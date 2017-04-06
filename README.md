@@ -1,2 +1,2 @@
 # gitpay
-The Pull Request marketplace
+The marketplace for on demmand changes
