@@ -7,7 +7,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "ng build --aot -prod"
   },
   "dependencies": {
     "ejs": "2.4.1",
