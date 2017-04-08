@@ -5,7 +5,6 @@
   "engines": {
     "node": "5.9.1"
   },
-  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -13,7 +12,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postinstall": "ng build --aot -prod"
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
