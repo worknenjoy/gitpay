@@ -1,0 +1,14 @@
+import { MyGitPayPage } from './app.po';
+
+describe('my-git-pay App', () => {
+  let page: MyGitPayPage;
+
+  beforeEach(() => {
+    page = new MyGitPayPage();
+  });
+
+  it('should display message saying app works', () => {
+    page.navigateTo();
+    expect(page.getParagraphText()).toEqual('app works!');
+  });
+});
