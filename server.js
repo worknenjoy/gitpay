@@ -6,7 +6,7 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 
 //Angular testing with server
-app.use(express.static(__dirname + '/myGitPay/dist/'));
+app.use(express.static(__dirname + '/dist/'));
 
 //Jade - comments to test the Angular
 //=====================================================
