@@ -1,0 +1,84 @@
+@mixin sidebar-background-color($background-color, $font-color){
+    .nav{
+        li{
+            > a{
+                color: $font-color;
+            }
+            i{
+                color: rgba($font-color, .8);
+            }
+
+            &.active,
+            &:hover{
+                > [data-toggle="collapse"]{
+                    color: $font-color;
+
+                    i{
+                        color: rgba($font-color, .8);
+                    }
+                }
+            }
+        }
+    }
+    .user{
+        a{
+            color: $font-color;
+        }
+    }
+    .simple-text{
+        color: $font-color;
+    }
+    .sidebar-background:after{
+        background: $background-color;
+        opacity: .8;
+    }
+}
+
+@mixin sidebar-active-color($font-color){
+    .nav{
+        li{
+            &.active.visible > a:not([data-toggle="collapse"]){
+                color: $font-color;
+                opacity: 1;
+                @include shadow-big-color($font-color);
+
+                i{
+                    color: rgba($font-color, .8);
+                }
+            }
+        }
+    }
+}
+
+// @mixin sidebar-active-white($gray) {
+//     .nav{
+//         li{
+//             &.active > [data-toggle="collapse"]{
+//                 color: rgba($gray, .8);
+//                 @include shadow-big-color($gray);
+//
+//                 i{
+//                     color: rgba($gray, .8);
+//                 }
+//             }
+//         }
+//     }
+//
+//     .collapse li:hover:not(.active) > a{
+//         background-color: rgba(200, 200, 200, 0.2);
+//     }
+// }
+
+
+@mixin set-background-color-button($color){
+    .sidebar-moving-tab{
+        background-color: $color;
+        @include shadow-big-color($color);
+        //background-color: blue;
+
+    }
+    li.active.visible > a{
+        background-color: $color;
+        @include shadow-big-color($color);
+    }
+}
