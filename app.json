@@ -6,7 +6,6 @@
   "keywords": ["node", "express", "static"],
   "image": "heroku/nodejs",
   "scripts": {
-    "postdeploy": "ng lint"
-    
+    "postdeploy": "ng lint"   
   }
 }
