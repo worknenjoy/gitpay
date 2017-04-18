@@ -13,7 +13,8 @@
     "test": "karma start karma.conf.js --single-run",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build"
+    "postinstall": "ng build",
+    "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +33,7 @@
     "express": "4.13.3",
     "intl": "^1.2.5",
     "jquery": "^3.2.1",
+    "node-sass": "^4.5.2",
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "rxjs": "^5.1.0",

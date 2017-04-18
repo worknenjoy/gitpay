@@ -1,9 +1,9 @@
 import { PageComponent } from './page.component';
 
-describe('PageComponent', () => {  
+describe('PageComponent', () => {
 
   it('should create', () => {
-    expect(true).toBeTruthy();
+    expect(PageComponent).toBeTruthy();
   });
 });
 
