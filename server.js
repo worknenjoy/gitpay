@@ -2,6 +2,7 @@
 
 var express = require('express');
 var app = express();
+const loading = require('./loading/loading');
 
 app.set('port', (process.env.PORT || 5000));
 

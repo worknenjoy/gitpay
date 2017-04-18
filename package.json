@@ -32,7 +32,10 @@
     "express": "4.13.3",
     "intl": "^1.2.5",
     "jquery": "^3.2.1",
+    "pg": "^6.1.5",
+    "pg-hstore": "^2.3.2",
     "rxjs": "^5.1.0",
+    "sequelize": "^3.30.4",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
