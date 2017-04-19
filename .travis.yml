@@ -1,3 +1,5 @@
+sudo: required
+dist: trusty
 language: node_js
 node_js:
   - "7.8.0"
@@ -7,5 +9,6 @@ before_install:
  - sh -e /etc/init.d/xvfb start
  - sudo apt-get update
  - sudo apt-get install -y libappindicator1 fonts-liberation
+ - sudo apt-get install libgconf2-4 libnss3-1d libxss1
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
