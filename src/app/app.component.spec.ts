@@ -20,7 +20,7 @@ describe('AppComponent', () => {
 
   xit('should init', async(() => {
     const fixture = TestBed.createComponent(PageComponent);
-    const app = fixture.debuxgElement.componentInstance;
+    const app = fixture.debugElement.componentInstance;
     expect(app.ngOnInit).toBeTruthy();
   }));
 
