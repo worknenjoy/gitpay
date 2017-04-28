@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Login Gitpay</h3>
+                </div>
+                <div class="panel-body">
+                    <form name="form" (ngSubmit)="onSignin()" #signin="ngForm">
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="yourmail@example.com" maxlength="50" [(ngModel)]="model.email" #email="ngModel" required/>
+                            <span [hidden]="email.valid || email.pristine" class="alert alert-danger">Email invalid</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" maxlength="20" [(ngModel)]="model.password" #password="ngModel" required/>
+                            <span [hidden]="password.valid || password.pristine" class="alert alert-danger">Password</span>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+			    	    		<input name="remember" type="checkbox" value="Remember Me"> Remember Me
+			    	    	</label>
+                        </div>
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                    </form>
+                    <hr/>
+                    <h4>OR</h4>
+                    <div id="login-dp">
+                        <div class="social-buttons">
+                            <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                            <a href="#" class="btn btn-go"><i class="fa fa-google"></i> Google</a>
+                            <a href="#" class="btn btn-gi"><i class="fa fa-github"></i> Github</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
