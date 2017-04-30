@@ -5,7 +5,7 @@ const loading = require('../../loading/loading')
 const routerAuth = require('./routes/auth')
 
 const models = [
-    '../modules/auth/model/auth'
+    '../loading/user'
 ]
 
 exports.init = (app) => {
