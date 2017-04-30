@@ -18,5 +18,25 @@
         "username": "postgres",
         "password": "postgres",
         "logging": false
+    },
+    "oauthCredentials": {
+        "facebook": {
+            "id": "<>",
+            "secret": "<>"
+        },
+        "google": {
+            "id": "<>",
+            "secret": "<>"
+        },
+        "github": {
+            "id": "<>",
+            "secret": "<>"
+        }
+    },
+
+    "oauthCallbacks": {
+        "googleCallbackUrl": "http://localhost:5000/callback/google",
+        "githubCallbackUrl": "http://localhost:5000/callback/github",
+        "facebookCallbackUrl": "http://localhost:5000/callback/facebook"
     }
 }

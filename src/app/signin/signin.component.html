@@ -6,29 +6,31 @@
                     <h3 class="panel-title">Login Gitpay</h3>
                 </div>
                 <div class="panel-body">
-                    <form name="form" (ngSubmit)="onSignin()" #signin="ngForm">
+                    <form [formGroup]="form" (ngSubmit)="onSignin()">
                         <div class="form-group">
-                            <input type="email" id="email" name="email" class="form-control" placeholder="yourmail@example.com" maxlength="50" [(ngModel)]="model.email" #email="ngModel" required/>
-                            <span [hidden]="email.valid || email.pristine" class="alert alert-danger">Email invalid</span>
+                            <input id="email" type="email" class="form-control" formControlName="email" placeholder="Email" required>
+                            <span [hidden]="form.controls['email'].valid || form.controls['email'].pristine" class="alert alert-danger">Email</span>
                         </div>
                         <div class="form-group">
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" maxlength="20" [(ngModel)]="model.password" #password="ngModel" required/>
-                            <span [hidden]="password.valid || password.pristine" class="alert alert-danger">Password</span>
+                            <input id="password" type="password" class="form-control" formControlName="password" placeholder="Password" required>
+                            <span [hidden]="form.controls['password'].valid || form.controls['password'].pristine" class="alert alert-danger">Password</span>
                         </div>
                         <div class="checkbox">
                             <label>
 			    	    		<input name="remember" type="checkbox" value="Remember Me"> Remember Me
 			    	    	</label>
                         </div>
-                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                        <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="!form.valid">
+          Login
+        </button>
                     </form>
                     <hr/>
                     <h4>OR</h4>
                     <div id="login-dp">
                         <div class="social-buttons">
-                            <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                            <a href="#" class="btn btn-go"><i class="fa fa-google"></i> Google</a>
-                            <a href="#" class="btn btn-gi"><i class="fa fa-github"></i> Github</a>
+                            <button (click)="openAuthWindow('facebook')" class="btn btn-fb btn-block"><i class="fa fa-facebook"></i> Facebook</button>
+                            <button (click)="openAuthWindow('google')" class="btn btn-go btn-block"><i class="fa fa-google"></i>  Google</button>
+                            <button (click)="openAuthWindow('github')" class="btn btn-gi btn-block"><i class="fa fa-github"></i> Github</button>
                         </div>
                     </div>
 

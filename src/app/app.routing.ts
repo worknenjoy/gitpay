@@ -10,4 +10,4 @@ const appRoutes: Routes = [
   { path: '**', redirectTo: '/page' }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, {useHash: true});
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, {useHash: true})
