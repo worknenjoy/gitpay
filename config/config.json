@@ -21,19 +21,18 @@
     },
     "oauthCredentials": {
         "facebook": {
-            "id": "<>",
-            "secret": "<>"
+            "id": "",
+            "secret": ""
         },
         "google": {
-            "id": "<>",
-            "secret": "<>"
+            "id": "",
+            "secret": ""
         },
         "github": {
-            "id": "<>",
-            "secret": "<>"
+            "id": "",
+            "secret": ""
         }
     },
-
     "oauthCallbacks": {
         "googleCallbackUrl": "http://localhost:5000/callback/google",
         "githubCallbackUrl": "http://localhost:5000/callback/github",

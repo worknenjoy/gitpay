@@ -74,6 +74,12 @@ export class SigninComponent implements OnInit {
        });
     });
 
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
+
+    this.authSub = source.subscribe();
+
   }
 
 }
