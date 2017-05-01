@@ -5,7 +5,7 @@ var app = express();
 const loading = require('./loading/loading');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
-const auth = require('./routes/auth/auth');
+const auth = require('./modules/auth/auth');
 
 app.set('port', (process.env.PORT || 5000));
 

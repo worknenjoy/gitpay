@@ -40,6 +40,7 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(this.form.value)
                 .subscribe(data => {
                     if (data) {
+                      console.log(data)
                       this.authService.authenticated = true;
                     }else {
                       this.authService.authenticated = false;

@@ -15,6 +15,7 @@ export class AuthService {
 
   public authenticated = false;
   private authenticatedApi = this.apiBase + '/api/authenticated';
+  private loginApi = this.apiBase + '/authorize/local';
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -28,8 +29,10 @@ export class AuthService {
   ) {}
 
   signIn(user: User) {
-      return this.http.post('/signin', user, this.options)
-                      .map(response => response.json());
+
+      return this.http.post(this.loginApi, user,  <RequestOptionsArgs> {headers: this.headers, withCredentials: true})
+                      .map(response => response.json())
+                      .catch(this.handleError);
   }
 
   logout() {

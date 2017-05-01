@@ -1,6 +1,6 @@
 'use strict'
 const config = require('./config');
-//const User = require('../modules/models/user');
+const User = require('../loading/user');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth2').Strategy;
 const gitHubStrategy = require('passport-github2').Strategy;
@@ -133,13 +133,14 @@ passport.use(
 
 passport.use(
     new LocalStrategy({
-            usernameField: 'username',
+            usernameField: 'email',
             passwordField: 'password',
-            passReqToCallback: true
+            passReqToCallback: true,
         },
-        (request, username, password, done) => {
+        (req, email, password, done) => {
+            // provider: 'local' where below
             process.nextTick(() => {
-                return User.findAll({ where: { username: username, provider: 'local' } })
+                return User.findOne({ where: { email: email } })
                     .then((user) => {
                         if (!user) return done(null, false);
                         if (!user.verifyPassword(password)) return done(null, false);

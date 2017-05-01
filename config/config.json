@@ -29,16 +29,16 @@
     },
     "oauthCredentials": {
         "facebook": {
-            "id": "",
-            "secret": ""
+            "id": "1621273854602219",
+            "secret": "5996fd631a72976a1160c3099d6ef387"
         },
         "google": {
-            "id": "",
-            "secret": ""
+            "id": "537720862363-71n38jbefhp90nnk2ms6gb52iup1kkio.apps.googleusercontent.com",
+            "secret": "62Yttr3uiFWsSLhNrG1fzyB3"
         },
         "github": {
-            "id": "",
-            "secret": ""
+            "id": "0d1d0fbf1118be55f094",
+            "secret": "3c6987d880d5949ca75561d085095ddc6086a26f"
         }
     },
     "oauthCallbacks": {
