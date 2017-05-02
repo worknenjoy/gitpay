@@ -14,8 +14,9 @@ import { User } from './user.interface';
 export class AuthService {
 
   public authenticated = false;
-  private authenticatedApi = this.apiBase + '/api/authenticated';
+  private authenticatedApi = this.apiBase + '/authenticated';
   private loginApi = this.apiBase + '/authorize/local';
+  private registerApi = this.apiBase + '/auth/register';
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -30,9 +31,20 @@ export class AuthService {
 
   signIn(user: User) {
 
-      return this.http.post(this.loginApi, user,  <RequestOptionsArgs> {headers: this.headers, withCredentials: true})
-                      .map(response => response.json())
-                      .catch(this.handleError);
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(this.loginApi, user, <RequestOptionsArgs> {headers: headers, withCredentials: true})
+                      .map(response => response.json());
+  }
+
+  register(user: User) {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.registerApi, user, <RequestOptionsArgs> {headers: headers, withCredentials: true})
+                    .map(response => response.json());
+
   }
 
   logout() {
@@ -47,16 +59,10 @@ export class AuthService {
 
   auth() {
     return this.http.get(this.authenticatedApi, <RequestOptionsArgs> {withCredentials: true})
-                    .map((res: Response) => res.json())
-                    .catch(this.handleError);
+                    .map((res: Response) => res.json());
   }
 
   private showNavBar(ifShow: boolean) {
      this.showNavBarEmitter.emit(ifShow);
   }
-
-  private handleError (error: Response) {
-    return Observable.throw(error || 'Server Error');
-  }
-
 }

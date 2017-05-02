@@ -1,11 +1,19 @@
 'use strict'
 
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const session = require('express-session')
+const bodyParser = require('body-parser');
 const loading = require('./loading/loading');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
 const auth = require('./modules/auth/auth');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('port', (process.env.PORT || 5000));
 

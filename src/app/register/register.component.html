@@ -3,10 +3,10 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Login Gitpay</h3>
+                    <h3 class="panel-title">Register</h3>
                 </div>
                 <div class="panel-body">
-                    <form [formGroup]="form" (ngSubmit)="onSignin()">
+                    <form [formGroup]="form" (ngSubmit)="onRegister()">
                         <div class="form-group">
                             <input id="email" type="email" class="form-control" formControlName="email" placeholder="Email" required>
                             <span [hidden]="form.controls['email'].valid || form.controls['email'].pristine" class="alert alert-danger">Email</span>
@@ -15,21 +15,12 @@
                             <input id="password" type="password" class="form-control" formControlName="password" placeholder="Password" required>
                             <span [hidden]="form.controls['password'].valid || form.controls['password'].pristine" class="alert alert-danger">Password</span>
                         </div>
-
-                        <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="!form.valid">
-          Login
-        </button>
-                        <button (click)="register()" class="btn btn-warning btn-block"> Register</button>
-                    </form>
-                    <hr/>
-                    <h4>OR</h4>
-                    <div id="login-dp">
-                        <div class="social-buttons">
-                            <button (click)="openAuthWindow('facebook')" class="btn btn-fb btn-block"><i class="fa fa-facebook"></i> Facebook</button>
-                            <button (click)="openAuthWindow('google')" class="btn btn-go btn-block"><i class="fa fa-google"></i>  Google</button>
-                            <button (click)="openAuthWindow('github')" class="btn btn-gi btn-block"><i class="fa fa-github"></i> Github</button>
+                        <div class="checkbox">
                         </div>
-                    </div>
+                        <button class="btn btn-success" type="submit" [disabled]="!form.valid">
+          Register
+        </button>
+                    </form>
 
                 </div>
             </div>

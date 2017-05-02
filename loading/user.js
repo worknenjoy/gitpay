@@ -1,4 +1,5 @@
 'use strict';
+
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize, DataTypes) => {
@@ -15,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         instanceMethods: {
-            verifyPassword: (password) => {
-                return bcrypt.compareSync(password, this.password);
+            verifyPassword: (password, databasePassword) => {
+                return bcrypt.compareSync(password, databasePassword);
             }
         }
     });

@@ -25,7 +25,7 @@ function isAuth(req, res, next) {
 function isNotAuth(req, res, next) {
     if (!req.isAuthenticated()) return next()
 
-    res.json({ 'authenticated': true });
+    res.send({ 'authenticated': true });
 }
 
 module.exports = {

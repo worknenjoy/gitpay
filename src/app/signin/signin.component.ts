@@ -5,6 +5,7 @@ import { Subscription, Observable } from 'rxjs/Rx';
 import { Inject } from '@angular/core';
 
 import { AuthService } from '../auth/auth.service';
+import { BasicValidators } from './../shared/basic-validators';
 
 @Component({
   selector: 'app-signin',
@@ -31,7 +32,7 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): any {
     this.form = this.formBuilder.group({
-        email: ['', Validators.required],
+        email: ['', [Validators.required, BasicValidators.email]],
         password: ['', Validators.required],
     });
   }
@@ -39,13 +40,20 @@ export class SigninComponent implements OnInit {
   onSignin() {
     this.authService.signIn(this.form.value)
                 .subscribe(data => {
-                    if (data) {
-                      console.log(data)
+                    if (data.id) {
                       this.authService.authenticated = true;
+                      this.router.navigate(['/page']);
                     }else {
                       this.authService.authenticated = false;
                     }
-                }, error => this.errorMessage = <any>error);
+                }, error => {
+                  this.errorMessage = <any>error;
+                  alert(this.errorMessage);
+                });
+  }
+
+  register() {
+    this.router.navigate(['/register']);
   }
 
   authenticated(): Observable<boolean> {
@@ -54,7 +62,11 @@ export class SigninComponent implements OnInit {
     }
 
     this.authenticatedObs = this.authService.auth()
-      .map(data => {return data.authenticated});
+      .map(data => {
+        console.log(data)
+        return data.authenticated
+      });
+
     return this.authenticatedObs;
   }
 
@@ -69,7 +81,7 @@ export class SigninComponent implements OnInit {
       .map(() => {
         this.authServiceSub = this.authenticated().subscribe(data => {
           if (data) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/page']);
           newWindow.close();
         }
        });
