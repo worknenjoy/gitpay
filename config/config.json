@@ -11,7 +11,7 @@
     "test": {
         "username": "root",
         "password": null,
-        "database": "database_test",
+        "database": "gitPay",
         "schema": "public",
         "host": "127.0.0.1",
         "port": 5432,
@@ -21,7 +21,7 @@
     "production": {
         "username": "root",
         "password": null,
-        "database": "database_production",
+        "database": "gitPay",
         "schema": "public",
         "host": "127.0.0.1",
         "port": 5432,
