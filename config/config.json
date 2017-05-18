@@ -9,9 +9,9 @@
         "logging": false
     },
     "test": {
-        "username": "root",
-        "password": null,
-        "database": "database_test",
+        "username": "postgres",
+        "password": "postgres",
+        "database": "gitPay",
         "schema": "public",
         "host": "127.0.0.1",
         "port": 5432,
@@ -30,16 +30,16 @@
     },
     "oauthCredentials": {
         "facebook": {
-            "id": "",
-            "secret": ""
+            "id": "1621273854602219",
+            "secret": "5996fd631a72976a1160c3099d6ef387"
         },
         "google": {
-            "id": "",
-            "secret": ""
+            "id": "173385314820-luia7eqjs1cc4svlj4umc2t642nr2vir.apps.googleusercontent.com",
+            "secret": "Q5qTlBhnz2zuUlN4aWsimMev"
         },
         "github": {
-            "id": "",
-            "secret": ""
+            "id": "0d1d0fbf1118be55f094",
+            "secret": "3c6987d880d5949ca75561d085095ddc6086a26f"
         }
     },
     "oauthCallbacks": {

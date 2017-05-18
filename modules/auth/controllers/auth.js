@@ -19,3 +19,17 @@ exports.register = (req, res) => {
             res.send(false);
         });
 }
+
+exports.searchAll = (req, res) => {
+
+    models.User
+        .findAll(
+            {}
+        )
+        .then((data) => {
+            res.send(data);
+        }).catch((error) => {
+            console.log(error);
+            res.send(false);
+        });
+}
