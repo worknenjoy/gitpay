@@ -1,19 +1,27 @@
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-left">
+            <a href="/" title="home">
+              <img src="../assets/img/gitpay-small.png" width="140" />
+            </a>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+            </div>
+          </div>
+          <div class="pull-right">
+            <button type="button" class="btn btn-success navbar-btn" (click)="logout()"><i class="material-icons">fingerprint</i> Sign in</button>
+            <button (click)="register()" class="btn btn-warning navbar-btn"> <i class="material-icons">person_add</i> Register</button>
+          </div>
         </div>
-
-        <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-            <button type="button" class="btn btn-default navbar-btn " (click)="logout()">Sign in</button>
-        </div>
+      </div>
     </div>
-
 </nav>
 <div class="container">
     <router-outlet></router-outlet>
