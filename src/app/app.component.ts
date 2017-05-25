@@ -16,4 +16,8 @@ export class AppComponent {
       this.authenticated = false;
       this.router.navigate(['/signin']);
    }
+
+   register() {
+   	
+   }
  }

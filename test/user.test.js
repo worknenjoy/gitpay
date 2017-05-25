@@ -51,18 +51,18 @@ describe('login User Local', () => {
     })
 })
 
-describe('login User Google', () => {
-    it('should user google', (done) => {
-        agent
-            .post('/authorize/google')
-            .send({email: 'wharleyangelica@gmail.com', password: 'teste'})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(200)
-                expect(res.body).to.exist;
-                done();
-            })
-    })
-})
+// describe('login User Google', () => {
+//     it('should user google', (done) => {
+//         agent
+//             .post('/authorize/google')
+//             .send({email: 'wharleyangelica@gmail.com', password: 'teste'})
+//             .expect('Content-Type', /json/)
+//             .expect(200)
+//             .end((err, res) => {
+//                 expect(res.statusCode).to.equal(200)
+//                 expect(res.body).to.exist;
+//                 done();
+//             })
+//     })
+// })
 
