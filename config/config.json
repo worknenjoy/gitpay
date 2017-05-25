@@ -9,10 +9,9 @@
         "logging": false
     },
     "test": {
-        "username": "root",
-        "password": null,
+        "username": "postgres",
+        "password": "postgres",
         "database": "gitPay",
-        "schema": "public",
         "host": "127.0.0.1",
         "port": 5432,
         "dialect": "postgres",

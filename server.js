@@ -8,16 +8,6 @@ const loading = require('./loading/loading');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
 const auth = require('./modules/auth/auth');
-var pg = require('pg');
-
-if (process.env == 'production') {
-  pg.defaults.ssl = true;
-}
-
-pg.connect(process.env.DATABASE_URL, function(err) {
-  if (err) throw err;
-  console.log('Connected to postgres!');
-});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

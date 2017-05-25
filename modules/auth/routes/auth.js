@@ -5,7 +5,7 @@ const router = express.Router();
 const passport = require('passport');
 const authenticationHelpers = require('../../authenticationHelpers');
 const models = require('../../../loading/loading');
-const controllers = require('../controllers/auth')
+const controllers = require('../controllers/auth');
 
 router.get('/authenticated', authenticationHelpers.isAuth, (req, res, next) => {
     res.send({ 'authenticated': true });

@@ -1,19 +1,16 @@
 'use strict'
-
 const passport = require('passport');
 const models = require('../../../loading/loading');
+const userBuild = require('../../users').userBuilds;
+const userSearch = require('../../users').userSearch;
+const Promise = require('bluebird');
+
 
 exports.register = (req, res) => {
 
-    req.body.password = models.User.generateHash(req.body.password)
-
-    models.User
-        .build(
-            req.body
-        )
-        .save()
+    userBuild(req.body)
         .then((data) => {
-            res.send(true);
+            res.send(true);    
         }).catch((error) => {
             console.log(error);
             res.send(false);
@@ -22,10 +19,7 @@ exports.register = (req, res) => {
 
 exports.searchAll = (req, res) => {
 
-    models.User
-        .findAll(
-            {}
-        )
+    userSearch()
         .then((data) => {
             res.send(data);
         }).catch((error) => {
