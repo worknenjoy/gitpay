@@ -29,7 +29,7 @@ passport.use(
         },
         (accessToken, refreshToken, profile, done) => {
             process.nextTick(() => {
-console.log('teste')
+
                 const attributes = {
                     access_token: accessToken,
                     refresh_token: refreshToken
