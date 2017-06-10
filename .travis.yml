@@ -15,6 +15,5 @@ before_install:
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
 script:
-    - npm run test
-    - psql -c 'create database gitPay;' -U postgres
     - npm run test-unit
+    - npm run test
