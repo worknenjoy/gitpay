@@ -3,10 +3,12 @@ dist: trusty
 language: node_js
 before_script:
   - psql -c 'create database gitPay;' -U postgres
+  - mysql -e 'CREATE DATABASE gitPay;'
 node_js:
   - "7.8.0"
 services:
   - postgresql
+  - mysql
 before_install:
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0
