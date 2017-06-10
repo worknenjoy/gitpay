@@ -2,7 +2,6 @@ sudo: required
 dist: trusty
 language: node_js
 before_script:
-  - mysql -e 'create database gitPay;'
   - psql -c 'create database gitPay;' -U postgres
 node_js:
   - "7.8.0"
@@ -16,5 +15,4 @@ before_install:
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
 script:
-    - npm run test
     - npm run test-unit
