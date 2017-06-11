@@ -10,7 +10,6 @@ addons:
       - ./mocha.js
 before_script:
   - psql -c 'create database gitPay;' -U postgres
-  - node migrate.js up
 node_js:
   - "7.8.0"
 services:
