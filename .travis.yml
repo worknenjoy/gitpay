@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: node_js
 env:
-  - DB=pgsql
+  - DB=postgresql
 addons:
   artifacts:
     paths:
@@ -10,7 +10,6 @@ addons:
       - ./mocha.js
 before_script:
   - psql -c 'create database gitPay;' -U postgres
-  - psql -c 'create database travis;' -U postgres
 node_js:
   - "7.8.0"
 services:
