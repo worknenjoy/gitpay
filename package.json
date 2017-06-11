@@ -13,6 +13,7 @@
     "test": "karma start karma.conf.js --single-run",
     "test-unit": "env NODE_ENV=travis ./node_modules/.bin/mocha test/*.test.js",
     "keep-test": "karma start karma.conf.js",
+    ""
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ng build --prod",
