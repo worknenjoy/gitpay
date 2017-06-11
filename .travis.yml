@@ -9,9 +9,10 @@ addons:
       - .karma/
       - ./mocha.js
 before_script:
-  - psql -c 'create database gitPay;' -U postgres
   - npm install -g pg
   - npm install -g pg-hstore
+  - psql -c 'create database gitPay;' -U postgres
+  - env NODE_ENV=test node migrate.js up 
 node_js:
   - "7.8.0"
 services:
