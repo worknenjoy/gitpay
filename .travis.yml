@@ -1,14 +1,16 @@
 sudo: required
 dist: trusty
 language: node_js
+env:
+  - DB=pgsql
 addons:
   artifacts:
     paths:
       - .karma/
       - ./mocha.js
 before_script:
+  - cp config/database.yml.travis config/database.yml
   - psql -c 'create database gitPay;' -U postgres
-  - mysql -e 'CREATE DATABASE gitPay;'
 node_js:
   - "7.8.0"
 services:
