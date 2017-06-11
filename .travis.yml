@@ -8,6 +8,8 @@ addons:
     paths:
       - .karma/
       - ./mocha.js
+before_script:
+  - psql -c 'create database gitPay;' -U postgres
 node_js:
   - "7.8.0"
 services:
@@ -24,4 +26,4 @@ before_install:
  - sudo dpkg -i google-chrome*.deb
 script:
     - npm run test
-    - npm run test-unit-ci
+    - npm run test-unit
