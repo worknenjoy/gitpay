@@ -11,7 +11,7 @@
     "start": "node migrate.js up && node server.js",
     "build": "ng build --prod",
     "test": "karma start karma.conf.js --single-run",
-    "test-unit": "./node_modules/.bin/mocha test/*.test.js",
+    "test-unit": "env NODE_ENV=test ./node_modules/.bin/mocha test/*.test.js --compilers ts:typescript-require",
     "keep-test": "karma start karma.conf.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -76,9 +76,9 @@
     "request": "^2.81.0",
     "should": "^11.2.1",
     "supertest": "^3.0.0",
-    "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.2.0"
+    "typescript": "~2.2.0",
+    "typescript-require": "^0.2.9-1"
   }
 }
