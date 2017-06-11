@@ -17,15 +17,6 @@
         "dialect": "postgres",
         "logging": false
     },
-    "travis": {
-      "username": "postgres",
-      "password": "postgres",
-      "database": "postgres",
-      "host": "127.0.0.1",
-      "port": 5432,
-      "dialect": "postgres",
-      "logging": false
-    },
     "production": {
         "username": "root",
         "password": null,
