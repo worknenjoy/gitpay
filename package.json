@@ -12,6 +12,7 @@
     "build": "ng build --prod",
     "test": "karma start karma.conf.js --single-run",
     "test-unit": "node migrate.js up && env NODE_ENV=travis ./node_modules/.bin/mocha test/*.test.js",
+    "test-unit-ci": "psql -c 'create database gitPay;' -U postgres && node migrate.js up && env NODE_ENV=travis ./node_modules/.bin/mocha test/*.test.js",
     "keep-test": "karma start karma.conf.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
