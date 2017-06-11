@@ -3,7 +3,6 @@ dist: trusty
 language: node_js
 env:
   - DB=gitPay
-  - DB=postgres
 addons:
   artifacts:
     paths:
