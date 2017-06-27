@@ -1,10 +1,20 @@
 sudo: required
 dist: trusty
 language: node_js
+env:
+  - DB=gitPay
+addons:
+  artifacts:
+    paths:
+      - .karma/
+      - ./mocha.js
 before_script:
-  - psql -c 'create database gitPay;' -U postgres
+  - psql -c 'create database gitPay;' -U postgres 
 node_js:
   - "7.8.0"
+services:
+  - postgresql
+  - mysql
 before_install:
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0
@@ -14,3 +24,6 @@ before_install:
  - sudo apt-get install libgconf2-4 libnss3-1d libxss1
  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
  - sudo dpkg -i google-chrome*.deb
+script:
+    - npm run test
+    #- npm run test-unit
