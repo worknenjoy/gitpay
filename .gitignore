@@ -79,3 +79,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Configuration of database and password/tokens/idSercure
+.env

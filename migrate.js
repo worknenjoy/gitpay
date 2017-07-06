@@ -4,8 +4,8 @@ const path = require('path');
 const child_process = require('child_process');
 const Promise = require('bluebird');
 //const env = process.env.NODE_ENV || 'development';
-const env = 'test';
-const config = require('./config/config.json')[env];
+const env = 'databaseTest';
+const config = require('./.env')[env];
 const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 

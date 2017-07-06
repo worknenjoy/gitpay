@@ -1,5 +1,5 @@
 'use strict'
-const config = require('./config');
+const { google, facebook, github, oauthCallbacks } = require('../.env');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy;
@@ -23,9 +23,9 @@ passport.deserializeUser((obj, done) => {
 passport.use(
 
     new googleStrategy({
-            clientID: config.oauthCredentials.google.id,
-            clientSecret: config.oauthCredentials.google.secret,
-            callbackURL: config.oauthCallbacks.googleCallbackUrl
+            clientID: google.id,
+            clientSecret: google.secret,
+            callbackURL: oauthCallbacks.googleCallbackUrl
         },
         (accessToken, refreshToken, profile, done) => {
             process.nextTick(() => {
@@ -83,9 +83,9 @@ passport.use(
 passport.use(
 
     new gitHubStrategy({
-            clientID: config.oauthCredentials.github.id,
-            clientSecret: config.oauthCredentials.github.secret,
-            callbackURL: config.oauthCallbacks.githubCallbackUrl
+            clientID: github.id,
+            clientSecret: github.secret,
+            callbackURL: oauthCallbacks.githubCallbackUrl
         },
         (accessToken, accessTokenSecret, profile, done) => {
             process.nextTick(() => {
@@ -143,9 +143,9 @@ passport.use(
 passport.use(
 
     new facebookStrategy({
-            clientID: config.oauthCredentials.facebook.id,
-            clientSecret: config.oauthCredentials.facebook.secret,
-            callbackURL: config.oauthCallbacks.facebookCallbackUrl
+            clientID: facebook.id,
+            clientSecret: facebook.secret,
+            callbackURL: oauthCallbacks.facebookCallbackUrl
         },
         (accessToken, accessTokenSecret, profile, done) => {
             process.nextTick(() => {

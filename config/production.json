@@ -1,7 +1,0 @@
-{
-    "oauthCallbacks": {
-        "googleCallbackUrl": "http://gitpay.me/callback/google",
-        "githubCallbackUrl": "http://gitpay.me/callback/github",
-        "facebookCallbackUrl": "http://gitpay.me/callback/facebook"
-    }
-}
