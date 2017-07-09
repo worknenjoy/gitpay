@@ -111,6 +111,7 @@ ReactDOM.render(
         <Routes />
     </Provider>
 , document.getElementById('app'))
+```
 
 ### Created folder `src/auth`
 
