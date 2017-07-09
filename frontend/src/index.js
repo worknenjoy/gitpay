@@ -15,6 +15,6 @@ import App from './main/app'
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers)
 ReactDOM.render(
     <Provider store={store}>
-        <Routes />
+        <App />
     </Provider>
 , document.getElementById('app'))
