@@ -86,7 +86,7 @@ Alter the `scripts` to execute dev and production as below:
 
 ### Configuring routes
 
-- Created the file `src/main/routes.js to navegation App
+- Created the file `src/main/routes.js` to navegation App
 
 ### Import the libary Redux to the project inside of `src/index.js`
 
