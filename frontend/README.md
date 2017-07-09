@@ -78,7 +78,7 @@ Alter the `scripts` to execute dev and production as below:
 
 - To create the Component Auth will need redux library to control of state dynamic
 
-> `redux@3.7.1`, `react-redux@5.0.5`, `redux-promise@0.5.3`, `redux-form@6.4.1`, `react-redux-toastr@4.4.2` and `redux-thunk@2.1.0`
+> `redux@3.7.1`, `react-redux@5.0.5`, `redux-promise@0.5.3`, `redux-form@6.4.1`, `react-redux-toastr@4.4.2`, `redux-thunk@2.1.0` and `redux-multi@0.1.12`
 
 ### Configuring redux library
 
