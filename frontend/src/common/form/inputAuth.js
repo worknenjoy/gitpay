@@ -6,9 +6,10 @@ import If from '../operator/if'
 export default props => ( 
     <If test={!props.hide}>
     	<TextField 
-    		hintText = {props.label}
-    		floatingLabelText = {props.label} 
-    		type = {props.type}
-    		{...props.input } />  
+    		hintText={props.label}
+    		floatingLabelText={props.label} 
+    		type={props.type}
+    		name={props.name}
+    		value={props.value} />  
     </If>
 )

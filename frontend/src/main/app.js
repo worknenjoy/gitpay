@@ -9,6 +9,7 @@ import FontIcon from 'material-ui/FontIcon'
 import { red500 } from 'material-ui/styles/colors';
 
 import './app.css'
+import Routes from './routes'
 
 injectTabEventPlugin()
 
@@ -31,6 +32,7 @@ class App extends Component {
 					<Drawer open={this.state.open} 
 						docked={false} 
 						onRequestChange={(open) => this.setState({open})} />
+					<Routes />
 				</div>				
 			</MuiThemeProvider>			
 		)

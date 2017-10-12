@@ -1,39 +1,54 @@
 import React, { Component } from 'react'
-import { reduxForm, Field } from 'redux-form'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 import { Card, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 import Input from '../common/form/inputAuth'
 
+const cardStyle = {
+	minWidth: 275,
+	position: 'relative'
+}
+
 class Auth extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = { loginMode: true }
+		this.state = { 
+			loginMode: true,
+			username: '',
+			email: '',
+			password: '' 
+		}
+
+		this.changeMode = this.changeMode.bind(this)
 	}
 	changeMode() {
-		this.setState({ loginMode: !this.state.loginMode })
+		this.setState({ loginMode: !this.state.loginMode, ...this.state })
 	}
-	onSubmit(values) {
-		const { login, signup } = this.props
-		this.state.loginMode ? login(values) : signup(values)
+	onSubmit() {
+		console.log(this.state)
 	}
 	render() {		
 		return (
-			<Card className='container'>
-				<form onSubmit={handleSubmit(v => this.onSubmit(v))}>
+			<Card className='container' style={cardStyle}>
+				<form onSubmit={() => this.onSubmit()}>
 					<h2 className='card-heading'>Login</h2>
 					<div className='field-line'>
-						<Field component={Input} label='Name' 
-							type='input' hide={loginMode} />
-                        <Field component={Input} label='E-mail' 
-                        	type='input' name='name' hide={loginMode} />
-                        <Field component={Input} label='Password' 
-                        	type='password' />
-                        <Field component={Input} label='Confirm password' 
-                        	type='password' hide={loginMode} />                            
+						<Input label='Name' 
+							type='text'
+							name='username'
+							hide={this.state.loginMode}
+							value='this.state.username' />
+						<br />
+                        <Input label='E-mail' 
+                        	type='text' 
+                        	name='email'
+                        	value={this.state.email} />
+                        <br />
+                        <Input label='Password'
+                        	name='password'
+                        	type='password'
+                        	value={this.state.password} />
 					</div>
 					<div className='button-line'>
 						<RaisedButton type='submit' label='Login' primary />
@@ -41,7 +56,7 @@ class Auth extends Component {
 
 					<CardText>
 						<a onClick={() => this.changeMode()}>
-	                        {loginMode ? 'New user? Register here!' :
+	                        {this.state.loginMode ? 'New user? Register here!' :
 	                            'Already registered?? Come in here!'}
 						</a>
 					</CardText>
@@ -51,6 +66,4 @@ class Auth extends Component {
 	}
 }
 
-Auth = reduxForm({ form: 'authForm' })(Auth)
-const mapDispatchToProps = dispatch => bindActionCreators({ login, signup }, dispatch)
-export default connect(null, mapDispatchToProps)(Auth)
+export default Auth

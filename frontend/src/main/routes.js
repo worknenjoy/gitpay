@@ -1,13 +1,11 @@
 import React from 'react'
 import { Router, Route, IndexRoute, Redirect, hashHistory } from 'react-router'
 
-import AuthOrApp from './authOrApp'
+import Auth from '../auth/auth'
 
 export default props => (
     <Router history={hashHistory}>
-        <Route path='/' component={AuthOrApp}>
-        
-        </Route>
+        <Route path='/' component={Auth} />       
         <Redirect from='*' to='/' />
     </Router>
 )
