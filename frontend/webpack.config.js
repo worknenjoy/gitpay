@@ -16,7 +16,7 @@ module.exports = {
 		alias: {
 			modules: __dirname + '/node_modules'
 		}
-	},	
+	},
 	plugins: [
 		new ExtractTextPlugin('app.css')
 	],
@@ -35,6 +35,8 @@ module.exports = {
 		}, {
 			test: /\.woff|.woff2|.ttf|.eot|.svg*.*$/,
 			loader: 'file-loader'
-		}]
+		},
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+    ]
 	}
 }

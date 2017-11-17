@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import { Card, CardText } from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
 import Input from '../common/form/inputAuth'
 
 const cardStyle = {
@@ -13,11 +12,11 @@ class Auth extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = { 
+		this.state = {
 			loginMode: true,
 			username: '',
 			email: '',
-			password: '' 
+			password: ''
 		}
 
 		this.changeMode = this.changeMode.bind(this)
@@ -28,20 +27,20 @@ class Auth extends Component {
 	onSubmit() {
 		console.log(this.state)
 	}
-	render() {		
+	render() {
 		return (
 			<Card className='container' style={cardStyle}>
 				<form onSubmit={() => this.onSubmit()}>
 					<h2 className='card-heading'>Login</h2>
 					<div className='field-line'>
-						<Input label='Name' 
+						<Input label='Name'
 							type='text'
 							name='username'
 							hide={this.state.loginMode}
 							value='this.state.username' />
 						<br />
-                        <Input label='E-mail' 
-                        	type='text' 
+                        <Input label='E-mail'
+                        	type='text'
                         	name='email'
                         	value={this.state.email} />
                         <br />
@@ -49,9 +48,6 @@ class Auth extends Component {
                         	name='password'
                         	type='password'
                         	value={this.state.password} />
-					</div>
-					<div className='button-line'>
-						<RaisedButton type='submit' label='Login' primary />
 					</div>
 
 					<CardText>

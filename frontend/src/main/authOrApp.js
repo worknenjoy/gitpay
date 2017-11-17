@@ -6,7 +6,7 @@ import Auth from '../auth/auth'
 class AuthOrApp extends Component {
 
     render() {
-        return <Auth />
+        return <App />
     }
 }
 
