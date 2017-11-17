@@ -50,14 +50,14 @@ function Welcome(props) {
           <Grid item xs={12}>
             <div className={classes.mainBlock}>
               <Typography type="display2" gutterBottom>
-                All the issues solved
+                Aqui seu código ganha vida
               </Typography>
               <Typography type="title" gutterBottom>
-                and ideas come to life
+                para colocar no ar novas idéias
               </Typography>
               <Typography gutterBottom noWrap>
                 {`
-                    Use git to work in different projects and or definition of done is pull requests approved
+                    com o gitpay você trabalha de forma independente para empresas sob demanda
                 `}
               </Typography>
               <Button raised color="primary" className={classes.button}>

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --progress --colors --inline --hot",
+    "test": "",
     "production": "webpack --progress -p"
   },
   "keywords": [],

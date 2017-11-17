@@ -20,11 +20,6 @@ app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(__dirname + '/dist/'));
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.path
-}));
-
 app.get('/octos', function(req, res){
 
   feed("http://feeds.feedburner.com/Octocats", (err, articles) => {
