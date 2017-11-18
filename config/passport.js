@@ -1,5 +1,5 @@
 'use strict'
-const { google, facebook, github, oauthCallbacks } = require('../.env');
+const { google, facebook, github, oauthCallbacks } = require('../config/secrets');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy;
@@ -44,13 +44,13 @@ passport.use(
                 }
 
                 userExist(data)
-                    .then((user) => { 
+                    .then((user) => {
 
                         if (user){
-                            
+
                             userUpdat(data)
                                 .then((user) => {
-                                    return done(null, user);                                    
+                                    return done(null, user);
                                 }).catch((error) => {
                                     console.log("Error in passport.js configuration file");
                                     console.log(error);
@@ -104,13 +104,13 @@ passport.use(
                 }
 
                 userExist(data)
-                    .then((user) => { 
+                    .then((user) => {
 
                         if(user){
 
                             userUpdat(data)
                                 .then((user) => {
-                                    return done(null, user);                                    
+                                    return done(null, user);
                                 }).catch((error) => {
                                     console.log("Error in passport.js configuration file");
                                     console.log(error);
@@ -164,13 +164,13 @@ passport.use(
                 }
 
                 userExist(data)
-                    .then((user) => { 
+                    .then((user) => {
 
                         if(user){
 
                             userUpdat(data)
                                 .then((user) => {
-                                    return done(null, user);                                    
+                                    return done(null, user);
                                 }).catch((error) => {
                                     console.log("Error in passport.js configuration file");
                                     console.log(error);
