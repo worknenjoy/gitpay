@@ -96,7 +96,7 @@ function Welcome(props) {
               </Typography>
               <Typography type="subheading" gutterBottom noWrap>
 
-                    com o <strong>Gitpay</strong> você trabalha de forma independente para empresas sob demanda e recebe
+                    com o <strong>Gitpay</strong> você trabalha de forma independente para projetos sob demanda e recebe
                     por cada código integrado
 
               </Typography>

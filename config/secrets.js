@@ -7,7 +7,7 @@ const databaseDev = {
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
-  logging: false
+  logging: true
 }
 
 const databaseTest = {
@@ -17,7 +17,7 @@ const databaseTest = {
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
-  logging: false
+  logging: true
 }
 
 const databaseProd = {
