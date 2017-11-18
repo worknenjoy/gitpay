@@ -1,5 +1,5 @@
 'use strict'
-const { google, facebook, github, oauthCallbacks } = require('../config/secrets');
+const { google, facebook, github, oauthCallbacks } = require('./secrets');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy;
