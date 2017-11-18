@@ -15,7 +15,7 @@
   "private": true,
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
