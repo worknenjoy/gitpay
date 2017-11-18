@@ -1,9 +1,10 @@
 
 
-import React from 'react';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import purple from 'material-ui/colors/purple';
-import green from 'material-ui/colors/green';
+import React from 'react'
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import purple from 'material-ui/colors/purple'
+import green from 'material-ui/colors/green'
+import './app.css'
 
 import Routes from './routes'
 
