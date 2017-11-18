@@ -98,7 +98,7 @@ function Welcome(props) {
 
                     com o <strong>Gitpay</strong> você trabalha de forma independente para empresas sob demanda e recebe
                     por cada código integrado
-                
+
               </Typography>
               <Button raised color="primary" className={classes.button}>
                 Start to work now

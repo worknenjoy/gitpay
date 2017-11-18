@@ -1,6 +1,8 @@
 sudo: required
 dist: trusty
 language: node_js
+services:
+  - postgresql
 before_script:
   - psql -c 'create database gitPay;' -U postgres
 node_js:
