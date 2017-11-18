@@ -32,6 +32,10 @@ const styles = theme => ({
     height: 55,
     backgroundColor: 'black',
     color: theme.palette.text.secondary,
+  },
+  tagline: {
+    fontSize: 45,
+    color: 'black'
   }
 });
 
@@ -49,7 +53,7 @@ function Welcome(props) {
           </Grid>
           <Grid item xs={12}>
             <div className={classes.mainBlock}>
-              <Typography type="display2" gutterBottom>
+              <Typography type="display2" className={classes.tagline} gutterBottom>
                 Aqui seu código ganha vida
               </Typography>
               <Typography type="title" gutterBottom>

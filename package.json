@@ -8,7 +8,7 @@
   },
   "scripts": {
     "migrate": "node migrate.js up && node server.js",
-    "test": "env NODE_ENV=databaseTest ./node_modules/.bin/mocha test/*.test.js",
+    "test": "NODE_ENV=databaseTest ./node_modules/.bin/mocha test/*.test.js",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css"
   },
   "private": true,
