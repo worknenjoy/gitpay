@@ -23,7 +23,7 @@ const databaseTest = {
 const databaseProd = {
   username: 'root',
   password: null,
-  database: 'gitpay',
+  database: process.env.DATABASE_URL,
   schema: 'public',
   host: '127.0.0.1',
   port: 5432,
