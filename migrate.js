@@ -36,7 +36,7 @@ const umzug = new Umzug({
 
 function logUmzugEvent(eventName) {
     return (name, migration) => {
-        console.log(`${ name } ${ eventName }`);
+        console.log(`${name} ${eventName}`);
     }
 }
 umzug.on('migrating', logUmzugEvent('migrating'));
@@ -112,10 +112,10 @@ function cmdHardReset() {
     return new Promise((resolve, reject) => {
         setImmediate(() => {
             try {
-                console.log(`dropdb ${ config.database }`);
-                child_process.spawnSync(`dropdb ${ config.database }`);
-                console.log(`createdb ${ config.database } --username ${ config.username }`);
-                child_process.spawnSync(`createdb ${ config.database } --username ${ config.username }`);
+                console.log(`dropdb ${config.database}`);
+                child_process.spawnSync(`dropdb ${config.database}`);
+                console.log(`createdb ${config.database} --username ${config.username}`);
+                child_process.spawnSync(`createdb ${config.database} --username ${config.username}`);
                 resolve();
             } catch (e) {
                 console.log(e);
@@ -128,7 +128,7 @@ function cmdHardReset() {
 const cmd = process.argv[2].trim();
 let executedCmd;
 
-console.log(`${ cmd.toUpperCase() } BEGIN`);
+console.log(`${cmd.toUpperCase()} BEGIN`);
 switch (cmd) {
     case 'status':
         executedCmd = cmdStatus();
@@ -159,18 +159,18 @@ switch (cmd) {
         break;
 
     default:
-        console.log(`invalid cmd: ${ cmd }`);
+        console.log(`invalid cmd: ${cmd}`);
         process.exit(1);
 }
 
 executedCmd
     .then((result) => {
-        const doneStr = `${ cmd.toUpperCase() } DONE`;
+        const doneStr = `${cmd.toUpperCase()} DONE`;
         console.log(doneStr);
         console.log("=".repeat(doneStr.length));
     })
     .catch(err => {
-        const errorStr = `${ cmd.toUpperCase() } ERROR`;
+        const errorStr = `${cmd.toUpperCase()} ERROR`;
         console.log(errorStr);
         console.log("=".repeat(errorStr.length));
         console.log(err);

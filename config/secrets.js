@@ -3,7 +3,7 @@ require('dotenv').config()
 const databaseDev = {
   username: 'postgres',
   password: 'postgres',
-  database: 'gitPay',
+  database: 'gitpay',
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
@@ -13,7 +13,7 @@ const databaseDev = {
 const databaseTest = {
   username: 'postgres',
   password: 'postgres',
-  database: 'gitPay',
+  database: 'gitpay',
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
@@ -23,7 +23,7 @@ const databaseTest = {
 const databaseProd = {
   username: 'root',
   password: null,
-  database: 'gitPay',
+  database: 'gitpay',
   schema: 'public',
   host: '127.0.0.1',
   port: 5432,
