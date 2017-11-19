@@ -1,27 +1,43 @@
 'use strict'
 
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const session = require('express-session')
+const bodyParser = require('body-parser');
 const loading = require('./loading/loading');
+const passport = require('passport');
+const passportConfig = require('./config/passport');
+const auth = require('./modules/auth/auth');
+const feed = require('feed-read');
 
-app.set('port', (process.env.PORT || 5000));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
-//Angular testing with server
+app.set('port', (process.env.PORT || 3000));
+
 app.use(express.static(__dirname + '/dist/'));
 
-//Jade - comments to test the Angular
-//=====================================================
-//app.use(express.static(__dirname + '/public'));
+app.get('/octos', function(req, res){
 
-// views is directory for all template files
-//app.set('views', __dirname + '/views');
-//app.set('view engine', 'ejs');
+  feed("http://feeds.feedburner.com/Octocats", (err, articles) => {
+      if(err) throw err;
 
-//app.get('/', function(request, response) {
-//  response.render('pages/index');
-//});
-//=====================================================
+      console.log(articles);
+
+  });
+
+  return res.json({
+
+  }).end();
+});
+
+auth.init(app);
 
 app.listen(app.get('port'), () => {
     console.log('Node app is running on port', app.get('port'));
 });
+
+module.exports = app
