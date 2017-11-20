@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import purple from 'material-ui/colors/purple'

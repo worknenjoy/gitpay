@@ -1,3 +1,9 @@
 body {
 	margin: 0;
 }
+
+.MuiTypography-noWrap-112 {
+  overflow: hidden;
+  white-space: normal !important;
+  text-overflow: ellipsis;
+}
