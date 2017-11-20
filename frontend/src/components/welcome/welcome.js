@@ -92,7 +92,7 @@ function Welcome(props) {
                 Aqui seu código ganha vida
               </Typography>
               <Typography type="headline" gutterBottom>
-                para colocar no ar novas idéias
+                para colocar novas idéias no ar
               </Typography>
               <Typography type="subheading" gutterBottom noWrap>
 
