@@ -3,9 +3,13 @@
 const path = require('path');
 const child_process = require('child_process');
 const Promise = require('bluebird');
-//const env = process.env.NODE_ENV || 'development';
-const env = 'databaseTest';
-const config = require('./config/secrets')[env];
+const env = process.env.NODE_ENV || 'development';
+const database_env = {
+  'development': 'databaseDev',
+  'production': 'databaseProd',
+  'test': 'databaseTest'
+};
+const config = require('./config/secrets')[database_env[env]];
 const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 
