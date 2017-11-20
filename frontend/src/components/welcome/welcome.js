@@ -53,7 +53,7 @@ const formProps = {
   action: '//gardering.us9.list-manage.com/subscribe/post?u=5e42ed8d71c8269c0acfa701b&amp;id=454966a133',
   messages: {
     inputPlaceholder: "Seu email",
-    btnLabel: "Me inscrever!",
+    btnLabel: "Cadastrar!",
     sending: "Registrando...",
     success: "Você foi registrado e irá receber em breve novas oportunidades!",
     error: "Não conseguimos registrar este e-mail, deixou vazio ou colocou algum já existente?"
