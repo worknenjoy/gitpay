@@ -13,7 +13,19 @@ const config = require('./config/secrets')[database_env[env]];
 const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+if (env == 'production') {
+  const sequelize = new Sequelize(process.env.process.env.DATABASE_URL, {
+    dialect:  'postgres',
+    protocol: 'postgres',
+    port:     match[4],
+    host:     match[3],
+    logging:  true //false
+  });
+  console.log('running production migration');
+
+} else {
+  const sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
 const umzug = new Umzug({
     storage: 'sequelize',
