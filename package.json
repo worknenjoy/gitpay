@@ -19,6 +19,7 @@
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "dotenv": "^4.0.0",
     "express": "4.13.3",
     "express-session": "^1.15.2",
     "feed-read": "0.0.1",
@@ -37,9 +38,9 @@
     "rxjs": "^5.1.0",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
+    "sequelize-heroku": "^1.0.0",
     "umzug": "^1.12.0",
-    "zone.js": "^0.8.4",
-    "dotenv": "^4.0.0"
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",

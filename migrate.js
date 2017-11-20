@@ -15,11 +15,15 @@ const Umzug = require('umzug');
 let sequelize = {};
 
 if (env == 'production') {
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
+  const database_url = process.env.DATABASE_URL;
+  const database_settings = database_url.split(':');
+  const port = database_settings[4];
+  const host = database_settings[3];
+  sequelize = new Sequelize(database_url, {
     dialect:  'postgres',
     protocol: 'postgres',
-    port:     match[4],
-    host:     match[3],
+    port:     port,
+    host:     host,
     logging:  true //false
   });
   console.log('running production migration');
