@@ -9,7 +9,7 @@ const database_env = {
   'production': 'databaseProd',
   'test': 'databaseTest'
 };
-const config = require('./config/secrets')[database_env[env]];
+const config = require('../config/secrets')[database_env[env]];
 
 let Sequelize = require('sequelize');
 let sequelize = {};
