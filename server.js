@@ -18,20 +18,20 @@ app.use(passport.session());
 
 app.set('port', (process.env.PORT || 3000));
 
-app.use(express.static(__dirname + '/dist/'));
+app.use(express.static(__dirname + '/frontend/public/'));
 
-app.get('/octos', function(req, res){
+app.get('/octos', function (req, res) {
 
-  feed("http://feeds.feedburner.com/Octocats", (err, articles) => {
-      if(err) throw err;
+    feed("http://feeds.feedburner.com/Octocats", (err, articles) => {
+        if (err) throw err;
 
-      console.log(articles);
+        console.log(articles);
 
-  });
+    });
 
-  return res.json({
+    return res.json({
 
-  }).end();
+    }).end();
 });
 
 auth.init(app);
