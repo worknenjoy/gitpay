@@ -50,7 +50,7 @@ const styles = theme => ({
 
 
 const formProps = {
-  action: '//gardering.us9.list-manage.com/subscribe/post?u=5e42ed8d71c8269c0acfa701b&amp;id=454966a133',
+  action: '//truppie.us17.list-manage.com/subscribe/post?u=bb76ecd5ef5cbbc5e60701321&amp;id=63cbedd527',
   messages: {
     inputPlaceholder: "Seu email",
     btnLabel: "Cadastrar!",
