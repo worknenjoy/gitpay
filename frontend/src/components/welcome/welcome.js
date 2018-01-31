@@ -10,6 +10,9 @@ import { red, cyan, teal } from 'material-ui/colors';
 import './mailchimp.css'
 
 const logo = require('../../images/gitpay-logo.png')
+const logoGitlab = require('../../images/gitlab-logo.png')
+const logoGithub = require('../../images/github-logo.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const styles = theme => ({
   root: {
@@ -17,15 +20,27 @@ const styles = theme => ({
     marginTop: 0,
   },
   img: {
-    marginTop: -18
+    marginTop: -18,
+    marginRight: 10
+  },
+  icon: {
+    marginTop: -4,
+    marginRight: 5
   },
   button: {
-    margin: theme.spacing.unit*2,
-    display: 'none'
+    margin: theme.spacing.unit,
+    padding: [theme.spacing.unit*2, theme.spacing.unit*4],
+    color: 'white'
+  },
+  altButton: {
+    margin: [theme.spacing.unit],
+    padding: [theme.spacing.unit/2, theme.spacing.unit*6],
+    color: 'white',
+    fontSize: 12
   },
   mainBlock: {
     textAlign: 'center',
-    padding: 10,
+    padding: 8,
     color: theme.palette.text.primary
   },
   defaultCenterBlock: {
@@ -101,15 +116,24 @@ function Welcome(props) {
 
               </Typography>
               <Button raised color="primary" className={classes.button}>
-                Start to work now
+                Começar agora!
               </Button>
             </div>
           </Grid>
           <Grid item xs={12}>
-            <div className={classes.defaultCenterBlock}>
-              <div className="subscribe-form">
-                <SubscribeFrom  {...formProps} />
-              </div>
+            <div className={classes.mainBlock}>
+              <Typography type="subheading" gutterBottom noWrap>
+                Ou conecte com algumas dessas contas
+              </Typography>
+              <Button raised size="small" color="accent" className={classes.altButton}>
+                <img width="16" src={logoGithub} className={classes.icon} /> Github
+              </Button>
+              <Button raised size="small" color="accent" className={classes.altButton}>
+                <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
+              </Button>
+              <Button raised size="small" color="accent" className={classes.altButton}>
+                <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
+              </Button>
             </div>
           </Grid>
         </Grid>
@@ -119,4 +143,12 @@ function Welcome(props) {
 
 export default withStyles(styles)(Welcome);
 
-
+/*
+ <Grid item xs={12}>
+ <div className={classes.defaultCenterBlock}>
+ <div className="subscribe-form">
+ <SubscribeFrom  {...formProps} />
+ </div>
+ </div>
+ </Grid>
+ */

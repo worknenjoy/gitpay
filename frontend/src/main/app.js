@@ -1,6 +1,7 @@
 import React from 'react'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import purple from 'material-ui/colors/purple'
+import { withStyles } from 'material-ui/styles'
+import blue from 'material-ui/colors/blue'
 import green from 'material-ui/colors/green'
 import './app.css'
 
@@ -8,11 +9,8 @@ import Routes from './routes'
 
 const theme = createMuiTheme({
   palette: {
-    primary: purple,
-    secondary: green,
-  },
-  status: {
-    danger: 'orange',
+    primary: green,
+    secondary: blue
   },
 });
 
@@ -24,4 +22,6 @@ function App() {
   );
 }
 
-export default App
+//export default App
+
+export default withStyles(theme)(App);
