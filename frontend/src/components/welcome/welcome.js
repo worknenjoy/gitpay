@@ -3,6 +3,11 @@ import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
+import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
+import WorkIcon from 'material-ui-icons/Work';
+import AppsIcon from 'material-ui-icons/Apps';
 import SubscribeFrom from 'react-mailchimp-subscribe'
 
 import { red, cyan, teal } from 'material-ui/colors';
@@ -13,6 +18,7 @@ const logo = require('../../images/gitpay-logo.png')
 const logoGitlab = require('../../images/gitlab-logo.png')
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
+const octodex = require('../../images/octodex.png')
 
 const styles = theme => ({
   root: {
@@ -42,6 +48,29 @@ const styles = theme => ({
     textAlign: 'center',
     padding: 8,
     color: theme.palette.text.primary
+  },
+  secBlock: {
+    textAlign: 'center',
+    padding: 8,
+    backgroundColor: '#f1f0ea'
+  },
+  divider: {
+    marginTop: 120,
+    textAlign: 'center',
+    display: 'inline-block',
+    marginLeft: '35%',
+    marginBottom: '5%',
+    width: '25%',
+    height: 5,
+    backgroundColor: theme.palette.text.primary
+  },
+  mainlist: {
+    textAlign: 'left',
+    marginLeft: '20%',
+    width: '100%'
+  },
+  listIconTop: {
+    alignItems: 'flex-start'
   },
   defaultCenterBlock: {
     textAlign: 'center',
@@ -137,6 +166,44 @@ function Welcome(props) {
             </div>
           </Grid>
         </Grid>
+        <div className={classes.secBlock}>
+          <Grid container spacing={24}>
+              <Grid item xs={12} sm={6}>
+                <div className={classes.divider}></div>
+                <div className={classes.mainlist}>
+                  <List>
+                    <ListItem className={classes.listIconTop}>
+                      <ListItemIcon>
+                        <Avatar>
+                          <AppsIcon />
+                        </Avatar>
+                      </ListItemIcon>
+                      <ListItemText primary="Trabalhe em projetos usando as melhores ferramentas de desenvolvimento" secondary="Com o Gitpay você utiliza os recursos do git e controle de versão para realizar entregas para os clientes" />
+                    </ListItem>
+                    <ListItem className={classes.listIconTop}>
+                      <ListItemIcon>
+                        <Avatar>
+                          <WorkIcon />
+                        </Avatar>
+                      </ListItemIcon>
+                      <ListItemText primary="Colabore com empresas e trabalhe sob demanda" secondary="Trabalhe em diferentes projetos, colabore e aprenda com projetos reais que utilizam diferentes tecnologias" />
+                    </ListItem>
+                    <ListItem className={classes.listIconTop}>
+                      <ListItemIcon>
+                        <Avatar>
+                          <AccountBalanceWalletIcon />
+                        </Avatar>
+                      </ListItemIcon>
+                      <ListItemText primary="Receba pelos trabalhos realizados" secondary="Receba o pagamento diretamente na sua conta pelas tarefas de desenvolvimento quando seu código for integrado" />
+                    </ListItem>
+                  </List>
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <img width="600" src={octodex} />
+              </Grid>
+          </Grid>
+        </div>
       </div>
     );
 }
