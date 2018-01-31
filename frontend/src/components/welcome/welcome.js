@@ -20,9 +20,10 @@ import { red, cyan, teal } from 'material-ui/colors';
 
 import './mailchimp.css'
 
-const logoGitlab = require('../../images/gitlab-logo.png')
 const logo = require('../../images/gitpay-logo.png')
+const logoCompleteGray = require('../../images/logo-complete-gray.png')
 const logoSymbol = require('../../images/logo-symbol.png')
+const logoGitlab = require('../../images/gitlab-logo.png')
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 const octodex = require('../../images/octodex.png')
@@ -88,7 +89,11 @@ const styles = theme => ({
   },
   alignLeftPadding: {
     textAlign: 'left',
-    padding: 80
+    padding: 80,
+    paddingTop: 40,
+  },
+  spacedTop: {
+    marginTop: 20
   },
   defaultCenterBlock: {
     textAlign: 'center',
@@ -163,8 +168,7 @@ function Welcome(props) {
               </Typography>
               <Typography type="subheading" gutterBottom noWrap>
 
-                    com o <strong>Gitpay</strong> você trabalha de forma independente com projetos sob demanda e recebe
-                    por cada código integrado
+                    com o <strong>Gitpay</strong> você trabalha de forma independente com projetos sob demanda
 
               </Typography>
               <Button raised color="primary" className={classes.button}>
@@ -323,50 +327,54 @@ function Welcome(props) {
             <Grid container spacing={24}>
               <Grid item xs={12} sm={3}>
                 <Typography type="subheading">
-                  Como funciona
+                  <strong>Para devs</strong>
                 </Typography>
                 <List component="nav">
                   <ListItem button>
-                    <ListItemText primary="Trash" />
+                    <ListItemText primary="Como funciona" />
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Spam" />
+                    <ListItemText primary="Core Team" />
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Spam" />
+                    <ListItemText primary="Pagamento" />
                   </ListItem>
                 </List>
               </Grid>
               <Grid item xs={12} sm={3}>
                 <Typography type="subheading">
-                  Recursos
+                  <strong>Para empresas</strong>
                 </Typography>
                 <List component="nav">
                   <ListItem button>
-                    <ListItemText primary="Trash" />
+                    <ListItemText primary="Como funciona" />
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Spam" />
+                    <ListItemText primary="Valores e planos" />
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Spam" />
+                    <ListItemText primary="Consultoria" />
                   </ListItem>
                 </List>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography type="subheading">
-                  Tá na dúvida aí? Não se preocupe, deixe seu e-mail e fique apenas sabendo de novos desafios!
+                  Tá na dúvida aí? Não se preocupe, deixe seu e-mail e fique sabendo de novos desafios!
                 </Typography>
                 <div className="subscribe-form">
                   <SubscribeFrom  {...formProps} />
                 </div>
               </Grid>
             </Grid>
-            <Divider />
-            <Grid item xs={12} sm={3}>
-              <div className={classes.logoSimple}>
-                <img className={classes.img} src={logoSymbol} width="40" />
-              </div>
+            <Divider className={classes.spacedTop} />
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={3}>
+                <div className={classes.logoSimple}>
+                  <img className={classes.img} src={logoCompleteGray} width="100" />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={9}>
+              </Grid>
             </Grid>
           </div>
         </div>
