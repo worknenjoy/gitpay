@@ -8,7 +8,7 @@
   width: 40%;
   border: 0;
   margin: 0 0 15px;
-  padding: 15px;
+  padding: 15px 5px;
   box-sizing: border-box;
   font-size: 14px;
 }
@@ -18,7 +18,7 @@
   text-transform: uppercase;
   outline: 0;
   background: #00b58e;
-  width: 15%;
+  width: 25%;
   border: 0;
   padding: 15px;
   color: #FFFFFF;
@@ -26,6 +26,7 @@
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+  font-size: 12px;
 }
 
 .subscribe-form button:hover,.subscribe-form button:active, .subscribe-form button:focus {

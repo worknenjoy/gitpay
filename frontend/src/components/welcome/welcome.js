@@ -9,14 +9,20 @@ import Avatar from 'material-ui/Avatar';
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
 import WorkIcon from 'material-ui-icons/Work';
 import AppsIcon from 'material-ui-icons/Apps';
+import AssignmentIcon from 'material-ui-icons/Assignment';
+import GroupWorkIcon from 'material-ui-icons/GroupWork';
+import ArchiveIcon from 'material-ui-icons/Archive';
+import CardMembershipIcon from 'material-ui-icons/CardMembership';
+import BugReportIcon from 'material-ui-icons/BugReport';
 import SubscribeFrom from 'react-mailchimp-subscribe'
 
 import { red, cyan, teal } from 'material-ui/colors';
 
 import './mailchimp.css'
 
-const logo = require('../../images/gitpay-logo.png')
 const logoGitlab = require('../../images/gitlab-logo.png')
+const logo = require('../../images/gitpay-logo.png')
+const logoSymbol = require('../../images/logo-symbol.png')
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 const octodex = require('../../images/octodex.png')
@@ -80,6 +86,10 @@ const styles = theme => ({
   listIconTop: {
     alignItems: 'flex-start'
   },
+  alignLeftPadding: {
+    textAlign: 'left',
+    padding: 80
+  },
   defaultCenterBlock: {
     textAlign: 'center',
     padding: 10,
@@ -92,6 +102,11 @@ const styles = theme => ({
     height: 55,
     backgroundColor: 'black',
     color: theme.palette.text.secondary,
+  },
+  logoSimple: {
+    textAlign: 'left',
+    overflow: 'hidden',
+    paddingTop: 20
   },
   tagline: {
     fontSize: 45,
@@ -229,7 +244,7 @@ function Welcome(props) {
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
                       <Avatar>
-                        <AppsIcon />
+                        <AssignmentIcon />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText primary="Gerencie o desenvolvimento da sua startup" secondary="Com o Gitpay as empresas podem gerir seu negócio utilizando ferramentas de desenvolvimento feito sobe medida para você" />
@@ -237,7 +252,7 @@ function Welcome(props) {
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
                       <Avatar>
-                        <WorkIcon />
+                        <GroupWorkIcon />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText primary="Pague pelos trabalhos concluídos ou estimule desenvolvedores a contribuir com seu projeto usando contratos inteligentes" secondary="Envolva diferentes tipos de desenvolvendores, com experiências variadas que irão ajudar no desenvolvimento do projeto usando as ferramentas que ele conhece e processos já consolidados" />
@@ -262,7 +277,7 @@ function Welcome(props) {
           <Grid container spacing={24}>
             <div className={classes.divider}>
               <Typography type="headline" gutterBottom>
-                Integracoes
+                Como funciona
               </Typography>
             </div>
             <Grid item xs={12} sm={6}>
@@ -273,45 +288,90 @@ function Welcome(props) {
                 <List>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
-                      <Avatar>
-                        <AppsIcon />
-                      </Avatar>
+                      <ArchiveIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Gerencie o desenvolvimento da sua startup" secondary="Com o Gitpay as empresas podem gerir seu negócio utilizando ferramentas de desenvolvimento feito sobe medida para você" />
+                    <ListItemText primary="Um projeto é cadastrado ou importado, com suas demandas em diferentes áreas" secondary="Uma demanda, incidente, melhoria ou sugestão é cadastrada na plataforma, seja ela de código, SEO, conteúdo ou até mudanças estruturais" />
                   </ListItem>
+                  <Divider />
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
-                      <Avatar>
-                        <WorkIcon />
-                      </Avatar>
+                      <BugReportIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Pague pelos trabalhos concluídos ou estimule desenvolvedores a contribuir com seu projeto usando contratos inteligentes" secondary="Envolva diferentes tipos de desenvolvendores, com experiências variadas que irão ajudar no desenvolvimento do projeto usando as ferramentas que ele conhece e processos já consolidados" />
+                    <ListItemText primary="A sua demanda é enviada para a comunidade" secondary="Diferentes grupos de desenvolvimento, como o Truppie Devs se interessam por esta demanda, seja os valores propostos por você ou deixar que interessados enviem propostas" />
                   </ListItem>
+                  <Divider />
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
-                      <Avatar>
-                        <AccountBalanceWalletIcon />
-                      </Avatar>
+                      <CardMembershipIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Desenvolva o seu negócio com ferramentas open source, e pagando por servicos sob demanda" secondary="Empresas podem nascer e se manter com o Gitpay, pagando apenas pelas demandas concluídas e integradas com o projeto" />
+                    <ListItemText primary="Solicitação de mudança e recompensa" secondary="É enviada uma solicitação no repositório do projeto para que seja integrado e o serviço é concluído e assim podemos considerar como pronto e o pagamento é feito de acordo com o que foi acordado e definição de pronto. E cada integração realizada lhe dá uma pontuação na plataforma" />
+                  </ListItem>
+                  <Divider />
+                  <ListItem className={classes.listIconTop}>
+                    <ListItemIcon>
+                      <BugReportIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="O que queremos resolver" secondary="Queremos facilitar as transações e facilitar os acordos entre empresas e freelancers utilizando ferramentas inteligentes, usada no mundo inteiro" />
                   </ListItem>
                 </List>
               </div>
             </Grid>
           </Grid>
         </div>
+        <div className={classes.secBlock}>
+          <div className={classes.alignLeftPadding}>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={3}>
+                <Typography type="subheading">
+                  Como funciona
+                </Typography>
+                <List component="nav">
+                  <ListItem button>
+                    <ListItemText primary="Trash" />
+                  </ListItem>
+                  <ListItem button component="a" href="#simple-list">
+                    <ListItemText primary="Spam" />
+                  </ListItem>
+                  <ListItem button component="a" href="#simple-list">
+                    <ListItemText primary="Spam" />
+                  </ListItem>
+                </List>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Typography type="subheading">
+                  Recursos
+                </Typography>
+                <List component="nav">
+                  <ListItem button>
+                    <ListItemText primary="Trash" />
+                  </ListItem>
+                  <ListItem button component="a" href="#simple-list">
+                    <ListItemText primary="Spam" />
+                  </ListItem>
+                  <ListItem button component="a" href="#simple-list">
+                    <ListItemText primary="Spam" />
+                  </ListItem>
+                </List>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography type="subheading">
+                  Tá na dúvida aí? Não se preocupe, deixe seu e-mail e fique apenas sabendo de novos desafios!
+                </Typography>
+                <div className="subscribe-form">
+                  <SubscribeFrom  {...formProps} />
+                </div>
+              </Grid>
+            </Grid>
+            <Divider />
+            <Grid item xs={12} sm={3}>
+              <div className={classes.logoSimple}>
+                <img className={classes.img} src={logoSymbol} width="40" />
+              </div>
+            </Grid>
+          </div>
+        </div>
       </div>
     );
 }
 
 export default withStyles(styles)(Welcome);
-
-/*
- <Grid item xs={12}>
- <div className={classes.defaultCenterBlock}>
- <div className="subscribe-form">
- <SubscribeFrom  {...formProps} />
- </div>
- </div>
- </Grid>
- */
