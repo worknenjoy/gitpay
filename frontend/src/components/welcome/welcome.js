@@ -73,7 +73,7 @@ const styles = theme => ({
     fontSize: 18,
     paddingBottom: 10,
     borderBottom: '5px solid black',
-    width: '25%',
+    width: '30%',
   },
   mainlist: {
     textAlign: 'left',
@@ -161,7 +161,7 @@ function Welcome(props) {
           <Grid item xs={12}>
             <div className={classes.mainBlock}>
               <Typography type="display2" className={classes.tagline} gutterBottom>
-                Aqui seu código ganha vida
+                Aqui seu trabalho ganha vida
               </Typography>
               <Typography type="headline" gutterBottom>
                 para colocar novas idéias no ar
@@ -198,7 +198,7 @@ function Welcome(props) {
               <Grid item xs={12} sm={6}>
                 <div className={classes.divider}>
                   <Typography type="headline" gutterBottom>
-                    Para devs
+                    Para freelancers
                   </Typography>
                 </div>
                 <div className={classes.mainlist}>
@@ -327,7 +327,7 @@ function Welcome(props) {
             <Grid container spacing={24}>
               <Grid item xs={12} sm={3}>
                 <Typography type="subheading">
-                  <strong>Para devs</strong>
+                  <strong>Para freelancers</strong>
                 </Typography>
                 <List component="nav">
                   <ListItem button>
@@ -364,6 +364,11 @@ function Welcome(props) {
                 <div className="subscribe-form">
                   <SubscribeFrom  {...formProps} />
                 </div>
+                <Typography type="caption">
+                  <strong>worknenjoy, Inc.</strong> <br />
+                  Borgergade, 26 sal 4 lej 3 <br />
+                  København, Hovedstaden 1300 DK
+                </Typography>
               </Grid>
             </Grid>
             <Divider className={classes.spacedTop} />
