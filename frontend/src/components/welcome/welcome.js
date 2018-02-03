@@ -171,6 +171,7 @@ function Welcome(props) {
                     com o <strong>Gitpay</strong> você trabalha de forma independente com projetos sob demanda
 
               </Typography>
+              
               <Button raised color="primary" className={classes.button}>
                 Começar agora!
               </Button>
