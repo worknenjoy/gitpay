@@ -69,7 +69,7 @@ const styles = theme => ({
     display: 'inline-block',
     marginLeft: '35%',
     marginBottom: '5%',
-    marginTop: 20,
+    marginTop: 40,
     fontSize: 18,
     paddingBottom: 10,
     borderBottom: '5px solid black',
@@ -124,7 +124,7 @@ const styles = theme => ({
 const formProps = {
   action: '//truppie.us17.list-manage.com/subscribe/post?u=bb76ecd5ef5cbbc5e60701321&amp;id=63cbedd527',
   messages: {
-    inputPlaceholder: "Seu email",
+    inputPlaceholder: "Deixe seu email",
     btnLabel: "Cadastrar!",
     sending: "Registrando...",
     success: "Você foi registrado e irá receber em breve novas oportunidades!",
@@ -172,27 +172,8 @@ function Welcome(props) {
 
               </Typography>
               <div className="subscribe-form">
-                <SubscribeFrom  {...formProps} />
+                <SubscribeFrom className="subscribe-form-main"  {...formProps} />
               </div>
-              <Button raised color="primary" className={classes.button}>
-                Começar agora!
-              </Button>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className={classes.mainBlock}>
-              <Typography type="subheading" gutterBottom noWrap>
-                Ou conecte com algumas dessas contas
-              </Typography>
-              <Button raised size="small" color="accent" className={classes.altButton}>
-                <img width="16" src={logoGithub} className={classes.icon} /> Github
-              </Button>
-              <Button raised size="small" color="accent" className={classes.altButton}>
-                <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
-              </Button>
-              <Button raised size="small" color="accent" className={classes.altButton}>
-                <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
-              </Button>
             </div>
           </Grid>
         </Grid>
@@ -389,5 +370,28 @@ function Welcome(props) {
       </div>
     );
 }
+
+/*
+<Button raised color="primary" className={classes.button}>
+  Começar agora!
+</Button>
+
+ <Grid item xs={12}>
+ <div className={classes.mainBlock}>
+ <Typography type="subheading" gutterBottom noWrap>
+ Ou conecte com algumas dessas contas
+ </Typography>
+ <Button raised size="small" color="accent" className={classes.altButton}>
+ <img width="16" src={logoGithub} className={classes.icon} /> Github
+ </Button>
+ <Button raised size="small" color="accent" className={classes.altButton}>
+ <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
+ </Button>
+ <Button raised size="small" color="accent" className={classes.altButton}>
+ <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
+ </Button>
+ </div>
+ </Grid>
+*/
 
 export default withStyles(styles)(Welcome);
