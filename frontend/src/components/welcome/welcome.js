@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider';
+import Dialog from 'material-ui/Dialog';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -146,16 +153,39 @@ const formProps = {
   }
 }
 
-function Welcome(props) {
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
-  const { classes } = props;
+class Welcome extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+    this.handleClickOpen = this.handleClickOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleClickOpen() {
+    this.setState({ open: true });
+  };
+
+  handleClose() {
+    this.setState({ open: false });
+  };
+
+  render() {
+
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <div className={classes.intro}>
-              <img className={classes.img} src={logo} width="230" />
+              <img className={classes.img} src={logo} width="230"/>
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -168,7 +198,7 @@ function Welcome(props) {
               </Typography>
               <Typography type="subheading" gutterBottom noWrap>
 
-                    com o <strong>Gitpay</strong> você trabalha de forma independente com projetos sob demanda
+                com o <strong>Gitpay</strong> você trabalha de forma independente com projetos sob demanda
 
               </Typography>
               <div className="subscribe-form">
@@ -179,44 +209,47 @@ function Welcome(props) {
         </Grid>
         <div className={classes.secBlock}>
           <Grid container spacing={24}>
-              <Grid item xs={12} sm={6}>
-                <div className={classes.divider}>
-                  <Typography type="headline" gutterBottom>
-                    Para freelancers
-                  </Typography>
-                </div>
-                <div className={classes.mainlist}>
-                  <List>
-                    <ListItem className={classes.listIconTop}>
-                      <ListItemIcon>
-                        <Avatar>
-                          <AppsIcon />
-                        </Avatar>
-                      </ListItemIcon>
-                      <ListItemText primary="Trabalhe em projetos usando as melhores ferramentas de desenvolvimento" secondary="Com o Gitpay você utiliza os recursos do git e controle de versão para realizar entregas para os clientes" />
-                    </ListItem>
-                    <ListItem className={classes.listIconTop}>
-                      <ListItemIcon>
-                        <Avatar>
-                          <WorkIcon />
-                        </Avatar>
-                      </ListItemIcon>
-                      <ListItemText primary="Colabore com empresas e trabalhe sob demanda" secondary="Trabalhe em diferentes projetos, colabore e aprenda com projetos reais que utilizam diferentes tecnologias" />
-                    </ListItem>
-                    <ListItem className={classes.listIconTop}>
-                      <ListItemIcon>
-                        <Avatar>
-                          <AccountBalanceWalletIcon />
-                        </Avatar>
-                      </ListItemIcon>
-                      <ListItemText primary="Receba pelos trabalhos realizados" secondary="Receba o pagamento diretamente na sua conta pelas tarefas de desenvolvimento quando seu código for integrado" />
-                    </ListItem>
-                  </List>
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <img width="600" src={octodex} />
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <div className={classes.divider}>
+                <Typography type="headline" gutterBottom>
+                  Para freelancers
+                </Typography>
+              </div>
+              <div className={classes.mainlist}>
+                <List>
+                  <ListItem className={classes.listIconTop}>
+                    <ListItemIcon>
+                      <Avatar>
+                        <AppsIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText primary="Trabalhe em projetos usando as melhores ferramentas de desenvolvimento"
+                                  secondary="Com o Gitpay você utiliza os recursos do git e controle de versão para realizar entregas para os clientes"/>
+                  </ListItem>
+                  <ListItem className={classes.listIconTop}>
+                    <ListItemIcon>
+                      <Avatar>
+                        <WorkIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText primary="Colabore com empresas e trabalhe sob demanda"
+                                  secondary="Trabalhe em diferentes projetos, colabore e aprenda com projetos reais que utilizam diferentes tecnologias"/>
+                  </ListItem>
+                  <ListItem className={classes.listIconTop}>
+                    <ListItemIcon>
+                      <Avatar>
+                        <AccountBalanceWalletIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText primary="Receba pelos trabalhos realizados"
+                                  secondary="Receba o pagamento diretamente na sua conta pelas tarefas de desenvolvimento quando seu código for integrado"/>
+                  </ListItem>
+                </List>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <img width="600" src={octodex}/>
+            </Grid>
           </Grid>
         </div>
         <div className={classes.mainBlock}>
@@ -235,7 +268,8 @@ function Welcome(props) {
                         <AssignmentIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary="Gerencie o desenvolvimento da sua startup" secondary="Com o Gitpay as empresas podem gerir seu negócio utilizando ferramentas de desenvolvimento feito sobe medida para você" />
+                    <ListItemText primary="Gerencie o desenvolvimento da sua startup"
+                                  secondary="Com o Gitpay as empresas podem gerir seu negócio utilizando ferramentas de desenvolvimento feito sobe medida para você"/>
                   </ListItem>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
@@ -243,7 +277,9 @@ function Welcome(props) {
                         <GroupWorkIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary="Pague pelos trabalhos concluídos ou estimule desenvolvedores a contribuir com seu projeto usando contratos inteligentes" secondary="Envolva diferentes tipos de desenvolvendores, com experiências variadas que irão ajudar no desenvolvimento do projeto usando as ferramentas que ele conhece e processos já consolidados" />
+                    <ListItemText
+                      primary="Pague pelos trabalhos concluídos ou estimule desenvolvedores a contribuir com seu projeto usando contratos inteligentes"
+                      secondary="Envolva diferentes tipos de desenvolvendores, com experiências variadas que irão ajudar no desenvolvimento do projeto usando as ferramentas que ele conhece e processos já consolidados"/>
                   </ListItem>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
@@ -251,13 +287,15 @@ function Welcome(props) {
                         <AccountBalanceWalletIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary="Desenvolva o seu negócio com ferramentas open source, e pagando por servicos sob demanda" secondary="Empresas podem nascer e se manter com o Gitpay, pagando apenas pelas demandas concluídas e integradas com o projeto" />
+                    <ListItemText
+                      primary="Desenvolva o seu negócio com ferramentas open source, e pagando por servicos sob demanda"
+                      secondary="Empresas podem nascer e se manter com o Gitpay, pagando apenas pelas demandas concluídas e integradas com o projeto"/>
                   </ListItem>
                 </List>
               </div>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <img width="500" src={octodexMotherhubbertocat} />
+              <img width="500" src={octodexMotherhubbertocat}/>
             </Grid>
           </Grid>
         </div>
@@ -269,7 +307,7 @@ function Welcome(props) {
               </Typography>
             </div>
             <Grid item xs={12} sm={6}>
-              <img width="400" src={deal} />
+              <img width="400" src={deal}/>
             </Grid>
             <Grid item xs={12} sm={6}>
               <div className={classes.seclist}>
@@ -278,28 +316,32 @@ function Welcome(props) {
                     <ListItemIcon>
                       <ArchiveIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Um projeto é cadastrado ou importado, com suas demandas em diferentes áreas" secondary="Uma demanda, incidente, melhoria ou sugestão é cadastrada na plataforma, seja ela de código, SEO, conteúdo ou até mudanças estruturais" />
+                    <ListItemText primary="Uma nova tarefa de um projeto é criada"
+                                  secondary="Uma demanda, incidente, melhoria ou sugestão é lançada na plataforma, seja ela de código, SEO, conteúdo ou até mudanças estruturais"/>
                   </ListItem>
                   <Divider />
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
                       <BugReportIcon />
                     </ListItemIcon>
-                    <ListItemText primary="A sua demanda é enviada para a comunidade" secondary="Diferentes grupos de desenvolvimento, como o Truppie Devs se interessam por esta demanda, seja os valores propostos por você ou deixar que interessados enviem propostas" />
+                    <ListItemText primary="A sua demanda é enviada para a comunidade"
+                                  secondary="Diferentes grupos de desenvolvimento (como o Truppie Devs) se interessam por esta demanda por um valor fixo ou sugerido pelos interessados"/>
                   </ListItem>
                   <Divider />
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
                       <CardMembershipIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Solicitação de mudança e recompensa" secondary="É enviada uma solicitação no repositório do projeto para que seja integrado e o serviço é concluído e assim podemos considerar como pronto e o pagamento é feito de acordo com o que foi acordado e definição de pronto. E cada integração realizada lhe dá uma pontuação na plataforma" />
+                    <ListItemText primary="Solicitação de mudança e recompensa"
+                                  secondary="É enviada uma solicitação no repositório do projeto para que seja integrado e o pagamento é realizado. A cada integração realizada lhe dá uma referência de mais um trabalho concluído"/>
                   </ListItem>
                   <Divider />
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
                       <BugReportIcon />
                     </ListItemIcon>
-                    <ListItemText primary="O que queremos resolver" secondary="Queremos facilitar as transações e facilitar os acordos entre empresas e freelancers utilizando ferramentas inteligentes, usada no mundo inteiro" />
+                    <ListItemText primary="O que queremos resolver"
+                                  secondary="Queremos facilitar as transações e facilitar os acordos entre empresas e freelancers utilizando ferramentas inteligentes, processos já usados em empresas ágeis e startups"/>
                   </ListItem>
                 </List>
               </div>
@@ -315,13 +357,42 @@ function Welcome(props) {
                 </Typography>
                 <List component="nav">
                   <ListItem button>
-                    <ListItemText primary="Como funciona" />
+                    <ListItemText primary="Como funciona"/>
+                  </ListItem>
+                  <ListItem button onClick={this.handleClickOpen} component="a" href="#simple-list">
+                    <ListItemText primary="Core Team"/>
+                    <Dialog
+                      fullScreen
+                      open={this.state.open}
+                      onClose={this.handleClose}
+                      transition={Transition}
+                    >
+                      <AppBar className={classes.appBar}>
+                        <Toolbar>
+                          <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+                            <CloseIcon />
+                          </IconButton>
+                          <Typography variant="title" color="inherit">
+                            Sound
+                          </Typography>
+                          <Button color="inherit" onClick={this.handleClose}>
+                            save
+                          </Button>
+                        </Toolbar>
+                      </AppBar>
+                      <List>
+                        <ListItem button>
+                          <ListItemText primary="Phone ringtone" secondary="Titania"/>
+                        </ListItem>
+                        <Divider />
+                        <ListItem button>
+                          <ListItemText primary="Default notification ringtone" secondary="Tethys"/>
+                        </ListItem>
+                      </List>
+                    </Dialog>
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Core Team" />
-                  </ListItem>
-                  <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Pagamento" />
+                    <ListItemText primary="Pagamento"/>
                   </ListItem>
                 </List>
               </Grid>
@@ -331,13 +402,13 @@ function Welcome(props) {
                 </Typography>
                 <List component="nav">
                   <ListItem button>
-                    <ListItemText primary="Como funciona" />
+                    <ListItemText primary="Como funciona"/>
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Valores e planos" />
+                    <ListItemText primary="Valores e planos"/>
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
-                    <ListItemText primary="Consultoria" />
+                    <ListItemText primary="Consultoria"/>
                   </ListItem>
                 </List>
               </Grid>
@@ -355,11 +426,11 @@ function Welcome(props) {
                 </Typography>
               </Grid>
             </Grid>
-            <Divider className={classes.spacedTop} />
+            <Divider className={classes.spacedTop}/>
             <Grid container spacing={24}>
               <Grid item xs={12} sm={3}>
                 <div className={classes.logoSimple}>
-                  <img className={classes.img} src={logoCompleteGray} width="100" />
+                  <img className={classes.img} src={logoCompleteGray} width="100"/>
                 </div>
               </Grid>
               <Grid item xs={12} sm={9}>
@@ -369,6 +440,7 @@ function Welcome(props) {
         </div>
       </div>
     );
+  }
 }
 
 /*
@@ -393,5 +465,9 @@ function Welcome(props) {
  </div>
  </Grid>
 */
+
+Welcome.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(Welcome);
