@@ -359,8 +359,65 @@ class Welcome extends Component {
                   <strong>Para freelancers</strong>
                 </Typography>
                 <List component="nav">
-                  <ListItem button>
+                  <ListItem button onClick={this.handleClickOpen} component="a" href="#simple-list">
                     <ListItemText primary="Como funciona"/>
+                    <Dialog
+                      fullScreen
+                      open={this.state.open}
+                      onClose={this.handleClose}
+                      transition={Transition}
+                    >
+                      <Grid item xs={12} sm={12}>
+                        <AppBar className={classes.appBar}>
+                          <Toolbar>
+                            <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
+                              <CloseIcon />
+                            </IconButton>
+                            <Typography variant="title" color="secondary">
+                              Para freelancers
+                            </Typography>
+                          </Toolbar>
+                          <div classeName={classes.spacedTop}>
+                            <div className={classes.divider}>
+                              <Typography type="headline" gutterBottom>
+                                O core team
+                              </Typography>
+                            </div>
+                          </div>
+                          <div className={classes.mainlist}>
+                            <List>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AppsIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Uma metaplataforma de trabalho distribuido"
+                                              secondary="O core team é um time dedicado ao gitpay para evoluir e mostrar na prática como o processo funciona"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <WorkIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Projetos são referências"
+                                              secondary="Com este modelo membros do projeto podem ser tornar do core de diferentes plataformas"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AccountBalanceWalletIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Entre para o time"
+                                              secondary="A cada trabalho realizado a oportunidade de próximos"/>
+                              </ListItem>
+                            </List>
+                          </div>
+                        </AppBar>
+                      </Grid>
+                    </Dialog>
                   </ListItem>
                   <ListItem button onClick={this.handleClickOpen} component="a" href="#simple-list">
                     <ListItemText primary="Core Team"/>
@@ -419,12 +476,68 @@ class Welcome extends Component {
                             </List>
                           </div>
                         </AppBar>
-
                       </Grid>
                     </Dialog>
                   </ListItem>
-                  <ListItem button component="a" href="#simple-list">
+                  <ListItem button onClick={this.handleClickOpen} component="a" href="#simple-list">
                     <ListItemText primary="Pagamento"/>
+                    <Dialog
+                      fullScreen
+                      open={this.state.open}
+                      onClose={this.handleClose}
+                      transition={Transition}
+                    >
+                      <Grid item xs={12} sm={12}>
+                        <AppBar className={classes.appBar}>
+                          <Toolbar>
+                            <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
+                              <CloseIcon />
+                            </IconButton>
+                            <Typography variant="title" color="secondary">
+                              Para freelancers
+                            </Typography>
+                          </Toolbar>
+                          <div classeName={classes.spacedTop}>
+                            <div className={classes.divider}>
+                              <Typography type="headline" gutterBottom>
+                                O core team
+                              </Typography>
+                            </div>
+                          </div>
+                          <div className={classes.mainlist}>
+                            <List>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AppsIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Uma metaplataforma de trabalho distribuido"
+                                              secondary="O core team é um time dedicado ao gitpay para evoluir e mostrar na prática como o processo funciona"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <WorkIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Projetos são referências"
+                                              secondary="Com este modelo membros do projeto podem ser tornar do core de diferentes plataformas"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AccountBalanceWalletIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Entre para o time"
+                                              secondary="A cada trabalho realizado a oportunidade de próximos"/>
+                              </ListItem>
+                            </List>
+                          </div>
+                        </AppBar>
+                      </Grid>
+                    </Dialog>
                   </ListItem>
                 </List>
               </Grid>
@@ -433,14 +546,185 @@ class Welcome extends Component {
                   <strong>Para empresas</strong>
                 </Typography>
                 <List component="nav">
-                  <ListItem button>
+                  <ListItem button onClick={this.handleClickOpen} component="a" href="#simple-list">
                     <ListItemText primary="Como funciona"/>
+                    <Dialog
+                      fullScreen
+                      open={this.state.open}
+                      onClose={this.handleClose}
+                      transition={Transition}
+                    >
+                      <Grid item xs={12} sm={12}>
+                        <AppBar className={classes.appBar}>
+                          <Toolbar>
+                            <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
+                              <CloseIcon />
+                            </IconButton>
+                            <Typography variant="title" color="secondary">
+                              Para freelancers
+                            </Typography>
+                          </Toolbar>
+                          <div classeName={classes.spacedTop}>
+                            <div className={classes.divider}>
+                              <Typography type="headline" gutterBottom>
+                                O core team
+                              </Typography>
+                            </div>
+                          </div>
+                          <div className={classes.mainlist}>
+                            <List>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AppsIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Uma metaplataforma de trabalho distribuido"
+                                              secondary="O core team é um time dedicado ao gitpay para evoluir e mostrar na prática como o processo funciona"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <WorkIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Projetos são referências"
+                                              secondary="Com este modelo membros do projeto podem ser tornar do core de diferentes plataformas"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AccountBalanceWalletIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Entre para o time"
+                                              secondary="A cada trabalho realizado a oportunidade de próximos"/>
+                              </ListItem>
+                            </List>
+                          </div>
+                        </AppBar>
+                      </Grid>
+                    </Dialog>
                   </ListItem>
-                  <ListItem button component="a" href="#simple-list">
+                  <ListItem button onClick={this.handleClickOpen} component="a" href="#simple-list">
                     <ListItemText primary="Valores e planos"/>
+                    <Dialog
+                      fullScreen
+                      open={this.state.open}
+                      onClose={this.handleClose}
+                      transition={Transition}
+                    >
+                      <Grid item xs={12} sm={12}>
+                        <AppBar className={classes.appBar}>
+                          <Toolbar>
+                            <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
+                              <CloseIcon />
+                            </IconButton>
+                            <Typography variant="title" color="secondary">
+                              Para freelancers
+                            </Typography>
+                          </Toolbar>
+                          <div classeName={classes.spacedTop}>
+                            <div className={classes.divider}>
+                              <Typography type="headline" gutterBottom>
+                                O core team
+                              </Typography>
+                            </div>
+                          </div>
+                          <div className={classes.mainlist}>
+                            <List>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AppsIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Uma metaplataforma de trabalho distribuido"
+                                              secondary="O core team é um time dedicado ao gitpay para evoluir e mostrar na prática como o processo funciona"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <WorkIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Projetos são referências"
+                                              secondary="Com este modelo membros do projeto podem ser tornar do core de diferentes plataformas"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AccountBalanceWalletIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Entre para o time"
+                                              secondary="A cada trabalho realizado a oportunidade de próximos"/>
+                              </ListItem>
+                            </List>
+                          </div>
+                        </AppBar>
+                      </Grid>
+                    </Dialog>
                   </ListItem>
-                  <ListItem button component="a" href="#simple-list">
+                  <ListItem button onClick={this.handleClickOpen} component="a" href="#simple-list">
                     <ListItemText primary="Consultoria"/>
+                    <Dialog
+                      fullScreen
+                      open={this.state.open}
+                      onClose={this.handleClose}
+                      transition={Transition}
+                    >
+                      <Grid item xs={12} sm={12}>
+                        <AppBar className={classes.appBar}>
+                          <Toolbar>
+                            <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
+                              <CloseIcon />
+                            </IconButton>
+                            <Typography variant="title" color="secondary">
+                              Para freelancers
+                            </Typography>
+                          </Toolbar>
+                          <div classeName={classes.spacedTop}>
+                            <div className={classes.divider}>
+                              <Typography type="headline" gutterBottom>
+                                O core team
+                              </Typography>
+                            </div>
+                          </div>
+                          <div className={classes.mainlist}>
+                            <List>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AppsIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Uma metaplataforma de trabalho distribuido"
+                                              secondary="O core team é um time dedicado ao gitpay para evoluir e mostrar na prática como o processo funciona"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <WorkIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Projetos são referências"
+                                              secondary="Com este modelo membros do projeto podem ser tornar do core de diferentes plataformas"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AccountBalanceWalletIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Entre para o time"
+                                              secondary="A cada trabalho realizado a oportunidade de próximos"/>
+                              </ListItem>
+                            </List>
+                          </div>
+                        </AppBar>
+                      </Grid>
+                    </Dialog>
                   </ListItem>
                 </List>
               </Grid>
