@@ -123,6 +123,9 @@ const styles = theme => ({
   tagline: {
     fontSize: 45,
     color: 'black'
+  },
+  appBar: {
+    height: '100%'
   }
 });
 
@@ -367,28 +370,57 @@ class Welcome extends Component {
                       onClose={this.handleClose}
                       transition={Transition}
                     >
-                      <AppBar className={classes.appBar}>
-                        <Toolbar>
-                          <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-                            <CloseIcon />
-                          </IconButton>
-                          <Typography variant="title" color="inherit">
-                            Sound
-                          </Typography>
-                          <Button color="inherit" onClick={this.handleClose}>
-                            save
-                          </Button>
-                        </Toolbar>
-                      </AppBar>
-                      <List>
-                        <ListItem button>
-                          <ListItemText primary="Phone ringtone" secondary="Titania"/>
-                        </ListItem>
-                        <Divider />
-                        <ListItem button>
-                          <ListItemText primary="Default notification ringtone" secondary="Tethys"/>
-                        </ListItem>
-                      </List>
+                      <Grid item xs={12} sm={12}>
+                        <AppBar className={classes.appBar}>
+                          <Toolbar>
+                            <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
+                              <CloseIcon />
+                            </IconButton>
+                            <Typography variant="title" color="secondary">
+                              Para freelancers
+                            </Typography>
+                          </Toolbar>
+                          <div classeName={classes.spacedTop}>
+                            <div className={classes.divider}>
+                              <Typography type="headline" gutterBottom>
+                                O core team
+                              </Typography>
+                            </div>
+                          </div>
+                          <div className={classes.mainlist}>
+                            <List>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AppsIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Uma metaplataforma de trabalho distribuido"
+                                              secondary="O core team é um time dedicado ao gitpay para evoluir e mostrar na prática como o processo funciona"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <WorkIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Projetos são referências"
+                                              secondary="Com este modelo membros do projeto podem ser tornar do core de diferentes plataformas"/>
+                              </ListItem>
+                              <ListItem className={classes.listIconTop}>
+                                <ListItemIcon>
+                                  <Avatar>
+                                    <AccountBalanceWalletIcon />
+                                  </Avatar>
+                                </ListItemIcon>
+                                <ListItemText primary="Entre para o time"
+                                              secondary="A cada trabalho realizado a oportunidade de próximos"/>
+                              </ListItem>
+                            </List>
+                          </div>
+                        </AppBar>
+
+                      </Grid>
                     </Dialog>
                   </ListItem>
                   <ListItem button component="a" href="#simple-list">
