@@ -7,7 +7,6 @@ import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 
-import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
 import AppsIcon from 'material-ui-icons/Apps';
@@ -16,7 +15,7 @@ import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
 import Transition from '../transition';
 
 
-class HowItWorksPeople extends Component {
+class HowItWorksCompany extends Component {
 
   constructor(props) {
     super(props);
@@ -58,7 +57,7 @@ class HowItWorksPeople extends Component {
                   <CloseIcon />
                 </IconButton>
                 <Typography variant="title" color="secondary">
-                  Para freelancers
+                  Para empresas
                 </Typography>
               </Toolbar>
               <div classeName={classes.spacedTop}>
@@ -76,8 +75,8 @@ class HowItWorksPeople extends Component {
                         <AppsIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary="Se inscreva no site e saiba quando novas tarefas surgirem"
-                                  secondary="Clientes enviam propostas para diferentes demandas do projeto e procuram freelancers com diferentes conhecimentos"/>
+                    <ListItemText primary="A empresa precisa de uma demanda resolvida para o seu projeto"
+                                  secondary="Avaliamos sua demanda e a realidade da empresa para que seu projeto tenha uma estrutura mínima de desenvolvimento para as diferentes competências"/>
                   </ListItem>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
@@ -85,8 +84,8 @@ class HowItWorksPeople extends Component {
                         <WorkIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary="Você é atribuído a tarefa e recebe as instruções"
-                                  secondary="É dado o acesso ao repositório do projeto com o que precisa para começar e pode discutir sobre as soluções" />
+                    <ListItemText primary="Empresas podem nascer, idéias podem entrar em prática"
+                                  secondary="Oferecemos serviços para que sua idéia saia do papel de forma colaborativa entre as diferentes competências como design, conteúdo e desenvolvimento, e você paga apenas por cada trabalho concluído de forma iterativa. Cada demanda é integrada e pronta para ser usada pelos clientes" />
                   </ListItem>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
@@ -94,8 +93,8 @@ class HowItWorksPeople extends Component {
                         <AccountBalanceWalletIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary=" A sua mudança é avaliada, o projeto é integrado e você recebe o pagamento"
-                                  secondary=" Sua mudança é enviada e avaliada em um ambiente de testes e mudanças podem ser discutidas e revisadas com os envolvidos no projeto. Assim que a mudança é integrada você recebe o pagamento"/>
+                    <ListItemText primary="Sua tarefa é enviada para os freelancers"
+                                  secondary="A sua demanda é traduzida e dividida entre as diferentes competência para então ser atribuída aos freelancers que irão realizar a entrega de acordo com prazo e valores que podem ser definidos usando diferentes processos adaptados à realidade do seu projeto e tamanho da empresa"/>
                   </ListItem>
                 </List>
               </div>
@@ -106,8 +105,8 @@ class HowItWorksPeople extends Component {
   }
 }
 
-HowItWorksPeople.propTypes = {
+HowItWorksCompany.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default HowItWorksPeople;
+export default HowItWorksCompany;

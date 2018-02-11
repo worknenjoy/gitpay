@@ -24,6 +24,11 @@ import { red, cyan, teal } from 'material-ui/colors';
 import './mailchimp.css'
 
 import HowItWorksPeople from './how-it-works-people';
+import WhoSubscribes from './who-subscribes';
+import Workflow from './workflow';
+import HowItWorksCompany from './how-it-works-company';
+import WhichCompanies from './which-companies';
+import Consulting from './consulting';
 
 const logo = require('../../images/gitpay-logo.png');
 const logoCompleteGray = require('../../images/logo-complete-gray.png');
@@ -82,8 +87,7 @@ const styles = theme => ({
   },
   mainlist: {
     textAlign: 'left',
-    marginLeft: '20%',
-    width: '100%'
+    marginLeft: '20%'
   },
   seclist: {
     textAlign: 'left',
@@ -152,10 +156,6 @@ const formProps = {
       color: red["500"]
     }
   }
-}
-
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
 }
 
 class Welcome extends Component {
@@ -267,7 +267,7 @@ class Welcome extends Component {
                     </ListItemIcon>
                     <ListItemText
                       primary="Pague pelos trabalhos concluídos com processos inteligentes e automatizados"
-                      secondary="Envolva diferentes tipos de desenvolvendores, com experiências variadas que irão ajudar no desenvolvimento do projeto usando as ferramentas que eles conhecem e processos já consolidados"/>
+                      secondary="Envolva diferentes tipos de freelancers, com experiências variadas que irão ajudar no desenvolvimento do projeto usando as ferramentas que eles conhecem e processos já consolidados"/>
                   </ListItem>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
@@ -313,7 +313,7 @@ class Welcome extends Component {
                       <BugReportIcon />
                     </ListItemIcon>
                     <ListItemText primary="A sua demanda é enviada para a comunidade"
-                                  secondary="Diferentes grupos de desenvolvimento (como o Truppie Devs) se interessam por esta demanda por um valor fixo ou sugerido pelos interessados"/>
+                                  secondary="Diferentes grupos de freelancers se interessam por esta demanda por um valor fixo ou sugerido pelos interessados"/>
                   </ListItem>
                   <Divider />
                   <ListItem className={classes.listIconTop}>
@@ -345,6 +345,18 @@ class Welcome extends Component {
                 </Typography>
                 <List component="nav">
                   <HowItWorksPeople classes={classes} />
+                  <WhoSubscribes classes={classes} />
+                  <Workflow classes={classes} />
+                </List>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Typography type="subheading">
+                  <strong>Para empresas</strong>
+                </Typography>
+                <List component="nav">
+                  <HowItWorksCompany classes={classes} />
+                  <WhichCompanies classes={classes} />
+                  <Consulting classes={classes} />
                 </List>
               </Grid>
               <Grid item xs={12} sm={6}>

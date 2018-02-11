@@ -7,7 +7,6 @@ import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 
-import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
 import AppsIcon from 'material-ui-icons/Apps';
@@ -16,7 +15,7 @@ import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
 import Transition from '../transition';
 
 
-class HowItWorksPeople extends Component {
+class WhichCompanies extends Component {
 
   constructor(props) {
     super(props);
@@ -45,7 +44,7 @@ class HowItWorksPeople extends Component {
 
     return (
       <ListItem button onClick={this.handleClickOpen} component="a">
-        <ListItemText primary="Como funciona"/>
+        <ListItemText primary="Para quais empresas?"/>
         <Dialog
           fullScreen
           open={this.state.open}
@@ -58,13 +57,13 @@ class HowItWorksPeople extends Component {
                   <CloseIcon />
                 </IconButton>
                 <Typography variant="title" color="secondary">
-                  Para freelancers
+                  Para empresas
                 </Typography>
               </Toolbar>
               <div classeName={classes.spacedTop}>
                 <div className={classes.divider}>
                   <Typography type="headline" gutterBottom>
-                    Como funciona
+                    Para quais empresas?
                   </Typography>
                 </div>
               </div>
@@ -76,8 +75,8 @@ class HowItWorksPeople extends Component {
                         <AppsIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary="Se inscreva no site e saiba quando novas tarefas surgirem"
-                                  secondary="Clientes enviam propostas para diferentes demandas do projeto e procuram freelancers com diferentes conhecimentos"/>
+                    <ListItemText primary="Para qualquer tipo de empresa"
+                                  secondary="O trabalho distribuído pode ajudar a sua empresa a crescer e ter suas idéias desenvolvidas usando processos ágeis de desenvolvimento"/>
                   </ListItem>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
@@ -85,8 +84,8 @@ class HowItWorksPeople extends Component {
                         <WorkIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary="Você é atribuído a tarefa e recebe as instruções"
-                                  secondary="É dado o acesso ao repositório do projeto com o que precisa para começar e pode discutir sobre as soluções" />
+                    <ListItemText primary="Uma comunidade inteira disponível"
+                                  secondary="Empresas usam o Open Source para criar ferramentas compartilhadas e tecnologias que ajudam outras empresas" />
                   </ListItem>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>
@@ -94,8 +93,8 @@ class HowItWorksPeople extends Component {
                         <AccountBalanceWalletIcon />
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText primary=" A sua mudança é avaliada, o projeto é integrado e você recebe o pagamento"
-                                  secondary=" Sua mudança é enviada e avaliada em um ambiente de testes e mudanças podem ser discutidas e revisadas com os envolvidos no projeto. Assim que a mudança é integrada você recebe o pagamento"/>
+                    <ListItemText primary="Avaliamos o seu negócio"
+                                  secondary="Levantamos as demandas para preparar seu projeto para trabalhar com o desenvolvimento de forma independente"/>
                   </ListItem>
                 </List>
               </div>
@@ -106,8 +105,8 @@ class HowItWorksPeople extends Component {
   }
 }
 
-HowItWorksPeople.propTypes = {
+WhichCompanies.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default HowItWorksPeople;
+export default WhichCompanies;
