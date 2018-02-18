@@ -28,6 +28,7 @@
     "jquery": "^3.2.1",
     "node-sass": "^4.5.2",
     "passport": "^0.3.2",
+    "passport-bitbucket": "^2.0.0",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",
     "passport-google-oauth20": "^1.0.0",

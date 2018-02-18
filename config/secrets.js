@@ -49,9 +49,9 @@ const github = {
 }
 
 const oauthCallbacks = {
-  googleCallbackUrl: 'http://localhost:5000/callback/google',
-  githubCallbackUrl: 'http://localhost:5000/callback/github',
-  facebookCallbackUrl: 'http://localhost:5000/callback/facebook'
+  googleCallbackUrl: 'http://localhost:3000/callback/google',
+  githubCallbackUrl: 'http://localhost:3000/callback/github',
+  facebookCallbackUrl: 'http://localhost:3000/callback/facebook'
 }
 
 module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, oauthCallbacks }

@@ -165,7 +165,7 @@ class Welcome extends Component {
     super(props);
 
     this.client = axios.create({
-      baseURL: 'http://localhost:4000/api/v1/',
+      baseURL: 'http://localhost:3000/api/gitpay/v1/',
       timeout: 3000,
       headers: {'Accept': 'application/json'},
     });
@@ -177,7 +177,7 @@ class Welcome extends Component {
   }
 
   bitbucketLogin() {
-    let key = 'Cw5S5kvJnYNCtbS77nK7GE2r3qQyyKuu';
+    let key = 'Fy2S66FyvXwnEWF3Pj';
     window.location =
       `https://bitbucket.org/site/oauth2/authorize?client_id=${key}&response_type=token`;
   }
@@ -187,9 +187,11 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
+    console.log(params);
     let params = window.location.hash.split('&');
     if (params.length > 0 && params[0].startsWith('#access_token=')) {
       let key = decodeURIComponent(params[0].replace('#access_token=', ''));
+      console.info(key);
       this.authenticate(key);
     }
   }
@@ -200,8 +202,9 @@ class Welcome extends Component {
       access_token: key
     })
       .then(response => {
+        console.log(response);
         this.client = axios.create({
-          baseURL: 'http://localhost:3000',
+          baseURL: 'http://localhost:3000/api/gitpay/v1/',
           timeout: 3000,
           headers: {'x-auth-token': response.headers['x-auth-token']}
         });
@@ -252,13 +255,13 @@ class Welcome extends Component {
             <Typography type="subheading" gutterBottom noWrap>
               Ou conecte com algumas dessas contas
             </Typography>
-            <Button raised size="small"  className={classes.altButton}>
+            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
               <img width="16" src={logoGithub} className={classes.icon} /> Github
             </Button>
-            <Button raised size="small" color="accent" className={classes.altButton}>
+            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
               <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
             </Button>
-            <Button onClick={this.bitbucketLogin} raised size="small" color="accent" className={classes.altButton}>
+            <Button onClick={this.bitbucketLogin} variant="raised" size="small" color="secondary" className={classes.altButton}>
               <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
             </Button>
           </div>

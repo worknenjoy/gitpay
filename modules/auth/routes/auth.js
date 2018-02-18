@@ -28,6 +28,12 @@ router.get('/callback/github', passport.authenticate('github', {
     failureRedirect: '/signin'
 }));
 
+router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'], accessType: 'offline' }));
+router.get('/callback/bitbucket', passport.authenticate('bitbucket', {
+  successRedirect: '/',
+  failureRedirect: '/signin'
+}));
+
 router.post('/authorize/local', (req, res, next) => {
 
     passport.authenticate('local', (err, user, info) => {

@@ -3,6 +3,7 @@ const { google, facebook, github, oauthCallbacks } = require('./secrets');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy;
+const bitbucketStrategy = require('passport-bitbucket').Strategy;
 const facebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const requestPromise = require('request-promise');
@@ -168,7 +169,7 @@ passport.use(
 
                         if(user){
 
-                            userUpdat(data)
+                            userUpdate(data)
                                 .then((user) => {
                                     return done(null, user);
                                 }).catch((error) => {
@@ -199,6 +200,27 @@ passport.use(
         })
 
 );
+
+passport.use(
+  new bitbucketStrategy({
+    consumerKey: 'Fy2S66FyvXwnEWF3Pj',
+    consumerSecret: 'Cw5S5kvJnYNCtbS77nK7GE2r3qQyyKuu',
+    callbackURL: oauthCallbacks.facebookCallbackUrl,
+    profileWithEmail: true
+  },
+  function (accessToken, refreshToken, profile, done) {
+    console.log(accessToken);
+    console.log(refreshToken);
+    console.log(profile);
+    /*User.upsertBitbuketUser(accessToken, refreshToken, profile, function(err, user) {
+      return done(err, user);
+    });*/
+    process.nextTick(() => {
+      return done(null);
+    })
+}));
+
+
 
 passport.use(
     new LocalStrategy({
