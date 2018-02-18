@@ -60,7 +60,7 @@ class Consulting extends Component {
                   Para empresas
                 </Typography>
               </Toolbar>
-              <div classeName={classes.spacedTop}>
+              <div className={classes.spacedTop}>
                 <div className={classes.divider}>
                   <Typography type="headline" gutterBottom>
                     Consultoria

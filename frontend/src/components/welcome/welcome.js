@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
@@ -162,6 +163,57 @@ class Welcome extends Component {
 
   constructor(props) {
     super(props);
+
+    this.client = axios.create({
+      baseURL: 'http://localhost:4000/api/v1/',
+      timeout: 3000,
+      headers: {'Accept': 'application/json'},
+    });
+
+    this.state = {key: '', isAuthenticated: false, user: null, token: ''};
+    this.bitbucketLogin = this.bitbucketLogin.bind(this);
+    this.logout = this.logout.bind(this);
+
+  }
+
+  bitbucketLogin() {
+    let key = 'Cw5S5kvJnYNCtbS77nK7GE2r3qQyyKuu';
+    window.location =
+      `https://bitbucket.org/site/oauth2/authorize?client_id=${key}&response_type=token`;
+  }
+
+  logout() {
+    this.setState({isAuthenticated: false, token: '', user: null})
+  }
+
+  componentDidMount() {
+    let params = window.location.hash.split('&');
+    if (params.length > 0 && params[0].startsWith('#access_token=')) {
+      let key = decodeURIComponent(params[0].replace('#access_token=', ''));
+      this.authenticate(key);
+    }
+  }
+
+  authenticate(key) {
+    let that = this;
+    this.client.post('/auth/bitbucket', {
+      access_token: key
+    })
+      .then(response => {
+        this.client = axios.create({
+          baseURL: 'http://localhost:3000',
+          timeout: 3000,
+          headers: {'x-auth-token': response.headers['x-auth-token']}
+        });
+        that.setState({
+          isAuthenticated: true, token: response.headers['x-auth-token'],
+          user: response.data, key: key
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        that.setState({isAuthenticated: false, token: '', user: null, key: key});
+      });
   }
 
   render() {
@@ -194,6 +246,22 @@ class Welcome extends Component {
               </div>
             </div>
           </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <div className={classes.mainBlock}>
+            <Typography type="subheading" gutterBottom noWrap>
+              Ou conecte com algumas dessas contas
+            </Typography>
+            <Button raised size="small"  className={classes.altButton}>
+              <img width="16" src={logoGithub} className={classes.icon} /> Github
+            </Button>
+            <Button raised size="small" color="accent" className={classes.altButton}>
+              <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
+            </Button>
+            <Button onClick={this.bitbucketLogin} raised size="small" color="accent" className={classes.altButton}>
+              <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
+            </Button>
+          </div>
         </Grid>
         <div className={classes.secBlock}>
           <Grid container spacing={24}>
