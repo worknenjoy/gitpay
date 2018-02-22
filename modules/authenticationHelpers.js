@@ -7,7 +7,7 @@
 function isAuthOrRedirect(req, res, next) {
     if (req.isAuthenticated()) return next()
 
-    res.redirect('/signin');
+    res.redirect('/');
 }
 
 function isNotAuthOrRedirect(req, res, next) {

@@ -26,6 +26,7 @@
     "init": "^0.1.2",
     "intl": "^1.2.5",
     "jquery": "^3.2.1",
+    "node-okbitbucket": "^1.0.10",
     "node-sass": "^4.5.2",
     "passport": "^0.3.2",
     "passport-bitbucket": "^2.0.0",

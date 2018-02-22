@@ -5,12 +5,12 @@
 .subscribe-form input {
   outline: 0;
   background: #f2f2f2;
-  width: 40%;
+  width: 50%;
   border: 0;
   margin: 0 0 15px;
   padding: 15px 5px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .subscribe-form button {
@@ -18,11 +18,11 @@
   text-transform: uppercase;
   outline: 0;
   background: #00b58e;
-  width: 25%;
+  width: 45%;
   border: 0;
   padding: 15px;
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 12px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;

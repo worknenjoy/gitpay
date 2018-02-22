@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import Slide from 'material-ui/transitions/Slide';
-import Button from 'material-ui/Button'
+import Button from 'material-ui/Button';
 import Avatar from 'material-ui/Avatar';
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
 import WorkIcon from 'material-ui-icons/Work';
@@ -40,6 +40,10 @@ const logoBitbucket = require('../../images/bitbucket-logo.png');
 const octodex = require('../../images/octodex.png');
 const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat.png');
 const deal = require('../../images/deal.png');
+
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-114655639-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const styles = theme => ({
   root: {
@@ -163,60 +167,6 @@ class Welcome extends Component {
 
   constructor(props) {
     super(props);
-
-    this.client = axios.create({
-      baseURL: 'http://localhost:3000/api/gitpay/v1/',
-      timeout: 3000,
-      headers: {'Accept': 'application/json'},
-    });
-
-    this.state = {key: '', isAuthenticated: false, user: null, token: ''};
-    this.bitbucketLogin = this.bitbucketLogin.bind(this);
-    this.logout = this.logout.bind(this);
-
-  }
-
-  bitbucketLogin() {
-    let key = 'Fy2S66FyvXwnEWF3Pj';
-    window.location =
-      `https://bitbucket.org/site/oauth2/authorize?client_id=${key}&response_type=token`;
-  }
-
-  logout() {
-    this.setState({isAuthenticated: false, token: '', user: null})
-  }
-
-  componentDidMount() {
-    console.log(params);
-    let params = window.location.hash.split('&');
-    if (params.length > 0 && params[0].startsWith('#access_token=')) {
-      let key = decodeURIComponent(params[0].replace('#access_token=', ''));
-      console.info(key);
-      this.authenticate(key);
-    }
-  }
-
-  authenticate(key) {
-    let that = this;
-    this.client.post('/auth/bitbucket', {
-      access_token: key
-    })
-      .then(response => {
-        console.log(response);
-        this.client = axios.create({
-          baseURL: 'http://localhost:3000/api/gitpay/v1/',
-          timeout: 3000,
-          headers: {'x-auth-token': response.headers['x-auth-token']}
-        });
-        that.setState({
-          isAuthenticated: true, token: response.headers['x-auth-token'],
-          user: response.data, key: key
-        });
-      })
-      .catch(error => {
-        console.log(error);
-        that.setState({isAuthenticated: false, token: '', user: null, key: key});
-      });
   }
 
   render() {
@@ -249,22 +199,6 @@ class Welcome extends Component {
               </div>
             </div>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.mainBlock}>
-            <Typography type="subheading" gutterBottom noWrap>
-              Ou conecte com algumas dessas contas
-            </Typography>
-            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
-              <img width="16" src={logoGithub} className={classes.icon} /> Github
-            </Button>
-            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
-              <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
-            </Button>
-            <Button onClick={this.bitbucketLogin} variant="raised" size="small" color="secondary" className={classes.altButton}>
-              <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
-            </Button>
-          </div>
         </Grid>
         <div className={classes.secBlock}>
           <Grid container spacing={24}>
@@ -430,7 +364,13 @@ class Welcome extends Component {
                   <Consulting classes={classes} />
                 </List>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={2}>
+                <Typography type="subheading">
+                  <strong>Parceiros</strong>
+                </Typography>
+                <Button label="Jooble" href="https://br.jooble.org/vagas-de-emprego-desenvolvedor">Jooble</Button>
+              </Grid>
+              <Grid item xs={12} sm={4}>
                 <Typography type="subheading">
                   Tá na dúvida aí? Não se preocupe, deixe seu e-mail e fique sabendo de novos desafios!
                 </Typography>
@@ -446,12 +386,10 @@ class Welcome extends Component {
             </Grid>
             <Divider className={classes.spacedTop}/>
             <Grid container spacing={24}>
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12} sm={2}>
                 <div className={classes.logoSimple}>
                   <img className={classes.img} src={logoCompleteGray} width="100"/>
                 </div>
-              </Grid>
-              <Grid item xs={12} sm={9}>
               </Grid>
             </Grid>
           </div>

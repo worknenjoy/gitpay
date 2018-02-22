@@ -6,8 +6,6 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
-
-import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
 import AppsIcon from 'material-ui-icons/Apps';

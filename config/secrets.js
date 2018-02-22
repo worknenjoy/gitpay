@@ -48,10 +48,16 @@ const github = {
   secret: process.env.GITHUB_SECRET
 }
 
+const bitbucket = {
+  id: process.env.BITBUCKET_ID,
+  secret: process.env.BITBUCKET_SECRET
+}
+
 const oauthCallbacks = {
   googleCallbackUrl: 'http://localhost:3000/callback/google',
   githubCallbackUrl: 'http://localhost:3000/callback/github',
-  facebookCallbackUrl: 'http://localhost:3000/callback/facebook'
+  facebookCallbackUrl: 'http://localhost:3000/callback/facebook',
+  facebookCallbackUrl: 'http://localhost:3000/callback/bitbucket'
 }
 
-module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, oauthCallbacks }
+module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, bitbucket, oauthCallbacks }
