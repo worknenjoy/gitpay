@@ -3,16 +3,16 @@ const { google, facebook, github, oauthCallbacks, bitbucket } = require('./secre
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy;
-const bitbucketStrategy = require('passport-bitbucket').Strategy;
+const bitbucketStrategy = require('passport-bitbucket-oauth20').Strategy;
 const facebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const requestPromise = require('request-promise');
 
 const userExist = require('../modules/users').userExists;
 const userBuild = require('../modules/users').userBuilds;
-const userUpdat = require('../modules/users').userUpdate;
+const userUpdate = require('../modules/users').userUpdate;
+const userFindOrCreate = require('../modules/users').userFindOrCreate;
 const Promise = require('bluebird');
-var BitBucket = require('node-okbitbucket');
 
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -110,7 +110,7 @@ passport.use(
 
                         if(user){
 
-                            userUpdat(data)
+                            userUpdate(data)
                                 .then((user) => {
                                     return done(null, user);
                                 }).catch((error) => {
@@ -203,10 +203,9 @@ passport.use(
 
 passport.use(
   new bitbucketStrategy({
-    consumerKey: bitbucket.id,
-    consumerSecret: bitbucket.secret,
-    callbackURL: oauthCallbacks.facebookCallbackUrl,
-    profileWithEmail: true
+    clientID: bitbucket.id,
+    clientSecret: bitbucket.secret,
+    callbackURL: oauthCallbacks.bitbucketCallbackUrl
   },
   function (accessToken, accessTokenSecret, profile, done) {
     process.nextTick(() => {
@@ -220,16 +219,18 @@ passport.use(
         social_id: profile.account_id,
         profile: profile,
         attribute: attributes,
-        email: 'none@gitpay.me'
+        email: profile.emails[0].value
       }
-
-
 
       userExist(data)
         .then((user) => {
+
           if(user){
+
             userUpdate(data)
               .then((user) => {
+                console.log('user updated');
+                console.log(user);
                 return done(null, user);
               }).catch((error) => {
               console.log("Error in passport.js configuration file");
@@ -240,6 +241,8 @@ passport.use(
           }else{
             userBuild(data)
               .then((user) => {
+                console.log('user created');
+                console.log(user);
                 return done(null, user);
               }).catch((error) => {
               console.log("Error in passport.js configuration file");
@@ -269,6 +272,7 @@ passport.use(
                 const userAttributes = {
                     email: email
                 }
+
 
                 userExist(userAttributes)
                     .then((user) => {

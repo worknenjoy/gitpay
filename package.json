@@ -15,6 +15,7 @@
   "private": true,
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "bitbucket-v2": "^0.4.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
@@ -30,6 +31,8 @@
     "node-sass": "^4.5.2",
     "passport": "^0.3.2",
     "passport-bitbucket": "^2.0.0",
+    "passport-bitbucket-oauth2": "^0.1.2",
+    "passport-bitbucket-oauth20": "^1.1.0",
     "passport-facebook": "^2.1.1",
     "passport-github2": "^0.1.10",
     "passport-google-oauth20": "^1.0.0",
