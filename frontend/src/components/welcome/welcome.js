@@ -200,6 +200,22 @@ class Welcome extends Component {
             </div>
           </Grid>
         </Grid>
+        <Grid item xs={12}>
+          <div className={classes.mainBlock}>
+            <Typography type="subheading" gutterBottom noWrap>
+              Ou conecte com algumas dessas contas
+            </Typography>
+            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
+              <img width="16" src={logoGithub} className={classes.icon} /> Github
+            </Button>
+            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
+              <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
+            </Button>
+            <Button href="/authorize/bitbucket" variant="raised" size="small" color="secondary" className={classes.altButton}>
+              <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
+            </Button>
+          </div>
+        </Grid>
         <div className={classes.secBlock}>
           <Grid container spacing={24}>
             <Grid item xs={12} sm={6}>
