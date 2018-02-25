@@ -6,6 +6,7 @@ import HomeIcon from 'material-ui-icons/Home';
 import Badge from 'material-ui/Badge';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
+import api from '../../consts';
 
 const logo = require('../../images/gitpay-logo.png');
 
@@ -37,23 +38,49 @@ const styles = {
   }
 };
 
-const TopBar = () => {
-  return (
-    <div style={styles.intro}>
-      <div style={styles.containerBar}>
-        <Button href="/">
-          <HomeIcon color="primary" />
-        </Button>
-        <img style={styles.img} src={logo} width="140"/>
-        <div style={styles.notifications}>
-          <Badge badgeContent={4} color="secondary">
-            <Notifications color="primary" />
-          </Badge>
-          <Avatar style={styles.avatar}>AM</Avatar>
+class TopBar extends Component  {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      logged: false
+    };
+  }
+
+  componentDidMount() {
+    fetch(api.API_URL + '/authenticated').then(res => {
+      return res.json();
+    }).then(body => {
+      console.log(body);
+      if(body.authenticated) {
+        this.setState({
+          logged: true
+        })
+      }
+    }).catch(e => {
+      console.log('error');
+      console.log(e);
+    });
+  }
+
+  render() {
+    return (
+      <div style={styles.intro}>
+        <div style={styles.containerBar}>
+          <Button href="/">
+            <HomeIcon color="primary"/>
+          </Button>
+          <img style={styles.img} src={logo} width="140"/>
+          <div style={styles.notifications}>
+            <Badge badgeContent={4} color="secondary">
+              <Notifications color="primary"/>
+            </Badge>
+            <Avatar style={styles.avatar}>AM</Avatar>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 };
 
 export default withStyles(styles)(TopBar);

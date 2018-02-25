@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios'
+import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
@@ -23,6 +22,8 @@ import SubscribeFrom from 'react-mailchimp-subscribe'
 import { red, cyan, teal } from 'material-ui/colors';
 
 import './mailchimp.css';
+
+import api from '../../consts';
 
 import TopBar from '../topbar/topbar';
 
@@ -183,10 +184,10 @@ class Welcome extends Component {
             <Typography type="subheading" gutterBottom noWrap>
               Ou conecte com algumas dessas contas
             </Typography>
-            <Button href="/authorize/github" variant="raised" size="small" color="secondary" className={classes.altButton}>
+            <Button href={`${api.API_URL}/authorize/github`} variant="raised" size="small" color="secondary" className={classes.altButton}>
               <img width="16" src={logoGithub} className={classes.icon} /> Github
             </Button>
-            <Button href="/authorize/bitbucket" variant="raised" size="small" color="secondary" className={classes.altButton}>
+            <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="small" color="secondary" className={classes.altButton}>
               <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
             </Button>
           </div>
