@@ -22,7 +22,9 @@ import SubscribeFrom from 'react-mailchimp-subscribe'
 
 import { red, cyan, teal } from 'material-ui/colors';
 
-import './mailchimp.css'
+import './mailchimp.css';
+
+import TopBar from '../topbar/topbar';
 
 import HowItWorksPeople from './how-it-works-people';
 import WhoSubscribes from './who-subscribes';
@@ -31,7 +33,6 @@ import HowItWorksCompany from './how-it-works-company';
 import WhichCompanies from './which-companies';
 import Consulting from './consulting';
 
-const logo = require('../../images/gitpay-logo.png');
 const logoCompleteGray = require('../../images/logo-complete-gray.png');
 const logoSymbol = require('../../images/logo-symbol.png');
 const logoGitlab = require('../../images/gitlab-logo.png');
@@ -41,18 +42,10 @@ const octodex = require('../../images/octodex.png');
 const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat.png');
 const deal = require('../../images/deal.png');
 
-import ReactGA from 'react-ga';
-ReactGA.initialize('UA-114655639-1');
-ReactGA.pageview(window.location.pathname + window.location.search);
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 0,
-  },
-  img: {
-    marginTop: -18,
-    marginRight: 10
   },
   icon: {
     marginTop: -4,
@@ -114,14 +107,6 @@ const styles = theme => ({
     padding: 10,
     color: theme.palette.text.primary
   },
-  intro: {
-    padding: 20,
-    margin: 0,
-    textAlign: 'center',
-    height: 55,
-    backgroundColor: 'black',
-    color: theme.palette.text.secondary,
-  },
   logoSimple: {
     textAlign: 'left',
     overflow: 'hidden',
@@ -130,9 +115,6 @@ const styles = theme => ({
   tagline: {
     fontSize: 45,
     color: 'black'
-  },
-  appBar: {
-    height: '100%'
   }
 });
 
@@ -176,11 +158,7 @@ class Welcome extends Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <div className={classes.intro}>
-              <img className={classes.img} src={logo} width="230"/>
-            </div>
-          </Grid>
+          <TopBar />
           <Grid item xs={12}>
             <div className={classes.mainBlock}>
               <Typography type="display2" className={classes.tagline} gutterBottom>

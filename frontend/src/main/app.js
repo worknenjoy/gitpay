@@ -1,9 +1,12 @@
-import React from 'react'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import { withStyles } from 'material-ui/styles'
-import blue from 'material-ui/colors/blue'
-import green from 'material-ui/colors/green'
-import './app.css'
+import React from 'react';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import blue from 'material-ui/colors/blue';
+import green from 'material-ui/colors/green';
+import './app.css';
+
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-114655639-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 import Routes from './routes'
 
@@ -24,4 +27,4 @@ function App() {
 
 //export default App
 
-export default withStyles(theme)(App);
+export default App;

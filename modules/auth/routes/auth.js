@@ -24,13 +24,13 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
 
 router.get('/authorize/github', passport.authenticate('github', { scope: ['email'], accessType: 'offline' }));
 router.get('/callback/github', passport.authenticate('github', {
-    successRedirect: '/',
+    successRedirect: '/profile',
     failureRedirect: '/signin'
 }));
 
 router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'], accessType: 'offline' }));
 router.get('/callback/bitbucket', passport.authenticate('bitbucket', {
-  successRedirect: '/',
+  successRedirect: '/profile',
   failureRedirect: '/signin'
 }));
 
