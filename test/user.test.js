@@ -85,7 +85,7 @@ describe('login User social networks', () => {
         .end((err, res) => {
 
           expect(res.statusCode).to.equal(302);
-          expect(res.headers.location).to.include('https://bitbucket.org/api/1.0/oauth/authenticate/?oauth_token=')
+          expect(res.headers.location).to.include('https://bitbucket.org/site/oauth2/authorize')
           //expect(res.body.authenticated).to.equal(true);
           done();
         })

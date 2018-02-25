@@ -205,11 +205,8 @@ class Welcome extends Component {
             <Typography type="subheading" gutterBottom noWrap>
               Ou conecte com algumas dessas contas
             </Typography>
-            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
+            <Button href="/authorize/github" variant="raised" size="small" color="secondary" className={classes.altButton}>
               <img width="16" src={logoGithub} className={classes.icon} /> Github
-            </Button>
-            <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
-              <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
             </Button>
             <Button href="/authorize/bitbucket" variant="raised" size="small" color="secondary" className={classes.altButton}>
               <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
@@ -427,6 +424,9 @@ class Welcome extends Component {
  </Typography>
  <Button raised size="small" color="accent" className={classes.altButton}>
  <img width="16" src={logoGithub} className={classes.icon} /> Github
+ </Button>
+ <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
+ <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
  </Button>
  <Button raised size="small" color="accent" className={classes.altButton}>
  <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab

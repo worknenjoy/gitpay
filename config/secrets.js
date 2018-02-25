@@ -53,6 +53,11 @@ const bitbucket = {
   secret: process.env.BITBUCKET_SECRET
 }
 
+const mailchimp = {
+  apiKey: process.env.MAILCHIMP_API_KEY,
+  listId: process.env.MAILCHIMP_LIST_ID
+}
+
 const oauthCallbacks = {
   googleCallbackUrl: 'http://localhost:3000/callback/google',
   githubCallbackUrl: 'http://localhost:3000/callback/github',
@@ -60,4 +65,4 @@ const oauthCallbacks = {
   bitbucketCallbackUrl: 'http://localhost:3000/callback/bitbucket'
 }
 
-module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, bitbucket, oauthCallbacks }
+module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, bitbucket, oauthCallbacks, mailchimp }

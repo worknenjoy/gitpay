@@ -1,5 +1,5 @@
 'use strict'
-const { google, facebook, github, oauthCallbacks, bitbucket } = require('./secrets');
+const { google, facebook, github, oauthCallbacks, bitbucket, mailchimp } = require('./secrets');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy;
@@ -13,6 +13,24 @@ const userBuild = require('../modules/users').userBuilds;
 const userUpdate = require('../modules/users').userUpdate;
 const userFindOrCreate = require('../modules/users').userFindOrCreate;
 const Promise = require('bluebird');
+
+const Mailchimp = require('mailchimp-api-v3')
+const mc = new Mailchimp(mailchimp.apiKey);
+
+const mailChimpConnect = (mail) => {
+  mc.post(`/lists/${mailchimp.listId}/members`, {
+    email_address : mail,
+    status : 'subscribed'
+  })
+    .then(function(results) {
+      console.log('mailchimp');
+      console.log(results);
+    })
+    .catch(function (err) {
+      console.log('mailchimp error');
+      console.log(err)
+    });
+}
 
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -122,6 +140,7 @@ passport.use(
                         }else{
                             userBuild(data)
                                 .then((user) => {
+                                    mailChimpConnect(profile.emails[0].value);
                                     return done(null, user);
                                 }).catch((error) => {
                                     console.log("Error in passport.js configuration file");
@@ -231,6 +250,7 @@ passport.use(
               .then((user) => {
                 console.log('user updated');
                 console.log(user);
+
                 return done(null, user);
               }).catch((error) => {
               console.log("Error in passport.js configuration file");
@@ -243,6 +263,7 @@ passport.use(
               .then((user) => {
                 console.log('user created');
                 console.log(user);
+                mailChimpConnect(profile.emails[0].value);
                 return done(null, user);
               }).catch((error) => {
               console.log("Error in passport.js configuration file");
