@@ -43,10 +43,13 @@
     "material-ui": "^1.0.0-beta.34",
     "material-ui-icons": "^1.0.0-alpha.19",
     "material-ui-image": "^2.1.1",
+    "query-string": "^5.1.0",
     "react-ga": "^2.4.1",
     "react-mailchimp-subscribe": "^1.0.2",
+    "react-query-params": "^1.0.7",
     "react-router-dom": "^4.2.2",
     "react-tap-event-plugin": "^2.0.1",
+    "reactjs-localstorage": "0.0.6",
     "typeface-roboto": "0.0.31"
   }
 }

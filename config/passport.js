@@ -11,10 +11,11 @@ const requestPromise = require('request-promise');
 const userExist = require('../modules/users').userExists;
 const userBuild = require('../modules/users').userBuilds;
 const userUpdate = require('../modules/users').userUpdate;
-const userFindOrCreate = require('../modules/users').userFindOrCreate;
 const Promise = require('bluebird');
 
-const Mailchimp = require('mailchimp-api-v3')
+const jwt = require('jsonwebtoken');
+
+const Mailchimp = require('mailchimp-api-v3');
 const mc = new Mailchimp(mailchimp.apiKey);
 
 const mailChimpConnect = (mail) => {
@@ -36,8 +37,13 @@ passport.serializeUser((user, done) => {
     done(null, user);
 });
 
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
+passport.deserializeUser((user, done) => {
+  userExist(user)
+    .then((user) => {
+        console.log('no im not serial');
+        done(null, user);
+    });
+
 });
 
 passport.use(
@@ -248,17 +254,19 @@ passport.use(
 
             userUpdate(data)
               .then((user) => {
-                console.log('user updated');
-                console.log(user);
-
-                return done(null, user);
+                //console.log('user updated');
+                //console.log(user);
+                const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
+                data.token = token;
+                return done(null, data);
+                //return done(null, user);
               }).catch((error) => {
-              console.log("Error in passport.js configuration file");
-              console.log(error);
-              return done(null);
+                console.log("Error in passport.js configuration file");
+                console.log(error);
+                return done(null);
             });
 
-          }else{
+          } else {
             userBuild(data)
               .then((user) => {
                 console.log('user created');

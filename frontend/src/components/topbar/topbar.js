@@ -7,6 +7,8 @@ import Badge from 'material-ui/Badge';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import api from '../../consts';
+import axios from 'axios';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 const logo = require('../../images/gitpay-logo.png');
 
@@ -48,19 +50,19 @@ class TopBar extends Component  {
   }
 
   componentDidMount() {
-    fetch(api.API_URL + '/authenticated').then(res => {
-      return res.json();
-    }).then(body => {
-      console.log(body);
-      if(body.authenticated) {
-        this.setState({
-          logged: true
-        })
+    const token = reactLocalStorage.get('token');
+    axios.get(api.API_URL + '/authenticated', {
+      headers: {
+        authorization: `Bearer ${token}`
       }
-    }).catch(e => {
-      console.log('error');
-      console.log(e);
-    });
+    })
+      .then(function (response) {
+        console.log('logged');
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   render() {

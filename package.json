@@ -8,12 +8,13 @@
   },
   "scripts": {
     "migrate": "node migrate.js up",
-    "start": "node server.js",
+    "start": "nodemon ./server.js",
     "test": "env NODE_ENV=test ./node_modules/.bin/mocha test/*.test.js",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css"
   },
   "private": true,
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",
     "bitbucket-v2": "^0.4.3",
     "bluebird": "^3.5.1",
@@ -27,6 +28,7 @@
     "init": "^0.1.2",
     "intl": "^1.2.5",
     "jquery": "^3.2.1",
+    "jsonwebtoken": "^8.1.1",
     "mailchimp-api-v3": "^1.8.0",
     "node-okbitbucket": "^1.0.10",
     "node-sass": "^4.5.2",
@@ -40,6 +42,9 @@
     "passport-local": "^1.0.0",
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
+    "query-string": "^5.1.0",
+    "react-query-params": "^1.0.7",
+    "reactjs-localstorage": "0.0.6",
     "request-promise": "^4.2.0",
     "rxjs": "^5.1.0",
     "sequelize": "^3.30.4",
