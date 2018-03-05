@@ -12,7 +12,6 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
-import {reactLocalStorage} from 'reactjs-localstorage';
 
 const logo = require('../../images/gitpay-logo.png');
 
@@ -64,23 +63,28 @@ class TopBar extends Component  {
     this.handleSignIn = this.handleSignOut.bind(this);
     this.handleCloseNotification = this.handleCloseNotification.bind(this);
     this.handleCloseLoginNotification = this.handleCloseLoginNotification.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
 
   }
 
   componentDidMount() {
-    const token = reactLocalStorage.get('token');
-    axios.get(api.API_URL + '/authenticated', {
-      headers: {
-        authorization: `Bearer ${token}`
-      }
-    })
-      .then((response) => {
-        this.setState({logged: true, notifyLogin: true});
-        console.log(response);
+    const token = localStorage.getItem('token');
+    console.log(token);
+
+    if (token) {
+      axios.get(api.API_URL + '/authenticated', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          this.setState({logged: true, notifyLogin: true});
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
   }
 
   handleChange(event, checked) {
@@ -107,9 +111,14 @@ class TopBar extends Component  {
 
   }
 
+  handleProfile() {
+    window.location.assign("/#/profile");
+  }
+
   handleSignOut() {
-    reactLocalStorage.set('token', false);
-    this.setState({notify: true, logged: false});
+    localStorage.setItem('token', null);
+    this.setState({logged: false, notify: true});
+    this.context.router.push('/');
   }
 
   render() {
@@ -144,7 +153,7 @@ class TopBar extends Component  {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>
+                  <MenuItem onClick={this.handleProfile}>
                     Sua conta
                   </MenuItem>
                   <MenuItem onClick={this.handleSignOut}>
@@ -209,5 +218,9 @@ class TopBar extends Component  {
     )
   }
 };
+
+TopBar.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
 export default withStyles(styles)(TopBar);

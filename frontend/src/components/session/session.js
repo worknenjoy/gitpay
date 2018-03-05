@@ -5,18 +5,20 @@ export default class Session extends Component {
 
   constructor(props) {
     super(props);
-    const token = props.params.token
-    reactLocalStorage.set('token', token);
   }
 
   componentWillMount() {
-    console.log('session route starts');
-    this.props.router.push("/");
+    //console.log('session route starts');
+    const token = this.props.params.token;
+    localStorage.setItem('token', token);
+    this.props.router.push("/profile");
   }
 
   render() {
     return (
-      <div>hello</div>
+      <div>
+        Session created
+      </div>
     )
   }
 }

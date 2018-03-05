@@ -40,6 +40,8 @@
     "webpack-dev-server": "^2.5.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
+    "history": "^4.7.2",
     "material-ui": "^1.0.0-beta.34",
     "material-ui-icons": "^1.0.0-alpha.19",
     "material-ui-image": "^2.1.1",

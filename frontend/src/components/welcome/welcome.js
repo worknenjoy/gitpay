@@ -152,6 +152,10 @@ class Welcome extends Component {
     super(props);
   }
 
+  componentDidMount() {
+
+  }
+
   render() {
 
     const { classes } = this.props;
