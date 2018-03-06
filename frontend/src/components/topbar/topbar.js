@@ -12,6 +12,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import Auth from '../../modules/auth';
 
 const logo = require('../../images/gitpay-logo.png');
 
@@ -68,7 +69,7 @@ class TopBar extends Component  {
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('token');
+    const token = Auth.getToken();
     console.log(token);
 
     if (token) {
@@ -78,7 +79,7 @@ class TopBar extends Component  {
         }
       })
         .then((response) => {
-          this.setState({logged: true, notifyLogin: true});
+          this.setState({logged: true});
           console.log(response);
         })
         .catch((error) => {
@@ -116,7 +117,7 @@ class TopBar extends Component  {
   }
 
   handleSignOut() {
-    localStorage.setItem('token', null);
+    Auth.deauthenticateUser();
     this.setState({logged: false, notify: true});
     this.context.router.push('/');
   }

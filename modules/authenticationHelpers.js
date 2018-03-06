@@ -32,9 +32,10 @@ function isAuth(req, res, next) {
       }
 
       const userData = decoded;
+      console.log(userData);
       // check if a user exists
       return userExist(userData).then((user) => {
-        return res.send({ 'authenticated': true, user: user.email });
+        return res.send({ 'authenticated': true, user: user });
       }).catch(e => {
         console.log('error to sign user');
         return res.status(401).end();

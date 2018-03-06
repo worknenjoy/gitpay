@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import Auth from '../../modules/auth';
 
 export default class Session extends Component {
 
@@ -10,7 +10,7 @@ export default class Session extends Component {
   componentWillMount() {
     //console.log('session route starts');
     const token = this.props.params.token;
-    localStorage.setItem('token', token);
+    Auth.authenticateUser(token);
     this.props.router.push("/profile");
   }
 

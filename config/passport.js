@@ -241,21 +241,20 @@ passport.use(
 
       const data = {
         provider: profile.provider,
-        social_id: profile.account_id,
-        profile: profile,
-        attribute: attributes,
+        social_id: profile.id,
+        name: profile.displayName,
         email: profile.emails[0].value
       }
 
+      console.log(data);
+
       userExist(data)
         .then((user) => {
-
           if(user){
-
             userUpdate(data)
               .then((user) => {
-                //console.log('user updated');
-                //console.log(user);
+                console.log('user updated');
+                console.log(user);
                 const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
                 data.token = token;
                 return done(null, data);

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "migrate": "node migrate.js up",
+    "reset": "node migrate.js reset-hard",
     "start": "nodemon ./server.js",
     "test": "env NODE_ENV=test ./node_modules/.bin/mocha test/*.test.js",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css"

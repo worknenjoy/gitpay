@@ -8,10 +8,14 @@ import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button';
 import Avatar from 'material-ui/Avatar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import Snackbar from 'material-ui/Snackbar';
+
+
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
 import WorkIcon from 'material-ui-icons/Work';
 import AppsIcon from 'material-ui-icons/Apps';
-
 import AssignmentIcon from 'material-ui-icons/Assignment';
 import GroupWorkIcon from 'material-ui-icons/GroupWork';
 import ArchiveIcon from 'material-ui-icons/Archive';
@@ -150,10 +154,25 @@ class Welcome extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      notify: false
+    };
+
+    this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
 
   componentDidMount() {
+    console.log(this.props);
+  }
 
+  componentWillReceiveProps(props, nextProps) {
+    if(this.props.location.action == 'REPLACE') {
+      this.setState({ notify: true });
+    }
+  }
+
+  handleCloseNotification() {
+    this.setState({ notify: false });
   }
 
   render() {
@@ -162,6 +181,28 @@ class Welcome extends Component {
 
     return (
       <div className={classes.root}>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.notify}
+          autoHideDuration={3000}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Você não está autorizado a entrar nesta página</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleCloseNotification}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
         <Grid container spacing={24}>
           <TopBar />
           <Grid item xs={12}>

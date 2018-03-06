@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
@@ -10,7 +11,6 @@ import { MenuList, MenuItem } from 'material-ui/Menu';
 import InboxIcon from 'material-ui-icons/MoveToInbox';
 import DraftsIcon from 'material-ui-icons/Drafts';
 import SendIcon from 'material-ui-icons/Send';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 

@@ -9,11 +9,11 @@ const models = require('../../loading/loading');
 		        		email: userParameters.email
 		        	}
 		        }).then((data) => {
+                console.log('user update method');
+                console.log(data);
 		            return data;
 		        }).catch((error) => {
 		            console.log(error);
 		            return false;
 		        });
-
-
 });
