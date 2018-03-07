@@ -7,7 +7,8 @@
     "npm": "4.2.0"
   },
   "scripts": {
-    "migrate": "node migrate.js up",
+    "migrateDown": "node migrate.js down",
+    "migrateUp": "node migrate.js up",
     "start": "node server.js",
     "test": "env NODE_ENV=test ./node_modules/.bin/mocha test/*.test.js",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css"
