@@ -3,8 +3,8 @@
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
-const api = require('../server')
-const agent = request.agent(api)
+const api = require('../server');
+const agent = request.agent(api);
 
 
 describe('findAll User', () => {
@@ -55,6 +55,7 @@ describe('login User social networks', () => {
     it('should user authenticated', (done) => {
         agent
             .get('/authenticated')
+            .set('authorization', 'Bearer token-123') // 1) using the authorization header
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {

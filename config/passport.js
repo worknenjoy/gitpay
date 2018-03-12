@@ -40,7 +40,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   userExist(user)
     .then((user) => {
-        console.log('no im not serial');
         done(null, user);
     });
 

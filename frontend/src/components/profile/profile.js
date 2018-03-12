@@ -14,6 +14,10 @@ import SendIcon from 'material-ui-icons/Send';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 
+import api from '../../consts';
+import axios from 'axios';
+import Auth from '../../modules/auth';
+
 import TopBar from '../topbar/topbar';
 
 const styles = theme => ({
@@ -75,10 +79,32 @@ class Profile extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      user: {
+        name: "Loading name..."
+      }
+    }
   }
 
   componentWillMount() {
-    console.log(this.props);
+
+    const token = Auth.getToken();
+
+    if (token) {
+      axios.get(api.API_URL + '/authenticated', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+        .then((response) => {
+          this.setState({user: response.data.user});
+          console.log('profile');
+          console.log(response.data.user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   render() {
@@ -183,7 +209,7 @@ class Profile extends Component {
             </div>
             <div className={classes.row}>
               <Typography>
-                Nome
+                {this.state.user.name}
               </Typography>
             </div>
             <div className={classes.row}>

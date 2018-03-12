@@ -41,6 +41,7 @@
     "passport-github2": "^0.1.10",
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0",
+    "passport-stub": "^1.1.1",
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "query-string": "^5.1.0",

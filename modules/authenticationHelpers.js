@@ -20,12 +20,12 @@ function isNotAuthOrRedirect(req, res, next) {
 }
 
 function isAuth(req, res, next) {
-  if (req.isAuthenticated()) return next()
+  if (req.isAuthenticated()) return res.send({ 'authenticated': true });
 
   const token = req.headers.authorization.split(' ')[1];
+
   if (token) {
     return jwt.verify(token, process.env.SECRET_PHRASE, (err, decoded) => {
-      console.log(err);
       // the 401 code is for unauthorized status
       if (err) {
         return res.status(401).end();
