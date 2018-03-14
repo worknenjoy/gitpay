@@ -8,6 +8,8 @@ const facebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const requestPromise = require('request-promise');
 
+const BitbucketAPI = require('bitbucket-api-v2');
+
 const userExist = require('../modules/users').userExists;
 const userBuild = require('../modules/users').userBuilds;
 const userUpdate = require('../modules/users').userUpdate;
@@ -128,6 +130,19 @@ passport.use(
                     email: profile.emails[0].value
                 }
 
+              requestPromise({
+                uri: 'https://api.bitbucket.org/2.0/repositories/alexanmtz',
+                headers: {
+                  authorization: `Bearer ${accessToken}`
+                }
+              }).then(response => {
+                  console.log('response');
+                  console.log(response);
+              }).catch(e => {
+                console.log('error');
+                console.log(e);
+              })
+
                 userExist(data)
                     .then((user) => {
 
@@ -242,47 +257,60 @@ passport.use(
         provider: profile.provider,
         social_id: profile.id,
         name: profile.displayName,
+        username: profile.username,
+        picture_url: profile._json.links.avatar.href,
+        website: profile._json.website,
+        repos: 0,
         email: profile.emails[0].value
       }
 
-      console.log(data);
-
-      userExist(data)
-        .then((user) => {
-          if(user){
-            userUpdate(data)
-              .then((user) => {
-                console.log('user updated');
-                console.log(user);
-                const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
-                data.token = token;
-                return done(null, data);
-                //return done(null, user);
-              }).catch((error) => {
+      requestPromise({
+        uri: `https://api.bitbucket.org/2.0/repositories/${profile.username}`,
+        headers: {
+          authorization: `Bearer ${accessToken}`
+        }
+      }).then(response => {
+        data.repos = JSON.parse(response).size;
+        userExist(data)
+          .then((user) => {
+            if(user){
+              userUpdate(data)
+                .then((user) => {
+                  console.log('user updated');
+                  console.log(user);
+                  const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
+                  data.token = token;
+                  return done(null, data);
+                  //return done(null, user);
+                }).catch((error) => {
                 console.log("Error in passport.js configuration file");
                 console.log(error);
                 return done(null);
-            });
+              });
+            } else {
+              userBuild(data)
+                .then((user) => {
+                  console.log('user created');
+                  console.log(user);
+                  mailChimpConnect(profile.emails[0].value);
+                  return done(null, user);
+                }).catch((error) => {
+                console.log("Error in passport.js configuration file");
+                console.log(error);
+                return done(null);
+              });
+            }
 
-          } else {
-            userBuild(data)
-              .then((user) => {
-                console.log('user created');
-                console.log(user);
-                mailChimpConnect(profile.emails[0].value);
-                return done(null, user);
-              }).catch((error) => {
-              console.log("Error in passport.js configuration file");
-              console.log(error);
-              return done(null);
-            });
-          }
-
-        }).catch((error) => {
-        console.log("Error in passport.js configuration file - search users");
-        console.log(error);
+          }).catch((error) => {
+          console.log("Error in passport.js configuration file - search users");
+          console.log(error);
+          return done(null);
+        });
+      }).catch(e => {
+        console.log('error');
+        console.log(e);
         return done(null);
-      });
+      })
     })
 }));
 

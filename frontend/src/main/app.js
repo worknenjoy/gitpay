@@ -5,8 +5,11 @@ import green from 'material-ui/colors/green';
 import './app.css';
 
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-114655639-1');
-ReactGA.pageview(window.location.pathname + window.location.search);
+
+if(process.ENV == 'production') {
+  ReactGA.initialize('UA-114655639-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 import Routes from './routes'
 

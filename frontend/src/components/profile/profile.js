@@ -9,6 +9,7 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 import { MenuList, MenuItem } from 'material-ui/Menu';
 import InboxIcon from 'material-ui-icons/MoveToInbox';
+import DeviceHubIcon from 'material-ui-icons/DeviceHub';
 import DraftsIcon from 'material-ui-icons/Drafts';
 import SendIcon from 'material-ui-icons/Send';
 import classNames from 'classnames';
@@ -36,12 +37,26 @@ const styles = theme => ({
     justifyContent: 'center',
     marginTop: 10
   },
+  rowList: {
+    marginTop: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  infoItem: {
+    width: '100%',
+    textAlign: 'center'
+  },
   avatar: {
 
   },
   bigAvatar: {
     width: 140,
     height: 140
+  },
+  smallAvatar: {
+    width: 32,
+    height: 32
   },
   parentCard: {
     marginTop: 40,
@@ -81,7 +96,10 @@ class Profile extends Component {
     super(props);
     this.state = {
       user: {
-        name: "Loading name..."
+        name: "Loading name...",
+        picture_url: "Loading picture",
+        website: "Loading website",
+        repos: "Loading repo info"
       }
     }
   }
@@ -201,16 +219,40 @@ class Profile extends Component {
         <Grid item xs={12} md={4}>
           <div className={classes.bigRow}>
             <div className={classes.row}>
-              <Avatar
-                alt="Adelle Charles"
-                src=""
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              > AM </Avatar>
+              {this.state.user.picture_url ?
+                (<Avatar
+                  alt={this.state.user.username}
+                  src={this.state.user.picture_url}
+                  className={classNames(classes.avatar, classes.smallAvatar)}
+                /> ) : (
+                  <Avatar
+                    alt={this.state.user.username}
+                    src=""
+                    className={classNames(classes.avatar, classes.bigAvatar)}
+                  >AM</Avatar>
+                )}
             </div>
-            <div className={classes.row}>
-              <Typography>
-                {this.state.user.name}
-              </Typography>
+            <div className={classes.rowList}>
+              <div className={classes.infoItem}>
+                <Typography>
+                  {this.state.user.name}
+                </Typography>
+              </div>
+              <div className={classes.infoItem}>
+                <Typography>
+                  {this.state.user.website}
+                </Typography>
+              </div>
+              <div className={classes.infoItem}>
+                <Typography>
+                  <h4>
+                    <DeviceHubIcon /> Repositórios
+                  </h4>
+                  <p>
+                    {this.state.user.repos}
+                  </p>
+                </Typography>
+              </div>
             </div>
             <div className={classes.row}>
               <Paper className={classes.menuContainer}>

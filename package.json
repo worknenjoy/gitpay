@@ -17,6 +17,7 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",
+    "bitbucket-api-v2": "^0.6.0",
     "bitbucket-v2": "^0.4.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.1",
