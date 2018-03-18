@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
@@ -21,9 +22,15 @@ import Auth from '../../modules/auth';
 
 import TopBar from '../topbar/topbar';
 
+const logoGithub = require('../../images/github-logo.png');
+const logoBitbucket = require('../../images/bitbucket-logo.png');
+
 const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  altButton: {
+    marginRight: 10
   },
   paper: {
     padding: 10,
@@ -42,6 +49,11 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column'
+  },
+  rowContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   infoItem: {
     width: '100%',
@@ -99,7 +111,8 @@ class Profile extends Component {
         name: "Loading name...",
         picture_url: "Loading picture",
         website: "Loading website",
-        repos: "Loading repo info"
+        repos: "Loading repo info",
+        provider: "Loading provider"
       }
     }
   }
@@ -116,8 +129,8 @@ class Profile extends Component {
       })
         .then((response) => {
           this.setState({user: response.data.user});
-          console.log('profile');
-          console.log(response.data.user);
+          console.log('state after authorize');
+          console.log(this.state);
         })
         .catch((error) => {
           console.log(error);
@@ -223,7 +236,7 @@ class Profile extends Component {
                 (<Avatar
                   alt={this.state.user.username}
                   src={this.state.user.picture_url}
-                  className={classNames(classes.avatar, classes.smallAvatar)}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
                 /> ) : (
                   <Avatar
                     alt={this.state.user.username}
@@ -233,6 +246,16 @@ class Profile extends Component {
                 )}
             </div>
             <div className={classes.rowList}>
+              <div className={classes.rowContent}>
+                <Button disabled={this.state.user.provider == "github"} href={`${api.API_URL}/authorize/github`} variant="raised" size="small" color="secondary" className={classes.altButton}>
+                  <img width="16" src={logoGithub} className={classes.icon} /> Github
+                </Button>
+                <Button disabled={this.state.user.provider == "bitbucket"} href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="small" color="secondary" className={classes.altButton}>
+                  <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
+                </Button>
+              </div>
+            </div>
+            <div className={classes.rowList}>
               <div className={classes.infoItem}>
                 <Typography>
                   {this.state.user.name}
@@ -240,7 +263,9 @@ class Profile extends Component {
               </div>
               <div className={classes.infoItem}>
                 <Typography>
-                  {this.state.user.website}
+                  <a href={this.state.user.website}>
+                    {this.state.user.website}
+                  </a>
                 </Typography>
               </div>
               <div className={classes.infoItem}>

@@ -9,6 +9,14 @@ class Auth {
     localStorage.setItem('token', token);
   }
 
+  static authNotified() {
+    localStorage.setItem('authNotified', true);
+  }
+
+  static getAuthNotified() {
+    return localStorage.getItem('authNotified');
+  }
+
   /**
    * Check if a user is authenticated - check if a token is saved in Local Storage
    *
@@ -24,6 +32,7 @@ class Auth {
    */
   static deauthenticateUser() {
     localStorage.removeItem('token');
+    localStorage.removeItem('authNotified');
   }
 
   /**

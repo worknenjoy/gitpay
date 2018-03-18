@@ -13,6 +13,7 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Auth from '../../modules/auth';
+import Notification from '../notification/notification';
 
 const logo = require('../../images/gitpay-logo.png');
 
@@ -70,7 +71,6 @@ class TopBar extends Component  {
 
   componentDidMount() {
     const token = Auth.getToken();
-    console.log(token);
 
     if (token) {
       axios.get(api.API_URL + '/authenticated', {
@@ -79,8 +79,8 @@ class TopBar extends Component  {
         }
       })
         .then((response) => {
-          this.setState({logged: true});
-          console.log(response);
+          this.setState({logged: true, notifyLogin: !Auth.getAuthNotified()});
+          Auth.authNotified();
         })
         .catch((error) => {
           console.log(error);
@@ -118,14 +118,16 @@ class TopBar extends Component  {
 
   handleSignOut() {
     Auth.deauthenticateUser();
-    this.setState({logged: false, notify: true});
-    this.context.router.push('/');
+    const newState = {logged: false, notify: true}
+    this.setState(newState);
+    this.context.router.push({pathname: '/', state: {loggedOut: true}});
   }
 
   render() {
     const isLoggedIn = this.state.logged;
     const anchorEl = this.state.anchorEl;
     const open = Boolean(anchorEl);
+
     return (
       <div style={styles.intro}>
         <div style={styles.containerBar}>
@@ -163,56 +165,7 @@ class TopBar extends Component  {
                 </Menu>
               </div>
               }
-              <Snackbar
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                open={this.state.notify}
-                autoHideDuration={3000}
-                SnackbarContentProps={{
-                  'aria-describedby': 'message-id',
-                }}
-                message={<span id="message-id">Você saiu da plataforma</span>}
-                action={[
-                  <Button key="undo" color="secondary" size="small" onClick={this.handleSignIn}>
-                    Entrar Novamente?
-                  </Button>,
-                  <IconButton
-                    key="close"
-                    aria-label="Close"
-                    color="inherit"
-                    onClick={this.handleCloseNotification}
-                  >
-                    <CloseIcon />
-                  </IconButton>,
-                ]}
-              />
-              <Snackbar
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                open={this.state.notifyLogin && isLoggedIn}
-                autoHideDuration={3000}
-                SnackbarContentProps={{
-                  'aria-describedby': 'message-id',
-                }}
-                message={<span id="message-id">Você foi logado com sucesso</span>}
-                action={[
-                  <Button key="undo" color="secondary" size="small" onClick={this.handleSignIn}>
-                    Sair?
-                  </Button>,
-                  <IconButton
-                    key="close"
-                    aria-label="Close"
-                    color="inherit"
-                    onClick={this.handleCloseLoginNotification}
-                  >
-                    <CloseIcon />
-                  </IconButton>,
-                ]}
-              />
+              <Notification message="Você agora está logado" open={this.state.notifyLogin} onClose={this.handleCloseLoginNotification} />
           </div>
         </div>
       </div>

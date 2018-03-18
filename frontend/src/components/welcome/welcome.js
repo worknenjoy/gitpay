@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
@@ -8,10 +8,8 @@ import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button';
 import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui-icons/Close';
-import Snackbar from 'material-ui/Snackbar';
 
+import Notification from '../notification/notification';
 
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
 import WorkIcon from 'material-ui-icons/Work';
@@ -155,14 +153,17 @@ class Welcome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      notify: false
+      notify: false,
+      loggedOut: false
     };
 
     this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props);
+    if(this.props.location && this.props.location.state) {
+      this.setState(this.props.location.state);
+    }
   }
 
   componentWillReceiveProps(props, nextProps) {
@@ -172,7 +173,7 @@ class Welcome extends Component {
   }
 
   handleCloseNotification() {
-    this.setState({ notify: false });
+    this.setState({ notify: false, loggedOut: false });
   }
 
   render() {
@@ -181,28 +182,8 @@ class Welcome extends Component {
 
     return (
       <div className={classes.root}>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={this.state.notify}
-          autoHideDuration={3000}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">Você não está autorizado a entrar nesta página</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleCloseNotification}
-            >
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
+        <Notification message="Você não está autorizado a entrar nesta página" open={this.state.notify} onClose={this.handleCloseNotification} />
+        <Notification message="Você saiu saiu da sua conta com sucesso" open={this.state.loggedOut} onClose={this.handleCloseNotification} />
         <Grid container spacing={24}>
           <TopBar />
           <Grid item xs={12}>

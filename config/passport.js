@@ -276,12 +276,9 @@ passport.use(
             if(user){
               userUpdate(data)
                 .then((user) => {
-                  console.log('user updated');
-                  console.log(user);
                   const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
                   data.token = token;
                   return done(null, data);
-                  //return done(null, user);
                 }).catch((error) => {
                 console.log("Error in passport.js configuration file");
                 console.log(error);
