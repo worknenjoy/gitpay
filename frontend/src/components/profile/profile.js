@@ -14,6 +14,7 @@ import DeviceHubIcon from 'material-ui-icons/DeviceHub';
 import DraftsIcon from 'material-ui-icons/Drafts';
 import SendIcon from 'material-ui-icons/Send';
 import classNames from 'classnames';
+import nameInitials from 'name-initials';
 import { withStyles } from 'material-ui/styles';
 
 import api from '../../consts';
@@ -109,7 +110,7 @@ class Profile extends Component {
     this.state = {
       user: {
         name: "Loading name...",
-        picture_url: "Loading picture",
+        picture_url: null,
         website: "Loading website",
         repos: "Loading repo info",
         provider: "Loading provider"
@@ -242,7 +243,7 @@ class Profile extends Component {
                     alt={this.state.user.username}
                     src=""
                     className={classNames(classes.avatar, classes.bigAvatar)}
-                  >AM</Avatar>
+                  >{nameInitials(this.state.user.name)}</Avatar>
                 )}
             </div>
             <div className={classes.rowList}>

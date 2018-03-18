@@ -14,6 +14,8 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Auth from '../../modules/auth';
 import Notification from '../notification/notification';
+import nameInitials from 'name-initials';
+
 
 const logo = require('../../images/gitpay-logo.png');
 
@@ -56,7 +58,14 @@ class TopBar extends Component  {
       logged: false,
       anchorEl: null,
       notify: false,
-      notifyLogin: false
+      notifyLogin: false,
+      user: {
+        name: "Loading name...",
+        picture_url: null,
+        website: "Loading website",
+        repos: "Loading repo info",
+        provider: "Loading provider"
+      }
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleMenu = this.handleMenu.bind(this);
@@ -79,7 +88,7 @@ class TopBar extends Component  {
         }
       })
         .then((response) => {
-          this.setState({logged: true, notifyLogin: !Auth.getAuthNotified()});
+          this.setState({user: response.data.user, logged: true, notifyLogin: !Auth.getAuthNotified()});
           Auth.authNotified();
         })
         .catch((error) => {
@@ -141,7 +150,20 @@ class TopBar extends Component  {
                 <Badge badgeContent={4} color="secondary">
                   <Notifications color="primary"/>
                 </Badge>
-                <Avatar onClick={this.handleMenu} style={styles.avatar}>AM</Avatar>
+                {this.state.user.picture_url ?
+                  (<Avatar
+                    alt={this.state.user.username}
+                    src={this.state.user.picture_url}
+                    style={styles.avatar}
+                    onClick={this.handleMenu}
+                  /> ) : (
+                    <Avatar
+                      alt={this.state.user.username}
+                      src=""
+                      style={styles.avatar}
+                      onClick={this.handleMenu}
+                    >{nameInitials(this.state.name)}</Avatar>
+                  )}
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
@@ -166,6 +188,7 @@ class TopBar extends Component  {
               </div>
               }
               <Notification message="Você agora está logado" open={this.state.notifyLogin} onClose={this.handleCloseLoginNotification} />
+              <Notification message="Você saiu saiu da sua conta com sucesso" open={this.state.notify} onClose={this.handleCloseNotification} />
           </div>
         </div>
       </div>

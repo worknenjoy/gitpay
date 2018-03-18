@@ -46,6 +46,13 @@ const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat
 const deal = require('../../images/deal.png');
 
 const styles = theme => ({
+  appBarHeader: {
+    color: theme.palette.primary
+  },
+  appBar: {
+    height: '100%',
+    widht: '100%'
+  },
   root: {
     flexGrow: 1,
     marginTop: 0,
@@ -89,6 +96,10 @@ const styles = theme => ({
   mainlist: {
     textAlign: 'left',
     marginLeft: '20%'
+  },
+  infoList: {
+    textAlign: 'left',
+    marginLeft: '10%'
   },
   seclist: {
     textAlign: 'left',
@@ -152,6 +163,7 @@ class Welcome extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       notify: false,
       loggedOut: false
@@ -161,14 +173,20 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
+    console.log('component mount called');
     if(this.props.location && this.props.location.state) {
       this.setState(this.props.location.state);
     }
   }
 
   componentWillReceiveProps(props, nextProps) {
+    console.log('will receive props');
+    console.log(this.props);
     if(this.props.location.action == 'REPLACE') {
       this.setState({ notify: true });
+    }
+    if(this.props.location.action == 'POP') {
+      this.setState({loggedOut: false});
     }
   }
 
