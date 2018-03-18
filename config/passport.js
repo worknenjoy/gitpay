@@ -9,6 +9,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const requestPromise = require('request-promise');
 
 const BitbucketAPI = require('bitbucket-api-v2');
+var githubAPI = require('octonode');
 
 const userExist = require('../modules/users').userExists;
 const userBuild = require('../modules/users').userBuilds;
@@ -109,79 +110,6 @@ passport.use(
 
 passport.use(
 
-    new gitHubStrategy({
-            clientID: github.id,
-            clientSecret: github.secret,
-            callbackURL: oauthCallbacks.githubCallbackUrl
-        },
-        (accessToken, accessTokenSecret, profile, done) => {
-            process.nextTick(() => {
-
-                const attributes = {
-                    access_token: accessToken,
-                    access_token_secret: accessTokenSecret
-                };
-
-                const data = {
-                    provider: 'github',
-                    social_id: profile.id,
-                    profile: profile,
-                    attribute: attributes,
-                    email: profile.emails[0].value
-                }
-
-              requestPromise({
-                uri: 'https://api.bitbucket.org/2.0/repositories/alexanmtz',
-                headers: {
-                  authorization: `Bearer ${accessToken}`
-                }
-              }).then(response => {
-                  console.log('response');
-                  console.log(response);
-              }).catch(e => {
-                console.log('error');
-                console.log(e);
-              })
-
-                userExist(data)
-                    .then((user) => {
-
-                        if(user){
-
-                            userUpdate(data)
-                                .then((user) => {
-                                    return done(null, user);
-                                }).catch((error) => {
-                                    console.log("Error in passport.js configuration file");
-                                    console.log(error);
-                                    return done(null);
-                                });
-
-                        }else{
-                            userBuild(data)
-                                .then((user) => {
-                                    mailChimpConnect(profile.emails[0].value);
-                                    return done(null, user);
-                                }).catch((error) => {
-                                    console.log("Error in passport.js configuration file");
-                                    console.log(error);
-                                    return done(null);
-                                });
-                        }
-
-                    }).catch((error) => {
-                        console.log("Error in passport.js configuration file - search users");
-                        console.log(error);
-                        return done(null);
-                    });
-            });
-
-        })
-
-);
-
-passport.use(
-
     new facebookStrategy({
             clientID: facebook.id,
             clientSecret: facebook.secret,
@@ -239,6 +167,86 @@ passport.use(
         })
 
 );
+
+passport.use(
+
+  new gitHubStrategy({
+      clientID: github.id,
+      clientSecret: github.secret,
+      callbackURL: oauthCallbacks.githubCallbackUrl
+    },
+    (accessToken, accessTokenSecret, profile, done) => {
+      process.nextTick(() => {
+
+        const attributes = {
+          access_token: accessToken,
+          access_token_secret: accessTokenSecret
+        };
+
+        console.log('github profile');
+        console.log(profile);
+
+        const data = {
+          provider: profile.provider,
+          social_id: profile.id,
+          name: profile.displayName,
+          username: profile.username,
+          picture_url: profile.photos[0].value,
+          website: profile._json.blog,
+          repos: 0,
+          email: profile.emails[0].value
+        }
+
+        //const client = githubAPI.client(accessToken);
+
+        requestPromise({
+          uri: `https://api.github.com/users/${profile.username}/repos`,
+          headers: {
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+            authorization: `token ${accessToken}`
+          }
+        }).then(response => {
+          data.repos = JSON.parse(response).length;
+          userExist(data)
+            .then((user) => {
+              if(user){
+                userUpdate(data)
+                  .then((user) => {
+                    const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
+                    data.token = token;
+                    return done(null, data);
+                  }).catch((error) => {
+                  console.log("Error in passport.js configuration file");
+                  console.log(error);
+                  return done(null);
+                });
+              } else {
+                userBuild(data)
+                  .then((user) => {
+                    console.log('user created');
+                    console.log(user);
+                    mailChimpConnect(profile.emails[0].value);
+                    return done(null, user);
+                  }).catch((error) => {
+                  console.log("Error in passport.js configuration file");
+                  console.log(error);
+                  return done(null);
+                });
+              }
+
+            }).catch((error) => {
+            console.log("Error in passport.js configuration file - search users");
+            console.log(error);
+            return done(null);
+          });
+        }).catch(e => {
+          console.log('error');
+          console.log(e);
+          return done(null);
+        });
+      });
+
+}));
 
 passport.use(
   new bitbucketStrategy({
