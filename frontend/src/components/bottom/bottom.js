@@ -75,7 +75,7 @@ class Bottom extends Component {
                 <SubscribeFrom  {...formProps} />
               </div>
               <Typography type="caption">
-                <strong>worknenjoy, Inc.</strong> <br />
+                <a href="http://worknenjoy.com">worknenjoy, Inc.</a> <br />
                 Borgergade, 26 sal 4 lej 3 <br />
                 København, Hovedstaden 1300 DK
               </Typography>

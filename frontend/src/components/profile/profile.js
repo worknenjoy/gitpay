@@ -27,6 +27,10 @@ import Bottom from '../bottom/bottom';
 const logoGithub = require('../../images/github-logo.png');
 const logoBitbucket = require('../../images/bitbucket-logo.png');
 
+const taskIcon = require('../../images/task-icon.png');
+const paymentIcon = require('../../images/payment-icon.png');
+const toolsIcon = require('../../images/tools-icon.png');
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -81,10 +85,18 @@ const styles = theme => ({
   },
   card: {
     maxWidth: 280,
-    marginRight: 10
+    marginRight: 10,
+    textAlign: 'center'
+  },
+  cardActions: {
+    display: 'flex',
+    justifyContent: 'center'
   },
   media: {
-    height: 200,
+    width: 128,
+    height: 128,
+    marginLeft: 64,
+    marginTop: 20
   },
   menuContainer: {
     marginBottom: 40,
@@ -161,7 +173,7 @@ class Profile extends Component {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image="https://picsum.photos/200/300?image=0"
+                  image={taskIcon}
                   title="Contemplative Reptile"
                 />
                 <CardContent>
@@ -172,7 +184,7 @@ class Profile extends Component {
                     Veja as tarefas que estão disponíveis para você e comece!
                   </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions className={classes.cardActions}>
                   <Button size="small" color="primary">
                     Ver tarefas
                   </Button>
@@ -181,7 +193,7 @@ class Profile extends Component {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image="https://picsum.photos/200/300?image=998"
+                  image={paymentIcon}
                   title="Contemplative Reptile"
                 />
                 <CardContent>
@@ -192,7 +204,7 @@ class Profile extends Component {
                     Preencha os dados de pagamento para você receber pelas tarefas integradas
                   </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions className={classes.cardActions}>
                   <Button size="small" color="primary">
                     Configurar pagamento
                   </Button>
@@ -201,7 +213,7 @@ class Profile extends Component {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image="https://picsum.photos/200/300?image=1059"
+                  image={toolsIcon}
                   title="Contemplative Reptile"
                 />
                 <CardContent>
@@ -212,7 +224,7 @@ class Profile extends Component {
                     Configure sua conta para ficar de acordo com suas preferências
                   </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions className={classes.cardActions}>
                   <Button size="small" color="primary">
                     Configurar preferências
                   </Button>
