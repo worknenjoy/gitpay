@@ -17,7 +17,6 @@ exports.create = (req, res) => {
 }
 
 exports.list = (req, res) => {
-
   taskSearch()
     .then((data) => {
         res.send(data);

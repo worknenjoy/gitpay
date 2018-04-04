@@ -1,7 +1,5 @@
 'use strict';
 
-const Task =  require('./task');
-
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize, DataTypes) => {
@@ -17,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         classMethods: {
             associate: (models) => {
-              User.hasMany(Task);
+
             },
             generateHash: (password) => {
                 return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);

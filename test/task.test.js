@@ -10,7 +10,7 @@ const agent = request.agent(api);
 describe('list tasks', () => {
   it('should list tasks', (done) => {
     agent
-      .get('/tasks')
+      .get('/tasks/list')
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
