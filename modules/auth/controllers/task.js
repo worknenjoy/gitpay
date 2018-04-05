@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 const passport = require('passport');
 const models = require('../../../loading/loading');
-const taskBuild = require('../../tasks').taskBuild;
+const taskBuild = require('../../tasks').taskBuilds;
 const taskSearch = require('../../tasks').taskSearch;
 const Promise = require('bluebird');
 
 
-exports.create = (req, res) => {
+exports.createTask = (req, res) => {
   taskBuild(req.body)
     .then((data) => {
       res.send(true);
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
   });
 }
 
-exports.list = (req, res) => {
+exports.listTasks = (req, res) => {
   taskSearch()
     .then((data) => {
         res.send(data);

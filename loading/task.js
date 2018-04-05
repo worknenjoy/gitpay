@@ -9,17 +9,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'OPEN'
     },
-    stack: DataTypes.STRING,
-    payment_method: DataTypes.STRING,
-    dod: DataTypes.STRING,
     deadline: DataTypes.DATE,
     url: DataTypes.STRING,
     value: DataTypes.DECIMAL,
     paid: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    },
-    assign: DataTypes.INTEGER
+    }
   }, {
     classMethods: {
       associate: (models) => {

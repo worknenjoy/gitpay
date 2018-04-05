@@ -29,15 +29,6 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
-      stack: {
-        type: Sequelize.STRING
-      },
-      payment_method: {
-        type: Sequelize.STRING
-      },
-      dod: {
-        type: Sequelize.STRING
-      },
       deadline: {
         type: Sequelize.DATE
       },
@@ -49,9 +40,6 @@ module.exports = {
       },
       paid: {
         type: Sequelize.BOOLEAN
-      },
-      assign: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

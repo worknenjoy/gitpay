@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 
-const loading = require('../../loading/loading')
+const loading = require('../../loading/loading');
 
-const routerAuth = require('./routes/auth')
-const routerTask = require('./routes/tasks')
+const routerAuth = require('./routes/auth');
+const routerTask = require('./routes/tasks');
 
 const models = [
     '../loading/user',
