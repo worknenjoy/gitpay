@@ -3,12 +3,13 @@ import Avatar from 'material-ui/Avatar';
 import MailIcon from 'material-ui-icons/Mail';
 import Notifications from 'material-ui-icons/Notifications';
 import HomeIcon from 'material-ui-icons/Home';
+import PlusIcon from 'material-ui-icons/Queue';
 import Badge from 'material-ui/Badge';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import api from '../../consts';
 import axios from 'axios';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
@@ -16,15 +17,18 @@ import Auth from '../../modules/auth';
 import Notification from '../notification/notification';
 import nameInitials from 'name-initials';
 
+import mainStyles from '../styles/style';
+
+const classes = (theme) => mainStyles(theme);
 
 const logo = require('../../images/gitpay-logo.png');
 
 const styles = {
   logoMain: {
-    marginLeft: 80
+    marginLeft: 180
   },
   logoAlt: {
-    marginLeft: -60
+    marginLeft: 120
   },
   containerBar: {
     display: 'flex',
@@ -35,7 +39,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginRight: 30
+    marginRight: 30,
+    marginLeft: 30
   },
   intro: {
     padding: 20,
@@ -44,6 +49,9 @@ const styles = {
     height: 40,
     width: '100%',
     backgroundColor: 'black'
+  },
+  spaceRight: {
+    marginRight: 10
   },
   avatar: {
     marginLeft: 40
@@ -145,6 +153,9 @@ class TopBar extends Component  {
           </Button>
             <img style={isLoggedIn ? styles.logoMain : styles.logoAlt } src={logo} width="140"/>
             <div style={styles.notifications}>
+              <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="medium" color="primary" className={classes.altButton}>
+                <span style={styles.spaceRight}>Nova Tarefa</span>  <PlusIcon />
+              </Button>
               { isLoggedIn &&
               <div style={styles.notifications}>
                 <Badge badgeContent={4} color="secondary">
