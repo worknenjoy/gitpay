@@ -15,7 +15,7 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        allowNull: false
+        allowNull: true
       },
       provider: {
         type: Sequelize.STRING
@@ -33,7 +33,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       url: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       value: {
         type: Sequelize.DECIMAL

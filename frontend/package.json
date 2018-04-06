@@ -42,6 +42,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "history": "^4.7.2",
+    "is-github-url": "^1.2.2",
     "material-ui": "^1.0.0-beta.34",
     "material-ui-icons": "^1.0.0-alpha.19",
     "material-ui-image": "^2.1.1",
