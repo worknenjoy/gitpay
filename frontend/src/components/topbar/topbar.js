@@ -81,6 +81,7 @@ class TopBar extends Component  {
       notify: false,
       notifyLogin: false,
       user: {
+        id: null,
         name: "Loading name...",
         picture_url: null,
         website: "Loading website",
@@ -175,7 +176,8 @@ class TopBar extends Component  {
     if(this.validURL(url)) {
       axios.post(api.API_URL + '/tasks/create', {
         url: this.state.task.url.value,
-        provider: 'github'
+        provider: 'github',
+        userId: this.state.user.id
       })
         .then((response) => {
           console.log('create task response');

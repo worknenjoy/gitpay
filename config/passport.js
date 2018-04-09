@@ -22,7 +22,7 @@ const Mailchimp = require('mailchimp-api-v3');
 const mc = new Mailchimp(mailchimp.apiKey);
 
 const mailChimpConnect = (mail) => {
-  mc.post(`/lists/${mailchimp.listId}/members`, {
+  mc.put(`/lists/${mailchimp.listId}/members`, {
     email_address : mail,
     status : 'subscribed'
   })

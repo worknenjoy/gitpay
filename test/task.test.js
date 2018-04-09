@@ -62,6 +62,11 @@ describe("tasks", () => {
             expect(res.body).to.exist;
             expect(res.body.url).to.equal(github_url);
             expect(res.body.metadata).to.exist;
+            expect(res.body.metadata.id).to.equal('99');
+            expect(res.body.metadata.user).to.equal('worknenjoy');
+            expect(res.body.metadata.company).to.equal('worknenjoy');
+            expect(res.body.metadata.projectName).to.equal('truppie');
+            expect(res.body.metadata.issue.url).to.equal('https://api.github.com/repos/worknenjoy/truppie/issues/99');
             done();
           })
         }).catch(e => {
