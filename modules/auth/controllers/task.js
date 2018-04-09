@@ -3,6 +3,7 @@ const passport = require('passport');
 const models = require('../../../loading/loading');
 const taskBuild = require('../../tasks').taskBuilds;
 const taskSearch = require('../../tasks').taskSearch;
+const taskFetch = require('../../tasks').taskFetch;
 const Promise = require('bluebird');
 
 
@@ -23,5 +24,15 @@ exports.listTasks = (req, res) => {
     }).catch((error) => {
         console.log(error);
         res.send(false);
+  });
+}
+
+exports.fetchTask = (req, res) => {
+  taskFetch(req.body)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log(error);
+    res.send(false);
   });
 }

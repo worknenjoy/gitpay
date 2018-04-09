@@ -238,7 +238,7 @@ class TopBar extends Component  {
                   <DialogContent>
                     <DialogContentText>
                       <Typography type="subheading" gutterBottom>
-                        Para inserir uma nova tarefa, cole a URL de um incidente no <strong>Github</strong> ou <strong>Bitbucket</strong>, dê um valor que ela poderá ser resolvida pela comunidade por um valor estabelecido
+                        Para inserir uma nova tarefa, cole a URL de um incidente no <strong>Github</strong> ou <strong>Bitbucket</strong>
                       </Typography>
                     </DialogContentText>
                     <FormControl style={styles.formControl} error={this.state.task.url.error}>
