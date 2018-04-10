@@ -53,8 +53,7 @@ describe("tasks", () => {
 
       models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
         agent
-          .get('/tasks/fetch/')
-          .send({id: task.dataValues.id})
+          .get(`/tasks/fetch/${task.dataValues.id}`)
           .expect('Content-Type', /json/)
           .expect(200)
           .end((err, res) => {

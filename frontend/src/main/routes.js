@@ -5,6 +5,7 @@ import Auth from '../modules/auth';
 import Welcome from '../components/welcome/welcome';
 import Session from '../components/session/session';
 import Profile from '../components/profile/profile';
+import Task from '../components/task/task';
 
 const isAuth = (nextState, replace) => {
   //console.log(nextState);
@@ -19,5 +20,6 @@ export default props => (
         <Route path='/' component={Welcome} />
         <Route path="/profile" component={Profile} onEnter={isAuth} />
         <Route path='/token/:token' component={Session} />
+        <Route path='/task/:id' component={Task} />
     </Router>
 )

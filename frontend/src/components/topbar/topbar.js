@@ -180,8 +180,7 @@ class TopBar extends Component  {
         userId: this.state.user.id
       })
         .then((response) => {
-          console.log('create task response');
-          console.log(response);
+          window.location.assign(`/#/task/${response.data.id}`);
         })
         .catch((error) => {
           console.log('error to create task');

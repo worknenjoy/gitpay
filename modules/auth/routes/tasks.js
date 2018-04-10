@@ -9,6 +9,6 @@ const controllers = require('../controllers/task');
 
 router.post('/create', controllers.createTask);
 router.get('/list', controllers.listTasks);
-router.get('/fetch', controllers.fetchTask);
+router.get('/fetch/:id', controllers.fetchTask);
 
 module.exports = router;

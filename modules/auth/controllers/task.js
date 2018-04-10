@@ -10,7 +10,7 @@ const Promise = require('bluebird');
 exports.createTask = (req, res) => {
   taskBuild(req.body)
     .then((data) => {
-      res.send(true);
+      res.send(data);
     }).catch((error) => {
     console.log(error);
     res.send(false);
@@ -28,7 +28,7 @@ exports.listTasks = (req, res) => {
 }
 
 exports.fetchTask = (req, res) => {
-  taskFetch(req.body)
+  taskFetch(req.params)
     .then((data) => {
       res.send(data);
     }).catch((error) => {
