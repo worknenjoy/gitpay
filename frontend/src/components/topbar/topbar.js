@@ -53,7 +53,8 @@ const styles = {
     marginLeft: 30
   },
   intro: {
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
     margin: 0,
     textAlign: 'center',
     height: 40,

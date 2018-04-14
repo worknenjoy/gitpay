@@ -8,6 +8,10 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import AddIcon from 'material-ui-icons/Add';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Chip from 'material-ui/Chip';
+
 
 
 import classNames from 'classnames';
@@ -23,18 +27,17 @@ import renderHTML from 'react-render-html';
 import TopBar from '../topbar/topbar';
 import Bottom from '../bottom/bottom';
 
-const logoGithub = require('../../images/github-logo.png');
-const logoBitbucket = require('../../images/bitbucket-logo.png');
-
-const taskIcon = require('../../images/task-icon.png');
-const paymentIcon = require('../../images/payment-icon.png');
-const toolsIcon = require('../../images/tools-icon.png');
+const paymentIcon = require('../../images/payment-icon-alt.png');
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: 'black',
     height: 180,
+  },
+  formPayment: {
+    marginTop: 10,
+    marginBottom: 10
   },
   avatar: {
     margin: 10,
@@ -43,18 +46,26 @@ const styles = theme => ({
     width: 40,
     height: 40,
   },
+  chipContainer: {
+    marginTop: 12,
+    marginBottom: 12
+  },
+  chip: {
+    marginRight: 10
+  },
   paper: {
     padding: 10,
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 10,
     textAlign: 'left',
     color: theme.palette.text.secondary,
   },
   typo: {
-    marginLeft: 40,
-    marginRight: 40,
+    marginLeft: 20,
+    marginRight: 20,
     marginTop: -30,
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 0,
     borderTop: '1px solid #999'
   },
   gridBlock: {
@@ -67,6 +78,10 @@ const styles = theme => ({
   altButton: {
     margin: 0,
     border: `1px dashed ${theme.palette.primary.main}`
+  },
+  btnPayment: {
+    float: 'right',
+    marginTop: 10
   },
   bigRow: {
     marginTop: 40
@@ -153,8 +168,12 @@ const styles = theme => ({
     flex: '1 0 auto',
   },
   cover: {
-    width: 151,
-    height: 151,
+    width: 44,
+    height: 44,
+    margin: 20,
+    padding: 20,
+    textAlign: 'center',
+    verticalAlign: 'center'
   },
   controls: {
     display: 'flex',
@@ -203,6 +222,10 @@ class Task extends Component {
     this.setState({created: false});
   }
 
+  handlePayment() {
+    console.log('payment clicked');
+  }
+
   render() {
 
     const { classes } = this.props;
@@ -243,15 +266,51 @@ class Task extends Component {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cover}
-                  image="/static/images/cards/live-from-space.jpg"
-                  title="Live from space album cover"
+                  image={paymentIcon}
+                  title="Realize o pagamento pela tarefa"
                 />
                 <div className={classes.details}>
                   <CardContent className={classes.content}>
-                    <Typography variant="headline">Live From Space</Typography>
+                    <Typography variant="headline">Crie uma recompensa para esta tarefa</Typography>
                     <Typography variant="subheading" color="textSecondary">
-                      Mac Miller
+                      Realize um pagamento por esta tarefa para que alguém possa desenvolvê-la e receber o pagamento como recompensa.
                     </Typography>
+                    <div className={classes.chipContainer}>
+                      <Chip
+                        label=" R$ 50"
+                        className={classes.chip}
+                      />
+                      <Chip
+                        label=" R$ 100"
+                        className={classes.chip}
+                      />
+                      <Chip
+                        label=" R$ 150"
+                        className={classes.chip}
+                      />
+                      <Chip
+                        label=" R$ 300"
+                        className={classes.chip}
+                      />
+                      <Chip
+                        label=" R$ 500"
+                        className={classes.chip}
+                      />
+                    </div>
+                    <form className={classes.formPayment} action="POST">
+                      <FormControl fullWidth>
+                        <InputLabel htmlFor="adornment-amount">Outro valor</InputLabel>
+                        <Input
+                          id="adornment-amount"
+                          startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                          placeholder="Insira um valor"
+                          type="number"
+                        />
+                      </FormControl>
+                      <Button onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
+                        Pagar
+                      </Button>
+                    </form>
                   </CardContent>
                   <div className={classes.controls}>
 
