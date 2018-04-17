@@ -30,12 +30,12 @@ class Bottom extends Component {
   }
 
   componentDidMount() {
-
+    //console.log(this.props.classes);
   }
 
   render() {
 
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.secBlock}>

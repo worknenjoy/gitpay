@@ -19,9 +19,6 @@ import api from '../../consts';
 import axios from 'axios';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
-import Snackbar from 'material-ui/Snackbar';
-import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui-icons/Close';
 import Auth from '../../modules/auth';
 import Notification from '../notification/notification';
 import nameInitials from 'name-initials';
@@ -94,7 +91,8 @@ class TopBar extends Component  {
           error: false,
           value: null
         }
-      }
+      },
+      createTaskDialog: false
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleMenu = this.handleMenu.bind(this);

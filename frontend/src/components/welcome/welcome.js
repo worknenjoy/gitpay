@@ -259,7 +259,7 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </div>
-        <Bottom classes={classes} />
+        <Bottom />
       </div>
     );
   }

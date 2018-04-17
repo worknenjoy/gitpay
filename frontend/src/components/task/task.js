@@ -6,13 +6,12 @@ import Avatar from 'material-ui/Avatar';
 import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
 import AddIcon from 'material-ui-icons/Add';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
-
-
+import PaymentDialog from '../payment/payment-dialog';
+import '../checkout/checkout-form';
 
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
@@ -202,10 +201,18 @@ class Task extends Component {
             name: 'loading'
           }
         }
-      }
+      },
+      payment: {
+        dialog: false,
+      },
+      final_price: 0
     }
 
     this.handleCloseLoginNotification = this.handleCloseLoginNotification.bind(this);
+    this.handlePaymentDialogClose = this.handlePaymentDialogClose.bind(this);
+    this.handlePayment = this.handlePayment.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentWillMount() {
@@ -223,7 +230,23 @@ class Task extends Component {
   }
 
   handlePayment() {
-    console.log('payment clicked');
+    this.setState({payment: {dialog: true}});
+  }
+
+  handlePaymentDialogClose(e) {
+    this.setState({payment: {dialog: false}});
+  }
+
+  pickTaskPrice(price) {
+    this.setState({final_price: price});
+  }
+
+  handleClose() {
+    this.setState({payment: {dialog: false}});
+  }
+
+  handleInputChange(e) {
+    this.setState({final_price: e.target.value});
   }
 
   render() {
@@ -241,8 +264,8 @@ class Task extends Component {
           </Grid>
           <Notification message="Tarefa incluída com sucesso" open={this.state.created} onClose={this.handleCloseLoginNotification} />
         </Grid>
-        <Grid container spacing={24} className={classes.gridBlock}>
-          <Grid item xs={4} direction="row" justify="flex-start" alignItems="center" style={{display: 'flex', marginTop: 12}}>
+        <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
+          <Grid item xs={8} style={{display: 'flex', marginTop: 12}}>
             <div>
               <Avatar
                 alt={this.state.task.issue.user.name}
@@ -255,9 +278,11 @@ class Task extends Component {
                 <span className={classes.spaceRight}>Convidar freelancer</span>  <AddIcon />
               </Button>
             </div>
-          </Grid>
-          <Grid item xs={8}>
-
+            <div className={classes.paper}>
+              <Button size="medium" color="primary" className={classes.altButton}>
+                <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
+              </Button>
+            </div>
           </Grid>
         </Grid>
         <Grid container spacing={24} className={classes.gridBlock}>
@@ -279,38 +304,51 @@ class Task extends Component {
                       <Chip
                         label=" R$ 50"
                         className={classes.chip}
+                        onClick={() => this.pickTaskPrice(50)}
                       />
                       <Chip
                         label=" R$ 100"
                         className={classes.chip}
+                        onClick={() => this.pickTaskPrice(100)}
                       />
                       <Chip
                         label=" R$ 150"
                         className={classes.chip}
+                        onClick={() => this.pickTaskPrice(150)}
                       />
                       <Chip
                         label=" R$ 300"
                         className={classes.chip}
+                        onClick={() => this.pickTaskPrice(300)}
                       />
                       <Chip
                         label=" R$ 500"
                         className={classes.chip}
+                        onClick={() => this.pickTaskPrice(500)}
                       />
                     </div>
                     <form className={classes.formPayment} action="POST">
                       <FormControl fullWidth>
-                        <InputLabel htmlFor="adornment-amount">Outro valor</InputLabel>
+                        <InputLabel htmlFor="adornment-amount">Valor</InputLabel>
                         <Input
                           id="adornment-amount"
                           startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                           placeholder="Insira um valor"
                           type="number"
+                          inputProps={ {'min': 0} }
+                          value={this.state.final_price}
+                          onChange={this.handleInputChange}
                         />
                       </FormControl>
-                      <Button onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
-                        Pagar
+                      <Button disabled={!this.state.final_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
+                        {`Pagar R$ ${this.state.final_price}`}
                       </Button>
                     </form>
+                    <PaymentDialog
+                      open={this.state.payment.dialog}
+                      onClose={this.handleClose}
+                      price={this.state.final_price}
+                    />
                   </CardContent>
                   <div className={classes.controls}>
 
@@ -333,7 +371,7 @@ class Task extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <Bottom classes={classes} />
+        <Bottom />
       </div>
     )
   }

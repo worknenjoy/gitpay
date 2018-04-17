@@ -1,5 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { StripeProvider } from 'react-stripe-elements';
 import blue from 'material-ui/colors/blue';
 import green from 'material-ui/colors/green';
 import './app.css';
@@ -23,7 +24,9 @@ const theme = createMuiTheme({
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <Routes />
+      <StripeProvider apiKey="pk_test_pBA57lmPZbGhidkUUphTZZdB">
+        <Routes />
+      </StripeProvider>
     </MuiThemeProvider>
   );
 }

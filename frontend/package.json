@@ -54,6 +54,8 @@
     "react-query-params": "^1.0.7",
     "react-render-html": "^0.6.0",
     "react-router-dom": "^4.2.2",
+    "react-script-loader": "0.0.1",
+    "react-stripe-elements": "^1.6.0",
     "react-tap-event-plugin": "^2.0.1",
     "reactjs-localstorage": "0.0.6",
     "typeface-roboto": "0.0.31"
