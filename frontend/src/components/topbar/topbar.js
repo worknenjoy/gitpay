@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
-import MailIcon from 'material-ui-icons/Mail';
 import Notifications from 'material-ui-icons/Notifications';
 import Dialog, {
   DialogActions,

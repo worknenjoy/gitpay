@@ -265,7 +265,7 @@ class Task extends Component {
           <Notification message="Tarefa incluída com sucesso" open={this.state.created} onClose={this.handleCloseLoginNotification} />
         </Grid>
         <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
-          <Grid item xs={8} style={{display: 'flex', marginTop: 12}}>
+          <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
             <div>
               <Avatar
                 alt={this.state.task.issue.user.name}
