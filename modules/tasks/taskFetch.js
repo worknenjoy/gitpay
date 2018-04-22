@@ -4,15 +4,11 @@ const url = require('url');
 const requestPromise = require('request-promise');
 
 module.exports = Promise.method(function taskFetch(taskParams) {
-  console.log('task params');
-  console.log(taskParams);
   return models.Task
     .findOne(
       {where: {id: taskParams.id}, include: models.User}
     )
     .then(async (data) => {
-      console.log('data');
-      console.log(data);
       const githubUrl = data.dataValues.url;
       const splitIssueUrl = url.parse(githubUrl).path.split('/');
       const userOrCompany = splitIssueUrl[1];

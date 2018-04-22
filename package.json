@@ -8,6 +8,7 @@
   },
   "scripts": {
     "migrate": "node migrate.js up",
+    "migrate-test": "env NODE_ENV=test node migrate.js up",
     "rollback": "node migrate.js prev",
     "reset": "node migrate.js reset-hard",
     "start": "nodemon ./server.js",

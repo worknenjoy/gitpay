@@ -4,13 +4,16 @@ const loading = require('../../loading/loading');
 
 const routerAuth = require('./routes/auth');
 const routerTask = require('./routes/tasks');
+const routerOrder = require('./routes/orders');
 
 const models = [
     '../loading/user',
-    '../loading/task'
+    '../loading/task',
+  '../loading/order'
 ]
 
 exports.init = (app) => {
     app.use('/', routerAuth);
     app.use('/tasks', routerTask);
+    app.use('/orders', routerOrder);
 }

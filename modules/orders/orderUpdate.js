@@ -1,12 +1,12 @@
 const Promise = require('bluebird');
 const models = require('../../loading/loading');
 
-module.exports = Promise.method(function taskUpdate(taskParameters) {
+module.exports = Promise.method(function orderUpdate(orderParameters) {
 
-  return models.Task
-    .update(taskParameters, {
+  return models.Order
+    .update(orderParameters, {
       where: {
-        id: taskParameters.id
+        id: orderParameters.id
       }
     }).then((data) => {
       return data;
