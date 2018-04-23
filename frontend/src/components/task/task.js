@@ -348,6 +348,7 @@ class Task extends Component {
                       open={this.state.payment.dialog}
                       onClose={this.handleClose}
                       price={this.state.final_price}
+                      task={this.props.params.id}
                     />
                   </CardContent>
                   <div className={classes.controls}>

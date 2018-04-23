@@ -5,7 +5,10 @@ import { injectStripe } from 'react-stripe-elements';
 import CardSection from './card-section';
 import UserSection from './user-section';
 import Button from "material-ui/es/Button/Button";
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import Notification from '../notification/notification';
+
+import api from '../../consts';
+import axios from 'axios';
 
 const styles = {
   formActions: {
@@ -22,19 +25,24 @@ class CheckoutForm extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.handleCloseNotification = this.handleCloseNotification.bind(this);
 
     this.state = {
       fullname: null,
       email: null,
       error: {
         fullname: false,
-        email: false
-      }
+        email: false,
+        payment: false
+      },
+      paymentRequested: false
     };
   }
 
   handleSubmit(ev) {
     ev.preventDefault();
+
+    this.setState({paymentRequested: true});
 
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
@@ -51,7 +59,32 @@ class CheckoutForm extends Component {
     }
 
     this.props.stripe.createToken({name: this.state.fullname}).then(({token}) => {
-      console.log('Received Stripe token:', token);
+      //console.log('Received Stripe token:', token);
+
+      axios.post(api.API_URL + '/orders/create', {
+        source_id: token.id,
+        currency: 'BRL',
+        amount: this.props.price,
+        email: this.state.email,
+        TaskId: this.props.task
+      })
+        .then((response) => {
+          if(response.status == 200) {
+            const orderId = response.data.id;
+            window.location.assign(`/#/tasks/${this.props.task}/orders/${orderId}`);
+          } else {
+            this.setState({
+              payment: {
+                error: true
+              },
+              paymentRequested: false
+            })
+          }
+        })
+        .catch((error) => {
+          console.log('error to create order');
+          console.log(error);
+        });
     });
 
     // However, this line of code will do the same thing:
@@ -64,6 +97,14 @@ class CheckoutForm extends Component {
     this.setState(formData);
   }
 
+  handleCloseNotification() {
+    this.setState({
+      payment: {
+        error: false
+      }
+    });
+  }
+
   componentWillMount() {
 
   }
@@ -71,6 +112,7 @@ class CheckoutForm extends Component {
   render() {
     return (
       <div>
+        <Notification message="Tivemos um erro ao processar seu pagamento" open={this.state.error.payment} onClose={this.handleCloseNotification} />
         <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
           <Grid item xs={12} style={{marginBottom: 20}}>
             <UserSection error={this.state.error} />
@@ -84,7 +126,7 @@ class CheckoutForm extends Component {
                 <Button color="primary" onClick={this.props.onClose}>
                   Cancelar
                 </Button>
-                <Button type="submit" variant="raised" color="secondary">
+                <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
                   {`Pagar R$ ${this.props.price}`}
                 </Button>
               </div>

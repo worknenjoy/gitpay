@@ -10,13 +10,13 @@ const models = require('../loading/loading');
 describe("orders", () => {
 
   before(() => {
-    /*models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+    models.Order.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');
       }
     }, function(err){
       console.log(err);
-    });*/
+    });
   })
 
   describe('list orders', () => {
@@ -40,11 +40,13 @@ describe("orders", () => {
         .send({
           source_id: '12345',
           currency: 'BRL',
-          amount: 200
+          amount: 200,
+          email: 'testing@gitpay.me'
         })
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
+          console.log(err);
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
           expect(res.body.source_id).to.equal('12345');
