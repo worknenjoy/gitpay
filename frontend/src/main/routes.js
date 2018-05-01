@@ -6,10 +6,9 @@ import Welcome from '../components/welcome/welcome';
 import Session from '../components/session/session';
 import Profile from '../components/profile/profile';
 import Task from '../components/task/task';
+import Order from '../components/order/order';
 
 const isAuth = (nextState, replace) => {
-  //console.log(nextState);
-  //console.log(replace);
   if(!Auth.isUserAuthenticated()) {
     replace('/');
   }
@@ -21,5 +20,6 @@ export default props => (
         <Route path="/profile" component={Profile} onEnter={isAuth} />
         <Route path='/token/:token' component={Session} />
         <Route path='/task/:id' component={Task} />
+      <Route path='/task/:id/orders/:order_id' component={Task} />
     </Router>
 )

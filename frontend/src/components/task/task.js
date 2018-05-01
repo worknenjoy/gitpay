@@ -7,11 +7,15 @@ import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
+import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
+import CalendarIcon from 'material-ui-icons/PermContactCalendar';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
 import PaymentDialog from '../payment/payment-dialog';
 import '../checkout/checkout-form';
+
+import StatsCard from '../Cards/StatsCard';
 
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
@@ -218,7 +222,7 @@ class Task extends Component {
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.params.id}`).then((task) => {
       console.log(task.data);
-      this.setState({task: {issue: task.data.metadata.issue}});
+      this.setState({task: {issue: task.data.metadata.issue}, final_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
@@ -286,7 +290,6 @@ class Task extends Component {
           </Grid>
         </Grid>
         <Grid container spacing={24} className={classes.gridBlock}>
-          <Grid item xs={12}>
             <Grid item xs={8}>
               <Card className={classes.card}>
                 <CardMedia
@@ -368,10 +371,19 @@ class Task extends Component {
               </Card>
             </Grid>
             <Grid item xs={4}>
-
+              <StatsCard
+                icon={TrophyIcon}
+                iconColor="green"
+                title="Valor da tarefa"
+                description={`R$ ${this.state.final_price}`}
+                statIcon={CalendarIcon}
+                statText="Last 24 Hours"
+              />
+              <Card className={classes.card}>
+                teste
+              </Card>
             </Grid>
           </Grid>
-        </Grid>
         <Bottom />
       </div>
     )

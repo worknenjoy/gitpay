@@ -71,7 +71,15 @@ class CheckoutForm extends Component {
         .then((response) => {
           if(response.status == 200) {
             const orderId = response.data.id;
-            window.location.assign(`/#/tasks/${this.props.task}/orders/${orderId}`);
+            axios.put(api.API_URL + '/tasks/update', {
+              id: this.props.task,
+              value: this.props.price
+            }).then((response) => {
+              console.log(response);
+              window.location.assign(`/#/tasks/${this.props.task}/orders/${orderId}`);
+            }).catch((error) => {
+              console.log(error);
+            });
           } else {
             this.setState({
               payment: {

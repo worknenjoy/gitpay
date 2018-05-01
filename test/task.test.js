@@ -72,6 +72,30 @@ describe("tasks", () => {
           console.log('error create task');
           console.log(e);
         })
-      });
+    });
+
+    it('should update task', (done) => {
+
+      const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
+
+      models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
+        agent
+          .put("/tasks/update")
+          .send({id: task.dataValues.id, value: 200})
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.body).to.exist;
+            console.log('error', err);
+            console.log(res.body);
+            expect(res.body.value).to.equal('200');
+            done();
+          })
+      }).catch(e => {
+        console.log('error create task');
+        console.log(e);
+      })
+    });
+
   })
 })
