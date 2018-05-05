@@ -9,7 +9,7 @@ const models = require('../loading/loading');
 
 describe("tasks", () => {
 
-  before(() => {
+  beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');
@@ -33,7 +33,7 @@ describe("tasks", () => {
     })
   })
 
-  describe('create Task', () => {
+  describe('Task crud', () => {
     it('should create a new task', (done) => {
       agent
         .post('/tasks/create/')
@@ -88,6 +88,33 @@ describe("tasks", () => {
             expect(res.body).to.exist;
             console.log('error', err);
             console.log(res.body);
+            expect(res.body.value).to.equal('200');
+            done();
+          })
+      }).catch(e => {
+        console.log('error create task');
+        console.log(e);
+      })
+    });
+
+    it('should update task with associated order', (done) => {
+
+      const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
+      const order = {
+        source_id: '12345',
+        currency: 'BRL',
+        amount: 200,
+        email: 'foo@mail.com'
+      }
+
+      models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
+        agent
+          .put("/tasks/update")
+          .send({id: task.dataValues.id, value: 200, Orders: [order]})
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.body).to.exist;
             expect(res.body.value).to.equal('200');
             done();
           })

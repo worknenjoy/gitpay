@@ -84,7 +84,8 @@ const styles = theme => ({
   },
   btnPayment: {
     float: 'right',
-    marginTop: 10
+    marginTop: 10,
+    color: 'white'
   },
   bigRow: {
     marginTop: 40
@@ -187,6 +188,9 @@ const styles = theme => ({
   playIcon: {
     height: 38,
     width: 38,
+  },
+  light: {
+    color: 'white'
   }
 });
 
@@ -203,8 +207,9 @@ class Task extends Component {
           user: {
             avatar_url: 'loading',
             name: 'loading'
-          }
-        }
+          },
+        },
+        url: "loading"
       },
       payment: {
         dialog: false,
@@ -222,7 +227,7 @@ class Task extends Component {
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.params.id}`).then((task) => {
       console.log(task.data);
-      this.setState({task: {issue: task.data.metadata.issue}, final_price: task.data.value});
+      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url}, final_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
@@ -263,7 +268,7 @@ class Task extends Component {
           <TopBar />
           <Grid item xs={12}>
             <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
-              {this.state.task.issue.title}
+              <a className={classes.white} href={this.state.task.url}>{this.state.task.issue.title}</a>
             </Typography>
           </Grid>
           <Notification message="Tarefa incluída com sucesso" open={this.state.created} onClose={this.handleCloseLoginNotification} />
@@ -377,10 +382,10 @@ class Task extends Component {
                 title="Valor da tarefa"
                 description={`R$ ${this.state.final_price}`}
                 statIcon={CalendarIcon}
-                statText="Last 24 Hours"
+                statText={`Último valor pago de R$ #{}`}
               />
               <Card className={classes.card}>
-                teste
+
               </Card>
             </Grid>
           </Grid>

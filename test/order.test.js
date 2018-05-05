@@ -9,7 +9,7 @@ const models = require('../loading/loading');
 
 describe("orders", () => {
 
-  before(() => {
+  beforeEach(() => {
     models.Order.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');

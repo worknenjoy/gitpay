@@ -60,39 +60,31 @@ class CheckoutForm extends Component {
 
     this.props.stripe.createToken({name: this.state.fullname}).then(({token}) => {
       //console.log('Received Stripe token:', token);
-
-      axios.post(api.API_URL + '/orders/create', {
-        source_id: token.id,
-        currency: 'BRL',
-        amount: this.props.price,
-        email: this.state.email,
-        TaskId: this.props.task
-      })
-        .then((response) => {
-          if(response.status == 200) {
-            const orderId = response.data.id;
-            axios.put(api.API_URL + '/tasks/update', {
-              id: this.props.task,
-              value: this.props.price
-            }).then((response) => {
-              console.log(response);
-              window.location.assign(`/#/tasks/${this.props.task}/orders/${orderId}`);
-            }).catch((error) => {
-              console.log(error);
-            });
-          } else {
-            this.setState({
-              payment: {
-                error: true
-              },
-              paymentRequested: false
-            })
+      if(token) {
+        axios.put(api.API_URL + '/tasks/update', {
+          id: this.props.task,
+          value: this.props.price,
+          order: {
+            source_id: token.id,
+            currency: 'BRL',
+            amount: this.props.price,
+            email: this.state.email
           }
-        })
-        .catch((error) => {
-          console.log('error to create order');
+        }).then((response) => {
+          console.log(response);
+          window.location.assign(`/#/tasks/${this.props.task}/orders/${orderId}`);
+        }).catch((error) => {
           console.log(error);
         });
+
+      } else {
+        this.setState({
+          payment: {
+            error: true
+          },
+          paymentRequested: false
+        })
+      }
     });
 
     // However, this line of code will do the same thing:

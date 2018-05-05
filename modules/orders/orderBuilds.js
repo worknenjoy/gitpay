@@ -18,14 +18,10 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
       stripe.customers.create({
         email: orderParameters.email
       }).then(function (customer) {
-        console.log('customer Created');
-        console.log(customer);
         return stripe.customers.createSource(customer.id, {
           source: orderParameters.source_id
         });
       }).then(function (source) {
-        console.log('source');
-        console.log(source);
         return stripe.charges.create({
           amount: orderParameters.amount * 100,
           currency: orderParameters.currency,
@@ -45,7 +41,7 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
       return data;
 
     }).catch((error) => {
-      console.log('error');
+      console.log('error to create order');
       console.log(error);
       return error;
     });
