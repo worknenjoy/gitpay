@@ -64,15 +64,15 @@ class CheckoutForm extends Component {
         axios.put(api.API_URL + '/tasks/update', {
           id: this.props.task,
           value: this.props.price,
-          order: {
+          Orders: [{
             source_id: token.id,
             currency: 'BRL',
             amount: this.props.price,
             email: this.state.email
-          }
+          }]
         }).then((response) => {
           console.log(response);
-          window.location.assign(`/#/tasks/${this.props.task}/orders/${orderId}`);
+          window.location.assign(`/#/tasks/${this.props.task}/orders/`);
         }).catch((error) => {
           console.log(error);
         });

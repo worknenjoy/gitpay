@@ -40,7 +40,7 @@ module.exports = Promise.method(function taskFetch(taskParams) {
           projectName: projectName,
           issue: issueDataJson
         },
-        orders: data.dataValues.orders
+        orders: data.dataValues.Orders
       };
 
     }).catch((error) => {

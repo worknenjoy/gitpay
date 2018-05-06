@@ -20,6 +20,6 @@ export default props => (
         <Route path="/profile" component={Profile} onEnter={isAuth} />
         <Route path='/token/:token' component={Session} />
         <Route path='/task/:id' component={Task} />
-      <Route path='/task/:id/orders/:order_id' component={Task} />
+      <Route path='/task/:id/orders' component={Task} />
     </Router>
 )

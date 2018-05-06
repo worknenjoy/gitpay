@@ -4,11 +4,22 @@ import Grid from 'material-ui/Grid';
 import Notification from '../notification/notification';
 import Avatar from 'material-ui/Avatar';
 import Card, { CardContent, CardMedia } from 'material-ui/Card';
+import AppBar from 'material-ui/AppBar';
+import Tabs, { Tab } from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+
+import RedeemIcon from 'material-ui-icons/Redeem';
+import FavoriteIcon from 'material-ui-icons/Favorite';
+import PersonPinIcon from 'material-ui-icons/PersonPin';
+import HelpIcon from 'material-ui-icons/Help';
+import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
+import ThumbDown from 'material-ui-icons/ThumbDown';
+import ThumbUp from 'material-ui-icons/ThumbUp';
 import AddIcon from 'material-ui-icons/Add';
 import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
 import CalendarIcon from 'material-ui-icons/PermContactCalendar';
+
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
@@ -34,9 +45,16 @@ const paymentIcon = require('../../images/payment-icon-alt.png');
 
 const styles = theme => ({
   root: {
+    flexGrow: 1
+  },
+  rootTopBar: {
     flexGrow: 1,
     backgroundColor: 'black',
     height: 180,
+  },
+  rootTabs: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.text.secondary
   },
   formPayment: {
     marginTop: 10,
@@ -209,12 +227,14 @@ class Task extends Component {
             name: 'loading'
           },
         },
-        url: "loading"
+        url: "loading",
+        orders: []
       },
       payment: {
         dialog: false,
       },
-      final_price: 0
+      final_price: 0,
+      active_tab: 0
     }
 
     this.handleCloseLoginNotification = this.handleCloseLoginNotification.bind(this);
@@ -222,12 +242,13 @@ class Task extends Component {
     this.handlePayment = this.handlePayment.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
   }
 
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.params.id}`).then((task) => {
       console.log(task.data);
-      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url}, final_price: task.data.value});
+      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders}, final_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
@@ -258,13 +279,25 @@ class Task extends Component {
     this.setState({final_price: e.target.value});
   }
 
+  handleTabChange(event, tab) {
+    this.setState({ active_tab: tab });
+  }
+
   render() {
 
     const { classes } = this.props;
+    const activeTab = this.state.active_tab;
+    const TabContainer = (props) => {
+      return (
+        <Typography component="div" style={{ padding: 8 * 3 }}>
+          {props.children}
+        </Typography>
+      );
+    }
 
     return (
       <div>
-        <Grid container className={classes.root} spacing={24} >
+        <Grid container className={classes.rootTopBar} spacing={24} >
           <TopBar />
           <Grid item xs={12}>
             <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
@@ -296,84 +329,105 @@ class Task extends Component {
         </Grid>
         <Grid container spacing={24} className={classes.gridBlock}>
             <Grid item xs={8}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cover}
-                  image={paymentIcon}
-                  title="Realize o pagamento pela tarefa"
-                />
-                <div className={classes.details}>
-                  <CardContent className={classes.content}>
-                    <Typography variant="headline">Crie uma recompensa para esta tarefa</Typography>
-                    <Typography variant="subheading" color="textSecondary">
-                      Realize um pagamento por esta tarefa para que alguém possa desenvolvê-la e receber o pagamento como recompensa.
-                    </Typography>
-                    <div className={classes.chipContainer}>
-                      <Chip
-                        label=" R$ 50"
-                        className={classes.chip}
-                        onClick={() => this.pickTaskPrice(50)}
-                      />
-                      <Chip
-                        label=" R$ 100"
-                        className={classes.chip}
-                        onClick={() => this.pickTaskPrice(100)}
-                      />
-                      <Chip
-                        label=" R$ 150"
-                        className={classes.chip}
-                        onClick={() => this.pickTaskPrice(150)}
-                      />
-                      <Chip
-                        label=" R$ 300"
-                        className={classes.chip}
-                        onClick={() => this.pickTaskPrice(300)}
-                      />
-                      <Chip
-                        label=" R$ 500"
-                        className={classes.chip}
-                        onClick={() => this.pickTaskPrice(500)}
-                      />
-                    </div>
-                    <form className={classes.formPayment} action="POST">
-                      <FormControl fullWidth>
-                        <InputLabel htmlFor="adornment-amount">Valor</InputLabel>
-                        <Input
-                          id="adornment-amount"
-                          startAdornment={<InputAdornment position="start">R$</InputAdornment>}
-                          placeholder="Insira um valor"
-                          type="number"
-                          inputProps={ {'min': 0} }
-                          value={this.state.final_price}
-                          onChange={this.handleInputChange}
-                        />
-                      </FormControl>
-                      <Button disabled={!this.state.final_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
-                        {`Pagar R$ ${this.state.final_price}`}
-                      </Button>
-                    </form>
-                    <PaymentDialog
-                      open={this.state.payment.dialog}
-                      onClose={this.handleClose}
-                      price={this.state.final_price}
-                      task={this.props.params.id}
+              <div className={classes.rootTabs}>
+                <AppBar position="static" color="default">
+                  <Tabs
+                    value={activeTab}
+                    onChange={this.handleTabChange}
+                    scrollable
+                    scrollButtons="on"
+                    indicatorColor="primary"
+                    textColor="primary"
+                  >
+                    <Tab label="Tarefa" icon={<RedeemIcon />} />
+                    <Tab label="Pedidos" icon={<ShoppingBasket />} />
+                  </Tabs>
+                </AppBar>
+                {activeTab === 0 &&
+                <TabContainer>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.cover}
+                      image={paymentIcon}
+                      title="Realize o pagamento pela tarefa"
                     />
-                  </CardContent>
-                  <div className={classes.controls}>
-
-                  </div>
-                </div>
-              </Card>
-              <Card className={classes.paper}>
+                    <div className={classes.details}>
+                      <CardContent className={classes.content}>
+                        <Typography variant="headline">Crie uma recompensa para esta tarefa</Typography>
+                        <Typography variant="subheading" color="textSecondary">
+                          Realize um pagamento por esta tarefa para que alguém possa desenvolvê-la e receber o pagamento como recompensa.
+                        </Typography>
+                        <div className={classes.chipContainer}>
+                          <Chip
+                            label=" R$ 50"
+                            className={classes.chip}
+                            onClick={() => this.pickTaskPrice(50)}
+                          />
+                          <Chip
+                            label=" R$ 100"
+                            className={classes.chip}
+                            onClick={() => this.pickTaskPrice(100)}
+                          />
+                          <Chip
+                            label=" R$ 150"
+                            className={classes.chip}
+                            onClick={() => this.pickTaskPrice(150)}
+                          />
+                          <Chip
+                            label=" R$ 300"
+                            className={classes.chip}
+                            onClick={() => this.pickTaskPrice(300)}
+                          />
+                          <Chip
+                            label=" R$ 500"
+                            className={classes.chip}
+                            onClick={() => this.pickTaskPrice(500)}
+                          />
+                        </div>
+                        <form className={classes.formPayment} action="POST">
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor="adornment-amount">Valor</InputLabel>
+                            <Input
+                              id="adornment-amount"
+                              startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                              placeholder="Insira um valor"
+                              type="number"
+                              inputProps={ {'min': 0} }
+                              value={this.state.final_price}
+                              onChange={this.handleInputChange}
+                            />
+                          </FormControl>
+                          <Button disabled={!this.state.final_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
+                            {`Pagar R$ ${this.state.final_price}`}
+                          </Button>
+                        </form>
+                        <PaymentDialog
+                          open={this.state.payment.dialog}
+                          onClose={this.handleClose}
+                          price={this.state.final_price}
+                          task={this.props.params.id}
+                        />
+                      </CardContent>
+                      <div className={classes.controls}>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card className={classes.paper}>
+                    <Typography variant="title" align="left" gutterBottom>
+                      Descrição
+                    </Typography>
+                    <Typography variant="body2" align="left" gutterBottom>
+                      <div>
+                        {renderHTML(marked(this.state.task.issue.body))}
+                      </div>
+                    </Typography>
+                  </Card>
+                </TabContainer>}
+                {activeTab === 1 &&
                 <Typography variant="title" align="left" gutterBottom>
-                  Descrição
-                </Typography>
-                <Typography variant="body2" align="left" gutterBottom>
-                  <div>
-                    {renderHTML(marked(this.state.task.issue.body))}
-                  </div>
-                </Typography>
-              </Card>
+                  Orders
+                </Typography>}
+                </div>
             </Grid>
             <Grid item xs={4}>
               <StatsCard
@@ -382,7 +436,7 @@ class Task extends Component {
                 title="Valor da tarefa"
                 description={`R$ ${this.state.final_price}`}
                 statIcon={CalendarIcon}
-                statText={`Último valor pago de R$ #{}`}
+                statText={`Último valor recebido de R$ ${this.state.task.orders.map((item,i) => item.amount)}`}
               />
               <Card className={classes.card}>
 
