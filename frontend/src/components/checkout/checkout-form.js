@@ -71,6 +71,7 @@ class CheckoutForm extends Component {
             email: this.state.email
           }]
         }).then((response) => {
+
           console.log(response);
           window.location.assign(`/#/tasks/${this.props.task}/orders/`);
         }).catch((error) => {

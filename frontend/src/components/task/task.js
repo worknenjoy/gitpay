@@ -27,6 +27,8 @@ import PaymentDialog from '../payment/payment-dialog';
 import '../checkout/checkout-form';
 
 import StatsCard from '../Cards/StatsCard';
+import RegularCard from '../Cards/RegularCard';
+import Table from '../Table/Table';
 
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
@@ -253,6 +255,10 @@ class Task extends Component {
       console.log('not possible to fetch issue');
       console.log(e);
     });
+
+    if(this.props.route.path == "/task/:id/orders") {
+      this.setState({active_tab: 1});
+    }
   }
 
   handleCloseLoginNotification() {
@@ -293,6 +299,10 @@ class Task extends Component {
           {props.children}
         </Typography>
       );
+    }
+
+    const displayOrders = (orders) => {
+      return orders.map((item,i) => [item.id, item.status, item.amount, item.currency])
     }
 
     return (
@@ -424,10 +434,21 @@ class Task extends Component {
                   </Card>
                 </TabContainer>}
                 {activeTab === 1 &&
-                <Typography variant="title" align="left" gutterBottom>
-                  Orders
-                </Typography>}
-                </div>
+                <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
+                <RegularCard
+                  headerColor="green"
+                  cardTitle="Pagamentos realizados para esta tarefa"
+                  cardSubtitle="Elas serão transferidas para quem conclui-la"
+                  content={
+                    <Table
+                      tableHeaderColor="warning"
+                      tableHead={["ID", "Status", "Valor", "Moeda"]}
+                      tableData={displayOrders(this.state.task.orders)}
+                    />
+                  }
+                />
+                </div>}
+              </div>
             </Grid>
             <Grid item xs={4}>
               <StatsCard
