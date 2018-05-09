@@ -34,7 +34,7 @@ describe("orders", () => {
   })
 
   describe('create Order', () => {
-    it('should create a new order', (done) => {
+    xit('should create a new order', (done) => {
       agent
         .post('/orders/create/')
         .send({

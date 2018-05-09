@@ -6,10 +6,6 @@ class StripeCheckout extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      price: null
-    }
-
   }
 
   componentWillMount() {

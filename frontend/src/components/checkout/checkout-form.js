@@ -7,6 +7,8 @@ import UserSection from './user-section';
 import Button from "material-ui/es/Button/Button";
 import Notification from '../notification/notification';
 
+import { hashHistory } from "react-router";
+
 import api from '../../consts';
 import axios from 'axios';
 
@@ -33,7 +35,8 @@ class CheckoutForm extends Component {
       error: {
         fullname: false,
         email: false,
-        payment: false
+        payment: false,
+        message: "loading"
       },
       paymentRequested: false
     };
@@ -61,27 +64,52 @@ class CheckoutForm extends Component {
     this.props.stripe.createToken({name: this.state.fullname}).then(({token}) => {
       //console.log('Received Stripe token:', token);
       if(token) {
-        axios.put(api.API_URL + '/tasks/update', {
-          id: this.props.task,
-          value: this.props.price,
-          Orders: [{
-            source_id: token.id,
-            currency: 'BRL',
-            amount: this.props.price,
-            email: this.state.email
-          }]
-        }).then((response) => {
-
-          console.log(response);
-          window.location.assign(`/#/tasks/${this.props.task}/orders/`);
-        }).catch((error) => {
-          console.log(error);
-        });
+        try {
+          axios.put(api.API_URL + '/tasks/update', {
+            id: this.props.task,
+            value: this.props.price,
+            Orders: [{
+              source_id: token.id,
+              currency: 'BRL',
+              amount: this.props.price,
+              email: this.state.email
+            }]
+          }).then((response) => {
+            console.log('sucessfull response');
+            console.log(response);
+            this.props.onClose();
+            hashHistory.push({pathname: `/task/${this.props.task}/orders`, state: {
+              notification: {
+                open: true,
+                message: "O seu pagamento foi realizado com sucesso"
+              }
+            }});
+          }).catch((error) => {
+            console.log(error);
+            this.setState({
+              error: {
+                payment: true,
+                message: "Erro ao atualizar o pedido"
+              },
+              paymentRequested: false
+            })
+          });
+        } catch(e) {
+          console.log('error', e);
+          this.setState({
+            error: {
+              payment: true,
+              message: "Erro ao processar o pagamento do cartão de crédito"
+            },
+            paymentRequested: false
+          })
+        };
 
       } else {
         this.setState({
-          payment: {
-            error: true
+          error: {
+            payment: true,
+            message: "Erro na criação do token"
           },
           paymentRequested: false
         })
@@ -100,8 +128,8 @@ class CheckoutForm extends Component {
 
   handleCloseNotification() {
     this.setState({
-      payment: {
-        error: false
+      error: {
+        payment: false
       }
     });
   }
@@ -113,7 +141,7 @@ class CheckoutForm extends Component {
   render() {
     return (
       <div>
-        <Notification message="Tivemos um erro ao processar seu pagamento" open={this.state.error.payment} onClose={this.handleCloseNotification} />
+        <Notification message={this.state.error.message || "Tivemos um erro ao processar seu pagamento"} open={this.state.error.payment} onClose={this.handleCloseNotification} />
         <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
           <Grid item xs={12} style={{marginBottom: 20}}>
             <UserSection error={this.state.error} />

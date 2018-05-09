@@ -20,22 +20,28 @@ class PaymentDialog extends Component {
       price: null,
       open: false
     }
-    //this.handleClose = this.handleClose.bind(this);
+    this.onClose = this.onClose.bind(this);
 
   }
 
   componentWillMount() {
-    //this.setState({price: prop.price, open: this.props.open});
+    this.setState({price: this.props.price, open: this.props.open});
   }
 
-  //componentWillReceiveProps(prop){
-    //this.setState({price: prop.price, open: prop.open});
-  //}
+  componentWillReceiveProps(prop){
+    this.setState({price: prop.price, open: prop.open});
+  }
+
+  onClose() {
+    this.setState({
+      open: false
+    })
+  }
 
   render() {
     return (
       <Dialog
-        open={this.props.open}
+        open={this.state.open}
         transition={Transition}
         onClose={this.handleClose}
         aria-labelledby="alert-dialog-slide-title"

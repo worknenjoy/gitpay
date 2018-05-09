@@ -236,7 +236,13 @@ class Task extends Component {
         dialog: false,
       },
       final_price: 0,
-      active_tab: 0
+      current_price: 0,
+      order_price: 0,
+      active_tab: 0,
+      notification: {
+        open: false,
+        message: "loading"
+      }
     }
 
     this.handleCloseLoginNotification = this.handleCloseLoginNotification.bind(this);
@@ -245,24 +251,36 @@ class Task extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
+    this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
 
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.params.id}`).then((task) => {
-      console.log(task.data);
-      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders}, final_price: task.data.value});
+      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders}, final_price: task.data.value, order_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
     });
-
     if(this.props.route.path == "/task/:id/orders") {
       this.setState({active_tab: 1});
     }
   }
 
+  componentWillReceiveProps(newProp) {
+    if(newProp.route.path == "/task/:id/orders") {
+      this.setState({active_tab: 1});
+    }
+    if(newProp.location.state){
+      this.setState(newProp.location.state);
+    }
+  }
+
   handleCloseLoginNotification() {
     this.setState({created: false});
+  }
+
+  handleCloseNotification() {
+    this.setState({notification: {open: false}});
   }
 
   handlePayment() {
@@ -274,7 +292,7 @@ class Task extends Component {
   }
 
   pickTaskPrice(price) {
-    this.setState({final_price: price});
+    this.setState({current_price: price, final_price: parseInt(price) + parseInt(this.state.order_price)});
   }
 
   handleClose() {
@@ -282,7 +300,7 @@ class Task extends Component {
   }
 
   handleInputChange(e) {
-    this.setState({final_price: e.target.value});
+    this.setState({current_price: e.target.value});
   }
 
   handleTabChange(event, tab) {
@@ -302,7 +320,7 @@ class Task extends Component {
     }
 
     const displayOrders = (orders) => {
-      return orders.map((item,i) => [item.id, item.status, item.amount, item.currency])
+      return orders.map((item,i) => [`${item.id}`, item.status, `${item.amount}`, item.currency])
     }
 
     return (
@@ -315,6 +333,7 @@ class Task extends Component {
             </Typography>
           </Grid>
           <Notification message="Tarefa incluída com sucesso" open={this.state.created} onClose={this.handleCloseLoginNotification} />
+          <Notification message={this.state.notification.message} open={this.state.notification.open} onClose={this.handleCloseNotification} />
         </Grid>
         <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
           <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
@@ -403,12 +422,12 @@ class Task extends Component {
                               placeholder="Insira um valor"
                               type="number"
                               inputProps={ {'min': 0} }
-                              value={this.state.final_price}
+                              value={this.state.current_price}
                               onChange={this.handleInputChange}
                             />
                           </FormControl>
-                          <Button disabled={!this.state.final_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
-                            {`Pagar R$ ${this.state.final_price}`}
+                          <Button disabled={!this.state.current_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
+                            {`Pagar R$ ${this.state.current_price}`}
                           </Button>
                         </form>
                         <PaymentDialog
@@ -457,7 +476,7 @@ class Task extends Component {
                 title="Valor da tarefa"
                 description={`R$ ${this.state.final_price}`}
                 statIcon={CalendarIcon}
-                statText={`Último valor recebido de R$ ${this.state.task.orders.map((item,i) => item.amount)}`}
+                statText={`Último valor recebido de R$ ${this.state.task.orders.map((item,i) => `${item.amount}`)}`}
               />
               <Card className={classes.card}>
 
