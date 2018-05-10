@@ -433,6 +433,7 @@ class Task extends Component {
                         <PaymentDialog
                           open={this.state.payment.dialog}
                           onClose={this.handleClose}
+                          itemPrice={this.state.order_price}
                           price={this.state.final_price}
                           task={this.props.params.id}
                         />
