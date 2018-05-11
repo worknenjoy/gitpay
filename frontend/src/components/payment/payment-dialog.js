@@ -46,6 +46,7 @@ class PaymentDialog extends Component {
         onClose={this.handleClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
+        fullWidth={true}
       >
         <DialogTitle id="alert-dialog-slide-title">
           Realizar pagamento
@@ -54,7 +55,7 @@ class PaymentDialog extends Component {
           <DialogContentText id="alert-dialog-slide-description">
             Preecha os dados do cartão para efetuar o pagamento
           </DialogContentText>
-          <StripeCheckout price={this.props.itemPrice} onClose={this.props.onClose} task={this.props.task} />
+          <StripeCheckout { ...this.props } />
         </DialogContent>
       </Dialog>
     )

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const assert = require('assert')
 const request = require('supertest')
@@ -97,11 +97,11 @@ describe("tasks", () => {
       })
     });
 
-    it('should update task with associated order', (done) => {
+    it('should update task with associated order no logged users', (done) => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
       const order = {
-        source_id: '12345',
+        source_id: 'tok_1CPcpBBrSjgsps2DzfcePOYA',
         currency: 'BRL',
         amount: 200,
         email: 'foo@mail.com'
@@ -116,6 +116,7 @@ describe("tasks", () => {
           .end((err, res) => {
             expect(res.body).to.exist;
             expect(res.body.value).to.equal('200');
+            //expect(res.body.Orders).to.equal({});
             done();
           })
       }).catch(e => {
@@ -123,11 +124,54 @@ describe("tasks", () => {
         console.log(e);
       })
     });
+
+    it('should update task with associated order logged users', (done) => {
+
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const user = res.body;
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          const order = {
+            source_id: 'tok_1CPcpBBrSjgsps2DzfcePOYA',
+            currency: 'BRL',
+            amount: 200,
+            email: 'foo@mail.com',
+            userId: userId
+          };
+
+          models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
+            agent
+              .put("/tasks/update")
+              .send({id: task.dataValues.id, value: 200, Orders: [order]})
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.body.value).to.equal('200');
+                models.Order.findAll({where: {userId: userId }}).then((order) => {
+                  expect(order[0].dataValues.userId).to.equal(userId);
+                  models.User.findOne({where: {id: userId}}).then((user) => {
+                    //expect(user.dataValues.customer_id).to.exist;
+                    done();
+                  });
+                });
+              })
+          }).catch(e => {
+            console.log('error create task');
+            console.log(e);
+          })
+        })
+    });
+
   });
 
-  describe("Task webhooks", () => {
-    it('should update order to paid when receive a webhook', (done) => {
-      
+  xdescribe("Task webhooks", () => {
+    xit('should update order to paid when receive a webhook', (done) => {
+
     });
   });
 })

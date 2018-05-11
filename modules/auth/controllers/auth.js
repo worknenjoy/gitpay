@@ -10,7 +10,7 @@ exports.register = (req, res) => {
 
     userBuild(req.body)
         .then((data) => {
-            res.send(true);    
+            res.send(data);
         }).catch((error) => {
             console.log(error);
             res.send(false);

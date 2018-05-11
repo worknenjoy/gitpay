@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
 import { injectStripe } from 'react-stripe-elements';
 
 import CardSection from './card-section';
@@ -11,6 +12,7 @@ import { hashHistory } from "react-router";
 
 import api from '../../consts';
 import axios from 'axios';
+import Auth from '../../modules/auth';
 
 const styles = {
   formActions: {
@@ -32,6 +34,8 @@ class CheckoutForm extends Component {
     this.state = {
       fullname: null,
       email: null,
+      authenticated: false,
+      userId: null,
       error: {
         fullname: false,
         email: false,
@@ -71,8 +75,9 @@ class CheckoutForm extends Component {
             Orders: [{
               source_id: token.id,
               currency: 'BRL',
-              amount: this.props.price,
-              email: this.state.email
+              amount: this.props.itemPrice,
+              email: this.state.email,
+              userId: this.state.userId
             }]
           }).then((response) => {
             console.log('sucessfull response');
@@ -135,16 +140,40 @@ class CheckoutForm extends Component {
   }
 
   componentWillMount() {
+    const token = Auth.getToken();
 
+    if (token) {
+      axios.get(api.API_URL + '/authenticated', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+        .then((response) => {
+          console.log('logged');
+          console.log(response);
+          this.setState({
+            authenticated: response.data.authenticated,
+            fullname: response.data.user.name,
+            email: response.data.user.email,
+            userId: response.data.user.id
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   render() {
+
+    const logged = this.state.authenticated;
+
     return (
       <div>
         <Notification message={this.state.error.message || "Tivemos um erro ao processar seu pagamento"} open={this.state.error.payment} onClose={this.handleCloseNotification} />
         <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
           <Grid item xs={12} style={{marginBottom: 20}}>
-            <UserSection error={this.state.error} />
+            { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={12}>
@@ -156,7 +185,7 @@ class CheckoutForm extends Component {
                   Cancelar
                 </Button>
                 <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
-                  {`Pagar R$ ${this.props.price}`}
+                  {`Pagar R$ ${this.props.itemPrice}`}
                 </Button>
               </div>
             </Grid>
