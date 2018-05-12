@@ -133,7 +133,6 @@ describe("tasks", () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
-          const user = res.body;
           const userId = res.body.id;
           const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
           const order = {
@@ -154,6 +153,8 @@ describe("tasks", () => {
                 expect(res.body.value).to.equal('200');
                 models.Order.findAll({where: {userId: userId }}).then((order) => {
                   expect(order[0].dataValues.userId).to.equal(userId);
+                  //expect(order[0].dataValues.paid).to.equal(true);
+                  //expect(order[0].dataValues.status).to.equal("succeeded");
                   models.User.findOne({where: {id: userId}}).then((user) => {
                     //expect(user.dataValues.customer_id).to.exist;
                     done();
@@ -168,10 +169,4 @@ describe("tasks", () => {
     });
 
   });
-
-  xdescribe("Task webhooks", () => {
-    xit('should update order to paid when receive a webhook', (done) => {
-
-    });
-  });
-})
+});

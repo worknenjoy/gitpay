@@ -15,8 +15,19 @@ const createSourceAndCharge = (customer, orderParameters, order, task) => {
       metadata: {order_id: order.dataValues.id}
     }).then(function(charge){
       console.log('charge created');
-      console.log(charge);
-      return charge;
+      order.updateAttributes({
+        source: charge.id,
+        source_id: card.id,
+        paid: charge.paid,
+        status: charge.status
+      }).then(function(updatedUser) {
+        console.log(charge);
+        return charge;
+      }).catch((err) => {
+        console.log('error to update attributes');
+        console.log(err);
+        return err;
+      });
     }).catch(function(err) {
       console.log('error to create charge');
       console.log(err);
@@ -27,6 +38,25 @@ const createSourceAndCharge = (customer, orderParameters, order, task) => {
     console.log(err);
     return err;
   })
+};
+
+const createCustomer = (orderParameters, order, task) => {
+  stripe.customers.create({
+    email: orderParameters.email
+  }).then(function (customer) {
+    if (order.userId) {
+      return models.User.update({customer_id: customer.id}, {where: {id: order.userId}}).then((update) => {
+        if (update[0]) {
+          createSourceAndCharge(customer, orderParameters, order, task);
+        }
+      });
+    }
+    createSourceAndCharge(customer, orderParameters, order, task);
+  }).catch(function (err) {
+    console.log('error to stripe account');
+    console.log(err);
+    return err;
+  });
 }
 
 module.exports = Promise.method(function taskUpdate(taskParameters) {
@@ -53,26 +83,11 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
                     return e;
                   });
                 } else {
-                  throw new Error('no customer id found here for stripe');
+                  return createCustomer(orderParameters, order, task);
                 }
               });
             } else {
-              return stripe.customers.create({
-                email: orderParameters.email
-              }).then(function (customer) {
-                if (order.userId) {
-                  return models.User.update({customer_id: customer.id}, {where: {id: order.userId}}).then((update) => {
-                    if (update[0]) {
-                      createSourceAndCharge(customer, orderParameters, order, task);
-                    }
-                  });
-                }
-                createSourceAndCharge(customer, orderParameters, order, task);
-              }).catch(function (err) {
-                console.log('error to stripe account');
-                console.log(err);
-                return err;
-              });
+              return createCustomer(orderParameters, order, task);
             }
           }).catch(error => console.log(error));
 

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     source: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'OPEN'
+      defaultValue: 'open'
     },
     capture: {
       type: DataTypes.BOOLEAN,

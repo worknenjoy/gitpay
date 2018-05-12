@@ -319,8 +319,17 @@ class Task extends Component {
       );
     }
 
+    const statuses =  {
+      'open': 'Em aberto',
+      'succeeded': 'Realizado com sucesso',
+      'fail': 'Falha no pagamento'
+    }
+
     const displayOrders = (orders) => {
-      return orders.map((item,i) => [`${item.id}`, item.status, `${item.amount}`, item.currency])
+      if(!orders.length) {
+        return [];
+      }
+      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status], `R$ ${item.amount}`, (item.userId ? `${item.userId}` : 'anônimo'), new Date(item.updatedAt).toLocaleDateString()])
     }
 
     return (
@@ -462,8 +471,8 @@ class Task extends Component {
                   content={
                     <Table
                       tableHeaderColor="warning"
-                      tableHead={["ID", "Status", "Valor", "Moeda"]}
-                      tableData={displayOrders(this.state.task.orders)}
+                      tableHead={["Pago", "Status", "Valor", "id do usuário", "Criado em"]}
+                      tableData={this.state.task.orders.length ? displayOrders(this.state.task.orders) : []}
                     />
                   }
                 />
@@ -477,7 +486,7 @@ class Task extends Component {
                 title="Valor da tarefa"
                 description={`R$ ${this.state.final_price}`}
                 statIcon={CalendarIcon}
-                statText={`Último valor recebido de R$ ${this.state.task.orders.map((item,i) => `${item.amount}`)}`}
+                statText={`Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount} `)}`}
               />
               <Card className={classes.card}>
 
