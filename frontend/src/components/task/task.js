@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
+import MomentComponent from 'moment';
+
 import Grid from 'material-ui/Grid';
 import Notification from '../notification/notification';
 import Avatar from 'material-ui/Avatar';
@@ -18,6 +21,7 @@ import ThumbDown from 'material-ui-icons/ThumbDown';
 import ThumbUp from 'material-ui-icons/ThumbUp';
 import AddIcon from 'material-ui-icons/Add';
 import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
+import DateIcon from 'material-ui-icons/DateRange';
 import CalendarIcon from 'material-ui-icons/PermContactCalendar';
 
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
@@ -44,6 +48,8 @@ import TopBar from '../topbar/topbar';
 import Bottom from '../bottom/bottom';
 
 const paymentIcon = require('../../images/payment-icon-alt.png');
+const timeIcon = require('../../images/time-icon.png');
+
 
 const styles = theme => ({
   root: {
@@ -56,6 +62,7 @@ const styles = theme => ({
   },
   rootTabs: {
     flexGrow: 1,
+    marginBottom: 40,
     backgroundColor: theme.palette.text.secondary
   },
   formPayment: {
@@ -74,7 +81,8 @@ const styles = theme => ({
     marginBottom: 12
   },
   chip: {
-    marginRight: 10
+    marginRight: 10,
+    marginBottom: 20
   },
   paper: {
     padding: 10,
@@ -150,9 +158,10 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  card: {
+  otherCard: {
     maxWidth: 280,
     marginRight: 10,
+    marginBottom: 40,
     textAlign: 'center'
   },
   cardActions: {
@@ -183,6 +192,7 @@ const styles = theme => ({
   icon: {},
   card: {
     display: 'flex',
+    marginBottom: 20
   },
   details: {
     display: 'flex',
@@ -235,6 +245,7 @@ class Task extends Component {
       payment: {
         dialog: false,
       },
+      deadline: null,
       final_price: 0,
       current_price: 0,
       order_price: 0,
@@ -248,15 +259,17 @@ class Task extends Component {
     this.handleCloseLoginNotification = this.handleCloseLoginNotification.bind(this);
     this.handlePaymentDialogClose = this.handlePaymentDialogClose.bind(this);
     this.handlePayment = this.handlePayment.bind(this);
+    this.handleDeadline = this.handleDeadline.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChangeCalendar = this.handleInputChangeCalendar.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
 
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.params.id}`).then((task) => {
-      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders}, final_price: task.data.value, order_price: task.data.value});
+      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
@@ -291,8 +304,49 @@ class Task extends Component {
     this.setState({payment: {dialog: false}});
   }
 
+  handleDeadline() {
+    console.log(this.state.deadline);
+    axios.put(api.API_URL + `/tasks/update/`, {
+      id: this.props.params.id,
+      deadline: this.state.deadline
+    }).then((task) => {
+      console.log('task info');
+      console.log(task);
+      if(task.data.id) {
+        this.setState({
+          notification: {
+            open: true,
+            message: "A data foi escolhida com sucesso"
+          }
+        });
+      } else {
+        this.setState({
+          notification: {
+            open: true,
+            message: "A data não foi atualizada, por favor tente novamente"
+          }
+        });
+      }
+    }).catch((e) => {
+      this.setState({
+        notification: {
+          open: true,
+          message: "Não foi possível atualizar a data"
+        }
+      });
+      console.log('not possible to update task');
+      console.log(e);
+    });
+  }
+
   pickTaskPrice(price) {
     this.setState({current_price: price, final_price: parseInt(price) + parseInt(this.state.order_price)});
+  }
+
+  pickTaskDeadline(time) {
+    const date = MomentComponent(this.state.deadline).isValid() ? MomentComponent(this.state.deadline) : MomentComponent();
+    const newDate = date.add(time, 'days').format();
+    this.setState({deadline: newDate});
   }
 
   handleClose() {
@@ -301,6 +355,10 @@ class Task extends Component {
 
   handleInputChange(e) {
     this.setState({current_price: e.target.value});
+  }
+
+  handleInputChangeCalendar(e) {
+    this.setState({deadline: e.target.value});
   }
 
   handleTabChange(event, tab) {
@@ -451,6 +509,68 @@ class Task extends Component {
                       </div>
                     </div>
                   </Card>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.cover}
+                      image={timeIcon}
+                      title="Realize o pagamento pela tarefa"
+                    />
+                    <div className={classes.details}>
+                      <CardContent className={classes.content}>
+                        <Typography variant="headline">Escolha uma data limite para realizacao desta tarefa</Typography>
+                        <Typography variant="subheading" color="textSecondary">
+                          Escolha uma data em que deseja que ela precisa ser finalizada
+                        </Typography>
+                        <div className={classes.chipContainer}>
+                          <Chip
+                            label=" daqui uma semana "
+                            className={classes.chip}
+                            onClick={() => this.pickTaskDeadline(7)}
+                          />
+                          <Chip
+                            label=" daqui quinze dias "
+                            className={classes.chip}
+                            onClick={() => this.pickTaskDeadline(15)}
+                          />
+                          <Chip
+                            label=" daqui vinte dias "
+                            className={classes.chip}
+                            onClick={() => this.pickTaskDeadline(20)}
+                          />
+                          <Chip
+                            label=" daqui um mês"
+                            className={classes.chip}
+                            onClick={() => this.pickTaskDeadline(30)}
+                          />
+                        </div>
+                        <form className={classes.formPayment} action="POST">
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor="adornment-amount">Dia</InputLabel>
+                            <Input
+                              id="adornment-date"
+                              startAdornment={<InputAdornment position="start"><DateIcon /></InputAdornment>}
+                              placeholder="Insira uma data"
+                              type="date"
+                              value={`${MomentComponent(this.state.deadline).format("YYYY-MM-DD")}` || `${MomentComponent().format("YYYY-MM-DD")}`}
+                              onChange={this.handleInputChangeCalendar}
+                            />
+                          </FormControl>
+                          <Button disabled={!this.state.deadline} onClick={this.handleDeadline} variant="raised" color="primary" className={classes.btnPayment}>
+                            {this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format("DD/MM/YYYY")} como data limite` : 'Salvar data limite'}
+                          </Button>
+                        </form>
+                        <PaymentDialog
+                          open={this.state.payment.dialog}
+                          onClose={this.handleClose}
+                          itemPrice={this.state.current_price}
+                          price={this.state.final_price}
+                          task={this.props.params.id}
+                        />
+                      </CardContent>
+                      <div className={classes.controls}>
+                      </div>
+                    </div>
+                  </Card>
                   <Card className={classes.paper}>
                     <Typography variant="title" align="left" gutterBottom>
                       Descrição
@@ -488,6 +608,15 @@ class Task extends Component {
                 statIcon={CalendarIcon}
                 statText={`Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount} `)}`}
               />
+              {MomentComponent(this.state.deadline).isValid() &&
+              <StatsCard
+                icon={DateIcon}
+                iconColor="green"
+                title="data limite para realizacao da tarefa"
+                description={MomentComponent(this.state.deadline).format("DD-MM-YYYY")}
+                statIcon={DateIcon}
+                statText={`${MomentComponent(this.state.deadline).fromNow()}`}
+                />}
               <Card className={classes.card}>
 
               </Card>

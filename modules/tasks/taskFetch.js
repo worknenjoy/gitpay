@@ -33,6 +33,7 @@ module.exports = Promise.method(function taskFetch(taskParams) {
         id: data.dataValues.id,
         url: githubUrl,
         value: data.dataValues.value || 0,
+        deadline: data.dataValues.deadline,
         metadata: {
           id: issueId,
           user: userOrCompany,
