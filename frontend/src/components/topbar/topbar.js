@@ -100,6 +100,12 @@ class TopBar extends Component  {
     this.props.isLogged();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      this.props.isLogged();
+    }
+  }
+
   handleChange(event, checked) {
     this.setState({ auth: checked });
   };

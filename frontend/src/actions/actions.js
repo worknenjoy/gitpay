@@ -36,7 +36,7 @@ const loggedIn = () => {
   if (token) {
     return (dispatch) => {
       dispatch(loggedInRequested());
-      axios.get(api.API_URL + '/authenticated', {
+      return axios.get(api.API_URL + '/authenticated', {
         headers: {
           authorization: `Bearer ${token}`
         }
@@ -47,7 +47,7 @@ const loggedIn = () => {
             dispatch(addNotification("Você logou na sua conta com sucesso"))
             Auth.authNotified();
           }
-          dispatch(loggedInSuccess(response.data.user));
+          return dispatch(loggedInSuccess(response.data.user));
         })
         .catch((error) => {
           console.log(error);
