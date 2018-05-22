@@ -75,7 +75,7 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
             const orderParameters = taskParameters.Orders[0];
             if(order.userId) {
               models.User.findById(order.userId).then((user) => {
-                if(user.dataValues.customer_id) {
+                if(user && user.dataValues.customer_id) {
                   stripe.customers.retrieve(user.customer_id).then((customer) => {
                     return createSourceAndCharge(customer, orderParameters, order, task);
                   }).catch((e) => {
