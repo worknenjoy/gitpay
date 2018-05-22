@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { injectStripe } from 'react-stripe-elements';
+import { withRouter} from 'react-router-dom';
 
 import CardSection from './card-section';
 import UserSection from './user-section';
 import Button from "material-ui/es/Button/Button";
 import Notification from '../notification/notification';
-
-import { hashHistory } from "react-router";
 
 import api from '../../consts';
 import axios from 'axios';
@@ -83,7 +82,8 @@ class CheckoutForm extends Component {
             console.log('sucessfull response');
             console.log(response);
             this.props.onClose();
-            hashHistory.push({pathname: `/task/${this.props.task}/orders`, state: {
+            console.log(this.props);
+            this.props.history.replace({pathname: `/task/${this.props.match.params.id}/orders`, state: {
               notification: {
                 open: true,
                 message: "O seu pagamento foi realizado com sucesso"
@@ -196,4 +196,4 @@ class CheckoutForm extends Component {
   }
 }
 
-export default injectStripe(CheckoutForm);
+export default withRouter(injectStripe(CheckoutForm));

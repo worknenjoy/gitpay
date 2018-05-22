@@ -13,12 +13,7 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 
 import RedeemIcon from 'material-ui-icons/Redeem';
-import FavoriteIcon from 'material-ui-icons/Favorite';
-import PersonPinIcon from 'material-ui-icons/PersonPin';
-import HelpIcon from 'material-ui-icons/Help';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
-import ThumbDown from 'material-ui-icons/ThumbDown';
-import ThumbUp from 'material-ui-icons/ThumbUp';
 import AddIcon from 'material-ui-icons/Add';
 import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
 import DateIcon from 'material-ui-icons/DateRange';
@@ -96,7 +91,14 @@ const styles = theme => ({
     marginRight: 20,
     marginTop: -30,
     paddingTop: 10,
-    paddingBottom: 0,
+    paddingBottom: 20
+  },
+  typoSmall: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: -10,
+    paddingTop: 10,
+    paddingBottom: 20,
     borderTop: '1px solid #999'
   },
   gridBlock: {
@@ -231,6 +233,7 @@ class Task extends Component {
     this.state = {
       created: true,
       task: {
+        company: "loading",
         issue: {
           title: "loading",
           body: "loading",
@@ -268,19 +271,20 @@ class Task extends Component {
   }
 
   componentWillMount() {
-    axios.get(api.API_URL + `/tasks/fetch/${this.props.params.id}`).then((task) => {
-      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
+    axios.get(api.API_URL + `/tasks/fetch/${this.props.match.params.id}`).then((task) => {
+      console.log(task);
+      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders, company: task.data.metadata.company}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
     });
-    if(this.props.route.path == "/task/:id/orders") {
+    if(this.props.match.path == "/task/:id/orders") {
       this.setState({active_tab: 1});
     }
   }
 
   componentWillReceiveProps(newProp) {
-    if(newProp.route.path == "/task/:id/orders") {
+    if(newProp.match.path == "/task/:id/orders") {
       this.setState({active_tab: 1});
     }
     if(newProp.location.state){
@@ -305,13 +309,10 @@ class Task extends Component {
   }
 
   handleDeadline() {
-    console.log(this.state.deadline);
     axios.put(api.API_URL + `/tasks/update/`, {
-      id: this.props.params.id,
+      id: this.props.match.params.id,
       deadline: this.state.deadline
     }).then((task) => {
-      console.log('task info');
-      console.log(task);
       if(task.data.id) {
         this.setState({
           notification: {
@@ -387,7 +388,7 @@ class Task extends Component {
       if(!orders.length) {
         return [];
       }
-      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status], `R$ ${item.amount}`, (item.userId ? `${item.userId}` : 'anônimo'), new Date(item.updatedAt).toLocaleDateString()])
+      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `R$ ${item.amount}`, (item.userId ? `${item.userId}` : 'anônimo'), new Date(item.updatedAt).toLocaleDateString()])
     }
 
     return (
@@ -395,11 +396,13 @@ class Task extends Component {
         <Grid container className={classes.rootTopBar} spacing={24} >
           <TopBar />
           <Grid item xs={12}>
+            <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
+              <a className={classes.white} href={this.state.task.url}>{this.state.task.company}</a>
+            </Typography>
             <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
               <a className={classes.white} href={this.state.task.url}>{this.state.task.issue.title}</a>
             </Typography>
           </Grid>
-          <Notification message="Tarefa incluída com sucesso" open={this.state.created} onClose={this.handleCloseLoginNotification} />
           <Notification message={this.state.notification.message} open={this.state.notification.open} onClose={this.handleCloseNotification} />
         </Grid>
         <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
@@ -502,7 +505,7 @@ class Task extends Component {
                           onClose={this.handleClose}
                           itemPrice={this.state.current_price}
                           price={this.state.final_price}
-                          task={this.props.params.id}
+                          task={this.props.match.params.id}
                         />
                       </CardContent>
                       <div className={classes.controls}>
@@ -564,7 +567,7 @@ class Task extends Component {
                           onClose={this.handleClose}
                           itemPrice={this.state.current_price}
                           price={this.state.final_price}
-                          task={this.props.params.id}
+                          task={this.props.match.params.id}
                         />
                       </CardContent>
                       <div className={classes.controls}>
@@ -606,7 +609,7 @@ class Task extends Component {
                 title="Valor da tarefa"
                 description={`R$ ${this.state.final_price}`}
                 statIcon={CalendarIcon}
-                statText={`Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount} `)}`}
+                statText={`Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `}
               />
               {MomentComponent(this.state.deadline).isValid() &&
               <StatsCard

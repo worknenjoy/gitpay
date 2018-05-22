@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
+import { withRouter } from "react-router-dom";
 import Notifications from 'material-ui-icons/Notifications';
 import Dialog, {
   DialogActions,
@@ -50,10 +51,9 @@ const styles = {
   },
   intro: {
     paddingTop: 20,
-    paddingBottom: 20,
+    paddingBottom: 10,
     margin: 0,
     textAlign: 'center',
-    height: 40,
     width: '100%',
     backgroundColor: 'black'
   },
@@ -178,7 +178,13 @@ class TopBar extends Component  {
         userId: this.state.user.id
       })
         .then((response) => {
-          window.location.assign(`/#/task/${response.data.id}`);
+          //window.location.assign(`/#/task/${response.data.id}`);
+          this.props.history.replace({pathname: `/task/${response.data.id}`, state: {
+            notification: {
+              open: true,
+              message: "A sua tarefa foi criada com sucesso"
+            }
+          }});
         })
         .catch((error) => {
           console.log('error to create task');
@@ -208,7 +214,8 @@ class TopBar extends Component  {
     Auth.deauthenticateUser();
     const newState = {logged: false, notify: true}
     this.setState(newState);
-    this.context.router.push({pathname: '/', state: {loggedOut: true}});
+    console.log(this.props);
+    this.props.history.replace({pathname: '/', state: {loggedOut: true}});
   }
 
   render() {
@@ -318,8 +325,4 @@ class TopBar extends Component  {
   }
 };
 
-TopBar.contextTypes = {
-  router: React.PropTypes.object.isRequired
-}
-
-export default withStyles(styles)(TopBar);
+export default withRouter(withStyles(styles)(TopBar));
