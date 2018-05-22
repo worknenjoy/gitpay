@@ -13,10 +13,6 @@ class Notification extends Component {
 
   }
 
-  onClose() {
-
-  }
-
   render() {
     return (
       <Snackbar

@@ -28,7 +28,7 @@ import './mailchimp.css';
 
 import api from '../../consts';
 
-import TopBar from '../topbar/topbar';
+import TopBarContainer from '../../containers/topbar';
 import Bottom from '../../components/bottom/bottom';
 
 const logoSymbol = require('../../images/logo-symbol.png');
@@ -45,35 +45,10 @@ class Welcome extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      notify: false,
-      loggedOut: false
-    };
-
-    this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
 
   componentDidMount() {
-    console.log('component mount called');
-    if(this.props.location && this.props.location.state) {
-      this.setState(this.props.location.state);
-    }
-  }
 
-  componentWillReceiveProps(props, nextProps) {
-    console.log('will receive props');
-    console.log(this.props);
-    if(this.props.location.action == 'REPLACE') {
-      this.setState({ notify: true });
-    }
-    if(this.props.location.action == 'POP') {
-      this.setState({loggedOut: false});
-    }
-  }
-
-  handleCloseNotification() {
-    this.setState({ notify: false, loggedOut: false });
   }
 
   render() {
@@ -82,10 +57,8 @@ class Welcome extends Component {
 
     return (
       <div className={classes.root}>
-        <Notification message="Você não está autorizado a entrar nesta página" open={this.state.notify} onClose={this.handleCloseNotification} />
-        <Notification message="Você saiu saiu da sua conta com sucesso" open={this.state.loggedOut} onClose={this.handleCloseNotification} />
         <Grid container spacing={24}>
-          <TopBar />
+          <TopBarContainer />
           <Grid item xs={12}>
             <div className={classes.mainBlock}>
               <Typography type="display2" className={classes.tagline} gutterBottom>
@@ -110,10 +83,10 @@ class Welcome extends Component {
             <Typography type="subheading" gutterBottom noWrap>
               Ou conecte com algumas dessas contas
             </Typography>
-            <Button href={`${api.API_URL}/authorize/github`} variant="raised" size="small" color="secondary" className={classes.altButton}>
+            <Button href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
               <img width="16" src={logoGithub} className={classes.icon} /> Github
             </Button>
-            <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="small" color="secondary" className={classes.altButton}>
+            <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
               <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
             </Button>
           </div>
@@ -264,32 +237,6 @@ class Welcome extends Component {
     );
   }
 }
-
-/*
-<Button raised color="primary" className={classes.button}>
-  Começar agora!
-</Button>
-
- <Grid item xs={12}>
- <div className={classes.mainBlock}>
- <Typography type="subheading" gutterBottom noWrap>
- Ou conecte com algumas dessas contas
- </Typography>
- <Button raised size="small" color="accent" className={classes.altButton}>
- <img width="16" src={logoGithub} className={classes.icon} /> Github
- </Button>
- <Button variant="raised" size="small" color="secondary" className={classes.altButton}>
- <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
- </Button>
- <Button raised size="small" color="accent" className={classes.altButton}>
- <img width="16" src={logoGitlab} className={classes.icon} /> Gitlab
- </Button>
- <Button raised size="small" color="accent" className={classes.altButton}>
- <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
- </Button>
- </div>
- </Grid>
-*/
 
 Welcome.propTypes = {
   classes: PropTypes.object.isRequired,

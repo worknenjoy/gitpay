@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
 import { withRouter } from "react-router-dom";
-import Notifications from 'material-ui-icons/Notifications';
+import NotificationIcon from 'material-ui-icons/Notifications';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -20,9 +20,10 @@ import axios from 'axios';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 import Auth from '../../modules/auth';
-import Notification from '../notification/notification';
 import nameInitials from 'name-initials';
 import isGithubUrl from 'is-github-url';
+
+import { addNotification } from '../../actions/actions'
 
 import mainStyles from '../styles/style';
 
@@ -73,18 +74,7 @@ class TopBar extends Component  {
   constructor(props) {
     super(props);
     this.state = {
-      logged: false,
       anchorEl: null,
-      notify: false,
-      notifyLogin: false,
-      user: {
-        id: null,
-        name: "Loading name...",
-        picture_url: null,
-        website: "Loading website",
-        repos: "Loading repo info",
-        provider: "Loading provider"
-      },
       task: {
         url: {
           error: false,
@@ -98,8 +88,6 @@ class TopBar extends Component  {
     this.handleChange = this.handleChange.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleSignIn = this.handleSignOut.bind(this);
-    this.handleCloseNotification = this.handleCloseNotification.bind(this);
-    this.handleCloseLoginNotification = this.handleCloseLoginNotification.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
     this.handleClickDialogCreateTask = this.handleClickDialogCreateTask.bind(this);
     this.handleClickDialogCreateTaskClose = this.handleClickDialogCreateTaskClose.bind(this);
@@ -109,22 +97,7 @@ class TopBar extends Component  {
   }
 
   componentDidMount() {
-    const token = Auth.getToken();
-
-    if (token) {
-      axios.get(api.API_URL + '/authenticated', {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
-      .then((response) => {
-        this.setState({user: response.data.user, logged: true, notifyLogin: !Auth.getAuthNotified()});
-        Auth.authNotified();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    }
+    this.props.isLogged();
   }
 
   handleChange(event, checked) {
@@ -138,14 +111,6 @@ class TopBar extends Component  {
   handleClose() {
     this.setState({ anchorEl: null });
   };
-
-  handleCloseNotification() {
-    this.setState({ notify: false });
-  }
-
-  handleCloseLoginNotification() {
-    this.setState({ notifyLogin: false });
-  }
 
   handleClickDialogCreateTask() {
     this.setState({ createTaskDialog: true });
@@ -178,13 +143,8 @@ class TopBar extends Component  {
         userId: this.state.user.id
       })
         .then((response) => {
-          //window.location.assign(`/#/task/${response.data.id}`);
-          this.props.history.replace({pathname: `/task/${response.data.id}`, state: {
-            notification: {
-              open: true,
-              message: "A sua tarefa foi criada com sucesso"
-            }
-          }});
+          this.props.history.replace({pathname: `/task/${response.data.id}`});
+          this.props.dispatch(addNotification("A sua tarefa foi criada com sucesso"));
         })
         .catch((error) => {
           console.log('error to create task');
@@ -211,15 +171,13 @@ class TopBar extends Component  {
   }
 
   handleSignOut() {
-    Auth.deauthenticateUser();
-    const newState = {logged: false, notify: true}
-    this.setState(newState);
-    console.log(this.props);
-    this.props.history.replace({pathname: '/', state: {loggedOut: true}});
+    this.props.history.replace({pathname: '/'});
+    this.props.signOut();
   }
 
   render() {
-    const isLoggedIn = this.state.logged;
+    const isLoggedIn = this.props.logged;
+    const user = this.props.user;
     const anchorEl = this.state.anchorEl;
     const open = Boolean(anchorEl);
 
@@ -277,21 +235,21 @@ class TopBar extends Component  {
               { isLoggedIn &&
               <div style={styles.notifications}>
                 <Badge badgeContent={4} color="secondary">
-                  <Notifications color="primary"/>
+                  <NotificationIcon color="primary"/>
                 </Badge>
-                {this.state.user.picture_url ?
+                {user.picture_url ?
                   (<Avatar
-                    alt={this.state.user.username}
-                    src={this.state.user.picture_url}
+                    alt={user.username}
+                    src={user.picture_url}
                     style={styles.avatar}
                     onClick={this.handleMenu}
                   /> ) : (
                     <Avatar
-                      alt={this.state.user.username}
+                      alt={user.username}
                       src=""
                       style={styles.avatar}
                       onClick={this.handleMenu}
-                    >{nameInitials(this.state.name)}</Avatar>
+                    >{nameInitials(user.username)}</Avatar>
                   )}
                 <Menu
                   id="menu-appbar"
@@ -316,8 +274,6 @@ class TopBar extends Component  {
                 </Menu>
               </div>
               }
-              <Notification message="Você agora está logado" open={this.state.notifyLogin} onClose={this.handleCloseLoginNotification} />
-              <Notification message="Você saiu saiu da sua conta com sucesso" open={this.state.notify} onClose={this.handleCloseNotification} />
           </div>
         </div>
       </div>

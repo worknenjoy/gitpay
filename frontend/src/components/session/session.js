@@ -8,7 +8,6 @@ export default class Session extends Component {
   }
 
   componentWillMount() {
-    //console.log('session route starts');
     const token = this.props.match.params.token;
     Auth.authenticateUser(token);
     this.props.history.replace("/profile");

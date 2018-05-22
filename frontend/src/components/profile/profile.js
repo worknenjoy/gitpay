@@ -22,7 +22,7 @@ import api from '../../consts';
 import axios from 'axios';
 import Auth from '../../modules/auth';
 
-import TopBar from '../topbar/topbar';
+import TopBarContainer from '../../containers/topbar';
 import Bottom from '../bottom/bottom';
 import ProfileOptions from './profile-options';
 import TaskList from '../task/task-list';
@@ -110,8 +110,6 @@ class Profile extends Component {
 
     const token = Auth.getToken();
 
-    console.log(this.props);
-
     if (token) {
       axios.get(api.API_URL + '/authenticated', {
         headers: {
@@ -150,7 +148,7 @@ class Profile extends Component {
     return (
       <div>
         <Grid container className={classes.root} spacing={24} >
-          <TopBar />
+          <TopBarContainer />
           <Grid item xs={12} md={8}>
             <HashRouter>
               <Switch>

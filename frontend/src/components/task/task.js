@@ -39,7 +39,7 @@ import Auth from '../../modules/auth';
 import marked from 'marked';
 import renderHTML from 'react-render-html';
 
-import TopBar from '../topbar/topbar';
+import TopBarContainer from '../../containers/topbar';
 import Bottom from '../bottom/bottom';
 
 const paymentIcon = require('../../images/payment-icon-alt.png');
@@ -394,7 +394,7 @@ class Task extends Component {
     return (
       <div>
         <Grid container className={classes.rootTopBar} spacing={24} >
-          <TopBar />
+          <TopBarContainer />
           <Grid item xs={12}>
             <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
               <a className={classes.white} href={this.state.task.url}>{this.state.task.company}</a>
