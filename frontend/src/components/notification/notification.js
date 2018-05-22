@@ -9,6 +9,14 @@ class Notification extends Component {
     super(props);
   }
 
+  componentDidMount() {
+
+  }
+
+  onClose() {
+
+  }
+
   render() {
     return (
       <Snackbar
@@ -17,7 +25,8 @@ class Notification extends Component {
           horizontal: 'left',
         }}
         open={this.props.open}
-        autoHideDuration={3000}
+        onClose={this.props.onClose}
+        autoHideDuration={6000}
         SnackbarContentProps={{
           'aria-describedby': 'message-id',
         }}
