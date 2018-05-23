@@ -61,8 +61,6 @@ class TaskList extends Component {
 
     axios.get(api.API_URL + '/tasks/list')
       .then((response) => {
-        console.log('tasklist');
-        console.log(response);
         this.setState({tasks: response.data});
       })
       .catch((error) => {
@@ -82,6 +80,8 @@ class TaskList extends Component {
   render() {
 
     const { classes } = this.props;
+
+    console.log('task list', this.props);
 
     const TabContainer = (props) => {
       return (

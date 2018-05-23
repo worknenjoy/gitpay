@@ -62,14 +62,14 @@ class Welcome extends Component {
           <Grid item xs={12}>
             <div className={classes.mainBlock}>
               <Typography type="display2" className={classes.tagline} gutterBottom>
-                Aqui seu trabalho ganha vida
+                Aqui sua contribuição vira recompensa
               </Typography>
               <Typography type="headline" gutterBottom>
-                para colocar novas idéias no ar
+                e coloca novas ideias no ar!
               </Typography>
               <Typography type="subheading" gutterBottom noWrap>
 
-                com o <strong>Gitpay</strong> você trabalha de forma independente com projetos sob demanda
+                com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda
 
               </Typography>
               <div className="subscribe-form">

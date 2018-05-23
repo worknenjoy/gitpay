@@ -106,8 +106,6 @@ class Profile extends Component {
 
   render() {
 
-    console.log('props', this.props);
-
     const { classes } = this.props;
     const user = this.props.user;
 
