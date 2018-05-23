@@ -59,6 +59,7 @@
     "react-stripe-elements": "^1.6.0",
     "react-tap-event-plugin": "^2.0.1",
     "reactjs-localstorage": "0.0.6",
+    "text-ellipsis": "^1.0.3",
     "typeface-roboto": "0.0.31"
   }
 }

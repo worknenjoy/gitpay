@@ -117,7 +117,7 @@ class Profile extends Component {
             <HashRouter>
               <Switch>
                 <Route exact path="/profile" component={ProfileOptions} />
-                <Route exact path="/profile/tasks" component={TaskList} />
+                <Route exact path="/profile/tasks" component={() => <TaskList user={user} />} />
               </Switch>
             </HashRouter>
           </Grid>
