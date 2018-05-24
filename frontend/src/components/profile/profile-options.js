@@ -94,7 +94,7 @@ class ProfileOptions extends Component {
             </CardContent>
             <CardActions className={classes.cardActions}>
               <Button size="small" color="primary">
-                Configurar pagamento
+                <Link to={`/profile/payment-options`}>Configurar pagamento</Link>
               </Button>
             </CardActions>
           </Card>

@@ -26,6 +26,7 @@ import TopBarContainer from '../../containers/topbar';
 import Bottom from '../bottom/bottom';
 import ProfileOptions from './profile-options';
 import TaskList from '../task/task-list';
+import PaymentOptions from '../payment/payment-options';
 
 const logoGithub = require('../../images/github-logo.png');
 const logoBitbucket = require('../../images/bitbucket-logo.png');
@@ -103,7 +104,6 @@ class Profile extends Component {
 
   }
 
-
   render() {
 
     const { classes } = this.props;
@@ -118,6 +118,7 @@ class Profile extends Component {
               <Switch>
                 <Route exact path="/profile" component={ProfileOptions} />
                 <Route exact path="/profile/tasks" component={() => <TaskList user={user} />} />
+                <Route exact path="/profile/payment-options" component={() => <PaymentOptions user={user} />} />
               </Switch>
             </HashRouter>
           </Grid>
@@ -184,7 +185,7 @@ class Profile extends Component {
                       <ListItemIcon className={classes.icon}>
                         <CreditCard />
                       </ListItemIcon>
-                      <ListItemText classes={{ primary: classes.primary }} inset primary="Pagamento" />
+                      <ListItemText classes={{ primary: classes.primary }} inset primary={<Link to={`/profile/payment-options`}>Configurar pagamento</Link>} />
                     </MenuItem>
                     <MenuItem className={classes.menuItem}>
                       <ListItemIcon className={classes.icon}>

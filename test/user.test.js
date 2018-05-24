@@ -22,7 +22,7 @@ describe("Users", () => {
   describe('findAll User', () => {
     it('should find user', (done) => {
       agent
-        .get('/getUserAll')
+        .get('/users')
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -104,4 +104,30 @@ describe("Users", () => {
         })
     })
   })
+
+  describe("Customer", () => {
+    it('should get customer info', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          console.log('user response');
+          console.log(res.body);
+          agent
+            .get(`/user/customer/`)
+            .send({ id: res.body.id })
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200);
+              expect(res.body).to.equal({})
+              done();
+            })
+        })
+    });
+  });
+
 });

@@ -3,6 +3,7 @@ const passport = require('passport');
 const models = require('../../../loading/loading');
 const userBuild = require('../../users').userBuilds;
 const userSearch = require('../../users').userSearch;
+const userCustomer = require('../../users').userCustomer;
 const Promise = require('bluebird');
 
 
@@ -26,4 +27,15 @@ exports.searchAll = (req, res) => {
             console.log(error);
             res.send(false);
         });
+}
+
+exports.customer = (req, res) => {
+
+  userCustomer(req.body)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log(error);
+    res.send(false);
+  });
 }

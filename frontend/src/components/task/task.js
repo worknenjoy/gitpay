@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Moment from 'react-moment';
 import MomentComponent from 'moment';
 
 import Grid from 'material-ui/Grid';
@@ -34,7 +33,6 @@ import { withStyles } from 'material-ui/styles';
 
 import api from '../../consts';
 import axios from 'axios';
-import Auth from '../../modules/auth';
 
 import marked from 'marked';
 import renderHTML from 'react-render-html';
@@ -272,7 +270,6 @@ class Task extends Component {
 
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.match.params.id}`).then((task) => {
-      console.log(task);
       this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders, company: task.data.metadata.company}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');

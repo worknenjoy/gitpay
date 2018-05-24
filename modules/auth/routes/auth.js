@@ -60,6 +60,7 @@ router.post('/authorize/local', (req, res, next) => {
 });
 
 router.post('/auth/register', controllers.register)
-router.get('/getUserAll', controllers.searchAll)
+router.get('/users', controllers.searchAll)
+router.get('/users/:id/customer', controllers.customer)
 
 module.exports = router;
