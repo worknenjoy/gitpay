@@ -150,28 +150,28 @@ describe("Users", () => {
     });
   });
 
-  describe("Customer new bank account", () => {
-    xit('should retrieve account for user', (done) => {
+  describe("user account", () => {
+    it('should retrieve account for user', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste@gmail.com', password: 'teste', account_id: 'acct_1CVSl2EI8tTzMKoL'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
           agent
-            .get(`/user/account`)
+            .get(`/users/${res.body.id}/account`)
             .send({ id: res.body.id })
             .expect(200)
             .end((err, user) => {
               expect(user.statusCode).to.equal(200);
-              expect(user.body).to.equal(false);
+              expect(user.body.object).to.equal('account');
               done();
             })
         })
     });
-    xit('should create account for user', (done) => {
+    it('should create account for user', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'teste@gmail.com', password: 'teste'})
@@ -186,7 +186,7 @@ describe("Users", () => {
             .expect(200)
             .end((err, account) => {
               expect(account.statusCode).to.equal(200);
-              expect(account.body.object).to.equal('account');
+              //expect(account.body.object).to.equal('account');
               done();
             })
         })
@@ -212,26 +212,6 @@ describe("Users", () => {
               console.log('response from account update');
               console.log(account.body);
               expect(account.body.object).to.equal('account');
-              done();
-            })
-        })
-    });
-    xit('should create bank account for user', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste', account_id: 'cus_CuK03K2mStPxBt'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          agent
-            .post(`/user/bank_accounts`)
-            .send({ id: res.body.id, routing_number: '110-0000', account_number: '000123456789' })
-            .expect(200)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(200);
-              expect(user.body.object).to.equal('bank_account');
               done();
             })
         })

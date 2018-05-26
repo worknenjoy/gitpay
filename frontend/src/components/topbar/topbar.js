@@ -230,10 +230,10 @@ class TopBar extends Component  {
                         Conecte com algumas dessas contas
                       </Typography>
                       <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img width="16" src={logoGithub} /> Github
+                        <img style={{marginRight: 5}} width="16" src={logoGithub} /> Github
                       </Button>
                       <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img width="16" src={logoBitbucket} /> Bitbucket
+                        <img style={{marginRight: 5}} width="16" src={logoBitbucket} /> Bitbucket
                       </Button>
                     </div>
                   </DialogContent>

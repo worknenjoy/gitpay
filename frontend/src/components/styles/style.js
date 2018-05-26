@@ -4,26 +4,26 @@ const styles = (theme) => ({
   },
   appBar: {
     height: '100%',
-      widht: '100%'
+    widht: '100%'
   },
   root: {
     flexGrow: 1,
-      marginTop: 0,
+    marginTop: 0,
   },
   icon: {
     marginTop: -4,
-      marginRight: 5
+    marginRight: 5
   },
   button: {
     margin: theme.spacing.unit,
-      padding: [theme.spacing.unit*2, theme.spacing.unit*4],
-      color: 'white'
+    padding: [theme.spacing.unit*2, theme.spacing.unit*4],
+    color: 'white'
   },
   altButton: {
     margin: [theme.spacing.unit],
-      padding: [theme.spacing.unit/2, theme.spacing.unit*6],
-      color: 'white',
-      fontSize: 12
+    padding: [theme.spacing.unit/2, theme.spacing.unit*6],
+    color: 'white',
+    fontSize: 12
   },
   mainBlock: {
     textAlign: 'center',
@@ -71,17 +71,17 @@ const styles = (theme) => ({
   },
   defaultCenterBlock: {
     textAlign: 'center',
-      padding: 10,
-      color: theme.palette.text.primary
+    padding: 10,
+    color: theme.palette.text.primary
   },
   logoSimple: {
     textAlign: 'left',
-      overflow: 'hidden',
-      paddingTop: 20
+    overflow: 'hidden',
+    paddingTop: 20
   },
   tagline: {
     fontSize: 45,
-      color: 'black'
+    color: 'black'
   }
 })
 

@@ -75,7 +75,9 @@ const styles = theme => ({
     },
   },
   primary: {},
-  icon: {},
+  icon: {
+    marginRight: 5
+  },
 });
 
 class Profile extends Component {
