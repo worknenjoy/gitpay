@@ -18,6 +18,8 @@
 // // // Variables - Styles that are used on more than one component
 // #############################
 
+import Palette from './palette';
+
 const drawerWidth = 260;
 
 const transition = {
@@ -53,13 +55,13 @@ const defaultFont = {
   lineHeight: "1.5em"
 };
 
-const primaryColor = "#9c27b0";
-const warningColor = "#ff9800";
-const dangerColor = "#f44336";
-const successColor = "#4caf50";
-const infoColor = "#00acc1";
-const roseColor = "#e91e63";
-const grayColor = "#999999";
+const primaryColor = Palette.palette.primary.main;
+const warningColor = Palette.palette.primary.main;
+const dangerColor = Palette.palette.primary.main;
+const successColor = Palette.palette.primary.main;
+const infoColor = Palette.palette.primary.main;
+const roseColor = Palette.palette.primary.main;
+const grayColor = Palette.palette.secondary.main;
 
 const primaryBoxShadow = {
   boxShadow:
@@ -87,7 +89,7 @@ const orangeCardHeader = {
   ...warningBoxShadow
 };
 const greenCardHeader = {
-  background: "linear-gradient(60deg, #66bb6a, #43a047)",
+  background: `linear-gradient(60deg, ${Palette.palette.primary.main}, ${Palette.palette.primary.dark})`,
   ...successBoxShadow
 };
 const redCardHeader = {

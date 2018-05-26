@@ -13,6 +13,7 @@ import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
+import { indigo } from 'material-ui/colors';
 
 import api from '../../consts';
 import axios from 'axios';
@@ -57,7 +58,7 @@ const styles = theme => ({
   rootTabs: {
     flexGrow: 1,
     marginBottom: 40,
-    backgroundColor: '#ede4ca'
+    backgroundColor: theme.palette.primary.light
   }
 });
 

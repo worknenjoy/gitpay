@@ -5,8 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { StripeProvider } from 'react-stripe-elements';
-import blue from 'material-ui/colors/blue';
-import green from 'material-ui/colors/green';
+import Palette from '../components/styles/palette';
 import './app.css';
 import ReactGA from 'react-ga';
 
@@ -30,12 +29,7 @@ const store = createStore(
   )
 );
 
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-    secondary: blue
-  },
-});
+const theme = createMuiTheme(Palette);
 
 function App() {
   return (
