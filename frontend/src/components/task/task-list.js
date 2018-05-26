@@ -53,6 +53,11 @@ const styles = theme => ({
     height: 128,
     marginLeft: 64,
     marginTop: 20
+  },
+  rootTabs: {
+    flexGrow: 1,
+    marginBottom: 40,
+    backgroundColor: '#ede4ca'
   }
 });
 
@@ -117,6 +122,7 @@ class TaskList extends Component {
           <Typography component="p" style={{marginBottom: 40}}>
             Tarefas disponíveis para desenvolvimento
           </Typography>
+          <div className={classes.rootTabs}>
           <AppBar position="static" color="default">
             <Tabs
               value={this.state.tab}
@@ -160,6 +166,7 @@ class TaskList extends Component {
               ))}
             </List>
           </TabContainer>
+          </div>
         </Paper>
       </div>
     )

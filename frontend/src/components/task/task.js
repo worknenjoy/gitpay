@@ -10,6 +10,12 @@ import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
 
 import RedeemIcon from 'material-ui-icons/Redeem';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
@@ -22,7 +28,6 @@ import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
 import PaymentDialog from '../payment/payment-dialog';
-import '../checkout/checkout-form';
 
 import StatsCard from '../Cards/StatsCard';
 import RegularCard from '../Cards/RegularCard';
@@ -42,6 +47,9 @@ import Bottom from '../bottom/bottom';
 
 const paymentIcon = require('../../images/payment-icon-alt.png');
 const timeIcon = require('../../images/time-icon.png');
+
+const logoGithub = require('../../images/github-logo.png');
+const logoBitbucket = require('../../images/bitbucket-logo.png');
 
 
 const styles = theme => ({
@@ -251,6 +259,7 @@ class Task extends Component {
       current_price: 0,
       order_price: 0,
       active_tab: 0,
+      assignDialog: false,
       notification: {
         open: false,
         message: "loading"
@@ -266,6 +275,9 @@ class Task extends Component {
     this.handleInputChangeCalendar = this.handleInputChangeCalendar.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleCloseNotification = this.handleCloseNotification.bind(this);
+    this.handleAssignDialogClose = this.handleAssignDialogClose.bind(this);
+    this.handleAssignDialogOpen = this.handleAssignDialogOpen.bind(this);
+    this.handleAssignTask = this.handleAssignTask.bind(this);
   }
 
   componentWillMount() {
@@ -363,6 +375,18 @@ class Task extends Component {
     this.setState({ active_tab: tab });
   }
 
+  handleAssignDialogClose() {
+    this.setState({assignDialog: false});
+  }
+
+  handleAssignDialogOpen() {
+    this.setState({assignDialog: true});
+  }
+
+  handleAssignTask() {
+
+  }
+
   render() {
 
     const { classes } = this.props;
@@ -385,7 +409,7 @@ class Task extends Component {
       if(!orders.length) {
         return [];
       }
-      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `R$ ${item.amount}`, (item.userId ? `${item.userId}` : 'anônimo'), new Date(item.updatedAt).toLocaleDateString()])
+      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `R$ ${item.amount}`, new Date(item.updatedAt).toLocaleDateString()])
     }
 
     return (
@@ -412,9 +436,50 @@ class Task extends Component {
               />
             </div>
             <div className={classes.paper}>
-              <Button size="medium" color="primary" className={classes.altButton}>
+              <Button onClick={this.handleAssignDialogOpen} size="medium" color="primary" className={classes.altButton}>
                 <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
               </Button>
+              <Dialog
+                open={this.state.assignDialog}
+                onClose={this.handleAssignDialogClose}
+                aria-labelledby="form-dialog-title"
+              >
+                { !this.props.logged ? (
+                <div>
+                  <DialogTitle id="form-dialog-title">Você precisa estar logado para realizar esta tarefa</DialogTitle>
+                  <DialogContent>
+                    <div className={classes.mainBlock}>
+                      <Typography type="subheading" gutterBottom noWrap>
+                        Conecte com algumas dessas contas
+                      </Typography>
+                      <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                        <img width="16" src={logoGithub} /> Github
+                      </Button>
+                      <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                        <img width="16" src={logoBitbucket} /> Bitbucket
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </div>
+                  ) : (
+                    <div>
+                      <DialogTitle id="form-dialog-title">Você tem interesse nesta tarefa?</DialogTitle>
+                      <DialogContent>
+                        <Typography type="subheading" gutterBottom>
+                          Você poderá ser associado a tarefa no github para receber a recompensa quando o seu código for integrado
+                        </Typography>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={this.handleAssignDialogClose} color="primary">
+                          Cancelar
+                        </Button>
+                        <Button onClick={this.handleAssignTask} variant="raised" color="secondary" >
+                          Desafio aceito, quero esta tarefa!
+                        </Button>
+                      </DialogActions>
+                    </div>
+                  )}
+              </Dialog>
             </div>
           </Grid>
         </Grid>
@@ -586,7 +651,7 @@ class Task extends Component {
                   content={
                     <Table
                       tableHeaderColor="warning"
-                      tableHead={["Pago", "Status", "Valor", "id do usuário", "Criado em"]}
+                      tableHead={["Pago", "Status", "Valor", "Criado em"]}
                       tableData={this.state.task.orders.length ? displayOrders(this.state.task.orders) : []}
                     />
                   }

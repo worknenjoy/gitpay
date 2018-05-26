@@ -183,9 +183,6 @@ passport.use(
           access_token_secret: accessTokenSecret
         };
 
-        console.log('github profile');
-        console.log(profile);
-
         const data = {
           provider: profile.provider,
           social_id: profile.id,
@@ -223,8 +220,6 @@ passport.use(
               } else {
                 userBuild(data)
                   .then((user) => {
-                    console.log('user created');
-                    console.log(user);
                     mailChimpConnect(profile.emails[0].value);
                     return done(null, user);
                   }).catch((error) => {
@@ -295,8 +290,6 @@ passport.use(
             } else {
               userBuild(data)
                 .then((user) => {
-                  console.log('user created');
-                  console.log(user);
                   mailChimpConnect(profile.emails[0].value);
                   return done(null, user);
                 }).catch((error) => {
