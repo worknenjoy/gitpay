@@ -61,6 +61,10 @@ router.post('/authorize/local', (req, res, next) => {
 
 router.post('/auth/register', controllers.register)
 router.get('/users', controllers.searchAll)
-router.get('/users/:id/customer', controllers.customer)
+router.get('/user/customer', controllers.customer)
+router.get('/users/:id/account', controllers.account)
+router.post('/user/account', controllers.accountCreate)
+router.put('/user/account', controllers.accountUpdate)
+router.post('/user/bank_accounts', controllers.bankAccount)
 
 module.exports = router;

@@ -76,8 +76,8 @@ class Bottom extends Component {
               </div>
               <Typography type="caption">
                 <a href="http://worknenjoy.com">worknenjoy, Inc.</a> <br />
-                Borgergade, 26 sal 4 lej 3 <br />
-                København, Hovedstaden 1300 DK
+                2035 Sunset Lake Road, Suite B-2 <br />
+                Newark, DE 19702 - US
               </Typography>
             </Grid>
           </Grid>

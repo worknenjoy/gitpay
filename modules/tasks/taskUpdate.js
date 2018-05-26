@@ -14,14 +14,12 @@ const createSourceAndCharge = (customer, orderParameters, order, task) => {
       transfer_group: `task_${task.dataValues.id}`,
       metadata: {order_id: order.dataValues.id}
     }).then(function(charge){
-      console.log('charge created');
       order.updateAttributes({
         source: charge.id,
         source_id: card.id,
         paid: charge.paid,
         status: charge.status
       }).then(function(updatedUser) {
-        console.log(charge);
         return charge;
       }).catch((err) => {
         console.log('error to update attributes');

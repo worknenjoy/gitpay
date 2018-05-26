@@ -13,6 +13,7 @@ import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography'
 import HomeIcon from 'material-ui-icons/Home';
 import PlusIcon from 'material-ui-icons/Queue';
+import UserIcon from 'material-ui-icons/AccountCircle';
 import Badge from 'material-ui/Badge';
 import { withStyles } from 'material-ui/styles';
 import api from '../../consts';
@@ -30,13 +31,15 @@ import mainStyles from '../styles/style';
 const classes = (theme) => mainStyles(theme);
 
 const logo = require('../../images/gitpay-logo.png');
+const logoGithub = require('../../images/github-logo.png');
+const logoBitbucket = require('../../images/bitbucket-logo.png');
 
 const styles = {
   logoMain: {
     marginLeft: 180
   },
   logoAlt: {
-    marginLeft: 120
+    marginLeft: 180
   },
   containerBar: {
     display: 'flex',
@@ -48,7 +51,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     marginRight: 30,
-    marginLeft: 30
+    marginLeft: 0
   },
   intro: {
     paddingTop: 20,
@@ -62,7 +65,7 @@ const styles = {
     marginRight: 10
   },
   avatar: {
-    marginLeft: 40
+    marginLeft: 20
   },
   formControl: {
     width: '100%'
@@ -81,7 +84,8 @@ class TopBar extends Component  {
           value: null
         }
       },
-      createTaskDialog: false
+      createTaskDialog: false,
+      signUserDialog: false
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleMenu = this.handleMenu.bind(this);
@@ -93,6 +97,8 @@ class TopBar extends Component  {
     this.handleClickDialogCreateTaskClose = this.handleClickDialogCreateTaskClose.bind(this);
     this.handleCreateTask = this.handleCreateTask.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.handleClickDialogSignUser = this.handleClickDialogSignUser.bind(this);
+    this.handleSignUserDialogClose = this.handleSignUserDialogClose.bind(this);
 
   }
 
@@ -126,6 +132,10 @@ class TopBar extends Component  {
     this.setState({ createTaskDialog: false });
   }
 
+  handleClickDialogSignUser(e) {
+    this.setState(({signUserDialog: true}));
+  }
+
   onChange(e) {
     // Because we named the inputs to match their corresponding values in state, it's
     // super easy to update the state
@@ -146,7 +156,7 @@ class TopBar extends Component  {
       axios.post(api.API_URL + '/tasks/create', {
         url: this.state.task.url.value,
         provider: 'github',
-        userId: this.state.user.id
+        userId: this.props.user ? this.props.user.id : null
       })
         .then((response) => {
           this.props.history.replace({pathname: `/task/${response.data.id}`});
@@ -172,6 +182,10 @@ class TopBar extends Component  {
 
   }
 
+  handleSignUserDialogClose() {
+    this.setState({signUserDialog: false});
+  }
+
   handleProfile() {
     window.location.assign("/#/profile");
   }
@@ -195,9 +209,37 @@ class TopBar extends Component  {
           </Button>
             <img style={isLoggedIn ? styles.logoMain : styles.logoAlt } src={logo} width="140"/>
             <div style={styles.notifications}>
-              <Button onClick={this.handleClickDialogCreateTask} variant="raised" size="medium" color="primary" className={classes.altButton}>
+              <Button style={{marginRight: 10}} onClick={this.handleClickDialogCreateTask} variant="raised" size="medium" color="primary" className={classes.altButton}>
                 <span style={styles.spaceRight}>Criar tarefa</span>  <PlusIcon />
               </Button>
+              {!isLoggedIn &&
+              <div>
+                <Button style={{fontSize: 12}} onClick={this.handleClickDialogSignUser} variant="raised" size="small" color="secondary"
+                        className={classes.altButton}>
+                  <span style={styles.spaceRight}> Entrar</span> <UserIcon />
+                </Button>
+                <Dialog
+                  open={this.state.signUserDialog}
+                  onClose={this.handleSignUserDialogClose}
+                  aria-labelledby="form-dialog-title"
+                  >
+                  <DialogTitle id="form-dialog-title">Entre para a comunidade do Gitpay</DialogTitle>
+                  <DialogContent>
+                    <div className={classes.mainBlock}>
+                      <Typography type="subheading" gutterBottom noWrap>
+                        Conecte com algumas dessas contas
+                      </Typography>
+                      <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                        <img width="16" src={logoGithub} /> Github
+                      </Button>
+                      <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                        <img width="16" src={logoBitbucket} /> Bitbucket
+                      </Button>
+                    </div>
+                  </DialogContent>
+                  </Dialog>
+              </div>
+              }
               <form onSubmit={this.handleCreateTask} action="POST">
                 <Dialog
                   open={this.state.createTaskDialog}
@@ -208,7 +250,7 @@ class TopBar extends Component  {
                   <DialogContent>
                     <DialogContentText>
                       <Typography type="subheading" gutterBottom>
-                        Para inserir uma nova tarefa, cole a URL de um incidente no <strong>Github</strong> ou <strong>Bitbucket</strong>
+                        Para inserir uma nova tarefa, cole a URL de um incidente do <strong>Github</strong>
                       </Typography>
                     </DialogContentText>
                     <FormControl style={styles.formControl} error={this.state.task.url.error}>
@@ -240,9 +282,6 @@ class TopBar extends Component  {
 
               { isLoggedIn &&
               <div style={styles.notifications}>
-                <Badge badgeContent={4} color="secondary">
-                  <NotificationIcon color="primary"/>
-                </Badge>
                 {user.picture_url ?
                   (<Avatar
                     alt={user.username}
@@ -288,3 +327,10 @@ class TopBar extends Component  {
 };
 
 export default withRouter(withStyles(styles)(TopBar));
+
+/* notification badge
+
+<Badge badgeContent={4} color="secondary">
+  <NotificationIcon color="primary"/>
+</Badge>
+*/

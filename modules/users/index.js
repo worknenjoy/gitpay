@@ -3,11 +3,19 @@ const userSearch = require('./userSearch');
 const userBuilds = require('./userBuilds');
 const userUpdate = require('./userUpdate');
 const userCustomer = require('./userCustomer');
+const userAccount = require('./userAccount');
+const userAccountCreate = require('./userAccountCreate');
+const userAccountUpdate = require('./userAccountUpdate');
+const userBankAccount = require('./userBankAccount');
 
 module.exports = {
   userExists: userExists,
   userSearch: userSearch,
   userBuilds: userBuilds,
   userUpdate: userUpdate,
-  userCustomer: userCustomer
+  userAccount: userAccount,
+  userAccountCreate: userAccountCreate,
+  userAccountUpdate: userAccountUpdate,
+  userCustomer: userCustomer,
+  userBankAccount: userBankAccount
 }

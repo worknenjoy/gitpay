@@ -61,17 +61,6 @@ const styles = theme => ({
     width: '100%',
     textAlign: 'center'
   },
-  avatar: {
-
-  },
-  bigAvatar: {
-    width: 80,
-    height: 80
-  },
-  smallAvatar: {
-    width: 32,
-    height: 32
-  },
   menuContainer: {
     marginBottom: 40,
     marginRight: 20,
@@ -106,8 +95,7 @@ class Profile extends Component {
 
   render() {
 
-    const { classes } = this.props;
-    const user = this.props.user;
+    const { classes, user, account } = this.props;
 
     return (
       <div>

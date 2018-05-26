@@ -12,6 +12,7 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
+import AccountContainer from '../../containers/account';
 
 import api from '../../consts';
 import axios from 'axios';
@@ -62,8 +63,7 @@ class PaymentOptions extends Component {
     super(props);
     this.state = {
       tab: 0,
-      cards: [],
-      accounts: []
+      cards: []
     }
 
     this.handleTabChange = this.handleTabChange.bind(this);
@@ -101,87 +101,7 @@ class PaymentOptions extends Component {
           <Typography component="p" style={{marginBottom: 40}}>
             Aqui você configura seus pagamentos e suas contas bancárias para recebimento
           </Typography>
-          <AppBar position="static" color="default">
-            <Tabs
-              value={this.state.tab}
-              onChange={this.handleTabChange}
-              scrollable
-              scrollButtons="on"
-              indicatorColor="primary"
-              textColor="primary"
-            >
-              <Tab value={0} label="Meus cartões" icon={<RedeemIcon />} />
-              <Tab value={1} label="Minhas contas bancárias" icon={<ShoppingBasket />} />
-            </Tabs>
-          </AppBar>
-          <TabContainer>
-            { activeTab == 0 &&
-            <div>
-              <Typography variant="subheading">
-                { this.props.user.customer_id ? `Costumer id: ${this.props.user.customer_id}` : 'Sem cartão adicionado'}
-              </Typography>
-              <List component="nav">
-                { this.state.cards.map((item, key) => (
-                  <ListItem
-                    key={key}
-                    button
-                    onClick={() => this.handleClickListItem(item.id)}
-                  >
-                    <Chip label={item.status} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
-                    <Chip label={item.deadline ? MomentComponent(item.deadline).fromNow() : 'sem data definida'} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
-                    <Avatar>
-                      <ItemIcon />
-                    </Avatar>
-                    <ListItemText id={item.id}
-                                  primary={TextEllipsis(item.url, 50)}
-                                  secondary={`R$ ${item.value}`}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton aria-label="provider">
-                        <a target="_blank" href={item.url}>
-                          <img width="24" src={logoGithub} className={classes.icon} />
-                        </a>
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-            </div>
-            }
-            { activeTab == 1 &&
-            <div>
-              <Typography variant="subheading">
-                { this.props.user.customer_id ? `Costumer id: ${this.props.user.customer_id}` : 'Sem cartão adicionado'}
-              </Typography>
-              <List component="nav">
-                { this.state.accounts.map((item, key) => (
-                  <ListItem
-                    key={key}
-                    button
-                    onClick={() => this.handleClickListItem(item.id)}
-                  >
-                    <Chip label={item.status} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
-                    <Chip label={item.deadline ? MomentComponent(item.deadline).fromNow() : 'sem data definida'} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
-                    <Avatar>
-                      <ItemIcon />
-                    </Avatar>
-                    <ListItemText id={item.id}
-                                  primary={TextEllipsis(item.url, 50)}
-                                  secondary={`R$ ${item.value}`}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton aria-label="provider">
-                        <a target="_blank" href={item.url}>
-                          <img width="24" src={logoGithub} className={classes.icon} />
-                        </a>
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-            </div>
-            }
-          </TabContainer>
+          <AccountContainer />
         </Paper>
       </div>
     )

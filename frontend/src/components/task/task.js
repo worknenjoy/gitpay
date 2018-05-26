@@ -413,11 +413,6 @@ class Task extends Component {
             </div>
             <div className={classes.paper}>
               <Button size="medium" color="primary" className={classes.altButton}>
-                <span className={classes.spaceRight}>Convidar freelancer</span>  <AddIcon />
-              </Button>
-            </div>
-            <div className={classes.paper}>
-              <Button size="medium" color="primary" className={classes.altButton}>
                 <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
               </Button>
             </div>
@@ -455,6 +450,11 @@ class Task extends Component {
                         </Typography>
                         <div className={classes.chipContainer}>
                           <Chip
+                            label=" R$ 20"
+                            className={classes.chip}
+                            onClick={() => this.pickTaskPrice(20)}
+                          />
+                          <Chip
                             label=" R$ 50"
                             className={classes.chip}
                             onClick={() => this.pickTaskPrice(50)}
@@ -473,11 +473,6 @@ class Task extends Component {
                             label=" R$ 300"
                             className={classes.chip}
                             onClick={() => this.pickTaskPrice(300)}
-                          />
-                          <Chip
-                            label=" R$ 500"
-                            className={classes.chip}
-                            onClick={() => this.pickTaskPrice(500)}
                           />
                         </div>
                         <form className={classes.formPayment} action="POST">

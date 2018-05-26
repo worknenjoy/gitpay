@@ -1,15 +1,13 @@
 'use strict'
 const passport = require('passport');
 const models = require('../../../loading/loading');
-const userBuild = require('../../users').userBuilds;
-const userSearch = require('../../users').userSearch;
-const userCustomer = require('../../users').userCustomer;
+const user = require('../../users');
 const Promise = require('bluebird');
 
 
 exports.register = (req, res) => {
 
-    userBuild(req.body)
+    user.userBuilds(req.body)
         .then((data) => {
             res.send(data);
         }).catch((error) => {
@@ -20,7 +18,7 @@ exports.register = (req, res) => {
 
 exports.searchAll = (req, res) => {
 
-    userSearch()
+    user.userSearch()
         .then((data) => {
             res.send(data);
         }).catch((error) => {
@@ -30,8 +28,47 @@ exports.searchAll = (req, res) => {
 }
 
 exports.customer = (req, res) => {
+  user.userCustomer(req.body)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log(error);
+    res.send(false);
+  });
+}
 
-  userCustomer(req.body)
+exports.account = (req, res) => {
+  user.userAccount(req.params)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log(error);
+    res.send(false);
+  });
+}
+
+exports.accountCreate = (req, res) => {
+  user.userAccountCreate(req.body)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log(error);
+    res.send(false);
+  });
+}
+
+exports.accountUpdate = (req, res) => {
+  user.userAccountUpdate(req.body)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log(error);
+    res.send(false);
+  });
+}
+
+exports.bankAccount = (req, res) => {
+    user.userBankAccount(req.body)
     .then((data) => {
       res.send(data);
     }).catch((error) => {
