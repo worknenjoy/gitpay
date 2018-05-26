@@ -41,7 +41,7 @@ const styles = theme => ({
   }
 });
 
-class PaymentOptions extends Component {
+class Preferences extends Component {
 
   constructor(props) {
     super(props);
@@ -71,20 +71,25 @@ class PaymentOptions extends Component {
       <div>
         <Paper className={classes.paper} elevation={0}>
           <Typography variant="headline" component="h3">
-            Pagamento
+            Preferências
           </Typography>
           <Typography component="p" style={{marginBottom: 40}}>
-            Aqui você configura seus pagamentos e suas contas bancárias para recebimento
+            Aqui você configura algumas preferências para a sua conta
           </Typography>
-          <AccountContainer />
+          <Typography component="p" style={{marginBottom: 10}}>
+            <strong>Língua:</strong> Português
+          </Typography>
+          <Typography component="p" style={{marginBottom: 40}}>
+            <strong>Moeda:</strong> BRL (Real brasileiro)
+          </Typography>
         </Paper>
       </div>
     )
   }
 }
 
-PaymentOptions.propTypes = {
+Preferences.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(PaymentOptions));
+export default withRouter(withStyles(styles)(Preferences));

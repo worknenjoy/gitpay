@@ -19,14 +19,13 @@ import nameInitials from 'name-initials';
 import { withStyles } from 'material-ui/styles';
 
 import api from '../../consts';
-import axios from 'axios';
-import Auth from '../../modules/auth';
 
 import TopBarContainer from '../../containers/topbar';
 import Bottom from '../bottom/bottom';
 import ProfileOptions from './profile-options';
 import TaskList from '../task/task-list';
 import PaymentOptions from '../payment/payment-options';
+import Preferences from '../profile/preferences';
 
 const logoGithub = require('../../images/github-logo.png');
 const logoBitbucket = require('../../images/bitbucket-logo.png');
@@ -83,19 +82,41 @@ class Profile extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      selected: null
+    }
   }
 
   componentWillMount() {
+    this.setActive(this.props.location.pathname);
+  }
 
+  setActive(path) {
+    switch (path) {
+      case '/profile/tasks':
+        this.setState({selected: 0});
+        break;
+      case '/profile/payment-options':
+        this.setState({selected: 1});
+        break;
+      case '/profile/preferences':
+        this.setState({selected: 2});
+        break;
+      default:
+        this.setState({selected: null});
+        break;
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-
+    if(this.props.location.pathname !== nextProps.location.pathname) {
+      this.setActive(nextProps.location.pathname);
+    }
   }
 
   render() {
 
-    const { classes, user, account } = this.props;
+    const { classes, user } = this.props;
 
     return (
       <div>
@@ -107,6 +128,7 @@ class Profile extends Component {
                 <Route exact path="/profile" component={ProfileOptions} />
                 <Route exact path="/profile/tasks" component={() => <TaskList user={user} />} />
                 <Route exact path="/profile/payment-options" component={() => <PaymentOptions user={user} />} />
+                <Route exact path="/profile/preferences" component={() => <Preferences user={user} />} />
               </Switch>
             </HashRouter>
           </Grid>
@@ -163,23 +185,23 @@ class Profile extends Component {
               <div className={classes.row}>
                 <Paper className={classes.menuContainer}>
                   <MenuList>
-                    <MenuItem className={classes.menuItem}>
+                    <MenuItem className={classes.menuItem} selected={this.state.selected === 0}>
                       <ListItemIcon className={classes.icon}>
                         <LibraryBooks />
                       </ListItemIcon>
                       <ListItemText classes={{ primary: classes.primary }} inset primary={<Link to={`/profile/tasks`}>Tarefas</Link>} />
                     </MenuItem>
-                    <MenuItem className={classes.menuItem}>
+                    <MenuItem className={classes.menuItem} selected={this.state.selected === 1}>
                       <ListItemIcon className={classes.icon}>
                         <CreditCard />
                       </ListItemIcon>
                       <ListItemText classes={{ primary: classes.primary }} inset primary={<Link to={`/profile/payment-options`}>Configurar pagamento</Link>} />
                     </MenuItem>
-                    <MenuItem className={classes.menuItem}>
+                    <MenuItem className={classes.menuItem} selected={this.state.selected === 2}>
                       <ListItemIcon className={classes.icon}>
                         <Tune />
                       </ListItemIcon>
-                      <ListItemText classes={{ primary: classes.primary }} inset primary="Preferências" />
+                      <ListItemText classes={{ primary: classes.primary }} inset primary={<Link to="/profile/preferences">Preferências</Link>} />
                     </MenuItem>
                   </MenuList>
                 </Paper>

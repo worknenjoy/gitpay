@@ -12,11 +12,9 @@ import Button from 'material-ui/Button';
 import Chip from 'material-ui/Chip';
 import Typography from 'material-ui/Typography';
 import Slide from 'material-ui/transitions/Slide';
-import Input, { InputAdornment } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import Input from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
 import Const from '../../consts';
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import MailIcon from 'material-ui-icons/Mail';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;

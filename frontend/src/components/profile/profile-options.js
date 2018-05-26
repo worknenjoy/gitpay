@@ -114,7 +114,9 @@ class ProfileOptions extends Component {
             </CardContent>
             <CardActions className={classes.cardActions}>
               <Button size="small" color="primary">
-                Configurar preferências
+                <Link to="/profile/preferences">
+                  Configurar preferências
+                </Link>
               </Button>
             </CardActions>
           </Card>

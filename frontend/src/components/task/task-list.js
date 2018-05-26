@@ -12,6 +12,7 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
+import Tooltip from 'material-ui/Tooltip';
 
 import api from '../../consts';
 import axios from 'axios';
@@ -19,7 +20,6 @@ import { withStyles } from 'material-ui/styles';
 
 import RedeemIcon from 'material-ui-icons/Redeem';
 import ItemIcon from 'material-ui-icons/AccountBox';
-import DeleteIcon from 'material-ui-icons/Delete';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
 
 const logoGithub = require('../../images/github-logo.png');
@@ -145,13 +145,15 @@ class TaskList extends Component {
                 </Avatar>
                 <ListItemText id={item.id}
                   primary={TextEllipsis(item.url, 50)}
-                  secondary={`R$ ${item.value}`}
+                  secondary={item.value ? `R$ ${item.value}` : 'sem valor'}
                 />
                 <ListItemSecondaryAction>
                   <IconButton aria-label="provider">
-                    <a target="_blank" href={item.url}>
-                      <img width="24" src={logoGithub} className={classes.icon} />
-                    </a>
+                    <Tooltip id="tooltip-fab" title="Ver no Github" placement="right">
+                      <a target="_blank" href={item.url}>
+                        <img width="24" src={logoGithub} className={classes.icon} />
+                      </a>
+                    </Tooltip>
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
