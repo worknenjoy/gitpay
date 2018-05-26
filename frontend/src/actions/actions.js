@@ -14,12 +14,23 @@ const LOGOUT_COMPLETED = 'LOGOUT_COMPLETED';
 const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED';
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS';
 const FETCH_USER_ACCOUNT_ERROR = 'FETCH_USER_ACCOUNT_ERROR';
+
 const CREATE_USER_ACCOUNT_REQUESTED = 'CREATE_USER_ACCOUNT';
 const CREATE_USER_ACCOUNT_SUCCESS = 'CREATE_USER_ACCOUNT_SUCCESS';
 const CREATE_USER_ACCOUNT_ERROR = 'CREATE_USER_ACCOUNT_ERROR';
 const UPDATE_USER_ACCOUNT_REQUESTED = 'UPDATE_USER_ACCOUNT_REQUESTED';
 const UPDATE_USER_ACCOUNT_SUCCESS = 'UPDATE_USER_ACCOUNT_SUCCESS';
 const UPDATE_USER_ACCOUNT_ERROR = 'UPDATE_USER_ACCOUNT_ERROR';
+
+const UPDATE_TASK_REQUESTED = 'UPDATE_TASK_REQUESTED';
+const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS';
+const UPDATE_TASK_ERROR = 'UPDATE_TASK_ERROR';
+
+/*
+*
+* Notification
+*
+ */
 
 const addNotification = (message) => {
   return { type: ADD_NOTIFICATION, text: message, open: true}
@@ -28,6 +39,12 @@ const addNotification = (message) => {
 const closeNotification = () => {
   return { type: CLOSE_NOTIFICATION }
 }
+
+/*
+ *
+ * Login
+ *
+ */
 
 const loggedInRequested = () => {
   return { type: LOGGED_IN_REQUESTED, logged: false, completed: false }
@@ -40,6 +57,12 @@ const loggedInSuccess = (user) => {
 const loggedInError = () => {
   return { type: LOGGED_IN_ERROR, logged: false, completed: true }
 }
+
+/*
+ *
+ * Account
+ *
+ */
 
 const fetchUserAccountRequested = () => {
   return { type: FETCH_USER_ACCOUNT_REQUESTED, completed: false }
@@ -75,6 +98,24 @@ const updateUserAccountSuccess = (account) => {
 
 const updateUserAccountError = (error) => {
   return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error }
+}
+
+/*
+ *
+ * Task
+ *
+ */
+
+const updateTaskRequested = () => {
+  return { type: UPDATE_TASK_REQUESTED, completed: false }
+}
+
+const updateTaskSuccess = (task) => {
+  return { type: UPDATE_TASK_SUCCESS, completed: true, task: task }
+}
+
+const updateTaskError = (error) => {
+  return { type: UPDATE_TASK_SUCCESS, completed: true, error: error }
 }
 
 const loggedIn = () => {
@@ -192,6 +233,23 @@ const updateAccount = (accountData) => {
   }
 };
 
+const updateTask = (task) => {
+  return (dispatch, getState) => {
+    const userId = getState().loggedIn.user.id;
+    if(!userId) {
+      dispatch(addNotification('Você precisa estar logado'));
+      return dispatch(updateTaskError({ message: 'Você precisa estar logado' }));
+    }
+    axios.put(api.API_URL + '/tasks/update', task).then((response) => {
+      dispatch(addNotification('Tarefa atualizada com sucesso'));
+      return dispatch(updateTaskSuccess(response));
+    }).catch((error) => {
+      dispatch(addNotification('Erro ao atualizar tarefa'));
+      return dispatch(updateTaskError(error));
+    });
+  }
+}
+
 export {
   ADD_NOTIFICATION,
   CLOSE_NOTIFICATION,
@@ -209,12 +267,16 @@ export {
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
   UPDATE_USER_ACCOUNT_ERROR,
+  UPDATE_TASK_REQUESTED,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_ERROR,
   fetchAccount,
   createAccount,
   updateAccount,
   addNotification,
   closeNotification,
   loggedIn,
-  logOut
+  logOut,
+  updateTask
 };
 

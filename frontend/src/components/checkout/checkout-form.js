@@ -79,8 +79,6 @@ class CheckoutForm extends Component {
               userId: this.state.userId
             }]
           }).then((response) => {
-            console.log('sucessfull response');
-            console.log(response);
             this.props.onClose();
             console.log(this.props);
             this.props.history.replace({pathname: `/task/${this.props.match.params.id}/orders`, state: {

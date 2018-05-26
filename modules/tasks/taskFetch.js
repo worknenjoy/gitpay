@@ -6,7 +6,10 @@ const requestPromise = require('request-promise');
 module.exports = Promise.method(function taskFetch(taskParams) {
   return models.Task
     .findOne(
-      {where: {id: taskParams.id}, include: [models.User, models.Order]}
+      {where: {id: taskParams.id}, include: [models.User, models.Order, {
+        model: models.Assign,
+        include: [models.User]
+      }]}
     )
     .then(async (data) => {
       const githubUrl = data.dataValues.url;
@@ -41,7 +44,8 @@ module.exports = Promise.method(function taskFetch(taskParams) {
           projectName: projectName,
           issue: issueDataJson
         },
-        orders: data.dataValues.Orders
+        orders: data.dataValues.Orders,
+        assigns: data.dataValues.Assigns
       };
 
     }).catch((error) => {

@@ -66,7 +66,7 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
       include: [models.User, models.Order]
     }).then((data) => {
       return models.Task.findOne(
-        {where: {id: taskParameters.id}, include: [models.User, models.Order]}
+        {where: {id: taskParameters.id}, include: [models.User, models.Order, models.Assign]}
       ).then((task) => {
         if (taskParameters.Orders) {
           task.createOrder(taskParameters.Orders[0]).then((order) => {
@@ -87,6 +87,12 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
             } else {
               return createCustomer(orderParameters, order, task);
             }
+          }).catch(error => console.log(error));
+
+        }
+        if (taskParameters.Assigns) {
+          task.createAssign(taskParameters.Assigns[0]).then((assign) => {
+            return assign;
           }).catch(error => console.log(error));
 
         }

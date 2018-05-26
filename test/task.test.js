@@ -101,7 +101,7 @@ describe("tasks", () => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
       const order = {
-        source_id: 'tok_1CPcpBBrSjgsps2DzfcePOYA',
+        source_id: 'tok_1CRJW7BrSjgsps2DKHYRmjok',
         currency: 'BRL',
         amount: 200,
         email: 'foo@mail.com'
@@ -136,7 +136,7 @@ describe("tasks", () => {
           const userId = res.body.id;
           const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
           const order = {
-            source_id: 'tok_1CPcpBBrSjgsps2DzfcePOYA',
+            source_id: 'tok_1CRJT0BrSjgsps2Dw6mDmAnv',
             currency: 'BRL',
             amount: 200,
             email: 'foo@mail.com',
@@ -155,11 +155,41 @@ describe("tasks", () => {
                   expect(order[0].dataValues.userId).to.equal(userId);
                   //expect(order[0].dataValues.paid).to.equal(true);
                   //expect(order[0].dataValues.status).to.equal("succeeded");
-                  models.User.findOne({where: {id: userId}}).then((user) => {
-                    //expect(user.dataValues.customer_id).to.exist;
-                    done();
-                  });
+                  done();
                 });
+              })
+          }).catch(e => {
+            console.log('error create task');
+            console.log(e);
+          })
+        })
+    });
+
+    it('should update task with associated user assigned', (done) => {
+
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          const assigned = {
+            userId: userId
+          };
+
+          models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
+            agent
+              .put("/tasks/update")
+              .send({id: task.dataValues.id, value: 200, Assigns: [assigned]})
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                console.log('assign result');
+                console.log(res.body);
+                expect(res.body.value).to.equal('200');
+                done();
               })
           }).catch(e => {
             console.log('error create task');

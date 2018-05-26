@@ -15,7 +15,10 @@ import {
   CREATE_USER_ACCOUNT_ERROR,
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
-  UPDATE_USER_ACCOUNT_ERROR
+  UPDATE_USER_ACCOUNT_ERROR,
+  UPDATE_TASK_REQUESTED,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_ERROR,
 } from '../actions/actions'
 
 const notification = (state = {open: false}, action) => {
@@ -70,11 +73,25 @@ const account = (state = {account: {}, completed: true, error: {}}, action) => {
   }
 }
 
+const task = (state = {completed: true, error: {}, task: {}}, action) => {
+  switch (action.type) {
+    case UPDATE_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case UPDATE_TASK_SUCCESS:
+      return { ...state, completed: true, task: action.task.data };
+    case UPDATE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error };
+    default:
+      return state;
+  }
+}
+
 
 const reducers = combineReducers({
   notification,
   loggedIn,
-  account
+  account,
+  task
 })
 
 export default reducers;

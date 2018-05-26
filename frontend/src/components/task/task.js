@@ -23,6 +23,7 @@ import AddIcon from 'material-ui-icons/Add';
 import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
 import DateIcon from 'material-ui-icons/DateRange';
 import CalendarIcon from 'material-ui-icons/PermContactCalendar';
+import GroupWorkIcon from 'material-ui-icons/GroupAdd';
 
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
@@ -282,7 +283,7 @@ class Task extends Component {
 
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.match.params.id}`).then((task) => {
-      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders, company: task.data.metadata.company}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
+      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders, assigns: task.data.assigns, company: task.data.metadata.company}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
@@ -384,7 +385,13 @@ class Task extends Component {
   }
 
   handleAssignTask() {
-
+    this.props.updateTask({
+      id: this.props.match.params.id,
+      Assigns: [{
+        userId: this.props.user.id
+      }]
+    });
+    this.setState({assignDialog: false, active_tab: 2});
   }
 
   render() {
@@ -409,7 +416,17 @@ class Task extends Component {
       if(!orders.length) {
         return [];
       }
-      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `R$ ${item.amount}`, new Date(item.updatedAt).toLocaleDateString()])
+      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `R$ ${item.amount}`, MomentComponent(item.updatedAt).fromNow()])
+    }
+
+    const displayAssigns = (assign) => {
+      if(!assign.length) {
+        return [];
+      }
+      const items = assign.map((item, i) => {
+        return [`${item.User.name}` || 'Sem nome', MomentComponent(item.updatedAt).fromNow()]
+      });
+      return items;
     }
 
     return (
@@ -497,6 +514,7 @@ class Task extends Component {
                   >
                     <Tab label="Tarefa" icon={<RedeemIcon />} />
                     <Tab label="Pedidos" icon={<ShoppingBasket />} />
+                    <Tab label="Interessados" icon={<GroupWorkIcon />} />
                   </Tabs>
                 </AppBar>
                 {activeTab === 0 &&
@@ -656,6 +674,21 @@ class Task extends Component {
                     />
                   }
                 />
+                </div>}
+                {activeTab === 2 &&
+                <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
+                  <RegularCard
+                    headerColor="green"
+                    cardTitle="Interessados em realizar esta tarefa"
+                    cardSubtitle="Estes são usuários interessados em realizar esta tarefa"
+                    content={
+                      <Table
+                        tableHeaderColor="warning"
+                        tableHead={["Nome", "Criado em"]}
+                        tableData={this.state.task.assigns.length ? displayAssigns(this.state.task.assigns) : []}
+                      />
+                    }
+                  />
                 </div>}
               </div>
             </Grid>

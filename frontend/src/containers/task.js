@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Task from '../components/task/task'
-import { loggedIn, logOut } from '../actions/actions'
+import { loggedIn, updateTask } from '../actions/actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -13,7 +13,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     isLogged: () => {
-      dispatch(loggedIn())
+      dispatch(loggedIn());
+    },
+    updateTask: (task) => {
+      dispatch(updateTask(task));
     }
   }
 }
