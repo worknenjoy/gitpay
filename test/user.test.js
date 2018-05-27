@@ -23,7 +23,7 @@ describe("Users", () => {
     it('should find user', (done) => {
       agent
         .get('/users')
-        .expect('Content-Type', /json/)
+        .set('Accept', 'application/json')
         .expect(200)
         .end((err, res) => {
           console.log(res, err)
