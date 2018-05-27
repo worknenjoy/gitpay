@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
-  secret: "GITPAYNOREGRESS"
+  secret: process.env.SECRET_PHRASE
 }));
 app.use(passport.initialize());
 app.use(passport.session());
