@@ -1,10 +1,11 @@
 'use strict'
 
 const assert = require('assert')
-const request = require('supertest')
+// const request = require('supertest')
+const request = require('supertest-session')
 const expect = require('chai').expect
 const api = require('../server');
-const agent = request.agent(api);
+const agent = request(api);
 const models = require('../loading/loading');
 
 describe("Users", () => {

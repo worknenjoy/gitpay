@@ -882,7 +882,7 @@ cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
-cookiejar@^2.1.0:
+cookiejar@^2.0.1, cookiejar@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.1.tgz#41ad57b1b555951ec171412a81942b1e8200d34a"
 
@@ -5273,7 +5273,16 @@ superagent@^3.7.0:
     qs "^6.5.1"
     readable-stream "^2.3.5"
 
-supertest@^3.0.0:
+supertest-session@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/supertest-session/-/supertest-session-3.3.0.tgz#37a71541e054db307bbbfbfec8335909a6e6c913"
+  dependencies:
+    cookiejar "^2.0.1"
+    methods "^1.1.1"
+    object-assign "^4.0.1"
+    supertest "^3.1.0"
+
+supertest@^3.0.0, supertest@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/supertest/-/supertest-3.1.0.tgz#f9ebaf488e60f2176021ec580bdd23ad269e7bc6"
   dependencies:
