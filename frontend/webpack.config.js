@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const babiliPlugin = require('babili-webpack-plugin')
 
 module.exports = {
 	entry: './src/index.js',
@@ -18,7 +19,8 @@ module.exports = {
 		}
 	},
 	plugins: [
-		new ExtractTextPlugin('app.css')
+    new ExtractTextPlugin('app.css'),
+    new babiliPlugin()
 	],
 	module: {
 		loaders: [{

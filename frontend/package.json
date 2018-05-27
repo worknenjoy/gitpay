@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --colors --inline --hot",
     "test": "",
-    "production": "webpack --progress -p"
+    "production": "webpack --progress"
   },
   "proxy": "http://localhost:3000",
   "keywords": [],
@@ -39,6 +39,7 @@
     "webpack-dev-server": "^2.5.0"
   },
   "dependencies": {
+    "babili-webpack-plugin": "^0.1.2",
     "classnames": "^2.2.5",
     "history": "^4.7.2",
     "is-github-url": "^1.2.2",
