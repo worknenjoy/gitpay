@@ -7,6 +7,7 @@ before_script:
   - psql -c 'create database gitpay_test;' -U postgres
   - psql -c 'create database gitpay_dev;' -U postgres
   - npm run migrate
+  - npm run migrate-test
 node_js:
   - "7.8.0"
 #before_install:
