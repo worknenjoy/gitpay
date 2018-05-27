@@ -1,5 +1,9 @@
 'use strict'
 
+if(process.env.NODE_ENV != 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -25,14 +29,14 @@ router.get('/authorize/github', passport.authenticate('github', { scope: ['email
 router.get('/callback/github',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('http://localhost:8082/#/token/' + req.user.token);
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token);
   });
 
 router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'], accessType: 'offline' }));
 router.get('/callback/bitbucket',
   passport.authenticate('bitbucket', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('http://localhost:8082/#/token/' + req.user.token);
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token);
   });
 
 

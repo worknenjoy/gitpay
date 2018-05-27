@@ -59,10 +59,10 @@ const mailchimp = {
 }
 
 const oauthCallbacks = {
-  googleCallbackUrl: 'http://localhost:3000/callback/google',
-  githubCallbackUrl: 'http://localhost:3000/callback/github',
-  facebookCallbackUrl: 'http://localhost:3000/callback/facebook',
-  bitbucketCallbackUrl: 'http://localhost:3000/callback/bitbucket'
+  googleCallbackUrl: `${process.env.API_HOST}/callback/google`,
+  githubCallbackUrl: `${process.env.API_HOST}/callback/github`,
+  facebookCallbackUrl: `${process.env.API_HOST}/callback/facebook`,
+  bitbucketCallbackUrl: `${process.env.API_HOST}/callback/bitbucket`
 }
 
 module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, bitbucket, oauthCallbacks, mailchimp }
