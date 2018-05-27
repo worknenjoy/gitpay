@@ -12,7 +12,8 @@
     "rollback": "node migrate.js prev",
     "reset": "node migrate.js reset-hard",
     "reset-test": "env NODE_ENV=test node migrate.js reset-hard",
-    "start": "nodemon ./server.js --ignore '/frontend/*'",
+    "start": "node ./server.js",
+    "start:dev": "nodemon ./server.js --ignore '/frontend/*'",
     "test": "env NODE_ENV=test ./node_modules/.bin/mocha test/*.test.js",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css"
   },
