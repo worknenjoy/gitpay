@@ -26,7 +26,6 @@ describe("Users", () => {
         .set('Accept', 'application/json')
         .expect(200)
         .end((err, res) => {
-          console.log(res, err)
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
           done();
@@ -34,7 +33,7 @@ describe("Users", () => {
     })
   })
 
-  describe.skip('register User', () => {
+  describe('register User', () => {
     it('should register', (done) => {
       agent
         .post('/auth/register')
@@ -49,7 +48,7 @@ describe("Users", () => {
     })
   })
 
-  describe.skip('login User Local', () => {
+  describe('login User Local', () => {
     it('should user local', (done) => {
       agent
         .post('/authorize/local')
@@ -64,7 +63,7 @@ describe("Users", () => {
     })
   })
 
-  describe.skip('login User social networks', () => {
+  describe('login User social networks', () => {
     it('should user authenticated', (done) => {
       agent
         .get('/authenticated')
@@ -106,7 +105,7 @@ describe("Users", () => {
     })
   })
 
-  describe.skip("Customer get", () => {
+  describe("Customer get", () => {
     it('should try get customer info with no customer', (done) => {
       agent
         .post('/auth/register')
@@ -151,7 +150,7 @@ describe("Users", () => {
     });
   });
 
-  describe.skip("user account", () => {
+  describe("user account", () => {
     it('should retrieve account for user', (done) => {
       agent
         .post('/auth/register')
