@@ -4,11 +4,13 @@ const assert = require('assert')
 // const request = require('supertest')
 const request = require('supertest-session')
 const expect = require('chai').expect
-const api = require('../server');
-const agent = request(api);
-const models = require('../loading/loading');
+const api = require('../server')
+const models = require('../loading/loading')
 
 describe("Users", () => {
+
+  let agent = null
+  agent = request(api)
 
   before(() => {
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
