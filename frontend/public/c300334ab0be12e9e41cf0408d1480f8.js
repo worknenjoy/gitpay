@@ -18,15 +18,19 @@ var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var HardwareKeyboardArrowUp = function HardwareKeyboardArrowUp(props) {
+/**
+ * @ignore - internal component.
+ */
+var _ref = _react2.default.createElement('path', { d: 'M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z' });
+
+var RadioButtonChecked = function RadioButtonChecked(props) {
   return _react2.default.createElement(
     _SvgIcon2.default,
     props,
-    _react2.default.createElement('path', { d: 'M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z' })
+    _ref
   );
 };
-HardwareKeyboardArrowUp = (0, _pure2.default)(HardwareKeyboardArrowUp);
-HardwareKeyboardArrowUp.displayName = 'HardwareKeyboardArrowUp';
-HardwareKeyboardArrowUp.muiName = 'SvgIcon';
+RadioButtonChecked = (0, _pure2.default)(RadioButtonChecked);
+RadioButtonChecked.muiName = 'SvgIcon';
 
-exports.default = HardwareKeyboardArrowUp;
+exports.default = RadioButtonChecked;
