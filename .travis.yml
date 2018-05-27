@@ -6,8 +6,6 @@ services:
 before_script:
   - psql -c 'create database gitpay_test;' -U postgres
   - psql -c 'create database gitpay_dev;' -U postgres
-  - npm install
-  - npm run migrate
   - npm run migrate-test
 node_js:
   - "7.8.0"
