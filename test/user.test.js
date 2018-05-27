@@ -33,7 +33,7 @@ describe("Users", () => {
     })
   })
 
-  describe('register User', () => {
+  describe.skip('register User', () => {
     it('should register', (done) => {
       agent
         .post('/auth/register')
@@ -48,7 +48,7 @@ describe("Users", () => {
     })
   })
 
-  describe('login User Local', () => {
+  describe.skip('login User Local', () => {
     it('should user local', (done) => {
       agent
         .post('/authorize/local')
@@ -63,7 +63,7 @@ describe("Users", () => {
     })
   })
 
-  describe('login User social networks', () => {
+  describe.skip('login User social networks', () => {
     it('should user authenticated', (done) => {
       agent
         .get('/authenticated')
@@ -105,7 +105,7 @@ describe("Users", () => {
     })
   })
 
-  describe("Customer get", () => {
+  describe.skip("Customer get", () => {
     it('should try get customer info with no customer', (done) => {
       agent
         .post('/auth/register')
@@ -150,7 +150,7 @@ describe("Users", () => {
     });
   });
 
-  describe("user account", () => {
+  describe.skip("user account", () => {
     it('should retrieve account for user', (done) => {
       agent
         .post('/auth/register')
