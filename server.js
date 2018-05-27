@@ -14,9 +14,9 @@ const feed = require('feed-read');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(session({
-//   secret: process.env.SECRET_PHRASE
-// }));
+app.use(session({
+  secret: process.env.SECRET_PHRASE
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
