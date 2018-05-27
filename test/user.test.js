@@ -22,7 +22,7 @@ describe("Users", () => {
   describe('findAll User', () => {
     it('should find user', (done) => {
       agent
-        .get('/users')
+        .get(`http://localhost:${process.env.PORT}/users`)
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
