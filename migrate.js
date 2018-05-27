@@ -51,9 +51,9 @@ const umzug = new Umzug({
     },
 
     logging: () => {
-        console.log('start logging');
-        console.log.apply(null, arguments);
-        console.log('finish logging');
+        //console.log('start logging');
+        //console.log.apply(null, arguments);
+        //console.log('finish logging');
     },
 });
 
