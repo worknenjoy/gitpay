@@ -26,6 +26,7 @@ describe("Users", () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
+          console.log(res, err)
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
           done();
