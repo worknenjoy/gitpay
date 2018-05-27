@@ -30,6 +30,8 @@ if (env == 'production') {
 
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
+  console.log('running testing or development config');
+  console.log(config);
 }
 
 const umzug = new Umzug({
@@ -186,7 +188,10 @@ switch (cmd) {
 
 executedCmd
     .then((result) => {
+        console.log('migration result');
+        console.log(result);
         const doneStr = `${cmd.toUpperCase()} DONE`;
+        console.log('done');
         console.log(doneStr);
         console.log("=".repeat(doneStr.length));
     })
