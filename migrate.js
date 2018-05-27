@@ -59,6 +59,8 @@ const umzug = new Umzug({
 
 function logUmzugEvent(eventName) {
     return (name, migration) => {
+        console.log('migration running');
+        console.log(migration);
         console.log(`${name} ${eventName}`);
     }
 }

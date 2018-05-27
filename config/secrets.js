@@ -5,7 +5,7 @@ if(process.env.NODE_ENV != 'production') {
 const databaseDev = {
   username: 'postgres',
   password: 'postgres',
-  database: 'gitpay',
+  database: 'gitpay_dev',
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
@@ -15,7 +15,7 @@ const databaseDev = {
 const databaseTest = {
   username: 'postgres',
   password: 'postgres',
-  database: 'gitpay',
+  database: 'gitpay_test',
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
