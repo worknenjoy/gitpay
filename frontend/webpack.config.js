@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJS = require('uglifyjs-webpack-plugin')
 
 module.exports = {
 	entry: './src/index.js',
@@ -18,6 +19,7 @@ module.exports = {
 		}
 	},
 	plugins: [
+    new UglifyJS(),
 		new ExtractTextPlugin('app.css')
 	],
 	module: {

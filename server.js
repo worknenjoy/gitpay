@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const session = require('express-session')
 const bodyParser = require('body-parser');
@@ -10,9 +11,12 @@ const passportConfig = require('./config/passport');
 const auth = require('./modules/auth/auth');
 const feed = require('feed-read');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({
+  secret: process.env.SECRET_PHRASE
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -1,5 +1,9 @@
 'use strict'
 
+if(process.env.NODE_ENV != 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -7,9 +11,8 @@ const authenticationHelpers = require('../../authenticationHelpers');
 const models = require('../../../loading/loading');
 const controllers = require('../controllers/auth');
 
-router.get('/authenticated', authenticationHelpers.isAuth, (req, res, next) => {
-    res.send({ 'authenticated': true });
-});
+router.get('/authenticated', authenticationHelpers.isAuth);
+
 router.get('/authorize/google', passport.authenticate('google', { scope: ['email'], accessType: 'offline' }));
 router.get('/callback/google', passport.authenticate('google', {
     successRedirect: '/',
@@ -23,16 +26,19 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
 }));
 
 router.get('/authorize/github', passport.authenticate('github', { scope: ['email'], accessType: 'offline' }));
-router.get('/callback/github', passport.authenticate('github', {
-    successRedirect: '/',
-    failureRedirect: '/signin'
-}));
+router.get('/callback/github',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token);
+  });
 
 router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'], accessType: 'offline' }));
-router.get('/callback/bitbucket', passport.authenticate('bitbucket', {
-  successRedirect: '/',
-  failureRedirect: '/signin'
-}));
+router.get('/callback/bitbucket',
+  passport.authenticate('bitbucket', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token);
+  });
+
 
 router.post('/authorize/local', (req, res, next) => {
 
@@ -58,6 +64,11 @@ router.post('/authorize/local', (req, res, next) => {
 });
 
 router.post('/auth/register', controllers.register)
-router.get('/getUserAll', controllers.searchAll)
+router.get('/users', controllers.searchAll)
+router.get('/user/customer', controllers.customer)
+router.get('/users/:id/account', controllers.account)
+router.post('/user/account', controllers.accountCreate)
+router.put('/user/account', controllers.accountUpdate)
+router.post('/user/bank_accounts', controllers.bankAccount)
 
 module.exports = router;

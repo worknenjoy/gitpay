@@ -51,12 +51,16 @@ const umzug = new Umzug({
     },
 
     logging: () => {
-        console.log.apply(null, arguments);
+        //console.log('start logging');
+        //console.log.apply(null, arguments);
+        //console.log('finish logging');
     },
 });
 
 function logUmzugEvent(eventName) {
     return (name, migration) => {
+        console.log('migration running');
+        console.log(migration);
         console.log(`${name} ${eventName}`);
     }
 }
@@ -139,6 +143,7 @@ function cmdHardReset() {
                 child_process.spawnSync(`createdb ${config.database} --username ${config.username}`);
                 resolve();
             } catch (e) {
+                console.log('error on setImmediate');
                 console.log(e);
                 reject(e);
             }
@@ -186,7 +191,10 @@ switch (cmd) {
 
 executedCmd
     .then((result) => {
+        console.log('migration result');
+        console.log(result);
         const doneStr = `${cmd.toUpperCase()} DONE`;
+        console.log('done');
         console.log(doneStr);
         console.log("=".repeat(doneStr.length));
     })
