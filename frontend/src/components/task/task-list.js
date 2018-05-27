@@ -23,6 +23,8 @@ import RedeemIcon from 'material-ui-icons/Redeem';
 import ItemIcon from 'material-ui-icons/AccountBox';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
 
+import Constants from '../../consts';
+
 const logoGithub = require('../../images/github-logo.png');
 
 const styles = theme => ({
@@ -145,15 +147,15 @@ class TaskList extends Component {
                 button
                 onClick={() => this.handleClickListItem(item.id)}
               >
-                <Chip label={item.status} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
-                <Chip label={item.deadline ? MomentComponent(item.deadline).fromNow() : 'sem data definida'} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
                 <Avatar>
                   <ItemIcon />
                 </Avatar>
                 <ListItemText id={item.id}
-                  primary={TextEllipsis(item.url, 50)}
-                  secondary={item.value ? `R$ ${item.value}` : 'sem valor'}
+                              primary={TextEllipsis(item.url, 50)}
+                              secondary={item.value ? `R$ ${item.value}` : 'sem valor'}
                 />
+                <Chip label={Constants.STATUSES[item.status]} style={{marginRight: 10, backgroundColor: 'green', color: 'white'}} />
+                <Chip label={item.deadline ? MomentComponent(item.deadline).fromNow() : 'sem data definida'} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
                 <ListItemSecondaryAction>
                   <IconButton aria-label="provider">
                     <Tooltip id="tooltip-fab" title="Ver no Github" placement="right">

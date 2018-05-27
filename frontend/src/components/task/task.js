@@ -52,6 +52,8 @@ const timeIcon = require('../../images/time-icon.png');
 const logoGithub = require('../../images/github-logo.png');
 const logoBitbucket = require('../../images/bitbucket-logo.png');
 
+import Constants from '../../consts';
+
 
 const styles = theme => ({
   root: {
@@ -85,6 +87,11 @@ const styles = theme => ({
   chip: {
     marginRight: 10,
     marginBottom: 20
+  },
+  chipStatus: {
+    marginLeft: 20,
+    verticalAlign: 'middle',
+    backgroundColor: theme.palette.primary.light
   },
   paper: {
     padding: 10,
@@ -283,7 +290,7 @@ class Task extends Component {
 
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.match.params.id}`).then((task) => {
-      this.setState({task: {issue: task.data.metadata.issue, url: task.data.url, orders: task.data.orders, assigns: task.data.assigns, company: task.data.metadata.company}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
+      this.setState({task: {issue: task.data.metadata.issue, status: task.data.status, url: task.data.url, orders: task.data.orders, assigns: task.data.assigns, company: task.data.metadata.company}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
@@ -439,6 +446,10 @@ class Task extends Component {
             </Typography>
             <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
               <a className={classes.white} href={this.state.task.url}>{this.state.task.issue.title}</a>
+              <Chip
+                label={Constants.STATUSES[this.state.task.status]}
+                className={classes.chipStatus}
+              />
             </Typography>
           </Grid>
           <Notification message={this.state.notification.message} open={this.state.notification.open} onClose={this.handleCloseNotification} />

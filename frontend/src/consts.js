@@ -1,5 +1,5 @@
 export default {
-    API_URL: '',
+    API_URL: 'http://localhost:3000',
     ACCOUNT_FIELDS: {
       'external_account': 'Conta bancária',
       'legal_entity.address.city': 'Cidade',
@@ -18,5 +18,13 @@ export default {
     },
     ACCOUNT_REASONS: {
       'fields_needed': 'Pendente de verificação',
+    },
+    STATUSES: {
+      'open': 'Aberta',
+      'OPEN': 'Aberta',
+      'closed': 'Fechada',
+      '': 'Status indefinido',
+      null: 'Status indefinido',
+      undefined: 'Status indefinido'
     }
 }
