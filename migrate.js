@@ -30,8 +30,6 @@ if (env == 'production') {
 
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
-  console.log('running testing or development config');
-  console.log(config);
 }
 
 const umzug = new Umzug({
@@ -53,7 +51,9 @@ const umzug = new Umzug({
     },
 
     logging: () => {
+        console.log('start logging');
         console.log.apply(null, arguments);
+        console.log('finish logging');
     },
 });
 
@@ -143,6 +143,7 @@ function cmdHardReset() {
                 child_process.spawnSync(`createdb ${config.database} --username ${config.username}`);
                 resolve();
             } catch (e) {
+                console.log('error on setImmediate');
                 console.log(e);
                 reject(e);
             }
