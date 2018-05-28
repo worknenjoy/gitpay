@@ -15,7 +15,6 @@ export default props => (
         <PrivateRoute path="/profile" component={ProfileContainer} />
         <Route exact path='/token/:token' component={Session} />
         <Route exact path='/task/:id' component={TaskContainer} />
-        <Route exact path='/task/:id/orders' component={TaskContainer} />
       </Switch>
     </HashRouter>
 )

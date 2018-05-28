@@ -41,7 +41,7 @@ class PaymentDialog extends Component {
             Preecha os dados do cartão para efetuar o pagamento
           </DialogContentText>
           <DialogContentText>
-            <StripeCheckout { ...this.props } />
+            <StripeCheckout task={this.props.price} price={this.props.price} itemPrice={this.props.itemPrice} onClose={this.props.onClose} />
           </DialogContentText>
         </DialogContent>
       </Dialog>

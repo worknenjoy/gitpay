@@ -291,18 +291,6 @@ class Task extends Component {
       console.log('not possible to fetch issue');
       console.log(e);
     });
-    if(this.props.match.path == "/task/:id/orders") {
-      this.setState({active_tab: 1});
-    }
-  }
-
-  componentWillReceiveProps(newProp) {
-    if(newProp.match.path == "/task/:id/orders") {
-      this.setState({active_tab: 1});
-    }
-    if(newProp.location.state){
-      this.setState(newProp.location.state);
-    }
   }
 
   handleCloseLoginNotification() {
@@ -313,7 +301,7 @@ class Task extends Component {
     this.setState({notification: {open: false}});
   }
 
-  handlePayment() {
+  handlePayment(e) {
     this.props.openDialog();
   }
 
@@ -580,7 +568,7 @@ class Task extends Component {
                         </form>
                         <PaymentDialog
                           open={this.props.dialog}
-                          onClose={this.handlePaymentDialogClose}
+                          onClose={this.props.closeDialog}
                           itemPrice={this.state.current_price}
                           price={this.state.final_price}
                           task={this.props.match.params.id}
