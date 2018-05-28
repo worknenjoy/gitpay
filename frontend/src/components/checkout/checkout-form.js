@@ -149,8 +149,6 @@ class CheckoutForm extends Component {
         }
       })
         .then((response) => {
-          console.log('logged');
-          console.log(response);
           this.setState({
             authenticated: response.data.authenticated,
             fullname: response.data.user.name,

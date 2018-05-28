@@ -17,33 +17,24 @@ class PaymentDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: null,
-      open: false
+      price: null
     }
-    this.onClose = this.onClose.bind(this);
-
   }
 
   componentWillMount() {
-    this.setState({price: this.props.price, open: this.props.open});
+    this.setState({ price: this.props.price });
   }
 
   componentWillReceiveProps(prop){
-    this.setState({price: prop.price, open: prop.open});
-  }
-
-  onClose() {
-    this.setState({
-      open: false
-    })
+    this.setState({ price: prop.price });
   }
 
   render() {
     return (
       <Dialog
-        open={this.state.open}
+        open={this.props.open}
         transition={Transition}
-        onClose={this.handleClose}
+        onClose={this.props.onClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
         fullWidth={true}
@@ -55,6 +46,7 @@ class PaymentDialog extends Component {
           <DialogContentText id="alert-dialog-slide-description">
             Preecha os dados do cartão para efetuar o pagamento
           </DialogContentText>
+          <StripeCheckout { ...this.props } />
         </DialogContent>
       </Dialog>
     )
