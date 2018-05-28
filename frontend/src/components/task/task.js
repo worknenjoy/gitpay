@@ -259,9 +259,6 @@ class Task extends Component {
         url: "loading",
         orders: []
       },
-      payment: {
-        dialog: false,
-      },
       deadline: null,
       final_price: 0,
       current_price: 0,
@@ -278,7 +275,6 @@ class Task extends Component {
     this.handlePaymentDialogClose = this.handlePaymentDialogClose.bind(this);
     this.handlePayment = this.handlePayment.bind(this);
     this.handleDeadline = this.handleDeadline.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputChangeCalendar = this.handleInputChangeCalendar.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
@@ -318,11 +314,11 @@ class Task extends Component {
   }
 
   handlePayment() {
-    this.setState({payment: {dialog: true}});
+    this.props.openDialog();
   }
 
   handlePaymentDialogClose(e) {
-    this.setState({payment: {dialog: false}});
+    this.props.closeDialog();
   }
 
   handleDeadline() {
@@ -365,10 +361,6 @@ class Task extends Component {
     const date = MomentComponent(this.state.deadline).isValid() ? MomentComponent(this.state.deadline) : MomentComponent();
     const newDate = date.add(time, 'days').format();
     this.setState({deadline: newDate});
-  }
-
-  handleClose() {
-    this.setState({payment: {dialog: false}});
   }
 
   handleInputChange(e) {
@@ -587,8 +579,8 @@ class Task extends Component {
                           </Button>
                         </form>
                         <PaymentDialog
-                          open={this.state.payment.dialog}
-                          onClose={this.handleClose}
+                          open={this.props.dialog}
+                          onClose={this.handlePaymentDialogClose}
                           itemPrice={this.state.current_price}
                           price={this.state.final_price}
                           task={this.props.match.params.id}
@@ -648,13 +640,6 @@ class Task extends Component {
                             {this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format("DD/MM/YYYY")} como data limite` : 'Salvar data limite'}
                           </Button>
                         </form>
-                        <PaymentDialog
-                          open={this.state.payment.dialog}
-                          onClose={this.handleClose}
-                          itemPrice={this.state.current_price}
-                          price={this.state.final_price}
-                          task={this.props.match.params.id}
-                        />
                       </CardContent>
                       <div className={classes.controls}>
                       </div>

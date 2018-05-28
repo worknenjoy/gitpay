@@ -5,6 +5,9 @@ import Auth from '../modules/auth';
 const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION';
 
+const ADD_DIALOG = 'ADD_DIALOG';
+const CLOSE_DIALOG = 'CLOSE_DIALOG';
+
 const LOGGED_IN_REQUESTED = 'LOGGED_IN_REQUESTED';
 const LOGGED_IN_SUCCESS = 'LOGGED_IN_SUCCESS';
 const LOGGED_IN_ERROR = 'LOGGED_IN_ERROR';
@@ -39,6 +42,20 @@ const addNotification = (message) => {
 
 const closeNotification = () => {
   return { type: CLOSE_NOTIFICATION }
+}
+
+/*
+ *
+ * Dialog
+ *
+ */
+
+const addDialog = () => {
+  return { type: ADD_DIALOG, dialog: true}
+}
+
+const closeDialog = () => {
+  return { type: CLOSE_DIALOG, dialog: false }
 }
 
 /*
@@ -255,6 +272,8 @@ const updateTask = (task) => {
 export {
   ADD_NOTIFICATION,
   CLOSE_NOTIFICATION,
+  ADD_DIALOG,
+  CLOSE_DIALOG,
   LOGGED_IN_REQUESTED,
   LOGGED_IN_SUCCESS,
   LOGGED_IN_ERROR,
@@ -277,6 +296,8 @@ export {
   updateAccount,
   addNotification,
   closeNotification,
+  addDialog,
+  closeDialog,
   loggedIn,
   logOut,
   updateTask

@@ -2,6 +2,8 @@ import { combineReducers } from 'redux'
 import {
   ADD_NOTIFICATION,
   CLOSE_NOTIFICATION,
+  ADD_DIALOG,
+  CLOSE_DIALOG,
   LOGGED_IN_REQUESTED,
   LOGGED_IN_SUCCESS,
   LOGGED_IN_ERROR,
@@ -31,6 +33,17 @@ const notification = (state = {open: false}, action) => {
       return state;
   }
 };
+
+const dialog = (state = {open: false}, action) => {
+  switch (action.type) {
+    case ADD_DIALOG:
+      return { ...state, open: action.dialog };
+    case CLOSE_DIALOG:
+      return { ...state, open: action.dialog }
+    default:
+      return state;
+  }
+}
 
 const loggedIn = (state = {logged: false, user: {}, completed: true, error: {}}, action) => {
   switch (action.type) {
@@ -89,6 +102,7 @@ const task = (state = {completed: true, error: {}, task: {}}, action) => {
 
 const reducers = combineReducers({
   notification,
+  dialog,
   loggedIn,
   account,
   task
