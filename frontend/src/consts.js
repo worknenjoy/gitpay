@@ -1,5 +1,5 @@
 export default {
-    API_URL: 'http://localhost:3000',
+    API_URL: process.env.API_HOST,
     ACCOUNT_FIELDS: {
       'external_account': 'Conta bancária',
       'legal_entity.address.city': 'Cidade',
