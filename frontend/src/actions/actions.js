@@ -138,6 +138,7 @@ const loggedIn = () => {
         })
         .catch((error) => {
           console.log(error);
+          dispatch(addNotification("Tivemos um problema ao tentar logar na sua conta"))
           return dispatch(loggedInError(error));
         });
     }
