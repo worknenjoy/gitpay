@@ -2,6 +2,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const sslRedirect = require('heroku-ssl-redirect');
 const app = express();
 const session = require('express-session')
 const bodyParser = require('body-parser');
@@ -11,9 +12,9 @@ const passportConfig = require('./config/passport');
 const auth = require('./modules/auth/auth');
 const feed = require('feed-read');
 
-//if(process.env.NODE_ENV != 'production') {
-app.use(cors());
-//}
+if(process.env.NODE_ENV != 'production') {
+  app.use(cors());
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,6 +23,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(sslRedirect())
 
 app.set('port', (process.env.PORT || 3000));
 
