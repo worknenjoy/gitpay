@@ -42,7 +42,6 @@ class PaymentDialog extends Component {
     return (
       <Dialog
         open={this.state.open}
-        transition={Transition}
         onClose={this.handleClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
