@@ -8,7 +8,6 @@
     "test": "",
     "production": "webpack --progress --config webpack.config.prod.js"
   },
-  "proxy": "http://localhost:3000",
   "keywords": [],
   "author": "",
   "license": "ISC",
