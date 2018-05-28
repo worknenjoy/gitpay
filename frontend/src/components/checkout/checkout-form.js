@@ -85,7 +85,6 @@ class CheckoutForm extends Component {
             }]
           }).then((response) => {
             this.props.onClose();
-            console.log(this.props);
             this.props.history.replace({pathname: `/task/${this.props.match.params.id}/orders`, state: {
               notification: {
                 open: true,
@@ -188,12 +187,12 @@ class CheckoutForm extends Component {
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={12}>
-              <div className={classes.cardElements}>
+              <div>
                 <CardSection />
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div className={classes.formActions}>
+              <div>
                 <Button color="primary" onClick={this.props.onClose}>
                   Cancelar
                 </Button>
