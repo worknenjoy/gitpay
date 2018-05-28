@@ -55,18 +55,18 @@ class HowItWorksPeople extends Component {
                 <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
                   <CloseIcon />
                 </IconButton>
-                <Typography variant="title" color="secondary">
+                <Typography variant="title" className={classes.appBarHeader}>
                   Para freelancers
                 </Typography>
               </Toolbar>
               <div classeName={classes.spacedTop}>
                 <div className={classes.divider}>
-                  <Typography type="headline" gutterBottom>
+                  <Typography variant="title" className={classes.appBarHeader} gutterBottom>
                     Como funciona
                   </Typography>
                 </div>
               </div>
-              <div className={classes.mainlist}>
+              <div className={classes.infoList}>
                 <List>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>

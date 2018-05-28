@@ -56,18 +56,18 @@ class Consulting extends Component {
                 <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
                   <CloseIcon />
                 </IconButton>
-                <Typography variant="title" color="secondary">
+                <Typography variant="title" className={classes.appBarHeader}>
                   Para empresas
                 </Typography>
               </Toolbar>
               <div className={classes.spacedTop}>
                 <div className={classes.divider}>
-                  <Typography type="headline" gutterBottom>
+                  <Typography variant="title" className={classes.appBarHeader} gutterBottom>
                     Consultoria
                   </Typography>
                 </div>
               </div>
-              <div className={classes.mainlist}>
+              <div className={classes.infoList}>
                 <List>
                   <ListItem className={classes.listIconTop}>
                     <ListItemIcon>

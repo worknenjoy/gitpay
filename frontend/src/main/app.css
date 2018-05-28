@@ -2,6 +2,11 @@ body {
 	margin: 0;
 }
 
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
 .MuiTypography-noWrap-112 {
   overflow: hidden;
   white-space: normal !important;

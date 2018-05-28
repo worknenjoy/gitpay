@@ -1,25 +1,51 @@
 'use strict'
-const { google, facebook, github, oauthCallbacks, bitbucket } = require('./secrets');
+const { google, facebook, github, oauthCallbacks, bitbucket, mailchimp } = require('./secrets');
 const passport = require('passport');
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy;
-const bitbucketStrategy = require('passport-bitbucket').Strategy;
+const bitbucketStrategy = require('passport-bitbucket-oauth20').Strategy;
 const facebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const requestPromise = require('request-promise');
 
+const BitbucketAPI = require('bitbucket-api-v2');
+var githubAPI = require('octonode');
+
 const userExist = require('../modules/users').userExists;
 const userBuild = require('../modules/users').userBuilds;
-const userUpdat = require('../modules/users').userUpdate;
+const userUpdate = require('../modules/users').userUpdate;
 const Promise = require('bluebird');
-var BitBucket = require('node-okbitbucket');
+
+const jwt = require('jsonwebtoken');
+
+const Mailchimp = require('mailchimp-api-v3');
+const mc = new Mailchimp(mailchimp.apiKey);
+
+const mailChimpConnect = (mail) => {
+  mc.put(`/lists/${mailchimp.listId}/members`, {
+    email_address : mail,
+    status : 'subscribed'
+  })
+    .then(function(results) {
+      console.log('mailchimp');
+      console.log(results);
+    })
+    .catch(function (err) {
+      console.log('mailchimp error');
+      console.log(err)
+    });
+}
 
 passport.serializeUser((user, done) => {
     done(null, user);
 });
 
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
+passport.deserializeUser((user, done) => {
+  userExist(user)
+    .then((user) => {
+        done(null, user);
+    });
+
 });
 
 passport.use(
@@ -61,65 +87,6 @@ passport.use(
 
                         }else{
 
-                            userBuild(data)
-                                .then((user) => {
-                                    return done(null, user);
-                                }).catch((error) => {
-                                    console.log("Error in passport.js configuration file");
-                                    console.log(error);
-                                    return done(null);
-                                });
-                        }
-
-                    }).catch((error) => {
-                        console.log("Error in passport.js configuration file - search users");
-                        console.log(error);
-                        return done(null);
-                    });
-            });
-
-        })
-
-);
-
-passport.use(
-
-    new gitHubStrategy({
-            clientID: github.id,
-            clientSecret: github.secret,
-            callbackURL: oauthCallbacks.githubCallbackUrl
-        },
-        (accessToken, accessTokenSecret, profile, done) => {
-            process.nextTick(() => {
-
-                const attributes = {
-                    access_token: accessToken,
-                    access_token_secret: accessTokenSecret
-                };
-
-                const data = {
-                    provider: 'github',
-                    social_id: profile.id,
-                    profile: profile,
-                    attribute: attributes,
-                    email: profile.emails[0].value
-                }
-
-                userExist(data)
-                    .then((user) => {
-
-                        if(user){
-
-                            userUpdat(data)
-                                .then((user) => {
-                                    return done(null, user);
-                                }).catch((error) => {
-                                    console.log("Error in passport.js configuration file");
-                                    console.log(error);
-                                    return done(null);
-                                });
-
-                        }else{
                             userBuild(data)
                                 .then((user) => {
                                     return done(null, user);
@@ -202,11 +169,85 @@ passport.use(
 );
 
 passport.use(
+
+  new gitHubStrategy({
+      clientID: github.id,
+      clientSecret: github.secret,
+      callbackURL: oauthCallbacks.githubCallbackUrl
+    },
+    (accessToken, accessTokenSecret, profile, done) => {
+      process.nextTick(() => {
+
+        const attributes = {
+          access_token: accessToken,
+          access_token_secret: accessTokenSecret
+        };
+
+        const data = {
+          provider: profile.provider,
+          social_id: profile.id,
+          name: profile.displayName,
+          username: profile.username,
+          picture_url: profile.photos[0].value,
+          website: profile._json.blog,
+          repos: 0,
+          email: profile.emails[0].value
+        }
+
+        //const client = githubAPI.client(accessToken);
+
+        requestPromise({
+          uri: `https://api.github.com/users/${profile.username}/repos`,
+          headers: {
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+            authorization: `token ${accessToken}`
+          }
+        }).then(response => {
+          data.repos = JSON.parse(response).length;
+          userExist(data)
+            .then((user) => {
+              if(user){
+                userUpdate(data)
+                  .then((user) => {
+                    const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
+                    data.token = token;
+                    return done(null, data);
+                  }).catch((error) => {
+                  console.log("Error in passport.js configuration file");
+                  console.log(error);
+                  return done(null);
+                });
+              } else {
+                userBuild(data)
+                  .then((user) => {
+                    mailChimpConnect(profile.emails[0].value);
+                    return done(null, user);
+                  }).catch((error) => {
+                  console.log("Error in passport.js configuration file");
+                  console.log(error);
+                  return done(null);
+                });
+              }
+
+            }).catch((error) => {
+            console.log("Error in passport.js configuration file - search users");
+            console.log(error);
+            return done(null);
+          });
+        }).catch(e => {
+          console.log('error');
+          console.log(e);
+          return done(null);
+        });
+      });
+
+}));
+
+passport.use(
   new bitbucketStrategy({
-    consumerKey: bitbucket.id,
-    consumerSecret: bitbucket.secret,
-    callbackURL: oauthCallbacks.facebookCallbackUrl,
-    profileWithEmail: true
+    clientID: bitbucket.id,
+    clientSecret: bitbucket.secret,
+    callbackURL: oauthCallbacks.bitbucketCallbackUrl
   },
   function (accessToken, accessTokenSecret, profile, done) {
     process.nextTick(() => {
@@ -217,42 +258,57 @@ passport.use(
 
       const data = {
         provider: profile.provider,
-        social_id: profile.account_id,
-        profile: profile,
-        attribute: attributes,
-        email: 'none@gitpay.me'
+        social_id: profile.id,
+        name: profile.displayName,
+        username: profile.username,
+        picture_url: profile._json.links.avatar.href,
+        website: profile._json.website,
+        repos: 0,
+        email: profile.emails[0].value
       }
 
+      requestPromise({
+        uri: `https://api.bitbucket.org/2.0/repositories/${profile.username}`,
+        headers: {
+          authorization: `Bearer ${accessToken}`
+        }
+      }).then(response => {
+        data.repos = JSON.parse(response).size;
+        userExist(data)
+          .then((user) => {
+            if(user){
+              userUpdate(data)
+                .then((user) => {
+                  const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
+                  data.token = token;
+                  return done(null, data);
+                }).catch((error) => {
+                console.log("Error in passport.js configuration file");
+                console.log(error);
+                return done(null);
+              });
+            } else {
+              userBuild(data)
+                .then((user) => {
+                  mailChimpConnect(profile.emails[0].value);
+                  return done(null, user);
+                }).catch((error) => {
+                console.log("Error in passport.js configuration file");
+                console.log(error);
+                return done(null);
+              });
+            }
 
-
-      userExist(data)
-        .then((user) => {
-          if(user){
-            userUpdate(data)
-              .then((user) => {
-                return done(null, user);
-              }).catch((error) => {
-              console.log("Error in passport.js configuration file");
-              console.log(error);
-              return done(null);
-            });
-
-          }else{
-            userBuild(data)
-              .then((user) => {
-                return done(null, user);
-              }).catch((error) => {
-              console.log("Error in passport.js configuration file");
-              console.log(error);
-              return done(null);
-            });
-          }
-
-        }).catch((error) => {
-        console.log("Error in passport.js configuration file - search users");
-        console.log(error);
+          }).catch((error) => {
+          console.log("Error in passport.js configuration file - search users");
+          console.log(error);
+          return done(null);
+        });
+      }).catch(e => {
+        console.log('error');
+        console.log(e);
         return done(null);
-      });
+      })
     })
 }));
 
@@ -269,6 +325,7 @@ passport.use(
                 const userAttributes = {
                     email: email
                 }
+
 
                 userExist(userAttributes)
                     .then((user) => {

@@ -14,7 +14,6 @@ import WorkIcon from 'material-ui-icons/Work';
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet';
 import Transition from '../transition';
 
-
 class Workflow extends Component {
 
   constructor(props) {
@@ -40,7 +39,7 @@ class Workflow extends Component {
 
   render() {
 
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
       <ListItem button onClick={this.handleClickOpen} component="a">
@@ -56,18 +55,18 @@ class Workflow extends Component {
               <IconButton color="inherits" onClick={this.handleClose} aria-label="Close">
                 <CloseIcon />
               </IconButton>
-              <Typography variant="title" color="secondary">
+              <Typography variant="title" className={classes.appBarHeader}>
                 Para freelancers
               </Typography>
             </Toolbar>
             <div classeName={classes.spacedTop}>
               <div className={classes.divider}>
-                <Typography type="headline" gutterBottom>
+                <Typography variant="title" className={classes.appBarHeader} gutterBottom>
                   Fluxo de trabalho
                 </Typography>
               </div>
             </div>
-            <div className={classes.mainlist}>
+            <div className={classes.infoList}>
               <List>
                 <ListItem className={classes.listIconTop}>
                   <ListItemIcon>

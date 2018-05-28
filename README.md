@@ -8,15 +8,23 @@ The marketplace for on demmand changes
 
 First, you need the auth keys for oauth.
 
-Set in the env variable
-
 ## Test Unit
 
 Configuration on package.json, created the "test-unit": "env NODE_ENV=test ./node_modules/.bin/mocha test/*.test.js"
 To run the test unit "npm run test-unit"
 
 ## .env
-Create a file .env with your credentials
+Create a file .env with API KEYS
+
+## Run migration
+
+To run the migrations
+
+`npm install -g sequelize-cli`
+
+For user as example
+
+`sequelize migration:create --name users`
 
 
 ## License

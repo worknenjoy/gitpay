@@ -18,7 +18,13 @@ module.exports = {
 		}
 	},
 	plugins: [
-		new ExtractTextPlugin('app.css')
+		new ExtractTextPlugin('app.css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development'),
+        'API_HOST': JSON.stringify('http://localhost:3000')
+      }
+    })
 	],
 	module: {
 		loaders: [{

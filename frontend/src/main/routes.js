@@ -1,11 +1,21 @@
 import React from 'react'
-import { Router, Route, IndexRoute, Redirect, hashHistory } from 'react-router'
+import { Route, HashRouter, Switch, BrowserRouter } from 'react-router-dom'
 
-import Welcome from '../components/welcome/welcome'
+import PrivateRoute from '../components/session/private-route';
+
+import Welcome from '../components/welcome/welcome';
+import Session from '../components/session/session';
+import ProfileContainer from '../containers/profile';
+import TaskContainer from '../containers/task';
 
 export default props => (
-    <Router history={hashHistory}>
-        <Route path='/' component={Welcome} />
-        <Redirect from='*' to='/' />
-    </Router>
+    <HashRouter>
+      <Switch>
+        <Route exact path='/' component={Welcome} />
+        <PrivateRoute path="/profile" component={ProfileContainer} />
+        <Route exact path='/token/:token' component={Session} />
+        <Route exact path='/task/:id' component={TaskContainer} />
+        <Route exact path='/task/:id/orders' component={TaskContainer} />
+      </Switch>
+    </HashRouter>
 )

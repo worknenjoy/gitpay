@@ -14,6 +14,4 @@ const models = require('../../loading/loading');
 		            console.log(error);
 		            return false;
 		        });
-
-
 });

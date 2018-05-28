@@ -5,7 +5,7 @@ if(process.env.NODE_ENV != 'production') {
 const databaseDev = {
   username: 'postgres',
   password: 'postgres',
-  database: 'gitpay',
+  database: 'gitpay_dev',
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
@@ -15,7 +15,7 @@ const databaseDev = {
 const databaseTest = {
   username: 'postgres',
   password: 'postgres',
-  database: 'gitpay',
+  database: 'gitpay_test',
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
@@ -53,11 +53,16 @@ const bitbucket = {
   secret: process.env.BITBUCKET_SECRET
 }
 
-const oauthCallbacks = {
-  googleCallbackUrl: 'http://localhost:3000/callback/google',
-  githubCallbackUrl: 'http://localhost:3000/callback/github',
-  facebookCallbackUrl: 'http://localhost:3000/callback/facebook',
-  facebookCallbackUrl: 'http://localhost:3000/callback/bitbucket'
+const mailchimp = {
+  apiKey: process.env.MAILCHIMP_API_KEY,
+  listId: process.env.MAILCHIMP_LIST_ID
 }
 
-module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, bitbucket, oauthCallbacks }
+const oauthCallbacks = {
+  googleCallbackUrl: `${process.env.API_HOST}/callback/google`,
+  githubCallbackUrl: `${process.env.API_HOST}/callback/github`,
+  facebookCallbackUrl: `${process.env.API_HOST}/callback/facebook`,
+  bitbucketCallbackUrl: `${process.env.API_HOST}/callback/bitbucket`
+}
+
+module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, bitbucket, oauthCallbacks, mailchimp }
