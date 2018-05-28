@@ -15,7 +15,6 @@ module.exports = {
     }
   },
   plugins: [
-    new MinifyPlugin(),
     new ExtractTextPlugin('app.css'),
     new webpack.DefinePlugin({
       'process.env': {
@@ -23,6 +22,7 @@ module.exports = {
         'API_HOST': JSON.stringify('https://gitpay-staging.herokuapp.com')
       }
     })
+    //new MinifyPlugin()
   ],
   module: {
     loaders: [{
