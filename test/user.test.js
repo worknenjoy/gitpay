@@ -64,7 +64,7 @@ describe("Users", () => {
   })
 
   describe('login User social networks', () => {
-    it('should user authenticated', (done) => {
+    xit('should user authenticated', (done) => {
       agent
         .get('/authenticated')
         .set('authorization', 'Bearer token-123') // 1) using the authorization header
