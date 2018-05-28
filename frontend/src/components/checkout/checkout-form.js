@@ -187,12 +187,12 @@ class CheckoutForm extends Component {
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={12}>
-              <div>
+              <div className={classes.cardElements}>
                 <CardSection />
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div>
+              <div className={classes.formActions}>
                 <Button color="primary" onClick={this.props.onClose}>
                   Cancelar
                 </Button>
