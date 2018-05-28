@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { injectStripe } from 'react-stripe-elements';
 import { withRouter} from 'react-router-dom';
+import { withStyles } from 'material-ui/styles';
 
 import CardSection from './card-section';
 import UserSection from './user-section';
@@ -13,13 +15,13 @@ import api from '../../consts';
 import axios from 'axios';
 import Auth from '../../modules/auth';
 
-const styles = {
+const styles = theme => ({
   formActions: {
     marginTop: 20,
     marginBottom: 10,
     float: 'right'
   }
-}
+});
 
 class CheckoutForm extends Component {
 
@@ -165,6 +167,7 @@ class CheckoutForm extends Component {
   render() {
 
     const logged = this.state.authenticated;
+    const { classes } = this.props;
 
     return (
       <div>
@@ -178,7 +181,7 @@ class CheckoutForm extends Component {
               <CardSection />
             </Grid>
             <Grid item xs={12}>
-              <div style={styles.formActions}>
+              <div className={classes.formActions}>
                 <Button color="primary" onClick={this.props.onClose}>
                   Cancelar
                 </Button>
@@ -194,4 +197,8 @@ class CheckoutForm extends Component {
   }
 }
 
-export default withRouter(injectStripe(CheckoutForm));
+CheckoutForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withRouter(withStyles(styles)(injectStripe(CheckoutForm)));

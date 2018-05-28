@@ -710,7 +710,7 @@ class Task extends Component {
                 title="Valor da tarefa"
                 description={`R$ ${this.state.final_price}`}
                 statIcon={CalendarIcon}
-                statText={`Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `}
+                statText={this.state.task.orders.length ? `Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
               />
               {MomentComponent(this.state.deadline).isValid() &&
               <StatsCard
