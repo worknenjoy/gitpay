@@ -11,9 +11,9 @@ const passportConfig = require('./config/passport');
 const auth = require('./modules/auth/auth');
 const feed = require('feed-read');
 
-if(process.env.NODE_ENV != 'production') {
-  app.use(cors());
-}
+//if(process.env.NODE_ENV != 'production') {
+app.use(cors());
+//}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
