@@ -55,8 +55,8 @@ const loggedInSuccess = (user) => {
   return { type: LOGGED_IN_SUCCESS, logged: true, completed: true, user: user }
 }
 
-const loggedInError = () => {
-  return { type: LOGGED_IN_ERROR, logged: false, completed: true }
+const loggedInError = (error) => {
+  return { type: LOGGED_IN_ERROR, logged: false, completed: true, error: error }
 }
 
 /*
@@ -138,7 +138,7 @@ const loggedIn = () => {
         })
         .catch((error) => {
           console.log(error);
-          return dispatch(loggedInError());
+          return dispatch(loggedInError(error));
         });
     }
   }

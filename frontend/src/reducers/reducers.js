@@ -32,12 +32,12 @@ const notification = (state = {open: false}, action) => {
   }
 };
 
-const loggedIn = (state = {logged: false, user: {}, completed: true}, action) => {
+const loggedIn = (state = {logged: false, user: {}, completed: true, error: {}}, action) => {
   switch (action.type) {
     case LOGGED_IN_SUCCESS:
       return { ...state, logged:  action.logged, user: action.user, completed: action.completed};
     case LOGGED_IN_ERROR:
-      return { ...state, logged: action.logged, completed: action.completed};
+      return { ...state, logged: action.logged, completed: action.completed, error: action.error};
     case LOGGED_IN_REQUESTED:
       return { ...state, logged: action.logged, completed: action.completed};
     case LOGOUT_REQUESTED:
