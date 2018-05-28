@@ -20,7 +20,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
-        'API_HOST': JSON.stringify('https://gitpay-staging.herokuapp.com')
+        'API_HOST': JSON.stringify('https://gitpay.me')
       }
     })
   ],
