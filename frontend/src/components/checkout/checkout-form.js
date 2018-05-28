@@ -20,6 +20,9 @@ const styles = theme => ({
     marginTop: 20,
     marginBottom: 10,
     float: 'right'
+  },
+  cardElements: {
+
   }
 });
 
@@ -109,7 +112,6 @@ class CheckoutForm extends Component {
             paymentRequested: false
           })
         };
-
       } else {
         this.setState({
           error: {
@@ -119,6 +121,16 @@ class CheckoutForm extends Component {
           paymentRequested: false
         })
       }
+    }).catch((e) => {
+      console.log('error to create token');
+      console.log(e);
+      this.setState({
+        error: {
+          payment: true,
+          message: "Erro na criação do token"
+        },
+        paymentRequested: false
+      })
     });
 
     // However, this line of code will do the same thing:
@@ -176,7 +188,9 @@ class CheckoutForm extends Component {
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={12}>
-              <CardSection />
+              <div className={classes.cardElements}>
+                <CardSection />
+              </div>
             </Grid>
             <Grid item xs={12}>
               <div className={classes.formActions}>
