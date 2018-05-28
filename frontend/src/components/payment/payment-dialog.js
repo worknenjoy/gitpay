@@ -16,17 +16,10 @@ function Transition(props) {
 class PaymentDialog extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      price: null
-    }
   }
 
   componentWillMount() {
-    this.setState({ price: this.props.price });
-  }
 
-  componentWillReceiveProps(prop){
-    this.setState({ price: prop.price });
   }
 
   render() {
