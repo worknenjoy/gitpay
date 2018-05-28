@@ -20,7 +20,7 @@ function isNotAuthOrRedirect(req, res, next) {
 }
 
 function isAuth(req, res, next) {
-  if (req.isAuthenticated()) return res.send({ 'authenticated': true });
+  //if (req.isAuthenticated()) return res.send({ 'authenticated': true });
 
   const token = req.headers.authorization.split(' ')[1];
 
@@ -32,7 +32,6 @@ function isAuth(req, res, next) {
       }
 
       const userData = decoded;
-      console.log(userData);
       // check if a user exists
       return userExist(userData).then((user) => {
         return res.send({ 'authenticated': true, user: user });
