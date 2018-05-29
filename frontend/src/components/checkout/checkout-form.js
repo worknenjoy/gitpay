@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { withRouter } from 'react-router-dom';
-import { injectStripe } from 'react-stripe-elements';
 
 import CardSection from './card-section';
 import UserSection from './user-section';
@@ -148,7 +147,6 @@ class CheckoutForm extends Component {
   render() {
 
     const logged = this.state.authenticated;
-    const { classes } = this.props;
 
     return (
       <div>
@@ -158,9 +156,6 @@ class CheckoutForm extends Component {
             { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}
           </Grid>
           <Grid container spacing={24}>
-            <Grid item xs={12}>
-              <CardSection {...this.props} />
-            </Grid>
             <Grid item xs={12}>
               <div style={{marginTop: 20, marginBottom: 10,float: 'right'}}>
                 <Button color="primary" onClick={this.props.onClose}>
@@ -178,4 +173,4 @@ class CheckoutForm extends Component {
   }
 }
 
-export default withRouter(injectStripe(CheckoutForm));
+export default withRouter(CheckoutForm);
