@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { StripeProvider } from 'react-stripe-elements';
 import Palette from '../components/styles/palette';
 import './app.css';
 import ReactGA from 'react-ga';
@@ -47,14 +46,12 @@ const theme = createMuiTheme(Palette);
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <StripeProvider apiKey="pk_test_pBA57lmPZbGhidkUUphTZZdB">
-        <Provider store={store}>
-          <div>
-            <NotificationContainer />
-            <Routes />
-          </div>
-        </Provider>
-      </StripeProvider>
+      <Provider store={store}>
+        <div>
+          <NotificationContainer />
+          <Routes />
+        </div>
+      </Provider>
     </MuiThemeProvider>
   );
 }
