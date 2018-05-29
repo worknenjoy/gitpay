@@ -566,14 +566,6 @@ class Task extends Component {
                             {`Pagar R$ ${this.state.current_price}`}
                           </Button>
                         </form>
-                        <PaymentDialog
-                          open={this.props.dialog}
-                          onClose={this.props.closeDialog}
-                          itemPrice={this.state.current_price}
-                          price={this.state.final_price}
-                          task={this.props.match.params.id}
-                          classes={classes}
-                        />
                       </CardContent>
                       <div className={classes.controls}>
                       </div>
@@ -701,6 +693,14 @@ class Task extends Component {
             </Grid>
           </Grid>
         <Bottom />
+        <PaymentDialog
+          open={this.props.dialog}
+          onClose={this.props.closeDialog}
+          itemPrice={this.state.current_price}
+          price={this.state.final_price}
+          task={this.props.match.params.id}
+          classes={classes}
+        />
       </div>
     )
   }
