@@ -5,13 +5,8 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import Slide from 'material-ui/transitions/Slide';
 import StripeCheckout from '../checkout/stripe-checkout';
 
-
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
 
 class PaymentDialog extends Component {
   constructor(props) {
@@ -26,7 +21,6 @@ class PaymentDialog extends Component {
     return (
       <Dialog
         open={this.props.open}
-        transition={Transition}
         onClose={this.props.onClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
@@ -41,7 +35,7 @@ class PaymentDialog extends Component {
             Preecha os dados do cartão para efetuar o pagamento
           </DialogContentText>
           <DialogContentText>
-            <StripeCheckout task={this.props.price} price={this.props.price} itemPrice={this.props.itemPrice} onClose={this.props.onClose} />
+            <StripeCheckout {...this.props} />
           </DialogContentText>
         </DialogContent>
       </Dialog>

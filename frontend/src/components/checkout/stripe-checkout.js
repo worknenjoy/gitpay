@@ -20,7 +20,7 @@ class StripeCheckout extends Component {
   render() {
     return (
       <Elements>
-        <CheckoutForm task={this.props.price} price={this.props.price} itemPrice={this.props.itemPrice} onClose={this.props.onClose} />
+        <CheckoutForm {...this.props} />
       </Elements>
     );
   }
