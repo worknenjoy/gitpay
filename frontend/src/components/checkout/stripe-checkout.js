@@ -11,19 +11,18 @@ class StripeCheckout extends Component {
 
   componentWillMount() {
     if (window.Stripe) {
-      this.setState({stripe: 'pk_test_pBA57lmPZbGhidkUUphTZZdB'});
+      this.setState({stripe: window.Stripe('pk_test_pBA57lmPZbGhidkUUphTZZdB')});
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
-        console.log('loaded');
-        this.setState({stripe: 'pk_test_pBA57lmPZbGhidkUUphTZZdB'});
+        this.setState({stripe: window.Stripe('pk_test_pBA57lmPZbGhidkUUphTZZdB')});
       });
     }
   }
 
   render() {
     return (
-      <StripeProvider apiKey={this.state.stripe}>
+      <StripeProvider stripe={this.state.stripe}>
         <Elements>
           <CheckoutForm {...this.props} />
         </Elements>
