@@ -572,6 +572,7 @@ class Task extends Component {
                           itemPrice={this.state.current_price}
                           price={this.state.final_price}
                           task={this.props.match.params.id}
+                          classes={classes}
                         />
                       </CardContent>
                       <div className={classes.controls}>
