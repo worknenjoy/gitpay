@@ -212,4 +212,4 @@ CheckoutForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(injectStripe(CheckoutForm)));
+export default withRouter(withStyles(styles)(CheckoutForm));
