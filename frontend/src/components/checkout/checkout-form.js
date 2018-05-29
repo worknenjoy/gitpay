@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import { injectStripe } from 'react-stripe-elements';
+// import { injectStripe } from 'react-stripe-elements';
 import { withRouter} from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 
@@ -176,7 +176,7 @@ class CheckoutForm extends Component {
   render() {
 
     const logged = this.state.authenticated;
-    const { classes } = this.props;
+    //const { classes } = this.props;
 
     return (
       <div>
@@ -192,7 +192,7 @@ class CheckoutForm extends Component {
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div className={classes.formActions}>
+              <div>
                 <Button color="primary" onClick={this.props.onClose}>
                   Cancelar
                 </Button>
@@ -212,4 +212,4 @@ CheckoutForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default injectStripe(withRouter(withStyles(styles)(CheckoutForm)));
+export default CheckoutForm;
