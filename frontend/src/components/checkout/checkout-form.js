@@ -188,7 +188,7 @@ class CheckoutForm extends Component {
           <Grid container spacing={24}>
             <Grid item xs={12}>
               <div>
-                <CardSection {...props} />
+                <CardSection {...this.props} />
               </div>
             </Grid>
             <Grid item xs={12}>
@@ -212,4 +212,4 @@ CheckoutForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default injectStripe(withRouter(withStyles(styles)(CheckoutForm)));
+export default withRouter(withStyles(styles)(injectStripe(CheckoutForm)));

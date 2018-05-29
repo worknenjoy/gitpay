@@ -567,8 +567,6 @@ class Task extends Component {
                           </Button>
                         </form>
                       </CardContent>
-                      <div className={classes.controls}>
-                      </div>
                     </div>
                   </Card>
                   <Card className={classes.card}>
@@ -687,20 +685,16 @@ class Task extends Component {
                 statIcon={DateIcon}
                 statText={`${MomentComponent(this.state.deadline).fromNow()}`}
                 />}
-              <Card className={classes.card}>
-
-              </Card>
             </Grid>
           </Grid>
-        <Bottom />
         <PaymentDialog
           open={this.props.dialog}
           onClose={this.props.closeDialog}
           itemPrice={this.state.current_price}
           price={this.state.final_price}
           task={this.props.match.params.id}
-          classes={classes}
         />
+        <Bottom />
       </div>
     )
   }
