@@ -209,7 +209,7 @@ class CheckoutForm extends Component {
 }
 
 CheckoutForm.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(styles)(CheckoutForm));
+export default injectStripe(withRouter(withStyles(styles)(CheckoutForm)));
