@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { withRouter } from 'react-router-dom';
+import { injectStripe } from 'react-stripe-elements';
 
 import CardSection from './card-section';
 import UserSection from './user-section';
@@ -19,7 +20,6 @@ class CheckoutForm extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.handleCloseNotification = this.handleCloseNotification.bind(this);
 
     this.state = {
       fullname: null,
@@ -113,14 +113,6 @@ class CheckoutForm extends Component {
     this.setState(formData);
   }
 
-  handleCloseNotification() {
-    this.setState({
-      error: {
-        payment: false
-      }
-    });
-  }
-
   componentWillMount() {
     const token = Auth.getToken();
 
@@ -149,28 +141,28 @@ class CheckoutForm extends Component {
     const logged = this.state.authenticated;
 
     return (
-      <div>
-        <Notification message={this.state.error.message || "Tivemos um erro ao processar seu pagamento"} open={this.state.error.payment} onClose={this.handleCloseNotification} />
-        <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
-          <Grid item xs={12} style={{marginBottom: 20}}>
-            { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}
+      <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
+        <Grid item xs={12} style={{marginBottom: 20}}>
+          { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}
+        </Grid>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <CardSection {...this.props} />
           </Grid>
-          <Grid container spacing={24}>
-            <Grid item xs={12}>
-              <div style={{marginTop: 20, marginBottom: 10,float: 'right'}}>
-                <Button color="primary" onClick={this.props.onClose}>
-                  Cancelar
-                </Button>
-                <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
-                  {`Pagar R$ ${this.props.itemPrice}`}
-                </Button>
-              </div>
-            </Grid>
+          <Grid item xs={12}>
+            <div style={{marginTop: 20, marginBottom: 0, float: 'right'}}>
+              <Button color="primary" onClick={this.props.onClose}>
+                Cancelar
+              </Button>
+              <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
+                {`Pagar R$ ${this.props.itemPrice}`}
+              </Button>
+            </div>
           </Grid>
-        </form>
-      </div>
+        </Grid>
+      </form>
     );
   }
 }
 
-export default withRouter(CheckoutForm);
+export default withRouter(injectStripe(CheckoutForm));

@@ -245,7 +245,6 @@ class Task extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      created: true,
       task: {
         company: "loading",
         issue: {
@@ -271,7 +270,6 @@ class Task extends Component {
       }
     }
 
-    this.handleCloseLoginNotification = this.handleCloseLoginNotification.bind(this);
     this.handlePaymentDialogClose = this.handlePaymentDialogClose.bind(this);
     this.handlePayment = this.handlePayment.bind(this);
     this.handleDeadline = this.handleDeadline.bind(this);
@@ -293,19 +291,17 @@ class Task extends Component {
     });
   }
 
-  handleCloseLoginNotification() {
-    this.setState({created: false});
-  }
-
   handleCloseNotification() {
     this.setState({notification: {open: false}});
   }
 
   handlePayment(e) {
+    e.preventDefault();
     this.props.openDialog();
   }
 
   handlePaymentDialogClose(e) {
+    e.preventDefault();
     this.props.closeDialog();
   }
 
@@ -637,18 +633,18 @@ class Task extends Component {
                 </TabContainer>}
                 {activeTab === 1 &&
                 <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
-                <RegularCard
-                  headerColor="green"
-                  cardTitle="Pagamentos realizados para esta tarefa"
-                  cardSubtitle="Elas serão transferidas para quem conclui-la"
-                  content={
-                    <Table
-                      tableHeaderColor="warning"
-                      tableHead={["Pago", "Status", "Valor", "Criado em"]}
-                      tableData={this.state.task.orders.length ? displayOrders(this.state.task.orders) : []}
-                    />
-                  }
-                />
+                  <RegularCard
+                    headerColor="green"
+                    cardTitle="Pagamentos realizados para esta tarefa"
+                    cardSubtitle="Elas serão transferidas para quem conclui-la"
+                    content={
+                      <Table
+                        tableHeaderColor="warning"
+                        tableHead={["Pago", "Status", "Valor", "Criado em"]}
+                        tableData={this.state.task.orders.length ? displayOrders(this.state.task.orders) : []}
+                      />
+                    }
+                  />
                 </div>}
                 {activeTab === 2 &&
                 <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
