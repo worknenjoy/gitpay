@@ -17,6 +17,8 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
+import StripeCheckout from '../checkout/stripe-checkout';
+
 import RedeemIcon from 'material-ui-icons/Redeem';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
 import AddIcon from 'material-ui-icons/Add';
@@ -683,14 +685,30 @@ class Task extends Component {
                 />}
             </Grid>
           </Grid>
-          <PaymentDialog
+          <Dialog
             open={this.props.dialog}
             onClose={this.props.closeDialog}
-            addNotification={this.props.addNotification}
-            itemPrice={this.state.current_price}
-            price={this.state.final_price}
-            task={this.props.match.params.id}
-          />
+            aria-labelledby="alert-dialog-payment-title"
+            aria-describedby="alert-dialog-payment-description"
+            fullWidth={true}
+            maxWidth="md"
+          >
+            <DialogTitle id="alert-dialog-payment-title">
+              Realizar pagamento
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-payment-description">
+                Preecha os dados do cartão para efetuar o pagamento
+              </DialogContentText>
+              <StripeCheckout
+                addNotification={this.props.addNotification}
+                onClose={this.props.closeDialog}
+                itemPrice={this.state.current_price}
+                price={this.state.final_price}
+                task={this.props.match.params.id}
+              />
+            </DialogContent>
+          </Dialog>
         <Bottom />
       </div>
     )
