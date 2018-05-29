@@ -21,7 +21,6 @@ class PaymentDialog extends Component {
     return (
       <Dialog
         open={this.props.open}
-        onClose={this.props.onClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
         fullWidth={true}

@@ -188,7 +188,7 @@ class CheckoutForm extends Component {
           <Grid container spacing={24}>
             <Grid item xs={12}>
               <div>
-                <CardSection />
+                <CardSection {...this.props} />
               </div>
             </Grid>
             <Grid item xs={12}>

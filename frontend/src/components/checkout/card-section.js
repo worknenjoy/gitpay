@@ -6,7 +6,11 @@ class CardSection extends React.Component {
   render() {
     return (
       <label>
-        <CardElement style={{base: {fontSize: '22px', marginTop: 20, marginBottom: 20}}} />
+        {this.props.stripe ? (
+          <CardElement style={{base: {fontSize: '22px', marginTop: 20, marginBottom: 20}}} />
+        ) : (
+          <div>Card loading...</div>
+        )}
       </label>
     );
   }
