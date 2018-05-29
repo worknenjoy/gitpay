@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
+import { withRouter } from 'react-router-dom';
 import { injectStripe } from 'react-stripe-elements';
-import { withRouter} from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
 
 import CardSection from './card-section';
 import UserSection from './user-section';
@@ -14,17 +12,6 @@ import Notification from '../notification/notification';
 import api from '../../consts';
 import axios from 'axios';
 import Auth from '../../modules/auth';
-
-const styles = theme => ({
-  formActions: {
-    marginTop: 20,
-    marginBottom: 10,
-    float: 'right'
-  },
-  cardElements: {
-    backgroundColor: 'black'
-  }
-});
 
 class CheckoutForm extends Component {
 
@@ -85,49 +72,33 @@ class CheckoutForm extends Component {
             }]
           }).then((response) => {
             this.props.onClose();
-            this.props.history.replace({pathname: `/task/${this.props.match.params.id}/orders`, state: {
-              notification: {
-                open: true,
-                message: "O seu pagamento foi realizado com sucesso"
-              }
-            }});
+            this.props.addNotification("Pagamento realizado com sucesso");
+            this.props.history.replace({pathname: `/task/${this.props.match.params.id}`});
           }).catch((error) => {
             console.log(error);
+            this.props.addNotification("Erro ao atualizar o pedido");
             this.setState({
-              error: {
-                payment: true,
-                message: "Erro ao atualizar o pedido"
-              },
               paymentRequested: false
             })
           });
         } catch(e) {
           console.log('error', e);
+          this.props.addNotification("Erro ao processar o pagamento do cartão de crédito")
           this.setState({
-            error: {
-              payment: true,
-              message: "Erro ao processar o pagamento do cartão de crédito"
-            },
             paymentRequested: false
           })
         };
       } else {
+        this.props.addNotification("Erro na criação do token")
         this.setState({
-          error: {
-            payment: true,
-            message: "Erro na criação do token"
-          },
           paymentRequested: false
         })
       }
     }).catch((e) => {
       console.log('error to create token');
       console.log(e);
+      this.props.addNotification("Erro na criação do token");
       this.setState({
-        error: {
-          payment: true,
-          message: "Erro na criação do token"
-        },
         paymentRequested: false
       })
     });
@@ -137,6 +108,7 @@ class CheckoutForm extends Component {
   }
 
   onChange(ev) {
+    ev.preventDefault();
     let formData = {};
     formData[ev.target.name] = ev.target.value;
     this.setState(formData);
@@ -187,12 +159,10 @@ class CheckoutForm extends Component {
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={12}>
-              <div>
-                <CardSection {...this.props} />
-              </div>
+              <CardSection {...this.props} />
             </Grid>
             <Grid item xs={12}>
-              <div className={classes.formActions}>
+              <div style={{marginTop: 20, marginBottom: 10,float: 'right'}}>
                 <Button color="primary" onClick={this.props.onClose}>
                   Cancelar
                 </Button>
@@ -208,8 +178,4 @@ class CheckoutForm extends Component {
   }
 }
 
-CheckoutForm.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withRouter(withStyles(styles)(injectStripe(CheckoutForm)));
+export default withRouter(injectStripe(CheckoutForm));

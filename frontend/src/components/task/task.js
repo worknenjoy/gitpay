@@ -687,13 +687,14 @@ class Task extends Component {
                 />}
             </Grid>
           </Grid>
-        <PaymentDialog
-          open={this.props.dialog}
-          onClose={this.props.closeDialog}
-          itemPrice={this.state.current_price}
-          price={this.state.final_price}
-          task={this.props.match.params.id}
-        />
+          <PaymentDialog
+            open={this.props.dialog}
+            onClose={this.props.closeDialog}
+            addNotification={this.props.addNotification}
+            itemPrice={this.state.current_price}
+            price={this.state.final_price}
+            task={this.props.match.params.id}
+          />
         <Bottom />
       </div>
     )
