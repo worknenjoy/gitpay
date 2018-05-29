@@ -20,9 +20,6 @@ const styles = theme => ({
     marginTop: 20,
     marginBottom: 10,
     float: 'right'
-  },
-  cardElements: {
-
   }
 });
 
@@ -182,26 +179,23 @@ class CheckoutForm extends Component {
       <div>
         <Notification message={this.state.error.message || "Tivemos um erro ao processar seu pagamento"} open={this.state.error.payment} onClose={this.handleCloseNotification} />
         <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
-          <Grid item xs={12} style={{marginBottom: 20}}>
+
             { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}
-          </Grid>
-          <Grid container spacing={24}>
-            <Grid item xs={12}>
-              <div className={classes.cardElements}>
-                <CardSection />
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div className={classes.formActions}>
+
+
+
+              <CardSection />
+
+
+
                 <Button color="primary" onClick={this.props.onClose}>
                   Cancelar
                 </Button>
                 <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
                   {`Pagar R$ ${this.props.itemPrice}`}
                 </Button>
-              </div>
-            </Grid>
-          </Grid>
+
+
         </form>
       </div>
     );
@@ -212,4 +206,4 @@ CheckoutForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(injectStripe(CheckoutForm)));
+export default injectStripe(CheckoutForm);
