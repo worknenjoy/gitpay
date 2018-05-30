@@ -17,8 +17,6 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
-import StripeCheckout from '../checkout/stripe-checkout';
-
 import RedeemIcon from 'material-ui-icons/Redeem';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
 import AddIcon from 'material-ui-icons/Add';
@@ -32,8 +30,7 @@ import { FormControl } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
 import PaymentDialog from '../payment/payment-dialog';
 
-import StatsCard from '../Cards/StatsCard';
-import RegularCard from '../Cards/RegularCard';
+
 import Table from '../Table/Table';
 
 import classNames from 'classnames';
@@ -650,65 +647,22 @@ class Task extends Component {
                 </div>}
                 {activeTab === 2 &&
                 <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
-                  <RegularCard
-                    headerColor="green"
-                    cardTitle="Interessados em realizar esta tarefa"
-                    cardSubtitle="Estes são usuários interessados em realizar esta tarefa"
-                    content={
-                      <Table
-                        tableHeaderColor="warning"
-                        tableHead={["Nome", "Criado em"]}
-                        tableData={this.state.task.assigns.length ? displayAssigns(this.state.task.assigns) : []}
-                      />
-                    }
-                  />
+
                 </div>}
               </div>
             </Grid>
             <Grid item xs={4}>
-              <StatsCard
-                icon={TrophyIcon}
-                iconColor="green"
-                title="Valor da tarefa"
-                description={`R$ ${this.state.final_price}`}
-                statIcon={CalendarIcon}
-                statText={this.state.task.orders.length ? `Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
-              />
-              {MomentComponent(this.state.deadline).isValid() &&
-              <StatsCard
-                icon={DateIcon}
-                iconColor="green"
-                title="data limite para realizacao da tarefa"
-                description={MomentComponent(this.state.deadline).format("DD-MM-YYYY")}
-                statIcon={DateIcon}
-                statText={`${MomentComponent(this.state.deadline).fromNow()}`}
-                />}
+              
             </Grid>
           </Grid>
-          <Dialog
+          <PaymentDialog
             open={this.props.dialog}
             onClose={this.props.closeDialog}
-            aria-labelledby="alert-dialog-payment-title"
-            aria-describedby="alert-dialog-payment-description"
-            fullWidth={true}
-            maxWidth="md"
-          >
-            <DialogTitle id="alert-dialog-payment-title">
-              Realizar pagamento
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-payment-description">
-                Preecha os dados do cartão para efetuar o pagamento
-              </DialogContentText>
-              <StripeCheckout
-                addNotification={this.props.addNotification}
-                onClose={this.props.closeDialog}
-                itemPrice={this.state.current_price}
-                price={this.state.final_price}
-                task={this.props.match.params.id}
-              />
-            </DialogContent>
-          </Dialog>
+            addNotification={this.props.addNotification}
+            itemPrice={this.state.current_price}
+            price={this.state.final_price}
+            task={this.props.match.params.id}
+          />
         <Bottom />
       </div>
     )
