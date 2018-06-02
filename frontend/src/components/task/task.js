@@ -30,7 +30,8 @@ import { FormControl } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
 import PaymentDialog from '../payment/payment-dialog';
 
-
+import StatsCard from '../Cards/StatsCard';
+import RegularCard from '../Cards/RegularCard';
 import Table from '../Table/Table';
 
 import classNames from 'classnames';
@@ -270,7 +271,7 @@ class Task extends Component {
     }
 
     this.handlePaymentDialogClose = this.handlePaymentDialogClose.bind(this);
-    this.handlePayment = this.handlePayment.bind(this);
+    //this.handlePayment = this.handlePayment.bind(this);
     this.handleDeadline = this.handleDeadline.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputChangeCalendar = this.handleInputChangeCalendar.bind(this);
@@ -294,8 +295,7 @@ class Task extends Component {
     this.setState({notification: {open: false}});
   }
 
-  handlePayment(e) {
-    e.preventDefault();
+  handlePayment() {
     this.props.openDialog();
   }
 
@@ -557,7 +557,7 @@ class Task extends Component {
                               onChange={this.handleInputChange}
                             />
                           </FormControl>
-                          <Button disabled={!this.state.current_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
+                          <Button  onClick={() => this.handlePayment()} variant="raised" color="primary" className={classes.btnPayment}>
                             {`Pagar R$ ${this.state.current_price}`}
                           </Button>
                         </form>
@@ -647,12 +647,39 @@ class Task extends Component {
                 </div>}
                 {activeTab === 2 &&
                 <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
-
+                  <RegularCard
+                    headerColor="green"
+                    cardTitle="Interessados em realizar esta tarefa"
+                    cardSubtitle="Estes são usuários interessados em realizar esta tarefa"
+                    content={
+                      <Table
+                        tableHeaderColor="warning"
+                        tableHead={["Nome", "Criado em"]}
+                        tableData={this.state.task.assigns.length ? displayAssigns(this.state.task.assigns) : []}
+                      />
+                    }
+                  />
                 </div>}
               </div>
             </Grid>
             <Grid item xs={4}>
-              
+              <StatsCard
+                icon={TrophyIcon}
+                iconColor="green"
+                title="Valor da tarefa"
+                description={`R$ ${this.state.final_price}`}
+                statIcon={CalendarIcon}
+                statText={this.state.task.orders.length ? `Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
+              />
+              {MomentComponent(this.state.deadline).isValid() &&
+              <StatsCard
+                icon={DateIcon}
+                iconColor="green"
+                title="data limite para realizacao da tarefa"
+                description={MomentComponent(this.state.deadline).format("DD-MM-YYYY")}
+                statIcon={DateIcon}
+                statText={`${MomentComponent(this.state.deadline).fromNow()}`}
+                />}
             </Grid>
           </Grid>
           <PaymentDialog
