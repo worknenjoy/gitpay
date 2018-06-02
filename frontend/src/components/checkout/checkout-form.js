@@ -149,16 +149,7 @@ class CheckoutForm extends Component {
           <Grid item xs={12}>
             <CardSection {...this.props} />
           </Grid>
-          <Grid item xs={12}>
-            <div style={{marginTop: 20, marginBottom: 0, float: 'right'}}>
-              <Button color="primary" onClick={this.props.onClose}>
-                Cancelar
-              </Button>
-              <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
-                {`Pagar R$ ${this.props.itemPrice}`}
-              </Button>
-            </div>
-          </Grid>
+          
         </Grid>
       </form>
     );

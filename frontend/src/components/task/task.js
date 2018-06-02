@@ -271,7 +271,7 @@ class Task extends Component {
     }
 
     this.handlePaymentDialogClose = this.handlePaymentDialogClose.bind(this);
-    //this.handlePayment = this.handlePayment.bind(this);
+    this.handlePayment = this.handlePayment.bind(this);
     this.handleDeadline = this.handleDeadline.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputChangeCalendar = this.handleInputChangeCalendar.bind(this);
@@ -295,7 +295,8 @@ class Task extends Component {
     this.setState({notification: {open: false}});
   }
 
-  handlePayment() {
+  handlePayment(e) {
+    e.preventDefault();
     this.props.openDialog();
   }
 
@@ -557,7 +558,7 @@ class Task extends Component {
                               onChange={this.handleInputChange}
                             />
                           </FormControl>
-                          <Button  onClick={() => this.handlePayment()} variant="raised" color="primary" className={classes.btnPayment}>
+                          <Button disabled={!this.state.current_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
                             {`Pagar R$ ${this.state.current_price}`}
                           </Button>
                         </form>
