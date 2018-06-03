@@ -24,7 +24,6 @@ class PaymentDialog extends Component {
         aria-labelledby="alert-dialog-payment-title"
         aria-describedby="alert-dialog-payment-description"
         fullWidth={true}
-        maxWidth="md"
       >
         <DialogTitle id="alert-dialog-payment-title">
           Realizar pagamento

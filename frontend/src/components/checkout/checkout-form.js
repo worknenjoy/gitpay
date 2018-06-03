@@ -141,21 +141,21 @@ class CheckoutForm extends Component {
     const logged = this.state.authenticated;
 
     return (
-      <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
-        <Grid item xs={12} style={{marginBottom: 20}}>
-          { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}
-        </Grid>
+      <form onSubmit={this.handleSubmit} onChange={this.onChange}>
         <Grid container spacing={24}>
+          <Grid item xs={12} style={{marginBottom: 20}}>
+            { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}
+          </Grid>
           <Grid item xs={12}>
             <CardSection {...this.props} />
           </Grid>
           <Grid item xs={12}>
             <div style={{marginTop: 20, marginBottom: 0, float: 'right'}}>
-              <Button color="primary">
+              <Button color="primary" onClick={this.props.onClose}>
                 Cancelar
               </Button>
-              <Button color="secondary">
-                Pagar
+              <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
+                {`Pagar R$ ${this.props.itemPrice}`}
               </Button>
             </div>
           </Grid>
