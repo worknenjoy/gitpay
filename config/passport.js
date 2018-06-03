@@ -206,7 +206,7 @@ passport.use(
           data.repos = JSON.parse(response).length;
           userExist(data)
             .then((user) => {
-              if(user){
+              if(user) {
                 userUpdate(data)
                   .then((user) => {
                     const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
@@ -220,6 +220,8 @@ passport.use(
               } else {
                 userBuild(data)
                   .then((user) => {
+                    const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
+                    data.token = token;
                     mailChimpConnect(profile.emails[0].value);
                     return done(null, user);
                   }).catch((error) => {
