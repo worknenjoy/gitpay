@@ -22,7 +22,7 @@ const Mailchimp = require('mailchimp-api-v3');
 const mc = new Mailchimp(mailchimp.apiKey);
 
 const mailChimpConnect = (mail) => {
-  mc.put(`/lists/${mailchimp.listId}/members`, {
+  mc.post(`/lists/${mailchimp.listId}/members`, {
     email_address : mail,
     status : 'subscribed'
   })
@@ -76,7 +76,7 @@ passport.use(
 
                         if (user){
 
-                            userUpdat(data)
+                            userUpdate(data)
                                 .then((user) => {
                                     return done(null, user);
                                 }).catch((error) => {
