@@ -223,7 +223,7 @@ passport.use(
                     const token = jwt.sign({email: data.email}, process.env.SECRET_PHRASE);
                     data.token = token;
                     mailChimpConnect(profile.emails[0].value);
-                    return done(null, user);
+                    return done(null, data);
                   }).catch((error) => {
                   console.log("Error in passport.js configuration file");
                   console.log(error);
