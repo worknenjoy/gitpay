@@ -150,7 +150,14 @@ class CheckoutForm extends Component {
             <CardSection {...this.props} />
           </Grid>
           <Grid item xs={12}>
-            <h2>Você pode solicitar a devolução do valor em refund@gitpay.me</h2>
+            <div style={{marginTop: 20, marginBottom: 0, float: 'right'}}>
+              <Button color="primary">
+                Cancelar
+              </Button>
+              <Button color="secondary">
+                Pagar
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </form>
