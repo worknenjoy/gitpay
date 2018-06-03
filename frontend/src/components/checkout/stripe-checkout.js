@@ -10,7 +10,6 @@ class StripeCheckout extends Component {
   }
 
   componentWillMount() {
-    console.log('being called multiple times', this.props);
     // componentDidMount only runs in a browser environment.
     // In addition to loading asynchronously, this code is safe to server-side render.
 
@@ -23,7 +22,7 @@ class StripeCheckout extends Component {
       // The setTimeout lets us pretend that Stripe.js took a long time to load
       // Take it out of your production code!
       this.setState({
-        stripe: window.Stripe('pk_test_pBA57lmPZbGhidkUUphTZZdB'),
+        stripe: window.Stripe(process.env.STRIPE_PUBKEY)
       });
     }
     document.body && document.body.appendChild(stripeJs);

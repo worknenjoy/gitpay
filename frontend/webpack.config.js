@@ -1,3 +1,9 @@
+if(process.env.NODE_ENV != 'production') {
+  require('dotenv').config({
+    path: '../.env'
+  });
+}
+
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -22,7 +28,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development'),
-        'API_HOST': JSON.stringify('http://localhost:3000')
+        'API_HOST': JSON.stringify('http://localhost:3000'),
+        'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY)
       }
     })
 	],
