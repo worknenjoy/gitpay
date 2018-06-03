@@ -24,13 +24,14 @@ class PaymentDialog extends Component {
         aria-labelledby="alert-dialog-payment-title"
         aria-describedby="alert-dialog-payment-description"
         fullWidth={true}
+        maxWidth="md"
       >
         <DialogTitle id="alert-dialog-payment-title">
           Realizar pagamento
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-payment-description">
-            Preecha os dados do cartão para efetuar o pagamento
+            Preencha os dados do cartão para efetuar o pagamento
           </DialogContentText>
           <StripeCheckout {...this.props} />
         </DialogContent>

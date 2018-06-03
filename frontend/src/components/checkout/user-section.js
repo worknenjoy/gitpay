@@ -1,12 +1,12 @@
 // CardSection.js
-import React from 'react';
+import React, { Component } from 'react';
 import Input, { InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import MailIcon from 'material-ui-icons/Mail';
 
 
-class UserSection extends React.Component {
+class UserSection extends Component {
 
   constructor(props) {
     super(props);

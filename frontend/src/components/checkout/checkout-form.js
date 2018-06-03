@@ -6,8 +6,7 @@ import { injectStripe } from 'react-stripe-elements';
 
 import CardSection from './card-section';
 import UserSection from './user-section';
-import Button from "material-ui/es/Button/Button";
-import Notification from '../notification/notification';
+import Button from "material-ui/Button";
 
 import api from '../../consts';
 import axios from 'axios';
@@ -141,7 +140,7 @@ class CheckoutForm extends Component {
     const logged = this.state.authenticated;
 
     return (
-      <form onSubmit={this.handleSubmit} onChange={this.onChange}>
+      <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20}}>
         <Grid container spacing={24}>
           <Grid item xs={12} style={{marginBottom: 20}}>
             { logged ? <div><Typography variant="caption"> Você está logado como </Typography><Typography variant="subheading">{this.state.fullname}({this.state.email})</Typography></div>  : <UserSection error={this.state.error}/>}

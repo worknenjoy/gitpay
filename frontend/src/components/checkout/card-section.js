@@ -1,5 +1,6 @@
 // CardSection.js
 import React from 'react';
+import Typography from 'material-ui/Typography';
 import { CardElement } from 'react-stripe-elements';
 
 class CardSection extends React.Component {
@@ -9,7 +10,7 @@ class CardSection extends React.Component {
         {this.props.stripe ? (
           <CardElement style={{base: {fontSize: '22px', marginTop: 20, marginBottom: 20}}} />
         ) : (
-          <div>Card loading...</div>
+          <Typography variant="caption">Card loading...</Typography>
         )}
       </label>
     );
