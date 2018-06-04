@@ -159,8 +159,8 @@ class TopBar extends Component  {
         userId: this.props.user ? this.props.user.id : null
       })
         .then((response) => {
-          this.props.history.replace({pathname: `/task/${response.data.id}`});
           this.props.dispatch(addNotification("A sua tarefa foi criada com sucesso"));
+          this.props.history.replace({pathname: `/task/${response.data.id}`});
         })
         .catch((error) => {
           console.log('error to create task');
