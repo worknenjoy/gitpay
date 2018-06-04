@@ -191,7 +191,7 @@ passport.use(
           picture_url: profile.photos[0].value,
           website: profile._json.blog,
           repos: 0,
-          email: profile.emails[0].value
+          email: profile.emails.length ? profile.emails[0].value : profile._json.email
         }
 
         //const client = githubAPI.client(accessToken);
