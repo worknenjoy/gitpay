@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Topbar from '../components/topbar/topbar'
-import { loggedIn, logOut } from '../actions/actions'
+import { addNotification, loggedIn, logOut } from '../actions/actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -13,10 +13,13 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     isLogged: () => {
-      dispatch(loggedIn())
+      return dispatch(loggedIn())
     },
     signOut: () => {
-      dispatch(logOut())
+      return dispatch(logOut())
+    },
+    addNotification: (msg) => {
+      return dispatch(addNotification(msg))
     }
   }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
 import { withRouter } from "react-router-dom";
-import NotificationIcon from 'material-ui-icons/Notifications';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -159,14 +158,15 @@ class TopBar extends Component  {
         userId: this.props.user ? this.props.user.id : null
       })
         .then((response) => {
-          this.props.dispatch(addNotification("A sua tarefa foi criada com sucesso"));
+          this.props.addNotification("A sua tarefa foi criada com sucesso");
           this.props.history.replace({pathname: `/task/${response.data.id}`});
         })
         .catch((error) => {
+          this.props.addNotification("Tivemos algum problema para criar a tarefa");
           console.log('error to create task');
           console.log(error);
         });
-      this.setState({createTaskDialog: false});
+        this.setState({createTaskDialog: false});
     } else {
       this.setState({
         task: {
