@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MomentComponent from 'moment';
+import { StripeProvider } from 'react-stripe-elements';
 
 import Grid from 'material-ui/Grid';
 import Notification from '../notification/notification';
@@ -412,286 +413,288 @@ class Task extends Component {
     }
 
     return (
-      <div>
-        <Grid container className={classes.rootTopBar} spacing={24} >
-          <TopBarContainer />
-          <Grid item xs={12}>
-            <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
-              <a className={classes.white} href={this.state.task.url}>{this.state.task.company}</a>
-            </Typography>
-            <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
-              <a className={classes.white} href={this.state.task.url}>{this.state.task.issue.title}</a>
-              <Chip
-                label={Constants.STATUSES[this.state.task.status]}
-                className={classes.chipStatus}
-              />
-            </Typography>
+      <StripeProvider apiKey={process.env.STRIPE_PUBKEY}>
+        <div>
+          <Grid container className={classes.rootTopBar} spacing={24} >
+            <TopBarContainer />
+            <Grid item xs={12}>
+              <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
+                <a className={classes.white} href={this.state.task.url}>{this.state.task.company}</a>
+              </Typography>
+              <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
+                <a className={classes.white} href={this.state.task.url}>{this.state.task.issue.title}</a>
+                <Chip
+                  label={Constants.STATUSES[this.state.task.status]}
+                  className={classes.chipStatus}
+                />
+              </Typography>
+            </Grid>
+            <Notification message={this.state.notification.message} open={this.state.notification.open} onClose={this.handleCloseNotification} />
           </Grid>
-          <Notification message={this.state.notification.message} open={this.state.notification.open} onClose={this.handleCloseNotification} />
-        </Grid>
-        <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
-          <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
-            <div>
-              <Avatar
-                alt={this.state.task.issue.user.name}
-                src={this.state.task.issue.user.avatar_url}
-                className={classNames(classes.avatar)}
-              />
-            </div>
-            <div className={classes.paper}>
-              <Button onClick={this.handleAssignDialogOpen} size="medium" color="primary" className={classes.altButton}>
-                <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
-              </Button>
-              <Dialog
-                open={this.state.assignDialog}
-                onClose={this.handleAssignDialogClose}
-                aria-labelledby="form-dialog-title"
-              >
-                { !this.props.logged ? (
-                <div>
-                  <DialogTitle id="form-dialog-title">Você precisa estar logado para realizar esta tarefa</DialogTitle>
-                  <DialogContent>
-                    <div className={classes.mainBlock}>
-                      <Typography type="subheading" gutterBottom noWrap>
-                        Conecte com algumas dessas contas
-                      </Typography>
-                      <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img width="16" src={logoGithub} /> Github
-                      </Button>
-                      <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img width="16" src={logoBitbucket} /> Bitbucket
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </div>
-                  ) : (
-                    <div>
-                      <DialogTitle id="form-dialog-title">Você tem interesse nesta tarefa?</DialogTitle>
-                      <DialogContent>
-                        <Typography type="subheading" gutterBottom>
-                          Você poderá ser associado a tarefa no github para receber a recompensa quando o seu código for integrado
+          <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
+            <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
+              <div>
+                <Avatar
+                  alt={this.state.task.issue.user.name}
+                  src={this.state.task.issue.user.avatar_url}
+                  className={classNames(classes.avatar)}
+                />
+              </div>
+              <div className={classes.paper}>
+                <Button onClick={this.handleAssignDialogOpen} size="medium" color="primary" className={classes.altButton}>
+                  <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
+                </Button>
+                <Dialog
+                  open={this.state.assignDialog}
+                  onClose={this.handleAssignDialogClose}
+                  aria-labelledby="form-dialog-title"
+                >
+                  { !this.props.logged ? (
+                  <div>
+                    <DialogTitle id="form-dialog-title">Você precisa estar logado para realizar esta tarefa</DialogTitle>
+                    <DialogContent>
+                      <div className={classes.mainBlock}>
+                        <Typography type="subheading" gutterBottom noWrap>
+                          Conecte com algumas dessas contas
                         </Typography>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={this.handleAssignDialogClose} color="primary">
-                          Cancelar
+                        <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                          <img width="16" src={logoGithub} /> Github
                         </Button>
-                        <Button onClick={this.handleAssignTask} variant="raised" color="secondary" >
-                          Desafio aceito, quero esta tarefa!
+                        <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                          <img width="16" src={logoBitbucket} /> Bitbucket
                         </Button>
-                      </DialogActions>
-                    </div>
-                  )}
-              </Dialog>
-            </div>
-          </Grid>
-        </Grid>
-        <Grid container spacing={24} className={classes.gridBlock}>
-            <Grid item xs={8}>
-              <div className={classes.rootTabs}>
-                <AppBar position="static" color="default">
-                  <Tabs
-                    value={activeTab}
-                    onChange={this.handleTabChange}
-                    scrollable
-                    scrollButtons="on"
-                    indicatorColor="primary"
-                    textColor="primary"
-                  >
-                    <Tab label="Tarefa" icon={<RedeemIcon />} />
-                    <Tab label="Pedidos" icon={<ShoppingBasket />} />
-                    <Tab label="Interessados" icon={<GroupWorkIcon />} />
-                  </Tabs>
-                </AppBar>
-                {activeTab === 0 &&
-                <TabContainer>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cover}
-                      image={paymentIcon}
-                      title="Realize o pagamento pela tarefa"
-                    />
-                    <div className={classes.details}>
-                      <CardContent className={classes.content}>
-                        <Typography variant="headline">Crie uma recompensa para esta tarefa</Typography>
-                        <Typography variant="subheading" color="textSecondary">
-                          Realize um pagamento por esta tarefa para que alguém possa desenvolvê-la e receber o pagamento como recompensa.
-                        </Typography>
-                        <div className={classes.chipContainer}>
-                          <Chip
-                            label=" R$ 20"
-                            className={classes.chip}
-                            onClick={() => this.pickTaskPrice(20)}
-                          />
-                          <Chip
-                            label=" R$ 50"
-                            className={classes.chip}
-                            onClick={() => this.pickTaskPrice(50)}
-                          />
-                          <Chip
-                            label=" R$ 100"
-                            className={classes.chip}
-                            onClick={() => this.pickTaskPrice(100)}
-                          />
-                          <Chip
-                            label=" R$ 150"
-                            className={classes.chip}
-                            onClick={() => this.pickTaskPrice(150)}
-                          />
-                          <Chip
-                            label=" R$ 300"
-                            className={classes.chip}
-                            onClick={() => this.pickTaskPrice(300)}
-                          />
-                        </div>
-                        <form className={classes.formPayment} action="POST">
-                          <FormControl fullWidth>
-                            <InputLabel htmlFor="adornment-amount">Valor</InputLabel>
-                            <Input
-                              id="adornment-amount"
-                              startAdornment={<InputAdornment position="start">R$</InputAdornment>}
-                              placeholder="Insira um valor"
-                              type="number"
-                              inputProps={ {'min': 0} }
-                              value={this.state.current_price}
-                              onChange={this.handleInputChange}
-                            />
-                          </FormControl>
-                          <Button disabled={!this.state.current_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
-                            {`Pagar R$ ${this.state.current_price}`}
-                          </Button>
-                        </form>
-                      </CardContent>
-                    </div>
-                  </Card>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cover}
-                      image={timeIcon}
-                      title="Realize o pagamento pela tarefa"
-                    />
-                    <div className={classes.details}>
-                      <CardContent className={classes.content}>
-                        <Typography variant="headline">Escolha uma data limite para realizacao desta tarefa</Typography>
-                        <Typography variant="subheading" color="textSecondary">
-                          Escolha uma data em que deseja que ela precisa ser finalizada
-                        </Typography>
-                        <div className={classes.chipContainer}>
-                          <Chip
-                            label=" daqui uma semana "
-                            className={classes.chip}
-                            onClick={() => this.pickTaskDeadline(7)}
-                          />
-                          <Chip
-                            label=" daqui quinze dias "
-                            className={classes.chip}
-                            onClick={() => this.pickTaskDeadline(15)}
-                          />
-                          <Chip
-                            label=" daqui vinte dias "
-                            className={classes.chip}
-                            onClick={() => this.pickTaskDeadline(20)}
-                          />
-                          <Chip
-                            label=" daqui um mês"
-                            className={classes.chip}
-                            onClick={() => this.pickTaskDeadline(30)}
-                          />
-                        </div>
-                        <form className={classes.formPayment} action="POST">
-                          <FormControl fullWidth>
-                            <InputLabel htmlFor="adornment-amount">Dia</InputLabel>
-                            <Input
-                              id="adornment-date"
-                              startAdornment={<InputAdornment position="start"><DateIcon /></InputAdornment>}
-                              placeholder="Insira uma data"
-                              type="date"
-                              value={`${MomentComponent(this.state.deadline).format("YYYY-MM-DD")}` || `${MomentComponent().format("YYYY-MM-DD")}`}
-                              onChange={this.handleInputChangeCalendar}
-                            />
-                          </FormControl>
-                          <Button disabled={!this.state.deadline} onClick={this.handleDeadline} variant="raised" color="primary" className={classes.btnPayment}>
-                            {this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format("DD/MM/YYYY")} como data limite` : 'Salvar data limite'}
-                          </Button>
-                        </form>
-                      </CardContent>
-                      <div className={classes.controls}>
                       </div>
-                    </div>
-                  </Card>
-                  <Card className={classes.paper}>
-                    <Typography variant="title" align="left" gutterBottom>
-                      Descrição
-                    </Typography>
-                    <Typography variant="body2" align="left" gutterBottom>
+                    </DialogContent>
+                  </div>
+                    ) : (
                       <div>
-                        {renderHTML(marked(this.state.task.issue.body))}
+                        <DialogTitle id="form-dialog-title">Você tem interesse nesta tarefa?</DialogTitle>
+                        <DialogContent>
+                          <Typography type="subheading" gutterBottom>
+                            Você poderá ser associado a tarefa no github para receber a recompensa quando o seu código for integrado
+                          </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={this.handleAssignDialogClose} color="primary">
+                            Cancelar
+                          </Button>
+                          <Button onClick={this.handleAssignTask} variant="raised" color="secondary" >
+                            Desafio aceito, quero esta tarefa!
+                          </Button>
+                        </DialogActions>
                       </div>
-                    </Typography>
-                  </Card>
-                </TabContainer>}
-                {activeTab === 1 &&
-                <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
-                  <RegularCard
-                    headerColor="green"
-                    cardTitle="Pagamentos realizados para esta tarefa"
-                    cardSubtitle="Elas serão transferidas para quem conclui-la"
-                    content={
-                      <Table
-                        tableHeaderColor="warning"
-                        tableHead={["Pago", "Status", "Valor", "Criado em"]}
-                        tableData={this.state.task.orders.length ? displayOrders(this.state.task.orders) : []}
-                      />
-                    }
-                  />
-                </div>}
-                {activeTab === 2 &&
-                <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
-                  <RegularCard
-                    headerColor="green"
-                    cardTitle="Interessados em realizar esta tarefa"
-                    cardSubtitle="Estes são usuários interessados em realizar esta tarefa"
-                    content={
-                      <Table
-                        tableHeaderColor="warning"
-                        tableHead={["Nome", "Criado em"]}
-                        tableData={this.state.task.assigns.length ? displayAssigns(this.state.task.assigns) : []}
-                      />
-                    }
-                  />
-                </div>}
+                    )}
+                </Dialog>
               </div>
             </Grid>
-            <Grid item xs={4}>
-              <StatsCard
-                icon={TrophyIcon}
-                iconColor="green"
-                title="Valor da tarefa"
-                description={`R$ ${this.state.final_price}`}
-                statIcon={CalendarIcon}
-                statText={this.state.task.orders.length ? `Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
-              />
-              {MomentComponent(this.state.deadline).isValid() &&
-              <StatsCard
-                icon={DateIcon}
-                iconColor="green"
-                title="data limite para realizacao da tarefa"
-                description={MomentComponent(this.state.deadline).format("DD-MM-YYYY")}
-                statIcon={DateIcon}
-                statText={`${MomentComponent(this.state.deadline).fromNow()}`}
-                />}
-            </Grid>
           </Grid>
-          <PaymentDialog
-            open={this.props.dialog}
-            onClose={this.props.closeDialog}
-            addNotification={this.props.addNotification}
-            itemPrice={this.state.current_price}
-            price={this.state.final_price}
-            task={this.props.match.params.id}
-          />
-        <Bottom />
-      </div>
+          <Grid container spacing={24} className={classes.gridBlock}>
+              <Grid item xs={8}>
+                <div className={classes.rootTabs}>
+                  <AppBar position="static" color="default">
+                    <Tabs
+                      value={activeTab}
+                      onChange={this.handleTabChange}
+                      scrollable
+                      scrollButtons="on"
+                      indicatorColor="primary"
+                      textColor="primary"
+                    >
+                      <Tab label="Tarefa" icon={<RedeemIcon />} />
+                      <Tab label="Pedidos" icon={<ShoppingBasket />} />
+                      <Tab label="Interessados" icon={<GroupWorkIcon />} />
+                    </Tabs>
+                  </AppBar>
+                  {activeTab === 0 &&
+                  <TabContainer>
+                    <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.cover}
+                        image={paymentIcon}
+                        title="Realize o pagamento pela tarefa"
+                      />
+                      <div className={classes.details}>
+                        <CardContent className={classes.content}>
+                          <Typography variant="headline">Crie uma recompensa para esta tarefa</Typography>
+                          <Typography variant="subheading" color="textSecondary">
+                            Realize um pagamento por esta tarefa para que alguém possa desenvolvê-la e receber o pagamento como recompensa.
+                          </Typography>
+                          <div className={classes.chipContainer}>
+                            <Chip
+                              label=" R$ 20"
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(20)}
+                            />
+                            <Chip
+                              label=" R$ 50"
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(50)}
+                            />
+                            <Chip
+                              label=" R$ 100"
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(100)}
+                            />
+                            <Chip
+                              label=" R$ 150"
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(150)}
+                            />
+                            <Chip
+                              label=" R$ 300"
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(300)}
+                            />
+                          </div>
+                          <form className={classes.formPayment} action="POST">
+                            <FormControl fullWidth>
+                              <InputLabel htmlFor="adornment-amount">Valor</InputLabel>
+                              <Input
+                                id="adornment-amount"
+                                startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                                placeholder="Insira um valor"
+                                type="number"
+                                inputProps={ {'min': 0} }
+                                value={this.state.current_price}
+                                onChange={this.handleInputChange}
+                              />
+                            </FormControl>
+                            <Button disabled={!this.state.current_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
+                              {`Pagar R$ ${this.state.current_price}`}
+                            </Button>
+                          </form>
+                        </CardContent>
+                      </div>
+                    </Card>
+                    <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.cover}
+                        image={timeIcon}
+                        title="Realize o pagamento pela tarefa"
+                      />
+                      <div className={classes.details}>
+                        <CardContent className={classes.content}>
+                          <Typography variant="headline">Escolha uma data limite para realizacao desta tarefa</Typography>
+                          <Typography variant="subheading" color="textSecondary">
+                            Escolha uma data em que deseja que ela precisa ser finalizada
+                          </Typography>
+                          <div className={classes.chipContainer}>
+                            <Chip
+                              label=" daqui uma semana "
+                              className={classes.chip}
+                              onClick={() => this.pickTaskDeadline(7)}
+                            />
+                            <Chip
+                              label=" daqui quinze dias "
+                              className={classes.chip}
+                              onClick={() => this.pickTaskDeadline(15)}
+                            />
+                            <Chip
+                              label=" daqui vinte dias "
+                              className={classes.chip}
+                              onClick={() => this.pickTaskDeadline(20)}
+                            />
+                            <Chip
+                              label=" daqui um mês"
+                              className={classes.chip}
+                              onClick={() => this.pickTaskDeadline(30)}
+                            />
+                          </div>
+                          <form className={classes.formPayment} action="POST">
+                            <FormControl fullWidth>
+                              <InputLabel htmlFor="adornment-amount">Dia</InputLabel>
+                              <Input
+                                id="adornment-date"
+                                startAdornment={<InputAdornment position="start"><DateIcon /></InputAdornment>}
+                                placeholder="Insira uma data"
+                                type="date"
+                                value={`${MomentComponent(this.state.deadline).format("YYYY-MM-DD")}` || `${MomentComponent().format("YYYY-MM-DD")}`}
+                                onChange={this.handleInputChangeCalendar}
+                              />
+                            </FormControl>
+                            <Button disabled={!this.state.deadline} onClick={this.handleDeadline} variant="raised" color="primary" className={classes.btnPayment}>
+                              {this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format("DD/MM/YYYY")} como data limite` : 'Salvar data limite'}
+                            </Button>
+                          </form>
+                        </CardContent>
+                        <div className={classes.controls}>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card className={classes.paper}>
+                      <Typography variant="title" align="left" gutterBottom>
+                        Descrição
+                      </Typography>
+                      <Typography variant="body2" align="left" gutterBottom>
+                        <div>
+                          {renderHTML(marked(this.state.task.issue.body))}
+                        </div>
+                      </Typography>
+                    </Card>
+                  </TabContainer>}
+                  {activeTab === 1 &&
+                  <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
+                    <RegularCard
+                      headerColor="green"
+                      cardTitle="Pagamentos realizados para esta tarefa"
+                      cardSubtitle="Elas serão transferidas para quem conclui-la"
+                      content={
+                        <Table
+                          tableHeaderColor="warning"
+                          tableHead={["Pago", "Status", "Valor", "Criado em"]}
+                          tableData={this.state.task.orders.length ? displayOrders(this.state.task.orders) : []}
+                        />
+                      }
+                    />
+                  </div>}
+                  {activeTab === 2 &&
+                  <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
+                    <RegularCard
+                      headerColor="green"
+                      cardTitle="Interessados em realizar esta tarefa"
+                      cardSubtitle="Estes são usuários interessados em realizar esta tarefa"
+                      content={
+                        <Table
+                          tableHeaderColor="warning"
+                          tableHead={["Nome", "Criado em"]}
+                          tableData={this.state.task.assigns.length ? displayAssigns(this.state.task.assigns) : []}
+                        />
+                      }
+                    />
+                  </div>}
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <StatsCard
+                  icon={TrophyIcon}
+                  iconColor="green"
+                  title="Valor da tarefa"
+                  description={`R$ ${this.state.final_price}`}
+                  statIcon={CalendarIcon}
+                  statText={this.state.task.orders.length ? `Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
+                />
+                {MomentComponent(this.state.deadline).isValid() &&
+                <StatsCard
+                  icon={DateIcon}
+                  iconColor="green"
+                  title="data limite para realizacao da tarefa"
+                  description={MomentComponent(this.state.deadline).format("DD-MM-YYYY")}
+                  statIcon={DateIcon}
+                  statText={`${MomentComponent(this.state.deadline).fromNow()}`}
+                  />}
+              </Grid>
+            </Grid>
+            <PaymentDialog
+              open={this.props.dialog}
+              onClose={this.props.closeDialog}
+              addNotification={this.props.addNotification}
+              itemPrice={this.state.current_price}
+              price={this.state.final_price}
+              task={this.props.match.params.id}
+            />
+          <Bottom />
+        </div>
+      </StripeProvider>
     )
   }
 }

@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const MinifyPlugin = require("babel-minify-webpack-plugin");
+const MinifyPlugin = require("babel-minify-webpack-plugin")
 
 module.exports = {
   entry: './src/index.js',
