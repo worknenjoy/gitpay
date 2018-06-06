@@ -246,6 +246,7 @@ class Task extends Component {
     super(props);
     this.state = {
       task: {
+        id: null,
         company: "loading",
         issue: {
           title: "loading",
@@ -259,6 +260,7 @@ class Task extends Component {
         orders: []
       },
       deadline: null,
+      assigned: null,
       final_price: 0,
       current_price: 0,
       order_price: 0,
@@ -284,7 +286,7 @@ class Task extends Component {
 
   componentWillMount() {
     axios.get(api.API_URL + `/tasks/fetch/${this.props.match.params.id}`).then((task) => {
-      this.setState({task: {issue: task.data.metadata.issue, status: task.data.status, url: task.data.url, orders: task.data.orders, assigns: task.data.assigns, company: task.data.metadata.company}, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
+      this.setState({task: {id: task.data.id, userId: task.data.userId, issue: task.data.metadata.issue, status: task.data.status, url: task.data.url, orders: task.data.orders, assigns: task.data.assigns, company: task.data.metadata.company}, assigned: task.data.assigned, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
     }).catch((e) => {
       console.log('not possible to fetch issue');
       console.log(e);
@@ -395,6 +397,10 @@ class Task extends Component {
       'fail': 'Falha no pagamento'
     }
 
+    const taskOwner = () => {
+      return this.props.logged && (this.props.user.id === this.state.task.userId) || (!this.state.task.userId);
+    }
+
     const displayOrders = (orders) => {
       if(!orders.length) {
         return [];
@@ -402,13 +408,36 @@ class Task extends Component {
       return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `R$ ${item.amount}`, MomentComponent(item.updatedAt).fromNow()])
     }
 
+    const removeDuplicates = (myArr, prop) => {
+      return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+      });
+    }
+
+    const assignActions = (assign) => {
+      return (
+        <div>
+          { taskOwner  &&
+          <Button disabled={assign.id === this.state.assigned ? true : false} onClick={() => this.props.assignTask(this.props.match.params.id, assign.id)} style={{marginRight: 10}} variant="raised" size="small" color="primary">
+             <GroupWorkIcon style={{marginRight: 5}} /> escolher
+          </Button>}
+          { assign.id === this.state.assigned &&
+          <Chip
+            label="Escolhido"
+            className={classes.chip}
+          />}
+        </div>
+      )
+    }
+
     const displayAssigns = (assign) => {
       if(!assign.length) {
         return [];
       }
-      const items = assign.map((item, i) => {
-        return [`${item.User.name}` || 'Sem nome', MomentComponent(item.updatedAt).fromNow()]
-      });
+      const items = removeDuplicates(assign.map((item, i) => {
+        return [`${item.User.name}` || 'Sem nome', MomentComponent(item.updatedAt).fromNow(), assignActions(item.User)]
+      }), `${assign.name}`);
+
       return items;
     }
 
@@ -600,6 +629,7 @@ class Task extends Component {
                               onClick={() => this.pickTaskDeadline(30)}
                             />
                           </div>
+                          { taskOwner() &&
                           <form className={classes.formPayment} action="POST">
                             <FormControl fullWidth>
                               <InputLabel htmlFor="adornment-amount">Dia</InputLabel>
@@ -615,7 +645,7 @@ class Task extends Component {
                             <Button disabled={!this.state.deadline} onClick={this.handleDeadline} variant="raised" color="primary" className={classes.btnPayment}>
                               {this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format("DD/MM/YYYY")} como data limite` : 'Salvar data limite'}
                             </Button>
-                          </form>
+                          </form>}
                         </CardContent>
                         <div className={classes.controls}>
                         </div>
@@ -656,7 +686,7 @@ class Task extends Component {
                       content={
                         <Table
                           tableHeaderColor="warning"
-                          tableHead={["Nome", "Criado em"]}
+                          tableHead={["Nome", "Criado em", "Acões"]}
                           tableData={this.state.task.assigns.length ? displayAssigns(this.state.task.assigns) : []}
                         />
                       }

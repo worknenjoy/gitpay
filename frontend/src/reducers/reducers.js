@@ -23,6 +23,8 @@ import {
   UPDATE_TASK_ERROR,
 } from '../actions/actions'
 
+import { ASSIGN_TASK_REQUESTED, ASSIGN_TASK_SUCCESS, ASSIGN_TASK_ERROR, assignTask } from '../actions/assignActions';
+
 const notification = (state = {open: false}, action) => {
   switch (action.type) {
     case ADD_NOTIFICATION:
@@ -93,6 +95,12 @@ const task = (state = {completed: true, error: {}, task: {}}, action) => {
     case UPDATE_TASK_SUCCESS:
       return { ...state, completed: true, task: action.task.data };
     case UPDATE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error };
+    case ASSIGN_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case ASSIGN_TASK_SUCCESS:
+      return { ...state, completed: true, task: action.task };
+    case ASSIGN_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     default:
       return state;

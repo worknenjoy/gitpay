@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog, loggedIn, updateTask } from '../actions/actions'
+import { assignTask } from '../actions/assignActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -21,7 +22,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     openDialog: () => dispatch(addDialog()),
     closeDialog: () => dispatch(closeDialog()),
-    addNotification: (message) => dispatch(addNotification(message))
+    addNotification: (message) => dispatch(addNotification(message)),
+    assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId))
   }
 }
 

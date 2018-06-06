@@ -38,6 +38,8 @@ module.exports = Promise.method(function taskFetch(taskParams) {
         value: data.dataValues.value || 0,
         deadline: data.dataValues.deadline,
         status: data.dataValues.status,
+        assigned: data.dataValues.assigned,
+        userId: data.dataValues.userId,
         metadata: {
           id: issueId,
           user: userOrCompany,

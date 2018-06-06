@@ -15,6 +15,14 @@ module.exports = (sequelize, DataTypes) => {
     paid: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    assigned:  {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Assigns',
+        key: 'id'
+      },
+      allowNull: true
     }
   }, {
     classMethods: {

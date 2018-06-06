@@ -1,4 +1,4 @@
-const Sendmail = require('../mail/mail');
+const AssignMail = require('../mail/assign');
 const Promise = require('bluebird');
 const models = require('../../loading/loading');
 const { userExist, userBuild, userUpdate } = require('../../modules/users');
@@ -93,20 +93,19 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
         }
         if (taskParameters.Assigns) {
           task.createAssign(taskParameters.Assigns[0]).then((assign) => {
-            console.log(assign.dataValues);
-            models.User.findOne(
-              {where: {id: assign.dataValues.userId}}
-            ).then((user) => {
-              const usermail = task.dataValues.User.dataValues.email;
-              if(!usermail) {
-                Sendmail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues);
-              }
-              Sendmail.success(usermail, task.dataValues, user.name);
-              return assign;
-            }).catch((e) => console.log(e));
+            if(assign) {
+              models.User.findOne(
+                {where: {id: assign.dataValues.userId}}
+              ).then((user) => {
+                const usermail = task.dataValues.User.dataValues.email;
+                if (!usermail) {
+                  return AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues);
+                }
+                AssignMail.success(usermail, task.dataValues, user.name);
+                return assign;
+              }).catch((e) => console.log(e));
+            }
           }).catch(error => console.log(error));
-
-
         }
         return task.dataValues;
       }).catch((error) => {

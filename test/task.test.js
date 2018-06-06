@@ -199,5 +199,45 @@ describe("tasks", () => {
         })
     });
 
+    it('should update task with an user assinged', (done) => {
+
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          const assigned = {
+            userId: userId
+          };
+
+          models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
+            models.Assign.build({taskId: task.id, userId: userId}).save().then((assign) => {
+              agent
+                .put("/tasks/update")
+                .send({id: task.dataValues.id, value: 200, assigned: assign.id, Assigns: [assigned]})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  console.log('assign result');
+                  console.log(res.body);
+                  expect(res.body.value).to.equal('200');
+                  expect(res.body.assigned.id).to.equal(assign.id);
+                  done();
+                })
+            }).catch(e => {
+              console.log('error create task');
+              console.log(e);
+              done();
+            })
+          }).catch(e => {
+            console.log('error create task');
+            console.log(e);
+          });
+        })
+    });
+
   });
 });
