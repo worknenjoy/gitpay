@@ -22,7 +22,8 @@ export default {
     STATUSES: {
       'open': 'Aberta',
       'OPEN': 'Aberta',
-      'closed': 'Fechada',
+      'in_progress': 'Em desenvolvimento',
+      'closed': 'Finalizada',
       '': 'Status indefinido',
       null: 'Status indefinido',
       undefined: 'Status indefinido'

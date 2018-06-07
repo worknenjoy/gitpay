@@ -4,7 +4,6 @@ import MomentComponent from 'moment';
 import { StripeProvider } from 'react-stripe-elements';
 
 import Grid from 'material-ui/Grid';
-import Notification from '../notification/notification';
 import Avatar from 'material-ui/Avatar';
 import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
@@ -24,11 +23,13 @@ import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
 import DateIcon from 'material-ui-icons/DateRange';
 import CalendarIcon from 'material-ui-icons/PermContactCalendar';
 import GroupWorkIcon from 'material-ui-icons/GroupAdd';
+import DoneIcon from 'material-ui-icons/Done';
 
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
 import PaymentDialog from '../payment/payment-dialog';
+import StatusDialog from './status-dialog';
 
 import StatsCard from '../Cards/StatsCard';
 import RegularCard from '../Cards/RegularCard';
@@ -245,20 +246,6 @@ class Task extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      task: {
-        id: null,
-        company: "loading",
-        issue: {
-          title: "loading",
-          body: "loading",
-          user: {
-            avatar_url: 'loading',
-            name: 'loading'
-          },
-        },
-        url: "loading",
-        orders: []
-      },
       deadline: null,
       assigned: null,
       final_price: 0,
@@ -266,6 +253,7 @@ class Task extends Component {
       order_price: 0,
       active_tab: 0,
       assignDialog: false,
+      statusDialog: false,
       notification: {
         open: false,
         message: "loading"
@@ -282,15 +270,12 @@ class Task extends Component {
     this.handleAssignDialogClose = this.handleAssignDialogClose.bind(this);
     this.handleAssignDialogOpen = this.handleAssignDialogOpen.bind(this);
     this.handleAssignTask = this.handleAssignTask.bind(this);
+    this.handleStatusDialog = this.handleStatusDialog.bind(this);
+    this.handleStatusDialogClose = this.handleStatusDialogClose.bind(this);
   }
 
   componentWillMount() {
-    axios.get(api.API_URL + `/tasks/fetch/${this.props.match.params.id}`).then((task) => {
-      this.setState({task: {id: task.data.id, userId: task.data.userId, issue: task.data.metadata.issue, status: task.data.status, url: task.data.url, orders: task.data.orders, assigns: task.data.assigns, company: task.data.metadata.company}, assigned: task.data.assigned, deadline: task.data.deadline, final_price: task.data.value, order_price: task.data.value});
-    }).catch((e) => {
-      console.log('not possible to fetch issue');
-      console.log(e);
-    });
+    this.props.fetchTask(this.props.match.params.id);
   }
 
   handleCloseNotification() {
@@ -369,6 +354,14 @@ class Task extends Component {
     this.setState({assignDialog: true});
   }
 
+  handleStatusDialog() {
+    this.setState({statusDialog: true});
+  }
+
+  handleStatusDialogClose() {
+    this.setState({statusDialog: false});
+  }
+
   handleAssignTask() {
     this.props.updateTask({
       id: this.props.match.params.id,
@@ -381,7 +374,7 @@ class Task extends Component {
 
   render() {
 
-    const { classes } = this.props;
+    const { classes, task } = this.props;
     const activeTab = this.state.active_tab;
     const TabContainer = (props) => {
       return (
@@ -398,7 +391,7 @@ class Task extends Component {
     }
 
     const taskOwner = () => {
-      return this.props.logged && (this.props.user.id === this.state.task.userId) || (!this.state.task.userId);
+      return this.props.logged && (this.props.user.id === task.data.userId) || (!task.data.userId);
     }
 
     const displayOrders = (orders) => {
@@ -448,24 +441,33 @@ class Task extends Component {
             <TopBarContainer />
             <Grid item xs={12}>
               <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
-                <a className={classes.white} href={this.state.task.url}>{this.state.task.company}</a>
+                <a className={classes.white} href={task.data.url}>{task.data.metadata.company}</a>
               </Typography>
               <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
-                <a className={classes.white} href={this.state.task.url}>{this.state.task.issue.title}</a>
+                <a className={classes.white} href={task.data.metadata.url}>{task.data.metadata.issue.title}</a>
                 <Chip
-                  label={Constants.STATUSES[this.state.task.status]}
+                  style={{marginRight: 10}}
+                  label={Constants.STATUSES[task.data.status]}
                   className={classes.chipStatus}
+                  onDelete={() => 'foo'}
+                  deleteIcon={<DoneIcon />}
                 />
+                { taskOwner() &&
+                  <div style={{display: 'inline-block'}}>
+                    <Button onClick={this.handleStatusDialog} size="medium" color="primary" className={classes.altButton}>
+                      <span className={classes.spaceRight}>Novo status</span>  <AddIcon />
+                    </Button>
+                    <StatusDialog id={task.data.id} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
+                  </div>
+                }
               </Typography>
-            </Grid>
-            <Notification message={this.state.notification.message} open={this.state.notification.open} onClose={this.handleCloseNotification} />
+            </Grid>}
           </Grid>
           <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
             <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
               <div>
                 <Avatar
-                  alt={this.state.task.issue.user.name}
-                  src={this.state.task.issue.user.avatar_url}
+                  src={task.data.metadata.issue.user.avatar_url}
                   className={classNames(classes.avatar)}
                 />
               </div>
@@ -595,6 +597,7 @@ class Task extends Component {
                         </CardContent>
                       </div>
                     </Card>
+                    { taskOwner() &&
                     <Card className={classes.card}>
                       <CardMedia
                         className={classes.cover}
@@ -629,7 +632,6 @@ class Task extends Component {
                               onClick={() => this.pickTaskDeadline(30)}
                             />
                           </div>
-                          { taskOwner() &&
                           <form className={classes.formPayment} action="POST">
                             <FormControl fullWidth>
                               <InputLabel htmlFor="adornment-amount">Dia</InputLabel>
@@ -645,19 +647,19 @@ class Task extends Component {
                             <Button disabled={!this.state.deadline} onClick={this.handleDeadline} variant="raised" color="primary" className={classes.btnPayment}>
                               {this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format("DD/MM/YYYY")} como data limite` : 'Salvar data limite'}
                             </Button>
-                          </form>}
+                          </form>
                         </CardContent>
                         <div className={classes.controls}>
                         </div>
                       </div>
-                    </Card>
+                    </Card>}
                     <Card className={classes.paper}>
                       <Typography variant="title" align="left" gutterBottom>
                         Descrição
                       </Typography>
                       <Typography variant="body2" align="left" gutterBottom>
                         <div>
-                          {renderHTML(marked(this.state.task.issue.body))}
+                          {renderHTML(marked(task.data.metadata.issue.body))}
                         </div>
                       </Typography>
                     </Card>
@@ -672,7 +674,7 @@ class Task extends Component {
                         <Table
                           tableHeaderColor="warning"
                           tableHead={["Pago", "Status", "Valor", "Criado em"]}
-                          tableData={this.state.task.orders.length ? displayOrders(this.state.task.orders) : []}
+                          tableData={task.data.orders.length ? displayOrders(task.data.orders) : []}
                         />
                       }
                     />
@@ -687,7 +689,7 @@ class Task extends Component {
                         <Table
                           tableHeaderColor="warning"
                           tableHead={["Nome", "Criado em", "Acões"]}
-                          tableData={this.state.task.assigns.length ? displayAssigns(this.state.task.assigns) : []}
+                          tableData={task.data.assigns.length ? displayAssigns(task.data.assigns) : []}
                         />
                       }
                     />
@@ -701,16 +703,16 @@ class Task extends Component {
                   title="Valor da tarefa"
                   description={`R$ ${this.state.final_price}`}
                   statIcon={CalendarIcon}
-                  statText={this.state.task.orders.length ? `Valores recebidos de ${this.state.task.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
+                  statText={task.data.orders.length ? `Valores recebidos de ${task.data.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
                 />
-                {MomentComponent(this.state.deadline).isValid() &&
+                {MomentComponent(task.data.deadline).isValid() &&
                 <StatsCard
                   icon={DateIcon}
                   iconColor="green"
                   title="data limite para realizacao da tarefa"
-                  description={MomentComponent(this.state.deadline).format("DD-MM-YYYY")}
+                  description={MomentComponent(task.data.deadline).format("DD-MM-YYYY")}
                   statIcon={DateIcon}
-                  statText={`${MomentComponent(this.state.deadline).fromNow()}`}
+                  statText={`${MomentComponent(task.data.deadline).fromNow()}`}
                   />}
               </Grid>
             </Grid>

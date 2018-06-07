@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     level: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'OPEN'
+      defaultValue: 'open'
     },
     deadline: DataTypes.DATE,
     url: DataTypes.STRING,

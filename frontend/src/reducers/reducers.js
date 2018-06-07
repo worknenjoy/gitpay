@@ -15,6 +15,9 @@ import {
   UPDATE_TASK_REQUESTED,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_ERROR,
+  FETCH_TASK_REQUESTED,
+  FETCH_TASK_SUCCESS,
+  FETCH_TASK_ERROR,
 } from '../actions/taskActions'
 
 import {
@@ -101,19 +104,25 @@ const account = (state = {account: {}, completed: true, error: {}}, action) => {
   }
 }
 
-const task = (state = {completed: true, error: {}, task: {}}, action) => {
+const task = (state = {completed: true, error: {}, data: { orders: [], assigns: [], metadata: {issue: {body: '', user: {avatar_url: 'https://api.adorable.io/avatars/285/abott@adorable.png'}}}}}, action) => {
   switch (action.type) {
     case UPDATE_TASK_REQUESTED:
       return { ...state, completed: false };
     case UPDATE_TASK_SUCCESS:
-      return { ...state, completed: true, task: action.task.data };
+      return { ...state, completed: true };
     case UPDATE_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     case ASSIGN_TASK_REQUESTED:
       return { ...state, completed: false };
     case ASSIGN_TASK_SUCCESS:
-      return { ...state, completed: true, task: action.task };
+      return { ...state, completed: true, data: action.data };
     case ASSIGN_TASK_ERROR:
+      return { ...state, completed: true, error: action.error };
+    case FETCH_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case FETCH_TASK_SUCCESS:
+      return { ...state, completed: true, data: action.data };
+    case FETCH_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     default:
       return state;

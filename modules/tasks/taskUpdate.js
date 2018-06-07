@@ -66,7 +66,7 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
       },
       include: [models.User, models.Order]
     }).then((data) => {
-      return models.Task.findOne(
+     return models.Task.findOne(
         {where: {id: taskParameters.id}, include: [models.User, models.Order, models.Assign]}
       ).then((task) => {
         if (taskParameters.Orders) {
@@ -107,12 +107,11 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
             }
           }).catch(error => console.log(error));
         }
-        return task.dataValues;
+        return task.dataValues ? task.dataValues : {};
       }).catch((error) => {
         console.log('error on task update find', error);
         return false;
       });
-
     }).catch((error) => {
       console.log('error on task update', error);
       return false;
