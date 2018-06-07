@@ -8,11 +8,14 @@ import {
   CREATE_USER_ACCOUNT_ERROR,
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
-  UPDATE_USER_ACCOUNT_ERROR,
+  UPDATE_USER_ACCOUNT_ERROR
+} from '../actions/userActions'
+
+import {
   UPDATE_TASK_REQUESTED,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_ERROR,
-} from '../actions/actions'
+} from '../actions/taskActions'
 
 import {
   ADD_NOTIFICATION,
@@ -20,8 +23,20 @@ import {
   ADD_DIALOG,
   CLOSE_DIALOG,
 } from '../actions/notificationActions';
-import { LOGGED_IN_REQUESTED, LOGGED_IN_SUCCESS, LOGGED_IN_ERROR, LOGOUT_REQUESTED, LOGOUT_COMPLETED } from '../actions/loginActions';
-import { ASSIGN_TASK_REQUESTED, ASSIGN_TASK_SUCCESS, ASSIGN_TASK_ERROR } from '../actions/assignActions';
+
+import {
+  LOGGED_IN_REQUESTED,
+  LOGGED_IN_SUCCESS,
+  LOGGED_IN_ERROR,
+  LOGOUT_REQUESTED,
+  LOGOUT_COMPLETED
+} from '../actions/loginActions';
+
+import {
+  ASSIGN_TASK_REQUESTED,
+  ASSIGN_TASK_SUCCESS,
+  ASSIGN_TASK_ERROR
+} from '../actions/assignActions';
 
 const notification = (state = {open: false}, action) => {
   switch (action.type) {

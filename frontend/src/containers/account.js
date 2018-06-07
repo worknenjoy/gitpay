@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Account from '../components/profile/account'
-import { fetchAccount, createAccount, updateAccount } from '../actions/actions'
+import { fetchAccount, createAccount, updateAccount } from '../actions/userActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {

@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask } from '../actions/assignActions'
-import { updateTask } from '../actions/actions'
+import { updateTask } from '../actions/taskActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
