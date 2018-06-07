@@ -1,8 +1,7 @@
 import api from '../consts';
 import axios from 'axios';
-import Auth from '../modules/auth';
 
-import { addNotification } from './actions';
+import { addNotification } from './notificationActions';
 
 const ASSIGN_TASK_REQUESTED = 'ASSIGN_TASK_REQUESTED';
 const ASSIGN_TASK_SUCCESS = 'ASSIGN_TASK_SUCCESS';

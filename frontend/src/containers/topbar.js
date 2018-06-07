@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Topbar from '../components/topbar/topbar'
-import { addNotification, loggedIn, logOut } from '../actions/actions'
+import { addNotification } from '../actions/notificationActions'
+import { loggedIn, logOut } from '../actions/loginActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {

@@ -1,14 +1,5 @@
 import { combineReducers } from 'redux'
 import {
-  ADD_NOTIFICATION,
-  CLOSE_NOTIFICATION,
-  ADD_DIALOG,
-  CLOSE_DIALOG,
-  LOGGED_IN_REQUESTED,
-  LOGGED_IN_SUCCESS,
-  LOGGED_IN_ERROR,
-  LOGOUT_REQUESTED,
-  LOGOUT_COMPLETED,
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
   FETCH_USER_ACCOUNT_ERROR,
@@ -23,7 +14,14 @@ import {
   UPDATE_TASK_ERROR,
 } from '../actions/actions'
 
-import { ASSIGN_TASK_REQUESTED, ASSIGN_TASK_SUCCESS, ASSIGN_TASK_ERROR, assignTask } from '../actions/assignActions';
+import {
+  ADD_NOTIFICATION,
+  CLOSE_NOTIFICATION,
+  ADD_DIALOG,
+  CLOSE_DIALOG,
+} from '../actions/notificationActions';
+import { LOGGED_IN_REQUESTED, LOGGED_IN_SUCCESS, LOGGED_IN_ERROR, LOGOUT_REQUESTED, LOGOUT_COMPLETED } from '../actions/loginActions';
+import { ASSIGN_TASK_REQUESTED, ASSIGN_TASK_SUCCESS, ASSIGN_TASK_ERROR } from '../actions/assignActions';
 
 const notification = (state = {open: false}, action) => {
   switch (action.type) {
