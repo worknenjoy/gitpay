@@ -12,6 +12,9 @@ import {
 } from '../actions/userActions'
 
 import {
+  CREATE_TASK_REQUESTED,
+  CREATE_TASK_SUCCESS,
+  CREATE_TASK_ERROR,
   UPDATE_TASK_REQUESTED,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_ERROR,
@@ -107,6 +110,12 @@ const account = (state = {account: {}, completed: true, error: {}}, action) => {
 
 const task = (state = {completed: true, error: {}, tab: 0, data: { orders: [], assigns: [], metadata: {url: '', issue: {body: '', user: {avatar_url: 'https://api.adorable.io/avatars/285/abott@adorable.png'}}}}}, action) => {
   switch (action.type) {
+    case CREATE_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case CREATE_TASK_SUCCESS:
+      return { ...state, completed: true };
+    case CREATE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error };
     case UPDATE_TASK_REQUESTED:
       return { ...state, completed: false };
     case UPDATE_TASK_SUCCESS:

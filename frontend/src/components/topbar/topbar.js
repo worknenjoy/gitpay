@@ -103,6 +103,7 @@ class TopBar extends Component  {
 
   componentDidMount() {
     this.props.isLogged();
+    console.log(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -150,23 +151,13 @@ class TopBar extends Component  {
 
   handleCreateTask(e) {
     const url = this.state.task.url.value;
-
     if(this.validURL(url)) {
-      axios.post(api.API_URL + '/tasks/create', {
+      this.props.createTask({
         url: this.state.task.url.value,
         provider: 'github',
         userId: this.props.user ? this.props.user.id : null
-      })
-        .then((response) => {
-          this.props.addNotification("A sua tarefa foi criada com sucesso");
-          this.props.history.replace({pathname: `/task/${response.data.id}`});
-        })
-        .catch((error) => {
-          this.props.addNotification("Tivemos algum problema para criar a tarefa");
-          console.log('error to create task');
-          console.log(error);
-        });
-        this.setState({createTaskDialog: false});
+      }, this.props.history);
+      this.setState({createTaskDialog: false});
     } else {
       this.setState({
         task: {

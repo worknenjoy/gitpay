@@ -292,34 +292,9 @@ class Task extends Component {
   }
 
   handleDeadline() {
-    axios.put(api.API_URL + `/tasks/update/`, {
+    this.props.updateTask({
       id: this.props.match.params.id,
       deadline: this.state.deadline
-    }).then((task) => {
-      if(task.data.id) {
-        this.setState({
-          notification: {
-            open: true,
-            message: "A data foi escolhida com sucesso"
-          }
-        });
-      } else {
-        this.setState({
-          notification: {
-            open: true,
-            message: "A data não foi atualizada, por favor tente novamente"
-          }
-        });
-      }
-    }).catch((e) => {
-      this.setState({
-        notification: {
-          open: true,
-          message: "Não foi possível atualizar a data"
-        }
-      });
-      console.log('not possible to update task');
-      console.log(e);
     });
   }
 
@@ -369,7 +344,6 @@ class Task extends Component {
       }]
     });
     this.setState({ assignDialog: false });
-    this.props.fetchTask(this.props.match.params.id);
   }
 
   render() {

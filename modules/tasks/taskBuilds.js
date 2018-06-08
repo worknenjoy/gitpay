@@ -8,7 +8,7 @@ module.exports = Promise.method(function taskBuilds(taskParameters) {
     )
     .save()
     .then((data) => {
-      return data;
+      return data.dataValues;
     }).catch((error) => {
       console.log('error');
       console.log(error);
