@@ -18,6 +18,7 @@ import {
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
+  CHANGE_TASK_TAB
 } from '../actions/taskActions'
 
 import {
@@ -104,18 +105,20 @@ const account = (state = {account: {}, completed: true, error: {}}, action) => {
   }
 }
 
-const task = (state = {completed: true, error: {}, data: { orders: [], assigns: [], metadata: {issue: {body: '', user: {avatar_url: 'https://api.adorable.io/avatars/285/abott@adorable.png'}}}}}, action) => {
+const task = (state = {completed: true, error: {}, tab: 0, data: { orders: [], assigns: [], metadata: {url: '', issue: {body: '', user: {avatar_url: 'https://api.adorable.io/avatars/285/abott@adorable.png'}}}}}, action) => {
   switch (action.type) {
     case UPDATE_TASK_REQUESTED:
       return { ...state, completed: false };
     case UPDATE_TASK_SUCCESS:
-      return { ...state, completed: true };
+      return { ...state, completed: true, tab: action.tab };
     case UPDATE_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
+    case CHANGE_TASK_TAB:
+      return { ...state, tab: action.tab };
     case ASSIGN_TASK_REQUESTED:
       return { ...state, completed: false };
     case ASSIGN_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data };
+      return { ...state, completed: true, tab: action.tab };
     case ASSIGN_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     case FETCH_TASK_REQUESTED:

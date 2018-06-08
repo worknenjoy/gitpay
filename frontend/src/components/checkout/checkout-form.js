@@ -58,7 +58,7 @@ class CheckoutForm extends Component {
       //console.log('Received Stripe token:', token);
       if(token) {
         try {
-          axios.put(api.API_URL + '/tasks/update', {
+          this.props.onPayment({
             id: this.props.task,
             value: this.props.price,
             Orders: [{
@@ -68,17 +68,9 @@ class CheckoutForm extends Component {
               email: this.state.email,
               userId: this.state.userId
             }]
-          }).then((response) => {
-            this.props.onClose();
-            this.props.addNotification("Pagamento realizado com sucesso");
-            this.props.history.replace({pathname: `/task/${this.props.match.params.id}`});
-          }).catch((error) => {
-            console.log(error);
-            this.props.addNotification("Erro ao atualizar o pedido");
-            this.setState({
-              paymentRequested: false
-            })
           });
+          this.props.onClose();
+
         } catch(e) {
           console.log('error', e);
           this.props.addNotification("Erro ao processar o pagamento do cartão de crédito")

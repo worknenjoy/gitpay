@@ -51,7 +51,6 @@ class StatusDialog extends Component {
                       <DoneIcon />
                     ) : (
                       <FilterListIcon />
-
                     )
                     }
                   </Avatar>

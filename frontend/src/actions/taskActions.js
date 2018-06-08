@@ -9,6 +9,7 @@ const UPDATE_TASK_ERROR = 'UPDATE_TASK_ERROR';
 const FETCH_TASK_REQUESTED = 'FETCH_TASK_REQUESTED';
 const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS';
 const FETCH_TASK_ERROR = 'FETCH_TASK_ERROR';
+const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB';
 
 /*
  *
@@ -20,8 +21,8 @@ const updateTaskRequested = () => {
   return { type: UPDATE_TASK_REQUESTED, completed: false }
 }
 
-const updateTaskSuccess = () => {
-  return { type: UPDATE_TASK_SUCCESS, completed: true }
+const updateTaskSuccess = (field) => {
+  return { type: UPDATE_TASK_SUCCESS, completed: true, tab: field }
 }
 
 const updateTaskError = (error) => {
@@ -40,6 +41,10 @@ const fetchTaskError = (error) => {
   return { type: FETCH_TASK_ERROR, completed: true, error: error }
 }
 
+const changeTaskTab = (tab) => {
+  return { type: CHANGE_TASK_TAB, tab: tab }
+}
+
 const updateTask = (task) => {
   return (dispatch, getState) => {
     dispatch(updateTaskRequested())
@@ -49,8 +54,14 @@ const updateTask = (task) => {
       return dispatch(updateTaskError({ message: 'Você precisa estar logado' }));
     }
     axios.put(api.API_URL + '/tasks/update', task).then((response) => {
+      if(task.Orders) {
+        dispatch(updateTaskSuccess(1));
+      } else if(task.Assigns) {
+        dispatch(updateTaskSuccess(2));
+      } else {
+        dispatch(updateTaskSuccess(0));
+      }
       dispatch(addNotification('Tarefa atualizada com sucesso'));
-      dispatch(updateTaskSuccess());
       return dispatch(fetchTask(task.id));
     }).catch((error) => {
       console.log(error);
@@ -81,8 +92,10 @@ export {
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
+  CHANGE_TASK_TAB,
   addNotification,
   fetchTask,
-  updateTask
+  updateTask,
+  changeTaskTab
 };
 

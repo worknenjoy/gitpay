@@ -69,7 +69,7 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
      return models.Task.findOne(
         {where: {id: taskParameters.id}, include: [models.User, models.Order, models.Assign]}
       ).then((task) => {
-        if (taskParameters.Orders) {
+        if (task && taskParameters.Orders) {
           task.createOrder(taskParameters.Orders[0]).then((order) => {
             const orderParameters = taskParameters.Orders[0];
             if(order.userId) {
@@ -91,7 +91,7 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
           }).catch(error => console.log(error));
 
         }
-        if (taskParameters.Assigns) {
+        if (task && taskParameters.Assigns) {
           task.createAssign(taskParameters.Assigns[0]).then((assign) => {
             if(assign) {
               models.User.findOne(
@@ -107,7 +107,7 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
             }
           }).catch(error => console.log(error));
         }
-        return task.dataValues ? task.dataValues : {};
+        return task ? task.dataValues : {};
       }).catch((error) => {
         console.log('error on task update find', error);
         return false;

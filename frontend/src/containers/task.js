@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask } from '../actions/assignActions'
-import { updateTask, fetchTask } from '../actions/taskActions'
+import { updateTask, fetchTask, changeTaskTab } from '../actions/taskActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -23,7 +23,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     closeDialog: () => dispatch(closeDialog()),
     addNotification: (message) => dispatch(addNotification(message)),
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
-    fetchTask: (taskId) => dispatch(fetchTask(taskId))
+    fetchTask: (taskId) => dispatch(fetchTask(taskId)),
+    changeTab: (tab) => dispatch(changeTaskTab(tab))
   }
 }
 

@@ -2,6 +2,7 @@ import api from '../consts';
 import axios from 'axios';
 
 import { addNotification } from './notificationActions';
+import { fetchTask } from './taskActions';
 
 const ASSIGN_TASK_REQUESTED = 'ASSIGN_TASK_REQUESTED';
 const ASSIGN_TASK_SUCCESS = 'ASSIGN_TASK_SUCCESS';
@@ -11,8 +12,8 @@ const assignTaskRequested = () => {
   return { type: ASSIGN_TASK_REQUESTED, completed: false }
 }
 
-const assignTaskSuccess = (task) => {
-  return { type: ASSIGN_TASK_SUCCESS, completed: true, task: task }
+const assignTaskSuccess = (tab) => {
+  return { type: ASSIGN_TASK_SUCCESS, completed: true, tab: tab }
 }
 
 const assignTaskError = (error) => {
@@ -27,7 +28,8 @@ const assignTask = (taskId, assignId) => {
       assigned: assignId
     }).then((response) => {
       dispatch(addNotification('Tarefa atualizada com sucesso'));
-      return dispatch(assignTaskSuccess(response));
+      dispatch(assignTaskSuccess(2));
+      return dispatch(fetchTask(taskId));
     }).catch((error) => {
       dispatch(addNotification('Erro ao atualizar tarefa'));
       return dispatch(assignTaskError(error));

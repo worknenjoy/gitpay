@@ -251,7 +251,6 @@ class Task extends Component {
       final_price: 0,
       current_price: 0,
       order_price: 0,
-      active_tab: 0,
       assignDialog: false,
       statusDialog: false,
       notification: {
@@ -343,7 +342,7 @@ class Task extends Component {
   }
 
   handleTabChange(event, tab) {
-    this.setState({ active_tab: tab });
+    this.props.changeTab(tab);
   }
 
   handleAssignDialogClose() {
@@ -369,13 +368,14 @@ class Task extends Component {
         userId: this.props.user.id
       }]
     });
-    this.setState({assignDialog: false, active_tab: 2});
+    this.setState({ assignDialog: false });
+    this.props.fetchTask(this.props.match.params.id);
   }
 
   render() {
 
     const { classes, task } = this.props;
-    const activeTab = this.state.active_tab;
+
     const TabContainer = (props) => {
       return (
         <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -408,13 +408,14 @@ class Task extends Component {
     }
 
     const assignActions = (assign) => {
+      const taskData = this.props.task.data;
       return (
         <div>
           { taskOwner  &&
-          <Button disabled={assign.id === this.state.assigned ? true : false} onClick={() => this.props.assignTask(this.props.match.params.id, assign.id)} style={{marginRight: 10}} variant="raised" size="small" color="primary">
+          <Button disabled={assign.id === taskData.assigned ? true : false} onClick={() => this.props.assignTask(this.props.task.data.id, assign.id)} style={{marginRight: 10}} variant="raised" size="small" color="primary">
              <GroupWorkIcon style={{marginRight: 5}} /> escolher
           </Button>}
-          { assign.id === this.state.assigned &&
+          { assign.id === taskData.assigned &&
           <Chip
             label="Escolhido"
             className={classes.chip}
@@ -441,7 +442,7 @@ class Task extends Component {
             <TopBarContainer />
             <Grid item xs={12}>
               <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
-                <a className={classes.white} href={task.data.url}>{task.data.metadata.company}</a>
+                <a className={classes.white} href={task.data.metadata.url}>{task.data.metadata.company}</a>
               </Typography>
               <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
                 <a className={classes.white} href={task.data.metadata.url}>{task.data.metadata.issue.title}</a>
@@ -524,7 +525,7 @@ class Task extends Component {
                 <div className={classes.rootTabs}>
                   <AppBar position="static" color="default">
                     <Tabs
-                      value={activeTab}
+                      value={task.tab}
                       onChange={this.handleTabChange}
                       scrollable
                       scrollButtons="on"
@@ -536,7 +537,7 @@ class Task extends Component {
                       <Tab label="Interessados" icon={<GroupWorkIcon />} />
                     </Tabs>
                   </AppBar>
-                  {activeTab === 0 &&
+                  {task.tab === 0 &&
                   <TabContainer>
                     <Card className={classes.card}>
                       <CardMedia
@@ -664,7 +665,7 @@ class Task extends Component {
                       </Typography>
                     </Card>
                   </TabContainer>}
-                  {activeTab === 1 &&
+                  {task.tab === 1 &&
                   <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
                     <RegularCard
                       headerColor="green"
@@ -679,7 +680,7 @@ class Task extends Component {
                       }
                     />
                   </div>}
-                  {activeTab === 2 &&
+                  {task.tab === 2 &&
                   <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
                     <RegularCard
                       headerColor="green"
@@ -720,6 +721,7 @@ class Task extends Component {
               open={this.props.dialog}
               onClose={this.props.closeDialog}
               addNotification={this.props.addNotification}
+              onPayment={this.props.updateTask}
               itemPrice={this.state.current_price}
               price={this.state.final_price}
               task={this.props.match.params.id}
