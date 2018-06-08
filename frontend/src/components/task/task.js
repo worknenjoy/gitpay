@@ -19,6 +19,7 @@ import Dialog, {
 import RedeemIcon from 'material-ui-icons/Redeem';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
 import AddIcon from 'material-ui-icons/Add';
+import FilterIcon from 'material-ui-icons/FilterList'
 import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
 import DateIcon from 'material-ui-icons/DateRange';
 import CalendarIcon from 'material-ui-icons/PermContactCalendar';
@@ -39,7 +40,6 @@ import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 
 import api from '../../consts';
-import axios from 'axios';
 
 import marked from 'marked';
 import renderHTML from 'react-render-html';
@@ -412,27 +412,31 @@ class Task extends Component {
     return (
       <StripeProvider apiKey={process.env.STRIPE_PUBKEY}>
         <div>
-          <Grid container className={classes.rootTopBar} spacing={24} >
+          <Grid container className={classes.rootTopBar} spacing={24}>
             <TopBarContainer />
             <Grid item xs={12}>
               <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
-                <a className={classes.white} href={task.data.metadata.url}>{task.data.metadata.company}</a>
+                <a className={classes.white} href={task.data.url}>{task.data.metadata.company}</a>
               </Typography>
               <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
-                <a className={classes.white} href={task.data.metadata.url}>{task.data.metadata.issue.title}</a>
+                <a className={classes.white} href={task.data.url}>{task.data.metadata.issue.title}</a>
                 <Chip
                   style={{marginRight: 10}}
                   label={Constants.STATUSES[task.data.status]}
                   className={classes.chipStatus}
-                  onDelete={() => 'foo'}
+                  onDelete={this.handleStatusDialog}
+                  onClick={this.handleStatusDialog}
                   deleteIcon={<DoneIcon />}
                 />
                 { taskOwner() &&
                   <div style={{display: 'inline-block'}}>
-                    <Button onClick={this.handleStatusDialog} size="medium" color="primary" className={classes.altButton}>
-                      <span className={classes.spaceRight}>Novo status</span>  <AddIcon />
+                    <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
+                      <span className={classes.spaceRight}>Mudar status</span>  <FilterIcon />
                     </Button>
-                    <StatusDialog id={task.data.id} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
+                    <Button onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
+                      <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
+                    </Button>
+                    <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
                   </div>
                 }
               </Typography>

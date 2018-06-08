@@ -103,7 +103,6 @@ class TopBar extends Component  {
 
   componentDidMount() {
     this.props.isLogged();
-    console.log(this.props);
   }
 
   componentWillReceiveProps(nextProps) {

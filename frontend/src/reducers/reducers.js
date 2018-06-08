@@ -108,7 +108,7 @@ const account = (state = {account: {}, completed: true, error: {}}, action) => {
   }
 }
 
-const task = (state = {completed: true, error: {}, tab: 0, data: { orders: [], assigns: [], metadata: {url: '', issue: {body: '', user: {avatar_url: 'https://api.adorable.io/avatars/285/abott@adorable.png'}}}}}, action) => {
+const task = (state = {completed: true, error: {}, tab: 0, data: { orders: [], assigns: [], url: '', metadata: { issue: {state: 'open', body: '', user: {avatar_url: 'https://api.adorable.io/avatars/285/abott@adorable.png'}}}}}, action) => {
   switch (action.type) {
     case CREATE_TASK_REQUESTED:
       return { ...state, completed: false };

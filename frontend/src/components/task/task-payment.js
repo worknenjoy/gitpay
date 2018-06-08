@@ -30,35 +30,30 @@ const styles = {
   }
 };
 
-class StatusDialog extends Component {
+class TaskPayment extends Component {
 
   constructor(props) {
     super(props);
   }
 
-  handleListItemClick(status) {
-    this.props.onSelect({id: this.props.id, status: status});
-    this.props.onClose();
-  };
-
   render() {
-    const { classes, onClose, selectedValue, ...other } = this.props;
+    const { classes, orders, selectedValue, ...other } = this.props;
 
     return (
       <Dialog onClose={this.props.onClose} aria-labelledby="simple-dialog-title" {...other}>
-        <DialogTitle id="simple-dialog-title">Status da tarefa</DialogTitle>
+        <DialogTitle id="simple-dialog-title">Pagar pela tarefa como recompensa</DialogTitle>
         <div>
           <List>
-            {statuses.map((status, index) => (
+            {orders.map((status, index) => (
               <ListItem style={ selectedValue === status ? {background: blue[200]} : {} } button onClick={() => this.handleListItemClick(status)} key={status}>
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}>
                     { selectedValue === status ?
-                    (
-                      <DoneIcon />
-                    ) : (
-                      <FilterListIcon />
-                    )
+                      (
+                        <DoneIcon />
+                      ) : (
+                        <FilterListIcon />
+                      )
                     }
                   </Avatar>
                 </ListItemAvatar>
@@ -81,10 +76,10 @@ class StatusDialog extends Component {
   }
 }
 
-StatusDialog.propTypes = {
+TaskPayment.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
   selectedValue: PropTypes.string,
 };
 
-export default withStyles(styles)(StatusDialog);
+export default withStyles(styles)(TaskPayment);
