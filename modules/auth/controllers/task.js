@@ -1,15 +1,10 @@
 'use strict';
-const passport = require('passport');
-const models = require('../../../loading/loading');
-const taskBuild = require('../../tasks').taskBuilds;
-const taskSearch = require('../../tasks').taskSearch;
-const taskFetch = require('../../tasks').taskFetch;
-const taskUpdate = require('../../tasks').taskUpdate;
+const Tasks = require('../../tasks');
 const Promise = require('bluebird');
 
 
 exports.createTask = (req, res) => {
-  taskBuild(req.body)
+  Tasks.taskBuilds(req.body)
     .then((data) => {
       res.send(data);
     }).catch((error) => {
@@ -19,7 +14,7 @@ exports.createTask = (req, res) => {
 }
 
 exports.listTasks = (req, res) => {
-  taskSearch()
+  Tasks.taskSearch()
     .then((data) => {
         res.send(data);
     }).catch((error) => {
@@ -29,7 +24,7 @@ exports.listTasks = (req, res) => {
 }
 
 exports.fetchTask = (req, res) => {
-  taskFetch(req.params)
+  Tasks.taskFetch(req.params)
     .then((data) => {
       res.send(data);
     }).catch((error) => {
@@ -39,7 +34,17 @@ exports.fetchTask = (req, res) => {
 }
 
 exports.updateTask = (req, res) => {
-  taskUpdate(req.body)
+  Tasks.taskUpdate(req.body)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log('error on task controller', error);
+    res.send(false);
+  });
+}
+
+exports.paymentTask = (req, res) => {
+  Tasks.taskPayment(req.body)
     .then((data) => {
       res.send(data);
     }).catch((error) => {

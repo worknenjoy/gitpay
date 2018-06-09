@@ -31,6 +31,7 @@ import { FormControl } from 'material-ui/Form';
 import Chip from 'material-ui/Chip';
 import PaymentDialog from '../payment/payment-dialog';
 import StatusDialog from './status-dialog';
+import TaskPayment from './task-payment';
 
 import StatsCard from '../Cards/StatsCard';
 import RegularCard from '../Cards/RegularCard';
@@ -253,6 +254,7 @@ class Task extends Component {
       order_price: 0,
       assignDialog: false,
       statusDialog: false,
+      taskPaymentDialog: false,
       notification: {
         open: false,
         message: "loading"
@@ -271,6 +273,8 @@ class Task extends Component {
     this.handleAssignTask = this.handleAssignTask.bind(this);
     this.handleStatusDialog = this.handleStatusDialog.bind(this);
     this.handleStatusDialogClose = this.handleStatusDialogClose.bind(this);
+    this.handleTaskPaymentDialog = this.handleTaskPaymentDialog.bind(this);
+    this.handleTaskPaymentDialogClose = this.handleTaskPaymentDialogClose.bind(this);
   }
 
   componentWillMount() {
@@ -334,6 +338,14 @@ class Task extends Component {
 
   handleStatusDialogClose() {
     this.setState({statusDialog: false});
+  }
+
+  handleTaskPaymentDialog() {
+    this.setState({taskPaymentDialog: true});
+  }
+
+  handleTaskPaymentDialogClose() {
+    this.setState({taskPaymentDialog: false});
   }
 
   handleAssignTask() {
@@ -433,10 +445,11 @@ class Task extends Component {
                     <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
                       <span className={classes.spaceRight}>Mudar status</span>  <FilterIcon />
                     </Button>
-                    <Button onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
+                    <Button onClick={this.handleTaskPaymentDialog} size="small" color="primary" className={classes.altButton}>
                       <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
                     </Button>
                     <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
+                    <TaskPayment assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} />
                   </div>
                 }
               </Typography>
@@ -680,7 +693,7 @@ class Task extends Component {
                   icon={TrophyIcon}
                   iconColor="green"
                   title="Valor da tarefa"
-                  description={`R$ ${this.state.final_price}`}
+                  description={`R$ ${task.data.value}`}
                   statIcon={CalendarIcon}
                   statText={task.data.orders.length ? `Valores recebidos de ${task.data.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
                 />

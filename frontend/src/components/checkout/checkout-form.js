@@ -63,7 +63,7 @@ class CheckoutForm extends Component {
             value: this.props.price,
             Orders: [{
               source_id: token.id,
-              currency: 'BRL',
+              currency: 'brl',
               amount: this.props.itemPrice,
               email: this.state.email,
               userId: this.state.userId
