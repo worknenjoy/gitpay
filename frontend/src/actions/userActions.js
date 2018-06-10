@@ -24,7 +24,7 @@ const fetchUserAccountRequested = () => {
 }
 
 const fetchUserAccountSuccess = (account) => {
-  return { type: FETCH_USER_ACCOUNT_SUCCESS, completed: true, account: account }
+  return { type: FETCH_USER_ACCOUNT_SUCCESS, completed: true, data: account.data }
 }
 
 const fetchUserAccountError = () => {
@@ -36,7 +36,7 @@ const createUserAccountRequested = () => {
 }
 
 const createUserAccountSuccess = (account) => {
-  return { type: CREATE_USER_ACCOUNT_SUCCESS, completed: true, account: account }
+  return { type: CREATE_USER_ACCOUNT_SUCCESS, completed: true, data: account.data }
 }
 
 const createUserAccountError = (error) => {
@@ -48,7 +48,7 @@ const updateUserAccountRequested = () => {
 }
 
 const updateUserAccountSuccess = (account) => {
-  return { type: UPDATE_USER_ACCOUNT_SUCCESS, completed: true, account: account }
+  return { type: UPDATE_USER_ACCOUNT_SUCCESS, completed: true, data: account.data }
 }
 
 const updateUserAccountError = (error) => {
@@ -65,7 +65,7 @@ const fetchAccount = () => {
     return axios.get(api.API_URL + `/users/${userId}/account`, {
       // headers would be here
     }).then((account) => {
-      return dispatch(fetchUserAccountSuccess(account.data));
+      return dispatch(fetchUserAccountSuccess(account));
     }).catch((e) => {
       console.log('fetch user account error', e);
       return dispatch(fetchUserAccountError(e));

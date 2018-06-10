@@ -13,7 +13,10 @@ module.exports = Promise.method(function taskPayment(payment) {
       {include: [models.User, models.Order, models.Assign]}
     )
     .then((data) => {
-      models.User.findOne({
+      if(!data) {
+        throw new Error('find_task_error');
+      }
+       return models.User.findOne({
         where: {
             id: data.assigned
           }
@@ -21,15 +24,11 @@ module.exports = Promise.method(function taskPayment(payment) {
         const transferGroup = `task_${data.id}`;
         const dest = user.account_id;
         if(!dest) {
-          return Promise.reject('É necessário uma conta de destino');
+          return new Error('account_destination_invalid');
         }
-        /*stripe.balance.retrieve().then((balance) => {
-          console.log('balance', balance);
-          console.log('value', data.value * 100);
-        });*/
 
-        stripe.transfers.create({
-          amount: (data.value * 100) * 0.92,
+        return stripe.transfers.create({
+          amount: data.value * 100,
           currency: 'brl',
           destination: dest,
           source_type: 'card',
@@ -37,20 +36,20 @@ module.exports = Promise.method(function taskPayment(payment) {
         }).then(function(transfer) {
           console.log('transfer');
           console.log(transfer);
-          return transfer;
-        }).catch((e) => {
-          return Promise.reject(e.message);
+          if(transfer.paid) {
+            return models.Task.update({paid: transfer.paid, transfer_id: transfer.id}, {
+              where: {
+                id: data.id
+              }
+            }).then(function(update) {
+              if(!update) {
+                return new Error('update_task_reject');
+              }
+              return transfer;
+            });
+          }
         });
-      }).catch((e) => {
-        console.log(e);
-        return Promise.reject(e.message);
-      });
-
-      //return { ...data, };
-      return data;
-    }).catch((error) => {
-      console.log(error);
-      return Promise.reject(e.message);
+      })
     });
 
 });

@@ -48,7 +48,7 @@ exports.paymentTask = (req, res) => {
     .then((data) => {
       res.send(data);
     }).catch((error) => {
-    console.log('error on task controller', error);
-    res.send(false);
-  });
+      console.log('error on task controller', error);
+      res.send({ error: 'task_payment_error' });
+    });
 }

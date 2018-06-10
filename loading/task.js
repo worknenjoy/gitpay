@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
+    transfer_id: DataTypes.STRING,
     assigned:  {
       type: DataTypes.INTEGER,
       references: {

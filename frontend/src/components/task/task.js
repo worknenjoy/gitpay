@@ -449,7 +449,7 @@ class Task extends Component {
                       <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
                     </Button>
                     <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
-                    <TaskPayment assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} />
+                    <TaskPayment id={task.data.id} assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} onPay={this.props.paymentTask} />
                   </div>
                 }
               </Typography>

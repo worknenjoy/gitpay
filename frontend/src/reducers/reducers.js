@@ -21,6 +21,9 @@ import {
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
+  PAYMENT_TASK_REQUESTED,
+  PAYMENT_TASK_SUCCESS,
+  PAYMENT_TASK_ERROR,
   CHANGE_TASK_TAB
 } from '../actions/taskActions'
 
@@ -83,24 +86,24 @@ const loggedIn = (state = {logged: false, user: {}, completed: true, error: {}},
   }
 };
 
-const account = (state = {account: {}, completed: true, error: {}}, action) => {
+const account = (state = {data: { }, completed: true, error: {}}, action) => {
   switch (action.type) {
     case FETCH_USER_ACCOUNT_REQUESTED:
       return { ...state, completed: false };
     case FETCH_USER_ACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error };
     case FETCH_USER_ACCOUNT_SUCCESS:
-      return { ...state, completed: true, account: action.account };
+      return { ...state, completed: true, data: action.data };
     case CREATE_USER_ACCOUNT_REQUESTED:
       return { ...state, completed: false };
     case CREATE_USER_ACCOUNT_SUCCESS:
-      return { ...state, completed: true, account: action.account };
+      return { ...state, completed: true, data: action.data };
     case CREATE_USER_ACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error };
     case UPDATE_USER_ACCOUNT_REQUESTED:
       return { ...state, completed: false };
     case UPDATE_USER_ACCOUNT_SUCCESS:
-      return { ...state, completed: true, account: action.account };
+      return { ...state, completed: true, data: action.data };
     case UPDATE_USER_ACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error };
     default:
@@ -135,6 +138,12 @@ const task = (state = {completed: true, error: {}, tab: 0, data: { value: 0, ord
     case FETCH_TASK_SUCCESS:
       return { ...state, completed: true, data: action.data };
     case FETCH_TASK_ERROR:
+      return { ...state, completed: true, error: action.error };
+    case PAYMENT_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case PAYMENT_TASK_SUCCESS:
+      return { ...state, completed: true, data: action.data };
+    case PAYMENT_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     default:
       return state;

@@ -100,7 +100,7 @@ class Account extends Component {
 
     return (
       <div>
-        { account.id ? (
+        { account.data.id ? (
         <div>
           <Card className={classes.card}>
             <CardContent>
@@ -108,17 +108,17 @@ class Account extends Component {
                 <Typography className={classes.pos} color="textSecondary">
                   Status da sua conta:
                 </Typography>
-                <Chip label={Const.ACCOUNT_REASONS[account.verification.disabled_reason]} style={{marginRight: 20, backgroundColor: 'orange'}} />
+                <Chip label={Const.ACCOUNT_REASONS[account.data.verification.disabled_reason]} style={{marginRight: 20, backgroundColor: 'orange'}} />
               </div>
               <Typography className={classes.pos} color="textSecondary">
                 Entraremos em contato para finalizar a validação da sua conta para recebimento através do e-mail: <br/>
-                <strong>{ account.email }</strong>
+                <strong>{ account.data.email }</strong>
               </Typography>
               <Typography component="p">
                 {`Temos os seguintes campos a serem verificados:`}
               </Typography>
               <div>
-                { account.verification.fields_needed.map((item,i) => (
+                { account.data.verification.fields_needed.map((item,i) => (
                     <Chip style={{margin: 3}} key={i} label={`${Const.ACCOUNT_FIELDS[item]}`} />
                   )
                 )}
@@ -161,7 +161,7 @@ class Account extends Component {
                         placeholder="Primeiro nome"
                         ref="payment-form-user"
                         style={{marginRight: 20}}
-                        defaultValue={account.legal_entity.first_name}
+                        defaultValue={account.data.legal_entity.first_name}
                       />
                     </FormControl>
                     <FormControl>
@@ -170,7 +170,7 @@ class Account extends Component {
                         id="adornment-email"
                         placeholder="Último nome"
                         ref="payment-form-email"
-                        defaultValue={account.legal_entity.last_name}
+                        defaultValue={account.data.legal_entity.last_name}
                       />
                     </FormControl>
                   </Grid>

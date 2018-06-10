@@ -23,19 +23,12 @@ module.exports = Promise.method(function userAccountCreate(userParameters) {
         country: 'BR',
         email: user.dataValues.email
       }).then((account) => {
-        user.updateAttributes({
+        return user.updateAttributes({
           account_id: account.id
         }).then((userUpdated) => {
-          console.log('account for user created', userUpdated);
-          return userUpdated;
+          console.log('account for user created', account);
+          return account;
         });
-      }).catch((e) => {
-        console.log('could not finde customer', e);
-        return e;
-      });
-    }).catch((error) => {
-      console.log(error);
-      return false;
+      })
     });
-
 });

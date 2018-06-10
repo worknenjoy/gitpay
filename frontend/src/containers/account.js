@@ -4,8 +4,7 @@ import { fetchAccount, createAccount, updateAccount } from '../actions/userActio
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    account: state.account.account,
-    completed: state.account.completed
+    account: state.account
   }
 }
 

@@ -35,6 +35,12 @@ class TaskPayment extends Component {
 
   constructor(props) {
     super(props);
+    this.payTask = this.payTask.bind(this);
+  }
+
+  payTask(e) {
+    this.props.onPay(this.props.id);
+    this.props.onClose();
   }
 
   render() {
@@ -85,7 +91,7 @@ class TaskPayment extends Component {
           <Divider />
           {hasOrders() ?
             (
-              <Button style={{float: 'right', margin: 10}} variant="raised" color="primary" disabled={this.props.assigned ? false : true}>
+              <Button onClick={this.payTask} style={{float: 'right', margin: 10}} variant="raised" color="primary" disabled={this.props.assigned ? false : true}>
                 <RedeemIcon style={{marginRight: 10}} />
                 {`Pagar R$ ${displayTotal()}`}
               </Button>

@@ -14,6 +14,10 @@ const FETCH_TASK_REQUESTED = 'FETCH_TASK_REQUESTED';
 const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS';
 const FETCH_TASK_ERROR = 'FETCH_TASK_ERROR';
 
+const PAYMENT_TASK_REQUESTED = 'PAYMENT_TASK_REQUESTED';
+const PAYMENT_TASK_SUCCESS = 'PAYMENT_TASK_SUCCESS';
+const PAYMENT_TASK_ERROR = 'PAYMENT_TASK_ERROR';
+
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB';
 
 /*
@@ -56,6 +60,18 @@ const fetchTaskSuccess = (task) => {
 
 const fetchTaskError = (error) => {
   return { type: FETCH_TASK_ERROR, completed: true, error: error }
+}
+
+const paymentTaskRequested = () => {
+  return { type: PAYMENT_TASK_REQUESTED, completed: false }
+}
+
+const paymentTaskSuccess = (payment) => {
+  return { type: PAYMENT_TASK_SUCCESS, completed: true, data: payment.data}
+}
+
+const paymentTaskError = (error) => {
+  return { type: CREATE_TASK_ERROR, completed: true, error: error }
 }
 
 const changeTaskTab = (tab) => {
@@ -118,6 +134,23 @@ const fetchTask = (taskId) => {
   }
 }
 
+const paymentTask = (taskId) => {
+  return (dispatch) => {
+    dispatch(paymentTaskRequested())
+    axios.post(`${api.API_URL}/tasks/payments/`,{
+      taskId: taskId
+    }).then((payment) => {
+      console.log(payment)
+      return dispatch(paymentTaskSuccess(payment));
+    }).catch((e) => {
+      dispatch(addNotification('Não foi possível realizar o pagamento para esta tarefa'));
+      dispatch(paymentTaskError(e));
+      console.log('not possible to pay task');
+      console.log(e);
+    });
+  }
+}
+
 export {
   CREATE_TASK_REQUESTED,
   CREATE_TASK_SUCCESS,
@@ -128,11 +161,15 @@ export {
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
+  PAYMENT_TASK_REQUESTED,
+  PAYMENT_TASK_SUCCESS,
+  PAYMENT_TASK_ERROR,
   CHANGE_TASK_TAB,
   addNotification,
   createTask,
   fetchTask,
   updateTask,
+  paymentTask,
   changeTaskTab
 };
 
