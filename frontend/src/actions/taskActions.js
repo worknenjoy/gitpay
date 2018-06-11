@@ -20,6 +20,10 @@ const PAYMENT_TASK_ERROR = 'PAYMENT_TASK_ERROR';
 
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB';
 
+const VALIDATION_ERRORS = {
+  "url must be unique": 'Essa url já foi cadastrada'
+}
+
 /*
  *
  * Task
@@ -82,6 +86,10 @@ const createTask = (task, history) => {
   return (dispatch) => {
     dispatch(createTaskRequested())
     axios.post(api.API_URL + '/tasks/create', task).then((response) => {
+      if(response.data && response.data.errors) {
+        dispatch(addNotification(VALIDATION_ERRORS[response.data.errors[0].message]));
+        return dispatch(createTaskError(response.data.errors));
+      }
       dispatch(createTaskSuccess());
       dispatch(addNotification('Tarefa criada com sucesso'));
       history.push(`/task/${response.data.id}`);
@@ -137,6 +145,11 @@ const fetchTask = (taskId) => {
 const paymentTask = (taskId) => {
   return (dispatch) => {
     dispatch(paymentTaskRequested())
+    const userId = getState().loggedIn.user.id;
+    if(!userId) {
+      dispatch(addNotification('Você precisa estar logado'));
+      return dispatch(paymentTaskError({ message: 'Você precisa estar logado' }));
+    }
     axios.post(`${api.API_URL}/tasks/payments/`,{
       taskId: taskId
     }).then((payment) => {

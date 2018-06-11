@@ -202,33 +202,40 @@ class TopBar extends Component  {
               <Button style={{marginRight: 10}} onClick={this.handleClickDialogCreateTask} variant="raised" size="medium" color="primary" className={classes.altButton}>
                 <span style={styles.spaceRight}>Criar tarefa</span>  <PlusIcon />
               </Button>
-              {!isLoggedIn &&
-              <div>
-                <Button style={{fontSize: 12}} onClick={this.handleClickDialogSignUser} variant="raised" size="small" color="secondary"
-                        className={classes.altButton}>
-                  <span style={styles.spaceRight}> Entrar</span> <UserIcon />
-                </Button>
-                <Dialog
-                  open={this.state.signUserDialog}
-                  onClose={this.handleSignUserDialogClose}
-                  aria-labelledby="form-dialog-title"
-                  >
-                  <DialogTitle id="form-dialog-title">Entre para a comunidade do Gitpay</DialogTitle>
-                  <DialogContent>
-                    <div className={classes.mainBlock}>
-                      <Typography type="subheading" gutterBottom noWrap>
-                        Conecte com algumas dessas contas
-                      </Typography>
-                      <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img style={{marginRight: 5}} width="16" src={logoGithub} /> Github
-                      </Button>
-                      <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img style={{marginRight: 5}} width="16" src={logoBitbucket} /> Bitbucket
-                      </Button>
-                    </div>
-                  </DialogContent>
+              {!isLoggedIn ?
+                (
+                <div>
+                  <Button style={{fontSize: 12}} onClick={this.handleClickDialogSignUser} variant="raised" size="small" color="secondary"
+                          className={classes.altButton}>
+                    <span style={styles.spaceRight}> Entrar</span> <UserIcon />
+                  </Button>
+                  <Dialog
+                    open={this.state.signUserDialog}
+                    onClose={this.handleSignUserDialogClose}
+                    aria-labelledby="form-dialog-title"
+                    >
+                    <DialogTitle id="form-dialog-title">Entre para a comunidade do Gitpay</DialogTitle>
+                    <DialogContent>
+                      <div className={classes.mainBlock}>
+                        <Typography type="subheading" gutterBottom noWrap>
+                          Conecte com algumas dessas contas
+                        </Typography>
+                        <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                          <img style={{marginRight: 5}} width="16" src={logoGithub} /> Github
+                        </Button>
+                        <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
+                          <img style={{marginRight: 5}} width="16" src={logoBitbucket} /> Bitbucket
+                        </Button>
+                      </div>
+                    </DialogContent>
                   </Dialog>
-              </div>
+                </div>
+                ) : (
+                  <Button style={{fontSize: 12}} onClick={this.handleProfile} variant="raised" size="small" color="secondary"
+                          className={classes.altButton}>
+                    <span style={styles.spaceRight}> Acessar sua conta </span> <UserIcon />
+                  </Button>
+                )
               }
               <form onSubmit={this.handleCreateTask} action="POST">
                 <Dialog

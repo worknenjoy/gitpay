@@ -12,7 +12,7 @@ module.exports = Promise.method(function taskBuilds(taskParameters) {
     }).catch((error) => {
       console.log('error');
       console.log(error);
-      return false;
+      return error;
     });
 
 });

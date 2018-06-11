@@ -12,6 +12,5 @@ router.get('/list', controllers.listTasks);
 router.get('/fetch/:id', controllers.fetchTask);
 router.put('/update', controllers.updateTask);
 router.post('/payments', controllers.paymentTask, authenticationHelpers.isAuth);
-//router.post('/payments', controllers.paymentTask);
 
 module.exports = router;
