@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MomentComponent from 'moment';
 import { StripeProvider } from 'react-stripe-elements';
+import ReactPlaceholder from 'react-placeholder';
+import { RectShape } from 'react-placeholder/lib/placeholders';
+import "react-placeholder/lib/reactPlaceholder.css";
 
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
@@ -117,6 +120,12 @@ const styles = theme => ({
     paddingBottom: 20,
     borderTop: '1px solid #999'
   },
+  typoEmpty: {
+    marginTop: 40,
+    marginBottom: 5,
+    padding: 10,
+    fontSize: 32
+  },
   gridBlock: {
     paddingLeft: 20,
     paddingRight: 20
@@ -218,6 +227,11 @@ const styles = theme => ({
   },
   content: {
     flex: '1 0 auto',
+  },
+  contentBody: {
+    'img': {
+      width: 400,
+    }
   },
   cover: {
     width: 44,
@@ -421,42 +435,75 @@ class Task extends Component {
       return items;
     }
 
+    const linePlaceholder = (
+      <div className='line-holder'>
+        <RectShape color='white' style={{ marginBottom: 0, width: 50, height: 5 }} />
+      </div>
+    );
+
+    const headerPlaceholder = (
+      <div className='line-holder'>
+        <RectShape color='white' style={{ marginLeft: 20, marginTop: 0, width: 300, height: 20 }} />
+      </div>
+    );
+
+    const hasError = () => {
+      return this.props.task.error.message;
+    }
+
     return (
-      <StripeProvider apiKey={process.env.STRIPE_PUBKEY}>
+      <div>
+      { hasError() ? (
         <div>
-          <Grid container className={classes.rootTopBar} spacing={24}>
-            <TopBarContainer />
-            <Grid item xs={12}>
-              <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
-                <a className={classes.white} href={task.data.url}>{task.data.metadata.company}</a>
-              </Typography>
-              <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
-                <a className={classes.white} href={task.data.url}>{task.data.metadata.issue.title}</a>
-                <Chip
-                  style={{marginRight: 10}}
-                  label={Constants.STATUSES[task.data.status]}
-                  className={classes.chipStatus}
-                  onDelete={this.handleStatusDialog}
-                  onClick={this.handleStatusDialog}
-                  deleteIcon={<DoneIcon />}
-                />
-                { taskOwner() &&
-                  <div style={{display: 'inline-block'}}>
-                    <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
-                      <span className={classes.spaceRight}>Mudar status</span>  <FilterIcon />
-                    </Button>
-                    <Button onClick={this.handleTaskPaymentDialog} size="small" color="primary" className={classes.altButton}>
-                      <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
-                    </Button>
-                    <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
-                    <TaskPayment id={task.data.id} assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} onPay={this.props.paymentTask} />
-                  </div>
-                }
-              </Typography>
-            </Grid>}
-          </Grid>
-          <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
-            <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
+          <TopBarContainer/>
+          <Typography variant="title" color="primary" align="center" className={classes.typoEmpty} gutterBottom>
+            {this.props.task.error.message}
+          </Typography>
+          <Typography style={{marginBottom: 300}} variant="body2" align="center" gutterBottom>
+            Tente novamente mais tarde
+          </Typography>
+          <Bottom />
+        </div>
+      ) : (
+        <StripeProvider apiKey={process.env.STRIPE_PUBKEY}>
+          <div>
+            <Grid container className={classes.rootTopBar} spacing={24}>
+              <TopBarContainer />
+              <Grid item xs={12}>
+                <Typography variant="subheading" color="primary" align="left" className={classes.typoSmall} gutterBottom>
+                  <ReactPlaceholder showLoadingAnimation={true} type='text' rows={1} ready={task.completed}>
+                    <a className={classes.white} href={task.data.url}>{task.data.metadata.company}</a>
+                  </ReactPlaceholder>
+                </Typography>
+                <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation={true} ready={task.completed}>
+                  <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
+                    <a className={classes.white} href={task.data.url}>{task.data.metadata.issue.title}</a>
+                    <Chip
+                      style={{marginRight: 10}}
+                      label={Constants.STATUSES[task.data.status]}
+                      className={classes.chipStatus}
+                      onDelete={this.handleStatusDialog}
+                      onClick={this.handleStatusDialog}
+                      deleteIcon={<DoneIcon />}
+                    />
+                    { taskOwner() &&
+                    <div style={{display: 'inline-block'}}>
+                      <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
+                        <span className={classes.spaceRight}>Mudar status</span>  <FilterIcon />
+                      </Button>
+                      <Button onClick={this.handleTaskPaymentDialog} size="small" color="primary" className={classes.altButton}>
+                        <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
+                      </Button>
+                      <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
+                      <TaskPayment id={task.data.id} assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} onPay={this.props.paymentTask} />
+                    </div>
+                    }
+                  </Typography>
+                </ReactPlaceholder>
+              </Grid>
+            </Grid>
+            <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
+              <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
               <div>
                 <Avatar
                   src={task.data.metadata.issue.user.avatar_url}
@@ -468,10 +515,10 @@ class Task extends Component {
                   <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
                 </Button>
                 <Dialog
-                  open={this.state.assignDialog}
-                  onClose={this.handleAssignDialogClose}
-                  aria-labelledby="form-dialog-title"
-                >
+                open={this.state.assignDialog}
+                onClose={this.handleAssignDialogClose}
+                aria-labelledby="form-dialog-title"
+                  >
                   { !this.props.logged ? (
                   <div>
                     <DialogTitle id="form-dialog-title">Você precisa estar logado para realizar esta tarefa</DialogTitle>
@@ -489,44 +536,44 @@ class Task extends Component {
                       </div>
                     </DialogContent>
                   </div>
-                    ) : (
-                      <div>
-                        <DialogTitle id="form-dialog-title">Você tem interesse nesta tarefa?</DialogTitle>
-                        <DialogContent>
-                          <Typography type="subheading" gutterBottom>
-                            Você poderá ser associado a tarefa no github para receber a recompensa quando o seu código for integrado
-                          </Typography>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={this.handleAssignDialogClose} color="primary">
-                            Cancelar
-                          </Button>
-                          <Button onClick={this.handleAssignTask} variant="raised" color="secondary" >
-                            Desafio aceito, quero esta tarefa!
-                          </Button>
-                        </DialogActions>
-                      </div>
-                    )}
+                ) : (
+                  <div>
+                    <DialogTitle id="form-dialog-title">Você tem interesse nesta tarefa?</DialogTitle>
+                    <DialogContent>
+                      <Typography type="subheading" gutterBottom>
+                        Você poderá ser associado a tarefa no github para receber a recompensa quando o seu código for integrado
+                      </Typography>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.handleAssignDialogClose} color="primary">
+                        Cancelar
+                      </Button>
+                      <Button onClick={this.handleAssignTask} variant="raised" color="secondary" >
+                        Desafio aceito, quero esta tarefa!
+                      </Button>
+                    </DialogActions>
+                  </div>
+                )}
                 </Dialog>
               </div>
             </Grid>
           </Grid>
           <Grid container spacing={24} className={classes.gridBlock}>
-              <Grid item xs={8}>
-                <div className={classes.rootTabs}>
-                  <AppBar position="static" color="default">
-                    <Tabs
-                      value={task.tab}
-                      onChange={this.handleTabChange}
-                      scrollable
-                      scrollButtons="on"
-                      indicatorColor="primary"
-                      textColor="primary"
-                    >
-                      <Tab label="Tarefa" icon={<RedeemIcon />} />
-                      <Tab label="Pedidos" icon={<ShoppingBasket />} />
-                      <Tab label="Interessados" icon={<GroupWorkIcon />} />
-                    </Tabs>
+            <Grid item xs={8}>
+              <div className={classes.rootTabs}>
+                <AppBar position="static" color="default">
+                  <Tabs
+                    value={task.tab}
+                    onChange={this.handleTabChange}
+                    scrollable
+                    scrollButtons="on"
+                    indicatorColor="primary"
+                    textColor="primary"
+                  >
+                    <Tab label="Tarefa" icon={<RedeemIcon />} />
+                    <Tab label="Pedidos" icon={<ShoppingBasket />} />
+                    <Tab label="Interessados" icon={<GroupWorkIcon />} />
+                  </Tabs>
                   </AppBar>
                   {task.tab === 0 &&
                   <TabContainer>
@@ -650,9 +697,11 @@ class Task extends Component {
                         Descrição
                       </Typography>
                       <Typography variant="body2" align="left" gutterBottom>
-                        <div>
-                          {renderHTML(marked(task.data.metadata.issue.body))}
-                        </div>
+                        <ReactPlaceholder showLoadingAnimation={true} type='text' rows={1} ready={task.completed}>
+                          <div className={classes.contentBody}>
+                            {renderHTML(marked(task.data.metadata.issue.body))}
+                          </div>
+                        </ReactPlaceholder>
                       </Typography>
                     </Card>
                   </TabContainer>}
@@ -686,40 +735,42 @@ class Task extends Component {
                       }
                     />
                   </div>}
-                </div>
-              </Grid>
-              <Grid item xs={4}>
-                <StatsCard
-                  icon={TrophyIcon}
-                  iconColor="green"
-                  title="Valor da tarefa"
-                  description={`R$ ${task.data.value}`}
-                  statIcon={CalendarIcon}
-                  statText={task.data.orders.length ? `Valores recebidos de ${task.data.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
-                />
-                {MomentComponent(task.data.deadline).isValid() &&
-                <StatsCard
-                  icon={DateIcon}
-                  iconColor="green"
-                  title="data limite para realizacao da tarefa"
-                  description={MomentComponent(task.data.deadline).format("DD-MM-YYYY")}
-                  statIcon={DateIcon}
-                  statText={`${MomentComponent(task.data.deadline).fromNow()}`}
-                  />}
-              </Grid>
+              </div>
             </Grid>
-            <PaymentDialog
-              open={this.props.dialog}
-              onClose={this.props.closeDialog}
-              addNotification={this.props.addNotification}
-              onPayment={this.props.updateTask}
-              itemPrice={this.state.current_price}
-              price={this.state.final_price}
-              task={this.props.match.params.id}
-            />
+            <Grid item xs={4}>
+              <StatsCard
+                icon={TrophyIcon}
+                iconColor="green"
+                title="Valor da tarefa"
+                description={`R$ ${task.data.value}`}
+                statIcon={CalendarIcon}
+                statText={task.data.orders.length ? `Valores recebidos de ${task.data.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
+              />
+              {MomentComponent(task.data.deadline).isValid() &&
+              <StatsCard
+                icon={DateIcon}
+                iconColor="green"
+                title="data limite para realizacao da tarefa"
+                description={MomentComponent(task.data.deadline).format("DD-MM-YYYY")}
+                statIcon={DateIcon}
+                statText={`${MomentComponent(task.data.deadline).fromNow()}`}
+              />}
+            </Grid>
+          </Grid>
+          <PaymentDialog
+            open={this.props.dialog}
+            onClose={this.props.closeDialog}
+            addNotification={this.props.addNotification}
+            onPayment={this.props.updateTask}
+            itemPrice={this.state.current_price}
+            price={this.state.final_price}
+            task={this.props.match.params.id}
+          />
           <Bottom />
-        </div>
-      </StripeProvider>
+          </div>
+        </StripeProvider>
+      )}
+      </div>
     )
   }
 }

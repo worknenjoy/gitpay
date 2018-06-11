@@ -93,17 +93,17 @@ const account = (state = {data: { }, completed: true, error: {}}, action) => {
     case FETCH_USER_ACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error };
     case FETCH_USER_ACCOUNT_SUCCESS:
-      return { ...state, completed: true, data: action.data };
+      return { ...state, completed: true, data: action.data, error: {} };
     case CREATE_USER_ACCOUNT_REQUESTED:
       return { ...state, completed: false };
     case CREATE_USER_ACCOUNT_SUCCESS:
-      return { ...state, completed: true, data: action.data };
+      return { ...state, completed: true, data: action.data, error: {} };
     case CREATE_USER_ACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error };
     case UPDATE_USER_ACCOUNT_REQUESTED:
       return { ...state, completed: false };
     case UPDATE_USER_ACCOUNT_SUCCESS:
-      return { ...state, completed: true, data: action.data };
+      return { ...state, completed: true, data: action.data, error: {} };
     case UPDATE_USER_ACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error };
     default:
@@ -111,7 +111,7 @@ const account = (state = {data: { }, completed: true, error: {}}, action) => {
   }
 }
 
-const task = (state = {completed: true, error: {}, tab: 0, data: { value: 0, orders: [], assigns: [], url: '', metadata: { issue: {state: 'open', body: '', user: {avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg'}}}}}, action) => {
+const task = (state = {completed: true, error: { message: false }, tab: 0, data: { value: 0, orders: [], assigns: [], url: '', metadata: { company: '', issue: {state: 'open', body: '', user: {avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg'}}}}}, action) => {
   switch (action.type) {
     case CREATE_TASK_REQUESTED:
       return { ...state, completed: false };

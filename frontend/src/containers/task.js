@@ -7,6 +7,7 @@ import { updateTask, fetchTask, paymentTask, changeTaskTab } from '../actions/ta
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    completed: state.loggedIn.completed,
     logged: state.loggedIn.logged,
     dialog: state.dialog.open,
     user: state.loggedIn.user,

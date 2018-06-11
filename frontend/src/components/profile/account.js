@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import ReactPlaceholder from 'react-placeholder';
+
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Dialog, {
@@ -99,6 +101,7 @@ class Account extends Component {
     const { classes, account } = this.props;
 
     return (
+      <ReactPlaceholder showLoadingAnimation={true} type='media' rows={5} ready={account.completed && !account.error.error}>
       <div>
         { account.data.id ? (
         <div>
@@ -211,6 +214,7 @@ class Account extends Component {
           )
         }
       </div>
+      </ReactPlaceholder>
     );
   }
 }

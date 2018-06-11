@@ -65,7 +65,7 @@ class PaymentOptions extends Component {
 
   render() {
 
-    const { classes } = this.props;
+    const { classes, account } = this.props;
 
     return(
       <div>

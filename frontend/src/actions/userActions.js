@@ -27,8 +27,8 @@ const fetchUserAccountSuccess = (account) => {
   return { type: FETCH_USER_ACCOUNT_SUCCESS, completed: true, data: account.data }
 }
 
-const fetchUserAccountError = () => {
-  return { type: FETCH_USER_ACCOUNT_ERROR, completed: true }
+const fetchUserAccountError = (error) => {
+  return { type: FETCH_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 
 const createUserAccountRequested = () => {

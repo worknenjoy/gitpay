@@ -141,7 +141,12 @@ const fetchTask = (taskId) => {
   return (dispatch) => {
     dispatch(fetchTaskRequested())
     axios.get(api.API_URL + `/tasks/fetch/${taskId}`).then((task) => {
-      return dispatch(fetchTaskSuccess(task));
+      console.log(task);
+      if(task.data) {
+        return dispatch(fetchTaskSuccess(task));
+      }
+      dispatch(addNotification('Não foi possível obter esta tarefa, por favor tente novamente mais tarde'));
+      return dispatch(fetchTaskError({message: "Tarefa não disponível no momento"}));
     }).catch((e) => {
       dispatch(addNotification('Não foi possível obter esta tarefa, por favor tente novamente mais tarde'));
       dispatch(fetchTaskError(e));

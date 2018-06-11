@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Avatar from 'material-ui/Avatar';
 import { withRouter } from "react-router-dom";
+import ReactPlaceholder from 'react-placeholder';
+import { RoundShape } from 'react-placeholder/lib/placeholders';
+
+
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -13,13 +17,10 @@ import Typography from 'material-ui/Typography'
 import HomeIcon from 'material-ui-icons/Home';
 import PlusIcon from 'material-ui-icons/Queue';
 import UserIcon from 'material-ui-icons/AccountCircle';
-import Badge from 'material-ui/Badge';
 import { withStyles } from 'material-ui/styles';
 import api from '../../consts';
-import axios from 'axios';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
-import Auth from '../../modules/auth';
 import nameInitials from 'name-initials';
 import isGithubUrl from 'is-github-url';
 
@@ -187,9 +188,16 @@ class TopBar extends Component  {
 
   render() {
     const isLoggedIn = this.props.logged;
+    const completed = this.props.completed;
     const user = this.props.user;
     const anchorEl = this.state.anchorEl;
     const open = Boolean(anchorEl);
+
+    const avatarPlaceholder = (
+      <div className='avatar-placeholder'>
+        <RoundShape color='#ccc' style={{width: 40, height: 40, margin: 10}}/>
+      </div>
+    );
 
     return (
       <div style={styles.intro}>
@@ -276,7 +284,7 @@ class TopBar extends Component  {
                   </DialogActions>
                 </Dialog>
               </form>
-
+              <ReactPlaceholder showLoadingAnimation={true} customPlaceholder={avatarPlaceholder} ready={completed}>
               { isLoggedIn &&
               <div style={styles.notifications}>
                 {user.picture_url ?
@@ -316,6 +324,7 @@ class TopBar extends Component  {
                 </Menu>
               </div>
               }
+              </ReactPlaceholder>
           </div>
         </div>
       </div>
