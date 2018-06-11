@@ -145,7 +145,8 @@ class TopBar extends Component  {
   }
 
   validURL(url) {
-    return isGithubUrl(url);
+    const url_split = url.split('/');
+    return isGithubUrl(url) && parseInt(url_split[url_split.length - 1]);
   }
 
   handleCreateTask(e) {
@@ -233,7 +234,7 @@ class TopBar extends Component  {
                 ) : (
                   <Button style={{fontSize: 12}} onClick={this.handleProfile} variant="raised" size="small" color="secondary"
                           className={classes.altButton}>
-                    <span style={styles.spaceRight}> Acessar sua conta </span> <UserIcon />
+                    <span style={styles.spaceRight}> Gerenciar conta </span> <UserIcon />
                   </Button>
                 )
               }
