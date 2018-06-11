@@ -9,7 +9,7 @@ exports.createTask = (req, res) => {
       res.send(data);
     }).catch((error) => {
     console.log(error);
-    res.send(false);
+    res.send(error);
   });
 }
 
@@ -39,7 +39,7 @@ exports.updateTask = (req, res) => {
       res.send(data);
     }).catch((error) => {
     console.log('error on task controller', error);
-    res.send(false);
+    res.send(error);
   });
 }
 

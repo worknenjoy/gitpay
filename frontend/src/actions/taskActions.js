@@ -21,7 +21,12 @@ const PAYMENT_TASK_ERROR = 'PAYMENT_TASK_ERROR';
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB';
 
 const VALIDATION_ERRORS = {
-  "url must be unique": 'Essa url já foi cadastrada'
+  "url must be unique": 'Essa url já foi cadastrada',
+  "Not Found": 'Essa issue não foi encontrada no Github'
+}
+
+const ERROR_CODES = {
+  "StatusCodeError": 'Issue não encontrada'
 }
 
 /*
@@ -89,6 +94,10 @@ const createTask = (task, history) => {
       if(response.data && response.data.errors) {
         dispatch(addNotification(VALIDATION_ERRORS[response.data.errors[0].message]));
         return dispatch(createTaskError(response.data.errors));
+      }
+      if(response.data && response.data.error) {
+        dispatch(addNotification(ERROR_CODES[response.data.name]));
+        return dispatch(createTaskError(JSON.parse(response.data.error)));
       }
       dispatch(createTaskSuccess());
       dispatch(addNotification('Tarefa criada com sucesso'));

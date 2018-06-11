@@ -145,8 +145,7 @@ class TopBar extends Component  {
   }
 
   validURL(url) {
-    const url_split = url.split('/');
-    return isGithubUrl(url) && parseInt(url_split[url_split.length - 1]);
+    return isGithubUrl(url);
   }
 
   handleCreateTask(e) {
