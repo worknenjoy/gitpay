@@ -187,9 +187,8 @@ class TopBar extends Component  {
   }
 
   render() {
+    const { task, completed, user } = this.props;
     const isLoggedIn = this.props.logged;
-    const completed = this.props.completed;
-    const user = this.props.user;
     const anchorEl = this.state.anchorEl;
     const open = Boolean(anchorEl);
 
@@ -200,6 +199,7 @@ class TopBar extends Component  {
     );
 
     return (
+
       <div style={styles.intro}>
         <div style={styles.containerBar}>
           <Button href="/">
@@ -278,7 +278,7 @@ class TopBar extends Component  {
                     <Button onClick={this.handleClickDialogCreateTaskClose} color="primary">
                       Cancelar
                     </Button>
-                    <Button onClick={this.handleCreateTask} variant="raised" color="secondary" >
+                    <Button disabled={!completed} onClick={this.handleCreateTask} variant="raised" color="secondary" >
                       Inserir
                     </Button>
                   </DialogActions>

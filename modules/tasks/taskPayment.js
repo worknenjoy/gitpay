@@ -29,7 +29,7 @@ module.exports = Promise.method(function taskPayment(payment) {
 
         return stripe.transfers.create({
           amount: data.value * 100,
-          currency: 'brl',
+          currency: 'usd',
           destination: dest,
           source_type: 'card',
           transfer_group: transferGroup,

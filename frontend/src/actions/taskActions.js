@@ -14,6 +14,13 @@ const FETCH_TASK_REQUESTED = 'FETCH_TASK_REQUESTED';
 const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS';
 const FETCH_TASK_ERROR = 'FETCH_TASK_ERROR';
 
+const LIST_TASK_REQUESTED = 'LIST_TASK_REQUESTED';
+const LIST_TASK_SUCCESS = 'LIST_TASK_SUCCESS';
+const LIST_TASK_ERROR = 'LIST_TASK_ERROR';
+
+const FILTER_TASK_REQUESTED = 'FILTER_TASK_REQUESTED';
+const FILTER_TASK_SUCCESS = 'FILTER_TASK_SUCCESS';
+
 const PAYMENT_TASK_REQUESTED = 'PAYMENT_TASK_REQUESTED';
 const PAYMENT_TASK_SUCCESS = 'PAYMENT_TASK_SUCCESS';
 const PAYMENT_TASK_ERROR = 'PAYMENT_TASK_ERROR';
@@ -30,9 +37,7 @@ const ERROR_CODES = {
 }
 
 /*
- *
- * Task
- *
+ * Task create
  */
 
 const createTaskRequested = () => {
@@ -47,6 +52,10 @@ const createTaskError = (error) => {
   return { type: CREATE_TASK_ERROR, completed: true, error: error }
 }
 
+/*
+ * Task update
+ */
+
 const updateTaskRequested = () => {
   return { type: UPDATE_TASK_REQUESTED, completed: false }
 }
@@ -55,9 +64,42 @@ const updateTaskSuccess = (field) => {
   return { type: UPDATE_TASK_SUCCESS, completed: true, tab: field }
 }
 
-const updateTaskError = (error) => {
-  return { type: UPDATE_TASK_ERROR, completed: true, error: error }
+/*
+ * Task list
+ */
+
+const listTaskRequested = () => {
+  return { type: LIST_TASK_REQUESTED, completed: false }
 }
+
+const listTaskSuccess = (tasks) => {
+  return { type: LIST_TASK_SUCCESS, completed: true, data: tasks.data }
+}
+
+const listTaskError = (error) => {
+  return { type: LIST_TASK_ERROR, completed: true, error: error }
+}
+
+/*
+ * Task filter
+ */
+
+const filterTaskRequested = () => {
+  return { type: FILTER_TASK_REQUESTED, completed: false }
+}
+
+const filterTaskSuccess = (tasks) => {
+  return { type: FILTER_TASK_SUCCESS, completed: true, data: tasks }
+}
+
+const filterTaskError = (error) => {
+  return { type: FILTER_TASK_ERROR, completed: true, error: error }
+}
+
+
+/*
+ * Task fetch
+ */
 
 const fetchTaskRequested = () => {
   return { type: FETCH_TASK_REQUESTED, completed: false }
@@ -70,6 +112,10 @@ const fetchTaskSuccess = (task) => {
 const fetchTaskError = (error) => {
   return { type: FETCH_TASK_ERROR, completed: true, error: error }
 }
+
+/*
+ * Task payment
+ */
 
 const paymentTaskRequested = () => {
   return { type: PAYMENT_TASK_REQUESTED, completed: false }
@@ -137,11 +183,34 @@ const updateTask = (task) => {
   }
 }
 
+const listTasks = () => {
+  return (dispatch, getState) => {
+    dispatch(listTaskRequested())
+    axios.get(api.API_URL + '/tasks/list')
+      .then((response) => {
+        console.log(response);
+        return dispatch(listTaskSuccess(response));
+      })
+      .catch((error) => {
+        console.log(error);
+        return dispatch(listTaskError(error));
+      });
+  }
+}
+
+const filterTasks = (key, value) => {
+  return (dispatch, getState) => {
+    dispatch(filterTaskRequested())
+    const tasks = getState().tasks;
+    const filtered = tasks.data.filter((item) => item[key] === value);
+    return dispatch(filterTaskSuccess(filtered));
+  }
+}
+
 const fetchTask = (taskId) => {
   return (dispatch) => {
     dispatch(fetchTaskRequested())
     axios.get(api.API_URL + `/tasks/fetch/${taskId}`).then((task) => {
-      console.log(task);
       if(task.data) {
         return dispatch(fetchTaskSuccess(task));
       }
@@ -188,6 +257,11 @@ export {
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
+  LIST_TASK_REQUESTED,
+  LIST_TASK_SUCCESS,
+  LIST_TASK_ERROR,
+  FILTER_TASK_REQUESTED,
+  FILTER_TASK_SUCCESS,
   PAYMENT_TASK_REQUESTED,
   PAYMENT_TASK_SUCCESS,
   PAYMENT_TASK_ERROR,
@@ -195,6 +269,8 @@ export {
   addNotification,
   createTask,
   fetchTask,
+  listTasks,
+  filterTasks,
   updateTask,
   paymentTask,
   changeTaskTab

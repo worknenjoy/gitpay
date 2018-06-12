@@ -23,7 +23,7 @@ import api from '../../consts';
 import TopBarContainer from '../../containers/topbar';
 import Bottom from '../bottom/bottom';
 import ProfileOptions from './profile-options';
-import TaskList from '../task/task-list';
+import TaskListContainer from '../../containers/task-list';
 import PaymentOptions from '../payment/payment-options';
 import Preferences from '../profile/preferences';
 
@@ -128,7 +128,7 @@ class Profile extends Component {
             <HashRouter>
               <Switch>
                 <Route exact path="/profile" component={ProfileOptions} />
-                <Route exact path="/profile/tasks" component={() => <TaskList user={user} />} />
+                <Route exact path="/profile/tasks" component={() => <TaskListContainer />} />
                 <Route exact path="/profile/payment-options" component={() => <PaymentOptions user={user} />} />
                 <Route exact path="/profile/preferences" component={() => <Preferences user={user} />} />
               </Switch>

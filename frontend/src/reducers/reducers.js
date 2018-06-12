@@ -21,6 +21,11 @@ import {
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
+  LIST_TASK_REQUESTED,
+  LIST_TASK_SUCCESS,
+  LIST_TASK_ERROR,
+  FILTER_TASK_REQUESTED,
+  FILTER_TASK_SUCCESS,
   PAYMENT_TASK_REQUESTED,
   PAYMENT_TASK_SUCCESS,
   PAYMENT_TASK_ERROR,
@@ -150,13 +155,31 @@ const task = (state = {completed: true, error: { message: false }, tab: 0, data:
   }
 }
 
+const tasks = (state = {completed: true, error: { message: false }, data: []}, action) => {
+  switch (action.type) {
+    case LIST_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case LIST_TASK_SUCCESS:
+      return { ...state, completed: true, data: action.data };
+    case LIST_TASK_ERROR:
+      return { ...state, completed: true, error: action.error };
+    case FILTER_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case FILTER_TASK_SUCCESS:
+      return { ...state, completed: true, data: action.data };
+    default:
+      return state;
+  }
+}
+
 
 const reducers = combineReducers({
   notification,
   dialog,
   loggedIn,
   account,
-  task
+  task,
+  tasks
 })
 
 export default reducers;
