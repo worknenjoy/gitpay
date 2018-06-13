@@ -98,6 +98,11 @@ const styles = theme => ({
     verticalAlign: 'middle',
     backgroundColor: theme.palette.primary.light
   },
+  chipStatusPaid: {
+    marginLeft: 0,
+    verticalAlign: 'middle',
+    backgroundColor: theme.palette.primary.light
+  },
   paper: {
     padding: 10,
     marginTop: 10,
@@ -398,7 +403,7 @@ class Task extends Component {
       if(!orders.length) {
         return [];
       }
-      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `R$ ${item.amount}`, MomentComponent(item.updatedAt).fromNow()])
+      return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `$ ${item.amount}`, MomentComponent(item.updatedAt).fromNow()])
     }
 
     const removeDuplicates = (myArr, prop) => {
@@ -460,7 +465,7 @@ class Task extends Component {
             {this.props.task.error.message}
           </Typography>
           <Typography style={{marginBottom: 300}} variant="body2" align="center" gutterBottom>
-            Tente novamente mais tarde
+            Tente recarregar a página
           </Typography>
           <Bottom />
         </div>
@@ -486,6 +491,17 @@ class Task extends Component {
                       onClick={this.handleStatusDialog}
                       deleteIcon={<DoneIcon />}
                     />
+
+                    { task.data.paid &&
+                    <Chip
+                      style={{marginRight: 10}}
+                      label={`Paga`}
+                      className={classes.chipStatusPaid}
+                      onDelete={this.handleTaskPaymentDialog}
+                      onClick={this.handleTaskPaymentDialog}
+                      deleteIcon={<RedeemIcon />}
+                    />
+                    }
                     { taskOwner() &&
                     <div style={{display: 'inline-block'}}>
                       <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
@@ -495,7 +511,7 @@ class Task extends Component {
                         <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
                       </Button>
                       <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
-                      <TaskPayment id={task.data.id} assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} onPay={this.props.paymentTask} />
+                      <TaskPayment id={task.data.id} paid={task.data.paid} transferId={task.data.transfer_id} assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} onPay={this.props.paymentTask} />
                     </div>
                     }
                   </Typography>
@@ -591,27 +607,27 @@ class Task extends Component {
                           </Typography>
                           <div className={classes.chipContainer}>
                             <Chip
-                              label=" R$ 20"
+                              label=" $ 20"
                               className={classes.chip}
                               onClick={() => this.pickTaskPrice(20)}
                             />
                             <Chip
-                              label=" R$ 50"
+                              label=" $ 50"
                               className={classes.chip}
                               onClick={() => this.pickTaskPrice(50)}
                             />
                             <Chip
-                              label=" R$ 100"
+                              label=" $ 100"
                               className={classes.chip}
                               onClick={() => this.pickTaskPrice(100)}
                             />
                             <Chip
-                              label=" R$ 150"
+                              label=" $ 150"
                               className={classes.chip}
                               onClick={() => this.pickTaskPrice(150)}
                             />
                             <Chip
-                              label=" R$ 300"
+                              label=" $ 300"
                               className={classes.chip}
                               onClick={() => this.pickTaskPrice(300)}
                             />
@@ -621,7 +637,7 @@ class Task extends Component {
                               <InputLabel htmlFor="adornment-amount">Valor</InputLabel>
                               <Input
                                 id="adornment-amount"
-                                startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                 placeholder="Insira um valor"
                                 type="number"
                                 inputProps={ {'min': 0} }
@@ -630,7 +646,7 @@ class Task extends Component {
                               />
                             </FormControl>
                             <Button disabled={!this.state.current_price} onClick={this.handlePayment} variant="raised" color="primary" className={classes.btnPayment}>
-                              {`Pagar R$ ${this.state.current_price}`}
+                              {`Pagar $ ${this.state.current_price}`}
                             </Button>
                           </form>
                         </CardContent>
@@ -742,9 +758,9 @@ class Task extends Component {
                 icon={TrophyIcon}
                 iconColor="green"
                 title="Valor da tarefa"
-                description={`R$ ${task.data.value}`}
+                description={`$ ${task.data.value}`}
                 statIcon={CalendarIcon}
-                statText={task.data.orders.length ? `Valores recebidos de ${task.data.orders.map((item,i) => `R$ ${item.amount}`)} `: 'Nenhum valor recebido'}
+                statText={task.data.orders.length ? `Valores recebidos de ${task.data.orders.map((item,i) => `$ ${item.amount}`)} `: 'Nenhum valor recebido'}
               />
               {MomentComponent(task.data.deadline).isValid() &&
               <StatsCard

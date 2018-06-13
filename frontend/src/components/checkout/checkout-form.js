@@ -63,7 +63,7 @@ class CheckoutForm extends Component {
             value: this.props.price,
             Orders: [{
               source_id: token.id,
-              currency: 'brl',
+              currency: 'usd',
               amount: this.props.itemPrice,
               email: this.state.email,
               userId: this.state.userId
@@ -73,13 +73,13 @@ class CheckoutForm extends Component {
 
         } catch(e) {
           console.log('error', e);
-          this.props.addNotification("Erro ao processar o pagamento do cartão de crédito")
+          this.props.addNotification("Erro ao processar o pagamento do cartão de crédito");
           this.setState({
             paymentRequested: false
           })
         };
       } else {
-        this.props.addNotification("Erro na criação do token")
+        this.props.addNotification("Erro no pagamento");
         this.setState({
           paymentRequested: false
         })
@@ -87,7 +87,7 @@ class CheckoutForm extends Component {
     }).catch((e) => {
       console.log('error to create token');
       console.log(e);
-      this.props.addNotification("Erro na criação do token");
+      this.props.addNotification("Erro no pagamento");
       this.setState({
         paymentRequested: false
       })
@@ -146,7 +146,7 @@ class CheckoutForm extends Component {
                 Cancelar
               </Button>
               <Button type="submit" variant="raised" color="secondary" disabled={this.state.paymentRequested}>
-                {`Pagar R$ ${this.props.itemPrice}`}
+                {`Pagar $ ${this.props.itemPrice}`}
               </Button>
             </div>
           </Grid>

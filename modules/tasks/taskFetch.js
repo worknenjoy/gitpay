@@ -40,6 +40,7 @@ module.exports = Promise.method(function taskFetch(taskParams) {
         status: data.dataValues.status,
         assigned: data.dataValues.assigned,
         userId: data.dataValues.userId,
+        paid: data.dataValues.paid,
         metadata: {
           id: issueId,
           user: userOrCompany,

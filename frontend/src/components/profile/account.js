@@ -185,7 +185,7 @@ class Account extends Component {
                 )}
               </div>
               <Typography className={classes.pos} color="textSecondary">
-                Se tiver algum problema com a validação da sua conta, entraremos em contato para finalizar a validação da sua conta para recebimento através do e-mail: <br/>
+                Entraremos em contato para finalizar a validação da sua conta através do e-mail: <br/>
                 <strong>{ account.data.email }</strong>
               </Typography>
               <Typography component="p">
