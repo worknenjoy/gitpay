@@ -69,6 +69,7 @@ router.get('/user/customer', controllers.customer)
 router.get('/users/:id/account', controllers.account)
 router.post('/user/account', controllers.accountCreate)
 router.put('/user/account', controllers.accountUpdate)
-router.post('/user/bank_accounts', controllers.bankAccount)
+router.post('/user/bank_accounts', controllers.createBankAccount)
+router.get('/users/:id/bank_accounts', controllers.userBankAccount)
 
 module.exports = router;

@@ -1,10 +1,15 @@
 const Promise = require('bluebird');
 const models = require('../../loading/loading');
 const Stripe = require('stripe');
+const ip = require('ip');
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
 
 module.exports = Promise.method(function userAccountUpdate(userParameters) {
+  console.log('user parameters', userParameters);
+  if(userParameters.account.tos_acceptance) {
+    userParameters.account.tos_acceptance.ip = ip.address();
+  }
   return models.User
     .findOne(
       {

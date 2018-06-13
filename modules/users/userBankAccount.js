@@ -12,30 +12,14 @@ module.exports = Promise.method(function userBankAccount(userParameters) {
       }
     )
     .then((data) => {
-      if(data.dataValues.customer_id) {
-        return stripe.customers.createSource(data.dataValues.customer_id, {
-          source: {
-            object: 'bank_account',
-            country: 'BR',
-            currency: 'BRL',
-            account_holder_name: data.dataValues.name,
-            account_holder_type: 'individual',
-            routing_number: userParameters.routing_number,
-            account_number: userParameters.account_number
+      if(data.dataValues.account_id) {
+        return stripe.accounts.listExternalAccounts(data.dataValues.account_id, {object: "bank_account"}).then((bank_accounts) => {
+          if(bank_accounts.data.length) {
+             return bank_accounts.data[0];
           }
-        }).then((account) => {
-          console.log('bank account');
-          console.log(account);
-          return account;
-        }).catch((e) => {
-          console.log('could not finde customer', e);
-          return e;
+          return false;
         });
-      }
-      return false;
-    }).catch((error) => {
-      console.log(error);
-      return false;
-    });
 
+      }
+    })
 });

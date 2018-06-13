@@ -9,14 +9,21 @@ const FETCH_USER_ACCOUNT_ERROR = 'FETCH_USER_ACCOUNT_ERROR';
 const CREATE_USER_ACCOUNT_REQUESTED = 'CREATE_USER_ACCOUNT';
 const CREATE_USER_ACCOUNT_SUCCESS = 'CREATE_USER_ACCOUNT_SUCCESS';
 const CREATE_USER_ACCOUNT_ERROR = 'CREATE_USER_ACCOUNT_ERROR';
+
 const UPDATE_USER_ACCOUNT_REQUESTED = 'UPDATE_USER_ACCOUNT_REQUESTED';
 const UPDATE_USER_ACCOUNT_SUCCESS = 'UPDATE_USER_ACCOUNT_SUCCESS';
 const UPDATE_USER_ACCOUNT_ERROR = 'UPDATE_USER_ACCOUNT_ERROR';
 
+const CREATE_BANKACCOUNT_REQUESTED = 'CREATE_BANKACCOUNT_REQUESTED';
+const CREATE_BANKACCOUNT_SUCCESS = 'CREATE_BANKACCOUNT_SUCCESS';
+const CREATE_BANKACCOUNT_ERROR = 'CREATE_BANKACCOUNT_ERROR';
+
+const GET_BANKACCOUNT_REQUESTED = 'GET_BANKACCOUNT_REQUESTED';
+const GET_BANKACCOUNT_SUCCESS = 'GET_BANKACCOUNT_SUCCESS';
+const GET_BANKACCOUNT_ERROR = 'GET_BANKACCOUNT_ERROR';
+
 /*
- *
- * Account
- *
+ * Account fetch
  */
 
 const fetchUserAccountRequested = () => {
@@ -31,6 +38,10 @@ const fetchUserAccountError = (error) => {
   return { type: FETCH_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 
+/*
+ * Account create
+ */
+
 const createUserAccountRequested = () => {
   return { type: CREATE_USER_ACCOUNT_REQUESTED, completed: false }
 }
@@ -43,6 +54,10 @@ const createUserAccountError = (error) => {
   return { type: CREATE_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 
+/*
+ * Account update
+ */
+
 const updateUserAccountRequested = () => {
   return { type: UPDATE_USER_ACCOUNT_REQUESTED, completed: false }
 }
@@ -54,6 +69,40 @@ const updateUserAccountSuccess = (account) => {
 const updateUserAccountError = (error) => {
   return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
+
+
+/*
+ * Account bank get
+ */
+
+const getBankAccountRequested = () => {
+  return { type: GET_BANKACCOUNT_REQUESTED, completed: false }
+}
+
+const getBankAccountSuccess = (account) => {
+  return { type: GET_BANKACCOUNT_SUCCESS, completed: true, data: account.data }
+}
+
+const getBankAccountError = (error) => {
+  return { type: GET_BANKACCOUNT_ERROR, completed: true, error: error }
+}
+
+/*
+ * Account bank create
+ */
+
+const createBankAccountRequested = () => {
+  return { type: CREATE_BANKACCOUNT_REQUESTED, completed: false }
+}
+
+const createBankAccountSuccess = (account) => {
+  return { type: CREATE_BANKACCOUNT_SUCCESS, completed: true, data: account.data }
+}
+
+const createBankAccountError = (error) => {
+  return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error: error }
+}
+
 
 const fetchAccount = () => {
   return (dispatch, getState) => {
@@ -127,6 +176,55 @@ const updateAccount = (accountData) => {
   }
 };
 
+const getBankAccount = () => {
+  return (dispatch, getState) => {
+    dispatch(getBankAccountRequested());
+    const userId = getState().loggedIn.user.id;
+    axios.get(`${api.API_URL}/users/${userId}/bank_accounts`).then((bank_account) => {
+      if(bank_account.data.statusCode === 400) {
+        dispatch(addNotification('Erro ao tentar obter sua conta bancária'));
+        return dispatch(getBankAccountError(bank_account.data));
+      }
+      console.log(bank_account);
+      return dispatch(getBankAccountSuccess(bank_account));
+    }).catch((error) => {
+      dispatch(addNotification('Erro ao tentar atualizar sua conta'));
+      console.log('error on create account', error);
+      return dispatch(getBankAccountError(error));
+    });
+
+  }
+}
+
+const createBankAccount = (bank) => {
+  return (dispatch, getState) => {
+    dispatch(createBankAccountRequested());
+    const accountId = getState().loggedIn.user.account_id;
+    const userId = getState().loggedIn.user.id;
+    if(!accountId) {
+      dispatch(addNotification('Você não possui uma conta associada'));
+      return dispatch(createUserAccountError({ message: 'Você não possui uma conta' }));
+    }
+    axios.post(api.API_URL + `/user/bank_accounts`, {
+      id: userId,
+      routing_number: bank.routing_number,
+      account_number: bank.account_number
+    }).then((bank_account) => {
+      if(bank_account.data.statusCode === 400) {
+        dispatch(addNotification('Erro ao tentar atualizar sua conta'));
+        return dispatch(createBankAccountError(bank_account.data));
+      }
+      dispatch(addNotification('Conta bancária cadastrada com sucesso'));
+      return dispatch(createBankAccountSuccess(bank_account));
+    }).catch((error) => {
+      dispatch(addNotification('Erro ao tentar atualizar sua conta'));
+      console.log('error on create account', error);
+      return dispatch(createBankAccountError(error));
+    });
+
+  }
+}
+
 export {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
@@ -137,7 +235,15 @@ export {
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
   UPDATE_USER_ACCOUNT_ERROR,
+  GET_BANKACCOUNT_REQUESTED,
+  GET_BANKACCOUNT_SUCCESS,
+  GET_BANKACCOUNT_ERROR,
+  CREATE_BANKACCOUNT_REQUESTED,
+  CREATE_BANKACCOUNT_SUCCESS,
+  CREATE_BANKACCOUNT_ERROR,
   fetchAccount,
   createAccount,
-  updateAccount
+  updateAccount,
+  createBankAccount,
+  getBankAccount
 };

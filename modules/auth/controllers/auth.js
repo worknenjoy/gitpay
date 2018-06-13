@@ -67,12 +67,22 @@ exports.accountUpdate = (req, res) => {
   });
 }
 
-exports.bankAccount = (req, res) => {
-    user.userBankAccount(req.body)
+exports.createBankAccount = (req, res) => {
+    user.userBankAccountCreate(req.body)
     .then((data) => {
       res.send(data);
     }).catch((error) => {
     console.log(error);
-    res.send(false);
+    res.send(error);
+  });
+}
+
+exports.userBankAccount = (req, res) => {
+  user.userBankAccount(req.params)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log(error);
+    res.send(error);
   });
 }

@@ -13,7 +13,7 @@ export default {
       'legal_entity.last_name': 'Último nome',
       'legal_entity.personal_id_number': 'Número de identificação',
       'legal_entity.type': 'Tipo de identificação (identidade ou CPF',
-      'tos_acceptance.date': 'Aceitar os termos de uso',
+      'tos_acceptance.date': 'Data da confirmação dos termos de uso',
       'tos_acceptance.ip': 'Aceitar os termos de uso'
     },
     ACCOUNT_REASONS: {
