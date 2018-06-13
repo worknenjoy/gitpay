@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const loading = require('./loading/loading');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
-const auth = require('./modules/auth/auth');
+const load = require('./modules/load/load');
 const feed = require('feed-read');
 
 if(process.env.NODE_ENV != 'production') {
@@ -43,7 +43,7 @@ app.get('/octos', function (req, res) {
     }).end();
 });
 
-auth.init(app);
+load.init(app);
 
 app.listen(app.get('port'), () => {
     console.log('Node app is running on port', app.get('port'));
