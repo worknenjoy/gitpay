@@ -110,7 +110,7 @@ class TaskPayment extends Component {
               <Button onClick={this.payTask} style={{float: 'right', margin: 10}} variant="raised" color="primary"
                       disabled={this.props.assigned ? false : true}>
                 <RedeemIcon style={{marginRight: 10}}/>
-                {`Pagar R$ ${displayTotal()}`}
+                {`Pagar $ ${displayTotal()}`}
               </Button>
               }
               </div>
