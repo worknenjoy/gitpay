@@ -1,12 +1,14 @@
 const AssignMail = require('../mail/assign');
+const PaymentMail = require('../mail/payment');
 const Promise = require('bluebird');
 const models = require('../../loading/loading');
 const { userExist, userBuild, userUpdate } = require('../../modules/users');
 const Stripe = require('stripe');
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
-const createSourceAndCharge = (customer, orderParameters, order, task) => {
-   stripe.customers.createSource(customer.id, {source: orderParameters.source_id}).then(function(card){
+const createSourceAndCharge = (customer, orderParameters, order, task, user) => {
+
+   return stripe.customers.createSource(customer.id, {source: orderParameters.source_id}).then(function(card){
      stripe.charges.create({
       amount: orderParameters.amount * 100,
       currency: orderParameters.currency,
@@ -15,18 +17,24 @@ const createSourceAndCharge = (customer, orderParameters, order, task) => {
       transfer_group: `task_${task.dataValues.id}`,
       metadata: {order_id: order.dataValues.id}
     }).then(function(charge){
-      order.updateAttributes({
-        source: charge.id,
-        source_id: card.id,
-        paid: charge.paid,
-        status: charge.status
-      }).then(function(updatedUser) {
-        return charge;
-      }).catch((err) => {
-        console.log('error to update attributes');
-        console.log(err);
-        return err;
-      });
+      if(charge) {
+        return order.updateAttributes({
+          source: charge.id,
+          source_id: card.id,
+          paid: charge.paid,
+          status: charge.status
+        }).then(function(updatedUser) {
+          PaymentMail.success(user.email, task, order.amount);
+         return charge;
+        }).catch((err) => {
+          console.log('error to update attributes');
+          console.log(err);
+          PaymentMail.error(user.email, task, order.amount);
+          return err;
+        });
+      }
+      PaymentMail.error(user.email, task, order.amount);
+
     }).catch(function(err) {
       console.log('error to create charge');
       console.log(err);
@@ -39,18 +47,18 @@ const createSourceAndCharge = (customer, orderParameters, order, task) => {
   })
 };
 
-const createCustomer = (orderParameters, order, task) => {
+const createCustomer = (orderParameters, order, task, user) => {
   stripe.customers.create({
     email: orderParameters.email
   }).then(function (customer) {
     if (order.userId) {
       return models.User.update({customer_id: customer.id}, {where: {id: order.userId}}).then((update) => {
         if (update[0]) {
-          createSourceAndCharge(customer, orderParameters, order, task);
+          createSourceAndCharge(customer, orderParameters, order, task, user);
         }
       });
     }
-    createSourceAndCharge(customer, orderParameters, order, task);
+    createSourceAndCharge(customer, orderParameters, order, task, user);
   }).catch(function (err) {
     console.log('error to stripe account');
     console.log(err);
@@ -82,11 +90,11 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
                     return e;
                   });
                 } else {
-                  return createCustomer(orderParameters, order, task);
+                  return createCustomer(orderParameters, order, task, user);
                 }
               });
             } else {
-              return createCustomer(orderParameters, order, task);
+              return createCustomer(orderParameters, order, task, user);
             }
           }).catch(error => console.log(error));
 

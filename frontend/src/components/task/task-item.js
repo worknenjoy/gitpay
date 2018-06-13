@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import MomentComponent from 'moment';
 import TextEllipsis from 'text-ellipsis';
 import ReactPlaceholder from 'react-placeholder';
@@ -23,6 +24,10 @@ class TaskItem extends Component {
 
   }
 
+  handleClickListItem(id) {
+    this.props.history.push('/task/' + id);
+  }
+
   render() {
 
     const { item, key, ready, classes } = this.props;
@@ -39,7 +44,7 @@ class TaskItem extends Component {
           </Avatar>
           <ListItemText id={item.id}
                         primary={TextEllipsis(item.url, 50)}
-                        secondary={item.value ? `R$ ${item.value}` : 'sem valor'}
+                        secondary={item.value ? `$ ${item.value}` : 'sem valor'}
           />
           <Chip label={Constants.STATUSES[item.status]} style={{marginRight: 10, backgroundColor: 'green', color: 'white'}} />
           <Chip label={item.deadline ? MomentComponent(item.deadline).fromNow() : 'sem data definida'} style={{marginRight: 20, backgroundColor: 'green', color: 'white'}} />
@@ -58,4 +63,4 @@ class TaskItem extends Component {
   }
 }
 
-export default TaskItem;
+export default withRouter(TaskItem);

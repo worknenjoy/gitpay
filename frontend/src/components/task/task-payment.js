@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Avatar from 'material-ui/Avatar';
+import Typography from 'material-ui/Typography';
 import List from 'material-ui/List';
 import ListItem from 'material-ui/List/ListItem';
 import ListItemAvatar from 'material-ui/List/ListItemAvatar';
@@ -71,6 +72,11 @@ class TaskPayment extends Component {
       <Dialog onClose={this.props.onClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">Pagar pela tarefa como recompensa</DialogTitle>
         <DialogContent>
+          {this.props.paid &&
+            <Typography type="subheading" color="primary" gutterBottom noWrap>
+              {`A transferência para esta tarefa já foi realizada`}
+            </Typography>
+          }
           <List>
             {orders.map((order, index) => (
               <ListItem key={order.id}>
@@ -79,28 +85,47 @@ class TaskPayment extends Component {
                     <FilterListIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={`R$ ${order.amount}`} secondary={`${statuses[order.status] || 'indefinida'}`} />
+                <ListItemText primary={`$ ${order.amount}`} secondary={`${statuses[order.status] || 'indefinida'}`} />
               </ListItem>
             ))}
           </List>
           <DialogContentText>
             <span style={{display: 'inline-block', margin: 20}}>
-            {this.props.assigned ? `Enviar para ${sendTo(this.props.assigned)}` : 'Ninguém foi escolhido para esta tarefa, então não temos como efetuar o pagamento'}
+              {!this.props.paid ? (
+                <div>
+                  {this.props.assigned ? `Enviar para ${sendTo(this.props.assigned)}` : 'Ninguém foi escolhido para esta tarefa, então não temos como efetuar o pagamento'}
+                </div>
+              ) : (
+                <div>
+                  {`O pagamento foi efetuado para ${sendTo(this.props.assigned)}`}
+                </div>
+              )}
             </span>
           </DialogContentText>
           <Divider />
           {hasOrders() ?
             (
-              <Button onClick={this.payTask} style={{float: 'right', margin: 10}} variant="raised" color="primary" disabled={this.props.assigned ? false : true}>
-                <RedeemIcon style={{marginRight: 10}} />
+              <div>
+              { !this.props.paid &&
+              <Button onClick={this.payTask} style={{float: 'right', margin: 10}} variant="raised" color="primary"
+                      disabled={this.props.assigned ? false : true}>
+                <RedeemIcon style={{marginRight: 10}}/>
                 {`Pagar R$ ${displayTotal()}`}
               </Button>
+              }
+              </div>
             ) : (
-              <ListItemText variant="raised" disabled={true} primary={`Não temos nenhum pagamento realizado para esta tarefa`} />
+              <ListItemText variant="raised" disabled={true}
+                            primary={`Não temos nenhum pagamento realizado para esta tarefa`}/>
             )}
+          { !this.props.paid ? (
           <Button onClick={this.props.onClose} style={{ float: 'right', margin: 10}} >
             Cancelar
-          </Button>
+          </Button>) : (
+            <Button onClick={this.props.onClose} style={{ float: 'right', margin: 10}} >
+              Fechar
+            </Button>
+          )}
         </DialogContent>
       </Dialog>
     );

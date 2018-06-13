@@ -226,7 +226,7 @@ const fetchTask = (taskId) => {
 }
 
 const paymentTask = (taskId) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(paymentTaskRequested())
     const userId = getState().loggedIn.user.id;
     if(!userId) {
@@ -236,8 +236,9 @@ const paymentTask = (taskId) => {
     axios.post(`${api.API_URL}/tasks/payments/`,{
       taskId: taskId
     }).then((payment) => {
-      console.log(payment)
-      return dispatch(paymentTaskSuccess(payment));
+      //dispatch(paymentTaskSuccess(payment));
+      dispatch(addNotification('Transferência realizada com sucesso!'));
+      return dispatch(fetchTask(taskId));
     }).catch((e) => {
       dispatch(addNotification('Não foi possível realizar o pagamento para esta tarefa'));
       dispatch(paymentTaskError(e));

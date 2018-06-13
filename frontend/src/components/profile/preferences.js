@@ -80,7 +80,7 @@ class Preferences extends Component {
             <strong>Língua:</strong> Português
           </Typography>
           <Typography component="p" style={{marginBottom: 40}}>
-            <strong>Moeda:</strong> BRL (Real brasileiro)
+            <strong>Moeda:</strong> USD (Dólar)
           </Typography>
         </Paper>
       </div>

@@ -83,10 +83,6 @@ class TaskList extends Component {
     }
   };
 
-  handleClickListItem(id) {
-    this.props.history.replace('/task/' + id);
-  }
-
   render() {
 
     const { classes } = this.props;
