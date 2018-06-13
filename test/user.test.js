@@ -135,8 +135,6 @@ describe("Users", () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
-          console.log('user response');
-          console.log(res.body);
           agent
             .get(`/user/customer/`)
             .send({ id: res.body.id })
@@ -209,8 +207,6 @@ describe("Users", () => {
             .expect(200)
             .end((err, account) => {
               expect(account.statusCode).to.equal(200);
-              console.log('response from account update');
-              console.log(account.body);
               expect(account.body.object).to.equal('account');
               done();
             })

@@ -2,7 +2,7 @@ const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 
 let Sendmail = {};
 
-Sendmail.success = (to, task, name) => {
+Sendmail.success = (to, subject, msg) => {
 
   const request = sg.emptyRequest({
     method: 'POST',
@@ -29,10 +29,7 @@ Sendmail.success = (to, task, name) => {
       content: [
         {
           type: 'text/html',
-          value: `
-            <p>Olá, ${name} tem interesse na sua tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-            <p>Você pode atribuir o desenvolvimento desta tarefa para ele indo na aba 'INTERESSADOS', para que ela possa receber o valor após a tarefa for integrada</p>
-          `
+          value: msg
         },
       ],
     },
@@ -52,7 +49,7 @@ Sendmail.success = (to, task, name) => {
     });
 }
 
-Sendmail.error = (msg) => {
+Sendmail.error = (to, subject, msg) => {
 
   const request = sg.emptyRequest({
     method: 'POST',
@@ -62,10 +59,10 @@ Sendmail.error = (msg) => {
         {
           to: [
             {
-              email: 'alexanmtz@gmail.com',
+              email: to,
             },
           ],
-          subject: msg
+          subject: subject
         },
       ],
       from: {
@@ -74,7 +71,7 @@ Sendmail.error = (msg) => {
       content: [
         {
           type: 'text/html',
-          value: 'Hello, Email!'
+          value: msg
         },
       ],
     },

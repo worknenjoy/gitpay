@@ -5,6 +5,6 @@ const router = express.Router();
 const passport = require('passport');
 const controllers = require('../controllers/webhook');
 
-router.post('/update', controllers.updateWebhook);
+router.post('/', controllers.updateWebhook);
 
 module.exports = router;

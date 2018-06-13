@@ -7,6 +7,8 @@ const api = require('../server');
 const agent = request.agent(api);
 const models = require('../loading/loading');
 
+const chargeData = require('./data/charge');
+
 describe("webhooks", () => {
 
   beforeEach(() => {
@@ -19,7 +21,7 @@ describe("webhooks", () => {
     });
   })
 
-  describe('webhooks', () => {
+  describe('webhooks for charge', () => {
     it('should return false when the request is not a charge event', (done) => {
       agent
         .post('/orders/create/')
@@ -33,18 +35,14 @@ describe("webhooks", () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
-          console.log('order created');
-          console.log(res.body);
           agent
-            .post('/webhooks/update')
+            .post('/webhooks')
             .send({
 
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
-              console.log('called update');
-              console.log(res.body);
               expect(res.statusCode).to.equal(200);
               expect(res.body).to.exist;
               expect(res.body).to.equal(false);
@@ -54,42 +52,44 @@ describe("webhooks", () => {
 
     });
 
-    it('should update the order when a webhook is triggered', (done) => {
+    it('should update the order when a webhook charge.update is triggered', (done) => {
       agent
-        .post('/orders/create/')
-        .send({
-          source_id: '12345',
-          currency: 'BRL',
-          amount: 200,
-          source: 'foo',
-          email: 'testing@gitpay.me'
-        })
+        .post('/auth/register')
+        .send({email: 'alexanmtz@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
-        .end((err, order) => {
+        .end((err, user) => {
           agent
-            .post('/webhooks/update')
+            .post('/orders/create/')
             .send({
-              object: "charge",
-              id: "foo",
-              metadata: {
-                order_id: order.body.id
-              }
+              source_id: 'card_1CcdmoBrSjgsps2Dw7RRQDwp',
+              currency: 'BRL',
+              amount: 200,
+              source: 'ch_1CcdmsBrSjgsps2DNZiZAyvG',
+              email: 'testing@gitpay.me',
+              userId: user.body.id
             })
             .expect('Content-Type', /json/)
             .expect(200)
-            .end((err, res) => {
-              expect(res.statusCode).to.equal(200);
-              expect(res.body).to.exist;
-              expect(res.body.id).to.equal('foo');
-              models.Order.findById(order.body.id).then((o) => {
-                expect(o.dataValues.source).to.equal('foo');
-                //expect(o.dataValues.paid).to.equal(true);
-                done();
-              });
+            .end((err, order) => {
+              agent
+                .post('/webhooks')
+                .send(chargeData.update)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.statusCode).to.equal(200);
+                  expect(res.body).to.exist;
+                  expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx');
+                  models.Order.findById(order.body.id).then((o) => {
+                    expect(o.dataValues.source).to.equal('ch_1CcdmsBrSjgsps2DNZiZAyvG');
+                    expect(o.dataValues.paid).to.equal(true);
+                    expect(o.dataValues.status).to.equal('succeeded');
+                    done();
+                  });
+                })
             })
         })
-
     })
 
   })
