@@ -1,0 +1,15 @@
+{
+  "extends": ["taller/react"],
+  "globals": {
+    "DEV": false,
+    "MOCK_GRAPHQL__": false,
+    "drupalSettings": false,
+    "xdescribe": false,
+    "xit": false
+  },
+  "rules": {
+    "no-mixed-operators": 0,
+    "import/first": 0,
+    "prefer-promise-reject-errors": 0
+  }
+}
