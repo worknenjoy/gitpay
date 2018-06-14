@@ -50,6 +50,6 @@ exports.paymentTask = (req, res) => {
     }).catch((error) => {
       console.log('error on task controller', error);
       console.log('error raw', error.raw);
-      res.send(error.raw);
+      res.send({error: error.raw});
     });
 }
