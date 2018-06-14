@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
-import Auth from '../../modules/auth';
+import React, { Component } from 'react'
+import Auth from '../../modules/auth'
 
-export default class Session extends Component {
-
-  constructor(props) {
-    super(props);
+class Session extends Component {
+  constructor (props) {
+    super(props)
+  }
+  componentWillMount () {
+    const token = this.props.match.params.token
+    Auth.authenticateUser(token)
+    this.props.history.replace('/profile')
   }
 
-  componentWillMount() {
-    const token = this.props.match.params.token;
-    Auth.authenticateUser(token);
-    this.props.history.replace("/profile");
-  }
-
-  render() {
+  render () {
     return (
       <div>
         Session created
@@ -21,3 +19,5 @@ export default class Session extends Component {
     )
   }
 }
+
+export default Session
