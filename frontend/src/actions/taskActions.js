@@ -237,9 +237,8 @@ const paymentTask = (taskId) => {
       taskId: taskId
     }).then((payment) => {
       //dispatch(paymentTaskSuccess(payment));
-      console.log(payment);
-      if(payment.error) {
-        if(payment.error.code === 'balance_insufficient') {
+      if(payment.data.error) {
+        if(payment.data.error.code === 'balance_insufficient') {
           dispatch(addNotification('O valor ainda não está disponível para transferência'));
         } else {
           dispatch(addNotification('Houve algum erro para realizar a transferência'));
