@@ -1,5 +1,6 @@
 const AssignMail = require('../mail/assign');
 const PaymentMail = require('../mail/payment');
+const SendMail = require('../mail/mail');
 const Promise = require('bluebird');
 const models = require('../../loading/loading');
 const { userExist, userBuild, userUpdate } = require('../../modules/users');
@@ -84,17 +85,17 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
               models.User.findById(order.userId).then((user) => {
                 if(user && user.dataValues.customer_id) {
                   stripe.customers.retrieve(user.customer_id).then((customer) => {
-                    return createSourceAndCharge(customer, orderParameters, order, task);
+                    return createSourceAndCharge(customer, orderParameters, order, task, user.dataValues);
                   }).catch((e) => {
                     console.log('could not finde customer', e);
                     return e;
                   });
                 } else {
-                  return createCustomer(orderParameters, order, task, user);
+                  return createCustomer(orderParameters, order, task, user.dataValues);
                 }
               });
             } else {
-              return createCustomer(orderParameters, order, task, user);
+              return createCustomer(orderParameters, order, task, user.dataValues);
             }
           }).catch(error => console.log(error));
 
@@ -114,6 +115,19 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
               }).catch((e) => console.log(e));
             }
           }).catch(error => console.log(error));
+        }
+        if(task && taskParameters.assigned) {
+          models.Assign.findOne({
+            where: {
+              id: taskParameters.assigned
+            },
+            include: [models.User]
+          }).then((assigned) => {
+            SendMail.success(assigned.dataValues.User.dataValues.email, 'Você foi escolhido para iniciar uma tarefa no Gitpay', `
+                      <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.dataValues.id}">${process.env.FRONTEND_HOST}/#/task/${task.dataValues.id}</a> no Gitpay</p>
+                      <p>Isto quer dizer que você já pode começar. Fique de olho no prazo para conclusão, e após a tarefa for finalizada você receberá o pagamento na sua conta cadastrada.</p>
+              `);
+          });
         }
         return task ? task.dataValues : {};
       }).catch((error) => {

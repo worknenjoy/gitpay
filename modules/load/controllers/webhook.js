@@ -70,6 +70,31 @@ exports.updateWebhook = (req, res) => {
           }
         });
       break;
+      case "transfer.created":
+        models.Task.findOne({
+          where: {
+            transfer_id: event.data.object.id
+          },
+          include: [models.User]
+        }).then((task) => {
+          if(task) {
+            models.Assign.findOne({
+              where: {
+                id: task.dataValues.assigned
+              },
+              include: [models.User]
+            }).then((assigned) => {
+              SendMail.success(assigned.dataValues.User.dataValues.email, 'Uma transferência do Gitpay está a caminho!', `
+                      <p>Uma transferência no valor de $${event.data.object.amount / 100} foi enviado para sua conta e avisaremos quando for concluída</p>
+                      <p>Ela corresponde a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> que você concluiu</p>
+              `);
+            }).catch((e) => {
+                console.log('assign find issue', e);
+            });
+          }
+        })
+
+        break;
       default:
         break;
     }

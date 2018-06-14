@@ -20,7 +20,7 @@ Sendmail.success = (to, subject, msg) => {
               email: 'notifications@gitpay.me'
             }
           ],
-          subject: 'Alguém tem interesse por uma tarefa que você cadastrou no Gitpay'
+          subject: subject
         },
       ],
       from: {

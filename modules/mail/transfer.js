@@ -20,7 +20,7 @@ TransferMail.success = (to, task, value) => {
               email: 'notifications@gitpay.me'
             }
           ],
-          subject: 'Um pagamento foi realizado por uma tarefa no Gitpay'
+          subject: 'Uma transferência foi realizado por uma tarefa no Gitpay'
         },
       ],
       from: {
@@ -70,7 +70,7 @@ TransferMail.error = (to, task, value) => {
               email: 'notifications@gitpay.me'
             }
           ],
-          subject: "Problema no pagamento por tarefa no Gitpay"
+          subject: "Problema na transferência por tarefa no Gitpay"
         },
       ],
       from: {
