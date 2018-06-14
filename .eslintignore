@@ -1,0 +1,5 @@
+public
+build
+node_modules
+temp
+coverage
