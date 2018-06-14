@@ -181,7 +181,7 @@ const task = (state = {completed: true, values: { available: 0, failed: 0, pendi
     case PAYMENT_TASK_REQUESTED:
       return { ...state, completed: false };
     case PAYMENT_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data };
+      return { ...state, completed: true };
     case PAYMENT_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     default:

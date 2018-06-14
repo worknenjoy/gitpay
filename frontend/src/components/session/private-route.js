@@ -1,29 +1,30 @@
-import React from "react";
+import React from 'react'
+
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Redirect,
   withRouter
-} from "react-router-dom";
-import Auth from '../../modules/auth';
+} from 'react-router-dom'
+import Auth from '../../modules/auth'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
-    {...rest}
-    render={props =>
+    { ...rest }
+    render={ props =>
       Auth.isUserAuthenticated() ? (
-        <Component {...props} />
+        <Component { ...props } />
       ) : (
         <Redirect
-          to={{
-            pathname: "/",
+          to={ {
+            pathname: '/',
             state: { from: props.location }
-          }}
+          } }
         />
       )
     }
   />
-);
+)
 
-export default PrivateRoute;
+export default PrivateRoute
