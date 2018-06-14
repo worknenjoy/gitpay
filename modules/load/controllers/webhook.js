@@ -96,7 +96,7 @@ exports.updateWebhook = (req, res) => {
 
         break;
       default:
-        break;
+        res.send(false);
     }
     return res.json(req.body);
   } else {
