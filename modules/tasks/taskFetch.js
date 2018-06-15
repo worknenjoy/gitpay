@@ -23,7 +23,6 @@ module.exports = Promise.method(function taskFetch(taskParams) {
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         }
       }).then(response => {
-        console.log('response error when query the task');
         return response;
       }).catch(e => {
         console.log('github response error');

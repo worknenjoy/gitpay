@@ -55,12 +55,10 @@ class CheckoutForm extends Component {
     }
 
     this.props.stripe.createToken({name: this.state.fullname}).then(({token}) => {
-      //console.log('Received Stripe token:', token);
       if(token) {
         try {
           this.props.onPayment({
             id: this.props.task,
-            value: this.props.price,
             Orders: [{
               source_id: token.id,
               currency: 'usd',

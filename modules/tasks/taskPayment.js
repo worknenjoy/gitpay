@@ -16,7 +16,7 @@ module.exports = Promise.method(function taskPayment(payment) {
     )
     .then((task) => {
       if(!task) {
-        throw new Error('find_task_error');
+        return new Error('find_task_error');
       }
        return models.User.findOne({
         where: {

@@ -26,7 +26,6 @@ module.exports = Promise.method(function userAccountCreate(userParameters) {
         return user.updateAttributes({
           account_id: account.id
         }).then((userUpdated) => {
-          console.log('account for user created', account);
           return account;
         });
       })

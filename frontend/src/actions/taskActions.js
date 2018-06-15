@@ -25,6 +25,10 @@ const PAYMENT_TASK_REQUESTED = 'PAYMENT_TASK_REQUESTED';
 const PAYMENT_TASK_SUCCESS = 'PAYMENT_TASK_SUCCESS';
 const PAYMENT_TASK_ERROR = 'PAYMENT_TASK_ERROR';
 
+const SYNC_TASK_REQUESTED = 'SYNC_TASK_REQUESTED';
+const SYNC_TASK_SUCCESS = 'SYNC_TASK_SUCCESS';
+const SYNC_TASK_ERROR = 'SYNC_TASK_ERROR';
+
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB';
 
 const VALIDATION_ERRORS = {
@@ -60,8 +64,12 @@ const updateTaskRequested = () => {
   return { type: UPDATE_TASK_REQUESTED, completed: false }
 }
 
-const updateTaskSuccess = (field) => {
-  return { type: UPDATE_TASK_SUCCESS, completed: true, tab: field }
+const updateTaskSuccess = (task) => {
+  return { type: UPDATE_TASK_SUCCESS, completed: true }
+}
+
+const updateTaskError = (error) => {
+  return { type: UPDATE_TASK_ERROR, completed: true, error: error }
 }
 
 /*
@@ -133,6 +141,22 @@ const changeTaskTab = (tab) => {
   return { type: CHANGE_TASK_TAB, tab: tab }
 }
 
+/*
+ * Task sync
+ */
+
+const syncTaskRequested = () => {
+  return { type: SYNC_TASK_REQUESTED, completed: false }
+}
+
+const syncTaskSuccess = (values) => {
+  return { type: SYNC_TASK_SUCCESS, completed: true, values: values }
+}
+
+const syncTaskError = (error) => {
+  return { type: SYNC_TASK_ERROR, completed: true, error: error }
+}
+
 const createTask = (task, history) => {
   return (dispatch) => {
     dispatch(createTaskRequested())
@@ -167,18 +191,28 @@ const updateTask = (task) => {
     }
     axios.put(api.API_URL + '/tasks/update', task).then((response) => {
       if(task.Orders) {
-        dispatch(updateTaskSuccess(1));
+        dispatch(addNotification('Pagamento realizado com sucesso'));
+        dispatch(changeTaskTab(1));
+        dispatch(syncTask(task.id));
+        dispatch(updateTaskSuccess(response));
       } else if(task.Assigns) {
-        dispatch(updateTaskSuccess(2));
+        dispatch(addNotification('Você adicionou interesse pela tarefa com sucesso'));
+        dispatch(changeTaskTab(2));
+        dispatch(updateTaskSuccess(response));
       } else {
-        dispatch(updateTaskSuccess(0));
+        dispatch(addNotification('Tarefa atualizada com sucesso'));
+        dispatch(updateTaskSuccess(response));
       }
-      dispatch(addNotification('Tarefa atualizada com sucesso'));
       return dispatch(fetchTask(task.id));
     }).catch((error) => {
       console.log(error);
+      if(error.response.data.type === "StripeCardError") {
+        dispatch(addNotification('Tivemos um erro ao processar o pagamento'));
+        dispatch(changeTaskTab(1));
+        return dispatch(updateTaskError(error.response.data));
+      }
       dispatch(addNotification('Erro ao atualizar tarefa'));
-      return dispatch(updateTaskError(error));
+      return dispatch(fetchTask(task.id));
     });
   }
 }
@@ -256,6 +290,25 @@ const paymentTask = (taskId) => {
   }
 }
 
+const syncTask = (taskId) => {
+  return (dispatch) => {
+    dispatch(syncTaskRequested())
+    axios.get(api.API_URL + `/tasks/${taskId}/sync/value`).then((task) => {
+      if(task.data) {
+        return dispatch(syncTaskSuccess(task.data));
+      }
+      return dispatch(syncTaskError({error: {
+        type: 'task_sync_failed'
+      }}));
+    }).catch((e) => {
+      dispatch(addNotification('Não foi possível obter os valores pagos pela tarefa, por favor tente novamente mais tarde'));
+      dispatch(syncTaskError(e));
+      console.log('not possible to fetch issue');
+      console.log(e);
+    });
+  }
+}
+
 export {
   CREATE_TASK_REQUESTED,
   CREATE_TASK_SUCCESS,
@@ -274,6 +327,9 @@ export {
   PAYMENT_TASK_REQUESTED,
   PAYMENT_TASK_SUCCESS,
   PAYMENT_TASK_ERROR,
+  SYNC_TASK_REQUESTED,
+  SYNC_TASK_SUCCESS,
+  SYNC_TASK_ERROR,
   CHANGE_TASK_TAB,
   addNotification,
   createTask,
@@ -282,6 +338,7 @@ export {
   filterTasks,
   updateTask,
   paymentTask,
+  syncTask,
   changeTaskTab
 };
 

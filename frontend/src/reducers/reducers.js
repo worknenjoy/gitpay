@@ -35,6 +35,9 @@ import {
   PAYMENT_TASK_REQUESTED,
   PAYMENT_TASK_SUCCESS,
   PAYMENT_TASK_ERROR,
+  SYNC_TASK_REQUESTED,
+  SYNC_TASK_SUCCESS,
+  SYNC_TASK_ERROR,
   CHANGE_TASK_TAB
 } from '../actions/taskActions'
 
@@ -141,7 +144,7 @@ const bankAccount = (state = {data: { }, completed: true, error: {}}, action) =>
   }
 }
 
-const task = (state = {completed: true, error: { message: false }, tab: 0, data: { value: 0, orders: [], assigns: [], url: '', metadata: { company: '', issue: {state: 'open', body: '', user: {avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg'}}}}}, action) => {
+const task = (state = {completed: true, values: { available: 0, failed: 0, pending: 0}, error: { message: false }, tab: 0, data: { value: 0, orders: [], assigns: [], url: '', metadata: { company: '', issue: {state: 'open', body: '', user: {avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg'}}}}}, action) => {
   switch (action.type) {
     case CREATE_TASK_REQUESTED:
       return { ...state, completed: false };
@@ -152,7 +155,7 @@ const task = (state = {completed: true, error: { message: false }, tab: 0, data:
     case UPDATE_TASK_REQUESTED:
       return { ...state, completed: false };
     case UPDATE_TASK_SUCCESS:
-      return { ...state, completed: true, tab: action.tab };
+      return { ...state, completed: true };
     case UPDATE_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     case CHANGE_TASK_TAB:
@@ -168,6 +171,12 @@ const task = (state = {completed: true, error: { message: false }, tab: 0, data:
     case FETCH_TASK_SUCCESS:
       return { ...state, completed: true, data: action.data };
     case FETCH_TASK_ERROR:
+      return { ...state, completed: true, error: action.error };
+    case SYNC_TASK_REQUESTED:
+      return { ...state, completed: false };
+    case SYNC_TASK_SUCCESS:
+      return { ...state, completed: true, values: action.values.value };
+    case SYNC_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     case PAYMENT_TASK_REQUESTED:
       return { ...state, completed: false };

@@ -56,7 +56,7 @@ describe("webhooks", () => {
     it('should update the order when a webhook charge.update is triggered', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'alexanmtz@gmail.com', password: 'teste'})
+        .send({email: 'teste@mail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, user) => {
@@ -123,11 +123,10 @@ describe("webhooks", () => {
       });
 
       it('should notify the transfer when a webhook charge.update is triggered', (done) => {
-        models.User.build({email: 'alexanmtz@gmail.com', password: 'teste'}).save().then((user) => {
+        models.User.build({email: 'teste@mail.com', password: 'teste'}).save().then((user) => {
           models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/99', provider: 'github', transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', paid: true}).save()
             .then((task) => {
               models.Assign.build({TaskId: task.dataValues.id, userId: user.dataValues.id}).save().then((assign) => {
-                console.log('assign object', assign);
                 models.Task.update({assigned: assign.dataValues.id, assign: [assign]},{
                   where: {
                     id: task.dataValues.id

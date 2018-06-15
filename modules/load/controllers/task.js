@@ -38,9 +38,8 @@ exports.updateTask = (req, res) => {
     .then((data) => {
       res.send(data);
     }).catch((error) => {
-    console.log('error on task controller', error);
-    res.send(error);
-  });
+      res.status(400).send(error);
+    });
 }
 
 exports.paymentTask = (req, res) => {
@@ -52,4 +51,15 @@ exports.paymentTask = (req, res) => {
       console.log('error raw', error.raw);
       res.send({error: error.raw});
     });
+}
+
+exports.syncTask = (req, res) => {
+  Tasks.taskSync(req.params)
+    .then((data) => {
+      res.send(data);
+    }).catch((error) => {
+    console.log('error on task controller', error);
+    console.log('error raw', error.raw);
+    res.send({error: error.raw});
+  });
 }

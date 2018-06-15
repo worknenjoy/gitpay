@@ -32,13 +32,15 @@ exports.updateWebhook = (req, res) => {
                 }).then((user) => {
                   if(user) {
                     if (paid && status === 'succeeded'){
-                      SendMail.success(user.dataValues.email, 'O pagamento da sua tarefa no Gitpay foi atualizado!', `
+                      SendMail.success(user.dataValues.email, 'O pagamento da sua tarefa no Gitpay foi aprovado!', `
                       <p>O pagamento no valor de $${event.data.object.amount / 100} para uma tarefa no Gitpay foi aprovado</p>
                       `);
                     }
                   }
                 });
              }
+           }).catch((e) => {
+             throw new Error(e);
            });
        break;
       case "charge.failed":
@@ -90,6 +92,7 @@ exports.updateWebhook = (req, res) => {
               `);
             }).catch((e) => {
                 console.log('assign find issue', e);
+                throw new Error(e);
             });
           }
         })

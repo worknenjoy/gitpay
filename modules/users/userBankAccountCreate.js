@@ -27,8 +27,6 @@ module.exports = Promise.method(function userBankAccountCreate(userParameters) {
               account_number: userParameters.account_number
             }
           }).then((account) => {
-            console.log('bank account');
-            console.log(account);
             return account;
           })
         });

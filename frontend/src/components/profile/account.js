@@ -16,6 +16,8 @@ import Typography from 'material-ui/Typography';
 import Slide from 'material-ui/transitions/Slide';
 import Input from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
+import FormGroup from 'material-ui/Form/FormGroup';
+import FormControlLabel from 'material-ui/Form/FormControlLabel';
 import Stepper from 'material-ui/Stepper';
 import Step from 'material-ui/Stepper/Step';
 import StepButton from 'material-ui/Stepper/StepButton';
@@ -74,13 +76,14 @@ class Account extends Component {
       accountUpdateModal: false,
       currentStep: 0,
       terms: false
-    }
+    };
     this.openUpdateModal = this.openUpdateModal.bind(this);
     this.closeUpdateModal = this.closeUpdateModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.handleBankAccount = this.handleBankAccount.bind(this);
     this.handleAcceptTerms = this.handleAcceptTerms.bind(this);
+    this.handleTermsChange = this.handleTermsChange.bind(this);
   }
 
   componentDidMount() {
@@ -119,15 +122,20 @@ class Account extends Component {
   }
 
   handleTermsChange(e) {
-
+    e.preventDefault();
+    const terms = e.target.value == 'terms' ? true : false;
+    this.setState({ terms });
   }
 
   handleAcceptTerms(e) {
-    this.props.updateAccount({
-      tos_acceptance: {
-        date: Math.round(+new Date()/1000)
-      }
-    });
+    e.preventDefault();
+    if(this.state.terms) {
+      this.props.updateAccount({
+        tos_acceptance: {
+          date: Math.round(+new Date() / 1000)
+        }
+      });
+    }
   }
 
   onChange(e) {
@@ -184,19 +192,23 @@ class Account extends Component {
                   <Chip label={`Ativada`} style={{color: 'white', marginRight: 20, backgroundColor: 'green'}} />
                 )}
               </div>
-              <Typography className={classes.pos} color="textSecondary">
-                Entraremos em contato para finalizar a validação da sua conta através do e-mail: <br/>
-                <strong>{ account.data.email }</strong>
-              </Typography>
-              <Typography component="p">
-                {`Temos os seguintes campos a serem verificados:`}
-              </Typography>
-              <div>
-                { account.data.verification.fields_needed.map((item,i) => (
-                    <Chip style={{margin: 3}} key={i} label={`${Const.ACCOUNT_FIELDS[item]}`} />
-                  )
-                )}
+              { account.data.verification.fields_needed.length > 0 &&
+                <div>
+                  <Typography className={classes.pos} color="textSecondary">
+                    Entraremos em contato para finalizar a validação da sua conta através do e-mail: <br/>
+                    <strong>{ account.data.email }</strong>
+                  </Typography>
+                  <Typography component="p">
+                    {`Temos os seguintes campos a serem verificados:`}
+                  </Typography>
+                  <div>
+                    { account.data.verification.fields_needed.map((item,i) => (
+                        <Chip style={{margin: 3}} key={i} label={`${Const.ACCOUNT_FIELDS[item]}`} />
+                      )
+                    )}
+                  </div>
               </div>
+              }
             </CardContent>
             <CardActions>
               <Button
@@ -214,8 +226,23 @@ class Account extends Component {
           <form onSubmit={this.handleBankAccount} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography component="title">
-                  {getStepContent(1)}
+                <div style={{marginBottom: 10}}>
+                  <Typography>
+                    {getStepContent(1)}
+                  </Typography>
+                </div>
+                <Typography className={classes.pos} gutterBottom>
+                  Entre com os dados da sua conta no formato seguinte: <br />
+                  <strong>xxx-xxxxxx</strong> <br />
+                  Sendo a primeira parte o número do banco seguindo do número da agência. <br />
+                </Typography>
+                <Typography color="primary" gutterBottom>
+                  Você pode consultar o <a href="https://pt.wikipedia.org/wiki/Lista_de_bancos_do_Brasil" target="_blank">código do seu banco aqui</a>
+                </Typography>
+                <Typography className={classes.pos} gutterBottom>
+                  Lembre-se que é possível alterar uma conta bancária depois de verificada, então verifique se seus dados estão corretos <br />
+                  Se desejar modificar sua conta bancária, terá que adicionar uma nova entrando em contato
+                  com tarefas@gitpay.me
                 </Typography>
                   <Grid container spacing={24}>
                     <Grid item xs={12}>
@@ -235,7 +262,7 @@ class Account extends Component {
                           name="account_number"
                           placeholder="Número da conta"
                           disabled={bankAccount.data.routing_number ? true : false}
-                          defaultValue={bankAccount.data.account_number || ` *****${ bankAccount.data.last4 }`}
+                          defaultValue={bankAccount.data.account_number || ` *****${ bankAccount.data.last4 }` || ''}
                         />
                       </FormControl>
                     </Grid>
@@ -260,20 +287,27 @@ class Account extends Component {
           <form onSubmit={this.handleAcceptTerms} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography component="title">
-                  {getStepContent(2)}
-                </Typography>
+                <div style={{marginBottom: 20}}>
+                  <Typography component="title">
+                    {getStepContent(2)}
+                  </Typography>
+                </div>
                 <Grid container spacing={24}>
                   <Grid item xs={12}>
-                    <Typography component="title">
-                      Teremos os termos aqui
+                    <Typography color="primary">
+                      <a target="_blank" href="https://stripe.com/br/connect-account/legal"> Acessar termos de uso do Stripe </a>
                     </Typography>
                     <FormControl>
-                      <Switch
-                        checked={true}
-                        onChange={this.handleTermsChange}
-                        value="acceptTerms"
-                      />
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={this.state.terms}
+                            onChange={this.handleTermsChange}
+                            value="terms"
+                            color="primary"
+                          />
+                        }
+                        label="Eu li e aceito os termos do Stripe para receber transferências dos pagamentos para minha conta" />
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -285,9 +319,10 @@ class Account extends Component {
                   variant="raised"
                   color="primary"
                   type="submit"
+                  disabled={!this.state.terms}
                   onClick={this.handleAcceptTerms}
                 >
-                  Validar conta
+                  Aceitar termos
                 </Button>
               </CardActions>
             </Card>

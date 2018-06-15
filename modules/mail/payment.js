@@ -1,6 +1,13 @@
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 
 let PaymentMail = {};
+let bcc = [];
+
+if(process.env.NODE_ENV != 'test') {
+  bcc.push({
+    email: 'notifications@gitpay.me'
+  })
+}
 
 PaymentMail.success = (to, task, value) => {
 
@@ -15,11 +22,7 @@ PaymentMail.success = (to, task, value) => {
               email: to,
             },
           ],
-          bcc: [
-            {
-              email: 'notifications@gitpay.me'
-            }
-          ],
+          bcc: bcc,
           subject: 'Um pagamento foi realizado por uma tarefa no Gitpay'
         },
       ],

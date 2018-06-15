@@ -33,17 +33,18 @@ describe("tasks", () => {
     })
   })
 
-  xdescribe('Task crud', () => {
+  describe('Task crud', () => {
     // API rate limit exceeded
     xit('should create a new task', (done) => {
       agent
         .post('/tasks/create/')
-        .send({url: 'http://foo.com', provider: 'github'})
+        .send({url: 'https://github.com/worknenjoy/truppie/issues/99', provider: 'github'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
+          expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
           done();
         })
     })
@@ -70,13 +71,10 @@ describe("tasks", () => {
             expect(res.body.metadata.issue.url).to.equal('https://api.github.com/repos/worknenjoy/truppie/issues/99');
             done();
           })
-        }).catch(e => {
-          console.log('error create task');
-          console.log(e);
         })
     });
 
-    it('should update task', (done) => {
+    xit('should update task', (done) => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
 
@@ -88,22 +86,17 @@ describe("tasks", () => {
           .expect(200)
           .end((err, res) => {
             expect(res.body).to.exist;
-            console.log('error', err);
-            console.log(res.body);
             expect(res.body.value).to.equal('200');
             done();
           })
-      }).catch(e => {
-        console.log('error create task');
-        console.log(e);
       })
     });
 
-    it('should update task with associated order no logged users', (done) => {
+    xit('should update task with associated order no logged users', (done) => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
       const order = {
-        source_id: 'tok_1CRJW7BrSjgsps2DKHYRmjok',
+        source_id: 'tok_visa',
         currency: 'BRL',
         amount: 200,
         email: 'foo@mail.com'
@@ -121,13 +114,10 @@ describe("tasks", () => {
             //expect(res.body.Orders).to.equal({});
             done();
           })
-      }).catch(e => {
-        console.log('error create task');
-        console.log(e);
       })
     });
 
-    it('should update task with associated order logged users', (done) => {
+    it('should update task with associated order declined', (done) => {
 
       agent
         .post('/auth/register')
@@ -138,7 +128,7 @@ describe("tasks", () => {
           const userId = res.body.id;
           const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
           const order = {
-            source_id: 'tok_1CRJT0BrSjgsps2Dw6mDmAnv',
+            source_id: 'tok_chargeDeclined',
             currency: 'BRL',
             amount: 200,
             email: 'foo@mail.com',
@@ -152,22 +142,15 @@ describe("tasks", () => {
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
-                expect(res.body.value).to.equal('200');
+                console.log('body response', res.body);
+                expect(res.body.code).to.equal('card_declined');
                 done();
-                /*models.Order.findAll({where: {userId: userId }}).then((order) => {
-                  expect(order[0].dataValues.userId).to.equal(userId);
-                  done();
-                });*/
               })
-          }).catch(e => {
-            console.log('error create task');
-            console.log(e);
           })
         })
     });
 
     it('should update task with associated user assigned', (done) => {
-
       agent
         .post('/auth/register')
         .send({email: 'teste@gmail.com', password: 'teste'})
@@ -187,8 +170,6 @@ describe("tasks", () => {
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
-                console.log('assign result');
-                console.log(res.body);
                 expect(res.body.value).to.equal('200');
                 done();
               })
@@ -200,7 +181,6 @@ describe("tasks", () => {
     });
 
     it('should update task with an user assinged', (done) => {
-
       agent
         .post('/auth/register')
         .send({email: 'teste@gmail.com', password: 'teste'})
@@ -221,8 +201,6 @@ describe("tasks", () => {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end((err, res) => {
-                  console.log('assign result');
-                  console.log(res.body);
                   expect(res.body.value).to.equal('200');
                   expect(res.body.assigned.id).to.equal(assign.id);
                   done();
@@ -238,6 +216,51 @@ describe("tasks", () => {
           });
         })
     });
-
   });
+
+  describe('sync task', () => {
+    it('should sync with a open order', (done) => {
+      models.Task.build({url: 'http://github.com/check/issue/1', provider: 'github'}).save().then((task) => {
+        task.createOrder({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 200
+        }).then((order) => {
+          agent
+            .get(`/tasks/${task.dataValues.id}/sync/value`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200);
+              expect(res.body).to.exist;
+              expect(res.body.value.available).to.equal(0);
+              expect(res.body.value.pending).to.equal(200);
+              done();
+            })
+        });
+      })
+    });
+    it('should sync with a succeeded order', (done) => {
+      models.Task.build({url: 'http://github.com/check/issue/1', provider: 'github'}).save().then((task) => {
+        task.createOrder({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 200,
+          status: 'succeeded'
+        }).then((order) => {
+          agent
+            .get(`/tasks/${task.dataValues.id}/sync/value`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200);
+              expect(res.body).to.exist;
+              expect(res.body.value.available).to.equal(200);
+              expect(res.body.value.pending).to.equal(0);
+              done();
+            })
+        });
+      })
+    });
+  })
 });

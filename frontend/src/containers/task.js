@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask } from '../actions/assignActions'
-import { updateTask, fetchTask, paymentTask, changeTaskTab } from '../actions/taskActions'
+import { updateTask, fetchTask, paymentTask, syncTask, changeTaskTab } from '../actions/taskActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addNotification: (message) => dispatch(addNotification(message)),
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
+    syncTask: (taskId) => dispatch(syncTask(taskId)),
     paymentTask: (taskId) => dispatch(paymentTask(taskId)),
     changeTab: (tab) => dispatch(changeTaskTab(tab))
   }
