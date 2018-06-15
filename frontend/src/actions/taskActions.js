@@ -1,5 +1,6 @@
 import api from '../consts'
 import axios from 'axios'
+import Auth from '../modules/auth'
 import { addNotification } from './notificationActions'
 
 const CREATE_TASK_REQUESTED = 'CREATE_TASK_REQUESTED'
@@ -123,7 +124,15 @@ const fetchTaskError = (error) => {
 
 /*
  * Task payment
- */
+*/
+
+const validToken = () => {
+  if (Auth.getToken()) {
+    axios.defaults.headers.common['authorization'] = Auth.getToken()
+  }
+
+  return true
+}
 
 const paymentTaskRequested = () => {
   return { type: PAYMENT_TASK_REQUESTED, completed: false }
@@ -158,6 +167,7 @@ const syncTaskError = (error) => {
 }
 
 const createTask = (task, history) => {
+  validToken()
   return (dispatch) => {
     dispatch(createTaskRequested())
     axios.post(api.API_URL + '/tasks/create', task).then((response) => {
@@ -183,6 +193,7 @@ const createTask = (task, history) => {
 }
 
 const updateTask = (task) => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(updateTaskRequested())
     const userId = getState().loggedIn.user.id
@@ -219,6 +230,7 @@ const updateTask = (task) => {
 }
 
 const listTasks = () => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(listTaskRequested())
     axios.get(api.API_URL + '/tasks/list')
@@ -236,6 +248,7 @@ const listTasks = () => {
 }
 
 const filterTasks = (key, value) => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(filterTaskRequested())
     const tasks = getState().tasks
@@ -245,6 +258,7 @@ const filterTasks = (key, value) => {
 }
 
 const fetchTask = (taskId) => {
+  validToken()
   return (dispatch) => {
     dispatch(fetchTaskRequested())
     axios.get(api.API_URL + `/tasks/fetch/${taskId}`).then((task) => {
@@ -265,6 +279,7 @@ const fetchTask = (taskId) => {
 }
 
 const paymentTask = (taskId) => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(paymentTaskRequested())
     const userId = getState().loggedIn.user.id
