@@ -1,10 +1,11 @@
-'use strict'
+const express = require('express')
+const router = express.Router()
+require('passport')
+const controllers = require('../controllers/webhook')
+const secure = require('./secure')
 
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const controllers = require('../controllers/webhook');
+router.use(secure)
 
-router.post('/', controllers.updateWebhook);
+router.post('/', controllers.updateWebhook)
 
-module.exports = router;
+module.exports = router
