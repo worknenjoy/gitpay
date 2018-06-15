@@ -3,23 +3,23 @@ const path = require('path')
 const basename = path.basename(module.filename)
 const env = process.env.NODE_ENV || 'development'
 
-const database_env = {
+const databaseEnv = {
   'development': 'databaseDev',
   'production': 'databaseProd',
   'test': 'databaseTest'
 }
 
-const config = require('../config/secrets')[database_env[env]]
+const config = require('../config/secrets')[databaseEnv[env]]
 
 let Sequelize = require('sequelize')
 let sequelize = {}
 
-if (env == 'production') {
-  const database_url = process.env.DATABASE_URL
-  const database_settings = database_url.split(':')
-  const port = database_settings[4]
-  const host = database_settings[3]
-  sequelize = new Sequelize(database_url, {
+if (env === 'production') {
+  const databaseUrl = process.env.DATABASE_URL
+  const databaseSettings = databaseUrl.split(':')
+  const port = databaseSettings[4]
+  const host = databaseSettings[3]
+  sequelize = new Sequelize(databaseUrl, {
     dialect: 'postgres',
     protocol: 'postgres',
     port: port,
@@ -27,9 +27,9 @@ if (env == 'production') {
     logging: true // false
   })
   // eslint-disable-next-line no-console
-  console.log('running production migration');
-
-} else {
+  console.log('running production migration')
+}
+else {
   sequelize = new Sequelize(config.database, config.username, config.password, config)
 }
 

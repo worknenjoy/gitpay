@@ -1,11 +1,9 @@
-'use strict';
+require('../../loading/loading')
 
-const loading = require('../../loading/loading');
-
-const routerAuth = require('./routes/auth');
-const routerTask = require('./routes/tasks');
-const routerOrder = require('./routes/orders');
-const routerWebhook = require('./routes/webhooks');
+const routerAuth = require('./routes/auth')
+const routerTask = require('./routes/tasks')
+const routerOrder = require('./routes/orders')
+const routerWebhook = require('./routes/webhooks')
 
 const models = [
   '../loading/user',
@@ -14,8 +12,8 @@ const models = [
 ]
 
 exports.init = (app) => {
-    app.use('/', routerAuth);
-    app.use('/tasks', routerTask);
-    app.use('/orders', routerOrder);
-    app.use('/webhooks', routerWebhook);
+  app.use('/', routerAuth)
+  app.use('/tasks', routerTask)
+  app.use('/orders', routerOrder)
+  app.use('/webhooks', routerWebhook)
 }

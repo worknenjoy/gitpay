@@ -1,25 +1,24 @@
-'use strict'
-const { google, facebook, github, oauthCallbacks, bitbucket, mailchimp } = require('./secrets');
-const passport = require('passport');
+const { google, facebook, github, oauthCallbacks, bitbucket, mailchimp } = require('./secrets')
+const passport = require('passport')
 const googleStrategy = require('passport-google-oauth20').Strategy
-const gitHubStrategy = require('passport-github2').Strategy;
-const bitbucketStrategy = require('passport-bitbucket-oauth20').Strategy;
-const facebookStrategy = require('passport-facebook').Strategy;
-const LocalStrategy = require('passport-local').Strategy;
-const requestPromise = require('request-promise');
+const gitHubStrategy = require('passport-github2').Strategy
+const bitbucketStrategy = require('passport-bitbucket-oauth20').Strategy
+const facebookStrategy = require('passport-facebook').Strategy
+const LocalStrategy = require('passport-local').Strategy
+const requestPromise = require('request-promise')
 
-const BitbucketAPI = require('bitbucket-api-v2');
-var githubAPI = require('octonode');
+const BitbucketAPI = require('bitbucket-api-v2')
+var githubAPI = require('octonode')
 
-const userExist = require('../modules/users').userExists;
-const userBuild = require('../modules/users').userBuilds;
-const userUpdate = require('../modules/users').userUpdate;
-const Promise = require('bluebird');
+const userExist = require('../modules/users').userExists
+const userBuild = require('../modules/users').userBuilds
+const userUpdate = require('../modules/users').userUpdate
+const Promise = require('bluebird')
 
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 
-const Mailchimp = require('mailchimp-api-v3');
-const mc = new Mailchimp(mailchimp.apiKey);
+const Mailchimp = require('mailchimp-api-v3')
+const mc = new Mailchimp(mailchimp.apiKey)
 
 const mailChimpConnect = (mail) => {
   mc.post(`/lists/${mailchimp.listId}/members`, {
