@@ -121,7 +121,6 @@ class Account extends Component {
     this.setState({ currentStep: index })
   }
 
-<<<<<<< 73a47b0dc72e0162e488cd3aa47bb7d19c02c434
   handleTermsChange(e) {
     e.preventDefault();
     const terms = e.target.value == 'terms' ? true : false;
@@ -137,18 +136,6 @@ class Account extends Component {
         }
       });
     }
-=======
-  handleTermsChange (e) {
-
-  }
-
-  handleAcceptTerms (e) {
-    this.props.updateAccount({
-      tos_acceptance: {
-        date: Math.round(+new Date() / 1000)
-      }
-    })
->>>>>>> Added library eslint.
   }
 
   onChange (e) {
@@ -183,7 +170,6 @@ class Account extends Component {
         ready={ account.completed && !account.error.error }
       >
         <div>
-<<<<<<< 73a47b0dc72e0162e488cd3aa47bb7d19c02c434
           <Stepper nonLinear activeStep={this.state.currentStep}>
             {steps.map((label, index) => {
               return (
@@ -281,197 +267,6 @@ class Account extends Component {
                           defaultValue={bankAccount.data.account_number || ` *****${ bankAccount.data.last4 }` || ''}
                         />
                       </FormControl>
-=======
-          { account.data.id ? (
-            <div>
-              <Stepper nonLinear activeStep={ this.state.currentStep }>
-                { steps.map((label, index) => {
-                  return (
-                    <Step key={ index }>
-                      <StepButton onClick={ () => this.handleStepTab(index) } icon={ getStepsIcon(index) }>
-                        { label }
-                      </StepButton>
-                    </Step>
-                  )
-                }) }
-              </Stepper>
-              { this.state.currentStep === 0 &&
-              <Card className={ classes.card }>
-                <CardContent>
-                  <div className={ classes.title }>
-                    <Typography className={ classes.pos } color='textSecondary'>
-                      Status da sua conta:
-                    </Typography>
-                    { account.data.verification.disabled_reason ? (
-                      <Chip
-                        label={ Const.ACCOUNT_REASONS[account.data.verification.disabled_reason] }
-                        style={ { marginRight: 20, backgroundColor: 'orange' } }
-                      />
-                    ) : (
-                      <Chip
-                        label='Ativada'
-                        style={ { color: 'white', marginRight: 20, backgroundColor: 'green' } }
-                      />
-                    ) }
-                  </div>
-                  <Typography className={ classes.pos } color='textSecondary'>
-                    Entraremos em contato para finalizar a validação da sua conta através do e-mail: <br />
-                    <strong>{ account.data.email }</strong>
-                  </Typography>
-                  <Typography component='p'>
-                    Temos os seguintes campos a serem verificados:
-                  </Typography>
-                  <div>
-                    { account.data.verification.fields_needed.map((item, i) => (
-                      <Chip
-                        style={ { margin: 3 } }
-                        key={ i }
-                        label={ `${Const.ACCOUNT_FIELDS[item]}` }
-                      />
-                    )) }
-                  </div>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    style={ { color: 'white' } }
-                    size='large'
-                    variant='raised'
-                    color='primary'
-                    onClick={ this.openUpdateModal }
-                  >
-                    Validar conta
-                  </Button>
-                </CardActions>
-              </Card> }
-              { this.state.currentStep === 1 &&
-              <form onSubmit={ this.handleBankAccount } style={ { marginTop: 20, marginBottom: 20, width: '100%' } }>
-                <Card className={ classes.card }>
-                  <CardContent>
-                    <Typography component='title'>
-                      { getStepContent(1) }
-                    </Typography>
-                    <Grid container spacing={ 24 }>
-                      <Grid item xs={ 12 }>
-                        <FormControl>
-                          <Input
-                            id="bank-routing-number"
-                            name="routing_number"
-                            placeholder="Agência"
-                            style={{marginRight: 20}}
-                            disabled={bankAccount.data.routing_number ? true : false}
-                            defaultValue={bankAccount.data.routing_number}
-                          />
-                        </FormControl>
-                        <FormControl>
-                          <Input
-                            id="bank-account-number"
-                            name="account_number"
-                            placeholder="Número da conta"
-                            disabled={bankAccount.data.routing_number ? true : false}
-                            defaultValue={bankAccount.data.account_number || ` *****${ bankAccount.data.last4 }`}
-                          />
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      style={{color: 'white'}}
-                      size="large"
-                      variant="raised"
-                      color="primary"
-                      type="submit"
-                      disabled={bankAccount.data.routing_number ? true : false}
-                    >
-                      Validar conta
-                    </Button>
-                  </CardActions>
-                </Card>
-              </form>
-              }
-              { this.state.currentStep === 2 &&
-              <form onSubmit={this.handleAcceptTerms} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
-                <Card className={classes.card}>
-                  <CardContent>
-                    <Typography component="title">
-                      {getStepContent(2)}
-                    </Typography>
-                    <Grid container spacing={24}>
-                      <Grid item xs={12}>
-                        <Typography component="title">
-                          Teremos os termos aqui
-                        </Typography>
-                        <FormControl>
-                          <Switch
-                            checked={true}
-                            onChange={this.handleTermsChange}
-                            value="acceptTerms"
-                          />
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      style={{color: 'white'}}
-                      size="large"
-                      variant="raised"
-                      color="primary"
-                      type="submit"
-                      onClick={this.handleAcceptTerms}
-                    >
-                      Validar conta
-                    </Button>
-                  </CardActions>
-                </Card>
-              </form>}
-              <Dialog
-                open={this.state.accountUpdateModal}
-                transition={Transition}
-                onClose={this.closeUpdateModal}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-                fullWidth={true}
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  Verificar conta
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-slide-description">
-                    Preecha os dados para verificar sua conta
-                  </DialogContentText>
-                  <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
-                    <Grid container spacing={24}>
-                      <Grid item xs={12}>
-                        <FormControl>
-                          <Input
-                            id="payment-form-user"
-                            name="legal_entity[first_name]"
-                            placeholder="Primeiro nome"
-                            style={{marginRight: 20}}
-                            defaultValue={account.data.legal_entity.first_name}
-                          />
-                        </FormControl>
-                        <FormControl>
-                          <Input
-                            name="legal_entity[last_name]"
-                            id="adornment-email"
-                            placeholder="Último nome"
-                            defaultValue={account.data.legal_entity.last_name}
-                          />
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <div>
-                          <Button color="primary" onClick={this.closeUpdateModal}>
-                            Cancelar
-                          </Button>
-                          <Button type="submit" variant="raised" color="secondary">
-                            {`Atualizar conta`}
-                          </Button>
-                        </div>
-                      </Grid>
->>>>>>> Added library eslint.
                     </Grid>
                   </form>
                 </DialogContent>
@@ -481,7 +276,6 @@ class Account extends Component {
           ) : (
             <Card className={classes.cardEmpty}>
               <CardContent>
-<<<<<<< 73a47b0dc72e0162e488cd3aa47bb7d19c02c434
                 <div style={{marginBottom: 20}}>
                   <Typography component="title">
                     {getStepContent(2)}
@@ -506,11 +300,6 @@ class Account extends Component {
                     </FormControl>
                   </Grid>
                 </Grid>
-=======
-                <Typography className={classes.title} color="textSecondary">
-                Você não tem nenhuma cadastrada para recebimento
-                </Typography>
->>>>>>> Added library eslint.
               </CardContent>
               <CardActions className={classes.cardEmptyActions}>
                 <Button
@@ -518,17 +307,12 @@ class Account extends Component {
                   size="large"
                   variant="raised"
                   color="primary"
-<<<<<<< 73a47b0dc72e0162e488cd3aa47bb7d19c02c434
+
                   type="submit"
                   disabled={!this.state.terms}
                   onClick={this.handleAcceptTerms}
                 >
                   Aceitar termos
-=======
-                  onClick={() => this.props.createAccount()}
-                >
-                  Criar conta
->>>>>>> Added library eslint.
                 </Button>
               </CardActions>
             </Card>
