@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import AccountContainer from '../../containers/account';
 
 import { withStyles } from 'material-ui/styles';
 
@@ -59,7 +58,7 @@ class Preferences extends Component {
   }
 
   handleTabChange(event, value) {
-    this.setState({ tab: value });
+    this.setState({ tab: value })
   };
 
 

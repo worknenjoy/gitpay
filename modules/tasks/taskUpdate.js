@@ -112,6 +112,7 @@ module.exports = Promise.method(function taskUpdate(taskParameters) {
               return task.dataValues;
             });
           }
+          return task.dataValues;
         })
     });
 });

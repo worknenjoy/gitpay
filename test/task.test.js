@@ -35,7 +35,7 @@ describe("tasks", () => {
 
   describe('Task crud', () => {
     // API rate limit exceeded
-    xit('should create a new task', (done) => {
+    it('should create a new task', (done) => {
       agent
         .post('/tasks/create/')
         .send({url: 'https://github.com/worknenjoy/truppie/issues/99', provider: 'github'})
@@ -50,7 +50,7 @@ describe("tasks", () => {
     })
 
     // API rate limit exceeded
-    xit('should fetch task', (done) => {
+    it('should fetch task', (done) => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/99';
 
@@ -74,11 +74,11 @@ describe("tasks", () => {
         })
     });
 
-    xit('should update task', (done) => {
+    it('should update task', (done) => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
 
-      models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
+      models.Task.build({url: github_url, provider: 'github', value: 0}).save().then((task) => {
         agent
           .put("/tasks/update")
           .send({id: task.dataValues.id, value: 200})
@@ -92,7 +92,7 @@ describe("tasks", () => {
       })
     });
 
-    xit('should update task with associated order no logged users', (done) => {
+    it('should update task with associated order no logged users', (done) => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
       const order = {
@@ -142,7 +142,6 @@ describe("tasks", () => {
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
-                console.log('body response', res.body);
                 expect(res.body.code).to.equal('card_declined');
                 done();
               })
@@ -159,23 +158,17 @@ describe("tasks", () => {
         .end((err, res) => {
           const userId = res.body.id;
           const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-          const assigned = {
-            userId: userId
-          };
 
           models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
             agent
               .put("/tasks/update")
-              .send({id: task.dataValues.id, value: 200, Assigns: [assigned]})
+              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}]})
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
                 expect(res.body.value).to.equal('200');
                 done();
               })
-          }).catch(e => {
-            console.log('error create task');
-            console.log(e);
           })
         })
     });
@@ -189,31 +182,20 @@ describe("tasks", () => {
         .end((err, res) => {
           const userId = res.body.id;
           const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-          const assigned = {
-            userId: userId
-          };
-
           models.Task.build({url: github_url, provider: 'github'}).save().then((task) => {
-            models.Assign.build({taskId: task.id, userId: userId}).save().then((assign) => {
+            task.createAssign({userId: userId}).then((assign) => {
               agent
                 .put("/tasks/update")
-                .send({id: task.dataValues.id, value: 200, assigned: assign.id, Assigns: [assigned]})
+                .send({id: task.dataValues.id, value: 200, assigned: assign.dataValues.id})
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end((err, res) => {
                   expect(res.body.value).to.equal('200');
-                  expect(res.body.assigned.id).to.equal(assign.id);
+                  expect(res.body.assigned).to.exist;
                   done();
                 })
-            }).catch(e => {
-              console.log('error create task');
-              console.log(e);
-              done();
             })
-          }).catch(e => {
-            console.log('error create task');
-            console.log(e);
-          });
+          })
         })
     });
   });

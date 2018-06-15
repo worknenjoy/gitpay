@@ -235,12 +235,9 @@ const listTasks = () => {
     dispatch(listTaskRequested())
     axios.get(api.API_URL + '/tasks/list')
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response)
         return dispatch(listTaskSuccess(response))
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
         console.log(error)
         return dispatch(listTaskError(error))
       })

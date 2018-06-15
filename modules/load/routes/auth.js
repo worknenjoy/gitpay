@@ -49,7 +49,6 @@ router.post('/authorize/local', (req, res, next) => {
           res.status(500)
           res.send({ 'error': 'Server error' })
         }
-
         res.send(user)
       })
     }

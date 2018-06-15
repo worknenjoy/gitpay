@@ -14,7 +14,7 @@ exports.updateWebhook = (req, res) => {
     const status = event.data.object.status;
     switch (event.type) {
       case "charge.updated":
-           models.Order.update({
+           return models.Order.update({
              paid: paid,
              status: status
            }, {
@@ -25,7 +25,7 @@ exports.updateWebhook = (req, res) => {
              returning: true
            }).then((order) => {
              if(order[0]) {
-                models.User.findOne({
+                return models.User.findOne({
                   where: {
                     id: order[1][0].dataValues.userId
                   }
@@ -37,14 +37,18 @@ exports.updateWebhook = (req, res) => {
                       `);
                     }
                   }
+                  return res.json(req.body);
+
+                }).catch((e) => {
+                  res.status(400).send(e);
                 });
              }
            }).catch((e) => {
-             throw new Error(e);
+             res.status(400).send(e);
            });
        break;
       case "charge.failed":
-        models.Order.update({
+        return models.Order.update({
           paid: paid,
           status: status
         }, {
@@ -70,6 +74,8 @@ exports.updateWebhook = (req, res) => {
               }
             });
           }
+        }).catch((e) => {
+          res.status(400).send(e);
         });
       break;
       case "transfer.created":
@@ -90,19 +96,23 @@ exports.updateWebhook = (req, res) => {
                       <p>Uma transferência no valor de $${event.data.object.amount / 100} foi enviado para sua conta e avisaremos quando for concluída</p>
                       <p>Ela corresponde a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> que você concluiu</p>
               `);
+
             }).catch((e) => {
-                console.log('assign find issue', e);
-                throw new Error(e);
+              res.status(400).send(e);
             });
           }
         })
 
         break;
       default:
-        res.send(false);
+        res.status(400).send({error: {
+          message: "Not recognized event type"
+        }});
+        break;
+
     }
     return res.json(req.body);
   } else {
-    res.send(false);
+    return res.send(false);
   }
 }

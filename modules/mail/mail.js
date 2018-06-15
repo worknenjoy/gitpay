@@ -1,4 +1,5 @@
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+const Signature = require('./content');
 
 let Sendmail = {};
 let bcc = [];
@@ -32,7 +33,7 @@ Sendmail.success = (to, subject, msg) => {
       content: [
         {
           type: 'text/html',
-          value: msg
+          value: msg + Signature
         },
       ],
     },
@@ -74,7 +75,7 @@ Sendmail.error = (to, subject, msg) => {
       content: [
         {
           type: 'text/html',
-          value: msg
+          value: msg + Signature
         },
       ],
     },

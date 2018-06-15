@@ -74,9 +74,6 @@ describe("orders", () => {
             expect(res.body.amount).to.equal('200');
             done();
           })
-        }).catch(e => {
-          console.log('error create task');
-          console.log(e);
         })
       });
   })

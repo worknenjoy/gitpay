@@ -54,10 +54,9 @@ describe("Users", () => {
         .post('/authorize/local')
         .send({email: 'teste@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
-        .expect(200)
+        .expect(401)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
+          expect(res.statusCode).to.equal(401);
           done();
         })
     })
