@@ -5,16 +5,16 @@ class Auth {
    *
    * @param {string} token
    */
-  static authenticateUser(token) {
-    localStorage.setItem('token', token);
+  static authenticateUser (token) {
+    localStorage.setItem('token', token)
   }
 
-  static authNotified() {
-    localStorage.setItem('authNotified', true);
+  static authNotified () {
+    localStorage.setItem('authNotified', true)
   }
 
-  static getAuthNotified() {
-    return localStorage.getItem('authNotified');
+  static getAuthNotified () {
+    return localStorage.getItem('authNotified')
   }
 
   /**
@@ -22,17 +22,17 @@ class Auth {
    *
    * @returns {boolean}
    */
-  static isUserAuthenticated() {
-    return localStorage.getItem('token') !== null;
+  static isUserAuthenticated () {
+    return localStorage.getItem('token') !== null
   }
 
   /**
    * Deauthenticate a user. Remove a token from Local Storage.
    *
    */
-  static deauthenticateUser() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('authNotified');
+  static deauthenticateUser () {
+    localStorage.removeItem('token')
+    localStorage.removeItem('authNotified')
   }
 
   /**
@@ -41,10 +41,9 @@ class Auth {
    * @returns {string}
    */
 
-  static getToken() {
-    return localStorage.getItem('token');
+  static getToken () {
+    return localStorage.getItem('token')
   }
-
 }
 
-export default Auth;
+export default Auth
