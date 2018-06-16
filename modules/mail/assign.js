@@ -1,5 +1,5 @@
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-const Signature = require('./content');
+const Signatures = require('./content');
 
 let AssignMail = {};
 let bcc = [];
@@ -36,7 +36,7 @@ AssignMail.success = (to, task, name) => {
           value: `
             <p>Olá, ${name} tem interesse na sua tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
             <p>Você pode atribuir o desenvolvimento desta tarefa para ele indo na aba 'INTERESSADOS', para que ela possa receber o valor após a tarefa for integrada</p>
-          ${Signature}`
+              <p>${Signatures.sign}</p>`
         },
       ],
     },

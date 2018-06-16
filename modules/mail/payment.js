@@ -1,5 +1,5 @@
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-const Signature = require('./content');
+const Signatures = require('./content');
 
 let PaymentMail = {};
 let bcc = [];
@@ -35,7 +35,7 @@ PaymentMail.success = (to, task, value) => {
           type: 'text/html',
           value: `
             <p>Olá, você realizou um pagamento de $ ${value} para a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-            <p>${Signature}</p>
+            <p>${Signatures.sign}</p>
           `
         },
       ],
@@ -85,7 +85,7 @@ PaymentMail.error = (to, task, value) => {
           type: 'text/html',
           value: `
             <p>Olá, tivemos um problema com o pagamento de $ ${value} para a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-            <p></p>
+            <p>${Signatures.sign}</p>
           `
         },
       ],

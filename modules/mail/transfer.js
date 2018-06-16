@@ -1,5 +1,5 @@
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-const Signature = require('./content');
+const Signatures = require('./content');
 
 let TransferMail = {};
 let bcc = [];
@@ -35,7 +35,7 @@ TransferMail.success = (to, task, value) => {
           type: 'text/html',
           value: `
             <p>Olá, uma transferência no valor de $ ${value} será realizada para você pela tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-            <p>${Signature}</p>
+            <p>${Signatures.sign}</p>
           `
         },
       ],
@@ -85,7 +85,7 @@ TransferMail.error = (to, task, value) => {
           type: 'text/html',
           value: `
             <p>Olá, tivemos um problema com a transferência de $ ${value} para a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-            <p></p>
+            <p>${Signatures.sign}</p>
           `
         },
       ],
