@@ -15,9 +15,6 @@ module.exports = Promise.method(function userAccountCreate(userParameters) {
       if(user && user.dataValues && user.dataValues.account_id) {
         return { error: 'user already exist' };
       }
-      if(!user && !user.dataValues && !user.dataValues.email) {
-        return { error: 'Não foi possível registrar a conta' };
-      }
       return stripe.accounts.create({
         type: 'custom',
         country: 'BR',

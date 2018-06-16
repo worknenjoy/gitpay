@@ -4,6 +4,8 @@ import { fetchAccount, createAccount, updateAccount, createBankAccount, getBankA
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    logged: state.loggedIn.logged,
+    user: state.loggedIn,
     account: state.account,
     bankAccount: state.bankAccount
   }
@@ -11,10 +13,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchAccount: () => dispatch(fetchAccount()),
-    createAccount: () => dispatch(createAccount()),
+    fetchAccount: (userId) => dispatch(fetchAccount(userId)),
+    createAccount: (userId) => dispatch(createAccount(userId)),
     updateAccount: (account) => dispatch(updateAccount(account)),
-    getBankAccount: () => dispatch(getBankAccount()),
+    getBankAccount: (userId) => dispatch(getBankAccount(userId)),
     createBankAccount: (bank) => dispatch(createBankAccount(bank))
 
   }

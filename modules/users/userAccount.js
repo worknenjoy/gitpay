@@ -21,9 +21,5 @@ module.exports = Promise.method(function userAccount(userParameters) {
         });
       }
       return {};
-    }).catch((error) => {
-      console.log(error);
-      return false;
-    });
-
+    })
 });

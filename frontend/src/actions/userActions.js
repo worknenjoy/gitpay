@@ -104,16 +104,10 @@ const createBankAccountError = (error) => {
 }
 
 
-const fetchAccount = () => {
+const fetchAccount = (userId) => {
   return (dispatch, getState) => {
     dispatch(fetchUserAccountRequested());
-    const userId = getState().loggedIn.user.id;
-    if(!userId) {
-      return dispatch(fetchUserAccountError({error: true, message: 'Not logged'}));
-    }
-    return axios.get(api.API_URL + `/users/${userId}/account`, {
-      // headers would be here
-    }).then((account) => {
+    return axios.get(api.API_URL + `/users/${userId}/account`).then((account) => {
       return dispatch(fetchUserAccountSuccess(account));
     }).catch((e) => {
       console.log('fetch user account error', e);
@@ -122,18 +116,13 @@ const fetchAccount = () => {
   }
 }
 
-const createAccount = () => {
+const createAccount = (userId) => {
   return (dispatch, getState) => {
     dispatch(createUserAccountRequested());
-    const userId = getState().loggedIn.user.id;
     const accountId = getState().loggedIn.user.account_id;
     if(accountId) {
       dispatch(addNotification('Já existe uma conta associada'));
       return dispatch(createUserAccountError({ message: 'Já existe uma conta associada' }));
-    }
-    if(!userId) {
-      dispatch(addNotification('Você precisa estar logado'));
-      return dispatch(createUserAccountError({ message: 'Você precisa estar logado' }));
     }
     axios.post(api.API_URL + '/user/account', {
       id: userId
@@ -176,16 +165,14 @@ const updateAccount = (accountData) => {
   }
 };
 
-const getBankAccount = () => {
+const getBankAccount = (userId) => {
   return (dispatch, getState) => {
     dispatch(getBankAccountRequested());
-    const userId = getState().loggedIn.user.id;
     axios.get(`${api.API_URL}/users/${userId}/bank_accounts`).then((bank_account) => {
       if(bank_account.data.statusCode === 400) {
         dispatch(addNotification('Erro ao tentar obter sua conta bancária'));
         return dispatch(getBankAccountError(bank_account.data));
       }
-      console.log(bank_account);
       return dispatch(getBankAccountSuccess(bank_account));
     }).catch((error) => {
       dispatch(addNotification('Erro ao tentar atualizar sua conta'));

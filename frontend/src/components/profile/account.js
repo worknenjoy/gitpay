@@ -87,8 +87,11 @@ class Account extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchAccount();
-    this.props.getBankAccount();
+    if(this.props.user.logged) {
+      const userId = this.props.user.user.id;
+      this.props.fetchAccount(userId);
+      this.props.getBankAccount(userId);
+    }
   }
 
   openUpdateModal() {
@@ -147,7 +150,7 @@ class Account extends Component {
 
   render() {
 
-    const { classes, account, bankAccount } = this.props;
+    const { classes, account, bankAccount, user } = this.props;
 
     const getSteps = () => {
       return ['Verificar identidade', 'Registrar conta bancária', 'Aceitar termos de uso'];
@@ -262,7 +265,7 @@ class Account extends Component {
                             name="account_number"
                             placeholder="Número da conta"
                             disabled={bankAccount.data.routing_number ? true : false}
-                            defaultValue={bankAccount.data.account_number || ` *****${ bankAccount.data.last4 }` || ''}
+                            defaultValue={bankAccount.data.last4 ? `*****${ bankAccount.data.last4 }` : ''}
                           />
                         </FormControl>
                       </Grid>
@@ -392,7 +395,7 @@ class Account extends Component {
                   size="large"
                   variant="raised"
                   color="primary"
-                  onClick={() => this.props.createAccount()}
+                  onClick={() => this.props.createAccount(user.user.id)}
                 >
                   Criar conta
                 </Button>
