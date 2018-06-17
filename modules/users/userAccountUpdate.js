@@ -24,13 +24,6 @@ module.exports = Promise.method(function userAccountUpdate(userParameters) {
       }
       return stripe.accounts.update(user.dataValues.account_id, userParameters.account).then((account) => {
         return account;
-      }).catch((e) => {
-        console.log('could not finde customer', e);
-        return e;
-      });
-    }).catch((error) => {
-      console.log(error);
-      return false;
-    });
-
+      })
+    })
 });

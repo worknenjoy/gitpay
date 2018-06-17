@@ -75,6 +75,7 @@ class Account extends Component {
     this.state = {
       accountUpdateModal: false,
       currentStep: 0,
+      userId: null,
       terms: false
     };
     this.openUpdateModal = this.openUpdateModal.bind(this);
@@ -91,6 +92,7 @@ class Account extends Component {
       const userId = this.props.user.user.id;
       this.props.fetchAccount(userId);
       this.props.getBankAccount(userId);
+      this.setState({ userId })
     }
   }
 
@@ -104,9 +106,11 @@ class Account extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const formData = {...this.state };
-    delete formData.accountUpdateModal;
-    this.props.updateAccount(formData);
+    const formData = {
+      'legal_entity[first_name]': e.target['legal_entity[first_name]'].value,
+      'legal_entity[last_name]': e.target['legal_entity[last_name]'].value,
+    };
+    this.props.updateAccount(this.state.userId, formData);
     this.setState({accountUpdateModal: false});
   }
 
@@ -133,7 +137,7 @@ class Account extends Component {
   handleAcceptTerms(e) {
     e.preventDefault();
     if(this.state.terms) {
-      this.props.updateAccount({
+      this.props.updateAccount(this.state.userId, {
         tos_acceptance: {
           date: Math.round(+new Date() / 1000)
         }

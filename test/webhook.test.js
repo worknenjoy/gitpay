@@ -84,17 +84,19 @@ describe("webhooks", () => {
             .then((task) => {
                 task.createAssign({userId: user.dataValues.id})
                   .then((assign) => {
-                    agent
-                      .post('/webhooks')
-                      .send(transferData.update)
-                      .expect('Content-Type', /json/)
-                      .expect(200)
-                      .end((err, res) => {
-                        expect(res.statusCode).to.equal(200);
-                        expect(res.body).to.exist;
-                        expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx');
-                        done();
-                    })
+                    task.updateAttributes({assigned: assign.dataValues.id}).then((updatedTask) => {
+                      agent
+                        .post('/webhooks')
+                        .send(transferData.update)
+                        .expect('Content-Type', /json/)
+                        .expect(200)
+                        .end((err, res) => {
+                          expect(res.statusCode).to.equal(200);
+                          expect(res.body).to.exist;
+                          expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx');
+                          done();
+                        })
+                    });
               });
             });
         });

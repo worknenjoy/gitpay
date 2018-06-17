@@ -137,25 +137,15 @@ const createAccount = (userId) => {
   }
 };
 
-const updateAccount = (accountData) => {
+const updateAccount = (userId, accountData) => {
   return (dispatch, getState) => {
     dispatch(updateUserAccountRequested());
-    const userId = getState().loggedIn.user.id;
-    const accountId = getState().loggedIn.user.account_id;
-    if(!accountId) {
-      dispatch(addNotification('Você não possui uma conta associada'));
-      return dispatch(createUserAccountError({ message: 'Você não possui uma conta' }));
-    }
-    if(!userId) {
-      dispatch(addNotification('Você precisa estar logado'));
-      return dispatch(updateUserAccountError({ message: 'Você precisa estar logado' }));
-    }
     axios.put(api.API_URL + `/user/account`, {
       id: userId,
       account: accountData
     }).then((account) => {
       dispatch(addNotification('Conta atualizada com sucesso'));
-      dispatch(fetchAccount());
+      //dispatch(fetchAccount());
       return dispatch(updateUserAccountSuccess(account));
     }).catch((error) => {
       dispatch(addNotification('Erro ao tentar atualizar sua conta'));

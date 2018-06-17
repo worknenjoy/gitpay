@@ -40,11 +40,11 @@ exports.updateWebhook = (req, res) => {
                   return res.json(req.body);
 
                 }).catch((e) => {
-                  res.status(400).send(e);
+                  return res.status(400).send(e);
                 });
              }
            }).catch((e) => {
-             res.status(400).send(e);
+             return res.status(400).send(e);
            });
        break;
       case "charge.failed":
@@ -70,23 +70,24 @@ exports.updateWebhook = (req, res) => {
                       <p>O pagamento no valor de $${event.data.object.amount / 100} para uma tarefa no Gitpay não foi aprovado</p>
                       <p>Motivo: ${FAILED_REASON[event.data.object.outcome.network_status]}</p>
                       `);
+                  return res.json(req.body);
                 }
               }
             });
           }
         }).catch((e) => {
-          res.status(400).send(e);
+          return res.status(400).send(e);
         });
       break;
       case "transfer.created":
-        models.Task.findOne({
+        return models.Task.findOne({
           where: {
             transfer_id: event.data.object.id
           },
           include: [models.User]
         }).then((task) => {
           if(task) {
-            models.Assign.findOne({
+            return models.Assign.findOne({
               where: {
                 id: task.dataValues.assigned
               },
@@ -96,22 +97,20 @@ exports.updateWebhook = (req, res) => {
                       <p>Uma transferência no valor de $${event.data.object.amount / 100} foi enviado para sua conta e avisaremos quando for concluída</p>
                       <p>Ela corresponde a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> que você concluiu</p>
               `);
+              return res.json(req.body);
 
             }).catch((e) => {
-              res.status(400).send(e);
+              return res.status(400).send(e);
             });
           }
         })
-
         break;
       default:
-        res.status(400).send({error: {
+        return res.status(400).send({error: {
           message: "Not recognized event type"
         }});
         break;
-
     }
-    return res.json(req.body);
   } else {
     return res.send(false);
   }
