@@ -17,8 +17,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     createAccount: (userId) => dispatch(createAccount(userId)),
     updateAccount: (userId, account) => dispatch(updateAccount(userId, account)),
     getBankAccount: (userId) => dispatch(getBankAccount(userId)),
-    createBankAccount: (bank) => dispatch(createBankAccount(bank))
-
+    createBankAccount: (userId, bank) => dispatch(createBankAccount(userId, bank))
   }
 }
 

@@ -173,15 +173,9 @@ const getBankAccount = (userId) => {
   }
 }
 
-const createBankAccount = (bank) => {
+const createBankAccount = (userId, bank) => {
   return (dispatch, getState) => {
     dispatch(createBankAccountRequested());
-    const accountId = getState().loggedIn.user.account_id;
-    const userId = getState().loggedIn.user.id;
-    if(!accountId) {
-      dispatch(addNotification('Você não possui uma conta associada'));
-      return dispatch(createUserAccountError({ message: 'Você não possui uma conta' }));
-    }
     axios.post(api.API_URL + `/user/bank_accounts`, {
       id: userId,
       routing_number: bank.routing_number,

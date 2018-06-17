@@ -1,14 +1,15 @@
-'use strict';
+'use strict'
 
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
-const api = require('../server');
-const agent = request.agent(api);
-const models = require('../loading/loading');
+const api = require('../server')
+const agent = request.agent(api)
+const models = require('../loading/loading')
 
-const chargeData = require('./data/charge');
-const transferData = require('./data/transfer');
+const chargeData = require('./data/charge')
+const transferData = require('./data/transfer')
+const payoutData = require('./data/payout')
 
 describe("webhooks", () => {
 
@@ -101,6 +102,24 @@ describe("webhooks", () => {
             });
         });
       })
+
+      it('should notify the transfer when a webhook payout.create is triggered', (done) => {
+        models.User.build({email: 'teste@mail.com', password: 'teste', account_id: 'acct_1CZ5vkLlCJ9CeQRe'}).save().then((user) => {
+          agent
+            .post('/webhooks')
+            .send(payoutData.update)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200);
+              expect(res.body).to.exist;
+              expect(res.body.id).to.equal('evt_1CdprOLlCJ9CeQRe4QDlbGRY');
+              done();
+            })
+        })
+
+      })
+
     })
   })
 });

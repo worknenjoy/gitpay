@@ -105,6 +105,25 @@ exports.updateWebhook = (req, res) => {
           }
         })
         break;
+      case "payout.created":
+        return models.User.findOne({
+          where: {
+            account_id: event.account
+          }
+        }).then((user) => {
+          if(user) {
+            const date = new Date(event.data.object.arrival_date*1000);
+            SendMail.success(user.dataValues.email, 'Uma transferência do Gitpay está a caminho da sua conta!', `
+                    <p>Uma transferência no valor de ${event.data.object.currency} ${event.data.object.amount / 100} está a caminho da sua conta e avisaremos quando for concluída</p>
+                    <p>A previsão é de que ela chege em ${date}</p>
+            `);
+            return res.json(req.body);
+          }
+        }).catch(e => {
+          console.log('error on payout.created', e);
+          return res.status(400).send(e);
+        });
+        break;
       default:
         return res.status(400).send({error: {
           message: "Not recognized event type"

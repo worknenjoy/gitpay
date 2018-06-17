@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import ReactPlaceholder from 'react-placeholder';
+import Moment from 'moment';
 
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
@@ -118,7 +119,7 @@ class Account extends Component {
     e.preventDefault();
     const routingNumber = e.target.routing_number.value;
     const accountNumber = e.target.account_number.value;
-    this.props.createBankAccount({
+    this.props.createBankAccount(this.state.userId, {
       routing_number: routingNumber,
       account_number: accountNumber
     });
@@ -291,6 +292,8 @@ class Account extends Component {
               </form>
               }
               { this.state.currentStep === 2 &&
+              <div>
+              { !account.data.tos_acceptance.date ? (
               <form onSubmit={this.handleAcceptTerms} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
                 <Card className={classes.card}>
                   <CardContent>
@@ -333,7 +336,26 @@ class Account extends Component {
                     </Button>
                   </CardActions>
                 </Card>
-              </form>}
+              </form>) : (
+              <Card className={classes.card}>
+                <CardContent>
+                  <div style={{marginBottom: 10}}>
+                    <Typography>
+                      {getStepContent(2)}
+                    </Typography>
+                  </div>
+                  <Grid container spacing={24}>
+                    <Grid item xs={12}>
+                      <Typography color="primary">
+                        Você aceitou os termos em {`${Moment.unix(account.data.tos_acceptance.date).format('DD/MM/YYYY [às] HH:mm:ss')}`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+              )}
+              </div>
+              }
               <Dialog
                 open={this.state.accountUpdateModal}
                 transition={Transition}
