@@ -4,20 +4,22 @@ import { withRouter } from "react-router-dom";
 import ReactPlaceholder from 'react-placeholder';
 import { RoundShape } from 'react-placeholder/lib/placeholders';
 
-
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
+import Tooltip from 'material-ui/Tooltip'
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography'
 import HomeIcon from 'material-ui-icons/Home';
 import PlusIcon from 'material-ui-icons/Queue';
 import UserIcon from 'material-ui-icons/AccountCircle';
+import MoreIcon from 'material-ui-icons/MoreHoriz';
 import { withStyles } from 'material-ui/styles';
+
 import api from '../../consts';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
@@ -36,10 +38,10 @@ const logoBitbucket = require('../../images/bitbucket-logo.png');
 
 const styles = {
   logoMain: {
-    marginLeft: 180
+    marginLeft: 340
   },
   logoAlt: {
-    marginLeft: 180
+    marginLeft: 240
   },
   containerBar: {
     display: 'flex',
@@ -99,6 +101,7 @@ class TopBar extends Component  {
     this.onChange = this.onChange.bind(this);
     this.handleClickDialogSignUser = this.handleClickDialogSignUser.bind(this);
     this.handleSignUserDialogClose = this.handleSignUserDialogClose.bind(this);
+    this.handleGithubLink = this.handleGithubLink.bind(this);
 
   }
 
@@ -134,6 +137,10 @@ class TopBar extends Component  {
 
   handleClickDialogSignUser(e) {
     this.setState(({signUserDialog: true}));
+  }
+
+  handleGithubLink() {
+    window.location.href = 'https://github.com/worknenjoy/gitpay'
   }
 
   onChange(e) {
@@ -241,7 +248,13 @@ class TopBar extends Component  {
                 ) : (
                   <Button style={{fontSize: 12}} onClick={this.handleProfile} variant="raised" size="small" color="secondary"
                           className={classes.altButton}>
-                    <span style={styles.spaceRight}> Gerenciar conta </span> <UserIcon />
+                    <span style={styles.spaceRight}> Conta </span>
+                    <Avatar
+                      alt={user.username}
+                      src={user.picture_url}
+                      style={{width: 28, height: 28}}
+                      onClick={this.handleMenu}
+                    />
                   </Button>
                 )
               }
@@ -288,12 +301,25 @@ class TopBar extends Component  {
               { isLoggedIn &&
               <div style={styles.notifications}>
                 {user.picture_url ?
-                  (<Avatar
-                    alt={user.username}
-                    src={user.picture_url}
-                    style={styles.avatar}
-                    onClick={this.handleMenu}
-                  /> ) : (
+                  (
+                    <div style={{display: 'flex'}}>
+                      <Tooltip id="tooltip-github" title="Acessar nosso github" placement="bottom">
+                        <Avatar
+                        alt={user.username}
+                        src={logoGithub}
+                        style={styles.avatar}
+                        onClick={this.handleGithubLink}
+                        />
+                      </Tooltip>
+                      <Avatar
+                      alt={user.username}
+                      style={styles.avatar}
+                      onClick={this.handleMenu}
+                      >
+                        <MoreIcon color="action" />
+                      </Avatar>
+                    </div>
+                  ) : (
                     <Avatar
                       alt={user.username}
                       src=""
