@@ -193,6 +193,10 @@ passport.use(
           email: profile.emails ? profile.emails[0].value : profile._json.email
         }
 
+        if(!data.email) {
+          return done(null);
+        }
+
         //const client = githubAPI.client(accessToken);
 
         requestPromise({
