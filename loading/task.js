@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define('Task', {
     provider: DataTypes.STRING,
@@ -17,25 +15,27 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     transfer_id: DataTypes.STRING,
-    assigned:  {
+    assigned: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Assigns',
-        key: 'id'
+        key: 'id',
+        unique: true
       },
-      allowNull: true
+      allowNull: true,
     }
   }, {
     classMethods: {
       associate: (models) => {
-        Task.belongsTo(models.User, { foreignKey: 'userId' });
-        Task.hasMany(models.Order, { foreignKey: 'TaskId'});
-        Task.hasMany(models.Assign, { foreignKey: 'TaskId'});
+        Task.belongsTo(models.User, { foreignKey: 'userId' })
+        Task.hasMany(models.Order, { foreignKey: 'TaskId' })
+        Task.hasMany(models.Assign, { foreignKey: 'TaskId' })
       }
     },
     instanceMethods: {
 
     }
-  });
-  return Task;
-};
+  })
+
+  return Task
+}
