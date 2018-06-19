@@ -13,7 +13,7 @@ import NotificationContainer from '../containers/notification';
 
 import reducers from '../reducers/reducers';
 
-if(process.ENV == 'production') {
+if(process.env.NODE_ENV == 'production') {
   ReactGA.initialize('UA-114655639-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
 }
