@@ -16,17 +16,19 @@ module.exports = Promise.method(function taskPayment(payment) {
     )
     .then((task) => {
       if(!task) {
-        return new Error('find_task_error');
+        throw new Error('find_task_error');
       }
-       return models.User.findOne({
+       return models.Assign.findOne({
         where: {
-            id: task.assigned
-          }
-      }).then((user) => {
-        const transferGroup = `task_${task.id}`;
-        const dest = user.account_id;
+          id: task.assigned
+        },
+         include: [models.User]
+      }).then((assign) => {
+        const user = assign.dataValues.User.dataValues
+        const transferGroup = `task_${task.id}`
+        const dest = user.account_id
         if(!dest) {
-          return new Error('account_destination_invalid');
+          throw new Error('account_destination_invalid')
         }
 
         return stripe.transfers.create({
@@ -46,7 +48,7 @@ module.exports = Promise.method(function taskPayment(payment) {
             }).then(function(update) {
               if(!update) {
                 TransferMail.error(user.email, task, task.value);
-                return new Error('update_task_reject');
+                throw new Error('update_task_reject');
               }
               TransferMail.success(user.email, task, task.value);
               return transfer;
