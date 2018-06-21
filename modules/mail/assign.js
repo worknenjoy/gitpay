@@ -83,7 +83,7 @@ AssignMail.interested = (to, task, name) => {
           value: `
             <p>Olá ${name},</p>
             <p>Você tem interesse em realizar a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
-            <p>O responsável pela tarefa será notificado e você receberá uma confirmação caso seja atribuido e for escolhido para realizá-la.</p>
+            <p>O responsável pela tarefa será notificado e você receberá uma confirmação caso se você for escolhido para realizá-la.</p>
               <p>${Signatures.sign}</p>`
         },
       ],

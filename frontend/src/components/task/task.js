@@ -397,7 +397,7 @@ class Task extends Component {
     }
 
     const taskOwner = () => {
-      return this.props.logged && (this.props.user.id === task.data.userId) || (!task.data.userId);
+      return this.props.logged && (this.props.user.id === task.data.userId);
     }
 
     const displayOrders = (orders) => {
@@ -417,7 +417,7 @@ class Task extends Component {
       const taskData = this.props.task.data
       return (
         <div>
-          { taskOwner  &&
+          { taskOwner()  &&
           <Button disabled={assign.id === taskData.assigned ? true : false} onClick={() => this.props.assignTask(this.props.task.data.id, assign.id)} style={{marginRight: 10}} variant="raised" size="small" color="primary">
              <GroupWorkIcon style={{marginRight: 5}} /> escolher
           </Button>}
@@ -635,7 +635,7 @@ class Task extends Component {
                     <CardMedia
                       className={classes.cover}
                       image={timeIcon}
-                      title="Realize o pagamento pela tarefa"
+                      title="Escolha uma data limite para realizacao desta tarefa"
                     />
                     <div className={classes.details}>
                       <CardContent className={classes.content}>
