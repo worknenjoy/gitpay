@@ -10,7 +10,7 @@ if(process.env.NODE_ENV != 'test') {
   })
 }
 
-AssignMail.success = (to, task, name) => {
+AssignMail.owner = (to, task, name) => {
 
   const request = sg.emptyRequest({
     method: 'POST',
@@ -34,8 +34,56 @@ AssignMail.success = (to, task, name) => {
         {
           type: 'text/html',
           value: `
-            <p>Olá, ${name} tem interesse na sua tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-            <p>Você pode atribuir o desenvolvimento desta tarefa para ele indo na aba 'INTERESSADOS', para que ela possa receber o valor após a tarefa for integrada</p>
+            <p>Olá,</p>
+            <p>${name} tem interesse na sua tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
+            <p>Você pode atribuir o desenvolvimento desta tarefa para ele indo na aba 'INTERESSADOS', para que ela possa receber o valor após a tarefa for integrada.</p>
+              <p>${Signatures.sign}</p>`
+        },
+      ],
+    },
+  });
+
+  sg.API(request)
+    .then(response => {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+    })
+    .catch(error => {
+      //error is an instance of SendGridError
+      //The full response is attached to error.response
+      console.log(error.response.body.errors);
+      console.log(error.response.statusCode);
+    });
+}
+
+AssignMail.interested = (to, task, name) => {
+
+  const request = sg.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: {
+      personalizations: [
+        {
+          to: [
+            {
+              email: to,
+            },
+          ],
+          bcc: bcc,
+          subject: 'Você tem interesse em realizar uma tarefa no Gitpay'
+        },
+      ],
+      from: {
+        email: 'tarefas@gitpay.me'
+      },
+      content: [
+        {
+          type: 'text/html',
+          value: `
+            <p>Olá ${name},</p>
+            <p>Você tem interesse em realizar a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
+            <p>O responsável pela tarefa será notificado e você receberá uma confirmação caso seja atribuido e for escolhido para realizá-la.</p>
               <p>${Signatures.sign}</p>`
         },
       ],

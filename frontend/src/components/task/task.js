@@ -409,12 +409,12 @@ class Task extends Component {
 
     const removeDuplicates = (myArr, prop) => {
       return myArr.filter((obj, pos, arr) => {
-        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
       });
     }
 
     const assignActions = (assign) => {
-      const taskData = this.props.task.data;
+      const taskData = this.props.task.data
       return (
         <div>
           { taskOwner  &&
@@ -432,13 +432,13 @@ class Task extends Component {
 
     const displayAssigns = (assign) => {
       if(!assign.length) {
-        return [];
+        return []
       }
       const items = removeDuplicates(assign.map((item, i) => {
-        return [`${item.User.name}` || 'Sem nome', MomentComponent(item.updatedAt).fromNow(), assignActions(item.User)]
-      }), `${assign.name}`);
+        return [`${item.User.name}` || 'Sem nome', MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
+      }), `${assign.name}`)
 
-      return items;
+      return items
     }
 
     const headerPlaceholder = (
