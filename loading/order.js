@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define('Order', {
     source_id: DataTypes.STRING,
@@ -25,13 +23,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Order.belongsTo(models.User, { foreignKey: 'userId' });
-        Order.belongsTo(models.Task, { foreignKey: 'TaskId' });
+        Order.belongsTo(models.User, { foreignKey: 'userId' })
+        Order.belongsTo(models.Task, { foreignKey: 'TaskId' })
       }
     },
     instanceMethods: {
 
     }
-  });
-  return Order;
-};
+  })
+
+  return Order
+}
