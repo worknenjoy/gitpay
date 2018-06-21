@@ -6,6 +6,8 @@ const models = require('../../loading/loading')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
+const assignExist = require('../assigns').assignExists
+
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
     return stripe.charges.create({
@@ -85,13 +87,11 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
             })
           }
           if (taskParameters.Assigns) {
-            models.Assign.findOne({
-              where: {
-                userId: task.dataValues.userId,
-                TaskId: taskParameters.id
-              }
+            assignExist({
+              userId: task.dataValues.userId,
+              taskId: taskParameters.id
             }).then(resp => {
-              if (resp.dataValues) {
+              if (!resp) {
                 return task.createAssign(taskParameters.Assigns[0]).then(assign => {
                   if (assign) {
                     return models.User.findOne({
