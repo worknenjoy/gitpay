@@ -63,7 +63,7 @@ exports.accountUpdate = (req, res) => {
       res.send(data);
     }).catch((error) => {
     console.log(error);
-    res.send(false);
+    res.status(401).send(error);
   });
 }
 

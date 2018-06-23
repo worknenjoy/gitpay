@@ -17,16 +17,21 @@ import Typography from 'material-ui/Typography';
 import Slide from 'material-ui/transitions/Slide';
 import Input from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
-import FormGroup from 'material-ui/Form/FormGroup';
+import MenuItem from 'material-ui/Menu/MenuItem';
+import FormHelperText from 'material-ui/Form/FormHelperText';
 import FormControlLabel from 'material-ui/Form/FormControlLabel';
 import Stepper from 'material-ui/Stepper';
 import Step from 'material-ui/Stepper/Step';
 import StepButton from 'material-ui/Stepper/StepButton';
 import Switch from 'material-ui/Switch';
+import Select from 'material-ui/Select';
 
-import UserIcon from 'material-ui-icons/AccountCircle';
-import RedeemIcon from 'material-ui-icons/Redeem';
+import UserIcon from 'material-ui-icons/AccountCircle'
+import RedeemIcon from 'material-ui-icons/Redeem'
 import AssignmentIcon from 'material-ui-icons/Assignment'
+import NextIcon from 'material-ui-icons/NavigateNext'
+import PreviousIcon from 'material-ui-icons/ArrowBack'
+import ConcludeIcon from 'material-ui-icons/Done'
 
 
 import Const from '../../consts';
@@ -77,6 +82,8 @@ class Account extends Component {
       accountUpdateModal: false,
       currentStep: 0,
       userId: null,
+      selectedBank: "",
+      bankNumberError: false,
       terms: false
     };
     this.openUpdateModal = this.openUpdateModal.bind(this);
@@ -86,6 +93,7 @@ class Account extends Component {
     this.handleBankAccount = this.handleBankAccount.bind(this);
     this.handleAcceptTerms = this.handleAcceptTerms.bind(this);
     this.handleTermsChange = this.handleTermsChange.bind(this);
+    this.handleBankNumberSelect = this.handleBankNumberSelect.bind(this);
   }
 
   componentDidMount() {
@@ -107,22 +115,45 @@ class Account extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const formData = {
+    let formData = {
       'legal_entity[first_name]': e.target['legal_entity[first_name]'].value,
       'legal_entity[last_name]': e.target['legal_entity[last_name]'].value,
+      'legal_entity[address][city]': e.target['legal_entity[address][city]'].value,
+      'legal_entity[address][line1]': e.target['legal_entity[address][line1]'].value,
+      'legal_entity[address][line2]': e.target['legal_entity[address][line2]'].value,
+      'legal_entity[address][postal_code]': e.target['legal_entity[address][postal_code]'].value,
+      'legal_entity[address][state]': e.target['legal_entity[address][state]'].value,
+      'legal_entity[dob][day]': e.target['legal_entity[dob][day]'].value,
+      'legal_entity[dob][month]': e.target['legal_entity[dob][month]'].value,
+      'legal_entity[dob][year]': e.target['legal_entity[dob][year]'].value,
+      'legal_entity[type]': 'individual'
     };
+
+    if(e.target['legal_entity[personal_id_number]'].value) {
+      formData['legal_entity[personal_id_number]'] = e.target['legal_entity[personal_id_number]'].value
+    }
+
     this.props.updateAccount(this.state.userId, formData);
     this.setState({accountUpdateModal: false});
   }
 
   handleBankAccount(e) {
     e.preventDefault();
-    const routingNumber = e.target.routing_number.value;
-    const accountNumber = e.target.account_number.value;
-    this.props.createBankAccount(this.state.userId, {
-      routing_number: routingNumber,
-      account_number: accountNumber
-    });
+    const bankNumber = e.target['bank_number'].value;
+    if(bankNumber) {
+      const routingNumber = `${bankNumber}-${e.target.routing_number.value}`;
+      const accountNumber = e.target.account_number.value;
+      this.props.createBankAccount(this.state.userId, {
+        routing_number: routingNumber,
+        account_number: accountNumber
+      });
+    } else {
+      this.setState({ bankNumberError: true })
+    }
+  }
+
+  handleBankNumberSelect(e) {
+    this.setState({selectedBank: e.target.value, bankNumberError: false});
   }
 
   handleStepTab(index) {
@@ -200,12 +231,8 @@ class Account extends Component {
                       <Chip label={`Ativada`} style={{color: 'white', marginRight: 20, backgroundColor: 'green'}} />
                     )}
                   </div>
-                  { account.data.verification.fields_needed.length > 0 &&
+                  { account.data.verification.disabled_reason === "fields_needed" &&
                   <div>
-                    <Typography className={classes.pos} color="textSecondary">
-                      Entraremos em contato para finalizar a validação da sua conta através do e-mail: <br/>
-                      <strong>{ account.data.email }</strong>
-                    </Typography>
                     <Typography component="p">
                       {`Temos os seguintes campos a serem verificados:`}
                     </Typography>
@@ -226,7 +253,20 @@ class Account extends Component {
                     color="primary"
                     onClick={this.openUpdateModal}
                   >
-                    Validar conta
+                    { account.data.verification.disabled_reason ? `Ativar conta` : `Atualizar conta` }
+                  </Button>
+                  <Button
+                    style={{color: 'white'}}
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    onClick={() => this.handleStepTab(1)}
+                  >
+                    Próximo passo
+
+                    <NextIcon />
+
+
                   </Button>
                 </CardActions>
               </Card>}
@@ -239,19 +279,34 @@ class Account extends Component {
                         {getStepContent(1)}
                       </Typography>
                     </div>
-                    <Typography className={classes.pos} gutterBottom>
-                      Entre com os dados da sua conta no formato seguinte: <br />
-                      <strong>xxx-xxxxxx</strong> <br />
-                      Sendo a primeira parte o número do banco seguindo do número da agência. <br />
-                    </Typography>
-                    <Typography color="primary" gutterBottom>
-                      Você pode consultar o <a href="https://pt.wikipedia.org/wiki/Lista_de_bancos_do_Brasil" target="_blank">código do seu banco aqui</a>
-                    </Typography>
-                    <Typography className={classes.pos} gutterBottom>
-                      Lembre-se que é possível alterar uma conta bancária depois de verificada, então verifique se seus dados estão corretos <br />
-                      Se desejar modificar sua conta bancária, terá que adicionar uma nova entrando em contato
-                      com tarefas@gitpay.me
-                    </Typography>
+                    <Grid container spacing={24}>
+                      <Grid item xs={12}>
+                        { bankAccount.data.routing_number ? (
+                          <Typography color="primary">
+                            Sua conta bancária está ativa
+                          </Typography>
+                        ) : (
+                          <FormControl className={classes.formControl} error={this.state.bankNumberError}>
+                            <Select
+                              value={this.state.selectedBank}
+                              displayEmpty
+                              name="bank_number"
+                              onChange={this.handleBankNumberSelect}
+                            >
+                              <MenuItem value="" disabled>
+                                <em>Selecione o número do banco</em>
+                              </MenuItem>
+                              { Object.keys(Const.BANK_NUMBERS).map((item, i) => {
+                                return (<MenuItem key={i} value={item}>{`${Const.BANK_NUMBERS[item]}`}</MenuItem>)
+                              })}
+                            </Select>
+                            {this.state.bankNumberError &&
+                            < FormHelperText > Por favor selecione o banco</FormHelperText>
+                            }
+                          </FormControl>
+                        )}
+                      </Grid>
+                    </Grid>
                     <Grid container spacing={24}>
                       <Grid item xs={12}>
                         <FormControl>
@@ -285,7 +340,35 @@ class Account extends Component {
                       type="submit"
                       disabled={bankAccount.data.routing_number ? true : false}
                     >
-                      Validar conta
+                      Ativar conta bancária
+                    </Button>
+                    <Button
+                      style={{color: 'white'}}
+                      size="large"
+                      variant="raised"
+                      color="primary"
+                      onClick={() => this.handleStepTab(0)}
+                    >
+                      <PreviousIcon />
+
+                      Passo anterior
+
+
+
+
+                    </Button>
+                    <Button
+                      style={{color: 'white'}}
+                      size="large"
+                      variant="raised"
+                      color="primary"
+                      onClick={() => this.handleStepTab(2)}
+                    >
+                      Próximo passo
+
+                      <NextIcon />
+
+
                     </Button>
                   </CardActions>
                 </Card>
@@ -334,6 +417,19 @@ class Account extends Component {
                     >
                       Aceitar termos
                     </Button>
+                    <Button
+                      style={{color: 'white'}}
+                      size="large"
+                      variant="raised"
+                      color="primary"
+                      onClick={() => this.handleStepTab(1)}
+                    >
+                      <PreviousIcon />
+
+                      Passo anterior
+
+
+                    </Button>
                   </CardActions>
                 </Card>
               </form>) : (
@@ -352,6 +448,33 @@ class Account extends Component {
                     </Grid>
                   </Grid>
                 </CardContent>
+                <CardActions>
+                  <Button
+                    style={{color: 'white'}}
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    onClick={() => this.handleStepTab(1)}
+                  >
+                    <PreviousIcon />
+                    Passo anterior
+
+
+                  </Button>
+                  <Button
+                    style={{color: 'white'}}
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    onClick={() => this.handleStepTab(0)}
+                  >
+                    Concluir
+
+                    <ConcludeIcon />
+
+
+                  </Button>
+                </CardActions>
               </Card>
               )}
               </div>
@@ -388,12 +511,97 @@ class Account extends Component {
                             name="legal_entity[last_name]"
                             id="adornment-email"
                             placeholder="Último nome"
+                            style={{marginRight: 20}}
                             defaultValue={account.data.legal_entity.last_name}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <Input
+                            id="payment-form-user"
+                            name="legal_entity[personal_id_number]"
+                            placeholder={account.data.legal_entity.personal_id_number_provided ? 'CPF fornecido' : 'Número do CPF'}
+                            disabled={account.data.legal_entity.personal_id_number_provided}
+                            defaultValue={account.data.legal_entity.personal_id_number}
                           />
                         </FormControl>
                       </Grid>
                       <Grid item xs={12}>
-                        <div>
+                        <FormControl>
+                          <Input
+                            id="payment-form-user"
+                            name="legal_entity[address][line1]"
+                            placeholder="Endereço"
+                            style={{marginRight: 20}}
+                            defaultValue={account.data.legal_entity.address.line1}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <Input
+                            id="payment-form-user"
+                            name="legal_entity[address][line2]"
+                            placeholder="Complemento"
+                            style={{marginRight: 20}}
+                            defaultValue={account.data.legal_entity.address.line2}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <Input
+                            name="legal_entity[address][postal_code]"
+                            id="adornment-email"
+                            placeholder="CEP"
+                            defaultValue={account.data.legal_entity.address.postal_code}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl>
+                          <Input
+                            name="legal_entity[address][city]"
+                            id="adornment-city"
+                            placeholder="Cidade"
+                            style={{marginRight: 20}}
+                            defaultValue={account.data.legal_entity.address.city}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <Input
+                            id="payment-form-user"
+                            name="legal_entity[address][state]"
+                            placeholder="Estado"
+                            defaultValue={account.data.legal_entity.address.state}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl>
+                          <Input
+                            id="payment-form-user"
+                            name="legal_entity[dob][day]"
+                            placeholder="Dia do nascimento"
+                            style={{marginRight: 20}}
+                            defaultValue={account.data.legal_entity.dob.day}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <Input
+                            name="legal_entity[dob][month]"
+                            id="adornment-email"
+                            placeholder="Mês do nascimento"
+                            defaultValue={account.data.legal_entity.dob.month}
+                            style={{marginRight: 10}}
+                          />
+                        </FormControl>
+                        <FormControl>
+                          <Input
+                            name="legal_entity[dob][year]"
+                            id="adornment-email"
+                            placeholder="Ano do nascimento"
+                            defaultValue={account.data.legal_entity.dob.year}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <div style={{float: 'right'}}>
                           <Button color="primary" onClick={this.closeUpdateModal}>
                             Cancelar
                           </Button>

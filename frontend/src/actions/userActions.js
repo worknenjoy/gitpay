@@ -148,7 +148,7 @@ const updateAccount = (userId, accountData) => {
       //dispatch(fetchAccount());
       return dispatch(updateUserAccountSuccess(account));
     }).catch((error) => {
-      dispatch(addNotification('Erro ao tentar atualizar sua conta'));
+      dispatch(addNotification('Erro ao tentar atualizar sua conta. Você preencheu todos os dados?'));
       console.log('error on create account', error);
       return dispatch(updateUserAccountError(error));
     });
