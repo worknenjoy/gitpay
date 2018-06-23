@@ -5,8 +5,6 @@ import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
-import Slide from 'material-ui/transitions/Slide';
-import Button from 'material-ui/Button';
 import Avatar from 'material-ui/Avatar';
 
 import Notification from '../notification/notification';
@@ -26,15 +24,11 @@ import SubscribeFrom from 'react-mailchimp-subscribe';
 
 import './mailchimp.css';
 
-import api from '../../consts';
-
 import TopBarContainer from '../../containers/topbar';
 import Bottom from '../../components/bottom/bottom';
+import LoginButton from '../../components/session/login-button'
 
 const logoSymbol = require('../../images/logo-symbol.png');
-const logoGitlab = require('../../images/gitlab-logo.png');
-const logoGithub = require('../../images/github-logo.png');
-const logoBitbucket = require('../../images/bitbucket-logo.png');
 const octodex = require('../../images/octodex.png');
 const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat.png');
 const deal = require('../../images/deal.png');
@@ -80,15 +74,7 @@ class Welcome extends Component {
         </Grid>
         <Grid item xs={12}>
           <div className={classes.mainBlock}>
-            <Typography type="subheading" gutterBottom noWrap>
-              Ou conecte com algumas dessas contas
-            </Typography>
-            <Button href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-              <img width="16" src={logoGithub} className={classes.icon} /> Github
-            </Button>
-            <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-              <img width="16" src={logoBitbucket} className={classes.icon} /> Bitbucket
-            </Button>
+            <LoginButton referer={this.props.location} />
           </div>
         </Grid>
         <div className={classes.secBlock}>

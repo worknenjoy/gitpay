@@ -17,6 +17,14 @@ class Auth {
     return localStorage.getItem('authNotified')
   }
 
+  static storeReferer (path) {
+    localStorage.setItem('referer', path)
+  }
+
+  static getReferer() {
+    return localStorage.getItem('referer')
+  }
+
   /**
    * Check if a user is authenticated - check if a token is saved in Local Storage
    *

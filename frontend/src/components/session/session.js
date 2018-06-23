@@ -7,8 +7,15 @@ class Session extends Component {
   }
   componentWillMount () {
     const token = this.props.match.params.token
+    const referer = Auth.getReferer()
+
     Auth.authenticateUser(token)
-    this.props.history.replace('/profile')
+    if (referer && referer !== '/') {
+      this.props.history.replace(referer)
+    } else {
+      this.props.history.replace('/profile')
+    }
+
   }
 
   render () {

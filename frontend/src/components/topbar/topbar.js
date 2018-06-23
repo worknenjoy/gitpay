@@ -1,40 +1,39 @@
-import React, { Component } from 'react';
-import Avatar from 'material-ui/Avatar';
-import { withRouter } from "react-router-dom";
-import ReactPlaceholder from 'react-placeholder';
-import { RoundShape } from 'react-placeholder/lib/placeholders';
+import React, { Component } from 'react'
+import Avatar from 'material-ui/Avatar'
+import { withRouter } from "react-router-dom"
+import ReactPlaceholder from 'react-placeholder'
+import { RoundShape } from 'react-placeholder/lib/placeholders'
 
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from 'material-ui/Dialog';
+} from 'material-ui/Dialog'
+
 import Tooltip from 'material-ui/Tooltip'
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import TextField from 'material-ui/TextField';
+import { FormControl, FormHelperText } from 'material-ui/Form'
+import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
-import HomeIcon from 'material-ui-icons/Home';
-import PlusIcon from 'material-ui-icons/Queue';
-import UserIcon from 'material-ui-icons/AccountCircle';
-import MoreIcon from 'material-ui-icons/MoreHoriz';
-import { withStyles } from 'material-ui/styles';
+import HomeIcon from 'material-ui-icons/Home'
+import PlusIcon from 'material-ui-icons/Queue'
+import UserIcon from 'material-ui-icons/AccountCircle'
+import MoreIcon from 'material-ui-icons/MoreHoriz'
+import { withStyles } from 'material-ui/styles'
 
-import api from '../../consts';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Button from 'material-ui/Button';
-import nameInitials from 'name-initials';
-import isGithubUrl from 'is-github-url';
+import Menu, { MenuItem } from 'material-ui/Menu'
+import Button from 'material-ui/Button'
+import nameInitials from 'name-initials'
+import isGithubUrl from 'is-github-url'
 
-import { addNotification } from '../../actions/actions'
+import mainStyles from '../styles/style'
 
-import mainStyles from '../styles/style';
+const classes = (theme) => mainStyles(theme)
 
-const classes = (theme) => mainStyles(theme);
+import LoginButton from '../session/login-button'
 
-const logo = require('../../images/gitpay-logo.png');
-const logoGithub = require('../../images/github-logo.png');
-const logoBitbucket = require('../../images/bitbucket-logo.png');
+const logo = require('../../images/gitpay-logo.png')
+const logoGithub = require('../../images/github-logo.png')
 
 const styles = {
   logoMain: {
@@ -232,15 +231,7 @@ class TopBar extends Component  {
                     <DialogTitle id="form-dialog-title">Entre para a comunidade do Gitpay</DialogTitle>
                     <DialogContent>
                       <div className={classes.mainBlock}>
-                        <Typography type="subheading" gutterBottom noWrap>
-                          Conecte com algumas dessas contas
-                        </Typography>
-                        <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                          <img style={{marginRight: 5}} width="16" src={logoGithub} /> Github
-                        </Button>
-                        <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                          <img style={{marginRight: 5}} width="16" src={logoBitbucket} /> Bitbucket
-                        </Button>
+                        <LoginButton referer={this.props.location} />
                       </div>
                     </DialogContent>
                   </Dialog>

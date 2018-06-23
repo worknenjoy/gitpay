@@ -27,7 +27,7 @@ router.get('/authorize/github', passport.authenticate('github', { scope: ['email
 router.get('/callback/github',
   passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
   })
 
 router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'], accessType: 'offline' }))
