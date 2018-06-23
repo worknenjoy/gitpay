@@ -43,13 +43,12 @@ import Table from '../Table/Table';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 
-import api from '../../consts';
-
 import marked from 'marked';
 import renderHTML from 'react-render-html';
 
-import TopBarContainer from '../../containers/topbar';
-import Bottom from '../bottom/bottom';
+import TopBarContainer from '../../containers/topbar'
+import Bottom from '../bottom/bottom'
+import LoginButton from '../session/login-button'
 
 const paymentIcon = require('../../images/payment-icon-alt.png');
 const timeIcon = require('../../images/time-icon.png');
@@ -480,18 +479,6 @@ class Task extends Component {
                     deleteIcon={<RedeemIcon />}
                   />
                   }
-                  { taskOwner() &&
-                  <div style={{display: 'inline-block'}}>
-                    <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
-                      <span className={classes.spaceRight}>Mudar status</span>  <FilterIcon />
-                    </Button>
-                    <Button onClick={this.handleTaskPaymentDialog} size="small" color="primary" className={classes.altButton}>
-                      <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
-                    </Button>
-                    <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
-                    <TaskPayment id={task.data.id} paid={task.data.paid} transferId={task.data.transfer_id} assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} onPay={this.props.paymentTask} />
-                  </div>
-                  }
                 </Typography>
               </ReactPlaceholder>
             </Grid>
@@ -505,9 +492,21 @@ class Task extends Component {
               />
             </div>
             <div className={classes.paper}>
-              <Button onClick={this.handleAssignDialogOpen} size="medium" color="primary" className={classes.altButton}>
+              <Button style={{ marginRight: 10 }} onClick={this.handleAssignDialogOpen} size="medium" color="primary" className={classes.altButton}>
                 <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
               </Button>
+              { taskOwner() &&
+              <div style={{display: 'inline-block'}}>
+                <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
+                  <span className={classes.spaceRight}>Mudar status</span>  <FilterIcon />
+                </Button>
+                <Button onClick={this.handleTaskPaymentDialog} size="small" color="primary" className={classes.altButton}>
+                  <span className={classes.spaceRight}>Pagar</span>  <RedeemIcon />
+                </Button>
+                <StatusDialog id={task.data.id} providerStatus={task.data.metadata.issue.state} onSelect={this.props.updateTask} selectedValue={task.data.status} open={this.state.statusDialog} onClose={this.handleStatusDialogClose} />
+                <TaskPayment id={task.data.id} paid={task.data.paid} transferId={task.data.transfer_id} assigned={task.data.assigned} assigns={task.data.assigns} orders={task.data.orders} open={this.state.taskPaymentDialog} onClose={this.handleTaskPaymentDialogClose} onPay={this.props.paymentTask} />
+              </div>
+              }
               <Dialog
               open={this.state.assignDialog}
               onClose={this.handleAssignDialogClose}
@@ -518,15 +517,7 @@ class Task extends Component {
                   <DialogTitle id="form-dialog-title">Você precisa estar logado para realizar esta tarefa</DialogTitle>
                   <DialogContent>
                     <div className={classes.mainBlock}>
-                      <Typography type="subheading" gutterBottom noWrap>
-                        Conecte com algumas dessas contas
-                      </Typography>
-                      <Button style={{marginRight: 10}} href={`${api.API_URL}/authorize/github`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img width="16" src={logoGithub} /> Github
-                      </Button>
-                      <Button href={`${api.API_URL}/authorize/bitbucket`} variant="raised" size="large" color="secondary" className={classes.altButton}>
-                        <img width="16" src={logoBitbucket} /> Bitbucket
-                      </Button>
+                      <LoginButton referer={this.props.location} />
                     </div>
                   </DialogContent>
                 </div>

@@ -3,9 +3,7 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Redirect,
-  withRouter
+  Redirect
 } from 'react-router-dom'
 import Auth from '../../modules/auth'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, HashRouter, Switch, BrowserRouter } from 'react-router-dom'
+import { Route, HashRouter, Switch } from 'react-router-dom'
 
 import PrivateRoute from '../components/session/private-route';
 
@@ -7,6 +7,7 @@ import Welcome from '../components/welcome/welcome';
 import Session from '../components/session/session';
 import ProfileContainer from '../containers/profile';
 import TaskContainer from '../containers/task';
+
 
 export default props => (
     <HashRouter>
