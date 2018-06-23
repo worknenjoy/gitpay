@@ -25,14 +25,14 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
 
 router.get('/authorize/github', passport.authenticate('github', { scope: ['email'], accessType: 'offline' }))
 router.get('/callback/github',
-  passport.authenticate('github', { failureRedirect: '/login' }),
+  passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
     res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
   })
 
 router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'], accessType: 'offline' }))
 router.get('/callback/bitbucket',
-  passport.authenticate('bitbucket', { failureRedirect: '/login' }),
+  passport.authenticate('bitbucket', { failureRedirect: '/' }),
   (req, res) => {
     res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
   })
