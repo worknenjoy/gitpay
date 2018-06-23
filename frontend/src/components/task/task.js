@@ -6,18 +6,19 @@ import ReactPlaceholder from 'react-placeholder';
 import { RectShape } from 'react-placeholder/lib/placeholders';
 import "react-placeholder/lib/reactPlaceholder.css";
 
-import Grid from 'material-ui/Grid';
-import Avatar from 'material-ui/Avatar';
-import Card, { CardContent, CardMedia } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid'
+import Avatar from 'material-ui/Avatar'
+import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import AppBar from 'material-ui/AppBar'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
+import Tooltip from 'material-ui/Tooltip'
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
-} from 'material-ui/Dialog';
+} from 'material-ui/Dialog'
 
 import RedeemIcon from 'material-ui-icons/Redeem';
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
@@ -484,17 +485,24 @@ class Task extends Component {
             </Grid>
           </Grid>
           <Grid container justify="flex-start" direction="row" spacing={24} className={classes.gridBlock}>
-            <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12}}>
-            <div>
-              <Avatar
-                src={task.data.metadata.issue.user.avatar_url}
-                className={classNames(classes.avatar)}
-              />
+            <Grid item xs={8} style={{display: 'flex', alignItems: 'center', marginTop: 12, position: 'relative'}}>
+            <div style={{position: 'absolute', left: 18, top: 5}}>
+              <Typography color="default">Autor:</Typography>
             </div>
+            <Tooltip id="tooltip-github" title={`Criado por ${task.data.metadata.issue.user.login}`} placement="bottom">
+              <a href={`${task.data.metadata.issue.user.html_url}`} target="_blank">
+                <Avatar
+                  src={task.data.metadata.issue.user.avatar_url}
+                  className={classNames(classes.avatar)}
+                />
+              </a>
+            </Tooltip>
             <div className={classes.paper}>
+              { !taskOwner() &&
               <Button style={{ marginRight: 10 }} onClick={this.handleAssignDialogOpen} size="medium" color="primary" className={classes.altButton}>
                 <span className={classes.spaceRight}>Tenho interesse nesta tarefa!</span>  <AddIcon />
               </Button>
+              }
               { taskOwner() &&
               <div style={{display: 'inline-block'}}>
                 <Button style={{marginRight: 10}} onClick={this.handleStatusDialog} size="small" color="primary" className={classes.altButton}>
@@ -562,6 +570,7 @@ class Task extends Component {
                 </AppBar>
                 {task.tab === 0 &&
                 <TabContainer>
+                  { taskOwner() &&
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cover}
@@ -620,7 +629,7 @@ class Task extends Component {
                         </form>
                       </CardContent>
                     </div>
-                  </Card>
+                  </Card>}
                   { taskOwner() &&
                   <Card className={classes.card}>
                     <CardMedia
