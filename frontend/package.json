@@ -16,6 +16,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "webpack-dev-server": "^2.5.0"
+  },
+  "dependencies": {
     "axios": "^0.16.2",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
@@ -41,10 +44,7 @@
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
     "url-loader": "^0.6.2",
-    "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.5.0"
-  },
-  "dependencies": {
+    "webpack": "^3.12.0",
     "classnames": "^2.2.5",
     "history": "^4.7.2",
     "is-github-url": "^1.2.2",
