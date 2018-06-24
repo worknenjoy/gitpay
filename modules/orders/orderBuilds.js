@@ -1,19 +1,19 @@
-const Promise = require('bluebird');
-const models = require('../../loading/loading');
-const Stripe = require('stripe');
-const stripe = new Stripe(process.env.STRIPE_KEY);
+const Promise = require('bluebird')
+const models = require('../../loading/loading')
 
-module.exports = Promise.method(function orderBuilds(orderParameters) {
+module.exports = Promise.method(function orderBuilds (orderParameters) {
   return models.Order
     .build(
       orderParameters
     )
     .save()
     .then((data) => {
-      return data;
-    }).catch(function (err) {
-      console.log('error to stripe account');
-      console.log(err);
-      return err;
-    });
-});
+      return data
+    }).catch(err => {
+      // eslint-disable-next-line no-console
+      console.log('error to stripe account')
+      // eslint-disable-next-line no-console
+      console.log(err)
+      return err
+    })
+})

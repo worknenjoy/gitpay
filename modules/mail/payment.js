@@ -1,17 +1,16 @@
-const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-const Signatures = require('./content');
+const sg = require('sendgrid')(process.env.SENDGRID_API_KEY)
+const Signatures = require('./content')
 
-let PaymentMail = {};
-let bcc = [];
+let PaymentMail = {}
+let bcc = []
 
-if(process.env.NODE_ENV != 'test') {
+if (process.env.NODE_ENV !== 'test') {
   bcc.push({
     email: 'notifications@gitpay.me'
   })
 }
 
 PaymentMail.success = (to, task, value) => {
-
   const request = sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
@@ -40,24 +39,28 @@ PaymentMail.success = (to, task, value) => {
         },
       ],
     },
-  });
+  })
 
   sg.API(request)
     .then(response => {
-      console.log(response.statusCode);
-      console.log(response.body);
-      console.log(response.headers);
+      // eslint-disable-next-line no-console
+      console.log(response.statusCode)
+      // eslint-disable-next-line no-console
+      console.log(response.body)
+      // eslint-disable-next-line no-console
+      console.log(response.headers)
     })
     .catch(error => {
-      //error is an instance of SendGridError
-      //The full response is attached to error.response
-      console.log(error.response.body.errors);
-      console.log(error.response.statusCode);
-    });
+      // error is an instance of SendGridError
+      // The full response is attached to error.response
+      // eslint-disable-next-line no-console
+      console.log(error.response.body.errors)
+      // eslint-disable-next-line no-console
+      console.log(error.response.statusCode)
+    })
 }
 
 PaymentMail.error = (to, task, value) => {
-
   const request = sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
@@ -74,7 +77,7 @@ PaymentMail.error = (to, task, value) => {
               email: 'notifications@gitpay.me'
             }
           ],
-          subject: "Problema no pagamento por tarefa no Gitpay"
+          subject: 'Problema no pagamento por tarefa no Gitpay'
         },
       ],
       from: {
@@ -90,21 +93,23 @@ PaymentMail.error = (to, task, value) => {
         },
       ],
     },
-  });
+  })
 
   sg.API(request)
     .then(response => {
-      console.log(response.statusCode);
-      console.log(response.body);
-      console.log(response.headers);
+      // eslint-disable-next-line no-console
+      console.log(response.statusCode)
+      // eslint-disable-next-line no-console
+      console.log(response.body)
+      // eslint-disable-next-line no-console
+      console.log(response.headers)
     })
     .catch(error => {
-      //error is an instance of SendGridError
-      //The full response is attached to error.response
-      console.log(error.response.statusCode);
-    });
+      // error is an instance of SendGridError
+      // The full response is attached to error.response
+      // eslint-disable-next-line no-console
+      console.log(error.response.statusCode)
+    })
 }
 
-module.exports = PaymentMail;
-
-
+module.exports = PaymentMail

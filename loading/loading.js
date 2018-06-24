@@ -35,6 +35,7 @@ else {
 
 let db = {}
 
+/* eslint-disable no-sync */
 fs
   .readdirSync(__dirname)
   .filter((file) => {

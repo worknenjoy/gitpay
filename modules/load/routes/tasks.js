@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const authenticationHelpers = require('../../authenticationHelpers')
+require('../../authenticationHelpers')
 const controllers = require('../controllers/task')
 const secure = require('./secure')
 

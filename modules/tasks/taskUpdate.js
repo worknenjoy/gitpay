@@ -104,7 +104,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                         AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues)
                       }
                       AssignMail.interested(usermail, task.dataValues, user.name)
-                      if(task.dataValues.User) {
+                      if (task.dataValues.User) {
                         AssignMail.owner(task.dataValues.User.dataValues.email, task.dataValues, user.name)
                       }
                       return task.dataValues

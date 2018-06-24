@@ -65,4 +65,14 @@ const oauthCallbacks = {
   bitbucketCallbackUrl: `${process.env.API_HOST}/callback/bitbucket`
 }
 
-module.exports = { databaseDev, databaseTest, databaseProd, facebook, google, github, bitbucket, oauthCallbacks, mailchimp }
+module.exports = {
+  databaseDev,
+  databaseTest,
+  databaseProd,
+  facebook,
+  google,
+  github,
+  bitbucket,
+  oauthCallbacks,
+  mailchimp
+}

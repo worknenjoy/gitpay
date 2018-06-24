@@ -10,7 +10,7 @@ require('./config/passport')
 const load = require('./modules/load/load')
 const feed = require('feed-read')
 
-if (process.env.NODE_ENV != 'production') {
+if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
 }
 

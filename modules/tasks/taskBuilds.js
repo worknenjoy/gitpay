@@ -1,14 +1,14 @@
-const Promise = require('bluebird');
-const models = require('../../loading/loading');
-const url = require('url');
-const requestPromise = require('request-promise');
+const Promise = require('bluebird')
+const models = require('../../loading/loading')
+const url = require('url')
+const requestPromise = require('request-promise')
 
-module.exports = Promise.method(function taskBuilds(taskParameters) {
-  const githubUrl = taskParameters.url;
-  const splitIssueUrl = url.parse(githubUrl).path.split('/');
-  const userOrCompany = splitIssueUrl[1];
-  const projectName = splitIssueUrl[2];
-  const issueId = splitIssueUrl[4];
+module.exports = Promise.method(function taskBuilds (taskParameters) {
+  const githubUrl = taskParameters.url
+  const splitIssueUrl = url.parse(githubUrl).path.split('/')
+  const userOrCompany = splitIssueUrl[1]
+  const projectName = splitIssueUrl[2]
+  const issueId = splitIssueUrl[4]
   return requestPromise({
     uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`,
     headers: {
@@ -20,8 +20,8 @@ module.exports = Promise.method(function taskBuilds(taskParameters) {
         taskParameters
       )
       .save()
-      .then((data) => {
-        return data.dataValues;
+      .then(data => {
+        return data.dataValues
       })
-  });
-});
+  })
+})

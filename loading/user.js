@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 
       },
       generateHash: (password) => {
+        /* eslint-disable no-sync */
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
       }
     },

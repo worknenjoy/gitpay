@@ -14,7 +14,9 @@
     "start:dev": "nodemon ./server.js --ignore '/frontend/*'",
     "start": "npm install && node ./server.js",
     "test": "env NODE_ENV=test ./node_modules/.bin/mocha --timeout 10000 test/*.test.js",
-    "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css"
+    "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css",
+    "lint": "./node_modules/.bin/eslint .",
+    "prepush": "npm run lint"
   },
   "private": true,
   "dependencies": {
@@ -79,6 +81,7 @@
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "4.13.3",
+    "husky": "^0.14.3",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",
