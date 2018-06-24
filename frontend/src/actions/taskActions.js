@@ -244,11 +244,10 @@ const listTasks = () => {
   }
 }
 
-const filterTasks = (key, value) => {
+const filterTasks = (tasks, key, value) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(filterTaskRequested())
-    const tasks = getState().tasks
     let filtered = []
     if(key === 'Assigns') {
       filtered = tasks.data.filter((item) => {
