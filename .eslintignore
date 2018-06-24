@@ -3,3 +3,7 @@ build
 node_modules
 temp
 coverage
+test
+migrate.js
+migration
+frontend

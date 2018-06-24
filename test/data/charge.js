@@ -186,4 +186,3 @@ module.exports.success = {
   },
   "type": "charge.succeeded"
 }
-

@@ -1,33 +1,34 @@
-const Promise = require('bluebird');
-const models = require('../../loading/loading');
-const TransferMail = require('../mail/transfer');
+const Promise = require('bluebird')
+const models = require('../../loading/loading')
+const TransferMail = require('../mail/transfer')
 
-const Stripe = require('stripe');
-const stripe = new Stripe(process.env.STRIPE_KEY);
+const Stripe = require('stripe')
+const stripe = new Stripe(process.env.STRIPE_KEY)
 
-module.exports = Promise.method(function taskPayment(payment) {
+module.exports = Promise.method(function taskPayment (payment) {
   return models.Task
     .findOne({
       where: {
         id: payment.taskId
       }
     },
-      {include: [models.User, models.Order, models.Assign]}
+    { include: [ models.User, models.Order, models.Assign ] }
     )
-    .then((task) => {
-      if(!task) {
-        throw new Error('find_task_error');
+    .then(task => {
+      if (!task) {
+        throw new Error('find_task_error')
       }
-       return models.Assign.findOne({
+
+      return models.Assign.findOne({
         where: {
           id: task.assigned
         },
-         include: [models.User]
-      }).then((assign) => {
+        include: [ models.User ]
+      }).then(assign => {
         const user = assign.dataValues.User.dataValues
         const transferGroup = `task_${task.id}`
         const dest = user.account_id
-        if(!dest) {
+        if (!dest) {
           throw new Error('account_destination_invalid')
         }
 
@@ -37,25 +38,27 @@ module.exports = Promise.method(function taskPayment(payment) {
           destination: dest,
           source_type: 'card',
           transfer_group: transferGroup,
-        }).then(function(transfer) {
-          console.log('transfer');
-          console.log(transfer);
-          if(transfer) {
-            return models.Task.update({paid: true, transfer_id: transfer.id}, {
+        }).then(transfer => {
+          // eslint-disable-next-line no-console
+          console.log('transfer')
+          // eslint-disable-next-line no-console
+          console.log(transfer)
+
+          if (transfer) {
+            return models.Task.update({ paid: true, transfer_id: transfer.id }, {
               where: {
                 id: task.id
               }
-            }).then(function(update) {
-              if(!update) {
-                TransferMail.error(user.email, task, task.value);
-                throw new Error('update_task_reject');
+            }).then(update => {
+              if (!update) {
+                TransferMail.error(user.email, task, task.value)
+                throw new Error('update_task_reject')
               }
-              TransferMail.success(user.email, task, task.value);
-              return transfer;
-            });
+              TransferMail.success(user.email, task, task.value)
+              return transfer
+            })
           }
-        });
+        })
       })
-    });
-
-});
+    })
+})
