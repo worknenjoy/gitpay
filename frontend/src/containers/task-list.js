@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import TaskList from '../components/task/task-list'
 import { listTasks, filterTasks } from '../actions/taskActions'
+import { getFilteredTasks, getUser } from '../selectors/tasks'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, props) => {
   return {
-    user: state.loggedIn.user,
-    tasks: state.tasks
+    user: getUser(state),
+    tasks: getFilteredTasks(state)
   }
 }
 

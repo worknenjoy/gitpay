@@ -98,8 +98,8 @@ const filterTaskRequested = () => {
   return { type: FILTER_TASK_REQUESTED, completed: false }
 }
 
-const filterTaskSuccess = (tasks) => {
-  return { type: FILTER_TASK_SUCCESS, completed: true, data: tasks }
+const filterTaskSuccess = (tasks, filter) => {
+  return { type: FILTER_TASK_SUCCESS, completed: true, data: tasks.data, filterType: filter }
 }
 
 const filterTaskError = (error) => {
@@ -244,30 +244,11 @@ const listTasks = () => {
   }
 }
 
-const filterTasks = (tasks, key, value) => {
-  validToken()
+const filterTasks = (key = 'all') => {
   return (dispatch, getState) => {
+    const tasks = getState().tasks
     dispatch(filterTaskRequested())
-    let filtered = []
-    if(key === 'Assigns') {
-      filtered = tasks.data.filter((item) => {
-        const interested = item.Assigns.filter((assign) => assign.userId === value)
-        return interested.length
-      })
-    }  else if( key === 'assigned' ) {
-
-      filtered = tasks.data.filter((item) => {
-
-        const interested = item.Assigns.filter((assign) => assign.id === item.assigned)
-        if(interested.length) {
-          return item[key] === interested[0].id
-        }
-      })
-    } else {
-      filtered = tasks.data.filter((item) => item[key] === value)
-    }
-
-    return dispatch(filterTaskSuccess(filtered))
+    return dispatch(filterTaskSuccess(tasks, key))
   }
 }
 
