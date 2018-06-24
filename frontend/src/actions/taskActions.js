@@ -249,7 +249,25 @@ const filterTasks = (key, value) => {
   return (dispatch, getState) => {
     dispatch(filterTaskRequested())
     const tasks = getState().tasks
-    const filtered = tasks.data.filter((item) => item[key] === value)
+    let filtered = []
+    if(key === 'Assigns') {
+      filtered = tasks.data.filter((item) => {
+        const interested = item.Assigns.filter((assign) => assign.userId === value)
+        return interested.length
+      })
+    }  else if( key === 'assigned' ) {
+
+      filtered = tasks.data.filter((item) => {
+
+        const interested = item.Assigns.filter((assign) => assign.id === item.assigned)
+        if(interested.length) {
+          return item[key] === interested[0].id
+        }
+      })
+    } else {
+      filtered = tasks.data.filter((item) => item[key] === value)
+    }
+
     return dispatch(filterTaskSuccess(filtered))
   }
 }

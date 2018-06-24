@@ -78,6 +78,12 @@ class TaskList extends Component {
       case 1:
         this.props.filterTasks('userId', this.props.user.id);
         break;
+      case 2:
+        this.props.filterTasks('Assigns', this.props.user.id);
+        break;
+      case 3:
+        this.props.filterTasks('assigned', this.props.user.id);
+        break;
       default:
         this.props.filterTasks();
     }
@@ -115,7 +121,10 @@ class TaskList extends Component {
               textColor="primary"
             >
               <Tab value={0} label="Todas tarefas" icon={<RedeemIcon />} />
-              <Tab value={1} label="Minhas tarefas" icon={<ShoppingBasket />} />
+              <Tab value={1} label="Criadas por mim" icon={<ShoppingBasket />} />
+              <Tab value={2} label="Tenho interesse" icon={<ShoppingBasket />} />
+              <Tab value={3} label="Atribuidas a mim" icon={<ShoppingBasket />} />
+              <Tab value={4} label="Abertas" icon={<ShoppingBasket />} />
             </Tabs>
           </AppBar>
           <TabContainer>
