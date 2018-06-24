@@ -76,16 +76,16 @@ class TaskList extends Component {
         this.props.listTasks();
         break;
       case 1:
-        this.props.filterTasks('userId', this.props.user.id);
+        this.props.filterTasks(this.props.tasks, 'userId', this.props.user.id);
         break;
       case 2:
-        this.props.filterTasks('Assigns', this.props.user.id);
+        this.props.filterTasks(this.props.tasks, 'Assigns', this.props.user.id);
         break;
       case 3:
-        this.props.filterTasks('assigned', this.props.user.id);
+        this.props.filterTasks(this.props.tasks, 'assigned', this.props.user.id);
         break;
       default:
-        this.props.filterTasks();
+        this.props.filterTasks(this.props.tasks);
     }
   };
 
