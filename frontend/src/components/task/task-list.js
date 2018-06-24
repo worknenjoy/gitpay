@@ -70,22 +70,25 @@ class TaskList extends Component {
   }
 
   handleTabChange(event, value) {
-    this.setState({ tab: value });
+
+    const { tasks } = this.props
+
+    this.setState({ tab: value })
     switch (value) {
       case 0:
-        this.props.listTasks();
+        this.props.listTasks()
         break;
       case 1:
-        this.props.filterTasks(this.props.tasks, 'userId', this.props.user.id);
+        this.props.filterTasks('userId')
         break;
       case 2:
-        this.props.filterTasks(this.props.tasks, 'Assigns', this.props.user.id);
+        this.props.filterTasks('Assigns')
         break;
       case 3:
-        this.props.filterTasks(this.props.tasks, 'assigned', this.props.user.id);
+        this.props.filterTasks('assigned')
         break;
       default:
-        this.props.filterTasks(this.props.tasks);
+        this.props.filterTasks();
     }
   };
 
@@ -124,7 +127,6 @@ class TaskList extends Component {
               <Tab value={1} label="Criadas por mim" icon={<ShoppingBasket />} />
               <Tab value={2} label="Tenho interesse" icon={<ShoppingBasket />} />
               <Tab value={3} label="Atribuidas a mim" icon={<ShoppingBasket />} />
-              <Tab value={4} label="Abertas" icon={<ShoppingBasket />} />
             </Tabs>
           </AppBar>
           <TabContainer>

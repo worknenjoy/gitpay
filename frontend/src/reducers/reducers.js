@@ -189,18 +189,18 @@ const task = (state = {completed: true, values: { available: 0, failed: 0, pendi
   }
 }
 
-const tasks = (state = {completed: true, error: { message: false }, data: []}, action) => {
+const tasks = (state = {completed: true, error: { message: false }, data: [], filterType: 'all'}, action) => {
   switch (action.type) {
     case LIST_TASK_REQUESTED:
       return { ...state, completed: false };
     case LIST_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data };
+      return { ...state, completed: true, data: action.data, filterType: 'all' };
     case LIST_TASK_ERROR:
       return { ...state, completed: true, error: action.error };
     case FILTER_TASK_REQUESTED:
       return { ...state, completed: false };
     case FILTER_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data };
+      return { ...state, completed: true, data: action.data, filterType: action.filterType };
     default:
       return state;
   }
