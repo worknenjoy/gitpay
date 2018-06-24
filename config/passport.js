@@ -12,11 +12,14 @@ const userBuild = require('../modules/users').userBuilds
 const userUpdate = require('../modules/users').userUpdate
 
 const jwt = require('jsonwebtoken')
-
 const Mailchimp = require('mailchimp-api-v3')
-const mc = new Mailchimp(mailchimp.apiKey)
+
 
 const mailChimpConnect = (mail) => {
+  if(!mailchimp.apiKey) {
+    return;
+  }
+  const mc = new Mailchimp(mailchimp.apiKey)
   mc.post(`/lists/${mailchimp.listId}/members`, {
     email_address: mail,
     status: 'subscribed'
