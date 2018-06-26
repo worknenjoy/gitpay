@@ -63,6 +63,7 @@ describe("tasks", () => {
             expect(res.statusCode).to.equal(200);
             expect(res.body).to.exist;
             expect(res.body.url).to.equal(github_url);
+            expect(res.body.title).to.equal('Mailchimp integration');
             expect(res.body.metadata).to.exist;
             expect(res.body.metadata.id).to.equal('99');
             expect(res.body.metadata.user).to.equal('worknenjoy');
