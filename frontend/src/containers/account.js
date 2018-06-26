@@ -1,6 +1,12 @@
 import { connect } from 'react-redux'
 import Account from '../components/profile/account'
-import { fetchAccount, createAccount, updateAccount, createBankAccount, getBankAccount } from '../actions/userActions'
+import {
+  fetchAccount,
+  createAccount,
+  updateAccount,
+  createBankAccount,
+  getBankAccount
+} from '../actions/userActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -21,4 +27,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Account);
+export default connect(mapStateToProps, mapDispatchToProps)(Account)
