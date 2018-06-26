@@ -41,7 +41,9 @@ module.exports = Promise.method(function taskFetch (taskParams) {
 
         const issueDataJson = JSON.parse(issueData)
 
-        if (!data.title && data.title != issueDataJson.title) data.updateAttributes({title: issueDataJson.title}).then((task) => task)
+         if (!data.title && data.title != issueDataJson.title) {
+          const titleChange = await data.updateAttributes({title: issueDataJson.title}).then((task) => task)
+         }
 
         return {
           id: data.dataValues.id,
