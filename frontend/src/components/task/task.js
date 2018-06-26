@@ -407,12 +407,6 @@ class Task extends Component {
       return orders.map((item, i) => [item.paid ? 'Sim' : 'Não', statuses[item.status] || 'Não processado', `$ ${item.amount}`, MomentComponent(item.updatedAt).fromNow()])
     }
 
-    const removeDuplicates = (myArr, prop) => {
-      return myArr.filter((obj, pos, arr) => {
-        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
-      });
-    }
-
     const assignActions = (assign) => {
       const taskData = this.props.task.data
       return (
@@ -434,9 +428,9 @@ class Task extends Component {
       if(!assign.length) {
         return []
       }
-      const items = removeDuplicates(assign.map((item, i) => {
-        return [`${item.User.name}` || 'Sem nome', MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
-      }), `${assign.name}`)
+      const items = assign.map((item, i) => {
+        return [item.User.username , MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
+      })
 
       return items
     }
@@ -723,7 +717,7 @@ class Task extends Component {
                     content={
                       <Table
                         tableHeaderColor="warning"
-                        tableHead={["Nome", "Criado em", "Acões"]}
+                        tableHead={["Usuário", "Quando", "Acões"]}
                         tableData={task.data.assigns.length ? displayAssigns(task.data.assigns) : []}
                       />
                     }

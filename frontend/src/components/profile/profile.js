@@ -163,7 +163,7 @@ class Profile extends Component {
               <div className={classes.rowList}>
                 <div className={classes.infoItem}>
                   <Typography>
-                    {user.name}
+                    {user.username}
                   </Typography>
                 </div>
                 <div className={classes.infoItem}>

@@ -103,9 +103,9 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                       if (!usermail) {
                         AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues)
                       }
-                      AssignMail.interested(usermail, task.dataValues, user.name)
+                      AssignMail.interested(usermail, task.dataValues, user.username)
                       if (task.dataValues.User) {
-                        AssignMail.owner(task.dataValues.User.dataValues.email, task.dataValues, user.name)
+                        AssignMail.owner(task.dataValues.User.dataValues.email, task.dataValues, user.username)
                       }
                       return task.dataValues
                     })
@@ -123,7 +123,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
             }).then((assigned) => {
               SendMail.success(assigned.dataValues.User.dataValues.email, 'Você foi escolhido para iniciar uma tarefa no Gitpay', `
                     <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.dataValues.id}">${process.env.FRONTEND_HOST}/#/task/${task.dataValues.id}</a> no Gitpay</p>
-                    <p>Isto quer dizer que você já pode começar. Fique de olho no prazo para conclusão, e após a tarefa for finalizada você receberá o pagamento na sua conta cadastrada.</p>
+                    <p>Isto quer dizer que você já pode começar. Fique de olho no prazo para conclusão, e após a tarefa for integrada você receberá o pagamento na sua conta cadastrada.</p>
               `)
               return task.dataValues
             })
