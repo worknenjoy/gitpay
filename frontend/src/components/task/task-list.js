@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper'
+import Typography from 'material-ui/Typography'
+import AppBar from 'material-ui/AppBar'
 
-import Tabs, { Tab } from 'material-ui/Tabs';
-import List from 'material-ui/List';
+import Tabs, { Tab } from 'material-ui/Tabs'
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles'
 
-import RedeemIcon from 'material-ui-icons/Redeem';
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
+import RedeemIcon from 'material-ui-icons/Redeem'
+import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
 
-import TaskItem from './task-item';
+import CustomPaginationActionsTable from './task-table'
 
 const styles = theme => ({
   paper: {
@@ -130,11 +129,7 @@ class TaskList extends Component {
             </Tabs>
           </AppBar>
           <TabContainer>
-            <List component="nav">
-              { this.props.tasks.data.map((item, key) => (
-                <TaskItem item={item} key={key} classes={classes} ready={this.props.tasks.completed} />
-              ))}
-            </List>
+            <CustomPaginationActionsTable />
           </TabContainer>
           </div>
         </Paper>
