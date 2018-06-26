@@ -186,6 +186,7 @@ passport.use(
         username: profile.username,
         picture_url: profile.photos[0].value,
         website: profile._json.blog,
+        profile_url: profile.profileUrl,
         repos: 0,
         email: profile.emails ? profile.emails[0].value : profile._json.email
       }

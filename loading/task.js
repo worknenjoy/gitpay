@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     deadline: DataTypes.DATE,
     url: DataTypes.STRING,
+    title: DataTypes.STRING,
     value: DataTypes.DECIMAL,
     paid: {
       type: DataTypes.BOOLEAN,
