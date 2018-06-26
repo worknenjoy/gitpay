@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import MomentComponent from 'moment';
-import { StripeProvider } from 'react-stripe-elements';
-import ReactPlaceholder from 'react-placeholder';
-import { RectShape } from 'react-placeholder/lib/placeholders';
-import "react-placeholder/lib/reactPlaceholder.css";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import MomentComponent from 'moment'
+import { StripeProvider } from 'react-stripe-elements'
+import ReactPlaceholder from 'react-placeholder'
+import { RectShape } from 'react-placeholder/lib/placeholders'
+import "react-placeholder/lib/reactPlaceholder.css"
 
 import Grid from 'material-ui/Grid'
 import Avatar from 'material-ui/Avatar'
@@ -20,44 +20,43 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 
-import RedeemIcon from 'material-ui-icons/Redeem';
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
-import AddIcon from 'material-ui-icons/Add';
+import RedeemIcon from 'material-ui-icons/Redeem'
+import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
+import AddIcon from 'material-ui-icons/Add'
 import FilterIcon from 'material-ui-icons/FilterList'
-import TrophyIcon from 'material-ui-icons/AccountBalanceWallet';
-import DateIcon from 'material-ui-icons/DateRange';
-import CalendarIcon from 'material-ui-icons/PermContactCalendar';
-import GroupWorkIcon from 'material-ui-icons/GroupAdd';
-import DoneIcon from 'material-ui-icons/Done';
+import TrophyIcon from 'material-ui-icons/AccountBalanceWallet'
+import DateIcon from 'material-ui-icons/DateRange'
+import CalendarIcon from 'material-ui-icons/PermContactCalendar'
+import GroupWorkIcon from 'material-ui-icons/GroupAdd'
+import DoneIcon from 'material-ui-icons/Done'
 
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
-import Chip from 'material-ui/Chip';
-import PaymentDialog from '../payment/payment-dialog';
-import StatusDialog from './status-dialog';
-import TaskPayment from './task-payment';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
+import { FormControl } from 'material-ui/Form'
+import Chip from 'material-ui/Chip'
+import PaymentDialog from '../payment/payment-dialog'
+import StatusDialog from './status-dialog'
+import TaskPayment from './task-payment'
 
-import StatsCard from '../Cards/StatsCard';
-import RegularCard from '../Cards/RegularCard';
-import Table from '../Table/Table';
+import StatsCard from '../Cards/StatsCard'
+import RegularCard from '../Cards/RegularCard'
+import Table from '../Table/Table'
 
-import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
+import classNames from 'classnames'
+import { withStyles } from 'material-ui/styles'
 
-import marked from 'marked';
-import renderHTML from 'react-render-html';
+import marked from 'marked'
+import renderHTML from 'react-render-html'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import LoginButton from '../session/login-button'
 
-const paymentIcon = require('../../images/payment-icon-alt.png');
-const timeIcon = require('../../images/time-icon.png');
+const paymentIcon = require('../../images/payment-icon-alt.png')
+const timeIcon = require('../../images/time-icon.png')
 
-const logoGithub = require('../../images/github-logo.png');
-const logoBitbucket = require('../../images/bitbucket-logo.png');
+const logoGithub = require('../../images/github-logo.png')
 
-import Constants from '../../consts';
+import Constants from '../../consts'
 
 
 const styles = theme => ({
@@ -429,7 +428,26 @@ class Task extends Component {
         return []
       }
       const items = assign.map((item, i) => {
-        return [item.User.username , MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
+
+        const userField = () => (
+          <span>
+          {item.User.profile_url ?
+            (
+              <Tooltip id="tooltip-github" title="ver perfil deste usuário no github" placement="bottom">
+                <a target="_blank" href={item.User.profile_url} style={{display: 'flex', alignItems: 'center'}}>
+                  <span>{item.User.username}</span>
+                  <img style={{backgroundColor: 'black', marginLeft: 10}} width={18} src={logoGithub} />
+                </a>
+              </Tooltip>
+            ) :
+            (
+              `${item.User.username}`
+            )
+          }
+          </span>
+        )
+
+        return [userField() , MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
       })
 
       return items
@@ -454,7 +472,7 @@ class Task extends Component {
               </Typography>
               <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation={true} ready={task.completed}>
                 <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
-                  <a className={classes.white} href={task.data.url}>{task.data.metadata.issue.title}</a>
+                  <a className={classes.white} href={task.data.url}>{task.data.title}</a>
                   <Chip
                     style={{marginRight: 10}}
                     label={Constants.STATUSES[task.data.status]}

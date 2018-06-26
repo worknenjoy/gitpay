@@ -38,7 +38,7 @@ describe("tasks", () => {
     it('should create a new task', (done) => {
       agent
         .post('/tasks/create/')
-        .send({url: 'https://github.com/worknenjoy/truppie/issues/99', provider: 'github'})
+        .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -78,7 +78,7 @@ describe("tasks", () => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
 
-      models.Task.build({url: github_url, provider: 'github', value: 0}).save().then((task) => {
+      models.Task.build({url: github_url, value: 0}).save().then((task) => {
         agent
           .put("/tasks/update")
           .send({id: task.dataValues.id, value: 200})
@@ -202,7 +202,7 @@ describe("tasks", () => {
 
   describe('sync task', () => {
     it('should sync with a open order', (done) => {
-      models.Task.build({url: 'http://github.com/check/issue/1', provider: 'github'}).save().then((task) => {
+      models.Task.build({url: 'http://github.com/check/issue/1'}).save().then((task) => {
         task.createOrder({
           source_id: '12345',
           currency: 'BRL',
@@ -223,7 +223,7 @@ describe("tasks", () => {
       })
     });
     it('should sync with a succeeded order', (done) => {
-      models.Task.build({url: 'http://github.com/check/issue/1', provider: 'github'}).save().then((task) => {
+      models.Task.build({url: 'http://github.com/check/issue/1'}).save().then((task) => {
         task.createOrder({
           source_id: '12345',
           currency: 'BRL',

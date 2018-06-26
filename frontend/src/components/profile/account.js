@@ -294,7 +294,7 @@ class Account extends Component {
                               onChange={this.handleBankNumberSelect}
                             >
                               <MenuItem value="" disabled>
-                                <em>Selecione o número do banco</em>
+                                <em>Selecione o seu banco</em>
                               </MenuItem>
                               { Object.keys(Const.BANK_NUMBERS).map((item, i) => {
                                 return (<MenuItem key={i} value={item}>{`${Const.BANK_NUMBERS[item]}`}</MenuItem>)
@@ -486,13 +486,14 @@ class Account extends Component {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
                 fullWidth={true}
+                maxWidth="sm"
               >
                 <DialogTitle id="alert-dialog-slide-title">
                   Verificar conta
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-slide-description">
-                    Preecha os dados para verificar sua conta
+                    Preencha os dados para verificar sua conta
                   </DialogContentText>
                   <form onSubmit={this.handleSubmit} onChange={this.onChange} style={{marginTop: 20, marginBottom: 20, width: '100%'}}>
                     <Grid container spacing={24}>
@@ -614,9 +615,10 @@ class Account extends Component {
                   </form>
                 </DialogContent>
               </Dialog>
-
             </div>
           ) : (
+            <div>
+            { !account.data.id &&
             <Card className={classes.cardEmpty}>
               <CardContent>
                 <Typography className={classes.title} color="textSecondary">
@@ -635,6 +637,8 @@ class Account extends Component {
                 </Button>
               </CardActions>
             </Card>
+            }
+            </div>
           )
           }
         </div>
