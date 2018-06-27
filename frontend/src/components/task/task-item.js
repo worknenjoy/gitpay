@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import MomentComponent from 'moment';
-import TextEllipsis from 'text-ellipsis';
-import ReactPlaceholder from 'react-placeholder';
-import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
-import Constants from '../../consts';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import MomentComponent from 'moment'
+import TextEllipsis from 'text-ellipsis'
+import ReactPlaceholder from 'react-placeholder'
+import { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
+import Constants from '../../consts'
 
-const logoGithub = require('../../images/github-logo.png');
+const logoGithub = require('../../images/github-logo.png')
 
-import Avatar from 'material-ui/Avatar';
-import ItemIcon from 'material-ui-icons/AccountBox';
-import Chip from 'material-ui/Chip';
-import IconButton from 'material-ui/IconButton';
+import Avatar from 'material-ui/Avatar'
+import ItemIcon from 'material-ui-icons/AccountBox'
+import Chip from 'material-ui/Chip'
+import IconButton from 'material-ui/IconButton'
 import Tooltip from 'material-ui/Tooltip'
 
 class TaskItem extends Component {

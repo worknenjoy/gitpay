@@ -30,6 +30,16 @@ export default {
       undefined: 'Status indefinido'
     },
 
+    STATUSES_COLORS: {
+      'open': 'green',
+      'OPEN': 'green',
+      'in_progress': 'orange',
+      'closed': 'blue',
+      '': 'black',
+      null: 'gray',
+      undefined: 'brown'
+    },
+
     BANK_NUMBERS: {
       '110': 'BANCO PARA TESTE STRIPE',
       '001': 'BANCO DO BRASIL S.A. (Banco do Brasil)',
