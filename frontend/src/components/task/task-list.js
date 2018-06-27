@@ -13,6 +13,9 @@ import { withStyles } from 'material-ui/styles'
 import RedeemIcon from 'material-ui-icons/Redeem'
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
 
+import AssignIcon from 'material-ui-icons/Assignment'
+import ActionIcon from 'material-ui-icons/CallToAction'
+
 import CustomPaginationActionsTable from './task-table'
 
 const styles = theme => ({
@@ -21,7 +24,7 @@ const styles = theme => ({
     marginLeft: 20
   },
   parentCard: {
-    marginTop: 40,
+
     marginLeft: 40,
     display: 'flex',
     justifyContent: 'center',
@@ -124,12 +127,12 @@ class TaskList extends Component {
             >
               <Tab value={0} label="Todas tarefas" icon={<RedeemIcon />} />
               <Tab value={1} label="Criadas por mim" icon={<ShoppingBasket />} />
-              <Tab value={2} label="Tenho interesse" icon={<ShoppingBasket />} />
-              <Tab value={3} label="Atribuidas a mim" icon={<ShoppingBasket />} />
+              <Tab value={2} label="Tenho interesse" icon={<AssignIcon />} />
+              <Tab value={3} label="Atribuidas a mim" icon={<ActionIcon />} />
             </Tabs>
           </AppBar>
           <TabContainer>
-            <CustomPaginationActionsTable />
+            <CustomPaginationActionsTable tasks={this.props.tasks} />
           </TabContainer>
           </div>
         </Paper>

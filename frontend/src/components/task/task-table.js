@@ -1,19 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router-dom'
+import MomentComponent from 'moment'
+import TextEllipsis from 'text-ellipsis'
+
+import Avatar from 'material-ui/Avatar'
 import Table, {
+  TableHead,
   TableBody,
   TableCell,
   TableFooter,
   TablePagination,
   TableRow
-} from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import FirstPageIcon from 'material-ui-icons/FirstPage';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
-import LastPageIcon from 'material-ui-icons/LastPage';
+} from 'material-ui/Table'
+import Tooltip from 'material-ui/Tooltip'
+import Chip from 'material-ui/Chip'
+import Paper from 'material-ui/Paper'
+import IconButton from 'material-ui/IconButton'
+import FirstPageIcon from 'material-ui-icons/FirstPage'
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
+import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
+import LastPageIcon from 'material-ui-icons/LastPage'
+
+const logoGithub = require('../../images/github-logo.png')
+import Constants from '../../consts'
 
 const actionsStyles = theme => ({
   root: {
@@ -94,19 +105,13 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
   TablePaginationActions,
 );
 
-let counter = 0;
-function createData(name, calories, fat) {
-  counter += 1;
-  return { id: counter, name, calories, fat };
-}
-
 const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
   },
   table: {
-    minWidth: 500,
+    minWidth: 500
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -118,21 +123,6 @@ class CustomPaginationActionsTable extends React.Component {
     super(props);
 
     this.state = {
-      data: [
-        createData('Cupcake', 305, 3.7),
-        createData('Donut', 452, 25.0),
-        createData('Eclair', 262, 16.0),
-        createData('Frozen yoghurt', 159, 6.0),
-        createData('Gingerbread', 356, 16.0),
-        createData('Honeycomb', 408, 3.2),
-        createData('Ice cream sandwich', 237, 9.0),
-        createData('Jelly Bean', 375, 0.0),
-        createData('KitKat', 518, 26.0),
-        createData('Lollipop', 392, 0.2),
-        createData('Marshmallow', 318, 0),
-        createData('Nougat', 360, 19.0),
-        createData('Oreo', 437, 18.0),
-      ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
       page: 0,
       rowsPerPage: 5,
     };
@@ -146,24 +136,68 @@ class CustomPaginationActionsTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  handleClickListItem = id => {
+    this.props.history.push('/task/' + id);
+  }
+
   render() {
-    const { classes } = this.props;
-    const { data, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const { classes, tasks } = this.props;
+    const { rowsPerPage, page } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Autor</TableCell>
+                <TableCell>Tarefa</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Valor</TableCell>
+                <TableCell>Vencimento</TableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+              {tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                 return (
                   <TableRow key={n.id}>
-                    <TableCell component="th" scope="row">
-                      {n.name}
+                    <TableCell component="th" scope="row" style={{padding: 5}}>
+                      <a style={{display: 'flex', alignItems: 'center', height: 20}} target="_blank" href={n.User.profile_url}>
+                        <Avatar
+                          src={n.User.picture_url}
+                          style={{width: 24, height: 24, display: 'inline-block'}}
+                        />
+                        <span style={{marginLeft: 10}}>{n.User.username}</span>
+                      </a>
                     </TableCell>
-                    <TableCell numeric>{n.calories}</TableCell>
-                    <TableCell numeric>{n.fat}</TableCell>
+                    <TableCell component="th" scope="row" style={{padding: 10}}>
+                      <div style={{width: 250, display: 'flex', alignItems: 'center'}}>
+                        <a style={{cursor: 'pointer'}} onClick={() => this.handleClickListItem(n.id)}>
+                          {TextEllipsis(`${n.title || 'sem título'}`, 30)}
+                        </a>
+                        <Tooltip id="tooltip-fab" title="Ver no Github" placement="right">
+                          <a target="_blank" href={n.url}>
+                            <img width="16" src={logoGithub} style={{backgroundColor: 'black', marginLeft: 10}} />
+                          </a>
+                        </Tooltip>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div style={{width: 80}}>
+                        <Chip label={Constants.STATUSES[n.status]} style={{ backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white'}} />
+                      </div>
+                    </TableCell>
+                    <TableCell numeric style={{padding: 5}}>
+                      <div style={{width: 40}}>
+                        {`$ ${n.value}`}
+                      </div>
+                    </TableCell>
+                    <TableCell numeric style={{padding: 0}}>
+                      <div style={{width: 80}}>
+                        {n.deadline ? MomentComponent(n.deadline).fromNow() : 'não definido'}
+                      </div>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -177,7 +211,7 @@ class CustomPaginationActionsTable extends React.Component {
               <TableRow>
                 <TablePagination
                   colSpan={3}
-                  count={data.length}
+                  count={tasks.data.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onChangePage={this.handleChangePage}
@@ -197,4 +231,4 @@ CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CustomPaginationActionsTable);
+export default withRouter(withStyles(styles)(CustomPaginationActionsTable));
