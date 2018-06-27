@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import { withStyles } from 'material-ui/styles';
+import Paper from 'material-ui/Paper'
+import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import { withStyles } from 'material-ui/styles'
 
-const taskIcon = require('../../images/task-icon.png');
-const paymentIcon = require('../../images/payment-icon.png');
-const toolsIcon = require('../../images/tools-icon.png');
+const taskIcon = require('../../images/task-icon.png')
+const paymentIcon = require('../../images/payment-icon.png')
+const toolsIcon = require('../../images/tools-icon.png')
 
 const styles = theme => ({
   paper: {
@@ -39,84 +39,83 @@ const styles = theme => ({
     marginLeft: 64,
     marginTop: 20
   }
-});
+})
 
 class ProfileOptions extends Component {
+  render () {
+    const { classes } = this.props
 
-  render() {
-
-    const { classes } = this.props;
-
-    return(
+    return (
       <div>
-        <Paper className={classes.paper} elevation={0}>
-          <Typography variant="headline" component="h3">
+        <Paper className={ classes.paper } elevation={ 0 }>
+          <Typography variant='headline' component='h3'>
             Bem vindo ao Gitpay!
           </Typography>
-          <Typography component="p">
+          <Typography component='p'>
             Saiba quais são os seus primeiros passos para começar
           </Typography>
         </Paper>
-        <div className={classes.parentCard}>
-          <Card className={classes.card}>
-          <CardMedia
-            className={classes.media}
-            image={taskIcon}
-            title="Contemplative Reptile"
-              />
-              <CardContent>
-              <Typography variant="headline" component="h2">
-              Tarefas
-              </Typography>
-              <Typography component="p">
-              Veja as tarefas que estão disponíveis para você e comece!
-          </Typography>
-          </CardContent>
-            <CardActions className={classes.cardActions}>
-              <Button size="small" color="primary">
-                <Link to={`/profile/tasks`}>Ver tarefas</Link>
-              </Button>
-            </CardActions>
-          </Card>
-          <Card className={classes.card}>
+        <div className={ classes.parentCard }>
+          <Card className={ classes.card }>
             <CardMedia
-              className={classes.media}
-              image={paymentIcon}
-              title="Contemplative Reptile"
+              className={ classes.media }
+              image={ taskIcon }
+              title='Contemplative Reptile'
             />
             <CardContent>
-              <Typography variant="headline" component="h2">
-                Pagamento
+              <Typography variant='headline' component='h2'>
+                Tarefas
               </Typography>
-              <Typography component="p">
-                Preencha os dados de pagamento para você receber pelas tarefas integradas
+              <Typography component='p'>
+                Veja as tarefas que estão disponíveis para você e comece!
               </Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
-              <Button size="small" color="primary">
-                <Link to={`/profile/payment-options`}>Configurar pagamento</Link>
+            <CardActions className={ classes.cardActions }>
+              <Button size='small' color='primary'>
+                <Link to={ '/profile/tasks' }>Ver tarefas</Link>
               </Button>
             </CardActions>
           </Card>
-          <Card className={classes.card}>
+          <Card className={ classes.card }>
             <CardMedia
-              className={classes.media}
-              image={toolsIcon}
-              title="Contemplative Reptile"
+              className={ classes.media }
+              image={ paymentIcon }
+              title='Contemplative Reptile'
             />
             <CardContent>
-              <Typography variant="headline" component="h2">
+              <Typography variant='headline' component='h2'>
+                Pagamento
+              </Typography>
+              <Typography component='p'>
+                Preencha os dados de pagamento para você receber pelas tarefas
+                integradas
+              </Typography>
+            </CardContent>
+            <CardActions className={ classes.cardActions }>
+              <Button size='small' color='primary'>
+                <Link to={ '/profile/payment-options' }>
+                  Configurar pagamento
+                </Link>
+              </Button>
+            </CardActions>
+          </Card>
+          <Card className={ classes.card }>
+            <CardMedia
+              className={ classes.media }
+              image={ toolsIcon }
+              title='Contemplative Reptile'
+            />
+            <CardContent>
+              <Typography variant='headline' component='h2'>
                 Preferências
               </Typography>
-              <Typography component="p">
+              <Typography component='p'>
                 Configure sua conta para ficar de acordo com suas preferências
               </Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
-              <Button size="small" color="primary">
-                <Link to="/profile/preferences">
-                  Configurar preferências
-                </Link>
+            <CardActions className={ classes.cardActions }>
+              <Button size='small' color='primary'>
+                <Link to='/profile/preferences'>Configurar preferências</Link>
               </Button>
             </CardActions>
           </Card>
@@ -127,7 +126,7 @@ class ProfileOptions extends Component {
 }
 
 ProfileOptions.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(ProfileOptions);
+export default withStyles(styles)(ProfileOptions)

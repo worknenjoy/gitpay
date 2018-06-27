@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
-import { Elements } from 'react-stripe-elements';
-import CheckoutForm from './checkout-form';
+import React, { Component } from 'react'
+import { Elements } from 'react-stripe-elements'
+import CheckoutForm from './checkout-form'
 
 class StripeCheckout extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {stripe: null};
+  constructor (props) {
+    super(props)
+    this.state = { stripe: null }
   }
 
-  componentWillMount() {
+  componentWillMount () {}
 
-  }
-
-  render() {
+  render () {
     return (
       <Elements>
-        <CheckoutForm {...this.props} />
+        <CheckoutForm { ...this.props } />
       </Elements>
-    );
+    )
   }
 }
 
-export default StripeCheckout;
+export default StripeCheckout

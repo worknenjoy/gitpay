@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper'
+import Typography from 'material-ui/Typography'
+import AppBar from 'material-ui/AppBar'
 
-import Tabs, { Tab } from 'material-ui/Tabs';
-import List from 'material-ui/List';
+import Tabs, { Tab } from 'material-ui/Tabs'
+import List from 'material-ui/List'
 
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles'
 
-import RedeemIcon from 'material-ui-icons/Redeem';
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
+import RedeemIcon from 'material-ui-icons/Redeem'
+import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
 
-import TaskItem from './task-item';
+import TaskItem from './task-item'
 
 const styles = theme => ({
   paper: {
@@ -51,91 +51,102 @@ const styles = theme => ({
     marginBottom: 40,
     backgroundColor: theme.palette.primary.light
   }
-});
+})
 
 class TaskList extends Component {
-
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       tab: 0
     }
 
-    this.handleTabChange = this.handleTabChange.bind(this);
-
+    this.handleTabChange = this.handleTabChange.bind(this)
   }
 
-  componentDidMount() {
-    this.props.listTasks();
+  componentDidMount () {
+    this.props.listTasks()
   }
 
-  handleTabChange(event, value) {
-
-    const { tasks } = this.props
-
+  handleTabChange (event, value) {
     this.setState({ tab: value })
     switch (value) {
       case 0:
         this.props.listTasks()
-        break;
+        break
       case 1:
         this.props.filterTasks('userId')
-        break;
+        break
       case 2:
         this.props.filterTasks('Assigns')
-        break;
+        break
       case 3:
         this.props.filterTasks('assigned')
-        break;
+        break
       default:
-        this.props.filterTasks();
+        this.props.filterTasks()
     }
-  };
+  }
 
-  render() {
+  render () {
+    const { classes } = this.props
 
-    const { classes } = this.props;
-
-    const TabContainer = (props) => {
+    const TabContainer = props => {
       return (
-        <Typography component="div" style={{ padding: 8 * 3 }}>
-          {props.children}
+        <Typography component='div' style={ { padding: 8 * 3 } }>
+          { props.children }
         </Typography>
-      );
+      )
     }
 
-    return(
+    return (
       <div>
-        <Paper className={classes.paper} elevation={0}>
-          <Typography variant="headline" component="h3">
+        <Paper className={ classes.paper } elevation={ 0 }>
+          <Typography variant='headline' component='h3'>
             Lista de tarefas
           </Typography>
-          <Typography component="p" style={{marginBottom: 40}}>
+          <Typography component='p' style={ { marginBottom: 40 } }>
             Tarefas disponíveis para desenvolvimento
           </Typography>
-          <div className={classes.rootTabs}>
-          <AppBar position="static" color="default">
-            <Tabs
-              value={this.state.tab}
-              onChange={this.handleTabChange}
-              scrollable
-              scrollButtons="on"
-              indicatorColor="primary"
-              textColor="primary"
-            >
-              <Tab value={0} label="Todas tarefas" icon={<RedeemIcon />} />
-              <Tab value={1} label="Criadas por mim" icon={<ShoppingBasket />} />
-              <Tab value={2} label="Tenho interesse" icon={<ShoppingBasket />} />
-              <Tab value={3} label="Atribuidas a mim" icon={<ShoppingBasket />} />
-            </Tabs>
-          </AppBar>
-          <TabContainer>
-            <List component="nav">
-              { this.props.tasks.data.map((item, key) => (
-                <TaskItem item={item} key={key} classes={classes} ready={this.props.tasks.completed} />
-              ))}
-            </List>
-          </TabContainer>
+          <div className={ classes.rootTabs }>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={ this.state.tab }
+                onChange={ this.handleTabChange }
+                scrollable
+                scrollButtons='on'
+                indicatorColor='primary'
+                textColor='primary'
+              >
+                <Tab value={ 0 } label='Todas tarefas' icon={ <RedeemIcon /> } />
+                <Tab
+                  value={ 1 }
+                  label='Criadas por mim'
+                  icon={ <ShoppingBasket /> }
+                />
+                <Tab
+                  value={ 2 }
+                  label='Tenho interesse'
+                  icon={ <ShoppingBasket /> }
+                />
+                <Tab
+                  value={ 3 }
+                  label='Atribuidas a mim'
+                  icon={ <ShoppingBasket /> }
+                />
+              </Tabs>
+            </AppBar>
+            <TabContainer>
+              <List component='nav'>
+                { this.props.tasks.data.map((item, key) => (
+                  <TaskItem
+                    item={ item }
+                    key={ key }
+                    classes={ classes }
+                    ready={ this.props.tasks.completed }
+                  />
+                )) }
+              </List>
+            </TabContainer>
           </div>
         </Paper>
       </div>
@@ -145,6 +156,9 @@ class TaskList extends Component {
 
 TaskList.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+  listTasks: PropTypes.func,
+  filterTasks: PropTypes.func,
+  tasks: PropTypes.array
+}
 
-export default withRouter(withStyles(styles)(TaskList));
+export default withRouter(withStyles(styles)(TaskList))

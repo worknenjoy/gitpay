@@ -34,26 +34,34 @@ class Auth extends Component {
         <form onSubmit={ () => this.onSubmit() }>
           <h2 className='card-heading'>Login</h2>
           <div className='field-line'>
-            <Input label='Name'
+            <Input
+              label='Name'
               type='text'
               name='username'
               hide={ this.state.loginMode }
-              value='this.state.username' />
+              value='this.state.username'
+            />
             <br />
-            <Input label='E-mail'
+            <Input
+              label='E-mail'
               type='text'
               name='email'
-              value={ this.state.email } />
+              value={ this.state.email }
+            />
             <br />
-            <Input label='Password'
+            <Input
+              label='Password'
               name='password'
               type='password'
-              value={ this.state.password } />
+              value={ this.state.password }
+            />
           </div>
 
           <CardText>
             <a onClick={ () => this.changeMode() }>
-              { this.state.loginMode ? 'New user? Register here!' : 'Already registered? Come in here!' }
+              { this.state.loginMode
+                ? 'New user? Register here!'
+                : 'Already registered? Come in here!' }
             </a>
           </CardText>
         </form>
