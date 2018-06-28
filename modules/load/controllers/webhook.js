@@ -151,48 +151,6 @@ exports.updateWebhook = (req, res) => {
           })
 
         break
-      case 'payout.failed':
-        return models.Order.update(
-          {
-            paid: paid,
-            status: status
-          },
-          {
-            where: {
-              source_id: event.data.object.source.id,
-              source: event.data.object.id
-            },
-            returning: true
-          }
-        )
-          .then(order => {
-            if (order[0]) {
-              models.User.findOne({
-                where: {
-                  id: order[1][0].dataValues.userId
-                }
-              }).then(user => {
-                if (user) {
-                  if (status === 'failed') {
-                    SendMail.error(
-                      user.dataValues.email,
-                      'Ocorreu uma falha no pagamento da sua tarefa no Gitpay',
-                      `
-                      <p>O pagamento no valor de $${event.data.object.amount /
-                        100} para uma tarefa no Gitpay não foi processada e será feito uma nova tentativa de transferência</p>
-                      `
-                    )
-                    return res.json(req.body)
-                  }
-                }
-              })
-            }
-          })
-          .catch(e => {
-            return res.status(400).send(e)
-          })
-
-        break
       case 'transfer.created':
         return models.Task.findOne({
           where: {
@@ -260,6 +218,31 @@ exports.updateWebhook = (req, res) => {
             return res.status(400).send(e)
           })
 
+        break
+      case 'payout.failed':
+        return models.User.findOne({
+          where: {
+            account_id: event.account
+          }
+        })
+          .then(user => {
+            if (user) {
+              SendMail.success(
+                user.dataValues.email,
+                'Ocorreu uma falha no pagamento da sua tarefa no Gitpay',
+                `
+                <p>O pagamento no valor de $${event.data.object.amount /
+                  100} para uma tarefa no Gitpay não foi processada e será feito uma nova tentativa de transferência</p>
+                `
+              )
+              return res.json(req.body)
+            }
+          })
+          .catch(e => {
+            // eslint-disable-next-line no-console
+            console.log('error on payout.failed', e)
+            return res.status(400).send(e)
+          })
         break
       case 'payout.paid':
         return models.User.findOne({
