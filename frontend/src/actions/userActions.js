@@ -223,6 +223,7 @@ const createBankAccount = (userId, bank) => {
           return dispatch(createBankAccountError(bankAccount.data))
         }
         dispatch(addNotification('Conta bancária cadastrada com sucesso'))
+
         return dispatch(createBankAccountSuccess(bankAccount))
       })
       .catch(error => {
