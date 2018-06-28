@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
+import ReactPlaceholder from 'react-placeholder'
 
 import Avatar from 'material-ui/Avatar'
 import Table, {
@@ -147,94 +148,108 @@ class CustomPaginationActionsTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Autor</TableCell>
-                <TableCell>Tarefa</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Valor</TableCell>
-                <TableCell>Vencimento</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                return (
-                  <TableRow key={n.id}>
-                    <TableCell component="th" scope="row" style={{padding: 5}}>
-                      { n.User.profile_url ?
-                        (
-                          <a style={{display: 'flex', alignItems: 'center', height: 20}} target="_blank"
-                             href={n.User.profile_url}>
-                            <Avatar
-                              src={n.User.picture_url}
-                              style={{width: 24, height: 24, display: 'inline-block'}}
-                            />
-                            <span style={{marginLeft: 10}}>{n.User.username}</span>
-                          </a>
-                        ) : (
-                          <div>
-                            <Avatar
-                              src={n.User.picture_url}
-                              style={{width: 24, height: 24, display: 'inline-block'}}
-                            />
-                            <span style={{marginLeft: 10}}>{n.User.username}</span>
-                          </div>
-                        )
-                      }
-                    </TableCell>
-                    <TableCell component="th" scope="row" style={{padding: 10}}>
-                      <div style={{width: 250, display: 'flex', alignItems: 'center'}}>
-                        <a style={{cursor: 'pointer'}} onClick={() => this.handleClickListItem(n.id)}>
-                          {TextEllipsis(`${n.title || 'sem título'}`, 30)}
-                        </a>
-                        <Tooltip id="tooltip-fab" title="Ver no Github" placement="right">
-                          <a target="_blank" href={n.url}>
-                            <img width="16" src={logoGithub} style={{backgroundColor: 'black', marginLeft: 10}} />
-                          </a>
-                        </Tooltip>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div style={{width: 80}}>
-                        <Chip label={Constants.STATUSES[n.status]} style={{ backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white'}} />
-                      </div>
-                    </TableCell>
-                    <TableCell numeric style={{padding: 5}}>
-                      <div style={{width: 40}}>
-                        {`$ ${n.value}`}
-                      </div>
-                    </TableCell>
-                    <TableCell numeric style={{padding: 0}}>
-                      <div style={{width: 80}}>
-                        {n.deadline ? MomentComponent(n.deadline).fromNow() : 'não definido'}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 48 * emptyRows }}>
-                  <TableCell colSpan={6} />
+        <ReactPlaceholder style={{marginBottom: 20, padding: 20 }} showLoadingAnimation={true} type="text" rows={5} ready={tasks.completed}>
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Autor</TableCell>
+                  <TableCell>Tarefa</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Valor</TableCell>
+                  <TableCell>Vencimento</TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  colSpan={3}
-                  count={tasks.data.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onChangePage={this.handleChangePage}
-                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  Actions={TablePaginationActionsWrapped}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </div>
+              </TableHead>
+              <TableBody>
+                {tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  return (
+                    <TableRow key={n.id}>
+                      <TableCell component="th" scope="row" style={{padding: 5}}>
+                        { n.User ?  (
+                          <div>
+                          {n.User.profile_url ?
+                            (
+                              <a style={{display: 'flex', alignItems: 'center', height: 20}} target="_blank"
+                                 href={n.User.profile_url}>
+                                <Avatar
+                                  src={n.User.picture_url}
+                                  style={{width: 24, height: 24, display: 'inline-block'}}
+                                />
+                                <span style={{marginLeft: 10}}>
+                                  {TextEllipsis(n.User.username, 10)}
+                                </span>
+                              </a>
+                            ) : (
+                              <div style={{display: 'flex', alignItems: 'center', height: 20}}>
+                                <Avatar
+                                  src={n.User.picture_url}
+                                  style={{width: 24, height: 24, display: 'inline-block'}}
+                                />
+                                <span style={{marginLeft: 10}}>
+                                  {TextEllipsis(n.User.username, 10)}
+                                </span>
+                              </div>
+                            )
+                          }
+                          </div>) : (
+                            <div>
+                              sem autor
+                            </div>
+                          )
+                        }
+                      </TableCell>
+                      <TableCell component="th" scope="row" style={{padding: 10}}>
+                        <div style={{width: 250, display: 'flex', alignItems: 'center'}}>
+                          <a style={{cursor: 'pointer'}} onClick={() => this.handleClickListItem(n.id)}>
+                            {TextEllipsis(`${n.title || 'sem título'}`, 30)}
+                          </a>
+                          <Tooltip id="tooltip-fab" title="Ver no Github" placement="right">
+                            <a target="_blank" href={n.url}>
+                              <img width="16" src={logoGithub} style={{backgroundColor: 'black', marginLeft: 10}} />
+                            </a>
+                          </Tooltip>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div style={{width: 80}}>
+                          <Chip label={Constants.STATUSES[n.status]} style={{ backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white'}} />
+                        </div>
+                      </TableCell>
+                      <TableCell numeric style={{padding: 5}}>
+                        <div style={{width: 40}}>
+                          {`$ ${n.value}`}
+                        </div>
+                      </TableCell>
+                      <TableCell numeric style={{padding: 0}}>
+                        <div style={{width: 80}}>
+                          {n.deadline ? MomentComponent(n.deadline).fromNow() : 'não definido'}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 48 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    colSpan={3}
+                    count={tasks.data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    Actions={TablePaginationActionsWrapped}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </div>
+        </ReactPlaceholder>
       </Paper>
     );
   }
