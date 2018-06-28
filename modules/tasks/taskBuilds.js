@@ -9,19 +9,31 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
   const userOrCompany = splitIssueUrl[1]
   const projectName = splitIssueUrl[2]
   const issueId = splitIssueUrl[4]
-  return requestPromise({
-    uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`,
-    headers: {
-      'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-    }
-  }).then(response => {
-    return models.Task
-      .build(
-        taskParameters
-      )
-      .save()
-      .then(data => {
-        return data.dataValues
-      })
-  })
+
+  if (taskParameters.provider === 'github') {
+    return requestPromise({
+      uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`,
+      headers: {
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+      }
+    }).then(response => {
+      if (!taskParameters.title) taskParameters.title = response.title
+      return models.Task
+        .build(
+          taskParameters
+        )
+        .save()
+        .then(data => {
+          return data.dataValues
+        })
+    })
+  }
+  return models.Task
+    .build(
+      taskParameters
+    )
+    .save()
+    .then(data => {
+      return data.dataValues
+    })
 })

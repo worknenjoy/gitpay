@@ -30,6 +30,7 @@ export default {
     undefined: 'Status indefinido'
   },
 
+
   BANK_NUMBERS: {
     '110': 'BANCO PARA TESTE STRIPE',
     '001': 'BANCO DO BRASIL S.A. (Banco do Brasil)',
@@ -73,5 +74,15 @@ export default {
     '077': 'BANCO INTERMEDIUM S.A.',
     '212': 'BANCO ORIGINAL',
     '085': 'CECRED-COOPERATIVA CENTRAL DE CREDITO URBANO'
+  }
+
+  STATUSES_COLORS: {
+    'open': 'green',
+    'OPEN': 'green',
+    'in_progress': 'orange',
+    'closed': 'blue',
+    '': 'black',
+    null: 'gray',
+    undefined: 'brown'
   }
 }

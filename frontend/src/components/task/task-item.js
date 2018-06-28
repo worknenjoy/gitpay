@@ -9,6 +9,7 @@ import {
   ListItemText,
   ListItemSecondaryAction
 } from 'material-ui/List'
+
 import Constants from '../../consts'
 
 const logoGithub = require('../../images/github-logo.png')

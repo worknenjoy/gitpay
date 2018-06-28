@@ -7,14 +7,16 @@ import Typography from 'material-ui/Typography'
 import AppBar from 'material-ui/AppBar'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
-import List from 'material-ui/List'
 
 import { withStyles } from 'material-ui/styles'
 
 import RedeemIcon from 'material-ui-icons/Redeem'
 import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
 
-import TaskItem from './task-item'
+import AssignIcon from 'material-ui-icons/Assignment'
+import ActionIcon from 'material-ui-icons/CallToAction'
+
+import CustomPaginationActionsTable from './task-table'
 
 const styles = theme => ({
   paper: {
@@ -22,7 +24,7 @@ const styles = theme => ({
     marginLeft: 20
   },
   parentCard: {
-    marginTop: 40,
+
     marginLeft: 40,
     display: 'flex',
     justifyContent: 'center',
@@ -107,46 +109,25 @@ class TaskList extends Component {
           <Typography component='p' style={ { marginBottom: 40 } }>
             Tarefas disponíveis para desenvolvimento
           </Typography>
-          <div className={ classes.rootTabs }>
-            <AppBar position='static' color='default'>
-              <Tabs
-                value={ this.state.tab }
-                onChange={ this.handleTabChange }
-                scrollable
-                scrollButtons='on'
-                indicatorColor='primary'
-                textColor='primary'
-              >
-                <Tab value={ 0 } label='Todas tarefas' icon={ <RedeemIcon /> } />
-                <Tab
-                  value={ 1 }
-                  label='Criadas por mim'
-                  icon={ <ShoppingBasket /> }
-                />
-                <Tab
-                  value={ 2 }
-                  label='Tenho interesse'
-                  icon={ <ShoppingBasket /> }
-                />
-                <Tab
-                  value={ 3 }
-                  label='Atribuidas a mim'
-                  icon={ <ShoppingBasket /> }
-                />
-              </Tabs>
-            </AppBar>
-            <TabContainer>
-              <List component='nav'>
-                { this.props.tasks.data.map((item, key) => (
-                  <TaskItem
-                    item={ item }
-                    key={ key }
-                    classes={ classes }
-                    ready={ this.props.tasks.completed }
-                  />
-                )) }
-              </List>
-            </TabContainer>
+          <div className={classes.rootTabs}>
+          <AppBar position='static' color='default'>
+            <Tabs
+              value={this.state.tab}
+              onChange={this.handleTabChange}
+              scrollable
+              scrollButtons='on'
+              indicatorColor='primary'
+              textColor='primary'
+            >
+              <Tab value={0} label='Todas tarefas' icon={<RedeemIcon />} />
+              <Tab value={1} label='Criadas por mim' icon={<ShoppingBasket />} />
+              <Tab value={2} label='Tenho interesse' icon={<AssignIcon />} />
+              <Tab value={3} label='Atribuidas a mim' icon={<ActionIcon />} />
+            </Tabs>
+          </AppBar>
+          <TabContainer>
+            <CustomPaginationActionsTable tasks={this.props.tasks} />
+          </TabContainer>
           </div>
         </Paper>
       </div>

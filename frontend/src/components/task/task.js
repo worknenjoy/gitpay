@@ -54,6 +54,8 @@ import LoginButton from '../session/login-button'
 const paymentIcon = require('../../images/payment-icon-alt.png')
 const timeIcon = require('../../images/time-icon.png')
 
+const logoGithub = require('../../images/github-logo.png')
+
 import Constants from '../../consts'
 
 const styles = theme => ({
@@ -416,15 +418,10 @@ class Task extends Component {
       ])
     }
 
-    const removeDuplicates = (myArr, prop) => {
-      return myArr.filter((obj, pos, arr) => {
-        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
-      })
-    }
-
-    const assignActions = assign => {
-      const taskData = this.props.task.data
-      return (
+    const assignActions = (assign) => {
+    const taskData = this.props.task.data
+      
+    return (
         <div>
           { taskOwner() && (
             <Button
@@ -451,16 +448,29 @@ class Task extends Component {
       if (!assign.length) {
         return []
       }
-      const items = removeDuplicates(
-        assign.map((item, i) => {
-          return [
-            `${item.User.name}` || 'Sem nome',
-            MomentComponent(item.updatedAt).fromNow(),
-            assignActions(item)
-          ]
-        }),
-        `${assign.name}`
-      )
+
+      const items = assign.map((item, i) => {
+
+        const userField = () => (
+          <span>
+          {item.User.profile_url ?
+            (
+              <Tooltip id="tooltip-github" title="ver perfil deste usuário no github" placement="bottom">
+                <a target="_blank" href={item.User.profile_url} style={{display: 'flex', alignItems: 'center'}}>
+                  <span>{item.User.username}</span>
+                  <img style={{backgroundColor: 'black', marginLeft: 10}} width={18} src={logoGithub} />
+                </a>
+              </Tooltip>
+            ) :
+            (
+              `${item.User.username}`
+            )
+          }
+          </span>
+        )
+
+        return [userField() , MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
+      })
 
       return items
     }
@@ -511,7 +521,7 @@ class Task extends Component {
                   gutterBottom
                 >
                   <a className={ classes.white } href={ task.data.url }>
-                    { task.data.metadata.issue.title }
+                    { task.data.title }
                   </a>
                   <Chip
                     style={ { marginRight: 10 } }
@@ -675,6 +685,51 @@ class Task extends Component {
                 </Dialog>
               </div>
             </Grid>
+                  </Card>}
+                  <Card className={classes.paper}>
+                    <Typography variant="title" align="left" gutterBottom>
+                      Descrição
+                    </Typography>
+                    <Typography variant="body2" align="left" gutterBottom>
+                      <ReactPlaceholder showLoadingAnimation={true} type='text' rows={1} ready={task.completed}>
+                        <div className={classes.contentBody}>
+                          {renderHTML(marked(task.data.metadata.issue.body))}
+                        </div>
+                      </ReactPlaceholder>
+                    </Typography>
+                  </Card>
+                </TabContainer>}
+                {task.tab === 1 &&
+                <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
+                  <RegularCard
+                    headerColor="green"
+                    cardTitle="Pagamentos realizados para esta tarefa"
+                    cardSubtitle="Elas serão transferidas para quem conclui-la"
+                    content={
+                      <Table
+                        tableHeaderColor="warning"
+                        tableHead={["Pago", "Status", "Valor", "Criado em"]}
+                        tableData={task.data.orders.length ? displayOrders(task.data.orders) : []}
+                      />
+                    }
+                  />
+                </div>}
+                {task.tab === 2 &&
+                <div style={{marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20}}>
+                  <RegularCard
+                    headerColor="green"
+                    cardTitle="Interessados em realizar esta tarefa"
+                    cardSubtitle="Estes são usuários interessados em realizar esta tarefa"
+                    content={
+                      <Table
+                        tableHeaderColor="warning"
+                        tableHead={["Usuário", "Quando", "Acões"]}
+                        tableData={task.data.assigns.length ? displayAssigns(task.data.assigns) : []}
+                      />
+                    }
+                  />
+                </div>}
+            </div>
           </Grid>
           <Grid container spacing={ 24 } className={ classes.gridBlock }>
             <Grid item xs={ 8 }>

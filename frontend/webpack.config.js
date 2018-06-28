@@ -32,24 +32,24 @@ module.exports = {
         'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY)
       }
     })
-  ],
-  module: {
-    loaders: [{
-      test: /.js[x]?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      query: {
-        presets: ['es2015', 'react'],
-        plugins: ['transform-object-rest-spread']
-      }
-    }, {
-      test: /\.css$/,
-      loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
-    }, {
-      test: /\.woff|.woff2|.ttf|.eot|.svg*.*$/,
-      loader: 'file-loader'
-    },
-    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+	],
+	module: {
+		loaders: [{
+			test: /.js[x]?$/,
+			loader: 'babel-loader',
+			exclude: /node_modules/,
+			query: {
+				presets: ['es2015', 'react'],
+				plugins: ['transform-object-rest-spread', 'transform-class-properties']
+			}
+		}, {
+			test: /\.css$/,
+			loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'})
+		}, {
+			test: /\.woff|.woff2|.ttf|.eot|.svg*.*$/,
+			loader: 'file-loader'
+		},
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
   }
 }
