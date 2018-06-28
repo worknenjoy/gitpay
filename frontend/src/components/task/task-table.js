@@ -163,13 +163,26 @@ class CustomPaginationActionsTable extends React.Component {
                 return (
                   <TableRow key={n.id}>
                     <TableCell component="th" scope="row" style={{padding: 5}}>
-                      <a style={{display: 'flex', alignItems: 'center', height: 20}} target="_blank" href={n.User.profile_url}>
-                        <Avatar
-                          src={n.User.picture_url}
-                          style={{width: 24, height: 24, display: 'inline-block'}}
-                        />
-                        <span style={{marginLeft: 10}}>{n.User.username}</span>
-                      </a>
+                      { n.User.profile_url ?
+                        (
+                          <a style={{display: 'flex', alignItems: 'center', height: 20}} target="_blank"
+                             href={n.User.profile_url}>
+                            <Avatar
+                              src={n.User.picture_url}
+                              style={{width: 24, height: 24, display: 'inline-block'}}
+                            />
+                            <span style={{marginLeft: 10}}>{n.User.username}</span>
+                          </a>
+                        ) : (
+                          <div>
+                            <Avatar
+                              src={n.User.picture_url}
+                              style={{width: 24, height: 24, display: 'inline-block'}}
+                            />
+                            <span style={{marginLeft: 10}}>{n.User.username}</span>
+                          </div>
+                        )
+                      }
                     </TableCell>
                     <TableCell component="th" scope="row" style={{padding: 10}}>
                       <div style={{width: 250, display: 'flex', alignItems: 'center'}}>
