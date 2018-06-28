@@ -257,11 +257,10 @@ class Account extends Component {
                         />
                       ) }
                     </div>
-                    { account.data.verification.disabled_reason ===
-                      'fields_needed' && (
+                    { account.data.verification.fields_needed.length && (
                       <div>
                         <Typography component='p'>
-                          { 'Temos os seguintes campos a serem verificados:' }
+                          { 'No entanto, temos os seguintes campos que eventualmente pode precisar ser verificado(s):' }
                         </Typography>
                         <div>
                           { account.data.verification.fields_needed.map(
@@ -276,57 +275,6 @@ class Account extends Component {
                         </div>
                       </div>
                     ) }
-                    <Grid container spacing={24}>
-                      <Grid item xs={12}>
-                        { bankAccount.data.routing_number ? (
-                          <Typography color="primary">
-                            Sua conta bancária está ativa
-                          </Typography>
-                        ) : (
-                          <FormControl className={classes.formControl} error={this.state.bankNumberError}>
-                            <Select
-                              value={this.state.selectedBank}
-                              displayEmpty
-                              name="bank_number"
-                              onChange={this.handleBankNumberSelect}
-                            >
-                              <MenuItem value="" disabled>
-                                <em>Selecione o seu banco</em>
-                              </MenuItem>
-                              { Object.keys(Const.BANK_NUMBERS).map((item, i) => {
-                                return (<MenuItem key={i} value={item}>{`${Const.BANK_NUMBERS[item]}`}</MenuItem>)
-                              })}
-                            </Select>
-                            {this.state.bankNumberError &&
-                            < FormHelperText > Por favor selecione o banco</FormHelperText>
-                            }
-                          </FormControl>
-                        )}
-                      </Grid>
-                    </Grid>
-                    <Grid container spacing={24}>
-                      <Grid item xs={12}>
-                        <FormControl>
-                          <Input
-                            id="bank-routing-number"
-                            name="routing_number"
-                            placeholder="Agência"
-                            style={{marginRight: 20}}
-                            disabled={bankAccount.data.routing_number ? true : false}
-                            defaultValue={bankAccount.data.routing_number}
-                          />
-                        </FormControl>
-                        <FormControl>
-                          <Input
-                            id="bank-account-number"
-                            name="account_number"
-                            placeholder="Número da conta"
-                            disabled={bankAccount.data.routing_number ? true : false}
-                            defaultValue={bankAccount.data.last4 ? `*****${ bankAccount.data.last4 }` : ''}
-                          />
-                        </FormControl>
-                      </Grid>
-                    </Grid>
                   </CardContent>
                   <CardActions>
                     <Button
@@ -381,7 +329,7 @@ class Account extends Component {
                                 onChange={ this.handleBankNumberSelect }
                               >
                                 <MenuItem value='' disabled>
-                                  <em>Selecione o número do banco</em>
+                                  <em>Selecione o banco</em>
                                 </MenuItem>
                                 { Object.keys(Const.BANK_NUMBERS).map(
                                   (item, i) => {
