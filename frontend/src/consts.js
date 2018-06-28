@@ -11,14 +11,17 @@ export default {
     'legal_entity.dob.year': 'Ano do nascimento',
     'legal_entity.first_name': 'Primeiro nome',
     'legal_entity.last_name': 'Último nome',
-    'legal_entity.personal_id_number': 'Número de identificação',
-    'legal_entity.verification.document': 'Documento de identificação',
+    'legal_entity.personal_id_number': 'Número de identificação (opcional)',
+    'legal_entity.verification.document': 'Documento de identificação (opcional)',
     'legal_entity.type': 'Tipo de identificação (identidade ou CPF',
     'tos_acceptance.date': 'Data da confirmação dos termos de uso',
     'tos_acceptance.ip': 'Aceitar os termos de uso'
   },
   ACCOUNT_REASONS: {
     'fields_needed': 'Pendente de verificação',
+    'external_account' : 'Cadastrar conta bancária',
+    null: 'Pendente',
+    undefined: 'Pendente'
   },
 
   STATUSES: {
