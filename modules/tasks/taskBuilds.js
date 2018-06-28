@@ -10,7 +10,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
   const projectName = splitIssueUrl[2]
   const issueId = splitIssueUrl[4]
 
-  if(taskParameters.provider === 'github') {
+  if (taskParameters.provider === 'github') {
     return requestPromise({
       uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`,
       headers: {
@@ -36,5 +36,4 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
     .then(data => {
       return data.dataValues
     })
-
 })
