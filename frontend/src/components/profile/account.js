@@ -763,8 +763,9 @@ class Account extends Component {
                   Criar conta
                 </Button>
               </CardActions>
-            </Card>
-          ) }
+            </Card>}
+          </div>)
+          }
         </div>
       </ReactPlaceholder>
     )

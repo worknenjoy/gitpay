@@ -20,6 +20,7 @@ export default {
   ACCOUNT_REASONS: {
     'fields_needed': 'Pendente de verificação',
   },
+
   STATUSES: {
     'open': 'Aberta',
     'OPEN': 'Aberta',
@@ -30,6 +31,15 @@ export default {
     undefined: 'Status indefinido'
   },
 
+  STATUSES_COLORS: {
+    'open': 'green',
+    'OPEN': 'green',
+    'in_progress': 'orange',
+    'closed': 'blue',
+    '': 'black',
+    null: 'gray',
+    undefined: 'brown'
+  },
 
   BANK_NUMBERS: {
     '110': 'BANCO PARA TESTE STRIPE',
@@ -74,15 +84,5 @@ export default {
     '077': 'BANCO INTERMEDIUM S.A.',
     '212': 'BANCO ORIGINAL',
     '085': 'CECRED-COOPERATIVA CENTRAL DE CREDITO URBANO'
-  }
-
-  STATUSES_COLORS: {
-    'open': 'green',
-    'OPEN': 'green',
-    'in_progress': 'orange',
-    'closed': 'blue',
-    '': 'black',
-    null: 'gray',
-    undefined: 'brown'
   }
 }
