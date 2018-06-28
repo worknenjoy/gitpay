@@ -4,22 +4,21 @@ const url = require('url')
 const requestPromise = require('request-promise')
 
 module.exports = Promise.method(function taskFetch (taskParams) {
-  return models.Task
-    .findOne(
-      { where: {
-        id: taskParams.id
-      },
-      include: [
-        models.User, models.Order,
-        {
-          model: models.Assign,
-          include: [models.User]
-        }
-      ] }
-    )
-    .then(async (data) => {
-
-      if(data.provider == 'github') {
+  return models.Task.findOne({
+    where: {
+      id: taskParams.id
+    },
+    include: [
+      models.User,
+      models.Order,
+      {
+        model: models.Assign,
+        include: [models.User]
+      }
+    ]
+  })
+    .then(async data => {
+      if (data.provider === 'github') {
         const githubUrl = data.dataValues.url
         const splitIssueUrl = url.parse(githubUrl).path.split('/')
         const userOrCompany = splitIssueUrl[1]
@@ -28,22 +27,28 @@ module.exports = Promise.method(function taskFetch (taskParams) {
         const issueData = await requestPromise({
           uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`,
           headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+            'User-Agent':
+              'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
           }
-        }).then(response => {
-          return response
-        }).catch(e => {
-          // eslint-disable-next-line no-console
-          console.log('github response error')
-          // eslint-disable-next-line no-console
-          console.log(e)
         })
+          .then(response => {
+            return response
+          })
+          .catch(e => {
+            // eslint-disable-next-line no-console
+            console.log('github response error')
+            // eslint-disable-next-line no-console
+            console.log(e)
+          })
 
         const issueDataJson = JSON.parse(issueData)
 
-         if (!data.title && data.title != issueDataJson.title) {
-          const titleChange = await data.updateAttributes({title: issueDataJson.title}).then((task) => task)
-         }
+        if (!data.title && data.title !== issueDataJson.title) {
+          /* eslint-disable no-unused-vars */
+          const titleChange = await data
+            .updateAttributes({ title: issueDataJson.title })
+            .then(task => task)
+        }
 
         return {
           id: data.dataValues.id,
@@ -67,11 +72,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
         }
       }
       return data.dataValues
-
-      }).catch(error => {
-        // eslint-disable-next-line no-console
-        console.log(error)
-        return false
-      })
-
+    })
+    .catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      return false
+    })
 })
