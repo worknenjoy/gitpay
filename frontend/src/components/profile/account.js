@@ -242,25 +242,38 @@ class Account extends Component {
                       { account.data.verification.disabled_reason ? (
                         <Chip
                           label={
-                            Const.ACCOUNT_REASONS[account.data.verification.disabled_reason]
+                            Const.ACCOUNT_REASONS[account.data.verification.disabled_reason] || 'Pendente'
                           }
                           style={ { marginRight: 20, backgroundColor: 'orange' } }
                         />
                       ) : (
-                        <Chip
-                          label={ 'Ativada' }
-                          style={ {
-                            color: 'white',
-                            marginRight: 20,
-                            backgroundColor: 'green'
-                          } }
-                        />
+                        <div>
+                        { account.data.external_accounts.total_count ? (
+                          <Chip
+                            label={ 'Ativada' }
+                            style={ {
+                              color: 'white',
+                              marginRight: 20,
+                              backgroundColor: 'green'
+                            } }
+                          />
+                        ) : (
+                          <Chip
+                            label={ 'Falta dados bancários ( ir para próxima etapa)' }
+                            style={ {
+                              color: 'white',
+                              marginRight: 20,
+                              backgroundColor: 'orange'
+                            } }
+                          />
+                        ) }
+                        </div>
                       ) }
                     </div>
-                    { account.data.verification.fields_needed.length && (
+                    { account.data.verification.fields_needed.length && account.data.verification.fields_needed[0] !== 'legal_entity.verification.document' ? (
                       <div>
                         <Typography component='p'>
-                          { 'No entanto, temos os seguintes campos que eventualmente pode precisar ser verificado(s):' }
+                          { 'Temos os seguinte(s) campo(s) que precisa(m) ser verificado(s):' }
                         </Typography>
                         <div>
                           { account.data.verification.fields_needed.map(
@@ -274,7 +287,12 @@ class Account extends Component {
                           ) }
                         </div>
                       </div>
-                    ) }
+                    ) : (
+                      <Chip
+                        style={ { margin: 3 } }
+                        label={ `Agora receberá as recompensas na sua conta ` }
+                      />
+                    )}
                   </CardContent>
                   <CardActions>
                     <Button
