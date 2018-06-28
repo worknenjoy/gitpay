@@ -1,17 +1,17 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const MinifyPlugin = require("babel-minify-webpack-plugin")
+const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: __dirname + '/public',
+    path: `${__dirname}/public`,
     filename: './app.js'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      modules: __dirname + '/node_modules'
+      modules: `${__dirname}/node_modules`
     }
   },
   plugins: [
@@ -36,12 +36,12 @@ module.exports = {
       }
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'})
+      loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
     }, {
       test: /\.woff|.woff2|.ttf|.eot|.svg*.*$/,
       loader: 'file-loader'
     },
-      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
   }
 }

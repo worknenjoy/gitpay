@@ -1,20 +1,29 @@
 // CardSection.js
-import React from 'react';
-import Typography from 'material-ui/Typography';
-import { CardElement } from 'react-stripe-elements';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Typography from 'material-ui/Typography'
+import { CardElement } from 'react-stripe-elements'
 
 class CardSection extends React.Component {
-  render() {
+  render () {
     return (
       <label>
-        {this.props.stripe ? (
-          <CardElement style={{base: {fontSize: '22px', marginTop: 20, marginBottom: 20}}} />
+        { this.props.stripe ? (
+          <CardElement
+            style={ {
+              base: { fontSize: '22px', marginTop: 20, marginBottom: 20 }
+            } }
+          />
         ) : (
-          <Typography variant="caption">Card loading...</Typography>
-        )}
+          <Typography variant='caption'>Card loading...</Typography>
+        ) }
       </label>
-    );
+    )
   }
-};
+}
 
-export default CardSection;
+CardSection.propTypes = {
+  stripe: PropTypes.object
+}
+
+export default CardSection

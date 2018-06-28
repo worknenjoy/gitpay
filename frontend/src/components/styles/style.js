@@ -1,4 +1,4 @@
-const styles = (theme) => ({
+const styles = theme => ({
   appBarHeader: {
     color: theme.palette.primary
   },
@@ -8,7 +8,7 @@ const styles = (theme) => ({
   },
   root: {
     flexGrow: 1,
-    marginTop: 0,
+    marginTop: 0
   },
   icon: {
     marginTop: -4,
@@ -16,55 +16,55 @@ const styles = (theme) => ({
   },
   button: {
     margin: theme.spacing.unit,
-    padding: [theme.spacing.unit*2, theme.spacing.unit*4],
+    padding: [theme.spacing.unit * 2, theme.spacing.unit * 4],
     color: 'white'
   },
   altButton: {
     margin: [theme.spacing.unit],
-    padding: [theme.spacing.unit/2, theme.spacing.unit*6],
+    padding: [theme.spacing.unit / 2, theme.spacing.unit * 6],
     color: 'white',
     fontSize: 12
   },
   mainBlock: {
     textAlign: 'center',
-      padding: 8,
-      color: theme.palette.text.primary
+    padding: 8,
+    color: theme.palette.text.primary
   },
   secBlock: {
     textAlign: 'center',
-      padding: 8,
-      backgroundColor: '#f1f0ea'
+    padding: 8,
+    backgroundColor: '#f1f0ea'
   },
   divider: {
     textAlign: 'center',
-      display: 'inline-block',
-      marginLeft: '35%',
-      marginBottom: '5%',
-      marginTop: 40,
-      fontSize: 18,
-      paddingBottom: 10,
-      borderBottom: '5px solid black',
-      width: '30%',
+    display: 'inline-block',
+    marginLeft: '35%',
+    marginBottom: '5%',
+    marginTop: 40,
+    fontSize: 18,
+    paddingBottom: 10,
+    borderBottom: '5px solid black',
+    width: '30%'
   },
   mainlist: {
     textAlign: 'left',
-      marginLeft: '20%'
+    marginLeft: '20%'
   },
   infoList: {
     textAlign: 'left',
-      marginLeft: '10%'
+    marginLeft: '10%'
   },
   seclist: {
     textAlign: 'left',
-      width: '100%'
+    width: '100%'
   },
   listIconTop: {
     alignItems: 'flex-start'
   },
   alignLeftPadding: {
     textAlign: 'left',
-      padding: 80,
-      paddingTop: 40,
+    padding: 80,
+    paddingTop: 40
   },
   spacedTop: {
     marginTop: 20
@@ -85,4 +85,4 @@ const styles = (theme) => ({
   }
 })
 
-export default styles;
+export default styles

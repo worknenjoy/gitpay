@@ -1,10 +1,10 @@
 class Auth {
-
   /**
    * Authenticate a user. Save a token string in Local Storage
    *
    * @param {string} token
    */
+  /* eslint-disable no-undef */
   static authenticateUser (token) {
     localStorage.setItem('token', token)
   }
@@ -21,7 +21,7 @@ class Auth {
     localStorage.setItem('referer', path)
   }
 
-  static getReferer() {
+  static getReferer () {
     return localStorage.getItem('referer')
   }
 

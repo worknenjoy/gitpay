@@ -9,4 +9,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(Profile)

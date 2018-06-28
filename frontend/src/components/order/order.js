@@ -1,49 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Grid from 'material-ui/Grid';
-import Notification from '../notification/notification';
-import Avatar from 'material-ui/Avatar';
-import Card, { CardContent, CardMedia } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Chip from 'material-ui/Chip';
-import PaymentDialog from '../payment/payment-dialog';
-import '../checkout/checkout-form';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Grid from 'material-ui/Grid'
+import Notification from '../notification/notification'
+import Typography from 'material-ui/Typography'
 
-import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
+import '../checkout/checkout-form'
 
-import api from '../../consts';
-import axios from 'axios';
-import Auth from '../../modules/auth';
+import { withStyles } from 'material-ui/styles'
 
-import marked from 'marked';
-import renderHTML from 'react-render-html';
+import TopBar from '../topbar/topbar'
+import Bottom from '../bottom/bottom'
 
-import TopBar from '../topbar/topbar';
-import Bottom from '../bottom/bottom';
-
-const paymentIcon = require('../../images/payment-icon-alt.png');
+// const paymentIcon = require('../../images/payment-icon-alt.png')
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: 'black',
-    height: 180,
+    height: 180
   },
   formPayment: {
     marginTop: 10,
     marginBottom: 10
   },
   avatar: {
-    margin: 10,
+    margin: 10
   },
   bigAvatar: {
     width: 40,
-    height: 40,
+    height: 40
   },
   chipContainer: {
     marginTop: 12,
@@ -57,7 +42,7 @@ const styles = theme => ({
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'left',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   typo: {
     marginLeft: 20,
@@ -150,21 +135,21 @@ const styles = theme => ({
     '&:focus': {
       backgroundColor: theme.palette.primary.main,
       '& $primary, & $icon': {
-        color: theme.palette.common.white,
-      },
-    },
+        color: theme.palette.common.white
+      }
+    }
   },
   primary: {},
   icon: {},
   card: {
-    display: 'flex',
+    display: 'flex'
   },
   details: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   content: {
-    flex: '1 0 auto',
+    flex: '1 0 auto'
   },
   cover: {
     width: 44,
@@ -178,39 +163,40 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit
   },
   playIcon: {
     height: 38,
-    width: 38,
+    width: 38
   }
-});
+})
 
 class Order extends Component {
-
-  constructor(props) {
-    super(props);
-
+  constructor (props) {
+    super(props)
   }
 
-  componentWillMount() {
+  componentWillMount () {}
 
-  }
-
-  render() {
-
-    const { classes } = this.props;
+  render () {
+    const { classes } = this.props
 
     return (
       <div>
-        <Grid container className={classes.root} spacing={24} >
+        <Grid container className={ classes.root } spacing={ 24 }>
           <TopBar />
-          <Grid item xs={12}>
-            <Typography variant="display1" color="primary" align="left" className={classes.typo} gutterBottom>
+          <Grid item xs={ 12 }>
+            <Typography
+              variant='display1'
+              color='primary'
+              align='left'
+              className={ classes.typo }
+              gutterBottom
+            >
               page
             </Typography>
           </Grid>
-          <Notification message="Pedido criado com sucesso" open={true}  />
+          <Notification message='Pedido criado com sucesso' open />
         </Grid>
         <Bottom />
       </div>
@@ -219,7 +205,7 @@ class Order extends Component {
 }
 
 Order.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(Order);
+export default withStyles(styles)(Order)

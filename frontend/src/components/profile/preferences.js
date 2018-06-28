@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
+import Paper from 'material-ui/Paper'
+import Typography from 'material-ui/Typography'
 
-import { withStyles } from 'material-ui/styles';
-
+import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   paper: {
@@ -38,47 +37,41 @@ const styles = theme => ({
     marginLeft: 64,
     marginTop: 20
   }
-});
+})
 
 class Preferences extends Component {
-
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       tab: 0,
       cards: []
     }
 
-    this.handleTabChange = this.handleTabChange.bind(this);
-
+    this.handleTabChange = this.handleTabChange.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {}
 
-  }
-
-  handleTabChange(event, value) {
+  handleTabChange (event, value) {
     this.setState({ tab: value })
-  };
+  }
 
+  render () {
+    const { classes } = this.props
 
-  render() {
-
-    const { classes } = this.props;
-
-    return(
+    return (
       <div>
-        <Paper className={classes.paper} elevation={0}>
-          <Typography variant="headline" component="h3">
+        <Paper className={ classes.paper } elevation={ 0 }>
+          <Typography variant='headline' component='h3'>
             Preferências
           </Typography>
-          <Typography component="p" style={{marginBottom: 40}}>
+          <Typography component='p' style={ { marginBottom: 40 } }>
             Aqui você configura algumas preferências para a sua conta
           </Typography>
-          <Typography component="p" style={{marginBottom: 10}}>
+          <Typography component='p' style={ { marginBottom: 10 } }>
             <strong>Língua:</strong> Português
           </Typography>
-          <Typography component="p" style={{marginBottom: 40}}>
+          <Typography component='p' style={ { marginBottom: 40 } }>
             <strong>Moeda:</strong> USD (Dólar)
           </Typography>
         </Paper>
@@ -88,7 +81,7 @@ class Preferences extends Component {
 }
 
 Preferences.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withRouter(withStyles(styles)(Preferences));
+export default withRouter(withStyles(styles)(Preferences))

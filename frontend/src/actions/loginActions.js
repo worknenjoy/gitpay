@@ -19,11 +19,11 @@ const loggedInRequested = () => {
   return { type: LOGGED_IN_REQUESTED, logged: false, completed: false }
 }
 
-const loggedInSuccess = (user) => {
+const loggedInSuccess = user => {
   return { type: LOGGED_IN_SUCCESS, logged: true, completed: true, user: user }
 }
 
-const loggedInError = (error) => {
+const loggedInError = error => {
   return { type: LOGGED_IN_ERROR, logged: false, completed: true, error: error }
 }
 
@@ -38,22 +38,25 @@ const loggedOutCompleted = () => {
 export const loggedIn = () => {
   const token = Auth.getToken()
   if (token) {
-    return (dispatch) => {
+    return dispatch => {
       dispatch(loggedInRequested())
-      return axios.get(api.API_URL + '/authenticated', {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
-        .then((response) => {
+      return axios
+        .get(api.API_URL + '/authenticated', {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        })
+        .then(response => {
           if (!Auth.getAuthNotified()) {
             dispatch(addNotification('Você logou na sua conta com sucesso'))
             Auth.authNotified()
           }
           return dispatch(loggedInSuccess(response.data.user))
         })
-        .catch((error) => {
-          dispatch(addNotification('Tivemos um problema ao tentar logar na sua conta'))
+        .catch(error => {
+          dispatch(
+            addNotification('Tivemos um problema ao tentar logar na sua conta')
+          )
           return dispatch(loggedInError(error))
         })
     }
@@ -63,7 +66,7 @@ export const loggedIn = () => {
 
 export const logOut = () => {
   Auth.deauthenticateUser()
-  return (dispatch) => {
+  return dispatch => {
     dispatch(loggedOutRequested())
     dispatch(addNotification('Você acabou de sair da sua conta'))
     dispatch(loggedOutCompleted())

@@ -1,15 +1,11 @@
 // CardSection.js
-import React from 'react';
-//import { PostalCodeElement } from 'react-stripe-elements';
+import React from 'react'
+// import { PostalCodeElement } from 'react-stripe-elements';
 
 class AddressSection extends React.Component {
-  render() {
-    return (
-      <label>
-
-      </label>
-    );
+  render () {
+    return <label />
   }
-};
+}
 
-export default AddressSection;
+export default AddressSection

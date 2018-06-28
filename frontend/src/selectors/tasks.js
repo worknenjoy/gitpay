@@ -11,21 +11,27 @@ export const getFilteredTasks = createSelector(
       case 'all':
         return tasks
       case 'userId':
-        return {  ...tasks, data: tasks.data.filter((item) => item.userId === user.id) }
+        return { ...tasks, data: tasks.data.filter(item => item.userId === user.id) }
       case 'Assigns':
-        return { ...tasks, data: tasks.data.filter((item) => {
-          const interested = item.Assigns.filter((assign) => assign.userId === user.id)
-          return interested.length
-        })}
+        return {
+          ...tasks,
+          data: tasks.data.filter(item => {
+            const interested = item.Assigns.filter(assign => assign.userId === user.id)
+            return interested.length
+          }) }
       case 'assigned':
-        return {...tasks, data: tasks.data.filter((item) => {
-          const interested = item.Assigns.filter((assign) => assign.id === item.assigned)
-          if(interested.length) {
-            return item.assigned === interested[0].id
-          }
-        })}
+        return {
+          ...tasks,
+          data: tasks.data.filter(item => {
+            const interested = item.Assigns.filter(assign => assign.id === item.assigned)
+            if (interested.length) {
+              return item.assigned === interested[0].id
+            }
+          }) }
       default:
-        return {...tasks, data: tasks.data.filter((item) => item[visibilityFilter] === user.id)}
+        return {
+          ...tasks,
+          data: tasks.data.filter(item => item[visibilityFilter] === user.id) }
     }
   }
 )

@@ -1,30 +1,30 @@
-if(process.env.NODE_ENV != 'production') {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({
     path: '../.env'
-  });
+  })
 }
 
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-	entry: './src/index.js',
-	output: {
-		path: __dirname + '/public',
-		filename: './app.js'
-	},
-	devServer: {
-		port: 8082,
-		contentBase: './public'
-	},
-	resolve: {
-		extensions: ['.js', '.jsx'],
-		alias: {
-			modules: __dirname + '/node_modules'
-		}
-	},
-	plugins: [
-		new ExtractTextPlugin('app.css'),
+  entry: './src/index.js',
+  output: {
+    path: `${__dirname}/public`,
+    filename: './app.js'
+  },
+  devServer: {
+    port: 8082,
+    contentBase: './public'
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    alias: {
+      modules: `${__dirname}/node_modules`
+    }
+  },
+  plugins: [
+    new ExtractTextPlugin('app.css'),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development'),
@@ -51,5 +51,5 @@ module.exports = {
 		},
       { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
-	}
+  }
 }
