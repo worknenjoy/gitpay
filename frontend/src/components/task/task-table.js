@@ -198,16 +198,16 @@ class CustomPaginationActionsTable extends React.Component {
                           )
                         }
                       </TableCell>
-                      <TableCell component="th" scope="row" style={{padding: 10}}>
+                      <TableCell component="th" scope="row" style={{padding: 10, position: 'relative'}}>
                         <div style={{width: 250, display: 'flex', alignItems: 'center'}}>
                           <a style={{cursor: 'pointer'}} onClick={() => this.handleClickListItem(n.id)}>
                             {TextEllipsis(`${n.title || 'sem título'}`, 30)}
                           </a>
-                          <Tooltip id="tooltip-fab" title="Ver no Github" placement="right">
-                            <a target="_blank" href={n.url}>
+                          <a target="_blank" href={n.url}>
+                            <Tooltip id="tooltip-fab" title="Ver no Github" placement="top">
                               <img width="16" src={logoGithub} style={{backgroundColor: 'black', marginLeft: 10}} />
-                            </a>
-                          </Tooltip>
+                            </Tooltip>
+                          </a>
                         </div>
                       </TableCell>
                       <TableCell>
