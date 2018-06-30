@@ -34,7 +34,7 @@ import {
   StyledButton,
   LabelButton,
   StyledAvatar,
-  HiddenMobile,
+  OnlyDesktop,
 } from './TopbarStyles'
 
 import mainStyles from '../styles/style'
@@ -305,7 +305,7 @@ class TopBar extends Component {
             </ReactPlaceholder>
 
             { isLoggedIn &&
-              <HiddenMobile>
+              <OnlyDesktop>
                 <Tooltip id='tooltip-github' title='Acessar nosso github' placement='bottom'>
                   <StyledAvatar
                     alt={ user.username }
@@ -313,7 +313,7 @@ class TopBar extends Component {
                     onClick={ this.handleGithubLink }
                   />
                 </Tooltip>
-              </HiddenMobile>
+              </OnlyDesktop>
             }
 
           </RightSide>

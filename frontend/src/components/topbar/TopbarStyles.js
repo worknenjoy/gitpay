@@ -65,6 +65,6 @@ export const StyledAvatar = styled(Avatar)`
   ${media.phone`margin-left: 15px;`}
 `
 
-export const HiddenMobile = styled.div`
+export const OnlyDesktop = styled.div`
   ${media.phone`display: none;`}
 `
