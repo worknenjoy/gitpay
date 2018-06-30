@@ -19,25 +19,23 @@ import formProps from '../form/form-props'
 
 import mainStyles from '../styles/style'
 
+import {
+  Container,
+  BaseFooter,
+  SubscribeFromWrapper
+} from './FooterStyles'
+
 const logoCompleteGray = require('../../images/logo-complete-gray.png')
 
 const styles = theme => mainStyles(theme)
 
 class Bottom extends Component {
-  constructor (props) {
-    super(props)
-  }
-
-  componentDidMount () {
-    // console.log(this.props.classes);
-  }
-
   render () {
     const { classes } = this.props
 
     return (
       <div className={ classes.secBlock }>
-        <div className={ classes.alignLeftPadding }>
+        <Container>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography type='subheading'>
@@ -75,9 +73,9 @@ class Bottom extends Component {
                 Tá na dúvida aí? Não se preocupe, deixe seu e-mail e fique
                 sabendo de novos desafios!
               </Typography>
-              <div className='subscribe-form'>
+              <SubscribeFromWrapper className='subscribe-form'>
                 <SubscribeFrom { ...formProps } />
-              </div>
+              </SubscribeFromWrapper>
               <Typography type='caption'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
                 2035 Sunset Lake Road, Suite B-2 <br />
@@ -86,18 +84,10 @@ class Bottom extends Component {
             </Grid>
           </Grid>
           <Divider className={ classes.spacedTop } />
-          <Grid container spacing={ 24 }>
-            <Grid item xs={ 12 } sm={ 2 }>
-              <div className={ classes.logoSimple }>
-                <img
-                  className={ classes.img }
-                  src={ logoCompleteGray }
-                  width='100'
-                />
-              </div>
-            </Grid>
-          </Grid>
-        </div>
+          <BaseFooter>
+            <img className={ classes.img } src={ logoCompleteGray } width='100' />
+          </BaseFooter>
+        </Container>
       </div>
     )
   }
