@@ -120,8 +120,8 @@ class Profile extends Component {
 
     return (
       <div>
+        <TopBarContainer />
         <Grid container className={ classes.root } spacing={ 24 }>
-          <TopBarContainer />
           <Grid item xs={ 12 } md={ 8 }>
             <HashRouter>
               <Switch>

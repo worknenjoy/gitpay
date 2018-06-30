@@ -52,8 +52,8 @@ class Welcome extends Component {
 
     return (
       <div className={ classes.root }>
+        <TopBarContainer />
         <Grid container spacing={ 24 }>
-          <TopBarContainer />
           <Grid item xs={ 12 } style={{padding: 0, margin: 0}}>
             <div style={{background: `url(${backgroundPicture})`, backgroundSize: 'cover'}}>
               <div className={ classes.mainBlock } style={{margin: 0, paddingTop: 10}}>
