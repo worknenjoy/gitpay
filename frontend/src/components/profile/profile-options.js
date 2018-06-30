@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import { withStyles } from 'material-ui/styles'
+
+import { Card } from './ProfileStyles'
 
 const taskIcon = require('../../images/task-icon.png')
 const paymentIcon = require('../../images/payment-icon.png')
@@ -56,6 +58,7 @@ class ProfileOptions extends Component {
           </Typography>
         </Paper>
         <div className={ classes.parentCard }>
+
           <Card className={ classes.card }>
             <CardMedia
               className={ classes.media }
@@ -76,6 +79,7 @@ class ProfileOptions extends Component {
               </Button>
             </CardActions>
           </Card>
+
           <Card className={ classes.card }>
             <CardMedia
               className={ classes.media }
@@ -99,6 +103,7 @@ class ProfileOptions extends Component {
               </Button>
             </CardActions>
           </Card>
+
           <Card className={ classes.card }>
             <CardMedia
               className={ classes.media }

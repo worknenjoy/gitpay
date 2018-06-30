@@ -35,8 +35,7 @@ const backgroundPicture = require('../../images/main-background01.jpg')
 import {
   MainTitle,
   MainList,
-  ResponsiveImage,
-  InfoList
+  ResponsiveImage
 } from './CommonStyles'
 
 const styles = (theme) => mainStyles(theme)
