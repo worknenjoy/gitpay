@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import { CardActions, CardContent } from 'material-ui/Card'
 import { withStyles } from 'material-ui/styles'
 
-import { Card } from './ProfileStyles'
+import { Card, CardList, CardMedia } from './ProfileStyles'
 
 const taskIcon = require('../../images/task-icon.png')
 const paymentIcon = require('../../images/payment-icon.png')
@@ -57,11 +57,10 @@ class ProfileOptions extends Component {
             Saiba quais são os seus primeiros passos para começar
           </Typography>
         </Paper>
-        <div className={ classes.parentCard }>
 
-          <Card className={ classes.card }>
+        <CardList>
+          <Card>
             <CardMedia
-              className={ classes.media }
               image={ taskIcon }
               title='Contemplative Reptile'
             />
@@ -80,9 +79,8 @@ class ProfileOptions extends Component {
             </CardActions>
           </Card>
 
-          <Card className={ classes.card }>
+          <Card>
             <CardMedia
-              className={ classes.media }
               image={ paymentIcon }
               title='Contemplative Reptile'
             />
@@ -104,9 +102,8 @@ class ProfileOptions extends Component {
             </CardActions>
           </Card>
 
-          <Card className={ classes.card }>
+          <Card>
             <CardMedia
-              className={ classes.media }
               image={ toolsIcon }
               title='Contemplative Reptile'
             />
@@ -124,7 +121,7 @@ class ProfileOptions extends Component {
               </Button>
             </CardActions>
           </Card>
-        </div>
+        </CardList>
       </div>
     )
   }
