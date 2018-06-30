@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-import Chip from 'material-ui/Chip';
+import Chip from 'material-ui/Chip'
 
 import formProps from '../form/form-props'
 import mainStyles from '../styles/style'
