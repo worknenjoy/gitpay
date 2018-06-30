@@ -47,38 +47,6 @@ const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
 
 const styles = {
-  logoMain: {
-    marginLeft: 340
-  },
-  logoAlt: {
-    marginLeft: 240
-  },
-  containerBar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  notifications: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginRight: 30,
-    marginLeft: 0
-  },
-  intro: {
-    paddingTop: 20,
-    paddingBottom: 10,
-    margin: 0,
-    textAlign: 'center',
-    width: '100%',
-    backgroundColor: 'black'
-  },
-  spaceRight: {
-    marginRight: 10
-  },
-  avatar: {
-    marginLeft: 20
-  },
   formControl: {
     width: '100%'
   }
