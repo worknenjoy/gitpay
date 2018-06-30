@@ -58,7 +58,7 @@ class Welcome extends Component {
             <div style={{background: `url(${backgroundPicture})`, backgroundSize: 'cover'}}>
               <div className={ classes.mainBlock } style={{margin: 0, paddingTop: 10}}>
                 <Typography className={ classes.tagline } gutterBottom>
-                  transforme sua contribuição em recompensa
+                  Transforme sua contribuição em recompensa
                 </Typography>
                 <Typography variant='title' gutterBottom>
                   e coloque novas ideias no ar!
@@ -184,7 +184,7 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Desenvolva o seu negócio com ferramentas open source, e pagando por servicos sob demanda'
+                      primary='Desenvolva o seu negócio com ferramentas open source, e pagando por serviços sob demanda'
                       secondary='Empresas podem nascer e se manter com o Gitpay, desde o design até o desenvolvimento, pagando apenas pelas demandas concluídas e integradas com o projeto'
                     />
                   </ListItem>
