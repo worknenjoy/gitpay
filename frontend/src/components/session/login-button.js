@@ -28,11 +28,11 @@ class LoginButton extends Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, contrast } = this.props
 
     return (
-      <div>
-        <Typography type='subheading' gutterBottom noWrap>
+      <div style={contrast ? {} : {color: 'white'}}>
+        <Typography type='subheading' color={ contrast ? 'default' : 'inherit' } gutterBottom noWrap>
           Conecte com algumas dessas contas
         </Typography>
         <Button
@@ -63,7 +63,8 @@ class LoginButton extends Component {
 
 LoginButton.propTypes = {
   classes: PropTypes.object.isRequired,
-  referer: PropTypes.object
+  referer: PropTypes.object,
+  contrast: PropTypes.bool
 }
 
 export default withStyles(styles)(LoginButton)

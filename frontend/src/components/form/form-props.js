@@ -22,7 +22,11 @@ export default {
     },
     error: {
       fontSize: 14,
-      color: red['500']
+      backgroundColor: teal['200'],
+      display: 'inline-block',
+      opacity: 0.8,
+      padding: 10,
+      color: red['700']
     }
   }
 }

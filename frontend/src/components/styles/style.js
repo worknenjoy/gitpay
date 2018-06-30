@@ -80,7 +80,7 @@ const styles = theme => ({
     paddingTop: 20
   },
   tagline: {
-    fontSize: 45,
+    fontSize: 36,
     color: 'black'
   }
 })

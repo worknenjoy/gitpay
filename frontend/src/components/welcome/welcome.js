@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
+import Chip from 'material-ui/Chip';
 
 import formProps from '../form/form-props'
 import mainStyles from '../styles/style'
@@ -29,6 +30,7 @@ import LoginButton from '../../components/session/login-button'
 const octodex = require('../../images/octodex.png')
 const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat.png')
 const deal = require('../../images/deal.png')
+const backgroundPicture = require('../../images/main-background01.jpg')
 
 const styles = (theme) => mainStyles(theme)
 
@@ -40,33 +42,57 @@ class Welcome extends Component {
   render () {
     const { classes, location } = this.props
 
+    const chipData = [
+      { key: 0, label: 'React.js', url: 'https://reactjs.org/' },
+      { key: 1, label: 'Material-ui', url: 'https://material-ui.com/' },
+      { key: 2, label: 'Node.js', url: 'https://nodejs.org' },
+      { key: 3, label: 'Heroku', url: 'http://heroku.com/' },
+      { key: 4, label: 'Github', url: 'https://github.com' }
+    ]
+
     return (
       <div className={ classes.root }>
         <Grid container spacing={ 24 }>
           <TopBarContainer />
-          <Grid item xs={ 12 }>
-            <div className={ classes.mainBlock }>
-              <Typography type='display2' className={ classes.tagline } gutterBottom>
-                Aqui sua contribuição vira recompensa
-              </Typography>
-              <Typography type='headline' gutterBottom>
-                e coloca novas ideias no ar!
-              </Typography>
-              <Typography type='subheading' gutterBottom noWrap>
+          <Grid item xs={ 12 } style={{padding: 0, margin: 0}}>
+            <div style={{background: `url(${backgroundPicture})`, backgroundSize: 'cover'}}>
+              <div className={ classes.mainBlock } style={{margin: 0, paddingTop: 10}}>
+                <Typography className={ classes.tagline } gutterBottom>
+                  transforme sua contribuição em recompensa
+                </Typography>
+                <Typography variant='title' gutterBottom>
+                  e coloque novas ideias no ar!
+                </Typography>
+                <Typography type='subheading' gutterBottom noWrap>
 
-                com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda
+                  com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda
 
-              </Typography>
-              <div className='subscribe-form'>
-                <SubscribeFrom className='subscribe-form-main' { ...formProps } />
+                </Typography>
+                <div className='subscribe-form'>
+                  <SubscribeFrom className='subscribe-form-main' { ...formProps } />
+                </div>
+              </div>
+              <div className={ classes.mainBlock } style={{paddingBottom: 40}}>
+                <LoginButton referer={ location } constrast={true} />
+              </div>
+              <div className={ classes.mainBlock } style={{paddingBottom: 80, color: 'white'}}>
+                <Typography variant='subheading' color='inherit' gutterBottom>
+                  Nossa stack
+                </Typography>
+                <div style={{marginTop: 20}}>
+                {chipData.map((i) =>
+                  <Chip
+                    onClick={() => window.location.href = i.url}
+                    key={i.key}
+                    label={i.label}
+                    style={{marginRight: 20, fontWeight: 'bold'}}
+                  />
+                  )
+                }
+                </div>
               </div>
             </div>
           </Grid>
-        </Grid>
-        <Grid item xs={ 12 }>
-          <div className={ classes.mainBlock }>
-            <LoginButton referer={ location } />
-          </div>
         </Grid>
         <div className={ classes.secBlock }>
           <Grid container spacing={ 24 }>
