@@ -20,7 +20,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      modules: `${__dirname}/node_modules`
+      modules: `${__dirname}/node_modules`,
+      app: `${__dirname}/src`
     }
   },
   plugins: [
