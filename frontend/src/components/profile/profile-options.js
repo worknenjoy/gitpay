@@ -19,28 +19,10 @@ const styles = theme => ({
     paddingLeft: 20,
     marginLeft: 20
   },
-  parentCard: {
-    marginTop: 40,
-    marginLeft: 40,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  card: {
-    maxWidth: 280,
-    marginRight: 10,
-    textAlign: 'center'
-  },
   cardActions: {
     display: 'flex',
     justifyContent: 'center'
   },
-  media: {
-    width: 128,
-    height: 128,
-    marginLeft: 64,
-    marginTop: 20
-  }
 })
 
 class ProfileOptions extends Component {
