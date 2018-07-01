@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define('Order', {
     source_id: DataTypes.STRING,
+    provider: DataTypes.STRING,
     currency: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
     description: DataTypes.STRING,

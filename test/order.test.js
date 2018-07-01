@@ -54,6 +54,29 @@ describe('orders', () => {
         })
     })
 
+    it('should create a new paypal order', (done) => {
+      agent
+        .post('/orders/create/')
+        .send({
+          source_id: '12345',
+          currency: 'BRL',
+          provider: 'paypal',
+          amount: 200,
+          email: 'testing@gitpay.me'
+        })
+        //.expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          console.log(err);
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          expect(res.body.source_id).to.equal('12345');
+          expect(res.body.currency).to.equal('BRL');
+          expect(res.body.amount).to.equal('200');
+          done();
+        })
+    })
+
     it('should fetch order', (done) => {
       models.Order.build({
         source_id: '12345',
