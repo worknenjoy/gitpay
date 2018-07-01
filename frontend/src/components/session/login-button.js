@@ -18,7 +18,6 @@ const styles = theme => ({
 })
 
 const Wrapper = styled.div`
-
   ${props => props.contrast && css`
     color: white;
   `}
@@ -29,7 +28,6 @@ const Content = styled.div`
 `
 
 class LoginButton extends Component {
-
   componentWillMount () {
     const referer = this.props.referer.pathname
     if (referer) {
