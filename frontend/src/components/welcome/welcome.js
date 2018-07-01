@@ -169,7 +169,7 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Desenvolva o seu negócio com ferramentas open source, e pagando por servicos sob demanda'
+                      primary='Desenvolva o seu negócio com ferramentas open source, e pagando por serviços sob demanda'
                       secondary='Empresas podem nascer e se manter com o Gitpay, desde o design até o desenvolvimento, pagando apenas pelas demandas concluídas e integradas com o projeto'
                     />
                   </ListItem>
