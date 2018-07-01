@@ -14,7 +14,7 @@ import WorkIcon from 'material-ui-icons/Work'
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
 
-import { InfoList, MainTitle } from './CommonStyles'
+import { InfoList, MainTitle } from './components/CommonStyles'
 
 class Workflow extends Component {
   constructor (props) {

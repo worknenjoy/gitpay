@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import media from '../../styleguide/media'
+
+import media from 'app/styleguide/media'
+import backgroundPicture from 'app/images/main-background01.jpg'
 
 export const MainTitle = styled.div`
   text-align: center;
@@ -48,4 +50,11 @@ export const InfoList = styled.div`
   ${media.phone`
     margin-left: 0;
   `}
+`
+
+export const MainBanner = styled.div`
+  box-sizing: border-box;
+  padding: 3rem 1rem 4rem 1rem;
+  background: url(${backgroundPicture});
+  background-size: cover;
 `
