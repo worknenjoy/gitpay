@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import media from 'app/styleguide/media'
 import backgroundPicture from 'app/images/main-background01.jpg'
@@ -57,4 +57,13 @@ export const MainBanner = styled.div`
   padding: 3rem 1rem 4rem 1rem;
   background: url(${backgroundPicture});
   background-size: cover;
+`
+
+export const Section = styled.div`
+  text-align: center;
+  padding: 1rem;
+
+  ${props => props.alternative && css`
+    background-color: #f1f0ea;
+  `}
 `

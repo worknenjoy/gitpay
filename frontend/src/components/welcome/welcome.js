@@ -29,7 +29,7 @@ import LoginButton from '../../components/session/login-button'
 import OurStack from './components/OurStack'
 
 const octodex = require('../../images/octodex.png')
-const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat.png')
+const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat-transparent.png')
 const deal = require('../../images/deal.png')
 
 import {
@@ -37,6 +37,7 @@ import {
   MainList,
   MainBanner,
   ResponsiveImage,
+  Section
 } from './components/CommonStyles'
 
 const styles = (theme) => mainStyles(theme)
@@ -77,7 +78,7 @@ class Welcome extends Component {
           </Grid>
         </MainBanner>
 
-        <div className={ classes.secBlock }>
+        <Section>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
@@ -127,8 +128,9 @@ class Welcome extends Component {
               <ResponsiveImage width='600' src={ octodex } />
             </Grid>
           </Grid>
-        </div>
-        <div className={ classes.mainBlock }>
+        </Section>
+
+        <Section alternative>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
@@ -178,8 +180,9 @@ class Welcome extends Component {
               <ResponsiveImage width='500' src={ octodexMotherhubbertocat } />
             </Grid>
           </Grid>
-        </div>
-        <div className={ classes.mainBlock }>
+        </Section>
+
+        <Section>
           <MainTitle>
             <Typography type='headline' gutterBottom>Como funciona</Typography>
           </MainTitle>
@@ -233,7 +236,8 @@ class Welcome extends Component {
               </div>
             </Grid>
           </Grid>
-        </div>
+        </Section>
+
         <Bottom />
       </div>
     )
