@@ -224,9 +224,7 @@ class TopBar extends Component {
                 >
                   <DialogTitle id='form-dialog-title'>Entre para a comunidade do Gitpay</DialogTitle>
                   <DialogContent>
-                    <div className={ classes.mainBlock }>
-                      <LoginButton referer={ this.props.location } />
-                    </div>
+                    <LoginButton referer={ this.props.location } size='medium' />
                   </DialogContent>
                 </Dialog>
               </div>

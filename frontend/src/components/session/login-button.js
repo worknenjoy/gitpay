@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import Auth from '../../modules/auth'
 import Button from 'material-ui/Button'
@@ -16,10 +17,19 @@ const styles = theme => ({
   }
 })
 
+const Wrapper = styled.div`
+
+  ${props => props.contrast && css`
+    color: white;
+  `}
+`
+
+const Content = styled.div`
+  margin-top: 10px;
+`
+
 class LoginButton extends Component {
-  constructor (props) {
-    super(props)
-  }
+
   componentWillMount () {
     const referer = this.props.referer.pathname
     if (referer) {
@@ -28,35 +38,40 @@ class LoginButton extends Component {
   }
 
   render () {
-    const { classes, contrast } = this.props
+    const { classes, contrast, size } = this.props
 
     return (
-      <div style={contrast ? {} : {color: 'white'}}>
-        <Typography type='subheading' color={ contrast ? 'default' : 'inherit' } gutterBottom noWrap>
+      <Wrapper contrast={ contrast }>
+        <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
           Conecte com algumas dessas contas
         </Typography>
-        <Button
-          style={ { marginRight: 10 } }
-          href={ `${api.API_URL}/authorize/github` }
-          variant='raised'
-          size='large'
-          color='secondary'
-          className={ classes.logButtons }
-        >
-          <img width='16' src={ logoGithub } />
-          <span className={ classes.gutterLeft }>Github</span>
-        </Button>
-        <Button
-          href={ `${api.API_URL}/authorize/bitbucket` }
-          variant='raised'
-          size='large'
-          color='secondary'
-          className={ classes.logButtons }
-        >
-          <img width='16' src={ logoBitbucket } />
-          <span className={ classes.gutterLeft }>Bitbucket</span>
-        </Button>
-      </div>
+
+        <Content>
+          <Button
+            style={ { marginRight: 10 } }
+            href={ `${api.API_URL}/authorize/github` }
+            variant='raised'
+            size={ size }
+            color='secondary'
+            className={ classes.logButtons }
+          >
+            <img width='16' src={ logoGithub } />
+            <span className={ classes.gutterLeft }>Github</span>
+          </Button>
+
+          <Button
+            href={ `${api.API_URL}/authorize/bitbucket` }
+            variant='raised'
+            size={ size }
+            color='secondary'
+            className={ classes.logButtons }
+          >
+            <img width='16' src={ logoBitbucket } />
+            <span className={ classes.gutterLeft }>Bitbucket</span>
+          </Button>
+
+        </Content>
+      </Wrapper>
     )
   }
 }
@@ -64,7 +79,12 @@ class LoginButton extends Component {
 LoginButton.propTypes = {
   classes: PropTypes.object.isRequired,
   referer: PropTypes.object,
-  contrast: PropTypes.bool
+  contrast: PropTypes.bool,
+  size: PropTypes.oneOf(['large', 'medium', 'small']),
+}
+
+LoginButton.defaultProps = {
+  size: 'large'
 }
 
 export default withStyles(styles)(LoginButton)
