@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import { CardActions, CardContent } from 'material-ui/Card'
@@ -15,14 +14,10 @@ const paymentIcon = require('../../images/payment-icon.png')
 const toolsIcon = require('../../images/tools-icon.png')
 
 const styles = theme => ({
-  paper: {
-    paddingLeft: 20,
-    marginLeft: 20
-  },
   cardActions: {
     display: 'flex',
     justifyContent: 'center'
-  },
+  }
 })
 
 class ProfileOptions extends Component {
@@ -31,14 +26,14 @@ class ProfileOptions extends Component {
 
     return (
       <div>
-        <Paper className={ classes.paper } elevation={ 0 }>
+        <div>
           <Typography variant='headline' component='h3'>
             Bem vindo ao Gitpay!
           </Typography>
           <Typography component='p'>
             Saiba quais são os seus primeiros passos para começar
           </Typography>
-        </Paper>
+        </div>
 
         <CardList>
           <Card>

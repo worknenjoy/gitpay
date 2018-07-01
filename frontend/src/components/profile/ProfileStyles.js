@@ -4,22 +4,21 @@ import media from 'app/styleguide/media'
 
 export const Card = styled(BaseCard)`
   max-width: 280px;
-  margin: 1rem 5px;
+  margin: 1rem .5rem;
   text-align: center;
 
   ${media.phone`
     max-width: 100%;
+    margin: 1.5rem 0;
   `}
 `
 
 export const CardList = styled.div`
-  box-sizing: border-box;
-  margin-top: 40px;
-  margin-left: 10px;
-  margin-right: 10px;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  margin-top: 40px;
+  justify-content: center;
 
   ${media.phone`
     display: block;
@@ -31,7 +30,4 @@ export const CardMedia = styled(BaseCardMedia)`
   height: 128px;
   margin-top: 20px;
   display: inline-block;
-
-  ${media.phone`
-  `}
 `
