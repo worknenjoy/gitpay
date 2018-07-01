@@ -6,7 +6,6 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-import Chip from 'material-ui/Chip';
 
 import formProps from '../form/form-props'
 import mainStyles from '../styles/style'
@@ -27,82 +26,67 @@ import TopBarContainer from '../../containers/topbar'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
 
+import OurStack from './components/OurStack'
+
 const octodex = require('../../images/octodex.png')
-const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat.png')
+const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat-transparent.png')
 const deal = require('../../images/deal.png')
-const backgroundPicture = require('../../images/main-background01.jpg')
+
+import {
+  MainTitle,
+  MainList,
+  MainBanner,
+  ResponsiveImage,
+  Section
+} from './components/CommonStyles'
 
 const styles = (theme) => mainStyles(theme)
 
 class Welcome extends Component {
-  componentDidMount () {
-
-  }
-
   render () {
     const { classes, location } = this.props
 
-    const chipData = [
-      { key: 0, label: 'React.js', url: 'https://reactjs.org/' },
-      { key: 1, label: 'Material-ui', url: 'https://material-ui.com/' },
-      { key: 2, label: 'Node.js', url: 'https://nodejs.org' },
-      { key: 3, label: 'Heroku', url: 'http://heroku.com/' },
-      { key: 4, label: 'Github', url: 'https://github.com' }
-    ]
-
     return (
       <div className={ classes.root }>
-        <Grid container spacing={ 24 }>
-          <TopBarContainer />
-          <Grid item xs={ 12 } style={{padding: 0, margin: 0}}>
-            <div style={{background: `url(${backgroundPicture})`, backgroundSize: 'cover'}}>
-              <div className={ classes.mainBlock } style={{margin: 0, paddingTop: 10}}>
+        <TopBarContainer />
+
+        <MainBanner>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
+              <div className={ classes.mainBlock } style={ { margin: 0, paddingTop: 10 } }>
                 <Typography className={ classes.tagline } gutterBottom>
-                  transforme sua contribuição em recompensa
+                  Transforme sua contribuição em recompensa
                 </Typography>
                 <Typography variant='title' gutterBottom>
                   e coloque novas ideias no ar!
                 </Typography>
                 <Typography type='subheading' gutterBottom noWrap>
-
                   com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda
-
                 </Typography>
+
                 <div className='subscribe-form'>
                   <SubscribeFrom className='subscribe-form-main' { ...formProps } />
                 </div>
               </div>
-              <div className={ classes.mainBlock } style={{paddingBottom: 40}}>
-                <LoginButton referer={ location } constrast={true} />
+
+              <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
+                <LoginButton referer={ location } contrast />
               </div>
-              <div className={ classes.mainBlock } style={{paddingBottom: 80, color: 'white'}}>
-                <Typography variant='subheading' color='inherit' gutterBottom>
-                  Nossa stack
-                </Typography>
-                <div style={{marginTop: 20}}>
-                {chipData.map((i) =>
-                  <Chip
-                    onClick={() => window.location.href = i.url}
-                    key={i.key}
-                    label={i.label}
-                    style={{marginRight: 20, fontWeight: 'bold'}}
-                  />
-                  )
-                }
-                </div>
-              </div>
-            </div>
+
+              <OurStack />
+            </Grid>
           </Grid>
-        </Grid>
-        <div className={ classes.secBlock }>
+        </MainBanner>
+
+        <Section>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
-              <div className={ classes.divider }>
+              <MainTitle left>
                 <Typography type='headline' gutterBottom>
                   Para freelancers
                 </Typography>
-              </div>
-              <div className={ classes.mainlist }>
+              </MainTitle>
+              <MainList>
                 <List>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
@@ -138,22 +122,23 @@ class Welcome extends Component {
                     />
                   </ListItem>
                 </List>
-              </div>
+              </MainList>
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
-              <img width='600' src={ octodex } />
+              <ResponsiveImage width='600' src={ octodex } />
             </Grid>
           </Grid>
-        </div>
-        <div className={ classes.mainBlock }>
+        </Section>
+
+        <Section alternative>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
-              <div className={ classes.divider }>
+              <MainTitle left>
                 <Typography type='headline' gutterBottom>
                   Para empresas
                 </Typography>
-              </div>
-              <div className={ classes.mainlist }>
+              </MainTitle>
+              <MainList>
                 <List>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
@@ -189,22 +174,21 @@ class Welcome extends Component {
                     />
                   </ListItem>
                 </List>
-              </div>
+              </MainList>
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
-              <img width='500' src={ octodexMotherhubbertocat } />
+              <ResponsiveImage width='500' src={ octodexMotherhubbertocat } />
             </Grid>
           </Grid>
-        </div>
-        <div className={ classes.mainBlock }>
+        </Section>
+
+        <Section>
+          <MainTitle>
+            <Typography type='headline' gutterBottom>Como funciona</Typography>
+          </MainTitle>
           <Grid container spacing={ 24 }>
-            <div className={ classes.divider }>
-              <Typography type='headline' gutterBottom>
-                Como funciona
-              </Typography>
-            </div>
             <Grid item xs={ 12 } sm={ 6 }>
-              <img width='400' src={ deal } />
+              <ResponsiveImage width='400' src={ deal } />
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
               <div className={ classes.seclist }>
@@ -252,7 +236,8 @@ class Welcome extends Component {
               </div>
             </Grid>
           </Grid>
-        </div>
+        </Section>
+
         <Bottom />
       </div>
     )

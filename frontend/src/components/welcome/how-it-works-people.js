@@ -13,6 +13,8 @@ import WorkIcon from 'material-ui-icons/Work'
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
 
+import { InfoList, MainTitle } from './components/CommonStyles'
+
 class HowItWorksPeople extends Component {
   constructor (props) {
     super(props)
@@ -57,13 +59,13 @@ class HowItWorksPeople extends Component {
               </Typography>
             </Toolbar>
             <div classeName={ classes.spacedTop }>
-              <div className={ classes.divider }>
+              <MainTitle>
                 <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
                   Como funciona
                 </Typography>
-              </div>
+              </MainTitle>
             </div>
-            <div className={ classes.infoList }>
+            <InfoList>
               <List>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
@@ -99,7 +101,7 @@ class HowItWorksPeople extends Component {
                   />
                 </ListItem>
               </List>
-            </div>
+            </InfoList>
           </AppBar>
         </Dialog>
       </ListItem>

@@ -42,5 +42,20 @@ For user as example
 `sequelize migration:create --name users`
 
 
+## Postgres
+
+If you don't want install a Postgres server in your local environment, you can use a docker container.
+
+### Requirements
+
+- `docker`
+- `docker-compose`
+
+### Run
+
+To run the Postgres container execute
+
+`docker-compose up`
+
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_large)

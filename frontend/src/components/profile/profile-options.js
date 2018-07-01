@@ -2,42 +2,21 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import { CardActions, CardContent } from 'material-ui/Card'
 import { withStyles } from 'material-ui/styles'
+
+import { Card, CardList, CardMedia } from './ProfileStyles'
 
 const taskIcon = require('../../images/task-icon.png')
 const paymentIcon = require('../../images/payment-icon.png')
 const toolsIcon = require('../../images/tools-icon.png')
 
 const styles = theme => ({
-  paper: {
-    paddingLeft: 20,
-    marginLeft: 20
-  },
-  parentCard: {
-    marginTop: 40,
-    marginLeft: 40,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  card: {
-    maxWidth: 280,
-    marginRight: 10,
-    textAlign: 'center'
-  },
   cardActions: {
     display: 'flex',
     justifyContent: 'center'
-  },
-  media: {
-    width: 128,
-    height: 128,
-    marginLeft: 64,
-    marginTop: 20
   }
 })
 
@@ -47,18 +26,18 @@ class ProfileOptions extends Component {
 
     return (
       <div>
-        <Paper className={ classes.paper } elevation={ 0 }>
+        <div>
           <Typography variant='headline' component='h3'>
             Bem vindo ao Gitpay!
           </Typography>
           <Typography component='p'>
             Saiba quais são os seus primeiros passos para começar
           </Typography>
-        </Paper>
-        <div className={ classes.parentCard }>
-          <Card className={ classes.card }>
+        </div>
+
+        <CardList>
+          <Card>
             <CardMedia
-              className={ classes.media }
               image={ taskIcon }
               title='Contemplative Reptile'
             />
@@ -76,9 +55,9 @@ class ProfileOptions extends Component {
               </Button>
             </CardActions>
           </Card>
-          <Card className={ classes.card }>
+
+          <Card>
             <CardMedia
-              className={ classes.media }
               image={ paymentIcon }
               title='Contemplative Reptile'
             />
@@ -99,9 +78,9 @@ class ProfileOptions extends Component {
               </Button>
             </CardActions>
           </Card>
-          <Card className={ classes.card }>
+
+          <Card>
             <CardMedia
-              className={ classes.media }
               image={ toolsIcon }
               title='Contemplative Reptile'
             />
@@ -119,7 +98,7 @@ class ProfileOptions extends Component {
               </Button>
             </CardActions>
           </Card>
-        </div>
+        </CardList>
       </div>
     )
   }
