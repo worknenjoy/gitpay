@@ -6,10 +6,12 @@ require('../../../loading/loading')
 const controllers = require('../controllers/order')
 
 const secure = require('./secure')
-router.use(secure)
 
-router.post('/create', controllers.createOrder)
 router.get('/list', controllers.listOrders)
 router.get('/fetch/:id', controllers.fetchOrders)
+router.get('/update', controllers.updateOrders)
+
+router.use(secure)
+router.post('/create', controllers.createOrder)
 
 module.exports = router

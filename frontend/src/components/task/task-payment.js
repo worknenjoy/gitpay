@@ -62,7 +62,7 @@ class TaskPayment extends Component {
       const chosen = this.props.assigns.filter(item => {
         return item.id === id
       })
-      return chosen[0].User.name
+      return chosen[0].User.username
     }
 
     return (

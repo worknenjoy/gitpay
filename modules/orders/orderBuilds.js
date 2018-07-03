@@ -38,8 +38,8 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
             body: JSON.stringify({
               "intent": "sale",
               "redirect_urls": {
-                "return_url": "https://localhost:3000/payments",
-                "cancel_url": "https://localhost:3000/payments"
+                "return_url": "http://localhost:3000/orders/update",
+                "cancel_url": "http://localhost:3000/orders/update"
               },
               "payer": {
                 "payment_method": "paypal"
@@ -54,11 +54,10 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
           }).then(payment => {
             console.log('paypal payment response', payment)
             const paymentData = JSON.parse(payment)
-            order.updateAttributes({
+            return order.updateAttributes({
               source_id: paymentData.id,
-              source: paymentData.links[1].href
+              payment_url: paymentData.links[1].href
             }).then(orderUpdated => {
-              console.log(orderUpdated)
               return orderUpdated
             })
           })

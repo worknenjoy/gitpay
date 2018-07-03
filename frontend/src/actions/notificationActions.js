@@ -10,7 +10,7 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG'
  *
  */
 
-export const addNotification = message => {
+export const addNotification = (message) => {
   return { type: ADD_NOTIFICATION, text: message, open: true }
 }
 
@@ -24,10 +24,10 @@ export const closeNotification = () => {
  *
  */
 
-export const addDialog = () => {
-  return { type: ADD_DIALOG, dialog: true }
+export const addDialog = (target) => {
+  return { type: ADD_DIALOG, dialog: true, target }
 }
 
 export const closeDialog = () => {
-  return { type: CLOSE_DIALOG, dialog: false }
+  return { type: CLOSE_DIALOG, dialog: false, target: null }
 }

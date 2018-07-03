@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     source_type: DataTypes.STRING,
     source: DataTypes.STRING,
+    payment_url: DataTypes.STRING,
+    payer_id: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       defaultValue: 'open'

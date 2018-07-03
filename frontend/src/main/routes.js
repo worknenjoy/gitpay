@@ -7,6 +7,7 @@ import Welcome from '../components/welcome/welcome'
 import Session from '../components/session/session'
 import ProfileContainer from '../containers/profile'
 import TaskContainer from '../containers/task'
+import TaskOrdersContainer from '../containers/task-orders'
 
 export default props => (
   <HashRouter>
@@ -15,6 +16,7 @@ export default props => (
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Route exact path='/token/:token' component={ Session } />
       <Route exact path='/task/:id' component={ TaskContainer } />
+      <Route exact path='/task/:id/successOrder' component={ TaskOrdersContainer } />
     </Switch>
   </HashRouter>
 )

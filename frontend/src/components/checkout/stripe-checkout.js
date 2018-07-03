@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Elements } from 'react-stripe-elements'
+import { StripeProvider, Elements } from 'react-stripe-elements'
 import CheckoutForm from './checkout-form'
 
 class StripeCheckout extends Component {
@@ -12,9 +12,11 @@ class StripeCheckout extends Component {
 
   render () {
     return (
-      <Elements>
-        <CheckoutForm { ...this.props } />
-      </Elements>
+      <StripeProvider apiKey={ process.env.STRIPE_PUBKEY }>
+        <Elements>
+          <CheckoutForm { ...this.props } />
+        </Elements>
+      </StripeProvider>
     )
   }
 }
