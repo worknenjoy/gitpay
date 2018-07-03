@@ -83,7 +83,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography type='headline' gutterBottom>
-                  Para freelancers
+                  Para Freelancers
                 </Typography>
               </MainTitle>
               <MainList>
@@ -135,7 +135,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography type='headline' gutterBottom>
-                  Para empresas
+                  Para Empresas
                 </Typography>
               </MainTitle>
               <MainList>
@@ -184,7 +184,7 @@ class Welcome extends Component {
 
         <Section>
           <MainTitle>
-            <Typography type='headline' gutterBottom>Como funciona</Typography>
+            <Typography type='headline' gutterBottom>Como Funciona</Typography>
           </MainTitle>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
