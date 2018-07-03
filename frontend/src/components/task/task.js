@@ -55,6 +55,7 @@ const paymentIcon = require('../../images/payment-icon-alt.png')
 const timeIcon = require('../../images/time-icon.png')
 
 const logoGithub = require('../../images/github-logo.png')
+const logoPaypal = require('../../images/paypal-icon.png')
 
 import Constants from '../../consts'
 
@@ -396,6 +397,13 @@ class Task extends Component {
       return this.props.logged && this.props.user.id === task.data.userId
     }
 
+    const paymentType = type => {
+      if(type === 'paypal') {
+        return logoPaypal
+      }
+      return paymentIcon
+    }
+
     const displayOrders = orders => {
       if (!orders.length) {
         return []
@@ -404,7 +412,8 @@ class Task extends Component {
         item.paid ? 'Sim' : 'Não',
         statuses[item.status] || 'Não processado',
         `$ ${item.amount}`,
-        MomentComponent(item.updatedAt).fromNow()
+        MomentComponent(item.updatedAt).fromNow(),
+        (<img src={paymentType(item.provider)} width={48} />)
       ])
     }
 
@@ -805,7 +814,7 @@ class Task extends Component {
                     content={
                       <Table
                         tableHeaderColor='warning'
-                        tableHead={ ['Pago', 'Status', 'Valor', 'Criado em'] }
+                        tableHead={ ['Pago', 'Status', 'Valor', 'Criado em', 'Forma de pagamento'] }
                         tableData={ task.data.orders.length ? displayOrders(task.data.orders) : [] }
                       />
                     }

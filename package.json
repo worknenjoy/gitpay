@@ -72,6 +72,7 @@
     "stripe": "^5.8.0",
     "umzug": "^1.12.0",
     "url": "^0.11.0",
+    "url-search-params": "^1.0.2",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

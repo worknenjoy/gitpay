@@ -19,7 +19,7 @@ class PaypalPaymentDialog extends Component {
     e.preventDefault()
     this.props.createOrder({
       provider: 'paypal',
-      currency: 'usd',
+      currency: 'USD',
       amount: this.props.itemPrice,
       userId: this.props.user.id,
       TaskId: this.props.task

@@ -1,6 +1,8 @@
 const Promise = require('bluebird')
 const models = require('../../loading/loading')
 const requestPromise = require('request-promise')
+const URLSearchParams = require('url-search-params')
+const URL = require('url')
 
 module.exports = Promise.method(function orderBuilds (orderParameters) {
 
@@ -13,7 +15,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
       if(orderParameters.provider === 'paypal') {
         return requestPromise({
           method: 'POST',
-          uri: `https://api.sandbox.paypal.com/v1/oauth2/token`,
+          uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
           headers: {
             'Accept': 'application/json',
             'Accept-Language': 'en_US',
@@ -25,10 +27,9 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
             'grant_type': 'client_credentials'
           }
         }).then(response => {
-          console.log('response from token', response)
           return requestPromise({
             method: 'POST',
-            uri: `https://api.sandbox.paypal.com/v1/payments/payment`,
+            uri: `${process.env.PAYPAL_HOST}/v1/payments/payment`,
             headers: {
               'Accept': '*/*',
               'Accept-Language': 'en_US',
@@ -36,27 +37,31 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              "intent": "sale",
+              "intent": "authorize",
               "redirect_urls": {
-                "return_url": "http://localhost:3000/orders/update",
-                "cancel_url": "http://localhost:3000/orders/update"
+                "return_url": `${process.env.API_HOST}/orders/update`,
+                "cancel_url": `${process.env.API_HOST}/orders/update`
               },
               "payer": {
                 "payment_method": "paypal"
               },
               "transactions": [{
                 "amount": {
-                  "total": "7.47",
-                  "currency": "USD"
+                  "total": orderParameters.amount,
+                  "currency": orderParameters.currency
                 }
               }]
             })
           }).then(payment => {
-            console.log('paypal payment response', payment)
             const paymentData = JSON.parse(payment)
+            const paymentUrl = paymentData.links[1].href
+            const resultUrl = URL.parse(paymentUrl)
+            const searchParams = new URLSearchParams(resultUrl.search)
+
             return order.updateAttributes({
               source_id: paymentData.id,
-              payment_url: paymentData.links[1].href
+              payment_url: paymentUrl,
+              token: searchParams.get('token')
             }).then(orderUpdated => {
               return orderUpdated
             })

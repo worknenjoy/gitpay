@@ -10,20 +10,24 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
       status: orderParameters.paymentId && orderParameters.PayerID ? 'succeeded' : 'fail'
     }, {
       where: {
-        source_id: orderParameters.paymentId
+        token: orderParameters.token
       },
       returning: true,
       plain: true
     }).then(order => {
       const orderData = order[1].dataValues
       return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
-        PaymentMail.success(user.dataValues.email, task, orderData.amount)
+        if(orderData.paid) {
+          PaymentMail.success(user.dataValues.email, task, orderData.amount)
+        } else {
+          PaymentMail.error(user.dataValues.email, task, orderData.amount)
+        }
         if(task.dataValues.assigned) {
           const assignedId = task.dataValues.assigned
           return models.Assign.findById(assignedId, {
             include: [models.User]
           }).then(assign => {
-            PaymentMail.assigned(assign.dataValues.User.dataValues.email, task, order.amount)
+            PaymentMail.assigned(assign.dataValues.User.dataValues.email, task, orderData.amount)
             return orderData
           })
         }

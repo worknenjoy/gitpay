@@ -9,8 +9,12 @@ class TaskOrders extends Component {
     super(props)
   }
   componentWillMount () {
+    if( this.props.match.params.status === 'success' ) {
+      this.props.addNotification('Seu pagamento foi efetuado com sucesso')
+    } else {
+      this.props.addNotification('Tivemos um problema para completar seu pagamento')
+    }
     this.props.history.replace(`/#/task/${this.props.match.params.id}`)
-    this.props.addNotification('Seu pagamento foi efetuado com sucesso')
     this.props.changeTab(1)
   }
 

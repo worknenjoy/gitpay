@@ -20,7 +20,7 @@ module.exports = Promise.method(function taskSync (taskParameters) {
         finalValue.available += parseInt(item.amount)
       }
       else {
-        finalValue.failed += item.amount
+        finalValue.failed += parseInt(item.amount)
       }
     })
     return task.updateAttributes({ value: finalValue.available }).then(updatedTask => {

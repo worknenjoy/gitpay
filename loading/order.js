@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     source: DataTypes.STRING,
     payment_url: DataTypes.STRING,
     payer_id: DataTypes.STRING,
+    token: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       defaultValue: 'open'

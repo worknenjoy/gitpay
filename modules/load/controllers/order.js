@@ -39,12 +39,13 @@ exports.fetchOrders = (req, res) => {
 exports.updateOrders = (req, res) => {
   orderUpdate(req.query)
     .then(data => {
-      //res.send(data)
-      console.log('updateOrders controller', data)
-      res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/successOrder`)
+      if(data.paid) {
+        res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`)
+      }
+      res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
     }).catch(error => {
     // eslint-disable-next-line no-console
-    console.log(error)
-    res.status(401).send(error)
+    console.log('updateOrders error', error)
+    res.redirect(process.env.FRONTEND_HOST)
   })
 }
