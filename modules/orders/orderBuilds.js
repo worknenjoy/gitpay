@@ -37,7 +37,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              "intent": "authorize",
+              "intent": "sale",
               "redirect_urls": {
                 "return_url": `${process.env.API_HOST}/orders/update`,
                 "cancel_url": `${process.env.API_HOST}/orders/update`
