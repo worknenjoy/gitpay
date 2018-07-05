@@ -634,7 +634,8 @@ class Task extends Component {
                       orders={ task.data.orders }
                       open={ this.state.taskPaymentDialog }
                       onClose={ this.handleTaskPaymentDialogClose }
-                      onPay={ this.props.paymentTask }
+                      onPayTask={ this.props.paymentTask }
+                      onPayOrder={ this.props.paymentOrder }
                     />
                   </div>
                 ) }

@@ -54,7 +54,7 @@ describe('orders', () => {
         })
     })
 
-    xit('should create a new paypal order', (done) => {
+    it('should create a new paypal order', (done) => {
       agent
         .post('/orders/create/')
         .send({

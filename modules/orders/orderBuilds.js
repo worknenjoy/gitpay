@@ -27,6 +27,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
             'grant_type': 'client_credentials'
           }
         }).then(response => {
+          console.log('response from oauth token', response)
           return requestPromise({
             method: 'POST',
             uri: `${process.env.PAYPAL_HOST}/v1/payments/payment`,
@@ -53,6 +54,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               }]
             })
           }).then(payment => {
+            console.log('payment result', payment)
             const paymentData = JSON.parse(payment)
             const paymentUrl = paymentData.links[1].href
             const resultUrl = URL.parse(paymentUrl)
@@ -69,11 +71,5 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
         })
       }
       return order
-    }).catch(err => {
-      // eslint-disable-next-line no-console
-      console.log('error to stripe account')
-      // eslint-disable-next-line no-console
-      console.log(err)
-      return err
     })
 })

@@ -33,11 +33,15 @@ const statuses = {
 class TaskPayment extends Component {
   constructor (props) {
     super(props)
-    this.payTask = this.payTask.bind(this)
   }
 
-  payTask (e) {
-    this.props.onPay(this.props.id)
+  payTask = e => {
+    this.props.onPayTask(this.props.id)
+    this.props.onClose()
+  }
+
+  payOrder = (e, id) => {
+    this.props.onPayOrder({ id })
     this.props.onClose()
   }
 
@@ -52,7 +56,7 @@ class TaskPayment extends Component {
       if (hasOrders()) {
         let sum = 0
         this.props.orders.map(item => {
-          if (item.status === 'succeeded') sum += parseInt(item.amount)
+          if (item.status === 'succeeded' && item.provider !== 'paypal') sum += parseInt(item.amount)
         })
         return sum
       }
@@ -82,17 +86,46 @@ class TaskPayment extends Component {
           ) }
           <List>
             { orders.map((order, index) => (
-              <ListItem key={ order.id }>
-                <ListItemAvatar>
-                  <Avatar className={ classes.avatar }>
-                    <FilterListIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={ `$ ${order.amount}` }
-                  secondary={ `${statuses[order.status] || 'indefinida'}` }
-                />
-              </ListItem>
+              <div>
+              { order.provider === 'paypal' ?
+                (
+                  <ListItem key={ order.id }>
+                    <ListItemAvatar>
+                      <Avatar className={ classes.avatar }>
+                        <FilterListIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={ `$ ${order.amount}` }
+                      secondary={ `${statuses[order.status] || 'indefinida'}` }
+                    />
+                    <Button
+                      onClick={ (e) => this.payOrder(e, order.id) }
+                      style={ { float: 'right', margin: 10 } }
+                      variant='raised'
+                      color='primary'
+                      disabled={ !this.props.assigned }
+                    >
+                      <RedeemIcon style={ { marginRight: 10 } } />
+                      { `Pagar $ ${order.amount}` }
+                    </Button>
+                  </ListItem>
+                ) :
+                (
+                  <ListItem key={ order.id }>
+                    <ListItemAvatar>
+                      <Avatar className={ classes.avatar }>
+                        <FilterListIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={ `$ ${order.amount}` }
+                      secondary={ `${statuses[order.status] || 'indefinida'}` }
+                    />
+                  </ListItem>
+                )
+              }
+              </div>
             )) }
           </List>
           <DialogContentText>

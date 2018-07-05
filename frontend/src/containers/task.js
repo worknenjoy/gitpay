@@ -4,7 +4,7 @@ import { addNotification, addDialog, closeDialog } from '../actions/notification
 import { loggedIn } from '../actions/loginActions'
 import { assignTask } from '../actions/assignActions'
 import { updateTask, fetchTask, paymentTask, syncTask, changeTaskTab } from '../actions/taskActions'
-import { createOrder } from '../actions/orderActions'
+import { createOrder, payOrder } from '../actions/orderActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -28,6 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
     syncTask: (taskId) => dispatch(syncTask(taskId)),
     paymentTask: (taskId) => dispatch(paymentTask(taskId)),
+    paymentOrder: (order) => dispatch(payOrder(order)),
     changeTab: (tab) => dispatch(changeTaskTab(tab)),
     createOrder: (order) => dispatch(createOrder(order))
   }

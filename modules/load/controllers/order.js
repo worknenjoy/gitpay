@@ -2,6 +2,7 @@ const orderBuild = require('../../orders').orderBuilds
 const orderSearch = require('../../orders').orderSearch
 const orderFetch = require('../../orders').orderFetch
 const orderUpdate = require('../../orders').orderUpdate
+const orderPayment = require('../../orders').orderPayment
 
 exports.createOrder = (req, res) => {
   orderBuild(req.body)
@@ -10,7 +11,7 @@ exports.createOrder = (req, res) => {
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log(error)
-      res.send(false)
+      res.status(401).send(error)
     })
 }
 
@@ -49,3 +50,15 @@ exports.updateOrders = (req, res) => {
     res.redirect(process.env.FRONTEND_HOST)
   })
 }
+
+exports.paymentOrder = (req, res) => {
+  orderPayment(req.body)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(401).send(error)
+  })
+}
+
