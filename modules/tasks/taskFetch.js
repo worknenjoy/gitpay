@@ -10,7 +10,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
     },
     include: [
       models.User,
-      models.Order,
+      {
+        model: models.Order,
+        include: [models.User]
+      },
       {
         model: models.Assign,
         include: [models.User]

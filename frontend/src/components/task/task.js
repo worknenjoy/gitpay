@@ -53,6 +53,7 @@ import LoginButton from '../session/login-button'
 
 const paymentIcon = require('../../images/payment-icon-alt.png')
 const timeIcon = require('../../images/time-icon.png')
+const creditCardIcon = require('../../images/credit-card-icon.svg')
 
 const logoGithub = require('../../images/github-logo.png')
 const logoPaypal = require('../../images/paypal-icon.png')
@@ -399,9 +400,27 @@ class Task extends Component {
 
     const paymentType = type => {
       if(type === 'paypal') {
-        return logoPaypal
+        return (<div style={{textAlign: 'left'}}><img src={logoPaypal} width={48} /></div>)
       }
-      return paymentIcon
+      return (<div style={{textAlign: 'left', color: '#12789a', fontSize: 10}}><img src={creditCardIcon} width={48} /> <br />Cartão de crédito</div>)
+    }
+
+    const userRow = user => {
+      return (<span>
+            { user.profile_url
+              ? (
+                <Tooltip id='tooltip-github' title='ver perfil deste usuário no github' placement='bottom'>
+                  <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
+                    <span>{ user.username }</span>
+                    <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
+                  </a>
+                </Tooltip>
+              )
+              : (
+                `${user.username}`
+              )
+            }
+          </span>)
     }
 
     const displayOrders = orders => {
@@ -413,7 +432,8 @@ class Task extends Component {
         statuses[item.status] || 'Não processado',
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
-        (<img src={paymentType(item.provider)} width={48} />)
+        userRow(item.User),
+        paymentType(item.provider)
       ])
     }
 
@@ -814,7 +834,7 @@ class Task extends Component {
                     content={
                       <Table
                         tableHeaderColor='warning'
-                        tableHead={ ['Pago', 'Status', 'Valor', 'Criado em', 'Forma de pagamento'] }
+                        tableHead={ ['Pago', 'Status', 'Valor', 'Criado em', 'Usuário', 'Pagamento'] }
                         tableData={ task.data.orders.length ? displayOrders(task.data.orders) : [] }
                       />
                     }

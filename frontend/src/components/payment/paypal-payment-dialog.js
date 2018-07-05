@@ -12,7 +12,7 @@ class PaypalPaymentDialog extends Component {
   }
 
   componentWillMount () {
-    console.log('props', this.props)
+
   }
 
   handleNewOrder = (e) => {
@@ -28,7 +28,6 @@ class PaypalPaymentDialog extends Component {
   }
 
   triggerPayment(order) {
-    //console.log('order trigger', order)
     window.location.href = order.payment_url
   }
 
