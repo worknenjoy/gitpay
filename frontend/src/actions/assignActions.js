@@ -29,12 +29,12 @@ const assignTask = (taskId, assignId) => {
         assigned: assignId
       })
       .then(response => {
-        dispatch(addNotification('Tarefa atualizada com sucesso'))
+        dispatch(addNotification('Tarefa atualizada com sucesso!'))
         dispatch(assignTaskSuccess(2))
         return dispatch(fetchTask(taskId))
       })
       .catch(error => {
-        dispatch(addNotification('Erro ao atualizar tarefa'))
+        dispatch(addNotification('Não foi possível atualizar tarefa.'))
         return dispatch(assignTaskError(error))
       })
   }
