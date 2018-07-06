@@ -153,7 +153,7 @@ const createAccount = userId => {
         return dispatch(createUserAccountSuccess(account))
       })
       .catch(error => {
-        dispatch(addNotification('Erro ao tentar criar uma conta'))
+        dispatch(addNotification('Não foi possível criar a conta, por favor tente novamente mais tarde.'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createUserAccountError(error))
@@ -177,7 +177,7 @@ const updateAccount = (userId, accountData) => {
       .catch(error => {
         dispatch(
           addNotification(
-            'Erro ao tentar atualizar sua conta. Você preencheu todos os dados?'
+            'Não foi possível atualizar sua conta. Você preencheu todos os dados?'
           )
         )
         // eslint-disable-next-line no-console
@@ -194,13 +194,13 @@ const getBankAccount = userId => {
       .get(`${api.API_URL}/users/${userId}/bank_accounts`)
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(addNotification('Erro ao tentar obter sua conta bancária'))
+          dispatch(addNotification('Não foi possível obter sua conta bancária'))
           return dispatch(getBankAccountError(bankAccount.data))
         }
         return dispatch(getBankAccountSuccess(bankAccount))
       })
       .catch(error => {
-        dispatch(addNotification('Erro ao tentar atualizar sua conta'))
+        dispatch(addNotification('Não foi possível atualizar sua conta'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(getBankAccountError(error))
@@ -219,7 +219,7 @@ const createBankAccount = (userId, bank) => {
       })
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(addNotification('Erro ao tentar atualizar sua conta'))
+          dispatch(addNotification('Não foi possível atualizar sua conta'))
           return dispatch(createBankAccountError(bankAccount.data))
         }
         dispatch(addNotification('Conta bancária cadastrada com sucesso'))
@@ -227,7 +227,7 @@ const createBankAccount = (userId, bank) => {
         return dispatch(createBankAccountSuccess(bankAccount))
       })
       .catch(error => {
-        dispatch(addNotification('Erro ao tentar atualizar sua conta'))
+        dispatch(addNotification('Não foi possível atualizar sua conta'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createBankAccountError(error))
