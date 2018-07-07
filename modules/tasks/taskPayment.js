@@ -33,7 +33,7 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
         }
 
         return stripe.transfers.create({
-          amount: paymentParams.value || task.value * 100,
+          amount: paymentParams.value * 100 || task.value * 100,
           currency: 'usd',
           destination: dest,
           source_type: 'card',
