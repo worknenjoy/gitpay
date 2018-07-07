@@ -60,6 +60,56 @@ TransferMail.success = (to, task, value) => {
     })
 }
 
+TransferMail.notifyOwner = (to, task, value) => {
+  const request = sg.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: {
+      personalizations: [
+        {
+          to: [
+            {
+              email: to,
+            },
+          ],
+          bcc: bcc,
+          subject: 'Você confirmou uma transferência por uma tarefa no Gitpay'
+        },
+      ],
+      from: {
+        email: 'tarefas@gitpay.me'
+      },
+      content: [
+        {
+          type: 'text/html',
+          value: `
+            <p>Olá, você confirmou uma transferência no valor de $ ${value} pela tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
+            <p>${Signatures.sign}</p>
+          `
+        },
+      ],
+    },
+  })
+
+  sg.API(request)
+    .then(response => {
+      // eslint-disable-next-line no-console
+      console.log(response.statusCode)
+      // eslint-disable-next-line no-console
+      console.log(response.body)
+      // eslint-disable-next-line no-console
+      console.log(response.headers)
+    })
+    .catch(error => {
+      // error is an instance of SendGridError
+      // The full response is attached to error.response
+      // eslint-disable-next-line no-console
+      console.log(error.response.body.errors)
+      // eslint-disable-next-line no-console
+      console.log(error.response.statusCode)
+    })
+}
+
 TransferMail.error = (to, task, value) => {
   const request = sg.emptyRequest({
     method: 'POST',

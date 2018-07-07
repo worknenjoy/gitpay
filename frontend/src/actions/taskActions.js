@@ -22,6 +22,9 @@ const LIST_TASK_ERROR = 'LIST_TASK_ERROR'
 const FILTER_TASK_REQUESTED = 'FILTER_TASK_REQUESTED'
 const FILTER_TASK_SUCCESS = 'FILTER_TASK_SUCCESS'
 
+const FILTER_TASK_ORDERS_REQUESTED = 'FILTER_TASK_ORDERS_REQUESTED'
+const FILTER_TASK_ORDERS_SUCCESS = 'FILTER_TASK_ORDERS_SUCCESS'
+
 const PAYMENT_TASK_REQUESTED = 'PAYMENT_TASK_REQUESTED'
 const PAYMENT_TASK_SUCCESS = 'PAYMENT_TASK_SUCCESS'
 const PAYMENT_TASK_ERROR = 'PAYMENT_TASK_ERROR'
@@ -90,7 +93,7 @@ const listTaskError = error => {
 }
 
 /*
- * Task filter
+ * Tasks filter
  */
 
 const filterTaskRequested = () => {
@@ -106,9 +109,22 @@ const filterTaskSuccess = (tasks, filter) => {
   }
 }
 
-// const filterTaskError = (error) => {
-//   return { type: FILTER_TASK_ERROR, completed: true, error: error }
-// }
+/*
+ * Task order filter
+ */
+
+const filterTaskOrdersRequested = () => {
+  return { type: FILTER_TASK_ORDERS_REQUESTED, completed: false }
+}
+
+const filterTaskOrdersSuccess = (task, filter) => {
+  return {
+    type: FILTER_TASK_ORDERS_SUCCESS,
+    completed: true,
+    data: task.data,
+    filterOrdersBy: filter
+  }
+}
 
 /*
  * Task fetch
@@ -271,6 +287,14 @@ const filterTasks = (key = 'all') => {
   }
 }
 
+const filterTaskOrders = (filter = {}) => {
+  return (dispatch, getState) => {
+    const task = getState().task
+    dispatch(filterTaskOrdersRequested())
+    return dispatch(filterTaskOrdersSuccess(task, filter))
+  }
+}
+
 const fetchTask = taskId => {
   validToken()
   return dispatch => {
@@ -305,7 +329,7 @@ const fetchTask = taskId => {
   }
 }
 
-const paymentTask = taskId => {
+const paymentTask = (taskId, value) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(paymentTaskRequested())
@@ -318,7 +342,8 @@ const paymentTask = taskId => {
     }
     axios
       .post(`${api.API_URL}/tasks/payments/`, {
-        taskId: taskId
+        taskId: taskId,
+        value: value
       })
       .then(payment => {
         if (payment.data.error) {
@@ -403,6 +428,8 @@ export {
   LIST_TASK_ERROR,
   FILTER_TASK_REQUESTED,
   FILTER_TASK_SUCCESS,
+  FILTER_TASK_ORDERS_REQUESTED,
+  FILTER_TASK_ORDERS_SUCCESS,
   PAYMENT_TASK_REQUESTED,
   PAYMENT_TASK_SUCCESS,
   PAYMENT_TASK_ERROR,
@@ -415,6 +442,7 @@ export {
   fetchTask,
   listTasks,
   filterTasks,
+  filterTaskOrders,
   updateTask,
   paymentTask,
   syncTask,

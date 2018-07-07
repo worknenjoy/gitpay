@@ -67,6 +67,7 @@ class CheckoutForm extends Component {
                 {
                   source_id: token.id,
                   currency: 'usd',
+                  provider: 'stripe',
                   amount: this.props.itemPrice,
                   email: this.state.email,
                   userId: this.state.userId
@@ -76,8 +77,6 @@ class CheckoutForm extends Component {
             this.props.onClose()
           }
           catch (e) {
-            // eslint-disable-next-line no-console
-            console.log('error', e)
             this.props.addNotification(
               'Erro ao processar o pagamento do cartão de crédito'
             )
