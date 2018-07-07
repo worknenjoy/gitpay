@@ -35,9 +35,9 @@ module.exports = Promise.method(function taskSync (taskParameters) {
       }
     })
 
-    const paid_paypal =  finalValue.paypal === 0 || finalValue.transferred === finalValue.available ? true : false
-    const paid_stripe = task.transfer_id ? true : false
-    const paid = paid_paypal && paid_stripe
+    const paidPaypal =  finalValue.paypal === 0 || finalValue.transferred === finalValue.available ? true : false
+    const paidStripe = task.transfer_id ? true : false
+    const paid = paidPaypal && paidStripe
 
     return task.updateAttributes({ value: finalValue.available, paid: paid }).then(updatedTask => {
       if (updatedTask) {
