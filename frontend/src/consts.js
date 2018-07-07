@@ -46,10 +46,11 @@ export default {
 
   BANK_NUMBERS: {
     '110': 'BANCO PARA TESTE STRIPE',
+    '260': 'NUBANK',
     '001': 'BANCO DO BRASIL S.A. (Banco do Brasil)',
     '237': 'BANCO BRADESCO S.A. (Bradesco)',
     '341': 'BANCO ITAU S.A. (Itaú)',
-    '033' : 'BANCO ABN AMRO REAL S.A. (Santander)',
+    '033': 'BANCO SANTANDER (BRASIL) S.A.',
     '409': 'UNIBANCO UNIAO DE BANCOS BRASILEIROS S.A. (Unibanco)',
     '041': 'BANCO DO ESTADO DO RIO GRANDE DO SUL S.A. (Banrisul)',
     '104': 'CAIXA ECONOMICA FEDERAL (Caixa Econômica Federal)',
