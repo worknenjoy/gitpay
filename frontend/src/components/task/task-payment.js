@@ -208,7 +208,7 @@ class TaskPayment extends Component {
                 <div>
                   { `O pagamento foi efetuado para ${sendTo(
                     this.props.assigned
-                  )}.username` }
+                  ).username}` }
                 </div>
               ) }
             </span>
