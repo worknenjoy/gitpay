@@ -13,6 +13,11 @@ import DialogTitle from 'material-ui/Dialog/DialogTitle'
 import DialogContent from 'material-ui/Dialog/DialogContent'
 import DialogContentText from 'material-ui/Dialog/DialogContentText'
 import Dialog from 'material-ui/Dialog'
+import AppBar from 'material-ui/AppBar'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import PaymentTypeIcon from '../payment/payment-type-icon'
+
+
 import FilterListIcon from 'material-ui-icons/FilterList'
 import RedeemIcon from 'material-ui-icons/Redeem'
 import blue from 'material-ui/colors/blue'
@@ -33,6 +38,15 @@ const statuses = {
 class TaskPayment extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      currentTab: 0
+    }
+  }
+
+  componentDidMount() {
+    this.props.filterTaskOrders({
+      provider: 'credit-card'
+    })
   }
 
   payTask = e => {
@@ -45,8 +59,26 @@ class TaskPayment extends Component {
     this.props.onClose()
   }
 
+  onTabChange = (e, value) => {
+    const providerTab = ['credit-card', 'paypal']
+    e.preventDefault()
+    this.setState({currentTab: value})
+    this.props.filterTaskOrders({
+      provider: providerTab[value]
+    })
+  }
+
+
   render () {
     const { classes, orders, ...other } = this.props
+
+    const TabContainer = props => {
+      return (
+        <Typography component='div' style={ { padding: 8 * 3 } }>
+          { props.children }
+        </Typography>
+      )
+    }
 
     const hasOrders = () => {
       return !!this.props.orders.length
@@ -73,6 +105,8 @@ class TaskPayment extends Component {
       <Dialog
         onClose={ this.props.onClose }
         aria-labelledby='simple-dialog-title'
+        fullWidth
+        maxWidth='md'
         { ...other }
       >
         <DialogTitle id='simple-dialog-title'>
@@ -84,50 +118,67 @@ class TaskPayment extends Component {
               { 'A transferência para esta tarefa já foi realizada' }
             </Typography>
           ) }
-          <List>
-            { orders.map((order, index) => (
-              <div>
-              { order.provider === 'paypal' ?
-                (
-                  <ListItem key={ order.id }>
-                    <ListItemAvatar>
-                      <Avatar className={ classes.avatar }>
-                        <FilterListIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={ `$ ${order.amount}` }
-                      secondary={ `${statuses[order.status] || 'indefinida'}` }
-                    />
-                    <Button
-                      onClick={ (e) => this.payOrder(e, order.id) }
-                      style={ { float: 'right', margin: 10 } }
-                      variant='raised'
-                      color='primary'
-                      disabled={ !this.props.assigned }
-                    >
-                      <RedeemIcon style={ { marginRight: 10 } } />
-                      { `Pagar $ ${order.amount}` }
-                    </Button>
-                  </ListItem>
-                ) :
-                (
-                  <ListItem key={ order.id }>
-                    <ListItemAvatar>
-                      <Avatar className={ classes.avatar }>
-                        <FilterListIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={ `$ ${order.amount}` }
-                      secondary={ `${statuses[order.status] || 'indefinida'}` }
-                    />
-                  </ListItem>
-                )
-              }
-              </div>
-            )) }
-          </List>
+          <div>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={ this.state.currentTab }
+                onChange={this.onTabChange}
+                scrollable
+                scrollButtons='on'
+                indicatorColor='primary'
+                textColor='primary'
+              >
+                <Tab value={0} label='Pagamentos com cartão' icon={ <PaymentTypeIcon type="card" notext /> } />
+                <Tab value={1} label='Pagamentos com Paypal' icon={ <PaymentTypeIcon type="paypal" /> } />
+              </Tabs>
+            </AppBar>
+            <TabContainer>
+            <List>
+              { orders.map((order, index) => (
+                <div>
+                { order.provider === 'paypal' ?
+                  (
+                    <ListItem key={ order.id }>
+                      <ListItemAvatar>
+                        <Avatar className={ classes.avatar }>
+                          <FilterListIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={ `$ ${order.amount}` }
+                        secondary={ `${statuses[order.status] || 'indefinida'}` }
+                      />
+                      <Button
+                        onClick={ (e) => this.payOrder(e, order.id) }
+                        style={ { float: 'right', margin: 10 } }
+                        variant='raised'
+                        color='primary'
+                        disabled={ !this.props.assigned }
+                      >
+                        <RedeemIcon style={ { marginRight: 10 } } />
+                        { `Pagar $ ${order.amount}` }
+                      </Button>
+                    </ListItem>
+                  ) :
+                  (
+                    <ListItem key={ order.id }>
+                      <ListItemAvatar>
+                        <Avatar className={ classes.avatar }>
+                          <FilterListIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={ `$ ${order.amount}` }
+                        secondary={ `${statuses[order.status] || 'indefinida'}` }
+                      />
+                    </ListItem>
+                  )
+                }
+                </div>
+              )) }
+            </List>
+            </TabContainer>
+          </div>
           <DialogContentText>
             <span style={ { display: 'inline-block', margin: 20 } }>
               { !this.props.paid ? (

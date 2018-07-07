@@ -38,7 +38,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              "intent": "sale",
+              "intent": "authorize",
               "redirect_urls": {
                 "return_url": `${process.env.API_HOST}/orders/update`,
                 "cancel_url": `${process.env.API_HOST}/orders/update`
@@ -50,7 +50,8 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
                 "amount": {
                   "total": orderParameters.amount,
                   "currency": orderParameters.currency
-                }
+                },
+                "description": "Desenvolvimento de tarefa pelo Gitpay",
               }]
             })
           }).then(payment => {

@@ -42,12 +42,15 @@ exports.updateOrders = (req, res) => {
     .then(data => {
       if(data.paid) {
         res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`)
+        return
       }
       res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
+      return
     }).catch(error => {
     // eslint-disable-next-line no-console
     console.log('updateOrders error', error)
     res.redirect(process.env.FRONTEND_HOST)
+    return
   })
 }
 

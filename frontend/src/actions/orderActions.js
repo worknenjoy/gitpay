@@ -43,8 +43,8 @@ const payOrderRequested = () => {
   return { type: PAY_ORDER_REQUESTED, completed: false }
 }
 
-const payOrderSuccess = (payment) => {
-  return { type: PAY_ORDER_SUCCESS, completed: true, payment: payment.data }
+const payOrderSuccess = payment => {
+  return { type: PAY_ORDER_SUCCESS, completed: true, payment: payment }
 }
 
 const payOrderError = error => {
@@ -66,7 +66,7 @@ const createOrder = order => {
           )
         }
         return dispatch(
-          createOrderError({
+          payOrderError({
             error: {
               type: 'create_order_failed'
             }
@@ -92,7 +92,7 @@ const payOrder = order => {
       .post(api.API_URL + `/orders/payment`, order)
       .then(payment => {
         console.log('payment for order', payment)
-        if (payment.data) {
+        if (payment.state) {
           addNotification(
             'Pagamento realizado com sucesso'
           )
@@ -101,14 +101,14 @@ const payOrder = order => {
           addNotification(
             'Não foi possível realizar o pagamento'
           )
+          return dispatch(
+            payOrder({
+              error: {
+                type: 'create_order_failed'
+              }
+            })
+          )
         }
-        return dispatch(
-          createOrderError({
-            error: {
-              type: 'create_order_failed'
-            }
-          })
-        )
       })
       .catch(e => {
         dispatch(

@@ -53,11 +53,10 @@ import LoginButton from '../session/login-button'
 
 const paymentIcon = require('../../images/payment-icon-alt.png')
 const timeIcon = require('../../images/time-icon.png')
-const creditCardIcon = require('../../images/credit-card-icon.svg')
 
 const logoGithub = require('../../images/github-logo.png')
-const logoPaypal = require('../../images/paypal-icon.png')
 
+import PaymentTypeIcon from '../payment/payment-type-icon'
 import Constants from '../../consts'
 
 import { PageContent } from 'app/styleguide/components/Page'
@@ -398,13 +397,6 @@ class Task extends Component {
       return this.props.logged && this.props.user.id === task.data.userId
     }
 
-    const paymentType = type => {
-      if(type === 'paypal') {
-        return (<div style={{textAlign: 'left'}}><img src={logoPaypal} width={48} /></div>)
-      }
-      return (<div style={{textAlign: 'left', color: '#12789a', fontSize: 10}}><img src={creditCardIcon} width={48} /> <br />Cartão de crédito</div>)
-    }
-
     const userRow = user => {
       return (<span>
             { user.profile_url
@@ -433,7 +425,7 @@ class Task extends Component {
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
-        paymentType(item.provider)
+        <PaymentTypeIcon type={item.provider} />
       ])
     }
 
@@ -635,6 +627,7 @@ class Task extends Component {
                       open={ this.state.taskPaymentDialog }
                       onClose={ this.handleTaskPaymentDialogClose }
                       onPayTask={ this.props.paymentTask }
+                      filterTaskOrders= { this.props.filterTaskOrders }
                       onPayOrder={ this.props.paymentOrder }
                     />
                   </div>

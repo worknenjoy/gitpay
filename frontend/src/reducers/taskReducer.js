@@ -13,6 +13,8 @@ import {
   LIST_TASK_ERROR,
   FILTER_TASK_REQUESTED,
   FILTER_TASK_SUCCESS,
+  FILTER_TASK_ORDERS_REQUESTED,
+  FILTER_TASK_ORDERS_SUCCESS,
   PAYMENT_TASK_REQUESTED,
   PAYMENT_TASK_SUCCESS,
   PAYMENT_TASK_ERROR,
@@ -30,6 +32,7 @@ import {
 
 export const task = (state = {
   completed: true,
+  filterOrdersBy: {},
   values: {
     available: 0,
     failed: 0,
@@ -83,6 +86,10 @@ export const task = (state = {
       return { ...state, completed: true, data: action.data }
     case FETCH_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
+    case FILTER_TASK_ORDERS_REQUESTED:
+      return { ...state, completed: false }
+    case FILTER_TASK_ORDERS_SUCCESS:
+      return { ...state, completed: true, data: action.data, filterOrdersBy: action.filterOrdersBy }
     case SYNC_TASK_REQUESTED:
       return { ...state, completed: false }
     case SYNC_TASK_SUCCESS:
