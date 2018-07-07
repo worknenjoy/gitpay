@@ -63,6 +63,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
           assigned: data.dataValues.assigned,
           userId: data.dataValues.userId,
           paid: data.dataValues.paid,
+          transfer_id: data.dataValues.transfer_id,
           metadata: {
             id: issueId,
             user: userOrCompany,

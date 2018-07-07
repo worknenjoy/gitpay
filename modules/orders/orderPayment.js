@@ -1,8 +1,7 @@
 const Promise = require('bluebird')
 const models = require('../../loading/loading')
 const requestPromise = require('request-promise')
-const URLSearchParams = require('url-search-params')
-const URL = require('url')
+const TransferMail = require('../mail/transfer')
 
 /*
 
@@ -47,8 +46,21 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
                 "payer_id": order.payer_id
               })
             }).then(payment => {
-              console.log('payment execute result', payment)
-              return payment
+              const paymentData = JSON.parse(payment)
+              console.log('payment execute result', payment, paymentData)
+              return order.updateAttributes({
+                transfer_id: paymentData.transactions[0].related_resources[0].authorization.id
+              }, {
+                include: [models.Task, models.User],
+                returning: true,
+                plain: true
+              }).then(order => {
+                console.log('order', order)
+                const orderData = order[1].dataValues
+                TransferMail.notifyOwner(orderData.Task.dataValues.User.dataValues.email, order.Task.dataValues, order.Task.dataValues.amount)
+                TransferMail.success(orderData.User.dataValues.email, order.Task.dataValues, order.Task.dataValues.amount)
+                return order[1].dataValues
+              })
             })
           })
         }

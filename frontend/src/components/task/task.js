@@ -293,8 +293,8 @@ class Task extends Component {
   }
 
   componentWillMount () {
-    this.props.fetchTask(this.props.match.params.id)
     this.props.syncTask(this.props.match.params.id)
+    this.props.fetchTask(this.props.match.params.id)
   }
 
   handleCloseNotification () {
@@ -619,6 +619,7 @@ class Task extends Component {
                     />
                     <TaskPayment
                       id={ task.data.id }
+                      values={ task.values }
                       paid={ task.data.paid }
                       transferId={ task.data.transfer_id }
                       assigned={ task.data.assigned }

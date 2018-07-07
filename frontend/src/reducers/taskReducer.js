@@ -36,7 +36,10 @@ export const task = (state = {
   values: {
     available: 0,
     failed: 0,
-    pending: 0
+    pending: 0,
+    card: 0,
+    paypal: 0,
+    transferred: 0
   },
   error: {
     message: false
@@ -83,7 +86,7 @@ export const task = (state = {
     case FETCH_TASK_REQUESTED:
       return { ...state, completed: false }
     case FETCH_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data }
+      return { ...state, completed: true, data: action.data, filterOrdersBy: {} }
     case FETCH_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
     case FILTER_TASK_ORDERS_REQUESTED:

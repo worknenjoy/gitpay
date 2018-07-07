@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     payment_url: DataTypes.STRING,
     payer_id: DataTypes.STRING,
     token: DataTypes.STRING,
+    transfer_id: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       defaultValue: 'open'

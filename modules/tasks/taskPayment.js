@@ -5,11 +5,11 @@ const TransferMail = require('../mail/transfer')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
-module.exports = Promise.method(function taskPayment (payment) {
+module.exports = Promise.method(function taskPayment (paymentParams) {
   return models.Task
     .findOne({
       where: {
-        id: payment.taskId
+        id: paymentParams.taskId
       }
     },
     { include: [ models.User, models.Order, models.Assign ] }
@@ -33,7 +33,7 @@ module.exports = Promise.method(function taskPayment (payment) {
         }
 
         return stripe.transfers.create({
-          amount: task.value * 100,
+          amount: paymentParams.value || task.value * 100,
           currency: 'usd',
           destination: dest,
           source_type: 'card',
@@ -45,7 +45,7 @@ module.exports = Promise.method(function taskPayment (payment) {
           console.log(transfer)
 
           if (transfer) {
-            return models.Task.update({ paid: true, transfer_id: transfer.id }, {
+            return models.Task.update({ transfer_id: transfer.id }, {
               where: {
                 id: task.id
               }
@@ -54,8 +54,11 @@ module.exports = Promise.method(function taskPayment (payment) {
                 TransferMail.error(user.email, task, task.value)
                 throw new Error('update_task_reject')
               }
-              TransferMail.success(user.email, task, task.value)
-              return transfer
+              return models.User.findById(task.userId).then(taskOwner => {
+                TransferMail.notifyOwner(taskOwner.dataValues.email, task, task.value)
+                TransferMail.success(user.email, task, task.value)
+                return transfer
+              })
             })
           }
         })

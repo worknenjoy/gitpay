@@ -15,6 +15,8 @@ import DialogContentText from 'material-ui/Dialog/DialogContentText'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
+import Chip from 'material-ui/Chip'
+
 import PaymentTypeIcon from '../payment/payment-type-icon'
 
 
@@ -44,13 +46,11 @@ class TaskPayment extends Component {
   }
 
   componentDidMount() {
-    this.props.filterTaskOrders({
-      provider: 'credit-card'
-    })
+
   }
 
   payTask = e => {
-    this.props.onPayTask(this.props.id)
+    this.props.onPayTask(this.props.id, this.props.values.card)
     this.props.onClose()
   }
 
@@ -60,7 +60,7 @@ class TaskPayment extends Component {
   }
 
   onTabChange = (e, value) => {
-    const providerTab = ['credit-card', 'paypal']
+    const providerTab = ['all', 'stripe', 'paypal']
     e.preventDefault()
     this.setState({currentTab: value})
     this.props.filterTaskOrders({
@@ -84,21 +84,24 @@ class TaskPayment extends Component {
       return !!this.props.orders.length
     }
 
-    const displayTotal = () => {
-      if (hasOrders()) {
-        let sum = 0
-        this.props.orders.map(item => {
-          if (item.status === 'succeeded' && item.provider !== 'paypal') sum += parseInt(item.amount)
-        })
-        return sum
+    const paymentSupport = user => {
+      let supportedTypes = []
+      if(user.account_id) {
+        supportedTypes.push('Cartão de Crédito')
       }
+      if(user.paypal_id) {
+        supportedTypes.push('Paypal')
+      }
+      if(!supportedTypes.length) return 'nenhuma forma de pagamento'
+
+      return supportedTypes.join('e ')
     }
 
     const sendTo = id => {
       const chosen = this.props.assigns.filter(item => {
         return item.id === id
       })
-      return chosen[0].User.username
+      return chosen.length && chosen[0].User || {}
     }
 
     return (
@@ -115,11 +118,11 @@ class TaskPayment extends Component {
         <DialogContent>
           { this.props.paid && (
             <Typography type='subheading' color='primary' gutterBottom noWrap>
-              { 'A transferência para esta tarefa já foi realizada' }
+              { 'Todas as transferências para esta tarefa já foram realizadas' }
             </Typography>
           ) }
           <div>
-            <AppBar position='static' color='default'>
+            <AppBar position='static' color='default' style={{marginTop: 20,  boxShadow: 'none', background: 'transparent'}}>
               <Tabs
                 value={ this.state.currentTab }
                 onChange={this.onTabChange}
@@ -128,11 +131,22 @@ class TaskPayment extends Component {
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab value={0} label='Pagamentos com cartão' icon={ <PaymentTypeIcon type="card" notext /> } />
-                <Tab value={1} label='Pagamentos com Paypal' icon={ <PaymentTypeIcon type="paypal" /> } />
+                <Tab style={{margin: 10}} value={0} label='Todos' icon={ <RedeemIcon /> } />
+                <Tab style={{margin: 10}} value={1} label='Pagamentos com cartão' icon={ <PaymentTypeIcon type="card" notext /> } />
+                <Tab style={{margin: 10}} value={2} label='Pagamentos com Paypal' icon={ <PaymentTypeIcon type="paypal" /> } />
               </Tabs>
             </AppBar>
             <TabContainer>
+              { this.props.transferId && (
+                <div>
+                <Typography type='subheading' color='primary' gutterBottom noWrap>
+                  { `As transferências relativas aos pagamentos com o cartão de crédito foram realizadas e o id da transação é:` }
+                </Typography>
+                <Typography type='subheading' color='primary' gutterBottom noWrap>
+                  { `${this.props.transferId}` }
+                </Typography>
+                </div>
+              ) }
             <List>
               { orders.map((order, index) => (
                 <div>
@@ -148,16 +162,19 @@ class TaskPayment extends Component {
                         primary={ `$ ${order.amount}` }
                         secondary={ `${statuses[order.status] || 'indefinida'}` }
                       />
+                      { !order.transfer_id ? (
                       <Button
                         onClick={ (e) => this.payOrder(e, order.id) }
                         style={ { float: 'right', margin: 10 } }
                         variant='raised'
                         color='primary'
-                        disabled={ !this.props.assigned }
+                        disabled={ !this.props.assigned || !order.User.paypal_id }
                       >
                         <RedeemIcon style={ { marginRight: 10 } } />
                         { `Pagar $ ${order.amount}` }
-                      </Button>
+                      </Button>) : (
+                        <Chip label='Pago' />
+                      )}
                     </ListItem>
                   ) :
                   (
@@ -184,14 +201,14 @@ class TaskPayment extends Component {
               { !this.props.paid ? (
                 <div>
                   { this.props.assigned
-                    ? `Enviar para ${sendTo(this.props.assigned)}`
+                    ? `Você vai enviar para ${sendTo(this.props.assigned).username} que suporta o recebimento por ${paymentSupport(sendTo(this.props.assigned))}`
                     : 'Ninguém foi escolhido para esta tarefa, então não temos como efetuar o pagamento' }
                 </div>
               ) : (
                 <div>
                   { `O pagamento foi efetuado para ${sendTo(
                     this.props.assigned
-                  )}` }
+                  )}.username` }
                 </div>
               ) }
             </span>
@@ -205,10 +222,10 @@ class TaskPayment extends Component {
                   style={ { float: 'right', margin: 10 } }
                   variant='raised'
                   color='primary'
-                  disabled={ !this.props.assigned }
+                  disabled={ !this.props.assigned || this.props.transferId || this.state.currentTab === 2 }
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
-                  { `Pagar $ ${displayTotal()}` }
+                  { `Pagar $ ${ this.props.values.card || 0 }` }
                 </Button>
               ) }
             </div>
@@ -216,7 +233,7 @@ class TaskPayment extends Component {
             <ListItemText
               variant='raised'
               disabled
-              primary={ 'Não temos nenhum pagamento realizado para esta tarefa' }
+              primary={ 'Não temos nenhum pagamento realizado para esta modalidade' }
             />
           ) }
           { !this.props.paid ? (

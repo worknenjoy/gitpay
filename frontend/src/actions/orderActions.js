@@ -43,8 +43,8 @@ const payOrderRequested = () => {
   return { type: PAY_ORDER_REQUESTED, completed: false }
 }
 
-const payOrderSuccess = payment => {
-  return { type: PAY_ORDER_SUCCESS, completed: true, payment: payment }
+const payOrderSuccess = order => {
+  return { type: PAY_ORDER_SUCCESS, completed: true, order }
 }
 
 const payOrderError = error => {
@@ -90,13 +90,13 @@ const payOrder = order => {
     dispatch(payOrderRequested())
     axios
       .post(api.API_URL + `/orders/payment`, order)
-      .then(payment => {
-        console.log('payment for order', payment)
-        if (payment.state) {
+      .then(order => {
+        console.log('payment for order', order)
+        if (order.data.transfer_id) {
           addNotification(
             'Pagamento realizado com sucesso'
           )
-          return dispatch(payOrderSuccess(payment))
+          return dispatch(payOrderSuccess(order))
         } else {
           addNotification(
             'Não foi possível realizar o pagamento'
@@ -104,7 +104,7 @@ const payOrder = order => {
           return dispatch(
             payOrder({
               error: {
-                type: 'create_order_failed'
+                type: 'pay_order_failed'
               }
             })
           )

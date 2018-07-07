@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     profile_url: DataTypes.STRING,
     picture_url: DataTypes.STRING,
     customer_id: DataTypes.STRING,
-    account_id: DataTypes.STRING
+    account_id: DataTypes.STRING,
+    paypal_id: DataTypes.STRING
   }, {
     classMethods: {
       associate: (models) => {

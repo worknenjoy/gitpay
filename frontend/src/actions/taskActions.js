@@ -105,7 +105,7 @@ const filterTaskSuccess = (tasks, filter) => {
     type: FILTER_TASK_SUCCESS,
     completed: true,
     data: tasks.data,
-    filterOrdersBy: filter
+    filterType: filter
   }
 }
 
@@ -329,7 +329,7 @@ const fetchTask = taskId => {
   }
 }
 
-const paymentTask = taskId => {
+const paymentTask = (taskId, value) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(paymentTaskRequested())
@@ -342,7 +342,8 @@ const paymentTask = taskId => {
     }
     axios
       .post(`${api.API_URL}/tasks/payments/`, {
-        taskId: taskId
+        taskId: taskId,
+        value: value
       })
       .then(payment => {
         if (payment.data.error) {

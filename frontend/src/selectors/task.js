@@ -12,7 +12,7 @@ export const getTaskOrdersByFilter = createSelector(
           ... task.data,
           orders: task.data.orders.filter(item => item.provider === 'paypal') }
         }
-      case 'credit-card':
+      case 'stripe':
         return { ... task, data: {
           ... task.data,
           orders: task.data.orders.filter(item => item.provider !== 'paypal') }
