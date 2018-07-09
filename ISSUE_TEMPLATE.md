@@ -29,4 +29,4 @@ steps to solve
 Extra requirements to complete the task
 
 ### Tips
-
+Important things to know to better find the solution for this task
