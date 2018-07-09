@@ -5,12 +5,12 @@
 
 Freelancing with development workflow
 
-## What is this about?
+## What is Gitpay?
 
-To offer a marketplace for developers, digital products and platforms that use GIT for on demand project needs.
+We offer a marketplace for developersand platforms that use git for on demand project needs, using the Git Workflow as contract of deliver issues solved.
 
 * You can complete tasks with open collaboration and receive bounties for it
-* companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
+* Companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
 
 
 ## Requirements
