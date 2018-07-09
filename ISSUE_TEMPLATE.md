@@ -1,9 +1,19 @@
-Description
+Description 
+
+### Current behavior
+current behavior
+
+### Expected behavior
+expect behavior
+
+usefull links
+https://github.com/worknenjoy/gitpay/tree/master/modules/mail
 
 ### Screenshot attached
-
 some screenshot
 
+### How to solve this issue
+steps to solve
 
 ### How to reproduze the user scenario
 
