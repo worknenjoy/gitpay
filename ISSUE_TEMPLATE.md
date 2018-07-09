@@ -3,6 +3,9 @@ Description
 ### Why
 Motivations when solve this issue
 
+### Level
+Level required to conclude this issue
+
 ### Current behavior
 current behavior
 
@@ -22,8 +25,8 @@ steps to solve
 
  - steps to reproduce the issue
 
-More details in how to contribute, [read the contribution guidelines]
-
 ### What you will need to complete this issue
 Extra requirements to complete the task
+
+### Tips
 
