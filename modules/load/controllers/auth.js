@@ -55,6 +55,17 @@ exports.accountCreate = (req, res) => {
     })
 }
 
+exports.userUpdate = (req, res) => {
+  user.userUpdate(req.body)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.send(false)
+  })
+}
+
 exports.accountUpdate = (req, res) => {
   user.userAccountUpdate(req.body)
     .then(data => {

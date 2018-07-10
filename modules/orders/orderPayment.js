@@ -32,7 +32,6 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
               'grant_type': 'client_credentials'
             }
           }).then(response => {
-            console.log('response from oauth token', response)
             return requestPromise({
               method: 'POST',
               uri: `${process.env.PAYPAL_HOST}/v1/payments/payment/${order.source_id}/execute/`,
@@ -48,18 +47,23 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
             }).then(payment => {
               const paymentData = JSON.parse(payment)
               console.log('payment execute result', payment, paymentData)
+              console.log('authorization id', paymentData.transactions[0].related_resources[0].authorization.id)
               return order.updateAttributes({
                 transfer_id: paymentData.transactions[0].related_resources[0].authorization.id
               }, {
                 include: [models.Task, models.User],
                 returning: true,
                 plain: true
-              }).then(order => {
-                console.log('order', order)
-                const orderData = order[1].dataValues
-                TransferMail.notifyOwner(orderData.Task.dataValues.User.dataValues.email, order.Task.dataValues, order.Task.dataValues.amount)
-                TransferMail.success(orderData.User.dataValues.email, order.Task.dataValues, order.Task.dataValues.amount)
-                return order[1].dataValues
+              }).then(updatedOrder => {
+                if(!updatedOrder) {
+                  throw new Error('update_order_error')
+                }
+                const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
+                return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
+                  TransferMail.notifyOwner(user.dataValues.email, task.dataValues, orderData.amount)
+                  TransferMail.success(user.dataValues.email, task.dataValues, orderData.amount)
+                  return orderData
+                })
               })
             })
           })
