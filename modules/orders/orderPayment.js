@@ -60,9 +60,13 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
                 }
                 const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
                 return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
-                  TransferMail.notifyOwner(user.dataValues.email, task.dataValues, orderData.amount)
-                  TransferMail.success(user.dataValues.email, task.dataValues, orderData.amount)
-                  return orderData
+                  return models.Assign.findById(orderData.TaskId, {
+                    include: [models.User]
+                  }).then(assign => {
+                    TransferMail.notifyOwner(user.dataValues.email, task.dataValues, orderData.amount)
+                    TransferMail.success(assign.dataValues.User.email, task.dataValues, orderData.amount)
+                    return orderData
+                  })
                 })
               })
             })
