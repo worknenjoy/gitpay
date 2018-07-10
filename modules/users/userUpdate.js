@@ -2,13 +2,24 @@ const Promise = require('bluebird')
 const models = require('../../loading/loading')
 
 module.exports = Promise.method(function userUpdate (userParameters) {
-  return models.User
-    .update(userParameters, {
+  let condition = {}
+  if(userParameters.id) {
+    condition = {
+      where: {
+        id: userParameters.id
+      }
+    }
+  } else {
+    condition = {
       where: {
         email: userParameters.email
       }
-    }).then(data => {
-      return data
+    }
+  }
+  return models.User
+    .update(userParameters, { ...condition, returning: true, plain: true}).then(data => {
+      console.log(data)
+      return data[1].dataValues
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log(error)

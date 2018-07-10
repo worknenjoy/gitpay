@@ -2,6 +2,7 @@ import api from '../consts'
 import axios from 'axios'
 import Auth from '../modules/auth'
 import { addNotification } from './notificationActions'
+import { fetchTask } from './taskActions'
 
 const CREATE_ORDER_REQUESTED = 'CREATE_ORDER_REQUESTED'
 const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS'
@@ -93,16 +94,17 @@ const payOrder = order => {
       .then(order => {
         console.log('payment for order', order)
         if (order.data.transfer_id) {
-          addNotification(
+          dispatch(addNotification(
             'Pagamento realizado com sucesso'
-          )
-          return dispatch(payOrderSuccess(order))
+          ))
+          dispatch(payOrderSuccess(order))
+          return dispatch(fetchTask(order.data.TaskId))
         } else {
-          addNotification(
+          dispatch(addNotification(
             'Não foi possível realizar o pagamento'
-          )
+          ))
           return dispatch(
-            payOrder({
+            payOrderError({
               error: {
                 type: 'pay_order_failed'
               }

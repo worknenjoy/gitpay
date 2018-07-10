@@ -14,6 +14,11 @@ const UPDATE_USER_ACCOUNT_REQUESTED = 'UPDATE_USER_ACCOUNT_REQUESTED'
 const UPDATE_USER_ACCOUNT_SUCCESS = 'UPDATE_USER_ACCOUNT_SUCCESS'
 const UPDATE_USER_ACCOUNT_ERROR = 'UPDATE_USER_ACCOUNT_ERROR'
 
+const UPDATE_USER_REQUESTED = 'UPDATE_USER_REQUESTED'
+const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
+const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR'
+
+
 const CREATE_BANKACCOUNT_REQUESTED = 'CREATE_BANKACCOUNT_REQUESTED'
 const CREATE_BANKACCOUNT_SUCCESS = 'CREATE_BANKACCOUNT_SUCCESS'
 const CREATE_BANKACCOUNT_ERROR = 'CREATE_BANKACCOUNT_ERROR'
@@ -80,6 +85,26 @@ const updateUserAccountSuccess = account => {
 
 const updateUserAccountError = error => {
   return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error }
+}
+
+/*
+ * User update
+ */
+
+const updateUserRequested = () => {
+  return { type: UPDATE_USER_REQUESTED, completed: false }
+}
+
+const updateUserSuccess = user => {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    completed: true,
+    data: user.data
+  }
+}
+
+const updateUserError = error => {
+  return { type: UPDATE_USER_ERROR, completed: true, error: error }
 }
 
 /*
@@ -187,6 +212,31 @@ const updateAccount = (userId, accountData) => {
   }
 }
 
+const updateUser = (userId, userData) => {
+  return (dispatch, getState) => {
+    dispatch(updateUserRequested())
+    axios
+      .put(api.API_URL + '/user/update', {
+          ...userData, id: userId
+      })
+      .then(user => {
+        dispatch(addNotification('Conta atualizada com sucesso'))
+        // dispatch(fetchAccount());
+        return dispatch(updateUserSuccess(user))
+      })
+      .catch(error => {
+        dispatch(
+          addNotification(
+            'Não foi possível atualizar sua conta. Você preencheu todos os dados?'
+          )
+        )
+        // eslint-disable-next-line no-console
+        console.log('error on create account', error)
+        return dispatch(updateUserError(error))
+      })
+  }
+}
+
 const getBankAccount = userId => {
   return (dispatch, getState) => {
     dispatch(getBankAccountRequested())
@@ -245,6 +295,9 @@ export {
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
   UPDATE_USER_ACCOUNT_ERROR,
+  UPDATE_USER_REQUESTED,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
   GET_BANKACCOUNT_REQUESTED,
   GET_BANKACCOUNT_SUCCESS,
   GET_BANKACCOUNT_ERROR,
@@ -254,6 +307,7 @@ export {
   fetchAccount,
   createAccount,
   updateAccount,
+  updateUser,
   createBankAccount,
   getBankAccount
 }

@@ -377,7 +377,7 @@ class Task extends Component {
   }
 
   render () {
-    const { classes, task } = this.props
+    const { classes, task, order } = this.props
 
     const TabContainer = props => {
       return (
@@ -625,6 +625,7 @@ class Task extends Component {
                       assigned={ task.data.assigned }
                       assigns={ task.data.assigns }
                       orders={ task.data.orders }
+                      order={ order.data }
                       open={ this.state.taskPaymentDialog }
                       onClose={ this.handleTaskPaymentDialogClose }
                       onPayTask={ this.props.paymentTask }

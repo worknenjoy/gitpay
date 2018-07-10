@@ -4,6 +4,7 @@ import {
   fetchAccount,
   createAccount,
   updateAccount,
+  updateUser,
   createBankAccount,
   getBankAccount
 } from '../actions/userActions'
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchAccount: (userId) => dispatch(fetchAccount(userId)),
     createAccount: (userId) => dispatch(createAccount(userId)),
     updateAccount: (userId, account) => dispatch(updateAccount(userId, account)),
+    updateUser: (userId, user) => dispatch(updateUser(userId, user)),
     getBankAccount: (userId) => dispatch(getBankAccount(userId)),
     createBankAccount: (userId, bank) => dispatch(createBankAccount(userId, bank))
   }

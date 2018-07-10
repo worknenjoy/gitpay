@@ -94,7 +94,7 @@ class TaskPayment extends Component {
       }
       if(!supportedTypes.length) return 'nenhuma forma de pagamento'
 
-      return supportedTypes.join('e ')
+      return supportedTypes.join(' e ')
     }
 
     const sendTo = id => {
@@ -173,7 +173,7 @@ class TaskPayment extends Component {
                         <RedeemIcon style={ { marginRight: 10 } } />
                         { `Pagar $ ${order.amount}` }
                       </Button>) : (
-                        <Chip label='Pago' />
+                        <Chip label={`Pago com Paypal (id: ${order.transfer_id})`} />
                       )}
                     </ListItem>
                   ) :
