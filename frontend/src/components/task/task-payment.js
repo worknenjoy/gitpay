@@ -168,7 +168,7 @@ class TaskPayment extends Component {
                         style={ { float: 'right', margin: 10 } }
                         variant='raised'
                         color='primary'
-                        disabled={ !this.props.assigned || !order.User.paypal_id }
+                        disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
                       >
                         <RedeemIcon style={ { marginRight: 10 } } />
                         { `Pagar $ ${order.amount}` }
