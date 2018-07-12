@@ -8,6 +8,7 @@ const data = [
   { label: 'React.js', url: 'https://reactjs.org/' },
   { label: 'Material-ui', url: 'https://material-ui.com/' },
   { label: 'Node.js', url: 'https://nodejs.org' },
+  { label: 'Postgres', url: 'https://www.postgresql.org/' },
   { label: 'Heroku', url: 'http://heroku.com/' },
   { label: 'Github', url: 'https://github.com' }
 ]
