@@ -23,7 +23,7 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
   failureRedirect: '/signin'
 }))
 
-router.get('/authorize/github', passport.authenticate('github', { scope: ['email'], accessType: 'offline' }))
+router.get('/authorize/github', passport.authenticate('github', { scope: ['user:email'], accessType: 'offline' }))
 router.get('/callback/github',
   passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {

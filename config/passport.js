@@ -196,7 +196,8 @@ passport.use(
     {
       clientID: github.id,
       clientSecret: github.secret,
-      callbackURL: oauthCallbacks.githubCallbackUrl
+      callbackURL: oauthCallbacks.githubCallbackUrl,
+      scope: ['user:email']
     },
     (accessToken, accessTokenSecret, profile, done) => {
       process.nextTick(() => {
