@@ -1,11 +1,22 @@
-version: '3.1'
+version: '3.7'
 
 services:
+  frontend:
+    image: node:8.6
+    command: sh -c "npm install && npm run dev"
+    working_dir: /gitpay/frontend
+    volumes: 
+      - .:/gitpay
+    network_mode: host
+  backend:
+    image: node:8.6
+    command: sh -c "npm install && npm run migrate && npm run start"
+    working_dir: /gitpay/
+    volumes: 
+      - .:/gitpay
+    network_mode: host
   db:
-    image: postgres
-    # restart: always
+    image: postgres    
     environment:
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DB: "${POSTGRES_DB}"
-    ports:
-      - "${POSTGRES_PORT}:5432"
+      POSTGRES_DB: gitpay_dev
+    network_mode: host
