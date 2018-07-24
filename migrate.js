@@ -186,16 +186,20 @@ switch (cmd) {
 
 executedCmd
     .then((result) => {
+      if(env !== 'test') {
         const doneStr = `${cmd.toUpperCase()} DONE`;
         console.log(doneStr);
         console.log("=".repeat(doneStr.length));
+      }
     })
     .catch(err => {
+      if(env !== 'test') {
         const errorStr = `${cmd.toUpperCase()} ERROR`;
         console.log(errorStr);
         console.log("=".repeat(errorStr.length));
         console.log(err);
         console.log("=".repeat(errorStr.length));
+      }
     })
     .then(() => {
         if (cmd !== 'status' && cmd !== 'reset-hard') {
