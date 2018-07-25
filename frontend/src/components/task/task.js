@@ -7,7 +7,7 @@ import 'react-placeholder/lib/reactPlaceholder.css'
 
 import Grid from 'material-ui/Grid'
 import Avatar from 'material-ui/Avatar'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import Card from 'material-ui/Card'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
@@ -29,13 +29,11 @@ import CalendarIcon from 'material-ui-icons/PermContactCalendar'
 import GroupWorkIcon from 'material-ui-icons/GroupAdd'
 import DoneIcon from 'material-ui-icons/Done'
 
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
-import { FormControl } from 'material-ui/Form'
 import Chip from 'material-ui/Chip'
-import PaymentDialog from '../payment/payment-dialog'
-import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
 import StatusDialog from './status-dialog'
 import TaskPayment from './task-payment'
+import TaskPaymentForm from './task-payment-form'
+import TaskDeadlineForm from './task-deadline-form'
 
 import StatsCard from '../Cards/StatsCard'
 import RegularCard from '../Cards/RegularCard'
@@ -51,7 +49,6 @@ import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import LoginButton from '../session/login-button'
 
-const paymentIcon = require('../../images/payment-icon-alt.png')
 const timeIcon = require('../../images/time-icon.png')
 
 const logoGithub = require('../../images/github-logo.png')
@@ -264,32 +261,19 @@ class Task extends Component {
     this.state = {
       deadline: null,
       assigned: null,
-      final_price: 0,
-      current_price: 0,
-      order_price: 0,
+      finalPrice: 0,
+      currentPrice: 0,
+      orderPrice: 0,
       assignDialog: false,
       statusDialog: false,
+      paymentForm: false,
+      deadlineForm: false,
       taskPaymentDialog: false,
       notification: {
         open: false,
         message: 'loading'
       }
     }
-
-    this.handleDeadline = this.handleDeadline.bind(this)
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleInputChangeCalendar = this.handleInputChangeCalendar.bind(this)
-    this.handleTabChange = this.handleTabChange.bind(this)
-    this.handleCloseNotification = this.handleCloseNotification.bind(this)
-    this.handleAssignDialogClose = this.handleAssignDialogClose.bind(this)
-    this.handleAssignDialogOpen = this.handleAssignDialogOpen.bind(this)
-    this.handleAssignTask = this.handleAssignTask.bind(this)
-    this.handleStatusDialog = this.handleStatusDialog.bind(this)
-    this.handleStatusDialogClose = this.handleStatusDialogClose.bind(this)
-    this.handleTaskPaymentDialog = this.handleTaskPaymentDialog.bind(this)
-    this.handleTaskPaymentDialogClose = this.handleTaskPaymentDialogClose.bind(
-      this
-    )
   }
 
   componentWillMount () {
@@ -297,74 +281,39 @@ class Task extends Component {
     this.props.fetchTask(this.props.match.params.id)
   }
 
-  handleCloseNotification () {
+  handleCloseNotification = () => {
     this.setState({ notification: { open: false } })
   }
 
-  handlePayment (value) {
-    this.props.openDialog(value)
-  }
-
-  handleDeadline () {
-    this.props.updateTask({
-      id: this.props.match.params.id,
-      deadline: this.state.deadline
-    })
-  }
-
-  pickTaskPrice (price) {
-    this.setState({
-      current_price: price,
-      final_price: parseInt(price) + parseInt(this.state.order_price)
-    })
-  }
-
-  pickTaskDeadline (time) {
-    const date = MomentComponent(this.state.deadline).isValid()
-      ? MomentComponent(this.state.deadline)
-      : MomentComponent()
-    const newDate = date.add(time, 'days').format()
-    this.setState({ deadline: newDate })
-  }
-
-  handleInputChange (e) {
-    e.preventDefault()
-    this.setState({ current_price: e.target.value })
-  }
-
-  handleInputChangeCalendar (e) {
-    this.setState({ deadline: e.target.value })
-  }
-
-  handleTabChange (event, tab) {
+  handleTabChange = (event, tab) => {
     this.props.changeTab(tab)
   }
 
-  handleAssignDialogClose () {
+  handleAssignDialogClose = () => {
     this.setState({ assignDialog: false })
   }
 
-  handleAssignDialogOpen () {
+  handleAssignDialogOpen = () => {
     this.setState({ assignDialog: true })
   }
 
-  handleStatusDialog () {
+  handleStatusDialog = () => {
     this.setState({ statusDialog: true })
   }
 
-  handleStatusDialogClose () {
+  handleStatusDialogClose = () => {
     this.setState({ statusDialog: false })
   }
 
-  handleTaskPaymentDialog () {
+  handleTaskPaymentDialog = () => {
     this.setState({ taskPaymentDialog: true })
   }
 
-  handleTaskPaymentDialogClose () {
+  handleTaskPaymentDialogClose = () => {
     this.setState({ taskPaymentDialog: false })
   }
 
-  handleAssignTask () {
+  handleAssignTask = () => {
     this.props.updateTask({
       id: this.props.match.params.id,
       Assigns: [
@@ -374,6 +323,16 @@ class Task extends Component {
       ]
     })
     this.setState({ assignDialog: false })
+  }
+
+  handlePaymentForm = (e) => {
+      e.preventDefault()
+      this.state.paymentForm ? this.setState({paymentForm: false}) : this.setState({paymentForm: true})
+  }
+
+  handleDeadlineForm = (e) => {
+    e.preventDefault()
+    this.state.deadlineForm ? this.setState({deadlineForm: false}) : this.setState({deadlineForm: true})
   }
 
   render () {
@@ -489,7 +448,7 @@ class Task extends Component {
       <div className='line-holder'>
         <RectShape
           color='white'
-          style={ { marginLeft: 20, marginTop: 0, width: 300, height: 20 } }
+          style={ { marginLeft: 20, marginTop: 20, width: 300, height: 20 } }
         />
       </div>
     )
@@ -540,7 +499,6 @@ class Task extends Component {
               </Typography>
             </ReactPlaceholder>
           </TaskHeader>
-
           <Grid
             container
             justify='flex-start'
@@ -550,6 +508,7 @@ class Task extends Component {
             <Grid
               item
               sm={ 12 }
+              xs={ 12 }
               style={ {
                 display: 'flex',
                 alignItems: 'center',
@@ -577,7 +536,18 @@ class Task extends Component {
               </Tooltip>
               <div className={ classes.paper }>
                 <Button
-                  style={ { marginRight: 10 } }
+                  style={ {marginRight: 10} }
+                  onClick={ this.handlePaymentForm }
+                  size='small'
+                  color='primary'
+                  className={ classes.altButton }
+                >
+                  <span className={ classes.spaceRight }>Adicionar recompensa</span>{ ' ' }
+                  <RedeemIcon />
+                </Button>
+                { !taskOwner() &&
+                <Button
+                  style={ {marginRight: 10} }
                   onClick={ this.handleAssignDialogOpen }
                   size='medium'
                   color='primary'
@@ -588,8 +558,19 @@ class Task extends Component {
                   </span>{ ' ' }
                   <AddIcon />
                 </Button>
+                }
                 { taskOwner() && (
                   <div style={ { display: 'inline-block' } }>
+                    <Button
+                      style={ { marginRight: 10 } }
+                      onClick={ this.handleDeadlineForm }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>Data para entrega</span>{ ' ' }
+                      <DateIcon />
+                    </Button>
                     <Button
                       style={ { marginRight: 10 } }
                       onClick={ this.handleStatusDialog }
@@ -606,7 +587,7 @@ class Task extends Component {
                       color='primary'
                       className={ classes.altButton }
                     >
-                      <span className={ classes.spaceRight }>Pagar</span>{ ' ' }
+                      <span className={ classes.spaceRight }>Enviar recompensa</span>{ ' ' }
                       <RedeemIcon />
                     </Button>
                     <StatusDialog
@@ -670,9 +651,12 @@ class Task extends Component {
               </div>
             </Grid>
           </Grid>
-
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 8 }>
+              <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
+              { taskOwner() &&
+                <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
+              }
               <div className={ classes.rootTabs }>
                 <AppBar position='static' color='default'>
                   <Tabs
@@ -690,124 +674,6 @@ class Task extends Component {
                 </AppBar>
                 { task.tab === 0 &&
                 <TabContainer>
-                  { taskOwner() &&
-                  <Card className={ classes.card }>
-                    <CardMedia
-                      className={ classes.cover }
-                      image={ paymentIcon }
-                      title='Realize o pagamento pela tarefa'
-                    />
-                    <div className={ classes.details }>
-                      <CardContent className={ classes.content }>
-                        <Typography variant='headline'>Crie uma recompensa para esta tarefa</Typography>
-                        <Typography variant='subheading' color='textSecondary'>
-                        Realize um pagamento por esta tarefa para que alguém possa desenvolvê-la e receber o pagamento como recompensa.
-                        </Typography>
-                        <div className={ classes.chipContainer }>
-                          <Chip
-                            label=' $ 20'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(20) }
-                          />
-                          <Chip
-                            label=' $ 50'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(50) }
-                          />
-                          <Chip
-                            label=' $ 100'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(100) }
-                          />
-                          <Chip
-                            label=' $ 150'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(150) }
-                          />
-                          <Chip
-                            label=' $ 300'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(300) }
-                          />
-                        </div>
-                        <form className={ classes.formPayment } action='POST'>
-                          <FormControl fullWidth>
-                            <InputLabel htmlFor='adornment-amount'>Valor</InputLabel>
-                            <Input
-                              id='adornment-amount'
-                              startAdornment={ <InputAdornment position='start'>$</InputAdornment> }
-                              placeholder='Insira um valor'
-                              type='number'
-                              inputProps={ { 'min': 0 } }
-                              value={ this.state.current_price }
-                              onChange={ this.handleInputChange }
-                            />
-                          </FormControl>
-                          <Button style={{ marginLeft: 20 }}disabled={ !this.state.current_price } onClick={ () => this.handlePayment('PaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
-                            { `Pagar $ ${this.state.current_price} com cartão de crédito` }
-                          </Button>
-                          <Button disabled={ !this.state.current_price } onClick={ () => this.handlePayment('PaypalPaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
-                            { `Pagar $ ${this.state.current_price} com Paypal` }
-                          </Button>
-                        </form>
-                      </CardContent>
-                    </div>
-                  </Card> }
-                  { taskOwner() &&
-                  <Card className={ classes.card }>
-                    <CardMedia
-                      className={ classes.cover }
-                      image={ timeIcon }
-                      title='Escolha uma data limite para realizacao desta tarefa'
-                    />
-                    <div className={ classes.details }>
-                      <CardContent className={ classes.content }>
-                        <Typography variant='headline'>Escolha uma data limite para realizacao desta tarefa</Typography>
-                        <Typography variant='subheading' color='textSecondary'>
-                        Escolha uma data em que deseja que ela precisa ser finalizada
-                        </Typography>
-                        <div className={ classes.chipContainer }>
-                          <Chip
-                            label=' daqui uma semana '
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskDeadline(7) }
-                          />
-                          <Chip
-                            label=' daqui quinze dias '
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskDeadline(15) }
-                          />
-                          <Chip
-                            label=' daqui vinte dias '
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskDeadline(20) }
-                          />
-                          <Chip
-                            label=' daqui um mês'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskDeadline(30) }
-                          />
-                        </div>
-                        <form className={ classes.formPayment } action='POST'>
-                          <FormControl fullWidth>
-                            <InputLabel htmlFor='adornment-amount'>Dia</InputLabel>
-                            <Input
-                              id='adornment-date'
-                              startAdornment={ <InputAdornment position='start'><DateIcon /></InputAdornment> }
-                              placeholder='Insira uma data'
-                              type='date'
-                              value={ `${MomentComponent(this.state.deadline).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}` }
-                              onChange={ this.handleInputChangeCalendar }
-                            />
-                          </FormControl>
-                          <Button disabled={ !this.state.deadline } onClick={ this.handleDeadline } variant='raised' color='primary' className={ classes.btnPayment }>
-                            { this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format('DD/MM/YYYY')} como data limite` : 'Salvar data limite' }
-                          </Button>
-                        </form>
-                      </CardContent>
-                      <div className={ classes.controls } />
-                    </div>
-                  </Card> }
                   <Card className={ classes.paper }>
                     <Typography variant='title' align='left' gutterBottom>
                     Descrição
@@ -873,30 +739,6 @@ class Task extends Component {
               /> }
             </Grid>
           </Grid>
-
-          <PaymentDialog
-            open={ this.props.dialog.open && this.props.dialog.target === 'PaymentDialog'}
-            onClose={ this.props.closeDialog }
-            addNotification={ this.props.addNotification }
-            onPayment={ this.props.updateTask }
-            itemPrice={ this.state.current_price }
-            price={ this.state.final_price }
-            task={ this.props.match.params.id }
-          />
-
-          <PaypalPaymentDialog
-            open={ this.props.dialog.open && this.props.dialog.target === 'PaypalPaymentDialog'}
-            onClose={ this.props.closeDialog }
-            addNotification={ this.props.addNotification }
-            onPayment={ this.props.updateTask }
-            itemPrice={ this.state.current_price }
-            price={ this.state.final_price }
-            task={ this.props.match.params.id }
-            createOrder={ this.props.createOrder }
-            user={this.props.user}
-            order={this.props.order}
-          />
-
         </PageContent>
         <Bottom />
       </div>
