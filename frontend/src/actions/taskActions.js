@@ -100,12 +100,13 @@ const filterTaskRequested = () => {
   return { type: FILTER_TASK_REQUESTED, completed: false }
 }
 
-const filterTaskSuccess = (tasks, filter) => {
+const filterTaskSuccess = (tasks, filter, value) => {
   return {
     type: FILTER_TASK_SUCCESS,
     completed: true,
     data: tasks.data,
-    filterType: filter
+    filterType: filter,
+    filterValue: value
   }
 }
 
@@ -279,11 +280,11 @@ const listTasks = () => {
   }
 }
 
-const filterTasks = (key = 'all') => {
+const filterTasks = (key = 'all', value) => {
   return (dispatch, getState) => {
     const tasks = getState().tasks
     dispatch(filterTaskRequested())
-    return dispatch(filterTaskSuccess(tasks, key))
+    return dispatch(filterTaskSuccess(tasks, key, value))
   }
 }
 

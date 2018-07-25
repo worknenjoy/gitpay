@@ -17,6 +17,7 @@ import AssignIcon from 'material-ui-icons/Assignment'
 import ActionIcon from 'material-ui-icons/CallToAction'
 
 import CustomPaginationActionsTable from './task-table'
+import TaskStatusFilter from './task-status-filter'
 
 const styles = theme => ({
   icon: {
@@ -75,13 +76,15 @@ class TaskList extends Component {
 
     return (
       <Paper elevation={ 0 }>
-        <Typography variant='headline' component='h3'>
+        <Typography variant='headline' component='h2'>
           Lista de tarefas
         </Typography>
-        <Typography component='p' style={ { marginBottom: 40 } }>
+        <Typography component='p' style={ { marginBottom: 20 } }>
           Tarefas disponíveis para desenvolvimento
         </Typography>
-
+        <div style={{marginTop: 20, marginBottom: 20}}>
+          <TaskStatusFilter onFilter={this.props.filterTasks} />
+        </div>
         <div className={ classes.rootTabs }>
           <AppBar position='static' color='default'>
             <Tabs

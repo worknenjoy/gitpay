@@ -19,6 +19,8 @@ export const getFilteredTasks = createSelector(
             const interested = item.Assigns.filter(assign => assign.userId === user.id)
             return interested.length
           }) }
+      case 'status':
+        return { ...tasks, data: tasks.data.filter(item => item.status === tasks.filterValue) }
       case 'assigned':
         return {
           ...tasks,
@@ -29,9 +31,7 @@ export const getFilteredTasks = createSelector(
             }
           }) }
       default:
-        return {
-          ...tasks,
-          data: tasks.data.filter(item => item[visibilityFilter] === user.id) }
+        return tasks
     }
   }
 )
