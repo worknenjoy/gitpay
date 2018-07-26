@@ -19,7 +19,8 @@ class TaskPaymentForm extends Component {
     this.state = {
       currentPrice: 0,
       finalPrice: 0,
-      orderPrice: 0
+      orderPrice: 0,
+      samplePrice: 0
     }
   }
 
@@ -31,8 +32,7 @@ class TaskPaymentForm extends Component {
   }
 
   handleInputChange = (e) => {
-    e.preventDefault()
-    this.setState({ current_price: e.target.value })
+    this.setState({ currentPrice: e.target.value })
   }
 
   handlePayment = (value) => {
@@ -94,6 +94,7 @@ class TaskPaymentForm extends Component {
                       placeholder='Insira um valor'
                       type='number'
                       inputProps={ { 'min': 0 } }
+                      defaultValue={ this.state.currentPrice }
                       value={ this.state.currentPrice }
                       onChange={ this.handleInputChange }
                     />
