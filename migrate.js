@@ -93,7 +93,7 @@ function cmdStatus() {
                 pending: pending.map(m => m.file),
             }
 
-            console.log(JSON.stringify(status, null, 2))
+            //console.log(JSON.stringify(status, null, 2))
 
             return { executed, pending };
         })
@@ -186,20 +186,17 @@ switch (cmd) {
 
 executedCmd
     .then((result) => {
-      if(env !== 'test') {
-        const doneStr = `${cmd.toUpperCase()} DONE`;
-        console.log(doneStr);
-        console.log("=".repeat(doneStr.length));
-      }
+      const doneStr = `${cmd.toUpperCase()} DONE`;
+      console.log(doneStr);
+      console.log("=".repeat(doneStr.length));
+
     })
     .catch(err => {
-      if(env !== 'test') {
-        const errorStr = `${cmd.toUpperCase()} ERROR`;
-        console.log(errorStr);
-        console.log("=".repeat(errorStr.length));
-        console.log(err);
-        console.log("=".repeat(errorStr.length));
-      }
+      const errorStr = `${cmd.toUpperCase()} ERROR`;
+      console.log(errorStr);
+      console.log("=".repeat(errorStr.length));
+      console.log(err);
+      console.log("=".repeat(errorStr.length));
     })
     .then(() => {
         if (cmd !== 'status' && cmd !== 'reset-hard') {
