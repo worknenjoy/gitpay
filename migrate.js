@@ -24,7 +24,7 @@ if (env == 'production') {
     protocol: 'postgres',
     port:     port,
     host:     host,
-    logging:  true //false
+    logging:  false
   });
   console.log('running production migration');
 
