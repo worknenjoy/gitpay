@@ -149,7 +149,7 @@ function cmdHardReset() {
 const cmd = process.argv[2].trim();
 let executedCmd;
 
-console.log(`${cmd.toUpperCase()} BEGIN`);
+// console.log(`${cmd.toUpperCase()} BEGIN`);
 switch (cmd) {
     case 'status':
         executedCmd = cmdStatus();
@@ -187,7 +187,7 @@ switch (cmd) {
 executedCmd
     .then((result) => {
       const doneStr = `${cmd.toUpperCase()} DONE`;
-      console.log(doneStr);
+      // console.log(doneStr);
       console.log("=".repeat(doneStr.length));
 
     })
