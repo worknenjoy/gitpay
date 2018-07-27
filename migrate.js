@@ -139,7 +139,7 @@ function cmdHardReset() {
                 child_process.spawnSync(`createdb ${config.database} --username ${config.username}`);
                 resolve();
             } catch (e) {
-                console.log(e);
+                // console.log(e);
                 reject(e);
             }
         });
@@ -195,7 +195,7 @@ executedCmd
       const errorStr = `${cmd.toUpperCase()} ERROR`;
       // console.log(errorStr);
       console.log("=".repeat(errorStr.length));
-      console.log(err);
+      // console.log(err);
       console.log("=".repeat(errorStr.length));
     })
     .then(() => {
