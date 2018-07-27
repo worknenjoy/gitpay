@@ -193,7 +193,7 @@ executedCmd
     })
     .catch(err => {
       const errorStr = `${cmd.toUpperCase()} ERROR`;
-      console.log(errorStr);
+      // console.log(errorStr);
       console.log("=".repeat(errorStr.length));
       console.log(err);
       console.log("=".repeat(errorStr.length));
