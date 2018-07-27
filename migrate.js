@@ -24,7 +24,7 @@ if (env == 'production') {
     protocol: 'postgres',
     port:     port,
     host:     host,
-    logging:  true //false
+    logging:  false
   });
   console.log('running production migration');
 
@@ -139,7 +139,7 @@ function cmdHardReset() {
                 child_process.spawnSync(`createdb ${config.database} --username ${config.username}`);
                 resolve();
             } catch (e) {
-                console.log(e);
+                // console.log(e);
                 reject(e);
             }
         });
@@ -149,7 +149,7 @@ function cmdHardReset() {
 const cmd = process.argv[2].trim();
 let executedCmd;
 
-console.log(`${cmd.toUpperCase()} BEGIN`);
+// console.log(`${cmd.toUpperCase()} BEGIN`);
 switch (cmd) {
     case 'status':
         executedCmd = cmdStatus();
@@ -187,15 +187,15 @@ switch (cmd) {
 executedCmd
     .then((result) => {
       const doneStr = `${cmd.toUpperCase()} DONE`;
-      console.log(doneStr);
+      // console.log(doneStr);
       console.log("=".repeat(doneStr.length));
 
     })
     .catch(err => {
       const errorStr = `${cmd.toUpperCase()} ERROR`;
-      console.log(errorStr);
+      // console.log(errorStr);
       console.log("=".repeat(errorStr.length));
-      console.log(err);
+      // console.log(err);
       console.log("=".repeat(errorStr.length));
     })
     .then(() => {
