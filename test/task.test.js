@@ -199,6 +199,19 @@ describe("tasks", () => {
           })
         })
     });
+
+    it('should delete a task by id', (done) => {
+      const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+      models.Task.build({ url: github_url, provider: 'github' }).save().then((task) => {
+        agent
+          .delete(`/tasks/delete/${task.dataValues.id}`)
+          .expect(200)
+          .end((err, res) => {
+            expect(err).to.be.null
+            done()
+          })
+      })
+    })
   });
 
   describe('sync task', () => {
