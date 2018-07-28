@@ -4,7 +4,7 @@ services:
   backend_test:
     image: node:8.6
     command: sh -c "npm install && npm run migrate-test && npm run test"
-    working_dir: /gitpay/backend
+    working_dir: /gitpay
     volumes: 
       - .:/gitpay    
     environment:

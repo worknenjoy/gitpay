@@ -10,6 +10,7 @@ const models = require('../loading/loading')
 const chargeData = require('./data/charge')
 const transferData = require('./data/transfer')
 const payoutData = require('./data/payout')
+const balanceData = require('./data/balance')
 
 describe('webhooks', () => {
   beforeEach(() => {
@@ -245,6 +246,22 @@ describe('webhooks', () => {
               })
           })
       })
+    })
+  })
+
+  describe('webhooks for balance', () => {
+    it('should notify the user when he/she gets a new balance', done => {
+      agent
+        .post('/webhooks')
+        .send(balanceData.update)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.exist
+          expect(res.body.id).to.equal('evt_1234')
+          done()
+        });      
     })
   })
 })

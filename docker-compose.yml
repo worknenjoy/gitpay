@@ -11,7 +11,7 @@ services:
   backend:
     image: node:8.6
     command: sh -c "npm install && npm run migrate && npm run start"
-    working_dir: /gitpay/
+    working_dir: /gitpay
     volumes: 
       - .:/gitpay
     network_mode: host
