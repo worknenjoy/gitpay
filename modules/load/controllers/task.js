@@ -68,3 +68,12 @@ exports.syncTask = (req, res) => {
       res.send({ error: error.raw })
     })
 }
+
+exports.deleteTaskById = (req, res) => {
+  Tasks.taskDeleteById(req.params)
+    .then(() => {
+      res.sendStatus(200)
+    }).catch(error => {
+      res.status(400).send(error)
+    })
+}
