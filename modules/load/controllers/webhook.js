@@ -274,6 +274,18 @@ exports.updateWebhook = (req, res) => {
           })
 
         break
+        case 'balance.available':
+            SendMail.success(
+              'notifications@gitpay.me',
+              'Um novo balanço da sua conta no Gitpay',
+              `
+                  <p>Temos um novo balanço para a conta do Gitpay:</p>
+                  <ul>
+                  ${event.data.object.available.map(b=> `<li>${b.currency}: ${b.amount}</li>`).join('')}
+                  </ul>              
+              `)
+            return res.json(req.body);
+        break
       default:
         return res.status(400).send({
           error: {
