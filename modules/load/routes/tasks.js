@@ -12,5 +12,6 @@ router.use(secure)
 router.post('/create', controllers.createTask)
 router.put('/update', controllers.updateTask)
 router.post('/payments', controllers.paymentTask)
+router.delete('/delete/:id', controllers.deleteTaskById)
 
 module.exports = router
