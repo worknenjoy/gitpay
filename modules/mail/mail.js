@@ -1,16 +1,20 @@
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY)
 const Signatures = require('./content')
+const notificationEmail = 'notifications@gitpay.me';
 
 let Sendmail = {}
 let bcc = []
 
 if (process.env.NODE_ENV !== 'test') {
   bcc.push({
-    email: 'notifications@gitpay.me'
+    email: notificationEmail
   })
 }
 
 Sendmail.success = (to, subject, msg) => {
+  if(notificationEmail === to){
+    bcc = null;
+  }
   const request = sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',

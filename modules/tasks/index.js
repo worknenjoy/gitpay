@@ -5,6 +5,7 @@ const taskUpdate = require('./taskUpdate')
 const taskFetch = require('./taskFetch')
 const taskPayment = require('./taskPayment')
 const taskSync = require('./taskSync')
+const taskDeleteById = require('./taskDeleteById')
 
 module.exports = {
   taskExists,
@@ -13,5 +14,6 @@ module.exports = {
   taskUpdate,
   taskFetch,
   taskPayment,
-  taskSync
+  taskSync,
+  taskDeleteById
 }
