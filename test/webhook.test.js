@@ -12,7 +12,7 @@ const transferData = require('./data/transfer')
 const payoutData = require('./data/payout')
 const balanceData = require('./data/balance')
 
-describe('webhooks', () => {
+xdescribe('webhooks', () => {
   beforeEach(() => {
     models.Task.destroy({ where: {}, truncate: true, cascade: true }).then(
       function(rowDeleted) {
