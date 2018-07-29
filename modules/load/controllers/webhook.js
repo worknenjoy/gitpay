@@ -12,6 +12,26 @@ exports.updateWebhook = (req, res) => {
     const status = event.data.object.status
 
     switch (event.type) {
+      case 'customer.source.created':
+        return models.User.findOne({
+          where: {
+            customer_id: event.data.object.customer
+          },
+          attributes: ['email']
+        }).then((user) => {
+          if (!user) {
+            return res.status(400).send({ errors: ['User not found'] })
+          }
+          SendMail.success(
+            user.dataValues.email,
+            'Informações do Cartão de Crédito!',
+            `<p>Cartão: ${event.data.object.last4}</p>
+            <p>Nome: ${event.data.object.name}</p>`
+          )
+          return res.json(req.body)
+        }).catch(error => res.status(400).send(error))
+        /* eslint-disable no-unreachable */
+        break
       case 'charge.updated':
         return models.Order.update(
           {
@@ -57,7 +77,6 @@ exports.updateWebhook = (req, res) => {
           .catch(e => {
             return res.status(400).send(e)
           })
-        /* eslint-disable no-unreachable */
         break
       case 'charge.succeeded':
         return models.Order.update(

@@ -10,6 +10,7 @@ const models = require('../loading/loading')
 const chargeData = require('./data/charge')
 const transferData = require('./data/transfer')
 const payoutData = require('./data/payout')
+const cardData = require('./data/card')
 const balanceData = require('./data/balance')
 
 xdescribe('webhooks', () => {
@@ -144,6 +145,28 @@ xdescribe('webhooks', () => {
     })
 
     describe('webhooks for transfer', () => {
+      it('should notify the transfer when a webhook customer.source.created is triggered', done => {
+        models.User.build({
+          email: 'teste@gmail.com',
+          password: 'teste',
+          customer_id: cardData.sourceCreated.data.object.customer
+        })
+          .save()
+          .then(user => {
+            agent
+              .post('/webhooks')
+              .send(cardData.sourceCreated)
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.statusCode).to.equal(200)
+                expect(res.body).to.exist
+                expect(res.body.id).to.equal(cardData.sourceCreated.id)
+                done()
+              })
+          })
+      })
+
       it('should notify the transfer when a webhook transfer.update is triggered', done => {
         models.User.build({ email: 'teste@mail.com', password: 'teste' })
           .save()
