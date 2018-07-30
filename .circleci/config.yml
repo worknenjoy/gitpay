@@ -42,5 +42,5 @@ jobs:
 
       # run tests!
       - run:
-        name: run tests!
-        command: npm run test
+          name: run tests!
+          command: npm run test
