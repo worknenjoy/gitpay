@@ -65,16 +65,15 @@ describe('orders', () => {
         //.expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
-          console.log(err);
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          expect(res.body.currency).to.equal('USD');
-          expect(res.body.amount).to.equal('200');
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.exist
+          expect(res.body.currency).to.equal('USD')
+          expect(res.body.amount).to.equal('200')
           done();
         })
     })
 
-    it('should update a paypal order', (done) => {
+    xit('should update a paypal order', (done) => {
       models.Order.build({
         source_id: 'PAY-TEST',
         currency: 'USD',
