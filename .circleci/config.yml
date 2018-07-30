@@ -9,9 +9,9 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.6.0
       - image: circleci/postgres:9.4-alpine-postgis-ram
-          environment:
-                    POSTGRES_USER: postgres
-                    POSTGRES_DB: gitpay_test
+        environment:
+                  POSTGRES_USER: postgres
+                  POSTGRES_DB: gitpay_test
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -22,7 +22,9 @@ jobs:
 
     steps:
       - checkout
-      - run: npm run migrate-test
+      - run:
+          name: Migrate
+          command: npm run migrate-test
 
       # Download and cache dependencies
       - restore_cache:
