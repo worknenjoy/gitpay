@@ -10,8 +10,8 @@ jobs:
       - image: circleci/node:8.6
       - image: circleci/postgres:9.4-alpine-postgis-ram
         environment:
-          - POSTGRES_USER: postgres
-          - POSTGRES_DB: gitpay_test
+          POSTGRES_USER: postgres
+          POSTGRES_DB: gitpay_test
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
