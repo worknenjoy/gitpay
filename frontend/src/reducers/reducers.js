@@ -5,6 +5,7 @@ import { loggedIn } from './loginReducer'
 import { account, bankAccount } from './accountReducer'
 import { task, tasks } from './taskReducer'
 import { order } from './orderReducer'
+import { info } from './infoReducer'
 
 const reducers = combineReducers({
   notification,
@@ -14,7 +15,8 @@ const reducers = combineReducers({
   bankAccount,
   order,
   task,
-  tasks
+  tasks,
+  info
 })
 
 export default reducers
