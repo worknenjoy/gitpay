@@ -23,10 +23,12 @@ import SubscribeFrom from 'react-mailchimp-subscribe'
 import './mailchimp.css'
 
 import TopBarContainer from '../../containers/topbar'
+import InfoContainer from '../../containers/info'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
 
 import OurStack from './components/OurStack'
+import Info from './components/Info'
 
 const octodex = require('../../images/octodex.png')
 const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat-transparent.png')
@@ -43,12 +45,13 @@ import {
 const styles = (theme) => mainStyles(theme)
 
 class Welcome extends Component {
-  render () {
+  render () {    
     const { classes, location } = this.props
 
     return (
       <div className={ classes.root }>
         <TopBarContainer />
+        
 
         <MainBanner>
           <Grid container spacing={ 24 }>
@@ -72,7 +75,7 @@ class Welcome extends Component {
               <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
                 <LoginButton referer={ location } contrast />
               </div>
-
+              <InfoContainer />
               <OurStack />
             </Grid>
           </Grid>
