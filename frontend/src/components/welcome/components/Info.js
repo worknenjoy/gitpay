@@ -4,12 +4,6 @@ import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
 
-const data = {
-    tasks: {text: 'Total of Tasks', value: '--'},
-    orders: {text: 'Bounties Paid', value: '--'},
-    users: {text: 'Total of Users', value: '--'}    
-}
-
 const Content = styled.span`
    padding-bottom: 10px;
    color: white;
@@ -20,50 +14,48 @@ const Items = styled.div`
   margin-top: 20px;
 `
 
-const Item = styled(Chip)`
-display:
+const ItemBig = styled(Chip)`
   outline: 1px solid orange;
   margin: 10px;
   font-weight: bold;
-  width: 140px;
+  width: 170px;
   justify-Content: space-between !important;
 `
 
+const ItemSmall = styled(ItemBig)`
+  width: 120px;
+`
+
 const Icon = styled(Avatar)`
-width: 90px !important;
+width: 50px !important;
 font-size: 0.8rem !important;
 border-radius: 16px !important;
 `
 class Info extends React.Component {
-  constructor (props) {
-    super(props)
-    
-    this.state = {
-      data
-    }
-    
-  }
-
   componentDidMount () {    
     this.props.info();
   }
-  render() {    
-    data.tasks.value = this.props.tasks
-    data.orders.value = '$' + this.props.bounties
-    data.users.value = this.props.users
+  render() {
+    const {tasks, bounties, users} = this.props
+
+    const stats = {
+      tasks: {text: 'tarefas', value: tasks || '0' },
+      bounties: {text: 'em recompensas', value:  '$' + (bounties || '0')},
+      users: {text: 'usuários', value: users || '0'}
+    }
     
-return (
-  <Content>
-    <Typography variant='subheading' color='inherit' gutterBottom>
-        Stats
-      <Items>
-      <Item label={data.tasks.value} avatar={<Icon children={data.tasks.text}/>} />
-      <Item label={data.orders.value} avatar={<Icon children={data.orders.text}/>}/>
-      <Item label={data.users.value} avatar={<Icon children={data.users.text}/>} />
-      </Items>
-    </Typography>
-  </Content>
-  );
+    return (
+    <Content>
+      <Typography variant='subheading' color='inherit' gutterBottom>
+          Stats
+        <Items>
+          <ItemSmall label={stats.tasks.text} avatar={<Icon children={stats.tasks.value }/>}/>
+          <ItemBig label={stats.bounties.text} avatar={<Icon children={stats.bounties.value }/>}/>
+          <ItemSmall label={stats.users.text} avatar={<Icon children={stats.users.value }/>}/>
+        </Items>
+      </Typography>
+    </Content>
+    );
   }
 }
 
