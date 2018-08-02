@@ -1,4 +1,4 @@
 module.exports = {
   notificationEmail: 'notifications@gitpay.me',
-  efromEmail: 'tarefas@gitpay.me'
+  fromEmail: 'tarefas@gitpay.me'
 }
