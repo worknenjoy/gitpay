@@ -21,12 +21,16 @@ if (process.env.NODE_ENV !== 'test') {
                 email: to,
               },
             ],
-            bcc: [constants.notificationEmail],
+            bcc: [
+              {
+                email: constants.notificationEmail
+              }
+            ],
             subject: subject
           },
         ],
         from: {
-          email: 'tarefas@gitpay.me'
+          email: constants.fromEmail
         },
         content: [
           {
