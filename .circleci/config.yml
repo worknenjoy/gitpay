@@ -8,6 +8,11 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.6
+        environment:
+          PG_HOST: 127.0.0.1
+          POSTGRES_DB: gitpay_test
+          POSTGRES_USER: postgres
+          PG_PASSWD: postgres
       - image: circleci/postgres:9.5
         environment:
           POSTGRES_USER: postgres
@@ -23,6 +28,15 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install packages
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -32,8 +46,10 @@ jobs:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
-          name: Install packages
-          command: npm install
+          name: install postgresql-client
+          command: |
+            apk update
+            apk add postgresql-client
       - run:
           name: Migrate
           command: npm run migrate-test
