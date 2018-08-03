@@ -7,12 +7,13 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.4.1-node-jessie
+      - image: circleci/ruby:2.4-node-jessie
         environment:
           PG_HOST: 127.0.0.1
           POSTGRES_DB: gitpay_test
           POSTGRES_USER: postgres
           PG_PASSWD: postgres
+          NODE_ENV: test
       - image: circleci/postgres:9.5
         environment:
           POSTGRES_USER: postgres
