@@ -9,15 +9,13 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.6
         environment:
-          PGHOST: 127.0.0.1
-          PGUSER: postgres
+          TEST_DATABASE_URL: postgresql://postgres@127.0.0.1/gitpay_test?sslmode=disable
           NODE_ENV: test
       - image: circleci/postgres:9.5
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: gitpay_test
-          TEST_DATABASE_URL: postgresql://postgres@localhost/gitpay_test
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
