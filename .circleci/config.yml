@@ -51,6 +51,9 @@ jobs:
             apk update
             apk add postgresql-client
       - run:
+          name: Set up database
+          command: sudo psql -p 5433 -c 'create database gitpay_test'
+      - run:
           name: Migrate
           command: npm run migrate-test
       # run tests!
