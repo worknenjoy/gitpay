@@ -8,9 +8,6 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.6
-        environment:
-          TEST_DATABASE_URL: postgresql://postgres@127.0.0.1/gitpay_test?sslmode=disable
-          NODE_ENV: test
       - image: circleci/postgres:9.5
         environment:
           POSTGRES_USER: postgres
@@ -26,8 +23,14 @@ jobs:
 
     steps:
       - checkout
-      - run: sudo -u postgres psql -p 5433 -c "create user postgres with password ‘postgres’;"
-      - run: sudo -u postgres psql -p 5433 -c “alter user postgres with superuser;”
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: create database
           command: sudo -u postgres psql -p 5433 -c "create database gitpay_test;" -U postgres
@@ -37,14 +40,6 @@ jobs:
       - run:
           name: Migrate
           command: npm run migrate-test
-      - run:
-          name: install dockerize
-          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.3.0
-      - run:
-          name: Wait for db
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
       # run tests!
       - run:
           name: run tests!
