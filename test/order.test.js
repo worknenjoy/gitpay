@@ -44,7 +44,8 @@ describe('orders', () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
-          console.log(err);
+          console.log('request body from test:')
+          console.log(res.body);
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
           expect(res.body.source_id).to.equal('12345');
