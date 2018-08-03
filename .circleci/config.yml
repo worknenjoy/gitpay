@@ -28,7 +28,7 @@ jobs:
       - checkout
       - run:
           name: create database
-          command: sudo -u postgres psql -p 5433 -c "create database gitpay_test;"
+          command: psql -p 5433 -c "create database gitpay_test;" -U postgres
       - run:
           name: Install packages
           command: npm install
