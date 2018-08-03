@@ -52,7 +52,7 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Set up database
-          command: psql -p 5433 -c 'create database gitpay_test -h localhost -p 5432 -U postgres'
+          command: psql -p 5432 -c 'create database gitpay_test' -U postgres
       - run:
           name: Migrate
           command: npm run migrate-test
