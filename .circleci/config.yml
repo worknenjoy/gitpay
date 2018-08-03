@@ -42,10 +42,9 @@ jobs:
           paths:
             - node_modules
       - run: sudo apt install postgresql-client
-      - run: pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
       - run:
           name: Set up database
-          command: sudo psql -p 5433 -c 'create database gitpay_test -h localhost -p 5432 -U postgres'
+          command: psql -p 5433 -c 'create database gitpay_test -h localhost -p 5432 -U postgres'
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
