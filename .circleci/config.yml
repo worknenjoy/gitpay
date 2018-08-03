@@ -31,14 +31,6 @@ jobs:
       - run:
           name: Install packages
           command: npm install
-
-      - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client-9.6
-      - run: whoami
-      - run: |
-          psql \
-          -d $TEST_DATABASE_URL \
-          -c "CREATE DATABASE gitpay_dev"
       - run:
           name: Migrate
           command: npm run migrate-test
