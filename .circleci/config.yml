@@ -29,6 +29,9 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@5'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
