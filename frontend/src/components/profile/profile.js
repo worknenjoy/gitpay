@@ -218,6 +218,7 @@ class Profile extends Component {
                   <Paper className={ classes.menuContainer }>
                     <MenuList>
                       <MenuItem
+                        onClick={()=> this.props.history.push('/profile/tasks') }
                         className={ classes.menuItem }
                         selected={ this.state.selected === 0 }
                       >
@@ -227,10 +228,11 @@ class Profile extends Component {
                         <ListItemText
                           classes={ { primary: classes.primary } }
                           inset
-                          primary={ <Link to={ '/profile/tasks' }>Tarefas</Link> }
+                          primary={ <span>Tarefas</span> }
                         />
                       </MenuItem>
                       <MenuItem
+                        onClick={()=> this.props.history.push('/profile/payment-options') }
                         className={ classes.menuItem }
                         selected={ this.state.selected === 1 }
                       >
@@ -241,13 +243,12 @@ class Profile extends Component {
                           classes={ { primary: classes.primary } }
                           inset
                           primary={
-                            <Link to={ '/profile/payment-options' }>
-                              Configurar pagamento
-                            </Link>
+                            <span>Configurar pagamento</span>
                           }
                         />
                       </MenuItem>
                       <MenuItem
+                        onClick={()=> this.props.history.push('/profile/preferences') }
                         className={ classes.menuItem }
                         selected={ this.state.selected === 2 }
                       >
@@ -258,7 +259,7 @@ class Profile extends Component {
                           classes={ { primary: classes.primary } }
                           inset
                           primary={
-                            <Link to='/profile/preferences'>Preferências</Link>
+                            <span>Preferências</span>
                           }
                         />
                       </MenuItem>
