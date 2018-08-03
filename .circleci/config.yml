@@ -41,7 +41,7 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Migrate
-          command: npm run migrate-test
+          command: npm run migrate
       # Download and cache dependencies
       - restore_cache:
           keys:
