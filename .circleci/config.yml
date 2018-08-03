@@ -29,12 +29,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install packages
-          command: npm install
-      - run:
           name: Migrate
           command: npm run migrate-test
-
+      - run:
+          name: Install packages
+          command: npm install
       # Download and cache dependencies
       - restore_cache:
           keys:
