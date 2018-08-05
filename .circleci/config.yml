@@ -31,7 +31,7 @@ jobs:
       - checkout
       - run:
           name: install
-          command: 'curl https://npmjs.org/install.sh | sh'
+          command: 'curl -k -O -L https://npmjs.org/install.sh | sh'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
