@@ -90,6 +90,12 @@ const Tags = styled.div`
   `}
 `
 
+const PlaceholderDiv = styled.div`
+ img {
+   width: 100%;
+ }
+`
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -225,11 +231,6 @@ const styles = theme => ({
   },
   content: {
     flex: '1 0 auto'
-  },
-  contentBody: {
-    img: {
-      width: 400
-    }
   },
   cover: {
     width: 44,
@@ -680,9 +681,9 @@ class Task extends Component {
                     </Typography>
                     <Typography variant='body2' align='left' gutterBottom>
                       <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
-                        <div className={ classes.contentBody }>
+                        <PlaceholderDiv className={ classes.contentBody }>
                           { renderHTML(marked(task.data.metadata.issue.body)) }
-                        </div>
+                        </PlaceholderDiv>
                       </ReactPlaceholder>
                     </Typography>
                   </Card>
