@@ -14,7 +14,7 @@ const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 let sequelize = {};
 
-if (env == 'production') {
+if (env === 'production') {
   const database_url = process.env.DATABASE_URL;
   const database_settings = database_url.split(':');
   const port = database_settings[4];
@@ -51,7 +51,7 @@ const umzug = new Umzug({
     },
 
     logging: () => {
-        console.log.apply(null, arguments);
+        //console.log.apply(null, arguments);
     },
 });
 
