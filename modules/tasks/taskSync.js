@@ -3,7 +3,6 @@ const models = require('../../loading/loading')
 
 module.exports = Promise.method(function taskSync (taskParameters) {
   // eslint-disable-next-line no-console
-  console.log('task parameters', taskParameters)
   return models.Task.findById(taskParameters.id, {
     include: [ models.Order ]
   }).then(task => {
