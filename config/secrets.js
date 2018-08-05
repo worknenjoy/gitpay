@@ -58,6 +58,10 @@ const mailchimp = {
   listId: process.env.MAILCHIMP_LIST_ID
 }
 
+const sendgrid = {
+  apiKey: process.env.SENDGRID_API_KEY
+}
+
 const oauthCallbacks = {
   googleCallbackUrl: `${process.env.API_HOST}/callback/google`,
   githubCallbackUrl: `${process.env.API_HOST}/callback/github`,
@@ -74,5 +78,6 @@ module.exports = {
   github,
   bitbucket,
   oauthCallbacks,
-  mailchimp
+  mailchimp,
+  sendgrid
 }
