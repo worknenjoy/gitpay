@@ -24,9 +24,10 @@ exports.updateWebhook = (req, res) => {
           }
           SendMail.success(
             user.dataValues.email,
-            'Informações do Cartão de Crédito!',
-            `<p>Cartão: ${event.data.object.last4}</p>
-            <p>Nome: ${event.data.object.name}</p>`
+            'Um pagamento foi realizado com o seu cartão de crédito',
+            `<p>Um pagamento por uma tarefa foi realizado com o seu cartão de crédito. Quando a tarefa for concluída você poderá enviar o pagamento para quem realizou a tarefa.</p>
+            <p>Nome do Titular: ${event.data.object.name}</p>
+            <p>Últimos 4 dígitos do cartão: ${event.data.object.last4}</p>`
           )
           return res.json(req.body)
         }).catch(error => res.status(400).send(error))
