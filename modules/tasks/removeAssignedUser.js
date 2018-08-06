@@ -22,7 +22,9 @@ module.exports = Promise.method(function ({ id }, { message }) {
           SendMail.success(
             assign.User.email,
             'Você foi removido de uma tarefa no Gitpay',
-            `<p>Você foi removido da tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay</p>`
+            `<p>Você foi removido da tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay</p>
+            <p>O dono da tarefa deixou o seguinte mensagem para você:</p>
+            <p>${message}</p>`
           )
 
           return task.dataValues
