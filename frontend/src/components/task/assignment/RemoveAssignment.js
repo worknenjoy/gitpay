@@ -65,7 +65,7 @@ class RemoveAssignment extends Component {
           onClose={ this.closeModal }
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>Tirar o pessoal da tarefa</DialogTitle>
+          <DialogTitle id='form-dialog-title'>Desassociar escolhido para realizar a tarefa</DialogTitle>
           <DialogContent>
             <DialogContentText>
               <Typography type='subheading' gutterBottom>
