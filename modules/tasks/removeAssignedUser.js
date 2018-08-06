@@ -1,5 +1,7 @@
 const Promise = require('bluebird')
+
 const models = require('../../loading/loading')
+const SendMail = require('../mail/mail')
 
 module.exports = Promise.method(function ({ id }, { message }) {
   return models.Task
@@ -17,10 +19,11 @@ module.exports = Promise.method(function ({ id }, { message }) {
 
       return Promise.all([assignedPromise, saveTaskPromise])
         .then(([ assign ]) => {
-        // SendMail.success(assign.User.email, 'It has been removed your assignment of this task on Bitpay', `
-        //     <p>You were removed from this task <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay</p>
-        //     <p>Isto quer dizer que você já pode começar. Fique de olho no prazo para conclusão, e após a tarefa for integrada você receberá o pagamento na sua conta cadastrada.</p>
-        //   `)
+          SendMail.success(
+            assign.User.email,
+            'Você foi removido de uma tarefa no Gitpay',
+            `<p>Você foi removido da tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay</p>`
+          )
 
           return task.dataValues
         })
