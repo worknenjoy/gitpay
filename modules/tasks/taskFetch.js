@@ -21,64 +21,120 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       }
     ]
   })
-    .then(async data => {
-      if (data.provider === 'github') {
-        const githubUrl = data.dataValues.url
-        const githubClientId = secrets.github.id
-        const githubClientSecret = secrets.github.secret
-        const splitIssueUrl = url.parse(githubUrl).path.split('/')
-        const userOrCompany = splitIssueUrl[1]
-        const projectName = splitIssueUrl[2]
-        const issueId = splitIssueUrl[4]
-        const issueData = await requestPromise({
-          uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
-          headers: {
-            'User-Agent':
-              'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-          }
-        })
-          .then(response => {
-            return response
+    .then(data => {
+      const githubClientId = secrets.github.id
+      const githubClientSecret = secrets.github.secret
+      const issueUrl = data.dataValues.url
+      const splitIssueUrl = url.parse(issueUrl).path.split('/')
+      const userOrCompany = splitIssueUrl[1]
+      const projectName = splitIssueUrl[2]
+      const issueId = splitIssueUrl[4]
+
+      switch(data.provider) {
+        case 'github':
+          return requestPromise({
+            uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
+            headers: {
+              'User-Agent':
+                'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+            }
           })
-          .catch(e => {
-            // eslint-disable-next-line no-console
-            console.log('github response error')
-            // eslint-disable-next-line no-console
-            console.log(e)
+            .then(response => {
+
+              const issueDataJsonGithub = JSON.parse(response)
+
+              const responseGithub = {
+                id: data.dataValues.id,
+                url: issueUrl,
+                title: data.dataValues.title,
+                value: data.dataValues.value || 0,
+                deadline: data.dataValues.deadline,
+                status: data.dataValues.status,
+                assigned: data.dataValues.assigned,
+                userId: data.dataValues.userId,
+                paid: data.dataValues.paid,
+                transfer_id: data.dataValues.transfer_id,
+                metadata: {
+                  id: issueId,
+                  user: userOrCompany,
+                  company: userOrCompany,
+                  projectName: projectName,
+                  issue: issueDataJsonGithub
+                },
+                orders: data.dataValues.Orders,
+                assigns: data.dataValues.Assigns
+              }
+
+              if (!data.title && data.title !== issueDataJsonGithub.title) {
+                /* eslint-disable no-unused-vars */
+                data
+                  .updateAttributes({ title: issueDataJsonGithub.title })
+                  .then(task => responseGithub)
+              }
+              console.log(responseGithub)
+              return responseGithub
+            })
+            .catch(e => {
+              // eslint-disable-next-line no-console
+              console.log('github response error')
+              // eslint-disable-next-line no-console
+              console.log(e)
+            })
+          break;
+        case 'bitbucket':
+          return requestPromise({
+            uri: `https://api.bitbucket.org/1.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
           })
+            .then(response => {
+              const issueDataJsonBitbucket = JSON.parse(response)
 
-        const issueDataJson = JSON.parse(issueData)
+              const responseBitbucket = {
+                id: data.dataValues.id,
+                url: issueUrl,
+                title: data.dataValues.title,
+                value: data.dataValues.value || 0,
+                deadline: data.dataValues.deadline,
+                status: data.dataValues.status,
+                assigned: data.dataValues.assigned,
+                userId: data.dataValues.userId,
+                paid: data.dataValues.paid,
+                transfer_id: data.dataValues.transfer_id,
+                metadata: {
+                  id: issueId,
+                  user: userOrCompany,
+                  company: userOrCompany,
+                  projectName: projectName,
+                  issue: {
+                    state: issueDataJsonBitbucket.status,
+                    body: issueDataJsonBitbucket.content,
+                    user: {
+                      login: issueDataJsonBitbucket.reported_by.username,
+                      avatar_url: issueDataJsonBitbucket.reported_by.avatar
+                    }
+                  }
+                },
+                orders: data.dataValues.Orders,
+                assigns: data.dataValues.Assigns
+              }
 
-        if (!data.title && data.title !== issueDataJson.title) {
-          /* eslint-disable no-unused-vars */
-          const titleChange = await data
-            .updateAttributes({ title: issueDataJson.title })
-            .then(task => task)
-        }
-
-        return {
-          id: data.dataValues.id,
-          url: githubUrl,
-          title: data.dataValues.title,
-          value: data.dataValues.value || 0,
-          deadline: data.dataValues.deadline,
-          status: data.dataValues.status,
-          assigned: data.dataValues.assigned,
-          userId: data.dataValues.userId,
-          paid: data.dataValues.paid,
-          transfer_id: data.dataValues.transfer_id,
-          metadata: {
-            id: issueId,
-            user: userOrCompany,
-            company: userOrCompany,
-            projectName: projectName,
-            issue: issueDataJson
-          },
-          orders: data.dataValues.Orders,
-          assigns: data.dataValues.Assigns
-        }
+              if (!data.title && data.title !== issueDataJsonGithub.title) {
+                /* eslint-disable no-unused-vars */
+                data
+                  .updateAttributes({ title: issueDataJsonGithub.title })
+                  .then(task => responseBitbucket)
+              }
+              return responseBitbucket
+            })
+            .catch(e => {
+              // eslint-disable-next-line no-console
+              console.log('github response error')
+              // eslint-disable-next-line no-console
+              console.log(e)
+            })
+          break;
+        default:
+          break;
       }
-      return data.dataValues
     })
     .catch(error => {
       // eslint-disable-next-line no-console

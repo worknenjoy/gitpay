@@ -46,6 +46,10 @@ import LoginButton from '../session/login-button'
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
 
+const isBitbucketUrl = (url) => {
+  return url.indexOf("bitbucket") > -1
+}
+
 const styles = {
   formControl: {
     width: '100%'
@@ -64,6 +68,7 @@ class TopBar extends Component {
           value: null
         }
       },
+      provider: 'bitbucket',
       createTaskDialog: false,
       signUserDialog: false
     }
@@ -131,7 +136,7 @@ class TopBar extends Component {
   }
 
   validURL (url) {
-    return isGithubUrl(url)
+    return isGithubUrl(url) || isBitbucketUrl(url)
   }
 
   handleCreateTask (e) {
@@ -139,7 +144,7 @@ class TopBar extends Component {
     if (this.validURL(url)) {
       this.props.createTask({
         url: this.state.task.url.value,
-        provider: 'github',
+        provider: this.state.provider,
         userId: this.props.user ? this.props.user.id : null
       }, this.props.history)
       this.setState({ createTaskDialog: false })
@@ -240,7 +245,7 @@ class TopBar extends Component {
                 <DialogContent>
                   <DialogContentText>
                     <Typography type='subheading' gutterBottom>
-                      Para inserir uma nova tarefa, cole a URL de um incidente do <strong>Github</strong>
+                      Para inserir uma nova tarefa, cole a URL de um incidente do <strong>Github</strong> ou <strong>Bitbucket</strong>
                     </Typography>
                   </DialogContentText>
                   <FormControl style={ styles.formControl } error={ this.state.task.url.error }>

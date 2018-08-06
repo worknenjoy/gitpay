@@ -469,9 +469,11 @@ class Task extends Component {
             <Typography variant='subheading' style={ { color: '#bbb' } }>
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
-                <a className={ classes.white } href={ task.data.url }>
-                  { task.data.metadata.company }
-                </a>
+                {task.data.metadata &&
+                  <a className={ classes.white } href={ task.data.url }>
+                    { task.data.metadata.company }
+                  </a>
+                }
               </ReactPlaceholder>
             </Typography>
 
