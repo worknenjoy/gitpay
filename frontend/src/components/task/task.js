@@ -61,6 +61,8 @@ import { PageContent } from 'app/styleguide/components/Page'
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
+import RemoveAssignment from './assignment/RemoveAssignment'
+
 const TaskHeader = styled.div`
   box-sizing: border-box;
   background: black;
@@ -390,16 +392,22 @@ class Task extends Component {
     }
 
     const assignActions = (assign) => {
-      const taskData = this.props.task.data
+      const task = this.props.task.data
+      const hasAssignedUser = assign.id === task.assigned
+      const isOwner = taskOwner()
 
       return (
         <div>
-          { taskOwner() &&
+          <RemoveAssignment
+            task={ task }
+            remove={ this.props.removeAssignment }
+            visible={ hasAssignedUser && isOwner }
+          />
+
+          { (isOwner && !hasAssignedUser) &&
           <Button
-            disabled={ assign.id === taskData.assigned }
-            onClick={ () =>
-              this.props.assignTask(this.props.task.data.id, assign.id)
-            }
+            disabled={ hasAssignedUser }
+            onClick={ () => this.props.assignTask(task.id, assign.id) }
             style={ { marginRight: 10 } }
             variant='raised'
             size='small'
@@ -408,9 +416,8 @@ class Task extends Component {
             <GroupWorkIcon style={ { marginRight: 5 } } /> escolher
           </Button>
           }
-          { assign.id === taskData.assigned && (
-            <Chip label='Escolhido' className={ classes.chip } />
-          ) }
+
+          { hasAssignedUser && <Chip label='Escolhido' /> }
         </div>
       )
     }
@@ -763,7 +770,8 @@ Task.propTypes = {
   openDialog: PropTypes.func,
   updateTask: PropTypes.func,
   closeDialog: PropTypes.func,
-  syncTask: PropTypes.func
+  syncTask: PropTypes.func,
+  removeAssignment: PropTypes.func,
 }
 
 export default withStyles(styles)(Task)

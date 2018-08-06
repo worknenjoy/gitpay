@@ -14,4 +14,7 @@ router.put('/update', controllers.updateTask)
 router.post('/payments', controllers.paymentTask)
 router.delete('/delete/:id', controllers.deleteTaskById)
 
+// Assignment routes
+router.put('/:id/assignment/remove', controllers.removeAssignedUser)
+
 module.exports = router

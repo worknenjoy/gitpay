@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
-import { assignTask } from '../actions/assignActions'
+import { assignTask, removeAssignment } from '../actions/assignActions'
 import { updateTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders } from '../actions/taskActions'
 import { createOrder, payOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     closeDialog: () => dispatch(closeDialog()),
     addNotification: (message) => dispatch(addNotification(message)),
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
+    removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
     syncTask: (taskId) => dispatch(syncTask(taskId)),
     paymentTask: (taskId, value) => dispatch(paymentTask(taskId, value)),
