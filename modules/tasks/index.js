@@ -6,6 +6,7 @@ const taskFetch = require('./taskFetch')
 const taskPayment = require('./taskPayment')
 const taskSync = require('./taskSync')
 const taskDeleteById = require('./taskDeleteById')
+const removeAssignedUser = require('./removeAssignedUser')
 
 module.exports = {
   taskExists,
@@ -15,5 +16,7 @@ module.exports = {
   taskFetch,
   taskPayment,
   taskSync,
-  taskDeleteById
+  taskDeleteById,
+
+  removeAssignedUser
 }
