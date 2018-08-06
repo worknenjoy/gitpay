@@ -69,7 +69,7 @@ class RemoveAssignment extends Component {
           <DialogContent>
             <DialogContentText>
               <Typography type='subheading' gutterBottom>
-                  Deixe um comentario para <strong>entender</strong> porque removeu o pessoa da tarefa.
+                  Por que ele <strong>não estará</strong> mais trabalhando nesta tarefa?
               </Typography>
             </DialogContentText>
             <TextField
