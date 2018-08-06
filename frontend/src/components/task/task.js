@@ -61,7 +61,7 @@ import { PageContent } from 'app/styleguide/components/Page'
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
-import RemoveAssignment from './task/RemoveAssignment'
+import RemoveAssignment from './assignment/RemoveAssignment'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
