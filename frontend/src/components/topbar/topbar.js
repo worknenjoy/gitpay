@@ -45,6 +45,8 @@ import LoginButton from '../session/login-button'
 
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
+
 
 const isBitbucketUrl = (url) => {
   return url.indexOf("bitbucket") > -1
@@ -68,7 +70,7 @@ class TopBar extends Component {
           value: null
         }
       },
-      provider: 'bitbucket',
+      provider: 'github',
       createTaskDialog: false,
       signUserDialog: false
     }
@@ -124,6 +126,11 @@ class TopBar extends Component {
 
   handleGithubLink () {
     window.location.href = 'https://github.com/worknenjoy/gitpay'
+  }
+
+  handleProvider = (e, option) => {
+    e.preventDefault()
+    this.setState({provider: option})
   }
 
   onChange (e) {
@@ -259,6 +266,28 @@ class TopBar extends Component {
                       type='url'
                       fullWidth
                     />
+                    <div style={{marginTop: 10, marginBottom: 10}}>
+                      <Button
+                        style={ { marginRight: 10 } }
+                        color='primary'
+                        variant={this.state.provider === 'github' ? 'raised' : 'contained'}
+                        id='github'
+                        onClick={(e) => this.handleProvider(e, 'github')}
+                      >
+                        <img width='16' src={ logoGithub } />
+                        <span style={{marginLeft: 10}}>Github</span>
+                      </Button>
+
+                      <Button
+                        color='primary'
+                        variant={this.state.provider === 'bitbucket' ? 'raised' : 'contained'}
+                        id='bitbucket'
+                        onClick={(e) => this.handleProvider(e, 'bitbucket')}
+                      >
+                        <img width='16' src={ logoBitbucket } />
+                        <span style={{marginLeft: 10}}>Bitbucket</span>
+                      </Button>
+                    </div>
                     { this.state.task.url.error &&
                     <FormHelperText error={ this.state.task.url.error }>A URL inserida não é válida</FormHelperText>
                     }

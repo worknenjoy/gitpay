@@ -20,10 +20,11 @@ export const Technology = styled(Chip)`
 `
 
 export const Stack = styled.div`
-  margin-top: 20px;
+  margin-top: 5px;
 `
 
 export const Content = styled.div`
+   margin-top: 20px;
    padding-bottom: 10px;
    color: white;
    text-align: center;

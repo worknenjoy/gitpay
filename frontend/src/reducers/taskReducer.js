@@ -54,6 +54,7 @@ export const task = (state = {
     orders: [],
     assigns: [],
     url: '',
+    provider: null,
     metadata: {
       company: '',
       issue: {

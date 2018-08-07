@@ -30,7 +30,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       const projectName = splitIssueUrl[2]
       const issueId = splitIssueUrl[4]
 
-      switch(data.provider) {
+      switch(data.dataValues.provider) {
         case 'github':
           return requestPromise({
             uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
@@ -54,6 +54,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 userId: data.dataValues.userId,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
+                provider: data.dataValues.provider,
                 metadata: {
                   id: issueId,
                   user: userOrCompany,
@@ -71,7 +72,6 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   .updateAttributes({ title: issueDataJsonGithub.title })
                   .then(task => responseGithub)
               }
-              console.log(responseGithub)
               return responseGithub
             })
             .catch(e => {
@@ -99,11 +99,13 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 userId: data.dataValues.userId,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
+                provider: data.dataValues.provider,
                 metadata: {
                   id: issueId,
                   user: userOrCompany,
                   company: userOrCompany,
                   projectName: projectName,
+                  provider: data.provider,
                   issue: {
                     state: issueDataJsonBitbucket.status,
                     body: issueDataJsonBitbucket.content,
@@ -117,10 +119,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 assigns: data.dataValues.Assigns
               }
 
-              if (!data.title && data.title !== issueDataJsonGithub.title) {
+              if (!data.title && data.title !== issueDataJsonBitbucket.title) {
                 /* eslint-disable no-unused-vars */
                 data
-                  .updateAttributes({ title: issueDataJsonGithub.title })
+                  .updateAttributes({ title: issueDataJsonBitbucket.title })
                   .then(task => responseBitbucket)
               }
               return responseBitbucket

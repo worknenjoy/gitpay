@@ -25,6 +25,7 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 import LastPageIcon from 'material-ui-icons/LastPage'
 
 const logoGithub = require('../../images/github-logo.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
 import Constants from '../../consts'
 
 const actionsStyles = theme => ({
@@ -204,8 +205,8 @@ class CustomPaginationActionsTable extends React.Component {
                             {TextEllipsis(`${n.title || 'sem título'}`, 30)}
                           </a>
                           <a target="_blank" href={n.url}>
-                            <Tooltip id="tooltip-fab" title="Ver no Github" placement="top">
-                              <img width="16" src={logoGithub} style={{backgroundColor: 'black', marginLeft: 10}} />
+                            <Tooltip id="tooltip-fab" title={`Ver no ${n.provider}`} placement="top">
+                              <img width="24" src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={{borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10}} />
                             </Tooltip>
                           </a>
                         </div>

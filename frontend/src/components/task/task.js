@@ -603,6 +603,7 @@ class Task extends Component {
                     <StatusDialog
                       id={ task.data.id }
                       providerStatus={ task.data.metadata.issue.state }
+                      provider={ task.data.provider }
                       onSelect={ this.props.updateTask }
                       selectedValue={ task.data.status }
                       open={ this.state.statusDialog }

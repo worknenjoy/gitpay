@@ -12,7 +12,8 @@ import {
 
 import Constants from '../../consts'
 
-const logoGithub = require('../../images/github-logo.png')
+const logoGithub = require('../../images/github-logo.png')\
+const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 import Avatar from 'material-ui/Avatar'
 import ItemIcon from 'material-ui-icons/AccountBox'
@@ -77,9 +78,9 @@ class TaskItem extends Component {
           />
           <ListItemSecondaryAction>
             <IconButton aria-label='provider'>
-              <Tooltip id='tooltip-fab' title='Ver no Github' placement='right'>
+              <Tooltip id='tooltip-fab' title={`Ver no ${ item.provider }`} placement='right'>
                 <a target='_blank' href={ item.url }>
-                  <img width='24' src={ logoGithub } className={ classes.icon } />
+                  <img width='24' src={ item.provider === 'github' ? logoGithub : logoBitbucket } className={ classes.icon } />
                 </a>
               </Tooltip>
             </IconButton>

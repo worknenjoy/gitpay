@@ -5,13 +5,14 @@ import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
 
 const Content = styled.span`
+   margin-top: 5px;
    padding-bottom: 10px;
    color: white;
    text-align: center;
 `
 
 const Items = styled.div`
-  margin-top: 20px;
+  margin-top: 5px;
 `
 
 const ItemBig = styled(Chip)`
@@ -32,7 +33,7 @@ font-size: 0.8rem !important;
 border-radius: 16px !important;
 `
 class Info extends React.Component {
-  componentDidMount () {    
+  componentDidMount () {
     this.props.info();
   }
   render() {
@@ -43,17 +44,17 @@ class Info extends React.Component {
       bounties: {text: 'em recompensas', value:  '$' + (bounties || '0')},
       users: {text: 'usuários', value: users || '0'}
     }
-    
+
     return (
     <Content>
       <Typography variant='subheading' color='inherit' gutterBottom>
-          Stats
-        <Items>
-          <ItemSmall label={stats.tasks.text} avatar={<Icon children={stats.tasks.value }/>}/>
-          <ItemBig label={stats.bounties.text} avatar={<Icon children={stats.bounties.value }/>}/>
-          <ItemSmall label={stats.users.text} avatar={<Icon children={stats.users.value }/>}/>
-        </Items>
+        Stats
       </Typography>
+      <Items>
+        <ItemSmall label={stats.tasks.text} avatar={<Icon children={stats.tasks.value }/>}/>
+        <ItemBig label={stats.bounties.text} avatar={<Icon children={stats.bounties.value }/>}/>
+        <ItemSmall label={stats.users.text} avatar={<Icon children={stats.users.value }/>}/>
+      </Items>
     </Content>
     );
   }
