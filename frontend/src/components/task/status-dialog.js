@@ -25,6 +25,7 @@ const providerStatus = {
   },
   'bitbucket': {
     open: 'open',
+    new: 'open',
     resolved: 'closed'
   }
 }
