@@ -32,6 +32,7 @@ const providerStatus = {
 
 const statusesDisplay = {
   open: 'Aberta',
+  new: 'Aberta',
   in_progress: 'Em desenvolvimento',
   closed: 'Finalizada',
   resolved: 'Finalizada'
