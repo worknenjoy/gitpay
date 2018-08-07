@@ -14,13 +14,26 @@ import DoneIcon from 'material-ui-icons/Done'
 import blue from 'material-ui/colors/blue'
 
 const logoGithub = require('../../images/github-logo.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const statuses = ['open', 'in_progress', 'closed']
+const providerStatus = {
+  'github': {
+    open: 'open',
+    in_progress: 'in_progress',
+    closed: 'closed'
+  },
+  'bitbucket': {
+    open: 'open',
+    resolved: 'closed'
+  }
+}
 
 const statusesDisplay = {
   open: 'Aberta',
   in_progress: 'Em desenvolvimento',
-  closed: 'Finalizada'
+  closed: 'Finalizada',
+  resolved: 'Finalizada'
 }
 
 const styles = {
@@ -77,16 +90,16 @@ class StatusDialog extends Component {
             <ListItem
               button
               onClick={ () =>
-                this.handleListItemClick(this.props.providerStatus)
+                this.handleListItemClick(providerStatus[this.props.provider][this.props.providerStatus])
               }
             >
               <ListItemAvatar>
                 <Avatar>
-                  <img width='24' src={ logoGithub } />
+                  <img width='24' src={ this.props.provider === 'github' ? logoGithub : logoBitbucket } />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={ `Do github: ${
+                primary={ `Do ${this.props.provider}: ${
                   statusesDisplay[this.props.providerStatus]
                 }` }
               />
@@ -100,6 +113,7 @@ class StatusDialog extends Component {
 
 StatusDialog.propTypes = {
   classes: PropTypes.object.isRequired,
+  provider: PropTypes.string,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
   selectedValue: PropTypes.string,
