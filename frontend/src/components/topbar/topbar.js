@@ -125,7 +125,7 @@ class TopBar extends Component {
   }
 
   handleGithubLink () {
-    window.location.href = 'https://github.com/worknenjoy/gitpay'
+    window.open('https://github.com/worknenjoy/gitpay', '_blank')
   }
 
   handleProvider = (e, option) => {
