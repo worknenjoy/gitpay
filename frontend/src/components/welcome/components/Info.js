@@ -48,7 +48,7 @@ class Info extends React.Component {
     return (
     <Content>
       <Typography variant='subheading' color='inherit' gutterBottom>
-        Stats
+        Estatísticas
       </Typography>
       <Items>
         <ItemSmall label={stats.tasks.text} avatar={<Icon children={stats.tasks.value }/>}/>
