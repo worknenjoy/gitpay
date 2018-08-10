@@ -3,13 +3,6 @@ const models = require('../../loading/loading')
 const requestPromise = require('request-promise')
 const TransferMail = require('../mail/transfer')
 
-/*
-  curl -v https://api.sandbox.paypal.com/v1/payments/payment/PAY-86D79543R5702204MLM7FQ3I/execute/ \
-  -H "Content-Type:application/json" \
-  -H "Authorization: Bearer token" \
-  -d '{ "payer_id" : "H34ALHYEMUGZQ" }'
- */
-
 module.exports = Promise.method(function orderPayment (orderParameters) {
   return models.Order
     .findById(orderParameters.id)
