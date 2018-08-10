@@ -12,10 +12,7 @@ const paymentIcon = require('../../images/payment-icon-alt.png')
 
 import PaymentDialog from '../payment/payment-dialog'
 import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
-<<<<<<< 57ea70f421c4c7fdd6a07e6096b625e24d4c33af
-=======
 import TaskRequestPayment from './task-request-payment'
->>>>>>> a dialog with request payment option
 
 class TaskPaymentForm extends Component {
   constructor (props) {
