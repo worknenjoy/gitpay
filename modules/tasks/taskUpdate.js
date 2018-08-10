@@ -5,7 +5,7 @@ const Promise = require('bluebird')
 const models = require('../../loading/loading')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
-
+const TransferMail = require('../mail/transfer')
 const assignExist = require('../assigns').assignExists
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
@@ -111,6 +111,9 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                       const usermail = user.dataValues.email
                       if (!usermail) {
                         AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues)
+                      }
+                      if (!user.account_id) {
+                        TransferMail.future_payment_for_invalid_account(user.email)
                       }
                       AssignMail.interested(usermail, task.dataValues, user.username)
                       if (task.dataValues.User) {

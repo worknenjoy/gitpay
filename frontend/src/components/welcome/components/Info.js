@@ -6,16 +6,10 @@ import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
 
 const Content = styled.span`
-<<<<<<< Updated upstream
-   margin-top: 5px;
-   padding-bottom: 10px;
-   color: white;
-   text-align: center;
-=======
+  margin-top: 5px;
   padding-bottom: 10px;
   color: white;
   text-align: center;
->>>>>>> Stashed changes
 `
 
 const Items = styled.div`
@@ -35,9 +29,9 @@ const ItemSmall = styled(ItemBig)`
 `
 
 const Icon = styled(Avatar)`
-width: 50px !important;
-font-size: 0.8rem !important;
-border-radius: 16px !important;
+  width: 50px !important;
+  font-size: 0.8rem !important;
+  border-radius: 16px !important;
 `
 
 class Info extends React.Component {
@@ -56,7 +50,7 @@ class Info extends React.Component {
     return (
       <Content>
         <Typography variant='subheading' color='inherit' gutterBottom>
-          Stats
+          Estatísticas
         </Typography>
         <Items>
           <ItemSmall label={ stats.tasks.text } avatar={ <Icon children={ stats.tasks.value } /> } />
