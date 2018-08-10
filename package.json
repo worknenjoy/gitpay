@@ -17,7 +17,8 @@
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css",
     "lint": "./node_modules/.bin/eslint .",
     "prepush": "npm run lint",
-    "heroku-postbuild": "cd frontend && npm install && npm run production && cd .. && npm run migrate"
+    "heroku-postbuild": "cd frontend && npm install && npm run production && cd .. && npm run migrate",
+    "pretest": "npm run lint"
   },
   "private": true,
   "dependencies": {
