@@ -6,20 +6,19 @@ const INFO_SUCCESS = 'INFO_SUCCESS'
 const INFO_ERROR = 'INFO_ERROR'
 
 const infoRequested = () => {
-    return { type: INFO_REQUESTED, completed: false }
-  }
-  
-  const infoSuccess = info => {
-    return { type: INFO_SUCCESS, completed: true, data: info.data }
-  }
-  
-  const infoError = error => {
-    return { type: INFO_ERROR, completed: true, error: error }
-  }
+  return { type: INFO_REQUESTED, completed: false }
+}
 
+const infoSuccess = info => {
+  return { type: INFO_SUCCESS, completed: true, data: info.data }
+}
+
+const infoError = error => {
+  return { type: INFO_ERROR, completed: true, error: error }
+}
 
 const info = () => {
-  return (dispatch) => {    
+  return (dispatch) => {
     dispatch(infoRequested())
     axios
       .get(api.API_URL + '/info/all')
@@ -35,8 +34,8 @@ const info = () => {
 }
 
 export {
-    INFO_REQUESTED,
-    INFO_SUCCESS,
-    INFO_ERROR,
-    info
+  INFO_REQUESTED,
+  INFO_SUCCESS,
+  INFO_ERROR,
+  info
 }

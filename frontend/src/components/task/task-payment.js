@@ -19,7 +19,6 @@ import Chip from 'material-ui/Chip'
 
 import PaymentTypeIcon from '../payment/payment-type-icon'
 
-
 import FilterListIcon from 'material-ui-icons/FilterList'
 import RedeemIcon from 'material-ui-icons/Redeem'
 import blue from 'material-ui/colors/blue'
@@ -45,7 +44,7 @@ class TaskPayment extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
 
   }
 
@@ -62,12 +61,11 @@ class TaskPayment extends Component {
   onTabChange = (e, value) => {
     const providerTab = ['all', 'stripe', 'paypal']
     e.preventDefault()
-    this.setState({currentTab: value})
+    this.setState({ currentTab: value })
     this.props.filterTaskOrders({
       provider: providerTab[value]
     })
   }
-
 
   render () {
     const { classes, orders, ...other } = this.props
@@ -86,13 +84,13 @@ class TaskPayment extends Component {
 
     const paymentSupport = user => {
       let supportedTypes = []
-      if(user.account_id) {
+      if (user.account_id) {
         supportedTypes.push('Cartão de Crédito')
       }
-      if(user.paypal_id) {
+      if (user.paypal_id) {
         supportedTypes.push('Paypal')
       }
-      if(!supportedTypes.length) return 'nenhuma forma de pagamento'
+      if (!supportedTypes.length) return 'nenhuma forma de pagamento'
 
       return supportedTypes.join(' e ')
     }
@@ -122,78 +120,81 @@ class TaskPayment extends Component {
             </Typography>
           ) }
           <div>
-            <AppBar position='static' color='default' style={{marginTop: 20,  boxShadow: 'none', background: 'transparent'}}>
+            <AppBar position='static' color='default' style={ { marginTop: 20, boxShadow: 'none', background: 'transparent' } }>
               <Tabs
                 value={ this.state.currentTab }
-                onChange={this.onTabChange}
+                onChange={ this.onTabChange }
                 scrollable
                 scrollButtons='on'
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={{margin: 10}} value={0} label='Todos' icon={ <RedeemIcon /> } />
-                <Tab style={{margin: 10}} value={1} label='Pagamentos com cartão' icon={ <PaymentTypeIcon type="card" notext /> } />
-                <Tab style={{margin: 10}} value={2} label='Pagamentos com Paypal' icon={ <PaymentTypeIcon type="paypal" /> } />
+                <Tab style={ { margin: 10 } } value={ 0 } label='Todos' icon={ <RedeemIcon /> } />
+                <Tab style={ { margin: 10 } } value={ 1 } label='Pagamentos com cartão' icon={ <PaymentTypeIcon type='card' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 2 } label='Pagamentos com Paypal' icon={ <PaymentTypeIcon type='paypal' /> } />
               </Tabs>
             </AppBar>
             <TabContainer>
               { this.props.transferId && (
                 <div>
-                <Typography type='subheading' color='primary' gutterBottom noWrap>
-                  { `As transferências relativas aos pagamentos com o cartão de crédito foram realizadas e o id da transação é:` }
-                </Typography>
-                <Typography type='subheading' color='primary' gutterBottom noWrap>
-                  { `${this.props.transferId}` }
-                </Typography>
+                  <Typography type='subheading' color='primary' gutterBottom noWrap>
+                    { 'As transferências relativas aos pagamentos com o cartão de crédito foram realizadas e o id da transação é:' }
+                  </Typography>
+                  <Typography type='subheading' color='primary' gutterBottom noWrap>
+                    { `${this.props.transferId}` }
+                  </Typography>
                 </div>
               ) }
-            <List>
-              { orders.map((order, index) => (
-                <div>
-                { order.provider === 'paypal' ?
-                  (
-                    <ListItem key={ order.id }>
-                      <ListItemAvatar>
-                        <Avatar className={ classes.avatar }>
-                          <FilterListIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={ `$ ${order.amount}` }
-                        secondary={ `${statuses[order.status] || 'indefinida'}` }
-                      />
-                      { !order.transfer_id ? (
-                      <Button
-                        onClick={ (e) => this.payOrder(e, order.id) }
-                        style={ { float: 'right', margin: 10 } }
-                        variant='raised'
-                        color='primary'
-                        disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
-                      >
-                        <RedeemIcon style={ { marginRight: 10 } } />
-                        { `Pagar $ ${order.amount}` }
-                      </Button>) : (
-                        <Chip label={`Pago com Paypal (id: ${order.transfer_id})`} />
-                      )}
-                    </ListItem>
-                  ) :
-                  (
-                    <ListItem key={ order.id }>
-                      <ListItemAvatar>
-                        <Avatar className={ classes.avatar }>
-                          <FilterListIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={ `$ ${order.amount}` }
-                        secondary={ `${statuses[order.status] || 'indefinida'}` }
-                      />
-                    </ListItem>
-                  )
-                }
-                </div>
-              )) }
-            </List>
+              <List>
+                { orders.map((order, index) => (
+                  <div>
+                    { order.provider === 'paypal'
+                      ? (
+                        <ListItem key={ order.id }>
+                          <ListItemAvatar>
+                            <Avatar className={ classes.avatar }>
+                              <FilterListIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={ `$ ${order.amount}` }
+                            secondary={ `${statuses[order.status] || 'indefinida'}` }
+                          />
+                          { !order.transfer_id
+                            ? (
+                              <Button
+                                onClick={ (e) => this.payOrder(e, order.id) }
+                                style={ { float: 'right', margin: 10 } }
+                                variant='raised'
+                                color='primary'
+                                disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
+                              >
+                                <RedeemIcon style={ { marginRight: 10 } } />
+                                { `Pagar $ ${order.amount}` }
+                              </Button>
+                            ) : (
+                              <Chip label={ `Pago com Paypal (id: ${order.transfer_id})` } />
+                            )
+                          }
+                        </ListItem>
+                      )
+                      : (
+                        <ListItem key={ order.id }>
+                          <ListItemAvatar>
+                            <Avatar className={ classes.avatar }>
+                              <FilterListIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={ `$ ${order.amount}` }
+                            secondary={ `${statuses[order.status] || 'indefinida'}` }
+                          />
+                        </ListItem>
+                      )
+                    }
+                  </div>
+                )) }
+              </List>
             </TabContainer>
           </div>
           <DialogContentText>
@@ -225,7 +226,7 @@ class TaskPayment extends Component {
                   disabled={ !this.props.assigned || this.props.transferId || this.state.currentTab === 2 }
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
-                  { `Pagar $ ${ this.props.values.card || 0 }` }
+                  { `Pagar $ ${this.props.values.card || 0}` }
                 </Button>
               ) }
             </div>
@@ -261,12 +262,17 @@ TaskPayment.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
   onPay: PropTypes.func,
+  onPayOrder: PropTypes.func,
+  onPayTask: PropTypes.func,
   selectedValue: PropTypes.string,
   id: PropTypes.number,
   orders: PropTypes.array,
-  assigned: PropTypes.bool,
+  assigned: PropTypes.number,
   paid: PropTypes.bool,
-  assigns: PropTypes.array
+  assigns: PropTypes.array,
+  transferId: PropTypes.string,
+  filterTaskOrders: PropTypes.func,
+  values: PropTypes.object
 }
 
 export default withStyles(styles)(TaskPayment)

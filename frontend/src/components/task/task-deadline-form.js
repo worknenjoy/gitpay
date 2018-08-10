@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
@@ -10,7 +11,6 @@ import DateIcon from 'material-ui-icons/DateRange'
 import MomentComponent from 'moment'
 
 const timeIcon = require('../../images/time-icon.png')
-
 
 class TaskDeadlineForm extends Component {
   constructor (props) {
@@ -53,12 +53,11 @@ class TaskDeadlineForm extends Component {
   }
 
   render () {
-
     const { classes } = this.props
 
     return (
       <div>
-        <Collapse in={ this.props.open ? true : false }>
+        <Collapse in={ !!this.props.open }>
           <Card className={ classes.card }>
             <CardMedia
               className={ classes.cover }
@@ -117,6 +116,13 @@ class TaskDeadlineForm extends Component {
       </div>
     )
   }
+}
+
+TaskDeadlineForm.propTypes = {
+  updateTask: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  open: PropTypes.bool
 }
 
 export default TaskDeadlineForm

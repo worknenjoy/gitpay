@@ -7,13 +7,7 @@ import Dialog, {
 } from 'material-ui/Dialog'
 
 class PaypalPaymentDialog extends Component {
-  constructor (props) {
-    super(props)
-  }
-
-  componentWillMount () {
-
-  }
+  componentWillMount () { }
 
   handleNewOrder = (e) => {
     e.preventDefault()
@@ -24,10 +18,9 @@ class PaypalPaymentDialog extends Component {
       userId: this.props.user.id,
       TaskId: this.props.task
     })
-
   }
 
-  triggerPayment(order) {
+  triggerPayment (order) {
     window.location.href = order.payment_url
   }
 
@@ -51,13 +44,13 @@ class PaypalPaymentDialog extends Component {
           { this.props.order.data.payment_url ? (
             this.triggerPayment(this.props.order.data)
           ) : (
-            <div style={{textAlign: 'center', width: '100%', marginTop: 40, fontFamily: 'Roboto'}}>
-              Pagar com <br/>
-              <a href="#" title="Realizar pagamento com o Paypal" onClick={this.handleNewOrder}>
-                <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg" border="0" alt="PayPal Logo" />
+            <div style={ { textAlign: 'center', width: '100%', marginTop: 40, fontFamily: 'Roboto' } }>
+              Pagar com <br />
+              <a href='#' title='Realizar pagamento com o Paypal' onClick={ this.handleNewOrder }>
+                <img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
               </a>
             </div>
-          )}
+          ) }
         </DialogContent>
       </Dialog>
     )
@@ -65,12 +58,13 @@ class PaypalPaymentDialog extends Component {
 }
 
 PaypalPaymentDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
-  task: PropTypes.int,
+  task: PropTypes.string,
   open: PropTypes.bool,
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
   createOrder: PropTypes.func,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  order: PropTypes.object.isRequired,
+  itemPrice: PropTypes.any
 }
 
 export default PaypalPaymentDialog

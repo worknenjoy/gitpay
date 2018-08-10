@@ -28,7 +28,6 @@ import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
 
 import OurStack from './components/OurStack'
-import Info from './components/Info'
 
 const octodex = require('../../images/octodex.png')
 const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat-transparent.png')
@@ -45,13 +44,12 @@ import {
 const styles = (theme) => mainStyles(theme)
 
 class Welcome extends Component {
-  render () {    
+  render () {
     const { classes, location } = this.props
 
     return (
       <div className={ classes.root }>
         <TopBarContainer />
-        
 
         <MainBanner>
           <Grid container spacing={ 24 }>

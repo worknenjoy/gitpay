@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Auth from '../../modules/auth'
 
 class Session extends Component {
-  constructor (props) {
-    super(props)
-  }
   componentWillMount () {
     const token = this.props.match.params.token
     const referer = Auth.getReferer()
@@ -12,10 +10,10 @@ class Session extends Component {
     Auth.authenticateUser(token)
     if (referer && referer !== '/') {
       this.props.history.replace(referer)
-    } else {
+    }
+    else {
       this.props.history.replace('/profile')
     }
-
   }
 
   render () {
@@ -25,6 +23,11 @@ class Session extends Component {
       </div>
     )
   }
+}
+
+Session.propTypes = {
+  match: PropTypes.object,
+  history: PropTypes.object
 }
 
 export default Session

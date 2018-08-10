@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import Chip from 'material-ui/Chip'
 import { FormControl } from 'material-ui/Form'
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
-import Collapse from 'material-ui/transitions/Collapse';
+import Collapse from 'material-ui/transitions/Collapse'
 
 const paymentIcon = require('../../images/payment-icon-alt.png')
 
 import PaymentDialog from '../payment/payment-dialog'
 import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
-
 
 class TaskPaymentForm extends Component {
   constructor (props) {
@@ -40,12 +40,11 @@ class TaskPaymentForm extends Component {
   }
 
   render () {
-
     const { classes } = this.props
 
     return (
       <div>
-        <Collapse in={ this.props.open ? true : false }>
+        <Collapse in={ !!this.props.open }>
           <Card className={ classes.card }>
             <CardMedia
               className={ classes.cover }
@@ -99,7 +98,7 @@ class TaskPaymentForm extends Component {
                       onChange={ this.handleInputChange }
                     />
                   </FormControl>
-                  <Button style={{ marginLeft: 20 }} disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
+                  <Button style={ { marginLeft: 20 } } disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
                     { `Pagar $ ${this.state.currentPrice} com cartão de crédito` }
                   </Button>
                   <Button disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaypalPaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
@@ -111,7 +110,7 @@ class TaskPaymentForm extends Component {
           </Card>
         </Collapse>
         <PaymentDialog
-          open={ this.props.dialog.open && this.props.dialog.target === 'PaymentDialog'}
+          open={ this.props.dialog.open && this.props.dialog.target === 'PaymentDialog' }
           onClose={ this.props.closeDialog }
           addNotification={ this.props.addNotification }
           onPayment={ this.props.updateTask }
@@ -121,7 +120,7 @@ class TaskPaymentForm extends Component {
         />
 
         <PaypalPaymentDialog
-          open={ this.props.dialog.open && this.props.dialog.target === 'PaypalPaymentDialog'}
+          open={ this.props.dialog.open && this.props.dialog.target === 'PaypalPaymentDialog' }
           onClose={ this.props.closeDialog }
           addNotification={ this.props.addNotification }
           onPayment={ this.props.updateTask }
@@ -129,12 +128,26 @@ class TaskPaymentForm extends Component {
           price={ this.state.finalPrice }
           task={ this.props.match.params.id }
           createOrder={ this.props.createOrder }
-          user={this.props.user}
-          order={this.props.order}
+          user={ this.props.user }
+          order={ this.props.order }
         />
       </div>
     )
   }
+}
+
+TaskPaymentForm.propTypes = {
+  open: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
+  dialog: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  order: PropTypes.object,
+  openDialog: PropTypes.func.isRequired,
+  closeDialog: PropTypes.func.isRequired,
+  addNotification: PropTypes.func.isRequired,
+  updateTask: PropTypes.func,
+  createOrder: PropTypes.func.isRequired
 }
 
 export default TaskPaymentForm

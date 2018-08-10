@@ -24,11 +24,18 @@ const styles = theme => ({
     marginBottom: 10
   },
   avatar: {
-    margin: 10
+    margin: 10,
+    width: 40,
+    height: 40,
+    border: `4px solid ${theme.palette.primary.main}`
   },
   bigAvatar: {
-    width: 40,
-    height: 40
+    width: 180,
+    height: 180
+  },
+  smallAvatar: {
+    width: 32,
+    height: 32
   },
   chipContainer: {
     marginTop: 12,
@@ -90,19 +97,6 @@ const styles = theme => ({
     width: '100%',
     textAlign: 'center'
   },
-  avatar: {
-    width: 40,
-    height: 40,
-    border: `4px solid ${theme.palette.primary.main}`
-  },
-  bigAvatar: {
-    width: 180,
-    height: 180
-  },
-  smallAvatar: {
-    width: 32,
-    height: 32
-  },
   parentCard: {
     marginTop: 40,
     marginLeft: 40,
@@ -113,7 +107,8 @@ const styles = theme => ({
   card: {
     maxWidth: 280,
     marginRight: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    display: 'flex'
   },
   cardActions: {
     display: 'flex',
@@ -141,9 +136,6 @@ const styles = theme => ({
   },
   primary: {},
   icon: {},
-  card: {
-    display: 'flex'
-  },
   details: {
     display: 'flex',
     flexDirection: 'column'
@@ -172,10 +164,6 @@ const styles = theme => ({
 })
 
 class Order extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   componentWillMount () {}
 
   render () {

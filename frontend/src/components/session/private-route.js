@@ -1,7 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import {
-  BrowserRouter as Router,
   Route,
   Redirect
 } from 'react-router-dom'
@@ -24,5 +24,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     }
   />
 )
+
+PrivateRoute.propTypes = {
+  component: PropTypes.any,
+  location: PropTypes.object
+}
 
 export default PrivateRoute

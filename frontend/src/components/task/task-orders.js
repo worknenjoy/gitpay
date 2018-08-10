@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Redirect, BrowserRouter as Router
-} from "react-router-dom";
-
+} from 'react-router-dom'
 
 class TaskOrders extends Component {
-  constructor (props) {
-    super(props)
-  }
   componentWillMount () {
-    if( this.props.match.params.status === 'success' ) {
+    if (this.props.match.params.status === 'success') {
       this.props.addNotification('Seu pagamento foi efetuado com sucesso')
-    } else {
+    }
+    else {
       this.props.addNotification('Tivemos um problema para completar seu pagamento')
     }
     this.props.history.replace(`/#/task/${this.props.match.params.id}`)
@@ -19,20 +17,27 @@ class TaskOrders extends Component {
   }
 
   render () {
-
     return (
       <div>
         <Router>
           <Redirect
-            to={{
+            to={ {
               pathname: `/#/task/${this.props.match.params.id}`,
               state: { from: this.props.location }
-            }}
+            } }
           />
         </Router>
       </div>
     )
   }
+}
+
+TaskOrders.propTypes = {
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  addNotification: PropTypes.func.isRequired,
+  changeTab: PropTypes.func.isRequired
 }
 
 export default TaskOrders

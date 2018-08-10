@@ -61,9 +61,9 @@ exports.userUpdate = (req, res) => {
       res.send(data)
     }).catch(error => {
     // eslint-disable-next-line no-console
-    console.log(error)
-    res.send(false)
-  })
+      console.log(error)
+      res.send(false)
+    })
 }
 
 exports.accountUpdate = (req, res) => {

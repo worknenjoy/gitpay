@@ -49,8 +49,6 @@ import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import LoginButton from '../session/login-button'
 
-const timeIcon = require('../../images/time-icon.png')
-
 const logoGithub = require('../../images/github-logo.png')
 
 import PaymentTypeIcon from '../payment/payment-type-icon'
@@ -329,13 +327,13 @@ class Task extends Component {
   }
 
   handlePaymentForm = (e) => {
-      e.preventDefault()
-      this.state.paymentForm ? this.setState({paymentForm: false}) : this.setState({paymentForm: true})
+    e.preventDefault()
+    this.state.paymentForm ? this.setState({ paymentForm: false }) : this.setState({ paymentForm: true })
   }
 
   handleDeadlineForm = (e) => {
     e.preventDefault()
-    this.state.deadlineForm ? this.setState({deadlineForm: false}) : this.setState({deadlineForm: true})
+    this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true })
   }
 
   render () {
@@ -361,20 +359,20 @@ class Task extends Component {
 
     const userRow = user => {
       return (<span>
-            { user.profile_url
-              ? (
-                <Tooltip id='tooltip-github' title='ver perfil deste usuário no github' placement='bottom'>
-                  <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                    <span>{ user.username }</span>
-                    <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
-                  </a>
-                </Tooltip>
-              )
-              : (
-                `${user.username}`
-              )
-            }
-          </span>)
+        { user.profile_url
+          ? (
+            <Tooltip id='tooltip-github' title='ver perfil deste usuário no github' placement='bottom'>
+              <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
+                <span>{ user.username }</span>
+                <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
+              </a>
+            </Tooltip>
+          )
+          : (
+            `${user.username}`
+          )
+        }
+      </span>)
     }
 
     const displayOrders = orders => {
@@ -387,7 +385,7 @@ class Task extends Component {
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
-        <PaymentTypeIcon type={item.provider} />
+        <PaymentTypeIcon type={ item.provider } />
       ])
     }
 
@@ -469,7 +467,7 @@ class Task extends Component {
             <Typography variant='subheading' style={ { color: '#bbb' } }>
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
-                {task.data.metadata &&
+                { task.data.metadata &&
                   <a className={ classes.white } href={ task.data.url }>
                     { task.data.metadata.company }
                   </a>
@@ -546,7 +544,7 @@ class Task extends Component {
               </Tooltip>
               <div className={ classes.paper }>
                 <Button
-                  style={ {marginRight: 10} }
+                  style={ { marginRight: 10 } }
                   onClick={ this.handlePaymentForm }
                   size='small'
                   color='primary'
@@ -557,7 +555,7 @@ class Task extends Component {
                 </Button>
                 { !taskOwner() &&
                 <Button
-                  style={ {marginRight: 10} }
+                  style={ { marginRight: 10 } }
                   onClick={ this.handleAssignDialogOpen }
                   size='medium'
                   color='primary'
@@ -621,7 +619,7 @@ class Task extends Component {
                       open={ this.state.taskPaymentDialog }
                       onClose={ this.handleTaskPaymentDialogClose }
                       onPayTask={ this.props.paymentTask }
-                      filterTaskOrders= { this.props.filterTaskOrders }
+                      filterTaskOrders={ this.props.filterTaskOrders }
                       onPayOrder={ this.props.paymentOrder }
                     />
                   </div>
@@ -762,7 +760,7 @@ Task.propTypes = {
   fetchTask: PropTypes.func,
   dialog: PropTypes.object,
   addNotification: PropTypes.func,
-  location: PropTypes.string,
+  location: PropTypes.object,
   paymentTask: PropTypes.func,
   assignTask: PropTypes.func,
   task: PropTypes.object,
@@ -775,6 +773,9 @@ Task.propTypes = {
   closeDialog: PropTypes.func,
   syncTask: PropTypes.func,
   removeAssignment: PropTypes.func,
+  order: PropTypes.object,
+  filterTaskOrders: PropTypes.func,
+  paymentOrder: PropTypes.func,
 }
 
 export default withStyles(styles)(Task)

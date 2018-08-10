@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Route, Switch, HashRouter, Link } from 'react-router-dom'
+import { Route, Switch, HashRouter } from 'react-router-dom'
 
 import Grid from 'material-ui/Grid'
 import Avatar from 'material-ui/Avatar'
@@ -218,7 +218,7 @@ class Profile extends Component {
                   <Paper className={ classes.menuContainer }>
                     <MenuList>
                       <MenuItem
-                        onClick={()=> this.props.history.push('/profile/tasks') }
+                        onClick={ () => this.props.history.push('/profile/tasks') }
                         className={ classes.menuItem }
                         selected={ this.state.selected === 0 }
                       >
@@ -232,7 +232,7 @@ class Profile extends Component {
                         />
                       </MenuItem>
                       <MenuItem
-                        onClick={()=> this.props.history.push('/profile/payment-options') }
+                        onClick={ () => this.props.history.push('/profile/payment-options') }
                         className={ classes.menuItem }
                         selected={ this.state.selected === 1 }
                       >
@@ -248,7 +248,7 @@ class Profile extends Component {
                         />
                       </MenuItem>
                       <MenuItem
-                        onClick={()=> this.props.history.push('/profile/preferences') }
+                        onClick={ () => this.props.history.push('/profile/preferences') }
                         className={ classes.menuItem }
                         selected={ this.state.selected === 2 }
                       >
@@ -279,7 +279,8 @@ class Profile extends Component {
 Profile.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  history: PropTypes.object
 }
 
 export default withStyles(styles)(Profile)

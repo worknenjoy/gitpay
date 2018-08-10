@@ -37,19 +37,14 @@ import {
   OnlyDesktop,
 } from './TopbarStyles'
 
-import mainStyles from '../styles/style'
-
-const classes = (theme) => mainStyles(theme)
-
 import LoginButton from '../session/login-button'
 
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
-
 const isBitbucketUrl = (url) => {
-  return url.indexOf("bitbucket") > -1
+  return url.indexOf('bitbucket') > -1
 }
 
 const styles = {
@@ -130,7 +125,7 @@ class TopBar extends Component {
 
   handleProvider = (e, option) => {
     e.preventDefault()
-    this.setState({provider: option})
+    this.setState({ provider: option })
   }
 
   onChange (e) {
@@ -266,26 +261,26 @@ class TopBar extends Component {
                       type='url'
                       fullWidth
                     />
-                    <div style={{marginTop: 10, marginBottom: 10}}>
+                    <div style={ { marginTop: 10, marginBottom: 10 } }>
                       <Button
                         style={ { marginRight: 10 } }
                         color='primary'
-                        variant={this.state.provider === 'github' ? 'raised' : 'contained'}
+                        variant={ this.state.provider === 'github' ? 'raised' : 'contained' }
                         id='github'
-                        onClick={(e) => this.handleProvider(e, 'github')}
+                        onClick={ (e) => this.handleProvider(e, 'github') }
                       >
                         <img width='16' src={ logoGithub } />
-                        <span style={{marginLeft: 10}}>Github</span>
+                        <span style={ { marginLeft: 10 } }>Github</span>
                       </Button>
 
                       <Button
                         color='primary'
-                        variant={this.state.provider === 'bitbucket' ? 'raised' : 'contained'}
+                        variant={ this.state.provider === 'bitbucket' ? 'raised' : 'contained' }
                         id='bitbucket'
-                        onClick={(e) => this.handleProvider(e, 'bitbucket')}
+                        onClick={ (e) => this.handleProvider(e, 'bitbucket') }
                       >
                         <img width='16' src={ logoBitbucket } />
-                        <span style={{marginLeft: 10}}>Bitbucket</span>
+                        <span style={ { marginLeft: 10 } }>Bitbucket</span>
                       </Button>
                     </div>
                     { this.state.task.url.error &&
@@ -356,11 +351,11 @@ class TopBar extends Component {
 }
 
 TopBar.propTypes = {
-  isLogged: PropTypes.bool,
-  location: PropTypes.string,
-  history: PropTypes.string,
+  isLogged: PropTypes.func,
+  location: PropTypes.object,
+  history: PropTypes.object,
   user: PropTypes.object,
-  createTask: PropTypes.object,
+  createTask: PropTypes.func,
   signOut: PropTypes.func,
   logged: PropTypes.bool,
   completed: PropTypes.bool,

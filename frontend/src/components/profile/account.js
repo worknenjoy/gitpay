@@ -171,7 +171,7 @@ class Account extends Component {
   }
 
   handleTabChange (e, value) {
-    this.setState({currentTab: value})
+    this.setState({ currentTab: value })
   }
 
   handleBankNumberSelect (e) {
@@ -237,7 +237,7 @@ class Account extends Component {
           ready={ account.completed && !account.error.error }
         >
           <div>
-            <AppBar position='static' color='default' style={{marginTop: 20,  boxShadow: 'none', background: 'transparent'}}>
+            <AppBar position='static' color='default' style={ { marginTop: 20, boxShadow: 'none', background: 'transparent' } }>
               <Tabs
                 value={ this.state.currentTab }
                 onChange={ this.handleTabChange }
@@ -246,8 +246,8 @@ class Account extends Component {
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={{margin: 10}} value={0} label='Cartão' icon={ <PaymentTypeIcon type="stripe" notext />} />
-                <Tab style={{margin: 10}} value={1} label='Paypal' icon={ <PaymentTypeIcon type="paypal" notext /> } />
+                <Tab style={ { margin: 10 } } value={ 0 } label='Cartão' icon={ <PaymentTypeIcon type='stripe' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 1 } label='Paypal' icon={ <PaymentTypeIcon type='paypal' notext /> } />
               </Tabs>
             </AppBar>
             { this.state.currentTab === 0 &&
@@ -326,9 +326,9 @@ class Account extends Component {
                         ) : (
                           <Chip
                             style={ { margin: 3 } }
-                            label={ `Agora receberá as recompensas na sua conta ` }
+                            label={ 'Agora receberá as recompensas na sua conta ' }
                           />
-                        )}
+                        ) }
                       </CardContent>
                       <CardActions>
                         <Button
@@ -390,7 +390,7 @@ class Account extends Component {
                                         return (
                                           <MenuItem key={ i } value={ item }>{ `${
                                             Const.BANK_NUMBERS[item]
-                                            }` }</MenuItem>
+                                          }` }</MenuItem>
                                         )
                                       }
                                     ) }
@@ -765,10 +765,10 @@ class Account extends Component {
                         Criar conta
                       </Button>
                     </CardActions>
-                  </Card>}
+                  </Card> }
                 </div>)
               }
-            </TabContainer>}
+            </TabContainer> }
             { this.state.currentTab === 1 &&
             <TabContainer>
               <form
@@ -781,7 +781,7 @@ class Account extends Component {
                       <Typography className={ classes.pos } color='textSecondary'>
                         Ativar sua conta com o Paypal:
                       </Typography>
-                      <Typography component='p' color='textSecondary' style={{marginBottom: 20, marginTop: 20}}>
+                      <Typography component='p' color='textSecondary' style={ { marginBottom: 20, marginTop: 20 } }>
                         Ativando a conta com o Paypal, você receberá os valores na conta fornecida aqui. <br />
                         Nesta modalidade, as taxas do Paypal serão aplicadas
                       </Typography>
@@ -794,23 +794,23 @@ class Account extends Component {
                         />
                       ) : (
                         <div>
-                        <Typography className={ classes.pos } color='textSecondary'>
+                          <Typography className={ classes.pos } color='textSecondary'>
                           Status da sua conta:
-                        </Typography>
-                        <Chip
-                          label={ 'Ativada' }
-                          style={ {
-                            color: 'white',
-                            marginRight: 20,
-                            backgroundColor: 'green'
-                          } }
-                        />
+                          </Typography>
+                          <Chip
+                            label={ 'Ativada' }
+                            style={ {
+                              color: 'white',
+                              marginRight: 20,
+                              backgroundColor: 'green'
+                            } }
+                          />
                         </div>
                       ) }
                     </div>
                     <Grid item xs={ 12 }>
                       <FormControl>
-                        <InputLabel htmlFor="adornment-password">Email do Paypal</InputLabel>
+                        <InputLabel htmlFor='adornment-password'>Email do Paypal</InputLabel>
                         <Input
                           name='paypal_email'
                           type='email'
@@ -830,7 +830,7 @@ class Account extends Component {
                       size='large'
                       variant='raised'
                       color='primary'
-                      type="submit"
+                      type='submit'
                     >
                       { !user.paypal_id
                         ? 'Ativar conta'
@@ -839,7 +839,7 @@ class Account extends Component {
                   </CardActions>
                 </Card>
               </form>
-            </TabContainer>}
+            </TabContainer> }
           </div>
         </ReactPlaceholder>
       </div>
@@ -851,12 +851,13 @@ Account.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object,
   createAccount: PropTypes.func,
-  bankAccount: PropTypes.func,
+  bankAccount: PropTypes.object,
   account: PropTypes.object,
   createBankAccount: PropTypes.func,
   updateAccount: PropTypes.func,
   fetchAccount: PropTypes.func,
-  getBankAccount: PropTypes.func
+  getBankAccount: PropTypes.func,
+  updateUser: PropTypes.func
 }
 
 export default withStyles(styles)(Account)

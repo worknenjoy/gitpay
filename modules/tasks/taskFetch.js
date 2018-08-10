@@ -30,7 +30,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       const projectName = splitIssueUrl[2]
       const issueId = splitIssueUrl[4]
 
-      switch(data.dataValues.provider) {
+      switch (data.dataValues.provider) {
         case 'github':
           return requestPromise({
             uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
@@ -40,7 +40,6 @@ module.exports = Promise.method(function taskFetch (taskParams) {
             }
           })
             .then(response => {
-
               const issueDataJsonGithub = JSON.parse(response)
 
               const responseGithub = {
@@ -80,7 +79,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               // eslint-disable-next-line no-console
               console.log(e)
             })
-          break;
+
         case 'bitbucket':
           return requestPromise({
             uri: `https://api.bitbucket.org/1.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
@@ -133,9 +132,9 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               // eslint-disable-next-line no-console
               console.log(e)
             })
-          break;
+
         default:
-          break;
+          break
       }
     })
     .catch(error => {
