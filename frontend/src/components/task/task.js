@@ -167,7 +167,8 @@ const styles = theme => ({
   btnPayment: {
     float: 'right',
     marginTop: 10,
-    color: 'white'
+    color: 'white',
+    marginRight: 5
   },
   avatar: {
     width: 40,
