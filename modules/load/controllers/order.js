@@ -40,18 +40,16 @@ exports.fetchOrders = (req, res) => {
 exports.updateOrders = (req, res) => {
   orderUpdate(req.query)
     .then(data => {
-      if(data.paid) {
+      if (data.paid) {
         res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`)
         return
       }
       res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
-      return
     }).catch(error => {
     // eslint-disable-next-line no-console
-    console.log('updateOrders error', error)
-    res.redirect(process.env.FRONTEND_HOST)
-    return
-  })
+      console.log('updateOrders error', error)
+      res.redirect(process.env.FRONTEND_HOST)
+    })
 }
 
 exports.paymentOrder = (req, res) => {
@@ -60,8 +58,7 @@ exports.paymentOrder = (req, res) => {
       res.send(data)
     }).catch(error => {
     // eslint-disable-next-line no-console
-    console.log(error)
-    res.status(401).send(error)
-  })
+      console.log(error)
+      res.status(401).send(error)
+    })
 }
-

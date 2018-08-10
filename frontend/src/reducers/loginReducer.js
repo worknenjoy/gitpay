@@ -21,7 +21,7 @@ export const loggedIn = (state = { logged: false, user: {}, completed: true, err
     case LOGGED_IN_REQUESTED:
       return { ...state, logged: action.logged, completed: action.completed }
     case UPDATE_USER_REQUESTED:
-      return { ...state,  completed: action.completed }
+      return { ...state, completed: action.completed }
     case UPDATE_USER_SUCCESS:
       return { ...state, user: action.data, completed: action.completed }
     case UPDATE_USER_ERROR:

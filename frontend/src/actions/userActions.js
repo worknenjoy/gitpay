@@ -18,7 +18,6 @@ const UPDATE_USER_REQUESTED = 'UPDATE_USER_REQUESTED'
 const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
 const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR'
 
-
 const CREATE_BANKACCOUNT_REQUESTED = 'CREATE_BANKACCOUNT_REQUESTED'
 const CREATE_BANKACCOUNT_SUCCESS = 'CREATE_BANKACCOUNT_SUCCESS'
 const CREATE_BANKACCOUNT_ERROR = 'CREATE_BANKACCOUNT_ERROR'
@@ -217,7 +216,7 @@ const updateUser = (userId, userData) => {
     dispatch(updateUserRequested())
     axios
       .put(api.API_URL + '/user/update', {
-          ...userData, id: userId
+        ...userData, id: userId
       })
       .then(user => {
         dispatch(addNotification('Conta atualizada com sucesso'))

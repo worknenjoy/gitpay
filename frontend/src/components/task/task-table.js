@@ -34,63 +34,63 @@ const actionsStyles = theme => ({
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing.unit * 2.5,
   },
-});
+})
 
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
-    this.props.onChangePage(event, 0);
+    this.props.onChangePage(event, 0)
   };
 
   handleBackButtonClick = event => {
-    this.props.onChangePage(event, this.props.page - 1);
+    this.props.onChangePage(event, this.props.page - 1)
   };
 
   handleNextButtonClick = event => {
-    this.props.onChangePage(event, this.props.page + 1);
+    this.props.onChangePage(event, this.props.page + 1)
   };
 
   handleLastPageButtonClick = event => {
     this.props.onChangePage(
       event,
       Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
-    );
+    )
   };
 
-  render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props;
+  render () {
+    const { classes, count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={classes.root}>
+      <div className={ classes.root }>
         <IconButton
-          onClick={this.handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="First Page"
+          onClick={ this.handleFirstPageButtonClick }
+          disabled={ page === 0 }
+          aria-label='First Page'
         >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+          { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
         </IconButton>
         <IconButton
-          onClick={this.handleBackButtonClick}
-          disabled={page === 0}
-          aria-label="Previous Page"
+          onClick={ this.handleBackButtonClick }
+          disabled={ page === 0 }
+          aria-label='Previous Page'
         >
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+          { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
         </IconButton>
         <IconButton
-          onClick={this.handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Next Page"
+          onClick={ this.handleNextButtonClick }
+          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
+          aria-label='Next Page'
         >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+          { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
         </IconButton>
         <IconButton
-          onClick={this.handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Last Page"
+          onClick={ this.handleLastPageButtonClick }
+          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
+          aria-label='Last Page'
         >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+          { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>
       </div>
-    );
+    )
   }
 }
 
@@ -101,11 +101,11 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   theme: PropTypes.object.isRequired,
-};
+}
 
 const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
   TablePaginationActions,
-);
+)
 
 const styles = theme => ({
   root: {
@@ -118,40 +118,40 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
-});
+})
 
 class CustomPaginationActionsTable extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       page: 0,
       rowsPerPage: 5,
-    };
+    }
   }
 
   handleChangePage = (event, page) => {
-    this.setState({ page });
+    this.setState({ page })
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
+    this.setState({ rowsPerPage: event.target.value })
   };
 
   handleClickListItem = id => {
-    this.props.history.push('/task/' + id);
+    this.props.history.push('/task/' + id)
   }
 
-  render() {
-    const { classes, tasks } = this.props;
-    const { rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage);
+  render () {
+    const { classes, tasks } = this.props
+    const { rowsPerPage, page } = this.state
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage)
 
     return (
-      <Paper className={classes.root}>
-        <ReactPlaceholder style={{marginBottom: 20, padding: 20 }} showLoadingAnimation={true} type="text" rows={5} ready={tasks.completed}>
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
+      <Paper className={ classes.root }>
+        <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ tasks.completed }>
+          <div className={ classes.tableWrapper }>
+            <Table className={ classes.table }>
               <TableHead>
                 <TableRow>
                   <TableCell>Autor</TableCell>
@@ -162,89 +162,91 @@ class CustomPaginationActionsTable extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                { tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   return (
-                    <TableRow key={n.id}>
-                      <TableCell component="th" scope="row" style={{padding: 5}}>
-                        { n.User ?  (
-                          <div>
-                          {n.User.profile_url ?
-                            (
-                              <a style={{display: 'flex', alignItems: 'center', height: 20}} target="_blank"
-                                 href={n.User.profile_url}>
-                                <Avatar
-                                  src={n.User.picture_url}
-                                  style={{width: 24, height: 24, display: 'inline-block'}}
-                                />
-                                <span style={{marginLeft: 10}}>
-                                  {TextEllipsis(n.User.username, 10)}
-                                </span>
-                              </a>
-                            ) : (
-                              <div style={{display: 'flex', alignItems: 'center', height: 20}}>
-                                <Avatar
-                                  src={n.User.picture_url}
-                                  style={{width: 24, height: 24, display: 'inline-block'}}
-                                />
-                                <span style={{marginLeft: 10}}>
-                                  {TextEllipsis(n.User.username, 10)}
-                                </span>
-                              </div>
-                            )
-                          }
-                          </div>) : (
+                    <TableRow key={ n.id }>
+                      <TableCell component='th' scope='row' style={ { padding: 5 } }>
+                        { n.User
+                          ? (
+                            <div>
+                              { n.User.profile_url
+                                ? (
+                                  <a style={ { display: 'flex', alignItems: 'center', height: 20 } } target='_blank'
+                                    href={ n.User.profile_url }>
+                                    <Avatar
+                                      src={ n.User.picture_url }
+                                      style={ { width: 24, height: 24, display: 'inline-block' } }
+                                    />
+                                    <span style={ { marginLeft: 10 } }>
+                                      { TextEllipsis(n.User.username, 10) }
+                                    </span>
+                                  </a>
+                                ) : (
+                                  <div style={ { display: 'flex', alignItems: 'center', height: 20 } }>
+                                    <Avatar
+                                      src={ n.User.picture_url }
+                                      style={ { width: 24, height: 24, display: 'inline-block' } }
+                                    />
+                                    <span style={ { marginLeft: 10 } }>
+                                      { TextEllipsis(n.User.username, 10) }
+                                    </span>
+                                  </div>
+                                )
+                              }
+                            </div>
+                          ) : (
                             <div>
                               sem autor
                             </div>
                           )
                         }
                       </TableCell>
-                      <TableCell component="th" scope="row" style={{padding: 10, position: 'relative'}}>
-                        <div style={{width: 250, display: 'flex', alignItems: 'center'}}>
-                          <a style={{cursor: 'pointer'}} onClick={() => this.handleClickListItem(n.id)}>
-                            {TextEllipsis(`${n.title || 'sem título'}`, 30)}
+                      <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
+                        <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
+                          <a style={ { cursor: 'pointer' } } onClick={ () => this.handleClickListItem(n.id) }>
+                            { TextEllipsis(`${n.title || 'sem título'}`, 30) }
                           </a>
-                          <a target="_blank" href={n.url}>
-                            <Tooltip id="tooltip-fab" title={`Ver no ${n.provider}`} placement="top">
-                              <img width="24" src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={{borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10}} />
+                          <a target='_blank' href={ n.url }>
+                            <Tooltip id='tooltip-fab' title={ `Ver no ${n.provider}` } placement='top'>
+                              <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
                             </Tooltip>
                           </a>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div style={{width: 80}}>
-                          <Chip label={Constants.STATUSES[n.status]} style={{ backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white'}} />
+                        <div style={ { width: 80 } }>
+                          <Chip label={ Constants.STATUSES[n.status] } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
                         </div>
                       </TableCell>
-                      <TableCell numeric style={{padding: 5}}>
-                        <div style={{width: 40}}>
-                          {`$ ${n.value}`}
+                      <TableCell numeric style={ { padding: 5 } }>
+                        <div style={ { width: 40 } }>
+                          { `$ ${n.value}` }
                         </div>
                       </TableCell>
-                      <TableCell numeric style={{padding: 0}}>
-                        <div style={{width: 80}}>
-                          {n.deadline ? MomentComponent(n.deadline).fromNow() : 'não definido'}
+                      <TableCell numeric style={ { padding: 0 } }>
+                        <div style={ { width: 80 } }>
+                          { n.deadline ? MomentComponent(n.deadline).fromNow() : 'não definido' }
                         </div>
                       </TableCell>
                     </TableRow>
-                  );
-                })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
+                  )
+                }) }
+                { emptyRows > 0 && (
+                  <TableRow style={ { height: 48 * emptyRows } }>
+                    <TableCell colSpan={ 6 } />
                   </TableRow>
-                )}
+                ) }
               </TableBody>
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    colSpan={3}
-                    count={tasks.data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={this.handleChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    Actions={TablePaginationActionsWrapped}
+                    colSpan={ 3 }
+                    count={ tasks.data.length }
+                    rowsPerPage={ rowsPerPage }
+                    page={ page }
+                    onChangePage={ this.handleChangePage }
+                    onChangeRowsPerPage={ this.handleChangeRowsPerPage }
+                    Actions={ TablePaginationActionsWrapped }
                   />
                 </TableRow>
               </TableFooter>
@@ -252,12 +254,14 @@ class CustomPaginationActionsTable extends React.Component {
           </div>
         </ReactPlaceholder>
       </Paper>
-    );
+    )
   }
 }
 
 CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+  history: PropTypes.object,
+  tasks: PropTypes.object
+}
 
-export default withRouter(withStyles(styles)(CustomPaginationActionsTable));
+export default withRouter(withStyles(styles)(CustomPaginationActionsTable))

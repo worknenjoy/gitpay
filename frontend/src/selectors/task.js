@@ -8,14 +8,16 @@ export const getTaskOrdersByFilter = createSelector(
   (filter, task) => {
     switch (filter.provider) {
       case 'paypal':
-        return { ... task, data: {
-          ... task.data,
-          orders: task.data.orders.filter(item => item.provider === 'paypal') }
+        return { ...task,
+          data: {
+            ...task.data,
+            orders: task.data.orders.filter(item => item.provider === 'paypal') }
         }
       case 'stripe':
-        return { ... task, data: {
-          ... task.data,
-          orders: task.data.orders.filter(item => item.provider !== 'paypal') }
+        return { ...task,
+          data: {
+            ...task.data,
+            orders: task.data.orders.filter(item => item.provider !== 'paypal') }
         }
       default:
         return task

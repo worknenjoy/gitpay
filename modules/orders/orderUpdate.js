@@ -6,7 +6,7 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
   return models.Order
     .update({
       payer_id: orderParameters.PayerID,
-      paid: orderParameters.paymentId && orderParameters.PayerID ? true : false,
+      paid: !!(orderParameters.paymentId && orderParameters.PayerID),
       status: orderParameters.paymentId && orderParameters.PayerID ? 'succeeded' : 'fail'
     }, {
       where: {
@@ -17,12 +17,13 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
     }).then(order => {
       const orderData = order[1].dataValues
       return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
-        if(orderData.paid) {
+        if (orderData.paid) {
           PaymentMail.success(user.dataValues.email, task, orderData.amount)
-        } else {
+        }
+        else {
           PaymentMail.error(user.dataValues.email, task, orderData.amount)
         }
-        if(task.dataValues.assigned) {
+        if (task.dataValues.assigned) {
           const assignedId = task.dataValues.assigned
           return models.Assign.findById(assignedId, {
             include: [models.User]
@@ -33,6 +34,5 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
         }
         return orderData
       })
-      return orderData
     })
 })

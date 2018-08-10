@@ -46,10 +46,6 @@ const styles = {
 }
 
 class StatusDialog extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   handleListItemClick (status) {
     this.props.onSelect({ id: this.props.id, status: status })
     this.props.onClose()

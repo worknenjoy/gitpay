@@ -19,7 +19,7 @@ export default {
   },
   ACCOUNT_REASONS: {
     'fields_needed': 'Pendente de verificação',
-    'external_account' : 'Cadastrar conta bancária',
+    'external_account': 'Cadastrar conta bancária',
     null: 'Pendente',
     undefined: 'Pendente'
   },
@@ -54,7 +54,6 @@ export default {
     '409': 'UNIBANCO UNIAO DE BANCOS BRASILEIROS S.A. (Unibanco)',
     '041': 'BANCO DO ESTADO DO RIO GRANDE DO SUL S.A. (Banrisul)',
     '104': 'CAIXA ECONOMICA FEDERAL (Caixa Econômica Federal)',
-    '033': 'BANCO SANTANDER S.A. (Santander Banespa)',
     '399': 'HSBC BANK BRASIL S.A.BANCO MULTIPLO (HSBC)',
     '745': 'BANCO CITIBANK S.A.',
     '151': 'BANCO NOSSA CAIXA S.A (Nossa Caixa)',

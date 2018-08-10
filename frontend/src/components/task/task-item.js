@@ -12,7 +12,7 @@ import {
 
 import Constants from '../../consts'
 
-const logoGithub = require('../../images/github-logo.png')\
+const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 import Avatar from 'material-ui/Avatar'
@@ -22,10 +22,6 @@ import IconButton from 'material-ui/IconButton'
 import Tooltip from 'material-ui/Tooltip'
 
 class TaskItem extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {}
 
   handleClickListItem (id) {
@@ -78,7 +74,7 @@ class TaskItem extends Component {
           />
           <ListItemSecondaryAction>
             <IconButton aria-label='provider'>
-              <Tooltip id='tooltip-fab' title={`Ver no ${ item.provider }`} placement='right'>
+              <Tooltip id='tooltip-fab' title={ `Ver no ${item.provider}` } placement='right'>
                 <a target='_blank' href={ item.url }>
                   <img width='24' src={ item.provider === 'github' ? logoGithub : logoBitbucket } className={ classes.icon } />
                 </a>

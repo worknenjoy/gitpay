@@ -3,13 +3,14 @@ const models = require('../../loading/loading')
 
 module.exports = Promise.method(function userUpdate (userParameters) {
   let condition = {}
-  if(userParameters.id) {
+  if (userParameters.id) {
     condition = {
       where: {
         id: userParameters.id
       }
     }
-  } else {
+  }
+  else {
     condition = {
       where: {
         email: userParameters.email
@@ -17,7 +18,8 @@ module.exports = Promise.method(function userUpdate (userParameters) {
     }
   }
   return models.User
-    .update(userParameters, { ...condition, returning: true, plain: true}).then(data => {
+    .update(userParameters, { ...condition, returning: true, plain: true }).then(data => {
+      // eslint-disable-next-line no-console
       console.log(data)
       return data[1].dataValues
     }).catch(error => {

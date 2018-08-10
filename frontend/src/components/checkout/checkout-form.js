@@ -189,7 +189,12 @@ class CheckoutForm extends Component {
 }
 
 CheckoutForm.propTypes = {
-  stripe: PropTypes.object
+  stripe: PropTypes.object,
+  onPayment: PropTypes.func,
+  task: PropTypes.any,
+  onClose: PropTypes.func,
+  addNotification: PropTypes.func,
+  itemPrice: PropTypes.any
 }
 
 export default withRouter(injectStripe(CheckoutForm))

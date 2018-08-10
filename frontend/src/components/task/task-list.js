@@ -82,8 +82,8 @@ class TaskList extends Component {
         <Typography component='p' style={ { marginBottom: 20 } }>
           Tarefas disponíveis para desenvolvimento
         </Typography>
-        <div style={{marginTop: 20, marginBottom: 20}}>
-          <TaskStatusFilter onFilter={this.props.filterTasks} />
+        <div style={ { marginTop: 20, marginBottom: 20 } }>
+          <TaskStatusFilter onFilter={ this.props.filterTasks } />
         </div>
         <div className={ classes.rootTabs }>
           <AppBar position='static' color='default'>
@@ -114,7 +114,7 @@ TaskList.propTypes = {
   classes: PropTypes.object.isRequired,
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
-  tasks: PropTypes.array
+  tasks: PropTypes.object
 }
 
 export default withRouter(withStyles(styles)(TaskList))

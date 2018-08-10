@@ -57,11 +57,12 @@ const createOrder = order => {
   return dispatch => {
     dispatch(createOrderRequested())
     axios
-      .post(api.API_URL + `/orders/create`, order)
+      .post(api.API_URL + '/orders/create', order)
       .then(order => {
         if (order.data) {
           return dispatch(createOrderSuccess(order))
-        } else {
+        }
+        else {
           addNotification(
             'Não foi possível criar o pagamento'
           )
@@ -90,8 +91,9 @@ const payOrder = order => {
   return dispatch => {
     dispatch(payOrderRequested())
     axios
-      .post(api.API_URL + `/orders/payment`, order)
+      .post(api.API_URL + '/orders/payment', order)
       .then(order => {
+        // eslint-disable-next-line no-console
         console.log('payment for order', order)
         if (order.data.transfer_id) {
           dispatch(addNotification(
@@ -99,7 +101,8 @@ const payOrder = order => {
           ))
           dispatch(payOrderSuccess(order))
           return dispatch(fetchTask(order.data.TaskId))
-        } else {
+        }
+        else {
           dispatch(addNotification(
             'Não foi possível realizar o pagamento'
           ))

@@ -13,7 +13,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
   const projectName = splitIssueUrl[2]
   const issueId = splitIssueUrl[4]
 
-  switch(taskParameters.provider) {
+  switch (taskParameters.provider) {
     case 'github':
       return requestPromise({
         uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
@@ -31,12 +31,12 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
             return data.dataValues
           })
       })
-      break;
     case 'bitbucket':
       return requestPromise({
         uri: `https://api.bitbucket.org/1.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       }).then(response => {
-        console.log('response', response);
+        // eslint-disable-next-line no-console
+        console.log('response', response)
         return models.Task
           .build(
             taskParameters
@@ -46,10 +46,9 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
             return data.dataValues
           })
       })
-      break;
 
     default:
-      break;
+      break
   }
 
   return models.Task

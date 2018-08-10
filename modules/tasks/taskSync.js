@@ -20,12 +20,13 @@ module.exports = Promise.method(function taskSync (taskParameters) {
       }
       else if (item.status === 'succeeded') {
         finalValue.available += parseInt(item.amount)
-        if(item.provider === 'paypal') {
+        if (item.provider === 'paypal') {
           finalValue.paypal += parseInt(item.amount)
-        } else {
+        }
+        else {
           finalValue.card += parseInt(item.amount)
         }
-        if(item.transfer_id) {
+        if (item.transfer_id) {
           finalValue.transferred += parseInt(item.amount)
         }
       }
@@ -34,8 +35,8 @@ module.exports = Promise.method(function taskSync (taskParameters) {
       }
     })
 
-    const paidPaypal =  finalValue.paypal === 0 || finalValue.transferred === finalValue.available ? true : false
-    const paidStripe = task.transfer_id ? true : false
+    const paidPaypal = !!(finalValue.paypal === 0 || finalValue.transferred === finalValue.available)
+    const paidStripe = !!task.transfer_id
     const paid = paidPaypal && paidStripe
 
     return task.updateAttributes({ value: finalValue.available, paid: paid }).then(updatedTask => {

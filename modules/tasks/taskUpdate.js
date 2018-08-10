@@ -26,7 +26,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           status: charge.status
         }).then(updatedUser => {
           PaymentMail.success(user.email, task, order.amount)
-          if(task.dataValues.assigned) {
+          if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
             return models.Assign.findById(assignedId, {
               include: [models.User]
@@ -95,14 +95,13 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               }
             })
           }
-          
           if (taskParameters.Assigns) {
             assignExist({
               userId: taskParameters.Assigns[0].userId,
               taskId: taskParameters.id
             }).then(resp => {
               if (!resp) {
-                return task.createAssign(taskParameters.Assigns[0]).then(assign => {                  
+                return task.createAssign(taskParameters.Assigns[0]).then(assign => {
                   if (assign) {
                     return models.User.findOne({
                       where: {
@@ -113,7 +112,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                       if (!usermail) {
                         AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues)
                       }
-                      if (!user.account_id) {                        
+                      if (!user.account_id) {
                         TransferMail.future_payment_for_invalid_account(user.email)
                       }
                       AssignMail.interested(usermail, task.dataValues, user.username)

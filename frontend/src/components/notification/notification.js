@@ -5,10 +5,6 @@ import CloseIcon from 'material-ui-icons/Close'
 import PropTypes from 'prop-types'
 
 class Notification extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {}
 
   render () {
@@ -40,10 +36,9 @@ class Notification extends Component {
   }
 }
 
-Notification.PropTypes = {
+Notification.propTypes = {
   open: PropTypes.bool,
-  onClose: PropTypes.bool,
-  image: PropTypes.string,
+  onClose: PropTypes.func,
   message: PropTypes.string
 }
 
