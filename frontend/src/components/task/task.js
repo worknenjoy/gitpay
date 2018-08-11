@@ -60,6 +60,7 @@ import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
 import RemoveAssignment from './assignment/RemoveAssignment'
+import TaskInvite from './task-invite'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
@@ -336,6 +337,10 @@ class Task extends Component {
     this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true })
   }
 
+  handleInvite = () => {
+
+  }
+
   render () {
     const { classes, task, order } = this.props
 
@@ -552,6 +557,16 @@ class Task extends Component {
                 >
                   <span className={ classes.spaceRight }>Adicionar recompensa</span>{ ' ' }
                   <RedeemIcon />
+                </Button>
+                <Button
+                  style={ { marginRight: 10 } }
+                  onClick={ this.handleInvite }
+                  size='small'
+                  color='primary'
+                  className={ classes.altButton }
+                >
+                  <span className={ classes.spaceRight }></span>{ ' ' }
+                  <AddIcon />
                 </Button>
                 { !taskOwner() &&
                 <Button
