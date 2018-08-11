@@ -1,0 +1,56 @@
+---
+layout: default
+---
+
+<div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+
+        <article class="uk-article">
+
+            <h1 class="uk-article-title">{{ page.title | escape }}</h1>
+
+            <div class="article-content">
+                {{ content }}
+            </div>
+
+        </article>
+
+        {% if page.formspree.email %}
+        <h3 class="uk-margin-medium-top">Contact Form</h3>
+        <form class="uk-form-stacked uk-margin-medium-top" method="POST" action="https://formspree.io/{{ page.formspree.email }}" accept-charset="UTF-8">
+            <div class="uk-margin-medium-bottom">
+                <label class="uk-form-label uk-margin-small-bottom" for="form-stacked-text">Name</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-large uk-border-rounded" name="name" type="text" required>
+                </div>
+            </div>
+            <div class="uk-margin-medium-bottom">
+                <label class="uk-form-label uk-margin-small-bottom" for="form-stacked-text">Email</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-large uk-border-rounded" name="_replyto" type="email" required>
+                </div>
+            </div>
+            <div class="uk-margin-medium-bottom">
+                <label class="uk-form-label uk-margin-small-bottom" for="form-stacked-text">Subject</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-large uk-border-rounded" name="_subject" type="text">
+                </div>
+            </div>
+            <div class="uk-margin-medium-bottom">
+                <label class="uk-form-label uk-margin-small-bottom" for="form-stacked-text">Message</label>
+                <div class="uk-form-controls">
+                    <textarea class="uk-textarea uk-form-large" name="message" rows="5" minlength="10" required></textarea>
+                </div>
+            </div>
+            <div>
+                {% if page.formspree.redirect %}
+                <input type="hidden" name="_next" value="{{ page.formspree.redirect | absolute_url }}">
+                {% endif %}
+                <input type="text" name="_gotcha" style="display:none">
+                <input class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-border-rounded" type="submit" value="Send">
+            </div>
+        </form>
+        {% endif %}
+
+    </div>
+</div>

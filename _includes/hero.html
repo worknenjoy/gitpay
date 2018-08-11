@@ -1,0 +1,35 @@
+<div class="uk-section section-hero" data-uk-scrollspy="cls: uk-animation-slide-bottom-medium; repeat: true">
+    <div class="uk-container uk-container-small">
+        {% if page.hero.image %}
+        <p class="hero-image uk-text-center"><img src="{{ site.post_assets | absolute_url }}{{ page.hero.image }}" alt="Hero"></p>
+        {% endif %}
+        <h1 class="uk-heading-hero uk-text-center uk-margin-remove-top">{{ page.hero.title }}</h1>
+        {% if page.hero.subtitle %}<p class="subtitle uk-text-lead uk-text-center">{{ page.hero.subtitle }}</p>{% endif %}
+
+        {% if page.hero.search %}
+        <div class="hero-search">
+
+            <!-- Html Elements for Search -->
+            <div class="uk-position-relative">
+                <form class="uk-search uk-search-default uk-width-1-1" name="search-hero" onsubmit="return false;">
+                    <span data-uk-search-icon></span>
+                    <input id="hero-search" class="uk-search-input" type="search" placeholder="Search for answers...">
+                </form>
+                <ul id="hero-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+            </div>
+
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('hero-search'),
+                resultsContainer: document.getElementById('hero-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+
+        </div>
+        {% endif %}
+
+    </div>
+</div>

@@ -1,0 +1,25 @@
+- title: Getting Started
+  docs:
+  - home
+  - quickstart
+  - installation
+  - windows
+
+- title: Account and Billing
+  docs:
+  - frontmatter
+  - posts
+  - drafts
+  - pages
+
+- title: Customization
+  docs:
+  - usage
+  - structure
+  - configuration
+
+- title: Troubleshooting
+  docs:
+  - variables
+  - collections
+  - assets

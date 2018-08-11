@@ -1,0 +1,16 @@
+# Categories home page navigation
+
+- title: Getting Started
+  desc: Get your account up and running in just few easy steps
+  icon: settings
+  doc: home
+
+- title: Account and Billing
+  desc: Managing your account, creating new users and exporting data
+  icon: credit-card
+  doc: frontmatter
+
+- title: Troubleshooting
+  desc: Answers to most common configuration issues
+  icon: cog
+  doc: variables

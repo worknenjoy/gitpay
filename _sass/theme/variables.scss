@@ -1,0 +1,90 @@
+// Color scheme variables
+
+// Main content
+$color-main: #0F1214;
+
+// Secondary content
+$global-muted-color: #7a838a;
+
+// Accent color
+$global-primary-background: $color-main;
+
+// Link and botton hover
+$color-hover: #000;
+
+// Standard UIkit
+//$global-muted-background: ;
+$global-border: #c4c7ca;
+
+// Global
+$global-font-family: system-ui;
+$global-link-color: $global-muted-color;
+$global-link-hover-color: $color-hover;
+
+$global-xxlarge-font-size: 1.875rem;;
+$global-xlarge-font-size: 1.625rem;
+$global-large-font-size: 1.375rem;
+$global-medium-font-size: 1.125rem;
+$global-small-font-size: 0.875rem;
+
+// Base
+$base-body-color: $color-main;
+$base-heading-color: $color-main;
+$link-muted-hover-color: $color-main;
+$button-primary-hover-background: $color-hover;
+$base-hr-border: lighten($global-border, 13%);
+$text-lead-font-size: 1.125rem;
+$base-heading-font-weight: bold;
+$base-heading-margin-top: 50px;
+// $base-body-font-weight: 300;
+$base-h2-line-height: 1.4;
+$base-link-hover-text-decoration: underline;
+// $base-h1-font-size:                              $global-xxlarge-font-size !default;
+// $base-h2-font-size:                              $global-xlarge-font-size !default;
+// $base-h3-font-size:                              $global-large-font-size !default;
+// $base-h4-font-size:                              $global-medium-font-size !default;
+// $base-h5-font-size:                              $global-font-size !default;
+// $base-h6-font-size:                              $global-small-font-size !default;
+
+// Navbar
+$navbar-background: #fff;
+$navbar-nav-item-color: $global-muted-color;
+$navbar-nav-item-hover-color: $color-main;
+$navbar-nav-item-active-color: $color-main;
+$navbar-toggle-color: $global-muted-color;
+$navbar-toggle-hover-color: $color-main;
+
+// Subnav
+$subnav-item-color: $global-muted-color;
+$subnav-item-hover-color: $color-main;
+
+// Pagination links
+$pagination-item-color: $color-main;
+$pagination-item-hover-color: $color-main;
+
+$article-meta-font-size: 	0.8125rem;
+$article-meta-line-height: 1.3;
+
+$container-max-width: 1100px;
+$container-small-max-width: 800px;
+
+$card-small-body-padding-horizontal:            25px;
+$card-small-body-padding-vertical:              25px;
+
+$article-title-line-height: 1.4;
+$article-title-font-size: 1.875rem;
+$offcanvas-bar-color-mode: dark;
+$offcanvas-bar-background: #fff;
+
+$heading-hero-font-size: 2.375rem;
+$heading-hero-line-height: 1.3;
+$heading-hero-font-size-s: 2.9375rem;
+$heading-hero-line-height-s: 1.3;
+$heading-hero-font-size-m: 3.625rem;
+$heading-hero-line-height-m: 1.4;
+
+$navbar-nav-item-text-transform: none;
+
+$subnav-item-text-transform: none;
+
+$search-default-border:  darken($global-border, 15%);

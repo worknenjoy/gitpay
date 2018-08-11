@@ -1,0 +1,25 @@
+<div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="{{ "/" | relative_url }}">{% if site.brand.image %}<img src="{{ site.post_assets | absolute_url }}{{ site.brand.image }}" alt="{{ site.brand.text }}">{% else %}{{ site.brand.text }}{% endif %}</a></li>
+            {% for link in site.data.navigation_header %}
+                {% if link.url contains 'http' %}
+                    {% assign domain = '' %}
+                {% else %}
+                    {% assign domain = site.url %}
+                {% endif %}
+            <li><a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank" {% endif %}>{{ link.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                {% include social-networks.html %}
+            </div>
+        </div>
+
+    </div>
+</div>

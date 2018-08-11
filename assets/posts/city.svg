@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="818px" height="288px" viewBox="0 0 818 288" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Style 9</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 287 1057.606 287 1057.606 0.388 0 0.388"></polygon>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Background-Images" transform="translate(-1803.000000, -2124.000000)">
+            <g id="Style-9" transform="translate(1683.000000, 2124.000000)">
+                <path d="M1.9998,285.6122 L1055.6068,285.6122 L1.9998,285.6122 Z" id="Fill-1" fill="#D02929"></path>
+                <g id="Group-146" transform="translate(0.000000, 0.612000)">
+                    <path d="M712.7791,57.7333 C727.8561,57.7333 720.8011,33.8283 701.7021,39.5383 C700.6451,6.3433 646.5391,-17.9437 624.1671,26.8273 C617.8411,21.8223 603.6371,31.2763 606.7831,39.5383 C599.7571,40.1363 594.2271,40.9493 589.9271,42.0253 C579.9981,44.5103 581.9631,57.6223 592.1991,57.5303 L712.7791,57.7333 Z" id="Fill-4" fill="#FFFFFF"></path>
+                    <path d="M712.7791,57.7333 C727.8561,57.7333 720.8011,33.8283 701.7021,39.5383 C700.6451,6.3433 646.5391,-17.9437 624.1671,26.8273 C617.8411,21.8223 603.6371,31.2763 606.7831,39.5383 C599.7571,40.1363 594.2271,40.9493 589.9271,42.0253 C579.9981,44.5103 581.9631,57.6223 592.1991,57.5303 L712.7791,57.7333 Z" id="Stroke-6" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M894.5662,89.4452 L827.7962,89.4452 C822.3902,89.4452 820.0602,82.4462 824.4852,79.3402 C824.5462,79.2962 824.6092,79.2532 824.6722,79.2092 C830.9712,74.8792 839.2392,75.2722 839.2392,75.2722 C839.2392,75.2722 840.4202,51.8482 862.6632,51.8482 C873.6602,51.8482 882.5472,70.6462 882.5472,70.6462 C882.5472,70.6462 897.5062,70.6462 899.9822,82.4582 C900.7322,86.0362 898.2212,89.4452 894.5662,89.4452" id="Fill-8" fill="#FFFFFF"></path>
+                    <path d="M894.5662,89.4452 L827.7962,89.4452 C822.3902,89.4452 820.0602,82.4462 824.4852,79.3402 C824.5462,79.2962 824.6092,79.2532 824.6722,79.2092 C830.9712,74.8792 839.2392,75.2722 839.2392,75.2722 C839.2392,75.2722 840.4202,51.8482 862.6632,51.8482 C873.6602,51.8482 882.5472,70.6462 882.5472,70.6462 C882.5472,70.6462 897.5062,70.6462 899.9822,82.4582 C900.7322,86.0362 898.2212,89.4452 894.5662,89.4452 Z" id="Stroke-10" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M205.6257,47.9872 L268.5157,47.9872 C274.1377,47.9872 276.5617,40.7082 271.9597,37.4772 C271.8957,37.4322 271.8297,37.3872 271.7647,37.3422 C265.2137,32.8392 256.6157,33.2482 256.6157,33.2482 C256.6157,33.2482 255.3877,8.8862 232.2547,8.8862 C211.3417,8.8862 203.0007,29.4132 199.9927,40.7202 C199.0157,44.3952 201.8237,47.9872 205.6257,47.9872" id="Fill-12" fill="#FFFFFF"></path>
+                    <path d="M205.6257,47.9872 L268.5157,47.9872 C274.1377,47.9872 276.5617,40.7082 271.9597,37.4772 C271.8957,37.4322 271.8297,37.3872 271.7647,37.3422 C265.2137,32.8392 256.6157,33.2482 256.6157,33.2482 C256.6157,33.2482 255.3877,8.8862 232.2547,8.8862 C211.3417,8.8862 203.0007,29.4132 199.9927,40.7202 C199.0157,44.3952 201.8237,47.9872 205.6257,47.9872 Z" id="Stroke-14" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M317.9763,91.7441 L439.1173,91.7441 C450.4893,91.7441 449.9663,82.3811 446.2523,79.1181 C442.4463,75.7751 434.9233,77.1321 434.9233,77.1321 C434.9233,77.1321 432.6833,70.8341 425.3123,67.7671 C418.7913,65.0561 411.9603,66.3471 411.9603,66.3471 C411.9603,66.3471 411.9603,62.0241 407.7863,58.4441 C403.6113,54.8651 398.0443,55.2131 398.0443,55.2131 C398.0443,55.2131 394.2173,31.3811 368.6453,31.3811 C343.0743,31.3811 340.1163,53.8211 340.1163,53.8211 C340.1163,53.8211 334.3753,53.8211 330.2013,57.6481 C326.0263,61.4751 325.5033,65.8241 325.5033,65.8241 C325.5033,65.8241 311.5413,63.9431 307.4133,75.9871 C304.9523,83.1661 310.0073,91.7441 317.9763,91.7441" id="Fill-16" fill="#FFFFFF"></path>
+                    <path d="M317.9763,91.7441 L439.1173,91.7441 C450.4893,91.7441 449.9663,82.3811 446.2523,79.1181 C442.4463,75.7751 434.9233,77.1321 434.9233,77.1321 C434.9233,77.1321 432.6833,70.8341 425.3123,67.7671 C418.7913,65.0561 411.9603,66.3471 411.9603,66.3471 C411.9603,66.3471 411.9603,62.0241 407.7863,58.4441 C403.6113,54.8651 398.0443,55.2131 398.0443,55.2131 C398.0443,55.2131 394.2173,31.3811 368.6453,31.3811 C343.0743,31.3811 340.1163,53.8211 340.1163,53.8211 C340.1163,53.8211 334.3753,53.8211 330.2013,57.6481 C326.0263,61.4751 325.5033,65.8241 325.5033,65.8241 C325.5033,65.8241 311.5413,63.9431 307.4133,75.9871 C304.9523,83.1661 310.0073,91.7441 317.9763,91.7441 Z" id="Stroke-18" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-21"></g>
+                    <polygon id="Fill-20" fill="#FFFFFF" mask="url(#mask-2)" points="477.282 285 598.789 285 598.789 52.795 477.282 52.795"></polygon>
+                    <polygon id="Stroke-22" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="477.282 285 598.789 285 598.789 52.795 477.282 52.795"></polygon>
+                    <polygon id="Fill-23" fill="#FFFFFF" mask="url(#mask-2)" points="236.478 285 385.042 285 385.042 206.532 236.478 206.532"></polygon>
+                    <polygon id="Stroke-24" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="236.478 285 385.042 285 385.042 206.532 236.478 206.532"></polygon>
+                    <polygon id="Fill-25" fill="#FFFFFF" mask="url(#mask-2)" points="658.162 285 806.725 285 806.725 181.265 658.162 181.265"></polygon>
+                    <polygon id="Stroke-26" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="658.162 285 806.725 285 806.725 181.265 658.162 181.265"></polygon>
+                    <polygon id="Fill-27" fill="#FFFFFF" mask="url(#mask-2)" points="431.61 284.486 532.794 284.486 532.794 111.167 431.61 111.167"></polygon>
+                    <polygon id="Stroke-28" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="431.61 284.486 532.794 284.486 532.794 111.167 431.61 111.167"></polygon>
+                    <polygon id="Fill-29" fill="#FFFFFF" mask="url(#mask-2)" points="423.142 117.076 541.26 117.076 541.26 108.068 423.142 108.068"></polygon>
+                    <polygon id="Stroke-30" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="423.142 117.076 541.26 117.076 541.26 108.068 423.142 108.068"></polygon>
+                    <g id="Group-33" mask="url(#mask-2)">
+                        <g transform="translate(431.000000, 172.000000)">
+                            <path d="M0.7087,0.6923 L100.4277,0.6923" id="Fill-31" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.7087,0.6923 L100.4277,0.6923" id="Stroke-32" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                    <g id="Group-36" mask="url(#mask-2)">
+                        <g transform="translate(433.000000, 230.000000)">
+                            <path d="M0.7126,0.5097 L99.0706,0.5097" id="Fill-34" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.7126,0.5097 L99.0706,0.5097" id="Stroke-35" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                    <polygon id="Fill-37" fill="#FFFFFF" mask="url(#mask-2)" points="447.059 217.501 461.008 217.501 461.008 187.297 447.059 187.297"></polygon>
+                    <polygon id="Stroke-38" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="447.059 217.501 461.008 217.501 461.008 187.297 447.059 187.297"></polygon>
+                    <polygon id="Fill-39" fill="#FFFFFF" mask="url(#mask-2)" points="476.169 217.501 490.118 217.501 490.118 187.297 476.169 187.297"></polygon>
+                    <polygon id="Stroke-40" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="476.169 217.501 490.118 217.501 490.118 187.297 476.169 187.297"></polygon>
+                    <polygon id="Fill-41" fill="#FFFFFF" mask="url(#mask-2)" points="505.368 217.501 519.317 217.501 519.317 187.297 505.368 187.297"></polygon>
+                    <polygon id="Stroke-42" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="505.368 217.501 519.317 217.501 519.317 187.297 505.368 187.297"></polygon>
+                    <polygon id="Fill-43" fill="#FFFFFF" mask="url(#mask-2)" points="447.059 161.059 461.008 161.059 461.008 130.855 447.059 130.855"></polygon>
+                    <polygon id="Stroke-44" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="447.059 161.059 461.008 161.059 461.008 130.855 447.059 130.855"></polygon>
+                    <polygon id="Fill-45" fill="#FFFFFF" mask="url(#mask-2)" points="476.169 161.059 490.118 161.059 490.118 130.855 476.169 130.855"></polygon>
+                    <polygon id="Stroke-46" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="476.169 161.059 490.118 161.059 490.118 130.855 476.169 130.855"></polygon>
+                    <polygon id="Fill-47" fill="#FFFFFF" mask="url(#mask-2)" points="505.368 161.059 519.317 161.059 519.317 130.855 505.368 130.855"></polygon>
+                    <polygon id="Stroke-48" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="505.368 161.059 519.317 161.059 519.317 130.855 505.368 130.855"></polygon>
+                    <polygon id="Fill-49" fill="#FFFFFF" mask="url(#mask-2)" points="447.059 273.901 461.008 273.901 461.008 243.697 447.059 243.697"></polygon>
+                    <polygon id="Stroke-50" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="447.059 273.901 461.008 273.901 461.008 243.697 447.059 243.697"></polygon>
+                    <polygon id="Fill-51" fill="#FFFFFF" mask="url(#mask-2)" points="476.169 285 490.118 285 490.118 243.697 476.169 243.697"></polygon>
+                    <polygon id="Stroke-52" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="476.169 285 490.118 285 490.118 243.697 476.169 243.697"></polygon>
+                    <polygon id="Fill-53" fill="#FFFFFF" mask="url(#mask-2)" points="505.368 273.901 519.317 273.901 519.317 243.697 505.368 243.697"></polygon>
+                    <polygon id="Stroke-54" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="505.368 273.901 519.317 273.901 519.317 243.697 505.368 243.697"></polygon>
+                    <polygon id="Fill-55" fill="#FFFFFF" mask="url(#mask-2)" points="571.707 284.389 692.113 284.389 692.113 78.142 571.707 78.142"></polygon>
+                    <polygon id="Stroke-56" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="571.707 284.389 692.113 284.389 692.113 78.142 571.707 78.142"></polygon>
+                    <polygon id="Fill-57" fill="#FFFFFF" mask="url(#mask-2)" points="571.707 284.389 692.113 284.389 692.113 273.902 571.707 273.902"></polygon>
+                    <polygon id="Stroke-58" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="571.707 284.389 692.113 284.389 692.113 273.902 571.707 273.902"></polygon>
+                    <polygon id="Fill-59" fill="#FFFFFF" mask="url(#mask-2)" points="561.63 83.814 702.189 83.814 702.189 74.455 561.63 74.455"></polygon>
+                    <polygon id="Stroke-60" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="561.63 83.814 702.189 83.814 702.189 74.455 561.63 74.455"></polygon>
+                    <g id="Group-63" mask="url(#mask-2)">
+                        <g transform="translate(574.000000, 230.000000)">
+                            <path d="M0.2087,0.5097 L118.8717,0.5097" id="Fill-61" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.2087,0.5097 L118.8717,0.5097" id="Stroke-62" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                    <polygon id="Fill-64" fill="#FFFFFF" mask="url(#mask-2)" points="624.731 285 641.33 285 641.33 243.697 624.731 243.697"></polygon>
+                    <polygon id="Stroke-65" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="624.731 285 641.33 285 641.33 243.697 624.731 243.697"></polygon>
+                    <polygon id="Fill-66" fill="#FFFFFF" mask="url(#mask-2)" points="659.382 273.252 675.982 273.252 675.982 257.439 659.382 257.439"></polygon>
+                    <polygon id="Stroke-67" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="659.382 273.252 675.982 273.252 675.982 257.439 659.382 257.439"></polygon>
+                    <polygon id="Fill-68" fill="#FFFFFF" mask="url(#mask-2)" points="590.703 273.252 607.302 273.252 607.302 257.439 590.703 257.439"></polygon>
+                    <polygon id="Stroke-69" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="590.703 273.252 607.302 273.252 607.302 257.439 590.703 257.439"></polygon>
+                    <polygon id="Fill-70" fill="#FFFFFF" mask="url(#mask-2)" points="659.382 215.492 675.982 215.492 675.982 199.679 659.382 199.679"></polygon>
+                    <polygon id="Stroke-71" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="659.382 215.492 675.982 215.492 675.982 199.679 659.382 199.679"></polygon>
+                    <polygon id="Fill-72" fill="#FFFFFF" mask="url(#mask-2)" points="590.703 215.492 607.302 215.492 607.302 199.679 590.703 199.679"></polygon>
+                    <polygon id="Stroke-73" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="590.703 215.492 607.302 215.492 607.302 199.679 590.703 199.679"></polygon>
+                    <polygon id="Fill-74" fill="#FFFFFF" mask="url(#mask-2)" points="624.731 215.492 641.33 215.492 641.33 199.679 624.731 199.679"></polygon>
+                    <polygon id="Stroke-75" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="624.731 215.492 641.33 215.492 641.33 199.679 624.731 199.679"></polygon>
+                    <polygon id="Fill-76" fill="#FFFFFF" mask="url(#mask-2)" points="659.382 182.625 675.982 182.625 675.982 166.812 659.382 166.812"></polygon>
+                    <polygon id="Stroke-77" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="659.382 182.625 675.982 182.625 675.982 166.812 659.382 166.812"></polygon>
+                    <polygon id="Fill-78" fill="#FFFFFF" mask="url(#mask-2)" points="590.703 182.625 607.302 182.625 607.302 166.812 590.703 166.812"></polygon>
+                    <polygon id="Stroke-79" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="590.703 182.625 607.302 182.625 607.302 166.812 590.703 166.812"></polygon>
+                    <polygon id="Fill-80" fill="#FFFFFF" mask="url(#mask-2)" points="624.731 182.625 641.33 182.625 641.33 166.812 624.731 166.812"></polygon>
+                    <polygon id="Stroke-81" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="624.731 182.625 641.33 182.625 641.33 166.812 624.731 166.812"></polygon>
+                    <polygon id="Fill-82" fill="#FFFFFF" mask="url(#mask-2)" points="659.382 151.617 675.982 151.617 675.982 135.804 659.382 135.804"></polygon>
+                    <polygon id="Stroke-83" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="659.382 151.617 675.982 151.617 675.982 135.804 659.382 135.804"></polygon>
+                    <polygon id="Fill-84" fill="#FFFFFF" mask="url(#mask-2)" points="590.703 151.617 607.302 151.617 607.302 135.804 590.703 135.804"></polygon>
+                    <polygon id="Stroke-85" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="590.703 151.617 607.302 151.617 607.302 135.804 590.703 135.804"></polygon>
+                    <polygon id="Fill-86" fill="#FFFFFF" mask="url(#mask-2)" points="624.731 151.617 641.33 151.617 641.33 135.804 624.731 135.804"></polygon>
+                    <polygon id="Stroke-87" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="624.731 151.617 641.33 151.617 641.33 135.804 624.731 135.804"></polygon>
+                    <polygon id="Fill-88" fill="#FFFFFF" mask="url(#mask-2)" points="659.382 118.75 675.982 118.75 675.982 102.937 659.382 102.937"></polygon>
+                    <polygon id="Stroke-89" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="659.382 118.75 675.982 118.75 675.982 102.937 659.382 102.937"></polygon>
+                    <polygon id="Fill-90" fill="#FFFFFF" mask="url(#mask-2)" points="590.703 118.75 607.302 118.75 607.302 102.937 590.703 102.937"></polygon>
+                    <polygon id="Stroke-91" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="590.703 118.75 607.302 118.75 607.302 102.937 590.703 102.937"></polygon>
+                    <polygon id="Fill-92" fill="#FFFFFF" mask="url(#mask-2)" points="624.731 118.75 641.33 118.75 641.33 102.937 624.731 102.937"></polygon>
+                    <polygon id="Stroke-93" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="624.731 118.75 641.33 118.75 641.33 102.937 624.731 102.937"></polygon>
+                    <path d="M346.7898,160.704 L346.8588,160.704 C348.7388,160.704 350.2638,162.228 350.2638,164.108 L350.2638,285 L343.3858,285 L343.3858,164.108 C343.3858,162.228 344.9098,160.704 346.7898,160.704" id="Fill-94" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                    <path d="M346.7898,160.704 L346.8588,160.704 C348.7388,160.704 350.2638,162.228 350.2638,164.108 L350.2638,285 L343.3858,285 L343.3858,164.108 C343.3858,162.228 344.9098,160.704 346.7898,160.704 Z" id="Stroke-95" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)"></path>
+                    <path d="M286.5271,199.9452 C286.5271,233.3922 313.6411,260.5082 347.0891,260.5082 C380.5371,260.5082 407.6511,233.3922 407.6511,199.9452 C407.6511,166.4982 380.5371,131.4682 347.0891,131.4682 C313.6411,131.4682 286.5271,166.4982 286.5271,199.9452" id="Fill-96" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                    <path d="M286.5271,199.9452 C286.5271,233.3922 313.6411,260.5082 347.0891,260.5082 C380.5371,260.5082 407.6511,233.3922 407.6511,199.9452 C407.6511,166.4982 380.5371,131.4682 347.0891,131.4682 C313.6411,131.4682 286.5271,166.4982 286.5271,199.9452 Z" id="Stroke-97" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)"></path>
+                    <polygon id="Fill-98" fill="#FFFFFF" mask="url(#mask-2)" points="128.245 285 271.142 285 271.142 176.154 128.245 176.154"></polygon>
+                    <polygon id="Stroke-99" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="128.245 285 271.142 285 271.142 176.154 128.245 176.154"></polygon>
+                    <polygon id="Fill-100" fill="#FFFFFF" mask="url(#mask-2)" points="122.491 181.313 276.896 181.313 276.896 173.278 122.491 173.278"></polygon>
+                    <polygon id="Stroke-101" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="122.491 181.313 276.896 181.313 276.896 173.278 122.491 173.278"></polygon>
+                    <polygon id="Fill-102" fill="#FFFFFF" mask="url(#mask-2)" points="185.094 284.486 214.293 284.486 214.293 243.697 185.094 243.697"></polygon>
+                    <polygon id="Stroke-103" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="185.094 284.486 214.293 284.486 214.293 243.697 185.094 243.697"></polygon>
+                    <polygon id="Fill-104" fill="#FFFFFF" mask="url(#mask-2)" points="183.626 233.133 215.76 233.133 215.76 197.852 183.626 197.852"></polygon>
+                    <polygon id="Stroke-105" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="183.626 233.133 215.76 233.133 215.76 197.852 183.626 197.852"></polygon>
+                    <polygon id="Fill-106" fill="#FFFFFF" mask="url(#mask-2)" points="230.344 284.389 260.106 284.389 260.106 197.852 230.344 197.852"></polygon>
+                    <polygon id="Stroke-107" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="230.344 284.389 260.106 284.389 260.106 197.852 230.344 197.852"></polygon>
+                    <polygon id="Fill-108" fill="#FFFFFF" mask="url(#mask-2)" points="140.489 284.389 170.251 284.389 170.251 197.852 140.489 197.852"></polygon>
+                    <polygon id="Stroke-109" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="140.489 284.389 170.251 284.389 170.251 197.852 140.489 197.852"></polygon>
+                    <polygon id="Fill-110" fill="#FFFFFF" mask="url(#mask-2)" points="835.836 284.487 928.62 284.487 928.62 230.51 835.836 230.51"></polygon>
+                    <polygon id="Stroke-111" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="835.836 284.487 928.62 284.487 928.62 230.51 835.836 230.51"></polygon>
+                    <polygon id="Fill-112" fill="#FFFFFF" mask="url(#mask-2)" points="829.34 230.617 935.116 230.617 935.116 222.893 829.34 222.893"></polygon>
+                    <polygon id="Stroke-113" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="829.34 230.617 935.116 230.617 935.116 222.893 829.34 222.893"></polygon>
+                    <polygon id="Fill-114" fill="#FFFFFF" mask="url(#mask-2)" points="852.838 285 869.437 285 869.437 243.697 852.838 243.697"></polygon>
+                    <polygon id="Stroke-115" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="852.838 285 869.437 285 869.437 243.697 852.838 243.697"></polygon>
+                    <polygon id="Fill-116" fill="#FFFFFF" mask="url(#mask-2)" points="882.229 273.252 915.629 273.252 915.629 245.766 882.229 245.766"></polygon>
+                    <polygon id="Stroke-117" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="882.229 273.252 915.629 273.252 915.629 245.766 882.229 245.766"></polygon>
+                    <path d="M774.9744,128.0634 L775.0434,128.0634 C776.9234,128.0634 778.4484,129.5874 778.4484,131.4684 L778.4484,285.0004 L771.5694,285.0004 L771.5694,131.4684 C771.5694,129.5874 773.0944,128.0634 774.9744,128.0634" id="Fill-118" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                    <path d="M774.9744,128.0634 L775.0434,128.0634 C776.9234,128.0634 778.4484,129.5874 778.4484,131.4684 L778.4484,285.0004 L771.5694,285.0004 L771.5694,131.4684 C771.5694,129.5874 773.0944,128.0634 774.9744,128.0634 Z" id="Stroke-119" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)"></path>
+                    <path d="M714.7117,199.9452 C714.7117,233.3922 741.8257,260.5082 775.2737,260.5082 C808.7217,260.5082 835.8357,233.3922 835.8357,199.9452 C835.8357,166.4982 808.7217,100.5322 775.2737,100.5322 C741.8257,100.5322 714.7117,166.4982 714.7117,199.9452" id="Fill-120" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                    <path d="M714.7117,199.9452 C714.7117,233.3922 741.8257,260.5082 775.2737,260.5082 C808.7217,260.5082 835.8357,233.3922 835.8357,199.9452 C835.8357,166.4982 808.7217,100.5322 775.2737,100.5322 C741.8257,100.5322 714.7117,166.4982 714.7117,199.9452 Z" id="Stroke-121" stroke="#E1E4E5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)"></path>
+                    <g id="Group-124" mask="url(#mask-2)">
+                        <g transform="translate(237.000000, 107.000000)">
+                            <path d="M0.8406,0.6972 L22.8406,0.6972" id="Fill-122" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.8406,0.6972 L22.8406,0.6972" id="Stroke-123" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                    <g id="Group-127" mask="url(#mask-2)">
+                        <g transform="translate(281.000000, 107.000000)">
+                            <path d="M0.7859,0.6972 L36.7859,0.6972" id="Fill-125" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.7859,0.6972 L36.7859,0.6972" id="Stroke-126" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                    <g id="Group-130" mask="url(#mask-2)">
+                        <g transform="translate(435.000000, 27.000000)">
+                            <path d="M0.8405,0.6972 L16.8405,0.6972" id="Fill-128" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.8405,0.6972 L16.8405,0.6972" id="Stroke-129" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                    <g id="Group-133" mask="url(#mask-2)">
+                        <g transform="translate(752.000000, 37.000000)">
+                            <polyline id="Fill-131" stroke="none" fill="#FFFFFF" fill-rule="evenodd" points="0.8181 0.6972 2.8181 0.6972 14.8181 0.6972"></polyline>
+                            <polyline id="Stroke-132" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" points="0.8181 0.6972 2.8181 0.6972 14.8181 0.6972"></polyline>
+                        </g>
+                    </g>
+                    <g id="Group-136" mask="url(#mask-2)">
+                        <g transform="translate(516.000000, 37.000000)">
+                            <polyline id="Fill-134" stroke="none" fill="#FFFFFF" fill-rule="evenodd" points="0.3171 0.6972 7.3171 0.6972 23.3171 0.6972"></polyline>
+                            <polyline id="Stroke-135" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" points="0.3171 0.6972 7.3171 0.6972 23.3171 0.6972"></polyline>
+                        </g>
+                    </g>
+                    <g id="Group-139" mask="url(#mask-2)">
+                        <g transform="translate(569.000000, 17.000000)">
+                            <polyline id="Fill-137" stroke="none" fill="#FFFFFF" fill-rule="evenodd" points="0.8406 0.6972 0.8406 2.6972 12.8406 2.6972"></polyline>
+                            <polyline id="Stroke-138" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" points="0.8406 0.6972 0.8406 2.6972 12.8406 2.6972"></polyline>
+                        </g>
+                    </g>
+                    <g id="Group-142" mask="url(#mask-2)">
+                        <g transform="translate(841.000000, 104.000000)">
+                            <path d="M0.3923,0.6972 L22.4833,0.6972" id="Fill-140" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.3923,0.6972 L22.4833,0.6972" id="Stroke-141" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                    <g id="Group-145" mask="url(#mask-2)">
+                        <g transform="translate(879.000000, 104.000000)">
+                            <path d="M0.8406,0.6972 L16.8406,0.6972" id="Fill-143" stroke="none" fill="#FFFFFF" fill-rule="evenodd"></path>
+                            <path d="M0.8406,0.6972 L16.8406,0.6972" id="Stroke-144" stroke="#E1E4E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

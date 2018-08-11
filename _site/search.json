@@ -1,0 +1,115 @@
+[
+  
+    {
+      "title"    : "How To Setup Domain SSL With Github Pages",
+      "category" : "",
+      "tags"     : "featured",
+      "url"      : "/docs/assets/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Category hosting Setting up new domain and page",
+      "category" : "",
+      "tags"     : "featured",
+      "url"      : "/docs/collections/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Purchasing domain name and DNS setup",
+      "category" : "",
+      "tags"     : "othertag",
+      "url"      : "/docs/configuration/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Cancelling a website subscription",
+      "category" : "",
+      "tags"     : "featured",
+      "url"      : "/docs/drafts/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Settings up Jekkyl on Github pages",
+      "category" : "",
+      "tags"     : "othertag",
+      "url"      : "/docs/frontmatter/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Creating new page in Jekyll and publishing",
+      "category" : "",
+      "tags"     : "featured, othertag",
+      "url"      : "/docs/home/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Getting started with our application",
+      "category" : "",
+      "tags"     : "featured",
+      "url"      : "/docs/installation/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Updating your billing credit card",
+      "category" : "",
+      "tags"     : "othertag",
+      "url"      : "/docs/pages/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Accepted currencies for product billing",
+      "category" : "",
+      "tags"     : "featured",
+      "url"      : "/docs/posts/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Getting a JavaScript console error",
+      "category" : "",
+      "tags"     : "featured",
+      "url"      : "/docs/quickstart/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Upgrading to paid service",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/structure/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Design tips for choosing great images",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/usage/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Understanding company billing and accounts",
+      "category" : "",
+      "tags"     : "featured",
+      "url"      : "/docs/variables/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } ,
+  
+    {
+      "title"    : "Selecting the right fonts and colors",
+      "category" : "",
+      "tags"     : "othertag",
+      "url"      : "/docs/windows/",
+      "date"     : "2018-05-08 08:41:53 -0400"
+    } 
+  
+]

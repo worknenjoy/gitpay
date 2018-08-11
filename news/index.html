@@ -1,0 +1,49 @@
+---
+layout: default
+title: News
+---
+
+<div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+
+        <h1 class="uk-article-title">{{ page.title | escape }}</h1>
+
+        {% for post in paginator.posts %}
+        <div class="uk-card card-post uk-inline uk-border-rounded uk-width-1-1 uk-margin">
+            <a class="uk-position-cover" href="{{ post.url | relative_url }}"></a>
+            <div class="uk-card-header">
+                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    {% if page.author %}
+                      {% assign author = site.authors[page.author] %}
+                    {% else %}
+                      {% assign author = site.author %}
+                    {% endif %}
+
+                    <div class="uk-width-auto">
+                        {% if author.github %}
+                            {% avatar {{ author.github }} size=40 %}
+                        {% endif %}
+                    </div>
+                    <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">{{ post.title }}</h3>
+                        <p class="uk-text-meta uk-margin-remove-top"><time datetime="{{ post.date | date_to_xmlschema }}">
+                            {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+                            {{ post.date | date: date_format }}
+                        </time></p>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-card-body">
+                {{ post.excerpt }}
+            </div>
+            <div class="uk-card-footer">
+                <span class="uk-button uk-button-text">Read more &rarr;</span>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        {% include paginate-blog.html %}
+
+    </div>
+</div>

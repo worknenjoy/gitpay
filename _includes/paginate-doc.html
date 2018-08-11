@@ -1,0 +1,24 @@
+{% assign docs = site.data.navigation_docs | map: 'docs' | join: ',' | split: ',' %}
+
+{% for document in docs %}
+  {% assign document_url = document | prepend:"/docs/" | append:"/" %}
+  {% if document_url == page.url %}
+    <ul class="uk-pagination uk-margin-top">
+          {% if forloop.first %}
+
+          {% else %}
+            {% assign previous = forloop.index0 | minus: 1 %}
+            {% assign previous_page = docs[previous] | prepend:"/docs/" | append:"/" %}
+            <li><a class="hvr-back" href="{{ previous_page }}">&larr; Previous</a></li>
+          {% endif %}
+          {% if forloop.last %}
+
+          {% else %}
+            {% assign next = forloop.index0 | plus: 1 %}
+            {% assign next_page = docs[next] | prepend:"/docs/" | append:"/" %}
+            <li class="uk-margin-auto-left"><a class="hvr-forward" href="{{ next_page }}">Next &rarr;</a></li>
+          {% endif %}
+    </ul>
+    {% break %}
+  {% endif %}
+{% endfor %}
