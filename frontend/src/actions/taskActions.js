@@ -11,6 +11,10 @@ const UPDATE_TASK_REQUESTED = 'UPDATE_TASK_REQUESTED'
 const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS'
 const UPDATE_TASK_ERROR = 'UPDATE_TASK_ERROR'
 
+const INVITE_TASK_REQUESTED = 'INVITE_TASK_REQUESTED'
+const INVITE_TASK_SUCCESS = 'INVITE_TASK_SUCCESS'
+const INVITE_TASK_ERROR = 'INVITE_TASK_ERROR'
+
 const FETCH_TASK_REQUESTED = 'FETCH_TASK_REQUESTED'
 const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS'
 const FETCH_TASK_ERROR = 'FETCH_TASK_ERROR'
@@ -68,12 +72,28 @@ const updateTaskRequested = () => {
   return { type: UPDATE_TASK_REQUESTED, completed: false }
 }
 
-const updateTaskSuccess = task => {
+const updateTaskSuccess = () => {
   return { type: UPDATE_TASK_SUCCESS, completed: true }
 }
 
 const updateTaskError = error => {
   return { type: UPDATE_TASK_ERROR, completed: true, error: error }
+}
+
+/*
+*  Task invite
+ */
+
+const inviteTaskRequested = () => {
+  return { type: INVITE_TASK_REQUESTED, completed: false }
+}
+
+const inviteTaskSuccess = () => {
+  return { type: INVITE_TASK_SUCCESS, completed: true }
+}
+
+const inviteTaskError = error => {
+  return { type: UPDATE_TASK_ERROR, completed: true, error }
 }
 
 /*
@@ -234,18 +254,18 @@ const updateTask = task => {
           dispatch(addNotification('Pagamento realizado com sucesso'))
           dispatch(changeTaskTab(1))
           dispatch(syncTask(task.id))
-          dispatch(updateTaskSuccess(response))
+          dispatch(updateTaskSuccess())
         }
         else if (task.Assigns) {
           dispatch(
             addNotification('Você adicionou interesse pela tarefa com sucesso')
           )
           dispatch(changeTaskTab(2))
-          dispatch(updateTaskSuccess(response))
+          dispatch(updateTaskSuccess())
         }
         else {
           dispatch(addNotification('Tarefa atualizada com sucesso'))
-          dispatch(updateTaskSuccess(response))
+          dispatch(updateTaskSuccess())
         }
         return dispatch(fetchTask(task.id))
       })
@@ -382,6 +402,42 @@ const paymentTask = (taskId, value) => {
   }
 }
 
+const inviteTask = (id, email, message) => {
+  return dispatch => {
+    dispatch(inviteTaskRequested())
+    axios
+      .post(api.API_URL + `/tasks/${id}/invite/`, {
+        email, message
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('Convite enviado com sucesso'))
+          return dispatch(inviteTaskSuccess())
+        }
+        dispatch(addNotification('Não foi possível enviar o convite'))
+        return dispatch(
+          inviteTaskError({
+            error: {
+              type: 'task_invite_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification(
+            'Não foi possível enviar o convite'
+          )
+        )
+        dispatch(inviteTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible send invite')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
 const syncTask = taskId => {
   return dispatch => {
     dispatch(syncTaskRequested())
@@ -421,6 +477,9 @@ export {
   UPDATE_TASK_REQUESTED,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_ERROR,
+  INVITE_TASK_REQUESTED,
+  INVITE_TASK_SUCCESS,
+  INVITE_TASK_ERROR,
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
@@ -447,5 +506,6 @@ export {
   updateTask,
   paymentTask,
   syncTask,
+  inviteTask,
   changeTaskTab
 }

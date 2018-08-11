@@ -78,6 +78,12 @@ exports.deleteTaskById = (req, res) => {
     })
 }
 
+// invite functions
+exports.inviteUserToTask = ({ params, body }, res) => Tasks
+  .taskInvite(params, body)
+  .then(data => res.send(data))
+  .catch(error => res.send({ error: error.message }))
+
 // Assigns functions.
 exports.removeAssignedUser = ({ params, body }, res) => Tasks
   .removeAssignedUser(params, body)

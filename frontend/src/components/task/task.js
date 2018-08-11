@@ -60,6 +60,7 @@ import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
 import RemoveAssignment from './assignment/RemoveAssignment'
+import TaskInvite from './task-invite'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
@@ -270,6 +271,7 @@ class Task extends Component {
       paymentForm: false,
       deadlineForm: false,
       taskPaymentDialog: false,
+      taskInviteDialog: false,
       notification: {
         open: false,
         message: 'loading'
@@ -280,10 +282,6 @@ class Task extends Component {
   componentWillMount () {
     this.props.syncTask(this.props.match.params.id)
     this.props.fetchTask(this.props.match.params.id)
-  }
-
-  handleCloseNotification = () => {
-    this.setState({ notification: { open: false } })
   }
 
   handleTabChange = (event, tab) => {
@@ -334,6 +332,10 @@ class Task extends Component {
   handleDeadlineForm = (e) => {
     e.preventDefault()
     this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true })
+  }
+
+  handleInvite = () => {
+    this.setState({ taskInviteDialog: true })
   }
 
   render () {
@@ -571,12 +573,22 @@ class Task extends Component {
                   <div style={ { display: 'inline-block' } }>
                     <Button
                       style={ { marginRight: 10 } }
+                      onClick={ this.handleInvite }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>Convidar</span>
+                      <AddIcon />
+                    </Button>
+                    <Button
+                      style={ { marginRight: 10 } }
                       onClick={ this.handleDeadlineForm }
                       size='small'
                       color='primary'
                       className={ classes.altButton }
                     >
-                      <span className={ classes.spaceRight }>Data para entrega</span>{ ' ' }
+                      <span className={ classes.spaceRight }>Data para entrega</span>
                       <DateIcon />
                     </Button>
                     <Button
@@ -586,7 +598,7 @@ class Task extends Component {
                       color='primary'
                       className={ classes.altButton }
                     >
-                      <span className={ classes.spaceRight }>Mudar status</span>{ ' ' }
+                      <span className={ classes.spaceRight }>Mudar status</span>
                       <FilterIcon />
                     </Button>
                     <Button
@@ -595,7 +607,7 @@ class Task extends Component {
                       color='primary'
                       className={ classes.altButton }
                     >
-                      <span className={ classes.spaceRight }>Enviar recompensa</span>{ ' ' }
+                      <span className={ classes.spaceRight }>Enviar recompensa</span>
                       <RedeemIcon />
                     </Button>
                     <StatusDialog
@@ -624,6 +636,7 @@ class Task extends Component {
                     />
                   </div>
                 ) }
+                <TaskInvite id={ task.data.id } onInvite={ this.props.inviteTask } visible={ this.state.taskInviteDialog } onClose={ () => this.setState({ taskInviteDialog: false }) } onOpen={ () => this.setState({ taskInviteDialog: true }) } />
                 <Dialog
                   open={ this.state.assignDialog }
                   onClose={ this.handleAssignDialogClose }
@@ -776,6 +789,7 @@ Task.propTypes = {
   order: PropTypes.object,
   filterTaskOrders: PropTypes.func,
   paymentOrder: PropTypes.func,
+  inviteTask: PropTypes.func
 }
 
 export default withStyles(styles)(Task)
