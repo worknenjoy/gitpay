@@ -18,6 +18,9 @@ import {
   PAYMENT_TASK_REQUESTED,
   PAYMENT_TASK_SUCCESS,
   PAYMENT_TASK_ERROR,
+  INVITE_TASK_REQUESTED,
+  INVITE_TASK_SUCCESS,
+  INVITE_TASK_ERROR,
   SYNC_TASK_REQUESTED,
   SYNC_TASK_SUCCESS,
   SYNC_TASK_ERROR,
@@ -28,7 +31,6 @@ import {
   ASSIGN_TASK_REQUESTED,
   ASSIGN_TASK_SUCCESS,
   ASSIGN_TASK_ERROR,
-
   REMOVE_ASSIGNMENT_REQUESTED,
   REMOVE_ASSIGNMENT_SUCCESS,
   REMOVE_ASSIGNMENT_ERROR,
@@ -74,6 +76,7 @@ export const task = (state = {
       return { ...state, completed: true }
     case CREATE_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
+
     case UPDATE_TASK_REQUESTED:
       return { ...state, completed: false }
     case UPDATE_TASK_SUCCESS:
@@ -82,6 +85,13 @@ export const task = (state = {
       return { ...state, completed: true, error: action.error }
     case CHANGE_TASK_TAB:
       return { ...state, tab: action.tab }
+
+    case INVITE_TASK_REQUESTED:
+      return { ...state, completed: false }
+    case INVITE_TASK_SUCCESS:
+      return { ...state, completed: true }
+    case INVITE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error }
 
     case ASSIGN_TASK_REQUESTED:
       return { ...state, completed: false }

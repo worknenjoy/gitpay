@@ -35,6 +35,15 @@ describe("tasks", () => {
 
   describe('Task crud', () => {
     // API rate limit exceeded
+    const createTask = () => {
+      return agent
+        .post('/tasks/create/')
+        .send({url: 'https://github.com/worknenjoy/truppie/issues/99', provider: 'bitbucket'})
+        .end((err, task) => {
+          const taskId = task.body.id
+          return taskId
+        })
+    }
     it('should create a new task', (done) => {
       agent
         .post('/tasks/create/')
@@ -48,6 +57,23 @@ describe("tasks", () => {
           done();
         })
     })
+
+    it('should invite for a task', (done) => {
+      const taskId = createTask()
+      agent
+        .post(`/tasks/${taskId}/invite/`)
+        .send({email: 'https://github.com/worknenjoy/truppie/issues/99', message: 'a test invite'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          //expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
+          done();
+        })
+    })
+
+
 
     // API rate limit exceed sometimes and this test fails (mock github call)
     xit('should fetch task', (done) => {
