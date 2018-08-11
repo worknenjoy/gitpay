@@ -107,10 +107,10 @@ class TaskPaymentForm extends Component {
                   <Button size='small' style={ { marginLeft: 20 } } disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
                     { `Pagar $ ${this.state.currentPrice} com cartão de crédito` }
                   </Button>
-                  <Button size="small" disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaypalPaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
+                  <Button size='small' disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaypalPaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
                     { `Pagar $ ${this.state.currentPrice} com Paypal` }
                   </Button>
-                  <Button size="small" disabled={ !this.state.currentPrice } onClick={ () => this.requestPayment() } variant='raised' color='primary' className={ classes.btnPayment }>
+                  <Button size='small' disabled={ !this.state.currentPrice } onClick={ () => this.requestPayment() } variant='raised' color='primary' className={ classes.btnPayment }>
                     { `Solicitar pagamento de $ ${this.state.currentPrice}` }
                   </Button>
 
@@ -120,7 +120,7 @@ class TaskPaymentForm extends Component {
           </Card>
         </Collapse>
 
-        <TaskRequestPayment visible={ this.state.requestPaymentDialog } onClose={ () => this.setState({requestPaymentDialog: false})} onOpen={ () => this.setState({requestPaymentDialog: true})} />
+        <TaskRequestPayment visible={ this.state.requestPaymentDialog } onClose={ () => this.setState({ requestPaymentDialog: false }) } onOpen={ () => this.setState({ requestPaymentDialog: true }) } />
 
         <PaymentDialog
           open={ this.props.dialog.open && this.props.dialog.target === 'PaymentDialog' }

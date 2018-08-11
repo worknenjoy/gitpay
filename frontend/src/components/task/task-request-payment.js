@@ -5,15 +5,10 @@ import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } 
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 import styled from 'styled-components'
-import Icon from 'material-ui-icons/RemoveCircleOutline'
 
 const Container = styled.div`
   display: inline-block;
   margin-right: 1rem;
-`
-
-const RemoveIcon = styled(Icon)`
-  margin-right: .5rem;
 `
 
 class RequestPayment extends Component {
@@ -26,7 +21,8 @@ class RequestPayment extends Component {
   static defaultProps = { visible: true }
 
   static propTypes = {
-    visible: PropTypes.bool
+    visible: PropTypes.bool,
+    onClose: PropTypes.func
   }
 
   onChangeMessage = event => this.setState({ message: event.target.value })
