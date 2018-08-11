@@ -1,16 +1,16 @@
 # Categories home page navigation
 
-- title: Getting Started
-  desc: Get your account up and running in just few easy steps
+- title: Iniciando
+  desc: Comece a trabalhar para o Gitpay
   icon: settings
   doc: home
 
-- title: Account and Billing
-  desc: Managing your account, creating new users and exporting data
+- title: Pagamento
+  desc: Saiba como os pagamentos pelas tarefas são realizados
   icon: credit-card
   doc: frontmatter
 
-- title: Troubleshooting
-  desc: Answers to most common configuration issues
+- title: Resolvendo os problemas comuns
+  desc: Respostas para questões dos projetos
   icon: cog
   doc: variables

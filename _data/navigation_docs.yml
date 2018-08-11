@@ -1,25 +1,25 @@
-- title: Getting Started
+- title: Iniciando
   docs:
-  - home
-  - quickstart
-  - installation
-  - windows
+  - Home
+  - Como funcionam as issues, ou incidentes
+  - Executar o projeto do Gitpay localmente
+  - Ambiente windows
 
-- title: Account and Billing
+- title: Como receber os pagamentos
   docs:
-  - frontmatter
-  - posts
-  - drafts
-  - pages
+  - Configurando uma conta
+  - Como funcionam as recompensas
+  - Como o pagamento é efetuado
+  - Segurança
 
-- title: Customization
+- title: Melhores práticas
   docs:
-  - usage
-  - structure
-  - configuration
+  - rebase
+  - automatização
+  - testes
 
-- title: Troubleshooting
+- title: Tipos de projetos
   docs:
-  - variables
-  - collections
-  - assets
+  - Open Source
+  - Privado
+  - Híbrido

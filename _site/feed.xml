@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.1">Jekyll</generator><link href="https://docs.jekyll.plus/feed.xml" rel="self" type="application/atom+xml" /><link href="https://docs.jekyll.plus/" rel="alternate" type="text/html" /><updated>2018-08-11T23:53:41+02:00</updated><id>https://docs.jekyll.plus/</id><title type="html">Docs</title><subtitle>Documentation Jekyll theme.</subtitle><author><name>John Smith</name></author><entry><title type="html">Getting a JavaScript console error</title><link href="https://docs.jekyll.plus/post7/" rel="alternate" type="text/html" title="Getting a JavaScript console error" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post7</id><content type="html" xml:base="https://docs.jekyll.plus/post7/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-08-12T01:58:09+02:00</updated><id>http://localhost:4000/</id><title type="html">Docs</title><subtitle>Documentation Jekyll theme.</subtitle><author><name>John Smith</name></author><entry><title type="html">Getting a JavaScript console error</title><link href="http://localhost:4000/post7/" rel="alternate" type="text/html" title="Getting a JavaScript console error" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post7</id><content type="html" xml:base="http://localhost:4000/post7/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -6,8 +6,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -40,7 +40,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Selecting the right fonts and colors</title><link href="https://docs.jekyll.plus/post63/" rel="alternate" type="text/html" title="Selecting the right fonts and colors" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post63</id><content type="html" xml:base="https://docs.jekyll.plus/post63/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Selecting the right fonts and colors</title><link href="http://localhost:4000/post63/" rel="alternate" type="text/html" title="Selecting the right fonts and colors" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post63</id><content type="html" xml:base="http://localhost:4000/post63/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -48,8 +48,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -82,7 +82,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Design tips for choosing great images</title><link href="https://docs.jekyll.plus/post62/" rel="alternate" type="text/html" title="Design tips for choosing great images" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post62</id><content type="html" xml:base="https://docs.jekyll.plus/post62/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Design tips for choosing great images</title><link href="http://localhost:4000/post62/" rel="alternate" type="text/html" title="Design tips for choosing great images" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post62</id><content type="html" xml:base="http://localhost:4000/post62/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -90,8 +90,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -124,7 +124,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Upgrading to paid service</title><link href="https://docs.jekyll.plus/post61/" rel="alternate" type="text/html" title="Upgrading to paid service" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post61</id><content type="html" xml:base="https://docs.jekyll.plus/post61/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Upgrading to paid service</title><link href="http://localhost:4000/post61/" rel="alternate" type="text/html" title="Upgrading to paid service" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post61</id><content type="html" xml:base="http://localhost:4000/post61/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -132,8 +132,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -166,7 +166,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Purchasing domain name and DNS setup</title><link href="https://docs.jekyll.plus/post60/" rel="alternate" type="text/html" title="Purchasing domain name and DNS setup" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post60</id><content type="html" xml:base="https://docs.jekyll.plus/post60/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Purchasing domain name and DNS setup</title><link href="http://localhost:4000/post60/" rel="alternate" type="text/html" title="Purchasing domain name and DNS setup" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post60</id><content type="html" xml:base="http://localhost:4000/post60/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -174,8 +174,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -208,7 +208,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Using Private Browsing or Incognito mode</title><link href="https://docs.jekyll.plus/post6/" rel="alternate" type="text/html" title="Using Private Browsing or Incognito mode" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post6</id><content type="html" xml:base="https://docs.jekyll.plus/post6/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Using Private Browsing or Incognito mode</title><link href="http://localhost:4000/post6/" rel="alternate" type="text/html" title="Using Private Browsing or Incognito mode" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post6</id><content type="html" xml:base="http://localhost:4000/post6/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -216,8 +216,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -250,7 +250,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Accepted currencies for product billing</title><link href="https://docs.jekyll.plus/post5/" rel="alternate" type="text/html" title="Accepted currencies for product billing" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post5</id><content type="html" xml:base="https://docs.jekyll.plus/post5/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Accepted currencies for product billing</title><link href="http://localhost:4000/post5/" rel="alternate" type="text/html" title="Accepted currencies for product billing" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post5</id><content type="html" xml:base="http://localhost:4000/post5/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -258,8 +258,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -292,7 +292,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Cancelling a website subscription</title><link href="https://docs.jekyll.plus/post4/" rel="alternate" type="text/html" title="Cancelling a website subscription" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post4</id><content type="html" xml:base="https://docs.jekyll.plus/post4/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Cancelling a website subscription</title><link href="http://localhost:4000/post4/" rel="alternate" type="text/html" title="Cancelling a website subscription" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post4</id><content type="html" xml:base="http://localhost:4000/post4/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -300,8 +300,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -334,7 +334,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Updating your billing credit card</title><link href="https://docs.jekyll.plus/post3/" rel="alternate" type="text/html" title="Updating your billing credit card" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post3</id><content type="html" xml:base="https://docs.jekyll.plus/post3/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Updating your billing credit card</title><link href="http://localhost:4000/post3/" rel="alternate" type="text/html" title="Updating your billing credit card" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post3</id><content type="html" xml:base="http://localhost:4000/post3/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -342,8 +342,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;
@@ -376,7 +376,7 @@
 
 &lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
 
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Understanding company billing and accounts</title><link href="https://docs.jekyll.plus/post2/" rel="alternate" type="text/html" title="Understanding company billing and accounts" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.jekyll.plus/post2</id><content type="html" xml:base="https://docs.jekyll.plus/post2/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry><title type="html">Understanding company billing and accounts</title><link href="http://localhost:4000/post2/" rel="alternate" type="text/html" title="Understanding company billing and accounts" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>http://localhost:4000/post2</id><content type="html" xml:base="http://localhost:4000/post2/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
 
 &lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
 
@@ -384,8 +384,8 @@
 &lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
 
 &lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.jekyll.plus/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
+    &lt;a class=&quot;uk-inline&quot; href=&quot;http://localhost:4000/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
+        &lt;img src=&quot;http://localhost:4000/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
         &lt;div class=&quot;uk-position-center&quot;&gt;
             &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
         &lt;/div&gt;

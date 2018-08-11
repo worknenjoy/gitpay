@@ -5,8 +5,8 @@
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 
 # Site title and description
-title:              Docs
-description:        Documentation Jekyll theme.
+title:              Documentação do Gitpay
+description:        Guias, dúvidas e informações de como funciona o Gitpay.
 
 # Site subpath, e.g. /blog
 baseurl:            ""
@@ -24,29 +24,29 @@ brand:
 
 # Default author settings
 author:
-    name:       John Smith
-    github:     PressApps    # Github username for avatar
+    name:       Alexandre Magno
+    github:     alexanmtz    # Github username for avatar
 
 # Author settings, displayed on post and doc pages if front matter references author name e.g. author: peter
 authors:
     peter:
-        name:       Peter Brown
-        github:     PressApps    # Github username for avatar
+        name:       Wharley
+        github:     wharley    # Github username for avatar
 
 # Social icons displayed in footer
 social:
-    email:
-    website:
-    facebook:       https://www.facebook.com/
+    email:          tarefas@gitpay.me
+    website:        gitpay.me
+    facebook:
     flickr:
     dribbble:
-    github:
+    github:         https://worknenjoy.github.com/gitpay
     googleplus:
-    instagram:      https://www.instagram.com/
+    instagram:      https://www.instagram.com/worknenjoy
     linkedin:
     pinterest:
-    twitter:        https://twitter.com/
-    vimeo:          https://vimeo.com/
+    twitter:
+    vimeo:
     youtube:
 
 # Twitter share button
@@ -54,7 +54,7 @@ twitter_username:
 
 # Default footer image settings
 footer:
-    copyright:      Made by a <a href="https://ivanchromjak.com/">human</a> somewhere on the planet earth.
+    copyright:      Desenvolvido de forma colaborativa pelo <a href="https://gitpay.me">Gitpay</a>.
 
 # Disqus comments shortname, requires Disqus account https://disqus.com/
 disqus:

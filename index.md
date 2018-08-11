@@ -1,25 +1,25 @@
 ---
 layout: home
 hero:
-    title: How Can We Help?
-    subtitle: Search or browse in depth articles and videos on everything Jekyll, from basic theme setup and hosting to customisation and development
+    title: Como funciona o Gitpay?
+    subtitle: O Gitpay é uma plataforma open source feita para facilitar o desenvolvimento de projetos de forma eficiente, colaborativa e sob demanda 
     image: imac.svg
     search: true
 categories:
     columns: 3
-    title: Browse Topics
-    subtitle: Get your answers fast, jump to most popular documentation content
+    title: Como começar?
+    subtitle: Para entender o processo do Gitpay, temos os seguintes tópicos
 featured:
-    title: Popular Articles
+    title: O que é importante saber
     tag: featured
 section:
-    title: Need More?
-    subtitle: This section displays optional page content lorem ipsum
+    title: Entregando tarefas de projetos usando o Git Workflow
+    subtitle: com o Git Workflow conseguimos automatizar e melhorar os processos de trabalho remoto e distribuído
 cta:
-    title: Didn't find an answer to your question?
-    subtitle: Get in touch with us for details on additional services and custom work pricing
-    button_text: Contact Us   
+    title: Entre em contato com a gente!
+    subtitle: Cadastre-se para saber de novas tarefas que surgirem!
+    button_text: Contato  
     button_url: /contact/  
 ---
 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Fazemos parte de uma mudança da forma de trabalho. Somo da Work n Enjoy e queremos buscar a liberdade de trabalho e a colaboração

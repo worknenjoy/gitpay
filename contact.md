@@ -1,6 +1,6 @@
 ---
 layout: contact
-title: Got Any Questions
+title: Entre em contato com a gente se a documentação não respondeu a sua dúvida. Você pode também melhorar a documentação
 permalink: /contact/
 formspree:
     email: my_name@gmail.com
