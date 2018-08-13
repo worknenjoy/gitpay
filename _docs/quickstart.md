@@ -1,6 +1,6 @@
 ---
 layout: doc
-title: Getting a JavaScript console error
+title: Como trabalhar no modelo do Gitworkflow
 subtitle: Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis.
 author:
 tags: featured
