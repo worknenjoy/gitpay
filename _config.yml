@@ -19,8 +19,8 @@ url:                "https://worknenjoy.github.io/gitpay/"
 
 # Site logo, image or text
 brand:
-    image:          logo.svg  # e.g. logo.png, upload logo image file to /assets/img/ folder
-    text:           Docs      # if the above "logo:" image variable  is not set, this text logo is displayed instead
+    image:          logo.png  # e.g. logo.png, upload logo image file to /assets/img/ folder
+    text:           Documentação      # if the above "logo:" image variable  is not set, this text logo is displayed instead
 
 # Default author settings
 author:
