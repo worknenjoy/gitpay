@@ -3,11 +3,11 @@ const request = require('./request')
 const constants = require('./constants')
 let dateFormat = require('dateformat')
 let moment = require('moment')
-let ptLocale = require('moment/locale/pt-br');
+let ptLocale = require('moment/locale/pt-br')
 
 moment.locale('pt-br', ptLocale)
 
-/*dateFormat.i18n = {
+/* dateFormat.i18n = {
   dayNames: [
     'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb',
     'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
@@ -17,7 +17,7 @@ moment.locale('pt-br', ptLocale)
     'janeiro', 'fevereiro', 'março', 'bbril', 'maio', 'junho',
     'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
   ]
-}*/
+} */
 
 const AssignMail = {
   owner: (to, task, name) => {},
