@@ -22,7 +22,7 @@ We offer a marketplace for developersand platforms that use git for on demand pr
 ## Running tests
 
 To run the test: 
-`npm run migrate` (first time)
+`npm run migrate-test` (first time)
 
 `npm run test` (to run the tests)
 
@@ -37,9 +37,9 @@ To run the migrations
 
 `npm run migrate`
 
-For user as example
+To create a new migration
 
-`sequelize migration:create --name users`
+`sequelize migration:create --name modelname`
 
 
 ## Docker
