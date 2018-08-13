@@ -1,12 +1,13 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
-const dateformat = require('dateformat')
-const moment = require('moment')
+let dateFormat = require('dateformat')
+let moment = require('moment')
+let ptLocale = require('moment/locale/pt-br');
 
-//moment.locale('pt-BR')
-/*
-dateformat.i18n = {
+moment.locale('pt-br', ptLocale)
+
+/*dateFormat.i18n = {
   dayNames: [
     'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb',
     'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
@@ -71,8 +72,8 @@ if (constants.canSendEmail) {
            <p>Olá ${name},</p>
            <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
            <p>Quem mantém este projeto e criou esta tarefa entrará em contato para maiores detalhes para lhe instruir em como você deve começar.</p>
-           <p>O prazo para conclusão desta tarefa é: <strong>${task.deadline ? dateformat(task.deadline, constants.dateFormat) : 'Nenhum prazo foi definido'}</strong></p>
-           <p>O que signifca que você teria <strong>${task.deadline ? moment(task.deadline).fromNow() : 'o tempo que for necessário para terminar'} a partir de agora</strong></p>
+           <p>O prazo para conclusão desta tarefa é: <strong>${task.deadline ? dateFormat(task.deadline, constants.dateFormat) : 'Nenhum prazo foi definido'}</strong></p>
+           <p>O que signifca que você teria que enviar uma solução <strong>${task.deadline ? moment(task.deadline).fromNow() : 'o tempo que for necessário para terminar'} a partir de agora</strong></p>
            <p>Para iniciar, você deve seguir os seguintes passos:</p>
            <ul>
             <li>Criar um fork do projeto</li>
