@@ -112,7 +112,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                         AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues)
                       }
                       if (!user.account_id) {
-                        TransferMail.futurePaymentForInvalid_account(user.email)
+                        TransferMail.futurePaymentForInvalidAccount(user.email)
                       }
                       AssignMail.interested(usermail, task.dataValues, user.username)
                       if (task.dataValues.User) {
