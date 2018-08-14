@@ -1,6 +1,5 @@
 const AssignMail = require('../mail/assign')
 const PaymentMail = require('../mail/payment')
-const SendMail = require('../mail/mail')
 const Promise = require('bluebird')
 const models = require('../../loading/loading')
 const Stripe = require('stripe')
@@ -113,11 +112,12 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                         AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues)
                       }
                       if (!user.account_id) {
-                        TransferMail.future_payment_for_invalid_account(user.email)
+                        TransferMail.futurePaymentForInvalidAccount(user.email)
                       }
                       AssignMail.interested(usermail, task.dataValues, user.username)
                       if (task.dataValues.User) {
-                        AssignMail.owner(task.dataValues.User.dataValues.email, task.dataValues, user.username)
+                        const ownerUser = task.dataValues.User.dataValues
+                        AssignMail.owner(ownerUser.email, task.dataValues, user.username)
                       }
                       return task.dataValues
                     })
@@ -133,10 +133,8 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               },
               include: [models.User]
             }).then((assigned) => {
-              SendMail.success(assigned.dataValues.User.dataValues.email, 'Você foi escolhido para iniciar uma tarefa no Gitpay', `
-                    <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.dataValues.id}">${process.env.FRONTEND_HOST}/#/task/${task.dataValues.id}</a> no Gitpay</p>
-                    <p>Isto quer dizer que você já pode começar. Fique de olho no prazo para conclusão, e após a tarefa for integrada você receberá o pagamento na sua conta cadastrada.</p>
-              `)
+              const assignedUser = assigned.User.dataValues
+              AssignMail.assigned(assignedUser.email, task.dataValues, assignedUser.username)
               return task.dataValues
             })
           }

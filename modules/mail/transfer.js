@@ -6,8 +6,8 @@ const TransferMail = {
   success: (to, task, value) => {},
   notifyOwner: (to, task, value) => {},
   error: (to, task, value) => {},
-  payment_for_invalid_account: (to) => {},
-  future_payment_for_invalid_account: (to) => {}
+  paymentForInvalidAccount: (to) => {},
+  futurePaymentForInvalidAccount: (to) => {}
 }
 
 if (constants.canSendEmail) {
@@ -56,7 +56,7 @@ if (constants.canSendEmail) {
     )
   }
 
-  TransferMail.payment_for_invalid_account = (to) => {
+  TransferMail.paymentForInvalidAccount = (to) => {
     request(
       to,
       'Ativar conta para receber pagamento',
@@ -71,7 +71,7 @@ if (constants.canSendEmail) {
     )
   }
 
-  TransferMail.future_payment_for_invalid_account = (to) => {
+  TransferMail.futurePaymentForInvalidAccount = (to) => {
     request(
       to,
       'Ativar conta para receber futuros pagamentos',

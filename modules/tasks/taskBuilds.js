@@ -48,15 +48,13 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
       })
 
     default:
-      break
+      return models.Task
+        .build(
+          taskParameters
+        )
+        .save()
+        .then(data => {
+          return data.dataValues
+        })
   }
-
-  return models.Task
-    .build(
-      taskParameters
-    )
-    .save()
-    .then(data => {
-      return data.dataValues
-    })
 })

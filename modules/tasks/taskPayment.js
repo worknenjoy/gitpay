@@ -29,7 +29,7 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
         const transferGroup = `task_${task.id}`
         const dest = user.account_id
         if (!dest) {
-          TransferMail.payment_for_invalid_account(user.email)
+          TransferMail.paymentForInvalidAccount(user.email)
           throw new Error('account_destination_invalid')
         }
 

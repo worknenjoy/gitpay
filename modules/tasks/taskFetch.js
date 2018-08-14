@@ -134,7 +134,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
             })
 
         default:
-          break
+          return data.dataValues
       }
     })
     .catch(error => {

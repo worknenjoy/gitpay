@@ -1,6 +1,23 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
+let dateFormat = require('dateformat')
+let moment = require('moment')
+let ptLocale = require('moment/locale/pt-br')
+
+moment.locale('pt-br', ptLocale)
+
+/* dateFormat.i18n = {
+  dayNames: [
+    'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb',
+    'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
+  ],
+  monthNames: [
+    'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez',
+    'janeiro', 'fevereiro', 'março', 'bbril', 'maio', 'junho',
+    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+  ]
+} */
 
 const AssignMail = {
   owner: (to, task, name) => {},
@@ -37,8 +54,40 @@ if (constants.canSendEmail) {
           <p>Olá ${name},</p>
           <p>Você tem interesse em realizar a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
           <p>O responsável pela tarefa será notificado e você receberá uma confirmação caso você seja escolhido.</p>
+          
           <p>${Signatures.sign}</p>`
         },
+      ]
+    )
+  }
+
+  AssignMail.assigned = (to, task, name) => {
+    request(
+      to,
+      'Você foi escolhido para iniciar uma tarefa no Gitpay',
+      [
+        {
+          type: 'text/html',
+          value: `
+           <p>Olá ${name},</p>
+           <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
+           <p>Quem mantém este projeto e criou esta tarefa entrará em contato para maiores detalhes para lhe instruir em como você deve começar.</p>
+           <p>O prazo para conclusão desta tarefa é: <strong>${task.deadline ? dateFormat(task.deadline, constants.dateFormat) : 'Nenhum prazo foi definido'}</strong></p>
+           <p>O que signifca que você teria que enviar uma solução <strong>${task.deadline ? moment(task.deadline).fromNow() : 'o tempo que for necessário para terminar'} a partir de agora</strong></p>
+           <p>Para iniciar, você deve seguir os seguintes passos:</p>
+           <ul>
+            <li>Criar um fork do projeto</li>
+            <li>Seguir as instruções do projeto para rodá-lo localmente</li>
+            <li>Desenvolver uma solução e tirar quaisquer dúvidas se necessário</li>
+            <li>Sempre estar atualizado com o repositório principal</li>
+            <li>Dependendo do projeto, um build é realizado e <strong>você terá que passar nos testes automatizados</strong></li>
+            <li>Enviar um <strong>Pull Request</strong></li>
+            <li>Ter o seu <strong>código avaliado</strong></li>
+           </ul>
+           <p>Quando seu Pull Request for integrado, você receberá o valor da recompensa na sua conta cadastrada.</p>
+           <p>${Signatures.sign}</p>`
+
+        }
       ]
     )
   }
