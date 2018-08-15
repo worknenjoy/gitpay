@@ -10,17 +10,17 @@ tags: featured othertag
 * TOC
 {:toc}
 
-O Gitpay é uma plataforma que oferece tarefas que usam qualquer outro sistema Git para resolver tarefas de diferentes projetos. Estas tarefas são muitas vezes chamadas de Issue, como por exemplo no Github, e Incidentes, no Bitbucket.
+O Gitpay é uma plataforma que oferece tarefas que usam qualquer outro sistema Git para entrega de alguma parte do projeto. Estas tarefas são muitas vezes chamadas de Issue, como por exemplo no Github, e Incidentes, no Bitbucket.
 
 Você pode trabalhar em tarefas disponíveis na plataforma, de diferentes projetos e do próprio Gitpay. Isto quer dizer que a plataforma usa o seu próprio processo para evoluir suas features, utilizando as contribuições dos interessados.
 
-Neste caso, quem contribui para o próprio projeto está ajudando a construir a sua própria plataforma em que ela pode trabalhar e aprender de forma colaborativa. Contribuições de projetos contam como experiência para outros projetos.
+Neste caso, quem contribui para o próprio projeto está ajudando a construir *a sua própria plataforma de trabalho independente* e aprender de forma colaborativa. Contribuições de projetos contam como experiência para outros projetos.
 
 Estas tarefas são geralmente dividida em mudanças pequenas e específicas, mas também pode significar tarefas maiores, parte de um projeto. A vantagem de sempre buscar tarefas menores, é poder diminuir o risco e facilitar os testes e integrações necessárias para validar a tarefa.
 Com o Gitpay, as tarefas podem ser validadas em diversos níveis para serem consideradas como prontas. Estes processos seguem as melhores práticas de desenvolvimento de software ágil, já consolidados e usados em diversas empresas. Contribuindo com o Gitpay, você também estará aprendendo como empresas podem funcionar totalmente remotas e projetos podem ser mantidos de maneira sustentável, colaborativo e com apoio da comunidade. 
 
 ## O que eu preciso saber?
-Você não precisa saber destes conceitos para contribuir, usar o Gitpay e receber recompensas. No entanto, se não souber os conceitos abordados aqui, você tem que desejar ou estar aberto a aprender.
+Você não precisa saber destes conceitos para contribuir, usar o Gitpay e receber recompensas. No entanto, se não souber os conceitos abordados aqui, você tem que desejar ou estar aberto para aprender.
 
 Conceitos como desenvolvimento ágil, scrum, extreme programming, open source, releases, Pull Requests, integração contínua, build pipeline e TDD, são parte da composição do processo de desenvolvimento que o Gitpay usa para os projetos cadastrados.
 
