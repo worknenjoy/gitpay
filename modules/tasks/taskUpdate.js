@@ -5,6 +5,7 @@ const models = require('../../loading/loading')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
+const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
@@ -94,6 +95,22 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               }
             })
           }
+
+          if (taskParameters.deadline) {
+            if (task.dataValues.assigned) {
+              return models.Assign.findOne({
+                where: {
+                  id: task.dataValues.assigned
+                },
+                include: [models.User]
+              }).then((assigned) => {
+                const assignedUserDeadline = assigned.User.dataValues
+                DeadlineMail.update(assignedUserDeadline.email, task.dataValues, assignedUserDeadline.username)
+                return task.dataValues
+              })
+            }
+          }
+
           if (taskParameters.Assigns) {
             assignExist({
               userId: taskParameters.Assigns[0].userId,
