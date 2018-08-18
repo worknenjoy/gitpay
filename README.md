@@ -41,6 +41,14 @@ To create a new migration
 
 `sequelize migration:create --name modelname`
 
+## Run project
+### Frontend server
+`npm run dev`
+
+### Backend (node.js)
+`npm run start:dev`
+
+Then you can access at http://localhost:8082
 
 ## Docker
 
