@@ -53,29 +53,81 @@ Pegando um exemplo que poderia ser real, temos por exemplo o pedido de um client
 
 Vamos supor que a tarefa tenha sido criada na plataforma a partir de uma issue que descreve esta necessidade em um repositório no Github, e ela seja tão simples quanto colocar uma linha no header do documento de um site que esteja na plataforma com a referência para o favicon. O código do site se encontra em um repositório do Github.
 
+#### Interesse em uma tarefa
+
+Você primeiro chega até a tarefa: https://gitpay.me/#/task/64
+
+Nela, você pode demonstrar interesse e quem criou o tarefa será notificado.
+
+> Não se acanhe em pegar quantas tarefas tiver interesse e se não for escolhido, o processo é dinâmico e garantiremos que você tenha oportunidade para diferentes tipos de tarefas e desafios
+
+#### Escolhido
+
+Você então é escolhido para iniciar a tarefa.
+
+Dependendo da tarefa, você poderá ter que receber mais informações para acessar o projeto.
 
 ## Criando um fork
 
+O primeiro passo para começar a trabalhar em um projeto de fato é quando realizamos um Fork. Quando você realiza este passo você obtem uma ramificação do projeto. Com esta "cópia" você pode realizar as modificações para enviar de volta ao projeto e ser integrado na base principal.
+A versão do fork é para você realizar as modificações para quando concluídas, possam integrar o projeto.
 
+O projeto pode, enquanto você estiver trabalhando em uma tarefa, passar por modificações, correção de bugs e novas funcionalidades, principalmente se a tarefa tiver uma longa duração. Quando você tem um fork, você saiu da raíz do projeto e ele seguiu outro caminho.
+Você pode sempre obter a versão atualizada do projeto e deixar para o git sincronizar as mudanças. Assim você está em dia com as modificações e não teremos nenhum conflito para ter seu código integrado.
 
+Vamos supor que seja o próprio projeto do Gitpay esta tarefa, sendo assim, teríamos: https://github.com/worknenjoy/gitpay/issues/12
+
+Precisaríamos seguir as instruções para iniciar o projeto em: http://github.com/worknenjoy/gitpay
+
+E rodaríamos o projeto com os seguintes comandos:
+
+Frontend: `npm run dev`
+
+Backend (node.js): `npm run start:dev`
+
+Em seguida, iríamos para o código fonte do seguinte arquivo:
+
+File: https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html
+```html
+<head>
+  <meta charset="utf-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+  <title>GitPay - Freelancing with git</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+  <link rel="stylesheet" href="app.css">
+</head>
+```
+
+E acrescentaríamos a linha: `<link rel="shortcut icon" type="image/png" href="favicon.png">`
+
+E teríamos o arquivo da seguinte forma:
 
 ```html
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-  <link rel="shortcut icon" type="image/png" href="{{ "assets/img/favicon.png" | relative_url }}" >
-  <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
+  <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+  <title>GitPay - Freelancing with git</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+  <link rel="stylesheet" href="app.css">
 </head>
 ```
 
+Esse é o resultado final do seu trabalho, você pode verificar na home page que o favicon foi alterado.
+
+Quer começar a aprender na prática? Essa é uma tarefa de teste, você pode enviar de fato um Pull Request com esta mudança para a gente.
+
 
 ## Enviando seu Pull Request
-Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.
+Agora que você tem a solução implementada, você deve efetuar um commit e um push para o seu repositório.
 
-> Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet
+> Não se esqueça de executar os testes como `npm run test` e `npm run lint` que verificam automaticamente se seu código está nos padrões deste projeto
 
-In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
 
-Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.
+Para este projeto, no caso sendo do Gitpay, o pull request será enviado em https://github.com/worknenjoy/gitpay/pulls
+
+Após o Pull Request ser enviado, podemos avaliar a mudança e pedir modificações se for necessário, e você passa fazer as correções solicitadas e os pull requests são atualizados, até chegar na solução final.
+
+Uma vez aprovado, o seu código é integrado, aprovado e você recebe o pagamento daquela recompensa.

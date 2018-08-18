@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Purchasing domain name and DNS setup | Documentação do Gitpay</title>
+<title>Como rodar o projeto do Gitpay | Documentação do Gitpay</title>
 <meta name="generator" content="Jekyll v3.4.1" />
-<meta property="og:title" content="Purchasing domain name and DNS setup" />
+<meta property="og:title" content="Como rodar o projeto do Gitpay" />
 <meta name="author" content="Alexandre Magno" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Sections in this article" />
@@ -17,9 +17,9 @@
 <meta property="og:url" content="https://worknenjoy.github.io/gitpay//docs/configuration/" />
 <meta property="og:site_name" content="Documentação do Gitpay" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-08-15T21:48:14+02:00" />
+<meta property="article:published_time" content="2018-08-18T16:00:58+02:00" />
 <script type="application/ld+json">
-{"description":"Sections in this article","url":"https://worknenjoy.github.io/gitpay//docs/configuration/","headline":"Purchasing domain name and DNS setup","dateModified":"2018-08-15T21:48:14+02:00","datePublished":"2018-08-15T21:48:14+02:00","@type":"BlogPosting","author":{"@type":"Person","name":"Alexandre Magno"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://worknenjoy.github.io/gitpay//docs/configuration/"},"@context":"http://schema.org"}</script>
+{"description":"Sections in this article","url":"https://worknenjoy.github.io/gitpay//docs/configuration/","headline":"Como rodar o projeto do Gitpay","dateModified":"2018-08-18T16:00:58+02:00","datePublished":"2018-08-18T16:00:58+02:00","@type":"BlogPosting","author":{"@type":"Person","name":"Alexandre Magno"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://worknenjoy.github.io/gitpay//docs/configuration/"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
   <meta property="og:image" content="https://worknenjoy.github.io/gitpay//assets/posts/logo.png"/>
@@ -38,9 +38,8 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-
             <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="https://worknenjoy.github.io/gitpay//assets/posts/logo.png" alt="Documentação"></a>
-
+            <a href="http://github.com/worknenjoy/gitpay" title="Você pode enviar mudanças para esta página e ser recompensado">Editar esta página</a>
         </div>
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-visible@m">
@@ -121,7 +120,7 @@
                     
                       
                       
-                      <li class=""><a href="/docs/quickstart/">Como trabalhar no modelo do Gitworkflow</a></li>
+                      <li class=""><a href="/docs/quickstart/">Quais são as etapas do trabalho?</a></li>
                     
                       
                       
@@ -167,7 +166,7 @@
                     
                       
                       
-                      <li class="uk-active"><a href="/docs/configuration/">Purchasing domain name and DNS setup</a></li>
+                      <li class="uk-active"><a href="/docs/configuration/">Como rodar o projeto do Gitpay</a></li>
                     
                     </ul>
                     
@@ -195,24 +194,20 @@
 
                 <article class="uk-article">
 
-                    <h1 class="uk-article-title">Purchasing domain name and DNS setup</h1>
+                    <h1 class="uk-article-title">Como rodar o projeto do Gitpay</h1>
 
-                    <p class="subtitle uk-text-lead uk-text-muted">Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis.</p>
+                    <p class="subtitle uk-text-lead uk-text-muted">Veja como contribuir com o core do Gitpay para melhorar e evoluir na plataforma</p>
 
                     <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
                         
 
 
-    <img class="avatar avatar-small" alt="alexanmtz" width="32" height="32" data-proofer-ignore="true" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" />
 
 
 
-    Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
-
-
-<time datetime="2018-08-15T21:48:14+02:00" itemprop="datePublished">
+<time datetime="2018-08-18T16:00:58+02:00" itemprop="datePublished">
     
-    Aug 15, 2018
+    Aug 18, 2018
 </time>
 
                     </div>
@@ -220,10 +215,24 @@
                     <div class="article-content">
                         <h4 class="no_toc" id="sections-in-this-article">Sections in this article</h4>
 <ul id="markdown-toc">
+  <li><a href="#run-project" id="markdown-toc-run-project">Run project</a>    <ul>
+      <li><a href="#frontend-server" id="markdown-toc-frontend-server">Frontend server</a></li>
+      <li><a href="#backend-nodejs" id="markdown-toc-backend-nodejs">Backend (node.js)</a></li>
+    </ul>
+  </li>
   <li><a href="#image-lightbox-example" id="markdown-toc-image-lightbox-example">Image Lightbox Example</a></li>
   <li><a href="#example-of-code-block" id="markdown-toc-example-of-code-block">Example Of Code Block</a></li>
   <li><a href="#text-and-quote" id="markdown-toc-text-and-quote">Text and Quote</a></li>
 </ul>
+
+<h2 id="run-project">Run project</h2>
+<h3 id="frontend-server">Frontend server</h3>
+<p><code class="highlighter-rouge">npm run dev</code></p>
+
+<h3 id="backend-nodejs">Backend (node.js)</h3>
+<p><code class="highlighter-rouge">npm run start:dev</code></p>
+
+<p>Then you can access at http://localhost:8082</p>
 
 <p>Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</p>
 
@@ -270,7 +279,7 @@
 <p>Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.</p>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=Purchasing domain name and DNS setup&url=https://worknenjoy.github.io/gitpay//docs/configuration/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=Como rodar o projeto do Gitpay&url=https://worknenjoy.github.io/gitpay//docs/configuration/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
     <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fworknenjoy.github.io%2Fgitpay%2F%2Fdocs%2Fconfiguration%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 

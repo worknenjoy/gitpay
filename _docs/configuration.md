@@ -1,8 +1,8 @@
 ---
 layout: doc
-title: Purchasing domain name and DNS setup
-subtitle: Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis.
-author:
+title: Como rodar o projeto do Gitpay
+subtitle: Veja como contribuir com o core do Gitpay para melhorar e evoluir na plataforma
+author: Alexandre Magno
 tags: othertag
 ---
 
@@ -10,6 +10,15 @@ tags: othertag
 {:.no_toc}
 * TOC
 {:toc}
+
+## Run project
+### Frontend server
+`npm run dev`
+
+### Backend (node.js)
+`npm run start:dev`
+
+Then you can access at http://localhost:8082
 
 Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.
 

@@ -1,8 +1,8 @@
 ---
 layout: doc
-title: Como trabalhar no modelo do Gitworkflow
-subtitle: Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis.
-author:
+title: Quais são as etapas do trabalho?
+subtitle: Por quais passos temos que passar desde o início até a integração de uma tarefa no Gitpay
+author: Alexandre Magno
 tags: featured
 ---
 
