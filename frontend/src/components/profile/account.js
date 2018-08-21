@@ -706,13 +706,25 @@ class Account extends Component {
                               />
                             </FormControl>
                             <FormControl>
-                              <Input
+                              <Select
+                                value={ account.data.legal_entity.dob.month }
+                                displayEmpty
                                 name='legal_entity[dob][month]'
-                                id='adornment-email'
-                                placeholder='Mês do nascimento'
-                                defaultValue={ account.data.legal_entity.dob.month }
                                 style={ { marginRight: 10 } }
-                              />
+                              >
+                                <MenuItem value='' disabled>
+                                  <em>Mês do nascimento</em>
+                                </MenuItem>
+                                { [1,2,3,4,5,6,7,8,9,10,11,12].map(
+                                  (item, i) => {
+                                    return (
+                                      <MenuItem key={ i } value={ item }>{ `${
+                                        item
+                                      }` }</MenuItem>
+                                    )
+                                  }
+                                ) }
+                              </Select>
                             </FormControl>
                             <FormControl>
                               <Input
