@@ -8,13 +8,22 @@ services:
     volumes: 
       - .:/gitpay
     network_mode: host
+    ports:
+      - "8082:8082"
+    expose:
+      - "8082"
   backend:
     image: node:8.6
     command: sh -c "npm install && npm run migrate && npm run start"
     working_dir: /gitpay
     volumes: 
       - .:/gitpay
+    environment:
+      FRONTEND_HOST: "http://localhost:8082"
+      API_HOST: "http://localhost:3000"
     network_mode: host
+    ports:
+      - "3000:3000"
   db:
     image: postgres    
     environment:
