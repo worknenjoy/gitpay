@@ -712,9 +712,9 @@ class Account extends Component {
                                 displayEmpty
                                 name='legal_entity[dob][month]'
                                 style={ { marginRight: 10 } }
-                                onChange={(event) => {
+                                onChange={ (event) => {
                                   this.setState({ monthOfBirth: event.target.value })
-                                }}
+                                } }
                               >
                                 <MenuItem value='' disabled>
                                   <em>Mês do nascimento</em>
