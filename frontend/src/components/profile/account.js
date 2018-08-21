@@ -108,6 +108,9 @@ class Account extends Component {
       this.props.getBankAccount(userId)
       this.setState({ userId })
     }
+    if (this.props.account) {
+     this.setState({ monthOfBirth: account.data.legal_entity.dob.monththis.state.monthOfBirth })
+    }
   }
 
   openUpdateModal () {
@@ -708,7 +711,7 @@ class Account extends Component {
                             </FormControl>
                             <FormControl>
                               <Select
-                                value={ account.data.legal_entity.dob.month || this.state.monthOfBirth }
+                                value={ this.state.monthOfBirth }
                                 displayEmpty
                                 name='legal_entity[dob][month]'
                                 style={ { marginRight: 10 } }
