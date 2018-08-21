@@ -108,9 +108,6 @@ class Account extends Component {
       this.props.getBankAccount(userId)
       this.setState({ userId })
     }
-    if (this.props.account) {
-      this.setState({ monthOfBirth: this.props.account.data.legal_entity.dob.monththis.state.monthOfBirth })
-    }
   }
 
   openUpdateModal () {
@@ -711,23 +708,23 @@ class Account extends Component {
                             </FormControl>
                             <FormControl>
                               <Select
-                                value={ this.state.monthOfBirth }
-                                displayEmpty
+                                autoWidth
+                                native
                                 name='legal_entity[dob][month]'
                                 style={ { marginRight: 10 } }
                                 onChange={ (event) => {
                                   this.setState({ monthOfBirth: event.target.value })
                                 } }
                               >
-                                <MenuItem value='' disabled>
+                                <option value=''>
                                   <em>Mês do nascimento</em>
-                                </MenuItem>
+                                </option>
                                 { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                   (item, i) => {
                                     return (
-                                      <MenuItem key={ i } value={ item }>{ `${
+                                      <option selected={!!(item === account.data.legal_entity.dob.month) } key={ i } value={ item }>{ `${
                                         item
-                                      }` }</MenuItem>
+                                      }` }</option>
                                     )
                                   }
                                 ) }
