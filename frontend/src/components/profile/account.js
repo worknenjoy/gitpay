@@ -722,7 +722,7 @@ class Account extends Component {
                                 { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                   (item, i) => {
                                     return (
-                                      <option selected={!!(item === account.data.legal_entity.dob.month) } key={ i } value={ item }>{ `${
+                                      <option selected={ !!(item === account.data.legal_entity.dob.month) } key={ i } value={ item }>{ `${
                                         item
                                       }` }</option>
                                     )
