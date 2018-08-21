@@ -109,7 +109,7 @@ class Account extends Component {
       this.setState({ userId })
     }
     if (this.props.account) {
-     this.setState({ monthOfBirth: account.data.legal_entity.dob.monththis.state.monthOfBirth })
+      this.setState({ monthOfBirth: this.props.account.data.legal_entity.dob.monththis.state.monthOfBirth })
     }
   }
 
