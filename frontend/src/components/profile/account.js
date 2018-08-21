@@ -86,6 +86,7 @@ class Account extends Component {
       selectedBank: '',
       bankNumberError: false,
       terms: false,
+      monthOfBirth: 0,
       currentTab: 0
     }
     this.openUpdateModal = this.openUpdateModal.bind(this)
@@ -707,10 +708,13 @@ class Account extends Component {
                             </FormControl>
                             <FormControl>
                               <Select
-                                value={ account.data.legal_entity.dob.month }
+                                value={ account.data.legal_entity.dob.month || this.state.monthOfBirth }
                                 displayEmpty
                                 name='legal_entity[dob][month]'
                                 style={ { marginRight: 10 } }
+                                onChange={(event) => {
+                                  this.setState({monthOfBirth: event.target.value})
+                                }}
                               >
                                 <MenuItem value='' disabled>
                                   <em>Mês do nascimento</em>
