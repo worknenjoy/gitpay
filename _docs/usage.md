@@ -1,45 +1,41 @@
 ---
 layout: doc
-title: Design tips for choosing great images
-subtitle: Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis.
+title: Como são definidas as tarefas?
+subtitle: Como definimos a tarefa a ser desenvolvida de modo que fique claro e facilite a solução
 author:
 ---
 
-#### Sections in this article
+#### O que você vai ver aqui
 {:.no_toc}
 * TOC
 {:toc}
 
-Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.
+Uma das maiores vantagens do Git Workflow é ter tarefas definidas de acordo com um modelo. Este modelo pode variar e com o tempo descobrimos o que funcionava melhor para a gente.
 
-Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.
+Para criar uma tarefa no Gitpay, basta colar o link de uma tarefa já criada no Github, onde é possível definir templates e modelos de contribuição entre times.
 
-## Image Lightbox Example
-Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.
+Para toda tarefa, geralmente devemos abordar os seguintes pontos:
 
-{% include image.html img="image1.png" style="wide" lightbox="true" alt="Alt for image" caption="Image in lightbox" %}
+## O porquê da tarefa
 
-Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.
+Qual a motivação para levantar esta tarefa, qual o motivo ou propósito dela?
 
-## Example Of Code Block
-In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+## Nível
 
-```html
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-  <link rel="shortcut icon" type="image/png" href="{{ "assets/img/favicon.png" | relative_url }}" >
-  <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
-</head>
-```
+Bom saber o nível necessário para conclui-la, ela seria para um iniciante, intermediário ou avançado?
 
-## Text and Quote
-Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.
+## Comportamento atual
 
-> Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet
+Para sabermos de forma clara o que está acontecendo atualmente para que seja possível reproduzir e saber melhor o que temos agora
 
-In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+## Comportamento esperado
 
-Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.
+Como deveria ficar seguindo o caminho do comportamento atual para que possa ficar claro como era antes e como deve ficar depois
+
+## Links úteis
+
+Referências úteis que podem servir de inspiração para ajudar em algum ponto da tarefa
+
+## Como reproduzir o cenário
+
+Como alguém que irá trabalhar na tarefa irá chegará naquele comportamento atual que precisa ser modificado?
