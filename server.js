@@ -10,6 +10,9 @@ require('./config/passport')
 const load = require('./modules/load/load')
 const feed = require('feed-read')
 
+const { job } = require('./cron')
+job.start()
+
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
 }
