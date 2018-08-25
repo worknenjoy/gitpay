@@ -5,6 +5,11 @@ const FAILED_REASON = {
   declined_by_network: 'Negado pela operadora do cartão'
 }
 
+const CURRENCIES = {
+  brl: 'R$',
+  usd: '$'
+}
+
 exports.updateWebhook = (req, res) => {
   if (req.body.object === 'event') {
     const event = req.body
@@ -222,9 +227,7 @@ exports.updateWebhook = (req, res) => {
                 user.dataValues.email,
                 'Uma transferência do Gitpay está a caminho da sua conta!',
                 `
-                    <p>Uma transferência no valor de ${
-  event.data.object.currency
-} ${event.data.object.amount /
+                    <p>Uma transferência no valor de ${CURRENCIES[event.data.object.currency]} ${event.data.object.amount /
                   100} está a caminho da sua conta e avisaremos quando for concluída</p>
                     <p>A previsão é de que ela chege em ${date}</p>
             `
@@ -251,8 +254,8 @@ exports.updateWebhook = (req, res) => {
                 user.dataValues.email,
                 'Ocorreu uma falha no pagamento da sua tarefa no Gitpay',
                 `
-                <p>O pagamento no valor de $${event.data.object.amount /
-                  100} para uma tarefa no Gitpay não foi processada e será feito uma nova tentativa de transferência</p>
+                <p>O pagamento no valor de ${CURRENCIES[event.data.object.currency]} ${event.data.object.amount /
+                  100} para uma tarefa no Gitpay não foi processado e será feito uma nova tentativa de transferência</p>
                 `
               )
               return res.json(req.body)
@@ -277,10 +280,8 @@ exports.updateWebhook = (req, res) => {
                 user.dataValues.email,
                 'Uma transferência do Gitpay foi realizada para sua conta!',
                 `
-                    <p>Uma transferência no valor de ${
-  event.data.object.currency
-} ${event.data.object.amount /
-                  100} para a sua conta foi concluída</p>
+                    <p>Uma transferência no valor de ${CURRENCIES[event.data.object.currency]} ${event.data.object.amount /
+                  100} foi realizado para a sua conta e deve constar nas suas transações como um pagamento do Gitpay</p>
                     <p>Ela foi realizada em ${date}</p>
             `
               )
