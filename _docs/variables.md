@@ -2,7 +2,7 @@
 layout: doc
 title: Entendendo como funciona os pagamentos
 subtitle: Como os pagamentos pelas recompensas são realizados pelo Gitpay
-tags: featured
+tags:
 ---
 
 #### O que você vai ver

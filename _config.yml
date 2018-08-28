@@ -54,7 +54,7 @@ twitter_username:
 
 # Default footer image settings
 footer:
-    copyright:      Desenvolvido de forma colaborativa pelo <a href="https://gitpay.me">Gitpay</a>.
+    copyright:      Desenvolvido de forma colaborativa pelo Gitpay
 
 # Disqus comments shortname, requires Disqus account https://disqus.com/
 disqus:
@@ -79,15 +79,22 @@ post_assets:        /assets/posts/
 markdown:           kramdown
 highlighter:        rouge
 
-gems:
+plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-gist
   - jekyll-avatar
 exclude:
+  - .idea/
+  - .vscode/
   - Gemfile
   - Gemfile.lock
   - node_modules
+  - env
+  - .env.example
+  - .gitignore
+  - gitpay.iml
+  - frontend/node_modules
 
 sass:
   style:            compressed

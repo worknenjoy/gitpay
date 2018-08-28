@@ -3,7 +3,7 @@ layout: doc
 title: Como rodar o projeto do Gitpay
 subtitle: Veja como contribuir com o core do Gitpay para melhorar e evoluir na plataforma
 author: Alexandre Magno
-tags: othertag
+tags:
 ---
 
 #### O que você vai ver aqui

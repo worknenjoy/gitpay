@@ -1,12 +1,19 @@
 # Navbar menu navigation links
+
+- title: Cadastre-se
+  url: https://gitpay.me
+
 - title: Documentação
   url: /
 
-- title: Novidades
-  url: /news/
+#- title: Novidades
+#  url: /news/
 
 - title: Planejamento das versões
   url: /changelog/
 
-- title: Contato
-  url: /contact/
+- title: Github
+  url: https://github.com/worknenjoy/gitpay
+
+#- title: Contato
+#  url: /contact/

@@ -1,115 +1,115 @@
 [
   
     {
-      "title"    : "How To Setup Domain SSL With Github Pages",
+      "title"    : "Como configurar um repositório",
       "category" : "",
-      "tags"     : "featured",
+      "tags"     : "",
       "url"      : "/docs/assets/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
       "title"    : "Category hosting Setting up new domain and page",
       "category" : "",
-      "tags"     : "featured",
+      "tags"     : "",
       "url"      : "/docs/collections/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
       "title"    : "Como rodar o projeto do Gitpay",
       "category" : "",
-      "tags"     : "othertag",
+      "tags"     : "",
       "url"      : "/docs/configuration/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
       "title"    : "Cancelling a website subscription",
       "category" : "",
-      "tags"     : "featured",
+      "tags"     : "",
       "url"      : "/docs/drafts/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
-      "title"    : "Settings up Jekkyl on Github pages",
+      "title"    : "Plataforma",
       "category" : "",
       "tags"     : "othertag",
       "url"      : "/docs/frontmatter/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
       "title"    : "Por onde começar?",
       "category" : "",
-      "tags"     : "featured, othertag",
+      "tags"     : "",
       "url"      : "/docs/home/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
       "title"    : "Getting started with our application",
       "category" : "",
-      "tags"     : "featured",
+      "tags"     : "",
       "url"      : "/docs/installation/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
       "title"    : "Updating your billing credit card",
       "category" : "",
-      "tags"     : "othertag",
+      "tags"     : "",
       "url"      : "/docs/pages/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
-      "title"    : "Accepted currencies for product billing",
+      "title"    : "Recebendo pagamentos como recompensa",
       "category" : "",
-      "tags"     : "featured",
+      "tags"     : "",
       "url"      : "/docs/posts/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
       "title"    : "Trabalhando com o Git Workflow",
       "category" : "",
-      "tags"     : "featured",
+      "tags"     : "",
       "url"      : "/docs/quickstart/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
-      "title"    : "Upgrading to paid service",
+      "title"    : "Como o Git pode ajudar nas organizações",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/structure/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
-      "title"    : "Design tips for choosing great images",
+      "title"    : "Como são definidas as tarefas?",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/usage/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
-      "title"    : "Understanding company billing and accounts",
+      "title"    : "Entendendo como funciona os pagamentos",
       "category" : "",
-      "tags"     : "featured",
+      "tags"     : "",
       "url"      : "/docs/variables/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } ,
   
     {
-      "title"    : "Selecting the right fonts and colors",
+      "title"    : "O poder e a importância dos Pull Requests",
       "category" : "",
-      "tags"     : "othertag",
+      "tags"     : "",
       "url"      : "/docs/windows/",
-      "date"     : "2018-08-22 19:16:39 +0200"
+      "date"     : "2018-08-28 23:18:58 +0200"
     } 
   
 ]

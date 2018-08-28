@@ -1,46 +1,33 @@
 ---
 layout: doc
-title: Accepted currencies for product billing
-subtitle: Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis.
+title: Recebendo pagamentos como recompensa
+subtitle: Como funciona as transações entre os envolvidos em uma tarefa no Gitpay 
 author:
-tags: featured
+tags:
 ---
 
-#### Sections in this article
+#### O que você vai encontrar aqui
 {:.no_toc}
 * TOC
 {:toc}
 
-Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.
+## Pagamento por uma tarefa
+Quando uma tarefa é criada no Gitpay, ela pode receber recompensas.
 
-Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.
+As recompensas podem ser pagas atualmente com cartão de crédito e PayPal.
 
-## Image Lightbox Example
-Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.
+Também é possível que seja feito mais de um pedido que pode ter as duas categorias.
 
-{% include image.html img="image1.png" style="wide" lightbox="true" alt="Alt for image" caption="Image in lightbox" %}
+Quando você recebe a recompensa, você precisa receber de acordo como a tarefa foi paga
 
-Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.
+> Quando você vê um valor de uma tarefa no Gitpay, o pagamento já foi pré-autorizado
 
-## Example Of Code Block
-In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+Sendo assim, quando uma tarefa é paga no cartão de crédito, você irá receber na sua conta cadastrada.
 
-```html
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-  <link rel="shortcut icon" type="image/png" href="{{ "assets/img/favicon.png" | relative_url }}" >
-  <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
-</head>
-```
+Se o pagamento foi realizado com PayPal, você irá receber o pagamento com sua conta do PayPal.
 
-## Text and Quote
-Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.
+Você precisa configurar seus pagamentos configurando sua conta em (https://gitpay.me/#/profile/payment-options)[https://gitpay.me/#/profile/payment-options] 
 
-> Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet
+> Para saber com o pagamento foi realizado para aquela tarefa, verifique nos pedidos
 
-In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-
-Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.
+Os pedidos são pagamentos realizados que são enviados para sua conta ativada quando a tarefa é concluída.

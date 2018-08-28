@@ -2,7 +2,7 @@
 layout: doc
 title: Por onde começar?
 subtitle: Entenda como contribuir com tarefas pelo Gitpay e ser recompensado
-tags: featured othertag
+tags:
 ---
 
 #### O que você vai ver aqui

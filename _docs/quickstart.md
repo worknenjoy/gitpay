@@ -3,7 +3,7 @@ layout: doc
 title: Trabalhando com o Git Workflow
 subtitle: O processo de entrega intregado de uma tarefa no Gitpay
 author: Alexandre Magno
-tags: featured
+tags:
 ---
 
 #### O que você vai aprender aqui

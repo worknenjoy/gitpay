@@ -4,22 +4,21 @@
   - quickstart
   - installation
   - windows
-
-- title: Account and Billing
-  docs:
-  - frontmatter
-  - posts
-  - drafts
-  - pages
-
-- title: Customization
-  docs:
   - usage
-  - structure
-  - configuration
 
-- title: Troubleshooting
+- title: Conta e pagamento
   docs:
   - variables
-  - collections
-  - assets
+  - posts
+
+#
+#- title: Para as organizações
+#  docs:
+#  - structure
+#  - configuration
+
+- title: Dúvidas comuns
+  docs:
+  - frontmatter
+#  - collections
+#  - assets

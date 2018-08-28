@@ -3,15 +3,13 @@ layout: doc
 title: Como configurar um repositório
 categories: [Getting Started, Troubleshooting]
 author: John Black
-tags: featured
+tags: 
 ---
 
 #### O que você vai ver aqui
 {:.no_toc}
 * TOC
 {:toc}
-
-<a href="{{site.github.repository_url}}/blob/gh-pages/{{page.path}}">Editar esta página</a>
 
 ## Como trabalhar em um repositório de um projeto
 
