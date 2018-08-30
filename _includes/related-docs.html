@@ -1,10 +1,10 @@
 <div class="uk-margin-large-top">
-    <h3>Related Articles</h3>
-
     {% assign maxRelated = 4 %}
     {% assign minCommonTags =  1 %}
     {% assign maxRelatedCounter = 0 %}
-
+    {% if site.docs.length > 1 %}
+    <h3>Related Articles</h3>
+    {% endif %}
     <ul class="uk-list">
     {% for doc in site.docs %}
 

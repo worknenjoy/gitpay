@@ -3,7 +3,7 @@ layout: home
 hero:
     title: Como funciona o Gitpay?
     subtitle: O Gitpay é uma plataforma open source feita para facilitar o desenvolvimento de projetos de forma eficiente, colaborativa e sob demanda 
-    image: imac.svg
+    image: main-icon.png
     search: true
 categories:
     columns: 3

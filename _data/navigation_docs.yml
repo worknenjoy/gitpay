@@ -2,7 +2,7 @@
   docs:
   - home
   - quickstart
-  - installation
+  #- installation
   - windows
   - usage
 
