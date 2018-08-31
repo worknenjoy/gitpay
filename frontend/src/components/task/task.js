@@ -729,11 +729,11 @@ class Task extends Component {
                   <RegularCard
                     headerColor='green'
                     cardTitle='Interessados em realizar esta tarefa'
-                    cardSubtitle='Estes são usuários interessados em realizar esta tarefa'
+                    cardSubtitle='Estes são os usuários interessados em realizar esta tarefa'
                     content={
                       <Table
                         tableHeaderColor='warning'
-                        tableHead={ ['Usuário', 'Quando', 'Acões'] }
+                        tableHead={ ['Usuário', 'Quando', 'Ações'] }
                         tableData={ task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
                       />
                     }
@@ -754,7 +754,7 @@ class Task extends Component {
               <StatsCard
                 icon={ DateIcon }
                 iconColor='green'
-                title='data limite para realizacao da tarefa'
+                title='Data limite para realização da tarefa'
                 description={ MomentComponent(task.data.deadline).zone(-3).format('DD-MM-YYYY') }
                 statIcon={ DateIcon }
                 statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
