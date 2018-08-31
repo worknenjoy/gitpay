@@ -62,11 +62,11 @@ class TaskDeadlineForm extends Component {
             <CardMedia
               className={ classes.cover }
               image={ timeIcon }
-              title='Escolha uma data limite para realizacao desta tarefa'
+              title='Escolha uma data limite para realização desta tarefa'
             />
             <div className={ classes.details }>
               <CardContent className={ classes.content }>
-                <Typography variant='headline'>Escolha uma data limite para realizacao desta tarefa</Typography>
+                <Typography variant='headline'>Escolha uma data limite para realização desta tarefa</Typography>
                 <Typography variant='subheading' color='textSecondary'>
                   Escolha uma data em que deseja que ela precisa ser finalizada
                 </Typography>
