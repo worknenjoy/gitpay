@@ -6,10 +6,10 @@ import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import AppBar from 'material-ui/AppBar'
 
-import Card from 'material-ui/Card';
-import CardActions from 'material-ui/Card/CardActions';
-import CardContent from 'material-ui/Card/CardContent';
-import CardMedia from 'material-ui/Card/CardMedia';
+import Card from 'material-ui/Card'
+import CardActions from 'material-ui/Card/CardActions'
+import CardContent from 'material-ui/Card/CardContent'
+import CardMedia from 'material-ui/Card/CardMedia'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
 
@@ -23,7 +23,7 @@ import ActionIcon from 'material-ui-icons/CallToAction'
 
 import CustomPaginationActionsTable from './task-table'
 import TaskStatusFilter from './task-status-filter'
-import Button from "material-ui/Button";
+import Button from 'material-ui/Button'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -125,7 +125,7 @@ class TaskList extends Component {
           <TabContainer>
             { !user.id && this.state.tab !== 0
               ? (
-                <Card className={classes.card}>
+                <Card className={ classes.card }>
                   <CardMedia
                     className={ classes.media }
                     src={ imageGettingStarted }

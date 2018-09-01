@@ -61,16 +61,8 @@ const styles = theme => ({
 })
 
 class TaskExplorer extends Component {
-  constructor (props) {
-    super(props)
-  }
-
-  componentWillMount () {
-
-  }
-
   render () {
-    const { classes, user } = this.props
+    const { classes } = this.props
 
     return (
       <Page>
@@ -78,7 +70,7 @@ class TaskExplorer extends Component {
         <PageContent>
           <Grid container className={ classes.root } spacing={ 24 }>
             <Grid item xs={ 12 } md={ 12 }>
-              <TaskListContainer/>
+              <TaskListContainer />
             </Grid>
           </Grid>
         </PageContent>
@@ -89,9 +81,7 @@ class TaskExplorer extends Component {
 }
 
 TaskExplorer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  location: PropTypes.object,
-  history: PropTypes.object
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(TaskExplorer)

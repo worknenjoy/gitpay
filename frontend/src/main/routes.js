@@ -10,7 +10,6 @@ import TaskContainer from '../containers/task'
 import TaskOrdersContainer from '../containers/task-orders'
 import TaskExplorer from '../components/task/task-explorer'
 
-
 export default props => (
   <HashRouter>
     <Switch>

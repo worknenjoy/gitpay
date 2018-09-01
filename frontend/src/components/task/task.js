@@ -28,7 +28,7 @@ import DateIcon from 'material-ui-icons/DateRange'
 import CalendarIcon from 'material-ui-icons/PermContactCalendar'
 import GroupWorkIcon from 'material-ui-icons/GroupAdd'
 import DoneIcon from 'material-ui-icons/Done'
-import NavigationIcon from 'material-ui-icons/ArrowBack';
+import NavigationIcon from 'material-ui-icons/ArrowBack'
 
 import Chip from 'material-ui/Chip'
 import StatusDialog from './status-dialog'
@@ -475,7 +475,7 @@ class Task extends Component {
         <TopBarContainer />
         <PageContent>
           <TaskHeader>
-            <Button onClick={this.handleBackToTaskList} style={{marginBottom: 10}} variant='raised' size='small' aria-label='Delete' className={classes.button}>
+            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='raised' size='small' aria-label='Delete' className={ classes.button }>
               <NavigationIcon />
               Tarefas
             </Button>
