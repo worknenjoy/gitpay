@@ -297,7 +297,7 @@ exports.updateWebhook = (req, res) => {
         break
       case 'balance.available':
         SendMail.success(
-          'notifications@gitpay.me',
+          'tarefas@gitpay.me',
           'Um novo balanço da sua conta no Gitpay',
           `
                   <p>Temos um novo balanço para a conta do Gitpay:</p>
