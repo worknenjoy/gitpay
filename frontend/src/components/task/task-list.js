@@ -6,6 +6,11 @@ import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import AppBar from 'material-ui/AppBar'
 
+import Card from 'material-ui/Card'
+import CardActions from 'material-ui/Card/CardActions'
+import CardContent from 'material-ui/Card/CardContent'
+import CardMedia from 'material-ui/Card/CardMedia'
+
 import Tabs, { Tab } from 'material-ui/Tabs'
 
 import { withStyles } from 'material-ui/styles'
@@ -18,12 +23,28 @@ import ActionIcon from 'material-ui-icons/CallToAction'
 
 import CustomPaginationActionsTable from './task-table'
 import TaskStatusFilter from './task-status-filter'
+import Button from 'material-ui/Button'
+
+const logoGithub = require('../../images/github-logo.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
+
+const imageGettingStarted = require('../../images/octodex.png')
+
+import api from '../../consts'
 
 const styles = theme => ({
   icon: {
     backgroundColor: 'black'
   },
+  card: {
 
+  },
+  gutterLeft: {
+    marginLeft: 10
+  },
+  media: {
+    width: 600
+  },
   rootTabs: {
     backgroundColor: theme.palette.primary.light
   }
@@ -64,7 +85,7 @@ class TaskList extends Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, user } = this.props
 
     const TabContainer = props => {
       return (
@@ -102,7 +123,51 @@ class TaskList extends Component {
             </Tabs>
           </AppBar>
           <TabContainer>
-            <CustomPaginationActionsTable tasks={ this.props.tasks } />
+            { !user.id && this.state.tab !== 0
+              ? (
+                <Card className={ classes.card }>
+                  <CardMedia
+                    className={ classes.media }
+                    src={ imageGettingStarted }
+                    title='Teste'
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant='headline' component='h2'>
+                      Entre / Crie sua conta para trabalhar nas tarefas
+                    </Typography>
+                    <Typography component='p'>
+                      Com sua conta, você pode ser atribuído as tarefas e ser recompensado.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      style={ { marginRight: 10 } }
+                      href={ `${api.API_URL}/authorize/github` }
+                      variant='raised'
+                      size='small'
+                      color='secondary'
+                      className={ classes.logButtons }
+                    >
+                      <img width='16' src={ logoGithub } />
+                      <span className={ classes.gutterLeft }>Github</span>
+                    </Button>
+
+                    <Button
+                      href={ `${api.API_URL}/authorize/bitbucket` }
+                      variant='raised'
+                      size='small'
+                      color='secondary'
+                      className={ classes.logButtons }
+                    >
+                      <img width='16' src={ logoBitbucket } />
+                      <span className={ classes.gutterLeft }>Bitbucket</span>
+                    </Button>
+                  </CardActions>
+                </Card>
+              ) : (
+                <CustomPaginationActionsTable tasks={ this.props.tasks } />
+              )
+            }
           </TabContainer>
         </div>
       </Paper>
@@ -114,7 +179,8 @@ TaskList.propTypes = {
   classes: PropTypes.object.isRequired,
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
-  tasks: PropTypes.object
+  tasks: PropTypes.object,
+  user: PropTypes.object
 }
 
 export default withRouter(withStyles(styles)(TaskList))

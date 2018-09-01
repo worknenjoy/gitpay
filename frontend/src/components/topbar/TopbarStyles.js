@@ -24,7 +24,6 @@ export const Container = styled.div`
 
 export const Side = styled.div`
   display: flex;
-  
 `
 
 export const LeftSide = styled(Side)`

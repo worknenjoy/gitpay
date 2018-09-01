@@ -126,7 +126,7 @@ class CustomPaginationActionsTable extends React.Component {
 
     this.state = {
       page: 0,
-      rowsPerPage: 5,
+      rowsPerPage: 10,
     }
   }
 

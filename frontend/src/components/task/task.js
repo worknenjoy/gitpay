@@ -28,6 +28,7 @@ import DateIcon from 'material-ui-icons/DateRange'
 import CalendarIcon from 'material-ui-icons/PermContactCalendar'
 import GroupWorkIcon from 'material-ui-icons/GroupAdd'
 import DoneIcon from 'material-ui-icons/Done'
+import NavigationIcon from 'material-ui-icons/ArrowBack'
 
 import Chip from 'material-ui/Chip'
 import StatusDialog from './status-dialog'
@@ -253,6 +254,10 @@ const styles = theme => ({
   },
   light: {
     color: 'white'
+  },
+  button: {
+    width: 100,
+    font: 10
   }
 })
 
@@ -336,6 +341,10 @@ class Task extends Component {
 
   handleInvite = () => {
     this.setState({ taskInviteDialog: true })
+  }
+
+  handleBackToTaskList = () => {
+    window.location.assign('/#/tasks/explore')
   }
 
   render () {
@@ -466,6 +475,10 @@ class Task extends Component {
         <TopBarContainer />
         <PageContent>
           <TaskHeader>
+            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='raised' size='small' aria-label='Delete' className={ classes.button }>
+              <NavigationIcon />
+              Tarefas
+            </Button>
             <Typography variant='subheading' style={ { color: '#bbb' } }>
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
