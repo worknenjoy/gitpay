@@ -19,6 +19,7 @@ import HomeIcon from 'material-ui-icons/Home'
 import PlusIcon from 'material-ui-icons/Queue'
 import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
+import TasksIcon from 'material-ui-icons/ViewList'
 import { withStyles } from 'material-ui/styles'
 
 import Menu, { MenuItem } from 'material-ui/Menu'
@@ -161,6 +162,10 @@ class TopBar extends Component {
     window.location.assign('/#/profile')
   }
 
+  handleViewTasks = () => {
+    window.location.assign('/#/tasks/explore')
+  }
+
   handleSignOut = () => {
     this.props.history.replace({ pathname: '/' })
     this.props.signOut()
@@ -195,6 +200,15 @@ class TopBar extends Component {
               color='primary'
             >
               <LabelButton>Criar tarefa</LabelButton><PlusIcon />
+            </StyledButton>
+            <StyledButton
+              onClick={ this.handleViewTasks }
+              variant='raised'
+              size='small'
+              color='primary'
+              paddingLeft
+            >
+              <LabelButton>Explorar tarefas</LabelButton><TasksIcon />
             </StyledButton>
 
             <div>
