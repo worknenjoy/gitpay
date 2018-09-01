@@ -26,7 +26,7 @@ Sendo assim, quando uma tarefa é paga no cartão de crédito, você irá recebe
 
 Se o pagamento foi realizado com PayPal, você irá receber o pagamento com sua conta do PayPal.
 
-Você precisa configurar seus pagamentos configurando sua conta em (https://gitpay.me/#/profile/payment-options)[https://gitpay.me/#/profile/payment-options] 
+Você precisa configurar seus pagamentos configurando sua conta em [https://gitpay.me/#/profile/payment-options](https://gitpay.me/#/profile/payment-options) 
 
 > Para saber com o pagamento foi realizado para aquela tarefa, verifique nos pedidos
 
