@@ -24,10 +24,14 @@ export const Container = styled.div`
 
 export const Side = styled.div`
   display: flex;
-  width: 32%;
+  
 `
 
-export const LeftSide = styled(Side)``
+export const LeftSide = styled(Side)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+`
 
 export const RightSide = styled(Side)`
   justify-content: flex-end;
