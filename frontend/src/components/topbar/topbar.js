@@ -18,6 +18,7 @@ import Typography from 'material-ui/Typography'
 import HomeIcon from 'material-ui-icons/Home'
 import PlusIcon from 'material-ui-icons/Queue'
 import UserIcon from 'material-ui-icons/AccountCircle'
+import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import { withStyles } from 'material-ui/styles'
 
 import Menu, { MenuItem } from 'material-ui/Menu'
@@ -69,20 +70,6 @@ class TopBar extends Component {
       createTaskDialog: false,
       signUserDialog: false
     }
-
-    this.handleClose = this.handleClose.bind(this)
-    this.handleMenu = this.handleMenu.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSignOut = this.handleSignOut.bind(this)
-    this.handleSignIn = this.handleSignOut.bind(this)
-    this.handleProfile = this.handleProfile.bind(this)
-    this.handleClickDialogCreateTask = this.handleClickDialogCreateTask.bind(this)
-    this.handleClickDialogCreateTaskClose = this.handleClickDialogCreateTaskClose.bind(this)
-    this.handleCreateTask = this.handleCreateTask.bind(this)
-    this.onChange = this.onChange.bind(this)
-    this.handleClickDialogSignUser = this.handleClickDialogSignUser.bind(this)
-    this.handleSignUserDialogClose = this.handleSignUserDialogClose.bind(this)
-    this.handleGithubLink = this.handleGithubLink.bind(this)
   }
 
   componentDidMount () {
@@ -95,32 +82,36 @@ class TopBar extends Component {
     }
   }
 
-  handleChange (event, checked) {
+  handleChange = (event, checked) => {
     this.setState({ auth: checked })
   }
 
-  handleMenu (event) {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget })
   }
 
-  handleClose () {
+  handleClose = () => {
     this.setState({ anchorEl: null })
   }
 
-  handleClickDialogCreateTask () {
+  handleClickDialogCreateTask = () => {
     this.setState({ createTaskDialog: true })
   }
 
-  handleClickDialogCreateTaskClose () {
+  handleClickDialogCreateTaskClose = () => {
     this.setState({ createTaskDialog: false })
   }
 
-  handleClickDialogSignUser (e) {
+  handleClickDialogSignUser = (e) => {
     this.setState(({ signUserDialog: true }))
   }
 
-  handleGithubLink () {
+  handleGithubLink = () => {
     window.open('https://github.com/worknenjoy/gitpay', '_blank')
+  }
+
+  handleDocsLink = () => {
+    window.open('https://docs.gitpay.me', '_blank')
   }
 
   handleProvider = (e, option) => {
@@ -128,7 +119,7 @@ class TopBar extends Component {
     this.setState({ provider: option })
   }
 
-  onChange (e) {
+  onChange = (e) => {
     // Because we named the inputs to match their corresponding values in state, it's
     // super easy to update the state
     const task = this.state.task
@@ -137,11 +128,11 @@ class TopBar extends Component {
     this.setState(task)
   }
 
-  validURL (url) {
+  validURL = (url) => {
     return isGithubUrl(url) || isBitbucketUrl(url)
   }
 
-  handleCreateTask (e) {
+  handleCreateTask = (e) => {
     const url = this.state.task.url.value
     if (this.validURL(url)) {
       this.props.createTask({
@@ -162,19 +153,15 @@ class TopBar extends Component {
     }
   }
 
-  handleSignIn () {
-
-  }
-
-  handleSignUserDialogClose () {
+  handleSignUserDialogClose = () => {
     this.setState({ signUserDialog: false })
   }
 
-  handleProfile () {
+  handleProfile = () => {
     window.location.assign('/#/profile')
   }
 
-  handleSignOut () {
+  handleSignOut = () => {
     this.props.history.replace({ pathname: '/' })
     this.props.signOut()
   }
@@ -197,11 +184,9 @@ class TopBar extends Component {
           <LeftSide>
             <StyledButton href='/'>
               <HomeIcon color='primary' />
+              <Logo src={ logo } />
             </StyledButton>
           </LeftSide>
-
-          <Logo src={ logo } />
-
           <RightSide>
             <StyledButton
               onClick={ this.handleClickDialogCreateTask }
@@ -212,8 +197,20 @@ class TopBar extends Component {
               <LabelButton>Criar tarefa</LabelButton><PlusIcon />
             </StyledButton>
 
-            { !isLoggedIn &&
-              <div>
+            <div>
+              <StyledButton
+                onClick={ this.handleDocsLink }
+                variant='raised'
+                size='small'
+                color='default'
+                paddingLeft
+              >
+                <LabelButton>Documentação</LabelButton><LibraryIcon />
+              </StyledButton>
+            </div>
+
+            { !isLoggedIn
+              ? (<div>
                 <StyledButton
                   onClick={ this.handleClickDialogSignUser }
                   variant='raised'
@@ -234,7 +231,20 @@ class TopBar extends Component {
                     <LoginButton referer={ this.props.location } size='medium' />
                   </DialogContent>
                 </Dialog>
-              </div>
+              </div>) : (
+                <div>
+                  <StyledButton
+                    onClick={ this.handleProfile }
+                    variant='raised'
+                    size='small'
+                    color='secondary'
+                    paddingLeft
+                  >
+                    <LabelButton>Acessar conta</LabelButton>
+                    <UserIcon />
+                  </StyledButton>
+                </div>
+              )
             }
 
             <form onSubmit={ this.handleCreateTask } action='POST'>
@@ -330,19 +340,15 @@ class TopBar extends Component {
                 }
               </div>
             </ReactPlaceholder>
-
-            { isLoggedIn &&
-              <OnlyDesktop>
-                <Tooltip id='tooltip-github' title='Acessar nosso github' placement='bottom'>
-                  <StyledAvatar
-                    alt={ user.username }
-                    src={ logoGithub }
-                    onClick={ this.handleGithubLink }
-                  />
-                </Tooltip>
-              </OnlyDesktop>
-            }
-
+            <OnlyDesktop>
+              <Tooltip id='tooltip-github' title='Acessar nosso github' placement='bottom'>
+                <StyledAvatar
+                  alt={ user.username }
+                  src={ logoGithub }
+                  onClick={ this.handleGithubLink }
+                />
+              </Tooltip>
+            </OnlyDesktop>
           </RightSide>
         </Container>
       </Bar>
