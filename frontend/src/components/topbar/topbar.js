@@ -209,8 +209,8 @@ class TopBar extends Component {
               </StyledButton>
             </div>
 
-            { !isLoggedIn ?
-              (<div>
+            { !isLoggedIn
+              ? (<div>
                 <StyledButton
                   onClick={ this.handleClickDialogSignUser }
                   variant='raised'
@@ -240,7 +240,8 @@ class TopBar extends Component {
                     color='secondary'
                     paddingLeft
                   >
-                  <LabelButton>Acessar conta</LabelButton><UserIcon />
+                    <LabelButton>Acessar conta</LabelButton>
+                    <UserIcon />
                   </StyledButton>
                 </div>
               )
