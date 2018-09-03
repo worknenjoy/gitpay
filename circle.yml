@@ -1,0 +1,5 @@
+deployment:
+  production:
+    branch: gh-pages
+    commands:
+    - ./scripts/deploy-ghpages.sh build
