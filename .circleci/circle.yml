@@ -1,19 +1,21 @@
 version: 2
 jobs:
-  build:
+  deploy:
     docker:
-      - image: circleci/ruby:latest
-    filters:
-      branches:
-        only: gh-pages
+      - image: circleci/ruby:2.4.3-node-browsers
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "xx:xx:xx:xx:11:22:33:44:55:66:77:88:99:xx:xx:xx"
       - checkout
-      - run:
-          name: bundle
-          command: bundle
-      - run:
-          name: Run deploy scripts
-          command: ../scripts/deploy-ghpages.sh
+      - run: npm install
+      - run: bundle install
+      - run: bundle exec jekyll build
+      - deploy:
+          name: Deploy Release to GitHub
+          command: |
+            if [ $CIRCLE_BRANCH == 'github-pages' ]; then
+              bash scripts/setup-ghpages.sh
+            fi
+workflows:
+  version: 2
+  build:
+    jobs:
+      - deploy
