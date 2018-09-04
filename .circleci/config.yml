@@ -15,7 +15,7 @@ jobs:
     - deploy:
         name: Deploy Release to GitHub
         command: |
-          if [ $CIRCLE_BRANCH == 'github-pages' ]; then
+          if [ $CIRCLE_BRANCH == 'gh-pages' ]; then
             bash setup-ghpages.sh
           fi
   build:
