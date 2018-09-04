@@ -18,7 +18,6 @@ jobs:
           if [ $CIRCLE_BRANCH == 'github-pages' ]; then
             bash setup-ghpages.sh
           fi
-
   build:
     docker:
       # specify the version you desire here
