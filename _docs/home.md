@@ -87,7 +87,7 @@ Backend (node.js): `npm run start:dev`
 
 Em seguida, iríamos para o código fonte do seguinte arquivo:
 
-File: https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html
+File: [https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html](https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html)
 ```html
 <head>
   <meta charset="utf-8">
@@ -126,7 +126,7 @@ Agora que você tem a solução implementada, você deve efetuar um commit e um 
 > Não se esqueça de executar os testes como `npm run test` e `npm run lint` que verificam automaticamente se seu código está nos padrões deste projeto
 
 
-Para este projeto, no caso sendo do Gitpay, o pull request será enviado em https://github.com/worknenjoy/gitpay/pulls
+Para este projeto, no caso sendo do Gitpay, o pull request será enviado em [https://github.com/worknenjoy/gitpay/pulls](https://github.com/worknenjoy/gitpay/pulls)
 
 Após o Pull Request ser enviado, podemos avaliar a mudança e pedir modificações se for necessário, e você passa fazer as correções solicitadas e os pull requests são atualizados, até chegar na solução final.
 
