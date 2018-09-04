@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  ghpages-deploy:
+  docs:
     docker:
     - image: circleci/ruby:2.4.3-node-browsers
     steps:
@@ -18,7 +18,7 @@ jobs:
           if [ $CIRCLE_BRANCH == 'github-pages' ]; then
             bash setup-ghpages.sh
           fi
-  deploy:
+  build:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.6.0
@@ -77,13 +77,13 @@ jobs:
 
 workflows:
   version: 2
-  build-main:
+  build-all:
     jobs:
-    - ghpages:
+    - docs:
         filters:
           branches:
             only: gh-pages
-    - deploy:
+    - build:
         filters:
           branches:
             only: master
