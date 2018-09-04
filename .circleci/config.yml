@@ -6,10 +6,9 @@ version: 2
 jobs:
   docs:
     docker:
-    - image: circleci/ruby:2.4.3-node-browsers
+    - image: circleci/ruby:2.4.4
     steps:
       - checkout
-      - run: npm install
       - run: bundle install
       - run: bundle exec jekyll build
       - deploy:
