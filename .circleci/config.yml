@@ -18,7 +18,7 @@ jobs:
           if [ $CIRCLE_BRANCH == 'github-pages' ]; then
             bash setup-ghpages.sh
           fi
-  build:
+  master:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.6.0
@@ -77,13 +77,13 @@ jobs:
 
 workflows:
   version: 2
-  build-deploy:
+  build:
     jobs:
     - ghpages:
         filters:
           branches:
             only: gh-pages
-    - build:
+    - master:
         filters:
           branches:
             only: master
