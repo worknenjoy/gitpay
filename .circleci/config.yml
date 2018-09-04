@@ -9,6 +9,7 @@ jobs:
     - image: circleci/ruby:2.3.7
     steps:
       - checkout
+      - run: git checkout gh-pages
       - run: bundle install
       - run: bundle exec jekyll build
       - deploy:
