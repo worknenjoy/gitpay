@@ -81,13 +81,13 @@ workflows:
     jobs:
     - docs:
         requires:
-        - docs
+          - docs
         filters:
           branches:
             only: gh-pages
     - build:
         requires:
-        - build
+          - build
         filters:
           branches:
             only: master
