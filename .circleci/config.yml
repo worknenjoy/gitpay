@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  ghpages-build:
+  ghpages:
     docker:
     - image: circleci/ruby:2.4.3-node-browsers
     steps:
@@ -19,7 +19,7 @@ jobs:
             bash setup-ghpages.sh
           fi
 
-  prod-build:
+  build:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.6.0
@@ -78,18 +78,13 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  build-deploy:
     jobs:
-    - build
-    - ghpages-stage:
-        requires:
-          - ghpages-build
+    - ghpages:
         filters:
           branches:
             only: gh-pages
-    - prod-build:
-        requires:
-          - build
+    - build:
         filters:
           branches:
             only: master
