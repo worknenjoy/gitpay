@@ -93,13 +93,13 @@ workflows:
       - checkout_code
       - docs:
           requires:
-            - docs
+            - checkout_code
           filters:
             branches:
               only: gh-pages
       - build:
           requires:
-            - build
+            - checkout_code
           filters:
             branches:
               only: master
