@@ -19,7 +19,7 @@ jobs:
             bash setup-ghpages.sh
           fi
 
-  build:
+  prod-build:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.6.0
@@ -87,7 +87,7 @@ workflows:
         filters:
           branches:
             only: gh-pages
-    - deploy-prod:
+    - prod-build:
         requires:
           - build
         filters:
