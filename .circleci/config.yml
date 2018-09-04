@@ -6,18 +6,18 @@ version: 2
 jobs:
   docs:
     docker:
-      - image: circleci/ruby:2.4.3-node-browsers
-      steps:
-        - checkout
-        - run: npm install
-        - run: bundle install
-        - run: bundle exec jekyll build
-        - deploy:
-            name: Deploy Release to GitHub
-            command: |
-              if [ $CIRCLE_BRANCH == 'gh-pages' ]; then
-                bash setup-ghpages.sh
-              fi
+    - image: circleci/ruby:2.4.3-node-browsers
+    steps:
+      - checkout
+      - run: npm install
+      - run: bundle install
+      - run: bundle exec jekyll build
+      - deploy:
+          name: Deploy Release to GitHub
+          command: |
+            if [ $CIRCLE_BRANCH == 'gh-pages' ]; then
+              bash setup-ghpages.sh
+            fi
   build:
     docker:
     # specify the version you desire here
