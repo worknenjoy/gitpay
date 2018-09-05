@@ -153,18 +153,17 @@ class Account extends Component {
     const bankNumber = e.target['bank_number'].value
     if (bankNumber) {
       const routingNumber = `${bankNumber}-${e.target.routing_number.value}`
-      if (e.target.account_number.value.indexOf('-') > -1)
-      {
+      if (e.target.account_number.value.indexOf('-') > -1) {
         this.setState({ AccountNumberError: true })
       }
-      else{
+      else {
         this.setState({ AccountNumberError: false })
-        const accountNumber = e.target.account_number.value.replace("-", "")
+        const accountNumber = e.target.account_number.value.replace('-', '')
         this.props.createBankAccount(this.state.userId, {
           routing_number: routingNumber,
           account_number: accountNumber
         })
-      } 
+      }
     }
     else {
       this.setState({ bankNumberError: true })
@@ -428,7 +427,6 @@ class Account extends Component {
                               <FormControl
                                 error={ this.state.AccountNumberError }
                               >
-                                
                                 <Input
                                   id='bank-account-number'
                                   name='account_number'
@@ -441,11 +439,11 @@ class Account extends Component {
                                   }
                                 />
                                 { this.state.AccountNumberError && (
-                                    <FormHelperText>
-                                      { ' ' }
-                                      Sem dígito verificador
-                                    </FormHelperText>
-                                  ) }
+                                  <FormHelperText>
+                                    { ' ' }
+                                    Sem dígito verificador
+                                  </FormHelperText>
+                                ) }
                               </FormControl>
                             </Grid>
                           </Grid>
