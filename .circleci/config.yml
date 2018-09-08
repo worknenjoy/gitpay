@@ -75,7 +75,7 @@ jobs:
           command: npm run test
       - run:
           name: run frontend tests
-          command: cd frontend && npm run test
+          command: cd frontend && npm install && npm run test
 
 workflows:
   version: 2
