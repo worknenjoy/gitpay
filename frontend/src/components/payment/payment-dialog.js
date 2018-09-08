@@ -8,8 +8,6 @@ import Dialog, {
 import StripeCheckout from '../checkout/stripe-checkout'
 
 class PaymentDialog extends Component {
-  componentWillMount () {}
-
   render () {
     return (
       <Dialog
@@ -36,7 +34,8 @@ class PaymentDialog extends Component {
 
 PaymentDialog.propTypes = {
   open: PropTypes.bool,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  user: PropTypes.object
 }
 
 export default PaymentDialog

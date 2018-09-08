@@ -6,3 +6,4 @@ coverage
 test
 migrate.js
 migration
+frontend/stripe-v3.js

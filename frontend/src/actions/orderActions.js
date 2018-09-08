@@ -53,7 +53,6 @@ const payOrderError = error => {
 }
 
 const createOrder = order => {
-  validToken()
   return dispatch => {
     dispatch(createOrderRequested())
     axios
