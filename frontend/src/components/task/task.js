@@ -370,7 +370,7 @@ class Task extends Component {
 
     const userRow = user => {
       return (<span>
-        { user.profile_url
+        { user && user.length && user.profile_url
           ? (
             <Tooltip id='tooltip-github' title='ver perfil deste usuário no github' placement='bottom'>
               <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
@@ -380,7 +380,7 @@ class Task extends Component {
             </Tooltip>
           )
           : (
-            `${user.username}`
+            `${user && user.username || 'Usuário não cadastrado'}`
           )
         }
       </span>)
@@ -568,6 +568,16 @@ class Task extends Component {
                   <span className={ classes.spaceRight }>Adicionar recompensa</span>{ ' ' }
                   <RedeemIcon />
                 </Button>
+                <Button
+                  style={ { marginRight: 10 } }
+                  onClick={ this.handleInvite }
+                  size='small'
+                  color='primary'
+                  className={ classes.altButton }
+                >
+                  <span className={ classes.spaceRight }>Convidar</span>
+                  <AddIcon />
+                </Button>
                 { !taskOwner() &&
                 <Button
                   style={ { marginRight: 10 } }
@@ -584,16 +594,6 @@ class Task extends Component {
                 }
                 { taskOwner() && (
                   <div style={ { display: 'inline-block' } }>
-                    <Button
-                      style={ { marginRight: 10 } }
-                      onClick={ this.handleInvite }
-                      size='small'
-                      color='primary'
-                      className={ classes.altButton }
-                    >
-                      <span className={ classes.spaceRight }>Convidar</span>
-                      <AddIcon />
-                    </Button>
                     <Button
                       style={ { marginRight: 10 } }
                       onClick={ this.handleDeadlineForm }

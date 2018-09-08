@@ -2,16 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
-import { withRouter } from 'react-router-dom'
 import { injectStripe } from 'react-stripe-elements'
 
 import CardSection from './card-section'
 import UserSection from './user-section'
 import Button from 'material-ui/Button'
-
-import api from '../../consts'
-import axios from 'axios'
-import Auth from '../../modules/auth'
 
 class CheckoutForm extends Component {
   constructor (props) {
@@ -21,8 +16,8 @@ class CheckoutForm extends Component {
     this.onChange = this.onChange.bind(this)
 
     this.state = {
-      fullname: null,
       email: null,
+      fullname: null,
       authenticated: false,
       userId: null,
       error: {
@@ -44,6 +39,7 @@ class CheckoutForm extends Component {
     // tokenize, since there's only one in this group.
     if (!this.state.fullname) {
       this.setState({ error: { fullname: true } })
+      return
     }
     else {
       this.setState({ error: { fullname: false } })
@@ -55,7 +51,9 @@ class CheckoutForm extends Component {
     else {
       this.setState({ error: { email: false } })
     }
-
+    if (!this.props.stripe) {
+      return
+    }
     this.props.stripe
       .createToken({ name: this.state.fullname })
       .then(({ token }) => {
@@ -114,28 +112,16 @@ class CheckoutForm extends Component {
     this.setState(formData)
   }
 
-  componentWillMount () {
-    const token = Auth.getToken()
+  componentDidMount () {
+    const { user } = this.props
 
-    if (token) {
-      axios
-        .get(api.API_URL + '/authenticated', {
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-        .then(response => {
-          this.setState({
-            authenticated: response.data.authenticated,
-            fullname: response.data.user.name,
-            email: response.data.user.email,
-            userId: response.data.user.id
-          })
-        })
-        .catch(error => {
-          // eslint-disable-next-line no-console
-          console.log(error)
-        })
+    if (user && user.id) {
+      this.setState({
+        authenticated: true,
+        fullname: user.name,
+        email: user.email,
+        userId: user.id
+      })
     }
   }
 
@@ -153,11 +139,14 @@ class CheckoutForm extends Component {
             { logged ? (
               <div>
                 <Typography variant='caption'>
-                  { ' ' }
-                  Você está logado como{ ' ' }
+                  Você está logado como
                 </Typography>
                 <Typography variant='subheading'>
-                  { this.state.fullname }({ this.state.email })
+                  { (this.state.fullname && this.state.email) ? (
+                    `${this.state.fullname} (${this.state.email})`
+                  ) : (
+                    'Não foi possível obter os dados do usuário logado'
+                  ) }
                 </Typography>
               </div>
             ) : (
@@ -194,7 +183,9 @@ CheckoutForm.propTypes = {
   task: PropTypes.any,
   onClose: PropTypes.func,
   addNotification: PropTypes.func,
-  itemPrice: PropTypes.any
+  itemPrice: PropTypes.any,
+  user: PropTypes.object
 }
 
-export default withRouter(injectStripe(CheckoutForm))
+export const CheckoutFormPure = CheckoutForm
+export default injectStripe(CheckoutForm)

@@ -239,14 +239,8 @@ const createTask = (task, history) => {
 }
 
 const updateTask = task => {
-  validToken()
   return (dispatch, getState) => {
     dispatch(updateTaskRequested())
-    const userId = getState().loggedIn.user.id
-    if (!userId) {
-      dispatch(addNotification('Você precisa estar logado'))
-      return dispatch(updateTaskError({ message: 'Você precisa estar logado' }))
-    }
     axios
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
@@ -351,16 +345,8 @@ const fetchTask = taskId => {
 }
 
 const paymentTask = (taskId, value) => {
-  validToken()
   return (dispatch, getState) => {
     dispatch(paymentTaskRequested())
-    const userId = getState().loggedIn.user.id
-    if (!userId) {
-      dispatch(addNotification('Você precisa estar logado'))
-      return dispatch(
-        paymentTaskError({ message: 'Você precisa estar logado' })
-      )
-    }
     axios
       .post(`${api.API_URL}/tasks/payments/`, {
         taskId: taskId,

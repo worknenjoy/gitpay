@@ -10,9 +10,9 @@ const secure = require('./secure')
 router.get('/list', controllers.listOrders)
 router.get('/fetch/:id', controllers.fetchOrders)
 router.get('/update', controllers.updateOrders)
+router.post('/create', controllers.createOrder)
 
 router.use(secure)
-router.post('/create', controllers.createOrder)
 router.post('/payment', controllers.paymentOrder)
 
 module.exports = router

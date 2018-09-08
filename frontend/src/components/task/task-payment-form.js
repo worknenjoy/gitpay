@@ -116,6 +116,7 @@ class TaskPaymentForm extends Component {
           onPayment={ this.props.updateTask }
           itemPrice={ this.state.currentPrice }
           price={ this.state.finalPrice }
+          user={ this.props.user }
           task={ this.props.match.params.id }
         />
 
