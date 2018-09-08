@@ -144,7 +144,7 @@ class CheckoutForm extends Component {
                       Você está logado como
                     </Typography>
                     <Typography variant='subheading'>
-                      {`${this.state.fullname} (${this.state.email})`}
+                      { `${this.state.fullname} (${this.state.email})` }
                     </Typography>
                   </div>
                 ) : (

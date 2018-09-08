@@ -60,8 +60,8 @@ class UserSection extends Component {
             }
             placeholder='nome completo'
             ref='payment-form-user'
-            disabled={this.props.name}
-            defaultValue={this.props.name}
+            disabled={ this.props.name }
+            defaultValue={ this.props.name }
             required
             style={ { marginRight: 20 } }
             onChange={ this.onChangeName }
@@ -84,8 +84,8 @@ class UserSection extends Component {
             placeholder='e-mail'
             ref='payment-form-email'
             type='email'
-            disabled={this.props.email}
-            defaultValue={this.props.email}
+            disabled={ this.props.email }
+            defaultValue={ this.props.email }
             required
             onChange={ this.onChangeEmail }
           />
@@ -101,7 +101,9 @@ class UserSection extends Component {
 }
 
 UserSection.propTypes = {
-  error: PropTypes.object.isRequired
+  error: PropTypes.object.isRequired,
+  email: PropTypes.string,
+  name: PropTypes.string
 }
 
 export default UserSection
