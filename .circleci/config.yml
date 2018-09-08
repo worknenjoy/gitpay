@@ -71,8 +71,11 @@ jobs:
           command: npm run migrate-test
       # run tests!
       - run:
-          name: run tests!
+          name: run node tests
           command: npm run test
+      - run:
+          name: run frontend tests
+          command: cd frontend && npm run test
 
 workflows:
   version: 2
