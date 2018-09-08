@@ -127,6 +127,7 @@ class CheckoutForm extends Component {
 
   render () {
     const logged = this.state.authenticated
+    const { user } = this.props
 
     return (
       <form
@@ -138,7 +139,7 @@ class CheckoutForm extends Component {
           <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
             { logged ? (
               <div>
-                { (this.state.fullname && this.state.email) ? (
+                { user && user.name ? (
                   <div>
                     <Typography variant='caption'>
                       Você está logado como

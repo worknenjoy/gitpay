@@ -60,7 +60,6 @@ class UserSection extends Component {
             }
             placeholder='nome completo'
             ref='payment-form-user'
-            disabled={ this.props.name }
             defaultValue={ this.props.name }
             required
             style={ { marginRight: 20 } }
