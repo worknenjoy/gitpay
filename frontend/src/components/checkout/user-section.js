@@ -21,9 +21,11 @@ class UserSection extends Component {
   }
 
   componentWillReceiveProps (props, newProps) {
-    this.setState({
-      error: props.error
-    })
+    if(pros !== newProps) {
+      this.setState({
+        error: props.error
+      })
+    }
   }
 
   onChangeName (ev) {
@@ -58,6 +60,8 @@ class UserSection extends Component {
             }
             placeholder='nome completo'
             ref='payment-form-user'
+            disabled={this.props.name}
+            defaultValue={this.props.name}
             required
             style={ { marginRight: 20 } }
             onChange={ this.onChangeName }
@@ -80,6 +84,8 @@ class UserSection extends Component {
             placeholder='e-mail'
             ref='payment-form-email'
             type='email'
+            disabled={this.props.email}
+            defaultValue={this.props.email}
             required
             onChange={ this.onChangeEmail }
           />

@@ -145,7 +145,7 @@ class CheckoutForm extends Component {
                   { (this.state.fullname && this.state.email) ? (
                     `${this.state.fullname} (${this.state.email})`
                   ) : (
-                    'Não foi possível obter os dados do usuário logado'
+                    <UserSection error={ this.state.error } name={ this.state.fullname } email={ this.state.email } />
                   ) }
                 </Typography>
               </div>
