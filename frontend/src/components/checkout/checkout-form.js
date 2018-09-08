@@ -138,16 +138,18 @@ class CheckoutForm extends Component {
           <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
             { logged ? (
               <div>
-                <Typography variant='caption'>
-                  Você está logado como
-                </Typography>
-                <Typography variant='subheading'>
-                  { (this.state.fullname && this.state.email) ? (
-                    `${this.state.fullname} (${this.state.email})`
-                  ) : (
-                    <UserSection error={ this.state.error } name={ this.state.fullname } email={ this.state.email } />
-                  ) }
-                </Typography>
+                { (this.state.fullname && this.state.email) ? (
+                  <div>
+                    <Typography variant='caption'>
+                      Você está logado como
+                    </Typography>
+                    <Typography variant='subheading'>
+                      {`${this.state.fullname} (${this.state.email})`}
+                    </Typography>
+                  </div>
+                ) : (
+                  <UserSection error={ this.state.error } name={ this.state.fullname } email={ this.state.email } />
+                ) }
               </div>
             ) : (
               <UserSection error={ this.state.error } />

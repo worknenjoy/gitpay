@@ -21,7 +21,7 @@ class UserSection extends Component {
   }
 
   componentWillReceiveProps (props, newProps) {
-    if(pros !== newProps) {
+    if (props !== newProps) {
       this.setState({
         error: props.error
       })
