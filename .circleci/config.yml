@@ -74,8 +74,13 @@ jobs:
           name: run node tests
           command: npm run test
       - run:
+          name: install frontend dependencies
+          command: npm install
+          working_directory: frontend
+      - run:
           name: run frontend tests
-          command: cd frontend && npm install && npm run test
+          command: npm run test
+          working_directory: frontend
 
 workflows:
   version: 2
