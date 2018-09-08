@@ -110,6 +110,7 @@ class CheckoutForm extends Component {
     let formData = {}
     formData[ev.target.name] = ev.target.value
     this.setState(formData)
+    this.setState({ paymentRequested: false })
   }
 
   componentDidMount () {
