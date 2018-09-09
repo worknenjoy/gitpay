@@ -144,6 +144,51 @@ describe('webhooks', () => {
         })
     })
 
+    it('should update the order when a webhook charge.failed is triggered', done => {
+      models.User.build({ email: 'teste@mail.com', password: 'teste' })
+        .save()
+        .then(user => {
+          models.Task.build({
+            url: 'https://github.com/worknenjoy/truppie/issues/99',
+            provider: 'github',
+            userId: user.dataValues.id
+          })
+            .save()
+            .then(task => {
+              task
+                .createOrder({
+                  source_id: 'card_1D8FH6BrSjgsps2DtehhSR4l',
+                  currency: 'BRL',
+                  amount: 200,
+                  source: 'ch_1D8FHBBrSjgsps2DJawS1hYk',
+                  userId: user.dataValues.id
+                })
+                .then(order => {
+                  agent
+                    .post('/webhooks')
+                    .send(chargeData.failed)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+                      expect(res.body).to.exist
+                      expect(res.body.id).to.equal(
+                        'evt_1D8FHCBrSjgsps2DKkdcPqfg'
+                      )
+                      models.Order.findById(order.dataValues.id).then(o => {
+                        expect(o.dataValues.source).to.equal(
+                          'ch_1D8FHBBrSjgsps2DJawS1hYk'
+                        )
+                        expect(o.dataValues.paid).to.equal(false)
+                        expect(o.dataValues.status).to.equal('failed')
+                        done()
+                      })
+                    })
+                })
+            })
+        })
+    })
+
     describe('webhooks for transfer', () => {
       it('should notify the transfer when a webhook customer.source.created is triggered', done => {
         models.User.build({

@@ -186,3 +186,99 @@ module.exports.success = {
   },
   "type": "charge.succeeded"
 }
+
+module.exports.failed = {
+  "id": "evt_1D8FHCBrSjgsps2DKkdcPqfg",
+  "object": "event",
+  "api_version": "2018-02-28",
+  "created": 1536447098,
+  "data": {
+    "object": {
+      "id": "ch_1D8FHBBrSjgsps2DJawS1hYk",
+      "object": "charge",
+      "amount": 500,
+      "amount_refunded": 0,
+      "application": null,
+      "application_fee": null,
+      "balance_transaction": null,
+      "captured": false,
+      "created": 1536447097,
+      "currency": "usd",
+      "customer": "cus_DZO39yqDQgQt1O",
+      "description": null,
+      "destination": null,
+      "dispute": null,
+      "failure_code": "card_declined",
+      "failure_message": "Your card was declined.",
+      "fraud_details": {
+        "stripe_report": "fraudulent"
+      },
+      "invoice": null,
+      "livemode": true,
+      "metadata": {
+        "order_id": "47"
+      },
+      "on_behalf_of": null,
+      "order": null,
+      "outcome": {
+        "network_status": "not_sent_to_network",
+        "reason": "highest_risk_level",
+        "risk_level": "highest",
+        "rule": "block_if_high_risk__enabled",
+        "seller_message": "Stripe blocked this payment as too risky.",
+        "type": "blocked"
+      },
+      "paid": false,
+      "receipt_email": null,
+      "receipt_number": null,
+      "refunded": false,
+      "refunds": {
+        "object": "list",
+        "data": [
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/charges/ch_1D8FHBBrSjgsps2DJawS1hYk/refunds"
+      },
+      "review": null,
+      "shipping": null,
+      "source": {
+        "id": "card_1D8FH6BrSjgsps2DtehhSR4l",
+        "object": "card",
+        "address_city": null,
+        "address_country": null,
+        "address_line1": null,
+        "address_line1_check": null,
+        "address_line2": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_zip_check": null,
+        "brand": "Visa",
+        "country": "BR",
+        "customer": "cus_DZO39yqDQgQt1O",
+        "cvc_check": "unavailable",
+        "dynamic_last4": null,
+        "exp_month": 1,
+        "exp_year": 2026,
+        "fingerprint": "iguypZWj2UjRVNCv",
+        "funding": "credit",
+        "last4": "1017",
+        "metadata": {
+        },
+        "name": "mthais",
+        "tokenization_method": null
+      },
+      "source_transfer": null,
+      "statement_descriptor": null,
+      "status": "failed",
+      "transfer_group": "task_65"
+    }
+  },
+  "livemode": true,
+  "pending_webhooks": 1,
+  "request": {
+    "id": "req_TJZ6NnHw55910F",
+    "idempotency_key": null
+  },
+  "type": "charge.failed"
+}

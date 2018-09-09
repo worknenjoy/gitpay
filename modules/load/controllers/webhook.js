@@ -2,7 +2,8 @@ const models = require('../../../loading/loading')
 const SendMail = require('../../mail/mail')
 
 const FAILED_REASON = {
-  declined_by_network: 'Negado pela operadora do cartão'
+  declined_by_network: 'Negado pela operadora do cartão',
+  not_sent_to_network: 'Nível de risco elevado, talvez você não tenha fornecidos todas informações corretamente'
 }
 
 const CURRENCIES = {
