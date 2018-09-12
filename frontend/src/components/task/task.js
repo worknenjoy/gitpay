@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
-import MomentTimezone from 'moment-timezone'
 import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
 import 'react-placeholder/lib/reactPlaceholder.css'
@@ -769,7 +768,7 @@ class Task extends Component {
                 icon={ DateIcon }
                 iconColor='green'
                 title='Data limite para realização da tarefa'
-                description={ MomentComponent(task.data.deadline).zone(MomentTimezone.tz.guess()).format('DD-MM-YYYY') }
+                description={ MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') }
                 statIcon={ DateIcon }
                 statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
               /> }
