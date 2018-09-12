@@ -9,7 +9,9 @@
     "production": "webpack --progress --config webpack.config.prod.js"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/stripe-v3.js"],
+    "setupFiles": [
+      "<rootDir>/stripe-v3.js"
+    ],
     "moduleFileExtensions": [
       "js",
       "jsx"

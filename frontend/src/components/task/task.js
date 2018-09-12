@@ -768,7 +768,7 @@ class Task extends Component {
                 icon={ DateIcon }
                 iconColor='green'
                 title='Data limite para realização da tarefa'
-                description={ MomentComponent(task.data.deadline).zone(-3).format('DD-MM-YYYY') }
+                description={ MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') }
                 statIcon={ DateIcon }
                 statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
               /> }
