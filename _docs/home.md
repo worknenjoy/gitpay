@@ -55,7 +55,7 @@ Vamos supor que a tarefa tenha sido criada na plataforma a partir de uma issue q
 
 #### Interesse em uma tarefa
 
-Você primeiro chega até a tarefa: [https://gitpay.me/#/task/64]()
+Você primeiro chega até a tarefa: [https://gitpay.me/#/task/64](https://gitpay.me/#/task/64)
 
 Nela, você pode demonstrar interesse e quem criou o tarefa será notificado.
 
