@@ -9,7 +9,7 @@ tags:
 #### O que você vai aprender aqui
 
 {:.no_toc}  
-\* TOC  
+\*TOC  
 {:toc}
 
 O Git Workflow é um processo já existente no desenvolvimento de software que usamos como base para validar uma tarefa de um projeto Open Source, ou até mesmo de forma interna em projetos privados.
