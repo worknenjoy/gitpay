@@ -32,7 +32,7 @@ Há diversos tipos de Workflow para times, e aqui vamos falar do que usamos no G
 
 ## Forking Workflow
 
-![](/uploads/img-multidev-forking-800.png =250x)
+![Exemplo de um forkworkflow](/uploads/img-multidev-forking-800.png "Forking workflow" =250x)
 
 Este é o processo que usamos para integração das tarefas. No Forking Workflow, repositórios são criados a partir do principal onde contém a sua mudança. Você deve ser capaz de reproduzir um ambiente com o que você precisa para concluir aquela tarefa.
 
