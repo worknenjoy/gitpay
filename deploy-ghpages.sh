@@ -34,6 +34,7 @@ fi
 
 # copy over or recompile the new site
 #cp -a "../${siteSource}/." .
+git pull origin gh-pages
 bundle exec jekyll build
 # stage any changes and new files
 git add -A
