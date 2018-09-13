@@ -38,7 +38,7 @@ Com o Gitpay, você trabalha em uma tarefa passando pelo processo de desenvolvim
 
 Isto significa que cada tarefa quando enviada através de um *Pull Request* vai para produção após aprovada. O contrato do Gitpay são processos já existentes no Git para validar um trabalho. 
 
-{% include image.html img="image1.png" style="wide" lightbox="true" alt="Alt for image" caption="Image in lightbox" %}
+{% include image.html img="https://alexandremagno.net/wp-content/uploads/2018/09/Global-Business-Deals-Venn-Diagram.png" style="wide" lightbox="true" alt="Alt for image" caption="Image in lightbox" %}
 
 ## Como contribuir na prática e ser recompensado
 Vamos mostrar de uma forma bem geral como é o processo a partir do interesse de uma tarefa. Quando você cadastra no Gitpay, podemos enviar propostas de tarefas da plataforma e também de clientes que disponibilizam tarefas de seus projetos.
@@ -55,7 +55,7 @@ Vamos supor que a tarefa tenha sido criada na plataforma a partir de uma issue q
 
 #### Interesse em uma tarefa
 
-Você primeiro chega até a tarefa: https://gitpay.me/#/task/64
+Você primeiro chega até a tarefa: [https://gitpay.me/#/task/64]()
 
 Nela, você pode demonstrar interesse e quem criou o tarefa será notificado.
 
