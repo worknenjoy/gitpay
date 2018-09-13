@@ -9,7 +9,7 @@ tags:
 #### O que você vai aprender aqui
 
 {:.no_toc}  
-\* TOC  
+* TOC  
 {:toc}
 
 O Git Workflow é um processo já existente no desenvolvimento de software que usamos como base para validar uma tarefa de um projeto Open Source, ou até mesmo de forma interna em projetos privados.
@@ -32,7 +32,7 @@ Há diversos tipos de Workflow para times, e aqui vamos falar do que usamos no G
 
 ## Forking Workflow
 
-![](/uploads/img-multidev-forking-800.png)
+![](/uploads/img-multidev-forking-800.png =250x)
 
 Este é o processo que usamos para integração das tarefas. No Forking Workflow, repositórios são criados a partir do principal onde contém a sua mudança. Você deve ser capaz de reproduzir um ambiente com o que você precisa para concluir aquela tarefa.
 
