@@ -15,7 +15,7 @@ baseurl:            ""
 permalink:          /:title/
 
 # Site base hostname & protocol, e.g. http://example.com
-url:                "https://worknenjoy.github.io/gitpay/"
+url:                "https://worknenjoy.github.io/gitpay"
 
 # Site logo, image or text
 brand:
