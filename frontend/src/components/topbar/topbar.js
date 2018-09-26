@@ -352,7 +352,7 @@ class TopBar extends Component {
               </Dialog>
             </form>
             <Tooltip id='tooltip-lang' title='Escolher idioma' placement='bottom'>
-              <Button style={{padding: 0}} id='language-menu' onClick={ this.handleMenu }>
+              <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
                 <StyledAvatarIconOnly
                   alt={ user.username }
                   src={ logoLang() }
@@ -367,19 +367,19 @@ class TopBar extends Component {
               open={ anchorEl && anchorEl.id === 'language-menu' }
               onClose={ this.handleClose }
             >
-              <MenuItem selected={currentLanguage() === 'en' ? true : false} onClick={ (e) => this.switchLang('en') }>
+              <MenuItem selected={ currentLanguage() === 'en' } onClick={ (e) => this.switchLang('en') }>
                 <StyledAvatarIconOnly
                   alt='English'
                   src={ logoLangEn }
                 />
-                <strong style={{display: 'inline-block', margin: 10}}>English</strong>
+                <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
               </MenuItem>
-              <MenuItem selected={currentLanguage() === 'pt' ? true : false} onClick={ (e) => this.switchLang('pt') } >
+              <MenuItem selected={ currentLanguage() === 'pt' } onClick={ (e) => this.switchLang('pt') } >
                 <StyledAvatarIconOnly
                   alt='Português'
                   src={ logoLangBr }
                 />
-                 <strong style={{display: 'inline-block', margin: 10}}>Português</strong>
+                <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
               </MenuItem>
             </Menu>
             <OnlyDesktop>
@@ -391,16 +391,16 @@ class TopBar extends Component {
                 />
               </Tooltip>
               <Menu
-                    id='menu-appbar-language'
-                    anchorEl={ anchorEl }
-                    anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-                    transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-                    open={ anchorEl && anchorEl.id === 'account-menu' }
-                    onClose={ this.handleClose }
-                >
-                  <MenuItem onClick={ this.handleProfile }>Acessar conta</MenuItem>
-                  <MenuItem onClick={ this.handleSignOut }>Sair</MenuItem>
-                </Menu>
+                id='menu-appbar-language'
+                anchorEl={ anchorEl }
+                anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+                open={ anchorEl && anchorEl.id === 'account-menu' }
+                onClose={ this.handleClose }
+              >
+                <MenuItem onClick={ this.handleProfile }>Acessar conta</MenuItem>
+                <MenuItem onClick={ this.handleSignOut }>Sair</MenuItem>
+              </Menu>
             </OnlyDesktop>
           </RightSide>
         </Container>
