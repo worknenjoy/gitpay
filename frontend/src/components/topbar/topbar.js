@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import ReactPlaceholder from 'react-placeholder'
 import { RoundShape } from 'react-placeholder/lib/placeholders'
 
 import Dialog, {
@@ -191,14 +190,13 @@ class TopBar extends Component {
   }
 
   switchLang = (lang) => {
-    
+    this.setState({ anchorEl: null })
   }
 
   render () {
     const { completed, user } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
-    const open = anchorEl
 
     const avatarPlaceholder = (
       <div className='avatar-placeholder'>
@@ -369,14 +367,14 @@ class TopBar extends Component {
               open={ anchorEl && anchorEl.id === 'language-menu' }
               onClose={ this.handleClose }
             >
-              <MenuItem selected={currentLanguage() === 'en' ? true : false} onClick={ this.switchLang('en') }>
+              <MenuItem selected={currentLanguage() === 'en' ? true : false} onClick={ (e) => this.switchLang('en') }>
                 <StyledAvatarIconOnly
                   alt='English'
                   src={ logoLangEn }
                 />
                 <strong style={{display: 'inline-block', margin: 10}}>English</strong>
               </MenuItem>
-              <MenuItem selected={currentLanguage() === 'pt' ? true : false} onClick={ this.switchLang('pt') } >
+              <MenuItem selected={currentLanguage() === 'pt' ? true : false} onClick={ (e) => this.switchLang('pt') } >
                 <StyledAvatarIconOnly
                   alt='Português'
                   src={ logoLangBr }
