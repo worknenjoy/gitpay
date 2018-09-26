@@ -66,6 +66,7 @@
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "query-string": "^5.1.0",
+    "react-intl": "^2.6.0",
     "react-query-params": "^1.0.7",
     "reactjs-localstorage": "0.0.6",
     "request-promise": "^4.2.0",

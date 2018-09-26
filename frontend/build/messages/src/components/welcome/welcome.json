@@ -1,0 +1,14 @@
+[
+  {
+    "id": "welcome.tagline",
+    "defaultMessage": "Contribua e seja recompensado"
+  },
+  {
+    "id": "welcome.tagline1",
+    "defaultMessage": "e coloque novas ideias no ar!"
+  },
+  {
+    "id": "welcome.tagline2",
+    "defaultMessage": "com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda"
+  }
+]

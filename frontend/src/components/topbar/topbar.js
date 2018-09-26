@@ -21,6 +21,7 @@ import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
 import { withStyles } from 'material-ui/styles'
+import { teal } from 'material-ui/colors'
 
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Button from 'material-ui/Button'
@@ -36,6 +37,7 @@ import {
   StyledButton,
   LabelButton,
   StyledAvatar,
+  StyledAvatarIconOnly,
   OnlyDesktop,
 } from './TopbarStyles'
 
@@ -44,6 +46,23 @@ import LoginButton from '../session/login-button'
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
+const logoLangEn = require('../../images/united-states-of-america.png')
+const logoLangBr = require('../../images/brazil.png')
+
+const languagesIcons = {
+  en: logoLangEn,
+  br: logoLangBr
+}
+
+const language = navigator.language.split(/[-_]/)[0]
+
+const logoLang = () => {
+  return languagesIcons[language]
+}
+
+const currentLanguage = () => {
+  return language
+}
 
 const isBitbucketUrl = (url) => {
   return url.indexOf('bitbucket') > -1
@@ -171,11 +190,15 @@ class TopBar extends Component {
     this.props.signOut()
   }
 
+  switchLang = (lang) => {
+    
+  }
+
   render () {
     const { completed, user } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
-    const open = Boolean(anchorEl)
+    const open = anchorEl
 
     const avatarPlaceholder = (
       <div className='avatar-placeholder'>
@@ -206,7 +229,6 @@ class TopBar extends Component {
               variant='raised'
               size='small'
               color='primary'
-              paddingLeft
             >
               <LabelButton>Explorar tarefas</LabelButton><TasksIcon />
             </StyledButton>
@@ -217,7 +239,6 @@ class TopBar extends Component {
                 variant='raised'
                 size='small'
                 color='default'
-                paddingLeft
               >
                 <LabelButton>Documentação</LabelButton><LibraryIcon />
               </StyledButton>
@@ -230,7 +251,6 @@ class TopBar extends Component {
                   variant='raised'
                   size='small'
                   color='secondary'
-                  paddingLeft
                 >
                   <LabelButton>Entrar</LabelButton><UserIcon />
                 </StyledButton>
@@ -248,14 +268,25 @@ class TopBar extends Component {
               </div>) : (
                 <div>
                   <StyledButton
-                    onClick={ this.handleProfile }
+                    onClick={ this.handleMenu }
                     variant='raised'
                     size='small'
                     color='secondary'
-                    paddingLeft
+                    id='account-menu'
                   >
-                    <LabelButton>Acessar conta</LabelButton>
-                    <UserIcon />
+                    <LabelButton>Conta</LabelButton>
+                    { user.picture_url &&
+                      <StyledAvatar
+                        alt={ user.username }
+                        src={ user.picture_url }
+                      />
+                    }
+
+                    { !user.picture_url &&
+                      <StyledAvatar alt={ user.username } src=''>
+                        { nameInitials(user.username) }
+                      </StyledAvatar>
+                    }
                   </StyledButton>
                 </div>
               )
@@ -322,46 +353,56 @@ class TopBar extends Component {
                 </DialogActions>
               </Dialog>
             </form>
-
-            <ReactPlaceholder showLoadingAnimation customPlaceholder={ avatarPlaceholder } ready={ completed }>
-              <div>
-                { (isLoggedIn && user.picture_url) &&
-                  <StyledAvatar
-                    alt={ user.username }
-                    src={ user.picture_url }
-                    onClick={ this.handleMenu }
-                  />
-                }
-
-                { (isLoggedIn && !user.picture_url) &&
-                  <StyledAvatar alt={ user.username } src='' onClick={ this.handleMenu }>
-                    { nameInitials(user.username) }
-                  </StyledAvatar>
-                }
-
-                { isLoggedIn &&
-                  <Menu
-                    id='menu-appbar'
-                    anchorEl={ anchorEl }
-                    anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-                    transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-                    open={ open }
-                    onClose={ this.handleClose }
-                  >
-                    <MenuItem onClick={ this.handleProfile }>Sua conta</MenuItem>
-                    <MenuItem onClick={ this.handleSignOut }>Sair</MenuItem>
-                  </Menu>
-                }
-              </div>
-            </ReactPlaceholder>
+            <Tooltip id='tooltip-lang' title='Escolher idioma' placement='bottom'>
+              <Button style={{padding: 0}} id='language-menu' onClick={ this.handleMenu }>
+                <StyledAvatarIconOnly
+                  alt={ user.username }
+                  src={ logoLang() }
+                />
+              </Button>
+            </Tooltip>
+            <Menu
+              id='menu-appbar'
+              anchorEl={ anchorEl }
+              anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+              transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+              open={ anchorEl && anchorEl.id === 'language-menu' }
+              onClose={ this.handleClose }
+            >
+              <MenuItem selected={currentLanguage() === 'en' ? true : false} onClick={ this.switchLang('en') }>
+                <StyledAvatarIconOnly
+                  alt='English'
+                  src={ logoLangEn }
+                />
+                <strong style={{display: 'inline-block', margin: 10}}>English</strong>
+              </MenuItem>
+              <MenuItem selected={currentLanguage() === 'pt' ? true : false} onClick={ this.switchLang('pt') } >
+                <StyledAvatarIconOnly
+                  alt='Português'
+                  src={ logoLangBr }
+                />
+                 <strong style={{display: 'inline-block', margin: 10}}>Português</strong>
+              </MenuItem>
+            </Menu>
             <OnlyDesktop>
               <Tooltip id='tooltip-github' title='Acessar nosso github' placement='bottom'>
-                <StyledAvatar
+                <StyledAvatarIconOnly
                   alt={ user.username }
                   src={ logoGithub }
                   onClick={ this.handleGithubLink }
                 />
               </Tooltip>
+              <Menu
+                    id='menu-appbar-language'
+                    anchorEl={ anchorEl }
+                    anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                    transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+                    open={ anchorEl && anchorEl.id === 'account-menu' }
+                    onClose={ this.handleClose }
+                >
+                  <MenuItem onClick={ this.handleProfile }>Acessar conta</MenuItem>
+                  <MenuItem onClick={ this.handleSignOut }>Sair</MenuItem>
+                </Menu>
             </OnlyDesktop>
           </RightSide>
         </Container>

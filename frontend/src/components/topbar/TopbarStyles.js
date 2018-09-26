@@ -43,13 +43,10 @@ export const Logo = styled.img`
 `
 
 export const StyledButton = styled(Button)`
-  min-width: 40px !important;
+  min-width: 20px !important;
   font-size: 12px;
   cursor: pointer;
-
-  ${props => props.paddingLeft && `
-    margin-left: 10px !important;
-  `}
+  margin-left: 10px !important;
 `
 
 export const LabelButton = styled.span`
@@ -64,7 +61,16 @@ export const LabelButton = styled.span`
 export const StyledAvatar = styled(Avatar)`
   margin-left: 20px;
   cursor: pointer;
+  width: 24px !important;
+  height: 24px !important;
 
+  ${media.phone`margin-left: 15px;`}
+`
+
+export const StyledAvatarIconOnly = styled(Avatar)`
+  margin-left: 20px;
+  cursor: pointer;
+  alignItems: center;
   ${media.phone`margin-left: 15px;`}
 `
 

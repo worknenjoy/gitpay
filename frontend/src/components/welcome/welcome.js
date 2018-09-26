@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
@@ -56,13 +57,17 @@ class Welcome extends Component {
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div className={ classes.mainBlock } style={ { margin: 0, paddingTop: 10 } }>
                 <Typography className={ classes.tagline } gutterBottom>
-                  Transforme sua contribuição em recompensa
+                <FormattedMessage id="welcome.tagline"
+                          defaultMessage="Contribua e seja recompensado" />
                 </Typography>
                 <Typography variant='title' gutterBottom>
-                  e coloque novas ideias no ar!
+                <FormattedMessage id="welcome.tagline1"
+                          defaultMessage="e coloque novas ideias no ar!" />
                 </Typography>
                 <Typography type='subheading' gutterBottom noWrap>
-                  com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda
+                <FormattedHTMLMessage
+                  id="welcome.tagline2"
+                  defaultMessage="com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda" />
                 </Typography>
 
                 <div className='subscribe-form'>
