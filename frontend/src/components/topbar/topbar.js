@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { RoundShape } from 'react-placeholder/lib/placeholders'
 
 import Dialog, {
   DialogActions,
@@ -20,7 +19,6 @@ import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
 import { withStyles } from 'material-ui/styles'
-import { teal } from 'material-ui/colors'
 
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Button from 'material-ui/Button'
@@ -197,12 +195,6 @@ class TopBar extends Component {
     const { completed, user } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
-
-    const avatarPlaceholder = (
-      <div className='avatar-placeholder'>
-        <RoundShape color='#ccc' style={ { width: 40, height: 40, margin: 10 } } />
-      </div>
-    )
 
     return (
       <Bar>
