@@ -14,20 +14,12 @@ import NotificationContainer from '../containers/notification'
 import reducers from '../reducers/reducers'
 
 import { addLocaleData } from 'react-intl'
-import { IntlProvider, updateIntl } from 'react-intl-redux'
-
-import messagesBr from '../translations/br.json'
-import messagesEn from '../translations/en.json'
+import { IntlProvider } from 'react-intl-redux'
 
 import localeEn from 'react-intl/locale-data/en'
 import localeBr from 'react-intl/locale-data/br'
 
 addLocaleData([...localeEn, ...localeBr])
-
-const messages = {
-  'br': messagesBr,
-  'en': messagesEn
-}
 
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize('UA-114655639-1')
@@ -61,7 +53,7 @@ function App () {
             <NotificationContainer />
             <Routes />
           </div>
-        </IntlProvider>                
+        </IntlProvider>
       </Provider>
     </MuiThemeProvider>
   )

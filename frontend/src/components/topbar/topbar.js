@@ -64,6 +64,7 @@ const messages = {
 const browserLanguage = navigator.language.split(/[-_]/)[0]
 
 const localStorageLang = () => {
+  /* eslint-disable no-undef */
   return localStorage.getItem('userLanguage')
 }
 
@@ -72,7 +73,7 @@ const logoLang = (lang) => {
 }
 
 const currentLanguage = (logged, preferences) => {
-  if(!logged) return localStorageLang() || browserLanguage
+  if (!logged) return localStorageLang() || browserLanguage
   return preferences.language || browserLanguage
 }
 
@@ -208,11 +209,13 @@ class TopBar extends Component {
 
   switchLang = (lang) => {
     this.setState({ anchorEl: null })
-    if(this.props.logged) {
+    if (this.props.logged) {
       this.props.updateUser(this.props.user.id, {
         language: lang
       })
-    } else {
+    }
+    else {
+      /* eslint-disable no-undef */
       localStorage.setItem('userLanguage', lang)
     }
     store.dispatch(updateIntl({
@@ -437,7 +440,9 @@ TopBar.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object,
   user: PropTypes.object,
+  preferences: PropTypes.object,
   createTask: PropTypes.func,
+  updateUser: PropTypes.func,
   signOut: PropTypes.func,
   logged: PropTypes.bool,
   completed: PropTypes.bool,

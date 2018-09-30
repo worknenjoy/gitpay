@@ -8,7 +8,6 @@ module.exports = Promise.method(function userExists (userAttributes) {
         email: userAttributes.email
       }
     }).then(user => {
-
       if (!user) return false
 
       if (user && !user.dataValues) return false

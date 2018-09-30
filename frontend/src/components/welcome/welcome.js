@@ -45,7 +45,6 @@ import {
 const styles = (theme) => mainStyles(theme)
 
 class Welcome extends Component {
-  
   render () {
     const { classes, location } = this.props
 
