@@ -1,20 +1,18 @@
 import {
-   FETCH_PREFERENCES_REQUESTED,
-   FETCH_PREFERENCES_SUCCESS,
-   FETCH_PREFERENCES_ERROR
-  } from '../actions/preferencesActions'
-  
-  
-  export const preferences = (state = { lang: null, country: null, completed: true, error: {} }, action) => {
-    switch (action.type) {
-      case FETCH_PREFERENCES_REQUESTED:
-        return { ...state, lang: action.lang, country: action.country, completed: action.completed }
-      case FETCH_PREFERENCES_SUCCESS:
+  FETCH_PREFERENCES_REQUESTED,
+  FETCH_PREFERENCES_SUCCESS,
+  FETCH_PREFERENCES_ERROR
+} from '../actions/preferencesActions'
+
+export const preferences = (state = { lang: null, country: null, completed: true, error: {} }, action) => {
+  switch (action.type) {
+    case FETCH_PREFERENCES_REQUESTED:
       return { ...state, lang: action.lang, country: action.country, completed: action.completed }
-      case FETCH_PREFERENCES_ERROR:
+    case FETCH_PREFERENCES_SUCCESS:
+      return { ...state, lang: action.lang, country: action.country, completed: action.completed }
+    case FETCH_PREFERENCES_ERROR:
       return { ...state, error: action.error, lang: action.lang, country: action.country, completed: action.completed }
-      default:
-        return state
-    }
+    default:
+      return state
   }
-  
+}

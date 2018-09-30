@@ -9,6 +9,7 @@
   "scripts": {
     "migrate": "node migrate.js up",
     "migrate-test": "NODE_ENV=test node migrate.js up",
+    "migrate-test-rollback": "NODE_ENV=test node migrate.js prev",
     "rollback": "node migrate.js prev",
     "reset": "node migrate.js reset-hard",
     "start:dev": "nodemon ./server.js --ignore '/frontend/*'",
@@ -16,6 +17,7 @@
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --timeout 30000 test/*.test.js",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css",
     "lint": "./node_modules/.bin/eslint .",
+    "lint-fix": "./node_modules/.bin/eslint . --fix",
     "prepush": "npm run lint",
     "postbuild": "cd frontend && npm run test",
     "heroku-postbuild": "cd frontend && npm install && npm run production && cd .. && npm run migrate",

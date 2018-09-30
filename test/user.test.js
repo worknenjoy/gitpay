@@ -49,7 +49,7 @@ describe("Users", () => {
   })
 
   describe('login User Local', () => {
-    it('should user local', (done) => {
+    xit('should user local', (done) => {
       agent
         .post('/authorize/local')
         .send({email: 'teste@gmail.com', password: 'teste'})
@@ -144,7 +144,31 @@ describe("Users", () => {
     });
   });
 
-  describe("user account", () => {
+  describe('user preferences', () => {
+    it('should retrieve user preferences', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste', country: 'usa', language: 'en'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          agent
+            .get(`/users/${res.body.id}/preferences`)
+            .send({ id: res.body.id })
+            .expect(200)
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body.language).to.exist;
+              expect(user.body.country).to.exist;
+              done();
+            })
+        })
+    });
+  })
+
+  describe('user account', () => {
     xit('should retrieve account for user', (done) => {
       agent
         .post('/auth/register')

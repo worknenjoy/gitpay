@@ -6,8 +6,18 @@ module.exports = Promise.method(function userSearch () {
     .findAll(
       {}
     )
-    .then(data => {
-      return data
+    .then(user => {
+      if (!user) return false
+
+      if (user && !user.dataValues) return false
+
+      if (user && !user.length) return false
+
+      return {
+        id: user.dataValues.id,
+        name: user.dataValues.name,
+        email: user.dataValues.email
+      }
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log(error)
