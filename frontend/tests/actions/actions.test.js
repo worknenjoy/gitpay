@@ -7,23 +7,23 @@ const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
 describe('actions', () => {
-  describe('country and language preference actions', () =>{
+  describe('country and language preference actions', () => {
     it('should dispatch a action to get the current language', () => {
-      expect(actions.fetchLangRequested()).toEqual({ 
-        type: 'FETCH_LANGUAGE_REQUESTED',
+      expect(actions.fetchPreferencesRequested()).toEqual({ 
+        type: 'FETCH_PREFERENCES_REQUESTED',
         completed: false 
       })
-      expect(actions.fetchLangSuccess({
+      expect(actions.fetchPreferencesSuccess({
         data: {
           lang: 'br'
         }
       })).toEqual({ 
-        type: 'FETCH_LANGUAGE_SUCCESS',
+        type: 'FETCH_PREFERENCES_SUCCESS',
         completed: true, 
         lang: 'br' 
       })
-      expect(actions.fetchLangError({error: true})).toEqual({ 
-        type: 'FETCH_LANGUAGE_ERROR',
+      expect(actions.fetchPreferencesError({error: true})).toEqual({ 
+        type: 'FETCH_PREFERENCES_ERROR',
         completed: true,
         error: { error: true }
       })
@@ -54,11 +54,11 @@ describe('actions', () => {
         })
   
         const expectedActions = [
-          { type: 'FETCH_LANGUAGE_REQUESTED', completed: false },
-          { type: 'FETCH_LANGUAGE_SUCCESS', completed: true, lang: 'br' }
+          { type: 'FETCH_PREFERENCES_REQUESTED', completed: false },
+          { type: 'FETCH_PREFERENCES_SUCCESS', completed: true, lang: 'br' }
         ]
         const store = mockStore({ lang: {} })
-        return store.dispatch(actions.fetchLanguage()).then(() => {
+        return store.dispatch(actions.fetchPreferences()).then(() => {
           // return of async actions
           expect(store.getActions()).toEqual(expectedActions)
         })
