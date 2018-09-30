@@ -45,6 +45,7 @@ import {
 const styles = (theme) => mainStyles(theme)
 
 class Welcome extends Component {
+  
   render () {
     const { classes, location } = this.props
 
@@ -57,17 +58,14 @@ class Welcome extends Component {
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div className={ classes.mainBlock } style={ { margin: 0, paddingTop: 10 } }>
                 <Typography className={ classes.tagline } gutterBottom>
-                  <FormattedMessage id='welcome.tagline'
-                    defaultMessage='Contribua e seja recompensado' />
+                  <FormattedMessage id='welcome.tagline' />
                 </Typography>
                 <Typography variant='title' gutterBottom>
-                  <FormattedMessage id='welcome.tagline1'
-                    defaultMessage='e coloque novas ideias no ar!' />
+                  <FormattedMessage id='welcome.tagline1' />
                 </Typography>
                 <Typography type='subheading' gutterBottom noWrap>
                   <FormattedHTMLMessage
-                    id='welcome.tagline2'
-                    defaultMessage='com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda' />
+                    id='welcome.tagline2' />
                 </Typography>
 
                 <div className='subscribe-form'>

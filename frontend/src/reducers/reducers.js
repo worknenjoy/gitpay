@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { intlReducer } from 'react-intl-redux'
 
 import { notification, dialog } from './notificationReducer'
 import { loggedIn } from './loginReducer'
@@ -7,6 +8,7 @@ import { task, tasks } from './taskReducer'
 import { order } from './orderReducer'
 import { info } from './infoReducer'
 import { preferences } from './preferencesReducer'
+
 
 const reducers = combineReducers({
   notification,
@@ -18,7 +20,8 @@ const reducers = combineReducers({
   task,
   tasks,
   info,
-  preferences
+  preferences,
+  intl: intlReducer
 })
 
 export default reducers

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { store } from '../../main/app'
 
 import Dialog, {
   DialogActions,
@@ -19,6 +20,9 @@ import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
 import { withStyles } from 'material-ui/styles'
+import { updateIntl } from 'react-intl-redux'
+import messagesBr from '../../translations/br.json'
+import messagesEn from '../../translations/en.json'
 
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Button from 'material-ui/Button'
@@ -43,6 +47,7 @@ import LoginButton from '../session/login-button'
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
+
 const logoLangEn = require('../../images/united-states-of-america.png')
 const logoLangBr = require('../../images/brazil.png')
 
@@ -51,14 +56,24 @@ const languagesIcons = {
   br: logoLangBr
 }
 
-const language = navigator.language.split(/[-_]/)[0]
-
-const logoLang = () => {
-  return languagesIcons[language]
+const messages = {
+  'br': messagesBr,
+  'en': messagesEn
 }
 
-const currentLanguage = () => {
-  return language
+const browserLanguage = navigator.language.split(/[-_]/)[0]
+
+const localStorageLang = () => {
+  return localStorage.getItem('userLanguage')
+}
+
+const logoLang = (lang) => {
+  return languagesIcons[lang]
+}
+
+const currentLanguage = (logged, preferences) => {
+  if(!logged) return localStorageLang() || browserLanguage
+  return preferences.language || browserLanguage
 }
 
 const isBitbucketUrl = (url) => {
@@ -90,7 +105,11 @@ class TopBar extends Component {
   }
 
   componentDidMount () {
-    this.props.isLogged()
+    const currentLang = currentLanguage(this.props.logged, this.props.preferences)
+    store.dispatch(updateIntl({
+      locale: currentLang,
+      messages: messages[currentLang],
+    }))
   }
 
   componentWillReceiveProps (nextProps) {
@@ -189,12 +208,24 @@ class TopBar extends Component {
 
   switchLang = (lang) => {
     this.setState({ anchorEl: null })
+    if(this.props.logged) {
+      this.props.updateUser(this.props.user.id, {
+        language: lang
+      })
+    } else {
+      localStorage.setItem('userLanguage', lang)
+    }
+    store.dispatch(updateIntl({
+      locale: lang,
+      messages: messages[lang],
+    }))
   }
 
   render () {
-    const { completed, user } = this.props
+    const { completed, user, preferences } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
+    const userCurrentLanguage = currentLanguage(isLoggedIn, preferences)
 
     return (
       <Bar>
@@ -347,7 +378,7 @@ class TopBar extends Component {
               <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
                 <StyledAvatarIconOnly
                   alt={ user.username }
-                  src={ logoLang() }
+                  src={ logoLang(userCurrentLanguage) }
                 />
               </Button>
             </Tooltip>
@@ -359,14 +390,14 @@ class TopBar extends Component {
               open={ anchorEl && anchorEl.id === 'language-menu' }
               onClose={ this.handleClose }
             >
-              <MenuItem selected={ currentLanguage() === 'en' } onClick={ (e) => this.switchLang('en') }>
+              <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
                 <StyledAvatarIconOnly
                   alt='English'
                   src={ logoLangEn }
                 />
                 <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
               </MenuItem>
-              <MenuItem selected={ currentLanguage() === 'pt' } onClick={ (e) => this.switchLang('pt') } >
+              <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') } >
                 <StyledAvatarIconOnly
                   alt='Português'
                   src={ logoLangBr }

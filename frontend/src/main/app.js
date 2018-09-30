@@ -13,6 +13,22 @@ import NotificationContainer from '../containers/notification'
 
 import reducers from '../reducers/reducers'
 
+import { addLocaleData } from 'react-intl'
+import { IntlProvider, updateIntl } from 'react-intl-redux'
+
+import messagesBr from '../translations/br.json'
+import messagesEn from '../translations/en.json'
+
+import localeEn from 'react-intl/locale-data/en'
+import localeBr from 'react-intl/locale-data/br'
+
+addLocaleData([...localeEn, ...localeBr])
+
+const messages = {
+  'br': messagesBr,
+  'en': messagesEn
+}
+
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize('UA-114655639-1')
   ReactGA.pageview(window.location.pathname + window.location.search)
@@ -29,15 +45,9 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 )
 
-const store = createStore(
+export const store = createStore(
   reducers,
   enhancer
-  /* compose(
-    applyMiddleware(
-      thunkMiddleware
-    ),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  ) */
 )
 
 const theme = createMuiTheme(Palette)
@@ -46,10 +56,12 @@ function App () {
   return (
     <MuiThemeProvider theme={ theme }>
       <Provider store={ store }>
-        <div>
-          <NotificationContainer />
-          <Routes />
-        </div>
+        <IntlProvider>
+          <div>
+            <NotificationContainer />
+            <Routes />
+          </div>
+        </IntlProvider>                
       </Provider>
     </MuiThemeProvider>
   )

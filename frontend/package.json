@@ -77,6 +77,7 @@
     "react-dom": "^15.6.1",
     "react-ga": "^2.4.1",
     "react-intl": "^2.6.0",
+    "react-intl-redux": "^2.0.2",
     "react-mailchimp-subscribe": "^1.0.2",
     "react-moment": "^0.7.0",
     "react-placeholder": "^3.0.1",

@@ -10,6 +10,10 @@ module.exports = Promise.method(function userPreferences (userAttributes) {
     }).then(user => {
       if (!user) return false
 
+      if (user && !user.dataValues) return false
+
+      if (user.length <= 0) return false
+
       return {
         language: user.dataValues.language,
         country: user.dataValues.country
