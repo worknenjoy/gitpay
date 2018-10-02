@@ -60,9 +60,10 @@ export const loggedIn = () => {
           return dispatch(loggedInError(error))
         })
     }
-  } else {
+  }
+  else {
     return dispatch => {
-      return Promise.reject(dispatch(loggedInError({error: 'not logged'})))
+      return Promise.reject(dispatch(loggedInError({ error: 'not logged' })))
     }
   }
 }

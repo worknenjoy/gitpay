@@ -107,19 +107,18 @@ class TopBar extends Component {
   componentDidMount () {
     this.props.isLogged().then(() => {
       this.props.fetchPreferences(this.props.user.id).then(() => {
-        const currentLang = currentUserLanguage(this.props.preferences)  
+        const currentLang = currentUserLanguage(this.props.preferences)
         store.dispatch(updateIntl({
           locale: currentLang,
           messages: messages[currentLang],
         }))
       })
     }).catch(e => {
-      const currentLang = currentUserLanguage(this.props.preferences)  
+      const currentLang = currentUserLanguage(this.props.preferences)
       store.dispatch(updateIntl({
         locale: currentLang,
         messages: messages[currentLang],
       }))
-      console.log('error on log in topbar', e)
     })
   }
 
@@ -451,6 +450,7 @@ TopBar.propTypes = {
   history: PropTypes.object,
   user: PropTypes.object,
   preferences: PropTypes.object,
+  fetchPreferences: PropTypes.func,
   createTask: PropTypes.func,
   updateUser: PropTypes.func,
   signOut: PropTypes.func,
