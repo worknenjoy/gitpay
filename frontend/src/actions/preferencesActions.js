@@ -10,7 +10,7 @@ const fetchPreferencesRequested = () => {
 }
 
 const fetchPreferencesSuccess = (response) => {
-  return { type: FETCH_PREFERENCES_SUCCESS, completed: true, lang: response.data.lang }
+  return { type: FETCH_PREFERENCES_SUCCESS, completed: true, language: response.language }
 }
 
 const fetchPreferencesError = (error) => {

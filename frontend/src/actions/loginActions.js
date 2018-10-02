@@ -60,8 +60,11 @@ export const loggedIn = () => {
           return dispatch(loggedInError(error))
         })
     }
+  } else {
+    return dispatch => {
+      return Promise.reject(dispatch(loggedInError({error: 'not logged'})))
+    }
   }
-  return loggedInError()
 }
 
 export const logOut = () => {

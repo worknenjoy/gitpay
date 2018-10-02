@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { store } from '../../main/app'
 
 import Dialog, {
@@ -20,6 +19,7 @@ import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
 import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
 import messagesBr from '../../translations/br.json'
 import messagesEn from '../../translations/en.json'
@@ -72,9 +72,8 @@ const logoLang = (lang) => {
   return languagesIcons[lang]
 }
 
-const currentLanguage = (logged, preferences) => {
-  if (!logged) return localStorageLang() || browserLanguage
-  return preferences.language || browserLanguage
+const currentUserLanguage = (preferences) => {
+  return preferences.language || localStorageLang() || browserLanguage
 }
 
 const isBitbucketUrl = (url) => {
@@ -106,11 +105,22 @@ class TopBar extends Component {
   }
 
   componentDidMount () {
-    const currentLang = currentLanguage(this.props.logged, this.props.preferences)
-    store.dispatch(updateIntl({
-      locale: currentLang,
-      messages: messages[currentLang],
-    }))
+    this.props.isLogged().then(() => {
+      this.props.fetchPreferences(this.props.user.id).then(() => {
+        const currentLang = currentUserLanguage(this.props.preferences)  
+        store.dispatch(updateIntl({
+          locale: currentLang,
+          messages: messages[currentLang],
+        }))
+      })
+    }).catch(e => {
+      const currentLang = currentUserLanguage(this.props.preferences)  
+      store.dispatch(updateIntl({
+        locale: currentLang,
+        messages: messages[currentLang],
+      }))
+      console.log('error on log in topbar', e)
+    })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -228,7 +238,7 @@ class TopBar extends Component {
     const { completed, user, preferences } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
-    const userCurrentLanguage = currentLanguage(isLoggedIn, preferences)
+    const userCurrentLanguage = currentUserLanguage(preferences)
 
     return (
       <Bar>

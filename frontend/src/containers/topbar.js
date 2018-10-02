@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Topbar from '../components/topbar/topbar'
+import TopBar from '../components/topbar/topbar'
 import { addNotification } from '../actions/notificationActions'
 import { loggedIn, logOut } from '../actions/loginActions'
 import { createTask } from '../actions/taskActions'
@@ -22,9 +22,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     signOut: () => dispatch(logOut()),
     addNotification: (msg) => dispatch(addNotification(msg)),
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
-    updateUser: (user) => dispatch(updateUser(user)),
+    updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
     createTask: (task, history) => dispatch(createTask(task, history))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Topbar)
+export default connect(mapStateToProps, mapDispatchToProps)(TopBar)

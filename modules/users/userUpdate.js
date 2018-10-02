@@ -20,7 +20,7 @@ module.exports = Promise.method(function userUpdate (userParameters) {
   return models.User
     .update(userParameters, { ...condition, returning: true, plain: true }).then(data => {
       // eslint-disable-next-line no-console
-      console.log(data)
+      //console.log(data)
       return data[1].dataValues
     }).catch(error => {
       // eslint-disable-next-line no-console

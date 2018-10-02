@@ -143,7 +143,7 @@ const createBankAccountError = error => {
 }
 
 const fetchAccount = userId => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(fetchUserAccountRequested())
     return axios
       .get(api.API_URL + `/users/${userId}/account`)
