@@ -69,9 +69,10 @@ export const loggedIn = () => {
 
 export const logOut = () => {
   Auth.deauthenticateUser()
-  return dispatch => {
+  return (dispatch, getState) => {
+    const messages = getState().intl.messages
     dispatch(loggedOutRequested())
-    dispatch(addNotification('Você acabou de sair da sua conta'))
+    dispatch(addNotification(messages['user.logout']))
     dispatch(loggedOutCompleted())
   }
 }

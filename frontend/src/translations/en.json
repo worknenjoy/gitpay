@@ -1,5 +1,7 @@
 {
     "welcome.tagline": "Transform your contributions in rewards",
     "welcome.tagline1": "to help projects happen",
-    "welcome.tagline2": "with <strong>Gitpay</strong> you contribute with projects on demmand"
+    "welcome.tagline2": "with <strong>Gitpay</strong> you contribute with projects on demmand",
+    "notifications.account.update": "Your account was updated sucessfully",
+    "user.logout": "You logout of your account"
 }

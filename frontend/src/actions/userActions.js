@@ -213,13 +213,14 @@ const updateAccount = (userId, accountData) => {
 
 const updateUser = (userId, userData) => {
   return (dispatch, getState) => {
+    const messages = getState().intl.messages
     dispatch(updateUserRequested())
     axios
       .put(api.API_URL + '/user/update', {
         ...userData, id: userId
       })
       .then(user => {
-        dispatch(addNotification('Conta atualizada com sucesso'))
+        dispatch(addNotification(messages['notifications.account.update']))
         // dispatch(fetchAccount());
         return dispatch(updateUserSuccess(user))
       })
