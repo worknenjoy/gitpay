@@ -1,3 +1,4 @@
+const i18n = require('i18n')
 /**
  * Authentication helpers to determine if a user is logged in or not
  * before a route returns information to the response
@@ -19,6 +20,8 @@ function isNotAuthOrRedirect (req, res, next) {
 }
 
 function isAuth (req, res, next) {
+  // eslint-disable-next-line no-console
+  console.log(i18n.__('auth.log'))
   // if (req.isAuthenticated()) return res.send({ 'authenticated': true });
 
   const token = req.headers.authorization.split(' ')[1]

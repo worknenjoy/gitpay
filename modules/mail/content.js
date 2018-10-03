@@ -1,4 +1,3 @@
-
 const Signatures = {}
 
 Signatures.sign = `

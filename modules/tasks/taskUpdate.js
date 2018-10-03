@@ -25,7 +25,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           paid: charge.paid,
           status: charge.status
         }).then(updatedUser => {
-          PaymentMail.success(user.email, task, order.amount)
+          PaymentMail.success(user, task, order.amount)
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
             return models.Assign.findById(assignedId, {

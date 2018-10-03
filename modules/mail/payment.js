@@ -1,6 +1,7 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
+const i18n = require('i18n')
 
 const PaymentMail = {
   success: (to, task, value) => {},
@@ -9,10 +10,13 @@ const PaymentMail = {
 }
 
 if (constants.canSendEmail) {
-  PaymentMail.success = (to, task, value) => {
+  PaymentMail.success = (user, task, value) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Um pagamento foi realizado por uma tarefa no Gitpay',
+      i18n.__('mail.payment.success.subject'),
       [
         {
           type: 'text/html',

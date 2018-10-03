@@ -45,6 +45,7 @@
     "express-session": "^1.15.2",
     "feed-read": "0.0.1",
     "heroku-ssl-redirect": "0.0.4",
+    "i18n": "^0.8.3",
     "init": "^0.1.2",
     "intl": "^1.2.5",
     "ip": "^1.1.5",

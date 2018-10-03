@@ -13,7 +13,7 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG'
 export const addNotification = (message) => {
   return (dispatch, getState) => {
     const messages = getState().intl.messages
-    return dispatch({ type: ADD_NOTIFICATION, text: messages[message], open: true })
+    return dispatch({ type: ADD_NOTIFICATION, text: messages[message] || message, open: true })
   }
 }
 
