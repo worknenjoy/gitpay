@@ -52,7 +52,7 @@ describe('actions', () => {
           { type: 'FETCH_PREFERENCES_REQUESTED', completed: false },
           { type: 'FETCH_PREFERENCES_SUCCESS', completed: true, language: 'br' }
         ]
-        const store = mockStore({ preferences: {language: {} }})
+        const store = mockStore({ preferences: { language: {} } })
         return store.dispatch(actions.fetchPreferences(1)).then(() => {
           // return of async actions
           expect(store.getActions()).toEqual(expectedActions)
