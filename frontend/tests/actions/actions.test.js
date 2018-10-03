@@ -14,13 +14,11 @@ describe('actions', () => {
         completed: false
       })
       expect(actions.fetchPreferencesSuccess({
-        data: {
-          lang: 'br'
-        }
+        language: 'br'
       })).toEqual({
         type: 'FETCH_PREFERENCES_SUCCESS',
         completed: true,
-        lang: 'br'
+        language: 'br'
       })
       expect(actions.fetchPreferencesError({ error: true })).toEqual({
         type: 'FETCH_PREFERENCES_ERROR',
@@ -45,19 +43,17 @@ describe('actions', () => {
           request.respondWith({
             status: 200,
             response: {
-              data: {
-                lang: 'br'
-              }
+              language: 'br'
             }
           })
         })
 
         const expectedActions = [
           { type: 'FETCH_PREFERENCES_REQUESTED', completed: false },
-          { type: 'FETCH_PREFERENCES_SUCCESS', completed: true, lang: 'br' }
+          { type: 'FETCH_PREFERENCES_SUCCESS', completed: true, language: 'br' }
         ]
-        const store = mockStore({ lang: {} })
-        return store.dispatch(actions.fetchPreferences()).then(() => {
+        const store = mockStore({ preferences: {language: {} }})
+        return store.dispatch(actions.fetchPreferences(1)).then(() => {
           // return of async actions
           expect(store.getActions()).toEqual(expectedActions)
         })

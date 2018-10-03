@@ -25,9 +25,11 @@ app.use(session({
 }))
 
 i18n.configure({
-  directory: __dirname + '/locales',
-  locales: ['en', 'br']
-});
+  directory: `${__dirname}/locales`,
+  locales: ['en', 'br'],
+  defaultLocale: 'en',
+  updateFiles: false
+})
 
 app.use(i18n.init)
 
@@ -54,7 +56,6 @@ load.init(app)
 
 app.listen(app.get('port'), () => {
   // eslint-disable-next-line no-console
-  console.log(i18n.__('welcome.server'))
   console.log('Node app is running on port', app.get('port'))
 })
 

@@ -23,6 +23,7 @@ const fetchPreferences = (userId) => {
     return axios
       .get(`${api.API_URL}/users/${userId}/preferences`)
       .then(response => {
+        console.log(response)
         return dispatch(fetchPreferencesSuccess(response.data))
       })
       .catch(error => {
