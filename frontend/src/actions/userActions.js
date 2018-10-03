@@ -212,15 +212,14 @@ const updateAccount = (userId, accountData) => {
 }
 
 const updateUser = (userId, userData) => {
-  return (dispatch, getState) => {
-    const messages = getState().intl.messages
+  return (dispatch) => {
     dispatch(updateUserRequested())
     axios
       .put(api.API_URL + '/user/update', {
         ...userData, id: userId
       })
       .then(user => {
-        dispatch(addNotification(messages['notifications.account.update']))
+        dispatch(addNotification('notifications.account.update'))
         // dispatch(fetchAccount());
         return dispatch(updateUserSuccess(user))
       })
@@ -238,7 +237,7 @@ const updateUser = (userId, userData) => {
 }
 
 const getBankAccount = userId => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(getBankAccountRequested())
     axios
       .get(`${api.API_URL}/users/${userId}/bank_accounts`)

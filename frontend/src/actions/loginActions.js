@@ -71,9 +71,8 @@ export const loggedIn = () => {
 export const logOut = () => {
   Auth.deauthenticateUser()
   return (dispatch, getState) => {
-    const messages = getState().intl.messages
     dispatch(loggedOutRequested())
-    dispatch(addNotification(messages['user.logout']))
+    dispatch(addNotification('user.logout'))
     dispatch(loggedOutCompleted())
   }
 }

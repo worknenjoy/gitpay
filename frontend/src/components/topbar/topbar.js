@@ -11,6 +11,7 @@ import Dialog, {
 
 import Tooltip from 'material-ui/Tooltip'
 import { FormControl, FormHelperText } from 'material-ui/Form'
+import Avatar from 'material-ui/Avatar'
 import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 import HomeIcon from 'material-ui-icons/Home'
@@ -18,6 +19,8 @@ import PlusIcon from 'material-ui-icons/Queue'
 import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
+import CircularProgress from 'material-ui/Progress/CircularProgress'
+
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
@@ -388,10 +391,16 @@ class TopBar extends Component {
             </form>
             <Tooltip id='tooltip-lang' title='Escolher idioma' placement='bottom'>
               <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
-                <StyledAvatarIconOnly
-                  alt={ user.username }
-                  src={ logoLang(userCurrentLanguage) }
-                />
+                { completed ? (
+                  <StyledAvatarIconOnly
+                    alt={ user.username }
+                    src={ logoLang(userCurrentLanguage) }
+                  />
+                ) : (
+                  <Avatar>
+                    <CircularProgress />
+                  </Avatar>
+                ) }
               </Button>
             </Tooltip>
             <Menu
