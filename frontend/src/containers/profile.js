@@ -5,6 +5,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn.logged,
     user: state.loggedIn.user,
+    preferences: state.preferences,
     completed: state.loggedIn.completed
   }
 }

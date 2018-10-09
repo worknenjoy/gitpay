@@ -25,7 +25,7 @@ import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
-import Preferences from '../profile/preferences'
+import Preferences from '../../components/profile/preferences'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
@@ -118,7 +118,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user } = this.props
+    const { classes, user, preferences } = this.props
 
     return (
       <Page>
@@ -142,7 +142,7 @@ class Profile extends Component {
                   <Route
                     exact
                     path='/profile/preferences'
-                    component={ () => <Preferences user={ user } /> }
+                    component={ () => <Preferences user={ user } preferences={ preferences } /> }
                   />
                 </Switch>
               </HashRouter>

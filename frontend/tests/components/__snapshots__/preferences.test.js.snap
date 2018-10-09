@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components Preferences component should start a new preferences with a defined language 1`] = `
+<div
+  className="MuiPaper-root-1 MuiPaper-shadow0-3 MuiPaper-rounded-2"
+>
+  <h3
+    className="MuiTypography-root-28 MuiTypography-headline-33"
+  >
+    Preferências
+  </h3>
+  <p
+    className="MuiTypography-root-28 MuiTypography-body1-37"
+    style={
+      Object {
+        "marginBottom": 40,
+      }
+    }
+  >
+    Aqui você configura algumas preferências para a sua conta
+  </p>
+  <p
+    className="MuiTypography-root-28 MuiTypography-body1-37"
+    style={
+      Object {
+        "marginBottom": 10,
+      }
+    }
+  >
+    <strong>
+      Língua:
+    </strong>
+     
+    Português
+  </p>
+  <p
+    className="MuiTypography-root-28 MuiTypography-body1-37"
+    style={
+      Object {
+        "marginBottom": 40,
+      }
+    }
+  >
+    <strong>
+      Moeda:
+    </strong>
+     USD (Dólar)
+  </p>
+</div>
+`;

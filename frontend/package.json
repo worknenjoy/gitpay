@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --colors --inline --hot",
     "test": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache",
+    "update-snapshot": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache --updateSnapshot",
     "production": "webpack --progress --config webpack.config.prod.js"
   },
   "jest": {

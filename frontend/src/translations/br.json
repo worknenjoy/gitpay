@@ -3,5 +3,10 @@
     "welcome.tagline1": "e coloque novas idéias no ar!",
     "welcome.tagline2": "com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda",
     "notifications.account.update": "Conta atualizada com sucesso",
-    "user.logout": "Você acabou de sair da sua conta"
+    "user.logout": "Você acabou de sair da sua conta",
+    "preferences.headline": "Preferências",
+    "preferences.subtitle": "Aqui você configura algumas preferências para a sua conta",
+    "preferences.language.name": "Língua:",
+    "preferences.language.currency": "Moeda:",
+    "preferences.language.currency.name": "USD (Dólar)"
 }
