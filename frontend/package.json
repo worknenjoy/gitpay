@@ -39,6 +39,7 @@
     "babel-preset-env": "^1.7.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-15": "^1.1.0",
+    "enzyme-react-intl": "^2.0.2",
     "fetch-mock": "^7.0.5",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",

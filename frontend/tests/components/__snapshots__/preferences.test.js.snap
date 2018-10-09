@@ -6,9 +6,7 @@ exports[`components Preferences component should start a new preferences with a 
 >
   <h3
     className="MuiTypography-root-28 MuiTypography-headline-33"
-  >
-    Preferências
-  </h3>
+  />
   <p
     className="MuiTypography-root-28 MuiTypography-body1-37"
     style={
@@ -16,9 +14,7 @@ exports[`components Preferences component should start a new preferences with a 
         "marginBottom": 40,
       }
     }
-  >
-    Aqui você configura algumas preferências para a sua conta
-  </p>
+  />
   <p
     className="MuiTypography-root-28 MuiTypography-body1-37"
     style={
@@ -27,9 +23,7 @@ exports[`components Preferences component should start a new preferences with a 
       }
     }
   >
-    <strong>
-      Língua:
-    </strong>
+    <strong />
      
     Português
   </p>
@@ -41,10 +35,8 @@ exports[`components Preferences component should start a new preferences with a 
       }
     }
   >
-    <strong>
-      Moeda:
-    </strong>
-     USD (Dólar)
+    <strong />
+     
   </p>
 </div>
 `;
