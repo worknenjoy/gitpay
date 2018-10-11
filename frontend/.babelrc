@@ -1,6 +1,8 @@
 {
   "presets": ["es2015", "react"],
   "plugins": [
+    "transform-object-rest-spread",
+    "transform-class-properties",
     ["react-intl", {
         "messagesDir": "./build/messages/"
     }]

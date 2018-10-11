@@ -1,11 +1,12 @@
 {
+    "payment.message.error": "We could not process your payment",
     "welcome.tagline": "Transform your contributions in rewards",
     "welcome.tagline1": "to help projects happen",
     "welcome.tagline2": "with <strong>Gitpay</strong> you contribute with projects on demmand",
     "notifications.account.update": "Your user was updated sucessfully",
     "user.logout": "You logout of your account",
     "preferences.headline": "Preferences",
-    "preferences.subtitle": "Set up your account",
+    "preferences.subtitle": "Setup your account",
     "preferences.language.name": "Language:",
     "preferences.language.currency": "Currency:",
     "preferences.language.currency.name": "USD (Dolars)"

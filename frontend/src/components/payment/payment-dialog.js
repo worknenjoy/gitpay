@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Dialog, {
   DialogContent,
   DialogContentText,
@@ -19,11 +20,11 @@ class PaymentDialog extends Component {
         maxWidth='md'
       >
         <DialogTitle id='alert-dialog-payment-title'>
-          Realizar pagamento
+          <FormattedMessage id='payment.new.title' defaultMessage='Make a new payment' />
         </DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-payment-description'>
-            Preencha os dados do cartão para efetuar o pagamento
+            <FormattedMessage id='payment.new.text' defaultMessage='Please fill your credit card details' />
           </DialogContentText>
           <StripeCheckout { ...this.props } />
         </DialogContent>

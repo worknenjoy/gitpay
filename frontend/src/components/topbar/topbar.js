@@ -24,8 +24,6 @@ import CircularProgress from 'material-ui/Progress/CircularProgress'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
-import messagesBr from '../../translations/br.json'
-import messagesEn from '../../translations/en.json'
 
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Button from 'material-ui/Button'
@@ -44,6 +42,9 @@ import {
   StyledAvatarIconOnly,
   OnlyDesktop,
 } from './TopbarStyles'
+
+import messagesBr from '../../translations/br.json'
+import messagesEn from '../../translations/en.json'
 
 import LoginButton from '../session/login-button'
 

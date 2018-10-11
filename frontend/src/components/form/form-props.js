@@ -4,12 +4,12 @@ export default {
   action:
     '//truppie.us17.list-manage.com/subscribe/post?u=bb76ecd5ef5cbbc5e60701321&amp;id=63cbedd527',
   messages: {
-    inputPlaceholder: 'Deixe seu email',
-    btnLabel: 'Cadastrar!',
-    sending: 'Registrando...',
-    success: 'Você foi registrado e irá receber em breve novas oportunidades!',
+    inputPlaceholder: 'Leave your email',
+    btnLabel: 'Signup!',
+    sending: 'Subscribing...',
+    success: 'You now registered and soon you will receive new challenges',
     error:
-      'Não conseguimos registrar este e-mail, deixou vazio ou colocou algum já existente?'
+      'We could not register your e-mail, maybe you\'re already registered?'
   },
   styles: {
     sending: {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import { injectStripe } from 'react-stripe-elements'
@@ -76,7 +77,7 @@ class CheckoutForm extends Component {
           }
           catch (e) {
             this.props.addNotification(
-              'Erro ao processar o pagamento do cartão de crédito'
+              'payment.message.error'
             )
             this.setState({
               paymentRequested: false
@@ -84,7 +85,7 @@ class CheckoutForm extends Component {
           }
         }
         else {
-          this.props.addNotification('Erro no pagamento')
+          this.props.addNotification('payment.message.error')
           this.setState({
             paymentRequested: false
           })
@@ -95,7 +96,7 @@ class CheckoutForm extends Component {
         console.log('error to create token')
         // eslint-disable-next-line no-console
         console.log(e)
-        this.props.addNotification('Erro no pagamento')
+        this.props.addNotification('payment.message.error')
         this.setState({
           paymentRequested: false
         })
@@ -143,7 +144,7 @@ class CheckoutForm extends Component {
                 { user && user.name ? (
                   <div>
                     <Typography variant='caption'>
-                      Você está logado como
+                      <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
                     </Typography>
                     <Typography variant='subheading'>
                       { `${this.state.fullname} (${this.state.email})` }
@@ -163,7 +164,7 @@ class CheckoutForm extends Component {
           <Grid item xs={ 12 }>
             <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
               <Button color='primary' onClick={ this.props.onClose }>
-                Cancelar
+              <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
               </Button>
               <Button
                 type='submit'
@@ -171,7 +172,7 @@ class CheckoutForm extends Component {
                 color='secondary'
                 disabled={ this.state.paymentRequested }
               >
-                { `Pagar $ ${this.props.itemPrice}` }
+                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay $ {price}' values={{price: this.props.itemPrice}} />
               </Button>
             </div>
           </Grid>

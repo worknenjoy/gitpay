@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
@@ -24,11 +25,10 @@ class PaymentOptions extends Component {
     return (
       <Paper elevation={ 0 }>
         <Typography variant='headline' component='h3'>
-          Pagamento
+          <FormattedMessage id='payment.headline' defaultMessage='Payment' />
         </Typography>
         <Typography component='p' style={ { marginBottom: 40 } }>
-          Aqui você configura seus pagamentos e suas contas bancárias para
-          recebimento
+          <FormattedMessage id='payment.options.description' defaultMessage='Setup your payment and your bank account to receive the payments of your tasks concluded' />
         </Typography>
         <AccountContainer />
       </Paper>
