@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import ReactPlaceholder from 'react-placeholder'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { injectIntl, defineMessages, FormattedMessage, FormattedDate } from 'react-intl'
 import Moment from 'moment'
 
 import Grid from 'material-ui/Grid'
@@ -28,7 +28,7 @@ import Switch from 'material-ui/Switch'
 import Select from 'material-ui/Select'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import { red, green } from 'material-ui/colors'
+import { red, green, cyan } from 'material-ui/colors'
 
 import UserIcon from 'material-ui-icons/AccountCircle'
 import RedeemIcon from 'material-ui-icons/Redeem'
@@ -111,7 +111,7 @@ const messages = defineMessages({
     id: 'account.details.dob',
     defaultMessage: 'Date of birth'
   },
-  zipcode: {
+  zipCode: {
     id: 'account.details.zipcode',
     defaultMessage: 'Zipcode'
   },
@@ -155,6 +155,7 @@ class Account extends Component {
   }
 
   componentDidMount () {
+    console.log(this.props)
     if (this.props.user.logged) {
       const userId = this.props.user.user.id
       this.props.fetchAccount(userId)
@@ -546,7 +547,7 @@ class Account extends Component {
                             onClick={ () => this.handleStepTab(0) }
                           >
                             <PreviousIcon />
-                            Passo anterior
+                            <FormattedMessage id='account.steps.bank.previous' defaultMessage='Previous step' />
                           </Button>
                           <Button
                             style={ { color: 'white' } }
@@ -641,10 +642,10 @@ class Account extends Component {
                             <Grid container spacing={ 24 }>
                               <Grid item xs={ 12 }>
                                 <Typography color='primary'>
-                                  <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in' />
-                                  { `${Moment.unix(
+                                  <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
+                                  <FormattedDate value={Moment.unix(
                                     account.data.tos_acceptance.date
-                                  ).format('DD/MM/YYYY [às] HH:mm:ss')}` }
+                                  )} year='numeric' month='numeric' day='numeric' />
                                 </Typography>
                               </Grid>
                             </Grid>

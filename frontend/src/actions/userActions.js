@@ -148,6 +148,7 @@ const fetchAccount = userId => {
     return axios
       .get(api.API_URL + `/users/${userId}/account`)
       .then(account => {
+        console.log(account)
         return dispatch(fetchUserAccountSuccess(account))
       })
       .catch(e => {

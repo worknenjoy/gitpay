@@ -11,8 +11,10 @@ module.exports = Promise.method(function userAccount (userParameters) {
       }
     )
     .then(data => {
+      console.log(data)
       if (data && data.dataValues && data.dataValues.account_id) {
         return stripe.accounts.retrieve(data.dataValues.account_id).then((account) => {
+          console.log(account)
           return account
         }).catch(e => {
           // eslint-disable-next-line no-console

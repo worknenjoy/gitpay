@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, defineMessages, FormattedMessage, FormattedDate } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import Typography from 'material-ui/Typography'
@@ -28,52 +29,61 @@ class ProfileOptions extends Component {
       <div>
         <div>
           <Typography variant='headline' component='h3'>
-            Bem vindo ao Gitpay!
+            <FormattedMessage id='account.profile.welcome.headline' defaultMessage='Welcome to Gitpay!' />
           </Typography>
           <Typography component='p'>
-            Saiba quais são os seus primeiros passos para começar
+            <FormattedMessage id='account.profile.welcome.description' defaultMessage='This is the first steps to start to work with Gitpay' />
           </Typography>
         </div>
 
         <CardList>
           <Card>
-            <CardMedia
-              image={ taskIcon }
-              title='Contemplative Reptile'
-            />
+            <FormattedMessage id='account.profile.tasks.caption' defaultMessage='Tasks'>
+              {(msg) => (
+                <CardMedia
+                  image={ taskIcon }
+                  title={ msg }
+                />
+              )}
+            </FormattedMessage>
             <CardContent>
               <Typography variant='headline' component='h2'>
-                Tarefas
+                <FormattedMessage id='account.profile.tasks.headline' defaultMessage='Tasks' />
               </Typography>
               <Typography component='p'>
-                Veja as tarefas que estão disponíveis para você e comece!
+                <FormattedMessage id='account.profile.tasks.description' defaultMessage='Check the tasks available for you' />
               </Typography>
             </CardContent>
             <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
-                <Link to={ '/profile/tasks' }>Ver tarefas</Link>
+                <Link to={ '/profile/tasks' }>
+                  <FormattedMessage id='account.profile.tasks.link.tasks' defaultMessage='See tasks' />
+                </Link>
               </Button>
             </CardActions>
           </Card>
 
           <Card>
-            <CardMedia
-              image={ paymentIcon }
-              title='Contemplative Reptile'
-            />
+            <FormattedMessage id='account.profile.tasks.payment.caption' defaultMessage='Payment'>
+              {(msg) => (
+                 <CardMedia
+                 image={ paymentIcon }
+                 title={msg}
+               />
+              )}
+            </FormattedMessage>
             <CardContent>
               <Typography variant='headline' component='h2'>
-                Pagamento
+                <FormattedMessage id='account.profile.tasks.payment.headline' defaultMessage='Payment' />
               </Typography>
               <Typography component='p'>
-                Preencha os dados de pagamento para você receber pelas tarefas
-                integradas
+                <FormattedMessage id='account.profile.tasks.payment.desc' defaultMessage='Fill all your payment details and receive for the tasks concluded' />
               </Typography>
             </CardContent>
             <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
                 <Link to={ '/profile/payment-options' }>
-                  Configurar pagamento
+                  <FormattedMessage id='account.profile.tasks.payment.setup' defaultMessage='Setup payment' />
                 </Link>
               </Button>
             </CardActions>
@@ -86,15 +96,17 @@ class ProfileOptions extends Component {
             />
             <CardContent>
               <Typography variant='headline' component='h2'>
-                Preferências
+                <FormattedMessage id='account.profile.preferences.headline' defaultMessage='Preferences' />
               </Typography>
               <Typography component='p'>
-                Configure sua conta para ficar de acordo com suas preferências
+                <FormattedMessage id='account.profile.preferences.description' defaultMessage='Setup your account with your preferences' />
               </Typography>
             </CardContent>
             <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
-                <Link to='/profile/preferences'>Configurar preferências</Link>
+                <Link to='/profile/preferences'>
+                  <FormattedMessage id='account.profile.preferences.link' defaultMessage='Setup preferences' />
+                </Link>
               </Button>
             </CardActions>
           </Card>
