@@ -102,6 +102,30 @@ const messages = defineMessages({
   paypalTab: {
     id: 'account.status.paypal',
     defaultMessage: 'PayPal'
+  },
+  state: {
+    id: 'account.details.state',
+    defaultMessage: 'State'
+  },
+  dob: {
+    id: 'account.details.dob',
+    defaultMessage: 'Date of birth'
+  },
+  zipcode: {
+    id: 'account.details.zipcode',
+    defaultMessage: 'Zipcode'
+  },
+  city: {
+    id: 'account.details.city',
+    defaultMessage: 'City'
+  },
+  birthYear: {
+    id: 'account.details.birthYear',
+    defaultMessage: 'Birth year'
+  },
+  activeStatus: {
+    id: 'account.register.status',
+    defaultMessage: 'Active'
   }
 })
 
@@ -747,7 +771,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[address][postal_code]'
                                 id='adornment-email'
-                                placeholder='CEP'
+                                placeholder={this.props.intl.formatMessage(messages.zipCode)}
                                 defaultValue={
                                   account.data.legal_entity.address.postal_code
                                 }
@@ -759,7 +783,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[address][city]'
                                 id='adornment-city'
-                                placeholder='Cidade'
+                                placeholder={this.props.intl.formatMessage(messages.city)}
                                 style={ { marginRight: 20 } }
                                 defaultValue={
                                   account.data.legal_entity.address.city
@@ -770,7 +794,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[address][state]'
-                                placeholder='Estado'
+                                placeholder={this.props.intl.formatMessage(messages.state)}
                                 defaultValue={
                                   account.data.legal_entity.address.state
                                 }
@@ -782,7 +806,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[dob][day]'
-                                placeholder='Dia do nascimento'
+                                placeholder={this.props.intl.formatMessage(messages.dob)}
                                 style={ { marginRight: 20 } }
                                 defaultValue={ account.data.legal_entity.dob.day }
                               />
@@ -798,7 +822,9 @@ class Account extends Component {
                                 } }
                               >
                                 <option value=''>
-                                  <em>Mês do nascimento</em>
+                                  <em>
+                                    <FormattedMessage id='account.details' defaultMessage='Month of birth' />
+                                  </em>
                                 </option>
                                 { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                   (item, i) => {
@@ -815,7 +841,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[dob][year]'
                                 id='adornment-email'
-                                placeholder='Ano do nascimento'
+                                placeholder={this.props.intl.formatMessage(messages.birthYear)}
                                 defaultValue={ account.data.legal_entity.dob.year }
                               />
                             </FormControl>
@@ -826,14 +852,14 @@ class Account extends Component {
                                 color='primary'
                                 onClick={ this.closeUpdateModal }
                               >
-                                Cancelar
+                                <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
                               </Button>
                               <Button
                                 type='submit'
                                 variant='raised'
                                 color='secondary'
                               >
-                                { 'Atualizar conta' }
+                                <FormattedMessage id='account.actions.update' defaultMessage='Update Account' />
                               </Button>
                             </div>
                           </Grid>
@@ -848,7 +874,7 @@ class Account extends Component {
                   <Card className={ classes.cardEmpty }>
                     <CardContent>
                       <Typography className={ classes.title } color='textSecondary'>
-                        Você não tem nenhuma cadastrada para recebimento
+                        <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
                       </Typography>
                     </CardContent>
                     <CardActions className={ classes.cardEmptyActions }>
@@ -859,7 +885,7 @@ class Account extends Component {
                         color='primary'
                         onClick={ () => this.props.createAccount(user.user.id) }
                       >
-                        Criar conta
+                        <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
                       </Button>
                     </CardActions>
                   </Card> }
@@ -876,26 +902,27 @@ class Account extends Component {
                   <CardContent>
                     <div className={ classes.title }>
                       <Typography className={ classes.pos } color='textSecondary'>
-                        Ativar sua conta com o Paypal:
+                        <FormattedMessage id='account.register.paypal.title' defaultMessage='Activate PayPal account:' />
                       </Typography>
                       <Typography component='p' color='textSecondary' style={ { marginBottom: 20, marginTop: 20 } }>
-                        Ativando a conta com o Paypal, você receberá os valores na conta fornecida aqui. <br />
-                        Nesta modalidade, as taxas do Paypal serão aplicadas
+                        <FormattedMessage id='account.register.paypal.description' defaultMessage='When you activate your account with PayPal, you will receive the bounties in the account that you will provide here. The Paypal taxes will be applied' />
                       </Typography>
                       { !user.user.paypal_id ? (
-                        <Chip
-                          label={
-                            'Esta conta não está associada ao Paypal'
-                          }
-                          style={ { marginRight: 20, backgroundColor: 'orange' } }
-                        />
+                        <FormattedMessage id='account.register.paypal.status' defaultMessage='This account is not associated with PayPal'>
+                          {(msg) => (
+                            <Chip
+                              label={msg}
+                              style={ { marginRight: 20, backgroundColor: 'orange' } }
+                            />
+                          )}
+                        </FormattedMessage>
                       ) : (
                         <div>
                           <Typography className={ classes.pos } color='textSecondary'>
-                          Status da sua conta:
+                          <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
                           </Typography>
                           <Chip
-                            label={ 'Ativada' }
+                            label={this.props.intl.formatMessage(messages.activeStatus)}
                             style={ {
                               color: 'white',
                               marginRight: 20,
@@ -907,12 +934,13 @@ class Account extends Component {
                     </div>
                     <Grid item xs={ 12 }>
                       <FormControl>
-                        <InputLabel htmlFor='adornment-password'>Email do Paypal</InputLabel>
+                        <InputLabel htmlFor='adornment-password'>
+                          <FormattedMessage id='account.register.paypay.email' defaultMessage='PayPal registered email' />
+                        </InputLabel>
                         <Input
                           name='paypal_email'
                           type='email'
                           id='adornment-email'
-                          placeholder='Email do Paypal'
                           style={ { marginRight: 20 } }
                           defaultValue={
                             user.user.paypal_id ? `${user.user.paypal_id}` : `${user.user.email}`
