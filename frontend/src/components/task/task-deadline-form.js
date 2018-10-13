@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
@@ -16,8 +17,7 @@ class TaskDeadlineForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      deadline: null,
-
+      deadline: null
     }
   }
 
@@ -68,7 +68,7 @@ class TaskDeadlineForm extends Component {
               <CardContent className={ classes.content }>
                 <Typography variant='headline'>Escolha uma data limite para a realização desta tarefa</Typography>
                 <Typography variant='subheading' color='textSecondary'>
-                  Escolha uma data em que deseja que ela precisa ser finalizada
+                  <FormattedMessage id='task.status.deadline.subheading' defaultMessage='Choose a date that this task should be finished' />,
                 </Typography>
                 <div className={ classes.chipContainer }>
                   <Chip
@@ -94,18 +94,32 @@ class TaskDeadlineForm extends Component {
                 </div>
                 <form className={ classes.formPayment } action='POST'>
                   <FormControl fullWidth>
-                    <InputLabel htmlFor='adornment-amount'>Dia</InputLabel>
-                    <Input
-                      id='adornment-date'
-                      startAdornment={ <InputAdornment position='start'><DateIcon /></InputAdornment> }
-                      placeholder='Insira uma data'
-                      type='date'
-                      value={ `${MomentComponent(this.state.deadline).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}` }
-                      onChange={ this.handleInputChangeCalendar }
-                    />
+                    <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>,
+                      {(msg) => (
+                        <InputLabel htmlFor='adornment-amount'>{msg}</InputLabel>
+                      )}
+                    </FormattedMessage>
+                    <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>,
+                      {(msg) => (
+                        <Input
+                          id='adornment-date'
+                          startAdornment={ <InputAdornment position='start'><DateIcon /></InputAdornment> }
+                          placeholder={msg}
+                          type='date'
+                          value={ `${MomentComponent(this.state.deadline).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}` }
+                          onChange={ this.handleInputChangeCalendar }
+                        />
+                      )}
+                    </FormattedMessage>
                   </FormControl>
                   <Button disabled={ !this.state.deadline } onClick={ this.handleDeadline } variant='raised' color='primary' className={ classes.btnPayment }>
-                    { this.state.deadline ? `Escolher ${MomentComponent(this.state.deadline).format('DD/MM/YYYY')} como data limite` : 'Salvar data limite' }
+                    { this.state.deadline ? 
+                      <FormattedMessage id='task.status.deadline.set.target' defaultMessage='set to target date to {date}' values={{
+                         date: MomentComponent(this.state.deadline).format('DD/MM/YYYY')
+                      }} />
+                        : 
+                      <FormattedMessage id='task.deadline.button.save' defaultMessage='Save date' />
+                    }
                   </Button>
                 </form>
               </CardContent>

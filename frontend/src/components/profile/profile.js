@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch, HashRouter } from 'react-router-dom'
+import { injectIntl, defineMessages, FormattedMessage, FormattedDate } from 'react-intl'
 
 import Grid from 'material-ui/Grid'
 import Avatar from 'material-ui/Avatar'
@@ -208,7 +209,9 @@ class Profile extends Component {
                   <div className={ classes.infoItem }>
                     <Typography>
                       <h4>
-                        <DeviceHubIcon /> Repositórios
+                        <DeviceHubIcon /> 
+                        Repositórios
+                        <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
                       </h4>
                       <p>{ user.repos }</p>
                     </Typography>
@@ -243,7 +246,9 @@ class Profile extends Component {
                           classes={ { primary: classes.primary } }
                           inset
                           primary={
-                            <span>Configurar pagamento</span>
+                            <span>
+                              <FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />
+                            </span>
                           }
                         />
                       </MenuItem>
@@ -259,7 +264,9 @@ class Profile extends Component {
                           classes={ { primary: classes.primary } }
                           inset
                           primary={
-                            <span>Preferências</span>
+                            <span>
+                              <FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />
+                            </span>
                           }
                         />
                       </MenuItem>

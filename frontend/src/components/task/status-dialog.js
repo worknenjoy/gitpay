@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { FormattedMessage } from 'react-intl'
 import Avatar from 'material-ui/Avatar'
 import List from 'material-ui/List'
 import ListItem from 'material-ui/List/ListItem'
@@ -60,7 +61,9 @@ class StatusDialog extends Component {
         aria-labelledby='simple-dialog-title'
         { ...other }
       >
-        <DialogTitle id='simple-dialog-title'>Status da tarefa</DialogTitle>
+        <DialogTitle id='simple-dialog-title'>
+          <FormattedMessage id='account.dialog.status' defaultMessage='Task status' />
+        </DialogTitle>
         <div>
           <List>
             { statuses.map((status, index) => (

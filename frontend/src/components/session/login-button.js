@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Auth from '../../modules/auth'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
@@ -41,7 +42,7 @@ class LoginButton extends Component {
     return (
       <Wrapper contrast={ contrast }>
         <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
-          Conecte com algumas dessas contas
+          <FormattedMessage id='account.login.connect' defaultMessage='Conect with your existing account' />
         </Typography>
 
         <Content>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Button from 'material-ui/Button'
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog'
 import Typography from 'material-ui/Typography'
@@ -56,7 +57,8 @@ class RemoveAssignment extends Component {
           <Button
             size='small'
             onClick={ this.openModal }>
-            <RemoveIcon /> Remover
+            <RemoveIcon />
+            <FormattedMessage id='task.assignment.remove.action' defaultMessage='Remove' />
           </Button>
         }
 
@@ -65,11 +67,13 @@ class RemoveAssignment extends Component {
           onClose={ this.closeModal }
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>Desassociar escolhido para realizar a tarefa</DialogTitle>
+          <DialogTitle id='form-dialog-title'>
+            <FormattedMessage id='task.assignment.remove.user' defaultMessage='Unassign user' />
+          </DialogTitle>
           <DialogContent>
             <DialogContentText>
               <Typography type='subheading' gutterBottom>
-                  Por que ele <strong>não estará</strong> mais trabalhando nesta tarefa?
+                  <FormattedMessage id='task.assignment.remove.reason' defaultMessage='Why this user will not work on this task anymore?' />
               </Typography>
             </DialogContentText>
             <TextField
@@ -83,10 +87,10 @@ class RemoveAssignment extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={ this.closeModal } color='primary'>
-                Cancelar
+                <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
             </Button>
             <Button disabled={ message.length === 0 } onClick={ this.removeAssignment } variant='raised' color='secondary' >
-                Aplicar
+                <FormattedMessage id='task.assignment.actions.apply' defaultMessage='Apply' />
             </Button>
           </DialogActions>
         </Dialog>

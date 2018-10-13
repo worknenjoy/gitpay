@@ -50,7 +50,7 @@ class TaskItem extends Component {
           <ListItemText
             id={ item.id }
             primary={ TextEllipsis(item.url, 50) }
-            secondary={ item.value ? `$ ${item.value}` : 'sem valor' }
+            secondary={ item.value ? `$ ${item.value}` : ' - ' }
           />
           <Chip
             label={ Constants.STATUSES[item.status] }
@@ -64,7 +64,7 @@ class TaskItem extends Component {
             label={
               item.deadline
                 ? MomentComponent(item.deadline).fromNow()
-                : 'sem data definida'
+                : ' - '
             }
             style={ {
               marginRight: 20,
@@ -74,7 +74,7 @@ class TaskItem extends Component {
           />
           <ListItemSecondaryAction>
             <IconButton aria-label='provider'>
-              <Tooltip id='tooltip-fab' title={ `Ver no ${item.provider}` } placement='right'>
+              <Tooltip id='tooltip-fab' title={ `${item.provider}` } placement='right'>
                 <a target='_blank' href={ item.url }>
                   <img width='24' src={ item.provider === 'github' ? logoGithub : logoBitbucket } className={ classes.icon } />
                 </a>
