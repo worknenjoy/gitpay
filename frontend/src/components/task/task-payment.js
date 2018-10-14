@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Avatar from 'material-ui/Avatar'
@@ -30,10 +31,66 @@ const styles = {
   }
 }
 
+const messages = defineMessages({
+  statusOpen: {
+    id: 'task.status.label.open',
+    defaultMessage: 'Open'
+  },
+  statusSucceeded: {
+    id: 'task.status.label.succeeded',
+    defaultMessage: 'Paid',
+  },
+  statusFail: {
+    id: 'task.status.label.fail',
+    defaultMessage: 'Payment failed'
+  },
+  labelCreditCard: {
+    id: 'task.status.label.creditcard',
+    defaultMessage: 'Credit Card'
+  },
+  labelPayPal: {
+    id: 'task.status.label.paypal',
+    defaultMessage: 'Paypal'
+  },
+  labelNoPayment: {
+    id: 'task.status.label.none',
+    defaultMessage: 'No payment type'
+  },
+  statusAnd: {
+    id: 'task.status.label.and',
+    defaultMessage: 'and'
+  },
+  allPayments: {
+    id: 'task.payment.filter.all',
+    defaultMessage: 'All payments'
+  },
+  creditCardPayment: {
+    id: 'task.payment.filter.creditcard',
+    defaultMessage: 'Credit Card payments'
+  },
+  payPalPayment: {
+    id: 'task.payment.filter.paypal',
+    defaultMessage: 'Paypal payments'
+  },
+  undefinedLabel: {
+    id: 'task.payment.status.undefined',
+    defaultMessage: 'Undefined status'
+  },
+  transferMessage: {
+    id: 'task.payment.transfer.message',
+    defaultMessage: 'You will send the payment for this task to {to} that receive payments in {payments}'
+  },
+  taskNoAssigned: {
+    id: 'task.payment.noAssigned',
+    defaultMessage: 'Noboby assigned to this task, so you need to first assign and then we can conclude the payment'
+  }
+
+})
+
 const statuses = {
-  open: 'Em aberto',
-  succeeded: 'Paga',
-  fail: 'Falha no pagamento'
+  open: this.props.intl.formatMessage(messages.statusOpen),
+  succeeded: this.props.intl.formatMessage(messages.statusSucceeded),
+  fail: this.props.intl.formatMessage(messages.statusFail)
 }
 
 class TaskPayment extends Component {
@@ -85,14 +142,14 @@ class TaskPayment extends Component {
     const paymentSupport = user => {
       let supportedTypes = []
       if (user.account_id) {
-        supportedTypes.push('Cartão de Crédito')
+        supportedTypes.push(this.props.intl.formatMessage(messages.labelCreditCard))
       }
       if (user.paypal_id) {
-        supportedTypes.push('Paypal')
+        supportedTypes.push(this.props.intl.formatMessage(messages.labelPayPal))
       }
-      if (!supportedTypes.length) return 'nenhuma forma de pagamento'
+      if (!supportedTypes.length) return this.props.intl.formatMessage(messages.status.labelNoPayment)
 
-      return supportedTypes.join(' e ')
+      return supportedTypes.join(` ${this.props.intl.formatMessage(messages.statusAnd)} `)
     }
 
     const sendTo = id => {
@@ -111,12 +168,12 @@ class TaskPayment extends Component {
         { ...other }
       >
         <DialogTitle id='simple-dialog-title'>
-          Pagar pela tarefa como recompensa
+          <FormattedMessage id='task.payment.action.title' defaultMessage='Pay for this task' />
         </DialogTitle>
         <DialogContent>
           { this.props.paid && (
             <Typography type='subheading' color='primary' gutterBottom noWrap>
-              { 'Todas as transferências para esta tarefa já foram realizadas' }
+              <FormattedMessage id='task.payment.transfers.concluded' defaultMessage='All transfers was succeeded to the destination account' />
             </Typography>
           ) }
           <div>
@@ -129,16 +186,16 @@ class TaskPayment extends Component {
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={ { margin: 10 } } value={ 0 } label='Todos' icon={ <RedeemIcon /> } />
-                <Tab style={ { margin: 10 } } value={ 1 } label='Pagamentos com cartão' icon={ <PaymentTypeIcon type='card' notext /> } />
-                <Tab style={ { margin: 10 } } value={ 2 } label='Pagamentos com Paypal' icon={ <PaymentTypeIcon type='paypal' /> } />
+                <Tab style={ { margin: 10 } } value={ 0 } label={this.props.intl.formatMessage(messages.allPayments)} icon={ <RedeemIcon /> } />
+                <Tab style={ { margin: 10 } } value={ 1 } label={this.props.intl.formatMessage(messages.creditCardPayment)} icon={ <PaymentTypeIcon type='card' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 2 } label={this.props.intl.formatMessage(messages.payPalPayment)} icon={ <PaymentTypeIcon type='paypal' /> } />
               </Tabs>
             </AppBar>
             <TabContainer>
               { this.props.transferId && (
                 <div>
                   <Typography type='subheading' color='primary' gutterBottom noWrap>
-                    { 'As transferências relativas aos pagamentos com o cartão de crédito foram realizadas e o id da transação é:' }
+                    <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded with your credit card and the transaction id is: ' />
                   </Typography>
                   <Typography type='subheading' color='primary' gutterBottom noWrap>
                     { `${this.props.transferId}` }
@@ -158,7 +215,7 @@ class TaskPayment extends Component {
                           </ListItemAvatar>
                           <ListItemText
                             primary={ `$ ${order.amount}` }
-                            secondary={ `${statuses[order.status] || 'indefinida'}` }
+                            secondary={ `${statuses[order.status] || this.props.intl.formatMessage(messages.undefinedLabel)}` }
                           />
                           { !order.transfer_id
                             ? (
@@ -170,10 +227,18 @@ class TaskPayment extends Component {
                                 disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
                               >
                                 <RedeemIcon style={ { marginRight: 10 } } />
-                                { `Pagar $ ${order.amount}` }
+                                <FormattedMessage id='task.payment.pay.button' defaultMessage='Pay $ {value}' values={{
+                                  value: order.amount
+                                }} />
                               </Button>
                             ) : (
-                              <Chip label={ `Pago com Paypal (id: ${order.transfer_id})` } />
+                              <FormattedMessage id='task.payment.pay.button' defaultMessage='Pay with PayPal (id: {transfer}' values={{
+                                transfer: order.transfer_id
+                              }} >
+                                {(msg) => (
+                                  <Chip label={ msg } />
+                                )}
+                              </FormattedMessage>
                             )
                           }
                         </ListItem>
@@ -187,7 +252,7 @@ class TaskPayment extends Component {
                           </ListItemAvatar>
                           <ListItemText
                             primary={ `$ ${order.amount}` }
-                            secondary={ `${statuses[order.status] || 'indefinida'}` }
+                            secondary={ `${statuses[order.status] || this.props.intl.formatMessage(messages.labelCreditCard)}` }
                           />
                         </ListItem>
                       )
@@ -202,14 +267,17 @@ class TaskPayment extends Component {
               { !this.props.paid ? (
                 <div>
                   { this.props.assigned
-                    ? `Você vai enviar para ${sendTo(this.props.assigned).username} que suporta o recebimento por ${paymentSupport(sendTo(this.props.assigned))}`
-                    : 'Ninguém foi escolhido para esta tarefa, então não temos como efetuar o pagamento' }
+                    ? this.props.intl.formatMessage(messages.transferMessage, {
+                      to: sendTo(this.props.assigned).username,
+                      payments: paymentSupport(sendTo(this.props.assigned))
+                    })
+                    : this.props.intl.formatMessage(messages.taskNoAssigned) }
                 </div>
               ) : (
                 <div>
-                  { `O pagamento foi efetuado para ${sendTo(
-                    this.props.assigned
-                  ).username}` }
+                  <FormattedMessage id='task.payment.done.to' defaultMessage='You made a payment to $ {user}' values={{
+                    user: sendTo(this.props.assigned).username
+                  }} />
                 </div>
               ) }
             </span>
@@ -226,30 +294,36 @@ class TaskPayment extends Component {
                   disabled={ !this.props.assigned || this.props.transferId || this.state.currentTab === 2 }
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
-                  { `Pagar $ ${this.props.values.card || 0}` }
+                  <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={{
+                    value: this.props.values.card || 0
+                  }} />
                 </Button>
               ) }
             </div>
           ) : (
-            <ListItemText
-              variant='raised'
-              disabled
-              primary={ 'Não temos nenhum pagamento realizado para esta modalidade' }
-            />
+            <FormattedMessage id='task.payment.types.notype' defaultMessage='No payment for this payment type'>
+              {(msg) => (
+                <ListItemText
+                  variant='raised'
+                  disabled
+                  primary={ msg }
+                />
+              )}
+            </FormattedMessage>
           ) }
           { !this.props.paid ? (
             <Button
               onClick={ this.props.onClose }
               style={ { float: 'right', margin: 10 } }
             >
-              Cancelar
+              <FormattedMessage id='task.payment.action.cancel' defaultMessage='Cancel' />
             </Button>
           ) : (
             <Button
               onClick={ this.props.onClose }
               style={ { float: 'right', margin: 10 } }
             >
-              Fechar
+              <FormattedMessage id='task.payment.action.close' defaultMessage='Close' />
             </Button>
           ) }
         </DialogContent>
@@ -275,4 +349,4 @@ TaskPayment.propTypes = {
   values: PropTypes.object
 }
 
-export default withStyles(styles)(TaskPayment)
+export default injectIntl(withStyles(styles)(TaskPayment))

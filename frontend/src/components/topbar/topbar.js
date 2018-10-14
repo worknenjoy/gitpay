@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import { store } from '../../main/app'
 
 import Dialog, {
@@ -259,7 +260,9 @@ class TopBar extends Component {
               size='small'
               color='primary'
             >
-              <LabelButton>Criar tarefa</LabelButton><PlusIcon />
+              <LabelButton>
+                <FormattedMessage id='task.actions.create' defaultMessage='Create task' />
+              </LabelButton><PlusIcon />
             </StyledButton>
             <StyledButton
               onClick={ this.handleViewTasks }
@@ -267,7 +270,10 @@ class TopBar extends Component {
               size='small'
               color='primary'
             >
-              <LabelButton>Explorar tarefas</LabelButton><TasksIcon />
+              <LabelButton>
+                <FormattedMessage id='task.actions.explore' defaultMessage='Explore tasks' />  
+              </LabelButton>
+              <TasksIcon />
             </StyledButton>
 
             <div>
@@ -277,7 +283,9 @@ class TopBar extends Component {
                 size='small'
                 color='default'
               >
-                <LabelButton>Documentação</LabelButton><LibraryIcon />
+                <LabelButton>
+                  <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
+                </LabelButton><LibraryIcon />
               </StyledButton>
             </div>
 
@@ -289,7 +297,9 @@ class TopBar extends Component {
                   size='small'
                   color='secondary'
                 >
-                  <LabelButton>Entrar</LabelButton><UserIcon />
+                  <LabelButton>
+                    <FormattedMessage id='task.bar.signin' defaultMessage='Signin' />
+                  </LabelButton><UserIcon />
                 </StyledButton>
 
                 <Dialog
@@ -297,7 +307,9 @@ class TopBar extends Component {
                   onClose={ this.handleSignUserDialogClose }
                   aria-labelledby='form-dialog-title'
                 >
-                  <DialogTitle id='form-dialog-title'>Entre para a comunidade do Gitpay</DialogTitle>
+                  <DialogTitle id='form-dialog-title'>
+                    <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
+                  </DialogTitle>
                   <DialogContent>
                     <LoginButton referer={ this.props.location } size='medium' />
                   </DialogContent>
@@ -311,7 +323,9 @@ class TopBar extends Component {
                     color='secondary'
                     id='account-menu'
                   >
-                    <LabelButton>Conta</LabelButton>
+                    <LabelButton>
+                      <FormattedMessage id='task.actions.account' defaultMessage='Account' />
+                    </LabelButton>
                     { user.picture_url &&
                       <StyledAvatar
                         alt={ user.username }
@@ -335,11 +349,13 @@ class TopBar extends Component {
                 onClose={ this.handleClickDialogCreateTaskClose }
                 aria-labelledby='form-dialog-title'
               >
-                <DialogTitle id='form-dialog-title'>Inserir uma nova tarefa</DialogTitle>
+                <DialogTitle id='form-dialog-title'>
+                  <FormattedMessage id='task.actions.insert.new' defaultMessage='Insert a new task' />
+                </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
                     <Typography type='subheading' gutterBottom>
-                      Para inserir uma nova tarefa, cole a URL de um incidente do <strong>Github</strong> ou <strong>Bitbucket</strong>
+                      <FormattedMessage id='task.actions.insert.subheading' defaultMessage='Past the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
                     </Typography>
                   </DialogContentText>
                   <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
@@ -349,7 +365,7 @@ class TopBar extends Component {
                       margin='dense'
                       id='url'
                       name='url'
-                      label='URL da tarefa'
+                      label='URL'
                       type='url'
                       fullWidth
                     />
@@ -376,16 +392,18 @@ class TopBar extends Component {
                       </Button>
                     </div>
                     { this.state.task.url.error &&
-                    <FormHelperText error={ this.state.task.url.error }>A URL inserida não é válida</FormHelperText>
+                    <FormHelperText error={ this.state.task.url.error }>
+                      <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
+                    </FormHelperText>
                     }
                   </FormControl>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
-                    Cancelar
+                    <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                   </Button>
                   <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='raised' color='secondary' >
-                    Inserir
+                    <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />  
                   </Button>
                 </DialogActions>
               </Dialog>
@@ -443,8 +461,12 @@ class TopBar extends Component {
                 open={ anchorEl && anchorEl.id === 'account-menu' }
                 onClose={ this.handleClose }
               >
-                <MenuItem onClick={ this.handleProfile }>Acessar conta</MenuItem>
-                <MenuItem onClick={ this.handleSignOut }>Sair</MenuItem>
+                <MenuItem onClick={ this.handleProfile }>
+                  <FormattedMessage id='task.actions.account.access' defaultMessage='Access account' />
+                </MenuItem>
+                <MenuItem onClick={ this.handleSignOut }>
+                  <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
+                </MenuItem>
               </Menu>
             </OnlyDesktop>
           </RightSide>

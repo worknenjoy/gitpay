@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
@@ -47,6 +48,25 @@ const styles = theme => ({
   },
   rootTabs: {
     backgroundColor: theme.palette.primary.light
+  }
+})
+
+const messages = defineMessages({
+  allTasks: {
+    id: 'task.list.lable.allTasks',
+    defaultMessage: 'All tasks'
+  },
+  createdByMeTasks: {
+    id: 'task.status.createdByMe',
+    defaultMessage: 'Created by me'
+  },
+  interestedTasks: {
+    id: 'tasks.status.interested',
+    defaultMessage: 'I\'m interested'
+  },
+  assignedToMeTasks: {
+    id: 'task.status.assigned',
+    defaultMessage: 'Assigned to me'
   }
 })
 
@@ -98,10 +118,10 @@ class TaskList extends Component {
     return (
       <Paper elevation={ 0 }>
         <Typography variant='headline' component='h2'>
-          Lista de tarefas
+          <FormattedMessage id='task.list.headline' defaultMessage='Task list' />
         </Typography>
         <Typography component='p' style={ { marginBottom: 20 } }>
-          Tarefas disponíveis para desenvolvimento
+          <FormattedMessage id='task.list.description' defaultMessage='Available tasks for development' />
         </Typography>
         <div style={ { marginTop: 20, marginBottom: 20 } }>
           <TaskStatusFilter onFilter={ this.props.filterTasks } />
@@ -116,10 +136,10 @@ class TaskList extends Component {
               indicatorColor='primary'
               textColor='primary'
             >
-              <Tab value={ 0 } label='Todas tarefas' icon={ <RedeemIcon /> } />
-              <Tab value={ 1 } label='Criadas por mim' icon={ <ShoppingBasket /> } />
-              <Tab value={ 2 } label='Tenho interesse' icon={ <AssignIcon /> } />
-              <Tab value={ 3 } label='Atribuidas a mim' icon={ <ActionIcon /> } />
+              <Tab value={ 0 } label={this.props.intl.formatMessage(messages.allTasks)} icon={ <RedeemIcon /> } />
+              <Tab value={ 1 } label={this.props.intl.formatMessage(messages.createdByMeTasks)} icon={ <ShoppingBasket /> } />
+              <Tab value={ 2 } label={this.props.intl.formatMessage(messages.interestedTasks)} icon={ <AssignIcon /> } />
+              <Tab value={ 3 } label={this.props.intl.formatMessage(messages.assignedToMeTasks)} icon={ <ActionIcon /> } />
             </Tabs>
           </AppBar>
           <TabContainer>
@@ -133,10 +153,10 @@ class TaskList extends Component {
                   />
                   <CardContent>
                     <Typography gutterBottom variant='headline' component='h2'>
-                      Entre / Crie sua conta para trabalhar nas tarefas
+                      <FormattedMessage id='task.user.account.create.headline' defaultMessage='Login / signup to work in our tasks' />,
                     </Typography>
                     <Typography component='p'>
-                      Com sua conta, você pode ser atribuído as tarefas e ser recompensado.
+                      <FormattedMessage id='task.user.account.create.description' defaultMessage='Creating your account, you can be assigned to a task and receive bounties' />,
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -183,4 +203,4 @@ TaskList.propTypes = {
   user: PropTypes.object
 }
 
-export default withRouter(withStyles(styles)(TaskList))
+export default injectIntl(withRouter(withStyles(styles)(TaskList)))

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import { FormattedMessage } from 'react-intl'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import Chip from 'material-ui/Chip'
@@ -55,7 +56,7 @@ class TaskPaymentForm extends Component {
               <CardContent className={ classes.content }>
                 <Typography variant='headline'>Adicionar uma recompensa para esta tarefa</Typography>
                 <Typography variant='subheading' color='textSecondary'>
-                  Realize um pagamento por esta tarefa para que alguém possa desenvolvê-la e receber o pagamento como recompensa.
+                  <FormattedMessage id='task.payment.form.message.subheading' defaultMessage='Create a bounty for this task and who you assign will receive the payment for this bounty' />
                 </Typography>
                 <div className={ classes.chipContainer }>
                   <Chip
@@ -87,22 +88,30 @@ class TaskPaymentForm extends Component {
                 <form className={ classes.formPayment } action='POST'>
                   <FormControl fullWidth>
                     <InputLabel htmlFor='adornment-amount'>Valor</InputLabel>
-                    <Input
-                      id='adornment-amount'
-                      startAdornment={ <InputAdornment position='start'>$</InputAdornment> }
-                      placeholder='Insira um valor'
-                      type='number'
-                      inputProps={ { 'min': 0 } }
-                      defaultValue={ this.state.currentPrice }
-                      value={ this.state.currentPrice }
-                      onChange={ this.handleInputChange }
-                    />
+                    <FormattedMessage id='task.payment.input.amount' defaultMessage='Price insert a value for this task' >
+                      {(msg) => (
+                        <Input
+                          id='adornment-amount'
+                          startAdornment={ <InputAdornment position='start'>$</InputAdornment> }
+                          placeholder={ msg }
+                          type='number'
+                          inputProps={ { 'min': 0 } }
+                          defaultValue={ this.state.currentPrice }
+                          value={ this.state.currentPrice }
+                          onChange={ this.handleInputChange }
+                        />
+                      )}
+                    </FormattedMessage>
                   </FormControl>
                   <Button style={ { marginLeft: 20 } } disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
-                    { `Pagar $ ${this.state.currentPrice} com cartão de crédito` }
+                    <FormattedMessage id='task.payment.creditcard.action' defaultMessage='Pay $ {amount} with Credit Card' values={{
+                      amount: this.state.currentPrice
+                    }} />
                   </Button>
                   <Button disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaypalPaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
-                    { `Pagar $ ${this.state.currentPrice} com Paypal` }
+                    <FormattedMessage id='task.payment.paypal.action' defaultMessage='Pay $ {amount} with PayPal' values={{
+                      amount: this.state.currentPrice
+                    }} />
                   </Button>
                 </form>
               </CardContent>
