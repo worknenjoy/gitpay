@@ -1,4 +1,11 @@
 {
-	"mail.payment.success.subject": "You received a payment on Gitpay",
-	"mail.payment.success.content.main": "Olá, você realizou um pagamento de $ {{value}} para a tarefa <a href=\"{{url}}\"></a>"
+  "mail.payment.success.subject": "You received a payment on Gitpay",
+  "mail.payment.success.content.main": "Olá, você realizou um pagamento de $ {{value}} para a tarefa <a href=\"{{url}}\"></a>",
+  "mail.payment.sign.thanks": "Thanks",
+  "mail.payment.sign.team": "Gitpay Team",
+  "mail.payment.assigned.subject": "There is a new payment for a task that you were assigned",
+  "mail.payment.assigned.content.main": "Hello, a payment of $ {{value}} was added to the task <a href=\"{{url}}\">{{url}}</a>",
+  "mail.payment.assigned.content.secondary": "You are now assigend to this task. Once finished, a bounty will be sent to your account",
+  "mail.payment.subject.error": "We could not process the payment on Gitpay",
+  "mail.payment.content.error": "Hello, we had an issue with your payment of $ ${value} for the task <a href=\"{{url}}\">{{url}}</a>"
 }

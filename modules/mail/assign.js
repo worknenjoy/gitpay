@@ -7,18 +7,6 @@ let ptLocale = require('moment/locale/pt-br')
 
 moment.locale('pt-br', ptLocale)
 
-/* dateFormat.i18n = {
-  dayNames: [
-    'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb',
-    'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
-  ],
-  monthNames: [
-    'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez',
-    'janeiro', 'fevereiro', 'março', 'bbril', 'maio', 'junho',
-    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
-  ]
-} */
-
 const AssignMail = {
   owner: (to, task, name) => {},
   interested: (to, task, name) => {},
