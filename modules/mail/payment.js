@@ -21,7 +21,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>Olá, você realizou um pagamento de $ ${value} para a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
+          <p>${i18n.__('mail.payment.success.content.main', { value: value, url: `process.env.FRONTEND_HOST}/#/task/${task.id}`}) }</p>
           <p>${Signatures.sign}</p>`
         },
       ]

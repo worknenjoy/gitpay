@@ -47,14 +47,20 @@ class TaskPaymentForm extends Component {
       <div>
         <Collapse in={ !!this.props.open }>
           <Card className={ classes.card }>
-            <CardMedia
-              className={ classes.cover }
-              image={ paymentIcon }
-              title='Realize o pagamento pela tarefa'
-            />
+            <FormattedMessage id='task.payment.headline.bounty.create' defaultMessage='Create a bounty for this task'>
+              {(msg) => (
+                <CardMedia
+                  className={ classes.cover }
+                  image={ paymentIcon }
+                  title={msg}
+                />
+              )}
+            </FormattedMessage>
             <div className={ classes.details }>
               <CardContent className={ classes.content }>
-                <Typography variant='headline'>Adicionar uma recompensa para esta tarefa</Typography>
+                <Typography variant='headline'>
+                  <FormattedMessage id='task.payment.headline.bounty.add' defaultMessage='Add a bounty for this task' />
+                </Typography>
                 <Typography variant='subheading' color='textSecondary'>
                   <FormattedMessage id='task.payment.form.message.subheading' defaultMessage='Create a bounty for this task and who you assign will receive the payment for this bounty' />
                 </Typography>
@@ -87,7 +93,9 @@ class TaskPaymentForm extends Component {
                 </div>
                 <form className={ classes.formPayment } action='POST'>
                   <FormControl fullWidth>
-                    <InputLabel htmlFor='adornment-amount'>Valor</InputLabel>
+                    <InputLabel htmlFor='adornment-amount'>
+                      <FormattedMessage id='task.payment.input.amount.value' defaultMessage='Price' />
+                    </InputLabel>
                     <FormattedMessage id='task.payment.input.amount' defaultMessage='Price insert a value for this task' >
                       {(msg) => (
                         <Input

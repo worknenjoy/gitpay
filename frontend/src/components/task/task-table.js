@@ -127,9 +127,9 @@ TablePaginationActions.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions,
-)
+const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
+  TablePaginationActions
+))
 
 const styles = theme => ({
   root: {

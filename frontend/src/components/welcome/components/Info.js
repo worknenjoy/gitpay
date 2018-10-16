@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
@@ -50,7 +51,7 @@ class Info extends React.Component {
     return (
       <Content>
         <Typography variant='subheading' color='inherit' gutterBottom>
-          Estatísticas
+          <FormattedMessage id='info.status.subheading' defaultMessage='Stats' />
         </Typography>
         <Items>
           <ItemSmall label={ stats.tasks.text } avatar={ <Icon children={ stats.tasks.value } /> } />

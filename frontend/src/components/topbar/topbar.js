@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { store } from '../../main/app'
 
 import Dialog, {
@@ -355,7 +355,7 @@ class TopBar extends Component {
                 <DialogContent>
                   <DialogContentText>
                     <Typography type='subheading' gutterBottom>
-                      <FormattedMessage id='task.actions.insert.subheading' defaultMessage='Past the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
+                      <FormattedHTMLMessage id='task.actions.insert.subheading' defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
                     </Typography>
                   </DialogContentText>
                   <FormControl style={ styles.formControl } error={ this.state.task.url.error }>

@@ -1,37 +1,163 @@
+import { IntlProvider, defineMessages } from 'react-intl';
+import messagesBr from './translations/br.json'
+import messagesEn from './translations/en.json'
+
+const messages = {
+  'br': messagesBr,
+  'en': messagesEn
+}
+
+export const msgs = defineMessages({
+  externalAccont: {
+    id: 'consts.external.account',
+    defaultMessage: 'Bank account'
+  },
+  city: {
+    id: 'consts.address.city',
+    defaultMessage: 'City'
+  },
+  addressLine1: {
+    id: 'consts.address.line1',
+    defaultMessage: 'Address line 1'
+  },
+  zipcode: {
+    id: 'consts.address.zipcode',
+    defaultMessage: 'Zip code'
+  },
+  state: {
+    id: 'consts.address.state',
+    defaultMessage: 'State'
+  },
+  birthDay: {
+    id: 'consts.address.birth.day',
+    defaultMessage: 'Day of birth'
+  },
+  birthMonth: {
+    id: 'consts.address.birth.month',
+    defaultMessage: 'Month of Birth'
+  },
+  birthYear: {
+    id: 'consts.address.birth.year',
+    defaultMessage: 'Year of birth'
+  },
+  firstName: {
+    id: 'consts.account.firstname',
+    defaultMessage: 'First name'
+  },
+  lastName: {
+    id: 'consts.account.lastname',
+    defaultMessage: 'Last name'
+  },
+  lastName: {
+    id: 'consts.account.lastname',
+    defaultMessage: 'Last name'
+  },
+  idNumber: {
+    id: 'consts.account.id.number',
+    defaultMessage: 'document number'
+  },
+  docNumber: {
+    id: 'consts.account.id.doc',
+    defaultMessage: 'document'
+  },
+  idType: {
+    id: 'consts.account.id.type',
+    defaultMessage: 'identification type'
+  },
+  termsDate: {
+    id: 'consts.account.terms.date',
+    defaultMessage: 'Accepted terms date'
+  },
+  terms: {
+    id: 'consts.account.terms.accept',
+    defaultMessage: 'Accepted terms'
+  },
+  accountReasonsFieldsNeeded: {
+    id: 'consts.account.reasons.fields.needed',
+    defaultMessage: 'Pending fields'
+  },
+  accountReasonsFieldsExternal: {
+    id: 'consts.account.reasons.fields.external',
+    defaultMessage: 'Register bank account'
+  },
+  accountReasonsFieldsPending: {
+    id: 'consts.account.reasons.fields.pending',
+    defaultMessage: 'Verification pending'
+  },
+  accountReasonsFieldsPendingOther: {
+    id: 'consts.account.reasons.fields.pending.other',
+    defaultMessage: 'Pending'
+  },
+  statusOpen: {
+    id: 'consts.account.statuses.open',
+    defaultMessage: 'Open'
+  },
+  statusOpen: {
+    id: 'consts.account.statuses.open',
+    defaultMessage: 'Open'
+  },
+  statusOpenTwo: {
+    id: 'consts.account.statuses.open.two',
+    defaultMessage: 'Open'
+  },
+  statusProgress: {
+    id: 'consts.account.statuses.progress',
+    defaultMessage: 'In progress'
+  },
+  statusFinish: {
+    id: 'consts.account.statuses.finish',
+    defaultMessage: 'Finished'
+  },
+  statusUndefined: {
+    id: 'consts.account.statuses.undefined',
+    defaultMessage: 'Undefined'
+  },
+  statusUndefinedTwo: {
+    id: 'consts.account.statuses.undefined.two',
+    defaultMessage: 'Undefined'
+  },
+  statusUndefinedThree: {
+    id: 'consts.account.statuses.undefined.three',
+    defaultMessage: 'Undefined'
+  }
+})
+
+const { intl } = new IntlProvider({ locale: 'en', messages: messages['en'] }, {}).getChildContext();
+
 export default {
   API_URL: process.env.API_HOST,
   ACCOUNT_FIELDS: {
-    'external_account': 'Conta bancária',
-    'legal_entity.address.city': 'Cidade',
-    'legal_entity.address.line1': 'Primeira parte do endereço',
-    'legal_entity.address.postal_code': 'CEP',
-    'legal_entity.address.state': 'Estado',
-    'legal_entity.dob.day': 'Dia do nascimento',
-    'legal_entity.dob.month': 'Mês do nascimento',
-    'legal_entity.dob.year': 'Ano do nascimento',
-    'legal_entity.first_name': 'Primeiro nome',
-    'legal_entity.last_name': 'Último nome',
-    'legal_entity.personal_id_number': 'Número de identificação (opcional)',
-    'legal_entity.verification.document': 'Documento de identificação (opcional)',
-    'legal_entity.type': 'Tipo de identificação (identidade ou CPF',
-    'tos_acceptance.date': 'Data da confirmação dos termos de uso',
-    'tos_acceptance.ip': 'Aceitar os termos de uso'
+    'external_account': intl.formatMessage(msgs.externalAccont),
+    'legal_entity.address.city': intl.formatMessage(msgs.city),
+    'legal_entity.address.line1': intl.formatMessage(msgs.addressLine1),
+    'legal_entity.address.postal_code': intl.formatMessage(msgs.zipcode),
+    'legal_entity.address.state': intl.formatMessage(msgs.state),
+    'legal_entity.dob.day': intl.formatMessage(msgs.birthDay),
+    'legal_entity.dob.month': intl.formatMessage(msgs.birthMonth),
+    'legal_entity.dob.year': intl.formatMessage(msgs.birthYear),
+    'legal_entity.first_name': intl.formatMessage(msgs.firstName),
+    'legal_entity.last_name': intl.formatMessage(msgs.lastName),
+    'legal_entity.personal_id_number': intl.formatMessage(msgs.idNumber),
+    'legal_entity.verification.document': intl.formatMessage(msgs.docNumber),
+    'legal_entity.type': intl.formatMessage(msgs.idType),
+    'tos_acceptance.date': intl.formatMessage(msgs.termsDate),
+    'tos_acceptance.ip': intl.formatMessage(msgs.terms)
   },
   ACCOUNT_REASONS: {
-    'fields_needed': 'Pendente de verificação',
-    'external_account': 'Cadastrar conta bancária',
-    null: 'Pendente',
-    undefined: 'Pendente'
+    'fields_needed': intl.formatMessage(msgs.accountReasonsFieldsNeeded),
+    'external_account': intl.formatMessage(msgs.accountReasonsFieldsExternal),
+    null: intl.formatMessage(msgs.accountReasonsFieldsPending),
+    undefined: intl.formatMessage(msgs.accountReasonsFieldsPendingOther)
   },
 
   STATUSES: {
-    'open': 'Aberta',
-    'OPEN': 'Aberta',
-    'in_progress': 'Em desenvolvimento',
-    'closed': 'Finalizada',
-    '': 'Status indefinido',
-    null: 'Status indefinido',
-    undefined: 'Status indefinido'
+    'open': intl.formatMessage(msgs.statusOpen),
+    'OPEN': intl.formatMessage(msgs.statusOpenTwo),
+    'in_progress': intl.formatMessage(msgs.statusProgress),
+    'closed': intl.formatMessage(msgs.statusFinish),
+    '': intl.formatMessage(msgs.statusUndefined),
+    null: intl.formatMessage(msgs.statusUndefinedTwo),
+    undefined: intl.formatMessage(msgs.statusUndefinedThree)
   },
 
   STATUSES_COLORS: {

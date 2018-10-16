@@ -271,7 +271,7 @@ const messages = defineMessages({
     defaultMessage: 'Successfull payment'
   },
   failStatus: {
-    id: 'task.status.filter.payment.succeeded',
+    id: 'task.status.filter.payment.failed',
     defaultMessage: 'Payment failed'
   },
   noUserFound: {
@@ -533,7 +533,7 @@ class Task extends Component {
             size='small'
             color='primary'
           >
-            <GroupWorkIcon style={ { marginRight: 5 } } /> escolher
+            <GroupWorkIcon style={ { marginRight: 5 } } />
             <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
           </Button>
           }

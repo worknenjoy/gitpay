@@ -54,7 +54,7 @@ class TaskStatusFilter extends Component {
             onClick={ () => this.handleListItemClick(status) }
             clickable
             key={ index + 1 }
-            label={ statusesDisplay(status) }
+            label={ this.statusesDisplay(status) }
           />)
         )
         }

@@ -1,3 +1,4 @@
 {
-  "mail.payment.success.subject": "Um pagamento foi realizado por uma tarefa no Gitpay"
+  "mail.payment.success.subject": "Um pagamento foi realizado por uma tarefa no Gitpay",
+  "mail.payment.success.content.main": "Olá, você realizou um pagamento de $ {{value}} para a tarefa <a href=\"{{url}}\"></a>"
 }

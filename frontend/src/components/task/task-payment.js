@@ -87,12 +87,6 @@ const messages = defineMessages({
 
 })
 
-const statuses = {
-  open: this.props.intl.formatMessage(messages.statusOpen),
-  succeeded: this.props.intl.formatMessage(messages.statusSucceeded),
-  fail: this.props.intl.formatMessage(messages.statusFail)
-}
-
 class TaskPayment extends Component {
   constructor (props) {
     super(props)
@@ -122,6 +116,15 @@ class TaskPayment extends Component {
     this.props.filterTaskOrders({
       provider: providerTab[value]
     })
+  }
+
+  statuses = (status) => {
+    const possibles = {
+      open: this.props.intl.formatMessage(messages.statusOpen),
+      succeeded: this.props.intl.formatMessage(messages.statusSucceeded),
+      fail: this.props.intl.formatMessage(messages.statusFail)
+    }
+    return possibles[status]
   }
 
   render () {
@@ -215,7 +218,7 @@ class TaskPayment extends Component {
                           </ListItemAvatar>
                           <ListItemText
                             primary={ `$ ${order.amount}` }
-                            secondary={ `${statuses[order.status] || this.props.intl.formatMessage(messages.undefinedLabel)}` }
+                            secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.undefinedLabel)}` }
                           />
                           { !order.transfer_id
                             ? (
@@ -227,12 +230,12 @@ class TaskPayment extends Component {
                                 disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
                               >
                                 <RedeemIcon style={ { marginRight: 10 } } />
-                                <FormattedMessage id='task.payment.pay.button' defaultMessage='Pay $ {value}' values={{
+                                <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={{
                                   value: order.amount
                                 }} />
                               </Button>
                             ) : (
-                              <FormattedMessage id='task.payment.pay.button' defaultMessage='Pay with PayPal (id: {transfer}' values={{
+                              <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Pay with PayPal (id: {transfer}' values={{
                                 transfer: order.transfer_id
                               }} >
                                 {(msg) => (
@@ -252,7 +255,7 @@ class TaskPayment extends Component {
                           </ListItemAvatar>
                           <ListItemText
                             primary={ `$ ${order.amount}` }
-                            secondary={ `${statuses[order.status] || this.props.intl.formatMessage(messages.labelCreditCard)}` }
+                            secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.labelCreditCard)}` }
                           />
                         </ListItem>
                       )
