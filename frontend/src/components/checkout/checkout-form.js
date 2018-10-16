@@ -164,7 +164,7 @@ class CheckoutForm extends Component {
           <Grid item xs={ 12 }>
             <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
               <Button color='primary' onClick={ this.props.onClose }>
-              <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
+                <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
               </Button>
               <Button
                 type='submit'
@@ -172,7 +172,7 @@ class CheckoutForm extends Component {
                 color='secondary'
                 disabled={ this.state.paymentRequested }
               >
-                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay $ {price}' values={{price: this.props.itemPrice}} />
+                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay $ {price}' values={ { price: this.props.itemPrice } } />
               </Button>
             </div>
           </Grid>

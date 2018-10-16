@@ -103,8 +103,8 @@ class Workflow extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.workflowItemPrimary)}
-                    secondary={this.props.intl.formatMessage(messages.workflowItemSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.workflowItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -114,8 +114,8 @@ class Workflow extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.workflowItemTwoPrimary)}
-                    secondary={this.props.intl.formatMessage(messages.workflowItemTwoSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.workflowItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -125,8 +125,8 @@ class Workflow extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.workflowItemThreePrimary)}
-                    secondary={this.props.intl.formatMessage(messages.workflowItemThreeSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.workflowItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemThreeSecondary) }
                   />
                 </ListItem>
               </List>

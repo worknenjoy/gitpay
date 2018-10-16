@@ -95,30 +95,29 @@ class TaskDeadlineForm extends Component {
                 <form className={ classes.formPayment } action='POST'>
                   <FormControl fullWidth>
                     <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>,
-                      {(msg) => (
-                        <InputLabel htmlFor='adornment-amount'>{msg}</InputLabel>
-                      )}
+                      { (msg) => (
+                        <InputLabel htmlFor='adornment-amount'>{ msg }</InputLabel>
+                      ) }
                     </FormattedMessage>
                     <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>,
-                      {(msg) => (
+                      { (msg) => (
                         <Input
                           id='adornment-date'
                           startAdornment={ <InputAdornment position='start'><DateIcon /></InputAdornment> }
-                          placeholder={msg}
+                          placeholder={ msg }
                           type='date'
                           value={ `${MomentComponent(this.state.deadline).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}` }
                           onChange={ this.handleInputChangeCalendar }
                         />
-                      )}
+                      ) }
                     </FormattedMessage>
                   </FormControl>
                   <Button disabled={ !this.state.deadline } onClick={ this.handleDeadline } variant='raised' color='primary' className={ classes.btnPayment }>
-                    { this.state.deadline ? 
-                      <FormattedMessage id='task.status.deadline.set.target' defaultMessage='set to target date to {date}' values={{
-                         date: MomentComponent(this.state.deadline).format('DD/MM/YYYY')
-                      }} />
-                        : 
-                      <FormattedMessage id='task.deadline.button.save' defaultMessage='Save date' />
+                    { this.state.deadline
+                      ? <FormattedMessage id='task.status.deadline.set.target' defaultMessage='set to target date to {date}' values={ {
+                        date: MomentComponent(this.state.deadline).format('DD/MM/YYYY')
+                      } } />
+                      : <FormattedMessage id='task.deadline.button.save' defaultMessage='Save date' />
                     }
                   </Button>
                 </form>

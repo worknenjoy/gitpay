@@ -9,7 +9,7 @@ configure({ adapter: new Adapter() })
 describe('components', () => {
   describe('Preferences component', () => {
     it('should start a new preferences with a defined language', () => {
-      const preferencesComponent = () => (<PreferencesPure preferences={{language: 'br'}} />)
+      const preferencesComponent = () => (<PreferencesPure preferences={ { language: 'br' } } />)
       const component = renderer.create(preferencesComponent()).toJSON()
       console.log(component)
       expect(component).toMatchSnapshot()

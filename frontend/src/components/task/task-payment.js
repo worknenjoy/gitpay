@@ -189,9 +189,9 @@ class TaskPayment extends Component {
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={ { margin: 10 } } value={ 0 } label={this.props.intl.formatMessage(messages.allPayments)} icon={ <RedeemIcon /> } />
-                <Tab style={ { margin: 10 } } value={ 1 } label={this.props.intl.formatMessage(messages.creditCardPayment)} icon={ <PaymentTypeIcon type='card' notext /> } />
-                <Tab style={ { margin: 10 } } value={ 2 } label={this.props.intl.formatMessage(messages.payPalPayment)} icon={ <PaymentTypeIcon type='paypal' /> } />
+                <Tab style={ { margin: 10 } } value={ 0 } label={ this.props.intl.formatMessage(messages.allPayments) } icon={ <RedeemIcon /> } />
+                <Tab style={ { margin: 10 } } value={ 1 } label={ this.props.intl.formatMessage(messages.creditCardPayment) } icon={ <PaymentTypeIcon type='card' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 2 } label={ this.props.intl.formatMessage(messages.payPalPayment) } icon={ <PaymentTypeIcon type='paypal' /> } />
               </Tabs>
             </AppBar>
             <TabContainer>
@@ -230,17 +230,17 @@ class TaskPayment extends Component {
                                 disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
                               >
                                 <RedeemIcon style={ { marginRight: 10 } } />
-                                <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={{
+                                <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
                                   value: order.amount
-                                }} />
+                                } } />
                               </Button>
                             ) : (
-                              <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Pay with PayPal (id: {transfer}' values={{
+                              <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Pay with PayPal (id: {transfer}' values={ {
                                 transfer: order.transfer_id
-                              }} >
-                                {(msg) => (
+                              } } >
+                                { (msg) => (
                                   <Chip label={ msg } />
-                                )}
+                                ) }
                               </FormattedMessage>
                             )
                           }
@@ -278,9 +278,9 @@ class TaskPayment extends Component {
                 </div>
               ) : (
                 <div>
-                  <FormattedMessage id='task.payment.done.to' defaultMessage='You made a payment to $ {user}' values={{
+                  <FormattedMessage id='task.payment.done.to' defaultMessage='You made a payment to $ {user}' values={ {
                     user: sendTo(this.props.assigned).username
-                  }} />
+                  } } />
                 </div>
               ) }
             </span>
@@ -297,21 +297,21 @@ class TaskPayment extends Component {
                   disabled={ !this.props.assigned || this.props.transferId || this.state.currentTab === 2 }
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
-                  <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={{
+                  <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={ {
                     value: this.props.values.card || 0
-                  }} />
+                  } } />
                 </Button>
               ) }
             </div>
           ) : (
             <FormattedMessage id='task.payment.types.notype' defaultMessage='No payment for this payment type'>
-              {(msg) => (
+              { (msg) => (
                 <ListItemText
                   variant='raised'
                   disabled
                   primary={ msg }
                 />
-              )}
+              ) }
             </FormattedMessage>
           ) }
           { !this.props.paid ? (

@@ -3,9 +3,9 @@ const i18n = require('i18n')
 const Signatures = {}
 
 Signatures.sign = (language) => {
-    const language = user.language || 'en'
-    i18n.setLocale(language)
-    return `
+  const language = user.language || 'en'
+  i18n.setLocale(language)
+  return `
 
 <p>
 ${i18n.__('mail.payment.sign.thanks')}, <br />

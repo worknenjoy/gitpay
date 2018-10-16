@@ -11,7 +11,7 @@ const PaymentTypeIcon = props => {
       { props.type === 'paypal'
         ? (<div style={ { textAlign: 'left' } }><img src={ logoPaypal } width={ 48 } /></div>)
         : (<div style={ { textAlign: 'left', color: '#12789a', fontSize: 10 } }><img src={ creditCardIcon } width={ 48 } /> <br />
-          { !props.notext && 
+          { !props.notext &&
             <span>
               <FormattedMessage id='payment.creditcard' defaultMessage='Credit Card' />
             </span> }

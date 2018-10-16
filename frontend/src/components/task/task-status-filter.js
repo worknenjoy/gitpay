@@ -38,7 +38,7 @@ class TaskStatusFilter extends Component {
     return (
       <div>
         <FormattedMessage id='task.status.filter.all' defaultMessage='All'>
-          {(msg) => (
+          { (msg) => (
             <Chip
               style={ { marginRight: 10 } }
               onClick={ () => this.props.onFilter() }
@@ -46,7 +46,7 @@ class TaskStatusFilter extends Component {
               key={ 0 }
               label={ msg }
             />
-          )}
+          ) }
         </FormattedMessage>
         { statuses.map((status, index) =>
           (<Chip

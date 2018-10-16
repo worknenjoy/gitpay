@@ -39,12 +39,12 @@ class ProfileOptions extends Component {
         <CardList>
           <Card>
             <FormattedMessage id='account.profile.tasks.caption' defaultMessage='Tasks'>
-              {(msg) => (
+              { (msg) => (
                 <CardMedia
                   image={ taskIcon }
                   title={ msg }
                 />
-              )}
+              ) }
             </FormattedMessage>
             <CardContent>
               <Typography variant='headline' component='h2'>
@@ -65,12 +65,12 @@ class ProfileOptions extends Component {
 
           <Card>
             <FormattedMessage id='account.profile.tasks.payment.caption' defaultMessage='Payment'>
-              {(msg) => (
-                 <CardMedia
-                 image={ paymentIcon }
-                 title={msg}
-               />
-              )}
+              { (msg) => (
+                <CardMedia
+                  image={ paymentIcon }
+                  title={ msg }
+                />
+              ) }
             </FormattedMessage>
             <CardContent>
               <Typography variant='headline' component='h2'>

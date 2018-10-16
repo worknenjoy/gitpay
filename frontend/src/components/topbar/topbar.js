@@ -271,7 +271,7 @@ class TopBar extends Component {
               color='primary'
             >
               <LabelButton>
-                <FormattedMessage id='task.actions.explore' defaultMessage='Explore tasks' />  
+                <FormattedMessage id='task.actions.explore' defaultMessage='Explore tasks' />
               </LabelButton>
               <TasksIcon />
             </StyledButton>
@@ -403,7 +403,7 @@ class TopBar extends Component {
                     <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                   </Button>
                   <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='raised' color='secondary' >
-                    <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />  
+                    <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
                   </Button>
                 </DialogActions>
               </Dialog>

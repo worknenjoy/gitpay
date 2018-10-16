@@ -73,7 +73,7 @@ class RemoveAssignment extends Component {
           <DialogContent>
             <DialogContentText>
               <Typography type='subheading' gutterBottom>
-                  <FormattedMessage id='task.assignment.remove.reason' defaultMessage='Why this user will not work on this task anymore?' />
+                <FormattedMessage id='task.assignment.remove.reason' defaultMessage='Why this user will not work on this task anymore?' />
               </Typography>
             </DialogContentText>
             <TextField
@@ -87,10 +87,10 @@ class RemoveAssignment extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={ this.closeModal } color='primary'>
-                <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
+              <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
             </Button>
             <Button disabled={ message.length === 0 } onClick={ this.removeAssignment } variant='raised' color='secondary' >
-                <FormattedMessage id='task.assignment.actions.apply' defaultMessage='Apply' />
+              <FormattedMessage id='task.assignment.actions.apply' defaultMessage='Apply' />
             </Button>
           </DialogActions>
         </Dialog>

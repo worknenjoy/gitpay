@@ -52,7 +52,7 @@ class UserSection extends Component {
       <label>
         <FormControl error={ this.state.error.fullname }>
           <FormattedMessage id='user.data.fullname' defaultMessage='Full name'>
-            {(msg) => (
+            { (msg) => (
               <Input
                 id='payment-form-user'
                 name='fullname'
@@ -61,22 +61,22 @@ class UserSection extends Component {
                     <AccountCircle />
                   </InputAdornment>
                 }
-                placeholder={msg}
+                placeholder={ msg }
                 ref='payment-form-user'
                 defaultValue={ this.props.name }
                 required
                 style={ { marginRight: 20 } }
                 onChange={ this.onChangeName }
-              />  
-            )}
+              />
+            ) }
           </FormattedMessage>
           { this.state.error.fullname && (
             <FormattedMessage id='user.data.fullname.error' defaultMessage='Provide your full name'>
-              {(msg) => (
+              { (msg) => (
                 <FormHelperText error={ this.state.error.fullname }>
-                  {msg}
+                  { msg }
                 </FormHelperText>
-              )}
+              ) }
             </FormattedMessage>
           ) }
         </FormControl>
@@ -99,11 +99,11 @@ class UserSection extends Component {
           />
           { this.state.error.email && (
             <FormattedMessage id='user.data.email.error' defaultMessage='Provide your email correctly'>
-              {(msg) => (
+              { (msg) => (
                 <FormHelperText error={ this.state.error.email }>
-                  {msg}
+                  { msg }
                 </FormHelperText>
-              )}
+              ) }
             </FormattedMessage>
           ) }
         </FormControl>

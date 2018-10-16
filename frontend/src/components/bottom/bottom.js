@@ -53,7 +53,7 @@ class Bottom extends Component {
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography type='subheading'>
                 <strong>
-                <FormattedMessage id='bottom.header.subheading2' defaultMessage='For Companies' />
+                  <FormattedMessage id='bottom.header.subheading2' defaultMessage='For Companies' />
                 </strong>
               </Typography>
               <List component='nav'>
@@ -65,7 +65,7 @@ class Bottom extends Component {
             <Grid item xs={ 12 } sm={ 2 }>
               <Typography type='subheading'>
                 <strong>
-                <FormattedMessage id='bottom.subheading3' defaultMessage='Partners' />
+                  <FormattedMessage id='bottom.subheading3' defaultMessage='Partners' />
                 </strong>
               </Typography>
               <Button

@@ -1,4 +1,4 @@
-import { IntlProvider, defineMessages } from 'react-intl';
+import { IntlProvider, defineMessages } from 'react-intl'
 import messagesBr from './translations/br.json'
 import messagesEn from './translations/en.json'
 
@@ -122,7 +122,7 @@ export const msgs = defineMessages({
   }
 })
 
-const { intl } = new IntlProvider({ locale: 'en', messages: messages['en'] }, {}).getChildContext();
+const { intl } = new IntlProvider({ locale: 'en', messages: messages['en'] }, {}).getChildContext()
 
 export default {
   API_URL: process.env.API_HOST,

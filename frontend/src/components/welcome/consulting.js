@@ -103,8 +103,8 @@ class Consulting extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.consultingItemPrimary)}
-                    secondary={this.props.intl.formatMessage(messages.consultingItemSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -114,8 +114,8 @@ class Consulting extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.consultingItemTwoPrimary)}
-                    secondary={this.props.intl.formatMessage(messages.consultingItemTwoSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -125,8 +125,8 @@ class Consulting extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.consultingItemThreePrimary)}
-                    secondary={this.props.intl.formatMessage(messages.consultingItemThreeSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
                   />
                 </ListItem>
               </List>

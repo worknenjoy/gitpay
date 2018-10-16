@@ -49,11 +49,11 @@ class PaypalPaymentDialog extends Component {
               <FormattedMessage id='payment.paypal.paywith' defaultMessage='Pay with ' />
               <br />
               <FormattedMessage id='payment.paypal.logo.title' defaultMessage='Make the payment with paypal'>
-                {(msg) => (
-                  <a href='#' title={msg} onClick={ this.handleNewOrder }>
+                { (msg) => (
+                  <a href='#' title={ msg } onClick={ this.handleNewOrder }>
                     <img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
                   </a>
-                )}
+                ) }
               </FormattedMessage>
             </div>
           ) }

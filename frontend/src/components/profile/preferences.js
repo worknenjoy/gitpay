@@ -11,7 +11,6 @@ const languages = {
 }
 
 class Preferences extends Component {
-
   render () {
     return (
       <Paper elevation={ 0 }>

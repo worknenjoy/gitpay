@@ -209,7 +209,7 @@ class Profile extends Component {
                   <div className={ classes.infoItem }>
                     <Typography>
                       <h4>
-                        <DeviceHubIcon /> 
+                        <DeviceHubIcon />
                         Repositórios
                         <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
                       </h4>

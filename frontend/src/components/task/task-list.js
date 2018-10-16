@@ -136,10 +136,10 @@ class TaskList extends Component {
               indicatorColor='primary'
               textColor='primary'
             >
-              <Tab value={ 0 } label={this.props.intl.formatMessage(messages.allTasks)} icon={ <RedeemIcon /> } />
-              <Tab value={ 1 } label={this.props.intl.formatMessage(messages.createdByMeTasks)} icon={ <ShoppingBasket /> } />
-              <Tab value={ 2 } label={this.props.intl.formatMessage(messages.interestedTasks)} icon={ <AssignIcon /> } />
-              <Tab value={ 3 } label={this.props.intl.formatMessage(messages.assignedToMeTasks)} icon={ <ActionIcon /> } />
+              <Tab value={ 0 } label={ this.props.intl.formatMessage(messages.allTasks) } icon={ <RedeemIcon /> } />
+              <Tab value={ 1 } label={ this.props.intl.formatMessage(messages.createdByMeTasks) } icon={ <ShoppingBasket /> } />
+              <Tab value={ 2 } label={ this.props.intl.formatMessage(messages.interestedTasks) } icon={ <AssignIcon /> } />
+              <Tab value={ 3 } label={ this.props.intl.formatMessage(messages.assignedToMeTasks) } icon={ <ActionIcon /> } />
             </Tabs>
           </AppBar>
           <TabContainer>

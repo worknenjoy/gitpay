@@ -103,8 +103,8 @@ class WhichCompanies extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.companiesItemPrimary)}
-                    secondary={this.props.intl.formatMessage(messages.companiesItemSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.companiesItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -114,8 +114,8 @@ class WhichCompanies extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.companiesItemTwoPrimary)}
-                    secondary={this.props.intl.formatMessage(messages.companiesItemTwoSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.companiesItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -125,8 +125,8 @@ class WhichCompanies extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={this.props.intl.formatMessage(messages.companiesItemThreePrimary)}
-                    secondary={this.props.intl.formatMessage(messages.companiesItemThreeSecondary)}
+                    primary={ this.props.intl.formatMessage(messages.companiesItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesItemThreeSecondary) }
                   />
                 </ListItem>
               </List>

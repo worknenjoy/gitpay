@@ -307,8 +307,8 @@ class Account extends Component {
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={ { margin: 10 } } value={ 0 } label={this.props.intl.formatMessage(messages.cardTab)} icon={ <PaymentTypeIcon type='stripe' notext /> } />
-                <Tab style={ { margin: 10 } } value={ 1 } label={this.props.intl.formatMessage(messages.paypalTab)} icon={ <PaymentTypeIcon type='paypal' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 0 } label={ this.props.intl.formatMessage(messages.cardTab) } icon={ <PaymentTypeIcon type='stripe' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 1 } label={ this.props.intl.formatMessage(messages.paypalTab) } icon={ <PaymentTypeIcon type='paypal' notext /> } />
               </Tabs>
             </AppBar>
             { this.state.currentTab === 0 &&
@@ -338,20 +338,20 @@ class Account extends Component {
                           </Typography>
                           { account.data.verification.disabled_reason ? (
                             <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
-                              {(msg) => (
+                              { (msg) => (
                                 <Chip
                                   label={
                                     Const.ACCOUNT_REASONS[account.data.verification.disabled_reason] || msg
                                   }
                                   style={ { marginRight: 20, backgroundColor: cyan['500'] } }
                                 />
-                              )}
+                              ) }
                             </FormattedMessage>
                           ) : (
                             <div>
                               { account.data.external_accounts.total_count ? (
-                                <FormattedMessage id='account.bank.activated' defaultMessage='Activated'>  
-                                  {(msg) => (
+                                <FormattedMessage id='account.bank.activated' defaultMessage='Activated'>
+                                  { (msg) => (
                                     <Chip
                                       label={ msg }
                                       style={ {
@@ -360,11 +360,11 @@ class Account extends Component {
                                         backgroundColor: 'green'
                                       } }
                                     />
-                                  )}
+                                  ) }
                                 </FormattedMessage>
                               ) : (
-                                <FormattedMessage id='account.bank.missing' defaultMessage='Missing bank data (go to next step)'>  
-                                  {(msg) => (
+                                <FormattedMessage id='account.bank.missing' defaultMessage='Missing bank data (go to next step)'>
+                                  { (msg) => (
                                     <Chip
                                       label={ msg }
                                       style={ {
@@ -372,8 +372,8 @@ class Account extends Component {
                                         marginRight: 20,
                                         backgroundColor: green['500']
                                       } }
-                                    />  
-                                  )}
+                                    />
+                                  ) }
                                 </FormattedMessage>
                               ) }
                             </div>
@@ -397,13 +397,13 @@ class Account extends Component {
                             </div>
                           </div>
                         ) : (
-                          <FormattedMessage id='account.details.complete' defaultMessage='Your account is now verified and you are able to receive all payments from tasks'>  
-                            {(msg) => (
+                          <FormattedMessage id='account.details.complete' defaultMessage='Your account is now verified and you are able to receive all payments from tasks'>
+                            { (msg) => (
                               <Chip
                                 style={ { margin: 3 } }
                                 label={ msg }
                               />
-                            )}
+                            ) }
                           </FormattedMessage>
                         ) }
                       </CardContent>
@@ -488,35 +488,35 @@ class Account extends Component {
                             <Grid item xs={ 12 }>
                               <FormControl>
                                 <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
-                                    {(msg) => (
-                                      <Input
-                                        id='bank-routing-number'
-                                        name='routing_number'
-                                        placeholder={msg}
-                                        style={ { marginRight: 20 } }
-                                        disabled={ !!bankAccount.data.routing_number }
-                                        defaultValue={ bankAccount.data.routing_number }
-                                      />
-                                    )}
+                                  { (msg) => (
+                                    <Input
+                                      id='bank-routing-number'
+                                      name='routing_number'
+                                      placeholder={ msg }
+                                      style={ { marginRight: 20 } }
+                                      disabled={ !!bankAccount.data.routing_number }
+                                      defaultValue={ bankAccount.data.routing_number }
+                                    />
+                                  ) }
                                 </FormattedMessage>
                               </FormControl>
                               <FormControl
                                 error={ this.state.AccountNumberError }
                               >
                                 <FormattedMessage id='account.details.accountNumber' defaultMessage='Account number'>
-                                    {(msg) => (
-                                      <Input
-                                        id='bank-account-number'
-                                        name='account_number'
-                                        placeholder={msg}
-                                        disabled={ !!bankAccount.data.routing_number }
-                                        defaultValue={
-                                          bankAccount.data.last4
-                                            ? `*****${bankAccount.data.last4}`
-                                            : ''
-                                        }
-                                      />
-                                    )}
+                                  { (msg) => (
+                                    <Input
+                                      id='bank-account-number'
+                                      name='account_number'
+                                      placeholder={ msg }
+                                      disabled={ !!bankAccount.data.routing_number }
+                                      defaultValue={
+                                        bankAccount.data.last4
+                                          ? `*****${bankAccount.data.last4}`
+                                          : ''
+                                      }
+                                    />
+                                  ) }
                                 </FormattedMessage>
                                 { this.state.AccountNumberError && (
                                   <FormHelperText>
@@ -590,7 +590,7 @@ class Account extends Component {
                                   </Typography>
                                   <FormControl>
                                     <FormattedMessage id='account.details.terms.read' defaultMessage='I read and I accept the Stripe terms to receive transfers about payments directly on my account'>
-                                      {(msg) => (
+                                      { (msg) => (
                                         <FormControlLabel
                                           control={
                                             <Switch
@@ -600,9 +600,9 @@ class Account extends Component {
                                               color='primary'
                                             />
                                           }
-                                          label={msg}
+                                          label={ msg }
                                         />
-                                      )}
+                                      ) }
                                     </FormattedMessage>
                                   </FormControl>
                                 </Grid>
@@ -643,9 +643,9 @@ class Account extends Component {
                               <Grid item xs={ 12 }>
                                 <Typography color='primary'>
                                   <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
-                                  <FormattedDate value={Moment.unix(
+                                  <FormattedDate value={ Moment.unix(
                                     account.data.tos_acceptance.date
-                                  )} year='numeric' month='numeric' day='numeric' />
+                                  ) } year='numeric' month='numeric' day='numeric' />
                                 </Typography>
                               </Grid>
                             </Grid>
@@ -701,29 +701,29 @@ class Account extends Component {
                           <Grid item xs={ 12 }>
                             <FormControl>
                               <FormattedMessage id='account.verify.firstName' defaultMessage='First name'>
-                                {(msg) => (
+                                { (msg) => (
                                   <Input
                                     id='payment-form-user'
                                     name='legal_entity[first_name]'
-                                    placeholder={msg}
+                                    placeholder={ msg }
                                     style={ { marginRight: 20 } }
                                     defaultValue={ account.data.legal_entity.first_name }
                                   />
-                                )}
+                                ) }
                               </FormattedMessage>
                             </FormControl>
                             <FormControl>
-                            <FormattedMessage id='account.verify.lastName' defaultMessage='Last name'>
-                              {(msg) => (
-                                <Input
-                                  name='legal_entity[last_name]'
-                                  id='adornment-email'
-                                  placeholder={msg}
-                                  style={ { marginRight: 20 } }
-                                  defaultValue={ account.data.legal_entity.last_name }
-                                />
-                              )}
-                            </FormattedMessage>
+                              <FormattedMessage id='account.verify.lastName' defaultMessage='Last name'>
+                                { (msg) => (
+                                  <Input
+                                    name='legal_entity[last_name]'
+                                    id='adornment-email'
+                                    placeholder={ msg }
+                                    style={ { marginRight: 20 } }
+                                    defaultValue={ account.data.legal_entity.last_name }
+                                  />
+                                ) }
+                              </FormattedMessage>
                             </FormControl>
                             <FormControl>
                               <Input
@@ -750,7 +750,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[address][line1]'
-                                placeholder={this.props.intl.formatMessage(messages.addressLine1)}
+                                placeholder={ this.props.intl.formatMessage(messages.addressLine1) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={
                                   account.data.legal_entity.address.line1
@@ -761,7 +761,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[address][line2]'
-                                placeholder={this.props.intl.formatMessage(messages.addressLine2)}
+                                placeholder={ this.props.intl.formatMessage(messages.addressLine2) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={
                                   account.data.legal_entity.address.line2
@@ -772,7 +772,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[address][postal_code]'
                                 id='adornment-email'
-                                placeholder={this.props.intl.formatMessage(messages.zipCode)}
+                                placeholder={ this.props.intl.formatMessage(messages.zipCode) }
                                 defaultValue={
                                   account.data.legal_entity.address.postal_code
                                 }
@@ -784,7 +784,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[address][city]'
                                 id='adornment-city'
-                                placeholder={this.props.intl.formatMessage(messages.city)}
+                                placeholder={ this.props.intl.formatMessage(messages.city) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={
                                   account.data.legal_entity.address.city
@@ -795,7 +795,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[address][state]'
-                                placeholder={this.props.intl.formatMessage(messages.state)}
+                                placeholder={ this.props.intl.formatMessage(messages.state) }
                                 defaultValue={
                                   account.data.legal_entity.address.state
                                 }
@@ -807,7 +807,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[dob][day]'
-                                placeholder={this.props.intl.formatMessage(messages.dob)}
+                                placeholder={ this.props.intl.formatMessage(messages.dob) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={ account.data.legal_entity.dob.day }
                               />
@@ -842,7 +842,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[dob][year]'
                                 id='adornment-email'
-                                placeholder={this.props.intl.formatMessage(messages.birthYear)}
+                                placeholder={ this.props.intl.formatMessage(messages.birthYear) }
                                 defaultValue={ account.data.legal_entity.dob.year }
                               />
                             </FormControl>
@@ -910,20 +910,20 @@ class Account extends Component {
                       </Typography>
                       { !user.user.paypal_id ? (
                         <FormattedMessage id='account.register.paypal.status' defaultMessage='This account is not associated with PayPal'>
-                          {(msg) => (
+                          { (msg) => (
                             <Chip
-                              label={msg}
+                              label={ msg }
                               style={ { marginRight: 20, backgroundColor: 'orange' } }
                             />
-                          )}
+                          ) }
                         </FormattedMessage>
                       ) : (
                         <div>
                           <Typography className={ classes.pos } color='textSecondary'>
-                          <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
+                            <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
                           </Typography>
                           <Chip
-                            label={this.props.intl.formatMessage(messages.activeStatus)}
+                            label={ this.props.intl.formatMessage(messages.activeStatus) }
                             style={ {
                               color: 'white',
                               marginRight: 20,

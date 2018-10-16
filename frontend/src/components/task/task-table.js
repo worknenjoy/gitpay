@@ -88,28 +88,28 @@ class TablePaginationActions extends React.Component {
         <IconButton
           onClick={ this.handleFirstPageButtonClick }
           disabled={ page === 0 }
-          aria-label={this.props.intl.formatMessage(messages.firstPageLabel)}
+          aria-label={ this.props.intl.formatMessage(messages.firstPageLabel) }
         >
           { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
         </IconButton>
         <IconButton
           onClick={ this.handleBackButtonClick }
           disabled={ page === 0 }
-          aria-label={this.props.intl.formatMessage(messages.previousPageLabel)}
+          aria-label={ this.props.intl.formatMessage(messages.previousPageLabel) }
         >
           { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
         </IconButton>
         <IconButton
           onClick={ this.handleNextButtonClick }
           disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label={this.props.intl.formatMessage(messages.nextPageLabel)}
+          aria-label={ this.props.intl.formatMessage(messages.nextPageLabel) }
         >
           { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
         </IconButton>
         <IconButton
           onClick={ this.handleLastPageButtonClick }
           disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label={this.props.intl.formatMessage(messages.lastPageLabel)}
+          aria-label={ this.props.intl.formatMessage(messages.lastPageLabel) }
         >
           { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>

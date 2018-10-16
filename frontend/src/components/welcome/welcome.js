@@ -139,7 +139,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div className={ classes.mainBlock } style={ { margin: 0, paddingTop: 10 } }>
                 <Typography className={ classes.tagline } gutterBottom>
-                  <FormattedMessage id='welcome.tagline' deafultMessage='Welcome to Gitpay'  />
+                  <FormattedMessage id='welcome.tagline' deafultMessage='Welcome to Gitpay' />
                 </Typography>
                 <Typography variant='title' gutterBottom>
                   <FormattedMessage id='welcome.tagline1' deafultMessage='Work in tasks on demand' />
@@ -168,7 +168,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography type='headline' gutterBottom>
-                  <FormattedMessage id='welcome.headline.forfreelancers' defaultMessage='For freelancers'  />
+                  <FormattedMessage id='welcome.headline.forfreelancers' defaultMessage='For freelancers' />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -180,8 +180,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeFreelancersItemOnePrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeFreelancersItemOneSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOneSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -191,8 +191,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoPrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -202,8 +202,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeFreelancersItemThreePrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeFreelancersItemThreeSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreeSecondary) }
                     />
                   </ListItem>
                 </List>
@@ -220,7 +220,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography type='headline' gutterBottom>
-                  <FormattedMessage id='welcome.tagline.companies.main.headline' defaultMessage='For companies'  />
+                  <FormattedMessage id='welcome.tagline.companies.main.headline' defaultMessage='For companies' />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -232,8 +232,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeCompaniesItemOnePrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeCompaniesItemOneSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemOneSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -243,8 +243,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoPrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -254,8 +254,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeCompaniesItemThreePrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeCompaniesItemThreeSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemThreeSecondary) }
                     />
                   </ListItem>
                 </List>
@@ -270,7 +270,7 @@ class Welcome extends Component {
         <Section>
           <MainTitle>
             <Typography type='headline' gutterBottom>
-              <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works'  />
+              <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
             </Typography>
           </MainTitle>
           <Grid container spacing={ 24 }>
@@ -285,8 +285,8 @@ class Welcome extends Component {
                       <ArchiveIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeHowToItemOnePrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeHowToItemOneSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemOneSecondary) }
                     />
                   </ListItem>
                   <Divider />
@@ -295,8 +295,8 @@ class Welcome extends Component {
                       <BugReportIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeHowToItemTwoPrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeHowToItemTwoSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemTwoSecondary) }
                     />
                   </ListItem>
                   <Divider />
@@ -305,8 +305,8 @@ class Welcome extends Component {
                       <CardMembershipIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeHowToItemThreePrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeHowToItemThreeSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemThreeSecondary) }
                     />
                   </ListItem>
                   <Divider />
@@ -315,8 +315,8 @@ class Welcome extends Component {
                       <BugReportIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(messages.welcomeHowToItemFourPrimary)}
-                      secondary={this.props.intl.formatMessage(messages.welcomeHowToItemFourSecondary)}
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemFourPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemFourSecondary) }
                     />
                   </ListItem>
                 </List>

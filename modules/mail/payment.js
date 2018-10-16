@@ -21,7 +21,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.payment.success.content.main', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`}) }</p>
+          <p>${i18n.__('mail.payment.success.content.main', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -39,8 +39,8 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.payment.assigned.content.main', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`}) }</p>
-          <p>${i18n.__('mail.payment.assigned.content.secondary') }</p>
+          <p>${i18n.__('mail.payment.assigned.content.main', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.payment.assigned.content.secondary')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -58,7 +58,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.payment.content.error', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`}) }</p>
+          <p>${i18n.__('mail.payment.content.error', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]

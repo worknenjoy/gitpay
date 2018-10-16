@@ -2,9 +2,9 @@ import React from 'react'
 const Intl = jest.genMockFromModule('react-intl')
 
 const intl = {
-  formatMessage: ({defaultMessage}) => defaultMessage
+  formatMessage: ({ defaultMessage }) => defaultMessage
 }
 
-Intl.injectIntl = (Node) => (props) => <Node {...props} intl={intl}/>
+Intl.injectIntl = (Node) => (props) => <Node { ...props } intl={ intl } />
 
-module.exports = Intl;
+module.exports = Intl

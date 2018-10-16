@@ -66,7 +66,7 @@ class TaskInvite extends Component {
               </FormControl>
               <FormControl fullWidth>
                 <Typography type='subheading' gutterBottom>
-                    <FormattedMessage id='task.invite.text.label' defaultMessage='Write a text to be sent with the invite' />,
+                  <FormattedMessage id='task.invite.text.label' defaultMessage='Write a text to be sent with the invite' />,
                 </Typography>
                 <TextField
                   autoFocus
