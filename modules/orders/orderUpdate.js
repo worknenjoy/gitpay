@@ -18,17 +18,17 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
       const orderData = order[1].dataValues
       return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
         if (orderData.paid) {
-          PaymentMail.success(user.dataValues.email, task, orderData.amount)
+          PaymentMail.success(user, task, orderData.amount)
         }
         else {
-          PaymentMail.error(user.dataValues.email, task, orderData.amount)
+          PaymentMail.error(user.dataValues, task, orderData.amount)
         }
         if (task.dataValues.assigned) {
           const assignedId = task.dataValues.assigned
           return models.Assign.findById(assignedId, {
             include: [models.User]
           }).then(assign => {
-            PaymentMail.assigned(assign.dataValues.User.dataValues.email, task, orderData.amount)
+            PaymentMail.assigned(assign.dataValues.User.dataValues, task, orderData.amount)
             return orderData
           })
         }

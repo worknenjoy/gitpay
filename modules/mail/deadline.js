@@ -1,9 +1,10 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
-let dateFormat = require('dateformat')
-let moment = require('moment')
-let ptLocale = require('moment/locale/pt-br')
+const dateFormat = require('dateformat')
+const moment = require('moment')
+const ptLocale = require('moment/locale/pt-br')
+const i18n = require('i18n')
 
 moment.locale('pt-br', ptLocale)
 
@@ -14,40 +15,41 @@ const DeadlineMail = {
 }
 
 if (constants.canSendEmail) {
-  DeadlineMail.update = (to, task, name) => {
+  DeadlineMail.update = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'O prazo para conclusão de uma tarefa do Gitpay foi atualizada',
+      i18n.__('mail.deadline.update.subject'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Olá ${name},</p>
-          <p>A tarefa que você está trabalhando <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> teve o prazo atualizado.</p>
-          <p>O prazo para conclusão foi definido para: <strong>${task.deadline ? dateFormat(task.deadline, constants.dateFormat) : 'Nenhum prazo foi definido'}</strong></p>
-          <p>Isto signifca que você teria que enviar uma solução <strong>${task.deadline ? moment(task.deadline).fromNow() : 'o tempo que for necessário para terminar'} a partir de agora</strong>.</p>
-          <p>Por favor, nos avise se o prazo não poder ser cumprido para que possa ser revisto.</p>
-          <p>${Signatures.sign}</p>`
+          <p>Olá ${i18n.__('mail.assigned.hello', {name: name})}</p>
+          ${i18n.__('mail.assigned.update.intro', {url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}
+          ${i18n.__('mail.assigned.update.message', {deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}
+          <p>${Signatures.sign(language)}</p>`
         },
       ]
     )
   }
 
-  DeadlineMail.daysLeft = (to, task, name) => {
+  DeadlineMail.daysLeft = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      `Atenção, faltam ${task.deadline ? moment(task.deadline).fromNow() : 'para finalização de uma tarefa que foi escolhido no Gitpay'}`,
+      i18n.__('mail.deadline.daysLeft.subject', {deadline: moment(task.deadline).fromNow()}),
       [
         {
           type: 'text/html',
           value: `
-           <p>Olá ${name},</p>
-           <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
-           <p>O prazo para conclusão desta tarefa é: <strong>${task.deadline ? dateFormat(task.deadline, constants.dateFormat) : 'Nenhum prazo foi definido'}</strong></p>
-           <p>O que signifca que você teria que enviar uma solução <strong>${task.deadline ? moment(task.deadline).fromNow() : 'o tempo que for necessário para terminar'} a partir de agora</strong></p>
-           <p>Por favor, envie seu Pull Request para que a sua solução possa ser avaliada e integrada e assim você poderá receber a recopensa pelo desenvolvimento</p>
-           <p>${Signatures.sign}</p>`
-
+          <p>Olá ${i18n.__('mail.assigned.hello', {name: name})}</p>
+          ${i18n.__('mail.assigned.update.intro', {url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}
+          ${i18n.__('mail.assigned.update.message', {deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}
+          <p>${Signatures.sign(language)}</p>`
         }
       ]
     )
@@ -56,7 +58,7 @@ if (constants.canSendEmail) {
   DeadlineMail.error = (msg) => {
     request(
       constants.notificationEmail,
-      'Tivemos problema com alguma das notificações sobre interessados em tarefa no Gitpay',
+      i18n.__('mail.deadline.update.error'),
       [
         {
           type: 'text/html',

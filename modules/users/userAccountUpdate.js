@@ -16,10 +16,10 @@ module.exports = Promise.method(function userAccountUpdate (userParameters) {
     )
     .then(user => {
       if (!user && !user.dataValues && !user.dataValues.account_id) {
-        return { error: 'Você precisa criar sua conta antes atualizar os dados' }
+        return { error: 'You need to be logged to update account' }
       }
       if (!user && !user.dataValues && !user.dataValues.email) {
-        return { error: 'Não foi possível registrar a conta' }
+        return { error: 'We could not register your account' }
       }
       return stripe.accounts.update(user.dataValues.account_id, userParameters.account).then(account => {
         return account

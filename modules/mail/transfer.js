@@ -1,6 +1,7 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
+const i18n = require('i18n')
 
 const TransferMail = {
   success: (to, task, value) => {},
@@ -11,76 +12,91 @@ const TransferMail = {
 }
 
 if (constants.canSendEmail) {
-  TransferMail.success = (to, task, value) => {
+  TransferMail.success = (user, task, value) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Uma transferência foi realizado por uma tarefa no Gitpay',
+      i18n.__('mail.transfer.new.subject.success'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Olá, uma transferência no valor de $ ${value} será realizada para você pela tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
+          <p>${i18n.__('mail.transfer.new.message.success', {value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`})}<p>
+          <p>${Signatures.sign(language)}</p>`
+        },
+      ]
+    )
+  }
+
+  TransferMail.notifyOwner = (user, task, value) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
+    request(
+      to,
+      i18n.__('mail.transfer.notify.subject.success'),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>${i18n.__('mail.transfer.notify.message.success', {value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`})}<p>
           <p>${Signatures.sign}</p>`
         },
       ]
     )
   }
 
-  TransferMail.notifyOwner = (to, task, value) => {
+  TransferMail.error = (user, task, value) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Você confirmou uma transferência por uma tarefa no Gitpay',
+      i18n.__('mail.transfer.error.subject'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Olá, você confirmou uma transferência no valor de $ ${value} pela tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-          <p>${Signatures.sign}</p>`
+          <p>${i18n.__('mail.transfer.error.message', {value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`})}<p>
+          <p>${Signatures.sign(language)}</p>`
         },
       ]
     )
   }
 
-  TransferMail.error = (to, task, value) => {
+  TransferMail.paymentForInvalidAccount = (user) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Problema na transferência por tarefa no Gitpay',
+      i18n.__('mail.transfer.missing.subject'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Olá, tivemos um problema com a transferência de $ ${value} para a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-          <p>${Signatures.sign}</p>`
+          <p>${i18n.__('mail.transfer.missing.message')}</p>
+          <p>${Signatures.sign(language)}</p>`
         },
       ]
     )
   }
 
-  TransferMail.paymentForInvalidAccount = (to) => {
+  TransferMail.futurePaymentForInvalidAccount = (user) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Ativar conta para receber pagamento',
+      i18n.__('mail.transfer.missing.subject'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Você recebeu um pagamento pelo Gitpay, mas sua conta para recebimento ainda não foi configurada, por favor ative sua conta em <a href="https://gitpay.me/#/profile/payment-options">https://gitpay.me/#/profile/payment-options</a> para poder receber os valores</p>
-          <p>${Signatures.sign}</p>`
-        },
-      ]
-    )
-  }
-
-  TransferMail.futurePaymentForInvalidAccount = (to) => {
-    request(
-      to,
-      'Ativar conta para receber futuros pagamentos',
-      [
-        {
-          type: 'text/html',
-          value: `
-          <p>Para receber um pagamento de uma tarefa com recompensa, você precisa ativar sua conta em <a href="https://gitpay.me/#/profile/payment-options">https://gitpay.me/#/profile/payment-options</a>.</p>
-          <p>${Signatures.sign}</p>`
+          <p>${i18n.__('mail.transfer.invalid.message')}</p>
+          <p>${Signatures.sign(language)}</p>`
         },
       ]
     )

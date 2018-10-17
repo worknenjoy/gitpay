@@ -55,8 +55,8 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
                 return models.Assign.findById(orderData.TaskId, {
                   include: [models.User]
                 }).then(assign => {
-                  TransferMail.notifyOwner(user.dataValues.email, task.dataValues, orderData.amount)
-                  TransferMail.success(assign.dataValues.User.email, task.dataValues, orderData.amount)
+                  TransferMail.notifyOwner(user.dataValues, task.dataValues, orderData.amount)
+                  TransferMail.success(assign.dataValues.User, task.dataValues, orderData.amount)
                   return orderData
                 })
               })

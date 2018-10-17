@@ -29,7 +29,7 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
         const transferGroup = `task_${task.id}`
         const dest = user.account_id
         if (!dest) {
-          TransferMail.paymentForInvalidAccount(user.email)
+          TransferMail.paymentForInvalidAccount(user)
           throw new Error('account_destination_invalid')
         }
 
@@ -52,12 +52,12 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
               }
             }).then(update => {
               if (!update) {
-                TransferMail.error(user.email, task, task.value)
+                TransferMail.error(user, task, task.value)
                 throw new Error('update_task_reject')
               }
               return models.User.findById(task.userId).then(taskOwner => {
-                TransferMail.notifyOwner(taskOwner.dataValues.email, task, task.value)
-                TransferMail.success(user.email, task, task.value)
+                TransferMail.notifyOwner(taskOwner.dataValues, task, task.value)
+                TransferMail.success(user, task, task.value)
                 return transfer
               })
             })

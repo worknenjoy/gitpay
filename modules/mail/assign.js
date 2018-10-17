@@ -1,9 +1,10 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
-let dateFormat = require('dateformat')
-let moment = require('moment')
-let ptLocale = require('moment/locale/pt-br')
+const dateFormat = require('dateformat')
+const moment = require('moment')
+const ptLocale = require('moment/locale/pt-br')
+const i18n = require('i18n')
 
 moment.locale('pt-br', ptLocale)
 
@@ -14,66 +15,64 @@ const AssignMail = {
 }
 
 if (constants.canSendEmail) {
-  AssignMail.owner = (to, task, name) => {
+  AssignMail.owner = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Alguém tem interesse por uma tarefa que você cadastrou no Gitpay',
+      i18n.__('mail.assign.owner.subject'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Olá,</p>
-          <p>${name} tem interesse na sua tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a></p>
-          <p>Você pode atribuir o desenvolvimento desta tarefa para ele indo na aba 'INTERESSADOS', para que ela possa receber o valor após a tarefa for integrada.</p>
-          <p>${Signatures.sign}</p>`
+          <p>${i18n.__('mail.assign.owner.hello')},</p>
+          <p>${i18n.__('mail.assign.owner.main', {name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}</p>
+          <p>${i18n.__('mail.assign.owner.sec')}</p>
+          <p>${Signatures.sign(language)}</p>`
         },
       ]
     )
   }
 
-  AssignMail.interested = (to, task, name) => {
+  AssignMail.interested = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Você tem interesse em realizar uma tarefa no Gitpay',
+      i18n.__('mail.interested.subject'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Olá ${name},</p>
-          <p>Você tem interesse em realizar a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
-          <p>O responsável pela tarefa será notificado e você receberá uma confirmação caso você seja escolhido.</p>
-          
-          <p>${Signatures.sign}</p>`
+          <p>${i18n.__('mail.assign.owner.hello')},</p>
+          <p>${i18n.__('mail.interested.main', {name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}</p>
+          <p>${i18n.__('mail.interested.owner.sec')}</p>
+          <p>${Signatures.sign(language)}</p>`
         },
       ]
     )
   }
 
-  AssignMail.assigned = (to, task, name) => {
+  AssignMail.assigned = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'Você foi escolhido para iniciar uma tarefa no Gitpay',
+      i18n.__('mail.assigned.subject'),
       [
         {
           type: 'text/html',
           value: `
-           <p>Olá ${name},</p>
-           <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
-           <p>Quem mantém este projeto e criou esta tarefa entrará em contato para maiores detalhes para lhe instruir em como você deve começar.</p>
-           <p>O prazo para conclusão desta tarefa é: <strong>${task.deadline ? dateFormat(task.deadline, constants.dateFormat) : 'Nenhum prazo foi definido'}</strong></p>
-           <p>O que signifca que você teria que enviar uma solução <strong>${task.deadline ? moment(task.deadline).fromNow() : 'o tempo que for necessário para terminar'} a partir de agora</strong></p>
-           <p>Para iniciar, você deve seguir os seguintes passos:</p>
-           <ul>
-            <li>Criar um fork do projeto</li>
-            <li>Seguir as instruções do projeto para rodá-lo localmente</li>
-            <li>Desenvolver uma solução e tirar quaisquer dúvidas se necessário</li>
-            <li>Sempre estar atualizado com o repositório principal</li>
-            <li>Dependendo do projeto, um build é realizado e <strong>você terá que passar nos testes automatizados</strong></li>
-            <li>Enviar um <strong>Pull Request</strong></li>
-            <li>Ter o seu <strong>código avaliado</strong></li>
-           </ul>
-           <p>Quando seu Pull Request for integrado, você receberá o valor da recompensa na sua conta cadastrada.</p>
-           <p>${Signatures.sign}</p>`
+           <p>Olá ${i18n.__('mail.assigned.hello', {name: name})}</p>
+           <p>Olá ${i18n.__('mail.assigned.main', {name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`})}</p>
+           ${i18n.__('mail.assigned.message', {
+             deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
+             deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime')
+            })}
+           <p>${Signatures.sign(language)}</p>`
 
         }
       ]
@@ -83,7 +82,7 @@ if (constants.canSendEmail) {
   AssignMail.error = (msg) => {
     request(
       constants.notificationEmail,
-      'Tivemos problema com alguma das notificações sobre interessados em tarefa no Gitpay',
+      i18n.__('mail.assigned.error'),
       [
         {
           type: 'text/html',
