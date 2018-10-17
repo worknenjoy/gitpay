@@ -7,6 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
+const i18n = require('i18n')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {

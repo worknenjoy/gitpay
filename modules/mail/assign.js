@@ -27,7 +27,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.assign.owner.main', {name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}</p>
+          <p>${i18n.__('mail.assign.owner.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
@@ -47,7 +47,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.interested.main', {name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}</p>
+          <p>${i18n.__('mail.interested.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}</p>
           <p>${i18n.__('mail.interested.owner.sec')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
@@ -66,12 +66,12 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-           <p>Olá ${i18n.__('mail.assigned.hello', {name: name})}</p>
-           <p>Olá ${i18n.__('mail.assigned.main', {name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`})}</p>
+           <p>Olá ${i18n.__('mail.assigned.hello', { name: name })}</p>
+           <p>Olá ${i18n.__('mail.assigned.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
            ${i18n.__('mail.assigned.message', {
-             deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
-             deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime')
-            })}
+    deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
+    deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime')
+  })}
            <p>${Signatures.sign(language)}</p>`
 
         }

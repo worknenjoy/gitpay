@@ -2,7 +2,7 @@ import React from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
-import { updateIntl } from 'react-intl-redux'
+import { IntlProvider, updateIntl } from 'react-intl-redux'
 
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import Palette from '../components/styles/palette'
@@ -15,7 +15,6 @@ import NotificationContainer from '../containers/notification'
 import reducers from '../reducers/reducers'
 
 import { addLocaleData } from 'react-intl'
-import { IntlProvider } from 'react-intl-redux'
 
 import messagesBr from '../translations/br.json'
 import messagesEn from '../translations/en.json'

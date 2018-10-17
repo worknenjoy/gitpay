@@ -25,7 +25,7 @@ module.exports = Promise.method(function ({ id }, { message }) {
           SendMail.success(
             assign.User.email,
             i18n.__('mail.assign.remove.subject'),
-            i18n.__('mail.assign.remove.message', { message: message, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})
+            i18n.__('mail.assign.remove.message', { message: message, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })
           )
           return task.dataValues
         })

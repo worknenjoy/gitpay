@@ -48,10 +48,6 @@ export const msgs = defineMessages({
     id: 'consts.account.lastname',
     defaultMessage: 'Last name'
   },
-  lastName: {
-    id: 'consts.account.lastname',
-    defaultMessage: 'Last name'
-  },
   idNumber: {
     id: 'consts.account.id.number',
     defaultMessage: 'document number'
@@ -87,10 +83,6 @@ export const msgs = defineMessages({
   accountReasonsFieldsPendingOther: {
     id: 'consts.account.reasons.fields.pending.other',
     defaultMessage: 'Pending'
-  },
-  statusOpen: {
-    id: 'consts.account.statuses.open',
-    defaultMessage: 'Open'
   },
   statusOpen: {
     id: 'consts.account.statuses.open',

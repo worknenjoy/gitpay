@@ -3,8 +3,7 @@ const i18n = require('i18n')
 const Signatures = {}
 
 Signatures.sign = (language) => {
-  const language = user.language || 'en'
-  i18n.setLocale(language)
+  i18n.setLocale(language || 'en')
   return `
 
 <p>

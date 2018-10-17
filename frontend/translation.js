@@ -4,6 +4,7 @@ const pattern = 'src/components/**/*.js'
 const locales = ['en', 'br']
 
 extractReactIntl(locales, pattern).then(result => {
+  // eslint-disable-next-line no-console
   console.log(result)
   /*
 {

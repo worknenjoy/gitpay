@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
@@ -30,6 +31,11 @@ class Preferences extends Component {
       </Paper>
     )
   }
+}
+
+Preferences.PropTypes = {
+  preferences: PropTypes.string,
+  language: PropTypes.string
 }
 
 export const PreferencesPure = Preferences

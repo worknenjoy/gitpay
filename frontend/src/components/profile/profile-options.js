@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage, FormattedDate } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import Typography from 'material-ui/Typography'
@@ -120,4 +120,4 @@ ProfileOptions.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(ProfileOptions)
+export default injectIntl(withStyles(styles)(ProfileOptions))

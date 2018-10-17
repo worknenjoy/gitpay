@@ -15,7 +15,7 @@ module.exports = Promise.method(function ({ id }, { message, email }) {
       SendMail.success(
         email,
         i18n.__('mail.invite.send.action'),
-        i18n.__('mail.invite.send.message', { 
+        i18n.__('mail.invite.send.message', {
           title: task.title,
           url: taskUrl,
           value: task.value,

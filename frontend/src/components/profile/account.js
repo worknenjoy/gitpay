@@ -28,7 +28,7 @@ import Switch from 'material-ui/Switch'
 import Select from 'material-ui/Select'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import { red, green, cyan } from 'material-ui/colors'
+import { green, cyan } from 'material-ui/colors'
 
 import UserIcon from 'material-ui-icons/AccountCircle'
 import RedeemIcon from 'material-ui-icons/Redeem'
@@ -155,7 +155,6 @@ class Account extends Component {
   }
 
   componentDidMount () {
-    console.log(this.props)
     if (this.props.user.logged) {
       const userId = this.props.user.user.id
       this.props.fetchAccount(userId)

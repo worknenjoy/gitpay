@@ -1,7 +1,7 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
-const dateFormat = require('dateformat')
+// const dateFormat = require('dateformat')
 const moment = require('moment')
 const ptLocale = require('moment/locale/pt-br')
 const i18n = require('i18n')
@@ -35,9 +35,9 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>Olá ${i18n.__('mail.assigned.hello', {name: name})}</p>
-          <p>${i18n.__('mail.status.message.first', {url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`})}</p>
-          <p>${i18n.__('mail.status.message.second', {status: STATUSES[task.status]})}</p>
+          <p>Olá ${i18n.__('mail.assigned.hello', { name: name })}</p>
+          <p>${i18n.__('mail.status.message.first', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}</p>
+          <p>${i18n.__('mail.status.message.second', { status: STATUSES[task.status] })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch, HashRouter } from 'react-router-dom'
-import { injectIntl, defineMessages, FormattedMessage, FormattedDate } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import Grid from 'material-ui/Grid'
 import Avatar from 'material-ui/Avatar'
@@ -210,7 +210,6 @@ class Profile extends Component {
                     <Typography>
                       <h4>
                         <DeviceHubIcon />
-                        Repositórios
                         <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
                       </h4>
                       <p>{ user.repos }</p>
@@ -290,4 +289,4 @@ Profile.propTypes = {
   history: PropTypes.object
 }
 
-export default withStyles(styles)(Profile)
+export default injectIntl(withStyles(styles)(Profile))
