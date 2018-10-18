@@ -1,3 +1,4 @@
+jest.unmock('react-intl')
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import moxios from 'moxios'
@@ -7,6 +8,9 @@ const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
 describe('actions', () => {
+  beforeEach(() => {
+    
+  })
   describe('country and language preference actions', () => {
     it('should dispatch a action to get the current language', () => {
       expect(actions.fetchPreferencesRequested()).toEqual({

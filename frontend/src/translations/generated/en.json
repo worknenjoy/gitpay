@@ -1,5 +1,653 @@
 {
+  "card": {
+    "loading": "Loading card form..."
+  },
+  "task": {
+    "tab": {
+      "label": "Task",
+      "order": "Orders",
+      "interested": "Interested"
+    },
+    "bar": {
+      "signin": "Signin"
+    },
+    "card": {
+      "title": "Payments for this task",
+      "subtitle": "This payments will be transfered after the task be finished",
+      "interested": {
+        "title": "Interest to work in this task",
+        "subtitle": "This is interested users to conclude this task"
+      },
+      "table": {
+        "header": {
+          "paid": "Paid",
+          "user": "User",
+          "value": "Value",
+          "status": "Status",
+          "payment": "Payment",
+          "created": "Created at"
+        }
+      }
+    },
+    "status": {
+      "info": "Approved: $ {approved}, Pending: $ {pending}, Failed: $ {failed}",
+      "value": "Task value",
+      "assigned": "Assigned to me",
+      "label": {
+        "and": "and",
+        "none": "No payment type",
+        "open": "Open",
+        "paid": "Paid",
+        "fail": "Payment failed",
+        "paypal": "Paypal",
+        "succeeded": "Paid",
+        "creditcard": "Credit Card"
+      },
+      "limit": {
+        "date": "Deadline to conclude this task"
+      },
+      "filter": {
+        "all": "All",
+        "open": "Open",
+        "close": "Finshed",
+        "progress": "In progress",
+        "payment": {
+          "failed": "Payment failed",
+          "succeeded": "Successfull payment"
+        }
+      },
+      "createdByMe": "Created by me",
+      "created": {
+        "name": "Created by {name}"
+      },
+      "author": {
+        "label": "Author"
+      },
+      "deadline": {
+        "day": {
+          "label": "Day",
+          "insert": {
+            "label": "Choose a date"
+          }
+        },
+        "set": {
+          "target": "set to target date to {date}"
+        },
+        "subheading": "Choose a date that this task should be finished"
+      },
+      "status": {
+        "payment": {
+          "open": "Open"
+        }
+      }
+    },
+    "actions": {
+      "docs": "Documentation",
+      "create": "Create task",
+      "choose": "choose",
+      "cancel": "Cancel",
+      "explore": "Explore tasks",
+      "account": "Account",
+      "insert": {
+        "new": "Insert a new task",
+        "label": "Insert",
+        "novalid": "This is not a valid URL",
+        "subheading": "Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>"
+      },
+      "gitpay": {
+        "call": "Join the Gitpay community"
+      }
+    },
+    "invite": {
+      "title": "Invite someone to work on this task",
+      "form": {
+        "send": "Send",
+        "cancel": "Cancel"
+      },
+      "text": {
+        "label": "Write a text to be sent with the invite"
+      }
+    },
+    "bounties": {
+      "add": "Add bounty",
+      "invite": "Invite",
+      "send": {
+        "label": "Send bounty"
+      },
+      "logged": {
+        "info": "You need to login to be assigned to this task"
+      },
+      "actions": {
+        "work": "I want to work on this task!",
+        "cancel": "Cancel"
+      },
+      "date": {
+        "deadline": "Deadline"
+      },
+      "status": {
+        "change": "Change status"
+      },
+      "interested": {
+        "question": "Are you intereseted solve this task?",
+        "descritpion": "You may be assigned to this task and receive your bounty when your code is merged"
+      }
+    },
+    "list": {
+      "headline": "Task list",
+      "description": "Available tasks for development",
+      "lable": {
+        "allTasks": "All tasks"
+      }
+    },
+    "order": {
+      "paid": {
+        "no": "No",
+        "yes": "Yes",
+        "proccess": {
+          "none": "Pending"
+        }
+      },
+      "payment": {
+        "error": "We had a issue to process your payment",
+        "success": "Your order was completed successfully"
+      }
+    },
+    "user": {
+      "find": {
+        "none": "User not registered"
+      },
+      "check": {
+        "github": "Check this profile at Github"
+      },
+      "account": {
+        "create": {
+          "headline": "Login / signup to work in our tasks",
+          "description": "Creating your account, you can be assigned to a task and receive bounties"
+        }
+      }
+    },
+    "table": {
+      "date": {
+        "none": "Not yet defined"
+      },
+      "page": {
+        "next": "Next page",
+        "last": "Last page",
+        "first": "First page",
+        "previous": "Previous page"
+      },
+      "head": {
+        "task": "Task",
+        "value": "Value",
+        "status": "Status",
+        "author": "Author",
+        "deadline": "Deadline"
+      },
+      "body": {
+        "author": {
+          "none": "No author"
+        }
+      }
+    },
+    "payment": {
+      "done": {
+        "to": "You made a payment to $ {user}"
+      },
+      "noAssigned": "Noboby assigned to this task, so you need to first assign and then we can conclude the payment",
+      "filter": {
+        "all": "All payments",
+        "paypal": "Paypal payments",
+        "creditcard": "Credit Card payments"
+      },
+      "start": {
+        "payTo": "Pay $ {value}"
+      },
+      "action": {
+        "close": "Close",
+        "title": "Pay for this task",
+        "cancel": "Cancel",
+        "chosen": "Chosen"
+      },
+      "types": {
+        "notype": "No payment for this payment type"
+      },
+      "input": {
+        "amount": "Price insert a value for this task"
+      },
+      "paypal": {
+        "action": "Pay $ {amount} with PayPal"
+      },
+      "transfer": {
+        "done": "All your transfer was concluded with your credit card and the transaction id is:",
+        "message": "You will send the payment for this task to {to} that receive payments in {payments}"
+      },
+      "status": {
+        "undefined": "Undefined status"
+      },
+      "user": {
+        "check": {
+          "github": "Check this user profile at Github"
+        }
+      },
+      "pay": {
+        "button": {
+          "paypal": "Pay with PayPal (id: {transfer}",
+          "credit": "Pay $ {value}"
+        }
+      },
+      "creditcard": {
+        "action": "Pay $ {amount} with Credit Card"
+      },
+      "headline": {
+        "bounty": {
+          "add": "Add a bounty for this task",
+          "create": "Create a bounty for this task"
+        }
+      },
+      "transfers": {
+        "concluded": "All transfers was succeeded to the destination account"
+      },
+      "form": {
+        "message": {
+          "subheading": "Create a bounty for this task and who you assign will receive the payment for this bounty"
+        }
+      }
+    },
+    "title": {
+      "navigation": "Tasks"
+    },
+    "info": {
+      "description": "Description"
+    },
+    "interested": {
+      "action": "I have interest",
+      "table": {
+        "label": {
+          "when": "When",
+          "user": "User",
+          "actions": "Actions"
+        }
+      }
+    },
+    "deadline": {
+      "button": {
+        "save": "Save date"
+      }
+    },
+    "assignment": {
+      "remove": {
+        "user": "Unassign user",
+        "action": "Remove",
+        "reason": "Why this user will not work on this task anymore?"
+      },
+      "actions": {
+        "apply": "Apply",
+        "cancel": "Cancel"
+      }
+    }
+  },
+  "account": {
+    "status": "Your account status:",
+    "update": "Update account",
+    "details": "Month of birth",
+    "activate": "Activate account",
+    "type": {
+      "card": "Credit Card"
+    },
+    "steps": {
+      "next": "Next step",
+      "finish": "Finish",
+      "previous": "Previous step",
+      "bank": {
+        "previous": "Previous step"
+      }
+    },
+    "verify": {
+      "desc": "Please fill the data to verify your account",
+      "title": "Verify account",
+      "lastName": "Last name",
+      "firstName": "First name"
+    },
+    "bank": {
+      "select": "Please select your bank",
+      "missing": "Missing bank data (go to next step)",
+      "activated": "Activated"
+    },
+    "profile": {
+      "repo": "Repositories",
+      "preferences": "Preferences",
+      "payment": {
+        "setup": "Setup payment"
+      },
+      "tasks": {
+        "caption": "Tasks",
+        "headline": "Tasks",
+        "link": {
+          "tasks": "See tasks"
+        },
+        "description": "Check the tasks available for you",
+        "payment": {
+          "desc": "Fill all your payment details and receive for the tasks concluded",
+          "setup": "Setup payment",
+          "caption": "Payment",
+          "headline": "Payment"
+        }
+      },
+      "welcome": {
+        "headline": "Welcome to Gitpay!",
+        "description": "This is the first steps to start to work with Gitpay"
+      }
+    },
+    "terms": {
+      "accept": "Accept Terms",
+      "accepted": "You agreed with the terms in"
+    },
+    "login": {
+      "connect": "Conect with your existing account"
+    },
+    "dialog": {
+      "status": "Task status"
+    },
+    "address": {
+      "line2": "Adress line 2",
+      "line1": "Adress line 1"
+    },
+    "pending": {
+      "title": "We have the following items that needs to be verified:"
+    },
+    "actions": {
+      "update": "Update Account",
+      "cancel": "Cancel"
+    },
+    "id": {
+      "verification": "Verify identity",
+      "register": {
+        "bank": "Register bank account"
+      }
+    },
+    "register": {
+      "status": "Active",
+      "headline": "There is no account registered to receive the payments",
+      "paypay": {
+        "email": "PayPal registered email"
+      },
+      "paypal": {
+        "title": "Activate PayPal account:",
+        "status": "This account is not associated with PayPal",
+        "description": "When you activate your account with PayPal, you will receive the bounties in the account that you will provide here. The Paypal taxes will be applied"
+      },
+      "create": {
+        "action": "Create account"
+      },
+      "account": {
+        "status": "Account status"
+      }
+    },
+    "active": {
+      "statement": "Your bank account is active"
+    },
+    "banks": {
+      "list": {
+        "title": "Select your bank"
+      }
+    },
+    "document": {
+      "cpf": {
+        "provide": "Please provide your CPF",
+        "provided": "CPF provided"
+      }
+    }
+  },
+  "payment": {
+    "new": {
+      "text": "Please fill your credit card details",
+      "title": "Make a new payment"
+    },
+    "headline": "Payment",
+    "creditcard": "Credit Card",
+    "paypal": {
+      "title": "Make a new payment with Paypal",
+      "paywith": "Pay with",
+      "logo": {
+        "title": "Make the payment with paypal"
+      },
+      "description": "Remember that the assigned for this task will receive the payment with Paypal as well."
+    },
+    "options": {
+      "description": "Setup your payment and your bank account to receive the payments of your tasks concluded"
+    }
+  },
+  "welcome": {
+    "how": {
+      "title": "How it works",
+      "item": {
+        "primary": "Once subscribed you will know when new tasks are available to assign",
+        "secondary": "Clients create demands and they are looking for contributors with different skills",
+        "two": {
+          "primary": "You are assigned and receive all the instructions need to start",
+          "secondary": "You get access to repo info with all you need to start and discuss about possible solutions"
+        },
+        "three": {
+          "primary": "We validate your change, integrate the code and you receive a bounty",
+          "secondary": "Your change goes to test and your solution will be reviewed and once integrated on the codebase, you receive a bounty"
+        }
+      },
+      "people": {
+        "title": "How it works"
+      }
+    },
+    "companies": {
+      "title": "For companies",
+      "item": {
+        "primary": "For any company",
+        "secondary": "The distributed colaboration helps company grows and provide a great solution to have the tasks solved using agile process and colaboration throught development",
+        "one": {
+          "primary": "Manage the tasks of your projects",
+          "secondary": "With our platform the companies are able to manage your tasks on demand with development tools that suits your needs"
+        },
+        "two": {
+          "primary": "A community of passionate colaborators",
+          "secondary": "Companies will be able to use Open Source if they want to create colaborative tools that will help other companies and contribute with the OSS ecosystem"
+        },
+        "three": {
+          "primary": "We validate your business integration process",
+          "secondary": "We will help to fit in agile process to have your tasks concluded in an independent way and according to your business"
+        }
+      }
+    },
+    "who": {
+      "item": {
+        "primary": "Gitpay is for all",
+        "secondary": "Clients, team leads, designers, content creators and managers, everyone can follow the progress and status using already known tools to manage their projects for remote teams",
+        "two": {
+          "primary": "For all levels",
+          "secondary": "Beginners will learn for real of how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with"
+        },
+        "three": {
+          "primary": "Learn by doing and receive bounties",
+          "secondary": "Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges"
+        }
+      },
+      "title": {
+        "contrib": "For contributors"
+      }
+    },
+    "main": {
+      "item": {
+        "two": {
+          "primary": "Colaboration with companies by tasks on demand",
+          "secondary": "Work in different projects, you can colaborate and learn with many projects and stacks"
+        },
+        "one": {
+          "primary": "Work in projects using the best development tools",
+          "secondary": "We use all the Git tools and version control to manage deliveries for our clients"
+        },
+        "three": {
+          "primary": "Receive bounties by colaboration",
+          "secondary": "Receive bounties for the task you concluded with direct payment when your code is merged on the codebase"
+        }
+      }
+    },
+    "workflow": {
+      "item": {
+        "primary": "Gitpay is for all",
+        "secondary": "Clients, team leads, designers, content creators and managers, everyone can follow the progress and status using already known tools to manage their projects for remote teams",
+        "two": {
+          "primary": "For all levels",
+          "secondary": "Beginners will learn for real of how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with"
+        },
+        "three": {
+          "primary": "Learn by doing and receive bounties",
+          "secondary": "Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges"
+        }
+      }
+    },
+    "howto": {
+      "item": {
+        "two": {
+          "primary": "Your demand is send to our community",
+          "secondary": "Differents colaborators group will be interested to solve this issue for the price invested for that bounty"
+        },
+        "one": {
+          "primary": "A new task is created",
+          "secondary": "A new issue, demand, enhancement or suggestion is created on the platform, that represents needs like development, SEO, content, infrastructure or even new ideas"
+        },
+        "four": {
+          "primary": "Agile process between business, payment, consulting and development",
+          "secondary": "We want to facilitate the transactions and payment between colaborators and companies by facilitate the development with smart tools, consolidated process already used in agile companies and emerging startups"
+        },
+        "three": {
+          "primary": "Sent a pull request to receive a bounty",
+          "secondary": "A Pull Request is send in the repo and once approved the bounty is sent"
+        }
+      }
+    },
+    "headline": {
+      "forfreelancers": "For freelancers"
+    },
+    "consulting": {
+      "item": {
+        "primary": "We provide for you help to use agile processes and push your company forward",
+        "secondary": "You create demmands for your business and we make this happen using agile tools",
+        "two": {
+          "primary": "For all kind of roles",
+          "secondary": "Our platform is made by passionate developers, and we wish to expand our agile processes to other roles, with the powers of Git to help with content management"
+        },
+        "three": {
+          "primary": "We work with deliveries on the cloud",
+          "secondary": "We support the infrastructure using very known services like Amazon, Heroku and Google Cloud, we just need that your project is connected with Git"
+        }
+      },
+      "title": {
+        "company": "For companies",
+        "consulting": "Consulting"
+      }
+    },
+    "tagline": {
+      "headline": {
+        "how": {
+          "title": "How it works"
+        }
+      },
+      "companies": {
+        "main": {
+          "headline": "For companies"
+        }
+      }
+    }
+  },
+  "checkout": {
+    "loggedas": "Logged as",
+    "payment": {
+      "action": "Pay $ {price}"
+    }
+  },
+  "user": {
+    "data": {
+      "fullname": "Full name",
+      "email": {
+        "error": "Provide your email correctly"
+      }
+    }
+  },
+  "bottom": {
+    "subheading3": "Partners",
+    "header": {
+      "subheading2": "For Companies",
+      "subheading1": "For Freelancers"
+    },
+    "subheading": {
+      "newsletter": "If you want to get in touch, leave your e-mail with our news and challenges!"
+    }
+  },
+  "consts": {
+    "address": {
+      "city": "City",
+      "state": "State",
+      "line1": "Address line 1",
+      "zipcode": "Zip code",
+      "birth": {
+        "day": "Day of birth",
+        "year": "Year of birth",
+        "month": "Month of Birth"
+      }
+    },
+    "account": {
+      "id": {
+        "doc": "document",
+        "type": "identification type",
+        "number": "document number"
+      },
+      "lastname": "Last name",
+      "firstname": "First name",
+      "terms": {
+        "date": "Accepted terms date",
+        "accept": "Accepted terms"
+      },
+      "statuses": {
+        "open": "Open",
+        "finish": "Finished",
+        "progress": "In progress",
+        "undefined": "Undefined"
+      },
+      "reasons": {
+        "fields": {
+          "needed": "Pending fields",
+          "pending": "Verification pending",
+          "external": "Register bank account"
+        }
+      }
+    },
+    "external": {
+      "account": "Bank account"
+    }
+  },
   "preferences": {
-    "headline": "Teste"
+    "subtitle": "Setup your account",
+    "headline": "Preferences",
+    "language": {
+      "name": "Language",
+      "currency": {
+        "name": "USD (Dolars)"
+      }
+    }
+  },
+  "info": {
+    "stack": {
+      "subheading": "Our stack"
+    },
+    "status": {
+      "subheading": "Stats"
+    }
+  },
+  "general": {
+    "actions": {
+      "cancel": "Cancel"
+    }
+  },
+  "tasks": {
+    "status": {
+      "interested": "I'm interested"
+    }
   }
 }

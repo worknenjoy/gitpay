@@ -1,3 +1,4 @@
+jest.unmock('react-intl')
 import { preferences } from '../../src/reducers/preferencesReducer'
 
 describe('preferences reducer', () => {

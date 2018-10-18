@@ -1,5 +1,653 @@
 {
+  "card": {
+    "loading": ""
+  },
+  "task": {
+    "tab": {
+      "label": "",
+      "order": "",
+      "interested": ""
+    },
+    "bar": {
+      "signin": ""
+    },
+    "card": {
+      "title": "",
+      "subtitle": "",
+      "interested": {
+        "title": "",
+        "subtitle": ""
+      },
+      "table": {
+        "header": {
+          "paid": "",
+          "user": "",
+          "value": "",
+          "status": "",
+          "payment": "",
+          "created": ""
+        }
+      }
+    },
+    "status": {
+      "info": "",
+      "value": "",
+      "assigned": "",
+      "label": {
+        "and": "",
+        "none": "",
+        "open": "",
+        "paid": "",
+        "fail": "",
+        "paypal": "",
+        "succeeded": "",
+        "creditcard": ""
+      },
+      "limit": {
+        "date": ""
+      },
+      "filter": {
+        "all": "",
+        "open": "",
+        "close": "",
+        "progress": "",
+        "payment": {
+          "failed": "",
+          "succeeded": ""
+        }
+      },
+      "createdByMe": "",
+      "created": {
+        "name": ""
+      },
+      "author": {
+        "label": ""
+      },
+      "deadline": {
+        "day": {
+          "label": "",
+          "insert": {
+            "label": ""
+          }
+        },
+        "set": {
+          "target": ""
+        },
+        "subheading": ""
+      },
+      "status": {
+        "payment": {
+          "open": ""
+        }
+      }
+    },
+    "actions": {
+      "docs": "",
+      "create": "",
+      "choose": "",
+      "cancel": "",
+      "explore": "",
+      "account": "",
+      "insert": {
+        "new": "",
+        "label": "",
+        "novalid": "",
+        "subheading": ""
+      },
+      "gitpay": {
+        "call": ""
+      }
+    },
+    "invite": {
+      "title": "",
+      "form": {
+        "send": "",
+        "cancel": ""
+      },
+      "text": {
+        "label": ""
+      }
+    },
+    "bounties": {
+      "add": "",
+      "invite": "",
+      "send": {
+        "label": ""
+      },
+      "logged": {
+        "info": ""
+      },
+      "actions": {
+        "work": "",
+        "cancel": ""
+      },
+      "date": {
+        "deadline": ""
+      },
+      "status": {
+        "change": ""
+      },
+      "interested": {
+        "question": "",
+        "descritpion": ""
+      }
+    },
+    "list": {
+      "headline": "",
+      "description": "",
+      "lable": {
+        "allTasks": ""
+      }
+    },
+    "order": {
+      "paid": {
+        "no": "",
+        "yes": "",
+        "proccess": {
+          "none": ""
+        }
+      },
+      "payment": {
+        "error": "",
+        "success": ""
+      }
+    },
+    "user": {
+      "find": {
+        "none": ""
+      },
+      "check": {
+        "github": ""
+      },
+      "account": {
+        "create": {
+          "headline": "",
+          "description": ""
+        }
+      }
+    },
+    "table": {
+      "date": {
+        "none": ""
+      },
+      "page": {
+        "next": "",
+        "last": "",
+        "first": "",
+        "previous": ""
+      },
+      "head": {
+        "task": "",
+        "value": "",
+        "status": "",
+        "author": "",
+        "deadline": ""
+      },
+      "body": {
+        "author": {
+          "none": ""
+        }
+      }
+    },
+    "payment": {
+      "done": {
+        "to": ""
+      },
+      "noAssigned": "",
+      "filter": {
+        "all": "",
+        "paypal": "",
+        "creditcard": ""
+      },
+      "start": {
+        "payTo": ""
+      },
+      "action": {
+        "close": "",
+        "title": "",
+        "cancel": "",
+        "chosen": ""
+      },
+      "types": {
+        "notype": ""
+      },
+      "input": {
+        "amount": ""
+      },
+      "paypal": {
+        "action": ""
+      },
+      "transfer": {
+        "done": "",
+        "message": ""
+      },
+      "status": {
+        "undefined": ""
+      },
+      "user": {
+        "check": {
+          "github": ""
+        }
+      },
+      "pay": {
+        "button": {
+          "paypal": "",
+          "credit": ""
+        }
+      },
+      "creditcard": {
+        "action": ""
+      },
+      "headline": {
+        "bounty": {
+          "add": "",
+          "create": ""
+        }
+      },
+      "transfers": {
+        "concluded": ""
+      },
+      "form": {
+        "message": {
+          "subheading": ""
+        }
+      }
+    },
+    "title": {
+      "navigation": ""
+    },
+    "info": {
+      "description": ""
+    },
+    "interested": {
+      "action": "",
+      "table": {
+        "label": {
+          "when": "",
+          "user": "",
+          "actions": ""
+        }
+      }
+    },
+    "deadline": {
+      "button": {
+        "save": ""
+      }
+    },
+    "assignment": {
+      "remove": {
+        "user": "",
+        "action": "",
+        "reason": ""
+      },
+      "actions": {
+        "apply": "",
+        "cancel": ""
+      }
+    }
+  },
+  "account": {
+    "status": "",
+    "update": "",
+    "details": "",
+    "activate": "",
+    "type": {
+      "card": ""
+    },
+    "steps": {
+      "next": "",
+      "finish": "",
+      "previous": "",
+      "bank": {
+        "previous": ""
+      }
+    },
+    "verify": {
+      "desc": "",
+      "title": "",
+      "lastName": "",
+      "firstName": ""
+    },
+    "bank": {
+      "select": "",
+      "missing": "",
+      "activated": ""
+    },
+    "profile": {
+      "repo": "",
+      "preferences": "",
+      "payment": {
+        "setup": ""
+      },
+      "tasks": {
+        "caption": "",
+        "headline": "",
+        "link": {
+          "tasks": ""
+        },
+        "description": "",
+        "payment": {
+          "desc": "",
+          "setup": "",
+          "caption": "",
+          "headline": ""
+        }
+      },
+      "welcome": {
+        "headline": "",
+        "description": ""
+      }
+    },
+    "terms": {
+      "accept": "",
+      "accepted": ""
+    },
+    "login": {
+      "connect": ""
+    },
+    "dialog": {
+      "status": ""
+    },
+    "address": {
+      "line2": "",
+      "line1": ""
+    },
+    "pending": {
+      "title": ""
+    },
+    "actions": {
+      "update": "",
+      "cancel": ""
+    },
+    "id": {
+      "verification": "",
+      "register": {
+        "bank": ""
+      }
+    },
+    "register": {
+      "status": "",
+      "headline": "",
+      "paypay": {
+        "email": ""
+      },
+      "paypal": {
+        "title": "",
+        "status": "",
+        "description": ""
+      },
+      "create": {
+        "action": ""
+      },
+      "account": {
+        "status": ""
+      }
+    },
+    "active": {
+      "statement": ""
+    },
+    "banks": {
+      "list": {
+        "title": ""
+      }
+    },
+    "document": {
+      "cpf": {
+        "provide": "",
+        "provided": ""
+      }
+    }
+  },
+  "payment": {
+    "new": {
+      "text": "",
+      "title": ""
+    },
+    "headline": "",
+    "creditcard": "",
+    "paypal": {
+      "title": "",
+      "paywith": "",
+      "logo": {
+        "title": ""
+      },
+      "description": ""
+    },
+    "options": {
+      "description": ""
+    }
+  },
+  "welcome": {
+    "how": {
+      "title": "",
+      "item": {
+        "primary": "",
+        "secondary": "",
+        "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "three": {
+          "primary": "",
+          "secondary": ""
+        }
+      },
+      "people": {
+        "title": ""
+      }
+    },
+    "companies": {
+      "title": "",
+      "item": {
+        "primary": "",
+        "secondary": "",
+        "one": {
+          "primary": "",
+          "secondary": ""
+        },
+        "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "three": {
+          "primary": "",
+          "secondary": ""
+        }
+      }
+    },
+    "who": {
+      "item": {
+        "primary": "",
+        "secondary": "",
+        "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "three": {
+          "primary": "",
+          "secondary": ""
+        }
+      },
+      "title": {
+        "contrib": ""
+      }
+    },
+    "main": {
+      "item": {
+        "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "one": {
+          "primary": "",
+          "secondary": ""
+        },
+        "three": {
+          "primary": "",
+          "secondary": ""
+        }
+      }
+    },
+    "workflow": {
+      "item": {
+        "primary": "",
+        "secondary": "",
+        "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "three": {
+          "primary": "",
+          "secondary": ""
+        }
+      }
+    },
+    "howto": {
+      "item": {
+        "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "one": {
+          "primary": "",
+          "secondary": ""
+        },
+        "four": {
+          "primary": "",
+          "secondary": ""
+        },
+        "three": {
+          "primary": "",
+          "secondary": ""
+        }
+      }
+    },
+    "headline": {
+      "forfreelancers": ""
+    },
+    "consulting": {
+      "item": {
+        "primary": "",
+        "secondary": "",
+        "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "three": {
+          "primary": "",
+          "secondary": ""
+        }
+      },
+      "title": {
+        "company": "",
+        "consulting": ""
+      }
+    },
+    "tagline": {
+      "headline": {
+        "how": {
+          "title": ""
+        }
+      },
+      "companies": {
+        "main": {
+          "headline": ""
+        }
+      }
+    }
+  },
+  "checkout": {
+    "loggedas": "",
+    "payment": {
+      "action": ""
+    }
+  },
+  "user": {
+    "data": {
+      "fullname": "",
+      "email": {
+        "error": ""
+      }
+    }
+  },
+  "bottom": {
+    "subheading3": "",
+    "header": {
+      "subheading2": "",
+      "subheading1": ""
+    },
+    "subheading": {
+      "newsletter": ""
+    }
+  },
+  "consts": {
+    "address": {
+      "city": "",
+      "state": "",
+      "line1": "",
+      "zipcode": "",
+      "birth": {
+        "day": "",
+        "year": "",
+        "month": ""
+      }
+    },
+    "account": {
+      "id": {
+        "doc": "",
+        "type": "",
+        "number": ""
+      },
+      "lastname": "",
+      "firstname": "",
+      "terms": {
+        "date": "",
+        "accept": ""
+      },
+      "statuses": {
+        "open": "",
+        "finish": "",
+        "progress": "",
+        "undefined": ""
+      },
+      "reasons": {
+        "fields": {
+          "needed": "",
+          "pending": "",
+          "external": ""
+        }
+      }
+    },
+    "external": {
+      "account": ""
+    }
+  },
   "preferences": {
-    "headline": ""
+    "subtitle": "",
+    "headline": "",
+    "language": {
+      "name": "",
+      "currency": {
+        "name": ""
+      }
+    }
+  },
+  "info": {
+    "stack": {
+      "subheading": ""
+    },
+    "status": {
+      "subheading": ""
+    }
+  },
+  "general": {
+    "actions": {
+      "cancel": ""
+    }
+  },
+  "tasks": {
+    "status": {
+      "interested": ""
+    }
   }
 }

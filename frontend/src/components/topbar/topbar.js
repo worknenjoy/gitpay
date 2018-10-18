@@ -78,6 +78,11 @@ const logoLang = (lang) => {
 }
 
 const currentUserLanguage = (preferences) => {
+  const prefLang = preferences.language
+  if(prefLang) {
+    /* eslint-disable no-undef */
+    localStorage.setItem('userLanguage', prefLang)
+  }
   return preferences.language || localStorageLang() || browserLanguage
 }
 
@@ -112,17 +117,17 @@ class TopBar extends Component {
   componentDidMount () {
     this.props.isLogged().then(() => {
       this.props.fetchPreferences(this.props.user.id).then(() => {
-        const currentLang = currentUserLanguage(this.props.preferences)
+        const currentLangSuccess = currentUserLanguage(this.props.preferences)
         store.dispatch(updateIntl({
-          locale: currentLang,
-          messages: messages[currentLang],
+          locale: currentLangSuccess,
+          messages: messages[currentLangSuccess],
         }))
       })
     }).catch(e => {
-      const currentLang = currentUserLanguage(this.props.preferences)
+      const currentLangError = currentUserLanguage(this.props.preferences)
       store.dispatch(updateIntl({
-        locale: currentLang,
-        messages: messages[currentLang],
+        locale: currentLangError,
+        messages: messages[currentLangError],
       }))
     })
   }
@@ -228,10 +233,8 @@ class TopBar extends Component {
         language: lang
       })
     }
-    else {
-      /* eslint-disable no-undef */
-      localStorage.setItem('userLanguage', lang)
-    }
+    /* eslint-disable no-undef */
+    localStorage.setItem('userLanguage', lang)
     store.dispatch(updateIntl({
       locale: lang,
       messages: messages[lang],

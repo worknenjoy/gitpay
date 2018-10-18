@@ -3,11 +3,11 @@ import messagesBr from './translations/br.json'
 import messagesEn from './translations/en.json'
 
 const messages = {
-  'br': messagesBr,
-  'en': messagesEn
-}
-
-export const msgs = defineMessages({
+    'br': messagesBr,
+    'en': messagesEn
+  }
+  
+const msgs = defineMessages({
   externalAccont: {
     id: 'consts.external.account',
     defaultMessage: 'Bank account'
@@ -113,43 +113,51 @@ export const msgs = defineMessages({
     defaultMessage: 'Undefined'
   }
 })
+  
+/* eslint-disable no-undef */
+const locale = localStorage.getItem('userLanguage')
+const finalLocale = locale || 'en'
 
-const { intl } = new IntlProvider({ locale: 'en', messages: messages['en'] }, {}).getChildContext()
+const { intl } = new IntlProvider({ locale: finalLocale, messages: messages[finalLocale] }, {}).getChildContext()
 
-export default {
+const translate = (key) => {
+  return intl.formatMessage(key) || ''
+}
+
+const api = {
   API_URL: process.env.API_HOST,
   ACCOUNT_FIELDS: {
-    'external_account': intl.formatMessage(msgs.externalAccont),
-    'legal_entity.address.city': intl.formatMessage(msgs.city),
-    'legal_entity.address.line1': intl.formatMessage(msgs.addressLine1),
-    'legal_entity.address.postal_code': intl.formatMessage(msgs.zipcode),
-    'legal_entity.address.state': intl.formatMessage(msgs.state),
-    'legal_entity.dob.day': intl.formatMessage(msgs.birthDay),
-    'legal_entity.dob.month': intl.formatMessage(msgs.birthMonth),
-    'legal_entity.dob.year': intl.formatMessage(msgs.birthYear),
-    'legal_entity.first_name': intl.formatMessage(msgs.firstName),
-    'legal_entity.last_name': intl.formatMessage(msgs.lastName),
-    'legal_entity.personal_id_number': intl.formatMessage(msgs.idNumber),
-    'legal_entity.verification.document': intl.formatMessage(msgs.docNumber),
-    'legal_entity.type': intl.formatMessage(msgs.idType),
-    'tos_acceptance.date': intl.formatMessage(msgs.termsDate),
-    'tos_acceptance.ip': intl.formatMessage(msgs.terms)
+    'external_account': translate(msgs.externalAccont),
+    'legal_entity.address.city': translate(msgs.city),
+    'legal_entity.address.line1': translate(msgs.addressLine1),
+    'legal_entity.address.postal_code': translate(msgs.zipcode),
+    'legal_entity.address.state': translate(msgs.state),
+    'legal_entity.dob.day': translate(msgs.birthDay),
+    'legal_entity.dob.month': translate(msgs.birthMonth),
+    'legal_entity.dob.year': translate(msgs.birthYear),
+    'legal_entity.first_name': translate(msgs.firstName),
+    'legal_entity.last_name': translate(msgs.lastName),
+    'legal_entity.personal_id_number': translate(msgs.idNumber),
+    'legal_entity.verification.document': translate(msgs.docNumber),
+    'legal_entity.type': translate(msgs.idType),
+    'tos_acceptance.date': translate(msgs.termsDate),
+    'tos_acceptance.ip': translate(msgs.terms)
   },
   ACCOUNT_REASONS: {
-    'fields_needed': intl.formatMessage(msgs.accountReasonsFieldsNeeded),
-    'external_account': intl.formatMessage(msgs.accountReasonsFieldsExternal),
-    null: intl.formatMessage(msgs.accountReasonsFieldsPending),
-    undefined: intl.formatMessage(msgs.accountReasonsFieldsPendingOther)
+    'fields_needed': translate(msgs.accountReasonsFieldsNeeded),
+    'external_account': translate(msgs.accountReasonsFieldsExternal),
+    null: translate(msgs.accountReasonsFieldsPending),
+    undefined: translate(msgs.accountReasonsFieldsPendingOther)
   },
 
   STATUSES: {
-    'open': intl.formatMessage(msgs.statusOpen),
-    'OPEN': intl.formatMessage(msgs.statusOpenTwo),
-    'in_progress': intl.formatMessage(msgs.statusProgress),
-    'closed': intl.formatMessage(msgs.statusFinish),
-    '': intl.formatMessage(msgs.statusUndefined),
-    null: intl.formatMessage(msgs.statusUndefinedTwo),
-    undefined: intl.formatMessage(msgs.statusUndefinedThree)
+    'open': translate(msgs.statusOpen),
+    'OPEN': translate(msgs.statusOpenTwo),
+    'in_progress': translate(msgs.statusProgress),
+    'closed': translate(msgs.statusFinish),
+    '': translate(msgs.statusUndefined),
+    null: translate(msgs.statusUndefinedTwo),
+    undefined: translate(msgs.statusUndefinedThree)
   },
 
   STATUSES_COLORS: {
@@ -207,3 +215,5 @@ export default {
     '085': 'CECRED-COOPERATIVA CENTRAL DE CREDITO URBANO'
   }
 }
+
+export default api

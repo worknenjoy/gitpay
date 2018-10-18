@@ -1,11 +1,12 @@
 const extractReactIntl = require('extract-react-intl')
 
-const pattern = 'src/components/**/*.js'
+const pattern = 'src/**/*.js'
 const locales = ['en', 'br']
 
 extractReactIntl(locales, pattern).then(result => {
   // eslint-disable-next-line no-console
-  console.log(result)
+  console.log(JSON.stringify(result))
+
   /*
 {
   en:
