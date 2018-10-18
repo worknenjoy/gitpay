@@ -3,10 +3,10 @@ import messagesBr from './translations/br.json'
 import messagesEn from './translations/en.json'
 
 const messages = {
-    'br': messagesBr,
-    'en': messagesEn
-  }
-  
+  'br': messagesBr,
+  'en': messagesEn
+}
+
 const msgs = defineMessages({
   externalAccont: {
     id: 'consts.external.account',
@@ -113,7 +113,7 @@ const msgs = defineMessages({
     defaultMessage: 'Undefined'
   }
 })
-  
+
 /* eslint-disable no-undef */
 const locale = localStorage.getItem('userLanguage')
 const finalLocale = locale || 'en'

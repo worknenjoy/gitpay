@@ -79,7 +79,7 @@ const logoLang = (lang) => {
 
 const currentUserLanguage = (preferences) => {
   const prefLang = preferences.language
-  if(prefLang) {
+  if (prefLang) {
     /* eslint-disable no-undef */
     localStorage.setItem('userLanguage', prefLang)
   }

@@ -9,7 +9,7 @@ const mockStore = configureMockStore(middlewares)
 
 describe('actions', () => {
   beforeEach(() => {
-    
+
   })
   describe('country and language preference actions', () => {
     it('should dispatch a action to get the current language', () => {
