@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import Chip from 'material-ui/Chip'
 import Avatar from 'material-ui/Avatar'
@@ -35,17 +35,32 @@ const Icon = styled(Avatar)`
   border-radius: 16px !important;
 `
 
+const messages = defineMessages({
+  infoStatusTasks: {
+    id: 'info.stats.number.tasks',
+    defaultMessage: 'tasks'
+  },
+  infoStatusBounties: {
+    id: 'info.stats.number.bounty',
+    defaultMessage: 'paid for bounties'
+  },
+  infoStatusUsers: {
+    id: 'info.stats.number.users',
+    defaultMessage: 'users'
+  }
+})
+
 class Info extends React.Component {
   componentDidMount () {
     this.props.info()
   }
   render () {
-    const { tasks, bounties, users } = this.props
+    const { tasks, bounties, users, intl } = this.props
 
     const stats = {
-      tasks: { text: 'tarefas', value: tasks || '0' },
-      bounties: { text: 'em recompensas', value: '$' + (bounties || '0') },
-      users: { text: 'usuários', value: users || '0' }
+      tasks: { text: intl.formatMessage(messages.infoStatusTasks), value: tasks || '0' },
+      bounties: { text: intl.formatMessage(messages.infoStatusBounties), value: '$' + (bounties || '0') },
+      users: { text: intl.formatMessage(messages.infoStatusUsers), value: users || '0' }
     }
 
     return (
@@ -70,4 +85,4 @@ Info.propTypes = {
   users: PropTypes.any
 }
 
-export default Info
+export default injectIntl(Info)

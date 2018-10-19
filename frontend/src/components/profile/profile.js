@@ -230,7 +230,11 @@ class Profile extends Component {
                         <ListItemText
                           classes={ { primary: classes.primary } }
                           inset
-                          primary={ <span>Tarefas</span> }
+                          primary={ 
+                            <span>
+                              <FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />
+                            </span> 
+                          }
                         />
                       </MenuItem>
                       <MenuItem

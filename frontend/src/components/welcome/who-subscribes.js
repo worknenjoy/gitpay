@@ -71,7 +71,11 @@ class WhoSubscribes extends Component {
 
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
-        <ListItemText primary='Quem pode se inscrever?' />
+        <FormattedMessage id='welcome.how.consulting.who.subscribers' defaultMessage='Gitpay is for you?'>
+          {(msg) => (
+            <ListItemText primary={msg} />
+          )}
+        </FormattedMessage>
         <Dialog
           fullScreen
           open={ this.state.open }

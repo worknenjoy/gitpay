@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages } from 'react-intl'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
@@ -71,7 +71,11 @@ class Workflow extends Component {
 
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
-        <ListItemText primary='Fluxo de trabalho' />
+        <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Workflow'>
+          {(msg) => (
+            <ListItemText primary={msg} />
+          )}
+        </FormattedMessage>
         <Dialog
           fullScreen
           open={ this.state.open }
@@ -84,13 +88,13 @@ class Workflow extends Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant='title' className={ classes.appBarHeader }>
-                Para freelancers
+                <FormattedMessage id='welcome.how.workflow.contrib.title' defaultMessage='For contributors' />
               </Typography>
             </Toolbar>
             <div classeName={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  Fluxo de trabalho
+                  <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Workflow' />
                 </Typography>
               </MainTitle>
             </div>

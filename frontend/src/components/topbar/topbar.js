@@ -115,14 +115,12 @@ class TopBar extends Component {
   }
 
   componentDidMount () {
-    this.props.isLogged().then(() => {
-      this.props.fetchPreferences(this.props.user.id).then(() => {
-        const currentLangSuccess = currentUserLanguage(this.props.preferences)
-        store.dispatch(updateIntl({
-          locale: currentLangSuccess,
-          messages: messages[currentLangSuccess],
-        }))
-      })
+    this.props.fetchPreferences(this.props.user.id).then(() => {
+      const currentLangSuccess = currentUserLanguage(this.props.preferences)
+      store.dispatch(updateIntl({
+        locale: currentLangSuccess,
+        messages: messages[currentLangSuccess],
+      }))
     }).catch(e => {
       const currentLangError = currentUserLanguage(this.props.preferences)
       store.dispatch(updateIntl({
@@ -130,12 +128,6 @@ class TopBar extends Component {
         messages: messages[currentLangError],
       }))
     })
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.location !== this.props.location) {
-      this.props.isLogged()
-    }
   }
 
   handleChange = (event, checked) => {

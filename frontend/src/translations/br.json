@@ -66,7 +66,7 @@
   "account.details.terms.read": "I read and I accept the Stripe terms to receive transfers about payments directly on my account",
   "account.terms.accept": "Accept Terms",
   "account.steps.previous": "Previous step",
-  "account.terms.accepted": "You agreed with the terms in",
+  "account.terms.accepted": "You agreed with the terms in ",
   "account.steps.finish": "Finish",
   "account.verify.title": "Verify account",
   "account.verify.desc": "Please fill the data to verify your account",

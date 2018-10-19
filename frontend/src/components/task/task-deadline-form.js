@@ -59,14 +59,20 @@ class TaskDeadlineForm extends Component {
       <div>
         <Collapse in={ !!this.props.open }>
           <Card className={ classes.card }>
-            <CardMedia
-              className={ classes.cover }
-              image={ timeIcon }
-              title='Escolha uma data limite para a realização desta tarefa'
-            />
+          <FormattedMessage id='task.status.deadline.subheading.main' defaultMessage='Choose a date that this task should be finished'>
+              {(msg) => (
+                <CardMedia
+                  className={ classes.cover }
+                  image={ timeIcon }
+                  title={msg}
+                />
+              )}
+            </FormattedMessage>
             <div className={ classes.details }>
               <CardContent className={ classes.content }>
-                <Typography variant='headline'>Escolha uma data limite para a realização desta tarefa</Typography>
+                <Typography variant='headline'>
+                  <FormattedMessage id='task.status.deadline.headline' defaultMessage='Finish date' />,
+                </Typography>
                 <Typography variant='subheading' color='textSecondary'>
                   <FormattedMessage id='task.status.deadline.subheading' defaultMessage='Choose a date that this task should be finished' />,
                 </Typography>

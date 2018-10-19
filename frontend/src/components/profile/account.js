@@ -97,7 +97,7 @@ const messages = defineMessages({
   },
   cardTab: {
     id: 'account.type.card',
-    defaultMessage: 'Credit Card'
+    defaultMessage: 'Bank Account'
   },
   paypalTab: {
     id: 'account.status.paypal',
@@ -333,7 +333,7 @@ class Account extends Component {
                       <CardContent>
                         <div className={ classes.title }>
                           <Typography className={ classes.pos } color='textSecondary'>
-                            <FormattedMessage id='account.status' defaultMessage='Your account status:' />,
+                            <FormattedMessage id='account.status' defaultMessage='Your account status:' />
                           </Typography>
                           { account.data.verification.disabled_reason ? (
                             <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
@@ -644,7 +644,7 @@ class Account extends Component {
                                   <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
                                   <FormattedDate value={ Moment.unix(
                                     account.data.tos_acceptance.date
-                                  ) } year='numeric' month='numeric' day='numeric' />
+                                  ) } />
                                 </Typography>
                               </Grid>
                             </Grid>
