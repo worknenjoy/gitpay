@@ -71,9 +71,9 @@ class HowItWorksPeople extends Component {
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
         <FormattedMessage id='welcome.how.title' defaultMessage='How it works'>
-          {(msg) => (
-            <ListItemText primary={msg} />
-          )}
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
         </FormattedMessage>
         <Dialog
           fullScreen

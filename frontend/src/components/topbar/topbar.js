@@ -472,7 +472,6 @@ class TopBar extends Component {
 }
 
 TopBar.propTypes = {
-  isLogged: PropTypes.func,
   location: PropTypes.object,
   history: PropTypes.object,
   user: PropTypes.object,

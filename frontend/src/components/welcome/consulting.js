@@ -72,9 +72,9 @@ class Consulting extends Component {
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
         <FormattedMessage id='welcome.how.consulting.main.title' defaultMessage='Consultancy'>
-          {(msg) => (
-            <ListItemText primary={msg} />
-          )}
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
         </FormattedMessage>
         <Dialog
           fullScreen

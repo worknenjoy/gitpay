@@ -72,9 +72,9 @@ class WhichCompanies extends Component {
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
         <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?'>
-          {(msg) => (
-            <ListItemText primary={msg} />
-          )}
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
         </FormattedMessage>
         <Dialog
           fullScreen

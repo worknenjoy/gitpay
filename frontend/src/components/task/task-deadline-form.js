@@ -59,14 +59,14 @@ class TaskDeadlineForm extends Component {
       <div>
         <Collapse in={ !!this.props.open }>
           <Card className={ classes.card }>
-          <FormattedMessage id='task.status.deadline.subheading.main' defaultMessage='Choose a date that this task should be finished'>
-              {(msg) => (
+            <FormattedMessage id='task.status.deadline.subheading.main' defaultMessage='Choose a date that this task should be finished'>
+              { (msg) => (
                 <CardMedia
                   className={ classes.cover }
                   image={ timeIcon }
-                  title={msg}
+                  title={ msg }
                 />
-              )}
+              ) }
             </FormattedMessage>
             <div className={ classes.details }>
               <CardContent className={ classes.content }>

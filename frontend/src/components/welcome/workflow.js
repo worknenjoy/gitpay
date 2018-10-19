@@ -72,9 +72,9 @@ class Workflow extends Component {
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
         <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Workflow'>
-          {(msg) => (
-            <ListItemText primary={msg} />
-          )}
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
         </FormattedMessage>
         <Dialog
           fullScreen

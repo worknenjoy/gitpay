@@ -21,7 +21,6 @@ const fetchPreferencesError = (error) => {
 const fetchPreferences = (userId) => {
   return (dispatch) => {
     return dispatch(loggedIn()).then(user => {
-      console.log(user)
       dispatch(fetchPreferencesRequested())
       return axios
         .get(`${api.API_URL}/users/${userId}/preferences`)
