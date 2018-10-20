@@ -10,13 +10,13 @@ import Divider from 'material-ui/Divider'
 
 import { withStyles } from 'material-ui/styles'
 
+import SubscribeForm from '../form/subscribe-form'
 import HowItWorksPeople from '../welcome/how-it-works-people'
 import WhoSubscribes from '../welcome/who-subscribes'
 import Workflow from '../welcome/workflow'
 import HowItWorksCompany from '../welcome/how-it-works-company'
 import WhichCompanies from '../welcome/which-companies'
 import Consulting from '../welcome/consulting'
-import formProps from '../form/form-props'
 
 import mainStyles from '../styles/style'
 
@@ -80,7 +80,7 @@ class Bottom extends Component {
                 <FormattedMessage id='bottom.subheading.newsletter' defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!' />
               </Typography>
               <SubscribeFromWrapper className='subscribe-form'>
-                <SubscribeFrom { ...formProps } />
+                <SubscribeForm />
               </SubscribeFromWrapper>
               <Typography type='caption'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />

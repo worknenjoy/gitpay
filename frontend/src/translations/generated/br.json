@@ -2,14 +2,124 @@
   "card": {
     "loading": ""
   },
+  "account": {
+    "status": "",
+    "update": "",
+    "details": "",
+    "activate": "",
+    "type": {
+      "card": ""
+    },
+    "steps": {
+      "next": "",
+      "finish": "",
+      "previous": "",
+      "bank": {
+        "previous": ""
+      }
+    },
+    "verify": {
+      "desc": "",
+      "title": "",
+      "lastName": "",
+      "firstName": ""
+    },
+    "bank": {
+      "select": "",
+      "missing": "",
+      "activated": ""
+    },
+    "profile": {
+      "repo": "",
+      "preferences": "",
+      "tasks": {
+        "setup": "",
+        "caption": "",
+        "headline": "",
+        "link": {
+          "tasks": ""
+        },
+        "description": "",
+        "payment": {
+          "desc": "",
+          "setup": "",
+          "caption": "",
+          "headline": ""
+        }
+      },
+      "payment": {
+        "setup": ""
+      },
+      "welcome": {
+        "headline": "",
+        "description": ""
+      }
+    },
+    "terms": {
+      "accept": "",
+      "accepted": ""
+    },
+    "address": {
+      "line2": "",
+      "line1": ""
+    },
+    "login": {
+      "connect": ""
+    },
+    "pending": {
+      "title": ""
+    },
+    "dialog": {
+      "status": ""
+    },
+    "actions": {
+      "update": "",
+      "cancel": ""
+    },
+    "register": {
+      "status": "",
+      "headline": "",
+      "paypal": {
+        "title": "",
+        "status": "",
+        "description": ""
+      },
+      "paypay": {
+        "email": ""
+      },
+      "create": {
+        "action": ""
+      },
+      "account": {
+        "status": ""
+      }
+    },
+    "id": {
+      "verification": "",
+      "register": {
+        "bank": ""
+      }
+    },
+    "active": {
+      "statement": ""
+    },
+    "banks": {
+      "list": {
+        "title": ""
+      }
+    },
+    "document": {
+      "cpf": {
+        "provide": "",
+        "provided": ""
+      }
+    }
+  },
   "task": {
     "tab": {
-      "label": "",
       "order": "",
+      "label": "",
       "interested": ""
-    },
-    "bar": {
-      "signin": ""
     },
     "card": {
       "title": "",
@@ -29,22 +139,22 @@
         }
       }
     },
+    "bar": {
+      "signin": ""
+    },
     "status": {
       "info": "",
       "value": "",
       "assigned": "",
       "label": {
         "and": "",
-        "none": "",
-        "open": "",
-        "paid": "",
         "fail": "",
+        "paid": "",
+        "open": "",
+        "none": "",
         "paypal": "",
         "succeeded": "",
         "creditcard": ""
-      },
-      "limit": {
-        "date": ""
       },
       "filter": {
         "all": "",
@@ -56,14 +166,18 @@
           "succeeded": ""
         }
       },
-      "createdByMe": "",
-      "created": {
-        "name": ""
+      "limit": {
+        "date": ""
       },
+      "createdByMe": "",
       "author": {
         "label": ""
       },
+      "created": {
+        "name": ""
+      },
       "deadline": {
+        "headline": "",
         "day": {
           "label": "",
           "insert": {
@@ -83,9 +197,9 @@
     },
     "actions": {
       "docs": "",
-      "create": "",
-      "choose": "",
       "cancel": "",
+      "choose": "",
+      "create": "",
       "explore": "",
       "account": "",
       "insert": {
@@ -96,16 +210,6 @@
       },
       "gitpay": {
         "call": ""
-      }
-    },
-    "invite": {
-      "title": "",
-      "form": {
-        "send": "",
-        "cancel": ""
-      },
-      "text": {
-        "label": ""
       }
     },
     "bounties": {
@@ -121,15 +225,25 @@
         "work": "",
         "cancel": ""
       },
-      "date": {
-        "deadline": ""
-      },
       "status": {
         "change": ""
+      },
+      "date": {
+        "deadline": ""
       },
       "interested": {
         "question": "",
         "descritpion": ""
+      }
+    },
+    "invite": {
+      "title": "",
+      "form": {
+        "send": "",
+        "cancel": ""
+      },
+      "text": {
+        "label": ""
       }
     },
     "list": {
@@ -167,6 +281,13 @@
       }
     },
     "table": {
+      "head": {
+        "task": "",
+        "value": "",
+        "status": "",
+        "author": "",
+        "deadline": ""
+      },
       "date": {
         "none": ""
       },
@@ -175,13 +296,6 @@
         "last": "",
         "first": "",
         "previous": ""
-      },
-      "head": {
-        "task": "",
-        "value": "",
-        "status": "",
-        "author": "",
-        "deadline": ""
       },
       "body": {
         "author": {
@@ -193,23 +307,23 @@
       "done": {
         "to": ""
       },
-      "noAssigned": "",
       "filter": {
         "all": "",
         "paypal": "",
         "creditcard": ""
       },
+      "noAssigned": "",
       "start": {
         "payTo": ""
       },
-      "action": {
-        "close": "",
-        "title": "",
-        "cancel": "",
-        "chosen": ""
-      },
       "types": {
         "notype": ""
+      },
+      "action": {
+        "title": "",
+        "close": "",
+        "cancel": "",
+        "chosen": ""
       },
       "input": {
         "amount": ""
@@ -224,28 +338,28 @@
       "status": {
         "undefined": ""
       },
+      "creditcard": {
+        "action": ""
+      },
+      "pay": {
+        "button": {
+          "credit": "",
+          "paypal": ""
+        }
+      },
       "user": {
         "check": {
           "github": ""
         }
       },
-      "pay": {
-        "button": {
-          "paypal": "",
-          "credit": ""
-        }
-      },
-      "creditcard": {
-        "action": ""
+      "transfers": {
+        "concluded": ""
       },
       "headline": {
         "bounty": {
           "add": "",
           "create": ""
         }
-      },
-      "transfers": {
-        "concluded": ""
       },
       "form": {
         "message": {
@@ -277,8 +391,8 @@
     "assignment": {
       "remove": {
         "user": "",
-        "action": "",
-        "reason": ""
+        "reason": "",
+        "action": ""
       },
       "actions": {
         "apply": "",
@@ -286,124 +400,12 @@
       }
     }
   },
-  "account": {
-    "status": "",
-    "update": "",
-    "details": "",
-    "activate": "",
-    "type": {
-      "card": ""
-    },
-    "steps": {
-      "next": "",
-      "finish": "",
-      "previous": "",
-      "bank": {
-        "previous": ""
-      }
-    },
-    "verify": {
-      "desc": "",
-      "title": "",
-      "lastName": "",
-      "firstName": ""
-    },
-    "bank": {
-      "select": "",
-      "missing": "",
-      "activated": ""
-    },
-    "profile": {
-      "repo": "",
-      "preferences": "",
-      "payment": {
-        "setup": ""
-      },
-      "tasks": {
-        "caption": "",
-        "headline": "",
-        "link": {
-          "tasks": ""
-        },
-        "description": "",
-        "payment": {
-          "desc": "",
-          "setup": "",
-          "caption": "",
-          "headline": ""
-        }
-      },
-      "welcome": {
-        "headline": "",
-        "description": ""
-      }
-    },
-    "terms": {
-      "accept": "",
-      "accepted": ""
-    },
-    "login": {
-      "connect": ""
-    },
-    "dialog": {
-      "status": ""
-    },
-    "address": {
-      "line2": "",
-      "line1": ""
-    },
-    "pending": {
-      "title": ""
-    },
-    "actions": {
-      "update": "",
-      "cancel": ""
-    },
-    "id": {
-      "verification": "",
-      "register": {
-        "bank": ""
-      }
-    },
-    "register": {
-      "status": "",
-      "headline": "",
-      "paypay": {
-        "email": ""
-      },
-      "paypal": {
-        "title": "",
-        "status": "",
-        "description": ""
-      },
-      "create": {
-        "action": ""
-      },
-      "account": {
-        "status": ""
-      }
-    },
-    "active": {
-      "statement": ""
-    },
-    "banks": {
-      "list": {
-        "title": ""
-      }
-    },
-    "document": {
-      "cpf": {
-        "provide": "",
-        "provided": ""
-      }
-    }
-  },
   "payment": {
+    "headline": "",
     "new": {
       "text": "",
       "title": ""
     },
-    "headline": "",
     "creditcard": "",
     "paypal": {
       "title": "",
@@ -414,12 +416,18 @@
       "description": ""
     },
     "options": {
-      "description": ""
+      "description": "",
+      "warning": {
+        "message": ""
+      }
     }
   },
   "welcome": {
     "how": {
       "title": "",
+      "people": {
+        "title": ""
+      },
       "item": {
         "primary": "",
         "secondary": "",
@@ -432,8 +440,21 @@
           "secondary": ""
         }
       },
-      "people": {
-        "title": ""
+      "workflow": {
+        "main": {
+          "title": ""
+        },
+        "contrib": {
+          "title": ""
+        }
+      },
+      "consulting": {
+        "main": {
+          "title": ""
+        },
+        "who": {
+          "subscribers": ""
+        }
       }
     },
     "companies": {
@@ -441,11 +462,11 @@
       "item": {
         "primary": "",
         "secondary": "",
-        "one": {
+        "two": {
           "primary": "",
           "secondary": ""
         },
-        "two": {
+        "one": {
           "primary": "",
           "secondary": ""
         },
@@ -474,11 +495,11 @@
     },
     "main": {
       "item": {
-        "two": {
+        "one": {
           "primary": "",
           "secondary": ""
         },
-        "one": {
+        "two": {
           "primary": "",
           "secondary": ""
         },
@@ -562,6 +583,16 @@
       "action": ""
     }
   },
+  "bottom": {
+    "subheading3": "",
+    "header": {
+      "subheading1": "",
+      "subheading2": ""
+    },
+    "subheading": {
+      "newsletter": ""
+    }
+  },
   "user": {
     "data": {
       "fullname": "",
@@ -570,21 +601,11 @@
       }
     }
   },
-  "bottom": {
-    "subheading3": "",
-    "header": {
-      "subheading2": "",
-      "subheading1": ""
-    },
-    "subheading": {
-      "newsletter": ""
-    }
-  },
   "consts": {
     "address": {
       "city": "",
-      "state": "",
       "line1": "",
+      "state": "",
       "zipcode": "",
       "birth": {
         "day": "",
@@ -638,11 +659,35 @@
     },
     "status": {
       "subheading": ""
+    },
+    "stats": {
+      "number": {
+        "tasks": "",
+        "users": "",
+        "bounty": ""
+      }
     }
   },
   "general": {
     "actions": {
       "cancel": ""
+    }
+  },
+  "form": {
+    "email": {
+      "leave": {
+        "label": ""
+      },
+      "signup": {
+        "label": ""
+      },
+      "submit": {
+        "error": "",
+        "success": ""
+      },
+      "subscribing": {
+        "label": ""
+      }
     }
   },
   "tasks": {

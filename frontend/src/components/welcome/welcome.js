@@ -7,8 +7,6 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-
-import formProps from '../form/form-props'
 import mainStyles from '../styles/style'
 
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
@@ -19,7 +17,7 @@ import GroupWorkIcon from 'material-ui-icons/GroupWork'
 import ArchiveIcon from 'material-ui-icons/Archive'
 import CardMembershipIcon from 'material-ui-icons/CardMembership'
 import BugReportIcon from 'material-ui-icons/BugReport'
-import SubscribeFrom from 'react-mailchimp-subscribe'
+import SubscribeForm from '../form/subscribe-form'
 
 import './mailchimp.css'
 
@@ -148,9 +146,8 @@ class Welcome extends Component {
                   <FormattedHTMLMessage
                     id='welcome.tagline2' deafultMessage='and receive bounty for your contributions' />
                 </Typography>
-
                 <div className='subscribe-form'>
-                  <SubscribeFrom className='subscribe-form-main' { ...formProps } />
+                  <SubscribeForm type='subscribe-form-main' />
                 </div>
               </div>
 
