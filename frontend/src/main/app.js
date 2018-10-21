@@ -50,6 +50,7 @@ export const store = createStore(
   enhancer
 )
 
+/* eslint-disable no-undef */
 const currentLang = localStorage.getItem('userLanguage') || 'en'
 
 store.dispatch(updateIntl({

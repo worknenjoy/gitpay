@@ -48,14 +48,14 @@ export const loggedIn = () => {
         })
         .then(response => {
           if (!Auth.getAuthNotified()) {
-            dispatch(addNotification('Você logou na sua conta com sucesso'))
+            dispatch(addNotification('user.login.successfull'))
             Auth.authNotified()
           }
           return dispatch(loggedInSuccess(response.data.user))
         })
         .catch(error => {
           dispatch(
-            addNotification('Tivemos um problema ao tentar logar na sua conta')
+            addNotification('user.login.error')
           )
           return dispatch(loggedInError(error))
         })

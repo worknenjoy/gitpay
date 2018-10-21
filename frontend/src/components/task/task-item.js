@@ -54,7 +54,7 @@ class TaskItem extends Component {
             secondary={ item.value ? `$ ${item.value}` : ' - ' }
           />
           <Chip
-            label={ this.props.intl.formatMessage(Constants.STATUSES[item.status]) }
+            label={ intl.formatMessage(Constants.STATUSES[item.status]) }
             style={ {
               marginRight: 10,
               backgroundColor: 'green',

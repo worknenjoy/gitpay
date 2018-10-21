@@ -26,8 +26,7 @@ const msgs = defineMessages({
   }
 })
 
-const SubscribeForm = ({intl, type}) => {
-  
+const SubscribeForm = ({ intl, type }) => {
   const formProps = {
     action:
       '//truppie.us17.list-manage.com/subscribe/post?u=bb76ecd5ef5cbbc5e60701321&amp;id=63cbedd527',
@@ -59,7 +58,7 @@ const SubscribeForm = ({intl, type}) => {
   }
 
   return (
-    <SubscribeFrom { ...formProps } className={type || {}} />
+    <SubscribeFrom { ...formProps } className={ type || {} } />
   )
 }
 

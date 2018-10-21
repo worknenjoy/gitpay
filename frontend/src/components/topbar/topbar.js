@@ -115,9 +115,10 @@ class TopBar extends Component {
   }
 
   componentDidMount () {
+    /* eslint-disable no-undef */
     const currentStoredLang = localStorage.getItem('userLanguage')
     this.props.fetchPreferences(this.props.user.id).then(() => {
-      if(!currentStoredLang) {
+      if (!currentStoredLang) {
         const currentLangSuccess = currentUserLanguage(this.props.preferences)
         store.dispatch(updateIntl({
           locale: currentLangSuccess,
