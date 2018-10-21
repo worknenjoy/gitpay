@@ -55,7 +55,6 @@ describe('actions', () => {
           }
         })
         moxios.wait(() => {
-          console.log(moxios.requests)
           const request = moxios.requests.mostRecent()
           request.respondWith({
             status: 200,
@@ -71,7 +70,7 @@ describe('actions', () => {
           { completed: false, type: 'FETCH_PREFERENCES_REQUESTED' },
           { completed: true, type: 'FETCH_PREFERENCES_SUCCESS', language: 'br' }
         ]
-        const store = mockStore({ intl: { messages: {} }, preferences: { language: {} }, loggedIn: { logged: true, user: {id: 1} }  })
+        const store = mockStore({ intl: { messages: {} }, preferences: { language: {} }, loggedIn: { logged: true, user: { id: 1 } } })
         return store.dispatch(actions.fetchPreferences(1)).then(() => {
           // return of async actions
           expect(store.getActions()).toEqual(expectedActions)
