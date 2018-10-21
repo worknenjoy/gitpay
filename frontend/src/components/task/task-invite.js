@@ -49,7 +49,7 @@ class TaskInvite extends Component {
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title'>
-            <FormattedMessage id='task.invite.title' defaultMessage='Invite someone to work on this task' />,
+            <FormattedMessage id='task.invite.title' defaultMessage='Invite someone to work on this task' />
           </DialogTitle>
           <DialogContent>
             <form onChange={ this.onChangeInvite } type='POST'>
@@ -66,7 +66,7 @@ class TaskInvite extends Component {
               </FormControl>
               <FormControl fullWidth>
                 <Typography type='subheading' gutterBottom>
-                  <FormattedMessage id='task.invite.text.label' defaultMessage='Write a text to be sent with the invite' />,
+                  <FormattedMessage id='task.invite.text.label' defaultMessage='Write a text to be sent with the invite' />
                 </Typography>
                 <TextField
                   autoFocus
@@ -80,10 +80,10 @@ class TaskInvite extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={ () => this.props.onClose() } color='primary'>
-              <FormattedMessage id='task.invite.form.cancel' defaultMessage='Cancel' />,
+              <FormattedMessage id='task.invite.form.cancel' defaultMessage='Cancel' />
             </Button>
             <Button disabled={ message.length === 0 } onClick={ this.sendInvite } variant='raised' color='secondary' >
-              <FormattedMessage id='task.invite.form.send' defaultMessage='Send' />,
+              <FormattedMessage id='task.invite.form.send' defaultMessage='Send' />
             </Button>
           </DialogActions>
         </Dialog>

@@ -62,9 +62,7 @@ const createOrder = order => {
           return dispatch(createOrderSuccess(order))
         }
         else {
-          addNotification(
-            'Não foi possível criar o pagamento'
-          )
+          addNotification('actions.order.create.error')
         }
         return dispatch(
           payOrderError({
@@ -77,7 +75,7 @@ const createOrder = order => {
       .catch(e => {
         dispatch(
           addNotification(
-            'Não foi possível criar o pagamento para esta tarefa'
+            'actions.order.create.payment.error'
           )
         )
         return dispatch(createOrderError(e))
@@ -96,15 +94,13 @@ const payOrder = order => {
         console.log('payment for order', order)
         if (order.data.transfer_id) {
           dispatch(addNotification(
-            'Pagamento realizado com sucesso'
+            'actions.order.create.payment.send.success'
           ))
           dispatch(payOrderSuccess(order))
           return dispatch(fetchTask(order.data.TaskId))
         }
         else {
-          dispatch(addNotification(
-            'Não foi possível realizar o pagamento'
-          ))
+          dispatch(addNotification('actions.order.create.payment.send.error'))
           return dispatch(
             payOrderError({
               error: {
@@ -117,7 +113,7 @@ const payOrder = order => {
       .catch(e => {
         dispatch(
           addNotification(
-            'Não foi possível realizar o pagamento para esta tarefa'
+            'actions.order.create.payment.send.error'
           )
         )
         return dispatch(payOrderError(e))

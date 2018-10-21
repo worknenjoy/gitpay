@@ -14,7 +14,7 @@ const messages = defineMessages({
   },
   closed: {
     id: 'task.status.filter.close',
-    defaultMessage: 'Finshed'
+    defaultMessage: 'Finished'
   }
 })
 

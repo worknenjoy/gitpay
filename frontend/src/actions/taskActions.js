@@ -40,12 +40,12 @@ const SYNC_TASK_ERROR = 'SYNC_TASK_ERROR'
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB'
 
 const VALIDATION_ERRORS = {
-  'url must be unique': 'Essa url já foi cadastrada',
-  'Not Found': 'Essa issue não foi encontrada no Github'
+  'url must be unique': 'actions.task.create.validation.url',
+  'Not Found': 'actions.task.create.validation.invalid'
 }
 
 const ERROR_CODES = {
-  StatusCodeError: 'Issue não encontrada'
+  StatusCodeError: 'actions.task.issues.error.notfound'
 }
 
 /*
@@ -225,14 +225,14 @@ const createTask = (task, history) => {
           return dispatch(createTaskError(JSON.parse(response.data.error)))
         }
         dispatch(createTaskSuccess())
-        dispatch(addNotification('Tarefa criada com sucesso'))
+        dispatch(addNotification('actions.task.create.notification.success'))
         history.push(`/task/${response.data.id}`)
         return dispatch(fetchTask(response.data.id))
       })
       .catch(error => {
         // eslint-disable-next-line no-console
         console.log(error)
-        dispatch(addNotification('Erro ao atualizar tarefa'))
+        dispatch(addNotification('actions.task.create.notification.error'))
         return dispatch(createTaskError(error))
       })
   }
@@ -245,20 +245,20 @@ const updateTask = task => {
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
         if (task.Orders) {
-          dispatch(addNotification('Pagamento realizado com sucesso'))
+          dispatch(addNotification('actions.task.payment.notification.success'))
           dispatch(changeTaskTab(1))
           dispatch(syncTask(task.id))
           dispatch(updateTaskSuccess())
         }
         else if (task.Assigns) {
           dispatch(
-            addNotification('Você adicionou interesse pela tarefa com sucesso')
+            addNotification('actions.task.interested.notification.success')
           )
           dispatch(changeTaskTab(2))
           dispatch(updateTaskSuccess())
         }
         else {
-          dispatch(addNotification('Tarefa atualizada com sucesso'))
+          dispatch(addNotification('actions.task.update.notification.success'))
           dispatch(updateTaskSuccess())
         }
         return dispatch(fetchTask(task.id))
@@ -267,11 +267,11 @@ const updateTask = task => {
         // eslint-disable-next-line no-console
         console.log(error)
         if (error.response.data.type === 'StripeCardError') {
-          dispatch(addNotification('Tivemos um erro ao processar o pagamento'))
+          dispatch(addNotification('actions.task.payment.notification.error'))
           dispatch(changeTaskTab(1))
           return dispatch(updateTaskError(error.response.data))
         }
-        dispatch(addNotification('Erro ao atualizar tarefa'))
+        dispatch(addNotification('actions.task.update.notification.error'))
         return dispatch(fetchTask(task.id))
       })
   }
@@ -321,19 +321,15 @@ const fetchTask = taskId => {
           return dispatch(fetchTaskSuccess(task))
         }
         dispatch(
-          addNotification(
-            'Não foi possível obter esta tarefa, por favor tente novamente mais tarde'
-          )
+          addNotification('actions.task.fetch.error')
         )
         return dispatch(
-          fetchTaskError({ message: 'Tarefa não disponível no momento' })
+          fetchTaskError({ message: 'actions.task.fetch.unavailable' })
         )
       })
       .catch(e => {
         dispatch(
-          addNotification(
-            'Não foi possível obter esta tarefa, por favor tente novamente mais tarde'
-          )
+          addNotification('actions.task.fetch.other.error')
         )
         dispatch(fetchTaskError(e))
         // eslint-disable-next-line no-console
@@ -356,28 +352,24 @@ const paymentTask = (taskId, value) => {
         if (payment.data.error) {
           if (payment.data.error.code === 'balance_insufficient') {
             dispatch(
-              addNotification(
-                'O valor ainda não está disponível para transferência'
-              )
+              addNotification('actions.task.payment.balance.error')
             )
           }
           else {
             dispatch(
-              addNotification('Houve algum erro para realizar a transferência')
+              addNotification('actions.task.payment.balance.other.error')
             )
           }
         }
         else {
-          dispatch(addNotification('Transferência realizada com sucesso!'))
+          dispatch(addNotification('actions.task.payment.transfer.sucess'))
         }
         dispatch(paymentTaskSuccess(payment))
         return dispatch(fetchTask(taskId))
       })
       .catch(e => {
         dispatch(
-          addNotification(
-            'Não foi possível realizar o pagamento para esta tarefa'
-          )
+          addNotification('actions.task.payment.error.send')
         )
         dispatch(paymentTaskError(e))
         // eslint-disable-next-line no-console
@@ -397,10 +389,10 @@ const inviteTask = (id, email, message) => {
       })
       .then(task => {
         if (task.status === 200) {
-          dispatch(addNotification('Convite enviado com sucesso'))
+          dispatch(addNotification('actions.task.invite.success'))
           return dispatch(inviteTaskSuccess())
         }
-        dispatch(addNotification('Não foi possível enviar o convite'))
+        dispatch(addNotification('actions.task.invite.error'))
         return dispatch(
           inviteTaskError({
             error: {
@@ -411,9 +403,7 @@ const inviteTask = (id, email, message) => {
       })
       .catch(e => {
         dispatch(
-          addNotification(
-            'Não foi possível enviar o convite'
-          )
+          addNotification('actions.task.invite.error')
         )
         dispatch(inviteTaskError(e))
         // eslint-disable-next-line no-console
@@ -443,9 +433,7 @@ const syncTask = taskId => {
       })
       .catch(e => {
         dispatch(
-          addNotification(
-            'Não foi possível obter os valores pagos pela tarefa, por favor tente novamente mais tarde'
-          )
+          addNotification('actions.task.fetch.other.error')
         )
         dispatch(syncTaskError(e))
         // eslint-disable-next-line no-console

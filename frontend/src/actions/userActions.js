@@ -225,9 +225,7 @@ const updateUser = (userId, userData) => {
       })
       .catch(error => {
         dispatch(
-          addNotification(
-            'Não foi possível atualizar sua conta. Você preencheu todos os dados?'
-          )
+          addNotification('notifications.account.update.error')
         )
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
@@ -243,13 +241,13 @@ const getBankAccount = userId => {
       .get(`${api.API_URL}/users/${userId}/bank_accounts`)
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(addNotification('Não foi possível obter sua conta bancária'))
+          dispatch(addNotification('notifications.bank.get.success'))
           return dispatch(getBankAccountError(bankAccount.data))
         }
         return dispatch(getBankAccountSuccess(bankAccount))
       })
       .catch(error => {
-        dispatch(addNotification('Não foi possível atualizar sua conta'))
+        dispatch(addNotification('notifications.bank.get.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(getBankAccountError(error))
@@ -268,15 +266,15 @@ const createBankAccount = (userId, bank) => {
       })
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(addNotification('Não foi possível atualizar sua conta'))
+          dispatch(addNotification('notifications.bank.create.error'))
           return dispatch(createBankAccountError(bankAccount.data))
         }
-        dispatch(addNotification('Conta bancária cadastrada com sucesso'))
+        dispatch(addNotification('notifications.bank.create.success'))
 
         return dispatch(createBankAccountSuccess(bankAccount))
       })
       .catch(error => {
-        dispatch(addNotification('Não foi possível atualizar sua conta'))
+        dispatch(addNotification('notifications.bank.create.other.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createBankAccountError(error))

@@ -908,8 +908,9 @@ class Account extends Component {
                       type='submit'
                     >
                       { !user.paypal_id
-                        ? 'Ativar conta'
-                        : 'Atualizar conta' }
+                        ? <FormattedMessage id='account.register.paypay.activate' defaultMessage='Activate account' />
+                        : <FormattedMessage id='account.register.paypay.update' defaultMessage='Update account' />
+                      }
                     </Button>
                   </CardActions>
                 </Card>
