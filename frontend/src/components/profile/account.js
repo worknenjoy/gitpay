@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import ReactPlaceholder from 'react-placeholder'
-import { injectIntl, defineMessages, FormattedMessage, FormattedDate } from 'react-intl'
+import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import Moment from 'moment'
 
 import Grid from 'material-ui/Grid'
@@ -41,6 +41,7 @@ import PaymentTypeIcon from '../payment/payment-type-icon'
 
 import Const from '../../consts'
 import TabContainer from '../Tabs/TabContainer'
+import messages from './messages'
 
 function Transition (props) {
   return <Slide direction='up' { ...props } />
@@ -76,57 +77,6 @@ const styles = theme => ({
     marginBottom: 12
   },
   label: {}
-})
-
-const messages = defineMessages({
-  documentProvided: {
-    id: 'account.document.cpf.provided',
-    defaultMessage: 'CPF provided'
-  },
-  documentProvide: {
-    id: 'account.document.cpf.provide',
-    defaultMessage: 'Please provide your CPF'
-  },
-  addressLine1: {
-    id: 'account.address.line1',
-    defaultMessage: 'Adress line 1'
-  },
-  addressLine2: {
-    id: 'account.address.line2',
-    defaultMessage: 'Adress line 2'
-  },
-  cardTab: {
-    id: 'account.type.card',
-    defaultMessage: 'Bank Account'
-  },
-  paypalTab: {
-    id: 'account.status.paypal',
-    defaultMessage: 'PayPal'
-  },
-  state: {
-    id: 'account.details.state',
-    defaultMessage: 'State'
-  },
-  dob: {
-    id: 'account.details.dob',
-    defaultMessage: 'Date of birth'
-  },
-  zipCode: {
-    id: 'account.details.zipcode',
-    defaultMessage: 'Zipcode'
-  },
-  city: {
-    id: 'account.details.city',
-    defaultMessage: 'City'
-  },
-  birthYear: {
-    id: 'account.details.birthYear',
-    defaultMessage: 'Birth year'
-  },
-  activeStatus: {
-    id: 'account.register.status',
-    defaultMessage: 'Active'
-  }
 })
 
 class Account extends Component {
@@ -340,7 +290,7 @@ class Account extends Component {
                               { (msg) => (
                                 <Chip
                                   label={
-                                    Const.ACCOUNT_REASONS[account.data.verification.disabled_reason] || msg
+                                    this.props.intl.formatMessage(Const.ACCOUNT_REASONS[account.data.verification.disabled_reason]) || msg
                                   }
                                   style={ { marginRight: 20, backgroundColor: cyan['500'] } }
                                 />
@@ -389,7 +339,7 @@ class Account extends Component {
                                   <Chip
                                     style={ { margin: 3 } }
                                     key={ i }
-                                    label={ `${Const.ACCOUNT_FIELDS[item]}` }
+                                    label={ this.props.intl.formatMessage(Const.ACCOUNT_FIELDS[item]) }
                                   />
                                 )
                               ) }

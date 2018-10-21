@@ -1,11 +1,4 @@
-import { IntlProvider, defineMessages } from 'react-intl'
-import messagesBr from './translations/br.json'
-import messagesEn from './translations/en.json'
-
-const messages = {
-  'br': messagesBr,
-  'en': messagesEn
-}
+import { defineMessages } from 'react-intl'
 
 const msgs = defineMessages({
   externalAccont: {
@@ -114,50 +107,40 @@ const msgs = defineMessages({
   }
 })
 
-/* eslint-disable no-undef */
-const locale = localStorage.getItem('userLanguage')
-const finalLocale = locale || 'en'
-
-const { intl } = new IntlProvider({ locale: finalLocale, messages: messages[finalLocale] }, {}).getChildContext()
-
-const translate = (key) => {
-  return intl.formatMessage(key) || ''
-}
-
 const api = {
   API_URL: process.env.API_HOST,
   ACCOUNT_FIELDS: {
-    'external_account': translate(msgs.externalAccont),
-    'legal_entity.address.city': translate(msgs.city),
-    'legal_entity.address.line1': translate(msgs.addressLine1),
-    'legal_entity.address.postal_code': translate(msgs.zipcode),
-    'legal_entity.address.state': translate(msgs.state),
-    'legal_entity.dob.day': translate(msgs.birthDay),
-    'legal_entity.dob.month': translate(msgs.birthMonth),
-    'legal_entity.dob.year': translate(msgs.birthYear),
-    'legal_entity.first_name': translate(msgs.firstName),
-    'legal_entity.last_name': translate(msgs.lastName),
-    'legal_entity.personal_id_number': translate(msgs.idNumber),
-    'legal_entity.verification.document': translate(msgs.docNumber),
-    'legal_entity.type': translate(msgs.idType),
-    'tos_acceptance.date': translate(msgs.termsDate),
-    'tos_acceptance.ip': translate(msgs.terms)
+    'external_account': msgs.externalAccont,
+    'legal_entity.address.city': msgs.city,
+    'legal_entity.address.line1': msgs.addressLine1,
+    'legal_entity.address.postal_code': msgs.zipcode,
+    'legal_entity.address.state': msgs.state,
+    'legal_entity.dob.day': msgs.birthDay,
+    'legal_entity.dob.month': msgs.birthMonth,
+    'legal_entity.dob.year': msgs.birthYear,
+    'legal_entity.first_name': msgs.firstName,
+    'legal_entity.last_name': msgs.lastName,
+    'legal_entity.personal_id_number': msgs.idNumber,
+    'legal_entity.verification.document': msgs.docNumber,
+    'legal_entity.type': msgs.idType,
+    'tos_acceptance.date': msgs.termsDate,
+    'tos_acceptance.ip': msgs.terms
   },
   ACCOUNT_REASONS: {
-    'fields_needed': translate(msgs.accountReasonsFieldsNeeded),
-    'external_account': translate(msgs.accountReasonsFieldsExternal),
-    null: translate(msgs.accountReasonsFieldsPending),
-    undefined: translate(msgs.accountReasonsFieldsPendingOther)
+    'fields_needed': msgs.accountReasonsFieldsNeeded,
+    'external_account': msgs.accountReasonsFieldsExternal,
+    null: msgs.accountReasonsFieldsPending,
+    undefined: msgs.accountReasonsFieldsPendingOther
   },
 
   STATUSES: {
-    'open': translate(msgs.statusOpen),
-    'OPEN': translate(msgs.statusOpenTwo),
-    'in_progress': translate(msgs.statusProgress),
-    'closed': translate(msgs.statusFinish),
-    '': translate(msgs.statusUndefined),
-    null: translate(msgs.statusUndefinedTwo),
-    undefined: translate(msgs.statusUndefinedThree)
+    'open': msgs.statusOpen,
+    'OPEN': msgs.statusOpenTwo,
+    'in_progress': msgs.statusProgress,
+    'closed': msgs.statusFinish,
+    '': msgs.statusUndefined,
+    null: msgs.statusUndefinedTwo,
+    undefined: msgs.statusUndefinedThree
   },
 
   STATUSES_COLORS: {

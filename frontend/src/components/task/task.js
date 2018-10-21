@@ -622,7 +622,7 @@ class Task extends Component {
                 <Tags>
                   <Chip
                     style={ { marginRight: 10 } }
-                    label={ Constants.STATUSES[task.data.status] }
+                    label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
                     className={ classes.chipStatus }
                     onDelete={ this.handleStatusDialog }
                     onClick={ this.handleStatusDialog }
@@ -691,148 +691,148 @@ class Task extends Component {
                   </Tooltip>
                 ) }
               </FormattedMessage>
-            </Grid>
-            <div className={ classes.paper }>
-              <Button
-                style={ { marginRight: 10 } }
-                onClick={ this.handlePaymentForm }
-                size='small'
-                color='primary'
-                className={ classes.altButton }
-              >
-                <span className={ classes.spaceRight }>
-                  <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
-                </span>{ ' ' }
-                <RedeemIcon />
-              </Button>
-              <Button
-                style={ { marginRight: 10 } }
-                onClick={ this.handleInvite }
-                size='small'
-                color='primary'
-                className={ classes.altButton }
-              >
-                <span className={ classes.spaceRight }>
-                  <FormattedMessage id='task.bounties.invite' defaultMessage='Invite' />
-                </span>
-                <AddIcon />
-              </Button>
-              { !taskOwner() &&
+              <div className={ classes.paper }>
                 <Button
                   style={ { marginRight: 10 } }
-                  onClick={ this.handleAssignDialogOpen }
-                  size='medium'
+                  onClick={ this.handlePaymentForm }
+                  size='small'
                   color='primary'
                   className={ classes.altButton }
                 >
                   <span className={ classes.spaceRight }>
-                    <FormattedMessage id='task.interested.action' defaultMessage='I have interest' />
+                    <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
                   </span>{ ' ' }
+                  <RedeemIcon />
+                </Button>
+                <Button
+                  style={ { marginRight: 10 } }
+                  onClick={ this.handleInvite }
+                  size='small'
+                  color='primary'
+                  className={ classes.altButton }
+                >
+                  <span className={ classes.spaceRight }>
+                    <FormattedMessage id='task.bounties.invite' defaultMessage='Invite' />
+                  </span>
                   <AddIcon />
                 </Button>
-              }
-              { taskOwner() && (
-                <div style={ { display: 'inline-block' } }>
+                { !taskOwner() &&
                   <Button
                     style={ { marginRight: 10 } }
-                    onClick={ this.handleDeadlineForm }
-                    size='small'
+                    onClick={ this.handleAssignDialogOpen }
+                    size='medium'
                     color='primary'
                     className={ classes.altButton }
                   >
                     <span className={ classes.spaceRight }>
-                      <FormattedMessage id='task.bounties.date.deadline' defaultMessage='Deadline' />
-                    </span>
-                    <DateIcon />
+                      <FormattedMessage id='task.interested.action' defaultMessage='I have interest' />
+                    </span>{ ' ' }
+                    <AddIcon />
                   </Button>
-                  <Button
-                    style={ { marginRight: 10 } }
-                    onClick={ this.handleStatusDialog }
-                    size='small'
-                    color='primary'
-                    className={ classes.altButton }
-                  >
-                    <span className={ classes.spaceRight }>
-                      <FormattedMessage id='task.bounties.status.change' defaultMessage='Change status' />
-                    </span>
-                    <FilterIcon />
-                  </Button>
-                  <Button
-                    onClick={ this.handleTaskPaymentDialog }
-                    size='small'
-                    color='primary'
-                    className={ classes.altButton }
-                  >
-                    <span className={ classes.spaceRight }>
-                      <FormattedMessage id='task.bounties.send.label' defaultMessage='Send bounty' />
-                    </span>
-                    <RedeemIcon />
-                  </Button>
-                  <StatusDialog
-                    id={ task.data.id }
-                    providerStatus={ task.data.metadata.issue.state }
-                    provider={ task.data.provider }
-                    onSelect={ this.props.updateTask }
-                    selectedValue={ task.data.status }
-                    open={ this.state.statusDialog }
-                    onClose={ this.handleStatusDialogClose }
-                  />
-                  <TaskPayment
-                    id={ task.data.id }
-                    values={ task.values }
-                    paid={ task.data.paid }
-                    transferId={ task.data.transfer_id }
-                    assigned={ task.data.assigned }
-                    assigns={ task.data.assigns }
-                    orders={ task.data.orders }
-                    order={ order.data }
-                    open={ this.state.taskPaymentDialog }
-                    onClose={ this.handleTaskPaymentDialogClose }
-                    onPayTask={ this.props.paymentTask }
-                    filterTaskOrders={ this.props.filterTaskOrders }
-                    onPayOrder={ this.props.paymentOrder }
-                  />
-                </div>
-              ) }
-              <TaskInvite id={ task.data.id } onInvite={ this.props.inviteTask } visible={ this.state.taskInviteDialog } onClose={ () => this.setState({ taskInviteDialog: false }) } onOpen={ () => this.setState({ taskInviteDialog: true }) } />
-              <Dialog
-                open={ this.state.assignDialog }
-                onClose={ this.handleAssignDialogClose }
-                aria-labelledby='form-dialog-title'
-              >
-                { !this.props.logged ? (
-                  <div>
-                    <DialogTitle id='form-dialog-title'>
-                      <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                    </DialogTitle>
-                    <DialogContent>
-                      <div className={ classes.mainBlock }>
-                        <LoginButton referer={ this.props.location } />
-                      </div>
-                    </DialogContent>
-                  </div>
-                ) : (
-                  <div>
-                    <DialogTitle id='form-dialog-title'>
-                      <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you intereseted solve this task?' />
-                    </DialogTitle>
-                    <DialogContent>
-                      <Typography type='subheading' gutterBottom>
-                        <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged' />
-                      </Typography>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={ this.handleAssignDialogClose } color='primary'>
-                        <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
-                      </Button>
-                      <Button onClick={ this.handleAssignTask } variant='raised' color='secondary' >
-                        <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
-                      </Button>
-                    </DialogActions>
+                }
+                { taskOwner() && (
+                  <div style={ { display: 'inline-block' } }>
+                    <Button
+                      style={ { marginRight: 10 } }
+                      onClick={ this.handleDeadlineForm }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>
+                        <FormattedMessage id='task.bounties.date.deadline' defaultMessage='Deadline' />
+                      </span>
+                      <DateIcon />
+                    </Button>
+                    <Button
+                      style={ { marginRight: 10 } }
+                      onClick={ this.handleStatusDialog }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>
+                        <FormattedMessage id='task.bounties.status.change' defaultMessage='Change status' />
+                      </span>
+                      <FilterIcon />
+                    </Button>
+                    <Button
+                      onClick={ this.handleTaskPaymentDialog }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>
+                        <FormattedMessage id='task.bounties.send.label' defaultMessage='Send bounty' />
+                      </span>
+                      <RedeemIcon />
+                    </Button>
+                    <StatusDialog
+                      id={ task.data.id }
+                      providerStatus={ task.data.metadata.issue.state }
+                      provider={ task.data.provider }
+                      onSelect={ this.props.updateTask }
+                      selectedValue={ task.data.status }
+                      open={ this.state.statusDialog }
+                      onClose={ this.handleStatusDialogClose }
+                    />
+                    <TaskPayment
+                      id={ task.data.id }
+                      values={ task.values }
+                      paid={ task.data.paid }
+                      transferId={ task.data.transfer_id }
+                      assigned={ task.data.assigned }
+                      assigns={ task.data.assigns }
+                      orders={ task.data.orders }
+                      order={ order.data }
+                      open={ this.state.taskPaymentDialog }
+                      onClose={ this.handleTaskPaymentDialogClose }
+                      onPayTask={ this.props.paymentTask }
+                      filterTaskOrders={ this.props.filterTaskOrders }
+                      onPayOrder={ this.props.paymentOrder }
+                    />
                   </div>
                 ) }
-              </Dialog>
-            </div>
+                <TaskInvite id={ task.data.id } onInvite={ this.props.inviteTask } visible={ this.state.taskInviteDialog } onClose={ () => this.setState({ taskInviteDialog: false }) } onOpen={ () => this.setState({ taskInviteDialog: true }) } />
+                <Dialog
+                  open={ this.state.assignDialog }
+                  onClose={ this.handleAssignDialogClose }
+                  aria-labelledby='form-dialog-title'
+                >
+                  { !this.props.logged ? (
+                    <div>
+                      <DialogTitle id='form-dialog-title'>
+                        <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+                      </DialogTitle>
+                      <DialogContent>
+                        <div className={ classes.mainBlock }>
+                          <LoginButton referer={ this.props.location } />
+                        </div>
+                      </DialogContent>
+                    </div>
+                  ) : (
+                    <div>
+                      <DialogTitle id='form-dialog-title'>
+                        <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you intereseted solve this task?' />
+                      </DialogTitle>
+                      <DialogContent>
+                        <Typography type='subheading' gutterBottom>
+                          <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged' />
+                        </Typography>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={ this.handleAssignDialogClose } color='primary'>
+                          <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
+                        </Button>
+                        <Button onClick={ this.handleAssignTask } variant='raised' color='secondary' >
+                          <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
+                        </Button>
+                      </DialogActions>
+                    </div>
+                  ) }
+                </Dialog>
+              </div>
+            </Grid>
           </Grid>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 8 }>

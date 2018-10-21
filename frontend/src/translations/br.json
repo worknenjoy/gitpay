@@ -326,5 +326,6 @@
   "welcome.how.consulting.main.title": "Consultoria",
   "welcome.how.consulting.who.subscribers": "Gitpay é para você?",
   "welcome.how.workflow.main.title": "Como trabalhar",
-  "welcome.how.workflow.contrib.title": "Para contribuidores"
+  "welcome.how.workflow.contrib.title": "Para contribuidores",
+  "payment.options.warning.message": "No momento estamos suportando contas bancárias apenas no Brasil. Mas é possível ativar sua conta usando o Paypal se preferir."
 }

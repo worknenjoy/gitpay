@@ -50,9 +50,11 @@ export const store = createStore(
   enhancer
 )
 
+const currentLang = localStorage.getItem('userLanguage') || 'en'
+
 store.dispatch(updateIntl({
-  locale: 'en',
-  messages: messages['en'],
+  locale: currentLang,
+  messages: messages[currentLang],
 }))
 
 const theme = createMuiTheme(Palette)

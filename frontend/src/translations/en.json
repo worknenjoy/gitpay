@@ -327,5 +327,6 @@
   "welcome.how.consulting.main.title": "Consultancy",
   "welcome.how.consulting.who.subscribers": "Gitpay is for you?",
   "welcome.how.workflow.main.title": "Workflow",
-  "welcome.how.workflow.contrib.title": "For contributors"
+  "welcome.how.workflow.contrib.title": "For contributors",
+  "payment.options.warning.message": "For now we support bank accounts onboarding in Brazil only. But it is possible to activate your account with Paypal instead."
 }

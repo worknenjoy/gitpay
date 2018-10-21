@@ -249,7 +249,7 @@ class CustomPaginationActionsTable extends React.Component {
                       </TableCell>
                       <TableCell>
                         <div style={ { width: 80 } }>
-                          <Chip label={ Constants.STATUSES[n.status] } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
+                          <Chip label={ this.props.intl.formatMessage(Constants.STATUSES[n.status]) } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 5 } }>
