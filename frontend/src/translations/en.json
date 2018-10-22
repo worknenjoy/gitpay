@@ -365,5 +365,10 @@
   "action.task.remove.assign.success": "This task was unassigned successfully!",
   "action.task.remove.assign.error": "We could not unassign this user from this task",
   "account.register.paypay.activate": "Activate account",
-  "account.register.paypay.update": "Update account"
+  "account.register.paypay.update": "Update account",
+  "task.deadline.level1": " In one week ",
+  "task.deadline.level2": " In fifteen days ",
+  "task.deadline.level3": " In twenty days ",
+  "task.deadline.level4": " In on month "
+
 }

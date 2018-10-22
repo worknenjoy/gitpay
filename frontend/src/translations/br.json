@@ -365,6 +365,9 @@
   "action.task.remove.assign.error": "Não foi possível desassociar o usuário desta tarefa.",
   "account.register.paypay.activate": "Ativar conta",
   "account.register.paypay.update": "Atualizar conta",
-  "account.register.paypal.status": "Esta conta não está associada ainda ao Paypal. Confirme seu e-mail e ative a conta para receber pagamentos por ele"
-
+  "account.register.paypal.status": "Esta conta não está associada ainda ao Paypal. Confirme seu e-mail e ative a conta para receber pagamentos por ele",
+  "task.deadline.level1": " daqui uma semana ",
+  "task.deadline.level2": " daqui quinze dias ",
+  "task.deadline.level3": " daqui vinte dias ",
+  "task.deadline.level4": " daqui um mês "
 }

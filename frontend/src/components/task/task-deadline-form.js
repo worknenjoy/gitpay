@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
@@ -12,6 +12,25 @@ import DateIcon from 'material-ui-icons/DateRange'
 import MomentComponent from 'moment'
 
 const timeIcon = require('../../images/time-icon.png')
+
+const messages = defineMessages({
+  deadlineLevel1: {
+    id: 'task.deadline.level1',
+    defaultMessage: ' In one week '
+  },
+  deadlineLevel2: {
+    id: 'task.deadline.level2',
+    defaultMessage: ' In fifteen days '
+  },
+  deadlineLevel3: {
+    id: 'task.deadline.level3',
+    defaultMessage: ' In twenty days '
+  },
+  deadlineLevel4: {
+    id: 'task.deadline.level4',
+    defaultMessage: ' In on month '
+  },
+})
 
 class TaskDeadlineForm extends Component {
   constructor (props) {
@@ -52,8 +71,18 @@ class TaskDeadlineForm extends Component {
     this.setState({ deadline: e.target.value })
   }
 
+  renderChip(label, value) {
+    return (
+      <Chip
+        label={ label }
+        className={ this.props.classes.chip }
+        onClick={ () => this.pickTaskDeadline(value) }
+      />
+    )
+  }
+
   render () {
-    const { classes } = this.props
+    const { classes, intl } = this.props
 
     return (
       <div>
@@ -71,41 +100,25 @@ class TaskDeadlineForm extends Component {
             <div className={ classes.details }>
               <CardContent className={ classes.content }>
                 <Typography variant='headline'>
-                  <FormattedMessage id='task.status.deadline.headline' defaultMessage='Finish date' />,
+                  <FormattedMessage id='task.status.deadline.headline' defaultMessage='Finish date' />
                 </Typography>
                 <Typography variant='subheading' color='textSecondary'>
                   <FormattedMessage id='task.status.deadline.subheading' defaultMessage='Choose a date that this task should be finished' />,
                 </Typography>
                 <div className={ classes.chipContainer }>
-                  <Chip
-                    label=' daqui uma semana '
-                    className={ classes.chip }
-                    onClick={ () => this.pickTaskDeadline(7) }
-                  />
-                  <Chip
-                    label=' daqui quinze dias '
-                    className={ classes.chip }
-                    onClick={ () => this.pickTaskDeadline(15) }
-                  />
-                  <Chip
-                    label=' daqui vinte dias '
-                    className={ classes.chip }
-                    onClick={ () => this.pickTaskDeadline(20) }
-                  />
-                  <Chip
-                    label=' daqui um mês'
-                    className={ classes.chip }
-                    onClick={ () => this.pickTaskDeadline(30) }
-                  />
+                  { [{ label: intl.formatMessage(messages.deadlineLevel1), value: 7 }, { label: intl.formatMessage(messages.deadlineLevel2), value: 15 },{ label: intl.formatMessage(messages.deadlineLevel3), value: 20 }, { label: intl.formatMessage(messages.deadlineLevel4), value: 30 }].map((item, index) => {
+                     return this.renderChip(item.label, item.value) 
+                    })
+                  }
                 </div>
                 <form className={ classes.formPayment } action='POST'>
                   <FormControl fullWidth>
-                    <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>,
+                    <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
                       { (msg) => (
                         <InputLabel htmlFor='adornment-amount'>{ msg }</InputLabel>
                       ) }
                     </FormattedMessage>
-                    <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>,
+                    <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
                       { (msg) => (
                         <Input
                           id='adornment-date'
@@ -144,4 +157,4 @@ TaskDeadlineForm.propTypes = {
   open: PropTypes.bool
 }
 
-export default TaskDeadlineForm
+export default injectIntl(TaskDeadlineForm)

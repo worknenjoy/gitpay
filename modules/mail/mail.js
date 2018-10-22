@@ -15,7 +15,8 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: msg + Signatures.sign
+          value: `${msg}
+          ${Signatures.sign()}`
         },
       ]
     )
@@ -28,7 +29,8 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: msg + Signatures.sign
+          value: `${msg}
+          ${Signatures.sign()}`
         },
       ]
     )

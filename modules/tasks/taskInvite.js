@@ -9,18 +9,19 @@ module.exports = Promise.method(function ({ id }, { message, email }) {
     .findById(id, { include: [ models.User, models.Order, models.Assign ] })
     .then(task => {
       const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
-      const user = task.user
+      const user = task.User.dataValues
       const language = user.language || 'en'
       i18n.setLocale(language)
       SendMail.success(
         email,
         i18n.__('mail.invite.send.action'),
-        i18n.__('mail.invite.send.message', {
+        `${i18n.__('mail.invite.send.message', {
           title: task.title,
           url: taskUrl,
           value: task.value,
           message: message
-        })
+        })}
+        `
       )
     })
 })
