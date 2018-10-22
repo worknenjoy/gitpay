@@ -71,7 +71,7 @@ class TaskDeadlineForm extends Component {
     this.setState({ deadline: e.target.value })
   }
 
-  renderChip(label, value) {
+  renderChip (label, value) {
     return (
       <Chip
         label={ label }
@@ -106,9 +106,9 @@ class TaskDeadlineForm extends Component {
                   <FormattedMessage id='task.status.deadline.subheading' defaultMessage='Choose a date that this task should be finished' />,
                 </Typography>
                 <div className={ classes.chipContainer }>
-                  { [{ label: intl.formatMessage(messages.deadlineLevel1), value: 7 }, { label: intl.formatMessage(messages.deadlineLevel2), value: 15 },{ label: intl.formatMessage(messages.deadlineLevel3), value: 20 }, { label: intl.formatMessage(messages.deadlineLevel4), value: 30 }].map((item, index) => {
-                     return this.renderChip(item.label, item.value) 
-                    })
+                  { [{ label: intl.formatMessage(messages.deadlineLevel1), value: 7 }, { label: intl.formatMessage(messages.deadlineLevel2), value: 15 }, { label: intl.formatMessage(messages.deadlineLevel3), value: 20 }, { label: intl.formatMessage(messages.deadlineLevel4), value: 30 }].map((item, index) => {
+                    return this.renderChip(item.label, item.value)
+                  })
                   }
                 </div>
                 <form className={ classes.formPayment } action='POST'>
