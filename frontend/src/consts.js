@@ -108,7 +108,7 @@ const msgs = defineMessages({
 })
 
 const api = {
-  API_URL: process.env.API_HOST,
+  API_URL: process.env.API_HOST || 'http://localhost:3000',
   ACCOUNT_FIELDS: {
     'external_account': msgs.externalAccont,
     'legal_entity.address.city': msgs.city,

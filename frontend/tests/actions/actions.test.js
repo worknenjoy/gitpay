@@ -45,7 +45,7 @@ describe('actions', () => {
       })
 
       it('fetches the language successfully', () => {
-        moxios.stubRequest('undefined/authenticated', {
+        moxios.stubRequest('http://localhost:3000/authenticated', {
           status: 200,
           response: {
             authenticated: true,
