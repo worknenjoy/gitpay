@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
-
 const models = require('../../loading/loading')
 const SendMail = require('../mail/mail')
+const i18n = require('i18n')
 
 module.exports = Promise.method(function ({ id }, { message }) {
   return models.Task
@@ -19,14 +19,14 @@ module.exports = Promise.method(function ({ id }, { message }) {
 
       return Promise.all([assignedPromise, saveTaskPromise])
         .then(([ assign ]) => {
+          const user = assign.User
+          const language = user.language || 'en'
+          i18n.setLocale(language)
           SendMail.success(
             assign.User.email,
-            'Você foi removido de uma tarefa no Gitpay',
-            `<p>Você foi removido da tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay</p>
-            <p>O dono da tarefa deixou o seguinte mensagem para você:</p>
-            <p>${message}</p>`
+            i18n.__('mail.assign.remove.subject'),
+            i18n.__('mail.assign.remove.message', { message: message, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })
           )
-
           return task.dataValues
         })
     })

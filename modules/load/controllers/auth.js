@@ -22,6 +22,17 @@ exports.searchAll = (req, res) => {
     })
 }
 
+exports.preferences = (req, res) => {
+  user.userPreferences(req.params)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}
+
 exports.customer = (req, res) => {
   user.userCustomer(req.body)
     .then(data => {

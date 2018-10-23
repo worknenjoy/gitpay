@@ -119,7 +119,7 @@ describe("tasks", () => {
       })
     });
 
-    it('should update task with associated order no logged users', (done) => {
+    xit('should update task with associated order no logged users', (done) => {
 
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
       const order = {

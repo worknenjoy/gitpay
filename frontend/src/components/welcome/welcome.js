@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { injectIntl, defineMessages, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-
-import formProps from '../form/form-props'
 import mainStyles from '../styles/style'
 
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
@@ -18,7 +17,7 @@ import GroupWorkIcon from 'material-ui-icons/GroupWork'
 import ArchiveIcon from 'material-ui-icons/Archive'
 import CardMembershipIcon from 'material-ui-icons/CardMembership'
 import BugReportIcon from 'material-ui-icons/BugReport'
-import SubscribeFrom from 'react-mailchimp-subscribe'
+import SubscribeForm from '../form/subscribe-form'
 
 import './mailchimp.css'
 
@@ -43,6 +42,89 @@ import {
 
 const styles = (theme) => mainStyles(theme)
 
+const messages = defineMessages({
+  welcomeFreelancersItemOnePrimary: {
+    id: 'welcome.main.item.one.primary',
+    defaultMessage: 'Work in projects using the best development tools'
+  },
+  welcomeFreelancersItemOneSecondary: {
+    id: 'welcome.main.item.one.secondary',
+    defaultMessage: 'We use all the Git tools and version control to manage deliveries for our clients'
+  },
+  welcomeFreelancersItemTwoPrimary: {
+    id: 'welcome.main.item.two.primary',
+    defaultMessage: 'Colaboration with companies by tasks on demand'
+  },
+  welcomeFreelancersItemTwoSecondary: {
+    id: 'welcome.main.item.two.secondary',
+    defaultMessage: 'Work in different projects, you can colaborate and learn with many projects and stacks'
+  },
+  welcomeFreelancersItemThreePrimary: {
+    id: 'welcome.main.item.three.primary',
+    defaultMessage: 'Receive bounties by colaboration'
+  },
+  welcomeFreelancersItemThreeSecondary: {
+    id: 'welcome.main.item.three.secondary',
+    defaultMessage: 'Receive bounties for the task you concluded with direct payment when your code is merged on the codebase'
+  },
+  welcomeCompaniesItemOnePrimary: {
+    id: 'welcome.companies.item.one.primary',
+    defaultMessage: 'Manage the tasks of your projects'
+  },
+  welcomeCompaniesItemOneSecondary: {
+    id: 'welcome.companies.item.one.secondary',
+    defaultMessage: 'With our platform the companies are able to manage your tasks on demand with development tools that suits your needs'
+  },
+  welcomeCompaniesItemTwoPrimary: {
+    id: 'welcome.companies.item.two.primary',
+    defaultMessage: 'Pay for your tasks concluded with a smart and automated development process'
+  },
+  welcomeCompaniesItemTwoSecondary: {
+    id: 'welcome.companies.item.two.secondary',
+    defaultMessage: 'You will have different contributors, with wide experience that will help on the development using tools that they are confortable with established processes'
+  },
+  welcomeCompaniesItemThreePrimary: {
+    id: 'welcome.companies.item.three.primary',
+    defaultMessage: 'Develop your business with open source tools, and pay on demand'
+  },
+  welcomeCompaniesItemThreeSecondary: {
+    id: 'welcome.companies.item.three.secondary',
+    defaultMessage: 'Companies can use the Gitpay for all the development needs, from create a repository until release, paying for concluded and merged tasks that are integrated in your project for real'
+  },
+  welcomeHowToItemOnePrimary: {
+    id: 'welcome.howto.item.one.primary',
+    defaultMessage: 'A new task is created'
+  },
+  welcomeHowToItemOneSecondary: {
+    id: 'welcome.howto.item.one.secondary',
+    defaultMessage: 'A new issue, demand, enhancement or suggestion is created on the platform, that represents needs like development, SEO, content, infrastructure or even new ideas'
+  },
+  welcomeHowToItemTwoPrimary: {
+    id: 'welcome.howto.item.two.primary',
+    defaultMessage: 'Your demand is send to our community'
+  },
+  welcomeHowToItemTwoSecondary: {
+    id: 'welcome.howto.item.two.secondary',
+    defaultMessage: 'Differents colaborators group will be interested to solve this issue for the price invested for that bounty'
+  },
+  welcomeHowToItemThreePrimary: {
+    id: 'welcome.howto.item.three.primary',
+    defaultMessage: 'Sent a pull request to receive a bounty'
+  },
+  welcomeHowToItemThreeSecondary: {
+    id: 'welcome.howto.item.three.secondary',
+    defaultMessage: 'A Pull Request is send in the repo and once approved the bounty is sent'
+  },
+  welcomeHowToItemFourPrimary: {
+    id: 'welcome.howto.item.four.primary',
+    defaultMessage: 'Agile process between business, payment, consulting and development'
+  },
+  welcomeHowToItemFourSecondary: {
+    id: 'welcome.howto.item.four.secondary',
+    defaultMessage: 'We want to facilitate the transactions and payment between colaborators and companies by facilitate the development with smart tools, consolidated process already used in agile companies and emerging startups'
+  }
+})
+
 class Welcome extends Component {
   render () {
     const { classes, location } = this.props
@@ -50,23 +132,22 @@ class Welcome extends Component {
     return (
       <div className={ classes.root }>
         <TopBarContainer />
-
         <MainBanner>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div className={ classes.mainBlock } style={ { margin: 0, paddingTop: 10 } }>
                 <Typography className={ classes.tagline } gutterBottom>
-                  Transforme sua contribuição em recompensa
+                  <FormattedMessage id='welcome.tagline' deafultMessage='Welcome to Gitpay' />
                 </Typography>
                 <Typography variant='title' gutterBottom>
-                  e coloque novas ideias no ar!
+                  <FormattedMessage id='welcome.tagline1' deafultMessage='Work in tasks on demand' />
                 </Typography>
                 <Typography type='subheading' gutterBottom noWrap>
-                  com o <strong>Gitpay</strong> você contribui de forma independente com projetos sob demanda
+                  <FormattedHTMLMessage
+                    id='welcome.tagline2' deafultMessage='and receive bounty for your contributions' />
                 </Typography>
-
                 <div className='subscribe-form'>
-                  <SubscribeFrom className='subscribe-form-main' { ...formProps } />
+                  <SubscribeForm type='subscribe-form-main' />
                 </div>
               </div>
 
@@ -84,7 +165,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography type='headline' gutterBottom>
-                  Para Freelancers
+                  <FormattedMessage id='welcome.headline.forfreelancers' defaultMessage='For freelancers' />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -96,8 +177,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Trabalhe em projetos usando as melhores ferramentas de desenvolvimento'
-                      secondary='Com o Gitpay você utiliza os recursos do git e controle de versão para realizar entregas para os clientes'
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOneSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -107,8 +188,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Colabore com empresas e trabalhe sob demanda'
-                      secondary='Trabalhe em diferentes projetos, colabore e aprenda com projetos reais que utilizam diferentes tecnologias'
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -118,8 +199,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Receba pelos trabalhos realizados'
-                      secondary='Receba o pagamento diretamente na sua conta pelas tarefas de desenvolvimento quando seu código for integrado'
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreeSecondary) }
                     />
                   </ListItem>
                 </List>
@@ -136,7 +217,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography type='headline' gutterBottom>
-                  Para Empresas
+                  <FormattedMessage id='welcome.tagline.companies.main.headline' defaultMessage='For companies' />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -148,8 +229,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Gerencie o desenvolvimento da sua startup'
-                      secondary='Com o Gitpay as empresas podem gerir seu negócio utilizando ferramentas de desenvolvimento feitos sobe medida para você'
+                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemOneSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -159,8 +240,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Pague pelos trabalhos concluídos com processos inteligentes e automatizados'
-                      secondary='Envolva diferentes tipos de freelancers, com experiências variadas que irão ajudar no desenvolvimento do projeto usando as ferramentas que eles conhecem e processos já consolidados'
+                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -170,8 +251,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary='Desenvolva o seu negócio com ferramentas open source, e pagando por serviços sob demanda'
-                      secondary='Empresas podem nascer e se manter com o Gitpay, desde o design até o desenvolvimento, pagando apenas pelas demandas concluídas e integradas com o projeto'
+                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemThreeSecondary) }
                     />
                   </ListItem>
                 </List>
@@ -185,7 +266,9 @@ class Welcome extends Component {
 
         <Section>
           <MainTitle>
-            <Typography type='headline' gutterBottom>Como Funciona</Typography>
+            <Typography type='headline' gutterBottom>
+              <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
+            </Typography>
           </MainTitle>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
@@ -199,8 +282,8 @@ class Welcome extends Component {
                       <ArchiveIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary='Uma nova tarefa de um projeto é criada'
-                      secondary='Uma demanda, incidente, melhoria ou sugestão é lançada na plataforma, seja ela de código, SEO, conteúdo ou até infra estrutura e novas idéias'
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemOneSecondary) }
                     />
                   </ListItem>
                   <Divider />
@@ -209,8 +292,8 @@ class Welcome extends Component {
                       <BugReportIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary='A sua demanda é enviada para a comunidade'
-                      secondary='Diferentes grupos de freelancers se interessam por esta demanda por um valor fixo ou sugerido pelos interessados'
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemTwoSecondary) }
                     />
                   </ListItem>
                   <Divider />
@@ -219,8 +302,8 @@ class Welcome extends Component {
                       <CardMembershipIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary='Solicitação de mudança e recompensa'
-                      secondary='É enviada uma solicitação no repositório do projeto para que seja integrado e o pagamento é realizado'
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemThreeSecondary) }
                     />
                   </ListItem>
                   <Divider />
@@ -229,8 +312,8 @@ class Welcome extends Component {
                       <BugReportIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary='Processos ágeis entre negócios e desenvolvimento'
-                      secondary='Queremos facilitar as transações e facilitar os acordos entre empresas e freelancers utilizando ferramentas inteligentes, processos já usados em empresas ágeis e startups'
+                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemFourPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemFourSecondary) }
                     />
                   </ListItem>
                 </List>
@@ -250,4 +333,4 @@ Welcome.propTypes = {
   location: PropTypes.string,
 }
 
-export default withStyles(styles)(Welcome)
+export default injectIntl(withStyles(styles)(Welcome))

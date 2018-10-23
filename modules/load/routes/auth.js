@@ -58,6 +58,7 @@ router.post('/authorize/local', (req, res, next) => {
 router.post('/auth/register', controllers.register)
 router.get('/users', controllers.searchAll)
 router.get('/user/customer', controllers.customer)
+router.get('/users/:id/preferences', controllers.preferences)
 router.get('/users/:id/account', controllers.account)
 router.post('/user/account', controllers.accountCreate)
 router.put('/user/update', controllers.userUpdate)

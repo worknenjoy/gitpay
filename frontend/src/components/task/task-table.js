@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import MomentComponent from 'moment'
@@ -27,6 +28,29 @@ import LastPageIcon from 'material-ui-icons/LastPage'
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 import Constants from '../../consts'
+
+const messages = defineMessages({
+  firstPageLabel: {
+    id: 'task.table.page.first',
+    defaultMessage: 'First page'
+  },
+  previousPageLabel: {
+    id: 'task.table.page.previous',
+    defaultMessage: 'Previous page'
+  },
+  nextPageLabel: {
+    id: 'task.table.page.next',
+    defaultMessage: 'Next page'
+  },
+  lastPageLabel: {
+    id: 'task.table.page.last',
+    defaultMessage: 'Last page'
+  },
+  noDefined: {
+    id: 'task.table.date.none',
+    defaultMessage: 'Not yet defined'
+  }
+})
 
 const actionsStyles = theme => ({
   root: {
@@ -64,28 +88,28 @@ class TablePaginationActions extends React.Component {
         <IconButton
           onClick={ this.handleFirstPageButtonClick }
           disabled={ page === 0 }
-          aria-label='First Page'
+          aria-label={ this.props.intl.formatMessage(messages.firstPageLabel) }
         >
           { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
         </IconButton>
         <IconButton
           onClick={ this.handleBackButtonClick }
           disabled={ page === 0 }
-          aria-label='Previous Page'
+          aria-label={ this.props.intl.formatMessage(messages.previousPageLabel) }
         >
           { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
         </IconButton>
         <IconButton
           onClick={ this.handleNextButtonClick }
           disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label='Next Page'
+          aria-label={ this.props.intl.formatMessage(messages.nextPageLabel) }
         >
           { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
         </IconButton>
         <IconButton
           onClick={ this.handleLastPageButtonClick }
           disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label='Last Page'
+          aria-label={ this.props.intl.formatMessage(messages.lastPageLabel) }
         >
           { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>
@@ -103,9 +127,9 @@ TablePaginationActions.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions,
-)
+const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
+  TablePaginationActions
+))
 
 const styles = theme => ({
   root: {
@@ -154,11 +178,21 @@ class CustomPaginationActionsTable extends React.Component {
             <Table className={ classes.table }>
               <TableHead>
                 <TableRow>
-                  <TableCell>Autor</TableCell>
-                  <TableCell>Tarefa</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Valor</TableCell>
-                  <TableCell>Vencimento</TableCell>
+                  <TableCell>
+                    <FormattedMessage id='task.table.head.author' defaultMessage='Author' />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedMessage id='task.table.head.deadline' defaultMessage='Deadline' />
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -196,7 +230,7 @@ class CustomPaginationActionsTable extends React.Component {
                             </div>
                           ) : (
                             <div>
-                              sem autor
+                              <FormattedMessage id='task.table.body.author.none' defaultMessage='No author' />
                             </div>
                           )
                         }
@@ -215,7 +249,7 @@ class CustomPaginationActionsTable extends React.Component {
                       </TableCell>
                       <TableCell>
                         <div style={ { width: 80 } }>
-                          <Chip label={ Constants.STATUSES[n.status] } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
+                          <Chip label={ this.props.intl.formatMessage(Constants.STATUSES[n.status]) } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 5 } }>
@@ -225,7 +259,7 @@ class CustomPaginationActionsTable extends React.Component {
                       </TableCell>
                       <TableCell numeric style={ { padding: 0 } }>
                         <div style={ { width: 80 } }>
-                          { n.deadline ? MomentComponent(n.deadline).fromNow() : 'não definido' }
+                          { n.deadline ? MomentComponent(n.deadline).fromNow() : this.props.intl.formatMessage(messages.noDefined) }
                         </div>
                       </TableCell>
                     </TableRow>
@@ -264,4 +298,4 @@ CustomPaginationActionsTable.propTypes = {
   tasks: PropTypes.object
 }
 
-export default withRouter(withStyles(styles)(CustomPaginationActionsTable))
+export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))

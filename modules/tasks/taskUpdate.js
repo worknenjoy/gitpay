@@ -7,6 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
+const i18n = require('i18n')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
@@ -25,7 +26,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           paid: charge.paid,
           status: charge.status
         }).then(updatedUser => {
-          PaymentMail.success(user.email, task, order.amount)
+          PaymentMail.success(user, task, order.amount)
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
             return models.Assign.findById(assignedId, {
@@ -125,16 +126,18 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                       }
                     }).then((user) => {
                       const usermail = user.dataValues.email
+                      const language = user.language || 'en'
+                      i18n.setLocale(language)
                       if (!usermail) {
-                        AssignMail.error('Alguém registrou interesse mas não recebeu o email da tarefa' + task.dataValues)
+                        AssignMail.error('mail.assign.register.error' + task.dataValues)
                       }
                       if (!user.account_id) {
-                        TransferMail.futurePaymentForInvalidAccount(user.email)
+                        TransferMail.futurePaymentForInvalidAccount(user)
                       }
                       AssignMail.interested(usermail, task.dataValues, user.username)
                       if (task.dataValues.User) {
                         const ownerUser = task.dataValues.User.dataValues
-                        AssignMail.owner(ownerUser.email, task.dataValues, user.username)
+                        AssignMail.owner(ownerUser, task.dataValues, user.username)
                       }
                       return task.dataValues
                     })
@@ -151,7 +154,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               include: [models.User]
             }).then((assigned) => {
               const assignedUser = assigned.User.dataValues
-              AssignMail.assigned(assignedUser.email, task.dataValues, assignedUser.username)
+              AssignMail.assigned(assignedUser, task.dataValues, assignedUser.username)
               return task.dataValues
             })
           }

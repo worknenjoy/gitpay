@@ -1,9 +1,10 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
-let dateFormat = require('dateformat')
-let moment = require('moment')
-let ptLocale = require('moment/locale/pt-br')
+// const dateFormat = require('dateformat')
+const moment = require('moment')
+const ptLocale = require('moment/locale/pt-br')
+const i18n = require('i18n')
 
 moment.locale('pt-br', ptLocale)
 
@@ -13,49 +14,32 @@ const StatusMail = {
 }
 
 const STATUSES = {
-  'open': 'Aberta',
-  'OPEN': 'Aberta',
-  'in_progress': 'Em desenvolvimento',
-  'closed': 'Finalizada',
-  '': 'Status indefinido',
-  null: 'Status indefinido',
-  undefined: 'Status indefinido'
+  'open': i18n.__('mail.status.open'),
+  'OPEN': i18n.__('mail.status.open'),
+  'in_progress': i18n.__('mail.status.progress'),
+  'closed': i18n.__('mail.status.closed'),
+  '': i18n.__('mail.status.notefined'),
+  null: i18n.__('mail.status.notefined'),
+  undefined: i18n.__('mail.status.notefined')
 }
 
 if (constants.canSendEmail) {
-  StatusMail.update = (to, task, name) => {
+  StatusMail.update = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
-      'O status de uma tarefa que você foi escolhido foi atualizado no Gitpay',
+      i18n.__('mail.status.subject'),
       [
         {
           type: 'text/html',
           value: `
-          <p>Olá ${name},</p>
-          <p>A tarefa que você está trabalhando <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> teve o status atualizado.</p>
-          <p>Agora a tarefa está <strong>${STATUSES[task.status]}</strong></p>
-          <p>${Signatures.sign}</p>`
+          <p>Olá ${i18n.__('mail.assigned.hello', { name: name })}</p>
+          <p>${i18n.__('mail.status.message.first', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}</p>
+          <p>${i18n.__('mail.status.message.second', { status: STATUSES[task.status] })}</p>
+          <p>${Signatures.sign(language)}</p>`
         },
-      ]
-    )
-  }
-
-  StatusMail.daysLeft = (to, task, name) => {
-    request(
-      to,
-      `Atenção, faltam ${task.deadline ? moment(task.deadline).fromNow() : 'para finalização de uma tarefa que foi escolhido no Gitpay'}`,
-      [
-        {
-          type: 'text/html',
-          value: `
-           <p>Olá ${name},</p>
-           <p>Você foi escolhido para começar com a tarefa <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${process.env.FRONTEND_HOST}/#/task/${task.id}</a> no Gitpay.</p>
-           <p>O prazo para conclusão desta tarefa é: <strong>${task.deadline ? dateFormat(task.deadline, constants.dateFormat) : 'Nenhum prazo foi definido'}</strong></p>
-           <p>O que signifca que você teria que enviar uma solução <strong>${task.deadline ? moment(task.deadline).fromNow() : 'o tempo que for necessário para terminar'} a partir de agora</strong></p>
-           <p>Por favor, envie seu Pull Request para que a sua solução possa ser avaliada e integrada e assim você poderá receber a recopensa pelo desenvolvimento</p>
-           <p>${Signatures.sign}</p>`
-
-        }
       ]
     )
   }
@@ -63,7 +47,7 @@ if (constants.canSendEmail) {
   StatusMail.error = (msg) => {
     request(
       constants.notificationEmail,
-      'Tivemos problema com alguma das notificações sobre interessados em tarefa no Gitpay',
+      i18n.__('mail.status.error'),
       [
         {
           type: 'text/html',

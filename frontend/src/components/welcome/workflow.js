@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
@@ -15,6 +16,33 @@ import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
+
+const messages = defineMessages({
+  workflowItemPrimary: {
+    id: 'welcome.workflow.item.primary',
+    defaultMessage: 'Gitpay is for all'
+  },
+  workflowItemSecondary: {
+    id: 'welcome.workflow.item.secondary',
+    defaultMessage: 'Clients, team leads, designers, content creators and managers, everyone can follow the progress and status using already known tools to manage their projects for remote teams'
+  },
+  workflowItemTwoPrimary: {
+    id: 'welcome.workflow.item.two.primary',
+    defaultMessage: 'For all levels'
+  },
+  workflowItemTwoSecondary: {
+    id: 'welcome.workflow.item.two.secondary',
+    defaultMessage: 'Beginners will learn for real of how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with '
+  },
+  workflowItemThreePrimary: {
+    id: 'welcome.workflow.item.three.primary',
+    defaultMessage: 'Learn by doing and receive bounties'
+  },
+  workflowItemThreeSecondary: {
+    id: 'welcome.workflow.item.three.secondary',
+    defaultMessage: 'Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges'
+  }
+})
 
 class Workflow extends Component {
   constructor (props) {
@@ -43,7 +71,11 @@ class Workflow extends Component {
 
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
-        <ListItemText primary='Fluxo de trabalho' />
+        <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Workflow'>
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
+        </FormattedMessage>
         <Dialog
           fullScreen
           open={ this.state.open }
@@ -56,13 +88,13 @@ class Workflow extends Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant='title' className={ classes.appBarHeader }>
-                Para freelancers
+                <FormattedMessage id='welcome.how.workflow.contrib.title' defaultMessage='For contributors' />
               </Typography>
             </Toolbar>
             <div classeName={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  Fluxo de trabalho
+                  <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Workflow' />
                 </Typography>
               </MainTitle>
             </div>
@@ -75,8 +107,8 @@ class Workflow extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='Para todos os envolvidos'
-                    secondary='Clientes, líderes técnicos, designers e gestores, todos podem acompanhar o status e progresso usando ferramentas já conhecidas para gestão de projetos ágeis à distância'
+                    primary={ this.props.intl.formatMessage(messages.workflowItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -86,8 +118,8 @@ class Workflow extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='Para todos os níveis'
-                    secondary='Iniciantes podem aprender na prática como contribuir com empresas reais para encarar um mercado de trabalho competitivo, e freelancers com experiência podem participar de revisões, liderar projetos remotos e atuar em áreas em que ele tenha mais familiaridade e experiência e desenvolver melhorias para o projeto'
+                    primary={ this.props.intl.formatMessage(messages.workflowItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -97,8 +129,8 @@ class Workflow extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='Aprenda na prática ou ganhe trabalhando com o que você domina'
-                    secondary='Trabalhe em diferentes projetos e aprenda a criar soluções em times distribuídos por todo o mundo, usando as ferramentas que você já usa e propondo soluções para problemas que você conhece. Você também pode encarar novos desafios sem burocracia!'
+                    primary={ this.props.intl.formatMessage(messages.workflowItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemThreeSecondary) }
                   />
                 </ListItem>
               </List>
@@ -114,4 +146,4 @@ Workflow.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default Workflow
+export default injectIntl(Workflow)

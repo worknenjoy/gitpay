@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch, HashRouter } from 'react-router-dom'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import Grid from 'material-ui/Grid'
 import Avatar from 'material-ui/Avatar'
@@ -25,7 +26,7 @@ import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
-import Preferences from '../profile/preferences'
+import Preferences from '../../components/profile/preferences'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
@@ -118,7 +119,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user } = this.props
+    const { classes, user, preferences } = this.props
 
     return (
       <Page>
@@ -142,7 +143,7 @@ class Profile extends Component {
                   <Route
                     exact
                     path='/profile/preferences'
-                    component={ () => <Preferences user={ user } /> }
+                    component={ () => <Preferences user={ user } preferences={ preferences } /> }
                   />
                 </Switch>
               </HashRouter>
@@ -208,7 +209,8 @@ class Profile extends Component {
                   <div className={ classes.infoItem }>
                     <Typography>
                       <h4>
-                        <DeviceHubIcon /> Repositórios
+                        <DeviceHubIcon />
+                        <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
                       </h4>
                       <p>{ user.repos }</p>
                     </Typography>
@@ -228,7 +230,11 @@ class Profile extends Component {
                         <ListItemText
                           classes={ { primary: classes.primary } }
                           inset
-                          primary={ <span>Tarefas</span> }
+                          primary={
+                            <span>
+                              <FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />
+                            </span>
+                          }
                         />
                       </MenuItem>
                       <MenuItem
@@ -243,7 +249,9 @@ class Profile extends Component {
                           classes={ { primary: classes.primary } }
                           inset
                           primary={
-                            <span>Configurar pagamento</span>
+                            <span>
+                              <FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />
+                            </span>
                           }
                         />
                       </MenuItem>
@@ -259,7 +267,9 @@ class Profile extends Component {
                           classes={ { primary: classes.primary } }
                           inset
                           primary={
-                            <span>Preferências</span>
+                            <span>
+                              <FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />
+                            </span>
                           }
                         />
                       </MenuItem>
@@ -283,4 +293,4 @@ Profile.propTypes = {
   history: PropTypes.object
 }
 
-export default withStyles(styles)(Profile)
+export default injectIntl(withStyles(styles)(Profile))

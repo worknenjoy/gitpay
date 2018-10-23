@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
@@ -14,6 +15,33 @@ import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
+
+const messages = defineMessages({
+  consultingItemPrimary: {
+    id: 'welcome.how.item.primary',
+    defaultMessage: 'Once subscribed you will know when new tasks are available to assign'
+  },
+  consultingItemSecondary: {
+    id: 'welcome.how.item.secondary',
+    defaultMessage: 'Clients create demands and they are looking for contributors with different skills'
+  },
+  consultingItemTwoPrimary: {
+    id: 'welcome.how.item.two.primary',
+    defaultMessage: 'You are assigned and receive all the instructions need to start'
+  },
+  consultingItemTwoSecondary: {
+    id: 'welcome.how.item.two.secondary',
+    defaultMessage: 'You get access to repo info with all you need to start and discuss about possible solutions'
+  },
+  consultingItemThreePrimary: {
+    id: 'welcome.how.item.three.primary',
+    defaultMessage: 'We validate your change, integrate the code and you receive a bounty'
+  },
+  consultingItemThreeSecondary: {
+    id: 'welcome.how.item.three.secondary',
+    defaultMessage: 'Your change goes to test and your solution will be reviewed and once integrated on the codebase, you receive a bounty'
+  }
+})
 
 class HowItWorksPeople extends Component {
   constructor (props) {
@@ -42,7 +70,11 @@ class HowItWorksPeople extends Component {
 
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
-        <ListItemText primary='Como funciona' />
+        <FormattedMessage id='welcome.how.title' defaultMessage='How it works'>
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
+        </FormattedMessage>
         <Dialog
           fullScreen
           open={ this.state.open }
@@ -55,13 +87,13 @@ class HowItWorksPeople extends Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant='title' className={ classes.appBarHeader }>
-                Para freelancers
+                <FormattedMessage id='welcome.how.people.title.freelancer' defaultMessage='For Frelancers' />
               </Typography>
             </Toolbar>
             <div classeName={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  Como funciona
+                  <FormattedMessage id='welcome.how.people.title' defaultMessage='How it works' />
                 </Typography>
               </MainTitle>
             </div>
@@ -74,8 +106,8 @@ class HowItWorksPeople extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='Se inscreva no site e saiba quando novas tarefas surgirem'
-                    secondary='Clientes enviam propostas para diferentes demandas do projeto e procuram freelancers com diferentes conhecimentos'
+                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -85,8 +117,8 @@ class HowItWorksPeople extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='Você é atribuído a tarefa e recebe as instruções'
-                    secondary='É dado o acesso ao repositório do projeto com o que precisa para começar e pode discutir sobre as soluções'
+                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -96,8 +128,8 @@ class HowItWorksPeople extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary=' A sua mudança é avaliada, o projeto é integrado e você recebe o pagamento'
-                    secondary=' Sua mudança é enviada e avaliada em um ambiente de testes e mudanças podem ser discutidas e revisadas com os envolvidos no projeto. Assim que a mudança é integrada você recebe o pagamento'
+                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
                   />
                 </ListItem>
               </List>
@@ -113,4 +145,4 @@ HowItWorksPeople.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default HowItWorksPeople
+export default injectIntl(HowItWorksPeople)

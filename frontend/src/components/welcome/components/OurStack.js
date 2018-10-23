@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import Chip from 'material-ui/Chip'
 import Typography from 'material-ui/Typography'
@@ -37,7 +38,7 @@ const handleClick = url => event => {
 const OurStack = ({ technologies }) => (
   <Content>
     <Typography variant='subheading' color='inherit' gutterBottom>
-        Nossa stack
+      <FormattedMessage id='info.stack.subheading' defaultMessage='Our stack' />
       <Stack>
         { technologies.map((technology, index) =>
           (<Technology

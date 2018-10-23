@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import ReactPlaceholder from 'react-placeholder'
+import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import Moment from 'moment'
 
 import Grid from 'material-ui/Grid'
@@ -27,6 +28,7 @@ import Switch from 'material-ui/Switch'
 import Select from 'material-ui/Select'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
+import { green, cyan } from 'material-ui/colors'
 
 import UserIcon from 'material-ui-icons/AccountCircle'
 import RedeemIcon from 'material-ui-icons/Redeem'
@@ -39,6 +41,7 @@ import PaymentTypeIcon from '../payment/payment-type-icon'
 
 import Const from '../../consts'
 import TabContainer from '../Tabs/TabContainer'
+import messages from './messages'
 
 function Transition (props) {
   return <Slide direction='up' { ...props } />
@@ -218,9 +221,9 @@ class Account extends Component {
 
     const getSteps = () => {
       return [
-        'Verificar identidade',
-        'Registrar conta bancária',
-        'Aceitar termos de uso'
+        <FormattedMessage id='account.id.verification' defaultMessage='Verify identity' />,
+        <FormattedMessage id='account.id.register.bank' defaultMessage='Register bank account' />,
+        <FormattedMessage id='account.terms.accept.step' defaultMessage='Accept terms' />
       ]
     }
 
@@ -253,8 +256,8 @@ class Account extends Component {
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={ { margin: 10 } } value={ 0 } label='Cartão' icon={ <PaymentTypeIcon type='stripe' notext /> } />
-                <Tab style={ { margin: 10 } } value={ 1 } label='Paypal' icon={ <PaymentTypeIcon type='paypal' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 0 } label={ this.props.intl.formatMessage(messages.cardTab) } icon={ <PaymentTypeIcon type='stripe' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 1 } label={ this.props.intl.formatMessage(messages.paypalTab) } icon={ <PaymentTypeIcon type='paypal' notext /> } />
               </Tabs>
             </AppBar>
             { this.state.currentTab === 0 &&
@@ -280,35 +283,47 @@ class Account extends Component {
                       <CardContent>
                         <div className={ classes.title }>
                           <Typography className={ classes.pos } color='textSecondary'>
-                            Status da sua conta:
+                            <FormattedMessage id='account.status' defaultMessage='Your account status:' />
                           </Typography>
                           { account.data.verification.disabled_reason ? (
-                            <Chip
-                              label={
-                                Const.ACCOUNT_REASONS[account.data.verification.disabled_reason] || 'Pendente'
-                              }
-                              style={ { marginRight: 20, backgroundColor: 'orange' } }
-                            />
+                            <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
+                              { (msg) => (
+                                <Chip
+                                  label={
+                                    this.props.intl.formatMessage(Const.ACCOUNT_REASONS[account.data.verification.disabled_reason]) || msg
+                                  }
+                                  style={ { marginRight: 20, backgroundColor: cyan['500'] } }
+                                />
+                              ) }
+                            </FormattedMessage>
                           ) : (
                             <div>
                               { account.data.external_accounts.total_count ? (
-                                <Chip
-                                  label={ 'Ativada' }
-                                  style={ {
-                                    color: 'white',
-                                    marginRight: 20,
-                                    backgroundColor: 'green'
-                                  } }
-                                />
+                                <FormattedMessage id='account.bank.activated' defaultMessage='Activated'>
+                                  { (msg) => (
+                                    <Chip
+                                      label={ msg }
+                                      style={ {
+                                        color: 'white',
+                                        marginRight: 20,
+                                        backgroundColor: 'green'
+                                      } }
+                                    />
+                                  ) }
+                                </FormattedMessage>
                               ) : (
-                                <Chip
-                                  label={ 'Falta dados bancários ( ir para próxima etapa)' }
-                                  style={ {
-                                    color: 'white',
-                                    marginRight: 20,
-                                    backgroundColor: 'orange'
-                                  } }
-                                />
+                                <FormattedMessage id='account.bank.missing' defaultMessage='Missing bank data (go to next step)'>
+                                  { (msg) => (
+                                    <Chip
+                                      label={ msg }
+                                      style={ {
+                                        color: 'white',
+                                        marginRight: 20,
+                                        backgroundColor: green['500']
+                                      } }
+                                    />
+                                  ) }
+                                </FormattedMessage>
                               ) }
                             </div>
                           ) }
@@ -316,7 +331,7 @@ class Account extends Component {
                         { account.data.verification.fields_needed.length && account.data.verification.fields_needed[0] !== 'legal_entity.verification.document' ? (
                           <div>
                             <Typography component='p'>
-                              { 'Temos os seguinte(s) campo(s) que precisa(m) ser verificado(s):' }
+                              <FormattedMessage id='account.pending.title' defaultMessage='We have the following items that needs to be verified:' />
                             </Typography>
                             <div>
                               { account.data.verification.fields_needed.map(
@@ -324,17 +339,21 @@ class Account extends Component {
                                   <Chip
                                     style={ { margin: 3 } }
                                     key={ i }
-                                    label={ `${Const.ACCOUNT_FIELDS[item]}` }
+                                    label={ this.props.intl.formatMessage(Const.ACCOUNT_FIELDS[item]) }
                                   />
                                 )
                               ) }
                             </div>
                           </div>
                         ) : (
-                          <Chip
-                            style={ { margin: 3 } }
-                            label={ 'Agora receberá as recompensas na sua conta ' }
-                          />
+                          <FormattedMessage id='account.details.complete' defaultMessage='Your account is now verified and you are able to receive all payments from tasks'>
+                            { (msg) => (
+                              <Chip
+                                style={ { margin: 3 } }
+                                label={ msg }
+                              />
+                            ) }
+                          </FormattedMessage>
                         ) }
                       </CardContent>
                       <CardActions>
@@ -346,8 +365,8 @@ class Account extends Component {
                           onClick={ this.openUpdateModal }
                         >
                           { account.data.verification.disabled_reason
-                            ? 'Ativar conta'
-                            : 'Atualizar conta' }
+                            ? <FormattedMessage id='account.activate' defaultMessage='Activate account' />
+                            : <FormattedMessage id='account.update' defaultMessage='Update account' /> }
                         </Button>
                         <Button
                           style={ { color: 'white' } }
@@ -356,7 +375,7 @@ class Account extends Component {
                           color='primary'
                           onClick={ () => this.handleStepTab(1) }
                         >
-                          Próximo passo
+                          <FormattedMessage id='account.steps.next' defaultMessage='Next step' />
                           <NextIcon />
                         </Button>
                       </CardActions>
@@ -376,7 +395,7 @@ class Account extends Component {
                             <Grid item xs={ 12 }>
                               { bankAccount.data.routing_number ? (
                                 <Typography color='primary'>
-                                  Sua conta bancária está ativa
+                                  <FormattedMessage id='account.active.statement' defaultMessage='Your bank account is active' />
                                 </Typography>
                               ) : (
                                 <FormControl
@@ -390,7 +409,9 @@ class Account extends Component {
                                     onChange={ this.handleBankNumberSelect }
                                   >
                                     <MenuItem value='' disabled>
-                                      <em>Selecione o banco</em>
+                                      <em>
+                                        <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
+                                      </em>
                                     </MenuItem>
                                     { Object.keys(Const.BANK_NUMBERS).map(
                                       (item, i) => {
@@ -405,7 +426,7 @@ class Account extends Component {
                                   { this.state.bankNumberError && (
                                     <FormHelperText>
                                       { ' ' }
-                                      Por favor selecione o banco
+                                      <FormattedMessage id='account.bank.select' defaultMessage='Please select your bank' />
                                     </FormHelperText>
                                   ) }
                                 </FormControl>
@@ -415,33 +436,41 @@ class Account extends Component {
                           <Grid container spacing={ 24 }>
                             <Grid item xs={ 12 }>
                               <FormControl>
-                                <Input
-                                  id='bank-routing-number'
-                                  name='routing_number'
-                                  placeholder='Agência'
-                                  style={ { marginRight: 20 } }
-                                  disabled={ !!bankAccount.data.routing_number }
-                                  defaultValue={ bankAccount.data.routing_number }
-                                />
+                                <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
+                                  { (msg) => (
+                                    <Input
+                                      id='bank-routing-number'
+                                      name='routing_number'
+                                      placeholder={ msg }
+                                      style={ { marginRight: 20 } }
+                                      disabled={ !!bankAccount.data.routing_number }
+                                      defaultValue={ bankAccount.data.routing_number }
+                                    />
+                                  ) }
+                                </FormattedMessage>
                               </FormControl>
                               <FormControl
                                 error={ this.state.AccountNumberError }
                               >
-                                <Input
-                                  id='bank-account-number'
-                                  name='account_number'
-                                  placeholder='Número da conta'
-                                  disabled={ !!bankAccount.data.routing_number }
-                                  defaultValue={
-                                    bankAccount.data.last4
-                                      ? `*****${bankAccount.data.last4}`
-                                      : ''
-                                  }
-                                />
+                                <FormattedMessage id='account.details.accountNumber' defaultMessage='Account number'>
+                                  { (msg) => (
+                                    <Input
+                                      id='bank-account-number'
+                                      name='account_number'
+                                      placeholder={ msg }
+                                      disabled={ !!bankAccount.data.routing_number }
+                                      defaultValue={
+                                        bankAccount.data.last4
+                                          ? `*****${bankAccount.data.last4}`
+                                          : ''
+                                      }
+                                    />
+                                  ) }
+                                </FormattedMessage>
                                 { this.state.AccountNumberError && (
                                   <FormHelperText>
                                     { ' ' }
-                                    Sem dígito verificador
+                                    <FormattedMessage id='account.details.numbersOnly' defaultMessage='Just numbers only' />
                                   </FormHelperText>
                                 ) }
                               </FormControl>
@@ -457,7 +486,7 @@ class Account extends Component {
                             type='submit'
                             disabled={ !!bankAccount.data.routing_number }
                           >
-                            Ativar conta bancária
+                            <FormattedMessage id='account.details.activate.action' defaultMessage='Activate bank account' />
                           </Button>
                           <Button
                             style={ { color: 'white' } }
@@ -467,7 +496,7 @@ class Account extends Component {
                             onClick={ () => this.handleStepTab(0) }
                           >
                             <PreviousIcon />
-                            Passo anterior
+                            <FormattedMessage id='account.steps.bank.previous' defaultMessage='Previous step' />
                           </Button>
                           <Button
                             style={ { color: 'white' } }
@@ -476,7 +505,7 @@ class Account extends Component {
                             color='primary'
                             onClick={ () => this.handleStepTab(2) }
                           >
-                            Próximo passo
+                            <FormattedMessage id='account.steps.next' defaultMessage='Next step' />
                             <NextIcon />
                           </Button>
                         </CardActions>
@@ -505,21 +534,25 @@ class Account extends Component {
                                       href='https://stripe.com/br/connect-account/legal'
                                     >
                                       { ' ' }
-                                      Acessar termos de uso do Stripe{ ' ' }
+                                      <FormattedMessage id='account.details.terms.access' defaultMessage='Access Stripe terms' />{ ' ' }
                                     </a>
                                   </Typography>
                                   <FormControl>
-                                    <FormControlLabel
-                                      control={
-                                        <Switch
-                                          checked={ this.state.terms }
-                                          onChange={ this.handleTermsChange }
-                                          value='terms'
-                                          color='primary'
+                                    <FormattedMessage id='account.details.terms.read' defaultMessage='I read and I accept the Stripe terms to receive transfers about payments directly on my account'>
+                                      { (msg) => (
+                                        <FormControlLabel
+                                          control={
+                                            <Switch
+                                              checked={ this.state.terms }
+                                              onChange={ this.handleTermsChange }
+                                              value='terms'
+                                              color='primary'
+                                            />
+                                          }
+                                          label={ msg }
                                         />
-                                      }
-                                      label='Eu li e aceito os termos do Stripe para receber transferências dos pagamentos para minha conta'
-                                    />
+                                      ) }
+                                    </FormattedMessage>
                                   </FormControl>
                                 </Grid>
                               </Grid>
@@ -534,7 +567,7 @@ class Account extends Component {
                                 disabled={ !this.state.terms }
                                 onClick={ this.handleAcceptTerms }
                               >
-                                Aceitar termos
+                                <FormattedMessage id='account.terms.accept' defaultMessage='Accept Terms' />
                               </Button>
                               <Button
                                 style={ { color: 'white' } }
@@ -544,7 +577,7 @@ class Account extends Component {
                                 onClick={ () => this.handleStepTab(1) }
                               >
                                 <PreviousIcon />
-                                Passo anterior
+                                <FormattedMessage id='account.steps.previous' defaultMessage='Previous step' />
                               </Button>
                             </CardActions>
                           </Card>
@@ -558,10 +591,10 @@ class Account extends Component {
                             <Grid container spacing={ 24 }>
                               <Grid item xs={ 12 }>
                                 <Typography color='primary'>
-                                  Você aceitou os termos em{ ' ' }
-                                  { `${Moment.unix(
+                                  <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
+                                  <FormattedDate value={ Moment.unix(
                                     account.data.tos_acceptance.date
-                                  ).format('DD/MM/YYYY [às] HH:mm:ss')}` }
+                                  ) } />
                                 </Typography>
                               </Grid>
                             </Grid>
@@ -575,7 +608,7 @@ class Account extends Component {
                               onClick={ () => this.handleStepTab(1) }
                             >
                               <PreviousIcon />
-                              Passo anterior
+                              <FormattedMessage id='account.steps.previous' defaultMessage='Previous step' />
                             </Button>
                             <Button
                               style={ { color: 'white' } }
@@ -584,7 +617,7 @@ class Account extends Component {
                               color='primary'
                               onClick={ () => this.handleStepTab(0) }
                             >
-                              Concluir
+                              <FormattedMessage id='account.steps.finish' defaultMessage='Finish' />
                               <ConcludeIcon />
                             </Button>
                           </CardActions>
@@ -602,11 +635,11 @@ class Account extends Component {
                     maxWidth='sm'
                   >
                     <DialogTitle id='alert-dialog-slide-title'>
-                      Verificar conta
+                      <FormattedMessage id='account.verify.title' defaultMessage='Verify account' />
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText id='alert-dialog-slide-description'>
-                        Preecha os dados para verificar sua conta
+                        <FormattedMessage id='account.verify.desc' defaultMessage='Please fill the data to verify your account' />
                       </DialogContentText>
                       <form
                         onSubmit={ this.handleSubmit }
@@ -616,22 +649,30 @@ class Account extends Component {
                         <Grid container spacing={ 24 }>
                           <Grid item xs={ 12 }>
                             <FormControl>
-                              <Input
-                                id='payment-form-user'
-                                name='legal_entity[first_name]'
-                                placeholder='Primeiro nome'
-                                style={ { marginRight: 20 } }
-                                defaultValue={ account.data.legal_entity.first_name }
-                              />
+                              <FormattedMessage id='account.verify.firstName' defaultMessage='First name'>
+                                { (msg) => (
+                                  <Input
+                                    id='payment-form-user'
+                                    name='legal_entity[first_name]'
+                                    placeholder={ msg }
+                                    style={ { marginRight: 20 } }
+                                    defaultValue={ account.data.legal_entity.first_name }
+                                  />
+                                ) }
+                              </FormattedMessage>
                             </FormControl>
                             <FormControl>
-                              <Input
-                                name='legal_entity[last_name]'
-                                id='adornment-email'
-                                placeholder='Último nome'
-                                style={ { marginRight: 20 } }
-                                defaultValue={ account.data.legal_entity.last_name }
-                              />
+                              <FormattedMessage id='account.verify.lastName' defaultMessage='Last name'>
+                                { (msg) => (
+                                  <Input
+                                    name='legal_entity[last_name]'
+                                    id='adornment-email'
+                                    placeholder={ msg }
+                                    style={ { marginRight: 20 } }
+                                    defaultValue={ account.data.legal_entity.last_name }
+                                  />
+                                ) }
+                              </FormattedMessage>
                             </FormControl>
                             <FormControl>
                               <Input
@@ -640,8 +681,8 @@ class Account extends Component {
                                 placeholder={
                                   account.data.legal_entity
                                     .personal_id_number_provided
-                                    ? 'CPF fornecido'
-                                    : 'Número do CPF'
+                                    ? this.props.intl.formatMessage(messages.documentProvided)
+                                    : this.props.intl.formatMessage(messages.documentProvide)
                                 }
                                 disabled={
                                   account.data.legal_entity
@@ -658,7 +699,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[address][line1]'
-                                placeholder='Endereço'
+                                placeholder={ this.props.intl.formatMessage(messages.addressLine1) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={
                                   account.data.legal_entity.address.line1
@@ -669,7 +710,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[address][line2]'
-                                placeholder='Complemento'
+                                placeholder={ this.props.intl.formatMessage(messages.addressLine2) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={
                                   account.data.legal_entity.address.line2
@@ -680,7 +721,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[address][postal_code]'
                                 id='adornment-email'
-                                placeholder='CEP'
+                                placeholder={ this.props.intl.formatMessage(messages.zipCode) }
                                 defaultValue={
                                   account.data.legal_entity.address.postal_code
                                 }
@@ -692,7 +733,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[address][city]'
                                 id='adornment-city'
-                                placeholder='Cidade'
+                                placeholder={ this.props.intl.formatMessage(messages.city) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={
                                   account.data.legal_entity.address.city
@@ -703,7 +744,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[address][state]'
-                                placeholder='Estado'
+                                placeholder={ this.props.intl.formatMessage(messages.state) }
                                 defaultValue={
                                   account.data.legal_entity.address.state
                                 }
@@ -715,7 +756,7 @@ class Account extends Component {
                               <Input
                                 id='payment-form-user'
                                 name='legal_entity[dob][day]'
-                                placeholder='Dia do nascimento'
+                                placeholder={ this.props.intl.formatMessage(messages.dob) }
                                 style={ { marginRight: 20 } }
                                 defaultValue={ account.data.legal_entity.dob.day }
                               />
@@ -731,7 +772,9 @@ class Account extends Component {
                                 } }
                               >
                                 <option value=''>
-                                  <em>Mês do nascimento</em>
+                                  <em>
+                                    <FormattedMessage id='account.details' defaultMessage='Month of birth' />
+                                  </em>
                                 </option>
                                 { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                   (item, i) => {
@@ -748,7 +791,7 @@ class Account extends Component {
                               <Input
                                 name='legal_entity[dob][year]'
                                 id='adornment-email'
-                                placeholder='Ano do nascimento'
+                                placeholder={ this.props.intl.formatMessage(messages.birthYear) }
                                 defaultValue={ account.data.legal_entity.dob.year }
                               />
                             </FormControl>
@@ -759,14 +802,14 @@ class Account extends Component {
                                 color='primary'
                                 onClick={ this.closeUpdateModal }
                               >
-                                Cancelar
+                                <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
                               </Button>
                               <Button
                                 type='submit'
                                 variant='raised'
                                 color='secondary'
                               >
-                                { 'Atualizar conta' }
+                                <FormattedMessage id='account.actions.update' defaultMessage='Update Account' />
                               </Button>
                             </div>
                           </Grid>
@@ -781,7 +824,7 @@ class Account extends Component {
                   <Card className={ classes.cardEmpty }>
                     <CardContent>
                       <Typography className={ classes.title } color='textSecondary'>
-                        Você não tem nenhuma cadastrada para recebimento
+                        <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
                       </Typography>
                     </CardContent>
                     <CardActions className={ classes.cardEmptyActions }>
@@ -792,7 +835,7 @@ class Account extends Component {
                         color='primary'
                         onClick={ () => this.props.createAccount(user.user.id) }
                       >
-                        Criar conta
+                        <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
                       </Button>
                     </CardActions>
                   </Card> }
@@ -809,26 +852,27 @@ class Account extends Component {
                   <CardContent>
                     <div className={ classes.title }>
                       <Typography className={ classes.pos } color='textSecondary'>
-                        Ativar sua conta com o Paypal:
+                        <FormattedMessage id='account.register.paypal.title' defaultMessage='Activate PayPal account:' />
                       </Typography>
                       <Typography component='p' color='textSecondary' style={ { marginBottom: 20, marginTop: 20 } }>
-                        Ativando a conta com o Paypal, você receberá os valores na conta fornecida aqui. <br />
-                        Nesta modalidade, as taxas do Paypal serão aplicadas
+                        <FormattedMessage id='account.register.paypal.description' defaultMessage='When you activate your account with PayPal, you will receive the bounties in the account that you will provide here. The Paypal taxes will be applied' />
                       </Typography>
                       { !user.user.paypal_id ? (
-                        <Chip
-                          label={
-                            'Esta conta não está associada ao Paypal'
-                          }
-                          style={ { marginRight: 20, backgroundColor: 'orange' } }
-                        />
+                        <FormattedMessage id='account.register.paypal.status' defaultMessage='This account is not associated with PayPal'>
+                          { (msg) => (
+                            <Chip
+                              label={ msg }
+                              style={ { marginRight: 20, backgroundColor: 'orange' } }
+                            />
+                          ) }
+                        </FormattedMessage>
                       ) : (
                         <div>
                           <Typography className={ classes.pos } color='textSecondary'>
-                          Status da sua conta:
+                            <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
                           </Typography>
                           <Chip
-                            label={ 'Ativada' }
+                            label={ this.props.intl.formatMessage(messages.activeStatus) }
                             style={ {
                               color: 'white',
                               marginRight: 20,
@@ -840,12 +884,13 @@ class Account extends Component {
                     </div>
                     <Grid item xs={ 12 }>
                       <FormControl>
-                        <InputLabel htmlFor='adornment-password'>Email do Paypal</InputLabel>
+                        <InputLabel htmlFor='adornment-password'>
+                          <FormattedMessage id='account.register.paypay.email' defaultMessage='PayPal registered email' />
+                        </InputLabel>
                         <Input
                           name='paypal_email'
                           type='email'
                           id='adornment-email'
-                          placeholder='Email do Paypal'
                           style={ { marginRight: 20 } }
                           defaultValue={
                             user.user.paypal_id ? `${user.user.paypal_id}` : `${user.user.email}`
@@ -863,8 +908,9 @@ class Account extends Component {
                       type='submit'
                     >
                       { !user.paypal_id
-                        ? 'Ativar conta'
-                        : 'Atualizar conta' }
+                        ? <FormattedMessage id='account.register.paypay.activate' defaultMessage='Activate account' />
+                        : <FormattedMessage id='account.register.paypay.update' defaultMessage='Update account' />
+                      }
                     </Button>
                   </CardActions>
                 </Card>
@@ -890,4 +936,4 @@ Account.propTypes = {
   updateUser: PropTypes.func
 }
 
-export default withStyles(styles)(Account)
+export default injectIntl(withStyles(styles)(Account))

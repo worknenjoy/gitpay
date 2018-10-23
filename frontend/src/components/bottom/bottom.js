@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import List from 'material-ui/List'
 import Button from 'material-ui/Button'
-import SubscribeFrom from 'react-mailchimp-subscribe'
 import Divider from 'material-ui/Divider'
 
 import { withStyles } from 'material-ui/styles'
 
+import SubscribeForm from '../form/subscribe-form'
 import HowItWorksPeople from '../welcome/how-it-works-people'
 import WhoSubscribes from '../welcome/who-subscribes'
 import Workflow from '../welcome/workflow'
 import HowItWorksCompany from '../welcome/how-it-works-company'
 import WhichCompanies from '../welcome/which-companies'
 import Consulting from '../welcome/consulting'
-import formProps from '../form/form-props'
 
 import mainStyles from '../styles/style'
 
@@ -39,7 +39,9 @@ class Bottom extends Component {
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography type='subheading'>
-                <strong>Para freelancers</strong>
+                <strong>
+                  <FormattedMessage id='bottom.header.subheading1' defaultMessage='For Freelancers' />
+                </strong>
               </Typography>
               <List component='nav'>
                 <HowItWorksPeople classes={ classes } />
@@ -49,7 +51,9 @@ class Bottom extends Component {
             </Grid>
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography type='subheading'>
-                <strong>Para empresas</strong>
+                <strong>
+                  <FormattedMessage id='bottom.header.subheading2' defaultMessage='For Companies' />
+                </strong>
               </Typography>
               <List component='nav'>
                 <HowItWorksCompany classes={ classes } />
@@ -59,7 +63,9 @@ class Bottom extends Component {
             </Grid>
             <Grid item xs={ 12 } sm={ 2 }>
               <Typography type='subheading'>
-                <strong>Parceiros</strong>
+                <strong>
+                  <FormattedMessage id='bottom.subheading3' defaultMessage='Partners' />
+                </strong>
               </Typography>
               <Button
                 label='Jooble'
@@ -70,11 +76,10 @@ class Bottom extends Component {
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
               <Typography type='subheading'>
-                Tá na dúvida aí? Não se preocupe, deixe seu e-mail e fique
-                sabendo de novos desafios!
+                <FormattedMessage id='bottom.subheading.newsletter' defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!' />
               </Typography>
               <SubscribeFromWrapper className='subscribe-form'>
-                <SubscribeFrom { ...formProps } />
+                <SubscribeForm />
               </SubscribeFromWrapper>
               <Typography type='caption'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />

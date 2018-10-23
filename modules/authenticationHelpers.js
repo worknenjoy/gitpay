@@ -33,7 +33,7 @@ function isAuth (req, res, next) {
       const userData = decoded
       // check if a user exists
       return userExist(userData).then(user => {
-        return res.send({ 'authenticated': true, user: user })
+        return res.send({ authenticated: true, user: user })
       }).catch(e => {
         // eslint-disable-next-line no-console
         console.log('error to sign user')

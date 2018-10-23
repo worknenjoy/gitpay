@@ -1,16 +1,28 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, defineMessages } from 'react-intl'
 import {
   Redirect, BrowserRouter as Router
 } from 'react-router-dom'
 
+const messages = defineMessages({
+  orderSuccess: {
+    id: 'task.order.payment.success',
+    defaultMessage: 'Your order was completed successfully'
+  },
+  orderError: {
+    id: 'task.order.payment.error',
+    defaultMessage: 'We had a issue to process your payment'
+  }
+})
+
 class TaskOrders extends Component {
   componentWillMount () {
     if (this.props.match.params.status === 'success') {
-      this.props.addNotification('Seu pagamento foi efetuado com sucesso')
+      this.props.addNotification(this.props.intl.formatMessage(messages.orderSuccess))
     }
     else {
-      this.props.addNotification('Tivemos um problema para completar seu pagamento')
+      this.props.addNotification(this.props.intl.formatMessage(messages.orderError))
     }
     this.props.history.replace(`/#/task/${this.props.match.params.id}`)
     this.props.changeTab(1)
@@ -40,4 +52,4 @@ TaskOrders.propTypes = {
   changeTab: PropTypes.func.isRequired
 }
 
-export default TaskOrders
+export default injectIntl(TaskOrders)

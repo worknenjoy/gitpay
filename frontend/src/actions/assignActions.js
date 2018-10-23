@@ -29,12 +29,12 @@ const assignTask = (taskId, assignId) => {
         assigned: assignId
       })
       .then(response => {
-        dispatch(addNotification('Tarefa atualizada com sucesso!'))
+        dispatch(addNotification('actions.assign.task.sucess'))
         dispatch(assignTaskSuccess(2))
         return dispatch(fetchTask(taskId))
       })
       .catch(error => {
-        dispatch(addNotification('Não foi possível atualizar tarefa.'))
+        dispatch(addNotification('actions.assign.task.error'))
         return dispatch(assignTaskError(error))
       })
   }
@@ -66,12 +66,12 @@ export const removeAssignment = (id, message) => dispatch => {
   axios
     .put(`${api.API_URL}/tasks/${id}/assignment/remove`, { message })
     .then(response => {
-      dispatch(addNotification('Tarefa atualizada com sucesso!'))
+      dispatch(addNotification('action.task.remove.assign.success'))
       dispatch(removeAssignmentSuccess())
       return dispatch(fetchTask(id))
     })
     .catch(error => {
-      dispatch(addNotification('Não foi possível atualizar tarefa.'))
+      dispatch(addNotification('action.task.remove.assign.error'))
       return dispatch(removeAssignmentError(error))
     })
 }

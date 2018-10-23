@@ -9,6 +9,7 @@ const passport = require('passport')
 require('./config/passport')
 const load = require('./modules/load/load')
 const feed = require('feed-read')
+const i18n = require('i18n')
 
 const { job } = require('./cron')
 job.start()
@@ -22,6 +23,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SECRET_PHRASE
 }))
+
+i18n.configure({
+  directory: `${__dirname}/locales`,
+  locales: ['en', 'br'],
+  defaultLocale: 'en',
+  updateFiles: false
+})
+
+app.use(i18n.init)
 
 app.use(passport.initialize())
 app.use(passport.session())

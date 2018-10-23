@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import Avatar from 'material-ui/Avatar'
 import List from 'material-ui/List'
 import ListItem from 'material-ui/List/ListItem'
@@ -30,20 +31,27 @@ const providerStatus = {
   }
 }
 
-const statusesDisplay = {
-  open: 'Aberta',
-  new: 'Aberta',
-  in_progress: 'Em desenvolvimento',
-  closed: 'Finalizada',
-  resolved: 'Finalizada'
-}
-
 const styles = {
   avatar: {
     backgroundColor: blue[100],
     color: blue[600]
   }
 }
+
+const messages = defineMessages({
+  openStatus: {
+    id: 'task.status.filter.open',
+    defaultMessage: 'Open'
+  },
+  inProgressStatus: {
+    id: 'task.status.filter.progress',
+    defaultMessage: 'In progress'
+  },
+  closed: {
+    id: 'task.status.filter.close',
+    defaultMessage: 'Finished'
+  }
+})
 
 class StatusDialog extends Component {
   handleListItemClick (status) {
@@ -53,6 +61,13 @@ class StatusDialog extends Component {
 
   render () {
     const { classes, onClose, selectedValue, ...other } = this.props
+    const statusesDisplay = {
+      open: this.props.intl.formatMessage(messages.openStatus),
+      new: this.props.intl.formatMessage(messages.openStatus),
+      in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
+      closed: this.props.intl.formatMessage(messages.closed),
+      resolved: this.props.intl.formatMessage(messages.closed)
+    }
 
     return (
       <Dialog
@@ -60,7 +75,9 @@ class StatusDialog extends Component {
         aria-labelledby='simple-dialog-title'
         { ...other }
       >
-        <DialogTitle id='simple-dialog-title'>Status da tarefa</DialogTitle>
+        <DialogTitle id='simple-dialog-title'>
+          <FormattedMessage id='account.dialog.status' defaultMessage='Task status' />
+        </DialogTitle>
         <div>
           <List>
             { statuses.map((status, index) => (
@@ -97,7 +114,7 @@ class StatusDialog extends Component {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={ `Do ${this.props.provider}: ${
+                primary={ `${this.props.provider}: ${
                   statusesDisplay[this.props.providerStatus]
                 }` }
               />
@@ -119,4 +136,4 @@ StatusDialog.propTypes = {
   id: PropTypes.number
 }
 
-export default withStyles(styles)(StatusDialog)
+export default injectIntl(withStyles(styles)(StatusDialog))

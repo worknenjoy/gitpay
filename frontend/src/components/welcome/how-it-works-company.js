@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
@@ -15,6 +16,33 @@ import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
+
+const messages = defineMessages({
+  consultingItemPrimary: {
+    id: 'welcome.how.item.primary',
+    defaultMessage: 'The company needs an issue solved on the project'
+  },
+  consultingItemSecondary: {
+    id: 'welcome.how.item.secondary',
+    defaultMessage: 'We evaluate your demand and help you to go on the right track'
+  },
+  consultingItemTwoPrimary: {
+    id: 'welcome.how.item.two.primary',
+    defaultMessage: 'We can make ideas grows and be executed one by one, in a full development cycle'
+  },
+  consultingItemTwoSecondary: {
+    id: 'welcome.how.item.two.secondary',
+    defaultMessage: 'We offer services to make your idea reach the market in a colaborative way with all the competencies in design, content and development, and you pay on demand for each issue concluded'
+  },
+  consultingItemThreePrimary: {
+    id: 'welcome.how.item.three.primary',
+    defaultMessage: 'Your task is sent for colaborators'
+  },
+  consultingItemThreeSecondary: {
+    id: 'welcome.how.item.three.secondary',
+    defaultMessage: 'Your issue is assigned and delivery on a deadline your provide with the price that you invest for each task'
+  }
+})
 
 class HowItWorksCompany extends Component {
   constructor (props) {
@@ -43,7 +71,11 @@ class HowItWorksCompany extends Component {
 
     return (
       <ListItem button onClick={ this.handleClickOpen } component='a'>
-        <ListItemText primary='Como funciona' />
+        <FormattedMessage id='welcome.how.title' defaultMessage='How it works'>
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
+        </FormattedMessage>
         <Dialog
           fullScreen
           open={ this.state.open }
@@ -56,13 +88,13 @@ class HowItWorksCompany extends Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant='title' className={ classes.appBarHeader }>
-                Para empresas
+                <FormattedMessage id='welcome.how.title.company' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
             <div classeName={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  Como funciona
+                  <FormattedMessage id='welcome.how.title' defaultMessage='How it works' />
                 </Typography>
               </MainTitle>
             </div>
@@ -75,8 +107,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='A empresa precisa de uma demanda resolvida para o seu projeto'
-                    secondary='Avaliamos sua demanda e a realidade da empresa para que seu projeto tenha uma estrutura mínima de desenvolvimento para as diferentes competências'
+                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -86,8 +118,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='Empresas podem nascer, idéias podem entrar em prática'
-                    secondary='Oferecemos serviços para que sua idéia saia do papel de forma colaborativa entre as diferentes competências como design, conteúdo e desenvolvimento, e você paga apenas por cada trabalho concluído de forma iterativa. Cada demanda é integrada e pronta para ser usada pelos clientes'
+                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -97,8 +129,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary='Sua tarefa é enviada para os freelancers'
-                    secondary='A sua demanda é traduzida e dividida entre as diferentes competência para então ser atribuída aos freelancers que irão realizar a entrega de acordo com prazo e valores que podem ser definidos usando diferentes processos adaptados à realidade do seu projeto e tamanho da empresa'
+                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
                   />
                 </ListItem>
               </List>
@@ -114,4 +146,4 @@ HowItWorksCompany.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default HowItWorksCompany
+export default injectIntl(HowItWorksCompany)

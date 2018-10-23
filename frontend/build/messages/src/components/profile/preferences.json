@@ -1,0 +1,18 @@
+[
+  {
+    "id": "preferences.headline",
+    "defaultMessage": "Preferences"
+  },
+  {
+    "id": "preferences.subtitle",
+    "defaultMessage": "Setup your account"
+  },
+  {
+    "id": "preferences.language.name",
+    "defaultMessage": "Language"
+  },
+  {
+    "id": "preferences.language.currency.name",
+    "defaultMessage": "USD (Dolars)"
+  }
+]

@@ -48,27 +48,31 @@ export const loggedIn = () => {
         })
         .then(response => {
           if (!Auth.getAuthNotified()) {
-            dispatch(addNotification('Você logou na sua conta com sucesso'))
+            dispatch(addNotification('user.login.successfull'))
             Auth.authNotified()
           }
           return dispatch(loggedInSuccess(response.data.user))
         })
         .catch(error => {
           dispatch(
-            addNotification('Tivemos um problema ao tentar logar na sua conta')
+            addNotification('user.login.error')
           )
           return dispatch(loggedInError(error))
         })
     }
   }
-  return loggedInError()
+  else {
+    return dispatch => {
+      return Promise.reject(dispatch(loggedInError({ error: 'not logged' })))
+    }
+  }
 }
 
 export const logOut = () => {
   Auth.deauthenticateUser()
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(loggedOutRequested())
-    dispatch(addNotification('Você acabou de sair da sua conta'))
+    dispatch(addNotification('user.logout'))
     dispatch(loggedOutCompleted())
   }
 }

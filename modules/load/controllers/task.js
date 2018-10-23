@@ -82,7 +82,11 @@ exports.deleteTaskById = (req, res) => {
 exports.inviteUserToTask = ({ params, body }, res) => Tasks
   .taskInvite(params, body)
   .then(data => res.send(data))
-  .catch(error => res.send({ error: error.message }))
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.log('error on task controller invite', error)
+    res.send({ error: error.message })
+  })
 
 // Assigns functions.
 exports.removeAssignedUser = ({ params, body }, res) => Tasks

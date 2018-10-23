@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
@@ -29,7 +30,7 @@ class TaskItem extends Component {
   }
 
   render () {
-    const { item, key, ready, classes } = this.props
+    const { item, key, ready, classes, intl } = this.props
 
     return (
       <ReactPlaceholder
@@ -50,10 +51,10 @@ class TaskItem extends Component {
           <ListItemText
             id={ item.id }
             primary={ TextEllipsis(item.url, 50) }
-            secondary={ item.value ? `$ ${item.value}` : 'sem valor' }
+            secondary={ item.value ? `$ ${item.value}` : ' - ' }
           />
           <Chip
-            label={ Constants.STATUSES[item.status] }
+            label={ intl.formatMessage(Constants.STATUSES[item.status]) }
             style={ {
               marginRight: 10,
               backgroundColor: 'green',
@@ -64,7 +65,7 @@ class TaskItem extends Component {
             label={
               item.deadline
                 ? MomentComponent(item.deadline).fromNow()
-                : 'sem data definida'
+                : ' - '
             }
             style={ {
               marginRight: 20,
@@ -74,7 +75,7 @@ class TaskItem extends Component {
           />
           <ListItemSecondaryAction>
             <IconButton aria-label='provider'>
-              <Tooltip id='tooltip-fab' title={ `Ver no ${item.provider}` } placement='right'>
+              <Tooltip id='tooltip-fab' title={ `${item.provider}` } placement='right'>
                 <a target='_blank' href={ item.url }>
                   <img width='24' src={ item.provider === 'github' ? logoGithub : logoBitbucket } className={ classes.icon } />
                 </a>
@@ -95,4 +96,4 @@ TaskItem.propTypes = {
   classes: PropTypes.string
 }
 
-export default withRouter(TaskItem)
+export default injectIntl(withRouter(TaskItem))

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import ReactPlaceholder from 'react-placeholder'
-import { RoundShape } from 'react-placeholder/lib/placeholders'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { store } from '../../main/app'
 
 import Dialog, {
   DialogActions,
@@ -13,6 +12,7 @@ import Dialog, {
 
 import Tooltip from 'material-ui/Tooltip'
 import { FormControl, FormHelperText } from 'material-ui/Form'
+import Avatar from 'material-ui/Avatar'
 import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 import HomeIcon from 'material-ui-icons/Home'
@@ -20,7 +20,11 @@ import PlusIcon from 'material-ui-icons/Queue'
 import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
+import CircularProgress from 'material-ui/Progress/CircularProgress'
+
 import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router-dom'
+import { updateIntl } from 'react-intl-redux'
 
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Button from 'material-ui/Button'
@@ -36,14 +40,51 @@ import {
   StyledButton,
   LabelButton,
   StyledAvatar,
+  StyledAvatarIconOnly,
   OnlyDesktop,
 } from './TopbarStyles'
+
+import messagesBr from '../../translations/br.json'
+import messagesEn from '../../translations/en.json'
 
 import LoginButton from '../session/login-button'
 
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
+
+const logoLangEn = require('../../images/united-states-of-america.png')
+const logoLangBr = require('../../images/brazil.png')
+
+const languagesIcons = {
+  en: logoLangEn,
+  br: logoLangBr
+}
+
+const messages = {
+  'br': messagesBr,
+  'en': messagesEn
+}
+
+const browserLanguage = navigator.language.split(/[-_]/)[0]
+
+const localStorageLang = () => {
+  /* eslint-disable no-undef */
+  return localStorage.getItem('userLanguage')
+}
+
+const logoLang = (lang) => {
+  return languagesIcons[lang]
+}
+
+const currentUserLanguage = (preferences) => {
+  const prefLang = preferences.language
+  if (prefLang) {
+    /* eslint-disable no-undef */
+    localStorage.setItem('userLanguage', prefLang)
+  }
+  return preferences.language || localStorageLang() || browserLanguage
+}
 
 const isBitbucketUrl = (url) => {
   return url.indexOf('bitbucket') > -1
@@ -74,13 +115,23 @@ class TopBar extends Component {
   }
 
   componentDidMount () {
-    this.props.isLogged()
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.location !== this.props.location) {
-      this.props.isLogged()
-    }
+    /* eslint-disable no-undef */
+    const currentStoredLang = localStorage.getItem('userLanguage')
+    this.props.fetchPreferences(this.props.user.id).then(() => {
+      if (!currentStoredLang) {
+        const currentLangSuccess = currentUserLanguage(this.props.preferences)
+        store.dispatch(updateIntl({
+          locale: currentLangSuccess,
+          messages: messages[currentLangSuccess],
+        }))
+      }
+    }).catch(e => {
+      const currentLangError = currentUserLanguage(this.props.preferences)
+      store.dispatch(updateIntl({
+        locale: currentLangError,
+        messages: messages[currentLangError],
+      }))
+    })
   }
 
   handleChange = (event, checked) => {
@@ -171,17 +222,26 @@ class TopBar extends Component {
     this.props.signOut()
   }
 
+  switchLang = (lang) => {
+    this.setState({ anchorEl: null })
+    if (this.props.logged) {
+      this.props.updateUser(this.props.user.id, {
+        language: lang
+      })
+    }
+    /* eslint-disable no-undef */
+    localStorage.setItem('userLanguage', lang)
+    store.dispatch(updateIntl({
+      locale: lang,
+      messages: messages[lang],
+    }))
+  }
+
   render () {
-    const { completed, user } = this.props
+    const { completed, user, preferences } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
-    const open = Boolean(anchorEl)
-
-    const avatarPlaceholder = (
-      <div className='avatar-placeholder'>
-        <RoundShape color='#ccc' style={ { width: 40, height: 40, margin: 10 } } />
-      </div>
-    )
+    const userCurrentLanguage = currentUserLanguage(preferences)
 
     return (
       <Bar>
@@ -199,16 +259,20 @@ class TopBar extends Component {
               size='small'
               color='primary'
             >
-              <LabelButton>Criar tarefa</LabelButton><PlusIcon />
+              <LabelButton>
+                <FormattedMessage id='task.actions.create' defaultMessage='Create task' />
+              </LabelButton><PlusIcon />
             </StyledButton>
             <StyledButton
               onClick={ this.handleViewTasks }
               variant='raised'
               size='small'
               color='primary'
-              paddingLeft
             >
-              <LabelButton>Explorar tarefas</LabelButton><TasksIcon />
+              <LabelButton>
+                <FormattedMessage id='task.actions.explore' defaultMessage='Explore tasks' />
+              </LabelButton>
+              <TasksIcon />
             </StyledButton>
 
             <div>
@@ -217,9 +281,10 @@ class TopBar extends Component {
                 variant='raised'
                 size='small'
                 color='default'
-                paddingLeft
               >
-                <LabelButton>Documentação</LabelButton><LibraryIcon />
+                <LabelButton>
+                  <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
+                </LabelButton><LibraryIcon />
               </StyledButton>
             </div>
 
@@ -230,9 +295,10 @@ class TopBar extends Component {
                   variant='raised'
                   size='small'
                   color='secondary'
-                  paddingLeft
                 >
-                  <LabelButton>Entrar</LabelButton><UserIcon />
+                  <LabelButton>
+                    <FormattedMessage id='task.bar.signin' defaultMessage='Signin' />
+                  </LabelButton><UserIcon />
                 </StyledButton>
 
                 <Dialog
@@ -240,7 +306,9 @@ class TopBar extends Component {
                   onClose={ this.handleSignUserDialogClose }
                   aria-labelledby='form-dialog-title'
                 >
-                  <DialogTitle id='form-dialog-title'>Entre para a comunidade do Gitpay</DialogTitle>
+                  <DialogTitle id='form-dialog-title'>
+                    <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
+                  </DialogTitle>
                   <DialogContent>
                     <LoginButton referer={ this.props.location } size='medium' />
                   </DialogContent>
@@ -248,14 +316,27 @@ class TopBar extends Component {
               </div>) : (
                 <div>
                   <StyledButton
-                    onClick={ this.handleProfile }
+                    onClick={ this.handleMenu }
                     variant='raised'
                     size='small'
                     color='secondary'
-                    paddingLeft
+                    id='account-menu'
                   >
-                    <LabelButton>Acessar conta</LabelButton>
-                    <UserIcon />
+                    <LabelButton>
+                      <FormattedMessage id='task.actions.account' defaultMessage='Account' />
+                    </LabelButton>
+                    { user.picture_url &&
+                      <StyledAvatar
+                        alt={ user.username }
+                        src={ user.picture_url }
+                      />
+                    }
+
+                    { !user.picture_url &&
+                      <StyledAvatar alt={ user.username } src=''>
+                        { nameInitials(user.username) }
+                      </StyledAvatar>
+                    }
                   </StyledButton>
                 </div>
               )
@@ -267,11 +348,13 @@ class TopBar extends Component {
                 onClose={ this.handleClickDialogCreateTaskClose }
                 aria-labelledby='form-dialog-title'
               >
-                <DialogTitle id='form-dialog-title'>Inserir uma nova tarefa</DialogTitle>
+                <DialogTitle id='form-dialog-title'>
+                  <FormattedMessage id='task.actions.insert.new' defaultMessage='Insert a new task' />
+                </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
                     <Typography type='subheading' gutterBottom>
-                      Para inserir uma nova tarefa, cole a URL de um incidente do <strong>Github</strong> ou <strong>Bitbucket</strong>
+                      <FormattedHTMLMessage id='task.actions.insert.subheading' defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
                     </Typography>
                   </DialogContentText>
                   <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
@@ -281,7 +364,7 @@ class TopBar extends Component {
                       margin='dense'
                       id='url'
                       name='url'
-                      label='URL da tarefa'
+                      label='URL'
                       type='url'
                       fullWidth
                     />
@@ -308,60 +391,82 @@ class TopBar extends Component {
                       </Button>
                     </div>
                     { this.state.task.url.error &&
-                    <FormHelperText error={ this.state.task.url.error }>A URL inserida não é válida</FormHelperText>
+                    <FormHelperText error={ this.state.task.url.error }>
+                      <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
+                    </FormHelperText>
                     }
                   </FormControl>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
-                    Cancelar
+                    <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                   </Button>
                   <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='raised' color='secondary' >
-                    Inserir
+                    <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
                   </Button>
                 </DialogActions>
               </Dialog>
             </form>
-
-            <ReactPlaceholder showLoadingAnimation customPlaceholder={ avatarPlaceholder } ready={ completed }>
-              <div>
-                { (isLoggedIn && user.picture_url) &&
-                  <StyledAvatar
+            <Tooltip id='tooltip-lang' title='Escolher idioma' placement='bottom'>
+              <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
+                { completed ? (
+                  <StyledAvatarIconOnly
                     alt={ user.username }
-                    src={ user.picture_url }
-                    onClick={ this.handleMenu }
+                    src={ logoLang(userCurrentLanguage) }
                   />
-                }
-
-                { (isLoggedIn && !user.picture_url) &&
-                  <StyledAvatar alt={ user.username } src='' onClick={ this.handleMenu }>
-                    { nameInitials(user.username) }
-                  </StyledAvatar>
-                }
-
-                { isLoggedIn &&
-                  <Menu
-                    id='menu-appbar'
-                    anchorEl={ anchorEl }
-                    anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-                    transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-                    open={ open }
-                    onClose={ this.handleClose }
-                  >
-                    <MenuItem onClick={ this.handleProfile }>Sua conta</MenuItem>
-                    <MenuItem onClick={ this.handleSignOut }>Sair</MenuItem>
-                  </Menu>
-                }
-              </div>
-            </ReactPlaceholder>
+                ) : (
+                  <Avatar>
+                    <CircularProgress />
+                  </Avatar>
+                ) }
+              </Button>
+            </Tooltip>
+            <Menu
+              id='menu-appbar'
+              anchorEl={ anchorEl }
+              anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+              transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+              open={ anchorEl && anchorEl.id === 'language-menu' }
+              onClose={ this.handleClose }
+            >
+              <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
+                <StyledAvatarIconOnly
+                  alt='English'
+                  src={ logoLangEn }
+                />
+                <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
+              </MenuItem>
+              <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') } >
+                <StyledAvatarIconOnly
+                  alt='Português'
+                  src={ logoLangBr }
+                />
+                <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
+              </MenuItem>
+            </Menu>
             <OnlyDesktop>
               <Tooltip id='tooltip-github' title='Acessar nosso github' placement='bottom'>
-                <StyledAvatar
+                <StyledAvatarIconOnly
                   alt={ user.username }
                   src={ logoGithub }
                   onClick={ this.handleGithubLink }
                 />
               </Tooltip>
+              <Menu
+                id='menu-appbar-language'
+                anchorEl={ anchorEl }
+                anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+                open={ anchorEl && anchorEl.id === 'account-menu' }
+                onClose={ this.handleClose }
+              >
+                <MenuItem onClick={ this.handleProfile }>
+                  <FormattedMessage id='task.actions.account.access' defaultMessage='Access account' />
+                </MenuItem>
+                <MenuItem onClick={ this.handleSignOut }>
+                  <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
+                </MenuItem>
+              </Menu>
             </OnlyDesktop>
           </RightSide>
         </Container>
@@ -371,11 +476,13 @@ class TopBar extends Component {
 }
 
 TopBar.propTypes = {
-  isLogged: PropTypes.func,
   location: PropTypes.object,
   history: PropTypes.object,
   user: PropTypes.object,
+  preferences: PropTypes.object,
+  fetchPreferences: PropTypes.func,
   createTask: PropTypes.func,
+  updateUser: PropTypes.func,
   signOut: PropTypes.func,
   logged: PropTypes.bool,
   completed: PropTypes.bool,

@@ -35,8 +35,6 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
       return requestPromise({
         uri: `https://api.bitbucket.org/1.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       }).then(response => {
-        // eslint-disable-next-line no-console
-        console.log('response', response)
         return models.Task
           .build(
             taskParameters

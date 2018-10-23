@@ -1,6 +1,7 @@
 // CardSection.js
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Typography from 'material-ui/Typography'
 import { CardElement } from 'react-stripe-elements'
 
@@ -15,7 +16,9 @@ class CardSection extends React.Component {
             } }
           />
         ) : (
-          <Typography variant='caption'>Card loading...</Typography>
+          <Typography variant='caption'>
+            <FormattedMessage id='card.loading' defaultMessage='Loading card form...' />
+          </Typography>
         ) }
       </label>
     )

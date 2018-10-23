@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import Button from 'material-ui/Button'
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
 import { FormControl } from 'material-ui/Form'
@@ -47,7 +48,9 @@ class TaskInvite extends Component {
           onClose={ () => this.props.onClose() }
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>Convidar alguém para realizar a tarefa</DialogTitle>
+          <DialogTitle id='form-dialog-title'>
+            <FormattedMessage id='task.invite.title' defaultMessage='Invite someone to work on this task' />
+          </DialogTitle>
           <DialogContent>
             <form onChange={ this.onChangeInvite } type='POST'>
               <FormControl fullWidth style={ { marginBottom: 20 } }>
@@ -63,7 +66,7 @@ class TaskInvite extends Component {
               </FormControl>
               <FormControl fullWidth>
                 <Typography type='subheading' gutterBottom>
-                    Texto a ser enviado com o convite
+                  <FormattedMessage id='task.invite.text.label' defaultMessage='Write a text to be sent with the invite' />
                 </Typography>
                 <TextField
                   autoFocus
@@ -77,10 +80,10 @@ class TaskInvite extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={ () => this.props.onClose() } color='primary'>
-              Cancelar
+              <FormattedMessage id='task.invite.form.cancel' defaultMessage='Cancel' />
             </Button>
             <Button disabled={ message.length === 0 } onClick={ this.sendInvite } variant='raised' color='secondary' >
-              Enviar
+              <FormattedMessage id='task.invite.form.send' defaultMessage='Send' />
             </Button>
           </DialogActions>
         </Dialog>

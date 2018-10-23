@@ -51,7 +51,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
                   'total': orderParameters.amount,
                   'currency': orderParameters.currency
                 },
-                'description': 'Desenvolvimento de tarefa pelo Gitpay',
+                'description': 'Development services provided by Gitpay',
               }]
             })
           }).then(payment => {

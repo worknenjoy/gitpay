@@ -2,6 +2,7 @@ import React from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
+import { IntlProvider, updateIntl } from 'react-intl-redux'
 
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import Palette from '../components/styles/palette'
@@ -13,9 +14,24 @@ import NotificationContainer from '../containers/notification'
 
 import reducers from '../reducers/reducers'
 
+import { addLocaleData } from 'react-intl'
+
+import messagesBr from '../translations/br.json'
+import messagesEn from '../translations/en.json'
+
+import localeEn from 'react-intl/locale-data/en'
+import localeBr from 'react-intl/locale-data/br'
+
+addLocaleData([...localeEn, ...localeBr])
+
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize('UA-114655639-1')
   ReactGA.pageview(window.location.pathname + window.location.search)
+}
+
+const messages = {
+  'br': messagesBr,
+  'en': messagesEn
 }
 
 const composeEnhancers =
@@ -29,16 +45,18 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 )
 
-const store = createStore(
+export const store = createStore(
   reducers,
   enhancer
-  /* compose(
-    applyMiddleware(
-      thunkMiddleware
-    ),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  ) */
 )
+
+/* eslint-disable no-undef */
+const currentLang = localStorage.getItem('userLanguage') || 'en'
+
+store.dispatch(updateIntl({
+  locale: currentLang,
+  messages: messages[currentLang],
+}))
 
 const theme = createMuiTheme(Palette)
 
@@ -46,10 +64,12 @@ function App () {
   return (
     <MuiThemeProvider theme={ theme }>
       <Provider store={ store }>
-        <div>
-          <NotificationContainer />
-          <Routes />
-        </div>
+        <IntlProvider>
+          <div>
+            <NotificationContainer />
+            <Routes />
+          </div>
+        </IntlProvider>
       </Provider>
     </MuiThemeProvider>
   )
