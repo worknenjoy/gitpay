@@ -716,20 +716,20 @@ class Task extends Component {
                   </span>
                   <AddIcon />
                 </Button>
-
-                <Button
-                  style={ { marginRight: 10 } }
-                  onClick={ this.handleAssignDialogOpen }
-                  size='medium'
-                  color='primary'
-                  className={ classes.altButton }
-                >
-                  <span className={ classes.spaceRight }>
-                    <FormattedMessage id='task.interested.action' defaultMessage='Im interested' />
-                  </span>{ ' ' }
-                  <AddIcon />
-                </Button>
-
+                { !taskOwner() &&
+                  <Button
+                    style={ { marginRight: 10 } }
+                    onClick={ this.handleAssignDialogOpen }
+                    size='medium'
+                    color='primary'
+                    className={ classes.altButton }
+                  >
+                    <span className={ classes.spaceRight }>
+                      <FormattedMessage id='task.interested.action' defaultMessage='Im interested' />
+                    </span>{ ' ' }
+                    <AddIcon />
+                  </Button>
+                }
                 { taskOwner() && (
                   <div style={ { display: 'inline-block' } }>
                     <Button
