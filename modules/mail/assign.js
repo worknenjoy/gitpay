@@ -4,9 +4,16 @@ const constants = require('./constants')
 const dateFormat = require('dateformat')
 const moment = require('moment')
 const ptLocale = require('moment/locale/pt-br')
+const enLocale = require('moment/locale/en-gb')
 const i18n = require('i18n')
 
-moment.locale('pt-br', ptLocale)
+const setMomentLocale = (lang) => {
+  if(lang === 'br') {
+    moment.locale('pt-br', ptLocale)
+  } else {
+    moment.locale('en-gb', enLocale)
+  }
+} 
 
 const AssignMail = {
   owner: (to, task, name) => {},
@@ -19,6 +26,7 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
+    setMomentLocale(language)
     request(
       to,
       i18n.__('mail.assign.owner.subject'),
@@ -27,7 +35,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.assign.owner.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}</p>
+          <p>${i18n.__('mail.assign.owner.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
@@ -39,6 +47,7 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
+    setMomentLocale(language)
     request(
       to,
       i18n.__('mail.interested.subject'),
@@ -47,7 +56,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.interested.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}</p>
+          <p>${i18n.__('mail.interested.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.interested.owner.sec')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
@@ -59,6 +68,7 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
+    setMomentLocale(language)
     request(
       to,
       i18n.__('mail.assigned.subject'),
@@ -66,8 +76,8 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-           <p>Olá ${i18n.__('mail.assigned.hello', { name: name })}</p>
-           <p>Olá ${i18n.__('mail.assigned.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+           <p>${i18n.__('mail.assigned.hello', { name: name })}</p>
+           <p>${i18n.__('mail.assigned.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
            ${i18n.__('mail.assigned.message', {
     deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
     deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime')

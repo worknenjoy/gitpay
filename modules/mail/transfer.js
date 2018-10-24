@@ -42,7 +42,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.transfer.notify.message.success', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
-          <p>${Signatures.sign}</p>`
+          <p>${Signatures.sign(language)}</p>`
         },
       ]
     )

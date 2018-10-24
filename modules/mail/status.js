@@ -36,7 +36,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>Olá ${i18n.__('mail.assigned.hello', { name: name })}</p>
-          <p>${i18n.__('mail.status.message.first', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}</p>
+          <p>${i18n.__('mail.status.message.first', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.status.message.second', { status: STATUSES[task.status] })}</p>
           <p>${Signatures.sign(language)}</p>`
         },

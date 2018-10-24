@@ -1,9 +1,10 @@
 const models = require('../../../loading/loading')
 const SendMail = require('../../mail/mail')
+const i18n = require('i18n')
 
 const FAILED_REASON = {
-  declined_by_network: 'Negado pela operadora do cartão',
-  not_sent_to_network: 'Nível de risco elevado, talvez você não tenha fornecidos todas informações corretamente'
+  declined_by_network: 'Denied by card',
+  not_sent_to_network: 'Hight risk card, please provide all the information'
 }
 
 const CURRENCIES = {
@@ -29,11 +30,12 @@ exports.updateWebhook = (req, res) => {
             return res.status(400).send({ errors: ['User not found'] })
           }
           SendMail.success(
-            user.dataValues.email,
-            'Um pagamento foi realizado com o seu cartão de crédito',
-            `<p>Um pagamento por uma tarefa foi realizado com o seu cartão de crédito. Quando a tarefa for concluída você poderá enviar o pagamento para quem realizou a tarefa.</p>
-            <p>Nome do Titular: ${event.data.object.name}</p>
-            <p>Últimos 4 dígitos do cartão: ${event.data.object.last4}</p>`
+            user.dataValues,
+            i18n.__('mail.webhook.payment.success.subject'),
+            i18n.__('mail.webhook.payment.success.message', {
+              name: event.data.object.name,
+              number: event.data.object.last4
+            })
           )
           return res.json(req.body)
         }).catch(error => res.status(400).send(error))
@@ -64,16 +66,12 @@ exports.updateWebhook = (req, res) => {
                   if (user) {
                     if (paid && status === 'succeeded') {
                       SendMail.success(
-                        user.dataValues.email,
-                        'O pagamento da sua tarefa no Gitpay foi atualizado!',
-                        `
-                  <p>O pagamento no valor de $${event.data.object.amount /
-                    100} para uma tarefa no Gitpay foi aprovado</p>
-                  `
+                        user.dataValues,
+                        i18n.__('mail.webhook.payment.update.subject'),
+                        i18n.__('mail.webhook.payment.update.message', { amount: event.data.object.amount / 100 })
                       )
                     }
                   }
-
                   return res.json(req.body)
                 })
                 .catch(e => {
@@ -110,12 +108,11 @@ exports.updateWebhook = (req, res) => {
                   if (user) {
                     if (paid && status === 'succeeded') {
                       SendMail.success(
-                        user.dataValues.email,
-                        'O pagamento da sua tarefa no Gitpay foi aprovado!',
-                        `
-                      <p>O pagamento no valor de $${event.data.object.amount /
-                        100} para uma tarefa no Gitpay foi aprovado</p>
-                      `
+                        user.dataValues,
+                        i18n.__('mail.webhook.payment.update.message'),
+                        i18n.__('mail.webhook.payment.approved.message', {
+                          amount: event.data.object.amount / 100
+                        })
                       )
                     }
                   }
@@ -156,15 +153,12 @@ exports.updateWebhook = (req, res) => {
                 if (user) {
                   if (status === 'failed') {
                     SendMail.error(
-                      user.dataValues.email,
-                      'O pagamento da sua tarefa no Gitpay não foi autorizado',
-                      `
-                      <p>O pagamento no valor de $${event.data.object.amount /
-                        100} para uma tarefa no Gitpay não foi aprovado</p>
-                      <p>Motivo: ${
-  FAILED_REASON[event.data.object.outcome.network_status]
-}</p>
-                      `
+                      user.dataValues,
+                      i18n.__('mail.webhook.payment.unapproved.subject'),
+                      i18n.__('mail.webhook.payment.unapproved.message', {
+                        reason: FAILED_REASON[event.data.object.outcome.network_status],
+
+                      })
                     )
                     return res.json(req.body)
                   }
@@ -193,18 +187,13 @@ exports.updateWebhook = (req, res) => {
             })
               .then(assigned => {
                 SendMail.success(
-                  assigned.dataValues.User.dataValues.email,
-                  'Uma transferência do Gitpay está a caminho!',
-                  `
-                      <p>Uma transferência no valor de $${event.data.object
-    .amount /
-                        100} foi enviado para sua conta e avisaremos quando for concluída</p>
-                      <p>Ela corresponde a tarefa <a href='${
-  process.env.FRONTEND_HOST
-}/#/task/${task.id}'>${
-  process.env.FRONTEND_HOST
-}/#/task/${task.id}</a> que você concluiu</p>
-              `
+                  assigned.dataValues.User.dataValues,
+                  i18n.__('mail.webhook.payment.transfer.subject'),
+                  i18n.__('mail.webhook.payment.transfer.message', {
+                    reason: FAILED_REASON[event.data.object.outcome.network_status],
+                    amount: event.data.object.amount / 100,
+                    url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+                  })
                 )
                 return res.json(req.body)
               })
@@ -225,13 +214,12 @@ exports.updateWebhook = (req, res) => {
             if (user) {
               const date = new Date(event.data.object.arrival_date * 1000)
               SendMail.success(
-                user.dataValues.email,
-                'Uma transferência do Gitpay está a caminho da sua conta!',
-                `
-                    <p>Uma transferência no valor de ${CURRENCIES[event.data.object.currency]} ${event.data.object.amount /
-                  100} está a caminho da sua conta e avisaremos quando for concluída</p>
-                    <p>A previsão é de que ela chege em ${date}</p>
-            `
+                user.dataValues,
+                i18n.__('mail.webhook.payment.transfer.intransit.subject'),
+                i18n.__('mail.webhook.payment.transfer.intransit.message', {
+                  currency: CURRENCIES[event.data.object.currency],
+                  amount: event.data.object.amount / 100
+                })
               )
               return res.json(req.body)
             }
@@ -252,12 +240,12 @@ exports.updateWebhook = (req, res) => {
           .then(user => {
             if (user) {
               SendMail.success(
-                user.dataValues.email,
-                'Ocorreu uma falha no pagamento da sua tarefa no Gitpay',
-                `
-                <p>O pagamento no valor de ${CURRENCIES[event.data.object.currency]} ${event.data.object.amount /
-                  100} para uma tarefa no Gitpay não foi processado e será feito uma nova tentativa de transferência</p>
-                `
+                user.dataValues,
+                i18n.__('mail.webhook.payment.transfer.intransit.fail.subject'),
+                i18n.__('mail.webhook.payment.transfer.intransit.fail.message', {
+                  currency: CURRENCIES[event.data.object.currency],
+                  amount: event.data.object.amount / 100
+                })
               )
               return res.json(req.body)
             }
@@ -278,13 +266,12 @@ exports.updateWebhook = (req, res) => {
             if (user) {
               const date = new Date(event.data.object.arrival_date * 1000)
               SendMail.success(
-                user.dataValues.email,
-                'Uma transferência do Gitpay foi realizada para sua conta!',
-                `
-                    <p>Uma transferência no valor de ${CURRENCIES[event.data.object.currency]} ${event.data.object.amount /
-                  100} foi realizado para a sua conta e deve constar nas suas transações como um pagamento do Gitpay</p>
-                    <p>Ela foi realizada em ${date}</p>
-            `
+                user.dataValues,
+                i18n.__('mail.webhook.payment.transfer.finished.subject'),
+                i18n.__('mail.webhook.payment.transfer.finished.message', {
+                  currency: CURRENCIES[event.data.object.currency],
+                  date: date
+                })
               )
               return res.json(req.body)
             }
@@ -299,9 +286,9 @@ exports.updateWebhook = (req, res) => {
       case 'balance.available':
         SendMail.success(
           'tarefas@gitpay.me',
-          'Um novo balanço da sua conta no Gitpay',
+          'New balance on your account',
           `
-                  <p>Temos um novo balanço para a conta do Gitpay:</p>
+                  <p>We have a new balance:</p>
                   <ul>
                   ${event.data.object.available.map(b => `<li>${b.currency}: ${b.amount}</li>`).join('')}
                   </ul>              

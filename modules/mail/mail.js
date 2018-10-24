@@ -1,6 +1,7 @@
 const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
+const i18n = require('i18n')
 
 const Sendmail = {
   success: (to, subject, msg) => {},
@@ -8,7 +9,10 @@ const Sendmail = {
 }
 
 if (constants.canSendEmail) {
-  Sendmail.success = (to, subject, msg) => {
+  Sendmail.success = (user, subject, msg) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
       subject,
@@ -22,7 +26,10 @@ if (constants.canSendEmail) {
     )
   }
 
-  Sendmail.error = (to, subject, msg) => {
+  Sendmail.error = (user, subject, msg) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
     request(
       to,
       subject,

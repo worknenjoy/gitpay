@@ -716,7 +716,7 @@ class Task extends Component {
                   </span>
                   <AddIcon />
                 </Button>
-                { !taskOwner() &&
+                
                   <Button
                     style={ { marginRight: 10 } }
                     onClick={ this.handleAssignDialogOpen }
@@ -725,11 +725,11 @@ class Task extends Component {
                     className={ classes.altButton }
                   >
                     <span className={ classes.spaceRight }>
-                      <FormattedMessage id='task.interested.action' defaultMessage='I have interest' />
+                      <FormattedMessage id='task.interested.action' defaultMessage='Im interested' />
                     </span>{ ' ' }
                     <AddIcon />
                   </Button>
-                }
+                
                 { taskOwner() && (
                   <div style={ { display: 'inline-block' } }>
                     <Button
