@@ -13,7 +13,7 @@ module.exports = Promise.method(function ({ id }, { message, email }) {
       const language = user.language || 'en'
       i18n.setLocale(language)
       SendMail.success(
-        email,
+        { email, language },
         i18n.__('mail.invite.send.action'),
         `${i18n.__('mail.invite.send.message', {
           title: task.title,
