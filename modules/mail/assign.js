@@ -8,12 +8,13 @@ const enLocale = require('moment/locale/en-gb')
 const i18n = require('i18n')
 
 const setMomentLocale = (lang) => {
-  if(lang === 'br') {
+  if (lang === 'br') {
     moment.locale('pt-br', ptLocale)
-  } else {
+  }
+  else {
     moment.locale('en-gb', enLocale)
   }
-} 
+}
 
 const AssignMail = {
   owner: (to, task, name) => {},

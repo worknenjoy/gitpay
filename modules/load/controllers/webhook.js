@@ -190,7 +190,6 @@ exports.updateWebhook = (req, res) => {
                   assigned.dataValues.User.dataValues,
                   i18n.__('mail.webhook.payment.transfer.subject'),
                   i18n.__('mail.webhook.payment.transfer.message', {
-                    reason: FAILED_REASON[event.data.object.outcome.network_status],
                     amount: event.data.object.amount / 100,
                     url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
                   })
@@ -218,7 +217,8 @@ exports.updateWebhook = (req, res) => {
                 i18n.__('mail.webhook.payment.transfer.intransit.subject'),
                 i18n.__('mail.webhook.payment.transfer.intransit.message', {
                   currency: CURRENCIES[event.data.object.currency],
-                  amount: event.data.object.amount / 100
+                  amount: event.data.object.amount / 100,
+                  date: date
                 })
               )
               return res.json(req.body)
@@ -270,6 +270,7 @@ exports.updateWebhook = (req, res) => {
                 i18n.__('mail.webhook.payment.transfer.finished.subject'),
                 i18n.__('mail.webhook.payment.transfer.finished.message', {
                   currency: CURRENCIES[event.data.object.currency],
+                  amount: event.data.object.amount / 100,
                   date: date
                 })
               )
