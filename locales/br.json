@@ -60,7 +60,7 @@
   "mail.webhook.payment.transfer.subject": "Uma transferência do Gitpay está a caminho!",
   "mail.webhook.payment.transfer.message": "<p>Uma transferência no valor de $ {{amount}} foi enviado para sua conta e avisaremos quando for concluída</p><p>Ela corresponde a tarefa <a href='{{url}}'>{{url}}</a> que você concluiu.</p>",
   "mail.webhook.payment.transfer.intransit.subject": "Uma transferência do Gitpay está a caminho da sua conta!",
-  "mail.webhook.payment.transfer.intransit.message": "<p>Uma transferência no valor de {{currency}} {{amount}} está a caminho da sua conta e avisaremos quando for concluída</p><p>A previsão é de que ela chege em ${date}.</p>",
+  "mail.webhook.payment.transfer.intransit.message": "<p>Uma transferência no valor de {{currency}} {{amount}} está a caminho da sua conta e avisaremos quando for concluída</p><p>A previsão é de que ela chege em {{date}}.</p>",
   "mail.webhook.payment.transfer.intransit.fail.subject": "Ocorreu uma falha no pagamento da sua tarefa no Gitpay",
   "mail.webhook.payment.transfer.intransit.fail.message": "<p>O pagamento no valor de {{currency}} {{amount}} para uma tarefa no Gitpay não foi processado e será feito uma nova tentativa de transferência.</p>",
   "mail.webhook.payment.transfer.finished.subject": "Uma transferência do Gitpay foi realizada para sua conta!",
