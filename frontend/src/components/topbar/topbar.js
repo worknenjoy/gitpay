@@ -408,8 +408,8 @@ class TopBar extends Component {
               </Dialog>
             </form>
             <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
-              {(msg) => (
-                <Tooltip id='tooltip-lang' title={msg} placement='bottom'>
+              { (msg) => (
+                <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
                   <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
                     { completed ? (
                       <StyledAvatarIconOnly
@@ -423,7 +423,7 @@ class TopBar extends Component {
                     ) }
                   </Button>
                 </Tooltip>
-              )}
+              ) }
             </FormattedMessage>
             <Menu
               id='menu-appbar'
@@ -450,17 +450,17 @@ class TopBar extends Component {
             </Menu>
             <OnlyDesktop>
               <FormattedMessage id='task.actions.tooltip.git' defaultMessage='See our project on Github'>
-                {(msg) => (
-                  <Tooltip id='tooltip-github' title={msg} placement='bottom'>
+                { (msg) => (
+                  <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
                     <StyledAvatarIconOnly
                       alt={ user.username }
                       src={ logoGithub }
                       onClick={ this.handleGithubLink }
                     />
                   </Tooltip>
-                )}
+                ) }
               </FormattedMessage>
-              
+
               <Menu
                 id='menu-appbar-language'
                 anchorEl={ anchorEl }
