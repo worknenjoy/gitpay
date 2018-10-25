@@ -306,6 +306,10 @@ const messages = defineMessages({
     id: 'task.card.title',
     defaultMessage: 'Payments for this task'
   },
+  cardSubTitle: {
+    id: 'task.card.subtitle',
+    defaultMessage: 'We will transfer to destination accounts'
+  },
   cardSubtitle: {
     id: 'task.card.subtitle',
     defaultMessage: 'This payments will be transfered after the task be finished'
@@ -875,7 +879,7 @@ class Task extends Component {
                   <RegularCard
                     headerColor='green'
                     cardTitle={ this.props.intl.formatMessage(messages.cardTitle) }
-                    cardSubtitle='Elas serão transferidas para quem conclui-la'
+                    cardSubtitle={ this.props.intl.formatMessage(messages.cardSubTitle) }
                     content={
                       <Table
                         tableHeaderColor='warning'
