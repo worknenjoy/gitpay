@@ -59,7 +59,7 @@
   "mail.webhook.payment.unapproved.message": "<p>The payment of $ {{amount}} for a task on Gitpay was not approved</p><p>Reason: {{reason}}</p>.",
   "mail.webhook.payment.transfer.subject": "There's a Gitpay transfer on the way!",
   "mail.webhook.payment.transfer.message": "<p>A transfer of $ {{amount}} was sent to your account and we will let you know when concluded.</p><p>This transfer is about the task <a href='{{url}}'>{{url}}</a> that you concluded.</p>",
-  "mail.webhook.payment.transfer.intransit.subject": "There's a Gitpay transfer in transit for your account!",
+  "mail.webhook.payment.transfer.intransit.subject": "There's a Gitpay transfer in transit to your account!",
   "mail.webhook.payment.transfer.intransit.message": "<p>A transfer of {{currency}} {{amount}} is in transit for your account and we will let you know when concluded.</p><p>The estimation date to be transfered is ${date}.</p>",
   "mail.webhook.payment.transfer.intransit.fail.subject": "We had a issue with your payment on Gitpay",
   "mail.webhook.payment.transfer.intransit.fail.message": "<p>There's was a error to process the payment of {{currency}} {{amount}} for a task on Gitpay and we will try again later.</p>",
