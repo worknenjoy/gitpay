@@ -369,6 +369,7 @@
   "task.deadline.level1": " In one week ",
   "task.deadline.level2": " In fifteen days ",
   "task.deadline.level3": " In twenty days ",
-  "task.deadline.level4": " In on month "
-
+  "task.deadline.level4": " In on month ",
+  "task.actions.tooltip.language": "Choose your language",
+  "task.actions.tooltip.git": "See our project on Github"
 }

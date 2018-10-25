@@ -109,7 +109,7 @@ exports.updateWebhook = (req, res) => {
                     if (paid && status === 'succeeded') {
                       SendMail.success(
                         user.dataValues,
-                        i18n.__('mail.webhook.payment.update.message'),
+                        i18n.__('mail.webhook.payment.update.subject'),
                         i18n.__('mail.webhook.payment.approved.message', {
                           amount: event.data.object.amount / 100
                         })
