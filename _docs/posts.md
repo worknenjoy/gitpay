@@ -28,6 +28,6 @@ Se o pagamento foi realizado com PayPal, você irá receber o pagamento com sua 
 
 Você precisa configurar seus pagamentos configurando sua conta em [https://gitpay.me/#/profile/payment-options](https://gitpay.me/#/profile/payment-options) 
 
-> Para saber com o pagamento foi realizado para aquela tarefa, verifique nos pedidos
+> Para saber como o pagamento foi realizado para aquela tarefa, verifique nos pedidos
 
 Os pedidos são pagamentos realizados que são enviados para sua conta ativada quando a tarefa é concluída.
