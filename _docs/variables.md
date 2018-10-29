@@ -37,4 +37,4 @@ Se o pagamento foi realizado com PayPal, você precisa ativar sua conta do PayPa
 
 ## Pagamentos realizados por cartão e pelo PayPal
 
-Pode ser criada mais de uma ordem para aquela tarefa e ela ter tido diferentes tipos de pagamento. Para receber o valor integral, você precisará ter tanto sua canta bancária ativa quanto a do PayPal
+Pode ser criada mais de uma ordem para aquela tarefa e ela ter tido diferentes tipos de pagamento. Para receber o valor integral, você precisará ter tanto sua conta bancária ativa quanto a do PayPal.
