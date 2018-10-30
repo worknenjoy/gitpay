@@ -306,10 +306,6 @@ const messages = defineMessages({
     id: 'task.card.title',
     defaultMessage: 'Payments for this task'
   },
-  cardSubTitle: {
-    id: 'task.card.subtitle',
-    defaultMessage: 'We will transfer to destination accounts'
-  },
   cardSubtitle: {
     id: 'task.card.subtitle',
     defaultMessage: 'This payments will be transfered after the task be finished'
