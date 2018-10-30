@@ -371,5 +371,6 @@
   "task.deadline.level3": " daqui vinte dias ",
   "task.deadline.level4": " daqui um mês ",
   "task.actions.tooltip.language": "Escolher idioma",
-  "task.actions.tooltip.git": "Acessar nosso github"
+  "task.actions.tooltip.git": "Acessar nosso github",
+  "task.status.deadline.headline": "Data de entrega"
 }
