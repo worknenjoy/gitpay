@@ -139,7 +139,7 @@
   "task.status.label.none": "Nenhum pagamento feito",
   "task.status.label.and": "e",
   "task.payment.filter.all": "Todos pagamentos",
-  "task.payment.filter.creditcard": "Pagamentos por Cartão de Crédito",
+  "task.payment.filter.creditcard": "Cartão de Crédito",
   "task.payment.filter.paypal": "Pagamentos por Paypal",
   "task.payment.status.undefined": "Status não definido",
   "task.payment.transfer.message": "Você irá enviar o pagamento para esta tarefa para {to} para receber os pagamentos em {payments}",
