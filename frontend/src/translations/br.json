@@ -222,7 +222,7 @@
   "task.actions.gitpay.call": "Entre para a comunidade do Gitpay",
   "task.actions.account": "Conta",
   "task.actions.insert.new": "Inserir novas tarefas",
-  "task.actions.insert.subheading": "Cole a url de um incidente (issue) no <strong>Github</strong> ou <strong>Bitbucket</strong>",
+  "task.actions.insert.subheading": "Cole a url de um incidente (issue) do <strong>Github</strong> ou <strong>Bitbucket</strong>",
   "task.actions.insert.novalid": "Esta não é uma URL válida",
   "task.actions.cancel": "Cancelar",
   "task.actions.insert.label": "Inserir",
