@@ -66,7 +66,13 @@ const messages = {
   'en': messagesEn
 }
 
-const browserLanguage = navigator.language.split(/[-_]/)[0]
+const browserLanguage = () => {
+  const browserLang = navigator.language.split(/[-_]/)[0]
+  if (browserLang === 'pt') {
+    return 'br'
+  }
+  return browserLang
+}
 
 const localStorageLang = () => {
   /* eslint-disable no-undef */
@@ -83,7 +89,7 @@ const currentUserLanguage = (preferences) => {
     /* eslint-disable no-undef */
     localStorage.setItem('userLanguage', prefLang)
   }
-  return preferences.language || localStorageLang() || browserLanguage
+  return preferences.language || localStorageLang() || browserLanguage()
 }
 
 const isBitbucketUrl = (url) => {
