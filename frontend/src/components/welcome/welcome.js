@@ -137,14 +137,14 @@ class Welcome extends Component {
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div className={ classes.mainBlock } style={ { margin: 0, paddingTop: 10 } }>
                 <Typography className={ classes.tagline } gutterBottom>
-                  <FormattedMessage id='welcome.tagline' deafultMessage='Welcome to Gitpay' />
+                  <FormattedMessage id='welcome.tagline' defaultMessage='Welcome to Gitpay' />
                 </Typography>
                 <Typography variant='title' gutterBottom>
-                  <FormattedMessage id='welcome.tagline1' deafultMessage='Work in tasks on demand' />
+                  <FormattedMessage id='welcome.tagline1' defaultMessage='Work in tasks on demand' />
                 </Typography>
                 <Typography type='subheading' gutterBottom noWrap>
                   <FormattedHTMLMessage
-                    id='welcome.tagline2' deafultMessage='and receive bounty for your contributions' />
+                    id='welcome.tagline2' defaultMessage='and receive bounty for your contributions' />
                 </Typography>
                 <div className='subscribe-form'>
                   <SubscribeForm type='subscribe-form-main' />
