@@ -875,7 +875,7 @@ class Task extends Component {
                   <RegularCard
                     headerColor='green'
                     cardTitle={ this.props.intl.formatMessage(messages.cardTitle) }
-                    cardSubtitle={ this.props.intl.formatMessage(messages.cardSubTitle) }
+                    cardSubtitle={ this.props.intl.formatMessage(messages.cardSubtitle) }
                     content={
                       <Table
                         tableHeaderColor='warning'

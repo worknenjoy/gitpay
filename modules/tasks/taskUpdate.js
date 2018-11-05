@@ -134,7 +134,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                       if (!user.account_id) {
                         TransferMail.futurePaymentForInvalidAccount(user)
                       }
-                      AssignMail.interested(usermail, task.dataValues, user.username)
+                      AssignMail.interested(user, task.dataValues, user.username)
                       if (task.dataValues.User) {
                         const ownerUser = task.dataValues.User.dataValues
                         AssignMail.owner(ownerUser, task.dataValues, user.username)
