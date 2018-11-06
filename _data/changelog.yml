@@ -1,7 +1,12 @@
 # Changelog page source
-
+- title: Version v1.5
+  label: EM PRODUCAO
+  date: 06 de Novembro, 2018
+  list:
+  - Bugs relacionados a tradução corrigidos
+  - Testes com revisores e tradutores usando a plataforma
 - title: Version 1.4.0
-  label: EM TESTE
+  label: EM PRODUCAO
   date: 20 de Setembro, 2018
   list:
   - Filtro de tarefas por status
