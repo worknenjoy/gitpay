@@ -51,7 +51,7 @@ if (constants.canSendEmail) {
     setMomentLocale(language)
     request(
       to,
-      i18n.__('mail.interested.subject'),
+      i18n.__('mail.interested.owner.subject'),
       [
         {
           type: 'text/html',
