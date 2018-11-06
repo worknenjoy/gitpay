@@ -22,7 +22,7 @@ Usamos os processo de contribuição de um repositório git para validar o traba
 
 ## Git Workflow
 
-O Git Workflow é um processo e recomendação de como devemos usar o Git para finalizar tarefas de uma maneira consistente e produtiva. Ele nos encoraja a usar o Git de forma efetiva e consistente.
+O Git Workflow é um processo e recomendação de como devemos usar o Git para finalizar tarefas de uma maneira consistente e produtiva.
 
 Trabalhando em projeto, quando usamos o Git para o controle de versão, temos um fluxo de trabalho tendo ele como base. Para garantir que times e projetos em grande escala estejam na mesma página, acordamos de ter o Git Workflow para considerar a tarefa como finalizada.
 
