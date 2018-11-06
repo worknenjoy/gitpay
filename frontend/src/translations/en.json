@@ -144,7 +144,7 @@
   "task.payment.filter.paypal": "Paypal payments",
   "task.payment.status.undefined": "Undefined status",
   "task.payment.transfer.message": "You will send the payment for this task to {to} that receive payments in {payments}",
-  "task.payment.noAssigned": "Noboby assigned to this task. Assign it to someone so that we can conclude the payment",
+  "task.payment.noAssigned": "Noboby assigned to this task. Assign it to someone and then we can conclude the payment",
   "task.payment.action.title": "Pay for this task",
   "task.payment.transfers.concluded": "All transfers had succeed",
   "task.payment.transfer.done": "All your transfers was concluded with your credit card and the transaction id is:",
