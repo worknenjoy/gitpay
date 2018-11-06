@@ -109,7 +109,7 @@
   "task.status.deadline.subheading": "Choose a deadline for this task",
   "task.status.deadline.day.label": "Day",
   "task.status.deadline.day.insert.label": "Choose a date",
-  "task.status.deadline.set.target": "Set a date to target {date}",
+  "task.status.deadline.set.target": "Set deadline to {date}",
   "task.deadline.button.save": "Save date",
   "task.invite.title": "Invite someone to work on this task",
   "task.invite.text.label": "Write an invitation text",
