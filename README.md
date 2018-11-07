@@ -12,6 +12,10 @@ We offer a marketplace for developersand platforms that use git for on demand pr
 * You can complete tasks with open collaboration and receive bounties for it
 * Companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
 
+## Who is contributing
+[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/0)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/0)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/1)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/1)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/2)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/2)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/3)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/3)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/4)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/4)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/5)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/5)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/6)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/6)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/7)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/7)
+
+
 
 ## Requirements
 
