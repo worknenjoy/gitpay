@@ -10,6 +10,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 
+import Grid from 'material-ui/Grid'
 import Tooltip from 'material-ui/Tooltip'
 import { FormControl, FormHelperText } from 'material-ui/Form'
 import Avatar from 'material-ui/Avatar'
@@ -21,6 +22,11 @@ import UserIcon from 'material-ui-icons/AccountCircle'
 import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSlack } from '@fortawesome/free-brands-svg-icons'
+
+import humanFormat from 'human-format'
 
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -116,7 +122,8 @@ class TopBar extends Component {
       },
       provider: 'github',
       createTaskDialog: false,
-      signUserDialog: false
+      signUserDialog: false,
+      joinSlackDialog: false
     }
   }
 
@@ -138,6 +145,7 @@ class TopBar extends Component {
         messages: messages[currentLangError],
       }))
     })
+    this.props.info()
   }
 
   handleChange = (event, checked) => {
@@ -162,6 +170,10 @@ class TopBar extends Component {
 
   handleClickDialogSignUser = (e) => {
     this.setState(({ signUserDialog: true }))
+  }
+
+  handleClickDialogJoinSlack = (e) => {
+    this.setState(({ joinSlackDialog: true }))
   }
 
   handleGithubLink = () => {
@@ -215,6 +227,10 @@ class TopBar extends Component {
     this.setState({ signUserDialog: false })
   }
 
+  handleJoinSlackDialogClose = () => {
+    this.setState({ joinSlackDialog: false })
+  }
+
   handleProfile = () => {
     window.location.assign('/#/profile')
   }
@@ -248,6 +264,14 @@ class TopBar extends Component {
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
+    let channelUserCount = ''
+    if (this.props.channelUserCount) {
+      const count = humanFormat(this.props.channelUserCount, {
+        decimals: 1,
+        separator: ''
+      })
+      channelUserCount = `(${count})`
+    }
 
     return (
       <Bar>
@@ -483,6 +507,43 @@ class TopBar extends Component {
                 </MenuItem>
               </Menu>
             </OnlyDesktop>
+
+            <StyledButton
+              onClick={ this.handleClickDialogJoinSlack }
+              variant='raised'
+              size='small'
+              color='secondary'
+            >
+              <LabelButton>
+                <FormattedMessage id='task.bar.slack' defaultMessage='Slack {count}' values={ { count: channelUserCount } } />
+              </LabelButton><FontAwesomeIcon icon={ faSlack } size='2x' />
+            </StyledButton>
+            <Dialog
+              open={ this.state.joinSlackDialog }
+              onClose={ this.handleJoinSlackDialogClose }
+              aria-labelledby='form-dialog-title'
+            >
+              <DialogTitle id='form-dialog-title'>
+                <FormattedMessage id='task.actions.slack.call' defaultMessage='Join our Slack channel' />
+              </DialogTitle>
+              <DialogContent>
+                <Grid container justify='center'>
+                  <Grid item>
+                    <Button
+                      href={ process.env.SLACK_CHANNEL_INVITE_LINK }
+                      variant='raised'
+                      size='medium'
+                      color='secondary'
+                    >
+                      <FontAwesomeIcon icon={ faSlack } size='2x' />
+                      <LabelButton right>
+                        <FormattedMessage id='form.slack.join.label' defaultMessage='Join channel!' />
+                      </LabelButton>
+                    </Button>
+                  </Grid>
+                </Grid>
+              </DialogContent>
+            </Dialog>
           </RightSide>
         </Container>
       </Bar>
