@@ -23,8 +23,8 @@ import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSlack } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fontawesome/react-fontawesome'
+import { faSlack } from '@fontawesome/free-brands-svg-icons'
 
 import humanFormat from 'human-format'
 
