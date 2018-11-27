@@ -40,7 +40,7 @@ module.exports = {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
     }, {
-      test: /\.woff|.woff2|.ttf|.eot|.svg*.*$/,
+      test: /\.(woff|woff2|ttf|eot|svg)$/,
       loader: 'file-loader'
     },
     { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
