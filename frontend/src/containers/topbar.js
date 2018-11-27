@@ -5,6 +5,7 @@ import { loggedIn, logOut } from '../actions/loginActions'
 import { createTask } from '../actions/taskActions'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { updateUser } from '../actions/userActions'
+import { info } from '../actions/infoActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -12,7 +13,8 @@ const mapStateToProps = (state, ownProps) => {
     user: state.loggedIn.user,
     completed: state.loggedIn.completed,
     task: state.task,
-    preferences: state.preferences
+    preferences: state.preferences,
+    channelUserCount: state.info.data.channelUserCount
   }
 }
 
@@ -23,7 +25,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addNotification: (msg) => dispatch(addNotification(msg)),
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
-    createTask: (task, history) => dispatch(createTask(task, history))
+    createTask: (task, history) => dispatch(createTask(task, history)),
+    info: () => dispatch(info())
   }
 }
 

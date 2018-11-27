@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Button from 'material-ui/Button'
 import Avatar from 'material-ui/Avatar'
 
@@ -50,7 +50,10 @@ export const StyledButton = styled(Button)`
 `
 
 export const LabelButton = styled.span`
-  margin-right: 10px;
+
+  ${props => props.right
+    ? css`margin-left: 10px`
+    : css`margin-right: 10px`}
 
   ${media.phone`
     margin-right: 0;

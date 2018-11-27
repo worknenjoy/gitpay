@@ -22,7 +22,8 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
         'API_HOST': JSON.stringify(process.env.API_HOST),
-        'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY)
+        'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY),
+        'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK)
       }
     })
   ],

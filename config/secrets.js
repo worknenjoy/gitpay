@@ -53,6 +53,11 @@ const bitbucket = {
   secret: process.env.BITBUCKET_SECRET
 }
 
+const slack = {
+  token: process.env.SLACK_TOKEN,
+  channelId: process.env.SLACK_CHANNEL_ID
+}
+
 const mailchimp = {
   apiKey: process.env.MAILCHIMP_API_KEY,
   listId: process.env.MAILCHIMP_LIST_ID
@@ -77,6 +82,7 @@ module.exports = {
   google,
   github,
   bitbucket,
+  slack,
   oauthCallbacks,
   mailchimp,
   sendgrid

@@ -30,7 +30,8 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('development'),
         'API_HOST': JSON.stringify('http://localhost:3000'),
-        'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY)
+        'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY),
+        'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK)
       }
     })
   ],
