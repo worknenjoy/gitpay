@@ -23,8 +23,8 @@ import LibraryIcon from 'material-ui-icons/LibraryBooks'
 import TasksIcon from 'material-ui-icons/ViewList'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
 
-import { FontAwesomeIcon } from '@fontawesome/react-fontawesome'
-import { faSlack } from '@fontawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSlack } from '@fortawesome/free-brands-svg-icons'
 
 import humanFormat from 'human-format'
 
@@ -510,7 +510,6 @@ class TopBar extends Component {
 
             <StyledButton
               onClick={ this.handleClickDialogJoinSlack }
-              variant='raised'
               size='small'
               color='secondary'
             >
@@ -531,7 +530,7 @@ class TopBar extends Component {
                   <Grid item>
                     <Button
                       href={ process.env.SLACK_CHANNEL_INVITE_LINK }
-                      variant='raised'
+                      variant='outline'
                       size='medium'
                       color='secondary'
                     >
