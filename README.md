@@ -5,6 +5,8 @@
 
 Freelancing with development workflow
 
+(https://gitpitch.com/worknenjoy/gitpay)[https://gitpitch.com/worknenjoy/gitpay]
+
 ## What is Gitpay?
 
 We offer a marketplace for developersand platforms that use git for on demand project needs, using the Git Workflow as contract of deliver issues solved.
