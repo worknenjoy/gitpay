@@ -5,7 +5,7 @@
 
 Freelancing with development workflow
 
-(https://gitpitch.com/worknenjoy/gitpay)[https://gitpitch.com/worknenjoy/gitpay]
+https://gitpitch.com/worknenjoy/gitpay
 
 ## What is Gitpay?
 
