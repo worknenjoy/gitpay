@@ -232,7 +232,7 @@
         "deadline": "Deadline"
       },
       "interested": {
-        "question": "Are you intereseted solve this task?",
+        "question": "Are you interested solve this task?",
         "descritpion": "You may be assigned to this task and receive your bounty when your code is merged"
       }
     },
