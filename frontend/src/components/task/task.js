@@ -813,7 +813,7 @@ class Task extends Component {
                   ) : (
                     <div>
                       <DialogTitle id='form-dialog-title'>
-                        <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you intereseted solve this task?' />
+                        <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
                       </DialogTitle>
                       <DialogContent>
                         <Typography type='subheading' gutterBottom>
