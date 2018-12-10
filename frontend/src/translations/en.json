@@ -211,7 +211,7 @@
   "task.bounties.status.change": "Change status",
   "task.bounties.send.label": "Send bounty",
   "task.bounties.logged.info": "You need to login to be assigned to this task",
-  "task.bounties.interested.question": "Are you intereseted in solving this task?",
+  "task.bounties.interested.question": "Are you interested in solving this task?",
   "task.bounties.interested.descritpion": "You may be assigned to this task and receive your bounty when your code is merged",
   "task.bounties.actions.cancel": "Cancel",
   "task.bounties.actions.work": "I want to work on this task!",
