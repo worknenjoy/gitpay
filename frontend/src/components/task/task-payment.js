@@ -150,7 +150,7 @@ class TaskPayment extends Component {
       if (user.paypal_id) {
         supportedTypes.push(this.props.intl.formatMessage(messages.labelPayPal))
       }
-      if (!supportedTypes.length) return this.props.intl.formatMessage(messages.status.labelNoPayment)
+      if (!supportedTypes.length) return this.props.intl.formatMessage(messages.labelNoPayment)
 
       return supportedTypes.join(` ${this.props.intl.formatMessage(messages.statusAnd)} `)
     }
