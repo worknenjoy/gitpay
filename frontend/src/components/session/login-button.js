@@ -7,6 +7,8 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 
+import LoginForm from './login-form'
+
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
@@ -41,34 +43,41 @@ class LoginButton extends Component {
 
     return (
       <Wrapper contrast={ contrast }>
-        <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
-          <FormattedMessage id='account.login.connect' defaultMessage='Conect with your existing account' />
-        </Typography>
-
         <Content>
-          <Button
-            style={ { marginRight: 10 } }
-            href={ `${api.API_URL}/authorize/github` }
-            variant='raised'
-            size={ size }
-            color='secondary'
-            className={ classes.logButtons }
-          >
-            <img width='16' src={ logoGithub } />
-            <span className={ classes.gutterLeft }>Github</span>
-          </Button>
-
-          <Button
-            href={ `${api.API_URL}/authorize/bitbucket` }
-            variant='raised'
-            size={ size }
-            color='secondary'
-            className={ classes.logButtons }
-          >
-            <img width='16' src={ logoBitbucket } />
-            <span className={ classes.gutterLeft }>Bitbucket</span>
-          </Button>
-
+          <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+            <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
+          </Typography>
+          <LoginForm />
+          <div style={{textAlign: 'center'}}>
+            <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom>
+              <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
+            </Typography>
+          </div>
+          <div style={{display: 'flex', justifyContent: 'center', marginTop: 10}}>
+            <div>
+              <Button
+                style={ { marginRight: 10 } }
+                href={ `${api.API_URL}/authorize/github` }
+                variant='raised'
+                size={ size }
+                color='secondary'
+                className={ classes.logButtons }
+              >
+                <img width='16' src={ logoGithub } />
+                <span className={ classes.gutterLeft }>Github</span>
+              </Button>
+              <Button
+                href={ `${api.API_URL}/authorize/bitbucket` }
+                variant='raised'
+                size={ size }
+                color='secondary'
+                className={ classes.logButtons }
+              >
+                <img width='16' src={ logoBitbucket } />
+                <span className={ classes.gutterLeft }>Bitbucket</span>
+              </Button>
+            </div>
+          </div>
         </Content>
       </Wrapper>
     )
@@ -79,7 +88,7 @@ LoginButton.propTypes = {
   classes: PropTypes.object.isRequired,
   referer: PropTypes.object,
   contrast: PropTypes.bool,
-  size: PropTypes.oneOf(['large', 'medium', 'small']),
+  size: PropTypes.oneOf(['large', 'medium', 'small'])
 }
 
 LoginButton.defaultProps = {
