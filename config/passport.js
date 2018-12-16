@@ -394,6 +394,8 @@ passport.use(
           email: email
         }
 
+        console.log('userAttributes', userAttributes)
+
         userExist(userAttributes)
           .then(user => {
             if (!user) return done(null, false)

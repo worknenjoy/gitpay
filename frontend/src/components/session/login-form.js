@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import { withStyles } from 'material-ui/styles'
+import { FormattedMessage } from 'react-intl'
 import purple from 'material-ui/colors/purple'
 import Button from 'material-ui/Button'
 
@@ -38,16 +39,61 @@ const styles = theme => ({
 
 class LoginForm extends Component {
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      type: 'signin'
+    }
+  }
+
   handleChange = name => event => {
     console.log(name, event.target.value)
   }
 
+  handleType = type => event => {
+    console.log(type, event.target.value)
+
+    if(type === 'signin') {
+      this.setState({type: 'signin'})
+    }
+
+    if(type === 'signup') {
+      this.setState({type: 'signup'})
+    }
+  }
+
   render() {
     const { classes } = this.props
+    const { type } = this.state
     return (
       <form noValidate autoComplete="off" style={{marginBottom: 40}}>
+        { type === 'signup' && (
+          <div className={classes.margins}>
+            <TextField
+              onChange={this.handleChange('name')}
+              fullWidth
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                },
+              }}
+              label="Name"
+              variant="outlined"
+              id="custom-css-outlined-input"
+            />
+          </div>
+        )}
         <div className={classes.margins}>
           <TextField
+            onChange={this.handleChange('email')}
             fullWidth
             InputLabelProps={{
               classes: {
@@ -69,6 +115,7 @@ class LoginForm extends Component {
         </div>
         <div className={classes.margins}>
           <TextField
+            onChange={this.handleChange('password')}
             fullWidth
             InputLabelProps={{
               classes: {
@@ -90,12 +137,25 @@ class LoginForm extends Component {
           />
         </div>
         <div className={classes.center} style={{marginTop: 30}}>
-          <Button variant="raised" color="primary" className={classes.button}>
-            Sign in
-          </Button>
-          <Button variant="raised" color="primary" className={classes.button}>
-            Sign up
-          </Button>
+          { type === 'signin' ? (
+            <div>
+              <Button onClick={this.handleType('signup')} variant="raised" color="primary" className={classes.button}>
+                <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+              </Button>
+              <Button variant="raised" color="primary" className={classes.button}>
+                <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <Button onClick={this.handleType('signin')} variant="outline" color="primary" className={classes.button}>
+                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+              </Button>
+              <Button variant="raised" color="primary" className={classes.button}>
+                <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+              </Button>
+            </div>
+          )}
         </div>
       </form>
     )
