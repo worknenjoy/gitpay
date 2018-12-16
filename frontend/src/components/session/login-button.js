@@ -31,11 +31,12 @@ const Content = styled.div`
 `
 
 class LoginButton extends Component {
-
   componentWillMount () {
-    const referer = this.props.referer.pathname
-    if (referer) {
-      Auth.storeReferer(referer)
+    if (this.props.referer) {
+      const referer = this.props.referer.pathname
+      if (referer) {
+        Auth.storeReferer(referer)
+      }
     }
   }
 
@@ -53,12 +54,12 @@ class LoginButton extends Component {
               <LoginForm />
             </div>
           ) }
-          <div style={{textAlign: 'center'}}>
+          <div style={ { textAlign: 'center' } }>
             <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom>
               <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
             </Typography>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center', marginTop: 10}}>
+          <div style={ { display: 'flex', justifyContent: 'center', marginTop: 10 } }>
             <div>
               <Button
                 style={ { marginRight: 10 } }

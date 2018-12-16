@@ -13,6 +13,9 @@ const bitbucketStrategy = require('passport-bitbucket-oauth20').Strategy
 const facebookStrategy = require('passport-facebook').Strategy
 const LocalStrategy = require('passport-local').Strategy
 const requestPromise = require('request-promise')
+const passportJWT = require("passport-jwt")
+const ExtractJWT = passportJWT.ExtractJwt
+const JWTStrategy   = passportJWT.Strategy
 
 const userExist = require('../modules/users').userExists
 const userBuild = require('../modules/users').userBuilds
@@ -393,18 +396,18 @@ passport.use(
         const userAttributes = {
           email: email
         }
-
-        console.log('userAttributes', userAttributes)
-
         userExist(userAttributes)
           .then(user => {
             if (!user) return done(null, false)
-
-            if (!user.verifyPassword(password, user.password)) {
-              return done(null, false)
+            if (user.verifyPassword(password, user.password)) {
+              const token = jwt.sign(
+                { email: user.email },
+                process.env.SECRET_PHRASE
+              )
+              user.token = token
+              return done(null, user)
             }
-
-            return done(null, user)
+            return done(null, false)
           })
           .catch(error => {
             return done(error)
@@ -413,3 +416,32 @@ passport.use(
     }
   )
 )
+
+passport.use(new JWTStrategy({
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey   : process.env.SECRET_PHRASE
+},
+(jwtPayload, done) => {
+  process.nextTick(_ => {
+    const userAttributes = {
+      email: jwtPayload.email
+    }
+    userExist(userAttributes)
+      .then(user => {
+        if (!user) return done(null, false)
+        if (user.verifyPassword(password, user.password)) {
+          const token = jwt.sign(
+            { email: user.email },
+            process.env.SECRET_PHRASE
+          )
+          user.token = token
+          return done(null, user)
+        }
+        return done(null, false)
+      })
+      .catch(error => {
+        return done(error)
+      })
+  })
+}
+));

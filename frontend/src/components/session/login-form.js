@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl'
 import purple from 'material-ui/colors/purple'
 import Button from 'material-ui/Button'
 
+import api from '../../consts'
+
 const styles = theme => ({
   cssLabel: {
     '&$cssFocused': {
@@ -38,124 +40,130 @@ const styles = theme => ({
 })
 
 class LoginForm extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
-      type: 'signin'
+      type: 'signin',
+      action: `${api.API_URL}/authorize/local`
     }
   }
 
   handleChange = name => event => {
-    console.log(name, event.target.value)
+    // console.log(name, event.target.value)
   }
 
   handleType = type => event => {
-    console.log(type, event.target.value)
-
-    if(type === 'signin') {
-      this.setState({type: 'signin'})
+    if (type === 'signin') {
+      this.setState({ type: 'signin' })
     }
 
-    if(type === 'signup') {
-      this.setState({type: 'signup'})
+    if (type === 'signup') {
+      this.setState({ type: 'signup', action: `${api.API_URL}/auth/register` })
     }
   }
 
-  render() {
+  handleSubmit = event => {
+
+  }
+
+  render () {
     const { classes } = this.props
-    const { type } = this.state
+    const { type, action } = this.state
     return (
-      <form noValidate autoComplete="off" style={{marginBottom: 40}}>
+      <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
-          <div className={classes.margins}>
+          <div className={ classes.margins }>
             <TextField
-              onChange={this.handleChange('name')}
+              name='name'
+              onChange={ this.handleChange('name') }
               fullWidth
-              InputLabelProps={{
+              InputLabelProps={ {
                 classes: {
                   root: classes.cssLabel,
                   focused: classes.cssFocused,
                 },
-              }}
-              InputProps={{
+              } }
+              InputProps={ {
                 classes: {
                   root: classes.cssOutlinedInput,
                   focused: classes.cssFocused,
                   notchedOutline: classes.notchedOutline,
                 },
-              }}
-              label="Name"
-              variant="outlined"
-              id="custom-css-outlined-input"
+              } }
+              label='Name'
+              variant='outlined'
+              id='custom-css-outlined-input'
             />
           </div>
-        )}
-        <div className={classes.margins}>
+        ) }
+        <div className={ classes.margins }>
           <TextField
-            onChange={this.handleChange('email')}
+            name='email'
+            onChange={ this.handleChange('email') }
             fullWidth
-            InputLabelProps={{
+            InputLabelProps={ {
               classes: {
                 root: classes.cssLabel,
                 focused: classes.cssFocused,
               },
-            }}
-            InputProps={{
+            } }
+            InputProps={ {
               classes: {
                 root: classes.cssOutlinedInput,
                 focused: classes.cssFocused,
                 notchedOutline: classes.notchedOutline,
               },
-            }}
-            label="E-mail"
-            variant="outlined"
-            id="custom-css-outlined-input"
+            } }
+            type='email'
+            label='E-mail'
+            variant='outlined'
+            id='custom-css-outlined-input'
           />
         </div>
-        <div className={classes.margins}>
+        <div className={ classes.margins }>
           <TextField
-            onChange={this.handleChange('password')}
+            name='password'
+            onChange={ this.handleChange('password') }
             fullWidth
-            InputLabelProps={{
+            InputLabelProps={ {
               classes: {
                 root: classes.cssLabel,
                 focused: classes.cssFocused,
               },
-            }}
-            InputProps={{
+            } }
+            InputProps={ {
               classes: {
                 root: classes.cssOutlinedInput,
                 focused: classes.cssFocused,
                 notchedOutline: classes.notchedOutline,
               },
-            }}
-            type="password"
-            label="Password"
-            variant="outlined"
-            id="custom-css-outlined-input"
+            } }
+            type='password'
+            label='Password'
+            variant='outlined'
+            id='custom-css-outlined-input'
           />
         </div>
-        <div className={classes.center} style={{marginTop: 30}}>
+        <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
-              <Button onClick={this.handleType('signup')} variant="raised" color="primary" className={classes.button}>
+              <Button onClick={ this.handleType('signup') } variant='raised' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
               </Button>
-              <Button variant="raised" color="primary" className={classes.button}>
+              <Button type='submit' variant='raised' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
               </Button>
             </div>
           ) : (
             <div>
-              <Button onClick={this.handleType('signin')} variant="outline" color="primary" className={classes.button}>
+              <Button onClick={ this.handleType('signin') } variant='outline' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
               </Button>
-              <Button variant="raised" color="primary" className={classes.button}>
+              <Button variant='raised' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
               </Button>
             </div>
-          )}
+          ) }
         </div>
       </form>
     )
