@@ -152,7 +152,7 @@ class Welcome extends Component {
               </div>
 
               <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
-                <LoginButton referer={ location } contrast />
+                <LoginButton referer={ location } contrast includeForm={false} />
               </div>
               <InfoContainer />
               <OurStack />

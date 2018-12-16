@@ -23,8 +23,8 @@ const styles = theme => ({
   },
   notchedOutline: {},
   margins: {
-    top: 20,
-    bottom: 60
+    marginTop: 10,
+    marginBottom: 10
   },
   button: {
     marginRight: 20

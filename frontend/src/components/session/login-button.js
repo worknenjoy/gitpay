@@ -31,6 +31,7 @@ const Content = styled.div`
 `
 
 class LoginButton extends Component {
+
   componentWillMount () {
     const referer = this.props.referer.pathname
     if (referer) {
@@ -39,15 +40,19 @@ class LoginButton extends Component {
   }
 
   render () {
-    const { classes, contrast, size } = this.props
+    const { classes, contrast, size, includeForm } = this.props
 
     return (
       <Wrapper contrast={ contrast }>
         <Content>
-          <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
-            <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
-          </Typography>
-          <LoginForm />
+          { includeForm && (
+            <div>
+              <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+                <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
+              </Typography>
+              <LoginForm />
+            </div>
+          ) }
           <div style={{textAlign: 'center'}}>
             <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom>
               <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
@@ -88,6 +93,7 @@ LoginButton.propTypes = {
   classes: PropTypes.object.isRequired,
   referer: PropTypes.object,
   contrast: PropTypes.bool,
+  includeForm: PropTypes.bool,
   size: PropTypes.oneOf(['large', 'medium', 'small'])
 }
 

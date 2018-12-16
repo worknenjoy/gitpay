@@ -806,7 +806,7 @@ class Task extends Component {
                       </DialogTitle>
                       <DialogContent>
                         <div className={ classes.mainBlock }>
-                          <LoginButton referer={ this.props.location } />
+                          <LoginButton referer={ this.props.location } includeForm={true} />
                         </div>
                       </DialogContent>
                     </div>
