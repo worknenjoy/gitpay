@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl'
 import purple from 'material-ui/colors/purple'
 import Button from 'material-ui/Button'
 
-
 import api from '../../consts'
 
 const styles = theme => ({
