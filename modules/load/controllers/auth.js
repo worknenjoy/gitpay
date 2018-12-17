@@ -14,7 +14,7 @@ exports.register = (req, res) => {
         res.send(false)
       })
   }).catch(error => {
-    if(error) {
+    if (error) {
       // eslint-disable-next-line no-console
       console.log(error)
       res.send(false)
