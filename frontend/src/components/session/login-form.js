@@ -53,7 +53,7 @@ class LoginForm extends Component {
   }
 
   handleChange = name => event => {
-    this.setState({[name]: event.target.value})
+    this.setState({ [name]: event.target.value })
   }
 
   handleType = type => event => {
@@ -67,14 +67,13 @@ class LoginForm extends Component {
   }
 
   handleSubmit = event => {
-    if(this.state.type === 'signup') {
+    if (this.state.type === 'signup') {
       event.preventDefault()
       this.props.registerUser({
         name: this.state.name,
         email: this.state.email,
         password: this.state.password
       }).then((user) => {
-        console.log('registered user', user)
         this.props.history.push('/login')
       })
     }

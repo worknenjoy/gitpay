@@ -14,8 +14,6 @@ export const REGISTER_USER_REQUESTED = 'REGISTER_USER_REQUESTED'
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
 export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR'
 
-
-
 /*
  *
  * Login
@@ -99,14 +97,14 @@ export const registerUser = (data) => {
     return axios
       .post(api.API_URL + '/auth/register', data)
       .then(response => {
-        if(response.data.email) {
+        if (response.data.email) {
           dispatch(addNotification('user.register.successfull'))
           return dispatch(registerSuccess(response.data))
         }
         dispatch(
           addNotification('user.register.error')
         )
-        return dispatch(registerError(error))
+        return dispatch(registerError({}))
       })
       .catch(error => {
         dispatch(
