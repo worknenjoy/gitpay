@@ -164,7 +164,7 @@ class Profile extends Component {
                       src=''
                       className={ classNames(classes.avatar, classes.bigAvatar) }
                     >
-                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) :  <UserIcon />) }
+                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <UserIcon />) }
                     </Avatar>
                   ) }
                 </div>
@@ -207,7 +207,7 @@ class Profile extends Component {
                       <a href={ user.website }>{ user.website }</a>
                     </Typography>
                   </div>
-                  {user.repos && (
+                  { user.repos && (
                     <div className={ classes.infoItem }>
                       <Typography>
                         <h4>
@@ -217,7 +217,7 @@ class Profile extends Component {
                         <p>{ user.repos }</p>
                       </Typography>
                     </div>
-                  )}
+                  ) }
                 </div>
                 <div className={ classes.row }>
                   <Paper className={ classes.menuContainer }>

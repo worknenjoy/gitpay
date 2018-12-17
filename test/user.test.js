@@ -49,14 +49,14 @@ describe("Users", () => {
   })
 
   describe('login User Local', () => {
-    xit('should user local', (done) => {
+    it('should user local', (done) => {
       agent
         .post('/authorize/local')
         .send({email: 'teste@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
-        .expect(401)
+        .expect(302)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(302);
           done();
         })
     })

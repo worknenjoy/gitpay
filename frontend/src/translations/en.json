@@ -332,6 +332,8 @@
   "payment.options.warning.message": "For now we only support bank accounts in Brazil. But it is possible to activate your account with Paypal instead.",
   "user.login.successfull": "You successfully logged in",
   "user.login.error": "We could not log to your account",
+  "user.register.successfull": "You're now registered on our platform, now you can log in with your credentials",
+  "user.register.error": "There's was an error to create user",
   "notifications.account.update.error": "We could not create your account",
   "notifications.bank.get.success": "We could not obtain your bank account data",
   "notifications.bank.get.error": "We could not obtain your bank account data",

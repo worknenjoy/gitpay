@@ -6,8 +6,15 @@ import { addNotification } from './notificationActions'
 export const LOGGED_IN_REQUESTED = 'LOGGED_IN_REQUESTED'
 export const LOGGED_IN_SUCCESS = 'LOGGED_IN_SUCCESS'
 export const LOGGED_IN_ERROR = 'LOGGED_IN_ERROR'
+
 export const LOGOUT_REQUESTED = 'LOGOUT_REQUESTED'
 export const LOGOUT_COMPLETED = 'LOGOUT_COMPLETED'
+
+export const REGISTER_USER_REQUESTED = 'REGISTER_USER_REQUESTED'
+export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
+export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR'
+
+
 
 /*
  *
@@ -65,6 +72,48 @@ export const loggedIn = () => {
     return dispatch => {
       return Promise.reject(dispatch(loggedInError({ error: 'not logged' })))
     }
+  }
+}
+
+/*
+ *
+ * Register
+ *
+ */
+
+const registerRequested = () => {
+  return { type: REGISTER_USER_REQUESTED, logged: false, completed: false }
+}
+
+const registerSuccess = user => {
+  return { type: REGISTER_USER_SUCCESS, logged: true, completed: true, user: user }
+}
+
+const registerError = error => {
+  return { type: REGISTER_USER_ERROR, logged: false, completed: true, error: error }
+}
+
+export const registerUser = (data) => {
+  return dispatch => {
+    dispatch(registerRequested())
+    return axios
+      .post(api.API_URL + '/auth/register', data)
+      .then(response => {
+        if(response.data.email) {
+          dispatch(addNotification('user.register.successfull'))
+          return dispatch(registerSuccess(response.data))
+        }
+        dispatch(
+          addNotification('user.register.error')
+        )
+        return dispatch(registerError(error))
+      })
+      .catch(error => {
+        dispatch(
+          addNotification('user.login.error')
+        )
+        return dispatch(registerError(error))
+      })
   }
 }
 

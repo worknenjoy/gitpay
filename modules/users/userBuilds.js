@@ -12,7 +12,7 @@ module.exports = Promise.method(function userBuilds (userParameters) {
       return data
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(error)
+      console.log('error from userBuilds', error)
       return false
     })
 })

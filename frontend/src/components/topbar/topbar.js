@@ -363,7 +363,7 @@ class TopBar extends Component {
 
                     { !user.picture_url &&
                       <StyledAvatar alt={ user.username || '' } src=''>
-                        { user.username ? nameInitials(user.username) :  <UserIcon />}
+                        { user.username ? nameInitials(user.username) : <UserIcon /> }
                       </StyledAvatar>
                     }
                   </StyledButton>

@@ -331,6 +331,8 @@
   "payment.options.warning.message": "No momento estamos aceitando contas bancárias apenas no Brasil. Mas é possível ativar sua conta usando o Paypal, se preferir.",
   "user.login.successfull": "Você logou na sua conta com sucesso",
   "user.login.erro": "Não foi possível logar na sua conta",
+  "user.register.successfull": "Agora que você está cadastrado você pode entrar na sua conta com seus dados",
+  "user.register.error": "Tivemos um erro para registrar este usuário",
   "notifications.account.update.error": "Não foi possível atualizar sua conta. Você preencheu todos os dados?",
   "notifications.bank.get.success": "Não foi possível obter sua conta bancária",
   "notifications.bank.get.error": "Não foi possível obter os dados da sua conta",

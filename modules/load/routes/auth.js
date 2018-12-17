@@ -7,7 +7,6 @@ const passport = require('passport')
 const authenticationHelpers = require('../../authenticationHelpers')
 require('../../../loading/loading')
 const controllers = require('../controllers/auth')
-const jwt = require('jsonwebtoken')
 
 router.get('/authenticated', authenticationHelpers.isAuth)
 
@@ -39,6 +38,10 @@ router.get('/callback/bitbucket',
 
 router.post('/authorize/local', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      res.status(401)
+      res.send({ 'reason': 'Invalid credentials' })
+    }
     if (!user) {
       // res.status(401)
       // res.send({ 'reason': 'Invalid credentials' })

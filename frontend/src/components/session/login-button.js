@@ -7,7 +7,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 
-import LoginForm from './login-form'
+import LoginFormContainer from '../../containers/login-form'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -51,7 +51,7 @@ class LoginButton extends Component {
               <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
-              <LoginForm />
+              <LoginFormContainer />
             </div>
           ) }
           <div style={ { textAlign: 'center' } }>

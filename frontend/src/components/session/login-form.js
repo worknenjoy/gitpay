@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import purple from 'material-ui/colors/purple'
 import Button from 'material-ui/Button'
@@ -44,12 +45,15 @@ class LoginForm extends Component {
     super(props)
     this.state = {
       type: 'signin',
-      action: `${api.API_URL}/authorize/local`
+      action: `${api.API_URL}/authorize/local`,
+      name: '',
+      email: '',
+      password: ''
     }
   }
 
   handleChange = name => event => {
-    // console.log(name, event.target.value)
+    this.setState({[name]: event.target.value})
   }
 
   handleType = type => event => {
@@ -63,7 +67,17 @@ class LoginForm extends Component {
   }
 
   handleSubmit = event => {
-
+    if(this.state.type === 'signup') {
+      event.preventDefault()
+      this.props.registerUser({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
+      }).then((user) => {
+        console.log('registered user', user)
+        this.props.history.push('/login')
+      })
+    }
   }
 
   render () {
@@ -159,7 +173,7 @@ class LoginForm extends Component {
               <Button onClick={ this.handleType('signin') } variant='outline' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
               </Button>
-              <Button variant='raised' color='primary' className={ classes.button }>
+              <Button type='submit' variant='raised' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
               </Button>
             </div>
@@ -170,4 +184,4 @@ class LoginForm extends Component {
   }
 }
 
-export default withStyles(styles)(LoginForm)
+export default withRouter(withStyles(styles)(LoginForm))
