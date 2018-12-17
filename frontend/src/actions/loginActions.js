@@ -107,9 +107,15 @@ export const registerUser = (data) => {
         return dispatch(registerError({}))
       })
       .catch(error => {
-        dispatch(
-          addNotification('user.login.error')
-        )
+        if(error.error === 'user.exist') {
+          dispatch(
+            addNotification('user.login.error')
+          )  
+        } else {
+          dispatch(
+            addNotification('user.exist')
+          )
+        }
         return dispatch(registerError(error))
       })
   }

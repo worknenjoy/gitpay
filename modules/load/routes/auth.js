@@ -45,7 +45,7 @@ router.post('/authorize/local', (req, res, next) => {
     if (!user) {
       // res.status(401)
       // res.send({ 'reason': 'Invalid credentials' })
-      res.redirect(`${process.env.FRONTEND_HOST}/#/login`)
+      res.redirect(`${process.env.FRONTEND_HOST}/#/login/invalid`)
     }
     else {
       req.logIn(user, { session: false }, (err) => {
@@ -53,7 +53,7 @@ router.post('/authorize/local', (req, res, next) => {
           res.status(500)
           res.send({ 'error': 'Server error' })
         }
-        res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
+        res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
       })
     }
   })(req, res, next)
