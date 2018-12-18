@@ -340,7 +340,7 @@ class TopBar extends Component {
                     <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
                   </DialogTitle>
                   <DialogContent>
-                    <LoginButton referer={ this.props.location } size='medium' />
+                    <LoginButton referer={ this.props.location } size='medium' includeForm />
                   </DialogContent>
                 </Dialog>
               </div>) : (
@@ -357,14 +357,14 @@ class TopBar extends Component {
                     </LabelButton>
                     { user.picture_url &&
                       <StyledAvatar
-                        alt={ user.username }
+                        alt={ user.username || '' }
                         src={ user.picture_url }
                       />
                     }
 
                     { !user.picture_url &&
-                      <StyledAvatar alt={ user.username } src=''>
-                        { nameInitials(user.username) }
+                      <StyledAvatar alt={ user.username || '' } src=''>
+                        { user.username ? nameInitials(user.username) : <UserIcon /> }
                       </StyledAvatar>
                     }
                   </StyledButton>
@@ -443,7 +443,7 @@ class TopBar extends Component {
                   <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
                     { completed ? (
                       <StyledAvatarIconOnly
-                        alt={ user.username }
+                        alt={ user.username || '' }
                         src={ logoLang(userCurrentLanguage) }
                       />
                     ) : (
@@ -483,7 +483,7 @@ class TopBar extends Component {
                 { (msg) => (
                   <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
                     <StyledAvatarIconOnly
-                      alt={ user.username }
+                      alt={ user.username || '' }
                       src={ logoGithub }
                       onClick={ this.handleGithubLink }
                     />

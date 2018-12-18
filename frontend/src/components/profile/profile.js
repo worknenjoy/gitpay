@@ -14,6 +14,7 @@ import DeviceHubIcon from 'material-ui-icons/DeviceHub'
 import LibraryBooks from 'material-ui-icons/LibraryBooks'
 import CreditCard from 'material-ui-icons/CreditCard'
 import Tune from 'material-ui-icons/Tune'
+import UserIcon from 'material-ui-icons/AccountCircle'
 
 import classNames from 'classnames'
 import nameInitials from 'name-initials'
@@ -163,7 +164,7 @@ class Profile extends Component {
                       src=''
                       className={ classNames(classes.avatar, classes.bigAvatar) }
                     >
-                      { nameInitials(user.name || '') }
+                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <UserIcon />) }
                     </Avatar>
                   ) }
                 </div>
@@ -206,15 +207,17 @@ class Profile extends Component {
                       <a href={ user.website }>{ user.website }</a>
                     </Typography>
                   </div>
-                  <div className={ classes.infoItem }>
-                    <Typography>
-                      <h4>
-                        <DeviceHubIcon />
-                        <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
-                      </h4>
-                      <p>{ user.repos }</p>
-                    </Typography>
-                  </div>
+                  { user.repos && (
+                    <div className={ classes.infoItem }>
+                      <Typography>
+                        <h4>
+                          <DeviceHubIcon />
+                          <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
+                        </h4>
+                        <p>{ user.repos }</p>
+                      </Typography>
+                    </div>
+                  ) }
                 </div>
                 <div className={ classes.row }>
                   <Paper className={ classes.menuContainer }>

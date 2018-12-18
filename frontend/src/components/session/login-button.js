@@ -7,6 +7,8 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 
+import LoginFormContainer from '../../containers/login-form'
+
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
@@ -30,45 +32,58 @@ const Content = styled.div`
 
 class LoginButton extends Component {
   componentWillMount () {
-    const referer = this.props.referer.pathname
-    if (referer) {
-      Auth.storeReferer(referer)
+    if (this.props.referer) {
+      const referer = this.props.referer.pathname
+      if (referer) {
+        Auth.storeReferer(referer)
+      }
     }
   }
 
   render () {
-    const { classes, contrast, size } = this.props
+    const { classes, contrast, size, includeForm } = this.props
 
     return (
       <Wrapper contrast={ contrast }>
-        <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
-          <FormattedMessage id='account.login.connect' defaultMessage='Conect with your existing account' />
-        </Typography>
-
         <Content>
-          <Button
-            style={ { marginRight: 10 } }
-            href={ `${api.API_URL}/authorize/github` }
-            variant='raised'
-            size={ size }
-            color='secondary'
-            className={ classes.logButtons }
-          >
-            <img width='16' src={ logoGithub } />
-            <span className={ classes.gutterLeft }>Github</span>
-          </Button>
-
-          <Button
-            href={ `${api.API_URL}/authorize/bitbucket` }
-            variant='raised'
-            size={ size }
-            color='secondary'
-            className={ classes.logButtons }
-          >
-            <img width='16' src={ logoBitbucket } />
-            <span className={ classes.gutterLeft }>Bitbucket</span>
-          </Button>
-
+          { includeForm && (
+            <div>
+              <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+                <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
+              </Typography>
+              <LoginFormContainer />
+            </div>
+          ) }
+          <div style={ { textAlign: 'center' } }>
+            <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom>
+              <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
+            </Typography>
+          </div>
+          <div style={ { display: 'flex', justifyContent: 'center', marginTop: 10 } }>
+            <div>
+              <Button
+                style={ { marginRight: 10 } }
+                href={ `${api.API_URL}/authorize/github` }
+                variant='raised'
+                size={ size }
+                color='secondary'
+                className={ classes.logButtons }
+              >
+                <img width='16' src={ logoGithub } />
+                <span className={ classes.gutterLeft }>Github</span>
+              </Button>
+              <Button
+                href={ `${api.API_URL}/authorize/bitbucket` }
+                variant='raised'
+                size={ size }
+                color='secondary'
+                className={ classes.logButtons }
+              >
+                <img width='16' src={ logoBitbucket } />
+                <span className={ classes.gutterLeft }>Bitbucket</span>
+              </Button>
+            </div>
+          </div>
         </Content>
       </Wrapper>
     )
@@ -79,7 +94,8 @@ LoginButton.propTypes = {
   classes: PropTypes.object.isRequired,
   referer: PropTypes.object,
   contrast: PropTypes.bool,
-  size: PropTypes.oneOf(['large', 'medium', 'small']),
+  includeForm: PropTypes.bool,
+  size: PropTypes.oneOf(['large', 'medium', 'small'])
 }
 
 LoginButton.defaultProps = {

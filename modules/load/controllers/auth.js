@@ -1,14 +1,19 @@
 const user = require('../../users')
 
 exports.register = (req, res) => {
-  user.userBuilds(req.body)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
+  user.userExists({ email: req.body.email }).then(userData => {
+    if (userData.dataValues && userData.dataValues.email) {
+      res.status(403).send({ error: 'user.exist' })
+    }
+    user.userBuilds(req.body)
+      .then(data => {
+        res.send(data)
+      }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(false)
-    })
+        console.log(error)
+        res.send(false)
+      })
+  })
 }
 
 exports.searchAll = (req, res) => {

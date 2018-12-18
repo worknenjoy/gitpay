@@ -483,7 +483,7 @@ class Task extends Component {
               { (msg) => (
                 <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
                   <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                    <span>{ user.username }</span>
+                    <span>{ user.username || user.name || ' - ' }</span>
                     <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
                   </a>
                 </Tooltip>
@@ -491,7 +491,7 @@ class Task extends Component {
             </FormattedMessage>
           )
           : (
-            `${user && user.username || this.props.intl.formatMessage(messages.noUserFound)}`
+            `${user && user.username || user.name || this.props.intl.formatMessage(messages.noUserFound)}`
           )
         }
       </span>)
@@ -563,7 +563,7 @@ class Task extends Component {
                   { (msg) => (
                     <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
                       <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                        <span>{ item.User.username }</span>
+                        <span>{ item.User.username || item.User.name || ' - ' }</span>
                         <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
                       </a>
                     </Tooltip>
@@ -571,7 +571,7 @@ class Task extends Component {
                 </FormattedMessage>
               )
               : (
-                `${item.User.username}`
+                `${item.User.username || item.User.name || ' - '}`
               )
             }
           </span>
@@ -806,7 +806,7 @@ class Task extends Component {
                       </DialogTitle>
                       <DialogContent>
                         <div className={ classes.mainBlock }>
-                          <LoginButton referer={ this.props.location } />
+                          <LoginButton referer={ this.props.location } includeForm />
                         </div>
                       </DialogContent>
                     </div>

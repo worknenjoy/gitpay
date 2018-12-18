@@ -46,17 +46,38 @@ describe("Users", () => {
           done();
         })
     })
+    it('dont allow register with the same user', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          agent
+            .post('/auth/register')
+            .send({email: 'teste@gmail.com', password: 'teste'})
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .end((err, res) => {
+              console.log('res status', res.statusCode)
+              console.log('res body', res.body)
+              expect(res.statusCode).to.equal(403);
+              expect(res.body.error).to.equal('user.exist');
+              done();
+            })
+        })
+    })
   })
 
   describe('login User Local', () => {
-    xit('should user local', (done) => {
+    it('should user local', (done) => {
       agent
         .post('/authorize/local')
         .send({email: 'teste@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
-        .expect(401)
+        .expect(302)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(401);
+          expect(res.statusCode).to.equal(302);
           done();
         })
     })
@@ -105,7 +126,7 @@ describe("Users", () => {
     it('should try get customer info with no customer', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste123@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -125,7 +146,7 @@ describe("Users", () => {
     it('should try get customer info with customer id set', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste', customer_id: 'cus_CuK03K2mStPxBt'})
+        .send({email: 'teste1234@gmail.com', password: 'teste', customer_id: 'cus_CuK03K2mStPxBt'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -148,7 +169,7 @@ describe("Users", () => {
     it('should retrieve user preferences', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste', country: 'usa', language: 'en'})
+        .send({email: 'teste12345@gmail.com', password: 'teste', country: 'usa', language: 'en'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -172,7 +193,7 @@ describe("Users", () => {
     xit('should retrieve account for user', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste', account_id: 'acct_1CVSl2EI8tTzMKoL'})
+        .send({email: 'teste1234566@gmail.com', password: 'teste', account_id: 'acct_1CVSl2EI8tTzMKoL'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -192,7 +213,7 @@ describe("Users", () => {
     it('should create account for user', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste1111@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {

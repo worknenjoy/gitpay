@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
@@ -38,18 +37,23 @@ router.get('/callback/bitbucket',
   })
 
 router.post('/authorize/local', (req, res, next) => {
-  passport.authenticate('local', (user) => {
-    if (!user) {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
       res.status(401)
       res.send({ 'reason': 'Invalid credentials' })
     }
+    if (!user) {
+      // res.status(401)
+      // res.send({ 'reason': 'Invalid credentials' })
+      res.redirect(`${process.env.FRONTEND_HOST}/#/login/invalid`)
+    }
     else {
-      req.logIn(user, (err) => {
+      req.logIn(user, { session: false }, (err) => {
         if (err) {
           res.status(500)
           res.send({ 'error': 'Server error' })
         }
-        res.send(user)
+        res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
       })
     }
   })(req, res, next)
