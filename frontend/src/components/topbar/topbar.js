@@ -57,6 +57,7 @@ import LoginButton from '../session/login-button'
 
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const logoLangEn = require('../../images/united-states-of-america.png')
 const logoLangBr = require('../../images/brazil.png')
@@ -398,7 +399,26 @@ class TopBar extends Component {
                       fullWidth
                     />
                     <div style={ { marginTop: 10, marginBottom: 10 } }>
-                      <LoginButton referer={ this.props.location } size='medium' includeForm />
+                      <Button
+                          style={ { marginRight: 10 } }
+                          color='primary'
+                          variant={ this.state.provider === 'github' ? 'raised' : 'contained' }
+                          id='github'
+                          onClick={ (e) => this.handleProvider(e, 'github') }
+                        >
+                          <img width='16' src={ logoGithub } />
+                          <span style={ { marginLeft: 10 } }>Github</span>
+                        </Button>
+
+                        <Button
+                          color='primary'
+                          variant={ this.state.provider === 'bitbucket' ? 'raised' : 'contained' }
+                          id='bitbucket'
+                          onClick={ (e) => this.handleProvider(e, 'bitbucket') }
+                        >
+                          <img width='16' src={ logoBitbucket } />
+                          <span style={ { marginLeft: 10 } }>Bitbucket</span>
+                        </Button>
                     </div>
                     { this.state.task.url.error &&
                     <FormHelperText error={ this.state.task.url.error }>

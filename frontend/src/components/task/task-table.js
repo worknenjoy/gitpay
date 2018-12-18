@@ -212,7 +212,7 @@ class CustomPaginationActionsTable extends React.Component {
                                       style={ { width: 24, height: 24, display: 'inline-block' } }
                                     />
                                     <span style={ { marginLeft: 10 } }>
-                                      { TextEllipsis(n.User.username, 10) }
+                                      { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
                                     </span>
                                   </a>
                                 ) : (
@@ -222,7 +222,7 @@ class CustomPaginationActionsTable extends React.Component {
                                       style={ { width: 24, height: 24, display: 'inline-block' } }
                                     />
                                     <span style={ { marginLeft: 10 } }>
-                                      { TextEllipsis(n.User.username, 10) }
+                                      { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
                                     </span>
                                   </div>
                                 )
