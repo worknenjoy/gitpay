@@ -12,16 +12,16 @@ current behavior
 ### Expected behavior
 expect behavior
 
-usefull links
-https://github.com/worknenjoy/gitpay/tree/master/modules/mail
+### usefull links
+  - https://example.com
 
 ### Screenshot attached
 some screenshot
 
 ### How to solve this issue
-steps to solve
+ - steps to solve
 
-### How to reproduze the user scenario
+### How to reproduce the user scenario
 
  - steps to reproduce the issue
 
