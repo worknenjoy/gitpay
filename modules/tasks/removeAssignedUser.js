@@ -23,7 +23,7 @@ module.exports = Promise.method(function ({ id }, { message }) {
           const language = user.language || 'en'
           i18n.setLocale(language)
           SendMail.success(
-            assign.User.email,
+            assign.User,
             i18n.__('mail.assign.remove.subject'),
             i18n.__('mail.assign.remove.message', { message: message, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })
           )

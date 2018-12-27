@@ -150,7 +150,7 @@
   "task.payment.transfers.concluded": "All transfers had succeed",
   "task.payment.transfer.done": "All your transfers was concluded with your credit card and the transaction id is:",
   "task.payment.pay.button.credit": "Pay $ {value}",
-  "task.payment.pay.button.paypal": "Pay with Paypal (id: {transfer})",
+  "task.payment.pay.button.paypal": "Paid with Paypal (id: {transfer})",
   "task.payment.done.to": "You made a payment to $ {user}",
   "task.payment.start.payTo": "Pay $ {value}",
   "task.payment.types.notype": "No payment for this payment type",

@@ -134,10 +134,10 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                       if (!user.account_id) {
                         TransferMail.futurePaymentForInvalidAccount(user)
                       }
-                      AssignMail.interested(user, task.dataValues, user.username)
+                      AssignMail.interested(user, task.dataValues)
                       if (task.dataValues.User) {
                         const ownerUser = task.dataValues.User.dataValues
-                        AssignMail.owner(ownerUser, task.dataValues, user.username)
+                        AssignMail.owner(ownerUser, task.dataValues, user)
                       }
                       return task.dataValues
                     })
@@ -154,7 +154,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               include: [models.User]
             }).then((assigned) => {
               const assignedUser = assigned.User.dataValues
-              AssignMail.assigned(assignedUser, task.dataValues, assignedUser.username)
+              AssignMail.assigned(assignedUser, task.dataValues)
               return task.dataValues
             })
           }
