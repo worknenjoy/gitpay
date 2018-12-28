@@ -18,9 +18,6 @@ services:
     working_dir: /gitpay
     volumes: 
       - .:/gitpay
-    environment:
-      FRONTEND_HOST: "http://localhost:8082"
-      API_HOST: "http://localhost:3000"
     network_mode: host
     ports:
       - "3000:3000"
