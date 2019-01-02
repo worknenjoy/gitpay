@@ -5,9 +5,6 @@ module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {
     next()
   }
-  else if (process.env.NODE_ENV === 'test') {
-    next()
-  }
   else {
     const token = req.body.token || req.query.token || req.headers['authorization']
 
