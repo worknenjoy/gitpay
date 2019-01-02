@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const { userExists } = require('../../users')
 
 module.exports = (req, res, next) => {
   // CORS preflight request
@@ -10,10 +11,12 @@ module.exports = (req, res, next) => {
 
     if (!token) return res.status(403).send({ errors: ['No token provided'] })
 
-    jwt.verify(token, process.env.SECRET_PHRASE, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_PHRASE, async (err, decoded) => {
       if (err) return res.status(403).send({ errors: ['Failed to authenticate token'] })
 
       req.decoded = decoded
+      req.user = await userExists(decoded).catch(next)
+
       next()
     })
   }
