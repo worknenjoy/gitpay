@@ -53,6 +53,8 @@ router.post('/authorize/local', (req, res, next) => {
           res.status(500)
           res.send({ 'error': 'Server error' })
         }
+        // set authorization header for tests
+        res.set('Authorization', 'Bearer ' + user.token)
         res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
       })
     }
