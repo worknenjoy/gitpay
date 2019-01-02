@@ -7,7 +7,9 @@ module.exports = (req, res, next) => {
     next()
   }
   else {
-    const token = req.body.token || req.query.token || req.headers['authorization']
+    const token = req.body.token || req.query.token ||
+      // support with or without 'Bearer '
+      (req.headers['authorization'] || '').replace(/Bearer\s+/, '')
 
     if (!token) return res.status(403).send({ errors: ['No token provided'] })
 
