@@ -1,6 +1,6 @@
 import api from '../consts'
 import axios from 'axios'
-import Auth from '../modules/auth'
+import { validToken } from './helpers'
 import { addNotification } from './notificationActions'
 import { fetchTask } from './taskActions'
 
@@ -11,14 +11,6 @@ const CREATE_ORDER_ERROR = 'CREATE_ORDER_ERROR'
 const PAY_ORDER_REQUESTED = 'PAY_ORDER_REQUESTED'
 const PAY_ORDER_SUCCESS = 'PAY_ORDER_SUCCESS'
 const PAY_ORDER_ERROR = 'PAY_ORDER_ERROR'
-
-const validToken = () => {
-  if (Auth.getToken()) {
-    axios.defaults.headers.common['authorization'] = Auth.getToken()
-  }
-
-  return true
-}
 
 /*
  * Order create

@@ -1,6 +1,6 @@
 import api from '../consts'
 import axios from 'axios'
-import Auth from '../modules/auth'
+import { validToken } from './helpers'
 import { addNotification } from './notificationActions'
 
 const CREATE_TASK_REQUESTED = 'CREATE_TASK_REQUESTED'
@@ -166,14 +166,6 @@ const fetchTaskError = error => {
 /*
  * Task payment
 */
-
-const validToken = () => {
-  if (Auth.getToken()) {
-    axios.defaults.headers.common['authorization'] = Auth.getToken()
-  }
-
-  return true
-}
 
 const paymentTaskRequested = () => {
   return { type: PAYMENT_TASK_REQUESTED, completed: false }
