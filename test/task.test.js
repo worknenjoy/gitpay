@@ -6,6 +6,7 @@ const expect = require('chai').expect
 const api = require('../server');
 const agent = request.agent(api);
 const models = require('../loading/loading');
+const { registerAndLogin } = require('./helpers')
 
 describe("tasks", () => {
 
@@ -52,24 +53,20 @@ describe("tasks", () => {
           })
     }
     it('should create a new task', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'tasktestuser1233333@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          agent
-            .post('/tasks/create/')
-            .send({url: 'https://github.com/worknenjoy/truppie/issues/99', userId: res.body.id})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end((err, res) => {
-              expect(res.statusCode).to.equal(200);
-              expect(res.body).to.exist;
-              expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
-              done();
-            })
+      registerAndLogin(agent).then(res => {
+        agent
+          .post('/tasks/create/')
+          .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+          .set('Authorization', res.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.exist;
+            expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
+            done();
           })
+      })
     })
 
     xit('should invite for a task', (done) => {
@@ -264,24 +261,19 @@ describe("tasks", () => {
     });
 
     it('should delete a task by id', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          const userId = res.body.id;
-          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-          models.Task.build({ url: github_url, provider: 'github', userId: userId }).save().then((task) => {
-            agent
-              .delete(`/tasks/delete/${task.dataValues.id}`)
-              .expect(200)
-              .end((err, res) => {
-                expect(err).to.be.null
-                done()
-              })
-          })
+      const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+      models.Task.build({ url: github_url, provider: 'github' }).save().then((task) => {
+        registerAndLogin(agent).then(res => {
+          agent
+            .delete(`/tasks/delete/${task.dataValues.id}`)
+            .set('Authorization', res.headers.authorization)
+            .expect(200)
+            .end((err, res) => {
+              expect(err).to.be.null
+              done()
+            })
         })
+      })
     })
   });
 
