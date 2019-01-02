@@ -9,8 +9,8 @@ const models = require('../loading/loading');
 
 describe("info", () => {
     beforeEach(() => {
-        models.Task.destroy({where:{}, truncate: true})
-        models.User.destroy({where:{}, truncate: true})
+        models.Task.destroy({where:{}, truncate: true, cascade: true})
+        models.User.destroy({where:{}, truncate: true, cascade: true})
     })
     
     describe('with no models in database', () => {

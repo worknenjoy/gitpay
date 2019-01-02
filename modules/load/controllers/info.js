@@ -21,7 +21,8 @@ const fetchChannelUserCount = async () => {
     }
   }
   else {
-    throw new Error(data.error)
+    // throw new Error(data.error)
+    return 0
   }
 }
 

@@ -12,6 +12,9 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
   const userOrCompany = splitIssueUrl[1]
   const projectName = splitIssueUrl[2]
   const issueId = splitIssueUrl[4]
+  const userId = taskParameters.userId
+
+  if (!userId) return false
 
   switch (taskParameters.provider) {
     case 'github':
