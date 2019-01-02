@@ -12,6 +12,12 @@ const CURRENCIES = {
   usd: '$'
 }
 
+exports.github = (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log('webhook from github received', req.body, res.body)
+  res.json(req.body)
+}
+
 exports.updateWebhook = (req, res) => {
   if (req.body.object === 'event') {
     const event = req.body
