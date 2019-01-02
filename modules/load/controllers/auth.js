@@ -4,12 +4,13 @@ exports.register = (req, res) => {
   user.userExists({ email: req.body.email }).then(userData => {
     if (userData.dataValues && userData.dataValues.email) {
       res.status(403).send({ error: 'user.exist' })
+      return
     }
     user.userBuilds(req.body)
       .then(data => {
         res.send(data)
       }).catch(error => {
-      // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.log(error)
         res.send(false)
       })

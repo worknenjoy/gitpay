@@ -347,6 +347,7 @@
   "actions.task.issues.error.notfound": "We could not find this issue",
   "actions.task.create.notification.success": "Task created successfully",
   "actions.task.create.notification.error": "Error to update task",
+  "actions.task.create.auth.error": "You need to login first to create a task",
   "actions.task.payment.notification.success": "Your payment was completed successfully",
   "actions.task.interested.notification.success": "You add as interested for this task sucessfully",
   "actions.task.update.notification.success": "Task updated successfully",

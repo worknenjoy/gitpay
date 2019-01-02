@@ -38,6 +38,16 @@ To run the test:
 
 For fully integration with api services used by the platform, you will need the api keys. *You should make a copy of your `.env.example` to `.env`* with the right credentials. Please let me know if you need any of those to solve a issue (mail tarefas@gitpay.me)
 
+### Database 
+
+#### Install postgres
+1. install: `brew install postgres` (mac)
+2. start the service: `brew services start postgresql`
+3. create postgres user: `createuser postgres -s`
+4. Login into postgres cli: `psql -U postgres`
+5. Create test database: `create database gitpay_test;`
+6. Create a dev database: `create database gitpay_dev;`
+7. Exit: `\q`
 
 ## Run migration
 
@@ -50,6 +60,7 @@ To create a new migration
 `sequelize migration:create --name modelname`
 
 ## Run project
+
 ### Frontend server
 `npm run dev`
 
