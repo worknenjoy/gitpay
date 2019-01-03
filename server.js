@@ -47,9 +47,8 @@ app.get('/octos', (req, res) => {
 
     // eslint-disable-next-line no-console
     console.log(articles)
+    return res.json(articles).end()
   })
-
-  return res.json({}).end()
 })
 
 load.init(app)
