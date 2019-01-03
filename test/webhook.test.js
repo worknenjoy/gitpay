@@ -12,6 +12,7 @@ const transferData = require('./data/transfer')
 const payoutData = require('./data/payout')
 const cardData = require('./data/card')
 const balanceData = require('./data/balance')
+const githubWebhook = require('./data/github.event.main')
 
 describe('webhooks', () => {
   beforeEach(() => {
@@ -328,6 +329,22 @@ describe('webhooks', () => {
           expect(res.statusCode).to.equal(200)
           expect(res.body).to.exist
           expect(res.body.id).to.equal('evt_1234')
+          done()
+        });      
+    })
+  })
+
+  describe('webhooks for Github events', () => {
+    it('should post event from github webhooks', done => {
+      agent
+        .post('/webhooks/github')
+        .send(githubWebhook.main)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.exist
+          expect(res.body.hook_id).to.equal(74489783)
           done()
         });      
     })

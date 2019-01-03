@@ -346,6 +346,7 @@
   "actions.task.issues.error.notfound": "Tarefa não encontrada",
   "actions.task.create.notification.success": "Tarefa criada com sucesso",
   "actions.task.create.notification.error": "Erro ao atualizar tarefa",
+  "actions.task.create.auth.error": "Você precisa primeiro estar logado para criar uma tarefa",
   "actions.task.payment.notification.success": "Pagamento realizado com sucesso",
   "actions.task.interested.notification.success": "Você adicionou interesse pela tarefa",
   "actions.task.update.notification.success": "Tarefa atualizada com sucesso",

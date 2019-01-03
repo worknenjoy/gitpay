@@ -19,6 +19,9 @@ We offer a marketplace for developersand platforms that use git for on demand pr
 ## Who is contributing
 [![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/0)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/0)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/1)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/1)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/2)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/2)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/3)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/3)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/4)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/4)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/5)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/5)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/6)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/6)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/7)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/7)
 
+### Join the team
+Join the Gitpay team
+http://probot-invite.herokuapp.com/join/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3b3JrbmVuam95IiwiaXNzIjo1NTM1NTQsInJvbGUiOiJtZW1iZXIiLCJ0ZWFtcyI6WyIyODA0NDE5IiwiMjYzNzkyOSJdLCJpYXQiOjE1NDY0NzI4NjR9.iHSIS0XuvmvhwOROdkKw64i00PgzeK4e7h_yCxFh1YE
 
 
 ## Requirements
@@ -38,6 +41,16 @@ To run the test:
 
 For fully integration with api services used by the platform, you will need the api keys. *You should make a copy of your `.env.example` to `.env`* with the right credentials. Please let me know if you need any of those to solve a issue (mail tarefas@gitpay.me)
 
+### Database 
+
+#### Install postgres
+1. install: `brew install postgres` (mac)
+2. start the service: `brew services start postgresql`
+3. create postgres user: `createuser postgres -s`
+4. Login into postgres cli: `psql -U postgres`
+5. Create test database: `create database gitpay_test;`
+6. Create a dev database: `create database gitpay_dev;`
+7. Exit: `\q`
 
 ## Run migration
 
@@ -50,6 +63,7 @@ To create a new migration
 `sequelize migration:create --name modelname`
 
 ## Run project
+
 ### Frontend server
 `npm run dev`
 

@@ -23,7 +23,7 @@ const AssignMail = {
 }
 
 if (constants.canSendEmail) {
-  AssignMail.owner = (user, task, name) => {
+  AssignMail.owner = (user, task, interested) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
@@ -36,7 +36,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.assign.owner.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.assign.owner.main', { email: interested.email, name: interested.name || interested.username, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
@@ -44,7 +44,7 @@ if (constants.canSendEmail) {
     )
   }
 
-  AssignMail.interested = (user, task, name) => {
+  AssignMail.interested = (user, task) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
@@ -57,7 +57,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.interested.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.interested.main', { email: user.email, name: user.name || user.username, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.interested.owner.sec')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
@@ -65,9 +65,10 @@ if (constants.canSendEmail) {
     )
   }
 
-  AssignMail.assigned = (user, task, name) => {
+  AssignMail.assigned = (user, task) => {
     const to = user.email
     const language = user.language || 'en'
+    const name = user.name || user.username
     i18n.setLocale(language)
     setMomentLocale(language)
     request(
