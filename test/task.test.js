@@ -213,6 +213,30 @@ describe("tasks", () => {
         })
     });
 
+    it('should update task with associated user assigned and offer', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+
+          models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+            agent
+              .put("/tasks/update")
+              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}], Offers: [{userId: userId, value: 100}]})
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.body.value).to.equal('200');
+                done();
+              })
+          })
+        })
+    });
+
     xit('should update task with an user assinged', (done) => {
       agent
         .post('/auth/register')
