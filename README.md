@@ -1,5 +1,7 @@
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/worknenjoy/gitpay.png?columns=all)](https://waffle.io/worknenjoy/gitpay?utm_source=badge)
 
+[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
+
 ![Gitpay](https://user-images.githubusercontent.com/88840/49310112-ab148a80-f4dd-11e8-9d66-9800d6a4b04d.png)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/398ca838e49e4db2a537feb5568e7a87)](https://app.codacy.com/app/alexanmtz/gitpay?utm_source=github.com&utm_medium=referral&utm_content=worknenjoy/gitpay&utm_campaign=badger)
