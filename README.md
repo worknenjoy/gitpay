@@ -1,9 +1,7 @@
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/worknenjoy/gitpay.png?columns=all)](https://waffle.io/worknenjoy/gitpay?utm_source=badge) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
-
 ![Gitpay](https://user-images.githubusercontent.com/88840/49310112-ab148a80-f4dd-11e8-9d66-9800d6a4b04d.png)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/398ca838e49e4db2a537feb5568e7a87)](https://app.codacy.com/app/alexanmtz/gitpay?utm_source=github.com&utm_medium=referral&utm_content=worknenjoy/gitpay&utm_campaign=badger)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield) [![Waffle.io - Columns and their card count](https://badge.waffle.io/worknenjoy/gitpay.png?columns=all)](https://waffle.io/worknenjoy/gitpay?utm_source=badge) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 
 Freelancing with development workflow
 
@@ -11,7 +9,7 @@ https://gitpitch.com/worknenjoy/gitpay
 
 ## What is Gitpay?
 
-We offer a marketplace for developersand platforms that use git for on demand project needs, using the Git Workflow as contract of deliver issues solved.
+We offer a marketplace for developersand platforms that use git for on demand project needs, using the Git Workflow as contract to deliver issues solved and be rewarded for contribute.
 
 * You can complete tasks with open collaboration and receive bounties for it
 * Companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
