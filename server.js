@@ -49,7 +49,7 @@ app.get('/octos', (req, res) => {
     console.log(articles)
   })
 
-  return res.json({}).end()
+  return res.json(articles).end()
 })
 
 load.init(app)
