@@ -17,13 +17,13 @@ const setMomentLocale = (lang) => {
 }
 
 const AssignMail = {
-  owner: (to, task, name) => {},
+  owner: (to, task, name, offer) => {},
   interested: (to, task, name) => {},
   error: (msg) => {}
 }
 
 if (constants.canSendEmail) {
-  AssignMail.owner = (user, task, interested) => {
+  AssignMail.owner = (user, task, interested, offer) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
@@ -37,6 +37,7 @@ if (constants.canSendEmail) {
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
           <p>${i18n.__('mail.assign.owner.main', { email: interested.email, name: interested.name || interested.username, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.assign.owner.suggest', { value: offer.value, suggestedDate: offer.suggestedDate, learn: offer.learn, comment: offer.comment })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
           <p>${Signatures.sign(language)}</p>`
         },

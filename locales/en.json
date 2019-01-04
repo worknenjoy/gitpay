@@ -11,6 +11,7 @@
   "mail.assign.owner.subject": "Someone is interested in a task that you created on Gitpay",
   "mail.assign.owner.hello": "Hello",
   "mail.assign.owner.main": "{{name}} is interested in the task <a href=\"{{url}}\">{{url}}</a>. You can contact him on {{email}} to know more.",
+  "mail.assign.owner.suggest": "Suggested bounty: {{value}},  suggested date: {{suggestedDate}}, for learn: {{learn}}, comment: {{comment}}",
   "mail.assign.owner.sec": "You can assign this user for this task going in 'interested' tab and he will receive the bounty when the task is done.",
   "mail.interested.owner.subject": "You're interested in this task",
   "mail.interested.main": "You're interested to work in the task <a href=\"{{url}}\"</a> on Gitpay",
