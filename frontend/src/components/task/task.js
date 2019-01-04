@@ -562,7 +562,7 @@ class Task extends Component {
             </FormattedMessage>
           )
           : (
-            `${user && user.username || user.name || this.props.intl.formatMessage(messages.noUserFound)}`
+            `${user && (user.username || user.name || this.props.intl.formatMessage(messages.noUserFound))}`
           )
         }
       </span>)
