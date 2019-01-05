@@ -1,6 +1,7 @@
 const Tasks = require('../../tasks')
 
 exports.createTask = (req, res) => {
+  req.body.userId = req.user.id
   Tasks.taskBuilds(req.body)
     .then(data => {
       res.send(data)
