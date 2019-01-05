@@ -86,7 +86,7 @@ Then you can access at http://localhost:8082
 #### Running
 ##### Development environment 
 - Run `docker-compose up`
-- Open your browser at http://localhost:8082
+Then you can access at http://localhost:8082
 ##### Test environment
 - Run `docker-compose -f docker-compose.test.yml up`
 
