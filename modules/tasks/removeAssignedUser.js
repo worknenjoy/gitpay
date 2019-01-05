@@ -3,9 +3,16 @@ const models = require('../../loading/loading')
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 
-module.exports = Promise.method(function ({ id }, { message }) {
+module.exports = Promise.method(function ({ id, userId }, { message }) {
   return models.Task
-    .findById(id, { include: [ models.User, models.Order, models.Assign ] })
+    .findOne({
+      where: {
+        id,
+        userId
+      }
+    }, {
+      include: [ models.User, models.Order, models.Assign ]
+    })
     .then(task => {
       const assignedId = task.assigned
 

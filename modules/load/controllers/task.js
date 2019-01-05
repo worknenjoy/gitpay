@@ -90,7 +90,10 @@ exports.inviteUserToTask = ({ params, body }, res) => Tasks
   })
 
 // Assigns functions.
-exports.removeAssignedUser = ({ params, body }, res) => Tasks
-  .removeAssignedUser(params, body)
-  .then(data => res.send(data))
-  .catch(error => res.send({ error: error.message }))
+exports.removeAssignedUser = (req, res) => {
+  const params = { id: req.params.id, userId: req.user.id }
+  Tasks
+    .removeAssignedUser(params, req.body)
+    .then(data => res.send(data))
+    .catch(error => res.send({ error: error.message }))
+}
