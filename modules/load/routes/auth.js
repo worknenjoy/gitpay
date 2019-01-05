@@ -7,6 +7,7 @@ const passport = require('passport')
 const authenticationHelpers = require('../../authenticationHelpers')
 require('../../../loading/loading')
 const controllers = require('../controllers/auth')
+const secure = require('./secure')
 
 router.get('/authenticated', authenticationHelpers.isAuth)
 
@@ -63,13 +64,18 @@ router.post('/authorize/local', (req, res, next) => {
 
 router.post('/auth/register', controllers.register)
 router.get('/users', controllers.searchAll)
+
+router.use('/user/', secure)
+
 router.get('/user/customer', controllers.customer)
-router.get('/users/:id/preferences', controllers.preferences)
-router.get('/users/:id/account', controllers.account)
-router.post('/user/account', controllers.accountCreate)
+router.get('/user/preferences', controllers.preferences)
 router.put('/user/update', controllers.userUpdate)
+
+router.post('/user/account', controllers.accountCreate)
+router.get('/user/account', controllers.account)
 router.put('/user/account', controllers.accountUpdate)
+
 router.post('/user/bank_accounts', controllers.createBankAccount)
-router.get('/users/:id/bank_accounts', controllers.userBankAccount)
+router.get('/user/bank_accounts', controllers.userBankAccount)
 
 module.exports = router

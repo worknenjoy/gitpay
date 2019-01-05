@@ -6,10 +6,11 @@ const expect = require('chai').expect
 const api = require('../server');
 const agent = request.agent(api);
 const models = require('../loading/loading');
+const { registerAndLogin } = require('./helpers')
 
 describe("Users", () => {
 
-  before(() => {
+  beforeEach(() => {
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');
@@ -122,68 +123,54 @@ describe("Users", () => {
 
   describe("Customer get", () => {
     it('should try get customer info with no customer', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste123@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          agent
-            .get(`/user/customer/`)
-            .send({ id: res.body.id })
-            .expect(200)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(200);
-              expect(user.body).to.equal(false);
-              done();
-            })
-        })
+      registerAndLogin(agent).then(res => {
+        agent
+          .get(`/user/customer/`)
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.equal(false);
+            done();
+          })
+      })
     });
     xit('should try get customer info with customer id set', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste1234@gmail.com', password: 'teste', customer_id: 'cus_CuK03K2mStPxBt'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          agent
-            .get(`/user/customer/`)
-            .send({ id: res.body.id })
-            .expect(200)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(200);
-              expect(user.body.object).to.equal('customer');
-              done();
-            })
-        })
+      registerAndLogin(agent, {
+        customer_id: 'cus_CuK03K2mStPxBt'
+      }).then(res => {
+        agent
+          .get(`/user/customer/`)
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body.object).to.equal('customer');
+            done();
+          })
+      })
     });
   });
 
   describe('user preferences', () => {
     it('should retrieve user preferences', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste12345@gmail.com', password: 'teste', country: 'usa', language: 'en'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          agent
-            .get(`/users/${res.body.id}/preferences`)
-            .send({ id: res.body.id })
-            .expect(200)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(200);
-              expect(user.body.language).to.exist;
-              expect(user.body.country).to.exist;
-              done();
-            })
-        })
+      registerAndLogin(agent, {
+        email: 'teste@gmail.com',
+        password: 'teste',
+        country: 'usa',
+        language: 'en'
+      }).then(res => {
+        agent
+          .get(`/user/preferences`)
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body.language).to.exist;
+            expect(user.body.country).to.exist;
+            done();
+          })
+      })
     });
   })
 
@@ -209,24 +196,17 @@ describe("Users", () => {
         })
     });
     it('should create account for user', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste1111@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          agent
-            .post(`/user/account`)
-            .send({ id: res.body.id })
-            .expect(200)
-            .end((err, account) => {
-              expect(account.statusCode).to.equal(200);
-              //expect(account.body.object).to.equal('account');
-              done();
-            })
-        })
+      registerAndLogin(agent).then(res => {
+        agent
+          .post(`/user/account`)
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, account) => {
+            expect(account.statusCode).to.equal(200);
+            //expect(account.body.object).to.equal('account');
+            done();
+          })
+      })
     });
     xit('should update account for user', (done) => {
       agent
