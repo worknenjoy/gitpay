@@ -223,7 +223,7 @@
   "task.bounties.interested.input.amount": "Price insert a value for this task",
   "task.bounties.interested.leaveItFor": "Or leave it for",
   "task.bounties.interested.iAmStarter": "Or I'm starter and I just want to gain experience",
-  "task.bounties.interested.comment.value": "You can leave a comment",
+  "task.bounties.interested.comment.value": "Tell about your interest in solve this task and any plan in mind",
   "task.bounties.interested.input.comment": "I really would like to explore my Node.js experience on this",  
   "task.bounties.actions.cancel": "Cancel",
   "task.bounties.actions.work": "I want to work on this task!",

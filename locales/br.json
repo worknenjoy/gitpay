@@ -1,4 +1,7 @@
 {
+  "mail.statement.yes": "Sim",
+  "mail.statement.no": "Não",
+  "mail.offer.nocomment": "Sem comentários",
   "mail.payment.success.subject": "Um pagamento foi realizado por uma tarefa no Gitpay",
   "mail.payment.success.content.main": "Você realizou um pagamento de $ {{value}} para a tarefa <a href=\"{{url}}\">{{url}}</a> e terá acesso ao recibo. Você pode atribuir essa tarefa a alguém que, por sua vez, enviará uma solução dentro do período que você definir",
   "mail.payment.sign.thanks": "Obrigado",
@@ -11,7 +14,7 @@
   "mail.assign.owner.subject": "Alguém demonstrou interesse por uma tarefa sua no Gitpay",
   "mail.assign.owner.hello": "Olá",
   "mail.assign.owner.main": "{{name}} está interessado na sua tarefa <a href=\"{{url}}\">{{url}}</a>. Você pode entrar em contato com ele pelo e-mail {{email}} para saber mais.",
-  "mail.assign.owner.suggest": "Recompensa sugerida: {{value}},  data sugerida: {{suggestedDate}}, para aprender: {{learn}}, comentários: {{comment}}",
+  "mail.assign.owner.suggest": "<p>Recompensa sugerida: ${{value}}</p><p>Data para entrega sugerida: {{suggestedDate}}</p><p>Quero esta tarefa como aprendizado: {{learn}}</p> <p>Comentários: {{comment}}</p>",
   "mail.assign.owner.sec": "Você pode atribuir esta tarefa na aba 'INTERESSADOS'. Assim ele receberá o valor quando que a tarefa for concluída.",
   "mail.interested.owner.subject": "Você demonstrou interesse em realizar uma tarefa no Gitpay",
   "mail.interested.main": "Você demonstrou interesse em realizar a tarefa <a href=\"{{url}}\"</a> no Gitpay",

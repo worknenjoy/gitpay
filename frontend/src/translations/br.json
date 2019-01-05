@@ -222,7 +222,7 @@
   "task.bounties.interested.input.amount": "Sugira uma recompensa para essa tarefa",
   "task.bounties.interested.leaveItFor": "Ou deixe isso por",
   "task.bounties.interested.iAmStarter": "Ou eu sou um iniciante e gostaria de ganhar experiência",
-  "task.bounties.interested.comment.value": "Você pode deixar um comentário",
+  "task.bounties.interested.comment.value": "Fale um pouco como você deseja realizar esta tarefa, um plano inicial e comente sobre seu interesse",
   "task.bounties.interested.input.comment": "Eu realmente gostaria de explorar praticar minhas habilitadas de Node.Js nessa tarefa",  
   "task.bounties.actions.cancel": "Cancelar",
   "task.bounties.actions.work": "Quero trabalhar nesta tarefa!",

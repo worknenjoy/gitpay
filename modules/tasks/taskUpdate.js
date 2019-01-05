@@ -65,7 +65,7 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
   if (offer) {
     return models.User.findOne({
       where: {
-        id: task.dataValues.userId
+        id: offer.userId
       }
     }).then((user) => {
       const usermail = user.dataValues.email

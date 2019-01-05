@@ -1,4 +1,7 @@
 {
+  "mail.statement.yes": "Yes",
+  "mail.statement.no": "No",
+  "mail.offer.nocomment": "No comments",
   "mail.payment.success.subject": "You paid for a task on Gitpay",
   "mail.payment.success.content.main": "You paid $ {{value}} for the task <a href=\"{{url}}\">{{url}}</a> on Gitpay. You are going to receive a receipt from the provider about this payment and you can assign this task to someone interested. He will send the solution until the date you defined.",
   "mail.payment.sign.thanks": "Thanks",
@@ -11,7 +14,7 @@
   "mail.assign.owner.subject": "Someone is interested in a task that you created on Gitpay",
   "mail.assign.owner.hello": "Hello",
   "mail.assign.owner.main": "{{name}} is interested in the task <a href=\"{{url}}\">{{url}}</a>. You can contact him on {{email}} to know more.",
-  "mail.assign.owner.suggest": "Suggested bounty: {{value}},  suggested date: {{suggestedDate}}, for learn: {{learn}}, comment: {{comment}}",
+  "mail.assign.owner.suggest": "<p>Suggested bounty: ${{value}}</p> <p>Suggested date: {{suggestedDate}}</p> <p>For learning purposes: {{learn}}</p><p>Comment: {{comment}}</p>",
   "mail.assign.owner.sec": "You can assign this user for this task going in 'interested' tab and he will receive the bounty when the task is done.",
   "mail.interested.owner.subject": "You're interested in this task",
   "mail.interested.main": "You're interested to work in the task <a href=\"{{url}}\"</a> on Gitpay",
