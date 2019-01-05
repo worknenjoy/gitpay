@@ -70,7 +70,8 @@ exports.syncTask = (req, res) => {
 }
 
 exports.deleteTaskById = (req, res) => {
-  Tasks.taskDeleteById(req.params)
+  const params = { id: req.params.id, userId: req.user.id }
+  Tasks.taskDeleteById(params)
     .then(() => {
       res.sendStatus(200)
     }).catch(error => {
