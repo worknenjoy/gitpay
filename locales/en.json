@@ -68,5 +68,7 @@
   "mail.webhook.payment.transfer.intransit.fail.subject": "We had a issue with your payment on Gitpay",
   "mail.webhook.payment.transfer.intransit.fail.message": "<p>There's was a error to process the payment of {{currency}} {{amount}} for a task on Gitpay and we will try again later.</p>",
   "mail.webhook.payment.transfer.finished.subject": "A transfer from Gitpay was successfully deposited in your account!",
-  "mail.webhook.payment.transfer.finished.message": "<p>We transfered {{currency}} {{amount}} for your account and you are goint to see it in your transactions as a payment from Gitpay.</p><p>The transfer was finished at {{date}}</p>"
+  "mail.webhook.payment.transfer.finished.message": "<p>We transfered {{currency}} {{amount}} for your account and you are goint to see it in your transactions as a payment from Gitpay.</p><p>The transfer was finished at {{date}}</p>",
+  "mail.webhook.github.issue.new.subject": "A new task from your issue was added on Gitpay: {{title}}",
+  "mail.webhook.github.issue.new.message": "<p>Your issue <a href=\"{{issue}}\">{{issue}}</a> from your repo <a href=\"{{repo}}\">{{repo}}</a> was added on Gitpay and now you can add a bounty and assign developers interested in solving your tasks.</p><p>Here is the URL: <a href=\"{{task}}\">{{task}}</a> </p>"
 }

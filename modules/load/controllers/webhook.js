@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const models = require('../../../loading/loading')
 const SendMail = require('../../mail/mail')
 const i18n = require('i18n')
@@ -12,10 +15,52 @@ const CURRENCIES = {
   usd: '$'
 }
 
-exports.github = (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log('webhook from github received', req.body, res.body)
-  res.json(req.body)
+exports.github = async (req, res) => {
+  if (req.body.installation && req.body.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
+    if (req.body.action === 'created') {
+      try {
+        const user = await models.User.findOne({
+          where: {
+            username: req.body.issue.user.login
+          }
+        })
+        const userData = user && user.dataValues
+        const task = await models.Task.build(
+          {
+            title: req.body.issue.title,
+            provider: 'github',
+            url: req.body.issue.html_url,
+            userId: userData ? userData.id : null
+          }
+        ).save()
+        const taskData = task.dataValues
+        SendMail.success(
+          userData,
+          i18n.__('mail.webhook.github.issue.new.subject', {
+            title: req.body.issue.title
+          }),
+          i18n.__('mail.webhook.github.issue.new.message', {
+            task: `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`,
+            issue: req.body.issue.html_url,
+            repo: req.body.repository.html_url
+          })
+        )
+        return res.json({ ...req.body,
+          task: {
+            id: taskData.id,
+            title: taskData.title,
+            url: taskData.url,
+            userId: userData ? userData.id : null
+          } })
+      }
+      catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('error', e)
+        return res.json({})
+      }
+    }
+  }
+  return res.json(req.body)
 }
 
 exports.updateWebhook = (req, res) => {
