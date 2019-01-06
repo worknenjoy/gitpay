@@ -30,7 +30,7 @@ http://probot-invite.herokuapp.com/join/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ
 
 ## Running tests
 
-To run the test: 
+To run the test:
 `npm run migrate-test` (first time)
 
 `npm run test` (to run the tests)
@@ -39,7 +39,7 @@ To run the test:
 
 For fully integration with api services used by the platform, you will need the api keys. *You should make a copy of your `.env.example` to `.env`* with the right credentials. Please let me know if you need any of those to solve a issue (mail tarefas@gitpay.me)
 
-### Database 
+### Database
 
 #### Install postgres
 1. install: `brew install postgres` (mac)
@@ -77,14 +77,20 @@ Then you can access at http://localhost:8082
 - `Docker Engine`
 - `Docker Compose`
 
+### **Linux**
 ### Ubuntu
 
-#### Installing 
+#### Installing
 - Docker Engine: https://docs.docker.com/install/linux/docker-ce/ubuntu/
 - Docker Compose: https://docs.docker.com/compose/install/
 
+### Arch Linux / Manjaro / Antergos
+
+#### Installing
+- Docker and Docker Compose: `sudo pacman -S docker docker-compose`
+
 #### Running
-##### Development environment 
+##### Development environment
 - Run `docker-compose up`
 Then you can access at http://localhost:8082
 ##### Test environment
