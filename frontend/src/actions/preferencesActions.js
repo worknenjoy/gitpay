@@ -1,6 +1,7 @@
 import axios from 'axios'
 import api from '../consts'
 import { loggedIn } from './loginActions'
+import { validToken } from './helpers'
 
 const FETCH_PREFERENCES_REQUESTED = 'FETCH_PREFERENCES_REQUESTED'
 const FETCH_PREFERENCES_SUCCESS = 'FETCH_PREFERENCES_SUCCESS'
@@ -18,12 +19,13 @@ const fetchPreferencesError = (error) => {
   return { type: FETCH_PREFERENCES_ERROR, completed: true, error }
 }
 
-const fetchPreferences = (userId) => {
+const fetchPreferences = () => {
+  validToken()
   return (dispatch) => {
     return dispatch(loggedIn()).then(user => {
       dispatch(fetchPreferencesRequested())
       return axios
-        .get(`${api.API_URL}/users/${userId}/preferences`)
+        .get(`${api.API_URL}/user/preferences`)
         .then(response => {
           return dispatch(fetchPreferencesSuccess(response.data))
         })

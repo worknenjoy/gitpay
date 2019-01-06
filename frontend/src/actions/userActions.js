@@ -1,6 +1,7 @@
 import api from '../consts'
 import axios from 'axios'
 import { addNotification } from './notificationActions'
+import { validToken } from './helpers'
 
 const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS'
@@ -142,11 +143,12 @@ const createBankAccountError = error => {
   return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error: error }
 }
 
-const fetchAccount = userId => {
+const fetchAccount = () => {
+  validToken()
   return (dispatch) => {
     dispatch(fetchUserAccountRequested())
     return axios
-      .get(api.API_URL + `/users/${userId}/account`)
+      .get(api.API_URL + '/user/account')
       .then(account => {
         return dispatch(fetchUserAccountSuccess(account))
       })
@@ -158,7 +160,8 @@ const fetchAccount = userId => {
   }
 }
 
-const createAccount = userId => {
+const createAccount = () => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(createUserAccountRequested())
     const accountId = getState().loggedIn.user.account_id
@@ -169,9 +172,7 @@ const createAccount = userId => {
       )
     }
     axios
-      .post(api.API_URL + '/user/account', {
-        id: userId
-      })
+      .post(api.API_URL + '/user/account')
       .then(account => {
         dispatch(addNotification('Conta criada com sucesso'))
         return dispatch(createUserAccountSuccess(account))
@@ -185,14 +186,12 @@ const createAccount = userId => {
   }
 }
 
-const updateAccount = (userId, accountData) => {
+const updateAccount = (_, accountData) => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(updateUserAccountRequested())
     axios
-      .put(api.API_URL + '/user/account', {
-        id: userId,
-        account: accountData
-      })
+      .put(api.API_URL + '/user/account', { account: accountData })
       .then(account => {
         dispatch(addNotification('Conta atualizada com sucesso'))
         // dispatch(fetchAccount());
@@ -211,13 +210,12 @@ const updateAccount = (userId, accountData) => {
   }
 }
 
-const updateUser = (userId, userData) => {
+const updateUser = (_, userData) => {
+  validToken()
   return (dispatch) => {
     dispatch(updateUserRequested())
     axios
-      .put(api.API_URL + '/user/update', {
-        ...userData, id: userId
-      })
+      .put(api.API_URL + '/user/update', userData)
       .then(user => {
         dispatch(addNotification('notifications.account.update'))
         // dispatch(fetchAccount());
@@ -234,11 +232,12 @@ const updateUser = (userId, userData) => {
   }
 }
 
-const getBankAccount = userId => {
+const getBankAccount = () => {
+  validToken()
   return (dispatch) => {
     dispatch(getBankAccountRequested())
     axios
-      .get(`${api.API_URL}/users/${userId}/bank_accounts`)
+      .get(`${api.API_URL}/user/bank_accounts`)
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
           dispatch(addNotification('notifications.bank.get.success'))
@@ -255,12 +254,12 @@ const getBankAccount = userId => {
   }
 }
 
-const createBankAccount = (userId, bank) => {
+const createBankAccount = (_, bank) => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(createBankAccountRequested())
     axios
       .post(api.API_URL + '/user/bank_accounts', {
-        id: userId,
         routing_number: bank.routing_number,
         account_number: bank.account_number
       })

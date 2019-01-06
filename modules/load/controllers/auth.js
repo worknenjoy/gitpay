@@ -29,7 +29,7 @@ exports.searchAll = (req, res) => {
 }
 
 exports.preferences = (req, res) => {
-  user.userPreferences(req.params)
+  user.userPreferences({ id: req.user.id })
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -40,7 +40,7 @@ exports.preferences = (req, res) => {
 }
 
 exports.customer = (req, res) => {
-  user.userCustomer(req.body)
+  user.userCustomer({ id: req.user.id })
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -51,7 +51,7 @@ exports.customer = (req, res) => {
 }
 
 exports.account = (req, res) => {
-  user.userAccount(req.params)
+  user.userAccount({ id: req.user.id })
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -62,6 +62,7 @@ exports.account = (req, res) => {
 }
 
 exports.accountCreate = (req, res) => {
+  req.body.id = req.user.id
   user.userAccountCreate(req.body)
     .then(data => {
       res.send(data)
@@ -73,6 +74,7 @@ exports.accountCreate = (req, res) => {
 }
 
 exports.userUpdate = (req, res) => {
+  req.body.id = req.user.id
   user.userUpdate(req.body)
     .then(data => {
       res.send(data)
@@ -84,6 +86,7 @@ exports.userUpdate = (req, res) => {
 }
 
 exports.accountUpdate = (req, res) => {
+  req.body.id = req.user.id
   user.userAccountUpdate(req.body)
     .then(data => {
       res.send(data)
@@ -95,6 +98,7 @@ exports.accountUpdate = (req, res) => {
 }
 
 exports.createBankAccount = (req, res) => {
+  req.body.id = req.user.id
   user.userBankAccountCreate(req.body)
     .then(data => {
       res.send(data)
@@ -106,7 +110,7 @@ exports.createBankAccount = (req, res) => {
 }
 
 exports.userBankAccount = (req, res) => {
-  user.userBankAccount(req.params)
+  user.userBankAccount({ id: req.user.id })
     .then(data => {
       res.send(data)
     }).catch(error => {
