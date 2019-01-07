@@ -17,7 +17,7 @@ const CURRENCIES = {
 
 exports.github = async (req, res) => {
   if (req.body.installation && req.body.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
-    if (req.body.action === 'created') {
+    if (req.body.action === 'opened') {
       try {
         const user = await models.User.findOne({
           where: {

@@ -1,5 +1,5 @@
 module.exports.issue = {
-    "action": "created",
+    "action": "opened",
     "issue": {
       "url": "https://api.github.com/repos/worknenjoy/gitpay/issues/244",
       "repository_url": "https://api.github.com/repos/worknenjoy/gitpay",
