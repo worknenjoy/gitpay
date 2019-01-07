@@ -17,7 +17,9 @@ const CURRENCIES = {
 
 exports.github = async (req, res) => {
   if (req.body.installation && req.body.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
+    console.log('request from webhook catched')
     if (req.body.action === 'opened') {
+      console.log('it is a opened Issue')
       try {
         const user = await models.User.findOne({
           where: {
@@ -33,7 +35,9 @@ exports.github = async (req, res) => {
             userId: userData ? userData.id : null
           }
         ).save()
+        console.log('a user was found', user)
         const taskData = task.dataValues
+        console.log('it has task data', taskData)
         const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
         SendMail.success(
           userData,
