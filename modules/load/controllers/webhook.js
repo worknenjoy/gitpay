@@ -16,6 +16,8 @@ const CURRENCIES = {
 }
 
 exports.github = async (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log('request from github started')
   if (req.body.installation && req.body.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
     // eslint-disable-next-line no-console
     console.log('request from webhook catched')
@@ -69,6 +71,8 @@ exports.github = async (req, res) => {
       }
     }
   }
+  // eslint-disable-next-line no-console
+  console.log('send req body that as it is')
   return res.json(req.body)
 }
 
