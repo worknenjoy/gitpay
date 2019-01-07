@@ -16,24 +16,27 @@ const CURRENCIES = {
 }
 
 exports.github = async (req, res) => {
+  const response = req.body || res.body
   // eslint-disable-next-line no-console
   console.log('request from github started')
-  if (req.body.installation && req.body.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
+  // eslint-disable-next-line no-console
+  console.log('response', response.installation)
+  if (response.installation && response.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
     // eslint-disable-next-line no-console
     console.log('request from webhook catched')
-    if (req.body.action === 'opened') {
+    if (response.action === 'opened') {
       // eslint-disable-next-line no-console
       console.log('it is a opened Issue')
       try {
         const user = await models.User.findOne({
           where: {
-            username: req.body.issue.user.login
+            username: response.issue.user.login
           }
         })
         const userData = user && user.dataValues
         const task = await models.Task.build(
           {
-            title: req.body.issue.title,
+            title: response.issue.title,
             provider: 'github',
             url: req.body.issue.html_url,
             userId: userData ? userData.id : null
@@ -45,18 +48,20 @@ exports.github = async (req, res) => {
         // eslint-disable-next-line no-console
         console.log('it has task data', taskData)
         const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
-        SendMail.success(
-          userData,
-          i18n.__('mail.webhook.github.issue.new.subject', {
-            title: req.body.issue.title
-          }),
-          i18n.__('mail.webhook.github.issue.new.message', {
-            task: taskUrl,
-            issue: req.body.issue.html_url,
-            repo: req.body.repository.html_url
-          })
-        )
-        return res.json({ ...req.body,
+        if (userData) {
+          SendMail.success(
+            userData,
+            i18n.__('mail.webhook.github.issue.new.subject', {
+              title: response.issue.title
+            }),
+            i18n.__('mail.webhook.github.issue.new.message', {
+              task: taskUrl,
+              issue: response.issue.html_url,
+              repo: response.repository.html_url
+            })
+          )
+        }
+        return res.json({ ...response,
           task: {
             id: taskData.id,
             url: taskUrl,
