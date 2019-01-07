@@ -46,21 +46,11 @@ exports.github = async (req, res) => {
             repo: req.body.repository.html_url
           })
         )
-        // eslint-disable-next-line no-console
-        console.log('success', { ...req.body,
-          task: {
-            id: taskData.id,
-            url: taskUrl,
-            title: taskData.title,
-            url: taskData.url,
-            userId: userData ? userData.id : null
-          } })
         return res.json({ ...req.body,
           task: {
             id: taskData.id,
             url: taskUrl,
             title: taskData.title,
-            url: taskData.url,
             userId: userData ? userData.id : null
           } })
       }
