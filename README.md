@@ -96,5 +96,11 @@ Then you can access at http://localhost:8082
 ##### Test environment
 - Run `docker-compose -f docker-compose.test.yml up`
 
++### First timers
++Here you can start to learn how to create your first pull request and start to be a contributor:
++[https://github.com/worknenjoy/gitpay/issues/247](https://github.com/worknenjoy/gitpay/issues/247)
++[Prerna Verma]( https://github.com/PrernaVerma ) 
+
+
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_large)
