@@ -34,20 +34,31 @@ exports.github = async (req, res) => {
           }
         ).save()
         const taskData = task.dataValues
+        const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
         SendMail.success(
           userData,
           i18n.__('mail.webhook.github.issue.new.subject', {
             title: req.body.issue.title
           }),
           i18n.__('mail.webhook.github.issue.new.message', {
-            task: `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`,
+            task: taskUrl,
             issue: req.body.issue.html_url,
             repo: req.body.repository.html_url
           })
         )
+        // eslint-disable-next-line no-console
+        console.log('success', { ...req.body,
+          task: {
+            id: taskData.id,
+            url: taskUrl,
+            title: taskData.title,
+            url: taskData.url,
+            userId: userData ? userData.id : null
+          } })
         return res.json({ ...req.body,
           task: {
             id: taskData.id,
+            url: taskUrl,
             title: taskData.title,
             url: taskData.url,
             userId: userData ? userData.id : null
