@@ -20,7 +20,7 @@ exports.github = async (req, res) => {
   // eslint-disable-next-line no-console
   console.log('request from github started')
   // eslint-disable-next-line no-console
-  console.log('response', response.installation)
+  console.log('response', response)
   if (response.installation && response.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
     // eslint-disable-next-line no-console
     console.log('request from webhook catched')
