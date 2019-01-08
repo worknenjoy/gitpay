@@ -68,7 +68,7 @@ exports.github = async (req, res) => {
             })
           )
         }
-        const finalResponse = { ...response,
+        const finalResponse = {
           task: {
             id: taskData.id,
             url: taskUrl,
