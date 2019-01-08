@@ -77,8 +77,8 @@ exports.github = async (req, res) => {
     }
   }
   // eslint-disable-next-line no-console
-  console.log('send req body that as it is')
-  return res.json(req.body)
+  // console.log('send req body that as it is')
+  // res.json(req.body).end()
 }
 
 exports.updateWebhook = (req, res) => {
