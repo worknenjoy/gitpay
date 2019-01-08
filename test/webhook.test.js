@@ -336,7 +336,7 @@ describe('webhooks', () => {
   })
 
   describe('webhooks for Github events', () => {
-    xit('should post event from github webhooks', done => {
+    it('should post event from github webhooks', done => {
       agent
         .post('/webhooks/github')
         .send(githubWebhookMain.main)
