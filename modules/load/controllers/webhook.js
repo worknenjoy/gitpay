@@ -34,14 +34,21 @@ exports.github = async (req, res) => {
           }
         })
         const userData = user && user.dataValues
-        const task = await models.Task.build(
+        const taskExist = await models.Task.findOne({
+          where: {
+            url: response.issue.html_url
+          }
+        })
+
+        const task = taskExist || await models.Task.build(
           {
             title: response.issue.title,
             provider: 'github',
-            url: req.body.issue.html_url,
+            url: response.issue.html_url,
             userId: userData ? userData.id : null
           }
         ).save()
+
         // eslint-disable-next-line no-console
         console.log('a user was found', user)
         const taskData = task.dataValues
@@ -61,13 +68,16 @@ exports.github = async (req, res) => {
             })
           )
         }
-        return res.json({ ...response,
+        const finalResponse = { ...response,
           task: {
             id: taskData.id,
             url: taskUrl,
             title: taskData.title,
             userId: userData ? userData.id : null
-          } })
+          } }
+        // eslint-disable-next-line no-console
+        console.log('finalResponse', finalResponse)
+        return res.json(finalResponse)
       }
       catch (e) {
         // eslint-disable-next-line no-console
