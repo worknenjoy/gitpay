@@ -352,6 +352,7 @@ describe('webhooks', () => {
     it('should create new task when an event of new issue is triggered', done => {
       agent
         .post('/webhooks/github')
+        .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
         .send(githubWebhookIssue.issue)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -359,8 +360,8 @@ describe('webhooks', () => {
           const taskTitle = 'The filters and tabs on task list is not opening a new tab'
           expect(res.statusCode).to.equal(200)
           expect(res.body).to.exist
-          //expect(res.body.action).to.equal('opened')
-          //expect(res.body.issue.title).to.equal(taskTitle)
+          expect(res.body.action).to.equal('opened')
+          expect(res.body.issue.title).to.equal(taskTitle)
           expect(res.body.task.title).to.equal(taskTitle)
           done()
         });      
@@ -371,13 +372,14 @@ describe('webhooks', () => {
           .then(user => {
             agent
             .post('/webhooks/github')
+            .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
             .send(githubWebhookIssue.issue)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
               expect(res.statusCode).to.equal(200)
               expect(res.body).to.exist
-              //expect(res.body.action).to.equal('opened')
+              expect(res.body.action).to.equal('opened')
               expect(res.body.task.userId).to.equal(user.dataValues.id)
               done()
             });      

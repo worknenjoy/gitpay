@@ -21,7 +21,7 @@ exports.github = async (req, res) => {
   console.log('request from github started')
   // eslint-disable-next-line no-console
   console.log('response', response)
-  if (response.installation && response.installation.id === parseInt(process.env.GITHUB_WEBHOOK_APP_ID)) {
+  if (req.headers.authorization === `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`) {
     // eslint-disable-next-line no-console
     console.log('request from webhook catched')
     if (response.action === 'opened') {
@@ -68,7 +68,7 @@ exports.github = async (req, res) => {
             })
           )
         }
-        const finalResponse = {
+        const finalResponse = { ...response,
           task: {
             id: taskData.id,
             url: taskUrl,
