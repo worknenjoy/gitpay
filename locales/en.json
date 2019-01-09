@@ -70,5 +70,12 @@
   "mail.webhook.payment.transfer.finished.subject": "A transfer from Gitpay was successfully deposited in your account!",
   "mail.webhook.payment.transfer.finished.message": "<p>We transfered {{currency}} {{amount}} for your account and you are goint to see it in your transactions as a payment from Gitpay.</p><p>The transfer was finished at {{date}}</p>",
   "mail.webhook.github.issue.new.subject": "A new task from your issue was added on Gitpay: {{title}}",
-  "mail.webhook.github.issue.new.message": "<p>Your issue <a href=\"{{issue}}\">{{issue}}</a> from your repo <a href=\"{{repo}}\">{{repo}}</a> was added on Gitpay and now you can add a bounty and assign developers interested in solving your tasks.</p><p>Here is the URL: <a href=\"{{task}}\">{{task}}</a> </p>"
+  "mail.webhook.github.issue.new.message": "<p>Your issue <a href=\"{{issue}}\">{{issue}}</a> from your repo <a href=\"{{repo}}\">{{repo}}</a> was added on Gitpay and now you can add a bounty and assign developers interested in solving your tasks.</p><p>Here is the URL: <a href=\"{{task}}\">{{task}}</a> </p>",
+  "mail.task.me.subject": "You created a new task on Gitpay",
+  "mail.task.me.title": "We sent this task for our community",
+  "mail.task.provider.action": "See full details on Github",
+  "mail.task.calltoaction": "I'm interested",
+  "mail.task.instructions": "<p>Como posso trabalhar neste projeto?</p><ul><li>Entre na tarefa</li><li>Entre em 'Tenho interesse nesta tarefa'</li><li>Com o repositório do Github, você cria um fork e cria uma nova stack com Node.js e React para ir para o Heroku</li><li>Crie um Pull Request</li><li>Fazemos a revisão, damos o feedback e ele é aprovado</li><li>Você recebe a recompensa<br></li></ul>",
+  "mail.task.docs.title": "We have this documentation to help you (in Portuguese for now)",
+  "mail.task.reason": "Você recebeu esta mensagem pois você se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
 }
