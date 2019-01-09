@@ -3,6 +3,8 @@ const models = require('../../loading/loading')
 const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
+const constants = require('../mail/constants')
+const TaskMail = require('../mail/task')
 
 module.exports = Promise.method(function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
@@ -24,14 +26,24 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         }
       }).then(response => {
-        if (!taskParameters.title) taskParameters.title = response.title
+        const issueDataJsonGithub = JSON.parse(response)
+        if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
         return models.Task
           .build(
             taskParameters
           )
           .save()
-          .then(data => {
-            return data.dataValues
+          .then(async task => {
+            const taskData = task.dataValues
+            const userData = await task.getUser()
+            TaskMail.send(userData, {
+              task: {
+                title: taskData.title,
+                issue_url: taskData.url,
+                url: constants.taskUrl(taskData.id)
+              }
+            })
+            return taskData
           })
       })
     case 'bitbucket':
