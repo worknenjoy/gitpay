@@ -1,11 +1,10 @@
-'use strict';
-
+'use strict'
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
-const api = require('../server');
-const agent = request.agent(api);
-const models = require('../loading/loading');
+const api = require('../server')
+const agent = request.agent(api)
+const models = require('../loading/loading')
 const { registerAndLogin } = require('./helpers')
 
 describe("tasks", () => {
@@ -237,7 +236,7 @@ describe("tasks", () => {
         })
     });
 
-    xit('should update task with an user assinged', (done) => {
+    xit('should update task with an user assigned', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})

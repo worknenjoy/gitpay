@@ -43,6 +43,13 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
                 url: constants.taskUrl(taskData.id)
               }
             })
+            TaskMail.notify(userData, {
+              task: {
+                title: taskData.title,
+                issue_url: taskData.url,
+                url: constants.taskUrl(taskData.id)
+              }
+            })
             return taskData
           })
       })
