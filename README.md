@@ -96,11 +96,11 @@ Then you can access at http://localhost:8082
 ##### Test environment
 - Run `docker-compose -f docker-compose.test.yml up`
 
-+### First timers
-+Here you can start to learn how to create your first pull request and start to be a contributor:
-+[https://github.com/worknenjoy/gitpay/issues/247](https://github.com/worknenjoy/gitpay/issues/247)
-+[Prerna Verma]( https://github.com/PrernaVerma ) 
-+[I Gede Wicaksana]( https://github.com/wicaker ) 
+### First timers
+Here you can start to learn how to create your first pull request and start to be a contributor:
+[https://github.com/worknenjoy/gitpay/issues/247](https://github.com/worknenjoy/gitpay/issues/247)
+[Prerna Verma]( https://github.com/PrernaVerma ) 
+[I Gede Wicaksana]( https://github.com/wicaker ) 
 
 
 ## License
