@@ -5,7 +5,7 @@ import CheckoutForm from './checkout-form'
 class StripeCheckout extends Component {
   render () {
     return (
-      <StripeProvider apiKey={ process.env.STRIPE_PUBKEY }>
+      <StripeProvider apiKey={ process.env.STRIPE_PUBKEY || null }>
         <Elements>
           <CheckoutForm { ...this.props } />
         </Elements>

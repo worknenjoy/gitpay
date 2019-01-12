@@ -8,7 +8,7 @@ module.exports = (to, subject, data) => {
     from: constants.fromEmail,
     templateId: constants.templates.onetask,
     asm: {
-      group_id: 8241
+      group_id: constants.groups.onetask
     }
   }
   let msg = []
@@ -18,11 +18,11 @@ module.exports = (to, subject, data) => {
     })
   }
   else {
-    msg = [{ ...baseMsg, to, dynamic_template_data: data, subject }]
+    msg = [{ ...baseMsg, to, bcc: constants.notificationEmail, dynamic_template_data: data, subject }]
   }
   return sgMail.send(msg).then((response) => {
     // eslint-disable-next-line no-console
-    // console.log(response)
+    console.log(response)
     return response
   }).catch(e => {
     // eslint-disable-next-line no-console
