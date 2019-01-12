@@ -82,7 +82,7 @@ TaskMail.notifyPayment = async (user, data) => {
         instructions: i18n.__('mail.task.payment.instructions'),
         docs: i18n.__('mail.task.docs.title'),
         reason: i18n.__('mail.task.reason'),
-        subject: i18n.__('mail.task.payment.subject', { value: data.task.value, title: data.task.title  })
+        subject: i18n.__('mail.task.payment.subject', { value: data.task.value, title: data.task.title })
       } })
   })
   return withTemplate(
