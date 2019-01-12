@@ -63,4 +63,33 @@ TaskMail.notify = async (user, data) => {
   )
 }
 
+TaskMail.notifyPayment = async (user, data) => {
+  const allUsers = await models.User.findAll()
+  const targetUsers = allUsers.filter(item => item.email !== user.email)
+  let mailList = []
+  let subjectData = []
+  let templateData = []
+  targetUsers.map((u, i) => {
+    const language = u.language || 'en'
+    i18n.setLocale(language)
+    mailList.push(u.email)
+    subjectData.push(i18n.__('mail.task.payment.subject', { value: data.task.value, title: data.task.title }))
+    templateData.push({ ...data,
+      content: {
+        title: i18n.__('mail.task.payment.title', { value: data.task.value }),
+        provider_action: i18n.__('mail.task.provider.action'),
+        call_to_action: i18n.__('mail.task.calltoaction'),
+        instructions: i18n.__('mail.task.payment.instructions'),
+        docs: i18n.__('mail.task.docs.title'),
+        reason: i18n.__('mail.task.reason'),
+        subject: i18n.__('mail.task.payment.subject', { value: data.task.value, title: data.task.title })
+      } })
+  })
+  return withTemplate(
+    mailList,
+    subjectData,
+    templateData
+  )
+}
+
 module.exports = TaskMail
