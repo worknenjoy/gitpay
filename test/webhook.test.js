@@ -12,7 +12,8 @@ const transferData = require('./data/transfer')
 const payoutData = require('./data/payout')
 const cardData = require('./data/card')
 const balanceData = require('./data/balance')
-const githubWebhook = require('./data/github.event.main')
+const githubWebhookMain = require('./data/github.event.main')
+const githubWebhookIssue = require('./data/github.issue.create')
 
 describe('webhooks', () => {
   beforeEach(() => {
@@ -338,7 +339,7 @@ describe('webhooks', () => {
     it('should post event from github webhooks', done => {
       agent
         .post('/webhooks/github')
-        .send(githubWebhook.main)
+        .send(githubWebhookMain.main)
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -347,6 +348,42 @@ describe('webhooks', () => {
           expect(res.body.hook_id).to.equal(74489783)
           done()
         });      
+    })
+    it('should create new task when an event of new issue is triggered', done => {
+      agent
+        .post('/webhooks/github')
+        .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
+        .send(githubWebhookIssue.issue)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const taskTitle = 'The filters and tabs on task list is not opening a new tab'
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.exist
+          expect(res.body.action).to.equal('opened')
+          expect(res.body.issue.title).to.equal(taskTitle)
+          expect(res.body.task.title).to.equal(taskTitle)
+          done()
+        });      
+    })
+    it('should create a task from the issue created webhook and associate with the user', done => {
+      models.User.build({ email: 'teste@mail.com', username: 'alexanmtz', password: 'teste' })
+          .save()
+          .then(user => {
+            agent
+            .post('/webhooks/github')
+            .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
+            .send(githubWebhookIssue.issue)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200)
+              expect(res.body).to.exist
+              expect(res.body.action).to.equal('opened')
+              expect(res.body.task.userId).to.equal(user.dataValues.id)
+              done()
+            });      
+          })
     })
   })
 })

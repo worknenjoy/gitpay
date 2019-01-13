@@ -1,11 +1,11 @@
-'use strict';
-
+'use strict'
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
-const api = require('../server');
-const agent = request.agent(api);
-const models = require('../loading/loading');
+const api = require('../server')
+const agent = request.agent(api)
+const models = require('../loading/loading')
+const { registerAndLogin } = require('./helpers')
 
 describe("tasks", () => {
 
@@ -35,56 +35,55 @@ describe("tasks", () => {
 
   describe('Task crud', () => {
     // API rate limit exceeded
-    const createTask = () => {
-      agent
-        .post('/auth/register')
-        .send({email: 'tasktestuser123@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          return agent
-            .post('/tasks/create/')
-            .send({url: 'https://github.com/worknenjoy/truppie/issues/99', userId: res.body.id})
-            .end((err, task) => {
-              const taskId = task.body.id
-              return taskId
-            })
-          })
+    const createTask = (authorizationHeader) => {
+      return agent
+        .post('/tasks/create/')
+        .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+        .set('Authorization', authorizationHeader)
+        .then(res => res.body)
     }
+
+    const buildTask = () => {
+      const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+      return models.Task.create({ url: github_url, provider: 'github' })
+    }
+
     it('should create a new task', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'tasktestuser1233333@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .post('/tasks/create/')
+          .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+          .set('Authorization', res.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.exist;
+            expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
+            done();
+          })
+      })
+    })
+
+    it('should invite for a task', (done) => {
+      registerAndLogin(agent).then(res => {
+        createTask(res.headers.authorization).then(task => {
           agent
-            .post('/tasks/create/')
-            .send({url: 'https://github.com/worknenjoy/truppie/issues/99', userId: res.body.id})
+            .post(`/tasks/${task.id}/invite/`)
+            .send({
+              email: 'https://github.com/worknenjoy/truppie/issues/99',
+              message: 'a test invite'
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
               expect(res.statusCode).to.equal(200);
               expect(res.body).to.exist;
-              expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
+              //expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
               done();
             })
-          })
-    })
-
-    xit('should invite for a task', (done) => {
-      const taskId = createTask()
-      agent
-        .post(`/tasks/${taskId}/invite/`)
-        .send({email: 'https://github.com/worknenjoy/truppie/issues/99', message: 'a test invite'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          //expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
-          done();
         })
+      })
     })
 
 
@@ -213,7 +212,31 @@ describe("tasks", () => {
         })
     });
 
-    xit('should update task with an user assinged', (done) => {
+    it('should update task with associated user assigned and offer', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+
+          models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+            agent
+              .put("/tasks/update")
+              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}], Offers: [{userId: userId, value: 100}]})
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.body.value).to.equal('200');
+                done();
+              })
+          })
+        })
+    });
+
+    xit('should update task with an user assigned', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
@@ -240,24 +263,33 @@ describe("tasks", () => {
     });
 
     it('should delete a task by id', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          const userId = res.body.id;
-          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-          models.Task.build({ url: github_url, provider: 'github', userId: userId }).save().then((task) => {
-            agent
-              .delete(`/tasks/delete/${task.dataValues.id}`)
-              .expect(200)
-              .end((err, res) => {
-                expect(err).to.be.null
-                done()
-              })
-          })
+      registerAndLogin(agent).then(res => {
+        createTask(res.headers.authorization).then(task => {
+          agent
+            .delete(`/tasks/delete/${task.id}`)
+            .set('Authorization', res.headers.authorization)
+            .expect(200)
+            .then(async () => {
+              expect(
+                await models.Task.findById(task.id).catch(done)
+              ).to.be.null
+              done()
+            })
+            .catch(done)
         })
+      })
+    })
+
+    it('should only delete own task', async () => {
+      const task = await buildTask({ userId: Number.MAX_VALUE })
+      const res = await registerAndLogin(agent)
+      await agent
+        .delete(`/tasks/delete/${task.id}`)
+        .set('Authorization', res.headers.authorization)
+        .expect(200)
+      expect(
+        await models.Task.findById(task.id)
+      ).to.be.ok
     })
   });
 

@@ -1,4 +1,7 @@
 {
+  "mail.statement.yes": "Sim",
+  "mail.statement.no": "Não",
+  "mail.offer.nocomment": "Sem comentários",
   "mail.payment.success.subject": "Um pagamento foi realizado por uma tarefa no Gitpay",
   "mail.payment.success.content.main": "Você realizou um pagamento de $ {{value}} para a tarefa <a href=\"{{url}}\">{{url}}</a> e terá acesso ao recibo. Você pode atribuir essa tarefa a alguém que, por sua vez, enviará uma solução dentro do período que você definir",
   "mail.payment.sign.thanks": "Obrigado",
@@ -11,6 +14,7 @@
   "mail.assign.owner.subject": "Alguém demonstrou interesse por uma tarefa sua no Gitpay",
   "mail.assign.owner.hello": "Olá",
   "mail.assign.owner.main": "{{name}} está interessado na sua tarefa <a href=\"{{url}}\">{{url}}</a>. Você pode entrar em contato com ele pelo e-mail {{email}} para saber mais.",
+  "mail.assign.owner.suggest": "<p>Recompensa sugerida: ${{value}}</p><p>Data para entrega sugerida: {{suggestedDate}}</p><p>Quero esta tarefa como aprendizado: {{learn}}</p> <p>Comentários: {{comment}}</p>",
   "mail.assign.owner.sec": "Você pode atribuir esta tarefa na aba 'INTERESSADOS'. Assim ele receberá o valor quando que a tarefa for concluída.",
   "mail.interested.owner.subject": "Você demonstrou interesse em realizar uma tarefa no Gitpay",
   "mail.interested.main": "Você demonstrou interesse em realizar a tarefa <a href=\"{{url}}\"</a> no Gitpay",
@@ -64,5 +68,21 @@
   "mail.webhook.payment.transfer.intransit.fail.subject": "Ocorreu uma falha no pagamento da sua tarefa no Gitpay",
   "mail.webhook.payment.transfer.intransit.fail.message": "<p>O pagamento no valor de {{currency}} {{amount}} para uma tarefa no Gitpay não foi processado e será feitauma nova tentativa de transferência</p>",
   "mail.webhook.payment.transfer.finished.subject": "Uma transferência do Gitpay foi realizada para sua conta!",
-  "mail.webhook.payment.transfer.finished.message": "<p>Uma transferência no valor de {{currency}} {{amount}} foi realizada para a sua conta e deve constar nas suas transações como um pagamento do Gitpay.</p><p>Ela foi realizada em {{date}}</p>"
+  "mail.webhook.payment.transfer.finished.message": "<p>Uma transferência no valor de {{currency}} {{amount}} foi realizada para a sua conta e deve constar nas suas transações como um pagamento do Gitpay.</p><p>Ela foi realizada em {{date}}</p>",
+  "mail.webhook.github.issue.new.subject": "Uma nova tarefa no Gitpay foi criada a partir de seu incidente: {{title}}",
+  "mail.webhook.github.issue.new.message": "<p>Seu incidente <a href=\"{{issue}}\">{{issue}}</a> do repositório <a href=\"{{repo}}\">{{repo}}</a> foi adicionado no Gitpay e agora você pode adicionar recompensas para atribuir contribuidores interessados em conclui-las.</p><p>Aqui está a URL: <a href=\"{{task}}\">{{task}}</a> </p>",
+  "mail.task.me.subject": "Você criou uma nova tarefa no Gitpay",
+  "mail.task.payment.subject": "Uma recompensa de $ {{value}} pela tarefa: {{title}} foi adicionada ao Gitpay",
+  "mail.task.payment.title": "O pagamento de $ {{value}} foi realizado via cartão de crédito foi feito pela tarefa",
+  "mail.task.payment.instructions": "<p>O que você precisa saber?</p><ul><li>Você pode se candidatar para trabalhar na tarefa e demonstrar seu interesse</li><li>Você poderá ser atribuido</li><li>Envie um Pull Request com a solução</li><li>Nós então vamos analisar e dar um feedback</li><li>Suas mudanças são aprovadas e você então recebe a recompensa na sua conta</li></ul>",
+  "mail.task.subject": "Temos uma nova tarefa para você no Gitpay",
+  "mail.task.title": "Temos uma nova tarefa para você no Gitpay",
+  "mail.task.me.title": "Sua tarefa foi enviada para nossa comunidade",
+  "mail.task.me.instructions": "<p>O que você precisa saber?</p><ul><li>Adicione uma recompensa ou um deadline se desejar</li><li>Você receberá ofertas da comunidade</li><li>Clique em \"Escolher\" na seção de interessados</li><li>Envie os detalhes necessários para seu usuário</li><li>Ele vai enviar um Pull Request para você</li><li>Aprove e envie recompensa</li><li>O contribuidor irá receber a recompensa</li></ul>",
+  "mail.task.provider.action": "Ver no Github",
+  "mail.task.me.calltoaction": "Ver sua tarefa no Gitpay",
+  "mail.task.calltoaction": "Estou interessado",
+  "mail.task.instructions": "<p>Como trabalhar neste projeto?</p><ul><li>Acesse a tarefa no Gitpay</li><li>Clique em \"Estou interessado\"</li><li>Acesse o repositório do projeto e crie um fork</li><li>Envie um Pull Request</li><li>Quem mantém o projeto irá revisar, e você fará os ajustes necessários para que a tarefa atenda os requisitos</li><li>Você recebe então uma recompensa</li></ul>",
+  "mail.task.docs.title": "Nós temos uma documentação completa para você sobre como funciona",
+  "mail.task.reason": "Você recebeu esta mensagem pois você se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
 }

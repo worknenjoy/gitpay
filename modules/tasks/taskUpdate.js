@@ -7,7 +7,10 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
+const offerExists = require('../offers').offerExists
 const i18n = require('i18n')
+const constants = require('../mail/constants')
+const TaskMail = require('../mail/task')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
@@ -27,6 +30,14 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           status: charge.status
         }).then(updatedUser => {
           PaymentMail.success(user, task, order.amount)
+          TaskMail.notifyPayment(task.dataValues.User, {
+            task: {
+              title: task.dataValues.title,
+              value: order.dataValues.amount,
+              issue_url: task.dataValues.url,
+              url: constants.taskUrl(task.dataValues.id)
+            }
+          })
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
             return models.Assign.findById(assignedId, {
@@ -58,6 +69,32 @@ const createCustomer = Promise.method((orderParameters, order, task, user) => {
     }
     return createSourceAndCharge(customer, orderParameters, order, task, user)
   })
+})
+
+const postCreateOrUpdateOffer = Promise.method((task, offer) => {
+  if (offer) {
+    return models.User.findOne({
+      where: {
+        id: offer.userId
+      }
+    }).then((user) => {
+      const usermail = user.dataValues.email
+      const language = user.language || 'en'
+      i18n.setLocale(language)
+      if (!usermail) {
+        AssignMail.error('mail.assign.register.error' + task.dataValues)
+      }
+      if (!user.account_id) {
+        TransferMail.futurePaymentForInvalidAccount(user)
+      }
+      AssignMail.interested(user, task.dataValues)
+      if (task.dataValues.User) {
+        const ownerUser = task.dataValues.User.dataValues
+        AssignMail.owner(ownerUser, task.dataValues, user, offer)
+      }
+      return task.dataValues
+    })
+  }
 })
 
 module.exports = Promise.method(function taskUpdate (taskParameters) {
@@ -118,34 +155,30 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               taskId: taskParameters.id
             }).then(resp => {
               if (!resp) {
-                return task.createAssign(taskParameters.Assigns[0]).then(assign => {
-                  if (assign) {
-                    return models.User.findOne({
-                      where: {
-                        id: assign.dataValues.userId
-                      }
-                    }).then((user) => {
-                      const usermail = user.dataValues.email
-                      const language = user.language || 'en'
-                      i18n.setLocale(language)
-                      if (!usermail) {
-                        AssignMail.error('mail.assign.register.error' + task.dataValues)
-                      }
-                      if (!user.account_id) {
-                        TransferMail.futurePaymentForInvalidAccount(user)
-                      }
-                      AssignMail.interested(user, task.dataValues)
-                      if (task.dataValues.User) {
-                        const ownerUser = task.dataValues.User.dataValues
-                        AssignMail.owner(ownerUser, task.dataValues, user)
-                      }
-                      return task.dataValues
-                    })
-                  }
+                return task.createAssign(taskParameters.Assigns[0])
+              }
+            })
+          }
+
+          if (taskParameters.Offers) {
+            offerExists({
+              userId: taskParameters.Offers[0].userId,
+              taskId: taskParameters.id
+            }).then(resp => {
+              if (!resp) {
+                return task.createOffer(taskParameters.Offers[0]).then(offer => {
+                  return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                })
+              }
+              else {
+                return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
+                  taskId: taskParameters.id } }).then(update => {
+                  return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
                 })
               }
             })
           }
+
           if (taskParameters.assigned) {
             return models.Assign.findOne({
               where: {
