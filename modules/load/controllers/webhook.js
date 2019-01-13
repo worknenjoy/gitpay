@@ -1,11 +1,15 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const models = require('../../../loading/loading')
-const SendMail = require('../../mail/mail')
+
 const i18n = require('i18n')
+const dateFormat = require('dateformat')
+const moment = require('moment')
+
+const models = require('../../../loading/loading')
 const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
+const SendMail = require('../../mail/mail')
 
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
@@ -74,7 +78,9 @@ exports.github = async (req, res) => {
             task: {
               title: taskData.title,
               issue_url: taskData.url,
-              url: constants.taskUrl(taskData.id)
+              url: constants.taskUrl(taskData.id),
+              value: taskData.value > 0 ? taskData.value : null,
+              deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null
             }
           })
           const finalResponse = { ...response,
@@ -82,6 +88,8 @@ exports.github = async (req, res) => {
               id: taskData.id,
               url: taskUrl,
               title: taskData.title,
+              value: taskData.value > 0 ? taskData.value : null,
+              deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null,
               userId: userData ? userData.id : null
             } }
           // eslint-disable-next-line no-console
