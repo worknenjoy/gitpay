@@ -6,7 +6,7 @@
   "notifications.account.update": "Your user was updated sucessfully",
   "user.logout": "You have logged out of your account.",
   "preferences.headline": "Preferences",
-  "preferences.subtitle": "Setup your account",
+  "preferences.subtitle": "Setup your preferences about skill and how you should receive the notifications about new tasks and projects",
   "preferences.language.name": "Language:",
   "preferences.language.currency": "Currency:",
   "preferences.language.currency.name": "USD (Dolars)",

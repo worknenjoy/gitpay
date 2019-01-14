@@ -12,7 +12,7 @@ const fetchPreferencesRequested = () => {
 }
 
 const fetchPreferencesSuccess = (response) => {
-  return { type: FETCH_PREFERENCES_SUCCESS, completed: true, language: response.language }
+  return { type: FETCH_PREFERENCES_SUCCESS, completed: true, language: response.language, os: response.os, languages: response.languages, skills: response.skills, receiveNotifications: response.receiveNotifications }
 }
 
 const fetchPreferencesError = (error) => {

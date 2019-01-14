@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import Profile from '../components/profile/profile'
+import { fetchPreferences } from '../actions/preferencesActions'
+import { updateUser } from '../actions/userActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -10,4 +12,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(Profile)
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
+    updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -15,7 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     picture_url: DataTypes.STRING,
     customer_id: DataTypes.STRING,
     account_id: DataTypes.STRING,
-    paypal_id: DataTypes.STRING
+    paypal_id: DataTypes.STRING,
+    os: DataTypes.STRING,
+    skills: DataTypes.STRING,
+    languages: DataTypes.STRING,
+    receiveNotifications: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: (models) => {
