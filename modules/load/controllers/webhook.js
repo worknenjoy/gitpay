@@ -41,27 +41,20 @@ exports.github = async (req, res) => {
             }
           })
           const userData = user && user.dataValues
-          const taskExist = await models.Task.findOne({
+          const task = await models.Task.findOne({
             where: {
               url: response.issue.html_url
             }
           })
 
-          const task = taskExist || await models.Task.build(
-            {
-              title: response.issue.title,
-              provider: 'github',
-              url: response.issue.html_url,
-              userId: userData ? userData.id : null
-            }
-          ).save()
           // eslint-disable-next-line no-console
-          console.log('a user was found', user)
+          console.log('a user was found inside the label', user)
           const taskData = task.dataValues
           // eslint-disable-next-line no-console
-          console.log('it has task data', taskData)
+          console.log('it has task data inside the label', taskData)
           const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
-          if (userData) {
+
+          if (userData && !taskData.notified) {
             SendMail.success(
               userData,
               i18n.__('mail.webhook.github.issue.new.subject', {
@@ -83,6 +76,23 @@ exports.github = async (req, res) => {
               deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null
             }
           })
+
+          const taskUpdate = await models.Task.update(
+            {
+              notified: true
+            },
+            {
+              where: {
+                url: response.issue.html_url
+              }
+            }
+          )
+
+          if (!taskUpdate) {
+            SendMail.error('notifications@gitpay.me', 'Error to update task', `An error ocurred to update the task ${task}`)
+            return res.status(404)
+          }
+
           const finalResponse = { ...response,
             task: {
               id: taskData.id,

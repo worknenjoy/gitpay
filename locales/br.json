@@ -81,7 +81,7 @@
   "mail.task.me.instructions": "<p>O que você precisa saber?</p><ul><li>Adicione uma recompensa ou um deadline se desejar</li><li>Você receberá ofertas da comunidade</li><li>Clique em \"Escolher\" na seção de interessados</li><li>Envie os detalhes necessários para seu usuário</li><li>Ele vai enviar um Pull Request para você</li><li>Aprove e envie recompensa</li><li>O contribuidor irá receber a recompensa</li></ul>",
   "mail.task.provider.action": "Ver no Github",
   "mail.task.me.calltoaction": "Ver sua tarefa no Gitpay",
-  "mail.task.calltoaction": "Estou interessado",
+  "mail.task.calltoaction": "Saber mais da tarefa no Gitpay",
   "mail.task.instructions": "<p>Como trabalhar neste projeto?</p><ul><li>Acesse a tarefa no Gitpay</li><li>Clique em \"Estou interessado\"</li><li>Acesse o repositório do projeto e crie um fork</li><li>Envie um Pull Request</li><li>Quem mantém o projeto irá revisar, e você fará os ajustes necessários para que a tarefa atenda os requisitos</li><li>Você recebe então uma recompensa</li></ul>",
   "mail.task.docs.title": "Nós temos uma documentação completa para você sobre como funciona",
   "mail.task.reason": "Você recebeu esta mensagem pois você se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
