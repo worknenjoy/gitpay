@@ -1,1 +1,3 @@
-files: []
+files:
+  - source: /locales/en.json
+    translation: /locales/result/%locale%/%two_letters_code%.json
