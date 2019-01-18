@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     os: DataTypes.STRING,
     skills: DataTypes.STRING,
     languages: DataTypes.STRING,
-    receiveNotifications: DataTypes.BOOLEAN
+    receiveNotifications: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   }, {
     classMethods: {
       associate: (models) => {

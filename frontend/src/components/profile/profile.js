@@ -87,10 +87,7 @@ const styles = theme => ({
     marginRight: 5
   },
   secondaryBar: {
-    backgroundColor: '#dcf3f1'
-  },
-  thirdBar: {
-    backgroundColor: '##F5F5F5'
+    backgroundColor: theme.palette.primary.light
   },
   chip: {
     marginRight: 10,
@@ -170,17 +167,21 @@ class Profile extends Component {
         <TopBarContainer />
         <AppBar
           component='div'
-          className={ styles.secondaryBar }
+          classes={ { colorPrimary: classes.secondaryBar } }
           color='primary'
           position='static'
           elevation={ 0 }>
           <Toolbar>
             <Grid container alignItems='center' spacing={ 8 }>
               <Grid item xs>
-                <Button onClick={ this.handleBackToTaskList } variant='raised' size='small' aria-label='Back' color='primary'>
-                  <ArrowBackIcon />
-                  { titleNavigation }
-                </Button>
+                <Typography color='primary' variant='title'>
+                  <Button onClick={ this.handleBackToTaskList } variant='flat' size='small' aria-label='Back' color='primary'>
+                    <ArrowBackIcon />
+                  </Button>
+                  <span style={ { marginLeft: 10 } }>
+                    { titleNavigation }
+                  </span>
+                </Typography>
               </Grid>
             </Grid>
           </Toolbar>

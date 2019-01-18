@@ -1,5 +1,9 @@
 [
   {
+    "id": "preferences.actions.language.title",
+    "defaultMessage": "Language"
+  },
+  {
     "id": "preferences.actions.choose.language",
     "defaultMessage": "Choose language"
   },
@@ -16,8 +20,8 @@
     "defaultMessage": "My Skills"
   },
   {
-    "id": "prefences.my.languages",
-    "defaultMessage": "Languages"
+    "id": "prefences.my.skills.zero",
+    "defaultMessage": "No skills selected"
   },
   {
     "id": "prefences.my.notifications",

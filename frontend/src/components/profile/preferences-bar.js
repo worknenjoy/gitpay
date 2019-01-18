@@ -17,11 +17,11 @@ class PreferencesBar extends Component {
         elevation={ 0 }>
         <Toolbar>
           <Grid container alignItems='center' spacing={ 8 }>
-            <Grid item xs style={ { marginTop: 15 } }>
-              <Typography color='primary' variant='subtitle'>
+            <Grid item xs style={ { paddingTop: 15, paddingBottom: 15 } }>
+              <Typography color='primary' variant='subheading' gutterBottom>
                 <FormattedMessage id='preferences.subtitle' defaultMessage='Setup your preferences about skill and how you should receive the notifications about new tasks and projects' />
               </Typography>
-              <Typography variant='subtitle2'>
+              <Typography variant='body2' color='textSecondary' gutterBottom>
                 <FormattedMessage id='preferences.subtitle2' defaultMessage='You can onboard accounts to receive payments using our supported countries or link your account with Paypal (that will include Paypal fees)' />
               </Typography>
             </Grid>
