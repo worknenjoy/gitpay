@@ -8,7 +8,11 @@ describe('preferences reducer', () => {
         'completed': true,
         'country': null,
         'error': {},
-        'language': null
+        'language': null,
+        'languages': null,
+        'os': null,
+        'receiveNotifications': null,
+        'skills': null
       }
     )
   })

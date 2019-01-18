@@ -1,18 +1,38 @@
 [
   {
-    "id": "preferences.headline",
-    "defaultMessage": "Preferences"
+    "id": "preferences.actions.choose.language",
+    "defaultMessage": "Choose language"
   },
   {
-    "id": "preferences.subtitle",
-    "defaultMessage": "Setup your account"
+    "id": "preferences.os",
+    "defaultMessage": "OS"
   },
   {
-    "id": "preferences.language.name",
-    "defaultMessage": "Language"
+    "id": "prefences.skills",
+    "defaultMessage": "Skills"
   },
   {
-    "id": "preferences.language.currency.name",
-    "defaultMessage": "USD (Dolars)"
+    "id": "prefences.my.skills",
+    "defaultMessage": "My Skills"
+  },
+  {
+    "id": "prefences.my.languages",
+    "defaultMessage": "Languages"
+  },
+  {
+    "id": "prefences.my.notifications",
+    "defaultMessage": "Notifications"
+  },
+  {
+    "id": "preferences.notifications.checkbox",
+    "defaultMessage": "I want to receive notifications about all the tasks, not just the ones I'm interested"
+  },
+  {
+    "id": "general.actions.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "preferences.action.save",
+    "defaultMessage": "Save"
   }
 ]
