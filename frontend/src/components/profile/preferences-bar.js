@@ -22,9 +22,7 @@ class PreferencesBar extends Component {
                 <FormattedMessage id='preferences.subtitle' defaultMessage='Setup your preferences about skill and how you should receive the notifications about new tasks and projects' />
               </Typography>
               <Typography variant='subtitle2'>
-                <p>You can onboard accounts to receive payments using our supported countries<br />
-                    or link your account with Paypal (that will include Paypal fees)
-                </p>
+                <FormattedMessage id='preferences.subtitle2' defaultMessage='You can onboard accounts to receive payments using our supported countries or link your account with Paypal (that will include Paypal fees)' />
               </Typography>
             </Grid>
           </Grid>

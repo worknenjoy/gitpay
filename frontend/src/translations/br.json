@@ -7,6 +7,7 @@
   "user.logout": "Você acabou de sair da sua conta",
   "preferences.headline": "Preferências",
   "preferences.subtitle": "Configure suas preferências sobre suas habilidades e como você quer receber notificações sobre novas tarefas e projetos",
+  "preferences.subtitle2": "Você pode integrar contas para receber pagamentos usando nossos países suportados ou vincular sua conta com o Paypal (que incluirá taxas do Paypal)",
   "preferences.language.name": "Língua:",
   "preferences.language.currency": "Moeda:",
   "preferences.language.currency.name": "USD (Dólar)",
