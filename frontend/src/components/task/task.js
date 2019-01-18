@@ -64,6 +64,7 @@ import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
 import RemoveAssignment from './assignment/RemoveAssignment'
+import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import { Paper } from 'material-ui'
 import { FormControl } from 'material-ui/Form'
@@ -1096,6 +1097,11 @@ class Task extends Component {
             </Grid>
           </Grid>
           <Grid container spacing={ 24 }>
+            <Grid item xs={12} sm={ 8 }>
+              <div className={ classes.paper }>
+                  <TaskAssigned open={true} user={task.assigns ? task.assigns.filter(a => a.id === task.assigned) : {}}  />
+              </div>
+            </Grid>
             <Grid item xs={ 12 } sm={ 8 }>
               <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
               { taskOwner() &&
