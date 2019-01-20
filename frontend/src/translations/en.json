@@ -1,8 +1,8 @@
 {
   "payment.message.error": "We couldn't process your payment",
-  "welcome.tagline": "Transform your contribution into rewards",
-  "welcome.tagline1": "and turn ideas into reality",
-  "welcome.tagline2": "with <strong>Gitpay</strong> you contribute with projects on demmand",
+  "welcome.tagline": "Your contribution become rewards",
+  "welcome.tagline1": "by solving git issues",
+  "welcome.tagline2": "with <strong>Gitpay</strong> you can add bounties in order to have your issues solved, and a contributor is rewarded when the code is merged",
   "notifications.account.update": "Your user was updated sucessfully",
   "user.logout": "You have logged out of your account.",
   "preferences.headline": "Preferences",
