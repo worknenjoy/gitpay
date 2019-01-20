@@ -1,6 +1,6 @@
 {
   "payment.message.error": "We couldn't process your payment",
-  "welcome.tagline": "Your contribution become rewards",
+  "welcome.tagline": "Your contribution becomes rewards",
   "welcome.tagline1": "by solving git issues",
   "welcome.tagline2": "with <strong>Gitpay</strong> you can add bounties in order to have your issues solved, and a contributor is rewarded when the code is merged",
   "notifications.account.update": "Your user was updated sucessfully",
