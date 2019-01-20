@@ -1,8 +1,8 @@
 {
   "payment.message.error": "Erro ao realizar o pagamento",
-  "welcome.tagline": "Sua contribuição vira recompensa",
+  "welcome.tagline": "Contribua e seja recompensado",
   "welcome.tagline1": "solucionando tarefas no git",
-  "welcome.tagline2": "Com o <strong>Gitpay</strong> você pode adicionar recompensas para ter tarefas resolvidas, e quem contribuiu com a solução recebe os valores quando o código é integrado",
+  "welcome.tagline2": "com o <strong>Gitpay</strong> você pode adicionar recompensas para ter tarefas resolvidas",
   "notifications.account.update": "Conta atualizada com sucesso",
   "user.logout": "Você acabou de sair da sua conta",
   "preferences.headline": "Preferências",
