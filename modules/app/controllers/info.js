@@ -1,6 +1,6 @@
 const rp = require('request-promise')
 const { slack } = require('../../../config/secrets')
-const models = require('../../../loading/loading')
+const models = require('../../../models')
 
 const fetchChannelUserCount = async () => {
   const data = await rp({

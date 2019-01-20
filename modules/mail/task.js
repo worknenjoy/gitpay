@@ -2,7 +2,7 @@ const moment = require('moment')
 const ptLocale = require('moment/locale/pt-br')
 const i18n = require('i18n')
 const withTemplate = require('./template')
-const models = require('../../loading/loading')
+const models = require('../../models')
 
 moment.locale('pt-br', ptLocale)
 

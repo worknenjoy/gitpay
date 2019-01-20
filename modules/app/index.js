@@ -1,4 +1,4 @@
-require('../../loading/loading')
+require('../../models')
 
 const routerAuth = require('./routes/auth')
 const routerTask = require('./routes/tasks')

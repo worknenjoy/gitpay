@@ -3,7 +3,7 @@ const api = require('../server')
 const TaskMail = require('../modules/mail/task')
 const request = require('supertest')
 const nock = require('nock')
-const models = require('../loading/loading')
+const models = require('../models')
 const { register } = require('./helpers')
 const agent = request.agent(api)
 
