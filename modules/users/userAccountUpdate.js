@@ -1,5 +1,5 @@
 const Promise = require('bluebird')
-const models = require('../../loading/loading')
+const models = require('../../models')
 const Stripe = require('stripe')
 const ip = require('ip')
 const stripe = new Stripe(process.env.STRIPE_KEY)

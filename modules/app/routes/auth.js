@@ -5,7 +5,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 const authenticationHelpers = require('../../authenticationHelpers')
-require('../../../loading/loading')
+require('../../../models')
 const controllers = require('../controllers/auth')
 const secure = require('./secure')
 

@@ -1,0 +1,13 @@
+files:
+  - source: /locales/en.json
+    translation: /locales/result/%two_letters_code%.json
+    languages_mapping:
+      two_letters_code:
+        pt-BR: br
+        en-US: en
+  - source: /frontend/src/translations/en.json
+    translation: /frontend/src/translations/result/%two_letters_code%.json
+    languages_mapping:
+      two_letters_code:
+        pt-BR: br
+        en-US: en

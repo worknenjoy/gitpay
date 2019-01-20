@@ -6,7 +6,7 @@ const i18n = require('i18n')
 const dateFormat = require('dateformat')
 const moment = require('moment')
 
-const models = require('../../../loading/loading')
+const models = require('../../../models')
 const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')

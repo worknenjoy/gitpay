@@ -1,7 +1,7 @@
 const AssignMail = require('../mail/assign')
 const PaymentMail = require('../mail/payment')
 const Promise = require('bluebird')
-const models = require('../../loading/loading')
+const models = require('../../models')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')

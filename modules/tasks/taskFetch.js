@@ -1,5 +1,5 @@
 const Promise = require('bluebird')
-const models = require('../../loading/loading')
+const models = require('../../models')
 const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')

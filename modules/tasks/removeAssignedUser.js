@@ -1,5 +1,5 @@
 const Promise = require('bluebird')
-const models = require('../../loading/loading')
+const models = require('../../models')
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 

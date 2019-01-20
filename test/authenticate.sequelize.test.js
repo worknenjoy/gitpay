@@ -1,8 +1,8 @@
-const loading = require('../loading/loading')
+const models = require('../models')
 
 describe('authenticate', () => {
   it('should authenticate sequelize', (done) => {
-    loading.sequelize
+    models.sequelize
       .authenticate()
       .then(err => {
         if (err) done(err)
