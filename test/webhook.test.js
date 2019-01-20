@@ -5,7 +5,7 @@ const request = require('supertest')
 const expect = require('chai').expect
 const api = require('../server')
 const agent = request.agent(api)
-const models = require('../loading/loading')
+const models = require('../models')
 
 const chargeData = require('./data/charge')
 const transferData = require('./data/transfer')

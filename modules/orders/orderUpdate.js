@@ -1,6 +1,6 @@
 const PaymentMail = require('../mail/payment')
 const Promise = require('bluebird')
-const models = require('../../loading/loading')
+const models = require('../../models')
 
 module.exports = Promise.method(function orderUpdate (orderParameters) {
   return models.Order
