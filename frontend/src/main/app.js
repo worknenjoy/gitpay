@@ -16,8 +16,8 @@ import reducers from '../reducers/reducers'
 
 import { addLocaleData } from 'react-intl'
 
-import messagesBr from '../translations/br.json'
-import messagesEn from '../translations/en.json'
+import messagesBr from '../translations/result/br.json'
+import messagesEn from '../translations/result/en.json'
 
 import localeEn from 'react-intl/locale-data/en'
 import localeBr from 'react-intl/locale-data/br'
