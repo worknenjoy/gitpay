@@ -6,6 +6,7 @@ import Auth from '../../modules/auth'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
+import { withRouter } from 'react-router-dom'
 
 import LoginFormContainer from '../../containers/login-form'
 
@@ -31,9 +32,11 @@ const Content = styled.div`
 `
 
 class LoginButton extends Component {
+  
   componentWillMount () {
-    if (this.props.referer) {
-      const referer = this.props.referer.pathname
+    console.log(this.props)
+    if (this.props.location && this.props.location.state && this.props.location.state.from) {
+      const referer = this.props.location.state.from.pathname
       if (referer) {
         Auth.storeReferer(referer)
       }
@@ -102,4 +105,4 @@ LoginButton.defaultProps = {
   size: 'large'
 }
 
-export default withStyles(styles)(LoginButton)
+export default withRouter(withStyles(styles)(LoginButton))
