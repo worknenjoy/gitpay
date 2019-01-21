@@ -34,8 +34,7 @@ const Content = styled.div`
 class LoginButton extends Component {
   
   componentWillMount () {
-    console.log(this.props)
-    if(this.props.referer) {
+    if (this.props.referer) {
       Auth.storeReferer(this.props.referer.pathname)
     }
     if (this.props.location && this.props.location.state && this.props.location.state.from) {
