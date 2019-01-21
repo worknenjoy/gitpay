@@ -64,6 +64,7 @@ import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
 import RemoveAssignment from './assignment/RemoveAssignment'
+import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import { Paper } from 'material-ui'
 import { FormControl } from 'material-ui/Form'
@@ -1097,6 +1098,7 @@ class Task extends Component {
           </Grid>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 8 }>
+              { task.data.assigned && <TaskAssigned status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) } classes={ classes } user={ task.data.assignedUser || {} } /> }
               <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
               { taskOwner() &&
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
