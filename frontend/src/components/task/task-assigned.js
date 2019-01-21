@@ -1,49 +1,116 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Collapse from 'material-ui/transitions/Collapse'
+import { withStyles } from 'material-ui/styles'
+import { FormattedMessage } from 'react-intl'
+import MomentComponent from 'moment'
+import Avatar from 'material-ui/Avatar'
+import classNames from 'classnames'
+import Typography from 'material-ui/Typography'
+import Tooltip from 'material-ui/Tooltip'
+import Card, { CardHeader } from 'material-ui/Card'
+import Chip from 'material-ui/Chip'
+import nameInitials from 'name-initials'
+import UserIcon from 'material-ui-icons/AccountCircle'
+
+const styles = theme => ({
+  main: {
+    marginTop: 10,
+    marginBottom: 10
+  }
+})
 
 class TaskAssigned extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentPrice: 0,
-      finalPrice: 0,
-      orderPrice: 0,
-      samplePrice: 0
+
     }
   }
 
   pickTaskPrice = (price) => {
-    this.setState({
-      currentPrice: price,
-      finalPrice: parseInt(price) + parseInt(this.state.orderPrice)
-    })
+
   }
 
   handleInputChange = (e) => {
-    this.setState({ currentPrice: e.target.value })
+    // this.setState({ currentPrice: e.target.value })
   }
 
   handlePayment = (value) => {
-    
+
   }
 
   render () {
-    const { open, user } = this.props
+    const { user, classes, status } = this.props
+    const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
+    const timePlaceholder = (
+      <Typography type='subheading' style={ { padding: 25, color: 'gray' } }>
+        { updatedAtTimeString }
+      </Typography>
+    )
 
     return (
-      <div>
-        <Collapse in={ !!open }>
-          {user.id}aaa
-        </Collapse>
+      <div className={ classes.main }>
+        <Card raised={ false }>
+          <CardHeader
+            avatar={
+              <FormattedMessage id='task.assigned.status.name' defaultMessage='Assigned to {name}' values={ {
+                name: user.name || user.username
+              } }>
+                { (msg) => (
+                  <Tooltip
+                    id='tooltip-github'
+                    title={ msg }
+                    placement='bottom'
+                  >
+                    <a
+                      href={ `${user.repo || user.website || '#'}` }
+                      target='_blank'
+                    >
+                      { user.picture_url &&
+                        <Avatar
+                          alt={ user.username || '' }
+                          src={ user.picture_url }
+                        />
+                      }
+
+                      { !user.picture_url &&
+                        <Avatar className={ classNames(classes.avatar) } alt={ user.username || '' } src=''>
+                          { user.username ? nameInitials(user.username) : <UserIcon /> }
+                        </Avatar>
+                      }
+                    </a>
+                  </Tooltip>
+                ) }
+              </FormattedMessage>
+            }
+            title={ user.user || user.username }
+            subheader={
+              <div>
+                <FormattedMessage id='task.assigned.status.name.create' defaultMessage='Assigned to {name}' values={ {
+                  name: user.name || user.username
+                } } />
+                <Chip
+                  style={ { marginRight: 10 } }
+                  label={ status }
+                  className={ classes.chipStatus }
+                />
+              </div>
+            }
+            action={
+              timePlaceholder
+            }
+          />
+        </Card>
+
       </div>
     )
   }
 }
 
 TaskAssigned.propTypes = {
-  open: PropTypes.bool,
+  classes: PropTypes.object,
+  status: PropTypes.string,
   user: PropTypes.object
 }
 
-export default TaskAssigned
+export default withStyles(styles)(TaskAssigned)

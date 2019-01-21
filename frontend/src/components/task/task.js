@@ -1097,12 +1097,8 @@ class Task extends Component {
             </Grid>
           </Grid>
           <Grid container spacing={ 24 }>
-            <Grid item xs={12} sm={ 8 }>
-              <div className={ classes.paper }>
-                  <TaskAssigned open={true} user={task.assigns ? task.assigns.filter(a => a.id === task.assigned) : {}}  />
-              </div>
-            </Grid>
             <Grid item xs={ 12 } sm={ 8 }>
+              { task.data.assigned && <TaskAssigned status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) } classes={ classes } user={ task.data.assignedUser || {} } /> }
               <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
               { taskOwner() &&
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
