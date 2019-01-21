@@ -31,8 +31,7 @@ const Content = styled.div`
   margin-top: 10px;
 `
 
-class LoginButton extends Component {
-  
+class LoginButton extends Component {  
   componentWillMount () {
     if (this.props.referer) {
       Auth.storeReferer(this.props.referer.pathname)
