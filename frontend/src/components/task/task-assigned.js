@@ -63,7 +63,7 @@ class TaskAssigned extends Component {
                     placement='bottom'
                   >
                     <a
-                      href={ `${user.repo || user.website || '#'}` }
+                      href={ `${user.profile_url || user.website || '#'}` }
                       target='_blank'
                     >
                       { user.picture_url &&
