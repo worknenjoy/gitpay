@@ -1,5 +1,5 @@
 const Promise = require('bluebird')
-const models = require('../../loading/loading')
+const models = require('../../models')
 const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
@@ -39,8 +39,17 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
             }
           })
-            .then(response => {
+            .then(async response => {
               const issueDataJsonGithub = JSON.parse(response)
+
+              const assigned = await models.Assign.findOne(
+                {
+                  where: {
+                    id: data.assigned
+                  },
+                  include: [models.User]
+                }
+              ).catch(e => {})
 
               const responseGithub = {
                 id: data.dataValues.id,
@@ -50,6 +59,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 deadline: data.dataValues.deadline,
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
+                assignedUser: assigned && assigned.dataValues.User.dataValues,
                 userId: data.dataValues.userId,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,

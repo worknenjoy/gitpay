@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 require('passport')
 require('../../authenticationHelpers')
-require('../../../loading/loading')
+require('../../../models')
 const controllers = require('../controllers/order')
 
 const secure = require('./secure')

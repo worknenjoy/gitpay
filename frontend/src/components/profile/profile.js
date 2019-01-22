@@ -15,6 +15,7 @@ import LibraryBooks from 'material-ui-icons/LibraryBooks'
 import CreditCard from 'material-ui-icons/CreditCard'
 import Tune from 'material-ui-icons/Tune'
 import UserIcon from 'material-ui-icons/AccountCircle'
+import ArrowBackIcon from 'material-ui-icons/ArrowBack'
 
 import classNames from 'classnames'
 import nameInitials from 'name-initials'
@@ -30,6 +31,9 @@ import PaymentOptions from '../payment/payment-options'
 import Preferences from '../../components/profile/preferences'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
+import { Toolbar, AppBar } from 'material-ui'
+
+import PreferencesBar from './preferences-bar'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -81,6 +85,24 @@ const styles = theme => ({
   primary: {},
   icon: {
     marginRight: 5
+  },
+  secondaryBar: {
+    backgroundColor: theme.palette.primary.light
+  },
+  chip: {
+    marginRight: 10,
+    marginBottom: 20
+  },
+  chipSkill: {
+    margin: theme.spacing.unit,
+  },
+  chipLanguage: {
+    margin: theme.spacing.unit,
+  },
+  chipContainer: {
+    marginTop: 12,
+    marginBottom: 12,
+    width: '100%'
   }
 })
 
@@ -119,12 +141,54 @@ class Profile extends Component {
     }
   }
 
+  getTitleNavigation = () => {
+    if (this.state.selected === 0) {
+      return (<FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />)
+    }
+    else if (this.state.selected === 1) {
+      return (<FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />)
+    }
+    else {
+      return (<FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />)
+    }
+  }
+
+  handleBackToTaskList = () => {
+    window.history.back()
+  }
+
   render () {
     const { classes, user, preferences } = this.props
+
+    let titleNavigation = this.getTitleNavigation()
 
     return (
       <Page>
         <TopBarContainer />
+        <AppBar
+          component='div'
+          classes={ { colorPrimary: classes.secondaryBar } }
+          color='primary'
+          position='static'
+          elevation={ 0 }>
+          <Toolbar>
+            <Grid container alignItems='center' spacing={ 8 }>
+              <Grid item xs>
+                <Typography color='primary' variant='title'>
+                  <Button onClick={ this.handleBackToTaskList } variant='flat' size='small' aria-label='Back' color='primary'>
+                    <ArrowBackIcon />
+                  </Button>
+                  <span style={ { marginLeft: 10 } }>
+                    { titleNavigation }
+                  </span>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        { this.state.selected === 2 &&
+          <PreferencesBar classes={ classes } />
+        }
         <PageContent>
           <Grid container className={ classes.root } spacing={ 24 }>
             <Grid item xs={ 12 } md={ 8 }>
@@ -144,7 +208,7 @@ class Profile extends Component {
                   <Route
                     exact
                     path='/profile/preferences'
-                    component={ () => <Preferences user={ user } preferences={ preferences } /> }
+                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
                   />
                 </Switch>
               </HashRouter>

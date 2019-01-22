@@ -214,7 +214,7 @@ const updateUser = (_, userData) => {
   validToken()
   return (dispatch) => {
     dispatch(updateUserRequested())
-    axios
+    return axios
       .put(api.API_URL + '/user/update', userData)
       .then(user => {
         dispatch(addNotification('notifications.account.update'))

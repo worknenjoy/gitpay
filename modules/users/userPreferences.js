@@ -1,4 +1,4 @@
-const models = require('../../loading/loading')
+const models = require('../../models')
 const Promise = require('bluebird')
 
 module.exports = Promise.method(function userPreferences (userAttributes) {
@@ -16,7 +16,11 @@ module.exports = Promise.method(function userPreferences (userAttributes) {
 
       return {
         language: user.dataValues.language,
-        country: user.dataValues.country
+        country: user.dataValues.country,
+        os: user.dataValues.os,
+        skills: user.dataValues.skills,
+        languages: user.dataValues.languages,
+        receiveNotifications: user.dataValues.receiveNotifications != null && user.dataValues.receiveNotifications
       }
     }).catch(error => {
       // eslint-disable-next-line no-console

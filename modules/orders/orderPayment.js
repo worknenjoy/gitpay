@@ -1,5 +1,5 @@
 const Promise = require('bluebird')
-const models = require('../../loading/loading')
+const models = require('../../models')
 const requestPromise = require('request-promise')
 const TransferMail = require('../mail/transfer')
 

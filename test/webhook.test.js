@@ -5,7 +5,7 @@ const request = require('supertest')
 const expect = require('chai').expect
 const api = require('../server')
 const agent = request.agent(api)
-const models = require('../loading/loading')
+const models = require('../models')
 
 const chargeData = require('./data/charge')
 const transferData = require('./data/transfer')
@@ -381,6 +381,31 @@ describe('webhooks', () => {
               expect(res.body).to.exist
               expect(res.body.action).to.equal('opened')
               expect(res.body.task.userId).to.equal(user.dataValues.id)
+              done()
+            });      
+          })
+    })
+    it('should notify when a label notify is created', done => {
+      let customIssue = githubWebhookIssue.issue
+      customIssue.action = 'labeled'
+      customIssue.issue.labels = [{name: 'notify'}]
+      models.User.build({ email: 'alexanmtz@gmail.com', username: 'alexanmtz', password: 'teste' })
+          .save()
+          .then(async user => {
+            const task = await models.Task.create({provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id})
+            agent
+            .post('/webhooks/github')
+            .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
+            .send(customIssue)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(async (err, res) => {
+              const taskAfter = await models.Task.findOne({where: {id: task.dataValues.id}})
+              expect(res.statusCode).to.equal(200)
+              expect(res.body).to.exist
+              expect(res.body.action).to.equal('labeled')
+              expect(res.body.task.userId).to.equal(user.dataValues.id)
+              expect(taskAfter.notified).to.equal(true)
               done()
             });      
           })

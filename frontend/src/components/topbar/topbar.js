@@ -50,8 +50,8 @@ import {
   OnlyDesktop,
 } from './TopbarStyles'
 
-import messagesBr from '../../translations/br.json'
-import messagesEn from '../../translations/en.json'
+import messagesBr from '../../translations/result/br.json'
+import messagesEn from '../../translations/result/en.json'
 
 import LoginButton from '../session/login-button'
 
