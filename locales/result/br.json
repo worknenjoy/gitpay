@@ -73,7 +73,7 @@
   "mail.webhook.github.issue.new.message": "<p>Seu incidente <a href=\"{{issue}}\">{{issue}}</a> do repositório <a href=\"{{repo}}\">{{repo}}</a> foi adicionado no Gitpay e agora você pode adicionar recompensas para atribuir contribuidores interessados em conclui-las.</p><p>Aqui está a URL: <a href=\"{{task}}\">{{task}}</a> </p>",
   "mail.task.me.subject": "Você criou uma nova tarefa no Gitpay",
   "mail.task.payment.subject": "Uma recompensa de $ {{value}} pela tarefa: {{title}} foi adicionada ao Gitpay",
-  "mail.task.payment.title": "O pagamento de $ {{value}} foi realizado via cartão de crédito foi feito pela tarefa",
+  "mail.task.payment.title": "O pagamento de $ {{value}} foi realizado via cartão de crédito pela tarefa",
   "mail.task.payment.instructions": "<p>O que você precisa saber?</p><ul><li>Você pode se candidatar para trabalhar na tarefa e demonstrar seu interesse</li><li>Você poderá ser atribuido</li><li>Envie um Pull Request com a solução</li><li>Nós então vamos analisar e dar um feedback</li><li>Suas mudanças são aprovadas e você então recebe a recompensa na sua conta</li></ul>",
   "mail.task.subject": "Temos uma nova tarefa para você no Gitpay",
   "mail.task.me.title": "Sua tarefa foi enviada para nossa comunidade",
