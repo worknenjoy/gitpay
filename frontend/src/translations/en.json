@@ -123,6 +123,8 @@
   "task.status.createdByMe": "Created by me",
   "tasks.status.interested": "I'm interested",
   "task.status.assigned": "Assigned to me",
+  "task.assigned.status.name": "Assigned to {name}",
+  "task.assigned.status.name.create": "Assigned to {name}",
   "task.list.headline": "Task list",
   "task.list.description": "Available tasks for development",
   "task.user.account.create.headline": "Login / signup to work in your tasks",
