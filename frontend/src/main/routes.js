@@ -18,11 +18,22 @@ export default props => (
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Route path='/tasks/explore' component={ TaskExplorer } />
+      <Route path='/tasks/createdbyme' component={ TaskExplorer } />
+      <Route path='/tasks/interested' component={ TaskExplorer } />
+      <Route path='/tasks/assignedtome' component={ TaskExplorer } />
+      <Route path='/tasks/all' component={ TaskExplorer } />
+      <Route path='/tasks/open' component={ TaskExplorer } />
+      <Route path='/tasks/progress' component={ TaskExplorer } />
+      <Route path='/tasks/finished' component={ TaskExplorer } />
       <Route exact path='/login' component={ LoginPage } />
       <Route exact path='/login/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
       <Route exact path='/task/:id' component={ TaskContainer } />
-      <Route exact path='/task/:id/order/:order_id/status/:status' component={ TaskOrdersContainer } />
+      <Route
+        exact
+        path='/task/:id/order/:order_id/status/:status'
+        component={ TaskOrdersContainer }
+      />
     </Switch>
   </HashRouter>
 )
