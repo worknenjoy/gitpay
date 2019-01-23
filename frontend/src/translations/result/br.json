@@ -123,6 +123,8 @@
   "task.status.createdByMe": "Criadas por mim",
   "tasks.status.interested": "Estou interessado",
   "task.status.assigned": "Atribuidas a mim",
+  "task.assigned.status.name": "Assigned to {name}",
+  "task.assigned.status.name.create": "Assigned to {name}",
   "task.list.headline": "Lista de tarefas",
   "task.list.description": "Tarefas disponíveis para desenvolvimento",
   "task.user.account.create.headline": "Logar / cadastrar para trabalhar nas tarefas",
