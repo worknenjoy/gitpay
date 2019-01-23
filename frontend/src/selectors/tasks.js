@@ -25,7 +25,7 @@ export const getFilteredTasks = createSelector(
         return {
           ...tasks,
           data: tasks.data.filter(item => {
-            const interested = item.Assigns.filter(assign => assign.id === item.assigned)
+            const interested = item.Assigns.filter(assign => assign.userId === user.id)
             if (interested.length) {
               return item.assigned === interested[0].id
             }
