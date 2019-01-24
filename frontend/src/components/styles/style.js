@@ -2,6 +2,12 @@ const styles = theme => ({
   appBarHeader: {
     color: theme.palette.primary
   },
+  bgContrast: {
+    backgroundColor: '#D1DDE9'
+  },
+  iconFill: {
+    backgroundColor: theme.palette.secondary.main
+  },
   appBar: {
     height: '100%',
     widht: '100%'
