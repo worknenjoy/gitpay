@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import Chip from 'material-ui/Chip'
 
@@ -21,11 +22,33 @@ const messages = defineMessages({
 const statuses = ['open', 'in_progress', 'closed']
 
 class TaskStatusFilter extends Component {
-  handleListItemClick = (value) => {
+  handleListItemClick = value => {
     this.props.onFilter('status', value)
+
+    switch (value) {
+      case 'open':
+        this.props.history.push('/tasks/open')
+        this.props.onFilter('status', value)
+        break
+      case 'in_progress':
+        this.props.history.push('/tasks/progress')
+        this.props.onFilter('status', value)
+        break
+      case 'closed':
+        this.props.history.push('/tasks/finished')
+        this.props.onFilter('status', value)
+        break
+      default:
+        this.props.onFilter()
+    }
   }
 
-  statusesDisplay = (status) => {
+  handleClickAll = () => {
+    this.props.history.push('/tasks/all')
+    this.props.onFilter()
+  }
+
+  statusesDisplay = status => {
     const possibles = {
       open: this.props.intl.formatMessage(messages.openStatus),
       in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
@@ -38,26 +61,25 @@ class TaskStatusFilter extends Component {
     return (
       <div>
         <FormattedMessage id='task.status.filter.all' defaultMessage='All'>
-          { (msg) => (
+          { msg => (
             <Chip
               style={ { marginRight: 10 } }
-              onClick={ () => this.props.onFilter() }
+              onClick={ () => this.handleClickAll() }
               clickable
               key={ 0 }
               label={ msg }
             />
           ) }
         </FormattedMessage>
-        { statuses.map((status, index) =>
-          (<Chip
+        { statuses.map((status, index) => (
+          <Chip
             style={ { marginRight: 10 } }
             onClick={ () => this.handleListItemClick(status) }
             clickable
             key={ index + 1 }
             label={ this.statusesDisplay(status) }
-          />)
-        )
-        }
+          />
+        )) }
       </div>
     )
   }
@@ -67,4 +89,4 @@ TaskStatusFilter.propTypes = {
   onFilter: PropTypes.func
 }
 
-export default injectIntl(TaskStatusFilter)
+export default injectIntl(withRouter(TaskStatusFilter))
