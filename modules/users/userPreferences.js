@@ -1,4 +1,4 @@
-const models = require('../../loading/loading')
+const models = require('../../models')
 const Promise = require('bluebird')
 
 module.exports = Promise.method(function userPreferences (userAttributes) {

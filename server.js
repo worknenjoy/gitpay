@@ -4,10 +4,10 @@ const sslRedirect = require('heroku-ssl-redirect')
 const app = express()
 const session = require('express-session')
 const bodyParser = require('body-parser')
-require('./loading/loading')
+require('./models')
 const passport = require('passport')
 require('./config/passport')
-const load = require('./modules/load/load')
+const load = require('./modules/app')
 const feed = require('feed-read')
 const i18n = require('i18n')
 
@@ -25,7 +25,7 @@ app.use(session({
 }))
 
 i18n.configure({
-  directory: `${__dirname}/locales`,
+  directory: `${__dirname}/locales/result`,
   locales: ['en', 'br'],
   defaultLocale: 'en',
   updateFiles: false

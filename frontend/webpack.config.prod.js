@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 module.exports = {
+  mode: 'production',
   entry: './src/index.js',
   output: {
     path: `${__dirname}/public`,
@@ -28,7 +29,7 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [{
+    rules: [{
       test: /.js[x]?$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
