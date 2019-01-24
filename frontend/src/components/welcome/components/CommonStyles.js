@@ -6,7 +6,6 @@ import backgroundPicture from 'app/images/main-background01.jpg'
 export const MainTitle = styled.div`
   text-align: center;
   display: block;
-  font-size: 18px;
   padding-bottom: 10px;
   border-bottom: 5px solid black;
   width: 30%;
