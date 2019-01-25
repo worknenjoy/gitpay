@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import Chip from 'material-ui/Chip'
@@ -19,12 +20,51 @@ const messages = defineMessages({
   }
 })
 
+const styles = theme => ({
+  selected: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText
+  }
+})
+
 const statuses = ['open', 'in_progress', 'closed']
 
 class TaskStatusFilter extends Component {
-  handleListItemClick = value => {
-    this.props.onFilter('status', value)
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      selected: 'all'
+    }
+  }
+
+  componentDidUpdate (prevProps) {
+    if(this.props.loading !== prevProps.loading) {
+      let pathName = this.props.history.location.pathname
+      this.handleFromUrl(pathName)
+    }
+  }
+
+  handleFromUrl = value => {
+    switch (value) {
+      case '/tasks/open':
+        this.props.onFilter('status', 'open')
+        this.setState({selected: 'open'})
+        break
+      case '/tasks/progress':
+        this.props.onFilter('status', 'in_progress')
+        this.setState({selected: 'in_progress'})
+        break
+      case '/tasks/finished':
+        this.props.onFilter('status', 'closed')
+        this.setState({selected: 'closed'})
+        break
+      default:
+        this.props.onFilter()
+    }
+  }
+
+  handleListItemClick = value => {
     switch (value) {
       case 'open':
         this.props.history.push('/tasks/open')
@@ -41,11 +81,13 @@ class TaskStatusFilter extends Component {
       default:
         this.props.onFilter()
     }
+    this.setState({selected: value})
   }
 
   handleClickAll = () => {
     this.props.history.push('/tasks/all')
     this.props.onFilter()
+    this.setState({selected: 'all'})
   }
 
   statusesDisplay = status => {
@@ -58,6 +100,8 @@ class TaskStatusFilter extends Component {
   }
 
   render () {
+    const { selected } = this.state
+    const { classes } = this.props
     return (
       <div>
         <FormattedMessage id='task.status.filter.all' defaultMessage='All'>
@@ -68,6 +112,7 @@ class TaskStatusFilter extends Component {
               clickable
               key={ 0 }
               label={ msg }
+              className={selected === 'all' ? classes.selected : {}}
             />
           ) }
         </FormattedMessage>
@@ -78,6 +123,7 @@ class TaskStatusFilter extends Component {
             clickable
             key={ index + 1 }
             label={ this.statusesDisplay(status) }
+            className={selected === status ? classes.selected : {}}
           />
         )) }
       </div>
@@ -86,7 +132,8 @@ class TaskStatusFilter extends Component {
 }
 
 TaskStatusFilter.propTypes = {
+  classes: PropTypes.object.isRequired,
   onFilter: PropTypes.func
 }
 
-export default injectIntl(withRouter(TaskStatusFilter))
+export default injectIntl(withRouter(withStyles(styles)(TaskStatusFilter)))

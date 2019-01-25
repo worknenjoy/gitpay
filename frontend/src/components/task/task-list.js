@@ -72,20 +72,20 @@ class TaskList extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      tab: 0
+      tab: 0,
+      loading: true
     }
-
-    this.handleTabChange = this.handleTabChange.bind(this)
   }
 
   componentDidMount () {
-    let pathName = this.props.history.location.pathname
-
-    this.handleRoutePath(pathName)
-    this.props.listTasks()
+    this.props.listTasks().then(t => {
+      let pathName = this.props.history.location.pathname
+      this.handleRoutePath(pathName)
+      this.setState({loading: false})
+    })
   }
 
-  handleRoutePath (path) {
+  handleRoutePath = (path) => {
     switch (path) {
       case '/tasks/explore':
         this.handleTabChange(0, 0)
@@ -93,23 +93,23 @@ class TaskList extends Component {
       case '/tasks/createdbyme':
         this.handleTabChange(0, 1)
         break
-      case 'tasks/interested':
+      case '/tasks/interested':
         this.handleTabChange(0, 2)
         break
       case '/tasks/assignedtome':
         this.handleTabChange(0, 3)
         break
       default:
-        this.props.filterTasks()
+        // this.props.filterTasks()
     }
   }
 
-  handleTabChange (event, value) {
+  handleTabChange = (event, value) => {
     this.setState({ tab: value })
     switch (value) {
       case 0:
         this.props.history.push('/tasks/explore')
-        this.props.listTasks()
+        this.props.filterTasks()
         break
       case 1:
         this.props.history.push('/tasks/createdbyme')
@@ -124,7 +124,7 @@ class TaskList extends Component {
         this.props.filterTasks('assigned')
         break
       default:
-        this.props.filterTasks()
+        // this.props.filterTasks()
     }
   }
 
@@ -154,7 +154,7 @@ class TaskList extends Component {
           />
         </Typography>
         <div style={ { marginTop: 20, marginBottom: 20 } }>
-          <TaskStatusFilter onFilter={ this.props.filterTasks } />
+          <TaskStatusFilter onFilter={ this.props.filterTasks } loading={this.state.loading} />
         </div>
         <div className={ classes.rootTabs }>
           <AppBar position='static' color='default'>
