@@ -196,5 +196,37 @@ export default defineMessages({
   welcomeCollabItemThreeSecondary: {
     id: 'welcome.collab.item.three.secondary',
     defaultMessage: 'The open source allow us to work in descentralized and independent projects and we follow this path to provide our deliveries'
+  },
+  topMenu1: {
+    id: 'welcome.menu.item.one',
+    defaultMessage: 'Intro'
+  },
+  topMenu2: {
+    id: 'welcome.menu.item.two',
+    defaultMessage: 'For contributors'
+  },
+  topMenu3: {
+    id: 'welcome.menu.item.three',
+    defaultMessage: 'For companies'
+  },
+  topMenu4: {
+    id: 'welcome.menu.item.four',
+    defaultMessage: 'For collaboration'
+  },
+  topMenu5: {
+    id: 'welcome.menu.item.five',
+    defaultMessage: 'How it works'
+  },
+  topMenu6: {
+    id: 'welcome.menu.item.six',
+    defaultMessage: 'Pricing'
+  },
+  topMenu7: {
+    id: 'welcome.menu.item.seven',
+    defaultMessage: 'Integrations'
+  },
+  topMenu8: {
+    id: 'welcome.menu.item.eight',
+    defaultMessage: 'Get started'
   }
 })

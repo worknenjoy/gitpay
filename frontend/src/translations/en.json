@@ -1,4 +1,5 @@
 {
+  "welcome.menu.item.one": "Intro",
   "payment.message.error": "We couldn't process your payment",
   "welcome.tagline": "Your contribution becomes rewards",
   "welcome.tagline1": "by solving git issues",
@@ -321,7 +322,7 @@
   "welcome.integration.subtitle": "Check out our Github app",
   "welcome.integration.desc": "You can install our Gitpay app on your Github and start to boost your issues",
   "welcome.integration.button": "Checkout our Github App",
-  "welcome.bottom.call": "A better way to build your project",
+  "welcome.bottom.call": "A better way to build your project, a better way to work in projects",
   "welcome.bottom.link": "Get started",
   "welcome.bottom.linkAlt": "See our docs",
   "consts.external.account": "Bank account",

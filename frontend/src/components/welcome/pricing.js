@@ -30,7 +30,7 @@ const styles = theme => ({
   heroContent: {
     maxWidth: 600,
     margin: '0 auto',
-    padding: `0 0 ${theme.spacing.unit * 8}px`,
+    padding: `0 0 ${theme.spacing.unit * 4}px`,
   },
   heroDesc: {
     paddingTop: theme.spacing.unit * 2
@@ -69,12 +69,12 @@ const tiers = [
       'We manage your issues',
       'Advice on pricing for tasks',
       '8% fee for each transaction',
-      'Review the code',
+      'Code review',
       'Email support',
     ],
     buttonText: 'Contact us',
     buttonVariant: 'raised',
-    link: 'google form'
+    link: 'https://goo.gl/forms/eSpHlrtXGJ1v3Syv2'
   },
   {
     title: 'Enterprise',
@@ -84,12 +84,12 @@ const tiers = [
       'We manage your issues',
       'Advice on pricing for tasks',
       '10% fee for each transaction',
-      'Review the code',
+      'Code review',
       'Email support'
     ],
     buttonText: 'Contact us',
     buttonVariant: 'raised',
-    link: 'google form'
+    link: 'https://goo.gl/forms/eSpHlrtXGJ1v3Syv2'
   },
 ]
 
@@ -126,7 +126,7 @@ class Pricing extends Component {
                 <CardContent>
                   <div className={classes.cardPricing}>
                     <Typography variant="headline" color="textPrimary">
-                      ${tier.price}
+                      <small>US$</small> {tier.price}
                     </Typography>
                     <Typography variant="subheading" color="textSecondary">
                       <FormattedMessage id='welcome.pricing.month' defaultMessage='/mo' />

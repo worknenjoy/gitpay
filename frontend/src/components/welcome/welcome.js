@@ -7,7 +7,11 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
+import Tabs from 'material-ui/Tabs/Tabs'
+import Tab from 'material-ui/Tabs/Tab'
+import AppBar from 'material-ui/AppBar'
 import mainStyles from '../styles/style'
+import scrollToComponent from 'react-scroll-to-component';
 
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import WorkIcon from 'material-ui-icons/Work'
@@ -48,16 +52,56 @@ import {
   Section
 } from './components/CommonStyles'
 import { Button } from 'material-ui';
+import App from '../../main/app';
 
 const styles = (theme) => mainStyles(theme)
 
 class Welcome extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      value: 0
+    }
+  }
+
+  componentDidMount() {
+    //window.addEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = (event) => {
+    
+  }
+
+  handleSectionTab = (event, value) => {
+    this.setState({ value })
+    let offset = -30
+    if(event.currentTarget.id === 'integrations') offset = -50
+    scrollToComponent(this.refs[event.currentTarget.id], {
+      offset: offset,
+      align: 'top',
+      ease:'inExpo'
+    })
+  }
+
   render () {
     const { classes, location } = this.props
 
     return (
       <div className={ classes.root }>
-        <TopBarContainer />
+        <TopBarContainer ref='intro' />
+        <AppBar position='sticky' color='default'>
+          <Tabs variant='default' value={this.state.value} onChange={this.handleSectionTab}>
+            <Tab id='intro' value={0} label={this.props.intl.formatMessage(messages.topMenu1)} />
+            <Tab id='contrib' value={1} label={this.props.intl.formatMessage(messages.topMenu2)} />
+            <Tab id='companies' value={2} label={this.props.intl.formatMessage(messages.topMenu3)} />
+            <Tab id='collab' value={3} label={this.props.intl.formatMessage(messages.topMenu4)} />
+            <Tab id='how-it-works' value={4} label={this.props.intl.formatMessage(messages.topMenu5)} />
+            <Tab id='pricing' value={5} label={this.props.intl.formatMessage(messages.topMenu6)} />
+            <Tab id='integrations' value={6} label={this.props.intl.formatMessage(messages.topMenu7)} />
+            <Tab id='get-started' value={7} label={this.props.intl.formatMessage(messages.topMenu8)} />
+          </Tabs>
+        </AppBar>
         <MainBanner>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
@@ -85,7 +129,7 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </MainBanner>
-        <Section>
+        <Section ref='contrib'>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
@@ -136,7 +180,7 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-        <Section alternative className={ classes.bgContrast }>
+        <Section ref='companies' alternative className={ classes.bgContrast }>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
@@ -187,7 +231,7 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-        <Section>
+        <Section ref='collab'>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
@@ -238,7 +282,7 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-        <Section className={ classes.sectionBgAlt }>
+        <Section ref='how-it-works' className={ classes.sectionBgAlt }>
           <MainTitle>
             <Typography variant='headline' gutterBottom>
               <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
@@ -295,10 +339,10 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-        <Section>
+        <Section ref='pricing'>
           <Pricing />
         </Section>
-        <Section className={classes.gutterBottomBig}>
+        <Section ref='integrations' className={classes.gutterBottomBig}>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 4 } className={classes.alignRight}>
               <div className={classes.gutterTop}>
@@ -322,9 +366,9 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-        <Section style={{background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <Section ref='get-started' style={{background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <Typography variant='display1' gutterBottom>
-            <FormattedMessage id='welcome.bottom.call' defaultMessage='A better way to build your project' />
+            <FormattedHTMLMessage id='welcome.bottom.call' defaultMessage='A better way to build your project, <br /> a better way to work in projects' />
           </Typography>
           <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={classes.gutterTopSmall}>
             <FormattedMessage id='welcome.bottom.link' defaultMessage='Get started' />

@@ -28,10 +28,6 @@ class WhichCompanies extends Component {
     this.handleClose = this.handleClose.bind(this)
   }
 
-  componentDidMount () {
-
-  }
-
   handleClickOpen () {
     this.setState({ open: true })
   }
