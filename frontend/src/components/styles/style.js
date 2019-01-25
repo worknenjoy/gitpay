@@ -2,11 +2,32 @@ const styles = theme => ({
   appBarHeader: {
     color: theme.palette.primary
   },
+  alignRight: {
+    textAlign: 'right'
+  },
+  alignLeft: {
+    textAlign: 'left'
+  },
+  gutterTop: {
+    marginTop: theme.spacing.unit * 2
+  },
+  gutterTopSmall: {
+    marginTop: theme.spacing.unit
+  },
+  gutterBottomBig: {
+    marginBottom: theme.spacing.unit * 3
+  },
   bgContrast: {
     backgroundColor: '#D1DDE9'
   },
   iconFill: {
     backgroundColor: theme.palette.secondary.main
+  },
+  iconFillAlt: {
+    backgroundColor: theme.palette.primary.dark
+  },
+  sectionBgAlt: {
+    backgroundColor: theme.palette.primary.contrastText
   },
   appBar: {
     height: '100%',
