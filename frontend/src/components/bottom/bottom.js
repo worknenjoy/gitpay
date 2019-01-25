@@ -26,6 +26,7 @@ import {
 } from './FooterStyles'
 
 const logoCompleteGray = require('../../images/logo-complete-gray.png')
+const logoWorknEnjoy = require('../../images/worknenjoy-logo.png')
 
 const styles = theme => mainStyles(theme)
 
@@ -89,8 +90,16 @@ class Bottom extends Component {
             </Grid>
           </Grid>
           <Divider className={ classes.spacedTop } />
-          <BaseFooter>
-            <img className={ classes.img } src={ logoCompleteGray } width='100' />
+          <BaseFooter style={{float: 'right', display: 'flex', alignItems: 'center'}}>
+            <div>
+              <img className={ classes.img } src={ logoCompleteGray } width='100' />
+            </div>
+            <Typography varian='caption' component='span' style={{marginLeft: 10, marginRight: 10, display: 'inline-block'}}>
+              <FormattedMessage id='bottom.company.org' defaultMessage='is part of' />
+            </Typography>
+            <a href='http://worknenjoy.com' target='_blank'>
+              <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
+            </a>
           </BaseFooter>
         </Container>
       </div>
