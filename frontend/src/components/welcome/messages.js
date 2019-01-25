@@ -125,27 +125,27 @@ export default defineMessages({
     id: 'welcome.which.companies.item.three.secondary',
     defaultMessage: 'We will help to fit in agile process to have your tasks concluded in an independent way and according to your business'
   },
-  companiesItemPrimary: {
+  companiesItemPrimary1: {
     id: 'welcome.companies.item.primary',
     defaultMessage: 'For any company'
   },
-  companiesItemSecondary: {
+  companiesItemSecondary1: {
     id: 'welcome.companies.item.secondary',
     defaultMessage: 'The distributed colaboration helps company grows and provide a great solution to have the tasks solved using agile process and colaboration throught development'
   },
-  companiesItemTwoPrimary: {
+  companiesItemTwoPrimary1: {
     id: 'welcome.companies.item.two.primary.alt',
     defaultMessage: 'A community of passionate colaborators'
   },
-  companiesItemTwoSecondary: {
+  companiesItemTwoSecondary1: {
     id: 'welcome.companies.item.two.secondary.alt',
     defaultMessage: 'Companies will be able to use Open Source if they want to create colaborative tools that will help other companies and contribute with the OSS ecosystem'
   },
-  companiesItemThreePrimary: {
+  companiesItemThreePrimary1: {
     id: 'welcome.companies.item.three.primary.alt',
     defaultMessage: 'We validate your business integration process'
   },
-  companiesItemThreeSecondary: {
+  companiesItemThreeSecondary1: {
     id: 'welcome.companies.item.three.secondary.alt',
     defaultMessage: 'We will help to fit in agile process to have your tasks concluded in an independent way and according to your business'
   },

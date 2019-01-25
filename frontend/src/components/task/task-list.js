@@ -81,7 +81,7 @@ class TaskList extends Component {
     this.props.listTasks().then(t => {
       let pathName = this.props.history.location.pathname
       this.handleRoutePath(pathName)
-      this.setState({loading: false})
+      this.setState({ loading: false })
     })
   }
 
@@ -154,7 +154,7 @@ class TaskList extends Component {
           />
         </Typography>
         <div style={ { marginTop: 20, marginBottom: 20 } }>
-          <TaskStatusFilter onFilter={ this.props.filterTasks } loading={this.state.loading} />
+          <TaskStatusFilter onFilter={ this.props.filterTasks } loading={ this.state.loading } />
         </div>
         <div className={ classes.rootTabs }>
           <AppBar position='static' color='default'>

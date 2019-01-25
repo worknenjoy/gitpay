@@ -90,11 +90,11 @@ class Bottom extends Component {
             </Grid>
           </Grid>
           <Divider className={ classes.spacedTop } />
-          <BaseFooter style={{float: 'right', display: 'flex', alignItems: 'center'}}>
+          <BaseFooter style={ { float: 'right', display: 'flex', alignItems: 'center' } }>
             <div>
               <img className={ classes.img } src={ logoCompleteGray } width='100' />
             </div>
-            <Typography varian='caption' component='span' style={{marginLeft: 10, marginRight: 10, display: 'inline-block'}}>
+            <Typography varian='caption' component='span' style={ { marginLeft: 10, marginRight: 10, display: 'inline-block' } }>
               <FormattedMessage id='bottom.company.org' defaultMessage='is part of' />
             </Typography>
             <a href='http://worknenjoy.com' target='_blank'>

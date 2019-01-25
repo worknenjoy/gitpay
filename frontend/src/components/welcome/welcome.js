@@ -11,7 +11,7 @@ import Tabs from 'material-ui/Tabs/Tabs'
 import Tab from 'material-ui/Tabs/Tab'
 import AppBar from 'material-ui/AppBar'
 import mainStyles from '../styles/style'
-import scrollToComponent from 'react-scroll-to-component';
+import scrollToComponent from 'react-scroll-to-component'
 
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import WorkIcon from 'material-ui-icons/Work'
@@ -51,13 +51,11 @@ import {
   ShadowImage,
   Section
 } from './components/CommonStyles'
-import { Button } from 'material-ui';
-import App from '../../main/app';
+import { Button } from 'material-ui'
 
 const styles = (theme) => mainStyles(theme)
 
 class Welcome extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -65,22 +63,22 @@ class Welcome extends Component {
     }
   }
 
-  componentDidMount() {
-    //window.addEventListener('scroll', this.handleScroll);
+  componentDidMount () {
+    // window.addEventListener('scroll', this.handleScroll);
   }
 
   handleScroll = (event) => {
-    
+
   }
 
   handleSectionTab = (event, value) => {
     this.setState({ value })
     let offset = -30
-    if(event.currentTarget.id === 'integrations') offset = -50
+    if (event.currentTarget.id === 'integrations') offset = -50
     scrollToComponent(this.refs[event.currentTarget.id], {
       offset: offset,
       align: 'top',
-      ease:'inExpo'
+      ease: 'inExpo'
     })
   }
 
@@ -91,15 +89,15 @@ class Welcome extends Component {
       <div className={ classes.root }>
         <TopBarContainer ref='intro' />
         <AppBar position='sticky' color='default'>
-          <Tabs variant='default' value={this.state.value} onChange={this.handleSectionTab}>
-            <Tab id='intro' value={0} label={this.props.intl.formatMessage(messages.topMenu1)} />
-            <Tab id='contrib' value={1} label={this.props.intl.formatMessage(messages.topMenu2)} />
-            <Tab id='companies' value={2} label={this.props.intl.formatMessage(messages.topMenu3)} />
-            <Tab id='collab' value={3} label={this.props.intl.formatMessage(messages.topMenu4)} />
-            <Tab id='how-it-works' value={4} label={this.props.intl.formatMessage(messages.topMenu5)} />
-            <Tab id='pricing' value={5} label={this.props.intl.formatMessage(messages.topMenu6)} />
-            <Tab id='integrations' value={6} label={this.props.intl.formatMessage(messages.topMenu7)} />
-            <Tab id='get-started' value={7} label={this.props.intl.formatMessage(messages.topMenu8)} />
+          <Tabs variant='default' value={ this.state.value } onChange={ this.handleSectionTab }>
+            <Tab id='intro' value={ 0 } label={ this.props.intl.formatMessage(messages.topMenu1) } />
+            <Tab id='contrib' value={ 1 } label={ this.props.intl.formatMessage(messages.topMenu2) } />
+            <Tab id='companies' value={ 2 } label={ this.props.intl.formatMessage(messages.topMenu3) } />
+            <Tab id='collab' value={ 3 } label={ this.props.intl.formatMessage(messages.topMenu4) } />
+            <Tab id='how-it-works' value={ 4 } label={ this.props.intl.formatMessage(messages.topMenu5) } />
+            <Tab id='pricing' value={ 5 } label={ this.props.intl.formatMessage(messages.topMenu6) } />
+            <Tab id='integrations' value={ 6 } label={ this.props.intl.formatMessage(messages.topMenu7) } />
+            <Tab id='get-started' value={ 7 } label={ this.props.intl.formatMessage(messages.topMenu8) } />
           </Tabs>
         </AppBar>
         <MainBanner>
@@ -342,10 +340,10 @@ class Welcome extends Component {
         <Section ref='pricing'>
           <Pricing />
         </Section>
-        <Section ref='integrations' className={classes.gutterBottomBig}>
+        <Section ref='integrations' className={ classes.gutterBottomBig }>
           <Grid container spacing={ 24 }>
-            <Grid item xs={ 12 } sm={ 4 } className={classes.alignRight}>
-              <div className={classes.gutterTop}>
+            <Grid item xs={ 12 } sm={ 4 } className={ classes.alignRight }>
+              <div className={ classes.gutterTop }>
                 <Typography variant='caption' gutterBottom>
                   <FormattedMessage id='welcome.integration.title' defaultMessage='Integration' />
                 </Typography>
@@ -355,25 +353,25 @@ class Welcome extends Component {
                 <Typography variant='subheading' gutterBottom>
                   <FormattedMessage id='welcome.integration.desc' defaultMessage='You can install our Gitpay app on your Github and start to boost your issues' />
                 </Typography>
-                <Button component='a' target='_blank' href='https://github.com/apps/gitpay-me' variant='raised' color='primary' className={classes.gutterTopSmall}>
+                <Button component='a' target='_blank' href='https://github.com/apps/gitpay-me' variant='raised' color='primary' className={ classes.gutterTopSmall }>
                   <FormattedMessage id='welcome.integration.button' defaultMessage='Checkout our Github App' />
                   <ArrowIcon />
                 </Button>
               </div>
             </Grid>
-            <Grid item xs={ 12 } sm={ 8 } className={classes.alignLeft}>
+            <Grid item xs={ 12 } sm={ 8 } className={ classes.alignLeft }>
               <ShadowImage width='600' src={ appSnapshotImage } />
             </Grid>
           </Grid>
         </Section>
-        <Section ref='get-started' style={{background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <Section ref='get-started' style={ { background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' } }>
           <Typography variant='display1' gutterBottom>
             <FormattedHTMLMessage id='welcome.bottom.call' defaultMessage='A better way to build your project, <br /> a better way to work in projects' />
           </Typography>
-          <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={classes.gutterTopSmall}>
+          <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={ classes.gutterTopSmall }>
             <FormattedMessage id='welcome.bottom.link' defaultMessage='Get started' />
           </Button>
-          <Button component='a' href='https://docs.gitpay.me' size='large' variant='flat' color='primary' className={classes.gutterTopSmall}>
+          <Button component='a' href='https://docs.gitpay.me' size='large' variant='flat' color='primary' className={ classes.gutterTopSmall }>
             <FormattedMessage id='welcome.bottom.linkAlt' defaultMessage='See our docs' />
           </Button>
         </Section>

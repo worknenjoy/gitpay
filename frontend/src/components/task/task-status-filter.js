@@ -30,7 +30,6 @@ const styles = theme => ({
 const statuses = ['open', 'in_progress', 'closed']
 
 class TaskStatusFilter extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -39,7 +38,7 @@ class TaskStatusFilter extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if(this.props.loading !== prevProps.loading) {
+    if (this.props.loading !== prevProps.loading) {
       let pathName = this.props.history.location.pathname
       this.handleFromUrl(pathName)
     }
@@ -49,15 +48,15 @@ class TaskStatusFilter extends Component {
     switch (value) {
       case '/tasks/open':
         this.props.onFilter('status', 'open')
-        this.setState({selected: 'open'})
+        this.setState({ selected: 'open' })
         break
       case '/tasks/progress':
         this.props.onFilter('status', 'in_progress')
-        this.setState({selected: 'in_progress'})
+        this.setState({ selected: 'in_progress' })
         break
       case '/tasks/finished':
         this.props.onFilter('status', 'closed')
-        this.setState({selected: 'closed'})
+        this.setState({ selected: 'closed' })
         break
       default:
         this.props.onFilter()
@@ -81,13 +80,13 @@ class TaskStatusFilter extends Component {
       default:
         this.props.onFilter()
     }
-    this.setState({selected: value})
+    this.setState({ selected: value })
   }
 
   handleClickAll = () => {
     this.props.history.push('/tasks/all')
     this.props.onFilter()
-    this.setState({selected: 'all'})
+    this.setState({ selected: 'all' })
   }
 
   statusesDisplay = status => {
@@ -112,7 +111,7 @@ class TaskStatusFilter extends Component {
               clickable
               key={ 0 }
               label={ msg }
-              className={selected === 'all' ? classes.selected : {}}
+              className={ selected === 'all' ? classes.selected : {} }
             />
           ) }
         </FormattedMessage>
@@ -123,7 +122,7 @@ class TaskStatusFilter extends Component {
             clickable
             key={ index + 1 }
             label={ this.statusesDisplay(status) }
-            className={selected === status ? classes.selected : {}}
+            className={ selected === status ? classes.selected : {} }
           />
         )) }
       </div>
