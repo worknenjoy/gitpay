@@ -18,6 +18,7 @@ import ArchiveIcon from 'material-ui-icons/Archive'
 import CardMembershipIcon from 'material-ui-icons/CardMembership'
 import BugReportIcon from 'material-ui-icons/BugReport'
 import SubscribeForm from '../form/subscribe-form'
+import ArrowIcon from 'material-ui-icons/ArrowForward'
 
 import './mailchimp.css'
 
@@ -25,6 +26,7 @@ import TopBarContainer from '../../containers/topbar'
 import InfoContainer from '../../containers/info'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
+import Pricing from './pricing'
 
 import messages from './messages'
 
@@ -32,6 +34,9 @@ import OurStack from './components/OurStack'
 
 const freelancerImage = require('../../images/welcome-freelancer.png')
 const companiesImage = require('../../images/welcome-companies.png')
+const teamImage = require('../../images/welcome-teamwork.png')
+const appSnapshotImage = require('../../images/gitpay-app.png')
+const citySoftware = require('../../images/city-software.png')
 const deal = require('../../images/deal.png')
 
 import {
@@ -39,8 +44,10 @@ import {
   MainList,
   MainBanner,
   ResponsiveImage,
+  ShadowImage,
   Section
 } from './components/CommonStyles'
+import { Button } from 'material-ui';
 
 const styles = (theme) => mainStyles(theme)
 
@@ -78,7 +85,6 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </MainBanner>
-
         <Section>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
@@ -130,7 +136,6 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-
         <Section alternative className={ classes.bgContrast }>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
@@ -182,8 +187,58 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-
         <Section>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 6 }>
+              <MainTitle left>
+                <Typography variant='headline' gutterBottom>
+                  <FormattedMessage id='welcome.headline.forfreelancers' defaultMessage='For freelancers' />
+                </Typography>
+              </MainTitle>
+              <MainList>
+                <List>
+                  <ListItem className={ classes.listIconTop }>
+                    <ListItemIcon>
+                      <Avatar className={ classes.iconFill }>
+                        <AppsIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOneSecondary) }
+                    />
+                  </ListItem>
+                  <ListItem className={ classes.listIconTop }>
+                    <ListItemIcon>
+                      <Avatar className={ classes.iconFill }>
+                        <WorkIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoSecondary) }
+                    />
+                  </ListItem>
+                  <ListItem className={ classes.listIconTop }>
+                    <ListItemIcon>
+                      <Avatar className={ classes.iconFill }>
+                        <AccountBalanceWalletIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreeSecondary) }
+                    />
+                  </ListItem>
+                </List>
+              </MainList>
+            </Grid>
+            <Grid item xs={ 12 } sm={ 6 }>
+              <ResponsiveImage width='600' src={ teamImage } />
+            </Grid>
+          </Grid>
+        </Section>
+        <Section className={ classes.sectionBgAlt }>
           <MainTitle>
             <Typography variant='headline' gutterBottom>
               <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
@@ -240,7 +295,41 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-
+        <Section>
+          <Pricing />
+        </Section>
+        <Section className={classes.gutterBottomBig}>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 4 } className={classes.alignRight}>
+              <div className={classes.gutterTop}>
+                <Typography variant='caption' gutterBottom>
+                  Integration
+                </Typography>
+                <Typography variant='headline' gutterBottom>
+                  Quality Delivery
+                </Typography>
+                <Typography variant='subheading' gutterBottom>
+                  Integrated build tools
+                </Typography>
+                <Button variant='raised' color='primary' className={classes.gutterTopSmall}>
+                  Learn more
+                  <ArrowIcon />
+                </Button>
+              </div>
+            </Grid>
+            <Grid item xs={ 12 } sm={ 8 } className={classes.alignLeft}>
+              <ShadowImage width='600' src={ appSnapshotImage } />
+            </Grid>
+          </Grid>
+        </Section>
+        <Section style={{background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+          <Typography variant='display1' gutterBottom>
+            <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
+          </Typography>
+          <Button size='large' variant='raised' color='primary' className={classes.gutterTopSmall}>
+            Get started
+          </Button>
+        </Section>
         <Bottom />
       </div>
     )

@@ -10,9 +10,9 @@ export const MainTitle = styled.div`
   border-bottom: 5px solid black;
   width: 30%;
 
-  margin-top: 40px;
+  margin-top: 20px;
   margin-left: auto;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   margin-right: auto;
 
   ${props => props.left && `
@@ -40,6 +40,10 @@ export const ResponsiveImage = styled.img`
   ${media.phone`
     width: 100%;
   `}
+`
+
+export const ShadowImage = styled.img`
+    box-shadow: 1px 1px 3px 2px #ccc;
 `
 
 export const InfoList = styled.div`

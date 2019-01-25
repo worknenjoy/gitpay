@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
@@ -14,35 +14,9 @@ import AppsIcon from 'material-ui-icons/Apps'
 import WorkIcon from 'material-ui-icons/Work'
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
+import messages from './messages'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
-
-const messages = defineMessages({
-  consultingItemPrimary: {
-    id: 'welcome.how.item.primary',
-    defaultMessage: 'The company needs an issue solved on the project'
-  },
-  consultingItemSecondary: {
-    id: 'welcome.how.item.secondary',
-    defaultMessage: 'We evaluate your demand and help you to go on the right track'
-  },
-  consultingItemTwoPrimary: {
-    id: 'welcome.how.item.two.primary',
-    defaultMessage: 'We can make ideas grows and be executed one by one, in a full development cycle'
-  },
-  consultingItemTwoSecondary: {
-    id: 'welcome.how.item.two.secondary',
-    defaultMessage: 'We offer services to make your idea reach the market in a colaborative way with all the competencies in design, content and development, and you pay on demand for each issue concluded'
-  },
-  consultingItemThreePrimary: {
-    id: 'welcome.how.item.three.primary',
-    defaultMessage: 'Your task is sent for colaborators'
-  },
-  consultingItemThreeSecondary: {
-    id: 'welcome.how.item.three.secondary',
-    defaultMessage: 'Your issue is assigned and delivery on a deadline your provide with the price that you invest for each task'
-  }
-})
 
 class HowItWorksCompany extends Component {
   constructor (props) {
@@ -102,7 +76,7 @@ class HowItWorksCompany extends Component {
               <List>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <AppsIcon />
                     </Avatar>
                   </ListItemIcon>
@@ -113,7 +87,7 @@ class HowItWorksCompany extends Component {
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <WorkIcon />
                     </Avatar>
                   </ListItemIcon>
@@ -124,7 +98,7 @@ class HowItWorksCompany extends Component {
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <AccountBalanceWalletIcon />
                     </Avatar>
                   </ListItemIcon>

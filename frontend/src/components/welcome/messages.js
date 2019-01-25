@@ -80,5 +80,97 @@ export default defineMessages({
   welcomeHowToItemFourSecondary: {
     id: 'welcome.howto.item.four.secondary',
     defaultMessage: 'We want to facilitate the transactions and payment between colaborators and companies by facilitate the development with smart tools, consolidated process already used in agile companies and emerging startups'
+  },
+  consultingItemPrimary: {
+    id: 'welcome.how.item.primary',
+    defaultMessage: 'Once subscribed you will know when new tasks are available to assign'
+  },
+  consultingItemSecondary: {
+    id: 'welcome.how.item.secondary',
+    defaultMessage: 'Clients create demands and they are looking for contributors with different skills'
+  },
+  consultingItemTwoPrimary: {
+    id: 'welcome.how.item.two.primary',
+    defaultMessage: 'You are assigned and receive all the instructions need to start'
+  },
+  consultingItemTwoSecondary: {
+    id: 'welcome.how.item.two.secondary',
+    defaultMessage: 'You get access to repo info with all you need to start and discuss about possible solutions'
+  },
+  consultingItemThreePrimary: {
+    id: 'welcome.how.item.three.primary',
+    defaultMessage: 'We validate your change, integrate the code and you receive a bounty'
+  },
+  consultingItemThreeSecondary: {
+    id: 'welcome.how.item.three.secondary',
+    defaultMessage: 'Your change goes to test and your solution will be reviewed and once integrated on the codebase, you receive a bounty'
+  },
+  companiesItemPrimary: {
+    id: 'welcome.which.companies.item.primary',
+    defaultMessage: 'For any company'
+  },
+  companiesItemSecondary: {
+    id: 'welcome.which.companies.item.secondary',
+    defaultMessage: 'The distributed colaboration helps company grows and provide a great solution to have the tasks solved using agile process and colaboration throught development'
+  },
+  companiesItemTwoSecondary: {
+    id: 'welcome.which.companies.item.two.secondary',
+    defaultMessage: 'Companies will be able to use Open Source if they want to create colaborative tools that will help other companies and contribute with the OSS ecosystem'
+  },
+  companiesItemThreePrimary: {
+    id: 'welcome.which.companies.item.three.primary',
+    defaultMessage: 'We validate your business integration process'
+  },
+  companiesItemThreeSecondary: {
+    id: 'welcome.which.companies.item.three.secondary',
+    defaultMessage: 'We will help to fit in agile process to have your tasks concluded in an independent way and according to your business'
+  },
+  companiesItemPrimary: {
+    id: 'welcome.companies.item.primary',
+    defaultMessage: 'For any company'
+  },
+  companiesItemSecondary: {
+    id: 'welcome.companies.item.secondary',
+    defaultMessage: 'The distributed colaboration helps company grows and provide a great solution to have the tasks solved using agile process and colaboration throught development'
+  },
+  companiesItemTwoPrimary: {
+    id: 'welcome.companies.item.two.primary.alt',
+    defaultMessage: 'A community of passionate colaborators'
+  },
+  companiesItemTwoSecondary: {
+    id: 'welcome.companies.item.two.secondary.alt',
+    defaultMessage: 'Companies will be able to use Open Source if they want to create colaborative tools that will help other companies and contribute with the OSS ecosystem'
+  },
+  companiesItemThreePrimary: {
+    id: 'welcome.companies.item.three.primary.alt',
+    defaultMessage: 'We validate your business integration process'
+  },
+  companiesItemThreeSecondary: {
+    id: 'welcome.companies.item.three.secondary.alt',
+    defaultMessage: 'We will help to fit in agile process to have your tasks concluded in an independent way and according to your business'
+  },
+  workflowItemPrimary: {
+    id: 'welcome.workflow.item.primary',
+    defaultMessage: 'Gitpay is for all'
+  },
+  workflowItemSecondary: {
+    id: 'welcome.workflow.item.secondary',
+    defaultMessage: 'Clients, team leads, designers, content creators and managers, everyone can follow the progress and status using already known tools to manage their projects for remote teams'
+  },
+  workflowItemTwoPrimary: {
+    id: 'welcome.workflow.item.two.primary',
+    defaultMessage: 'For all levels'
+  },
+  workflowItemTwoSecondary: {
+    id: 'welcome.workflow.item.two.secondary',
+    defaultMessage: 'Beginners will learn for real of how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with '
+  },
+  workflowItemThreePrimary: {
+    id: 'welcome.workflow.item.three.primary',
+    defaultMessage: 'Learn by doing and receive bounties'
+  },
+  workflowItemThreeSecondary: {
+    id: 'welcome.workflow.item.three.secondary',
+    defaultMessage: 'Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges'
   }
 })
