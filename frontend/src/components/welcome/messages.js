@@ -172,5 +172,29 @@ export default defineMessages({
   workflowItemThreeSecondary: {
     id: 'welcome.workflow.item.three.secondary',
     defaultMessage: 'Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges'
+  },
+  welcomeCollabItemOnePrimary: {
+    id: 'welcome.collab.item.one.primary',
+    defaultMessage: 'Work with collaboration between members, maintainers and clients'
+  },
+  welcomeCollabItemOneSecondary: {
+    id: 'welcome.collab.item.one.secondary',
+    defaultMessage: 'Working with collaboration, you can help and support from a community'
+  },
+  welcomeCollabItemTwoPrimary: {
+    id: 'welcome.collab.item.two.primary',
+    defaultMessage: 'Work with smart integrations and tools'
+  },
+  welcomeCollabItemTwoSecondary: {
+    id: 'welcome.collab.item.two.secondary',
+    defaultMessage: 'Focus on the task instead of worry about how you will deliver, using git tools and integration the delivery is more efficient'
+  },
+  welcomeCollabItemThreePrimary: {
+    id: 'welcome.collab.item.three.primary',
+    defaultMessage: 'Learn with open source'
+  },
+  welcomeCollabItemThreeSecondary: {
+    id: 'welcome.collab.item.three.secondary',
+    defaultMessage: 'The open source allow us to work in descentralized and independent projects and we follow this path to provide our deliveries'
   }
 })

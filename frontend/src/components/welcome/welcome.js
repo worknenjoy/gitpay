@@ -192,7 +192,7 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography variant='headline' gutterBottom>
-                  <FormattedMessage id='welcome.headline.forfreelancers' defaultMessage='For freelancers' />
+                  <FormattedMessage id='welcome.headline.collab' defaultMessage='For collaboration' />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -204,8 +204,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOnePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOneSecondary) }
+                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemOneSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -215,8 +215,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoPrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoSecondary) }
+                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemTwoSecondary) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
@@ -226,8 +226,8 @@ class Welcome extends Component {
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreeSecondary) }
+                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemThreeSecondary) }
                     />
                   </ListItem>
                 </List>
@@ -303,16 +303,16 @@ class Welcome extends Component {
             <Grid item xs={ 12 } sm={ 4 } className={classes.alignRight}>
               <div className={classes.gutterTop}>
                 <Typography variant='caption' gutterBottom>
-                  Integration
+                  <FormattedMessage id='welcome.integration.title' defaultMessage='Integration' />
                 </Typography>
                 <Typography variant='headline' gutterBottom>
-                  Quality Delivery
+                  <FormattedMessage id='welcome.integration.subtitle' defaultMessage='Check out our Github app' />
                 </Typography>
                 <Typography variant='subheading' gutterBottom>
-                  Integrated build tools
+                  <FormattedMessage id='welcome.integration.desc' defaultMessage='You can install our Gitpay app on your Github and start to boost your issues' />
                 </Typography>
-                <Button variant='raised' color='primary' className={classes.gutterTopSmall}>
-                  Learn more
+                <Button component='a' target='_blank' href='https://github.com/apps/gitpay-me' variant='raised' color='primary' className={classes.gutterTopSmall}>
+                  <FormattedMessage id='welcome.integration.button' defaultMessage='Checkout our Github App' />
                   <ArrowIcon />
                 </Button>
               </div>
@@ -324,10 +324,13 @@ class Welcome extends Component {
         </Section>
         <Section style={{background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <Typography variant='display1' gutterBottom>
-            <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
+            <FormattedMessage id='welcome.bottom.call' defaultMessage='A better way to build your project' />
           </Typography>
-          <Button size='large' variant='raised' color='primary' className={classes.gutterTopSmall}>
-            Get started
+          <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={classes.gutterTopSmall}>
+            <FormattedMessage id='welcome.bottom.link' defaultMessage='Get started' />
+          </Button>
+          <Button component='a' href='https://docs.gitpay.me' size='large' variant='flat' color='primary' className={classes.gutterTopSmall}>
+            <FormattedMessage id='welcome.bottom.linkAlt' defaultMessage='See our docs' />
           </Button>
         </Section>
         <Bottom />

@@ -8,6 +8,7 @@ import CardHeader from 'material-ui/Card/CardHeader'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
+import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
 import {
   MainTitle
@@ -53,35 +54,42 @@ const styles = theme => ({
 const tiers = [
   {
     title: 'Free',
+    subheader: 'For personal and tech geeks companies',
     price: '0',
-    description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
+    description: ['Unlimited tasks', 'Development community', '12% fee for each transaction', 'Pay on demmand'],
     buttonText: 'Sign up for free',
     buttonVariant: 'raised',
+    link: 'https://gitpay.me/#/login'
   },
   {
-    title: 'Pro',
-    subheader: 'Most popular',
-    price: '15',
+    title: 'Open Source',
+    subheader: 'An Open Source project using git with our support and review',
+    price: '200',
     description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
-    ],
-    buttonText: 'Get started',
-    buttonVariant: 'raised',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
+      'We manage your issues',
+      'Advice on pricing for tasks',
+      '8% fee for each transaction',
+      'Review the code',
+      'Email support',
     ],
     buttonText: 'Contact us',
     buttonVariant: 'raised',
+    link: 'google form'
+  },
+  {
+    title: 'Enterprise',
+    subheader: 'For private projects',
+    price: '400',
+    description: [
+      'We manage your issues',
+      'Advice on pricing for tasks',
+      '10% fee for each transaction',
+      'Review the code',
+      'Email support'
+    ],
+    buttonText: 'Contact us',
+    buttonVariant: 'raised',
+    link: 'google form'
   },
 ]
 
@@ -95,12 +103,11 @@ class Pricing extends Component {
         <div className={classes.heroContent}>
           <MainTitle>
             <Typography variant='headline' gutterBottom>
-              Pricing
+              <FormattedMessage id='welcome.pricing.title' defaultMessage='Princing' />
             </Typography>
           </MainTitle>
           <Typography variant="body1" align="center" color="textSecondary" className={classes.heroDesc}>
-            Quickly build an effective pricing table for your potential customers with this layout.
-            It&apos;s built with default Material-UI components with little customization.
+            <FormattedMessage id='welcome.pricing.description' defaultMessage='Check our options to boost your company deliveries that can fit with your needs' />
           </Typography>
         </div>
         {/* End hero unit */}
@@ -122,7 +129,7 @@ class Pricing extends Component {
                       ${tier.price}
                     </Typography>
                     <Typography variant="subheading" color="textSecondary">
-                      /mo
+                      <FormattedMessage id='welcome.pricing.month' defaultMessage='/mo' />
                     </Typography>
                   </div>
                   {tier.description.map(line => (
@@ -132,7 +139,7 @@ class Pricing extends Component {
                   ))}
                 </CardContent>
                 <CardActions className={classes.cardActions}>
-                  <Button fullWidth variant={tier.buttonVariant} color="primary">
+                  <Button component='a' href={tier.link} fullWidth variant={tier.buttonVariant} color="primary">
                     {tier.buttonText}
                   </Button>
                 </CardActions>
@@ -149,4 +156,4 @@ Pricing.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Pricing)
+export default injectIntl(withStyles(styles)(Pricing))
