@@ -1,8 +1,8 @@
 {
-  "welcome.menu.item.one": "Intro",
+  "welcome.menu.item.one": "Página Inicial",
   "payment.message.error": "Erro ao realizar o pagamento",
   "welcome.tagline": "Contribua e seja recompensado",
-  "welcome.tagline1": "solucionando tarefas no git",
+  "welcome.tagline1": "solucione tarefas no git",
   "welcome.tagline2": "com o <strong>Gitpay</strong> tarefas ganham recompensas para serem resolvidas",
   "notifications.account.update": "Conta atualizada com sucesso",
   "user.logout": "Você acabou de sair da sua conta",
