@@ -365,7 +365,7 @@ class Welcome extends Component {
           </Grid>
         </Section>
         <Section ref='get-started' style={ { background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' } }>
-          <Typography variant='display1' gutterBottom>
+          <Typography variant='display1' gutterBottom style={ { padding: '0 220px' } }>
             <FormattedHTMLMessage id='welcome.bottom.call' defaultMessage='A better way to build your project, <br /> a better way to work in projects' />
           </Typography>
           <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={ classes.gutterTopSmall }>
