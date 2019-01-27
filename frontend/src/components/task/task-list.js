@@ -72,19 +72,20 @@ class TaskList extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      tab: 0
+      tab: 0,
+      loading: true
     }
-
-    this.handleTabChange = this.handleTabChange.bind(this)
   }
 
   componentDidMount () {
-    let pathName = this.props.history.location.pathname
-
-    this.handleRoutePath(pathName)
+    this.props.listTasks().then(t => {
+      let pathName = this.props.history.location.pathname
+      this.handleRoutePath(pathName)
+      this.setState({ loading: false })
+    })
   }
 
-  handleRoutePath (path) {
+  handleRoutePath = (path) => {
     switch (path) {
       case '/tasks/explore':
         this.handleTabChange(0, 0)
@@ -99,52 +100,31 @@ class TaskList extends Component {
         this.handleTabChange(0, 3)
         break
       default:
-        this.props.listTasks()
+        // this.props.filterTasks()
     }
   }
 
-  handleTabChange (event, value) {
+  handleTabChange = (event, value) => {
     this.setState({ tab: value })
     switch (value) {
       case 0:
         this.props.history.push('/tasks/explore')
-        this.props.listTasks()
+        this.props.filterTasks()
         break
       case 1:
-        let data = this.props.filterTasks('userId').data
-        if (data.length === 0) {
-          Promise.all([this.props.listTasks()]).then(() => {
-            this.props.filterTasks('userId')
-          })
-        } else {
-          this.props.filterTasks('userId')
-        }
         this.props.history.push('/tasks/createdbyme')
+        this.props.filterTasks('userId')
         break
       case 2:
-        data = this.props.filterTasks('Assigns').data
-        if (data.length === 0) {
-          Promise.all([this.props.listTasks()]).then(() => {
-            this.props.filterTasks('Assigns')
-          })
-        } else {
-          this.props.filterTasks('Assigns')
-        }
         this.props.history.push('/tasks/interested')
+        this.props.filterTasks('Assigns')
         break
       case 3:
-        data = this.props.filterTasks('Assigns').data
-        if (data.length === 0) {
-          Promise.all([this.props.listTasks()]).then(() => {
-            this.props.filterTasks('assigned')
-          })
-        } else {
-          this.props.filterTasks('assigned')
-        }
         this.props.history.push('/tasks/assignedtome')
+        this.props.filterTasks('assigned')
         break
       default:
-        this.props.filterTasks()
+        // this.props.filterTasks()
     }
   }
 
@@ -174,7 +154,7 @@ class TaskList extends Component {
           />
         </Typography>
         <div style={ { marginTop: 20, marginBottom: 20 } }>
-          <TaskStatusFilter onFilter={ this.props.filterTasks } />
+          <TaskStatusFilter onFilter={ this.props.filterTasks } loading={ this.state.loading } />
         </div>
         <div className={ classes.rootTabs }>
           <AppBar position='static' color='default'>

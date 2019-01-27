@@ -274,9 +274,9 @@ const updateTask = task => {
 
 const listTasks = () => {
   validToken()
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(listTaskRequested())
-    axios
+    return axios
       .get(api.API_URL + '/tasks/list')
       .then(response => {
         return dispatch(listTaskSuccess(response))

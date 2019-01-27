@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import { injectIntl, defineMessages, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
+import Tabs from 'material-ui/Tabs/Tabs'
+import Tab from 'material-ui/Tabs/Tab'
+import AppBar from 'material-ui/AppBar'
 import mainStyles from '../styles/style'
+import scrollToComponent from 'react-scroll-to-component'
 
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import WorkIcon from 'material-ui-icons/Work'
@@ -18,6 +22,7 @@ import ArchiveIcon from 'material-ui-icons/Archive'
 import CardMembershipIcon from 'material-ui-icons/CardMembership'
 import BugReportIcon from 'material-ui-icons/BugReport'
 import SubscribeForm from '../form/subscribe-form'
+import ArrowIcon from 'material-ui-icons/ArrowForward'
 
 import './mailchimp.css'
 
@@ -25,11 +30,17 @@ import TopBarContainer from '../../containers/topbar'
 import InfoContainer from '../../containers/info'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
+import Pricing from './pricing'
+
+import messages from './messages'
 
 import OurStack from './components/OurStack'
 
-const octodex = require('../../images/octodex.png')
-const octodexMotherhubbertocat = require('../../images/octodex-motherhubbertocat-transparent.png')
+const freelancerImage = require('../../images/welcome-freelancer.png')
+const companiesImage = require('../../images/welcome-companies.png')
+const teamImage = require('../../images/welcome-teamwork.png')
+const appSnapshotImage = require('../../images/gitpay-app.png')
+const citySoftware = require('../../images/city-software.png')
 const deal = require('../../images/deal.png')
 
 import {
@@ -37,101 +48,58 @@ import {
   MainList,
   MainBanner,
   ResponsiveImage,
+  ShadowImage,
   Section
 } from './components/CommonStyles'
+import { Button } from 'material-ui'
 
 const styles = (theme) => mainStyles(theme)
 
-const messages = defineMessages({
-  welcomeFreelancersItemOnePrimary: {
-    id: 'welcome.main.item.one.primary',
-    defaultMessage: 'Work in projects using the best development tools'
-  },
-  welcomeFreelancersItemOneSecondary: {
-    id: 'welcome.main.item.one.secondary',
-    defaultMessage: 'We use all the Git tools and version control to manage deliveries for our clients'
-  },
-  welcomeFreelancersItemTwoPrimary: {
-    id: 'welcome.main.item.two.primary',
-    defaultMessage: 'Colaboration with companies by tasks on demand'
-  },
-  welcomeFreelancersItemTwoSecondary: {
-    id: 'welcome.main.item.two.secondary',
-    defaultMessage: 'Work in different projects, you can colaborate and learn with many projects and stacks'
-  },
-  welcomeFreelancersItemThreePrimary: {
-    id: 'welcome.main.item.three.primary',
-    defaultMessage: 'Receive bounties by colaboration'
-  },
-  welcomeFreelancersItemThreeSecondary: {
-    id: 'welcome.main.item.three.secondary',
-    defaultMessage: 'Receive bounties for the task you concluded with direct payment when your code is merged on the codebase'
-  },
-  welcomeCompaniesItemOnePrimary: {
-    id: 'welcome.companies.item.one.primary',
-    defaultMessage: 'Manage the tasks of your projects'
-  },
-  welcomeCompaniesItemOneSecondary: {
-    id: 'welcome.companies.item.one.secondary',
-    defaultMessage: 'With our platform the companies are able to manage your tasks on demand with development tools that suits your needs'
-  },
-  welcomeCompaniesItemTwoPrimary: {
-    id: 'welcome.companies.item.two.primary',
-    defaultMessage: 'Pay for your tasks concluded with a smart and automated development process'
-  },
-  welcomeCompaniesItemTwoSecondary: {
-    id: 'welcome.companies.item.two.secondary',
-    defaultMessage: 'You will have different contributors, with wide experience that will help on the development using tools that they are confortable with established processes'
-  },
-  welcomeCompaniesItemThreePrimary: {
-    id: 'welcome.companies.item.three.primary',
-    defaultMessage: 'Develop your business with open source tools, and pay on demand'
-  },
-  welcomeCompaniesItemThreeSecondary: {
-    id: 'welcome.companies.item.three.secondary',
-    defaultMessage: 'Companies can use the Gitpay for all the development needs, from create a repository until release, paying for concluded and merged tasks that are integrated in your project for real'
-  },
-  welcomeHowToItemOnePrimary: {
-    id: 'welcome.howto.item.one.primary',
-    defaultMessage: 'A new task is created'
-  },
-  welcomeHowToItemOneSecondary: {
-    id: 'welcome.howto.item.one.secondary',
-    defaultMessage: 'A new issue, demand, enhancement or suggestion is created on the platform, that represents needs like development, SEO, content, infrastructure or even new ideas'
-  },
-  welcomeHowToItemTwoPrimary: {
-    id: 'welcome.howto.item.two.primary',
-    defaultMessage: 'Your demand is send to our community'
-  },
-  welcomeHowToItemTwoSecondary: {
-    id: 'welcome.howto.item.two.secondary',
-    defaultMessage: 'Differents colaborators group will be interested to solve this issue for the price invested for that bounty'
-  },
-  welcomeHowToItemThreePrimary: {
-    id: 'welcome.howto.item.three.primary',
-    defaultMessage: 'Sent a pull request to receive a bounty'
-  },
-  welcomeHowToItemThreeSecondary: {
-    id: 'welcome.howto.item.three.secondary',
-    defaultMessage: 'A Pull Request is send in the repo and once approved the bounty is sent'
-  },
-  welcomeHowToItemFourPrimary: {
-    id: 'welcome.howto.item.four.primary',
-    defaultMessage: 'Agile process between business, payment, consulting and development'
-  },
-  welcomeHowToItemFourSecondary: {
-    id: 'welcome.howto.item.four.secondary',
-    defaultMessage: 'We want to facilitate the transactions and payment between colaborators and companies by facilitate the development with smart tools, consolidated process already used in agile companies and emerging startups'
-  }
-})
-
 class Welcome extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      value: 0
+    }
+  }
+
+  componentDidMount () {
+    // window.addEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = (event) => {
+
+  }
+
+  handleSectionTab = (event, value) => {
+    this.setState({ value })
+    let offset = -30
+    if (event.currentTarget.id === 'integrations') offset = -50
+    scrollToComponent(this.refs[event.currentTarget.id], {
+      offset: offset,
+      align: 'top',
+      ease: 'inExpo'
+    })
+  }
+
   render () {
     const { classes, location } = this.props
 
     return (
       <div className={ classes.root }>
-        <TopBarContainer />
+        <TopBarContainer ref='intro' />
+        <AppBar position='sticky' color='default'>
+          <Tabs variant='default' value={ this.state.value } onChange={ this.handleSectionTab }>
+            <Tab id='intro' value={ 0 } label={ this.props.intl.formatMessage(messages.topMenu1) } />
+            <Tab id='contrib' value={ 1 } label={ this.props.intl.formatMessage(messages.topMenu2) } />
+            <Tab id='companies' value={ 2 } label={ this.props.intl.formatMessage(messages.topMenu3) } />
+            <Tab id='collab' value={ 3 } label={ this.props.intl.formatMessage(messages.topMenu4) } />
+            <Tab id='how-it-works' value={ 4 } label={ this.props.intl.formatMessage(messages.topMenu5) } />
+            <Tab id='pricing' value={ 5 } label={ this.props.intl.formatMessage(messages.topMenu6) } />
+            <Tab id='integrations' value={ 6 } label={ this.props.intl.formatMessage(messages.topMenu7) } />
+            <Tab id='get-started' value={ 7 } label={ this.props.intl.formatMessage(messages.topMenu8) } />
+          </Tabs>
+        </AppBar>
         <MainBanner>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
@@ -159,12 +127,11 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </MainBanner>
-
-        <Section>
+        <Section ref='contrib'>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography type='headline' gutterBottom>
+                <Typography variant='headline' gutterBottom>
                   <FormattedMessage id='welcome.headline.forfreelancers' defaultMessage='For freelancers' />
                 </Typography>
               </MainTitle>
@@ -172,7 +139,7 @@ class Welcome extends Component {
                 <List>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar>
+                      <Avatar className={ classes.iconFill }>
                         <AppsIcon />
                       </Avatar>
                     </ListItemIcon>
@@ -183,7 +150,7 @@ class Welcome extends Component {
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar>
+                      <Avatar className={ classes.iconFill }>
                         <WorkIcon />
                       </Avatar>
                     </ListItemIcon>
@@ -194,7 +161,7 @@ class Welcome extends Component {
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar>
+                      <Avatar className={ classes.iconFill }>
                         <AccountBalanceWalletIcon />
                       </Avatar>
                     </ListItemIcon>
@@ -207,16 +174,15 @@ class Welcome extends Component {
               </MainList>
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
-              <ResponsiveImage width='600' src={ octodex } />
+              <ResponsiveImage width='600' src={ freelancerImage } />
             </Grid>
           </Grid>
         </Section>
-
-        <Section alternative>
+        <Section ref='companies' alternative className={ classes.bgContrast }>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography type='headline' gutterBottom>
+                <Typography variant='headline' gutterBottom>
                   <FormattedMessage id='welcome.tagline.companies.main.headline' defaultMessage='For companies' />
                 </Typography>
               </MainTitle>
@@ -224,7 +190,7 @@ class Welcome extends Component {
                 <List>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar>
+                      <Avatar className={ classes.iconFill }>
                         <AssignmentIcon />
                       </Avatar>
                     </ListItemIcon>
@@ -235,7 +201,7 @@ class Welcome extends Component {
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar>
+                      <Avatar className={ classes.iconFill }>
                         <GroupWorkIcon />
                       </Avatar>
                     </ListItemIcon>
@@ -246,7 +212,7 @@ class Welcome extends Component {
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar>
+                      <Avatar className={ classes.iconFill }>
                         <AccountBalanceWalletIcon />
                       </Avatar>
                     </ListItemIcon>
@@ -259,14 +225,64 @@ class Welcome extends Component {
               </MainList>
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
-              <ResponsiveImage width='500' src={ octodexMotherhubbertocat } />
+              <ResponsiveImage width='500' src={ companiesImage } />
             </Grid>
           </Grid>
         </Section>
-
-        <Section>
+        <Section ref='collab'>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 6 }>
+              <MainTitle left>
+                <Typography variant='headline' gutterBottom>
+                  <FormattedMessage id='welcome.headline.collab' defaultMessage='For collaboration' />
+                </Typography>
+              </MainTitle>
+              <MainList>
+                <List>
+                  <ListItem className={ classes.listIconTop }>
+                    <ListItemIcon>
+                      <Avatar className={ classes.iconFill }>
+                        <AppsIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemOnePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemOneSecondary) }
+                    />
+                  </ListItem>
+                  <ListItem className={ classes.listIconTop }>
+                    <ListItemIcon>
+                      <Avatar className={ classes.iconFill }>
+                        <WorkIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemTwoPrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemTwoSecondary) }
+                    />
+                  </ListItem>
+                  <ListItem className={ classes.listIconTop }>
+                    <ListItemIcon>
+                      <Avatar className={ classes.iconFill }>
+                        <AccountBalanceWalletIcon />
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemThreePrimary) }
+                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemThreeSecondary) }
+                    />
+                  </ListItem>
+                </List>
+              </MainList>
+            </Grid>
+            <Grid item xs={ 12 } sm={ 6 }>
+              <ResponsiveImage width='600' src={ teamImage } />
+            </Grid>
+          </Grid>
+        </Section>
+        <Section ref='how-it-works' className={ classes.sectionBgAlt }>
           <MainTitle>
-            <Typography type='headline' gutterBottom>
+            <Typography variant='headline' gutterBottom>
               <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
             </Typography>
           </MainTitle>
@@ -321,7 +337,44 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-
+        <Section ref='pricing'>
+          <Pricing />
+        </Section>
+        <Section ref='integrations' className={ classes.gutterBottomBig }>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 4 } className={ classes.alignRight }>
+              <div className={ classes.gutterTop }>
+                <Typography variant='caption' gutterBottom>
+                  <FormattedMessage id='welcome.integration.title' defaultMessage='Integration' />
+                </Typography>
+                <Typography variant='headline' gutterBottom>
+                  <FormattedMessage id='welcome.integration.subtitle' defaultMessage='Check out our Github app' />
+                </Typography>
+                <Typography variant='subheading' gutterBottom>
+                  <FormattedMessage id='welcome.integration.desc' defaultMessage='You can install our Gitpay app on your Github and start to boost your issues' />
+                </Typography>
+                <Button component='a' target='_blank' href='https://github.com/apps/gitpay-me' variant='raised' color='primary' className={ classes.gutterTopSmall }>
+                  <FormattedMessage id='welcome.integration.button' defaultMessage='Checkout our Github App' />
+                  <ArrowIcon />
+                </Button>
+              </div>
+            </Grid>
+            <Grid item xs={ 12 } sm={ 8 } className={ classes.alignLeft }>
+              <ShadowImage width='600' src={ appSnapshotImage } />
+            </Grid>
+          </Grid>
+        </Section>
+        <Section ref='get-started' style={ { background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' } }>
+          <Typography variant='display1' gutterBottom style={ { padding: '0 220px' } }>
+            <FormattedHTMLMessage id='welcome.bottom.call' defaultMessage='A better way to build your project, <br /> a better way to work in projects' />
+          </Typography>
+          <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={ classes.gutterTopSmall }>
+            <FormattedMessage id='welcome.bottom.link' defaultMessage='Get started' />
+          </Button>
+          <Button component='a' href='https://docs.gitpay.me' size='large' variant='flat' color='primary' className={ classes.gutterTopSmall }>
+            <FormattedMessage id='welcome.bottom.linkAlt' defaultMessage='See our docs' />
+          </Button>
+        </Section>
         <Bottom />
       </div>
     )
