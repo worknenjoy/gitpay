@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-<<<<<<< HEAD
-=======
 import { withStyles } from 'material-ui/styles'
->>>>>>> f67f46bfa942799c7ec509ca54ddba99b505000e
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import Chip from 'material-ui/Chip'

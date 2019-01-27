@@ -17,11 +17,7 @@ export default props => (
     <Switch>
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
-<<<<<<< HEAD
-      <Route path='/tasks/explore' component={ TaskExplorer } />
-=======
       <Redirect path='/tasks/explore' to='/tasks/open' />
->>>>>>> f67f46bfa942799c7ec509ca54ddba99b505000e
       <Route path='/tasks/createdbyme' component={ TaskExplorer } />
       <Route path='/tasks/interested' component={ TaskExplorer } />
       <Route path='/tasks/assignedtome' component={ TaskExplorer } />

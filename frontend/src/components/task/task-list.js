@@ -85,7 +85,7 @@ class TaskList extends Component {
     })
   }
 
-  handleRoutePath = (path) => {
+  handleRoutePath = path => {
     switch (path) {
       case '/tasks/explore':
         this.handleTabChange(0, 0)
@@ -100,7 +100,7 @@ class TaskList extends Component {
         this.handleTabChange(0, 3)
         break
       default:
-        // this.props.filterTasks()
+      // this.props.filterTasks()
     }
   }
 
@@ -124,7 +124,7 @@ class TaskList extends Component {
         this.props.filterTasks('assigned')
         break
       default:
-        // this.props.filterTasks()
+      // this.props.filterTasks()
     }
   }
 
@@ -154,7 +154,10 @@ class TaskList extends Component {
           />
         </Typography>
         <div style={ { marginTop: 20, marginBottom: 20 } }>
-          <TaskStatusFilter onFilter={ this.props.filterTasks } loading={ this.state.loading } />
+          <TaskStatusFilter
+            onFilter={ this.props.filterTasks }
+            loading={ this.state.loading }
+          />
         </div>
         <div className={ classes.rootTabs }>
           <AppBar position='static' color='default'>
