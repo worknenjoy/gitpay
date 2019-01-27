@@ -82,7 +82,6 @@ class TaskList extends Component {
     let pathName = this.props.history.location.pathname
 
     this.handleRoutePath(pathName)
-    this.props.listTasks()
   }
 
   handleRoutePath (path) {
@@ -93,14 +92,14 @@ class TaskList extends Component {
       case '/tasks/createdbyme':
         this.handleTabChange(0, 1)
         break
-      case 'tasks/interested':
+      case '/tasks/interested':
         this.handleTabChange(0, 2)
         break
       case '/tasks/assignedtome':
         this.handleTabChange(0, 3)
         break
       default:
-        this.props.filterTasks()
+        this.props.listTasks()
     }
   }
 
@@ -112,16 +111,37 @@ class TaskList extends Component {
         this.props.listTasks()
         break
       case 1:
+        let data = this.props.filterTasks('userId').data
+        if (data.length === 0) {
+          Promise.all([this.props.listTasks()]).then(() => {
+            this.props.filterTasks('userId')
+          })
+        } else {
+          this.props.filterTasks('userId')
+        }
         this.props.history.push('/tasks/createdbyme')
-        this.props.filterTasks('userId')
         break
       case 2:
+        data = this.props.filterTasks('Assigns').data
+        if (data.length === 0) {
+          Promise.all([this.props.listTasks()]).then(() => {
+            this.props.filterTasks('Assigns')
+          })
+        } else {
+          this.props.filterTasks('Assigns')
+        }
         this.props.history.push('/tasks/interested')
-        this.props.filterTasks('Assigns')
         break
       case 3:
+        data = this.props.filterTasks('Assigns').data
+        if (data.length === 0) {
+          Promise.all([this.props.listTasks()]).then(() => {
+            this.props.filterTasks('assigned')
+          })
+        } else {
+          this.props.filterTasks('assigned')
+        }
         this.props.history.push('/tasks/assignedtome')
-        this.props.filterTasks('assigned')
         break
       default:
         this.props.filterTasks()

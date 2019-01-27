@@ -31,8 +31,16 @@ class TaskStatusFilter extends Component {
         this.props.onFilter('status', value)
         break
       case 'in_progress':
+        let data = this.props.onFilter().data
+        if (data.status === 'in_progress') {
+          Promise.all([this.props.onFilter('status', value)]).then(() => {
+            this.props.onFilter('status', value)
+          })
+        }
+        else {
+          this.props.onFilter('status', value)
+        }
         this.props.history.push('/tasks/progress')
-        this.props.onFilter('status', value)
         break
       case 'closed':
         this.props.history.push('/tasks/finished')
