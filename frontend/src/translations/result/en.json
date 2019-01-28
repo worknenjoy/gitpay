@@ -3,7 +3,7 @@
   "payment.message.error": "We couldn't process your payment",
   "welcome.tagline": "Contributors, be rewarded",
   "welcome.tagline1": "by solving git issues",
-  "welcome.tagline2": "with <strong>Gitpay</strong> is possible to add bounties in order to have issues solved",
+  "welcome.tagline2": "with <strong>Gitpay</strong> it is possible to create bounties in order to have issues solved. Once the task is done the contributor will be able to claim the rewards",
   "notifications.account.update": "Your user was updated successfully",
   "user.logout": "You have logged out of your account.",
   "preferences.headline": "Preferences",
