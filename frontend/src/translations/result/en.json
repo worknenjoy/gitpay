@@ -1,6 +1,6 @@
 {
   "welcome.menu.item.one": "Intro",
-  "payment.message.error": "We couldn't process your payment",
+  "payment.message.error": "We couldn't process your payment. Try again later",
   "welcome.tagline": "Contributors, be rewarded",
   "welcome.tagline1": "by solving git issues",
   "welcome.tagline2": "with <strong>Gitpay</strong> it is possible to create bounties in order to have issues solved. Once the task is done the contributor will be able to claim the rewards",
