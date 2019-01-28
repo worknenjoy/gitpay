@@ -74,15 +74,15 @@
   "mail.task.me.subject": "Você criou uma nova tarefa no Gitpay",
   "mail.task.payment.subject": "Uma recompensa de $ {{value}} pela tarefa: {{title}} foi adicionada ao Gitpay",
   "mail.task.payment.title": "O pagamento de $ {{value}} foi realizado via cartão de crédito pela tarefa",
-  "mail.task.payment.instructions": "<p>O que você precisa saber?</p><ul><li>Você pode se candidatar para trabalhar na tarefa e demonstrar seu interesse</li><li>Você poderá ser atribuido</li><li>Envie um Pull Request com a solução</li><li>Nós então vamos analisar e dar um feedback</li><li>Suas mudanças são aprovadas e você então recebe a recompensa na sua conta</li></ul>",
+  "mail.task.payment.instructions": "<p>O que você precisa saber?</p><ul><li>Você pode se candidatar para trabalhar na tarefa e demonstrar seu interesse;</li><li>Você poderá ser atribuído para a tarefa;</li><li>Caso a seja escolhido, envie um Pull Request com a solução;</li><li>Nós analisaremos a resposta e daremos um feedback;</li><li>Suas mudanças serão aprovadas e você receberá a recompensa na sua conta.</li></ul>",
   "mail.task.subject": "Temos uma nova tarefa para você no Gitpay",
-  "mail.task.me.title": "Sua tarefa foi enviada para nossa comunidade",
+  "mail.task.me.title": "Você acabou de criar uma nova tarefa no Gitpay",
   "mail.task.title": "Temos uma nova tarefa para você no Gitpay",
-  "mail.task.me.instructions": "<p>O que você precisa saber?</p><ul><li>Adicione uma recompensa ou um deadline se desejar</li><li>Você receberá ofertas da comunidade</li><li>Clique em \"Escolher\" na seção de interessados</li><li>Envie os detalhes necessários para seu usuário</li><li>Ele vai enviar um Pull Request para você</li><li>Aprove e envie recompensa</li><li>O contribuidor irá receber a recompensa</li></ul>",
-  "mail.task.provider.action": "Ver no Github",
+  "mail.task.me.instructions": "<p>O que você precisa saber?</p><ul><li>Adicione uma recompensa e o prazo de entrega que desejar;</li><li>Receba ofertas da nossa comunidade;</li><li>Escolha um usuário na seção de interessados;</li><li>Envie os detalhes para o usuário escolhido;</li><li>Aguarde o Pull Request com a solução;</li><li>Aprove e envie a recompensa;</li><li>O contribuidor receberá a recompensa.</li></ul>",
+  "mail.task.provider.action": "Ver todos os detalhes no Github",
   "mail.task.me.calltoaction": "Ver sua tarefa no Gitpay",
-  "mail.task.calltoaction": "Saber mais da tarefa no Gitpay",
-  "mail.task.instructions": "<p>Como trabalhar neste projeto?</p><ul><li>Acesse a tarefa no Gitpay</li><li>Clique em \"Estou interessado\"</li><li>Acesse o repositório do projeto e crie um fork</li><li>Envie um Pull Request</li><li>Quem mantém o projeto irá revisar, e você fará os ajustes necessários para que a tarefa atenda os requisitos</li><li>Você recebe então uma recompensa</li></ul>",
+  "mail.task.calltoaction": "Ver a tarefa no Gitpay",
+  "mail.task.instructions": "<p>Como trabalhar neste projeto?</p><ul><li>Acesse a tarefa no Gitpay;</li><li>Clique em \"Estou interessado\";</li><li>Acesse o projeto e crie uma solução;</li><li>Envie um Pull Request com a solução;</li><li>O dono do projeto revisará e você fará os ajustes necessários para que a tarefa atenda os requisitos;</li><li>Receba a recompensa quando a tarefa for concluída.</li></ul>",
   "mail.task.docs.title": "Nós temos uma documentação completa para você sobre como funciona",
-  "mail.task.reason": "Você recebeu esta mensagem pois você se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
+  "mail.task.reason": "Você recebeu esta mensagem pois se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
 }
