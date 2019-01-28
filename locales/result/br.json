@@ -14,7 +14,7 @@
   "mail.assign.owner.subject": "Alguém demonstrou interesse por sua tarefa no Gitpay",
   "mail.assign.owner.hello": "Olá",
   "mail.assign.owner.main": "{{name}} está interessado na tarefa <a href=\"{{url}}\">{{url}}</a>. Você pode contatá-lo por: {{email}}",
-  "mail.assign.owner.suggest": "<p>Recompensa sugerida: ${{value}}</p><p>Prazo de entrega sugerido: {{suggestedDate}}</p><p>Para facilitar a aprendizagem: {{learn}}</p> <p>Comentários: {{comment}}</p>",
+  "mail.assign.owner.suggest": "<p>Recompensa sugerida: ${{value}}</p><p>Prazo de entrega sugerido: {{suggestedDate}}</p><p>Não tenho experiência e quero aprender: {{learn}}</p> <p>Comentários: {{comment}}</p>",
   "mail.assign.owner.sec": "Você pode atribuir esta tarefa na aba 'interessados'. Assim ele receberá o valor quando que a tarefa for concluída.",
   "mail.interested.owner.subject": "Você demonstrou interesse por esta tarefa",
   "mail.interested.main": "Você demonstrou interesse em realizar a tarefa <a href=\"{{url}}\"</a> no Gitpay",
@@ -22,7 +22,7 @@
   "mail.assigned.subject": "Você foi escolhido para realizar uma tarefa no Gitpay",
   "mail.assigned.hello": "Olá {{name}}",
   "mail.assigned.main": "Você foi escolhido para realizar a tarefa <a href=\"{{url}}\">{{url}}</a> no Gitpay",
-  "mail.assigned.message": "<p>O dono deste projeto entrará em contato para dar maiores detalhes.</p><p>O prazo para conclusão desta tarefa é: <strong>{{deadline}}</strong></p><p>Isso significa que você tem que enviar a solução em até <strong>{{deadlineFromNow}}</strong></p>.<p>Para começar, siga os passos:</p><ul><li>Bifurque o projeto</li><li>Siga as instruções para realizá-lo</li><li>Desenvolva uma solução e tire quaisquer dúvidas</li><li>Mantenha a tarefa sempre atualizada</li><li>Realize cada tarefa sabendo que todos os projetos <strong>passarão por testes automatizados</strong></li><li>Envie um <strong>Pull Request</strong></li><li>Iniciaremos uma <strong>revisão do código</strong></li></ul><p>Quando sua solução for integrada, você receberá a recompensa na conta cadastrada.</p>",
+  "mail.assigned.message": "<p>O dono deste projeto entrará em contato para dar maiores detalhes.</p><p>O prazo para conclusão desta tarefa é: <strong>{{deadline}}</strong></p><p>Isso significa que você tem que enviar a solução em até <strong>{{deadlineFromNow}}</strong></p>.<p>Para começar, siga os passos:</p><ul><li>Crie um fork do projeto</li><li>Siga as instruções para realizá-lo</li><li>Desenvolva uma solução e tire quaisquer dúvidas</li><li>Mantenha a tarefa sempre atualizada</li><li>Realize cada tarefa sabendo que todos os projetos <strong>passarão por testes automatizados</strong></li><li>Envie um <strong>Pull Request</strong></li><li>Iniciaremos uma <strong>revisão do código</strong></li></ul><p>Quando sua solução for integrada, você receberá a recompensa na conta cadastrada.</p>",
   "mail.assigned.error": "Tivemos um problema com as notificações sobre interessados em uma tarefa no Gitpay.",
   "mail.assigned.nodate": "Nenhum prazo foi definido para esta tarefa",
   "mail.assigned.anytime": "O tempo necessário para terminar este projeto",
@@ -83,6 +83,6 @@
   "mail.task.me.calltoaction": "Ver sua tarefa no Gitpay",
   "mail.task.calltoaction": "Ver a tarefa no Gitpay",
   "mail.task.instructions": "<p>Como trabalhar neste projeto?</p><ul><li>Acesse a tarefa no Gitpay;</li><li>Clique em \"Estou interessado\";</li><li>Acesse o projeto e crie uma solução;</li><li>Envie um Pull Request com a solução;</li><li>O dono do projeto revisará e você fará os ajustes necessários para que a tarefa atenda os requisitos;</li><li>Receba a recompensa quando a tarefa for concluída.</li></ul>",
-  "mail.task.docs.title": "Nós temos uma documentação completa para você sobre como funciona",
+  "mail.task.docs.title": "Nós temos esta documentação completa para ajudá-lo (apenas em Português por enquanto)",
   "mail.task.reason": "Você recebeu esta mensagem pois se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
 }
