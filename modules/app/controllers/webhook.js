@@ -11,6 +11,9 @@ const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')
 
+const Stripe = require('stripe')
+const stripe = new Stripe(process.env.STRIPE_KEY)
+
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
   not_sent_to_network: 'Hight risk card, please provide all the information'
@@ -370,9 +373,25 @@ exports.updateWebhook = (req, res) => {
               .catch(e => {
                 return res.status(400).send(e)
               })
+          } else {
+            stripe.accounts.retrieve(event.data.object.destination).then((account) => {
+                SendMail.success(
+                  account.email,
+                  i18n.__('mail.webhook.payment.transfer.subject'),
+                  i18n.__('mail.webhook.payment.transfer.message', {
+                    amount: event.data.object.amount / 100,
+                    url: `${event.data.object.id}`
+                  })
+                )
+                return res.json(req.body)
+              }).catch(e => {
+                // eslint-disable-next-line no-console
+                console.log('could not find customer', e)
+                return res.status(400).send(e)
+              })
+             
           }
         })
-
         break
       case 'payout.created':
         return models.User.findOne({
