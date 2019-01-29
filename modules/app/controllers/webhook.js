@@ -373,23 +373,23 @@ exports.updateWebhook = (req, res) => {
               .catch(e => {
                 return res.status(400).send(e)
               })
-          } else {
+          }
+          else {
             stripe.accounts.retrieve(event.data.object.destination).then((account) => {
-                SendMail.success(
-                  account.email,
-                  i18n.__('mail.webhook.payment.transfer.subject'),
-                  i18n.__('mail.webhook.payment.transfer.message', {
-                    amount: event.data.object.amount / 100,
-                    url: `${event.data.object.id}`
-                  })
-                )
-                return res.json(req.body)
-              }).catch(e => {
-                // eslint-disable-next-line no-console
-                console.log('could not find customer', e)
-                return res.status(400).send(e)
-              })
-             
+              SendMail.success(
+                account.email,
+                i18n.__('mail.webhook.payment.transfer.subject'),
+                i18n.__('mail.webhook.payment.transfer.message', {
+                  amount: event.data.object.amount / 100,
+                  url: `${event.data.object.id}`
+                })
+              )
+              return res.json(req.body)
+            }).catch(e => {
+              // eslint-disable-next-line no-console
+              console.log('could not find customer', e)
+              return res.status(400).send(e)
+            })
           }
         })
         break
