@@ -1,6 +1,6 @@
 {
   "welcome.menu.item.one": "Página Inicial",
-  "payment.message.error": "Erro ao realizar o pagamento",
+  "payment.message.error": "Não foi possível realizar o pagamento",
   "welcome.tagline": "Contribua e seja recompensado",
   "welcome.tagline1": "solucione tarefas no git",
   "welcome.tagline2": "Com <strong>Gitpay</strong>, você oferece recompensas àqueles que resolverem suas demandas",
