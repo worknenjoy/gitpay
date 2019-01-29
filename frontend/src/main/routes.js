@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, HashRouter, Switch } from 'react-router-dom'
+import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
 
 import PrivateRoute from '../components/session/private-route'
 
@@ -17,7 +17,7 @@ export default props => (
     <Switch>
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
-      <Route path='/tasks/explore' component={ TaskExplorer } />
+      <Redirect path='/tasks/explore' to='/tasks/open' />
       <Route path='/tasks/createdbyme' component={ TaskExplorer } />
       <Route path='/tasks/interested' component={ TaskExplorer } />
       <Route path='/tasks/assignedtome' component={ TaskExplorer } />
