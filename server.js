@@ -44,10 +44,10 @@ app.use(express.static(`${__dirname}/frontend/public/`))
 app.get('/octos', (req, res) => {
   feed('http://feeds.feedburner.com/Octocats', (err, articles) => {
     if (err) throw err
-
+    const article = articles[Math.floor(Math.random() * articles.length)]
     // eslint-disable-next-line no-console
-    console.log(articles)
-    return res.json(articles).end()
+    console.log(article)
+    return res.json(article).end()
   })
 })
 
