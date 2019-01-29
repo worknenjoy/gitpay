@@ -376,6 +376,8 @@ exports.updateWebhook = (req, res) => {
           }
           else {
             stripe.accounts.retrieve(event.data.object.destination).then((account) => {
+              // eslint-disable-next-line no-console
+              console.log('account retrieved from transfer.created webhook', account)
               SendMail.success(
                 account.email,
                 i18n.__('mail.webhook.payment.transfer.subject'),
