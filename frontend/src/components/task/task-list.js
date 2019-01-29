@@ -88,7 +88,7 @@ class TaskList extends Component {
     this.setState({ tab: value })
     switch (value) {
       case 0:
-        this.props.listTasks()
+        this.props.filterTasks('all')
         break
       case 1:
         this.props.filterTasks('userId')
