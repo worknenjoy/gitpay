@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { connect } from 'react-redux'
 import TaskList from '../components/task/task-list'
 import { listTasks, filterTasks } from '../actions/taskActions'

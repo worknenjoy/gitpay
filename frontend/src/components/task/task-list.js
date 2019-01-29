@@ -109,7 +109,7 @@ class TaskList extends Component {
     switch (value) {
       case 0:
         this.props.history.push('/tasks/explore')
-        this.props.filterTasks()
+        this.props.filterTasks('open')
         break
       case 1:
         this.props.history.push('/tasks/createdbyme')
