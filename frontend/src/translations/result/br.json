@@ -32,7 +32,7 @@
   "payment.options.description": "Configure a forma de pagamento e sua conta bancária para receber pelas tarefas concluídas",
   "payment.creditcard": "Cartão de crédito",
   "payment.paypal.title": "Fazer um pagamento com o Paypal",
-  "payment.paypal.description": "Lembre-se de que a pessoa a quem essa tarefa for atribuída terá obrigatoriamente que receber pelo Paypal",
+  "payment.paypal.description": "Lembre-se de que a pessoa a quem essa tarefa for atribuída receberá o pagamento obrigatoriamente pelo Paypal",
   "payment.paypal.paywith": "Pagar com",
   "payment.paypal.logo.title": "Fazer pagamento com Paypal",
   "account.document.cpf.provided": "CPF fornecido",
