@@ -31,6 +31,8 @@
   "payment.creditcard": "Cartão de crédito",
   "payment.paypal.title": "Fazer um pagamento com o Paypal",
   "payment.paypal.description": "Lembre-se de que a pessoa a quem essa tarefa for atribuída terá obrigatoriamente que receber pelo Paypal",
+  "payment.paypal.warning": "Pagamentos realizados pelo Paypal esta sujeito a cobranças da plataforma.",
+  "payment.paypal.confirm": "Ok, Eu entendi.",
   "payment.paypal.paywith": "Pagar com",
   "payment.paypal.logo.title": "Fazer pagamento com Paypal",
   "account.document.cpf.provided": "CPF fornecido",
