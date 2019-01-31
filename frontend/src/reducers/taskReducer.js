@@ -148,7 +148,7 @@ export const tasks = (state = {
     case LIST_TASK_REQUESTED:
       return { ...state, completed: false }
     case LIST_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data, filterType: 'all' }
+      return { ...state, completed: true, data: action.data, filterType: 'status', filterValue: 'open' }
     case LIST_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
     case FILTER_TASK_REQUESTED:
