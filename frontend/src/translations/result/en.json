@@ -33,6 +33,8 @@
   "payment.creditcard": "Credit Card",
   "payment.paypal.title": "Make a new payment with Paypal",
   "payment.paypal.description": "Remember that the person assigned for this task will receive the payment with Paypal as well.",
+  "payment.paypal.warning": "You will make a pre-approved payment. You will just be charged when a solution is send with a Pull Request, and then the destination account can claim for your bounty. Payments made by Paypal are subject to platform charges.",
+  "payment.paypal.confirm": "Ok, I accept the PayPal payment terms and I am aware about my pre-authorization to charge the value chosen.",
   "payment.paypal.paywith": "Pay with",
   "payment.paypal.logo.title": "Make the payment with paypal",
   "account.document.cpf.provided": "CPF provided",
