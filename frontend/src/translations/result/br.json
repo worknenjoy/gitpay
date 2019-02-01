@@ -33,7 +33,7 @@
   "payment.creditcard": "Cartão de crédito",
   "payment.paypal.title": "Fazer um pagamento com o Paypal",
   "payment.paypal.description": "Lembre-se de que a pessoa a quem essa tarefa for atribuída receberá o pagamento obrigatoriamente pelo Paypal",
-  "payment.paypal.warning": "Você irá realizar um pagamento pré-aprovado. Você será cobrado quando uma solução é enviada através de um Pull Request, e assim a conta de destino recebe a recompensa do valor que você pagou. Pagamentos do PayPal estão sujeitos a cobranças das tarifas do PayPal.",
+  "payment.paypal.warning": "Você irá realizar um pagamento pré-aprovado. Você será cobrado quando uma solução é enviada através de um Pull Request, e assim a conta de destino recebe a recompensa do valor que você pagou. Pagamentos do PayPal estão sujeitos a cobranças das tarifas do PayPal. Marque a opção abaixo para continuar.",
   "payment.paypal.confirm": "Sim, Eu aceito os termos de pagamento do PayPal e estou ciente sobre minha pré-autorização para cobrar pelo valor escolhido.",
   "payment.paypal.paywith": "Pagar com",
   "payment.paypal.logo.title": "Fazer pagamento com Paypal",
