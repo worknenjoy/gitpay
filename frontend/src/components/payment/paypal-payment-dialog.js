@@ -6,7 +6,7 @@ import Dialog, {
   DialogContentText,
   DialogTitle
 } from 'material-ui/Dialog'
-import CheckBox from 'material-ui/CheckBox'
+import Checkbox from 'material-ui/Checkbox'
 
 class PaypalPaymentDialog extends Component {
   constructor (props) {
@@ -59,7 +59,7 @@ class PaypalPaymentDialog extends Component {
             </div>
             <div style={ { textAlign: 'center' } }>
               <FormattedMessage id='payment.paypal.confirm' defaultMessage='Ok, I accept.' />
-              <CheckBox onChange={ this.agreeTermsPaypal } />
+              <Checkbox onChange={ this.agreeTermsPaypal } />
             </div>
           </DialogContentText>
           { this.props.order.data.payment_url ? (
