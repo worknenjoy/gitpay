@@ -11,7 +11,6 @@ import CheckBox from 'material-ui/CheckBox'
 class PaypalPaymentDialog extends Component {
   constructor (props) {
     super(props)
-    this.agreeTermsPaypal = this.agreeTermsPaypal.bind(this)
     this.state = { termsPaypal: false }
   }
 
@@ -19,7 +18,7 @@ class PaypalPaymentDialog extends Component {
 
   handleNewOrder = (e) => {
     e.preventDefault()
-    if(this.state.termsPaypal){
+    if (this.state.termsPaypal) {
       this.props.createOrder({
         provider: 'paypal',
         currency: 'USD',
@@ -34,8 +33,8 @@ class PaypalPaymentDialog extends Component {
     window.location.href = order.payment_url
   }
 
-  agreeTermsPaypal (){
-    this.setState({termsPaypal: !this.state.termsPaypal});
+  agreeTermsPaypal = () => {
+    this.setState({ termsPaypal: !this.state.termsPaypal })
   }
 
   render () {
@@ -53,12 +52,12 @@ class PaypalPaymentDialog extends Component {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-payment-description'>
-          <FormattedMessage id='payment.paypal.description' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
+            <FormattedMessage id='payment.paypal.description' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
             <div style={
               { margin: 'auto', textAlign: 'center', width: '50%', marginTop: 40, fontFamily: 'Roboto', background: '#ecf0f1', padding: '20px' } }>
               <FormattedMessage id='payment.paypal.warning' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
             </div>
-            <div style={{ textAlign: 'center' }}>
+            <div style={ { textAlign: 'center' } }>
               <FormattedMessage id='payment.paypal.confirm' defaultMessage='Ok, I accept.' />
               <CheckBox onChange={ this.agreeTermsPaypal } />
             </div>
@@ -69,13 +68,13 @@ class PaypalPaymentDialog extends Component {
             <div style={ { textAlign: 'center', width: '100%', marginTop: 40, fontFamily: 'Roboto' } }>
               <FormattedMessage id='payment.paypal.paywith' defaultMessage='Pay with ' />
               <br />
-                <FormattedMessage id='payment.paypal.logo.title' defaultMessage='Make the payment with paypal'>
-                  { (msg) => (
-                    <a href='#' title={ msg } onClick={ this.handleNewOrder }>
-                      <img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
-                    </a>
-                  ) }
-                </FormattedMessage>
+              <FormattedMessage id='payment.paypal.logo.title' defaultMessage='Make the payment with paypal'>
+                { (msg) => (
+                  <a href='#' title={ msg } onClick={ this.handleNewOrder }>
+                    <img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
+                  </a>
+                ) }
+              </FormattedMessage>
             </div>
           ) }
         </DialogContent>
