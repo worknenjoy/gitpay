@@ -106,31 +106,34 @@ class TaskList extends Component {
 
   handleTabChange = (event, value) => {
     this.setState({ tab: value })
-    switch (value) {
-      case 0:
-        this.props.history.push('/tasks/explore')
-        this.props.filterTasks('open')
-        break
-      case 1:
-        this.props.history.push('/tasks/createdbyme')
-        this.props.filterTasks('userId')
-        break
-      case 2:
-        this.props.history.push('/tasks/interested')
-        this.props.filterTasks('Assigns')
-        break
-      case 3:
-        this.props.history.push('/tasks/assignedtome')
-        this.props.filterTasks('assigned')
-        break
-      default:
-        // this.props.filterTasks()
-    }
+    Promise.all([this.props.listTasks()]).then(() => {
+      this.props.filterTasks('Assigns')
+
+      switch (value) {
+        case 0:
+          this.props.filterTasks()
+          this.props.history.push('/tasks/explore')
+          break
+        case 1:
+          this.props.filterTasks('userId')
+          this.props.history.push('/tasks/createdbyme')
+          break
+        case 2:
+          this.props.filterTasks('Assigns')
+          this.props.history.push('/tasks/interested')
+          break
+        case 3:
+          this.props.filterTasks('assigned')
+          this.props.history.push('/tasks/assignedtome')
+          break
+        default:
+          this.props.filterTasks()
+      }
+    })
   }
 
   render () {
     const { classes, user } = this.props
-
     const TabContainer = props => {
       return (
         <Typography component='div' style={ { padding: 8 * 3 } }>
