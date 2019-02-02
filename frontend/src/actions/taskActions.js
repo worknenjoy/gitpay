@@ -290,7 +290,6 @@ const updateTask = task => {
   }
 }
 
-
 const deleteTask = (task, history) => {
   validToken()
   return dispatch => {

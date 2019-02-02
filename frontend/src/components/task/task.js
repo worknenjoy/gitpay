@@ -935,7 +935,7 @@ class Task extends Component {
                         </Button>
                       </DialogActions>
                     </div>
-                  )}
+                  ) }
                 </Dialog>
                 <Dialog
                   open={ this.state.assignDialog }
