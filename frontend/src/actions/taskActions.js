@@ -11,6 +11,10 @@ const UPDATE_TASK_REQUESTED = 'UPDATE_TASK_REQUESTED'
 const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS'
 const UPDATE_TASK_ERROR = 'UPDATE_TASK_ERROR'
 
+const DELETE_TASK_REQUESTED = 'DELETE_TASK_REQUESTED'
+const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS'
+const DELETE_TASK_ERROR = 'DELETE_TASK_ERROR'
+
 const INVITE_TASK_REQUESTED = 'INVITE_TASK_REQUESTED'
 const INVITE_TASK_SUCCESS = 'INVITE_TASK_SUCCESS'
 const INVITE_TASK_ERROR = 'INVITE_TASK_ERROR'
@@ -112,6 +116,21 @@ const listTaskError = error => {
   return { type: LIST_TASK_ERROR, completed: true, error: error }
 }
 
+/*
+ * Task delete
+ */
+
+const deleteTaskRequested = () => {
+  return { type: DELETE_TASK_REQUESTED, completed: false }
+}
+
+const deleteTaskSuccess = () => {
+  return { type: DELETE_TASK_SUCCESS, completed: true }
+}
+
+const deleteTaskError = error => {
+  return { type: DELETE_TASK_ERROR, completed: true, error: error }
+}
 /*
  * Tasks filter
  */
@@ -260,7 +279,6 @@ const updateTask = task => {
       })
       .catch(error => {
         // eslint-disable-next-line no-console
-        console.log(error)
         if (error.response.data.type === 'StripeCardError') {
           dispatch(addNotification('actions.task.payment.notification.error'))
           dispatch(changeTaskTab(1))
@@ -268,6 +286,31 @@ const updateTask = task => {
         }
         dispatch(addNotification('actions.task.update.notification.error'))
         return dispatch(fetchTask(task.id))
+      })
+  }
+}
+
+
+const deleteTask = (task, history) => {
+  validToken()
+  return dispatch => {
+    dispatch(deleteTaskRequested())
+    axios
+      .delete(api.API_URL + `/tasks/delete/${task.id}`, task)
+      .then(response => {
+        dispatch(deleteTaskSuccess())
+        dispatch(addNotification('actions.task.delete.notification.success'))
+        history.push('/tasks/all')
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+        if (error.response && error.response.status === 403) {
+          dispatch(addNotification('actions.task.delete.auth.error'))
+          return dispatch(deleteTaskError(error))
+        }
+        dispatch(addNotification('actions.task.delete.notification.error'))
+        return dispatch(deleteTaskError(error))
       })
   }
 }
@@ -446,6 +489,9 @@ export {
   UPDATE_TASK_REQUESTED,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_ERROR,
+  DELETE_TASK_REQUESTED,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_ERROR,
   INVITE_TASK_REQUESTED,
   INVITE_TASK_SUCCESS,
   INVITE_TASK_ERROR,
@@ -473,6 +519,7 @@ export {
   filterTasks,
   filterTaskOrders,
   updateTask,
+  deleteTask,
   paymentTask,
   syncTask,
   inviteTask,

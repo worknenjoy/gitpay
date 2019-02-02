@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask, removeAssignment } from '../actions/assignActions'
-import { updateTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask } from '../actions/taskActions'
+import { updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask } from '../actions/taskActions'
 import { createOrder, payOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 
@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     isLogged: () => dispatch(loggedIn()),
     updateTask: (task) => dispatch(updateTask(task)),
+    deleteTask: (task, history) => dispatch(deleteTask(task, history)),
     openDialog: (target) => dispatch(addDialog(target)),
     closeDialog: () => dispatch(closeDialog()),
     addNotification: (message) => dispatch(addNotification(message)),
