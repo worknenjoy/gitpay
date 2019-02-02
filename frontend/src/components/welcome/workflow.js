@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
@@ -14,35 +14,9 @@ import AppsIcon from 'material-ui-icons/Apps'
 import WorkIcon from 'material-ui-icons/Work'
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
+import messages from './messages'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
-
-const messages = defineMessages({
-  workflowItemPrimary: {
-    id: 'welcome.workflow.item.primary',
-    defaultMessage: 'Gitpay is for all'
-  },
-  workflowItemSecondary: {
-    id: 'welcome.workflow.item.secondary',
-    defaultMessage: 'Clients, team leads, designers, content creators and managers, everyone can follow the progress and status using already known tools to manage their projects for remote teams'
-  },
-  workflowItemTwoPrimary: {
-    id: 'welcome.workflow.item.two.primary',
-    defaultMessage: 'For all levels'
-  },
-  workflowItemTwoSecondary: {
-    id: 'welcome.workflow.item.two.secondary',
-    defaultMessage: 'Beginners will learn for real of how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with '
-  },
-  workflowItemThreePrimary: {
-    id: 'welcome.workflow.item.three.primary',
-    defaultMessage: 'Learn by doing and receive bounties'
-  },
-  workflowItemThreeSecondary: {
-    id: 'welcome.workflow.item.three.secondary',
-    defaultMessage: 'Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges'
-  }
-})
 
 class Workflow extends Component {
   constructor (props) {
@@ -102,7 +76,7 @@ class Workflow extends Component {
               <List>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <AppsIcon />
                     </Avatar>
                   </ListItemIcon>
@@ -113,7 +87,7 @@ class Workflow extends Component {
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <WorkIcon />
                     </Avatar>
                   </ListItemIcon>
@@ -124,7 +98,7 @@ class Workflow extends Component {
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <AccountBalanceWalletIcon />
                     </Avatar>
                   </ListItemIcon>

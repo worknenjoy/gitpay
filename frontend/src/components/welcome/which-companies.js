@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
 import Dialog from 'material-ui/Dialog'
 import AppBar from 'material-ui/AppBar'
@@ -14,35 +14,9 @@ import AppsIcon from 'material-ui-icons/Apps'
 import WorkIcon from 'material-ui-icons/Work'
 import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import Transition from '../transition'
+import messages from './messages'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
-
-const messages = defineMessages({
-  companiesItemPrimary: {
-    id: 'welcome.companies.item.primary',
-    defaultMessage: 'For any company'
-  },
-  companiesItemSecondary: {
-    id: 'welcome.companies.item.secondary',
-    defaultMessage: 'The distributed colaboration helps company grows and provide a great solution to have the tasks solved using agile process and colaboration throught development'
-  },
-  companiesItemTwoPrimary: {
-    id: 'welcome.companies.item.two.primary',
-    defaultMessage: 'A community of passionate colaborators'
-  },
-  companiesItemTwoSecondary: {
-    id: 'welcome.companies.item.two.secondary',
-    defaultMessage: 'Companies will be able to use Open Source if they want to create colaborative tools that will help other companies and contribute with the OSS ecosystem'
-  },
-  companiesItemThreePrimary: {
-    id: 'welcome.companies.item.three.primary',
-    defaultMessage: 'We validate your business integration process'
-  },
-  companiesItemThreeSecondary: {
-    id: 'welcome.companies.item.three.secondary',
-    defaultMessage: 'We will help to fit in agile process to have your tasks concluded in an independent way and according to your business'
-  }
-})
 
 class WhichCompanies extends Component {
   constructor (props) {
@@ -52,10 +26,6 @@ class WhichCompanies extends Component {
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
-  }
-
-  componentDidMount () {
-
   }
 
   handleClickOpen () {
@@ -102,35 +72,35 @@ class WhichCompanies extends Component {
               <List>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <AppsIcon />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesItemPrimary1) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesItemSecondary1) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <WorkIcon />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemTwoSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesItemTwoPrimary1) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesItemTwoSecondary1) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
-                    <Avatar>
+                    <Avatar className={ classes.iconFillAlt }>
                       <AccountBalanceWalletIcon />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesItemThreePrimary1) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesItemThreeSecondary1) }
                   />
                 </ListItem>
               </List>

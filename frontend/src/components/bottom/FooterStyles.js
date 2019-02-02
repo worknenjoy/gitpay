@@ -5,6 +5,7 @@ export const Container = styled.div`
   text-align: left;
   padding: 80px;
   padding-top: 40px;
+  overflow: hidden;
 
   ${media.phone`
     text-align: center;
