@@ -484,8 +484,10 @@ class Task extends Component {
     }).then(response => {
       this.props.history.push('/tasks/all')
       this.setState({ deleteDialog: false })
-    // *eslint*-*disable*-*next*-*line no*-*console *  
-    }).catch(e => console.log(e))
+    }).catch(e => {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    })
   }
 
   handlePaymentForm = (e) => {
