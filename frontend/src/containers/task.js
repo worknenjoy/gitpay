@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     isLogged: () => dispatch(loggedIn()),
     updateTask: (task) => dispatch(updateTask(task)),
-    deleteTask: (task, history) => dispatch(deleteTask(task, history)),
+    deleteTask: (task) => dispatch(deleteTask(task)),
     openDialog: (target) => dispatch(addDialog(target)),
     closeDialog: () => dispatch(closeDialog()),
     addNotification: (message) => dispatch(addNotification(message)),

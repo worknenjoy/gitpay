@@ -290,16 +290,15 @@ const updateTask = task => {
   }
 }
 
-const deleteTask = (task, history) => {
+const deleteTask = task => {
   validToken()
   return dispatch => {
     dispatch(deleteTaskRequested())
-    axios
+    return axios
       .delete(api.API_URL + `/tasks/delete/${task.id}`, task)
       .then(response => {
         dispatch(deleteTaskSuccess())
         dispatch(addNotification('actions.task.delete.notification.success'))
-        history.push('/tasks/all')
       })
       .catch(error => {
         // eslint-disable-next-line no-console

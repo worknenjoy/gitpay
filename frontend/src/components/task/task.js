@@ -481,8 +481,10 @@ class Task extends Component {
     this.props.deleteTask({
       id: this.props.match.params.id,
       userId: this.props.user.id
-    }, this.props.history)
-    this.setState({ deleteDialog: false })
+    }).then(response => {
+      this.props.history.push('/tasks/all')
+      this.setState({ deleteDialog: false })
+    }).catch(e => console.log(e))
   }
 
   handlePaymentForm = (e) => {
