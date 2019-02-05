@@ -89,7 +89,7 @@ class Welcome extends Component {
       <div className={ classes.root }>
         <TopBarContainer ref='intro' />
         <AppBar position='sticky' color='default'>
-          <Tabs variant='default' value={ this.state.value } onChange={ this.handleSectionTab }>
+          <Tabs variant='scrollable' value={ this.state.value } onChange={ this.handleSectionTab } scrollable scrollButtons='off'>
             <Tab id='intro' value={ 0 } label={ this.props.intl.formatMessage(messages.topMenu1) } />
             <Tab id='contrib' value={ 1 } label={ this.props.intl.formatMessage(messages.topMenu2) } />
             <Tab id='companies' value={ 2 } label={ this.props.intl.formatMessage(messages.topMenu3) } />
@@ -365,15 +365,25 @@ class Welcome extends Component {
           </Grid>
         </Section>
         <Section ref='get-started' style={ { background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' } }>
-          <Typography variant='display1' gutterBottom style={ { padding: '0 220px' } }>
-            <FormattedHTMLMessage id='welcome.bottom.call' defaultMessage='A better way to build your project, <br /> a better way to work in projects' />
-          </Typography>
-          <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={ classes.gutterTopSmall }>
-            <FormattedMessage id='welcome.bottom.link' defaultMessage='Get started' />
-          </Button>
-          <Button component='a' href='https://docs.gitpay.me' size='large' variant='flat' color='primary' className={ classes.gutterTopSmall }>
-            <FormattedMessage id='welcome.bottom.linkAlt' defaultMessage='See our docs' />
-          </Button>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 12 }>
+              <Typography variant='display1' gutterBottom style={ { } }>
+                <FormattedHTMLMessage id='welcome.bottom.call' defaultMessage='A better way to build your project, <br /> a better way to work in projects' />
+              </Typography>
+            </Grid>
+
+            <Grid item xs={ 12 } sm={ 12 }>
+              <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={ classes.gutterTopSmall }>
+                <FormattedMessage id='welcome.bottom.link' defaultMessage='Get started' />
+              </Button>
+            </Grid>
+
+            <Grid item xs={ 12 } sm={ 12 }>
+              <Button component='a' href='https://docs.gitpay.me' size='large' variant='flat' color='primary' className={ classes.gutterTopSmall }>
+                <FormattedMessage id='welcome.bottom.linkAlt' defaultMessage='See our docs' />
+              </Button>
+            </Grid>
+          </Grid>
         </Section>
         <Bottom />
       </div>

@@ -44,6 +44,10 @@ export const ResponsiveImage = styled.img`
 
 export const ShadowImage = styled.img`
     box-shadow: 1px 1px 3px 2px #ccc;
+
+    ${media.phone`
+      max-width: 100%;
+    `}
 `
 
 export const InfoList = styled.div`

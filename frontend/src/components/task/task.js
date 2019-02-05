@@ -32,6 +32,7 @@ import DoneIcon from 'material-ui-icons/Done'
 import NavigationIcon from 'material-ui-icons/ArrowBack'
 import InfoIcon from 'material-ui-icons/Info'
 import WarningIcon from 'material-ui-icons/Warning'
+import DeleteIcon from 'material-ui-icons/Delete'
 
 import Chip from 'material-ui/Chip'
 import StatusDialog from './status-dialog'
@@ -401,6 +402,7 @@ class Task extends Component {
       orderPrice: 0,
       assignDialog: false,
       statusDialog: false,
+      deleteDialog: false,
       paymentForm: false,
       deadlineForm: false,
       taskPaymentDialog: false,
@@ -438,6 +440,14 @@ class Task extends Component {
     this.setState({ statusDialog: false })
   }
 
+  handleDeleteDialog = () => {
+    this.setState({ deleteDialog: true })
+  }
+
+  handleDeleteDialogClose = () => {
+    this.setState({ deleteDialog: false })
+  }
+
   handleTaskPaymentDialog = () => {
     this.setState({ taskPaymentDialog: true })
   }
@@ -465,6 +475,19 @@ class Task extends Component {
       ]
     })
     this.setState({ assignDialog: false })
+  }
+
+  handleDeleteTask = () => {
+    this.props.deleteTask({
+      id: this.props.match.params.id,
+      userId: this.props.user.id
+    }).then(response => {
+      this.props.history.push('/tasks/all')
+      this.setState({ deleteDialog: false })
+    }).catch(e => {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    })
   }
 
   handlePaymentForm = (e) => {
@@ -838,6 +861,18 @@ class Task extends Component {
                       <FilterIcon />
                     </Button>
                     <Button
+                      style={ { marginRight: 10 } }
+                      onClick={ this.handleDeleteDialog }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>
+                        <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
+                      </span>
+                      <DeleteIcon />
+                    </Button>
+                    <Button
                       onClick={ this.handleTaskPaymentDialog }
                       size='small'
                       color='primary'
@@ -875,6 +910,38 @@ class Task extends Component {
                   </div>
                 ) }
                 <TaskInvite id={ task.data.id } onInvite={ this.props.inviteTask } visible={ this.state.taskInviteDialog } onClose={ () => this.setState({ taskInviteDialog: false }) } onOpen={ () => this.setState({ taskInviteDialog: true }) } />
+                <Dialog
+                  open={ this.state.deleteDialog }
+                  onClose={ this.handleDeleteDialogClose }
+                  aria-labelledby='form-dialog-title'
+                >
+                  { !this.props.logged ? (
+                    <div>
+                      <DialogTitle id='form-dialog-title'>
+                        <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+                      </DialogTitle>
+                      <DialogContent>
+                        <div className={ classes.mainBlock }>
+                          <LoginButton referer={ this.props.location } includeForm />
+                        </div>
+                      </DialogContent>
+                    </div>
+                  ) : (
+                    <div>
+                      <DialogTitle id='form-dialog-title'>
+                        <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this task?' />
+                      </DialogTitle>
+                      <DialogActions>
+                        <Button onClick={ this.handleDeleteDialogClose } color='primary'>
+                          <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
+                        </Button>
+                        <Button onClick={ this.handleDeleteTask } variant='raised' color='secondary' >
+                          <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
+                        </Button>
+                      </DialogActions>
+                    </div>
+                  ) }
+                </Dialog>
                 <Dialog
                   open={ this.state.assignDialog }
                   onClose={ this.handleAssignDialogClose }
@@ -1223,6 +1290,7 @@ Task.propTypes = {
   changeTab: PropTypes.func,
   openDialog: PropTypes.func,
   updateTask: PropTypes.func,
+  deleteTask: PropTypes.func,
   closeDialog: PropTypes.func,
   syncTask: PropTypes.func,
   removeAssignment: PropTypes.func,

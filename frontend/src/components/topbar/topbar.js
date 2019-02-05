@@ -48,6 +48,9 @@ import {
   StyledAvatar,
   StyledAvatarIconOnly,
   OnlyDesktop,
+  LogoButton,
+  StyledLanguageButton,
+  StyledSlackButton,
 } from './TopbarStyles'
 
 import messagesBr from '../../translations/result/br.json'
@@ -277,10 +280,10 @@ class TopBar extends Component {
       <Bar>
         <Container>
           <LeftSide>
-            <StyledButton href='/'>
+            <LogoButton href='/'>
               <HomeIcon color='primary' />
               <Logo src={ logo } />
-            </StyledButton>
+            </LogoButton>
           </LeftSide>
           <RightSide>
             <StyledButton
@@ -440,7 +443,7 @@ class TopBar extends Component {
             <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
               { (msg) => (
                 <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-                  <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
+                  <StyledLanguageButton style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
                     { completed ? (
                       <StyledAvatarIconOnly
                         alt={ user.username || '' }
@@ -451,7 +454,7 @@ class TopBar extends Component {
                         <CircularProgress />
                       </Avatar>
                     ) }
-                  </Button>
+                  </StyledLanguageButton>
                 </Tooltip>
               ) }
             </FormattedMessage>
@@ -508,7 +511,7 @@ class TopBar extends Component {
               </Menu>
             </OnlyDesktop>
 
-            <StyledButton
+            <StyledSlackButton
               onClick={ this.handleClickDialogJoinSlack }
               size='small'
               color='secondary'
@@ -516,7 +519,7 @@ class TopBar extends Component {
               <LabelButton>
                 <FormattedMessage id='task.bar.slack' defaultMessage='Slack {count}' values={ { count: channelUserCount } } />
               </LabelButton><FontAwesomeIcon icon={ faSlack } size='2x' />
-            </StyledButton>
+            </StyledSlackButton>
             <Dialog
               open={ this.state.joinSlackDialog }
               onClose={ this.handleJoinSlackDialogClose }
