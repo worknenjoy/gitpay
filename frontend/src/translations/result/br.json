@@ -239,6 +239,7 @@
   "task.bounties.actions.work": "Quero trabalhar nesta tarefa!",
   "task.info.description": "Descrição",
   "task.actions.create": "Criar tarefa",
+  "task.actions.delete": "Excluir",
   "task.actions.explore": "Explorar tarefas",
   "task.actions.docs": "Documentação",
   "task.bar.signin": "Logar",

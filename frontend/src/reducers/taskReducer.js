@@ -5,6 +5,9 @@ import {
   UPDATE_TASK_REQUESTED,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_ERROR,
+  DELETE_TASK_REQUESTED,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_ERROR,
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
@@ -86,6 +89,13 @@ export const task = (state = {
       return { ...state, completed: true, error: action.error }
     case CHANGE_TASK_TAB:
       return { ...state, tab: action.tab }
+
+    case DELETE_TASK_REQUESTED:
+      return { ...state, completed: false }
+    case DELETE_TASK_SUCCESS:
+      return { ...state, completed: true }
+    case DELETE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error }
 
     case INVITE_TASK_REQUESTED:
       return { ...state, completed: false }
