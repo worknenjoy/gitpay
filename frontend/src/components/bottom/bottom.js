@@ -33,38 +33,38 @@ const logoWorknEnjoy = require('../../images/worknenjoy-logo.png')
 const styles = theme => mainStyles(theme)
 
 class Bottom extends Component {
-  render() {
+  render () {
     const { classes } = this.props
 
     return (
-      <div className={classes.secBlock}>
+      <div className={ classes.secBlock }>
         <Container>
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={3}>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 3 }>
               <Typography component='div'>
                 <strong>
                   <FormattedMessage id='bottom.header.subheading1' defaultMessage='For Freelancers' />
                 </strong>
               </Typography>
               <List component='nav'>
-                <HowItWorksPeople classes={classes} />
-                <WhoSubscribes classes={classes} />
-                <Workflow classes={classes} />
+                <HowItWorksPeople classes={ classes } />
+                <WhoSubscribes classes={ classes } />
+                <Workflow classes={ classes } />
               </List>
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={ 12 } sm={ 3 }>
               <Typography component='div'>
                 <strong>
                   <FormattedMessage id='bottom.header.subheading2' defaultMessage='For Companies' />
                 </strong>
               </Typography>
               <List component='nav'>
-                <HowItWorksCompany classes={classes} />
-                <WhichCompanies classes={classes} />
-                <Consulting classes={classes} />
+                <HowItWorksCompany classes={ classes } />
+                <WhichCompanies classes={ classes } />
+                <Consulting classes={ classes } />
               </List>
             </Grid>
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={ 12 } sm={ 2 }>
               <Typography component='div'>
                 <strong>
                   <FormattedMessage id='bottom.subheading3' defaultMessage='Partners' />
@@ -77,7 +77,7 @@ class Bottom extends Component {
                 Jooble
               </Button>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={ 12 } sm={ 4 }>
               <Typography component='div'>
                 <FormattedMessage id='bottom.subheading.newsletter' defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!' />
               </Typography>
@@ -91,16 +91,16 @@ class Bottom extends Component {
               </Typography>
             </Grid>
           </Grid>
-          <Divider className={classes.spacedTop} />
-          <BaseFooter style={{ float: 'right', display: 'flex', alignItems: 'center' }}>
+          <Divider className={ classes.spacedTop } />
+          <BaseFooter style={ { float: 'right', display: 'flex', alignItems: 'center' } }>
             <div>
-              <img className={classes.img} src={logoCompleteGray} width='100' />
+              <img className={ classes.img } src={ logoCompleteGray } width='100' />
             </div>
-            <Typography component='span' style={{ marginLeft: 10, marginRight: 10, display: 'inline-block' }}>
+            <Typography component='span' style={ { marginLeft: 10, marginRight: 10, display: 'inline-block' } }>
               <FormattedMessage id='bottom.company.org' defaultMessage='is part of' />
             </Typography>
             <a href='http://worknenjoy.com' target='_blank'>
-              <img className={classes.img} src={logoWorknEnjoy} width='100' />
+              <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
             </a>
           </BaseFooter>
         </Container>

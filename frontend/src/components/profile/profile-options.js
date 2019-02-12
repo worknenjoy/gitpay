@@ -26,7 +26,7 @@ const styles = theme => ({
 })
 
 class ProfileOptions extends Component {
-  render() {
+  render () {
     const { classes } = this.props
 
     return (
@@ -43,12 +43,12 @@ class ProfileOptions extends Component {
         <CardList>
           <Card>
             <FormattedMessage id='account.profile.tasks.caption' defaultMessage='Tasks'>
-              {(msg) => (
+              { (msg) => (
                 <CardMedia
-                  image={taskIcon}
-                  title={msg}
+                  image={ taskIcon }
+                  title={ msg }
                 />
-              )}
+              ) }
             </FormattedMessage>
             <CardContent>
               <Typography variant='h5' component='h2'>
@@ -58,9 +58,9 @@ class ProfileOptions extends Component {
                 <FormattedMessage id='account.profile.tasks.description' defaultMessage='Check the tasks available for you' />
               </Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
+            <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
-                <Link to={'/profile/tasks'}>
+                <Link to={ '/profile/tasks' }>
                   <FormattedMessage id='account.profile.tasks.link.tasks' defaultMessage='See tasks' />
                 </Link>
               </Button>
@@ -69,12 +69,12 @@ class ProfileOptions extends Component {
 
           <Card>
             <FormattedMessage id='account.profile.tasks.payment.caption' defaultMessage='Payment'>
-              {(msg) => (
+              { (msg) => (
                 <CardMedia
-                  image={paymentIcon}
-                  title={msg}
+                  image={ paymentIcon }
+                  title={ msg }
                 />
-              )}
+              ) }
             </FormattedMessage>
             <CardContent>
               <Typography variant='h5' component='h2'>
@@ -84,9 +84,9 @@ class ProfileOptions extends Component {
                 <FormattedMessage id='account.profile.tasks.payment.desc' defaultMessage='Fill all your payment details and receive for the tasks concluded' />
               </Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
+            <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
-                <Link to={'/profile/payment-options'}>
+                <Link to={ '/profile/payment-options' }>
                   <FormattedMessage id='account.profile.tasks.payment.setup' defaultMessage='Setup payment' />
                 </Link>
               </Button>
@@ -95,7 +95,7 @@ class ProfileOptions extends Component {
 
           <Card>
             <CardMedia
-              image={toolsIcon}
+              image={ toolsIcon }
               title='Contemplative Reptile'
             />
             <CardContent>
@@ -106,7 +106,7 @@ class ProfileOptions extends Component {
                 <FormattedMessage id='account.profile.preferences.description' defaultMessage='Setup your account with your preferences' />
               </Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
+            <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
                 <Link to='/profile/preferences'>
                   <FormattedMessage id='account.profile.preferences.link' defaultMessage='Setup preferences' />

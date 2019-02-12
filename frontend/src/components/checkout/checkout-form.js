@@ -12,7 +12,7 @@ import CardSection from './card-section'
 import UserSection from './user-section'
 
 class CheckoutForm extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -33,7 +33,7 @@ class CheckoutForm extends Component {
     }
   }
 
-  handleSubmit(ev) {
+  handleSubmit (ev) {
     ev.preventDefault()
 
     this.setState({ paymentRequested: true })
@@ -108,7 +108,7 @@ class CheckoutForm extends Component {
     // this.props.stripe.createToken({type: 'card', name: 'Jenny Rosen'});
   }
 
-  onChange(ev) {
+  onChange (ev) {
     ev.preventDefault()
     let formData = {}
     formData[ev.target.name] = ev.target.value
@@ -116,7 +116,7 @@ class CheckoutForm extends Component {
     this.setState({ paymentRequested: false })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { user } = this.props
 
     if (user && user.id) {
@@ -129,52 +129,52 @@ class CheckoutForm extends Component {
     }
   }
 
-  render() {
+  render () {
     const logged = this.state.authenticated
     const { user } = this.props
 
     return (
       <form
-        onSubmit={this.handleSubmit}
-        onChange={this.onChange}
-        style={{ marginTop: 20 }}
+        onSubmit={ this.handleSubmit }
+        onChange={ this.onChange }
+        style={ { marginTop: 20 } }
       >
-        <Grid container spacing={24}>
-          <Grid item xs={12} style={{ marginBottom: 20 }}>
-            {logged ? (
+        <Grid container spacing={ 24 }>
+          <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
+            { logged ? (
               <div>
-                {user && user.name ? (
+                { user && user.name ? (
                   <div>
                     <Typography variant='caption'>
                       <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
                     </Typography>
                     <Typography variant='subheading'>
-                      {`${this.state.fullname} (${this.state.email})`}
+                      { `${this.state.fullname} (${this.state.email})` }
                     </Typography>
                   </div>
                 ) : (
-                    <UserSection error={this.state.error} name={this.state.fullname} email={this.state.email} />
-                  )}
+                  <UserSection error={ this.state.error } name={ this.state.fullname } email={ this.state.email } />
+                ) }
               </div>
             ) : (
-                <UserSection error={this.state.error} />
-              )}
+              <UserSection error={ this.state.error } />
+            ) }
           </Grid>
-          <Grid item xs={12}>
-            <CardSection {...this.props} />
+          <Grid item xs={ 12 }>
+            <CardSection { ...this.props } />
           </Grid>
-          <Grid item xs={12}>
-            <div style={{ marginTop: 20, marginBottom: 0, float: 'right' }}>
-              <Button color='primary' onClick={this.props.onClose}>
+          <Grid item xs={ 12 }>
+            <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
+              <Button color='primary' onClick={ this.props.onClose }>
                 <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
               </Button>
               <Button
                 type='submit'
                 variant='contained'
                 color='secondary'
-                disabled={this.state.paymentRequested}
+                disabled={ this.state.paymentRequested }
               >
-                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay $ {price}' values={{ price: this.props.itemPrice }} />
+                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay $ {price}' values={ { price: this.props.itemPrice } } />
               </Button>
             </div>
           </Grid>

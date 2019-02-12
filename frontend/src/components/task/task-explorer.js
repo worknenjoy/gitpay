@@ -64,20 +64,20 @@ const styles = theme => ({
 })
 
 class TaskExplorer extends Component {
-  render() {
+  render () {
     const { classes } = this.props
 
     return (
       <Page>
         <TopBarContainer />
         <PageContent>
-          <Grid container className={classes.root} spacing={24}>
-            <Grid item xs={12} md={12}>
+          <Grid container className={ classes.root } spacing={ 24 }>
+            <Grid item xs={ 12 } md={ 12 }>
               <TaskListContainer />
             </Grid>
           </Grid>
         </PageContent>
-        <Bottom classes={classes} />
+        <Bottom classes={ classes } />
       </Page>
     )
   }

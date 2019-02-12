@@ -62,7 +62,7 @@ const SubscribeForm = ({ intl, type }) => {
   }
 
   return (
-    <SubscribeFrom {...formProps} className={type || {}} />
+    <SubscribeFrom { ...formProps } className={ type || {} } />
   )
 }
 

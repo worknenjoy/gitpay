@@ -10,6 +10,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Divider,
+  Dialog,
   DialogTitle,
 } from '@material-ui/core'
 import {
@@ -58,12 +59,12 @@ const messages = defineMessages({
 })
 
 class StatusDialog extends Component {
-  handleListItemClick(status) {
+  handleListItemClick (status) {
     this.props.onSelect({ id: this.props.id, status: status })
     this.props.onClose()
   }
 
-  render() {
+  render () {
     const { classes, onClose, selectedValue, ...other } = this.props
     const statusesDisplay = {
       open: this.props.intl.formatMessage(messages.openStatus),
@@ -75,52 +76,52 @@ class StatusDialog extends Component {
 
     return (
       <Dialog
-        onClose={this.props.onClose}
+        onClose={ this.props.onClose }
         aria-labelledby='simple-dialog-title'
-        {...other}
+        { ...other }
       >
         <DialogTitle id='simple-dialog-title'>
           <FormattedMessage id='account.dialog.status' defaultMessage='Task status' />
         </DialogTitle>
         <div>
           <List>
-            {statuses.map((status, index) => (
+            { statuses.map((status, index) => (
               <ListItem
                 style={
                   selectedValue === status ? { background: blue[200] } : {}
                 }
                 button
-                onClick={() => this.handleListItemClick(status)}
-                key={status}
+                onClick={ () => this.handleListItemClick(status) }
+                key={ status }
               >
                 <ListItemAvatar>
-                  <Avatar className={classes.avatar}>
-                    {selectedValue === status ? (
+                  <Avatar className={ classes.avatar }>
+                    { selectedValue === status ? (
                       <DoneIcon />
                     ) : (
-                        <FilterListIcon />
-                      )}
+                      <FilterListIcon />
+                  ) }
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={statusesDisplay[status]} />
+                <ListItemText primary={ statusesDisplay[status] } />
               </ListItem>
-            ))}
+            )) }
             <Divider />
             <ListItem
               button
-              onClick={() =>
+              onClick={ () =>
                 this.handleListItemClick(providerStatus[this.props.provider][this.props.providerStatus])
               }
             >
               <ListItemAvatar>
                 <Avatar>
-                  <img width='24' src={this.props.provider === 'github' ? logoGithub : logoBitbucket} />
+                  <img width='24' src={ this.props.provider === 'github' ? logoGithub : logoBitbucket } />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={`${this.props.provider}: ${
+                primary={ `${this.props.provider}: ${
                   statusesDisplay[this.props.providerStatus]
-                  }`}
+                }` }
               />
             </ListItem>
           </List>

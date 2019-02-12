@@ -9,32 +9,32 @@ import {
 import Close from '@material-ui/icons/Close'
 
 class Notification extends Component {
-  componentDidMount() { }
+  componentDidMount () { }
 
-  render() {
+  render () {
     return (
       <Snackbar
-        anchorOrigin={{
+        anchorOrigin={ {
           vertical: 'bottom',
           horizontal: 'left'
-        }}
-        open={this.props.open}
-        onClose={this.props.onClose}
-        autoHideDuration={6000}
-        SnackbarContentProps={{
+        } }
+        open={ this.props.open }
+        onClose={ this.props.onClose }
+        autoHideDuration={ 6000 }
+        SnackbarContentProps={ {
           'aria-describedby': 'message-id'
-        }}
-        message={<span id='message-id'>{this.props.message}</span>}
-        action={[
+        } }
+        message={ <span id='message-id'>{ this.props.message }</span> }
+        action={ [
           <IconButton
             key='close'
             aria-label='Close'
             color='inherit'
-            onClick={this.props.onClose}
+            onClick={ this.props.onClose }
           >
             <Close />
           </IconButton>
-        ]}
+        ] }
       />
     )
   }

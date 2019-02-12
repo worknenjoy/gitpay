@@ -10,11 +10,11 @@ import {
 import StripeCheckout from '../checkout/stripe-checkout'
 
 class PaymentDialog extends Component {
-  render() {
+  render () {
     return (
       <Dialog
-        open={this.props.open}
-        onClose={this.props.onClose}
+        open={ this.props.open }
+        onClose={ this.props.onClose }
         aria-labelledby='alert-dialog-payment-title'
         aria-describedby='alert-dialog-payment-description'
         fullWidth
@@ -27,7 +27,7 @@ class PaymentDialog extends Component {
           <DialogContentText id='alert-dialog-payment-description'>
             <FormattedMessage id='payment.new.text' defaultMessage='Please fill your credit card details' />
           </DialogContentText>
-          <StripeCheckout {...this.props} />
+          <StripeCheckout { ...this.props } />
         </DialogContent>
       </Dialog>
     )

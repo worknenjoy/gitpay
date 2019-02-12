@@ -6,20 +6,20 @@ import Typography from '@material-ui/core/Typography'
 import { CardElement } from 'react-stripe-elements'
 
 class CardSection extends React.Component {
-  render() {
+  render () {
     return (
       <label>
-        {this.props.stripe ? (
+        { this.props.stripe ? (
           <CardElement
-            style={{
+            style={ {
               base: { fontSize: '22px', marginTop: 20, marginBottom: 20 }
-            }}
+            } }
           />
         ) : (
-            <Typography variant='caption'>
-              <FormattedMessage id='card.loading' defaultMessage='Loading card form...' />
-            </Typography>
-          )}
+          <Typography variant='caption'>
+            <FormattedMessage id='card.loading' defaultMessage='Loading card form...' />
+          </Typography>
+        ) }
       </label>
     )
   }

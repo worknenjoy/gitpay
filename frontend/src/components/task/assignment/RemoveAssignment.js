@@ -25,7 +25,7 @@ const RemoveIcon = styled(Icon)`
 `
 
 class RemoveAssignment extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = { open: false, message: '' }
@@ -54,24 +54,24 @@ class RemoveAssignment extends Component {
     this.closeModal()
   }
 
-  render() {
+  render () {
     const { visible } = this.props
     const { open, message } = this.state
 
     return (
       <Container>
-        {visible &&
+        { visible &&
           <Button
             size='small'
-            onClick={this.openModal}>
+            onClick={ this.openModal }>
             <RemoveIcon />
             <FormattedMessage id='task.assignment.remove.action' defaultMessage='Remove' />
           </Button>
         }
 
         <Dialog
-          open={open}
-          onClose={this.closeModal}
+          open={ open }
+          onClose={ this.closeModal }
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title'>
@@ -84,7 +84,7 @@ class RemoveAssignment extends Component {
               </Typography>
             </DialogContentText>
             <TextField
-              onChange={this.onChangeMessage}
+              onChange={ this.onChangeMessage }
               autoFocus
               name='message'
               multiline
@@ -93,10 +93,10 @@ class RemoveAssignment extends Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.closeModal} color='primary'>
+            <Button onClick={ this.closeModal } color='primary'>
               <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
             </Button>
-            <Button disabled={message.length === 0} onClick={this.removeAssignment} variant='contained' color='secondary' >
+            <Button disabled={ message.length === 0 } onClick={ this.removeAssignment } variant='contained' color='secondary' >
               <FormattedMessage id='task.assignment.actions.apply' defaultMessage='Apply' />
             </Button>
           </DialogActions>

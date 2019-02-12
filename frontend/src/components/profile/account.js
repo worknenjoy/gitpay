@@ -40,6 +40,7 @@ import {
   NavigateBefore,
   Done,
   Payment,
+  ArrowBack as PreviousIcon
 } from '@material-ui/icons'
 
 import ReactPlaceholder from 'react-placeholder'
@@ -50,8 +51,8 @@ import Const from '../../consts'
 import TabContainer from '../Tabs/TabContainer'
 import messages from './messages'
 
-function Transition(props) {
-  return <Slide direction='up' {...props} />
+function Transition (props) {
+  return <Slide direction='up' { ...props } />
 }
 
 const styles = theme => ({
@@ -87,7 +88,7 @@ const styles = theme => ({
 })
 
 class Account extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       accountUpdateModal: false,
@@ -111,7 +112,7 @@ class Account extends Component {
     this.handlePaypalAccount = this.handlePaypalAccount.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.user.logged) {
       const userId = this.props.user.user.id
       this.props.fetchAccount(userId)
@@ -120,15 +121,15 @@ class Account extends Component {
     }
   }
 
-  openUpdateModal() {
+  openUpdateModal () {
     this.setState({ accountUpdateModal: true })
   }
 
-  closeUpdateModal() {
+  closeUpdateModal () {
     this.setState({ accountUpdateModal: false })
   }
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault()
     let formData = {
       'legal_entity[first_name]': e.target['legal_entity[first_name]'].value,
@@ -158,7 +159,7 @@ class Account extends Component {
     this.setState({ accountUpdateModal: false })
   }
 
-  handleBankAccount(e) {
+  handleBankAccount (e) {
     e.preventDefault()
     const bankNumber = e.target['bank_number'].value
     if (bankNumber) {
@@ -180,32 +181,32 @@ class Account extends Component {
     }
   }
 
-  handlePaypalAccount(e) {
+  handlePaypalAccount (e) {
     e.preventDefault()
     this.props.updateUser(this.state.userId, {
       paypal_id: e.target.paypal_email.value
     })
   }
 
-  handleTabChange(e, value) {
+  handleTabChange (e, value) {
     this.setState({ currentTab: value })
   }
 
-  handleBankNumberSelect(e) {
+  handleBankNumberSelect (e) {
     this.setState({ selectedBank: e.target.value, bankNumberError: false })
   }
 
-  handleStepTab(index) {
+  handleStepTab (index) {
     this.setState({ currentStep: index })
   }
 
-  handleTermsChange(e) {
+  handleTermsChange (e) {
     e.preventDefault()
     const terms = e.target.value === 'terms'
     this.setState({ terms })
   }
 
-  handleAcceptTerms(e) {
+  handleAcceptTerms (e) {
     e.preventDefault()
     if (this.state.terms) {
       this.props.updateAccount(this.state.userId, {
@@ -216,14 +217,14 @@ class Account extends Component {
     }
   }
 
-  onChange(e) {
+  onChange (e) {
     e.preventDefault()
     let formData = {}
     formData[e.target.name] = e.target.value
     this.setState(formData)
   }
 
-  render() {
+  render () {
     const { classes, account, bankAccount, user } = this.props
 
     const getSteps = () => {
@@ -250,267 +251,268 @@ class Account extends Component {
         <ReactPlaceholder
           showLoadingAnimation
           type='media'
-          rows={5}
-          ready={account.completed && !account.error.error}
+          rows={ 5 }
+          ready={ account.completed && !account.error.error }
         >
           <div>
-            <AppBar position='static' color='default' style={{ marginTop: 20, boxShadow: 'none', background: 'transparent' }}>
+            <AppBar position='static' color='default' style={ { marginTop: 20, boxShadow: 'none', background: 'transparent' } }>
               <Tabs
-                value={this.state.currentTab}
-                onChange={this.handleTabChange}
+                value={ this.state.currentTab }
+                onChange={ this.handleTabChange }
                 scrollable
                 scrollButtons='on'
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={{ margin: 10 }} value={0} label={this.props.intl.formatMessage(messages.cardTab)} icon={<Payment type='stripe' notext />} />
-                <Tab style={{ margin: 10 }} value={1} label={this.props.intl.formatMessage(messages.paypalTab)} icon={<Payment type='paypal' notext />} />
+                <Tab style={ { margin: 10 } } value={ 0 } label={ this.props.intl.formatMessage(messages.cardTab) } icon={ <Payment type='stripe' notext /> } />
+                <Tab style={ { margin: 10 } } value={ 1 } label={ this.props.intl.formatMessage(messages.paypalTab) } icon={ <Payment type='paypal' notext /> } />
               </Tabs>
             </AppBar>
-            {this.state.currentTab === 0 &&
+            { this.state.currentTab === 0 &&
               <TabContainer>
-                {account.data.id ? (
+                { account.data.id ? (
                   <div>
-                    <Stepper nonLinear activeStep={this.state.currentStep}>
-                      {steps.map((label, index) => {
+                    <Stepper nonLinear activeStep={ this.state.currentStep }>
+                      { steps.map((label, index) => {
                         return (
-                          <Step key={index}>
+                          <Step key={ index }>
                             <StepButton
-                              onClick={() => this.handleStepTab(index)}
-                              icon={getStepsIcon(index)}
+                              onClick={ () => this.handleStepTab(index) }
+                              icon={ getStepsIcon(index) }
                             >
-                              {label}
+                              { label }
                             </StepButton>
                           </Step>
                         )
-                      })}
+                      }) }
                     </Stepper>
-                    {this.state.currentStep === 0 && (
-                      <Card className={classes.card}>
+                    { this.state.currentStep === 0 && (
+                      <Card className={ classes.card }>
                         <CardContent>
-                          <div className={classes.title}>
-                            <Typography className={classes.pos} color='textSecondary'>
+                          <div className={ classes.title }>
+                            <Typography className={ classes.pos } color='textSecondary'>
                               <FormattedMessage id='account.status' defaultMessage='Your account status:' />
                             </Typography>
-                            {account.data.verification.disabled_reason ? (
+                            { account.data.verification.disabled_reason ? (
                               <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
-                                {(msg) => (
+                                { (msg) => (
                                   <Chip
                                     label={
                                       this.props.intl.formatMessage(Const.ACCOUNT_REASONS[account.data.verification.disabled_reason]) || msg
                                     }
-                                    style={{ marginRight: 20, backgroundColor: cyan['500'] }}
+                                    style={ { marginRight: 20, backgroundColor: cyan['500'] } }
                                   />
-                                )}
+                                ) }
                               </FormattedMessage>
                             ) : (
-                                <div>
-                                  {account.data.external_accounts.total_count ? (
-                                    <FormattedMessage id='account.bank.activated' defaultMessage='Activated'>
-                                      {(msg) => (
-                                        <Chip
-                                          label={msg}
-                                          style={{
-                                            color: 'white',
-                                            marginRight: 20,
-                                            backgroundColor: 'green'
-                                          }}
-                                        />
-                                      )}
-                                    </FormattedMessage>
-                                  ) : (
-                                      <FormattedMessage id='account.bank.missing' defaultMessage='Missing bank data (go to next step)'>
-                                        {(msg) => (
-                                          <Chip
-                                            label={msg}
-                                            style={{
-                                              color: 'white',
-                                              marginRight: 20,
-                                              backgroundColor: green['500']
-                                            }}
-                                          />
-                                        )}
-                                      </FormattedMessage>
-                                    )}
-                                </div>
-                              )}
+                              <div>
+                                { account.data.external_accounts.total_count ? (
+                                  <FormattedMessage id='account.bank.activated' defaultMessage='Activated'>
+                                    { (msg) => (
+                                      <Chip
+                                        label={ msg }
+                                        style={ {
+                                          color: 'white',
+                                          marginRight: 20,
+                                          backgroundColor: 'green'
+                                        } }
+                                      />
+                                    ) }
+                                  </FormattedMessage>
+                                ) : (
+                                  <FormattedMessage id='account.bank.missing' defaultMessage='Missing bank data (go to next step)'>
+                                    { (msg) => (
+                                      <Chip
+                                        label={ msg }
+                                        style={ {
+                                          color: 'white',
+                                          marginRight: 20,
+                                          backgroundColor: green['500']
+                                        } }
+                                      />
+                                    ) }
+                                  </FormattedMessage>
+                                ) }
+                              </div>
+                            ) }
                           </div>
-                          {account.data.verification.fields_needed.length && account.data.verification.fields_needed[0] !== 'legal_entity.verification.document' ? (
+                          { account.data.verification.fields_needed.length && account.data.verification.fields_needed[0] !== 'legal_entity.verification.document' ? (
                             <div>
                               <Typography component='p'>
                                 <FormattedMessage id='account.pending.title' defaultMessage='We have the following items that needs to be verified:' />
                               </Typography>
                               <div>
-                                {account.data.verification.fields_needed.map(
+                                { account.data.verification.fields_needed.map(
                                   (item, i) => (
                                     <Chip
-                                      style={{ margin: 3 }}
-                                      key={i}
-                                      label={this.props.intl.formatMessage(Const.ACCOUNT_FIELDS[item])}
+                                      style={ { margin: 3 } }
+                                      key={ i }
+                                      label={ this.props.intl.formatMessage(Const.ACCOUNT_FIELDS[item]) }
                                     />
                                   )
-                                )}
+                                ) }
                               </div>
                             </div>
                           ) : (
-                              <FormattedMessage id='account.details.complete' defaultMessage='Your account is now verified and you are able to receive all payments from tasks'>
-                                {(msg) => (
-                                  <Chip
-                                    style={{ margin: 3 }}
-                                    label={msg}
-                                  />
-                                )}
-                              </FormattedMessage>
-                            )}
+                            <FormattedMessage id='account.details.complete' defaultMessage='Your account is now verified and you are able to receive all payments from tasks'>
+                              { (msg) => (
+                                <Chip
+                                  style={ { margin: 3 } }
+                                  label={ msg }
+                                />
+                              ) }
+                            </FormattedMessage>
+                          ) }
                         </CardContent>
                         <CardActions>
                           <Button
-                            style={{ color: 'white' }}
+                            style={ { color: 'white' } }
                             size='large'
                             variant='contained'
                             color='primary'
-                            onClick={this.openUpdateModal}
+                            onClick={ this.openUpdateModal }
                           >
-                            {account.data.verification.disabled_reason
+                            { account.data.verification.disabled_reason
                               ? <FormattedMessage id='account.activate' defaultMessage='Activate account' />
-                              : <FormattedMessage id='account.update' defaultMessage='Update account' />}
+                              : <FormattedMessage id='account.update' defaultMessage='Update account' /> }
                           </Button>
                           <Button
-                            style={{ color: 'white' }}
+                            style={ { color: 'white' } }
                             size='large'
                             variant='contained'
                             color='primary'
-                            onClick={() => this.handleStepTab(1)}
+                            onClick={ () => this.handleStepTab(1) }
                           >
                             <FormattedMessage id='account.steps.next' defaultMessage='Next step' />
                             <NavigateNext />
                           </Button>
                         </CardActions>
                       </Card>
-                    )}
-                    {this.state.currentStep === 1 && (
+                    ) }
+                    { this.state.currentStep === 1 && (
                       <form
-                        onSubmit={this.handleBankAccount}
-                        style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
+                        onSubmit={ this.handleBankAccount }
+                        style={ { marginTop: 20, marginBottom: 20, width: '100%' } }
                       >
-                        <Card className={classes.card}>
+                        <Card className={ classes.card }>
                           <CardContent>
-                            <div style={{ marginBottom: 10 }}>
-                              <Typography>{getStepContent(1)}</Typography>
+                            <div style={ { marginBottom: 10 } }>
+                              <Typography>{ getStepContent(1) }</Typography>
                             </div>
-                            <Grid container spacing={24}>
-                              <Grid item xs={12}>
-                                {bankAccount.data.routing_number ? (
+                            <Grid container spacing={ 24 }>
+                              <Grid item xs={ 12 }>
+                                { bankAccount.data.routing_number ? (
                                   <Typography color='primary'>
                                     <FormattedMessage id='account.active.statement' defaultMessage='Your bank account is active' />
                                   </Typography>
                                 ) : (
-                                    <FormControl
-                                      className={classes.formControl}
-                                      error={this.state.bankNumberError}
+                                  <FormControl
+                                    className={ classes.formControl }
+                                    error={ this.state.bankNumberError }
+                                  >
+                                    <Select
+                                      value={ this.state.selectedBank }
+                                      displayEmpty
+                                      name='bank_number'
+                                      onChange={ this.handleBankNumberSelect }
                                     >
-                                      <Select
-                                        value={this.state.selectedBank}
-                                        displayEmpty
-                                        name='bank_number'
-                                        onChange={this.handleBankNumberSelect}
-                                      >
-                                        <MenuItem value='' disabled>
-                                          <em>
-                                            <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
-                                          </em>
-                                        </MenuItem>
-                                        {Object.keys(Const.BANK_NUMBERS).map(
-                                          (item, i) => {
-                                            return (
-                                              <MenuItem key={i} value={item}>{`${
-                                                Const.BANK_NUMBERS[item]
-                                                }`}</MenuItem>
-                                            )
-                                          }
-                                        )}
-                                      </Select>
-                                      {this.state.bankNumberError && (
-                                        <FormHelperText>
-                                          {' '}
-                                          <FormattedMessage id='account.bank.select' defaultMessage='Please select your bank' />
-                                        </FormHelperText>
-                                      )}
-                                    </FormControl>
-                                  )}
+                                      <MenuItem value='' disabled>
+                                        <em>
+                                          <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
+                                        </em>
+                                      </MenuItem>
+                                      { Object.keys(Const.BANK_NUMBERS).map(
+                                        (item, i) => {
+                                          return (
+                                            <MenuItem key={ i } value={ item }>{ `${
+                                              Const.BANK_NUMBERS[item]
+                                              }` }
+                                            </MenuItem>
+                                          )
+                                        }
+                                      ) }
+                                    </Select>
+                                    { this.state.bankNumberError && (
+                                      <FormHelperText>
+                                        { ' ' }
+                                        <FormattedMessage id='account.bank.select' defaultMessage='Please select your bank' />
+                                      </FormHelperText>
+                                    ) }
+                                  </FormControl>
+                                ) }
                               </Grid>
                             </Grid>
-                            <Grid container spacing={24}>
-                              <Grid item xs={12}>
+                            <Grid container spacing={ 24 }>
+                              <Grid item xs={ 12 }>
                                 <FormControl>
                                   <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
-                                    {(msg) => (
+                                    { (msg) => (
                                       <Input
                                         id='bank-routing-number'
                                         name='routing_number'
-                                        placeholder={msg}
-                                        style={{ marginRight: 20 }}
-                                        disabled={!!bankAccount.data.routing_number}
-                                        defaultValue={bankAccount.data.routing_number}
+                                        placeholder={ msg }
+                                        style={ { marginRight: 20 } }
+                                        disabled={ !!bankAccount.data.routing_number }
+                                        defaultValue={ bankAccount.data.routing_number }
                                       />
-                                    )}
+                                    ) }
                                   </FormattedMessage>
                                 </FormControl>
                                 <FormControl
-                                  error={this.state.AccountNumberError}
+                                  error={ this.state.AccountNumberError }
                                 >
                                   <FormattedMessage id='account.details.accountNumber' defaultMessage='Account number'>
-                                    {(msg) => (
+                                    { (msg) => (
                                       <Input
                                         id='bank-account-number'
                                         name='account_number'
-                                        placeholder={msg}
-                                        disabled={!!bankAccount.data.routing_number}
+                                        placeholder={ msg }
+                                        disabled={ !!bankAccount.data.routing_number }
                                         defaultValue={
                                           bankAccount.data.last4
                                             ? `*****${bankAccount.data.last4}`
                                             : ''
                                         }
                                       />
-                                    )}
+                                    ) }
                                   </FormattedMessage>
-                                  {this.state.AccountNumberError && (
+                                  { this.state.AccountNumberError && (
                                     <FormHelperText>
-                                      {' '}
+                                      { ' ' }
                                       <FormattedMessage id='account.details.numbersOnly' defaultMessage='Just numbers only' />
                                     </FormHelperText>
-                                  )}
+                                  ) }
                                 </FormControl>
                               </Grid>
                             </Grid>
                           </CardContent>
                           <CardActions>
                             <Button
-                              style={{ color: 'white' }}
+                              style={ { color: 'white' } }
                               size='large'
                               variant='contained'
                               color='primary'
                               type='submit'
-                              disabled={!!bankAccount.data.routing_number}
+                              disabled={ !!bankAccount.data.routing_number }
                             >
                               <FormattedMessage id='account.details.activate.action' defaultMessage='Activate bank account' />
                             </Button>
                             <Button
-                              style={{ color: 'white' }}
+                              style={ { color: 'white' } }
                               size='large'
                               variant='contained'
                               color='primary'
-                              onClick={() => this.handleStepTab(0)}
+                              onClick={ () => this.handleStepTab(0) }
                             >
                               <NavigateBefore />
                               <FormattedMessage id='account.steps.bank.previous' defaultMessage='Previous step' />
                             </Button>
                             <Button
-                              style={{ color: 'white' }}
+                              style={ { color: 'white' } }
                               size='large'
                               variant='contained'
                               color='primary'
-                              onClick={() => this.handleStepTab(2)}
+                              onClick={ () => this.handleStepTab(2) }
                             >
                               <FormattedMessage id='account.steps.next' defaultMessage='Next step' />
                               <NavigateNext />
@@ -518,47 +520,47 @@ class Account extends Component {
                           </CardActions>
                         </Card>
                       </form>
-                    )}
-                    {this.state.currentStep === 2 && (
+                    ) }
+                    { this.state.currentStep === 2 && (
                       <div>
-                        {!account.data.tos_acceptance.date ? (
+                        { !account.data.tos_acceptance.date ? (
                           <form
-                            onSubmit={this.handleAcceptTerms}
-                            style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
+                            onSubmit={ this.handleAcceptTerms }
+                            style={ { marginTop: 20, marginBottom: 20, width: '100%' } }
                           >
-                            <Card className={classes.card}>
+                            <Card className={ classes.card }>
                               <CardContent>
-                                <div style={{ marginBottom: 20 }}>
+                                <div style={ { marginBottom: 20 } }>
                                   <Typography component='title'>
-                                    {getStepContent(2)}
+                                    { getStepContent(2) }
                                   </Typography>
                                 </div>
-                                <Grid container spacing={24}>
-                                  <Grid item xs={12}>
+                                <Grid container spacing={ 24 }>
+                                  <Grid item xs={ 12 }>
                                     <Typography color='primary'>
                                       <a
                                         target='_blank'
                                         href='https://stripe.com/br/connect-account/legal'
                                       >
-                                        {' '}
-                                        <FormattedMessage id='account.details.terms.access' defaultMessage='Access Stripe terms' />{' '}
+                                        { ' ' }
+                                        <FormattedMessage id='account.details.terms.access' defaultMessage='Access Stripe terms' />{ ' ' }
                                       </a>
                                     </Typography>
                                     <FormControl>
                                       <FormattedMessage id='account.details.terms.read' defaultMessage='I read and I accept the Stripe terms to receive transfers about payments directly on my account'>
-                                        {(msg) => (
+                                        { (msg) => (
                                           <FormControlLabel
                                             control={
                                               <Switch
-                                                checked={this.state.terms}
-                                                onChange={this.handleTermsChange}
+                                                checked={ this.state.terms }
+                                                onChange={ this.handleTermsChange }
                                                 value='terms'
                                                 color='primary'
                                               />
                                             }
-                                            label={msg}
+                                            label={ msg }
                                           />
-                                        )}
+                                        ) }
                                       </FormattedMessage>
                                     </FormControl>
                                   </Grid>
@@ -566,22 +568,22 @@ class Account extends Component {
                               </CardContent>
                               <CardActions>
                                 <Button
-                                  style={{ color: 'white' }}
+                                  style={ { color: 'white' } }
                                   size='large'
                                   variant='contained'
                                   color='primary'
                                   type='submit'
-                                  disabled={!this.state.terms}
-                                  onClick={this.handleAcceptTerms}
+                                  disabled={ !this.state.terms }
+                                  onClick={ this.handleAcceptTerms }
                                 >
                                   <FormattedMessage id='account.terms.accept' defaultMessage='Accept Terms' />
                                 </Button>
                                 <Button
-                                  style={{ color: 'white' }}
+                                  style={ { color: 'white' } }
                                   size='large'
                                   variant='contained'
                                   color='primary'
-                                  onClick={() => this.handleStepTab(1)}
+                                  onClick={ () => this.handleStepTab(1) }
                                 >
                                   <NavigateBefore />
                                   <FormattedMessage id='account.steps.previous' defaultMessage='Previous step' />
@@ -590,52 +592,52 @@ class Account extends Component {
                             </Card>
                           </form>
                         ) : (
-                            <Card className={classes.card}>
-                              <CardContent>
-                                <div style={{ marginBottom: 10 }}>
-                                  <Typography>{getStepContent(2)}</Typography>
-                                </div>
-                                <Grid container spacing={24}>
-                                  <Grid item xs={12}>
-                                    <Typography color='primary'>
-                                      <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
-                                      <FormattedDate value={Moment.unix(
-                                        account.data.tos_acceptance.date
-                                      )} />
-                                    </Typography>
-                                  </Grid>
+                          <Card className={ classes.card }>
+                            <CardContent>
+                              <div style={ { marginBottom: 10 } }>
+                                <Typography>{ getStepContent(2) }</Typography>
+                              </div>
+                              <Grid container spacing={ 24 }>
+                                <Grid item xs={ 12 }>
+                                  <Typography color='primary'>
+                                    <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
+                                    <FormattedDate value={ Moment.unix(
+                                      account.data.tos_acceptance.date
+                                    ) } />
+                                  </Typography>
                                 </Grid>
-                              </CardContent>
-                              <CardActions>
-                                <Button
-                                  style={{ color: 'white' }}
-                                  size='large'
-                                  variant='contained'
-                                  color='primary'
-                                  onClick={() => this.handleStepTab(1)}
-                                >
-                                  <PreviousIcon />
-                                  <FormattedMessage id='account.steps.previous' defaultMessage='Previous step' />
-                                </Button>
-                                <Button
-                                  style={{ color: 'white' }}
-                                  size='large'
-                                  variant='contained'
-                                  color='primary'
-                                  onClick={() => this.handleStepTab(0)}
-                                >
-                                  <FormattedMessage id='account.steps.finish' defaultMessage='Finish' />
-                                  <Done />
-                                </Button>
-                              </CardActions>
-                            </Card>
-                          )}
+                              </Grid>
+                            </CardContent>
+                            <CardActions>
+                              <Button
+                                style={ { color: 'white' } }
+                                size='large'
+                                variant='contained'
+                                color='primary'
+                                onClick={ () => this.handleStepTab(1) }
+                              >
+                                <PreviousIcon />
+                                <FormattedMessage id='account.steps.previous' defaultMessage='Previous step' />
+                              </Button>
+                              <Button
+                                style={ { color: 'white' } }
+                                size='large'
+                                variant='contained'
+                                color='primary'
+                                onClick={ () => this.handleStepTab(0) }
+                              >
+                                <FormattedMessage id='account.steps.finish' defaultMessage='Finish' />
+                                <Done />
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        ) }
                       </div>
-                    )}
+                    ) }
                     <Dialog
-                      open={this.state.accountUpdateModal}
-                      transition={Transition}
-                      onClose={this.closeUpdateModal}
+                      open={ this.state.accountUpdateModal }
+                      TransitionComponent={ Transition }
+                      onClose={ this.closeUpdateModal }
                       aria-labelledby='alert-dialog-slide-title'
                       aria-describedby='alert-dialog-slide-description'
                       fullWidth
@@ -649,36 +651,36 @@ class Account extends Component {
                           <FormattedMessage id='account.verify.desc' defaultMessage='Please fill the data to verify your account' />
                         </DialogContentText>
                         <form
-                          onSubmit={this.handleSubmit}
-                          onChange={this.onChange}
-                          style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
+                          onSubmit={ this.handleSubmit }
+                          onChange={ this.onChange }
+                          style={ { marginTop: 20, marginBottom: 20, width: '100%' } }
                         >
-                          <Grid container spacing={24}>
-                            <Grid item xs={12}>
+                          <Grid container spacing={ 24 }>
+                            <Grid item xs={ 12 }>
                               <FormControl>
                                 <FormattedMessage id='account.verify.firstName' defaultMessage='First name'>
-                                  {(msg) => (
+                                  { (msg) => (
                                     <Input
                                       id='payment-form-user'
                                       name='legal_entity[first_name]'
-                                      placeholder={msg}
-                                      style={{ marginRight: 20 }}
-                                      defaultValue={account.data.legal_entity.first_name}
+                                      placeholder={ msg }
+                                      style={ { marginRight: 20 } }
+                                      defaultValue={ account.data.legal_entity.first_name }
                                     />
-                                  )}
+                                  ) }
                                 </FormattedMessage>
                               </FormControl>
                               <FormControl>
                                 <FormattedMessage id='account.verify.lastName' defaultMessage='Last name'>
-                                  {(msg) => (
+                                  { (msg) => (
                                     <Input
                                       name='legal_entity[last_name]'
                                       id='adornment-email'
-                                      placeholder={msg}
-                                      style={{ marginRight: 20 }}
-                                      defaultValue={account.data.legal_entity.last_name}
+                                      placeholder={ msg }
+                                      style={ { marginRight: 20 } }
+                                      defaultValue={ account.data.legal_entity.last_name }
                                     />
-                                  )}
+                                  ) }
                                 </FormattedMessage>
                               </FormControl>
                               <FormControl>
@@ -701,13 +703,13 @@ class Account extends Component {
                                 />
                               </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={ 12 }>
                               <FormControl>
                                 <Input
                                   id='payment-form-user'
                                   name='legal_entity[address][line1]'
-                                  placeholder={this.props.intl.formatMessage(messages.addressLine1)}
-                                  style={{ marginRight: 20 }}
+                                  placeholder={ this.props.intl.formatMessage(messages.addressLine1) }
+                                  style={ { marginRight: 20 } }
                                   defaultValue={
                                     account.data.legal_entity.address.line1
                                   }
@@ -717,8 +719,8 @@ class Account extends Component {
                                 <Input
                                   id='payment-form-user'
                                   name='legal_entity[address][line2]'
-                                  placeholder={this.props.intl.formatMessage(messages.addressLine2)}
-                                  style={{ marginRight: 20 }}
+                                  placeholder={ this.props.intl.formatMessage(messages.addressLine2) }
+                                  style={ { marginRight: 20 } }
                                   defaultValue={
                                     account.data.legal_entity.address.line2
                                   }
@@ -728,20 +730,20 @@ class Account extends Component {
                                 <Input
                                   name='legal_entity[address][postal_code]'
                                   id='adornment-email'
-                                  placeholder={this.props.intl.formatMessage(messages.zipCode)}
+                                  placeholder={ this.props.intl.formatMessage(messages.zipCode) }
                                   defaultValue={
                                     account.data.legal_entity.address.postal_code
                                   }
                                 />
                               </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={ 12 }>
                               <FormControl>
                                 <Input
                                   name='legal_entity[address][city]'
                                   id='adornment-city'
-                                  placeholder={this.props.intl.formatMessage(messages.city)}
-                                  style={{ marginRight: 20 }}
+                                  placeholder={ this.props.intl.formatMessage(messages.city) }
+                                  style={ { marginRight: 20 } }
                                   defaultValue={
                                     account.data.legal_entity.address.city
                                   }
@@ -751,21 +753,21 @@ class Account extends Component {
                                 <Input
                                   id='payment-form-user'
                                   name='legal_entity[address][state]'
-                                  placeholder={this.props.intl.formatMessage(messages.state)}
+                                  placeholder={ this.props.intl.formatMessage(messages.state) }
                                   defaultValue={
                                     account.data.legal_entity.address.state
                                   }
                                 />
                               </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={ 12 }>
                               <FormControl>
                                 <Input
                                   id='payment-form-user'
                                   name='legal_entity[dob][day]'
-                                  placeholder={this.props.intl.formatMessage(messages.dob)}
-                                  style={{ marginRight: 20 }}
-                                  defaultValue={account.data.legal_entity.dob.day}
+                                  placeholder={ this.props.intl.formatMessage(messages.dob) }
+                                  style={ { marginRight: 20 } }
+                                  defaultValue={ account.data.legal_entity.dob.day }
                                 />
                               </FormControl>
                               <FormControl>
@@ -773,41 +775,41 @@ class Account extends Component {
                                   autoWidth
                                   native
                                   name='legal_entity[dob][month]'
-                                  style={{ marginRight: 10 }}
-                                  onChange={(event) => {
+                                  style={ { marginRight: 10 } }
+                                  onChange={ (event) => {
                                     this.setState({ monthOfBirth: event.target.value })
-                                  }}
+                                  } }
                                 >
                                   <option value=''>
                                     <em>
                                       <FormattedMessage id='account.details' defaultMessage='Month of birth' />
                                     </em>
                                   </option>
-                                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
+                                  { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                     (item, i) => {
                                       return (
-                                        <option selected={!!(item === account.data.legal_entity.dob.month)} key={i} value={item}>{`${
-                                          item
-                                          }`}</option>
+                                        <option selected={ !!(item === account.data.legal_entity.dob.month) } key={ i } value={ item }>
+                                          { `${item}` }
+                                        </option>
                                       )
                                     }
-                                  )}
+                                  ) }
                                 </Select>
                               </FormControl>
                               <FormControl>
                                 <Input
                                   name='legal_entity[dob][year]'
                                   id='adornment-email'
-                                  placeholder={this.props.intl.formatMessage(messages.birthYear)}
-                                  defaultValue={account.data.legal_entity.dob.year}
+                                  placeholder={ this.props.intl.formatMessage(messages.birthYear) }
+                                  defaultValue={ account.data.legal_entity.dob.year }
                                 />
                               </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
-                              <div style={{ float: 'right' }}>
+                            <Grid item xs={ 12 }>
+                              <div style={ { float: 'right' } }>
                                 <Button
                                   color='primary'
-                                  onClick={this.closeUpdateModal}
+                                  onClick={ this.closeUpdateModal }
                                 >
                                   <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
                                 </Button>
@@ -826,70 +828,70 @@ class Account extends Component {
                     </Dialog>
                   </div>
                 ) : (
-                    <div>
-                      {!account.data.id &&
-                        <Card className={classes.cardEmpty}>
-                          <CardContent>
-                            <Typography className={classes.title} color='textSecondary'>
-                              <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
-                            </Typography>
-                          </CardContent>
-                          <CardActions className={classes.cardEmptyActions}>
-                            <Button
-                              style={{ color: 'white' }}
-                              size='large'
-                              variant='contained'
-                              color='primary'
-                              onClick={() => this.props.createAccount(user.user.id)}
-                            >
-                              <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
-                            </Button>
-                          </CardActions>
-                        </Card>}
-                    </div>)
+                  <div>
+                    { !account.data.id &&
+                      <Card className={ classes.cardEmpty }>
+                        <CardContent>
+                          <Typography className={ classes.title } color='textSecondary'>
+                            <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
+                          </Typography>
+                        </CardContent>
+                        <CardActions className={ classes.cardEmptyActions }>
+                          <Button
+                            style={ { color: 'white' } }
+                            size='large'
+                            variant='contained'
+                            color='primary'
+                            onClick={ () => this.props.createAccount(user.user.id) }
+                          >
+                            <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
+                          </Button>
+                        </CardActions>
+                      </Card> }
+                  </div>)
                 }
-              </TabContainer>}
-            {this.state.currentTab === 1 &&
+              </TabContainer> }
+            { this.state.currentTab === 1 &&
               <TabContainer>
                 <form
-                  onSubmit={this.handlePaypalAccount}
-                  style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
+                  onSubmit={ this.handlePaypalAccount }
+                  style={ { marginTop: 20, marginBottom: 20, width: '100%' } }
                 >
-                  <Card className={classes.card}>
+                  <Card className={ classes.card }>
                     <CardContent>
-                      <div className={classes.title}>
-                        <Typography className={classes.pos} color='textSecondary'>
+                      <div className={ classes.title }>
+                        <Typography className={ classes.pos } color='textSecondary'>
                           <FormattedMessage id='account.register.paypal.title' defaultMessage='Activate PayPal account:' />
                         </Typography>
-                        <Typography component='p' color='textSecondary' style={{ marginBottom: 20, marginTop: 20 }}>
+                        <Typography component='p' color='textSecondary' style={ { marginBottom: 20, marginTop: 20 } }>
                           <FormattedMessage id='account.register.paypal.description' defaultMessage='When you activate your account with PayPal, you will receive the bounties in the account that you will provide here. The Paypal taxes will be applied' />
                         </Typography>
-                        {!user.user.paypal_id ? (
+                        { !user.user.paypal_id ? (
                           <FormattedMessage id='account.register.paypal.status' defaultMessage='This account is not associated with PayPal'>
-                            {(msg) => (
+                            { (msg) => (
                               <Chip
-                                label={msg}
-                                style={{ marginRight: 20, backgroundColor: 'orange' }}
+                                label={ msg }
+                                style={ { marginRight: 20, backgroundColor: 'orange' } }
                               />
-                            )}
+                            ) }
                           </FormattedMessage>
                         ) : (
-                            <div>
-                              <Typography className={classes.pos} color='textSecondary'>
-                                <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
-                              </Typography>
-                              <Chip
-                                label={this.props.intl.formatMessage(messages.activeStatus)}
-                                style={{
-                                  color: 'white',
-                                  marginRight: 20,
-                                  backgroundColor: 'green'
-                                }}
-                              />
-                            </div>
-                          )}
+                          <div>
+                            <Typography className={ classes.pos } color='textSecondary'>
+                              <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
+                            </Typography>
+                            <Chip
+                              label={ this.props.intl.formatMessage(messages.activeStatus) }
+                              style={ {
+                                color: 'white',
+                                marginRight: 20,
+                                backgroundColor: 'green'
+                              } }
+                            />
+                          </div>
+                        ) }
                       </div>
-                      <Grid item xs={12}>
+                      <Grid item xs={ 12 }>
                         <FormControl>
                           <InputLabel htmlFor='adornment-password'>
                             <FormattedMessage id='account.register.paypay.email' defaultMessage='PayPal registered email' />
@@ -898,7 +900,7 @@ class Account extends Component {
                             name='paypal_email'
                             type='email'
                             id='adornment-email'
-                            style={{ marginRight: 20 }}
+                            style={ { marginRight: 20 } }
                             defaultValue={
                               user.user.paypal_id ? `${user.user.paypal_id}` : `${user.user.email}`
                             }
@@ -908,13 +910,13 @@ class Account extends Component {
                     </CardContent>
                     <CardActions>
                       <Button
-                        style={{ color: 'white' }}
+                        style={ { color: 'white' } }
                         size='large'
                         variant='contained'
                         color='primary'
                         type='submit'
                       >
-                        {!user.paypal_id
+                        { !user.paypal_id
                           ? <FormattedMessage id='account.register.paypay.activate' defaultMessage='Activate account' />
                           : <FormattedMessage id='account.register.paypay.update' defaultMessage='Update account' />
                         }
@@ -922,7 +924,8 @@ class Account extends Component {
                     </CardActions>
                   </Card>
                 </form>
-              </TabContainer>}
+              </TabContainer>
+            }
           </div>
         </ReactPlaceholder>
       </div>

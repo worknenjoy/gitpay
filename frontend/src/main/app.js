@@ -63,10 +63,10 @@ store.dispatch(updateIntl({
 
 const theme = createMuiTheme(Palette)
 
-function App() {
+function App () {
   return (
-    <MuiThemeProvider theme={theme}>
-      <Provider store={store}>
+    <MuiThemeProvider theme={ theme }>
+      <Provider store={ store }>
         <IntlProvider>
           <div>
             <NotificationContainer />

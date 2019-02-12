@@ -5,19 +5,19 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 
 class PreferencesBar extends Component {
-  render() {
+  render () {
     const { classes } = this.props
 
     return (
       <AppBar
         component='div'
-        className={classes.thirdBar}
+        className={ classes.thirdBar }
         color='default'
         position='static'
-        elevation={0}>
+        elevation={ 0 }>
         <Toolbar>
-          <Grid container alignItems='center' spacing={8}>
-            <Grid item xs style={{ paddingTop: 15, paddingBottom: 15 }}>
+          <Grid container alignItems='center' spacing={ 8 }>
+            <Grid item xs style={ { paddingTop: 15, paddingBottom: 15 } }>
               <Typography color='primary' variant='subheading' gutterBottom>
                 <FormattedMessage id='preferences.subtitle' defaultMessage='Setup your preferences about skill and how you should receive the notifications about new tasks and projects' />
               </Typography>

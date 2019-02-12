@@ -166,21 +166,21 @@ const styles = theme => ({
 })
 
 class Order extends Component {
-  componentWillMount() { }
+  componentWillMount () { }
 
-  render() {
+  render () {
     const { classes } = this.props
 
     return (
       <div>
-        <Grid container className={classes.root} spacing={24}>
+        <Grid container className={ classes.root } spacing={ 24 }>
           <TopBar />
-          <Grid item xs={12}>
+          <Grid item xs={ 12 }>
             <Typography
               variant='display1'
               color='primary'
               align='left'
-              className={classes.typo}
+              className={ classes.typo }
               gutterBottom
             >
               page

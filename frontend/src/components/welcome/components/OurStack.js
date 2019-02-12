@@ -44,11 +44,11 @@ const OurStack = ({ technologies }) => (
     <Typography variant='subheading' color='inherit' gutterBottom>
       <FormattedMessage id='info.stack.subheading' defaultMessage='Our stack' />
       <Stack>
-        {technologies.map((technology, index) =>
+        { technologies.map((technology, index) =>
           (<Technology
-            onClick={handleClick(technology.url)}
-            key={index}
-            label={technology.label}
+            onClick={ handleClick(technology.url) }
+            key={ index }
+            label={ technology.label }
           />)
         )
         }

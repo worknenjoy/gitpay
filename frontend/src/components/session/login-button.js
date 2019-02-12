@@ -18,7 +18,7 @@ const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 import api from '../../consts'
-import { IncomingMessage } from 'http';
+// import { IncomingMessage } from 'http'
 
 const styles = theme => ({
   gutterLeft: {
@@ -37,7 +37,7 @@ const Content = styled.div`
 `
 
 class LoginButton extends Component {
-  componentWillMount() {
+  componentWillMount () {
     if (this.props.referer) {
       Auth.storeReferer(this.props.referer.pathname)
     }
@@ -49,48 +49,48 @@ class LoginButton extends Component {
     }
   }
 
-  render() {
+  render () {
     const { classes, contrast, size, includeForm } = this.props
 
     return (
-      <Wrapper contrast={contrast}>
+      <Wrapper contrast={ contrast }>
         <Content>
-          {includeForm && (
+          { includeForm && (
             <div>
-              <Typography type='subtitle1' color={contrast ? 'inherit' : 'default'} gutterBottom noWrap>
+              <Typography type='subtitle1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
               <LoginFormContainer />
             </div>
-          )}
+          ) }
 
-          <div style={{ textAlign: 'center' }}>
-            <Typography type='subtitle1' color={contrast ? 'inherit' : 'default'} gutterBottom>
+          <div style={ { textAlign: 'center' } }>
+            <Typography type='subtitle1' color={ contrast ? 'inherit' : 'default' } gutterBottom>
               <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
             </Typography>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
+          <div style={ { display: 'flex', justifyContent: 'center', marginTop: 10 } }>
             <div>
               <Button
-                style={{ marginRight: 10 }}
-                href={`${api.API_URL}/authorize/github`}
+                style={ { marginRight: 10 } }
+                href={ `${api.API_URL}/authorize/github` }
                 variant='contained'
-                size={size}
+                size={ size }
                 color='secondary'
-                className={classes.logButtons}
+                className={ classes.logButtons }
               >
-                <img width='16' src={logoGithub} />
-                <span className={classes.gutterLeft}>Github</span>
+                <img width='16' src={ logoGithub } />
+                <span className={ classes.gutterLeft }>Github</span>
               </Button>
               <Button
-                href={`${api.API_URL}/authorize/bitbucket`}
+                href={ `${api.API_URL}/authorize/bitbucket` }
                 variant='contained'
-                size={size}
+                size={ size }
                 color='secondary'
-                className={classes.logButtons}
+                className={ classes.logButtons }
               >
-                <img width='16' src={logoBitbucket} />
-                <span className={classes.gutterLeft}>Bitbucket</span>
+                <img width='16' src={ logoBitbucket } />
+                <span className={ classes.gutterLeft }>Bitbucket</span>
               </Button>
             </div>
           </div>

@@ -114,18 +114,18 @@ const styles = theme => ({
 })
 
 class Profile extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       selected: null
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.setActive(this.props.location.pathname)
   }
 
-  setActive(path) {
+  setActive (path) {
     switch (path) {
       case '/profile/tasks':
         this.setState({ selected: 0 })
@@ -142,7 +142,7 @@ class Profile extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.setActive(nextProps.location.pathname)
     }
@@ -164,7 +164,7 @@ class Profile extends Component {
     window.history.back()
   }
 
-  render() {
+  render () {
     const { classes, user, preferences } = this.props
 
     let titleNavigation = this.getTitleNavigation()
@@ -174,135 +174,135 @@ class Profile extends Component {
         <TopBarContainer />
         <AppBar
           component='div'
-          classes={{ colorPrimary: classes.secondaryBar }}
+          classes={ { colorPrimary: classes.secondaryBar } }
           color='primary'
           position='static'
-          elevation={0}>
+          elevation={ 0 }>
           <Toolbar>
-            <Grid container alignItems='center' spacing={8}>
+            <Grid container alignItems='center' spacing={ 8 }>
               <Grid item xs>
                 <Typography color='primary' variant='title'>
-                  <Button onClick={this.handleBackToTaskList} variant='text' size='small' aria-label='Back' color='primary'>
+                  <Button onClick={ this.handleBackToTaskList } variant='text' size='small' aria-label='Back' color='primary'>
                     <ArrowBack />
                   </Button>
-                  <span style={{ marginLeft: 10 }}>
-                    {titleNavigation}
+                  <span style={ { marginLeft: 10 } }>
+                    { titleNavigation }
                   </span>
                 </Typography>
               </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
-        {this.state.selected === 2 &&
-          <PreferencesBar classes={classes} />
+        { this.state.selected === 2 &&
+          <PreferencesBar classes={ classes } />
         }
         <PageContent>
-          <Grid container className={classes.root} spacing={24}>
-            <Grid item xs={12} md={8}>
+          <Grid container className={ classes.root } spacing={ 24 }>
+            <Grid item xs={ 12 } md={ 8 }>
               <HashRouter>
                 <Switch>
-                  <Route exact path='/profile' component={ProfileOptions} />
+                  <Route exact path='/profile' component={ ProfileOptions } />
                   <Route
                     exact
                     path='/profile/tasks'
-                    component={() => <TaskListContainer />}
+                    component={ () => <TaskListContainer /> }
                   />
                   <Route
                     exact
                     path='/profile/payment-options'
-                    component={() => <PaymentOptions user={user} />}
+                    component={ () => <PaymentOptions user={ user } /> }
                   />
                   <Route
                     exact
                     path='/profile/preferences'
-                    component={() => <Preferences user={user} preferences={preferences} classes={classes} updateUser={this.props.updateUser} fetchPreferences={this.props.fetchPreferences} />}
+                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
                   />
                 </Switch>
               </HashRouter>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <div className={classes.bigRow}>
-                <div className={classes.row}>
-                  {user.picture_url ? (
+            <Grid item xs={ 12 } md={ 4 }>
+              <div className={ classes.bigRow }>
+                <div className={ classes.row }>
+                  { user.picture_url ? (
                     <Avatar
-                      alt={user.username}
-                      src={user.picture_url}
-                      className={classNames(classes.avatar, classes.bigAvatar)}
+                      alt={ user.username }
+                      src={ user.picture_url }
+                      className={ classNames(classes.avatar, classes.bigAvatar) }
                     />
                   ) : (
-                      <Avatar
-                        alt={user.username}
-                        src=''
-                        className={classNames(classes.avatar, classes.bigAvatar)}
-                      >
-                        {user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <Person />)}
-                      </Avatar>
-                    )}
+                    <Avatar
+                      alt={ user.username }
+                      src=''
+                      className={ classNames(classes.avatar, classes.bigAvatar) }
+                    >
+                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <Person />) }
+                    </Avatar>
+                  ) }
                 </div>
-                <div className={classes.rowList}>
-                  <div className={classes.rowContent}>
+                <div className={ classes.rowList }>
+                  <div className={ classes.rowContent }>
                     <Button
-                      disabled={user.provider === 'github'}
-                      href={`${api.API_URL}/authorize/github`}
+                      disabled={ user.provider === 'github' }
+                      href={ `${api.API_URL}/authorize/github` }
                       variant='contained'
                       size='small'
                       color='secondary'
-                      className={classes.altButton}
+                      className={ classes.altButton }
                     >
-                      <img width='16' src={logoGithub} className={classes.icon} />{' '}
+                      <img width='16' src={ logoGithub } className={ classes.icon } />{ ' ' }
                       Github
                     </Button>
                     <Button
-                      disabled={user.provider === 'bitbucket'}
-                      href={`${api.API_URL}/authorize/bitbucket`}
+                      disabled={ user.provider === 'bitbucket' }
+                      href={ `${api.API_URL}/authorize/bitbucket` }
                       variant='contained'
                       size='small'
                       color='secondary'
-                      className={classes.altButton}
+                      className={ classes.altButton }
                     >
                       <img
                         width='16'
-                        src={logoBitbucket}
-                        className={classes.icon}
-                      />{' '}
+                        src={ logoBitbucket }
+                        className={ classes.icon }
+                      />{ ' ' }
                       Bitbucket
                     </Button>
                   </div>
                 </div>
-                <div className={classes.rowList}>
-                  <div className={classes.infoItem}>
-                    <Typography>{user.name}</Typography>
+                <div className={ classes.rowList }>
+                  <div className={ classes.infoItem }>
+                    <Typography>{ user.name }</Typography>
                   </div>
-                  <div className={classes.infoItem}>
+                  <div className={ classes.infoItem }>
                     <Typography>
-                      <a href={user.website}>{user.website}</a>
+                      <a href={ user.website }>{ user.website }</a>
                     </Typography>
                   </div>
-                  {user.repos && (
-                    <div className={classes.infoItem}>
+                  { user.repos && (
+                    <div className={ classes.infoItem }>
                       <Typography>
                         <h4>
                           <DeviceHub />
                           <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
                         </h4>
-                        <p>{user.repos}</p>
+                        <p>{ user.repos }</p>
                       </Typography>
                     </div>
-                  )}
+                  ) }
                 </div>
-                <div className={classes.row}>
-                  <Paper className={classes.menuContainer}>
+                <div className={ classes.row }>
+                  <Paper className={ classes.menuContainer }>
                     <MenuList>
                       <MenuItem
-                        onClick={() => this.props.history.push('/profile/tasks')}
-                        className={classes.menuItem}
-                        selected={this.state.selected === 0}
+                        onClick={ () => this.props.history.push('/profile/tasks') }
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 0 }
                       >
-                        <ListItemIcon className={classes.icon}>
+                        <ListItemIcon className={ classes.icon }>
                           <LibraryBooks />
                         </ListItemIcon>
                         <ListItemText
-                          classes={{ primary: classes.primary }}
+                          classes={ { primary: classes.primary } }
                           inset
                           primary={
                             <span>
@@ -312,15 +312,15 @@ class Profile extends Component {
                         />
                       </MenuItem>
                       <MenuItem
-                        onClick={() => this.props.history.push('/profile/payment-options')}
-                        className={classes.menuItem}
-                        selected={this.state.selected === 1}
+                        onClick={ () => this.props.history.push('/profile/payment-options') }
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 1 }
                       >
-                        <ListItemIcon className={classes.icon}>
+                        <ListItemIcon className={ classes.icon }>
                           <CreditCard />
                         </ListItemIcon>
                         <ListItemText
-                          classes={{ primary: classes.primary }}
+                          classes={ { primary: classes.primary } }
                           inset
                           primary={
                             <span>
@@ -330,15 +330,15 @@ class Profile extends Component {
                         />
                       </MenuItem>
                       <MenuItem
-                        onClick={() => this.props.history.push('/profile/preferences')}
-                        className={classes.menuItem}
-                        selected={this.state.selected === 2}
+                        onClick={ () => this.props.history.push('/profile/preferences') }
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 2 }
                       >
-                        <ListItemIcon className={classes.icon}>
+                        <ListItemIcon className={ classes.icon }>
                           <Tune />
                         </ListItemIcon>
                         <ListItemText
-                          classes={{ primary: classes.primary }}
+                          classes={ { primary: classes.primary } }
                           inset
                           primary={
                             <span>
@@ -354,7 +354,7 @@ class Profile extends Component {
             </Grid>
           </Grid>
         </PageContent>
-        <Bottom classes={classes} />
+        <Bottom classes={ classes } />
       </Page>
     )
   }

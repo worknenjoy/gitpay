@@ -11,7 +11,7 @@ import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 
 class MySkill extends Component {
-  render() {
+  render () {
     const { classes, title } = this.props
 
     return (
@@ -21,10 +21,11 @@ class MySkill extends Component {
             <Folder />
           </Avatar>
         }
-        label={title}
-        className={classes.chipSkill}
-        onDelete={this.props.onDelete}
-      />)
+        label={ title }
+        className={ classes.chipSkill }
+        onDelete={ this.props.onDelete }
+      />
+    )
   }
 }
 

@@ -13,23 +13,23 @@ import {
 import FolderIcon from '@material-ui/icons/Folder'
 
 class Skill extends Component {
-  render() {
+  render () {
     const { classes, title } = this.props
 
     return (
-      <Grid container direction='row' alignItems='center' xs={6}>
-        <Grid item xs={2}>
-          <Avatar className={classNames(classes.avatar, classes.bigAvatar)}>
+      <Grid container direction='row' alignItems='center' xs={ 6 }>
+        <Grid item xs={ 2 }>
+          <Avatar className={ classNames(classes.avatar, classes.bigAvatar) }>
             <FolderIcon />
           </Avatar>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={ 6 }>
           <Typography variant='body1' color='default'>
-            {title}
+            { title }
           </Typography>
         </Grid>
-        <Grid item xs={4} alignItems='flex-end'>
-          <Checkbox onClick={this.props.onClick} checked={this.props.isSelected ? 'checked' : ''} />
+        <Grid item xs={ 4 } alignItems='flex-end'>
+          <Checkbox onClick={ this.props.onClick } checked={ this.props.isSelected ? 'checked' : '' } />
         </Grid>
       </Grid>
     )

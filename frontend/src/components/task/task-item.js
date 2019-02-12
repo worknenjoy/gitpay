@@ -23,43 +23,43 @@ const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 class TaskItem extends Component {
-  componentDidMount() { }
+  componentDidMount () { }
 
-  handleClickListItem(id) {
+  handleClickListItem (id) {
     this.props.history.push('/task/' + id)
   }
 
-  render() {
+  render () {
     const { item, key, ready, classes, intl } = this.props
 
     return (
       <ReactPlaceholder
-        style={{ marginBottom: 20 }}
+        style={ { marginBottom: 20 } }
         showLoadingAnimation
         type='media'
-        rows={2}
-        ready={ready}
+        rows={ 2 }
+        ready={ ready }
       >
         <ListItem
-          key={key}
+          key={ key }
           button
-          onClick={() => this.handleClickListItem(item.id)}
+          onClick={ () => this.handleClickListItem(item.id) }
         >
           <Avatar>
             <ItemIcon />
           </Avatar>
           <ListItemText
-            id={item.id}
-            primary={TextEllipsis(item.url, 50)}
-            secondary={item.value ? `$ ${item.value}` : ' - '}
+            id={ item.id }
+            primary={ TextEllipsis(item.url, 50) }
+            secondary={ item.value ? `$ ${item.value}` : ' - ' }
           />
           <Chip
-            label={intl.formatMessage(Constants.STATUSES[item.status])}
-            style={{
+            label={ intl.formatMessage(Constants.STATUSES[item.status]) }
+            style={ {
               marginRight: 10,
               backgroundColor: 'green',
               color: 'white'
-            }}
+            } }
           />
           <Chip
             label={
@@ -67,17 +67,17 @@ class TaskItem extends Component {
                 ? MomentComponent(item.deadline).fromNow()
                 : ' - '
             }
-            style={{
+            style={ {
               marginRight: 20,
               backgroundColor: 'green',
               color: 'white'
-            }}
+            } }
           />
           <ListItemSecondaryAction>
             <IconButton aria-label='provider'>
-              <Tooltip id='tooltip-fab' title={`${item.provider}`} placement='right'>
-                <a target='_blank' href={item.url}>
-                  <img width='24' src={item.provider === 'github' ? logoGithub : logoBitbucket} className={classes.icon} />
+              <Tooltip id='tooltip-fab' title={ `${item.provider}` } placement='right'>
+                <a target='_blank' href={ item.url }>
+                  <img width='24' src={ item.provider === 'github' ? logoGithub : logoBitbucket } className={ classes.icon } />
                 </a>
               </Tooltip>
             </IconButton>
