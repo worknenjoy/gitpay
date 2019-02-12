@@ -383,7 +383,7 @@
   "actions.task.create.validation.invalid": "This issue was not found",
   "actions.task.issues.error.notfound": "We could not find this issue",
   "actions.task.delete.notification.success": "Task deleted successfully",
-  "actions.task.delete.notification.error": "Not was possible to delete this task",
+  "actions.task.delete.notification.error": "We couldn't delete this task",
   "actions.task.delete.auth.error": "You need to login first to delete a task",
   "actions.task.create.notification.success": "Task created successfully",
   "actions.task.create.notification.error": "Error to update task",
