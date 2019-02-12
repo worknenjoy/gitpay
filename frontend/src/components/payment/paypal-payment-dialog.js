@@ -6,7 +6,7 @@ import Dialog, {
   DialogContentText,
   DialogTitle
 } from 'material-ui/Dialog'
-import CheckBox from 'material-ui/CheckBox'
+import Checkbox from 'material-ui/Checkbox'
 
 class PaypalPaymentDialog extends Component {
   constructor (props) {
