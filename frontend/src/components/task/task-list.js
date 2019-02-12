@@ -130,7 +130,6 @@ class TaskList extends Component {
 
   render() {
     const { classes, user } = this.props
-
     const TabContainer = props => {
       return (
         <Typography component='div' style={{ padding: 8 * 3 }}>

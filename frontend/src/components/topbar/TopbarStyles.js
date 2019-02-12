@@ -41,7 +41,7 @@ export const RightSide = styled(Side)`
 export const Logo = styled.img`
   width: 140px;
 
-  ${media.phone`width: 100px;`}
+  ${media.phone`width: 100px !important;`}
 `
 
 export const StyledButton = styled(Button)`
@@ -49,6 +49,25 @@ export const StyledButton = styled(Button)`
   font-size: 12px;
   cursor: pointer;
   margin-left: 10px !important;
+`
+
+export const LogoButton = styled(StyledButton)`
+
+  ${media.phone`
+    padding: 0px !important;
+  `}
+`
+
+export const StyledLanguageButton = styled(StyledButton)`
+  ${media.phone`
+    display: none !important;
+  `}
+`
+
+export const StyledSlackButton = styled(StyledButton)`
+  ${media.phone`
+    display: none !important;
+  `}
 `
 
 export const LabelButton = styled.span`
