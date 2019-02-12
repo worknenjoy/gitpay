@@ -2,13 +2,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Input, { InputAdornment } from 'material-ui/Input'
-import { FormControl, FormHelperText } from 'material-ui/Form'
-import AccountCircle from 'material-ui-icons/AccountCircle'
-import MailIcon from 'material-ui-icons/Mail'
+
+import {
+  Input,
+  InputAdornment,
+  FormControl,
+  FormHelperText
+} from '@material-ui/core'
+import {
+  AccountCircle,
+  Email
+} from '@material-ui/icons'
 
 class UserSection extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       error: {
@@ -21,7 +28,7 @@ class UserSection extends Component {
     this.onChangeEmail = this.onChangeEmail.bind(this)
   }
 
-  componentWillReceiveProps (props, newProps) {
+  componentWillReceiveProps(props, newProps) {
     if (props !== newProps) {
       this.setState({
         error: props.error
@@ -29,7 +36,7 @@ class UserSection extends Component {
     }
   }
 
-  onChangeName (ev) {
+  onChangeName(ev) {
     if (ev.target.value.length < 1) {
       this.setState({ error: { fullname: true } })
     }
@@ -38,7 +45,7 @@ class UserSection extends Component {
     }
   }
 
-  onChangeEmail (ev) {
+  onChangeEmail(ev) {
     if (ev.target.value.length < 1) {
       this.setState({ error: { email: true } })
     }
@@ -47,12 +54,12 @@ class UserSection extends Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <label>
-        <FormControl error={ this.state.error.fullname }>
+        <FormControl error={this.state.error.fullname}>
           <FormattedMessage id='user.data.fullname' defaultMessage='Full name'>
-            { (msg) => (
+            {(msg) => (
               <Input
                 id='payment-form-user'
                 name='fullname'
@@ -61,51 +68,51 @@ class UserSection extends Component {
                     <AccountCircle />
                   </InputAdornment>
                 }
-                placeholder={ msg }
+                placeholder={msg}
                 ref='payment-form-user'
-                defaultValue={ this.props.name }
+                defaultValue={this.props.name}
                 required
-                style={ { marginRight: 20 } }
-                onChange={ this.onChangeName }
+                style={{ marginRight: 20 }}
+                onChange={this.onChangeName}
               />
-            ) }
+            )}
           </FormattedMessage>
-          { this.state.error.fullname && (
+          {this.state.error.fullname && (
             <FormattedMessage id='user.data.fullname.error' defaultMessage='Provide your full name'>
-              { (msg) => (
-                <FormHelperText error={ this.state.error.fullname }>
-                  { msg }
+              {(msg) => (
+                <FormHelperText error={this.state.error.fullname}>
+                  {msg}
                 </FormHelperText>
-              ) }
+              )}
             </FormattedMessage>
-          ) }
+          )}
         </FormControl>
-        <FormControl error={ this.state.error.email }>
+        <FormControl error={this.state.error.email}>
           <Input
             name='email'
             id='adornment-email'
             startAdornment={
               <InputAdornment position='start'>
-                <MailIcon />
+                <Email />
               </InputAdornment>
             }
             placeholder='e-mail'
             ref='payment-form-email'
             type='email'
-            disabled={ this.props.email }
-            defaultValue={ this.props.email }
+            disabled={this.props.email}
+            defaultValue={this.props.email}
             required
-            onChange={ this.onChangeEmail }
+            onChange={this.onChangeEmail}
           />
-          { this.state.error.email && (
+          {this.state.error.email && (
             <FormattedMessage id='user.data.email.error' defaultMessage='Provide your email correctly'>
-              { (msg) => (
-                <FormHelperText error={ this.state.error.email }>
-                  { msg }
+              {(msg) => (
+                <FormHelperText error={this.state.error.email}>
+                  {msg}
                 </FormHelperText>
-              ) }
+              )}
             </FormattedMessage>
-          ) }
+          )}
         </FormControl>
       </label>
     )

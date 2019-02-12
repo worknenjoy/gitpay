@@ -1,4 +1,4 @@
-import { indigo, teal, grey } from 'material-ui/colors'
+import { indigo, teal, grey } from '@material-ui/core/colors'
 
 const Palette = {
   palette: {

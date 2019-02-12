@@ -6,34 +6,44 @@ import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
 import 'react-placeholder/lib/reactPlaceholder.css'
 
-import Grid from 'material-ui/Grid'
-import Avatar from 'material-ui/Avatar'
-import Card, { CardHeader } from 'material-ui/Card'
-import AppBar from 'material-ui/AppBar'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Tooltip from 'material-ui/Tooltip'
-import Dialog, {
+import {
+  Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
-} from 'material-ui/Dialog'
+  DialogTitle,
+  Grid,
+  Avatar,
+  Card,
+  CardHeader,
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Button,
+  Tooltip,
+  Chip,
+  withStyles,
+  Paper,
+  FormControl,
+  Input,
+  InputAdornment,
+  InputLabel,
+  Checkbox,
+} from '@material-ui/core'
+import {
+  Redeem as RedeemIcon,
+  ShoppingBasket,
+  AddBox as AddIcon,
+  FilterList as FilterIcon,
+  HowToReg as TrophyIcon,
+  DateRange as DateIcon,
+  CalendarToday as CalendarIcon,
+  GroupWork as GroupWorkIcon,
+  Done as DoneIcon,
+  Navigation as NavigationIcon,
+  Warning as WarningIcon
+} from '@material-ui/icons'
 
-import RedeemIcon from 'material-ui-icons/Redeem'
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
-import AddIcon from 'material-ui-icons/Add'
-import FilterIcon from 'material-ui-icons/FilterList'
-import TrophyIcon from 'material-ui-icons/AccountBalanceWallet'
-import DateIcon from 'material-ui-icons/DateRange'
-import CalendarIcon from 'material-ui-icons/PermContactCalendar'
-import GroupWorkIcon from 'material-ui-icons/GroupAdd'
-import DoneIcon from 'material-ui-icons/Done'
-import NavigationIcon from 'material-ui-icons/ArrowBack'
-import InfoIcon from 'material-ui-icons/Info'
-import WarningIcon from 'material-ui-icons/Warning'
-
-import Chip from 'material-ui/Chip'
 import StatusDialog from './status-dialog'
 import TaskPayment from './task-payment'
 import TaskPaymentForm from './task-payment-form'
@@ -44,7 +54,6 @@ import RegularCard from '../Cards/RegularCard'
 import Table from '../Table/Table'
 
 import classNames from 'classnames'
-import { withStyles } from 'material-ui/styles'
 
 import marked from 'marked'
 import renderHTML from 'react-render-html'
@@ -66,10 +75,6 @@ import media from 'app/styleguide/media'
 import RemoveAssignment from './assignment/RemoveAssignment'
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
-import { Paper } from 'material-ui'
-import { FormControl } from 'material-ui/Form'
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
-import Checkbox from 'material-ui/Checkbox'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
@@ -388,7 +393,7 @@ const messages = defineMessages({
 })
 
 class Task extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -413,7 +418,7 @@ class Task extends Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.props.syncTask(this.props.match.params.id)
     this.props.fetchTask(this.props.match.params.id)
   }
@@ -526,13 +531,13 @@ class Task extends Component {
     })
   }
 
-  render () {
+  render() {
     const { classes, task, order } = this.props
 
     const TabContainer = props => {
       return (
-        <Typography component='div' style={ { padding: 8 * 3 } }>
-          { props.children }
+        <Typography component='div' style={{ padding: 8 * 3 }}>
+          {props.children}
         </Typography>
       )
     }
@@ -549,17 +554,17 @@ class Task extends Component {
 
     const userRow = user => {
       return (<span>
-        { user && user.length && user.profile_url
+        {user && user.length && user.profile_url
           ? (
             <FormattedMessage id='task.payment.user.check.github' defaultMessage='Check this user profile at Github'>
-              { (msg) => (
-                <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                  <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                    <span>{ user.username || user.name || ' - ' }</span>
-                    <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
+              {(msg) => (
+                <Tooltip id='tooltip-github' title={msg} placement='bottom'>
+                  <a target='_blank' href={user.profile_url} style={{ display: 'flex', alignItems: 'center' }}>
+                    <span>{user.username || user.name || ' - '}</span>
+                    <img style={{ backgroundColor: 'black', marginLeft: 10 }} width={18} src={logoGithub} />
                   </a>
                 </Tooltip>
-              ) }
+              )}
             </FormattedMessage>
           )
           : (
@@ -579,7 +584,7 @@ class Task extends Component {
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
-        <PaymentTypeIcon type={ item.provider } />
+        <PaymentTypeIcon type={item.provider} />
       ])
     }
 
@@ -591,30 +596,30 @@ class Task extends Component {
       return (
         <div>
           <RemoveAssignment
-            task={ task }
-            remove={ this.props.removeAssignment }
-            visible={ hasAssignedUser && isOwner }
+            task={task}
+            remove={this.props.removeAssignment}
+            visible={hasAssignedUser && isOwner}
           />
 
-          { (isOwner && !hasAssignedUser) &&
-          <Button
-            disabled={ hasAssignedUser }
-            onClick={ () => this.props.assignTask(task.id, assign.id) }
-            style={ { marginRight: 10 } }
-            variant='raised'
-            size='small'
-            color='primary'
-          >
-            <GroupWorkIcon style={ { marginRight: 5 } } />
-            <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
-          </Button>
+          {(isOwner && !hasAssignedUser) &&
+            <Button
+              disabled={hasAssignedUser}
+              onClick={() => this.props.assignTask(task.id, assign.id)}
+              style={{ marginRight: 10 }}
+              variant='contained'
+              size='small'
+              color='primary'
+            >
+              <GroupWorkIcon style={{ marginRight: 5 }} />
+              <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
+            </Button>
           }
 
-          { hasAssignedUser &&
+          {hasAssignedUser &&
             <FormattedMessage id='task.payment.action.chosen' defaultMessage='Chosen' >
-              { (msg) => (
-                <Chip label={ msg } />
-              ) }
+              {(msg) => (
+                <Chip label={msg} />
+              )}
             </FormattedMessage>
           }
         </div>
@@ -629,17 +634,17 @@ class Task extends Component {
       const items = assign.map((item, i) => {
         const userField = () => (
           <span>
-            { item.User.profile_url
+            {item.User.profile_url
               ? (
                 <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
-                  { (msg) => (
-                    <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                      <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                        <span>{ item.User.username || item.User.name || ' - ' }</span>
-                        <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
+                  {(msg) => (
+                    <Tooltip id='tooltip-github' title={msg} placement='bottom'>
+                      <a target='_blank' href={item.User.profile_url} style={{ display: 'flex', alignItems: 'center' }}>
+                        <span>{item.User.username || item.User.name || ' - '}</span>
+                        <img style={{ backgroundColor: 'black', marginLeft: 10 }} width={18} src={logoGithub} />
                       </a>
                     </Tooltip>
-                  ) }
+                  )}
                 </FormattedMessage>
               )
               : (
@@ -659,15 +664,15 @@ class Task extends Component {
       <div className='line-holder'>
         <RectShape
           color='white'
-          style={ { marginLeft: 20, marginTop: 20, width: 300, height: 20 } }
+          style={{ marginLeft: 20, marginTop: 20, width: 300, height: 20 }}
         />
       </div>
     )
 
     const updatedAtTimeString = MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A')
     const timePlaceholder = (
-      <Typography type='subheading' style={ { padding: 10, color: 'gray' } }>
-        { updatedAtTimeString }
+      <Typography type='subheading' style={{ padding: 10, color: 'gray' }}>
+        {updatedAtTimeString}
       </Typography>
     )
 
@@ -678,52 +683,52 @@ class Task extends Component {
         <TopBarContainer />
         <PageContent>
           <TaskHeader>
-            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='raised' size='small' aria-label='Delete' className={ classes.button }>
+            <Button onClick={this.handleBackToTaskList} style={{ marginBottom: 10 }} variant='contained' size='small' aria-label='Delete' className={classes.button}>
               <NavigationIcon />
               <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
             </Button>
-            <Typography variant='subheading' style={ { color: '#bbb' } }>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
-                ready={ task.completed }>
-                { task.data.metadata &&
-                  <a className={ classes.white } href={ task.data.url }>
-                    { task.data.metadata.company }
+            <Typography variant='subheading' style={{ color: '#bbb' }}>
+              <ReactPlaceholder showLoadingAnimation type='text' rows={1}
+                ready={task.completed}>
+                {task.data.metadata &&
+                  <a className={classes.white} href={task.data.url}>
+                    {task.data.metadata.company}
                   </a>
                 }
               </ReactPlaceholder>
             </Typography>
 
-            <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
-              ready={ task.completed }>
+            <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation
+              ready={task.completed}>
               <Typography variant='display1' color='primary' align='left' gutterBottom>
-                <a className={ classes.white } href={ task.data.url }>
-                  { task.data.title }
+                <a className={classes.white} href={task.data.url}>
+                  {task.data.title}
                 </a>
 
                 <Tags>
                   <Chip
-                    style={ { marginRight: 10 } }
-                    label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                    className={ classes.chipStatus }
-                    onDelete={ this.handleStatusDialog }
-                    onClick={ this.handleStatusDialog }
-                    deleteIcon={ <DoneIcon /> }
+                    style={{ marginRight: 10 }}
+                    label={this.props.intl.formatMessage(Constants.STATUSES[task.data.status])}
+                    className={classes.chipStatus}
+                    onDelete={this.handleStatusDialog}
+                    onClick={this.handleStatusDialog}
+                    deleteIcon={<DoneIcon />}
                   />
 
-                  { task.data.paid && (
+                  {task.data.paid && (
                     <FormattedMessage id='task.status.label.paid' defaultMessage='Paid'>
-                      { (msg) => (
+                      {(msg) => (
                         <Chip
-                          style={ { marginRight: 10 } }
-                          label={ msg }
-                          className={ classes.chipStatusPaid }
-                          onDelete={ this.handleTaskPaymentDialog }
-                          onClick={ this.handleTaskPaymentDialog }
-                          deleteIcon={ <RedeemIcon /> }
+                          style={{ marginRight: 10 }}
+                          label={msg}
+                          className={classes.chipStatusPaid}
+                          onDelete={this.handleTaskPaymentDialog}
+                          onClick={this.handleTaskPaymentDialog}
+                          deleteIcon={<RedeemIcon />}
                         />
-                      ) }
+                      )}
                     </FormattedMessage>
-                  ) }
+                  )}
                 </Tags>
 
               </Typography>
@@ -733,472 +738,472 @@ class Task extends Component {
             container
             justify='flex-start'
             direction='row'
-            spacing={ 24 }
+            spacing={24}
           >
             <Grid
               item
-              sm={ 12 }
-              xs={ 12 }
-              style={ {
+              sm={12}
+              xs={12}
+              style={{
                 display: 'flex',
                 alignItems: 'center',
                 marginTop: 12,
                 position: 'relative'
-              } }
+              }}
             >
-              <div style={ { position: 'absolute', left: 18, top: 5 } }>
+              <div style={{ position: 'absolute', left: 18, top: 5 }}>
                 <Typography color='default'>
                   <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
                 </Typography>
               </div>
-              <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
+              <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={{
                 name: task.data.metadata.issue.user.login
-              } }>
-                { (msg) => (
+              }}>
+                {(msg) => (
                   <Tooltip
                     id='tooltip-github'
-                    title={ msg }
+                    title={msg}
                     placement='bottom'
                   >
                     <a
-                      href={ `${task.data.metadata.issue.user.html_url}` }
+                      href={`${task.data.metadata.issue.user.html_url}`}
                       target='_blank'
                     >
                       <Avatar
-                        src={ task.data.metadata.issue.user.avatar_url }
-                        className={ classNames(classes.avatar) }
+                        src={task.data.metadata.issue.user.avatar_url}
+                        className={classNames(classes.avatar)}
                       />
                     </a>
                   </Tooltip>
-                ) }
+                )}
               </FormattedMessage>
-              <div className={ classes.paper }>
+              <div className={classes.paper}>
                 <Button
-                  style={ { marginRight: 10 } }
-                  onClick={ this.handlePaymentForm }
+                  style={{ marginRight: 10 }}
+                  onClick={this.handlePaymentForm}
                   size='small'
                   color='primary'
-                  className={ classes.altButton }
+                  className={classes.altButton}
                 >
-                  <span className={ classes.spaceRight }>
+                  <span className={classes.spaceRight}>
                     <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
-                  </span>{ ' ' }
+                  </span>{' '}
                   <RedeemIcon />
                 </Button>
                 <Button
-                  style={ { marginRight: 10 } }
-                  onClick={ this.handleInvite }
+                  style={{ marginRight: 10 }}
+                  onClick={this.handleInvite}
                   size='small'
                   color='primary'
-                  className={ classes.altButton }
+                  className={classes.altButton}
                 >
-                  <span className={ classes.spaceRight }>
+                  <span className={classes.spaceRight}>
                     <FormattedMessage id='task.bounties.invite' defaultMessage='Invite' />
                   </span>
                   <AddIcon />
                 </Button>
-                { !taskOwner() &&
+                {!taskOwner() &&
                   <Button
-                    style={ { marginRight: 10 } }
-                    onClick={ this.handleAssignDialogOpen }
+                    style={{ marginRight: 10 }}
+                    onClick={this.handleAssignDialogOpen}
                     size='medium'
                     color='primary'
-                    className={ classes.altButton }
+                    className={classes.altButton}
                   >
-                    <span className={ classes.spaceRight }>
+                    <span className={classes.spaceRight}>
                       <FormattedMessage id='task.interested.action' defaultMessage='Im interested' />
-                    </span>{ ' ' }
+                    </span>{' '}
                     <AddIcon />
                   </Button>
                 }
-                { taskOwner() && (
-                  <div style={ { display: 'inline-block' } }>
+                {taskOwner() && (
+                  <div style={{ display: 'inline-block' }}>
                     <Button
-                      style={ { marginRight: 10 } }
-                      onClick={ this.handleDeadlineForm }
+                      style={{ marginRight: 10 }}
+                      onClick={this.handleDeadlineForm}
                       size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      className={classes.altButton}
                     >
-                      <span className={ classes.spaceRight }>
+                      <span className={classes.spaceRight}>
                         <FormattedMessage id='task.bounties.date.deadline' defaultMessage='Deadline' />
                       </span>
                       <DateIcon />
                     </Button>
                     <Button
-                      style={ { marginRight: 10 } }
-                      onClick={ this.handleStatusDialog }
+                      style={{ marginRight: 10 }}
+                      onClick={this.handleStatusDialog}
                       size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      className={classes.altButton}
                     >
-                      <span className={ classes.spaceRight }>
+                      <span className={classes.spaceRight}>
                         <FormattedMessage id='task.bounties.status.change' defaultMessage='Change status' />
                       </span>
                       <FilterIcon />
                     </Button>
                     <Button
-                      onClick={ this.handleTaskPaymentDialog }
+                      onClick={this.handleTaskPaymentDialog}
                       size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      className={classes.altButton}
                     >
-                      <span className={ classes.spaceRight }>
+                      <span className={classes.spaceRight}>
                         <FormattedMessage id='task.bounties.send.label' defaultMessage='Send bounty' />
                       </span>
                       <RedeemIcon />
                     </Button>
                     <StatusDialog
-                      id={ task.data.id }
-                      providerStatus={ task.data.metadata.issue.state }
-                      provider={ task.data.provider }
-                      onSelect={ this.props.updateTask }
-                      selectedValue={ task.data.status }
-                      open={ this.state.statusDialog }
-                      onClose={ this.handleStatusDialogClose }
+                      id={task.data.id}
+                      providerStatus={task.data.metadata.issue.state}
+                      provider={task.data.provider}
+                      onSelect={this.props.updateTask}
+                      selectedValue={task.data.status}
+                      open={this.state.statusDialog}
+                      onClose={this.handleStatusDialogClose}
                     />
                     <TaskPayment
-                      id={ task.data.id }
-                      values={ task.values }
-                      paid={ task.data.paid }
-                      transferId={ task.data.transfer_id }
-                      assigned={ task.data.assigned }
-                      assigns={ task.data.assigns }
-                      orders={ task.data.orders }
-                      order={ order.data }
-                      open={ this.state.taskPaymentDialog }
-                      onClose={ this.handleTaskPaymentDialogClose }
-                      onPayTask={ this.props.paymentTask }
-                      filterTaskOrders={ this.props.filterTaskOrders }
-                      onPayOrder={ this.props.paymentOrder }
+                      id={task.data.id}
+                      values={task.values}
+                      paid={task.data.paid}
+                      transferId={task.data.transfer_id}
+                      assigned={task.data.assigned}
+                      assigns={task.data.assigns}
+                      orders={task.data.orders}
+                      order={order.data}
+                      open={this.state.taskPaymentDialog}
+                      onClose={this.handleTaskPaymentDialogClose}
+                      onPayTask={this.props.paymentTask}
+                      filterTaskOrders={this.props.filterTaskOrders}
+                      onPayOrder={this.props.paymentOrder}
                     />
                   </div>
-                ) }
-                <TaskInvite id={ task.data.id } onInvite={ this.props.inviteTask } visible={ this.state.taskInviteDialog } onClose={ () => this.setState({ taskInviteDialog: false }) } onOpen={ () => this.setState({ taskInviteDialog: true }) } />
+                )}
+                <TaskInvite id={task.data.id} onInvite={this.props.inviteTask} visible={this.state.taskInviteDialog} onClose={() => this.setState({ taskInviteDialog: false })} onOpen={() => this.setState({ taskInviteDialog: true })} />
                 <Dialog
-                  open={ this.state.assignDialog }
-                  onClose={ this.handleAssignDialogClose }
+                  open={this.state.assignDialog}
+                  onClose={this.handleAssignDialogClose}
                   aria-labelledby='form-dialog-title'
                 >
-                  { !this.props.logged ? (
+                  {!this.props.logged ? (
                     <div>
                       <DialogTitle id='form-dialog-title'>
                         <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
                       </DialogTitle>
                       <DialogContent>
-                        <div className={ classes.mainBlock }>
-                          <LoginButton referer={ this.props.location } includeForm />
+                        <div className={classes.mainBlock}>
+                          <LoginButton referer={this.props.location} includeForm />
                         </div>
                       </DialogContent>
                     </div>
                   ) : (
-                    <div>
-                      <DialogTitle id='form-dialog-title'>
-                        <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
-                      </DialogTitle>
-                      <DialogContent>
-                        <Card>
-                          <CardHeader
-                            avatar={
-                              <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
-                                name: task.data.metadata.issue.user.login
-                              } }>
-                                { (msg) => (
-                                  <Tooltip
-                                    id='tooltip-github'
-                                    title={ msg }
-                                    placement='bottom'
-                                  >
-                                    <a
-                                      href={ `${task.data.metadata.issue.user.html_url}` }
-                                      target='_blank'
+                      <div>
+                        <DialogTitle id='form-dialog-title'>
+                          <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
+                        </DialogTitle>
+                        <DialogContent>
+                          <Card>
+                            <CardHeader
+                              avatar={
+                                <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={{
+                                  name: task.data.metadata.issue.user.login
+                                }}>
+                                  {(msg) => (
+                                    <Tooltip
+                                      id='tooltip-github'
+                                      title={msg}
+                                      placement='bottom'
                                     >
-                                      <Avatar
-                                        src={ task.data.metadata.issue.user.avatar_url }
-                                        className={ classNames(classes.avatar) }
-                                      />
-                                    </a>
-                                  </Tooltip>
-                                ) }
-                              </FormattedMessage>
-                            }
-                            title={ task.data.title }
-                            subheader={
-                              <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={ {
-                                name: task.data.metadata.issue.user.login
-                              } } />
-                            }
-                            action={
-                              timePlaceholder
-                            }
-                          />
-                        </Card>
-
-                        <div style={ { paddingBottom: 10 } }>
-                          <Typography type='subheading' gutterBottom style={ { paddingTop: 20, color: 'gray' } }>
-                            <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
-                            <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-                              { (msg) => (
-                                <span className={ classes.spanText }>
-                                  { msg }
-                                </span>
-                              ) }
-                            </FormattedMessage>
-                          </Typography>
-                        </div>
-
-                        <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10 } }>
-                          <div style={ { padding: 5, color: 'gray' } }>
-                            <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
-                              <WarningIcon className={ classes.iconCenter } style={ { color: '#D7472F' } } />
-                              <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage='Please just send your interested if you will be able to do it and finish on time'>
-                                { (msg) => (
-                                  <span className={ classes.spanText }>
-                                    { msg }
-                                  </span>
-                                ) }
-                              </FormattedMessage>
-                            </Typography>
-                          </div>
-                          <div style={ { padding: 5, color: 'gray' } }>
-                            <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
-                              <CalendarIcon className={ classes.iconCenter } />
-                              <span className={ classes.spanText }>
-                                <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={ { deliveryDate: deliveryDate } } />
-                              </span>
-                              <Button onClick={ this.handleSuggestAnotherDate } color='primary'>
-                                <FormattedMessage id='task.bounties.actions.sugggestAnotherDate' defaultMessage='SUGGEST ANOTHER DATE' />&nbsp;
-                                <InfoIcon className={ classes.iconCenter } style={ { color: 'darkgray' } } />
-                              </Button>
-                            </Typography>
-                          </div>
-                          { this.state.showSuggestAnotherDateField && (
-                            <FormControl fullWidth>
-                              <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
-                                { (msg) => (
-                                  <InputLabel htmlFor='interested-date'>{ msg }</InputLabel>
-                                ) }
-                              </FormattedMessage>
-                              <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
-                                { (msg) => (
-                                  <Input
-                                    id='interested-date'
-                                    startAdornment={ <InputAdornment position='start'><DateIcon /></InputAdornment> }
-                                    placeholder={ msg }
-                                    type='date'
-                                    value={ `${MomentComponent(this.state.interestedSuggestedDate).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}` }
-                                    onChange={ this.handleInputChangeCalendar }
-                                  />
-                                ) }
-                              </FormattedMessage>
-                            </FormControl>
-                          ) }
-                        </Paper>
-
-                        <Typography type='heading' gutterBottom style={ { paddingTop: 10 } }>
-                          <FormattedMessage id='task.bounties.interested.canSuggestBounty' defaultMessage='You can suggest a bounty' />
-                        </Typography>
-
-                        <div className={ classes.chipContainer }>
-                          <Chip
-                            label=' $ 20'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(20) }
-                          />
-                          <Chip
-                            label=' $ 50'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(50) }
-                          />
-                          <Chip
-                            label=' $ 100'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(100) }
-                          />
-                          <Chip
-                            label=' $ 150'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(150) }
-                          />
-                          <Chip
-                            label=' $ 300'
-                            className={ classes.chip }
-                            onClick={ () => this.pickTaskPrice(300) }
-                          />
-                        </div>
-
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor='interested-amount'>
-                            <FormattedMessage id='task.bounties.interested.amount.value' defaultMessage='Price' />
-                          </InputLabel>
-                          <FormattedMessage id='task.bounties.interested.input.amount' defaultMessage='Price insert a value for this task' >
-                            { (msg) => (
-                              <Input
-                                id='interested-amount'
-                                startAdornment={ <InputAdornment position='start'>$</InputAdornment> }
-                                placeholder={ msg }
-                                type='number'
-                                inputProps={ { 'min': 0 } }
-                                value={ this.state.currentPrice }
-                                onChange={ this.handleInputInterestedAmountChange }
-                              />
-                            ) }
-                          </FormattedMessage>
-                        </FormControl>
-
-                        <Grid container spacing={ 24 }>
-
-                          <Grid item xs={ 12 } sm={ 6 }>
-                            <Checkbox checked={ this.state.currentPrice === 0 && !this.state.interestedLearn ? 'checked' : '' } onChange={ this.handleCheckboxLeaveItFor } /><FormattedMessage id='task.bounties.interested.leaveItFor' defaultMessage='Or leave it for' />&nbsp;
-                            <Chip
-                              label={ `$ ${task.values.available}` }
-                              className={ classes.chip }
-                              onClick={ () => this.pickTaskPrice(0) }
+                                      <a
+                                        href={`${task.data.metadata.issue.user.html_url}`}
+                                        target='_blank'
+                                      >
+                                        <Avatar
+                                          src={task.data.metadata.issue.user.avatar_url}
+                                          className={classNames(classes.avatar)}
+                                        />
+                                      </a>
+                                    </Tooltip>
+                                  )}
+                                </FormattedMessage>
+                              }
+                              title={task.data.title}
+                              subheader={
+                                <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
+                                  name: task.data.metadata.issue.user.login
+                                }} />
+                              }
+                              action={
+                                timePlaceholder
+                              }
                             />
-                          </Grid>
-                          <Grid item xs={ 12 } sm={ 6 }>
-                            <Checkbox checked={ this.state.interestedLearn ? 'checked' : '' } onChange={ this.handleCheckboxLearn } /><FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage="Or I'm starter and I just want to gain experience" />
-                          </Grid>
+                          </Card>
 
-                        </Grid>
+                          <div style={{ paddingBottom: 10 }}>
+                            <Typography type='subheading' gutterBottom style={{ paddingTop: 20, color: 'gray' }}>
+                              <InfoIcon className={classes.iconCenter} style={{ color: '#C5C5C5' }} />
+                              <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
+                                {(msg) => (
+                                  <span className={classes.spanText}>
+                                    {msg}
+                                  </span>
+                                )}
+                              </FormattedMessage>
+                            </Typography>
+                          </div>
 
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor='interested-comment'>
-                            <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='You can leave a comment' />
-                          </InputLabel>
+                          <Paper style={{ background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10 }}>
+                            <div style={{ padding: 5, color: 'gray' }}>
+                              <Typography type='caption' gutterBottom style={{ color: 'gray' }}>
+                                <WarningIcon className={classes.iconCenter} style={{ color: '#D7472F' }} />
+                                <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage='Please just send your interested if you will be able to do it and finish on time'>
+                                  {(msg) => (
+                                    <span className={classes.spanText}>
+                                      {msg}
+                                    </span>
+                                  )}
+                                </FormattedMessage>
+                              </Typography>
+                            </div>
+                            <div style={{ padding: 5, color: 'gray' }}>
+                              <Typography type='caption' gutterBottom style={{ color: 'gray' }}>
+                                <CalendarIcon className={classes.iconCenter} />
+                                <span className={classes.spanText}>
+                                  <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={{ deliveryDate: deliveryDate }} />
+                                </span>
+                                <Button onClick={this.handleSuggestAnotherDate} color='primary'>
+                                  <FormattedMessage id='task.bounties.actions.sugggestAnotherDate' defaultMessage='SUGGEST ANOTHER DATE' />&nbsp;
+                                <InfoIcon className={classes.iconCenter} style={{ color: 'darkgray' }} />
+                                </Button>
+                              </Typography>
+                            </div>
+                            {this.state.showSuggestAnotherDateField && (
+                              <FormControl fullWidth>
+                                <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
+                                  {(msg) => (
+                                    <InputLabel htmlFor='interested-date'>{msg}</InputLabel>
+                                  )}
+                                </FormattedMessage>
+                                <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
+                                  {(msg) => (
+                                    <Input
+                                      id='interested-date'
+                                      startAdornment={<InputAdornment position='start'><DateIcon /></InputAdornment>}
+                                      placeholder={msg}
+                                      type='date'
+                                      value={`${MomentComponent(this.state.interestedSuggestedDate).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}`}
+                                      onChange={this.handleInputChangeCalendar}
+                                    />
+                                  )}
+                                </FormattedMessage>
+                              </FormControl>
+                            )}
+                          </Paper>
 
-                          <FormattedMessage id='task.bounties.interested.input.comment' defaultMessage='I really would like to explore my Node.js experience on this' >
-                            { (msg) => (
-                              <Input
-                                id='interested-comment'
-                                placeholder={ msg }
-                                type='text'
-                                inputProps={ { maxLength: '120' } }
-                                value={ this.state.interestedComment }
-                                onChange={ this.handleInputInterestedCommentChange }
+                          <Typography type='heading' gutterBottom style={{ paddingTop: 10 }}>
+                            <FormattedMessage id='task.bounties.interested.canSuggestBounty' defaultMessage='You can suggest a bounty' />
+                          </Typography>
+
+                          <div className={classes.chipContainer}>
+                            <Chip
+                              label=' $ 20'
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(20)}
+                            />
+                            <Chip
+                              label=' $ 50'
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(50)}
+                            />
+                            <Chip
+                              label=' $ 100'
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(100)}
+                            />
+                            <Chip
+                              label=' $ 150'
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(150)}
+                            />
+                            <Chip
+                              label=' $ 300'
+                              className={classes.chip}
+                              onClick={() => this.pickTaskPrice(300)}
+                            />
+                          </div>
+
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor='interested-amount'>
+                              <FormattedMessage id='task.bounties.interested.amount.value' defaultMessage='Price' />
+                            </InputLabel>
+                            <FormattedMessage id='task.bounties.interested.input.amount' defaultMessage='Price insert a value for this task' >
+                              {(msg) => (
+                                <Input
+                                  id='interested-amount'
+                                  startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                                  placeholder={msg}
+                                  type='number'
+                                  inputProps={{ 'min': 0 }}
+                                  value={this.state.currentPrice}
+                                  onChange={this.handleInputInterestedAmountChange}
+                                />
+                              )}
+                            </FormattedMessage>
+                          </FormControl>
+
+                          <Grid container spacing={24}>
+
+                            <Grid item xs={12} sm={6}>
+                              <Checkbox checked={this.state.currentPrice === 0 && !this.state.interestedLearn ? 'checked' : ''} onChange={this.handleCheckboxLeaveItFor} /><FormattedMessage id='task.bounties.interested.leaveItFor' defaultMessage='Or leave it for' />&nbsp;
+                            <Chip
+                                label={`$ ${task.values.available}`}
+                                className={classes.chip}
+                                onClick={() => this.pickTaskPrice(0)}
                               />
-                            ) }
-                          </FormattedMessage>
-                        </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <Checkbox checked={this.state.interestedLearn ? 'checked' : ''} onChange={this.handleCheckboxLearn} /><FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage="Or I'm starter and I just want to gain experience" />
+                            </Grid>
 
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={ this.handleAssignDialogClose } color='primary'>
-                          <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
-                        </Button>
-                        <Button onClick={ this.handleAssignTask } variant='raised' color='secondary' >
-                          <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
-                        </Button>
-                      </DialogActions>
-                    </div>
-                  ) }
+                          </Grid>
+
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor='interested-comment'>
+                              <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='You can leave a comment' />
+                            </InputLabel>
+
+                            <FormattedMessage id='task.bounties.interested.input.comment' defaultMessage='I really would like to explore my Node.js experience on this' >
+                              {(msg) => (
+                                <Input
+                                  id='interested-comment'
+                                  placeholder={msg}
+                                  type='text'
+                                  inputProps={{ maxLength: '120' }}
+                                  value={this.state.interestedComment}
+                                  onChange={this.handleInputInterestedCommentChange}
+                                />
+                              )}
+                            </FormattedMessage>
+                          </FormControl>
+
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={this.handleAssignDialogClose} color='primary'>
+                            <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
+                          </Button>
+                          <Button onClick={this.handleAssignTask} variant='contained' color='secondary' >
+                            <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
+                          </Button>
+                        </DialogActions>
+                      </div>
+                    )}
                 </Dialog>
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={ 24 }>
-            <Grid item xs={ 12 } sm={ 8 }>
-              { task.data.assigned && <TaskAssigned status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) } classes={ classes } user={ task.data.assignedUser || {} } /> }
-              <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
-              { taskOwner() &&
-                <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={8}>
+              {task.data.assigned && <TaskAssigned status={this.props.intl.formatMessage(Constants.STATUSES[task.data.status])} classes={classes} user={task.data.assignedUser || {}} />}
+              <TaskPaymentForm {...this.props} open={this.state.paymentForm} />
+              {taskOwner() &&
+                <TaskDeadlineForm {...this.props} open={this.state.deadlineForm} />
               }
-              <div className={ classes.rootTabs }>
+              <div className={classes.rootTabs}>
                 <AppBar position='static' color='default'>
                   <Tabs
-                    value={ task.tab }
-                    onChange={ this.handleTabChange }
+                    value={task.tab}
+                    onChange={this.handleTabChange}
                     scrollable
                     scrollButtons='on'
                     indicatorColor='primary'
                     textColor='primary'
                   >
-                    <Tab label={ this.props.intl.formatMessage(messages.taskLabel) } icon={ <RedeemIcon /> } />
-                    <Tab label={ this.props.intl.formatMessage(messages.orderLabel) } icon={ <ShoppingBasket /> } />
-                    <Tab label={ this.props.intl.formatMessage(messages.interestedLabel) } icon={ <GroupWorkIcon /> } />
+                    <Tab label={this.props.intl.formatMessage(messages.taskLabel)} icon={<RedeemIcon />} />
+                    <Tab label={this.props.intl.formatMessage(messages.orderLabel)} icon={<ShoppingBasket />} />
+                    <Tab label={this.props.intl.formatMessage(messages.interestedLabel)} icon={<GroupWorkIcon />} />
                   </Tabs>
                 </AppBar>
-                { task.tab === 0 &&
-                <TabContainer>
-                  <Card className={ classes.paper }>
-                    <Typography variant='title' align='left' gutterBottom>
-                      <FormattedMessage id='task.info.description' defaultMessage='Description' />
-                    </Typography>
-                    <Typography variant='body2' align='left' gutterBottom>
-                      <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
-                        <PlaceholderDiv className={ classes.contentBody }>
-                          { renderHTML(marked(task.data.metadata.issue.body)) }
-                        </PlaceholderDiv>
-                      </ReactPlaceholder>
-                    </Typography>
-                  </Card>
-                </TabContainer> }
-                { task.tab === 1 &&
-                <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-                  <RegularCard
-                    headerColor='green'
-                    cardTitle={ this.props.intl.formatMessage(messages.cardTitle) }
-                    cardSubtitle={ this.props.intl.formatMessage(messages.cardSubtitle) }
-                    content={
-                      <Table
-                        tableHeaderColor='warning'
-                        tableHead={ [
-                          this.props.intl.formatMessage(messages.cardTableHeaderPaid),
-                          this.props.intl.formatMessage(messages.cardTableHeaderStatus),
-                          this.props.intl.formatMessage(messages.cardTableHeaderValue),
-                          this.props.intl.formatMessage(messages.cardTableHeaderCreated),
-                          this.props.intl.formatMessage(messages.cardTableHeaderUser),
-                          this.props.intl.formatMessage(messages.cardTableHeaderPayment)
-                        ]
-                        }
-                        tableData={ task.data.orders.length ? displayOrders(task.data.orders) : [] }
-                      />
-                    }
-                  />
-                </div> }
-                { task.tab === 2 &&
-                <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-                  <RegularCard
-                    headerColor='green'
-                    cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
-                    cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
-                    content={
-                      <Table
-                        tableHeaderColor='warning'
-                        tableHead={ [
-                          this.props.intl.formatMessage(messages.interestedTableLabelUser),
-                          this.props.intl.formatMessage(messages.interestedTableLabelWhen),
-                          this.props.intl.formatMessage(messages.interestedTableLabelActions)
-                        ] }
-                        tableData={ task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
-                      />
-                    }
-                  />
-                </div> }
+                {task.tab === 0 &&
+                  <TabContainer>
+                    <Card className={classes.paper}>
+                      <Typography variant='title' align='left' gutterBottom>
+                        <FormattedMessage id='task.info.description' defaultMessage='Description' />
+                      </Typography>
+                      <Typography variant='body2' align='left' gutterBottom>
+                        <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={task.completed}>
+                          <PlaceholderDiv className={classes.contentBody}>
+                            {renderHTML(marked(task.data.metadata.issue.body))}
+                          </PlaceholderDiv>
+                        </ReactPlaceholder>
+                      </Typography>
+                    </Card>
+                  </TabContainer>}
+                {task.tab === 1 &&
+                  <div style={{ marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 }}>
+                    <RegularCard
+                      headerColor='green'
+                      cardTitle={this.props.intl.formatMessage(messages.cardTitle)}
+                      cardSubtitle={this.props.intl.formatMessage(messages.cardSubtitle)}
+                      content={
+                        <Table
+                          tableHeaderColor='warning'
+                          tableHead={[
+                            this.props.intl.formatMessage(messages.cardTableHeaderPaid),
+                            this.props.intl.formatMessage(messages.cardTableHeaderStatus),
+                            this.props.intl.formatMessage(messages.cardTableHeaderValue),
+                            this.props.intl.formatMessage(messages.cardTableHeaderCreated),
+                            this.props.intl.formatMessage(messages.cardTableHeaderUser),
+                            this.props.intl.formatMessage(messages.cardTableHeaderPayment)
+                          ]
+                          }
+                          tableData={task.data.orders.length ? displayOrders(task.data.orders) : []}
+                        />
+                      }
+                    />
+                  </div>}
+                {task.tab === 2 &&
+                  <div style={{ marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 }}>
+                    <RegularCard
+                      headerColor='green'
+                      cardTitle={this.props.intl.formatMessage(messages.interestedCardTitle)}
+                      cardSubtitle={this.props.intl.formatMessage(messages.interestedCardSubTitle)}
+                      content={
+                        <Table
+                          tableHeaderColor='warning'
+                          tableHead={[
+                            this.props.intl.formatMessage(messages.interestedTableLabelUser),
+                            this.props.intl.formatMessage(messages.interestedTableLabelWhen),
+                            this.props.intl.formatMessage(messages.interestedTableLabelActions)
+                          ]}
+                          tableData={task.data.assigns.length ? displayAssigns(task.data.assigns) : []}
+                        />
+                      }
+                    />
+                  </div>}
               </div>
             </Grid>
-            <Grid item xs={ 12 } sm={ 4 }>
+            <Grid item xs={12} sm={4}>
               <StatsCard
-                icon={ TrophyIcon }
+                icon={TrophyIcon}
                 iconColor='green'
-                title={ this.props.intl.formatMessage(messages.taskValueLabel) }
-                description={ `$ ${task.values.available}` }
-                statIcon={ CalendarIcon }
-                statText={ this.props.intl.formatMessage(messages.taskValuesStatus, {
+                title={this.props.intl.formatMessage(messages.taskValueLabel)}
+                description={`$ ${task.values.available}`}
+                statIcon={CalendarIcon}
+                statText={this.props.intl.formatMessage(messages.taskValuesStatus, {
                   approved: task.values.available,
                   pending: task.values.pending,
                   failed: task.values.failed
-                }) }
+                })}
               />
-              { MomentComponent(task.data.deadline).isValid() &&
-              <StatsCard
-                icon={ DateIcon }
-                iconColor='green'
-                title={ this.props.intl.formatMessage(messages.taskLimitDate) }
-                description={ MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') }
-                statIcon={ DateIcon }
-                statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
-              /> }
+              {MomentComponent(task.data.deadline).isValid() &&
+                <StatsCard
+                  icon={DateIcon}
+                  iconColor='green'
+                  title={this.props.intl.formatMessage(messages.taskLimitDate)}
+                  description={MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY')}
+                  statIcon={DateIcon}
+                  statText={`${MomentComponent(task.data.deadline).fromNow()}`}
+                />}
             </Grid>
           </Grid>
         </PageContent>

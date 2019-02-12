@@ -5,13 +5,13 @@ import {
   CardContent,
   CardHeader,
   CardActions
-} from 'material-ui'
+} from '@material-ui/core'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import regularCardStyle from '../styles/material-dashboard-react/regularCardStyle'
 
-function RegularCard ({ ...props }) {
+function RegularCard({ ...props }) {
   const {
     classes,
     headerColor,
@@ -28,9 +28,9 @@ function RegularCard ({ ...props }) {
     [' ' + classes.cardPlainHeader]: plainCard
   })
   return (
-    <Card className={ classes.card + plainCardClasses }>
+    <Card className={classes.card + plainCardClasses}>
       <CardHeader
-        classes={ {
+        classes={{
           root:
             classes.cardHeader +
             ' ' +
@@ -38,14 +38,14 @@ function RegularCard ({ ...props }) {
             cardPlainHeaderClasses,
           title: classes.cardTitle,
           subheader: classes.cardSubtitle
-        } }
-        title={ cardTitle }
-        subheader={ cardSubtitle }
+        }}
+        title={cardTitle}
+        subheader={cardSubtitle}
       />
-      <CardContent>{ content }</CardContent>
-      { footer !== undefined ? (
-        <CardActions className={ classes.cardActions }>{ footer }</CardActions>
-      ) : null }
+      <CardContent>{content}</CardContent>
+      {footer !== undefined ? (
+        <CardActions className={classes.cardActions}>{footer}</CardActions>
+      ) : null}
     </Card>
   )
 }

@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Button from 'material-ui/Button'
-import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog'
-import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
 import styled from 'styled-components'
-import Icon from 'material-ui-icons/RemoveCircleOutline'
+
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography,
+  TextField
+} from '@material-ui/core'
+import Icon from '@material-ui/icons/RemoveCircleOutline'
 
 const Container = styled.div`
   display: inline-block;
@@ -18,7 +25,7 @@ const RemoveIcon = styled(Icon)`
 `
 
 class RemoveAssignment extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = { open: false, message: '' }
@@ -47,24 +54,24 @@ class RemoveAssignment extends Component {
     this.closeModal()
   }
 
-  render () {
+  render() {
     const { visible } = this.props
     const { open, message } = this.state
 
     return (
       <Container>
-        { visible &&
+        {visible &&
           <Button
             size='small'
-            onClick={ this.openModal }>
+            onClick={this.openModal}>
             <RemoveIcon />
             <FormattedMessage id='task.assignment.remove.action' defaultMessage='Remove' />
           </Button>
         }
 
         <Dialog
-          open={ open }
-          onClose={ this.closeModal }
+          open={open}
+          onClose={this.closeModal}
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title'>
@@ -72,12 +79,12 @@ class RemoveAssignment extends Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <Typography type='subheading' gutterBottom>
+              <Typography component='div'>
                 <FormattedMessage id='task.assignment.remove.reason' defaultMessage='Why this user will not work on this task anymore?' />
               </Typography>
             </DialogContentText>
             <TextField
-              onChange={ this.onChangeMessage }
+              onChange={this.onChangeMessage}
               autoFocus
               name='message'
               multiline
@@ -86,10 +93,10 @@ class RemoveAssignment extends Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={ this.closeModal } color='primary'>
+            <Button onClick={this.closeModal} color='primary'>
               <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
             </Button>
-            <Button disabled={ message.length === 0 } onClick={ this.removeAssignment } variant='raised' color='secondary' >
+            <Button disabled={message.length === 0} onClick={this.removeAssignment} variant='contained' color='secondary' >
               <FormattedMessage id='task.assignment.actions.apply' defaultMessage='Apply' />
             </Button>
           </DialogActions>

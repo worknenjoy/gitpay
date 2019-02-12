@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Button from 'material-ui/Button'
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
-import { FormControl } from 'material-ui/Form'
-import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
 import styled from 'styled-components'
+
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  Typography,
+  TextField
+} from '@material-ui/core'
 
 const Container = styled.div`
   display: inline-block;
@@ -14,7 +20,7 @@ const Container = styled.div`
 `
 
 class TaskInvite extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = { open: false, email: '', message: '' }
@@ -37,25 +43,25 @@ class TaskInvite extends Component {
     this.props.onClose()
   }
 
-  render () {
+  render() {
     const { visible } = this.props
     const { message } = this.state
 
     return (
       <Container>
         <Dialog
-          open={ visible }
-          onClose={ () => this.props.onClose() }
+          open={visible}
+          onClose={() => this.props.onClose()}
           aria-labelledby='form-dialog-title'
         >
           <DialogTitle id='form-dialog-title'>
             <FormattedMessage id='task.invite.title' defaultMessage='Invite someone to work on this task' />
           </DialogTitle>
           <DialogContent>
-            <form onChange={ this.onChangeInvite } type='POST'>
-              <FormControl fullWidth style={ { marginBottom: 20 } }>
+            <form onChange={this.onChangeInvite} type='POST'>
+              <FormControl fullWidth style={{ marginBottom: 20 }}>
                 <Typography type='subheading' gutterBottom>
-                    E-mail
+                  E-mail
                 </Typography>
                 <TextField
                   type='email'
@@ -79,10 +85,10 @@ class TaskInvite extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={ () => this.props.onClose() } color='primary'>
+            <Button onClick={() => this.props.onClose()} color='primary'>
               <FormattedMessage id='task.invite.form.cancel' defaultMessage='Cancel' />
             </Button>
-            <Button disabled={ message.length === 0 } onClick={ this.sendInvite } variant='raised' color='secondary' >
+            <Button disabled={message.length === 0} onClick={this.sendInvite} variant='contained' color='secondary' >
               <FormattedMessage id='task.invite.form.send' defaultMessage='Send' />
             </Button>
           </DialogActions>

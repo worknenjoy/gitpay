@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import { FormattedMessage } from 'react-intl'
-import MomentComponent from 'moment'
-import Avatar from 'material-ui/Avatar'
-import classNames from 'classnames'
-import Typography from 'material-ui/Typography'
-import Tooltip from 'material-ui/Tooltip'
-import Card, { CardHeader } from 'material-ui/Card'
-import Chip from 'material-ui/Chip'
 import nameInitials from 'name-initials'
-import UserIcon from 'material-ui-icons/AccountCircle'
+import MomentComponent from 'moment'
+import classNames from 'classnames'
+
+import {
+  withStyles,
+  Avatar,
+  Typography,
+  Tooltip,
+  Card,
+  CardHeader,
+  Chip
+} from '@material-ui/core'
+import UserIcon from '@material-ui/icons/AccountCircle'
 
 const styles = theme => ({
   main: {
@@ -20,7 +24,7 @@ const styles = theme => ({
 })
 
 class TaskAssigned extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
 
@@ -39,60 +43,60 @@ class TaskAssigned extends Component {
 
   }
 
-  render () {
+  render() {
     const { user, classes, status } = this.props
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
     const timePlaceholder = (
-      <Typography type='subheading' style={ { padding: 25, color: 'gray' } }>
-        { updatedAtTimeString }
+      <Typography type='subheading' style={{ padding: 25, color: 'gray' }}>
+        {updatedAtTimeString}
       </Typography>
     )
 
     return (
-      <div className={ classes.main }>
-        <Card raised={ false }>
+      <div className={classes.main}>
+        <Card raised={false}>
           <CardHeader
             avatar={
-              <FormattedMessage id='task.assigned.status.name' defaultMessage='Assigned to {name}' values={ {
+              <FormattedMessage id='task.assigned.status.name' defaultMessage='Assigned to {name}' values={{
                 name: user.name || user.username
-              } }>
-                { (msg) => (
+              }}>
+                {(msg) => (
                   <Tooltip
                     id='tooltip-github'
-                    title={ msg }
+                    title={msg}
                     placement='bottom'
                   >
                     <a
-                      href={ `${user.profile_url || user.website || '#'}` }
+                      href={`${user.profile_url || user.website || '#'}`}
                       target='_blank'
                     >
-                      { user.picture_url &&
+                      {user.picture_url &&
                         <Avatar
-                          alt={ user.username || '' }
-                          src={ user.picture_url }
+                          alt={user.username || ''}
+                          src={user.picture_url}
                         />
                       }
 
-                      { !user.picture_url &&
-                        <Avatar className={ classNames(classes.avatar) } alt={ user.username || '' } src=''>
-                          { user.username ? nameInitials(user.username) : <UserIcon /> }
+                      {!user.picture_url &&
+                        <Avatar className={classNames(classes.avatar)} alt={user.username || ''} src=''>
+                          {user.username ? nameInitials(user.username) : <UserIcon />}
                         </Avatar>
                       }
                     </a>
                   </Tooltip>
-                ) }
+                )}
               </FormattedMessage>
             }
-            title={ user.user || user.username }
+            title={user.user || user.username}
             subheader={
               <div>
-                <FormattedMessage id='task.assigned.status.name.create' defaultMessage='Assigned to {name}' values={ {
+                <FormattedMessage id='task.assigned.status.name.create' defaultMessage='Assigned to {name}' values={{
                   name: user.name || user.username
-                } } />
+                }} />
                 <Chip
-                  style={ { marginRight: 10 } }
-                  label={ status }
-                  className={ classes.chipStatus }
+                  style={{ marginRight: 10 }}
+                  label={status}
+                  className={classes.chipStatus}
                 />
               </div>
             }

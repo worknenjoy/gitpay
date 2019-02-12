@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Grid from 'material-ui/Grid'
+
+import {
+  Grid,
+  Typography,
+  withStyles
+} from '@material-ui/core'
 import Notification from '../notification/notification'
-import Typography from 'material-ui/Typography'
 
 import '../checkout/checkout-form'
-
-import { withStyles } from 'material-ui/styles'
 
 import TopBar from '../topbar/topbar'
 import Bottom from '../bottom/bottom'
@@ -164,21 +166,21 @@ const styles = theme => ({
 })
 
 class Order extends Component {
-  componentWillMount () {}
+  componentWillMount() { }
 
-  render () {
+  render() {
     const { classes } = this.props
 
     return (
       <div>
-        <Grid container className={ classes.root } spacing={ 24 }>
+        <Grid container className={classes.root} spacing={24}>
           <TopBar />
-          <Grid item xs={ 12 }>
+          <Grid item xs={12}>
             <Typography
               variant='display1'
               color='primary'
               align='left'
-              className={ classes.typo }
+              className={classes.typo}
               gutterBottom
             >
               page

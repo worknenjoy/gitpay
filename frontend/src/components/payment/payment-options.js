@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
-import { orange } from 'material-ui/colors'
+
+import {
+  Paper,
+  Typography,
+  orange,
+} from '@material-ui/core'
 
 import AccountContainer from '../../containers/account'
 
 class PaymentOptions extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       tab: 0,
@@ -25,16 +28,16 @@ class PaymentOptions extends Component {
     this.setState({ notification: false })
   }
 
-  render () {
+  render() {
     return (
-      <Paper elevation={ 0 }>
-        <Typography variant='headline' component='h3' style={ { marginBottom: 10 } }>
+      <Paper elevation={0}>
+        <Typography variant='h5' component='h3' style={{ marginBottom: 10 }}>
           <FormattedMessage id='payment.headline' defaultMessage='Payment' />
         </Typography>
-        <Typography component='p' color='textSecondary' style={ { marginBottom: 10 } }>
+        <Typography component='p' color='textSecondary' style={{ marginBottom: 10 }}>
           <FormattedMessage id='payment.options.description' defaultMessage='Setup your bank account to receive the payments of your tasks concluded' />
         </Typography>
-        <Typography variant='body1' component='p' color='default' style={ { marginBottom: 20, padding: 10, backgroundColor: orange['100'] } }>
+        <Typography variant='body1' component='p' color='default' style={{ marginBottom: 20, padding: 10, backgroundColor: orange['100'] }}>
           <FormattedMessage id='payment.options.warning.message' defaultMessage='For now we support bank accounts onboarding in Brazil only. But it is possible to activate your account with Paypal instead.' />
         </Typography>
         <AccountContainer />

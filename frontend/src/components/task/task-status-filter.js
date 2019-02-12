@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import Chip from 'material-ui/Chip'
+
+import {
+  withStyles,
+  Chip
+} from '@material-ui/core'
 
 const messages = defineMessages({
   openStatus: {
@@ -30,14 +33,14 @@ const styles = theme => ({
 const statuses = ['open', 'in_progress', 'closed']
 
 class TaskStatusFilter extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       selected: 'all'
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.loading !== prevProps.loading) {
       let pathName = this.props.history.location.pathname
       this.handleFromUrl(pathName)
@@ -98,33 +101,33 @@ class TaskStatusFilter extends Component {
     return possibles[status]
   }
 
-  render () {
+  render() {
     const { selected } = this.state
     const { classes } = this.props
     return (
       <div>
         <FormattedMessage id='task.status.filter.all' defaultMessage='All'>
-          { msg => (
+          {msg => (
             <Chip
-              style={ { marginRight: 10 } }
-              onClick={ () => this.handleClickAll() }
+              style={{ marginRight: 10 }}
+              onClick={() => this.handleClickAll()}
               clickable
-              key={ 0 }
-              label={ msg }
-              className={ selected === 'all' ? classes.selected : {} }
+              key={0}
+              label={msg}
+              className={selected === 'all' ? classes.selected : {}}
             />
-          ) }
+          )}
         </FormattedMessage>
-        { statuses.map((status, index) => (
+        {statuses.map((status, index) => (
           <Chip
-            style={ { marginRight: 10 } }
-            onClick={ () => this.handleListItemClick(status) }
+            style={{ marginRight: 10 }}
+            onClick={() => this.handleListItemClick(status)}
             clickable
-            key={ index + 1 }
-            label={ this.statusesDisplay(status) }
-            className={ selected === status ? classes.selected : {} }
+            key={index + 1}
+            label={this.statusesDisplay(status)}
+            className={selected === status ? classes.selected : {}}
           />
-        )) }
+        ))}
       </div>
     )
   }

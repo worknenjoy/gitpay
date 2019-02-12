@@ -1,24 +1,29 @@
 import React, { Component } from 'react'
-import FolderIcon from 'material-ui-icons/Folder'
-import { Avatar, Chip } from 'material-ui'
+
+import {
+  Avatar,
+  Chip
+} from '@material-ui/core'
+import Folder from '@material-ui/icons/Folder'
+
 import { withRouter } from 'react-router-dom'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 
 class MyLanguage extends Component {
-  render () {
+  render() {
     const { classes, title } = this.props
 
     return (
       <Chip
         avatar={
           <Avatar>
-            <FolderIcon />
+            <Folder />
           </Avatar>
         }
-        label={ title }
-        className={ classes.chipLanguage }
-        onDelete={ this.props.onDelete }
+        label={title}
+        className={classes.chipLanguage}
+        onDelete={this.props.onDelete}
       />)
   }
 }

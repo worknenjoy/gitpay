@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Grid from 'material-ui/Grid'
-import { withStyles } from 'material-ui/styles'
+
+import {
+  Grid,
+  withStyles,
+} from '@material-ui/core'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
@@ -61,20 +64,20 @@ const styles = theme => ({
 })
 
 class TaskExplorer extends Component {
-  render () {
+  render() {
     const { classes } = this.props
 
     return (
       <Page>
         <TopBarContainer />
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 24 }>
-            <Grid item xs={ 12 } md={ 12 }>
+          <Grid container className={classes.root} spacing={24}>
+            <Grid item xs={12} md={12}>
               <TaskListContainer />
             </Grid>
           </Grid>
         </PageContent>
-        <Bottom classes={ classes } />
+        <Bottom classes={classes} />
       </Page>
     )
   }

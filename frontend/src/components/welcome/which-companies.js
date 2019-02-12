@@ -1,25 +1,33 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
-import Dialog from 'material-ui/Dialog'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
-import CloseIcon from 'material-ui-icons/Close'
 
-import Typography from 'material-ui/Typography'
-import Avatar from 'material-ui/Avatar'
-import AppsIcon from 'material-ui-icons/Apps'
-import WorkIcon from 'material-ui-icons/Work'
-import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Dialog,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Avatar,
+} from '@material-ui/core'
+import {
+  Apps,
+  Work,
+  AccountBalanceWallet,
+  Close
+} from '@material-ui/icons'
+
 import Transition from '../transition'
 import messages from './messages'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
 
 class WhichCompanies extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       open: false
@@ -28,79 +36,86 @@ class WhichCompanies extends Component {
     this.handleClose = this.handleClose.bind(this)
   }
 
-  handleClickOpen () {
+  handleClickOpen() {
     this.setState({ open: true })
   }
 
-  handleClose () {
+  handleClose() {
     this.setState({ open: false })
   }
 
-  render () {
+  render() {
     const { classes } = this.props
 
     return (
-      <ListItem button onClick={ this.handleClickOpen } component='a'>
-        <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?'>
-          { (msg) => (
-            <ListItemText primary={ msg } />
-          ) }
-        </FormattedMessage>
+      <ListItem button component='a'>
+        <Typography
+          variant='h6'
+          onClick={this.handleClickOpen}
+          component='div'
+          style={{ display: 'block', width: '100%' }}
+        >
+          <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?'>
+            {(msg) => (
+              <ListItemText primary={msg} />
+            )}
+          </FormattedMessage>
+        </Typography>
         <Dialog
           fullScreen
-          open={ this.state.open }
-          onClose={ this.handleClose }
-          transition={ Transition }
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
         >
-          <AppBar className={ classes.appBar } >
+          <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color='inherits' onClick={ this.handleClose } aria-label='Close'>
-                <CloseIcon />
+              <IconButton color='inherit' onClick={this.handleClose} aria-label='Close'>
+                <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='title' className={classes.appBarHeader}>
                 <FormattedMessage id='welcome.companies.title' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
-            <div classeName={ classes.spacedTop }>
+            <div className={classes.spacedTop}>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
+                <Typography variant='title' className={classes.appBarHeader} gutterBottom>
                   <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?' />
                 </Typography>
               </MainTitle>
             </div>
             <InfoList>
               <List>
-                <ListItem className={ classes.listIconTop }>
+                <ListItem className={classes.listIconTop}>
                   <ListItemIcon>
-                    <Avatar className={ classes.iconFillAlt }>
-                      <AppsIcon />
+                    <Avatar className={classes.iconFillAlt}>
+                      <Apps />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemPrimary1) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemSecondary1) }
+                    primary={this.props.intl.formatMessage(messages.companiesItemPrimary1)}
+                    secondary={this.props.intl.formatMessage(messages.companiesItemSecondary1)}
                   />
                 </ListItem>
-                <ListItem className={ classes.listIconTop }>
+                <ListItem className={classes.listIconTop}>
                   <ListItemIcon>
-                    <Avatar className={ classes.iconFillAlt }>
-                      <WorkIcon />
+                    <Avatar className={classes.iconFillAlt}>
+                      <Work />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemTwoPrimary1) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemTwoSecondary1) }
+                    primary={this.props.intl.formatMessage(messages.companiesItemTwoPrimary1)}
+                    secondary={this.props.intl.formatMessage(messages.companiesItemTwoSecondary1)}
                   />
                 </ListItem>
-                <ListItem className={ classes.listIconTop }>
+                <ListItem className={classes.listIconTop}>
                   <ListItemIcon>
-                    <Avatar className={ classes.iconFillAlt }>
-                      <AccountBalanceWalletIcon />
+                    <Avatar className={classes.iconFillAlt}>
+                      <AccountBalanceWallet />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemThreePrimary1) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemThreeSecondary1) }
+                    primary={this.props.intl.formatMessage(messages.companiesItemThreePrimary1)}
+                    secondary={this.props.intl.formatMessage(messages.companiesItemThreeSecondary1)}
                   />
                 </ListItem>
               </List>

@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Dialog, {
+import {
+  Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle
-} from 'material-ui/Dialog'
+} from '@material-ui/core'
 
 class PaypalPaymentDialog extends Component {
-  componentWillMount () { }
+  componentWillMount() { }
 
   handleNewOrder = (e) => {
     e.preventDefault()
@@ -21,15 +22,15 @@ class PaypalPaymentDialog extends Component {
     })
   }
 
-  triggerPayment (order) {
+  triggerPayment(order) {
     window.location.href = order.payment_url
   }
 
-  render () {
+  render() {
     return (
       <Dialog
-        open={ this.props.open }
-        onClose={ this.props.onClose }
+        open={this.props.open}
+        onClose={this.props.onClose}
         aria-labelledby='alert-dialog-payment-title'
         aria-describedby='alert-dialog-payment-description'
         fullWidth
@@ -42,21 +43,21 @@ class PaypalPaymentDialog extends Component {
           <DialogContentText id='alert-dialog-payment-description'>
             <FormattedMessage id='payment.paypal.description' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
           </DialogContentText>
-          { this.props.order.data.payment_url ? (
+          {this.props.order.data.payment_url ? (
             this.triggerPayment(this.props.order.data)
           ) : (
-            <div style={ { textAlign: 'center', width: '100%', marginTop: 40, fontFamily: 'Roboto' } }>
-              <FormattedMessage id='payment.paypal.paywith' defaultMessage='Pay with ' />
-              <br />
-              <FormattedMessage id='payment.paypal.logo.title' defaultMessage='Make the payment with paypal'>
-                { (msg) => (
-                  <a href='#' title={ msg } onClick={ this.handleNewOrder }>
-                    <img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
-                  </a>
-                ) }
-              </FormattedMessage>
-            </div>
-          ) }
+              <div style={{ textAlign: 'center', width: '100%', marginTop: 40, fontFamily: 'Roboto' }}>
+                <FormattedMessage id='payment.paypal.paywith' defaultMessage='Pay with ' />
+                <br />
+                <FormattedMessage id='payment.paypal.logo.title' defaultMessage='Make the payment with paypal'>
+                  {(msg) => (
+                    <a href='#' title={msg} onClick={this.handleNewOrder}>
+                      <img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
+                    </a>
+                  )}
+                </FormattedMessage>
+              </div>
+            )}
         </DialogContent>
       </Dialog>
     )

@@ -3,37 +3,41 @@ import PropTypes from 'prop-types'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { store } from '../../main/app'
 
-import Dialog, {
+import {
+  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from 'material-ui/Dialog'
-
-import Grid from 'material-ui/Grid'
-import Tooltip from 'material-ui/Tooltip'
-import { FormControl, FormHelperText } from 'material-ui/Form'
-import Avatar from 'material-ui/Avatar'
-import TextField from 'material-ui/TextField'
-import Typography from 'material-ui/Typography'
-import HomeIcon from 'material-ui-icons/Home'
-import PlusIcon from 'material-ui-icons/Queue'
-import UserIcon from 'material-ui-icons/AccountCircle'
-import LibraryIcon from 'material-ui-icons/LibraryBooks'
-import TasksIcon from 'material-ui-icons/ViewList'
-import CircularProgress from 'material-ui/Progress/CircularProgress'
+  Grid,
+  Tooltip,
+  FormControl,
+  FormHelperText,
+  Avatar,
+  TextField,
+  Typography,
+  CircularProgress,
+  Menu,
+  MenuItem,
+  Button,
+  withStyles
+} from '@material-ui/core'
+import {
+  Home,
+  AddBox,
+  Person,
+  LibraryBooks,
+  ViewList
+} from '@material-ui/icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSlack } from '@fortawesome/free-brands-svg-icons'
 
 import humanFormat from 'human-format'
 
-import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
 
-import Menu, { MenuItem } from 'material-ui/Menu'
-import Button from 'material-ui/Button'
 import nameInitials from 'name-initials'
 import isGithubUrl from 'is-github-url'
 
@@ -109,7 +113,7 @@ const styles = {
 }
 
 class TopBar extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -127,7 +131,7 @@ class TopBar extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     /* eslint-disable no-undef */
     const currentStoredLang = localStorage.getItem('userLanguage')
     this.props.fetchPreferences(this.props.user.id).then(() => {
@@ -259,7 +263,7 @@ class TopBar extends Component {
     }))
   }
 
-  render () {
+  render() {
     const { completed, user, preferences } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
@@ -278,76 +282,79 @@ class TopBar extends Component {
         <Container>
           <LeftSide>
             <StyledButton href='/'>
-              <HomeIcon color='primary' />
-              <Logo src={ logo } />
+              <Home color='primary' />
+              <Logo src={logo} />
             </StyledButton>
           </LeftSide>
           <RightSide>
             <StyledButton
-              onClick={ this.handleClickDialogCreateTask }
-              variant='raised'
+              onClick={this.handleClickDialogCreateTask}
+              variant='contained'
               size='small'
               color='primary'
             >
               <LabelButton>
                 <FormattedMessage id='task.actions.create' defaultMessage='Create task' />
-              </LabelButton><PlusIcon />
+              </LabelButton>
+              <AddBox />
             </StyledButton>
+
             <StyledButton
-              onClick={ this.handleViewTasks }
-              variant='raised'
+              onClick={this.handleViewTasks}
+              variant='contained'
               size='small'
               color='primary'
             >
               <LabelButton>
                 <FormattedMessage id='task.actions.explore' defaultMessage='Explore tasks' />
               </LabelButton>
-              <TasksIcon />
+              <ViewList />
             </StyledButton>
 
             <div>
               <StyledButton
-                onClick={ this.handleDocsLink }
-                variant='raised'
+                onClick={this.handleDocsLink}
+                variant='contained'
                 size='small'
                 color='default'
               >
                 <LabelButton>
                   <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
-                </LabelButton><LibraryIcon />
+                </LabelButton>
+                <LibraryBooks />
               </StyledButton>
             </div>
 
-            { !isLoggedIn
+            {!isLoggedIn
               ? (<div>
                 <StyledButton
-                  onClick={ this.handleClickDialogSignUser }
-                  variant='raised'
+                  onClick={this.handleClickDialogSignUser}
+                  variant='contained'
                   size='small'
                   color='secondary'
                 >
                   <LabelButton>
                     <FormattedMessage id='task.bar.signin' defaultMessage='Signin' />
-                  </LabelButton><UserIcon />
+                  </LabelButton><Person />
                 </StyledButton>
 
                 <Dialog
-                  open={ this.state.signUserDialog }
-                  onClose={ this.handleSignUserDialogClose }
+                  open={this.state.signUserDialog}
+                  onClose={this.handleSignUserDialogClose}
                   aria-labelledby='form-dialog-title'
                 >
                   <DialogTitle id='form-dialog-title'>
                     <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
                   </DialogTitle>
                   <DialogContent>
-                    <LoginButton referer={ this.props.location } size='medium' includeForm />
+                    <LoginButton referer={this.props.location} size='medium' includeForm />
                   </DialogContent>
                 </Dialog>
               </div>) : (
                 <div>
                   <StyledButton
-                    onClick={ this.handleMenu }
-                    variant='raised'
+                    onClick={this.handleMenu}
+                    variant='contained'
                     size='small'
                     color='secondary'
                     id='account-menu'
@@ -355,16 +362,16 @@ class TopBar extends Component {
                     <LabelButton>
                       <FormattedMessage id='task.actions.account' defaultMessage='Account' />
                     </LabelButton>
-                    { user.picture_url &&
+                    {user.picture_url &&
                       <StyledAvatar
-                        alt={ user.username || '' }
-                        src={ user.picture_url }
+                        alt={user.username || ''}
+                        src={user.picture_url}
                       />
                     }
 
-                    { !user.picture_url &&
-                      <StyledAvatar alt={ user.username || '' } src=''>
-                        { user.username ? nameInitials(user.username) : <UserIcon /> }
+                    {!user.picture_url &&
+                      <StyledAvatar alt={user.username || ''} src=''>
+                        {user.username ? nameInitials(user.username) : <Person />}
                       </StyledAvatar>
                     }
                   </StyledButton>
@@ -372,24 +379,26 @@ class TopBar extends Component {
               )
             }
 
-            <form onSubmit={ this.handleCreateTask } action='POST'>
+            <form onSubmit={this.handleCreateTask} action='POST'>
               <Dialog
-                open={ this.state.createTaskDialog }
-                onClose={ this.handleClickDialogCreateTaskClose }
-                aria-labelledby='form-dialog-title'
+                open={this.state.createTaskDialog}
+                onClose={this.handleClickDialogCreateTaskClose}
+                aria-label='form-dialog-title'
               >
                 <DialogTitle id='form-dialog-title'>
                   <FormattedMessage id='task.actions.insert.new' defaultMessage='Insert a new task' />
                 </DialogTitle>
+
                 <DialogContent>
                   <DialogContentText>
                     <Typography type='subheading' gutterBottom>
                       <FormattedHTMLMessage id='task.actions.insert.subheading' defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
                     </Typography>
                   </DialogContentText>
-                  <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
-                    <TextField error={ this.state.task.url.error }
-                      onChange={ this.onChange }
+
+                  <FormControl style={styles.formControl} error={this.state.task.url.error}>
+                    <TextField error={this.state.task.url.error}
+                      onChange={this.onChange}
                       autoFocus
                       margin='dense'
                       id='url'
@@ -398,128 +407,133 @@ class TopBar extends Component {
                       type='url'
                       fullWidth
                     />
-                    <div style={ { marginTop: 10, marginBottom: 10 } }>
+                    <div style={{ marginTop: 10, marginBottom: 10 }}>
                       <Button
-                        style={ { marginRight: 10 } }
+                        style={{ marginRight: 10 }}
                         color='primary'
-                        variant={ this.state.provider === 'github' ? 'raised' : 'contained' }
+                        variant={this.state.provider === 'github' ? 'raised' : 'contained'}
                         id='github'
-                        onClick={ (e) => this.handleProvider(e, 'github') }
+                        onClick={(e) => this.handleProvider(e, 'github')}
                       >
-                        <img width='16' src={ logoGithub } />
-                        <span style={ { marginLeft: 10 } }>Github</span>
+                        <img width='16' src={logoGithub} />
+                        <span style={{ marginLeft: 10 }}>Github</span>
                       </Button>
 
                       <Button
                         color='primary'
-                        variant={ this.state.provider === 'bitbucket' ? 'raised' : 'contained' }
+                        variant={this.state.provider === 'bitbucket' ? 'raised' : 'contained'}
                         id='bitbucket'
-                        onClick={ (e) => this.handleProvider(e, 'bitbucket') }
+                        onClick={(e) => this.handleProvider(e, 'bitbucket')}
                       >
-                        <img width='16' src={ logoBitbucket } />
-                        <span style={ { marginLeft: 10 } }>Bitbucket</span>
+                        <img width='16' src={logoBitbucket} />
+                        <span style={{ marginLeft: 10 }}>Bitbucket</span>
                       </Button>
                     </div>
-                    { this.state.task.url.error &&
-                    <FormHelperText error={ this.state.task.url.error }>
-                      <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
-                    </FormHelperText>
+
+                    {this.state.task.url.error &&
+                      <FormHelperText error={this.state.task.url.error}>
+                        <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
+                      </FormHelperText>
                     }
                   </FormControl>
                 </DialogContent>
+
                 <DialogActions>
-                  <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
+                  <Button onClick={this.handleClickDialogCreateTaskClose} color='primary'>
                     <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                   </Button>
-                  <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='raised' color='secondary' >
+                  <Button disabled={!completed} onClick={this.handleCreateTask} variant='contained' color='secondary' >
                     <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
                   </Button>
                 </DialogActions>
               </Dialog>
             </form>
+
             <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
-              { (msg) => (
-                <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-                  <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
-                    { completed ? (
+              {(msg) => (
+                <Tooltip id='tooltip-lang' title={msg} placement='bottom'>
+                  <Button style={{ padding: 0 }} id='language-menu' onClick={this.handleMenu}>
+                    {completed ? (
                       <StyledAvatarIconOnly
-                        alt={ user.username || '' }
-                        src={ logoLang(userCurrentLanguage) }
+                        alt={user.username || ''}
+                        src={logoLang(userCurrentLanguage)}
                       />
                     ) : (
-                      <Avatar>
-                        <CircularProgress />
-                      </Avatar>
-                    ) }
+                        <Avatar>
+                          <CircularProgress />
+                        </Avatar>
+                      )}
                   </Button>
                 </Tooltip>
-              ) }
+              )}
             </FormattedMessage>
+
             <Menu
               id='menu-appbar'
-              anchorEl={ anchorEl }
-              anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-              transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-              open={ anchorEl && anchorEl.id === 'language-menu' }
-              onClose={ this.handleClose }
+              anchorEl={anchorEl}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              open={anchorEl && anchorEl.id === 'language-menu'}
+              onClose={this.handleClose}
             >
-              <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
+              <MenuItem selected={userCurrentLanguage === 'en'} onClick={(e) => this.switchLang('en')}>
                 <StyledAvatarIconOnly
                   alt='English'
-                  src={ logoLangEn }
+                  src={logoLangEn}
                 />
-                <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
+                <strong style={{ display: 'inline-block', margin: 10 }}>English</strong>
               </MenuItem>
-              <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') } >
+              <MenuItem selected={userCurrentLanguage === 'br'} onClick={(e) => this.switchLang('br')} >
                 <StyledAvatarIconOnly
                   alt='Português'
-                  src={ logoLangBr }
+                  src={logoLangBr}
                 />
-                <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
+                <strong style={{ display: 'inline-block', margin: 10 }}>Português</strong>
               </MenuItem>
             </Menu>
+
             <OnlyDesktop>
               <FormattedMessage id='task.actions.tooltip.git' defaultMessage='See our project on Github'>
-                { (msg) => (
-                  <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
+                {(msg) => (
+                  <Tooltip id='tooltip-github' title={msg} placement='bottom'>
                     <StyledAvatarIconOnly
-                      alt={ user.username || '' }
-                      src={ logoGithub }
-                      onClick={ this.handleGithubLink }
+                      alt={user.username || ''}
+                      src={logoGithub}
+                      onClick={this.handleGithubLink}
                     />
                   </Tooltip>
-                ) }
+                )}
               </FormattedMessage>
 
               <Menu
                 id='menu-appbar-language'
-                anchorEl={ anchorEl }
-                anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-                transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-                open={ anchorEl && anchorEl.id === 'account-menu' }
-                onClose={ this.handleClose }
+                anchorEl={anchorEl}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={anchorEl && anchorEl.id === 'account-menu'}
+                onClose={this.handleClose}
               >
-                <MenuItem onClick={ this.handleProfile }>
+                <MenuItem onClick={this.handleProfile}>
                   <FormattedMessage id='task.actions.account.access' defaultMessage='Access account' />
                 </MenuItem>
-                <MenuItem onClick={ this.handleSignOut }>
+                <MenuItem onClick={this.handleSignOut}>
                   <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
                 </MenuItem>
               </Menu>
             </OnlyDesktop>
 
             <StyledButton
-              onClick={ this.handleClickDialogJoinSlack }
+              onClick={this.handleClickDialogJoinSlack}
               size='small'
               color='secondary'
             >
               <LabelButton>
-                <FormattedMessage id='task.bar.slack' defaultMessage='Slack {count}' values={ { count: channelUserCount } } />
-              </LabelButton><FontAwesomeIcon icon={ faSlack } size='2x' />
+                <FormattedMessage id='task.bar.slack' defaultMessage='Slack {count}' values={{ count: channelUserCount }} />
+              </LabelButton><FontAwesomeIcon icon={faSlack} size='2x' />
             </StyledButton>
             <Dialog
-              open={ this.state.joinSlackDialog }
-              onClose={ this.handleJoinSlackDialogClose }
+              open={this.state.joinSlackDialog}
+              onClose={this.handleJoinSlackDialogClose}
               aria-labelledby='form-dialog-title'
             >
               <DialogTitle id='form-dialog-title'>
@@ -529,12 +543,12 @@ class TopBar extends Component {
                 <Grid container justify='center'>
                   <Grid item>
                     <Button
-                      href={ process.env.SLACK_CHANNEL_INVITE_LINK }
+                      href={process.env.SLACK_CHANNEL_INVITE_LINK}
                       variant='outline'
                       size='medium'
                       color='secondary'
                     >
-                      <FontAwesomeIcon icon={ faSlack } size='2x' />
+                      <FontAwesomeIcon icon={faSlack} size='2x' />
                       <LabelButton right>
                         <FormattedMessage id='form.slack.join.label' defaultMessage='Join channel!' />
                       </LabelButton>

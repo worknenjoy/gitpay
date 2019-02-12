@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components'
-import Button from 'material-ui/Button'
-import Avatar from 'material-ui/Avatar'
+import {
+  Button,
+  Avatar,
+} from '@material-ui/core'
 
 import media from '../../styleguide/media'
 

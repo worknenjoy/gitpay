@@ -1,4 +1,8 @@
-import BaseCard, { CardMedia as BaseCardMedia } from 'material-ui/Card'
+import {
+  BaseCard,
+  CardMedia as BaseCardMedia
+} from '@material-ui/core'
+
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 

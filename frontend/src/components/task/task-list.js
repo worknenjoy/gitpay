@@ -3,28 +3,28 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
-import AppBar from 'material-ui/AppBar'
-
-import Card from 'material-ui/Card'
-import CardActions from 'material-ui/Card/CardActions'
-import CardContent from 'material-ui/Card/CardContent'
-import CardMedia from 'material-ui/Card/CardMedia'
-
-import Tabs, { Tab } from 'material-ui/Tabs'
-
-import { withStyles } from 'material-ui/styles'
-
-import RedeemIcon from 'material-ui-icons/Redeem'
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
-
-import AssignIcon from 'material-ui-icons/Assignment'
-import ActionIcon from 'material-ui-icons/CallToAction'
+import {
+  Button,
+  Paper,
+  Typography,
+  AppBar,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Tabs,
+  Tab,
+  withStyles
+} from '@material-ui/core'
+import {
+  Redeem as RedeemIcon,
+  ShoppingBasket,
+  Assignment as AssignIcon,
+  AssignmentInd as ActionIcon
+} from '@material-ui/icons'
 
 import CustomPaginationActionsTable from './task-table'
 import TaskStatusFilter from './task-status-filter'
-import Button from 'material-ui/Button'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -69,7 +69,7 @@ const messages = defineMessages({
 })
 
 class TaskList extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       tab: 0,
@@ -77,7 +77,7 @@ class TaskList extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.listTasks().then(t => {
       let pathName = this.props.history.location.pathname
       this.handleRoutePath(pathName)
@@ -100,7 +100,7 @@ class TaskList extends Component {
         this.handleTabChange(0, 3)
         break
       default:
-        // this.props.filterTasks()
+      // this.props.filterTasks()
     }
   }
 
@@ -124,82 +124,82 @@ class TaskList extends Component {
         this.props.filterTasks('assigned')
         break
       default:
-        // this.props.filterTasks()
+      // this.props.filterTasks()
     }
   }
 
-  render () {
+  render() {
     const { classes, user } = this.props
 
     const TabContainer = props => {
       return (
-        <Typography component='div' style={ { padding: 8 * 3 } }>
-          { props.children }
+        <Typography component='div' style={{ padding: 8 * 3 }}>
+          {props.children}
         </Typography>
       )
     }
 
     return (
-      <Paper elevation={ 0 }>
-        <Typography variant='headline' component='h2'>
+      <Paper elevation={0}>
+        <Typography variant='h5' component='h2'>
           <FormattedMessage
             id='task.list.headline'
             defaultMessage='Task list'
           />
         </Typography>
-        <Typography component='p' style={ { marginBottom: 20 } }>
+        <Typography component='p' style={{ marginBottom: 20 }}>
           <FormattedMessage
             id='task.list.description'
             defaultMessage='Available tasks for development'
           />
         </Typography>
-        <div style={ { marginTop: 20, marginBottom: 20 } }>
-          <TaskStatusFilter onFilter={ this.props.filterTasks } loading={ this.state.loading } />
+        <div style={{ marginTop: 20, marginBottom: 20 }}>
+          <TaskStatusFilter onFilter={this.props.filterTasks} loading={this.state.loading} />
         </div>
-        <div className={ classes.rootTabs }>
+        <div className={classes.rootTabs}>
           <AppBar position='static' color='default'>
             <Tabs
-              value={ this.state.tab }
-              onChange={ this.handleTabChange }
+              value={this.state.tab}
+              onChange={this.handleTabChange}
               scrollable
               scrollButtons='on'
               indicatorColor='primary'
               textColor='primary'
             >
               <Tab
-                value={ 0 }
-                label={ this.props.intl.formatMessage(messages.allTasks) }
-                icon={ <RedeemIcon /> }
+                value={0}
+                label={this.props.intl.formatMessage(messages.allTasks)}
+                icon={<RedeemIcon />}
               />
               <Tab
-                value={ 1 }
-                label={ this.props.intl.formatMessage(messages.createdByMeTasks) }
-                icon={ <ShoppingBasket /> }
+                value={1}
+                label={this.props.intl.formatMessage(messages.createdByMeTasks)}
+                icon={<ShoppingBasket />}
               />
               <Tab
-                value={ 2 }
-                label={ this.props.intl.formatMessage(messages.interestedTasks) }
-                icon={ <AssignIcon /> }
+                value={2}
+                label={this.props.intl.formatMessage(messages.interestedTasks)}
+                icon={<AssignIcon />}
               />
               <Tab
-                value={ 3 }
-                label={ this.props.intl.formatMessage(
+                value={3}
+                label={this.props.intl.formatMessage(
                   messages.assignedToMeTasks
-                ) }
-                icon={ <ActionIcon /> }
+                )}
+                icon={<ActionIcon />}
               />
             </Tabs>
           </AppBar>
           <TabContainer>
-            { !user.id && this.state.tab !== 0 ? (
-              <Card className={ classes.card }>
+            {!user.id && this.state.tab !== 0 ? (
+              <Card className={classes.card}>
                 <CardMedia
-                  className={ classes.media }
-                  src={ imageGettingStarted }
+                  className={classes.media}
+                  src={imageGettingStarted}
                   title='Teste'
                 />
                 <CardContent>
-                  <Typography gutterBottom variant='headline' component='h2'>
+                  <Typography gutterBottom variant='h5' component='h2'>
                     <FormattedMessage
                       id='task.user.account.create.headline'
                       defaultMessage='Login / signup to work in our tasks'
@@ -216,32 +216,32 @@ class TaskList extends Component {
                 </CardContent>
                 <CardActions>
                   <Button
-                    style={ { marginRight: 10 } }
-                    href={ `${api.API_URL}/authorize/github` }
-                    variant='raised'
+                    style={{ marginRight: 10 }}
+                    href={`${api.API_URL}/authorize/github`}
+                    variant='contained'
                     size='small'
                     color='secondary'
-                    className={ classes.logButtons }
+                    className={classes.logButtons}
                   >
-                    <img width='16' src={ logoGithub } />
-                    <span className={ classes.gutterLeft }>Github</span>
+                    <img width='16' src={logoGithub} />
+                    <span className={classes.gutterLeft}>Github</span>
                   </Button>
 
                   <Button
-                    href={ `${api.API_URL}/authorize/bitbucket` }
-                    variant='raised'
+                    href={`${api.API_URL}/authorize/bitbucket`}
+                    variant='contained'
                     size='small'
                     color='secondary'
-                    className={ classes.logButtons }
+                    className={classes.logButtons}
                   >
-                    <img width='16' src={ logoBitbucket } />
-                    <span className={ classes.gutterLeft }>Bitbucket</span>
+                    <img width='16' src={logoBitbucket} />
+                    <span className={classes.gutterLeft}>Bitbucket</span>
                   </Button>
                 </CardActions>
               </Card>
             ) : (
-              <CustomPaginationActionsTable tasks={ this.props.tasks } />
-            ) }
+                <CustomPaginationActionsTable tasks={this.props.tasks} />
+              )}
           </TabContainer>
         </div>
       </Paper>

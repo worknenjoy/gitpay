@@ -1,6 +1,10 @@
 import React from 'react'
 import SubscribeFrom from 'react-mailchimp-subscribe'
-import { red, cyan, teal } from 'material-ui/colors'
+import {
+  red,
+  cyan,
+  teal
+} from '@material-ui/core/colors'
 import { injectIntl, defineMessages } from 'react-intl'
 
 const msgs = defineMessages({
@@ -58,7 +62,7 @@ const SubscribeForm = ({ intl, type }) => {
   }
 
   return (
-    <SubscribeFrom { ...formProps } className={ type || {} } />
+    <SubscribeFrom {...formProps} className={type || {}} />
   )
 }
 

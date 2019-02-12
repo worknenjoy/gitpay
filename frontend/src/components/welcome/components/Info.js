@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import Chip from 'material-ui/Chip'
-import Avatar from 'material-ui/Avatar'
-import Typography from 'material-ui/Typography'
+
+import {
+  Chip,
+  Avatar,
+  Typography
+} from '@material-ui/core'
 
 const Content = styled.span`
   margin-top: 5px;
@@ -51,10 +54,10 @@ const messages = defineMessages({
 })
 
 class Info extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.info()
   }
-  render () {
+  render() {
     const { tasks, bounties, users, intl } = this.props
 
     const stats = {
@@ -69,9 +72,9 @@ class Info extends React.Component {
           <FormattedMessage id='info.status.subheading' defaultMessage='Stats' />
         </Typography>
         <Items>
-          <ItemSmall label={ stats.tasks.text } avatar={ <Icon children={ stats.tasks.value } /> } />
-          <ItemBig label={ stats.bounties.text } avatar={ <Icon children={ stats.bounties.value } /> } />
-          <ItemSmall label={ stats.users.text } avatar={ <Icon children={ stats.users.value } /> } />
+          <ItemSmall label={stats.tasks.text} avatar={<Icon children={stats.tasks.value} />} />
+          <ItemBig label={stats.bounties.text} avatar={<Icon children={stats.bounties.value} />} />
+          <ItemSmall label={stats.users.text} avatar={<Icon children={stats.users.value} />} />
         </Items>
       </Content>
     )
