@@ -426,7 +426,7 @@ class Account extends Component {
                                           return (
                                             <MenuItem key={ i } value={ item }>{ `${
                                               Const.BANK_NUMBERS[item]
-                                              }` }
+                                            }` }
                                             </MenuItem>
                                           )
                                         }

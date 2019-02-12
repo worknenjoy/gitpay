@@ -100,7 +100,7 @@ class StatusDialog extends Component {
                       <DoneIcon />
                     ) : (
                       <FilterListIcon />
-                  ) }
+                ) }
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={ statusesDisplay[status] } />

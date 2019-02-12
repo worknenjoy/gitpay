@@ -150,7 +150,7 @@ class Preferences extends Component {
 
     let selectedSkills = this.state.selectedSkills.map(function (item) {
       return (
-        <MySkill classes={ classes } title={ item }  onDelete={ () => instance.handleRemoveSkill(item) } />
+        <MySkill classes={ classes } title={ item } onDelete={ () => instance.handleRemoveSkill(item) } />
       )
     })
 

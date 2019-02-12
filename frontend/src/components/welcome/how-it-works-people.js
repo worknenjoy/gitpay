@@ -7,16 +7,12 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  // Dialog,
-  // DialogContent,
-  // DialogTitle,
-  // DialogActions,
+  Dialog,
   AppBar,
   Toolbar,
   IconButton,
   Typography,
   Avatar,
-  // Button,
 } from '@material-ui/core'
 import {
   Apps,

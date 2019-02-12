@@ -618,7 +618,7 @@ class Task extends Component {
           { hasAssignedUser &&
             <FormattedMessage id='task.payment.action.chosen' defaultMessage='Chosen' >
               { (msg) => (
-                <Chip label={msg} />
+                <Chip label={ msg } />
               ) }
             </FormattedMessage>
           }
@@ -639,7 +639,7 @@ class Task extends Component {
                 <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
                   { (msg) => (
                     <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                      <a target='_blank' href={item.User.profile_url} style={ { display: 'flex', alignItems: 'center' } }>
+                      <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
                         <span>{ item.User.username || item.User.name || ' - ' }</span>
                         <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
                       </a>
@@ -779,7 +779,7 @@ class Task extends Component {
               <div className={ classes.paper }>
                 <Button
                   style={ { marginRight: 10 } }
-                  onClick={this.handlePaymentForm}
+                  onClick={ this.handlePaymentForm }
                   size='small'
                   color='primary'
                   className={ classes.altButton }
@@ -877,7 +877,7 @@ class Task extends Component {
                       onPayOrder={ this.props.paymentOrder }
                     />
                   </div>
-                )}
+                ) }
                 <TaskInvite
                   id={ task.data.id }
                   onInvite={ this.props.inviteTask }
@@ -970,7 +970,7 @@ class Task extends Component {
                               <WarningIcon className={ classes.iconCenter } style={ { color: '#D7472F' } } />
                               <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage='Please just send your interested if you will be able to do it and finish on time'>
                                 { (msg) => (
-                                  <span className={classes.spanText}>
+                                  <span className={ classes.spanText }>
                                     { msg }
                                   </span>
                                 ) }
@@ -1024,7 +1024,7 @@ class Task extends Component {
                           />
                           <Chip
                             label=' $ 50'
-                            className={classes.chip}
+                            className={ classes.chip }
                             onClick={ () => this.pickTaskPrice(50) }
                           />
                           <Chip
@@ -1115,8 +1115,8 @@ class Task extends Component {
           </Grid>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 8 }>
-              {task.data.assigned && <TaskAssigned status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) } classes={ classes } user={ task.data.assignedUser || {} } /> }
-              <TaskPaymentForm {...this.props} open={this.state.paymentForm} />
+              { task.data.assigned && <TaskAssigned status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) } classes={ classes } user={ task.data.assignedUser || {} } /> }
+              <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
               { taskOwner() &&
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
