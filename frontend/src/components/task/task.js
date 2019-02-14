@@ -182,7 +182,12 @@ const styles = theme => ({
   avatar: {
     width: 40,
     height: 40,
-    border: `4px solid ${theme.palette.primary.main}`
+    border: `4px solid ${theme.palette.primary.main}`,
+    [theme.breakpoints.down('sm')]: {
+      margin: 'auto',
+      display: 'block',
+      marginBottom: 5
+    },
   },
   bigAvatar: {
     width: 180,
@@ -276,7 +281,16 @@ const styles = theme => ({
     paddingRight: 5
   },
   inputComment: {
-    paddingTop: 20
+    paddingTop: 20,
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 30,
+    },
+  },
+  cardHeader: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+      textAlign: 'center'
+    }
   }
 })
 
@@ -554,11 +568,6 @@ class Task extends Component {
     })
   }
 
-  replaceDateText = (text) => {
-    text = text.replace('in', '').replace('days', '')
-    return text
-  }
-
   render () {
     const { classes, task, order } = this.props
 
@@ -699,13 +708,13 @@ class Task extends Component {
 
     const updatedAtTimeString = MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A')
     const timePlaceholder = (
-      <Typography type='subheading' style={ { padding: 10, color: 'gray' } }>
+      <Typography type='subheading' style={ { padding: 10, color: 'gray', marginRight: 10 } }>
         { updatedAtTimeString }
       </Typography>
     )
 
     const deliveryDate = task.data.deadline !== null ? MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') : this.props.intl.formatMessage(messages.deliveryDateNotInformed)
-    const deadline = task.data.deadline !== null ? this.replaceDateText(MomentComponent(task.data.deadline).utc().fromNow()) : false
+    const deadline = task.data.deadline !== null ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days') : false
 
     return (
       <div>
@@ -978,6 +987,7 @@ class Task extends Component {
                       <DialogContent>
                         <Card>
                           <CardHeader
+                            className={ classes.cardHeader }
                             avatar={
                               <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
                                 name: task.data.metadata.issue.user.login
