@@ -182,7 +182,12 @@ const styles = theme => ({
   avatar: {
     width: 40,
     height: 40,
-    border: `4px solid ${theme.palette.primary.main}`
+    border: `4px solid ${theme.palette.primary.main}`,
+    [theme.breakpoints.down('sm')]: {
+      margin: 'auto',
+      display: 'block',
+      marginBottom: 5
+    },
   },
   bigAvatar: {
     width: 180,
@@ -274,6 +279,18 @@ const styles = theme => ({
   iconCenter: {
     verticalAlign: 'middle',
     paddingRight: 5
+  },
+  inputComment: {
+    paddingTop: 20,
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 30,
+    },
+  },
+  cardHeader: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+      textAlign: 'center'
+    }
   }
 })
 
@@ -411,7 +428,9 @@ class Task extends Component {
         open: false,
         message: 'loading'
       },
-      showSuggestAnotherDateField: false
+      showSuggestAnotherDateField: false,
+      charactersCount: 0,
+      maxWidth: 'md'
     }
   }
 
@@ -509,7 +528,7 @@ class Task extends Component {
   }
 
   handleInputInterestedCommentChange = (e) => {
-    this.setState({ interestedComment: e.target.value })
+    this.setState({ interestedComment: e.target.value, charactersCount: e.target.value.length })
   }
 
   handleInputInterestedAmountChange = (e) => {
@@ -689,12 +708,13 @@ class Task extends Component {
 
     const updatedAtTimeString = MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A')
     const timePlaceholder = (
-      <Typography type='subheading' style={ { padding: 10, color: 'gray' } }>
+      <Typography type='subheading' style={ { padding: 10, color: 'gray', marginRight: 10 } }>
         { updatedAtTimeString }
       </Typography>
     )
 
-    const deliveryDate = task.data.deadline !== null ? MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') + ' (' + MomentComponent(task.data.deadline).utc().fromNow() + ')' : this.props.intl.formatMessage(messages.deliveryDateNotInformed)
+    const deliveryDate = task.data.deadline !== null ? MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') : this.props.intl.formatMessage(messages.deliveryDateNotInformed)
+    const deadline = task.data.deadline !== null ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days') : false
 
     return (
       <div>
@@ -946,6 +966,7 @@ class Task extends Component {
                   open={ this.state.assignDialog }
                   onClose={ this.handleAssignDialogClose }
                   aria-labelledby='form-dialog-title'
+                  maxWidth='md'
                 >
                   { !this.props.logged ? (
                     <div>
@@ -966,6 +987,7 @@ class Task extends Component {
                       <DialogContent>
                         <Card>
                           <CardHeader
+                            className={ classes.cardHeader }
                             avatar={
                               <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
                                 name: task.data.metadata.issue.user.login
@@ -1003,28 +1025,32 @@ class Task extends Component {
 
                         <div style={ { paddingBottom: 10 } }>
                           <Typography type='subheading' gutterBottom style={ { paddingTop: 20, color: 'gray' } }>
-                            <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
-                            <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-                              { (msg) => (
-                                <span className={ classes.spanText }>
-                                  { msg }
-                                </span>
-                              ) }
-                            </FormattedMessage>
-                          </Typography>
-                        </div>
-
-                        <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10 } }>
-                          <div style={ { padding: 5, color: 'gray' } }>
-                            <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
-                              <WarningIcon className={ classes.iconCenter } style={ { color: '#D7472F' } } />
-                              <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage='Please just send your interested if you will be able to do it and finish on time'>
+                            <Grid item sm={ 12 } xs={ 12 } style={ { display: 'flex' } }>
+                              <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
+                              <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
                                 { (msg) => (
                                   <span className={ classes.spanText }>
                                     { msg }
                                   </span>
                                 ) }
                               </FormattedMessage>
+                            </Grid>
+                          </Typography>
+                        </div>
+
+                        <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10 } }>
+                          <div style={ { padding: 5, color: 'gray' } }>
+                            <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
+                              <Grid item sm={ 12 } xs={ 12 } style={ { display: 'flex' } }>
+                                <WarningIcon className={ classes.iconCenter } style={ { color: '#D7472F' } } />
+                                <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage='Please just send your interested if you will be able to do it and finish on time'>
+                                  { (msg) => (
+                                    <span className={ classes.spanText }>
+                                      { msg }
+                                    </span>
+                                  ) }
+                                </FormattedMessage>
+                              </Grid>
                             </Typography>
                           </div>
                           <div style={ { padding: 5, color: 'gray' } }>
@@ -1032,6 +1058,9 @@ class Task extends Component {
                               <CalendarIcon className={ classes.iconCenter } />
                               <span className={ classes.spanText }>
                                 <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={ { deliveryDate: deliveryDate } } />
+                                { deadline
+                                  ? <FormattedHTMLMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={ { deadline: deadline } } />
+                                  : null }
                               </span>
                               <Button onClick={ this.handleSuggestAnotherDate } color='primary'>
                                 <FormattedMessage id='task.bounties.actions.sugggestAnotherDate' defaultMessage='SUGGEST ANOTHER DATE' />&nbsp;
@@ -1043,7 +1072,7 @@ class Task extends Component {
                             <FormControl fullWidth>
                               <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
                                 { (msg) => (
-                                  <InputLabel htmlFor='interested-date'>{ msg }</InputLabel>
+                                  <InputLabel htmlFor='interested-date' shrink='true'>{ msg }</InputLabel>
                                 ) }
                               </FormattedMessage>
                               <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
@@ -1113,8 +1142,7 @@ class Task extends Component {
                           </FormattedMessage>
                         </FormControl>
 
-                        <Grid container spacing={ 24 }>
-
+                        <Grid container spacing={ 24 } style={ { fontFamily: 'Roboto', marginBottom: '20px', color: '#a9a9a9' } }>
                           <Grid item xs={ 12 } sm={ 6 }>
                             <Checkbox checked={ this.state.currentPrice === 0 && !this.state.interestedLearn ? 'checked' : '' } onChange={ this.handleCheckboxLeaveItFor } /><FormattedMessage id='task.bounties.interested.leaveItFor' defaultMessage='Or leave it for' />&nbsp;
                             <Chip
@@ -1124,11 +1152,10 @@ class Task extends Component {
                             />
                           </Grid>
                           <Grid item xs={ 12 } sm={ 6 }>
-                            <Checkbox checked={ this.state.interestedLearn ? 'checked' : '' } onChange={ this.handleCheckboxLearn } /><FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage="Or I'm starter and I just want to gain experience" />
+                            <Checkbox style={ { marginLeft: '-15px' } } checked={ this.state.interestedLearn ? 'checked' : '' } onChange={ this.handleCheckboxLearn } />
+                            <FormattedMessage style={ { fontFamily: 'Roboto' } } id='task.bounties.interested.iAmStarter' defaultMessage="Or I'm starter and I just want to gain experience" />
                           </Grid>
-
                         </Grid>
-
                         <FormControl fullWidth>
                           <InputLabel htmlFor='interested-comment'>
                             <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='You can leave a comment' />
@@ -1141,11 +1168,13 @@ class Task extends Component {
                                 placeholder={ msg }
                                 type='text'
                                 inputProps={ { maxLength: '120' } }
+                                className={ classes.inputComment }
                                 value={ this.state.interestedComment }
                                 onChange={ this.handleInputInterestedCommentChange }
                               />
                             ) }
                           </FormattedMessage>
+                          <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ this.state.charactersCount + '/120' }</small>
                         </FormControl>
 
                       </DialogContent>
