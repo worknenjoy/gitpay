@@ -40,6 +40,8 @@ To run the test:
 
 For fully integration with api services used by the platform, you will need the api keys. *You should make a copy of your `.env.example` to `.env`* with the right credentials. Please let me know if you need any of those to solve a issue (mail tarefas@gitpay.me)
 
+You can do this with: `cp .env.example .env`
+
 ### Database
 
 #### Install postgres
