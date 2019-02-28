@@ -49,6 +49,7 @@ export const StyledButton = styled(Button)`
   font-size: 12px;
   cursor: pointer;
   margin-left: 10px !important;
+  
 `
 
 export const LogoButton = styled(StyledButton)`

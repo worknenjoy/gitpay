@@ -7,8 +7,6 @@ import {
   Paper,
   Grid,
   Typography,
-  LabelButton,
-  StyledAvatarIconOnly,
   Checkbox,
   Switch,
   Menu,
@@ -16,6 +14,8 @@ import {
   Button
 } from '@material-ui/core'
 import LanguageIcon from '@material-ui/icons/Language'
+
+import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import Skill from './skill'

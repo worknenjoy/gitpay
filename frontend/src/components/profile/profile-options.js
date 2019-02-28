@@ -8,11 +8,10 @@ import {
   Button,
   CardActions,
   CardContent,
-  withStyles,
-  Card,
-  CardList,
-  CardMedia,
+  withStyles
 } from '@material-ui/core'
+
+import { Card, CardList, CardMedia } from './ProfileStyles'
 
 const taskIcon = require('../../images/task-icon.png')
 const paymentIcon = require('../../images/payment-icon.png')

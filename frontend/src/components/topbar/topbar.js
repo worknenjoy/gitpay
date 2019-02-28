@@ -51,10 +51,7 @@ import {
   LabelButton,
   StyledAvatar,
   StyledAvatarIconOnly,
-  OnlyDesktop,
-  // LogoButton,
-  // StyledLanguageButton,
-  // StyledSlackButton,
+  OnlyDesktop
 } from './TopbarStyles'
 
 import messagesBr from '../../translations/result/br.json'

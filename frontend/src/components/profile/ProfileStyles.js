@@ -1,5 +1,5 @@
 import {
-  BaseCard,
+  Card as BaseCard,
   CardMedia as BaseCardMedia
 } from '@material-ui/core'
 
