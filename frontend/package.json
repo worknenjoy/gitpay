@@ -43,7 +43,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "enzyme": "^3.6.0",
-    "enzyme-adapter-react-15": "^1.1.0",
+    "enzyme-adapter-react-16": "^1.2.0",
     "enzyme-react-intl": "^2.0.2",
     "extract-react-intl": "^0.6.0",
     "extract-react-intl-messages": "^0.10.0",
