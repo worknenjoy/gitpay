@@ -1046,32 +1046,6 @@ class Task extends Component {
                             </FormattedMessage>
                           </Typography>
                         </div>
-
-                        <Paper style={ {
-                          background: '#F7F7F7',
-                          borderColor: '#F0F0F0',
-                          borderWidth: 1,
-                          borderStyle: 'solid',
-                          boxShadow: 'none',
-                          padding: 10
-                        } }>
-                          <div style={ { padding: 5, color: 'gray' } }>
-                            <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
-                              <WarningIcon className={ classes.iconCenter } style={ { color: '#D7472F' } } />
-                              <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage='Please just send your interested if you will be able to do it and finish on time' />
-                              <Grid item sm={ 12 } xs={ 12 } style={ { display: 'flex' } }>
-                                <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
-                                <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-                                  { (msg) => (
-                                    <span className={ classes.spanText }>
-                                      { msg }
-                                    </span>
-                                  ) }
-                                </FormattedMessage>
-                              </Grid>
-                            </Typography>
-                          </div>
-                        </Paper>
                         <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10 } }>
                           <div style={ { padding: 5, color: 'gray' } }>
                             <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
