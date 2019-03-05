@@ -1,7 +1,8 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const MinifyPlugin = require('babel-minify-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// Minify hangs in 92% when build in production, so now we are testing the uglify above
+// const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -21,7 +22,7 @@ module.exports = {
     }
   },
   plugins: [
-    //new MinifyPlugin(),
+    // new MinifyPlugin(),
     new ExtractTextPlugin('app.css'),
     new webpack.DefinePlugin({
       'process.env': {
