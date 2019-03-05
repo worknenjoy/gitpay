@@ -311,22 +311,20 @@ class TopBar extends Component {
               <ViewList />
             </StyledButton>
 
-            <div>
-              <StyledButton
-                onClick={ this.handleDocsLink }
-                variant='contained'
-                size='small'
-                color='default'
-              >
-                <LabelButton>
-                  <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
-                </LabelButton>
-                <LibraryBooks />
-              </StyledButton>
-            </div>
+            <StyledButton
+              onClick={ this.handleDocsLink }
+              variant='contained'
+              size='small'
+              color='default'
+            >
+              <LabelButton>
+                <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
+              </LabelButton>
+              <LibraryBooks />
+            </StyledButton>
 
             { !isLoggedIn
-              ? (<div>
+              ? (<React.Fragment>
                 <StyledButton
                   onClick={ this.handleClickDialogSignUser }
                   variant='contained'
@@ -350,8 +348,8 @@ class TopBar extends Component {
                     <LoginButton referer={ this.props.location } size='medium' includeForm />
                   </DialogContent>
                 </Dialog>
-              </div>) : (
-                <div>
+              </React.Fragment>) : (
+                <React.Fragment>
                   <StyledButton
                     onClick={ this.handleMenu }
                     variant='contained'
@@ -375,7 +373,7 @@ class TopBar extends Component {
                       </StyledAvatar>
                     }
                   </StyledButton>
-                </div>
+                </React.Fragment>
               )
             }
 
@@ -411,7 +409,7 @@ class TopBar extends Component {
                       <Button
                         style={ { marginRight: 10 } }
                         color='primary'
-                        variant={ this.state.provider === 'github' ? 'raised' : 'contained' }
+                        variant={ this.state.provider === 'github' ? 'raised' : 'outline' }
                         id='github'
                         onClick={ (e) => this.handleProvider(e, 'github') }
                       >
@@ -421,7 +419,7 @@ class TopBar extends Component {
 
                       <Button
                         color='primary'
-                        variant={ this.state.provider === 'bitbucket' ? 'raised' : 'contained' }
+                        variant={ this.state.provider === 'bitbucket' ? 'raised' : 'outline' }
                         id='bitbucket'
                         onClick={ (e) => this.handleProvider(e, 'bitbucket') }
                       >

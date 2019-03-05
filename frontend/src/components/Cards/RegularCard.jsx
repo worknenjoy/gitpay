@@ -28,7 +28,7 @@ function RegularCard({ ...props }) {
     [' ' + classes.cardPlainHeader]: plainCard
   })
   return (
-    <Card className={classes.card + plainCardClasses}>
+    <Card className={classes.card + plainCardClasses} style={{overflow: 'visible'}}>
       <CardHeader
         classes={{
           root:

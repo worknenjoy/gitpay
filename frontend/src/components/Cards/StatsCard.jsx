@@ -23,7 +23,7 @@ function StatsCard({ ...props }) {
     iconColor
   } = props
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} style={{overflow: 'visible'}}>
       <CardHeader
         classes={{
           root: classes.cardHeader + ' ' + classes[iconColor + 'CardHeader'],
