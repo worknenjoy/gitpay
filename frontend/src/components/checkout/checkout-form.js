@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
+import {
+  Grid,
+  Typography,
+  Button,
+} from '@material-ui/core'
 import { injectStripe } from 'react-stripe-elements'
 
 import CardSection from './card-section'
 import UserSection from './user-section'
-import Button from 'material-ui/Button'
 
 class CheckoutForm extends Component {
   constructor (props) {
@@ -168,7 +170,7 @@ class CheckoutForm extends Component {
               </Button>
               <Button
                 type='submit'
-                variant='raised'
+                variant='contained'
                 color='secondary'
                 disabled={ this.state.paymentRequested }
               >

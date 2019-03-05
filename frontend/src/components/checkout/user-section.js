@@ -2,10 +2,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Input, { InputAdornment } from 'material-ui/Input'
-import { FormControl, FormHelperText } from 'material-ui/Form'
-import AccountCircle from 'material-ui-icons/AccountCircle'
-import MailIcon from 'material-ui-icons/Mail'
+
+import {
+  Input,
+  InputAdornment,
+  FormControl,
+  FormHelperText
+} from '@material-ui/core'
+import {
+  AccountCircle,
+  Email
+} from '@material-ui/icons'
 
 class UserSection extends Component {
   constructor (props) {
@@ -86,7 +93,7 @@ class UserSection extends Component {
             id='adornment-email'
             startAdornment={
               <InputAdornment position='start'>
-                <MailIcon />
+                <Email />
               </InputAdornment>
             }
             placeholder='e-mail'

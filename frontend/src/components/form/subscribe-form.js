@@ -1,6 +1,10 @@
 import React from 'react'
 import SubscribeFrom from 'react-mailchimp-subscribe'
-import { red, cyan, teal } from 'material-ui/colors'
+import {
+  red,
+  cyan,
+  teal
+} from '@material-ui/core/colors'
 import { injectIntl, defineMessages } from 'react-intl'
 
 const msgs = defineMessages({

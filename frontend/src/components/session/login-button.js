@@ -3,9 +3,13 @@ import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import Auth from '../../modules/auth'
-import Button from 'material-ui/Button'
-import Typography from 'material-ui/Typography'
-import { withStyles } from 'material-ui/styles'
+
+import {
+  Button,
+  Typography,
+  withStyles
+} from '@material-ui/core'
+
 import { withRouter } from 'react-router-dom'
 
 import LoginFormContainer from '../../containers/login-form'
@@ -14,6 +18,7 @@ const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 import api from '../../consts'
+// import { IncomingMessage } from 'http'
 
 const styles = theme => ({
   gutterLeft: {
@@ -52,14 +57,15 @@ class LoginButton extends Component {
         <Content>
           { includeForm && (
             <div>
-              <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+              <Typography type='subtitle1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
               <LoginFormContainer />
             </div>
           ) }
+
           <div style={ { textAlign: 'center' } }>
-            <Typography type='subheading' color={ contrast ? 'inherit' : 'default' } gutterBottom>
+            <Typography type='subtitle1' color={ contrast ? 'inherit' : 'default' } gutterBottom>
               <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
             </Typography>
           </div>
@@ -68,7 +74,7 @@ class LoginButton extends Component {
               <Button
                 style={ { marginRight: 10 } }
                 href={ `${api.API_URL}/authorize/github` }
-                variant='raised'
+                variant='contained'
                 size={ size }
                 color='secondary'
                 className={ classes.logButtons }
@@ -78,7 +84,7 @@ class LoginButton extends Component {
               </Button>
               <Button
                 href={ `${api.API_URL}/authorize/bitbucket` }
-                variant='raised'
+                variant='contained'
                 size={ size }
                 color='secondary'
                 className={ classes.logButtons }

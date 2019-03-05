@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Typography from 'material-ui/Typography'
+import Typography from '@material-ui/core/Typography'
 import { CardElement } from 'react-stripe-elements'
 
 class CardSection extends React.Component {

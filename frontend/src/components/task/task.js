@@ -6,35 +6,47 @@ import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
 import 'react-placeholder/lib/reactPlaceholder.css'
 
-import Grid from 'material-ui/Grid'
-import Avatar from 'material-ui/Avatar'
-import Card, { CardHeader } from 'material-ui/Card'
-import AppBar from 'material-ui/AppBar'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Tooltip from 'material-ui/Tooltip'
-import Dialog, {
+import {
+  Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
-} from 'material-ui/Dialog'
+  DialogTitle,
+  Grid,
+  Avatar,
+  Card,
+  CardHeader,
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Button,
+  Tooltip,
+  Chip,
+  withStyles,
+  Paper,
+  FormControl,
+  Input,
+  InputAdornment,
+  InputLabel,
+  Checkbox,
+} from '@material-ui/core'
 
-import RedeemIcon from 'material-ui-icons/Redeem'
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
-import AddIcon from 'material-ui-icons/Add'
-import FilterIcon from 'material-ui-icons/FilterList'
-import TrophyIcon from 'material-ui-icons/AccountBalanceWallet'
-import DateIcon from 'material-ui-icons/DateRange'
-import CalendarIcon from 'material-ui-icons/PermContactCalendar'
-import GroupWorkIcon from 'material-ui-icons/GroupAdd'
-import DoneIcon from 'material-ui-icons/Done'
-import NavigationIcon from 'material-ui-icons/ArrowBack'
-import InfoIcon from 'material-ui-icons/Info'
-import WarningIcon from 'material-ui-icons/Warning'
-import DeleteIcon from 'material-ui-icons/Delete'
+import {
+  Redeem as RedeemIcon,
+  ShoppingBasket,
+  AddBox as AddIcon,
+  FilterList as FilterIcon,
+  HowToReg as TrophyIcon,
+  DateRange as DateIcon,
+  CalendarToday as CalendarIcon,
+  GroupWork as GroupWorkIcon,
+  Done as DoneIcon,
+  Navigation as NavigationIcon,
+  Warning as WarningIcon,
+  Info as InfoIcon,
+  Delete as DeleteIcon
+} from '@material-ui/icons'
 
-import Chip from 'material-ui/Chip'
 import StatusDialog from './status-dialog'
 import TaskPayment from './task-payment'
 import TaskPaymentForm from './task-payment-form'
@@ -45,7 +57,6 @@ import RegularCard from '../Cards/RegularCard'
 import Table from '../Table/Table'
 
 import classNames from 'classnames'
-import { withStyles } from 'material-ui/styles'
 
 import marked from 'marked'
 import renderHTML from 'react-render-html'
@@ -67,10 +78,6 @@ import media from 'app/styleguide/media'
 import RemoveAssignment from './assignment/RemoveAssignment'
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
-import { Paper } from 'material-ui'
-import { FormControl } from 'material-ui/Form'
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
-import Checkbox from 'material-ui/Checkbox'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
@@ -603,8 +610,7 @@ class Task extends Component {
                 </Tooltip>
               ) }
             </FormattedMessage>
-          )
-          : (
+          ) : (
             `${user && (user.username || user.name || this.props.intl.formatMessage(messages.noUserFound))}`
           )
         }
@@ -639,17 +645,17 @@ class Task extends Component {
           />
 
           { (isOwner && !hasAssignedUser) &&
-          <Button
-            disabled={ hasAssignedUser }
-            onClick={ () => this.props.assignTask(task.id, assign.id) }
-            style={ { marginRight: 10 } }
-            variant='raised'
-            size='small'
-            color='primary'
-          >
-            <GroupWorkIcon style={ { marginRight: 5 } } />
-            <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
-          </Button>
+            <Button
+              disabled={ hasAssignedUser }
+              onClick={ () => this.props.assignTask(task.id, assign.id) }
+              style={ { marginRight: 10 } }
+              variant='contained'
+              size='small'
+              color='primary'
+            >
+              <GroupWorkIcon style={ { marginRight: 5 } } />
+              <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
+            </Button>
           }
 
           { hasAssignedUser &&
@@ -683,8 +689,7 @@ class Task extends Component {
                     </Tooltip>
                   ) }
                 </FormattedMessage>
-              )
-              : (
+              ) : (
                 `${item.User.username || item.User.name || ' - '}`
               )
             }
@@ -721,7 +726,7 @@ class Task extends Component {
         <TopBarContainer />
         <PageContent>
           <TaskHeader>
-            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='raised' size='small' aria-label='Delete' className={ classes.button }>
+            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='contained' size='small' aria-label='Delete' className={ classes.button }>
               <NavigationIcon />
               <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
             </Button>
@@ -929,7 +934,13 @@ class Task extends Component {
                     />
                   </div>
                 ) }
-                <TaskInvite id={ task.data.id } onInvite={ this.props.inviteTask } visible={ this.state.taskInviteDialog } onClose={ () => this.setState({ taskInviteDialog: false }) } onOpen={ () => this.setState({ taskInviteDialog: true }) } />
+                <TaskInvite
+                  id={ task.data.id }
+                  onInvite={ this.props.inviteTask }
+                  visible={ this.state.taskInviteDialog }
+                  onClose={ () => this.setState({ taskInviteDialog: false }) }
+                  onOpen={ () => this.setState({ taskInviteDialog: true }) }
+                />
                 <Dialog
                   open={ this.state.deleteDialog }
                   onClose={ this.handleDeleteDialogClose }
@@ -1025,19 +1036,16 @@ class Task extends Component {
 
                         <div style={ { paddingBottom: 10 } }>
                           <Typography type='subheading' gutterBottom style={ { paddingTop: 20, color: 'gray' } }>
-                            <Grid item sm={ 12 } xs={ 12 } style={ { display: 'flex' } }>
-                              <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
-                              <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-                                { (msg) => (
-                                  <span className={ classes.spanText }>
-                                    { msg }
-                                  </span>
-                                ) }
-                              </FormattedMessage>
-                            </Grid>
+                            <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
+                            <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
+                              { (msg) => (
+                                <span className={ classes.spanText }>
+                                  { msg }
+                                </span>
+                              ) }
+                            </FormattedMessage>
                           </Typography>
                         </div>
-
                         <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10 } }>
                           <div style={ { padding: 5, color: 'gray' } }>
                             <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
@@ -1182,7 +1190,7 @@ class Task extends Component {
                         <Button onClick={ this.handleAssignDialogClose } color='primary'>
                           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleAssignTask } variant='raised' color='secondary' >
+                        <Button onClick={ this.handleAssignTask } variant='contained' color='secondary' >
                           <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
                         </Button>
                       </DialogActions>
@@ -1215,62 +1223,64 @@ class Task extends Component {
                   </Tabs>
                 </AppBar>
                 { task.tab === 0 &&
-                <TabContainer>
-                  <Card className={ classes.paper }>
-                    <Typography variant='title' align='left' gutterBottom>
-                      <FormattedMessage id='task.info.description' defaultMessage='Description' />
-                    </Typography>
-                    <Typography variant='body2' align='left' gutterBottom>
-                      <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
-                        <PlaceholderDiv className={ classes.contentBody }>
-                          { renderHTML(marked(task.data.metadata.issue.body)) }
-                        </PlaceholderDiv>
-                      </ReactPlaceholder>
-                    </Typography>
-                  </Card>
-                </TabContainer> }
+                  <TabContainer>
+                    <Card className={ classes.paper }>
+                      <Typography variant='title' align='left' gutterBottom>
+                        <FormattedMessage id='task.info.description' defaultMessage='Description' />
+                      </Typography>
+                      <Typography variant='body2' align='left' gutterBottom>
+                        <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
+                          <PlaceholderDiv className={ classes.contentBody }>
+                            { renderHTML(marked(task.data.metadata.issue.body)) }
+                          </PlaceholderDiv>
+                        </ReactPlaceholder>
+                      </Typography>
+                    </Card>
+                  </TabContainer>
+                }
                 { task.tab === 1 &&
-                <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-                  <RegularCard
-                    headerColor='green'
-                    cardTitle={ this.props.intl.formatMessage(messages.cardTitle) }
-                    cardSubtitle={ this.props.intl.formatMessage(messages.cardSubtitle) }
-                    content={
-                      <Table
-                        tableHeaderColor='warning'
-                        tableHead={ [
-                          this.props.intl.formatMessage(messages.cardTableHeaderPaid),
-                          this.props.intl.formatMessage(messages.cardTableHeaderStatus),
-                          this.props.intl.formatMessage(messages.cardTableHeaderValue),
-                          this.props.intl.formatMessage(messages.cardTableHeaderCreated),
-                          this.props.intl.formatMessage(messages.cardTableHeaderUser),
-                          this.props.intl.formatMessage(messages.cardTableHeaderPayment)
-                        ]
-                        }
-                        tableData={ task.data.orders.length ? displayOrders(task.data.orders) : [] }
-                      />
-                    }
-                  />
-                </div> }
+                  <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
+                    <RegularCard
+                      headerColor='green'
+                      cardTitle={ this.props.intl.formatMessage(messages.cardTitle) }
+                      cardSubtitle={ this.props.intl.formatMessage(messages.cardSubtitle) }
+                      content={
+                        <Table
+                          tableHeaderColor='warning'
+                          tableHead={ [
+                            this.props.intl.formatMessage(messages.cardTableHeaderPaid),
+                            this.props.intl.formatMessage(messages.cardTableHeaderStatus),
+                            this.props.intl.formatMessage(messages.cardTableHeaderValue),
+                            this.props.intl.formatMessage(messages.cardTableHeaderCreated),
+                            this.props.intl.formatMessage(messages.cardTableHeaderUser),
+                            this.props.intl.formatMessage(messages.cardTableHeaderPayment)
+                          ] }
+                          tableData={ task.data.orders.length ? displayOrders(task.data.orders) : [] }
+                        />
+                      }
+                    />
+                  </div>
+                }
                 { task.tab === 2 &&
-                <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-                  <RegularCard
-                    headerColor='green'
-                    cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
-                    cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
-                    content={
-                      <Table
-                        tableHeaderColor='warning'
-                        tableHead={ [
-                          this.props.intl.formatMessage(messages.interestedTableLabelUser),
-                          this.props.intl.formatMessage(messages.interestedTableLabelWhen),
-                          this.props.intl.formatMessage(messages.interestedTableLabelActions)
-                        ] }
-                        tableData={ task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
-                      />
-                    }
-                  />
-                </div> }
+                  <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
+                    <RegularCard
+                      headerColor='green'
+                      cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
+                      cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
+                      content={
+                        <Table
+                          tableHeaderColor='warning'
+                          tableHead={ [
+                            this.props.intl.formatMessage(messages.interestedTableLabelUser),
+                            this.props.intl.formatMessage(messages.interestedTableLabelWhen),
+                            this.props.intl.formatMessage(messages.interestedTableLabelActions)
+                          ] }
+                          tableData={ task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
+                        />
+                      }
+                    />
+                  </div>
+                }
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
@@ -1287,14 +1297,15 @@ class Task extends Component {
                 }) }
               />
               { MomentComponent(task.data.deadline).isValid() &&
-              <StatsCard
-                icon={ DateIcon }
-                iconColor='green'
-                title={ this.props.intl.formatMessage(messages.taskLimitDate) }
-                description={ MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') }
-                statIcon={ DateIcon }
-                statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
-              /> }
+                <StatsCard
+                  icon={ DateIcon }
+                  iconColor='green'
+                  title={ this.props.intl.formatMessage(messages.taskLimitDate) }
+                  description={ MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') }
+                  statIcon={ DateIcon }
+                  statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
+                />
+              }
             </Grid>
           </Grid>
         </PageContent>

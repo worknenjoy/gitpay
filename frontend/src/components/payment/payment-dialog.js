@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Dialog, {
+import {
+  Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle
-} from 'material-ui/Dialog'
+} from '@material-ui/core'
 import StripeCheckout from '../checkout/stripe-checkout'
 
 class PaymentDialog extends Component {

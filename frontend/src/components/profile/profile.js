@@ -3,23 +3,31 @@ import PropTypes from 'prop-types'
 import { Route, Switch, HashRouter } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import Grid from 'material-ui/Grid'
-import Avatar from 'material-ui/Avatar'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Paper from 'material-ui/Paper'
-import { ListItemIcon, ListItemText } from 'material-ui/List'
-import { MenuList, MenuItem } from 'material-ui/Menu'
-import DeviceHubIcon from 'material-ui-icons/DeviceHub'
-import LibraryBooks from 'material-ui-icons/LibraryBooks'
-import CreditCard from 'material-ui-icons/CreditCard'
-import Tune from 'material-ui-icons/Tune'
-import UserIcon from 'material-ui-icons/AccountCircle'
-import ArrowBackIcon from 'material-ui-icons/ArrowBack'
+import {
+  Grid,
+  Avatar,
+  Typography,
+  Button,
+  Paper,
+  ListItemIcon,
+  ListItemText,
+  MenuList,
+  MenuItem,
+  withStyles,
+  Toolbar,
+  AppBar,
+} from '@material-ui/core'
+import {
+  DeviceHub,
+  LibraryBooks,
+  CreditCard,
+  Tune,
+  Person,
+  ArrowBack
+} from '@material-ui/icons'
 
 import classNames from 'classnames'
 import nameInitials from 'name-initials'
-import { withStyles } from 'material-ui/styles'
 
 import api from '../../consts'
 
@@ -31,7 +39,6 @@ import PaymentOptions from '../payment/payment-options'
 import Preferences from '../../components/profile/preferences'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
-import { Toolbar, AppBar } from 'material-ui'
 
 import PreferencesBar from './preferences-bar'
 
@@ -175,8 +182,8 @@ class Profile extends Component {
             <Grid container alignItems='center' spacing={ 8 }>
               <Grid item xs>
                 <Typography color='primary' variant='title'>
-                  <Button onClick={ this.handleBackToTaskList } variant='flat' size='small' aria-label='Back' color='primary'>
-                    <ArrowBackIcon />
+                  <Button onClick={ this.handleBackToTaskList } variant='text' size='small' aria-label='Back' color='primary'>
+                    <ArrowBack />
                   </Button>
                   <span style={ { marginLeft: 10 } }>
                     { titleNavigation }
@@ -228,7 +235,7 @@ class Profile extends Component {
                       src=''
                       className={ classNames(classes.avatar, classes.bigAvatar) }
                     >
-                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <UserIcon />) }
+                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <Person />) }
                     </Avatar>
                   ) }
                 </div>
@@ -237,7 +244,7 @@ class Profile extends Component {
                     <Button
                       disabled={ user.provider === 'github' }
                       href={ `${api.API_URL}/authorize/github` }
-                      variant='raised'
+                      variant='contained'
                       size='small'
                       color='secondary'
                       className={ classes.altButton }
@@ -248,7 +255,7 @@ class Profile extends Component {
                     <Button
                       disabled={ user.provider === 'bitbucket' }
                       href={ `${api.API_URL}/authorize/bitbucket` }
-                      variant='raised'
+                      variant='contained'
                       size='small'
                       color='secondary'
                       className={ classes.altButton }
@@ -275,7 +282,7 @@ class Profile extends Component {
                     <div className={ classes.infoItem }>
                       <Typography>
                         <h4>
-                          <DeviceHubIcon />
+                          <DeviceHub />
                           <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
                         </h4>
                         <p>{ user.repos }</p>

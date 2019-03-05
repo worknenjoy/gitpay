@@ -5,25 +5,25 @@ import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
 import ReactPlaceholder from 'react-placeholder'
+
 import {
   ListItem,
   ListItemText,
-  ListItemSecondaryAction
-} from 'material-ui/List'
+  ListItemSecondaryAction,
+  Avatar,
+  ItemIcon,
+  Chip,
+  IconButton,
+  Tooltip
+} from '@material-ui/core'
 
 import Constants from '../../consts'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
-import Avatar from 'material-ui/Avatar'
-import ItemIcon from 'material-ui-icons/AccountBox'
-import Chip from 'material-ui/Chip'
-import IconButton from 'material-ui/IconButton'
-import Tooltip from 'material-ui/Tooltip'
-
 class TaskItem extends Component {
-  componentDidMount () {}
+  componentDidMount () { }
 
   handleClickListItem (id) {
     this.props.history.push('/task/' + id)

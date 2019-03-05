@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { withStyles } from 'material-ui/styles'
 import { withRouter, Link } from 'react-router-dom'
-import Card from 'material-ui/Card'
-import CardContent from 'material-ui/Card/CardContent'
-import cyan from 'material-ui/colors/cyan'
 import LoginButton from './login-button'
+
+import {
+  withStyles,
+  Card,
+  CardContent
+} from '@material-ui/core'
+
+import cyan from '@material-ui/core/colors/cyan'
 
 const styles = theme => ({
   container: {

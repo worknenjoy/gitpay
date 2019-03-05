@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import TextField from 'material-ui/TextField'
-import { withStyles } from 'material-ui/styles'
-import { withRouter } from 'react-router-dom'
+import withRouter from 'react-router-dom/withRouter'
 import { FormattedMessage } from 'react-intl'
-import purple from 'material-ui/colors/purple'
-import Button from 'material-ui/Button'
+
+import {
+  Button,
+  withStyles,
+  TextField
+} from '@material-ui/core'
+import purple from '@material-ui/core/colors/purple'
 
 import api from '../../consts'
 
@@ -83,7 +86,7 @@ class LoginForm extends Component {
     const { classes } = this.props
     const { type, action } = this.state
     return (
-      <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
+      <form onSubmit={ () => this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
           <div className={ classes.margins }>
             <TextField
@@ -105,7 +108,7 @@ class LoginForm extends Component {
               } }
               label='Name'
               variant='outlined'
-              id='custom-css-outlined-input'
+              id='name'
             />
           </div>
         ) }
@@ -130,7 +133,7 @@ class LoginForm extends Component {
             type='email'
             label='E-mail'
             variant='outlined'
-            id='custom-css-outlined-input'
+            id='email'
           />
         </div>
         <div className={ classes.margins }>
@@ -154,28 +157,27 @@ class LoginForm extends Component {
             type='password'
             label='Password'
             variant='outlined'
-            id='custom-css-outlined-input'
+            id='password'
           />
         </div>
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
-              <Button onClick={ this.handleType('signup') } variant='raised' color='primary' className={ classes.button }>
+              <Button onClick={ this.handleType('signup') } variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
               </Button>
-              <Button type='submit' variant='raised' color='primary' className={ classes.button }>
+              <Button type='submit' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
               </Button>
             </div>
-          ) : (
-            <div>
-              <Button onClick={ this.handleType('signin') } variant='outline' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
-              </Button>
-              <Button type='submit' variant='raised' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
-              </Button>
-            </div>
+          ) : (<div>
+            <Button onClick={ this.handleType('signin') } variant='contained' color='primary' className={ classes.button }>
+              <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+            </Button>
+            <Button type='submit' variant='contained' color='primary' className={ classes.button }>
+              <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+            </Button>
+          </div>
           ) }
         </div>
       </form>

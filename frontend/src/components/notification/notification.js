@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import Snackbar from 'material-ui/Snackbar'
-import IconButton from 'material-ui/IconButton'
-import CloseIcon from 'material-ui-icons/Close'
 import PropTypes from 'prop-types'
 
+import {
+  Snackbar,
+  IconButton,
+} from '@material-ui/core'
+
+import Close from '@material-ui/icons/Close'
+
 class Notification extends Component {
-  componentDidMount () {}
+  componentDidMount () { }
 
   render () {
     return (
@@ -28,7 +32,7 @@ class Notification extends Component {
             color='inherit'
             onClick={ this.props.onClose }
           >
-            <CloseIcon />
+            <Close />
           </IconButton>
         ] }
       />
