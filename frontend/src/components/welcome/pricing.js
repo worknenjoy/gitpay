@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Button from 'material-ui/Button'
-import Card from 'material-ui/Card'
-import CardActions from 'material-ui/Card/CardActions'
-import CardContent from 'material-ui/Card/CardContent'
-import CardHeader from 'material-ui/Card/CardHeader'
-import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
-import { withStyles } from 'material-ui/styles'
+
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Grid,
+  Typography,
+  withStyles
+} from '@material-ui/core'
+
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
@@ -58,7 +62,7 @@ const tiers = [
     price: '0',
     description: ['Unlimited tasks', 'Development community', '12% fee for each transaction', 'Pay on demmand'],
     buttonText: 'Sign up for free',
-    buttonVariant: 'raised',
+    buttonVariant: 'contained',
     link: 'https://gitpay.me/#/login'
   },
   {
@@ -73,7 +77,7 @@ const tiers = [
       'Email support',
     ],
     buttonText: 'Contact us',
-    buttonVariant: 'raised',
+    buttonVariant: 'contained',
     link: 'https://goo.gl/forms/eSpHlrtXGJ1v3Syv2'
   },
   {
@@ -88,7 +92,7 @@ const tiers = [
       'Email support'
     ],
     buttonText: 'Contact us',
-    buttonVariant: 'raised',
+    buttonVariant: 'contained',
     link: 'https://goo.gl/forms/eSpHlrtXGJ1v3Syv2'
   },
 ]
@@ -102,7 +106,7 @@ class Pricing extends Component {
         { /* Hero unit */ }
         <div className={ classes.heroContent }>
           <MainTitle>
-            <Typography variant='headline' gutterBottom>
+            <Typography variant='h5' gutterBottom>
               <FormattedMessage id='welcome.pricing.title' defaultMessage='Princing' />
             </Typography>
           </MainTitle>
@@ -125,7 +129,7 @@ class Pricing extends Component {
                 />
                 <CardContent>
                   <div className={ classes.cardPricing }>
-                    <Typography variant='headline' color='textPrimary'>
+                    <Typography variant='h5' color='textPrimary'>
                       <small>US$</small> { tier.price }
                     </Typography>
                     <Typography variant='subheading' color='textSecondary'>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppBar, Toolbar, Grid, Typography } from 'material-ui'
+import { AppBar, Toolbar, Grid, Typography } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'

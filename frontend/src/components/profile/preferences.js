@@ -1,17 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { withStyles } from 'material-ui/styles'
+
+import {
+  withStyles,
+  Paper,
+  Grid,
+  Typography,
+  Checkbox,
+  Switch,
+  Menu,
+  MenuItem,
+  Button
+} from '@material-ui/core'
+import LanguageIcon from '@material-ui/icons/Language'
+
+import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
+
 import { FormattedMessage, injectIntl } from 'react-intl'
 import Skill from './skill'
 import MySkill from './my-skill'
-
-import Paper from 'material-ui/Paper'
-import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
-import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
-import LanguageIcon from 'material-ui-icons/ViewList'
-import { Checkbox, Switch, Menu, MenuItem, Button } from 'material-ui'
 
 const skills = [
   'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation', 'React', 'Angular', 'Vue.js', 'Blogging', 'Wordpress', 'PHP', 'Testing', 'Git', 'Continuous Integration'
@@ -156,7 +164,7 @@ class Preferences extends Component {
             <Button
               id='chooseLanguageButton'
               onClick={ this.handleMenu }
-              variant='raised'
+              variant='contained'
               size='medium'
               color='primary'
             >
@@ -224,7 +232,7 @@ class Preferences extends Component {
             <Checkbox id='checkbox_mac' checked={ this.isOSSelected('Mac') } onClick={ () => this.handleOSClick('Mac') } />
             <label htmlFor='checkbox_mac'>
               <Typography style={ { display: 'inline-block' } } component='span' color='default' variant='body2'>
-                  Mac
+                Mac
               </Typography>
             </label>
           </Grid>
@@ -281,7 +289,7 @@ class Preferences extends Component {
             <Button
               style={ { color: 'white' } }
               size='large'
-              variant='raised'
+              variant='contained'
               color='primary'
               onClick={ () => this.handleSave() }
             >

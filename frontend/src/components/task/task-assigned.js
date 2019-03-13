@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import { FormattedMessage } from 'react-intl'
-import MomentComponent from 'moment'
-import Avatar from 'material-ui/Avatar'
-import classNames from 'classnames'
-import Typography from 'material-ui/Typography'
-import Tooltip from 'material-ui/Tooltip'
-import Card, { CardHeader } from 'material-ui/Card'
-import Chip from 'material-ui/Chip'
 import nameInitials from 'name-initials'
-import UserIcon from 'material-ui-icons/AccountCircle'
+import MomentComponent from 'moment'
+import classNames from 'classnames'
+
+import {
+  withStyles,
+  Avatar,
+  Typography,
+  Tooltip,
+  Card,
+  CardHeader,
+  Chip
+} from '@material-ui/core'
+import UserIcon from '@material-ui/icons/AccountCircle'
 
 const styles = theme => ({
   main: {

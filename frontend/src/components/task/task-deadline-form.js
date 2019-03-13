@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Chip from 'material-ui/Chip'
-import { FormControl } from 'material-ui/Form'
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
-import Collapse from 'material-ui/transitions/Collapse'
-import DateIcon from 'material-ui-icons/DateRange'
 import MomentComponent from 'moment'
+
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Chip,
+  Input,
+  InputLabel,
+  InputAdornment,
+  Collapse,
+  FormControl,
+} from '@material-ui/core'
+import DateIcon from '@material-ui/icons/DateRange'
 
 const timeIcon = require('../../images/time-icon.png')
 
@@ -99,7 +106,7 @@ class TaskDeadlineForm extends Component {
             </FormattedMessage>
             <div className={ classes.details }>
               <CardContent className={ classes.content }>
-                <Typography variant='headline'>
+                <Typography variant='h5'>
                   <FormattedMessage id='task.status.deadline.headline' defaultMessage='Finish date' />
                 </Typography>
                 <Typography variant='subheading' color='textSecondary'>
@@ -131,7 +138,7 @@ class TaskDeadlineForm extends Component {
                       ) }
                     </FormattedMessage>
                   </FormControl>
-                  <Button disabled={ !this.state.deadline } onClick={ this.handleDeadline } variant='raised' color='primary' className={ classes.btnPayment }>
+                  <Button disabled={ !this.state.deadline } onClick={ this.handleDeadline } variant='contained' color='primary' className={ classes.btnPayment }>
                     { this.state.deadline
                       ? <FormattedMessage id='task.status.deadline.set.target' defaultMessage='set to target date to {date}' values={ {
                         date: MomentComponent(this.state.deadline).format('DD/MM/YYYY')

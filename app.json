@@ -5,5 +5,37 @@
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static"],
   "image": "heroku/nodejs",
-  "addons": ["heroku-postgresql"]
+  "addons": ["heroku-postgresql"],
+  "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "BITBUCKET_ID": {
+      "value": "123"
+    },
+    "BITBUCKET_SECRET": {
+      "value": "123"
+    },
+    "FACEBOOK_ID": {
+      "value": "123"
+    },
+    "FACEBOOK_SECRET": {
+      "value": "123"
+    },
+    "GOOGLE_ID": {
+      "value": "123"
+    },
+    "GOOGLE_SECRET": {
+      "value": "123"
+    },
+    "GITHUB_ID": {
+      "value": "123"
+    },
+    "GITHUB_SECRET": {
+      "value": "123"
+    },
+    "SECRET_PHRASE": {
+      "value": "123"
+    }
+  }
 }

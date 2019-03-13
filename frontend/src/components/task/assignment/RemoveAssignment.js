@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Button from 'material-ui/Button'
-import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog'
-import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
 import styled from 'styled-components'
-import Icon from 'material-ui-icons/RemoveCircleOutline'
+
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography,
+  TextField
+} from '@material-ui/core'
+import Icon from '@material-ui/icons/RemoveCircleOutline'
 
 const Container = styled.div`
   display: inline-block;
@@ -72,7 +79,7 @@ class RemoveAssignment extends Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <Typography type='subheading' gutterBottom>
+              <Typography component='div'>
                 <FormattedMessage id='task.assignment.remove.reason' defaultMessage='Why this user will not work on this task anymore?' />
               </Typography>
             </DialogContentText>
@@ -89,7 +96,7 @@ class RemoveAssignment extends Component {
             <Button onClick={ this.closeModal } color='primary'>
               <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
             </Button>
-            <Button disabled={ message.length === 0 } onClick={ this.removeAssignment } variant='raised' color='secondary' >
+            <Button disabled={ message.length === 0 } onClick={ this.removeAssignment } variant='contained' color='secondary' >
               <FormattedMessage id='task.assignment.actions.apply' defaultMessage='Apply' />
             </Button>
           </DialogActions>

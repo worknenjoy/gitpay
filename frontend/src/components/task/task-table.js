@@ -1,29 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
 import ReactPlaceholder from 'react-placeholder'
 
-import Avatar from 'material-ui/Avatar'
-import Table, {
+import {
+  Avatar,
+  Table,
   TableHead,
   TableBody,
   TableCell,
   TableFooter,
   TablePagination,
-  TableRow
-} from 'material-ui/Table'
-import Tooltip from 'material-ui/Tooltip'
-import Chip from 'material-ui/Chip'
-import Paper from 'material-ui/Paper'
-import IconButton from 'material-ui/IconButton'
-import FirstPageIcon from 'material-ui-icons/FirstPage'
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
-import LastPageIcon from 'material-ui-icons/LastPage'
+  TableRow,
+  withStyles,
+  Tooltip,
+  Chip,
+  Paper,
+  IconButton
+} from '@material-ui/core'
+import {
+  FirstPage as FirstPageIcon,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  LastPage as LastPageIcon
+} from '@material-ui/icons'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -84,7 +87,7 @@ class TablePaginationActions extends React.Component {
     const { classes, count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={ classes.root }>
+      <div className={ classes.root } >
         <IconButton
           onClick={ this.handleFirstPageButtonClick }
           disabled={ page === 0 }

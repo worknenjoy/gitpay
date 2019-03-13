@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Grid from 'material-ui/Grid'
-import { withStyles } from 'material-ui/styles'
+
+import {
+  Grid,
+  withStyles,
+} from '@material-ui/core'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'

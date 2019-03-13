@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
-import { orange } from 'material-ui/colors'
+
+import {
+  Paper,
+  Typography,
+} from '@material-ui/core'
+import orange from '@material-ui/core/colors/orange'
 
 import AccountContainer from '../../containers/account'
 
@@ -28,7 +31,7 @@ class PaymentOptions extends Component {
   render () {
     return (
       <Paper elevation={ 0 }>
-        <Typography variant='headline' component='h3' style={ { marginBottom: 10 } }>
+        <Typography variant='h5' component='h3' style={ { marginBottom: 10 } }>
           <FormattedMessage id='payment.headline' defaultMessage='Payment' />
         </Typography>
         <Typography component='p' color='textSecondary' style={ { marginBottom: 10 } }>

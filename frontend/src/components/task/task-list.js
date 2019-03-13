@@ -3,28 +3,28 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
-import AppBar from 'material-ui/AppBar'
-
-import Card from 'material-ui/Card'
-import CardActions from 'material-ui/Card/CardActions'
-import CardContent from 'material-ui/Card/CardContent'
-import CardMedia from 'material-ui/Card/CardMedia'
-
-import Tabs, { Tab } from 'material-ui/Tabs'
-
-import { withStyles } from 'material-ui/styles'
-
-import RedeemIcon from 'material-ui-icons/Redeem'
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket'
-
-import AssignIcon from 'material-ui-icons/Assignment'
-import ActionIcon from 'material-ui-icons/CallToAction'
+import {
+  Button,
+  Paper,
+  Typography,
+  AppBar,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Tabs,
+  Tab,
+  withStyles
+} from '@material-ui/core'
+import {
+  Redeem as RedeemIcon,
+  ShoppingBasket,
+  Assignment as AssignIcon,
+  AssignmentInd as ActionIcon
+} from '@material-ui/icons'
 
 import CustomPaginationActionsTable from './task-table'
 import TaskStatusFilter from './task-status-filter'
-import Button from 'material-ui/Button'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -100,36 +100,32 @@ class TaskList extends Component {
         this.handleTabChange(0, 3)
         break
       default:
-        // this.props.filterTasks()
+      // this.props.filterTasks()
     }
   }
 
   handleTabChange = (event, value) => {
     this.setState({ tab: value })
-    Promise.all([this.props.listTasks()]).then(() => {
-      this.props.filterTasks('Assigns')
-
-      switch (value) {
-        case 0:
-          this.props.filterTasks()
-          this.props.history.push('/tasks/explore')
-          break
-        case 1:
-          this.props.filterTasks('userId')
-          this.props.history.push('/tasks/createdbyme')
-          break
-        case 2:
-          this.props.filterTasks('Assigns')
-          this.props.history.push('/tasks/interested')
-          break
-        case 3:
-          this.props.filterTasks('assigned')
-          this.props.history.push('/tasks/assignedtome')
-          break
-        default:
-          this.props.filterTasks()
-      }
-    })
+    switch (value) {
+      case 0:
+        this.props.history.push('/tasks/explore')
+        this.props.filterTasks('open')
+        break
+      case 1:
+        this.props.history.push('/tasks/createdbyme')
+        this.props.filterTasks('userId')
+        break
+      case 2:
+        this.props.history.push('/tasks/interested')
+        this.props.filterTasks('Assigns')
+        break
+      case 3:
+        this.props.history.push('/tasks/assignedtome')
+        this.props.filterTasks('assigned')
+        break
+      default:
+      // this.props.filterTasks()
+    }
   }
 
   render () {
@@ -144,7 +140,7 @@ class TaskList extends Component {
 
     return (
       <Paper elevation={ 0 }>
-        <Typography variant='headline' component='h2'>
+        <Typography variant='h5' component='h2'>
           <FormattedMessage
             id='task.list.headline'
             defaultMessage='Task list'
@@ -202,7 +198,7 @@ class TaskList extends Component {
                   title='Teste'
                 />
                 <CardContent>
-                  <Typography gutterBottom variant='headline' component='h2'>
+                  <Typography gutterBottom variant='h5' component='h2'>
                     <FormattedMessage
                       id='task.user.account.create.headline'
                       defaultMessage='Login / signup to work in our tasks'
@@ -221,7 +217,7 @@ class TaskList extends Component {
                   <Button
                     style={ { marginRight: 10 } }
                     href={ `${api.API_URL}/authorize/github` }
-                    variant='raised'
+                    variant='contained'
                     size='small'
                     color='secondary'
                     className={ classes.logButtons }
@@ -232,7 +228,7 @@ class TaskList extends Component {
 
                   <Button
                     href={ `${api.API_URL}/authorize/bitbucket` }
-                    variant='raised'
+                    variant='contained'
                     size='small'
                     color='secondary'
                     className={ classes.logButtons }

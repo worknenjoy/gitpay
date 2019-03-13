@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Button from 'material-ui/Button'
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
-import { FormControl } from 'material-ui/Form'
-import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
 import styled from 'styled-components'
+
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  Typography,
+  TextField
+} from '@material-ui/core'
 
 const Container = styled.div`
   display: inline-block;
@@ -55,7 +61,7 @@ class TaskInvite extends Component {
             <form onChange={ this.onChangeInvite } type='POST'>
               <FormControl fullWidth style={ { marginBottom: 20 } }>
                 <Typography type='subheading' gutterBottom>
-                    E-mail
+                  E-mail
                 </Typography>
                 <TextField
                   type='email'
@@ -82,7 +88,7 @@ class TaskInvite extends Component {
             <Button onClick={ () => this.props.onClose() } color='primary'>
               <FormattedMessage id='task.invite.form.cancel' defaultMessage='Cancel' />
             </Button>
-            <Button disabled={ message.length === 0 } onClick={ this.sendInvite } variant='raised' color='secondary' >
+            <Button disabled={ message.length === 0 } onClick={ this.sendInvite } variant='contained' color='secondary' >
               <FormattedMessage id='task.invite.form.send' defaultMessage='Send' />
             </Button>
           </DialogActions>
