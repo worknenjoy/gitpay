@@ -4,4 +4,4 @@ title: Changelog
 permalink: /changelog/
 ---
 
-Acompanhe nosso roadmap para novas versões.
+Check out what was released on Gitpay
