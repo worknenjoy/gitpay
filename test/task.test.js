@@ -160,7 +160,7 @@ describe("tasks", () => {
     xit('should update task with associated order declined', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste_order_declined@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -191,7 +191,7 @@ describe("tasks", () => {
     it('should update task with associated user assigned', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste_task_user_assigned@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -215,7 +215,7 @@ describe("tasks", () => {
     it('should update task with associated user assigned and offer', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste_user_assigned_and_offer@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
