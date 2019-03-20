@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import 'typeface-roboto'
 import {
@@ -61,6 +62,7 @@ import {
 } from './components/CommonStyles'
 
 const styles = theme => mainStyles(theme)
+const OFFSET = -30
 
 class Welcome extends Component {
   constructor (props) {
@@ -73,66 +75,64 @@ class Welcome extends Component {
     this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
+  componentDidMount () {
+    for (let ref in this.refs) {
+      const domNode = ReactDOM.findDOMNode(this.refs[ref])
+      const y = domNode.getBoundingClientRect().top
+      const position = {
+        [ref]: ref === 'integrations' ? y + OFFSET - 20 : y + OFFSET
+      }
+      this.positions = { ...this.positions, ...position }
+    }
+
+    window.addEventListener('scroll', this.handleSectionsScroll)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.handleSectionsScroll)
+  }
+
   handleSectionTab = (event, value) => {
     this.setState({ value })
-    let offset = -30
-    if (event.currentTarget.id === 'integrations') offset = -50
+
     scrollToComponent(this.refs[event.currentTarget.id], {
-      offset: offset,
+      offset: event.currentTarget.id === 'integrations' ? OFFSET - 20 : OFFSET,
       align: 'top',
       ease: 'inExpo'
     })
   }
 
-  componentDidMount () {
-    window.addEventListener('scroll', this.handleSectionScroll)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this.handleSectionScroll)
-  }
-
-  handleSectionScroll = ({ pageY }) => {
-    const positions = {
-      home: 795,
-      contrib: 1329,
-      companies: 1801,
-      collab: 2310,
-      how: 2844,
-      pricing: 3378,
-      integrations: 3999 /* ,
-      getStarted: 4483 */
-    }
+  handleSectionsScroll = ({ pageY }) => {
     const {
-      home,
+      // intro,
       contrib,
       companies,
       collab,
-      how,
+      'how-it-works': howItWorks,
       pricing,
-      integrations /* ,
-      getStarted */
-    } = positions
+      integrations,
+      'get-started': getStarted
+    } = this.positions
 
-    if (pageY < home) {
+    if (pageY < contrib) {
       this.setState({ value: 0 })
     }
-    else if (pageY < contrib) {
+    else if (pageY < companies) {
       this.setState({ value: 1 })
     }
-    else if (pageY < companies) {
+    else if (pageY < collab) {
       this.setState({ value: 2 })
     }
-    else if (pageY < collab) {
+    else if (pageY < howItWorks) {
       this.setState({ value: 3 })
     }
-    else if (pageY < how) {
+    else if (pageY < pricing) {
       this.setState({ value: 4 })
     }
-    else if (pageY < pricing) {
+    else if (pageY < integrations) {
       this.setState({ value: 5 })
     }
-    else if (pageY < integrations) {
+    else if (pageY < getStarted) {
       this.setState({ value: 6 })
     }
     else this.setState({ value: 7 })
