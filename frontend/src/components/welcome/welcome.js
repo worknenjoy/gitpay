@@ -114,25 +114,25 @@ class Welcome extends Component {
       'get-started': getStarted
     } = this.positions
 
-    if (pageY < contrib) {
+    if (pageY <= contrib) {
       this.setState({ value: 0 })
     }
-    else if (pageY < companies) {
+    else if (pageY <= companies) {
       this.setState({ value: 1 })
     }
-    else if (pageY < collab) {
+    else if (pageY <= collab) {
       this.setState({ value: 2 })
     }
-    else if (pageY < howItWorks) {
+    else if (pageY <= howItWorks) {
       this.setState({ value: 3 })
     }
-    else if (pageY < pricing) {
+    else if (pageY <= pricing) {
       this.setState({ value: 4 })
     }
-    else if (pageY < integrations) {
+    else if (pageY <= integrations) {
       this.setState({ value: 5 })
     }
-    else if (pageY < getStarted) {
+    else if (pageY <= getStarted) {
       this.setState({ value: 6 })
     }
     else this.setState({ value: 7 })
