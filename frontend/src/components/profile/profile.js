@@ -197,12 +197,12 @@ class Profile extends Component {
         { this.state.selected === 2 &&
           <PreferencesBar classes={ classes } />
         }
-        <PageContent> 
+        <PageContent>
           <Grid container className={ classes.root } spacing={ 24 }>
             <Grid item xs={ 12 } md={ 8 }>
-              <div style={{marginTop: 20, marginBottom: 20, textAlign: 'center'}}>
+              <div style={ { marginTop: 20, marginBottom: 20, textAlign: 'center' } }>
                 <a href='https://app.turbomkt.com.br/checkout?tm=NLEAUIIG&fp=335084580644244&ga=UA-134720490-1&jc=dZZJJOyciC&src=gitpay'>
-                <img src={ bannerDiscount } width="450" />  
+                  <img src={ bannerDiscount } width='450' />
                 </a>
               </div>
               <HashRouter>
@@ -297,7 +297,7 @@ class Profile extends Component {
                   ) }
                 </div>
                 <div className={ classes.row }>
-                  <Paper className={ classes.menuContainer }> 
+                  <Paper className={ classes.menuContainer }>
                     <MenuList>
                       <MenuItem
                         onClick={ () => this.props.history.push('/profile/tasks') }
