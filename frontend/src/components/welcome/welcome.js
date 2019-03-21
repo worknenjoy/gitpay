@@ -78,10 +78,11 @@ class Welcome extends Component {
   componentDidMount () {
     for (let ref in this.refs) {
       const domNode = ReactDOM.findDOMNode(this.refs[ref])
-      const y = domNode.getBoundingClientRect().top
-      const position = {
-        [ref]: ref === 'integrations' ? y + OFFSET - 20 : y + OFFSET
-      }
+      const clientY = domNode.offsetTop
+      const offsetY =
+        ref === 'integrations' ? clientY + OFFSET - 20 : clientY + OFFSET
+      const position = { [ref]: offsetY }
+
       this.positions = { ...this.positions, ...position }
     }
 
@@ -104,7 +105,7 @@ class Welcome extends Component {
 
   handleSectionsScroll = ({ pageY }) => {
     const {
-      // intro,
+      intro,
       contrib,
       companies,
       collab,
@@ -114,28 +115,30 @@ class Welcome extends Component {
       'get-started': getStarted
     } = this.positions
 
-    if (pageY < contrib) {
-      this.setState({ value: 0 })
+    if (pageY >= getStarted) {
+      this.setState({ value: 7 })
     }
-    else if (pageY < companies) {
-      this.setState({ value: 1 })
-    }
-    else if (pageY < collab) {
-      this.setState({ value: 2 })
-    }
-    else if (pageY < howItWorks) {
-      this.setState({ value: 3 })
-    }
-    else if (pageY < pricing) {
-      this.setState({ value: 4 })
-    }
-    else if (pageY < integrations) {
-      this.setState({ value: 5 })
-    }
-    else if (pageY < getStarted) {
+    else if (pageY >= integrations) {
       this.setState({ value: 6 })
     }
-    else this.setState({ value: 7 })
+    else if (pageY >= pricing) {
+      this.setState({ value: 5 })
+    }
+    else if (pageY >= howItWorks) {
+      this.setState({ value: 4 })
+    }
+    else if (pageY >= collab) {
+      this.setState({ value: 3 })
+    }
+    else if (pageY >= companies) {
+      this.setState({ value: 2 })
+    }
+    else if (pageY >= contrib) {
+      this.setState({ value: 1 })
+    }
+    else if (pageY >= intro) {
+      this.setState({ value: 0 })
+    }
   }
 
   render () {
