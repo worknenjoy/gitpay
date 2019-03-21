@@ -78,7 +78,7 @@ class Welcome extends Component {
   componentDidMount () {
     for (let ref in this.refs) {
       const domNode = ReactDOM.findDOMNode(this.refs[ref])
-      const clientY = domNode.offsetTop
+      const clientY = Math.ceil(domNode.getBoundingClientRect().top)
       const offsetY =
         ref === 'integrations' ? clientY + OFFSET - 20 : clientY + OFFSET
       const position = { [ref]: offsetY }
@@ -103,7 +103,10 @@ class Welcome extends Component {
     })
   }
 
-  handleSectionsScroll = ({ pageY }) => {
+  handleSectionsScroll = () => {
+    const scrollPosition = document.documentElement.scrollTop
+    const offsetPostion = scrollPosition + OFFSET
+
     const {
       intro,
       contrib,
@@ -115,28 +118,28 @@ class Welcome extends Component {
       'get-started': getStarted
     } = this.positions
 
-    if (pageY >= getStarted) {
+    if (offsetPostion >= getStarted) {
       this.setState({ value: 7 })
     }
-    else if (pageY >= integrations) {
+    else if (offsetPostion >= integrations) {
       this.setState({ value: 6 })
     }
-    else if (pageY >= pricing) {
+    else if (offsetPostion >= pricing) {
       this.setState({ value: 5 })
     }
-    else if (pageY >= howItWorks) {
+    else if (offsetPostion >= howItWorks) {
       this.setState({ value: 4 })
     }
-    else if (pageY >= collab) {
+    else if (offsetPostion >= collab) {
       this.setState({ value: 3 })
     }
-    else if (pageY >= companies) {
+    else if (offsetPostion >= companies) {
       this.setState({ value: 2 })
     }
-    else if (pageY >= contrib) {
+    else if (offsetPostion >= contrib - 35) {
       this.setState({ value: 1 })
     }
-    else if (pageY >= intro) {
+    else if (offsetPostion >= intro) {
       this.setState({ value: 0 })
     }
   }
