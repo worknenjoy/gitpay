@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import 'typeface-roboto'
 import {
@@ -60,11 +61,11 @@ import {
   Section
 } from './components/CommonStyles'
 
-const OFFSET = -30
+let OFFSET = -30
 const styles = theme => mainStyles(theme)
 
 class Welcome extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -74,7 +75,7 @@ class Welcome extends Component {
     this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     for (let ref in this.refs) {
       const domNode = ReactDOM.findDOMNode(this.refs[ref])
       const clientY = domNode.offsetTop
@@ -88,7 +89,7 @@ class Welcome extends Component {
     window.addEventListener('scroll', this.handleSectionsScroll)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('scroll', this.handleSectionsScroll)
   }
 
@@ -117,109 +118,116 @@ class Welcome extends Component {
 
     if (pageY >= getStarted) {
       this.setState({ value: 7 })
-    } else if (pageY >= integrations) {
+    }
+    else if (pageY >= integrations) {
       this.setState({ value: 6 })
-    } else if (pageY >= pricing) {
+    }
+    else if (pageY >= pricing) {
       this.setState({ value: 5 })
-    } else if (pageY >= howItWorks) {
+    }
+    else if (pageY >= howItWorks) {
       this.setState({ value: 4 })
-    } else if (pageY >= collab) {
+    }
+    else if (pageY >= collab) {
       this.setState({ value: 3 })
-    } else if (pageY >= companies) {
+    }
+    else if (pageY >= companies) {
       this.setState({ value: 2 })
-    } else if (pageY >= contrib) {
+    }
+    else if (pageY >= contrib) {
       this.setState({ value: 1 })
-    } else if (pageY >= intro) {
+    }
+    else if (pageY >= intro) {
       this.setState({ value: 0 })
     }
   }
 
-  render() {
+  render () {
     const { classes, location } = this.props
 
     return (
-      <div className={classes.root}>
-        <TopBarContainer ref="intro" />
-        <AppBar position="sticky" color="default">
+      <div className={ classes.root }>
+        <TopBarContainer ref='intro' />
+        <AppBar position='sticky' color='default'>
           <Tabs
-            variant="fullWidth"
-            value={this.state.value}
-            onChange={this.handleSectionTab}
+            variant='fullWidth'
+            value={ this.state.value }
+            onChange={ this.handleSectionTab }
           >
             <Tab
-              id="intro"
-              value={0}
-              label={this.props.intl.formatMessage(messages.topMenu1)}
+              id='intro'
+              value={ 0 }
+              label={ this.props.intl.formatMessage(messages.topMenu1) }
             />
             <Tab
-              id="contrib"
-              value={1}
-              label={this.props.intl.formatMessage(messages.topMenu2)}
+              id='contrib'
+              value={ 1 }
+              label={ this.props.intl.formatMessage(messages.topMenu2) }
             />
             <Tab
-              id="companies"
-              value={2}
-              label={this.props.intl.formatMessage(messages.topMenu3)}
+              id='companies'
+              value={ 2 }
+              label={ this.props.intl.formatMessage(messages.topMenu3) }
             />
             <Tab
-              id="collab"
-              value={3}
-              label={this.props.intl.formatMessage(messages.topMenu4)}
+              id='collab'
+              value={ 3 }
+              label={ this.props.intl.formatMessage(messages.topMenu4) }
             />
             <Tab
-              id="how-it-works"
-              value={4}
-              label={this.props.intl.formatMessage(messages.topMenu5)}
+              id='how-it-works'
+              value={ 4 }
+              label={ this.props.intl.formatMessage(messages.topMenu5) }
             />
             <Tab
-              id="pricing"
-              value={5}
-              label={this.props.intl.formatMessage(messages.topMenu6)}
+              id='pricing'
+              value={ 5 }
+              label={ this.props.intl.formatMessage(messages.topMenu6) }
             />
             <Tab
-              id="integrations"
-              value={6}
-              label={this.props.intl.formatMessage(messages.topMenu7)}
+              id='integrations'
+              value={ 6 }
+              label={ this.props.intl.formatMessage(messages.topMenu7) }
             />
             <Tab
-              id="get-started"
-              value={7}
-              label={this.props.intl.formatMessage(messages.topMenu8)}
+              id='get-started'
+              value={ 7 }
+              label={ this.props.intl.formatMessage(messages.topMenu8) }
             />
           </Tabs>
         </AppBar>
         <MainBanner>
-          <Grid container spacing={24}>
-            <Grid item xs={12} style={{ padding: 0, margin: 0 }}>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div
-                className={classes.mainBlock}
-                style={{ margin: 0, paddingTop: 10 }}
+                className={ classes.mainBlock }
+                style={ { margin: 0, paddingTop: 10 } }
               >
-                <Typography className={classes.tagline} gutterBottom>
+                <Typography className={ classes.tagline } gutterBottom>
                   <FormattedMessage
-                    id="welcome.tagline"
-                    defaultMessage="Welcome to Gitpay"
+                    id='welcome.tagline'
+                    defaultMessage='Welcome to Gitpay'
                   />
                 </Typography>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant='h6' gutterBottom>
                   <FormattedMessage
-                    id="welcome.tagline1"
-                    defaultMessage="Work in tasks on demand"
+                    id='welcome.tagline1'
+                    defaultMessage='Work in tasks on demand'
                   />
                 </Typography>
-                <Typography type="subtitle1" gutterBottom noWrap>
+                <Typography type='subtitle1' gutterBottom noWrap>
                   <FormattedHTMLMessage
-                    id="welcome.tagline2"
-                    defaultMessage="and receive bounty for your contributions"
+                    id='welcome.tagline2'
+                    defaultMessage='and receive bounty for your contributions'
                   />
                 </Typography>
-                <div className="subscribe-form">
-                  <SubscribeForm type="subscribe-form-main" />
+                <div className='subscribe-form'>
+                  <SubscribeForm type='subscribe-form-main' />
                 </div>
               </div>
 
-              <div className={classes.mainBlock} style={{ paddingBottom: 40 }}>
-                <LoginButton referer={location} contrast includeForm={false} />
+              <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
+                <LoginButton referer={ location } contrast includeForm={ false } />
               </div>
               <InfoContainer />
               <OurStack />
@@ -227,278 +235,278 @@ class Welcome extends Component {
           </Grid>
         </MainBanner>
 
-        <Section ref="contrib">
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={6}>
+        <Section ref='contrib'>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant='h5' gutterBottom>
                   <FormattedMessage
-                    id="welcome.headline.forfreelancers"
-                    defaultMessage="For freelancers"
+                    id='welcome.headline.forfreelancers'
+                    defaultMessage='For freelancers'
                   />
                 </Typography>
               </MainTitle>
               <MainList>
                 <List>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <Apps />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeFreelancersItemOnePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeFreelancersItemOneSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
 
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <Work />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeFreelancersItemTwoPrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeFreelancersItemTwoSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
 
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeFreelancersItemThreePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeFreelancersItemThreeSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
                 </List>
               </MainList>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <ResponsiveImage width="600" src={freelancerImage} />
+            <Grid item xs={ 12 } sm={ 6 }>
+              <ResponsiveImage width='600' src={ freelancerImage } />
             </Grid>
           </Grid>
         </Section>
 
-        <Section ref="companies" alternative className={classes.bgContrast}>
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={6}>
+        <Section ref='companies' alternative className={ classes.bgContrast }>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant='h5' gutterBottom>
                   <FormattedMessage
-                    id="welcome.tagline.companies.main.headline"
-                    defaultMessage="For companies"
+                    id='welcome.tagline.companies.main.headline'
+                    defaultMessage='For companies'
                   />
                 </Typography>
               </MainTitle>
               <MainList>
                 <List>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <Assignment />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeCompaniesItemOnePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeCompaniesItemOneSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <GroupWork />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeCompaniesItemTwoPrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeCompaniesItemTwoSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeCompaniesItemThreePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeCompaniesItemThreeSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
                 </List>
               </MainList>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <ResponsiveImage width="500" src={companiesImage} />
+            <Grid item xs={ 12 } sm={ 6 }>
+              <ResponsiveImage width='500' src={ companiesImage } />
             </Grid>
           </Grid>
         </Section>
 
-        <Section ref="collab">
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={6}>
+        <Section ref='collab'>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant='h5' gutterBottom>
                   <FormattedMessage
-                    id="welcome.headline.collab"
-                    defaultMessage="For collaboration"
+                    id='welcome.headline.collab'
+                    defaultMessage='For collaboration'
                   />
                 </Typography>
               </MainTitle>
               <MainList>
                 <List>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <Apps />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeCollabItemOnePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeCollabItemOneSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <Work />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeCollabItemTwoPrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeCollabItemTwoSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <Avatar className={classes.iconFill}>
+                      <Avatar className={ classes.iconFill }>
                         <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeCollabItemThreePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeCollabItemThreeSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
                 </List>
               </MainList>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <ResponsiveImage width="600" src={teamImage} />
+            <Grid item xs={ 12 } sm={ 6 }>
+              <ResponsiveImage width='600' src={ teamImage } />
             </Grid>
           </Grid>
         </Section>
 
-        <Section ref="how-it-works" className={classes.sectionBgAlt}>
+        <Section ref='how-it-works' className={ classes.sectionBgAlt }>
           <MainTitle>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant='h5' gutterBottom>
               <FormattedMessage
-                id="welcome.tagline.headline.how.title"
-                defaultMessage="How it works"
+                id='welcome.tagline.headline.how.title'
+                defaultMessage='How it works'
               />
             </Typography>
           </MainTitle>
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={6}>
-              <ResponsiveImage width="400" src={deal} />
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 6 }>
+              <ResponsiveImage width='400' src={ deal } />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <div className={classes.seclist}>
+            <Grid item xs={ 12 } sm={ 6 }>
+              <div className={ classes.seclist }>
                 <List>
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Archive />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemOnePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemOneSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
                   <Divider />
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <BugReport />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemTwoPrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemTwoSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
                   <Divider />
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <CardMembership />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemThreePrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemThreeSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
                   <Divider />
-                  <ListItem className={classes.listIconTop}>
+                  <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <BugReport />
                     </ListItemIcon>
                     <ListItemText
-                      primary={this.props.intl.formatMessage(
+                      primary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemFourPrimary
-                      )}
-                      secondary={this.props.intl.formatMessage(
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
                         messages.welcomeHowToItemFourSecondary
-                      )}
+                      ) }
                     />
                   </ListItem>
                 </List>
@@ -507,57 +515,57 @@ class Welcome extends Component {
           </Grid>
         </Section>
 
-        <Section ref="pricing">
+        <Section ref='pricing'>
           <Pricing />
         </Section>
 
-        <Section ref="integrations" className={classes.gutterBottomBig}>
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={4} className={classes.alignRight}>
-              <div className={classes.gutterTop}>
-                <Typography variant="h6" gutterBottom>
+        <Section ref='integrations' className={ classes.gutterBottomBig }>
+          <Grid container spacing={ 24 }>
+            <Grid item xs={ 12 } sm={ 4 } className={ classes.alignRight }>
+              <div className={ classes.gutterTop }>
+                <Typography variant='h6' gutterBottom>
                   <FormattedMessage
-                    id="welcome.integration.title"
-                    defaultMessage="Integration"
+                    id='welcome.integration.title'
+                    defaultMessage='Integration'
                   />
                 </Typography>
-                <Typography variant="h4" gutterBottom>
+                <Typography variant='h4' gutterBottom>
                   <FormattedMessage
-                    id="welcome.integration.subtitle"
-                    defaultMessage="Check out our Github app"
+                    id='welcome.integration.subtitle'
+                    defaultMessage='Check out our Github app'
                   />
                 </Typography>
-                <Typography variant="subtitle1" gutterBottom>
+                <Typography variant='subtitle1' gutterBottom>
                   <FormattedMessage
-                    id="welcome.integration.desc"
-                    defaultMessage="You can install our Gitpay app on your Github and start to boost your issues"
+                    id='welcome.integration.desc'
+                    defaultMessage='You can install our Gitpay app on your Github and start to boost your issues'
                   />
                 </Typography>
                 <Button
-                  component="a"
-                  target="_blank"
-                  href="https://github.com/apps/gitpay-me"
-                  variant="contained"
-                  color="primary"
-                  className={classes.gutterTopSmall}
+                  component='a'
+                  target='_blank'
+                  href='https://github.com/apps/gitpay-me'
+                  variant='contained'
+                  color='primary'
+                  className={ classes.gutterTopSmall }
                 >
                   <FormattedMessage
-                    id="welcome.integration.button"
-                    defaultMessage="Checkout our Github App"
+                    id='welcome.integration.button'
+                    defaultMessage='Checkout our Github App'
                   />
                   <ArrowForward />
                 </Button>
               </div>
             </Grid>
-            <Grid item xs={12} sm={8} className={classes.alignLeft}>
-              <ShadowImage width="600" src={appSnapshotImage} />
+            <Grid item xs={ 12 } sm={ 8 } className={ classes.alignLeft }>
+              <ShadowImage width='600' src={ appSnapshotImage } />
             </Grid>
           </Grid>
         </Section>
 
         <Section
-          ref="get-started"
-          style={{
+          ref='get-started'
+          style={ {
             background: `url(${citySoftware}) no-repeat`,
             backgroundSize: 'cover',
             height: 300,
@@ -565,38 +573,38 @@ class Welcome extends Component {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center'
-          }}
+          } }
         >
-          <Typography variant="h6" gutterBottom style={{ padding: '0 60px' }}>
+          <Typography variant='h6' gutterBottom style={ { padding: '0 60px' } }>
             <FormattedHTMLMessage
-              id="welcome.bottom.call"
-              defaultMessage="A better way to build your project, <br /> a better way to work in projects"
+              id='welcome.bottom.call'
+              defaultMessage='A better way to build your project, <br /> a better way to work in projects'
             />
           </Typography>
           <Button
-            component="a"
-            href="https://gitpay.me/#/login"
-            size="large"
-            variant="contained"
-            color="primary"
-            className={classes.gutterTopSmall}
+            component='a'
+            href='https://gitpay.me/#/login'
+            size='large'
+            variant='contained'
+            color='primary'
+            className={ classes.gutterTopSmall }
           >
             <FormattedMessage
-              id="welcome.bottom.link"
-              defaultMessage="Get started"
+              id='welcome.bottom.link'
+              defaultMessage='Get started'
             />
           </Button>
           <Button
-            component="a"
-            href="https://docs.gitpay.me"
-            size="large"
-            variant="text"
-            color="primary"
-            className={classes.gutterTopSmall}
+            component='a'
+            href='https://docs.gitpay.me'
+            size='large'
+            variant='text'
+            color='primary'
+            className={ classes.gutterTopSmall }
           >
             <FormattedMessage
-              id="welcome.bottom.linkAlt"
-              defaultMessage="See our docs"
+              id='welcome.bottom.linkAlt'
+              defaultMessage='See our docs'
             />
           </Button>
         </Section>
