@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         Member.belongsTo(models.User, { foreignKey: 'userId' })
         Member.belongsTo(models.Task, { foreignKey: 'taskId' })
+        Member.belongsTo(models.Role, {foreignKey: 'roleId'})
       }
     },
     instanceMethods: {

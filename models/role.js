@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-
+        
       }
     },
     instanceMethods: {

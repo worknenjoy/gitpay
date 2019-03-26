@@ -21,7 +21,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       },
       {
         model: models.Member,
-        include: [models.User]
+        include: [models.User, models.Role]
       }
     ]
   })
@@ -76,7 +76,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   issue: issueDataJsonGithub
                 },
                 orders: data.dataValues.Orders,
-                assigns: data.dataValues.Assigns
+                assigns: data.dataValues.Assigns,
+                members: data.dataValues.Members
               }
 
               if (!data.title && data.title !== issueDataJsonGithub.title) {

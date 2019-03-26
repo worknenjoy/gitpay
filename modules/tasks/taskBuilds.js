@@ -37,7 +37,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
           )
           .save()
           .then(async task => {
-            const role = await roleExists({ name: 'admin' })
+            const role = await roleExists({ name: 'owner' })
             if (role.dataValues && role.dataValues.id) {
               const userInfo = await requestPromise({
                 uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
@@ -48,9 +48,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
               const userInfoJSON = JSON.parse(userInfo)
               const userExist = await userExists({ email: userInfoJSON.email })
               if (userExist.dataValues && userExist.dataValues.id) {
-                const taskWithMember = await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
-                // eslint-disable-next-line no-console
-                console.log('taskWithMember', taskWithMember)
+                await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
               }
             }
             const taskData = task.dataValues
