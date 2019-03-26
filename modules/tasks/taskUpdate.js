@@ -8,6 +8,7 @@ const TransferMail = require('../mail/transfer')
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists
+const memberExists = require('../members').memberExists
 const i18n = require('i18n')
 const constants = require('../mail/constants')
 const TaskMail = require('../mail/task')
@@ -103,12 +104,12 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
       where: {
         id: taskParameters.id,
       },
-      include: [models.User, models.Order]
+      include: [models.User, models.Order, models.Offer, models.Member]
     }).then((data) => {
       if (!data) {
         return new Error('task_updated_failed')
       }
-      return models.Task.findById(taskParameters.id, { include: [ models.User, models.Order, models.Assign ] })
+      return models.Task.findById(taskParameters.id, { include: [ models.User, models.Order, models.Assign, models.Member ] })
         .then((task) => {
           if (!task) {
             return new Error('task_find_failed')
@@ -150,18 +151,23 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
           }
 
           if (taskParameters.Assigns) {
-            assignExist({
+            return assignExist({
               userId: taskParameters.Assigns[0].userId,
               taskId: taskParameters.id
             }).then(resp => {
               if (!resp) {
-                return task.createAssign(taskParameters.Assigns[0])
+                return task.createAssign(taskParameters.Assigns[0]).then(assign => {
+                  return task.dataValues
+                })
+              }
+              else {
+                return task.dataValues
               }
             })
           }
 
           if (taskParameters.Offers) {
-            offerExists({
+            return offerExists({
               userId: taskParameters.Offers[0].userId,
               taskId: taskParameters.id
             }).then(resp => {
@@ -174,6 +180,26 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                 return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
                   taskId: taskParameters.id } }).then(update => {
                   return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                })
+              }
+            })
+          }
+
+          if (taskParameters.Members) {
+            return memberExists({
+              userId: taskParameters.Members[0].userId
+            }).then(resp => {
+              if (!resp) {
+                return task.createMember(taskParameters.Members[0]).then(member => {
+                  return task.dataValues
+                }).catch(e => {
+                  return task.dataValues
+                })
+              }
+              else {
+                return models.Member.update(taskParameters.Members[0], { where: { userId: taskParameters.Members[0].userId,
+                  taskId: taskParameters.id } }).then(update => {
+                  return task.dataValues
                 })
               }
             })

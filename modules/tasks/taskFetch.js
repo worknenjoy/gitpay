@@ -18,6 +18,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       {
         model: models.Assign,
         include: [models.User]
+      },
+      {
+        model: models.Member,
+        include: [models.User]
       }
     ]
   })
