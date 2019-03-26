@@ -62,7 +62,7 @@ import {
 } from './components/CommonStyles'
 
 const styles = theme => mainStyles(theme)
-const OFFSET = -30
+const isIntegrations = ref => ref === 'integrations'
 
 class Welcome extends Component {
   constructor (props) {
@@ -76,11 +76,24 @@ class Welcome extends Component {
   }
 
   componentDidMount () {
+    const clientX = ReactDOM.findDOMNode(
+      this.refs.intro
+    ).getBoundingClientRect().width
+
+    this.offsets = { offset: clientX * 0.04, integrations: clientX * 0.06 }
+    if (this.offsets.offset > 30) {
+      this.offsets = { offset: 30, integrations: 48 }
+    }
+    const { offset, integrations } = this.offsets
+
     for (let ref in this.refs) {
       const domNode = ReactDOM.findDOMNode(this.refs[ref])
+
       const clientY = Math.ceil(domNode.getBoundingClientRect().top)
-      const offsetY =
-        ref === 'integrations' ? clientY + OFFSET - 20 : clientY + OFFSET
+      const offsetY = isIntegrations(ref)
+        ? clientY - integrations
+        : clientY - offset
+
       const position = { [ref]: offsetY }
 
       this.positions = { ...this.positions, ...position }
@@ -93,11 +106,13 @@ class Welcome extends Component {
     window.removeEventListener('scroll', this.handleSectionsScroll)
   }
 
-  handleSectionTab = (event, value) => {
+  handleSectionTab = ({ currentTarget }, value) => {
     this.setState({ value })
 
-    scrollToComponent(this.refs[event.currentTarget.id], {
-      offset: event.currentTarget.id === 'integrations' ? OFFSET - 20 : OFFSET,
+    const ref = this.refs[currentTarget.id]
+    const { offset, integrations } = this.offsets
+    scrollToComponent(ref, {
+      offset: isIntegrations(ref) ? 0 - integrations : 0 - offset,
       align: 'top',
       ease: 'inExpo'
     })
@@ -105,7 +120,7 @@ class Welcome extends Component {
 
   handleSectionsScroll = () => {
     const scrollPosition = document.documentElement.scrollTop
-    const offsetPostion = scrollPosition + OFFSET
+    const offsetPostion = scrollPosition + this.offsets.offset
 
     const {
       intro,
