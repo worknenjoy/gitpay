@@ -619,7 +619,7 @@ class Task extends Component {
 
     const taskOwner = () => {
       const creator = this.props.logged && this.props.user.id === task.data.userId
-      const owner = task.data.members && task.data.members.length ? task.data.members.filter(m => m.User.id === this.props.user.id) : false
+      const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === this.props.user.id) : false
       return creator || owner
     }
 
