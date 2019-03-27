@@ -7,7 +7,6 @@ const constants = require('../mail/constants')
 const TaskMail = require('../mail/task')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
-// const memberExists = require('../members').memberExists
 
 module.exports = Promise.method(function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
@@ -37,7 +36,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
           )
           .save()
           .then(async task => {
-            const role = await roleExists({ name: 'owner' })
+            const role = await roleExists({ name: 'company_owner' })
             if (role.dataValues && role.dataValues.id) {
               const userInfo = await requestPromise({
                 uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
@@ -49,6 +48,9 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
               const userExist = await userExists({ email: userInfoJSON.email })
               if (userExist.dataValues && userExist.dataValues.id) {
                 await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
+              }
+              else {
+                // send an email
               }
             }
             const taskData = task.dataValues

@@ -1334,7 +1334,7 @@ class Task extends Component {
                             this.props.intl.formatMessage(messages.membersTableLabelRole),
                             this.props.intl.formatMessage(messages.membersTableLabelActions)
                           ] }
-                          tableData={ task.data.members.length ? displayMembers(task.data.members) : [] }
+                          tableData={ task.data.members && task.data.members.length ? displayMembers(task.data.members) : [] }
                         />
                       }
                     />

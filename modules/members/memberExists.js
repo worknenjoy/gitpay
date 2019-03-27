@@ -5,7 +5,8 @@ module.exports = Promise.method(function memberExists (memberAttributes) {
   return models.Member
     .findOne({
       where: {
-        userId: memberAttributes.userId
+        userId: memberAttributes.userId,
+        taskId: memberAttributes.taskId
       }
     }).then(member => {
       if (!member) return false

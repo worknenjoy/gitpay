@@ -7,8 +7,16 @@ module.exports = {
         label: 'Adminstrator'
       },
       {
-        name: 'owner',
+        name: 'issue_owner',
         label: 'Owner'
+      },
+      {
+        name: 'company_owner',
+        label: 'Company owner'
+      },
+      {
+        name: 'sponsor',
+        label: 'Sponsor'
       },
       {
         name: 'funding',
