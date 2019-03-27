@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         Task.hasMany(models.Order, { foreignKey: 'TaskId' })
         Task.hasMany(models.Assign, { foreignKey: 'TaskId' })
         Task.hasMany(models.Offer, { foreignKey: 'taskId' })
+        Task.hasMany(models.Member, { foreignKey: 'taskId' })
       }
     },
     instanceMethods: {

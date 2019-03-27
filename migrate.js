@@ -32,6 +32,8 @@ if (env === 'production') {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+const migrationType = process.env.TYPE
+
 const umzug = new Umzug({
     storage: 'sequelize',
     storageOptions: {
@@ -46,7 +48,7 @@ const umzug = new Umzug({
                 throw new Error('Migration tried to use old style "done" callback. Please upgrade to "umzug" and return a promise instead.');
             }
         ],
-        path: './migration/migrations',
+        path: migrationType === 'seed' ? './migration/seeders' : './migration/migrations',
         pattern: /\.js$/
     },
 

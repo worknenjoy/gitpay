@@ -39,12 +39,13 @@ import {
   HowToReg as TrophyIcon,
   DateRange as DateIcon,
   CalendarToday as CalendarIcon,
-  GroupWork as GroupWorkIcon,
+  HowToReg as GroupWorkIcon,
   Done as DoneIcon,
   Navigation as NavigationIcon,
   Warning as WarningIcon,
   Info as InfoIcon,
-  Delete as DeleteIcon
+  Delete as DeleteIcon,
+  SupervisedUserCircle as Members
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -342,6 +343,10 @@ const messages = defineMessages({
     id: 'task.tab.interested',
     defaultMessage: 'Interested'
   },
+  membersLabel: {
+    id: 'task.tab.members',
+    defaultMessage: 'Members'
+  },
   cardTitle: {
     id: 'task.card.title',
     defaultMessage: 'Payments for this task'
@@ -392,6 +397,26 @@ const messages = defineMessages({
   },
   interestedTableLabelActions: {
     id: 'task.interested.table.label.actions',
+    defaultMessage: 'Actions'
+  },
+  membersCardTitle: {
+    id: 'task.members.table.label.title',
+    defaultMessage: 'Members of this task'
+  },
+  membersCardSubTitle: {
+    id: 'task.members.table.label.subtitle',
+    defaultMessage: 'When you create a task on Gitpay, it import members and original owners'
+  },
+  membersTableLabelUser: {
+    id: 'task.members.table.label.user',
+    defaultMessage: 'User'
+  },
+  membersTableLabelRole: {
+    id: 'task.members.table.label.role',
+    defaultMessage: 'Role'
+  },
+  membersTableLabelActions: {
+    id: 'task.members.table.label.actions',
     defaultMessage: 'Actions'
   },
   taskValueLabel: {
@@ -593,7 +618,9 @@ class Task extends Component {
     }
 
     const taskOwner = () => {
-      return this.props.logged && this.props.user.id === task.data.userId
+      const creator = this.props.logged && this.props.user.id === task.data.userId
+      const owner = task.data.members && task.data.members.filter(m => m.User.id === this.props.user.id)
+      return creator || owner
     }
 
     const userRow = user => {
@@ -628,6 +655,17 @@ class Task extends Component {
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
         <PaymentTypeIcon type={ item.provider } />
+      ])
+    }
+
+    const displayMembers = members => {
+      if (!members.length) {
+        return []
+      }
+      return members.map((item, i) => [
+        item.User.username,
+        item.Role && item.Role.label,
+        ''
       ])
     }
 
@@ -1220,6 +1258,7 @@ class Task extends Component {
                     <Tab label={ this.props.intl.formatMessage(messages.taskLabel) } icon={ <RedeemIcon /> } />
                     <Tab label={ this.props.intl.formatMessage(messages.orderLabel) } icon={ <ShoppingBasket /> } />
                     <Tab label={ this.props.intl.formatMessage(messages.interestedLabel) } icon={ <GroupWorkIcon /> } />
+                    <Tab label={ this.props.intl.formatMessage(messages.membersLabel) } icon={ <Members /> } />
                   </Tabs>
                 </AppBar>
                 { task.tab === 0 &&
@@ -1276,6 +1315,26 @@ class Task extends Component {
                             this.props.intl.formatMessage(messages.interestedTableLabelActions)
                           ] }
                           tableData={ task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
+                        />
+                      }
+                    />
+                  </div>
+                }
+                { task.tab === 3 &&
+                  <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
+                    <RegularCard
+                      headerColor='green'
+                      cardTitle={ this.props.intl.formatMessage(messages.membersCardTitle) }
+                      cardSubtitle={ this.props.intl.formatMessage(messages.membersCardSubTitle) }
+                      content={
+                        <Table
+                          tableHeaderColor='warning'
+                          tableHead={ [
+                            this.props.intl.formatMessage(messages.membersTableLabelUser),
+                            this.props.intl.formatMessage(messages.membersTableLabelRole),
+                            this.props.intl.formatMessage(messages.membersTableLabelActions)
+                          ] }
+                          tableData={ task.data.members && task.data.members.length ? displayMembers(task.data.members) : [] }
                         />
                       }
                     />
