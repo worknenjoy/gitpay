@@ -11,6 +11,7 @@ moment.locale('pt-br', ptLocale)
 const DeadlineMail = {
   update: (to, task, name) => {},
   daysLeft: (to, task, name) => {},
+  rememberDeadline: (to, task, name) => {},
   error: (msg) => {}
 }
 
@@ -49,6 +50,26 @@ if (constants.canSendEmail) {
           <p>Olá ${i18n.__('mail.assigned.hello', { name: name })}</p>
           ${i18n.__('mail.assigned.update.intro', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
           ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+          <p>${Signatures.sign(language)}</p>`
+        }
+      ]
+    )
+  }
+
+  DeadlineMail.rememberAssigned = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
+    request(
+      to,
+      i18n.__('mail.deadline.remember.subject', { deadline: moment(task.deadline).fromNow() }),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>Olá ${i18n.__('mail.assigned.hello', { name: name })}</p>
+          ${i18n.__('mail.deadline.remember.intro', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
+          ${i18n.__('mail.deadline.remember.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
           <p>${Signatures.sign(language)}</p>`
         }
       ]
