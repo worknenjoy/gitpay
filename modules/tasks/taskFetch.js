@@ -3,6 +3,9 @@ const models = require('../../models')
 const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
+const roleExists = require('../roles').roleExists
+const userExists = require('../users').userExists
+const memberExists = require('../members').memberExists
 
 module.exports = Promise.method(function taskFetch (taskParams) {
   return models.Task.findOne({
@@ -18,6 +21,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       {
         model: models.Assign,
         include: [models.User]
+      },
+      {
+        model: models.Member,
+        include: [models.User, models.Role]
       }
     ]
   })
@@ -51,6 +58,35 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 }
               ).catch(e => {})
 
+              const role = await roleExists({ name: 'company_owner' })
+              if (role.dataValues && role.dataValues.id) {
+                const userInfo = await requestPromise({
+                  uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
+                  headers: {
+                    'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+                  }
+                })
+                const userInfoJSON = JSON.parse(userInfo)
+                const userExist = await userExists({ email: userInfoJSON.email })
+                if (userExist.dataValues && userExist.dataValues.id) {
+                  const memberExist = await memberExists({ userId: userExist.dataValues.id, taskId: data.id })
+                  if (memberExist.dataValues && memberExist.dataValues.id) {
+                    // alerady member
+                  }
+                  else {
+                    // add member
+                    const task = await models.Task.findOne({
+                      where: {
+                        id: data.id
+                      }
+                    })
+                    await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
+                  }
+                }
+                else {
+                  // send an email
+                }
+              }
               const responseGithub = {
                 id: data.dataValues.id,
                 url: issueUrl,
@@ -72,7 +108,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   issue: issueDataJsonGithub
                 },
                 orders: data.dataValues.Orders,
-                assigns: data.dataValues.Assigns
+                assigns: data.dataValues.Assigns,
+                members: data.dataValues.Members
               }
 
               if (!data.title && data.title !== issueDataJsonGithub.title) {

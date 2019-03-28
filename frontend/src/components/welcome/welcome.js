@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import 'typeface-roboto'
 import {
@@ -61,6 +62,7 @@ import {
 } from './components/CommonStyles'
 
 const styles = theme => mainStyles(theme)
+const isIntegrations = ref => ref === 'integrations'
 
 class Welcome extends Component {
   constructor (props) {
@@ -73,69 +75,88 @@ class Welcome extends Component {
     this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
-  handleSectionTab = (event, value) => {
+  componentDidMount () {
+    const clientX = ReactDOM.findDOMNode(
+      this.refs.intro
+    ).getBoundingClientRect().width
+
+    this.offsets = { offset: clientX * 0.04, integrations: clientX * 0.06 }
+    if (this.offsets.offset > 30) {
+      this.offsets = { offset: 30, integrations: 48 }
+    }
+    const { offset, integrations } = this.offsets
+
+    for (let ref in this.refs) {
+      const domNode = ReactDOM.findDOMNode(this.refs[ref])
+
+      const clientY = Math.ceil(domNode.getBoundingClientRect().top)
+      const offsetY = isIntegrations(ref)
+        ? clientY - integrations
+        : clientY - offset
+
+      const position = { [ref]: offsetY }
+
+      this.positions = { ...this.positions, ...position }
+    }
+
+    window.addEventListener('scroll', this.handleSectionsScroll)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.handleSectionsScroll)
+  }
+
+  handleSectionTab = ({ currentTarget }, value) => {
     this.setState({ value })
-    let offset = -30
-    if (event.currentTarget.id === 'integrations') offset = -50
-    scrollToComponent(this.refs[event.currentTarget.id], {
-      offset: offset,
+
+    const ref = this.refs[currentTarget.id]
+    const { offset, integrations } = this.offsets
+    scrollToComponent(ref, {
+      offset: isIntegrations(ref) ? 0 - integrations : 0 - offset,
       align: 'top',
       ease: 'inExpo'
     })
   }
 
-  componentDidMount () {
-    window.addEventListener('scroll', this.handleSectionScroll)
-  }
+  handleSectionsScroll = () => {
+    const scrollPosition = document.documentElement.scrollTop
+    const offsetPostion = scrollPosition + this.offsets.offset
 
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this.handleSectionScroll)
-  }
-
-  handleSectionScroll = ({ pageY }) => {
-    const positions = {
-      home: 795,
-      contrib: 1329,
-      companies: 1801,
-      collab: 2310,
-      how: 2844,
-      pricing: 3378,
-      integrations: 3999 /* ,
-      getStarted: 4483 */
-    }
     const {
-      home,
+      intro,
       contrib,
       companies,
       collab,
-      how,
+      'how-it-works': howItWorks,
       pricing,
-      integrations /* ,
-      getStarted */
-    } = positions
+      integrations,
+      'get-started': getStarted
+    } = this.positions
 
-    if (pageY < home) {
-      this.setState({ value: 0 })
+    if (offsetPostion >= getStarted) {
+      this.setState({ value: 7 })
     }
-    else if (pageY < contrib) {
-      this.setState({ value: 1 })
-    }
-    else if (pageY < companies) {
-      this.setState({ value: 2 })
-    }
-    else if (pageY < collab) {
-      this.setState({ value: 3 })
-    }
-    else if (pageY < how) {
-      this.setState({ value: 4 })
-    }
-    else if (pageY < pricing) {
-      this.setState({ value: 5 })
-    }
-    else if (pageY < integrations) {
+    else if (offsetPostion >= integrations) {
       this.setState({ value: 6 })
     }
-    else this.setState({ value: 7 })
+    else if (offsetPostion >= pricing) {
+      this.setState({ value: 5 })
+    }
+    else if (offsetPostion >= howItWorks) {
+      this.setState({ value: 4 })
+    }
+    else if (offsetPostion >= collab) {
+      this.setState({ value: 3 })
+    }
+    else if (offsetPostion >= companies) {
+      this.setState({ value: 2 })
+    }
+    else if (offsetPostion >= contrib - 35) {
+      this.setState({ value: 1 })
+    }
+    else if (offsetPostion >= intro) {
+      this.setState({ value: 0 })
+    }
   }
 
   render () {
