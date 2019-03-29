@@ -34,7 +34,7 @@ const job = new CronJob({
     const d = new Date()
     // eslint-disable-next-line no-console
     console.log('Log to confirm cron job run at', d)
-    DeadlineMail.rememberDeadline()
+    TaskCron.rememberDeadline()
   }
 })
 
