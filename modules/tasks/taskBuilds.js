@@ -5,6 +5,8 @@ const url = require('url')
 const requestPromise = require('request-promise')
 const constants = require('../mail/constants')
 const TaskMail = require('../mail/task')
+const roleExists = require('../roles').roleExists
+const userExists = require('../users').userExists
 
 module.exports = Promise.method(function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
@@ -34,6 +36,23 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
           )
           .save()
           .then(async task => {
+            const role = await roleExists({ name: 'company_owner' })
+            if (role.dataValues && role.dataValues.id) {
+              const userInfo = await requestPromise({
+                uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
+                headers: {
+                  'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+                }
+              })
+              const userInfoJSON = JSON.parse(userInfo)
+              const userExist = await userExists({ email: userInfoJSON.email })
+              if (userExist.dataValues && userExist.dataValues.id) {
+                await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
+              }
+              else {
+                // send an email
+              }
+            }
             const taskData = task.dataValues
             const userData = await task.getUser()
             TaskMail.send(userData, {
@@ -70,7 +89,10 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
     default:
       return models.Task
         .build(
-          taskParameters
+          taskParameters,
+          {
+            include: [models.User, models.Member]
+          }
         )
         .save()
         .then(data => {
