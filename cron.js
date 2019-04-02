@@ -19,7 +19,7 @@ const TaskCron = {
       tasks.map(async t => {
         if (t.assigned) {
           const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
-          DeadlineMail.rememberDeadline(t.User, t, userAssigned.dataValues.User.name)
+          DeadlineMail.rememberDeadline(t.User.dataValues, t, userAssigned.dataValues.User.name)
         }
       })
     }
