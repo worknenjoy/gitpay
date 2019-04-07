@@ -8,7 +8,7 @@ const TaskCron = {
     const tasks = await models.Task.findAll({ where: {
       status: 'in_progress',
       deadline: {
-        $lt: moment().subtract(3, 'days').toDate()
+        $gte: moment().subtract(3, 'days').toDate()
       }
     },
     include: [ models.User ]

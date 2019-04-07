@@ -37,7 +37,8 @@ import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
-import Preferences from '../../components/profile/preferences'
+import Preferences from './preferences'
+import Organizations from './organizations'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
@@ -342,7 +343,7 @@ class Profile extends Component {
                     <FormattedMessage id='account.profile.welcome.description' defaultMessage='This is the first steps to start to work with Gitpay' />
                   </Typography>
                   <div style={{marginTop: 20, marginBottom: 40}}>
-                    <Chip label='test' />
+                    <Organizations />
                   </div>
                 </div>
               </Grid>
