@@ -335,14 +335,14 @@ class Profile extends Component {
             </Grid>
             <Grid item xs={ 12 } md={ 9 }>
               <Grid item xs={ 12 } md={ 12 }>
-                <div style={{marginTop: 10, marginBottom: 10}}>
+                <div style={ { marginTop: 10, marginBottom: 10 } }>
                   <Typography variant='h5' component='h3'>
                     <FormattedMessage id='account.profile.welcome.headline' defaultMessage='Welcome to Gitpay!' />
                   </Typography>
                   <Typography component='p'>
                     <FormattedMessage id='account.profile.welcome.description' defaultMessage='This is the first steps to start to work with Gitpay' />
                   </Typography>
-                  <div style={{marginTop: 20, marginBottom: 40}}>
+                  <div style={ { marginTop: 20, marginBottom: 40 } }>
                     <Organizations />
                   </div>
                 </div>
