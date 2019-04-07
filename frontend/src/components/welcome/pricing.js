@@ -57,39 +57,39 @@ const styles = theme => ({
 
 const tiers = [
   {
-    title: 'Free',
-    subheader: 'For personal and tech geeks companies',
-    price: '0',
-    description: ['Unlimited tasks', 'Development community', '12% fee for each transaction', 'Pay on demmand'],
-    buttonText: 'Sign up for free',
+    title: 'Open source',
+    subheader: 'For open source projects',
+    price: '8%',
+    description: [
+      'Public projects on Github or Bitbucket',
+      'Development community willing to solve your issues',
+      '8% fee for each transaction'
+    ],
+    buttonText: 'Sign up',
     buttonVariant: 'contained',
     link: 'https://gitpay.me/#/login'
   },
   {
-    title: 'Open Source',
-    subheader: 'An Open Source project using git with our support and review',
-    price: '200',
+    title: 'Private',
+    subheader: 'For private projects',
+    price: '18%',
     description: [
-      'We manage your issues',
-      'Advice on pricing for tasks',
-      '8% fee for each transaction',
-      'Code review',
-      'Email support',
+      'Private projects on Github or Bitbucket',
+      'Development community willing to solve your issues',
+      '18% fee for each transaction'
     ],
     buttonText: 'Contact us',
     buttonVariant: 'contained',
     link: 'https://goo.gl/forms/eSpHlrtXGJ1v3Syv2'
   },
   {
-    title: 'Enterprise',
-    subheader: 'For private projects',
-    price: '400',
+    title: 'Support',
+    subheader: 'Our Support to complete your tasks',
+    price: '30%',
     description: [
-      'We manage your issues',
-      'Advice on pricing for tasks',
-      '10% fee for each transaction',
+      'We manage your projects on Github or Bitbucket',
       'Code review',
-      'Email support'
+      '30% fee for each transaction'
     ],
     buttonText: 'Contact us',
     buttonVariant: 'contained',
@@ -130,10 +130,10 @@ class Pricing extends Component {
                 <CardContent>
                   <div className={ classes.cardPricing }>
                     <Typography variant='h5' color='textPrimary'>
-                      <small>US$</small> { tier.price }
+                      <small>Fee</small> { tier.price }
                     </Typography>
                     <Typography variant='subheading' color='textSecondary'>
-                      <FormattedMessage id='welcome.pricing.month' defaultMessage='/mo' />
+                      <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
                     </Typography>
                   </div>
                   { tier.description.map(line => (
