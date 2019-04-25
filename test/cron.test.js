@@ -7,7 +7,7 @@ const { registerAndLogin } = require('./helpers')
 const { TaskCron } = require('../cron')
 const MockDate = require('mockdate')
 
-describe('Crons', () => {
+xdescribe('Crons', () => {
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
