@@ -6,7 +6,7 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core'
-import orange from '@material-ui/core/colors/orange'
+import { orange } from '@material-ui/core/colors'
 
 import AccountContainer from '../../containers/account'
 

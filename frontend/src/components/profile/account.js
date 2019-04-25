@@ -29,9 +29,13 @@ import {
   AppBar,
   Tabs,
   Tab,
+} from '@material-ui/core'
+
+import {
   green,
   cyan
-} from '@material-ui/core'
+} from '@material-ui/core/colors'
+
 import {
   People,
   Redeem,
