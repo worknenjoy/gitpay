@@ -8,7 +8,6 @@ import {
   Avatar,
   Typography,
   Button,
-  Chip,
   Paper,
   ListItemIcon,
   ListItemText,

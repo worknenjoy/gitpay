@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
-import Paper from '@material-ui/core/Paper'
 import TagFacesIcon from '@material-ui/icons/TagFaces'
 
 const styles = theme => ({
@@ -30,7 +29,8 @@ class Organizations extends Component {
 
   handleDelete = data => () => {
     if (data.label === 'React') {
-      alert('Why would you want to delete React?! :)') // eslint-disable-line no-alert
+      // eslint-disable-line no-alert
+      console.log('Why would you want to delete React?! :)')
       return
     }
 
