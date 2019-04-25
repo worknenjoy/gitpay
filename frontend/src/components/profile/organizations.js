@@ -29,8 +29,7 @@ class Organizations extends Component {
 
   handleDelete = data => () => {
     if (data.label === 'React') {
-      // eslint-disable-line no-console
-      console.log('Why would you want to delete React?! :)')
+      console.log('Why would you want to delete React?! :)') // eslint-disable-line no-console
       return
     }
 
