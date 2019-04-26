@@ -10,7 +10,7 @@
     "production": "webpack --progress --config webpack.config.prod.js",
     "translate": "NODE_ENV=development extract-messages -l=en,br -o src/translations/generated 'src/**/*.js'",
     "output-translation": "node translation.js",
-    "sitemap": "NODE_ENV=production node src/sitemap-builder.js"
+    "sitemap": "node sitemap-builder.js"
   },
   "jest": {
     "setupFiles": [
