@@ -36,7 +36,8 @@ import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
-import Preferences from '../../components/profile/preferences'
+import Preferences from './preferences'
+import Organizations from './organizations'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
@@ -44,6 +45,7 @@ import PreferencesBar from './preferences-bar'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
+const bannerDiscount = require('../../images/discount-99.png')
 
 const styles = theme => ({
   root: {
@@ -198,29 +200,7 @@ class Profile extends Component {
         }
         <PageContent>
           <Grid container className={ classes.root } spacing={ 24 }>
-            <Grid item xs={ 12 } md={ 8 }>
-              <HashRouter>
-                <Switch>
-                  <Route exact path='/profile' component={ ProfileOptions } />
-                  <Route
-                    exact
-                    path='/profile/tasks'
-                    component={ () => <TaskListContainer /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/payment-options'
-                    component={ () => <PaymentOptions user={ user } /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/preferences'
-                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
-                  />
-                </Switch>
-              </HashRouter>
-            </Grid>
-            <Grid item xs={ 12 } md={ 4 }>
+            <Grid item xs={ 12 } md={ 3 }>
               <div className={ classes.bigRow }>
                 <div className={ classes.row }>
                   { user.picture_url ? (
@@ -351,6 +331,46 @@ class Profile extends Component {
                   </Paper>
                 </div>
               </div>
+            </Grid>
+            <Grid item xs={ 12 } md={ 9 }>
+              <Grid item xs={ 12 } md={ 12 }>
+                <div style={ { marginTop: 10, marginBottom: 10, display: 'none' } }>
+                  <Typography variant='h5' component='h3'>
+                    <FormattedMessage id='account.profile.welcome.headline' defaultMessage='Welcome to Gitpay!' />
+                  </Typography>
+                  <Typography component='p'>
+                    <FormattedMessage id='account.profile.welcome.description' defaultMessage='This is the first steps to start to work with Gitpay' />
+                  </Typography>
+                  <div style={ { marginTop: 20, marginBottom: 40 } }>
+                    <Organizations />
+                  </div>
+                </div>
+              </Grid>
+              <div style={ { marginTop: 20, marginBottom: 20, textAlign: 'center', display: 'none' } }>
+                <a href='https://app.turbomkt.com.br/checkout?tm=NLEAUIIG&fp=335084580644244&ga=UA-134720490-1&jc=dZZJJOyciC&src=gitpay'>
+                  <img src={ bannerDiscount } width='450' />
+                </a>
+              </div>
+              <HashRouter>
+                <Switch>
+                  <Route exact path='/profile' component={ ProfileOptions } />
+                  <Route
+                    exact
+                    path='/profile/tasks'
+                    component={ () => <TaskListContainer /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/payment-options'
+                    component={ () => <PaymentOptions user={ user } /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/preferences'
+                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
+                  />
+                </Switch>
+              </HashRouter>
             </Grid>
           </Grid>
         </PageContent>

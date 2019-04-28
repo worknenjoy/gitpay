@@ -9,6 +9,8 @@
   "scripts": {
     "migrate": "node migrate.js up",
     "migrate-test": "NODE_ENV=test node migrate.js up",
+    "seed": "TYPE=seed node migrate.js up",
+    "seed-test": "TYPE=seed NODE_ENV=test node migrate.js up",
     "migrate-test-rollback": "NODE_ENV=test node migrate.js prev",
     "rollback": "node migrate.js prev",
     "reset": "node migrate.js reset-hard",
@@ -20,7 +22,7 @@
     "lint-fix": "./node_modules/.bin/eslint . --fix",
     "prepush": "npm run lint",
     "postbuild": "cd frontend && npm run test",
-    "heroku-postbuild": "cd frontend && npm install && npm run production && cd .. && npm run migrate",
+    "heroku-postbuild": "cd frontend && npm install && npm run sitemap && npm run production && cd .. && npm run migrate",
     "pretest": "npm run lint"
   },
   "private": true,
@@ -53,6 +55,7 @@
     "mailchimp-api-v3": "^1.12.1",
     "moment": "^2.22.2",
     "name-initials": "^0.1.3",
+    "natives": "^1.1.6",
     "node-okbitbucket": "^1.0.10",
     "node-sass": "^4.7.2",
     "octonode": "^0.9.5",
@@ -105,6 +108,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.6",
     "mocha": "^3.4.1",
+    "mockdate": "^2.0.2",
     "nock": "^10.0.6",
     "nodemon": "^1.18.9",
     "protractor": "^5.4.2",
