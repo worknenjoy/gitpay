@@ -19,6 +19,7 @@ const setMomentLocale = (lang) => {
 const AssignMail = {
   owner: (to, task, name, offer) => {},
   interested: (to, task, name) => {},
+  assigned: (to, task) => {},
   error: (msg) => {}
 }
 

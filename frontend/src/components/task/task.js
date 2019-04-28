@@ -76,7 +76,7 @@ import { PageContent } from 'app/styleguide/components/Page'
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
-import RemoveAssignment from './assignment/RemoveAssignment'
+import AssignActions from './assignment/AssignActions'
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 
@@ -467,11 +467,25 @@ class Task extends Component {
   }
 
   componentWillMount () {
-    this.props.syncTask(this.props.match.params.id)
-    this.props.fetchTask(this.props.match.params.id)
+    const id = this.props.match.params.id
+    this.props.syncTask(id)
+    this.props.fetchTask(id)
+    if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
+      this.props.changeTab(1)
+    }
+    if (this.props.history && this.props.history.location.pathname === `/task/${id}/interested`) {
+      this.props.changeTab(2)
+    }
+    if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
+      this.props.changeTab(3)
+    }
   }
 
   handleTabChange = (event, tab) => {
+    const id = this.props.match.params.id
+    if (tab === 1) this.props.history.push(`/task/${id}/orders`)
+    if (tab === 2) this.props.history.push(`/task/${id}/interested`)
+    if (tab === 3) this.props.history.push(`/task/${id}/members`)
     this.props.changeTab(tab)
   }
 
@@ -623,6 +637,10 @@ class Task extends Component {
       return creator || owner
     }
 
+    const isCurrentUserAssigned = () => {
+      return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
+    }
+
     const userRow = user => {
       return (<span>
         { user && user.length && user.profile_url
@@ -669,42 +687,13 @@ class Task extends Component {
       ])
     }
 
-    const assignActions = (assign) => {
+    const isAssignOwner = () => {
+      return taskOwner() || isCurrentUserAssigned()
+    }
+
+    const assignActions = assign => {
       const task = this.props.task.data
-      const hasAssignedUser = assign.id === task.assigned
-      const isOwner = taskOwner()
-
-      return (
-        <div>
-          <RemoveAssignment
-            task={ task }
-            remove={ this.props.removeAssignment }
-            visible={ hasAssignedUser && isOwner }
-          />
-
-          { (isOwner && !hasAssignedUser) &&
-            <Button
-              disabled={ hasAssignedUser }
-              onClick={ () => this.props.assignTask(task.id, assign.id) }
-              style={ { marginRight: 10 } }
-              variant='contained'
-              size='small'
-              color='primary'
-            >
-              <GroupWorkIcon style={ { marginRight: 5 } } />
-              <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
-            </Button>
-          }
-
-          { hasAssignedUser &&
-            <FormattedMessage id='task.payment.action.chosen' defaultMessage='Chosen' >
-              { (msg) => (
-                <Chip label={ msg } />
-              ) }
-            </FormattedMessage>
-          }
-        </div>
-      )
+      return <AssignActions isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } />
     }
 
     const displayAssigns = assign => {
@@ -1240,7 +1229,18 @@ class Task extends Component {
           </Grid>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 8 }>
-              { task.data.assigned && <TaskAssigned status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) } classes={ classes } user={ task.data.assignedUser || {} } /> }
+              { task.data.assigned &&
+                <TaskAssigned
+                  task={ task.data }
+                  isOwner={ isAssignOwner() }
+                  status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                  classes={ classes }
+                  user={ task.data.assignedUser || {} }
+                  removeAssignment={ this.props.removeAssignment }
+                  assignTask={ this.props.assignTask }
+                  assign={ { id: task.data.assigned } }
+                />
+              }
               <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
               { taskOwner() &&
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
