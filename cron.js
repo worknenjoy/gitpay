@@ -2,13 +2,22 @@ const CronJob = require('cron').CronJob
 const models = require('./models')
 const moment = require('moment')
 const DeadlineMail = require('./modules/mail/deadline')
+const i18n = require('i18n')
+
+i18n.configure({
+  directory: `${__dirname}/locales/result`,
+  locales: ['en', 'br'],
+  defaultLocale: 'en',
+  updateFiles: false
+})
 
 const TaskCron = {
   rememberDeadline: async () => {
     const tasks = await models.Task.findAll({ where: {
       status: 'in_progress',
       deadline: {
-        $gte: moment().subtract(3, 'days').toDate()
+        $lt: moment(new Date()).format(),
+        $gt: moment(new Date()).subtract(4, 'days').format()
       }
     },
     include: [ models.User ]
@@ -18,8 +27,12 @@ const TaskCron = {
     if (tasks[0]) {
       tasks.map(async t => {
         if (t.assigned) {
-          const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
-          DeadlineMail.rememberDeadline(t.User.dataValues, t, userAssigned.dataValues.User.name)
+          if (t.dataValues && t.assigned) {
+            const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
+            if (userAssigned[0].dataValues) {
+              DeadlineMail.deadlineEndAssigned(t.User.dataValues, t.dataValues, userAssigned[0].dataValues.User.dataValues.name)
+            }
+          }
         }
       })
     }

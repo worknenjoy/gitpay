@@ -62,7 +62,6 @@ const removeAssignmentError = error => {
 
 export const removeAssignment = (id, message) => dispatch => {
   dispatch(removeAssignmentRequested())
-
   axios
     .put(`${api.API_URL}/tasks/${id}/assignment/remove`, { message })
     .then(response => {

@@ -279,7 +279,7 @@ describe("tasks", () => {
         })
     });
 
-    xit('should update task with an user assigned', (done) => {
+    it('should update task with an existent user assigned', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
