@@ -22,6 +22,8 @@ const DeadlineMail = {
   update: (to, task, name) => {},
   daysLeft: (to, task, name) => {},
   rememberAssigned: (to, task, name) => {},
+  deadlineEndAssigned: (to, task, name) => {},
+  deadlineEndOwner: (to, task, name) => {},
   error: (msg) => {}
 }
 
@@ -111,6 +113,40 @@ if (constants.canSendEmail) {
     },
     secondary: {
       label: 'mail.deadline.end.button.secondary',
+      url: urlExtend
+    }
+  })}
+          <p>${Signatures.sign(language)}</p>`
+        }
+      ]
+    )
+  }
+
+  DeadlineMail.deadlineEndOwner = (user, task, name) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const url = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+    const urlInterested = `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested`
+    const urlExtend = `${process.env.FRONTEND_HOST}/task/${task.id}/interested/extend`
+    i18n.setLocale(language)
+    moment.locale(locales[language].label, locales[language].file)
+    request(
+      to,
+      i18n.__('mail.deadline.end.owner.subject', { deadline: moment(task.deadline).fromNow() }),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>${i18n.__('mail.deadline.end.owner.hello', { name: name })}</p>
+          ${i18n.__('mail.deadline.end.owner.intro', { url, title: task.title })}
+          ${i18n.__('mail.deadline.end.owner.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+          ${Signatures.buttons(language, {
+    primary: {
+      label: 'mail.deadline.end.owner.button.primary',
+      url: urlInterested
+    },
+    secondary: {
+      label: 'mail.deadline.end.owner.button.secondary',
       url: urlExtend
     }
   })}

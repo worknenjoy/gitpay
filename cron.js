@@ -17,7 +17,7 @@ const TaskCron = {
       status: 'in_progress',
       deadline: {
         $lt: moment(new Date()).format(),
-        $gt: moment(new Date()).subtract(4, 'days').format()
+        $gt: moment(new Date()).subtract(14, 'days').format()
       }
     },
     include: [ models.User ]
@@ -30,7 +30,8 @@ const TaskCron = {
           if (t.dataValues && t.assigned) {
             const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
             if (userAssigned[0].dataValues) {
-              DeadlineMail.deadlineEndAssigned(t.User.dataValues, t.dataValues, userAssigned[0].dataValues.User.dataValues.name)
+              DeadlineMail.deadlineEndAssigned(t.User.dataValues, t.dataValues, t.User.name || t.User.username)
+              DeadlineMail.deadlineEndOwner(userAssigned[0].dataValues.User, t.dataValues, userAssigned[0].dataValues.User.dataValues.name)
             }
           }
         }
