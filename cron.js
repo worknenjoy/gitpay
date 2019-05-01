@@ -30,8 +30,8 @@ const TaskCron = {
           if (t.dataValues && t.assigned) {
             const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
             if (userAssigned[0].dataValues) {
-              DeadlineMail.deadlineEndAssigned(t.User.dataValues, t.dataValues, t.User.name || t.User.username)
-              DeadlineMail.deadlineEndOwner(userAssigned[0].dataValues.User, t.dataValues, userAssigned[0].dataValues.User.dataValues.name)
+              DeadlineMail.deadlineEndOwner(t.User.dataValues, t.dataValues, t.User.name || t.User.username)
+              DeadlineMail.deadlineEndAssigned(userAssigned[0].dataValues.User, t.dataValues, userAssigned[0].dataValues.User.dataValues.name)
             }
           }
         }
