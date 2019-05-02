@@ -218,7 +218,7 @@ describe("tasks", () => {
           models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
             agent
               .put("/tasks/update")
-              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}]})
+              .send({id: task.dataValues.id, value: 200, Offers: [{userId: userId, value: 100}], Assigns: [{userId: userId}]})
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
@@ -242,7 +242,7 @@ describe("tasks", () => {
           models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
             agent
               .put("/tasks/update")
-              .send({id: task.dataValues.id, value: 200, Offers: [{userId: userId, value: 100}]})
+              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}], Offers: [{userId: userId, value: 100}]})
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {

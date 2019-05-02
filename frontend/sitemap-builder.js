@@ -17,5 +17,5 @@ console.log(router);
 (
   new Sitemap(router)
     .build('http://gitpay.me')
-    .save('./sitemap.xml')
+    .save('./public/sitemap.xml')
 )
