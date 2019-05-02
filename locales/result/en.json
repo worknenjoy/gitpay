@@ -42,7 +42,7 @@
   "mail.deadline.end.button.secondary": "I'm not working on this anymore",
   "mail.deadline.end.owner.subject": "The deadline for the task that you created on Gitpay ended",
   "mail.deadline.end.owner.hello": "Hello {{name}}",
-  "mail.deadline.end.owner.intro": "The task <strong>{{title}}</strong> (<a href=\"{{url}}\">{{url}}</a></p>) that you created on Gitpay reached the deadline date, and you can unassign or extend the deadline.",
+  "mail.deadline.end.owner.intro": "The task <strong>{{title}}</strong> (<a href=\"{{url}}\">{{url}}</a></p>) that you created on Gitpay reached the deadline date, and you can unassign this user or extend the deadline.",
   "mail.deadline.end.owner.message": "The deadline was {{deadline}}, {{deadlineFromNow}}.",
   "mail.deadline.end.owner.button.primary": "Review task assignment",
   "mail.deadline.end.owner.button.secondary": "Extend deadline",
