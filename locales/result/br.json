@@ -64,7 +64,7 @@
   "mail.transfer.missing.message": "Você recebeu um pagamento pelo Gitpay, mas sua conta ainda não foi configurada. Por favor, ative sua conta em <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a> para receber as recompensas.",
   "mail.transfer.invalid.message": "Para receber o pagamento por uma tarefa, você precisa ativar sua conta em <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a>",
   "mail.assign.remove.subject": "Você foi removido de uma tarefa no Gitpay",
-  "mail.assign.remove.message": "<p>You were unassigned from the task <a href=\"{{url}}\">{{title}}</a> on Gitpay</p><p>The task owner sent the reason:</p><p>{{message}}</p>",
+  "mail.assign.remove.message": "<p>Você foi removido da tarefa <a href=\"{{url}}\">{{title}}</a> no Gitpay</p><p>O responsável pela tarefa enviou a seguinte mensagem:</p><p>{{message}}</p>",
   "mail.assign.remove.owner.subject": "O usuário foi desassociado de uma tarefa que você criou no Gitpay",
   "mail.assign.remove.owner.message": "<p>O usuário {{user}} ({{email}}) foi desassociado da tarefa <a href=\"{{url}}\">{{title}}</a> no Gitpay</p><p>A razão foi:</p><p>{{message}}</p>",
   "mail.invite.send.action": "Você recebeu um convite para trabalhar em uma tarefa do Gitpay :-)",
