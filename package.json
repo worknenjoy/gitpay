@@ -22,7 +22,7 @@
     "lint-fix": "./node_modules/.bin/eslint . --fix",
     "prepush": "npm run lint",
     "postbuild": "cd frontend && npm run test",
-    "heroku-postbuild": "cd frontend && npm install && npm run sitemap && npm run production && cd .. && npm run migrate",
+    "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate",
     "pretest": "npm run lint"
   },
   "private": true,
