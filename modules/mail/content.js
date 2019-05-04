@@ -49,4 +49,23 @@ Signatures.buttons = (language, buttons) => {
 `
 }
 
+Signatures.header = () => {
+    return `
+    <table width="100%" align="center" height="215" style="background: url('https://alexandremagno.net/wp-content/uploads/2019/05/bg-mail-top.png') no-repeat center; background-size: contain;">
+    <tr>
+        <td align="center">
+            <table width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <a href="https://gitpay.me" target="_blank">
+                            <img width="200" src="https://alexandremagno.net/wp-content/uploads/2018/09/logo-transparent.png" />
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+  </table>`
+}
+
 module.exports = Signatures
