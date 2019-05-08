@@ -4,7 +4,7 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield) [![Waffle.io - Columns and their card count](https://badge.waffle.io/worknenjoy/gitpay.png?columns=all)](https://waffle.io/worknenjoy/gitpay?utm_source=badge) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Average time to resolve an issue")
 
-Freelancing with development workflow
+An Open Source Bounty platform to solve tasks with Git
 
 https://gitpitch.com/worknenjoy/gitpay
 
