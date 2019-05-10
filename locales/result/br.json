@@ -35,7 +35,7 @@
   "mail.deadline.remember.message": "O prazo é {{deadline}}. Você tem {{deadlineFromNow}} dias. Se você precisar de mais tempo, sem problemas, nós avisaremos o autor e você pode renegociar para entregar em um tempo hábil. Se você desistiu por alguma razão, deixe o autor saber o quanto antes, para que outros possam ser escolhidos",
   "mail.deadline.update.error": "Tivemos um problema com as notificações sobre interessados em uma tarefa no Gitpay",
   "mail.deadline.end.subject": "O prazo para a tarefa que você foi escolhido terminou",
-  "mail.deadline.end.hello": "Hello {{name}}",
+  "mail.deadline.end.hello": "Olá {{name}}",
   "mail.deadline.end.intro": "A tarefa <strong>{{title}}</strong> (<a href=\"{{url}}\">{{url}}</a></p>) em que você foi escolhido no Gitpay atingiu a data limite, e precisamos rever se iremos continuar.",
   "mail.deadline.end.message": "O prazo era para {{deadline}}, {{deadlineFromNow}}.",
   "mail.deadline.end.button.primary": "Revisar a escolha desta tarefa",
