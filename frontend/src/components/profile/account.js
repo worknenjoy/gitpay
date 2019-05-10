@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import {
   withStyles,
+  Avatar,
   Grid,
   Card,
   CardContent,
@@ -92,10 +93,14 @@ const styles = theme => ({
   },
   title: {
     marginBottom: 16,
-    fontSize: 14
+    fontSize: 18,
+    fontWeight: 'bold'
   },
   pos: {
     marginBottom: 12
+  },
+  chip: {
+    margin: theme.spacing.unit,
   },
   label: {}
 })
@@ -122,7 +127,9 @@ class Account extends Component {
       countryPickerModal: false,
       currentStep: 0,
       userId: null,
-      country: null,
+      countryCode: null,
+      countryLabel: null,
+      countryImage: null,
       canCreateAccount: false,
       selectedBank: '',
       bankNumberError: false,
@@ -190,15 +197,21 @@ class Account extends Component {
   }
 
   handleCreateAccount = () => {
-    this.props.createAccount(this.state.userId, this.state.country)
+    this.props.createAccount(this.state.countryCode)
   }
 
   handleCountry = () => {
     this.setState({countryPickerModal: true})
   }
 
-  handleCountryClose = () => {
-    this.setState({countryPickerModal: false})
+  handleCountryClose = (e, item) => {
+    this.setState({
+      countryPickerModal: false,
+      countryCode: item.code,
+      countryLabel: item.country,
+      countryImage: item.image,
+      canCreateAccount: item.code ? true : false
+    })
   }
 
   handleBankAccount (e) {
@@ -877,6 +890,18 @@ class Account extends Component {
                           <Typography className={ classes.title } color='textSecondary'>
                             <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
                           </Typography>
+                          {this.state.countryCode && (
+                            <div>
+                              <Typography component='p' color='textSecondary'>
+                                <FormattedMessage id='account.register.country.label' defaultMessage='The country you choose to create your account' />
+                              </Typography>  
+                              <Chip
+                                avatar={<Avatar><img width={72} src={require(`../../images/countries/${this.state.countryImage}.png`)} /></Avatar>}
+                                label={this.state.countryLabel}
+                                className={classes.chip}
+                              />
+                            </div>
+                          )}
                         </CardContent>
                         <CardActions className={ classes.cardEmptyActionsAlt}>
                           <Button
