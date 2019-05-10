@@ -10,7 +10,7 @@ https://gitpitch.com/worknenjoy/gitpay
 
 ## What is Gitpay?
 
-We offer a marketplace for developersand platforms that use git for on demand project needs, using the Git Workflow as contract to deliver issues solved and be rewarded for contribute.
+We offer a marketplace for contributors and projects that use git for on demand project needs, using the Git Workflow as contract to solve issues and reward contributors.
 
 * You can complete tasks with open collaboration and receive bounties for it
 * Companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
