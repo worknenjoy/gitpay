@@ -25,6 +25,11 @@ const styles = theme => ({
 })
 
 class ProfileOptions extends Component {
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  }
+
   render () {
     const { classes } = this.props
 
@@ -119,8 +124,6 @@ class ProfileOptions extends Component {
   }
 }
 
-ProfileOptions.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+
 
 export default injectIntl(withStyles(styles)(ProfileOptions))

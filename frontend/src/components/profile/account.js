@@ -44,7 +44,9 @@ import {
   NavigateBefore,
   Done,
   Payment,
-  ArrowBack as PreviousIcon
+  ArrowBack as PreviousIcon,
+  Public as PublicIcon,
+  Person as PersonIcon
 } from '@material-ui/icons'
 
 import ReactPlaceholder from 'react-placeholder'
@@ -54,6 +56,8 @@ import Moment from 'moment'
 import Const from '../../consts'
 import TabContainer from '../Tabs/TabContainer'
 import messages from './messages'
+
+import CountryPicker from './country-picker'
 
 function Transition (props) {
   return <Slide direction='up' { ...props } />
@@ -76,6 +80,11 @@ const styles = theme => ({
     paddingTop: 20,
     paddingBottom: 40
   },
+  cardEmptyActionsAlt: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingBottom: 20
+  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -92,12 +101,29 @@ const styles = theme => ({
 })
 
 class Account extends Component {
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    createAccount: PropTypes.func,
+    bankAccount: PropTypes.object,
+    account: PropTypes.object,
+    createBankAccount: PropTypes.func,
+    updateAccount: PropTypes.func,
+    fetchAccount: PropTypes.func,
+    getBankAccount: PropTypes.func,
+    updateUser: PropTypes.func
+  }
+
   constructor (props) {
     super(props)
     this.state = {
       accountUpdateModal: false,
+      countryPickerModal: false,
       currentStep: 0,
       userId: null,
+      country: null,
+      canCreateAccount: false,
       selectedBank: '',
       bankNumberError: false,
       terms: false,
@@ -161,6 +187,18 @@ class Account extends Component {
 
     this.props.updateAccount(this.state.userId, formData)
     this.setState({ accountUpdateModal: false })
+  }
+
+  handleCreateAccount = () => {
+    this.props.createAccount(this.state.userId, this.state.country)
+  }
+
+  handleCountry = () => {
+    this.setState({countryPickerModal: true})
+  }
+
+  handleCountryClose = () => {
+    this.setState({countryPickerModal: false})
   }
 
   handleBankAccount (e) {
@@ -840,18 +878,33 @@ class Account extends Component {
                             <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
                           </Typography>
                         </CardContent>
+                        <CardActions className={ classes.cardEmptyActionsAlt}>
+                          <Button
+                              style={ { color: 'white' } }
+                              size='large'
+                              variant='contained'
+                              color='primary'
+                              onClick={ this.handleCountry  }
+                            >
+                              <FormattedMessage id='account.register.create.country' defaultMessage='Choose your country to start' />
+                              <PublicIcon style={{marginLeft: 10}} />
+                          </Button>
+                        </CardActions>
                         <CardActions className={ classes.cardEmptyActions }>
                           <Button
                             style={ { color: 'white' } }
                             size='large'
                             variant='contained'
                             color='primary'
-                            onClick={ () => this.props.createAccount(user.user.id) }
+                            disabled={!this.state.canCreateAccount}
+                            onClick={ this.handleCreateAccount  }
                           >
                             <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
+                            <PersonIcon style={{marginLeft: 10}} />
                           </Button>
                         </CardActions>
                       </Card> }
+                    <CountryPicker open={this.state.countryPickerModal} onClose={this.handleCountryClose} />
                   </div>)
                 }
               </TabContainer> }
@@ -935,19 +988,6 @@ class Account extends Component {
       </div>
     )
   }
-}
-
-Account.propTypes = {
-  classes: PropTypes.object.isRequired,
-  user: PropTypes.object,
-  createAccount: PropTypes.func,
-  bankAccount: PropTypes.object,
-  account: PropTypes.object,
-  createBankAccount: PropTypes.func,
-  updateAccount: PropTypes.func,
-  fetchAccount: PropTypes.func,
-  getBankAccount: PropTypes.func,
-  updateUser: PropTypes.func
 }
 
 export default injectIntl(withStyles(styles)(Account))

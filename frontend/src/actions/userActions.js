@@ -160,11 +160,12 @@ const fetchAccount = () => {
   }
 }
 
-const createAccount = () => {
+const createAccount = (country) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(createUserAccountRequested())
     const accountId = getState().loggedIn.user.account_id
+
     if (accountId) {
       dispatch(addNotification('Já existe uma conta associada'))
       return dispatch(
@@ -172,7 +173,7 @@ const createAccount = () => {
       )
     }
     axios
-      .post(api.API_URL + '/user/account')
+      .post(api.API_URL + '/user/account', { country })
       .then(account => {
         dispatch(addNotification('Conta criada com sucesso'))
         return dispatch(createUserAccountSuccess(account))

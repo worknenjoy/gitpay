@@ -13,6 +13,9 @@ const nock = require('nock')
 describe("Users", () => {
 
   beforeEach(() => {
+
+    nock.cleanAll()
+
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');
@@ -215,18 +218,34 @@ describe("Users", () => {
           })
         })
     });
-    it('should create account for user', (done) => {
-      registerAndLogin(agent).then(res => {
-        agent
-          .post(`/user/account`)
-          .set('Authorization', res.headers.authorization)
-          .expect(200)
-          .end((err, account) => {
-            expect(account.statusCode).to.equal(200);
-            //expect(account.body.object).to.equal('account');
-            done();
+    it('should create account for user in US', (done) => {
+      nock('https://api.stripe.com')
+            .post('/v1/accounts')
+            .replyWithFile(200, __dirname + '/data/account.json', {
+              'Content-Type': 'application/json',
+            })
+      register(agent, {
+        email: 'test_user_account_create@gmail.com',
+        password: 'test'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_account_create@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .post(`/user/account`)
+            .send({ id: userId, country: 'US' })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body.object).to.equal('account');
+              expect(user.body.country).to.equal('US');
+              done();
+            })
           })
-      })
+        })
     });
     it('should update account for user', (done) => {
       nock('https://api.stripe.com')
