@@ -38,7 +38,7 @@
   "payment.paypal.paywith": "Pagar com",
   "payment.paypal.logo.title": "Fazer pagamento com Paypal",
   "account.document.cpf.provided": "CPF fornecido",
-  "account.document.cpf.provide": "Por favor, digite o seu CPF",
+  "account.document.cpf.provide": "Por favor, digite o seu número de identificação (ex: CPF, SSN)",
   "account.address.line1": "Endereço",
   "account.address.line2": "Complemento",
   "account.type.card": "Cartão de Crédito",
