@@ -79,7 +79,7 @@
   "account.verify.desc": "Please fill the data to verify your account",
   "account.verify.firstName": "First name",
   "account.verify.lastName": "Last name",
-  "account.details": "Month of birth",
+  "account.details.month": "Month of birth",
   "account.actions.cancel": "Cancel",
   "account.actions.update": "Update Account",
   "account.register.headline": "There is no account registered to receive payments",
