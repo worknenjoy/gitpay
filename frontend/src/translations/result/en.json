@@ -379,7 +379,7 @@
   "welcome.how.consulting.who.subscribers": "Gitpay is for you?",
   "welcome.how.workflow.main.title": "Workflow",
   "welcome.how.workflow.contrib.title": "For contributors",
-  "payment.options.warning.message": "For now we only support bank accounts in Brazil. But it is possible to activate your account with Paypal instead.",
+  "payment.options.warning.message": "When you activate your bank account you will receive transfers directly. If the country that you have a bank account is not on the list, it is possible to activate your account with Paypal instead. Whatever, using Paypal, the Paypal fees would be applied.",
   "user.exist": "This user already exist. Please login",
   "user.invalid": "Invalid e-mail and / or password, please try again",
   "user.login.successfull": "You successfully logged in",
