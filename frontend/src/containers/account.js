@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchAccount: (userId) => dispatch(fetchAccount(userId)),
-    createAccount: (userId) => dispatch(createAccount(userId)),
+    createAccount: (country) => dispatch(createAccount(country)),
     updateAccount: (userId, account) => dispatch(updateAccount(userId, account)),
     updateUser: (userId, user) => dispatch(updateUser(userId, user)),
     getBankAccount: (userId) => dispatch(getBankAccount(userId)),

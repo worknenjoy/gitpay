@@ -160,25 +160,26 @@ const fetchAccount = () => {
   }
 }
 
-const createAccount = () => {
+const createAccount = (country) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(createUserAccountRequested())
     const accountId = getState().loggedIn.user.account_id
+
     if (accountId) {
-      dispatch(addNotification('Já existe uma conta associada'))
+      dispatch(addNotification('actions.user.account.exist'))
       return dispatch(
-        createUserAccountError({ message: 'Já existe uma conta associada' })
+        createUserAccountError({ message: 'actions.user.account.exist' })
       )
     }
     axios
-      .post(api.API_URL + '/user/account')
+      .post(api.API_URL + '/user/account', { country })
       .then(account => {
-        dispatch(addNotification('Conta criada com sucesso'))
+        dispatch(addNotification('actions.user.account.create.success'))
         return dispatch(createUserAccountSuccess(account))
       })
       .catch(error => {
-        dispatch(addNotification('Não foi possível criar a conta, por favor tente novamente mais tarde.'))
+        dispatch(addNotification('actions.user.account.create.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createUserAccountError(error))
@@ -193,14 +194,14 @@ const updateAccount = (_, accountData) => {
     axios
       .put(api.API_URL + '/user/account', { account: accountData })
       .then(account => {
-        dispatch(addNotification('Conta atualizada com sucesso'))
+        dispatch(addNotification('actions.user.account.update.success'))
         // dispatch(fetchAccount());
         return dispatch(updateUserAccountSuccess(account))
       })
       .catch(error => {
         dispatch(
           addNotification(
-            'Não foi possível atualizar sua conta. Você preencheu todos os dados?'
+            'actions.user.account.update.error.missing'
           )
         )
         // eslint-disable-next-line no-console
@@ -261,7 +262,8 @@ const createBankAccount = (_, bank) => {
     axios
       .post(api.API_URL + '/user/bank_accounts', {
         routing_number: bank.routing_number,
-        account_number: bank.account_number
+        account_number: bank.account_number,
+        country: bank.country
       })
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
