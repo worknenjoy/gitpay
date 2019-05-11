@@ -106,7 +106,6 @@ const styles = theme => ({
 })
 
 class Account extends Component {
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     user: PropTypes.object,
@@ -201,7 +200,7 @@ class Account extends Component {
   }
 
   handleCountry = () => {
-    this.setState({countryPickerModal: true})
+    this.setState({ countryPickerModal: true })
   }
 
   handleCountryClose = (e, item) => {
@@ -210,29 +209,39 @@ class Account extends Component {
       countryCode: item.code,
       countryLabel: item.country,
       countryImage: item.image,
-      canCreateAccount: item.code ? true : false
+      canCreateAccount: !!item.code
     })
   }
 
   handleBankAccount (e) {
     e.preventDefault()
-    const bankNumber = e.target['bank_number'].value
-    if (bankNumber) {
-      const routingNumber = `${bankNumber}-${e.target.routing_number.value}`
-      if (e.target.account_number.value.indexOf('-') > -1) {
-        this.setState({ AccountNumberError: true })
+    const userCountry = this.props.user.user.country
+    if (userCountry === 'BR') {
+      const bankNumber = e.target['bank_number'].value
+      if (bankNumber) {
+        const routingNumber = `${bankNumber}-${e.target.routing_number.value}`
+        if (e.target.account_number.value.indexOf('-') > -1) {
+          this.setState({ AccountNumberError: true })
+        }
+        else {
+          this.setState({ AccountNumberError: false })
+          const accountNumber = e.target.account_number.value.replace('-', '')
+          this.props.createBankAccount(this.state.userId, {
+            routing_number: routingNumber,
+            account_number: accountNumber
+          })
+        }
       }
       else {
-        this.setState({ AccountNumberError: false })
-        const accountNumber = e.target.account_number.value.replace('-', '')
-        this.props.createBankAccount(this.state.userId, {
-          routing_number: routingNumber,
-          account_number: accountNumber
-        })
+        this.setState({ bankNumberError: true })
       }
     }
     else {
-      this.setState({ bankNumberError: true })
+      this.props.createBankAccount(this.state.userId, {
+        routing_number: e.target.routing_number.value,
+        account_number: e.target.account_number.value,
+        country: userCountry
+      })
     }
   }
 
@@ -465,28 +474,30 @@ class Account extends Component {
                                     className={ classes.formControl }
                                     error={ this.state.bankNumberError }
                                   >
-                                    <Select
-                                      value={ this.state.selectedBank }
-                                      displayEmpty
-                                      name='bank_number'
-                                      onChange={ this.handleBankNumberSelect }
-                                    >
-                                      <MenuItem value='' disabled>
-                                        <em>
-                                          <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
-                                        </em>
-                                      </MenuItem>
-                                      { Object.keys(Const.BANK_NUMBERS).map(
-                                        (item, i) => {
-                                          return (
-                                            <MenuItem key={ i } value={ item }>{ `${
-                                              Const.BANK_NUMBERS[item]
-                                            }` }
-                                            </MenuItem>
-                                          )
-                                        }
-                                      ) }
-                                    </Select>
+                                    { user.user.country === 'BR' && (
+                                      <Select
+                                        value={ this.state.selectedBank }
+                                        displayEmpty
+                                        name='bank_number'
+                                        onChange={ this.handleBankNumberSelect }
+                                      >
+                                        <MenuItem value='' disabled>
+                                          <em>
+                                            <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
+                                          </em>
+                                        </MenuItem>
+                                        { Object.keys(Const.BANK_NUMBERS).map(
+                                          (item, i) => {
+                                            return (
+                                              <MenuItem key={ i } value={ item }>{ `${
+                                                Const.BANK_NUMBERS[item]
+                                              }` }
+                                              </MenuItem>
+                                            )
+                                          }
+                                        ) }
+                                      </Select>
+                                    ) }
                                     { this.state.bankNumberError && (
                                       <FormHelperText>
                                         { ' ' }
@@ -594,8 +605,9 @@ class Account extends Component {
                                   <Grid item xs={ 12 }>
                                     <Typography color='primary'>
                                       <a
+                                        style={ { fontSize: 24 } }
                                         target='_blank'
-                                        href='https://stripe.com/br/connect-account/legal'
+                                        href={ `https://stripe.com/${user.user.country}/connect-account/legal` }
                                       >
                                         { ' ' }
                                         <FormattedMessage id='account.details.terms.access' defaultMessage='Access Stripe terms' />{ ' ' }
@@ -835,11 +847,7 @@ class Account extends Component {
                                     this.setState({ monthOfBirth: event.target.value })
                                   } }
                                 >
-                                  <option value=''>
-                                    <em>
-                                      <FormattedMessage id='account.details' defaultMessage='Month of birth' />
-                                    </em>
-                                  </option>
+                                  <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{ (msg) => <option value='' key={ 'default' }>{ msg }</option> }</FormattedMessage>
                                   { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                     (item, i) => {
                                       return (
@@ -890,29 +898,29 @@ class Account extends Component {
                           <Typography className={ classes.title } color='textSecondary'>
                             <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
                           </Typography>
-                          {this.state.countryCode && (
+                          { this.state.countryCode && (
                             <div>
                               <Typography component='p' color='textSecondary'>
                                 <FormattedMessage id='account.register.country.label' defaultMessage='The country you choose to create your account' />
-                              </Typography>  
+                              </Typography>
                               <Chip
-                                avatar={<Avatar><img width={72} src={require(`../../images/countries/${this.state.countryImage}.png`)} /></Avatar>}
-                                label={this.state.countryLabel}
-                                className={classes.chip}
+                                avatar={ <Avatar><img width={ 72 } src={ require(`../../images/countries/${this.state.countryImage}.png`) } /></Avatar> }
+                                label={ this.state.countryLabel }
+                                className={ classes.chip }
                               />
                             </div>
-                          )}
+                          ) }
                         </CardContent>
-                        <CardActions className={ classes.cardEmptyActionsAlt}>
+                        <CardActions className={ classes.cardEmptyActionsAlt }>
                           <Button
-                              style={ { color: 'white' } }
-                              size='large'
-                              variant='contained'
-                              color='primary'
-                              onClick={ this.handleCountry  }
-                            >
-                              <FormattedMessage id='account.register.create.country' defaultMessage='Choose your country to start' />
-                              <PublicIcon style={{marginLeft: 10}} />
+                            style={ { color: 'white' } }
+                            size='large'
+                            variant='contained'
+                            color='primary'
+                            onClick={ this.handleCountry }
+                          >
+                            <FormattedMessage id='account.register.create.country' defaultMessage='Choose your country to start' />
+                            <PublicIcon style={ { marginLeft: 10 } } />
                           </Button>
                         </CardActions>
                         <CardActions className={ classes.cardEmptyActions }>
@@ -921,15 +929,15 @@ class Account extends Component {
                             size='large'
                             variant='contained'
                             color='primary'
-                            disabled={!this.state.canCreateAccount}
-                            onClick={ this.handleCreateAccount  }
+                            disabled={ !this.state.canCreateAccount }
+                            onClick={ this.handleCreateAccount }
                           >
                             <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
-                            <PersonIcon style={{marginLeft: 10}} />
+                            <PersonIcon style={ { marginLeft: 10 } } />
                           </Button>
                         </CardActions>
                       </Card> }
-                    <CountryPicker open={this.state.countryPickerModal} onClose={this.handleCountryClose} />
+                    <CountryPicker open={ this.state.countryPickerModal } onClose={ this.handleCountryClose } />
                   </div>)
                 }
               </TabContainer> }

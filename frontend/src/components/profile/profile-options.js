@@ -25,7 +25,6 @@ const styles = theme => ({
 })
 
 class ProfileOptions extends Component {
-
   static propTypes = {
     classes: PropTypes.object.isRequired
   }
@@ -123,7 +122,5 @@ class ProfileOptions extends Component {
     )
   }
 }
-
-
 
 export default injectIntl(withStyles(styles)(ProfileOptions))
