@@ -86,7 +86,7 @@ class LoginForm extends Component {
     const { classes } = this.props
     const { type, action } = this.state
     return (
-      <form onSubmit={ () => this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
+      <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
           <div className={ classes.margins }>
             <TextField
