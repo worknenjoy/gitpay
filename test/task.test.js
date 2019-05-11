@@ -253,6 +253,37 @@ describe("tasks", () => {
         })
     });
 
+    xit('should accept offer', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste_user_accept_work@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/77777';
+
+          models.Task.build({url: github_url, userId: userId}).save().then((task) => {
+            agent
+              .put("/tasks/update")
+              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}], Offers: [{userId: userId, value: 100}]})
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.body.value).to.equal('200');
+                agent
+                  .get(`/tasks/${task.dataValues.id}/accept/${1}`)
+                  .expect('Content-Type', /json/)
+                  .expect(200)
+                  .end((err, res) => {
+                    expect(res.body.value).to.equal('200');
+                    done();
+                  })
+              })
+          })
+        })
+    });
+
     it('should update task with members and roles', (done) => {
       agent
         .post('/auth/register')

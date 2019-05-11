@@ -28,7 +28,7 @@ module.exports = (to, subject, content) => {
       from: {
         email: fromEmail
       },
-      content: 
+      content:
       [{
         type: content[0].type,
         value: `
