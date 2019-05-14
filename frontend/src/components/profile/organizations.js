@@ -7,7 +7,6 @@ import TagFacesIcon from '@material-ui/icons/TagFaces'
 const styles = theme => ({
   root: {
     display: 'flex',
-
     flexWrap: 'wrap',
     padding: theme.spacing.unit / 2,
   },
@@ -17,15 +16,10 @@ const styles = theme => ({
 })
 
 class Organizations extends Component {
-  state = {
-    chipData: [
-      { key: 0, label: 'Angular' },
-      { key: 1, label: 'jQuery' },
-      { key: 2, label: 'Polymer' },
-      { key: 3, label: 'React' },
-      { key: 4, label: 'Vue.js' },
-    ],
-  };
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    data: PropTypes.object
+  }
 
   handleDelete = data => () => {
     if (data.label === 'React') {
@@ -42,11 +36,11 @@ class Organizations extends Component {
   };
 
   render () {
-    const { classes } = this.props
+    const { classes, data } = this.props
 
     return (
       <div className={ classes.root }>
-        { this.state.chipData.map(data => {
+        { data.map(data => {
           let icon = null
 
           if (data.label === 'React') {
@@ -66,10 +60,6 @@ class Organizations extends Component {
       </div>
     )
   }
-}
-
-Organizations.propTypes = {
-  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(Organizations)

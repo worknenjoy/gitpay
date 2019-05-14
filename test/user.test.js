@@ -8,7 +8,8 @@ const agent = request.agent(api);
 const models = require('../models');
 const { registerAndLogin, register, login } = require('./helpers')
 const nock = require('nock')
-
+const githubOrg = require('./data/github.org')
+const secrets = require('../config/secrets')
 
 describe("Users", () => {
 
@@ -185,6 +186,37 @@ describe("Users", () => {
             done();
           })
       })
+    });
+  })
+
+  describe('user organizations', () => {
+    it('should retrieve user github organizations', (done) => {
+      nock('https://api.github.com')
+        .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
+        .reply(200, githubOrg);
+      register(agent, {
+        email: 'test_user_organizations@gmail.com',
+        username: 'test',
+        password: 'test',
+        provider: 'github'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_organizations@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .get(`/user/organizations`)
+            .send({ id: userId })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body[0].login).to.equal('test');
+              done();
+            })
+          })
+        })
     });
   })
 
