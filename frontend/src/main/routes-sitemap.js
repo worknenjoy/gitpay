@@ -13,12 +13,5 @@ export default (
     <Route path='/tasks/progress' />
     <Route path='/tasks/finished' />
     <Route exact path='/login' />
-    <Route exact path='/login/:status' />
-    <Route exact path='/token/:token' />
-    <Route exact path='/task/:id' />
-    <Route
-      exact
-      path='/task/:id/order/:order_id/status/:status'
-    />
   </Route>
 )
