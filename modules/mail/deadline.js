@@ -93,7 +93,7 @@ if (constants.canSendEmail) {
     const language = user.language || 'en'
     const url = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
     const urlInterested = `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested`
-    const urlExtend = `${process.env.FRONTEND_HOST}/task/${task.id}/interested/extend`
+    // const urlExtend = `${process.env.FRONTEND_HOST}/task/${task.id}/interested/extend`
     i18n.setLocale(language)
     moment.locale(locales[language].label, locales[language].file)
     request(
@@ -113,7 +113,7 @@ if (constants.canSendEmail) {
     },
     secondary: {
       label: 'mail.deadline.end.button.secondary',
-      url: urlExtend
+      url: urlInterested
     }
   })}
           <p>${Signatures.sign(language)}</p>`
