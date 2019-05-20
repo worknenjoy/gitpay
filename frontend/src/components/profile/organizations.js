@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
-import TagFacesIcon from '@material-ui/icons/TagFaces'
+import WorkRoundedIcon from '@material-ui/icons/WorkRounded'
 
 const styles = theme => ({
   root: {
@@ -19,6 +19,10 @@ class Organizations extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     data: PropTypes.object
+  }
+
+  componentDidMount() {
+    console.log('organizations component', this.props)
   }
 
   handleDelete = data => () => {
@@ -40,19 +44,13 @@ class Organizations extends Component {
 
     return (
       <div className={ classes.root }>
-        { data.map(data => {
-          let icon = null
-
-          if (data.label === 'React') {
-            icon = <TagFacesIcon />
-          }
-
+        { data.length && data.map(org => {
           return (
             <Chip
-              key={ data.key }
-              icon={ icon }
-              label={ data.label }
-              onDelete={ this.handleDelete(data) }
+              key={ org.name }
+              icon={ <WorkRoundedIcon /> }
+              label={ org.name }
+              onDelete={ this.handleDelete(org) }
               className={ classes.chip }
             />
           )

@@ -12,7 +12,7 @@ const fetchOrganizationsRequested = () => {
 }
 
 const fetchOrganizationsSuccess = (response) => {
-  return { type: FETCH_ORGANIZATIONS_SUCCESS, completed: true, organizations: response.organizations }
+  return { type: FETCH_ORGANIZATIONS_SUCCESS, completed: true, organizations: response }
 }
 
 const fetchOrganizationsError = (error) => {
