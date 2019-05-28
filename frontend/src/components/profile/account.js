@@ -236,19 +236,21 @@ class Account extends Component {
       else {
         this.setState({ bankNumberError: true })
       }
-    } else {
+    }
+    else {
       let accountInfo = {}
-      if(userCountry === 'DK') {
-         accountInfo = {
+      if (userCountry === 'DK') {
+        accountInfo = {
           account_number: e.target.account_number.value,
           country: userCountry
-         }
-      } else {
-         accountInfo = {
+        }
+      }
+      else {
+        accountInfo = {
           routing_number: e.target.routing_number.value,
           account_number: e.target.account_number.value,
           country: userCountry
-         }
+        }
       }
       this.props.createBankAccount(this.state.userId, accountInfo)
     }
@@ -520,21 +522,21 @@ class Account extends Component {
                             <Grid container spacing={ 24 }>
                               <Grid item xs={ 12 }>
                                 { user.user.country !== 'DK' && (
-                                <FormControl>
-                                  <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
-                                    { (msg) => (
-                                      <Input
-                                        id='bank-routing-number'
-                                        name='routing_number'
-                                        placeholder={ msg }
-                                        style={ { marginRight: 20 } }
-                                        disabled={ !!bankAccount.data.routing_number }
-                                        defaultValue={ bankAccount.data.routing_number }
-                                      />
-                                    ) }
-                                  </FormattedMessage>
-                                </FormControl>
-                                )}
+                                  <FormControl>
+                                    <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
+                                      { (msg) => (
+                                        <Input
+                                          id='bank-routing-number'
+                                          name='routing_number'
+                                          placeholder={ msg }
+                                          style={ { marginRight: 20 } }
+                                          disabled={ !!bankAccount.data.routing_number }
+                                          defaultValue={ bankAccount.data.routing_number }
+                                        />
+                                      ) }
+                                    </FormattedMessage>
+                                  </FormControl>
+                                ) }
                                 <FormControl
                                   error={ this.state.AccountNumberError }
                                 >
