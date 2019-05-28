@@ -228,20 +228,29 @@ class Account extends Component {
           const accountNumber = e.target.account_number.value.replace('-', '')
           this.props.createBankAccount(this.state.userId, {
             routing_number: routingNumber,
-            account_number: accountNumber
+            account_number: accountNumber,
+            country: userCountry
           })
         }
       }
       else {
         this.setState({ bankNumberError: true })
       }
-    }
-    else {
-      this.props.createBankAccount(this.state.userId, {
-        routing_number: e.target.routing_number.value,
-        account_number: e.target.account_number.value,
-        country: userCountry
-      })
+    } else {
+      let accountInfo = {}
+      if(userCountry === 'DK') {
+         accountInfo = {
+          account_number: e.target.account_number.value,
+          country: userCountry
+         }
+      } else {
+         accountInfo = {
+          routing_number: e.target.routing_number.value,
+          account_number: e.target.account_number.value,
+          country: userCountry
+         }
+      }
+      this.props.createBankAccount(this.state.userId, accountInfo)
     }
   }
 
@@ -510,6 +519,7 @@ class Account extends Component {
                             </Grid>
                             <Grid container spacing={ 24 }>
                               <Grid item xs={ 12 }>
+                                { user.user.country !== 'DK' && (
                                 <FormControl>
                                   <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
                                     { (msg) => (
@@ -524,6 +534,7 @@ class Account extends Component {
                                     ) }
                                   </FormattedMessage>
                                 </FormControl>
+                                )}
                                 <FormControl
                                   error={ this.state.AccountNumberError }
                                 >
