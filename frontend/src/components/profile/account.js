@@ -239,7 +239,7 @@ class Account extends Component {
     }
     else {
       let accountInfo = {}
-      if (userCountry === 'DK') {
+      if (userCountry === 'DK' || userCountry === 'BE' ) {
         accountInfo = {
           account_number: e.target.account_number.value,
           country: userCountry
@@ -521,7 +521,7 @@ class Account extends Component {
                             </Grid>
                             <Grid container spacing={ 24 }>
                               <Grid item xs={ 12 }>
-                                { user.user.country !== 'DK' && (
+                                { (user.user.country !== 'DK' || user.user.country !== 'BE')  && (
                                   <FormControl>
                                     <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
                                       { (msg) => (
