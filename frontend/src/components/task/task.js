@@ -45,7 +45,8 @@ import {
   Warning as WarningIcon,
   Info as InfoIcon,
   Delete as DeleteIcon,
-  SupervisedUserCircle as Members
+  SupervisedUserCircle as Members,
+  OpenInNew as ExternalLinkIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -614,6 +615,10 @@ class Task extends Component {
     })
   }
 
+  goToProjectRepo = (url) => {
+    window.open(url, '_blank')
+  }
+
   render () {
     const { classes, task, order } = this.props
 
@@ -761,9 +766,28 @@ class Task extends Component {
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
                 { task.data.metadata &&
-                  <a className={ classes.white } href={ task.data.url }>
-                    { task.data.metadata.company }
-                  </a>
+                  <div style={ { marginTop: 20 } }>
+                    <Chip
+                      key={ task.data.metadata.company }
+                      clickable
+                      label={ task.data.metadata.company }
+                      onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                      className={ classes.chip }
+                      color='secondary'
+                      onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                      deleteIcon={ <ExternalLinkIcon /> }
+                    />
+                    <Chip
+                      key={ task.data.metadata.projectName }
+                      clickable
+                      label={ task.data.metadata.projectName }
+                      onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                      className={ classes.chip }
+                      color='secondary'
+                      onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                      deleteIcon={ <ExternalLinkIcon /> }
+                    />
+                  </div>
                 }
               </ReactPlaceholder>
             </Typography>
