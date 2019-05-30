@@ -24,7 +24,7 @@ describe('organizations reducer', () => {
     expect(organizations(undefined, {})).toEqual(
       {
         'completed': true,
-        'name': null,
+        'organizations': [],
         'error': {}
       }
     )

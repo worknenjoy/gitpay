@@ -127,9 +127,9 @@ class Profile extends Component {
     this.setActive(this.props.location.pathname)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.fetchOrganizations().then(org => {
-      this.setState({orgsLoaded: true})
+      this.setState({ orgsLoaded: true })
     })
   }
 
@@ -359,7 +359,7 @@ class Profile extends Component {
                   />
                 </Switch>
               </HashRouter>
-              { this.state.orgsLoaded && 
+              { this.state.orgsLoaded && organizations &&
                 <Grid item xs={ 12 } md={ 12 }>
                   <div style={ { marginTop: 10, marginBottom: 10 } }>
                     <Typography variant='h5' component='h3'>
@@ -369,7 +369,7 @@ class Profile extends Component {
                       <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
                     </Typography>
                     <div style={ { marginTop: 20, marginBottom: 40 } }>
-                      <Organizations data={ organizations } />
+                      <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
                     </div>
                   </div>
                 </Grid>

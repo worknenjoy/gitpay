@@ -8,7 +8,8 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
     .findOne({
       where: {
         id: userAttributes.id
-      }
+      },
+      include: [ models.Organization ]
     }).then(user => {
       if (!user) return false
 
@@ -21,13 +22,21 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
         headers: {
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         }
-      }).then(response => {
+      }).then(async response => {
         // eslint-disable-next-line no-console
         console.log('responseFromGithub', response)
+        // eslint-disable-next-line no-console
+        console.log('response from user find', user.dataValues)
         const responseFromGithub = JSON.parse(response)
+
+        const currentOrgs = await models.Organization.findAll()
+
         const formatedResponse = responseFromGithub.map(org => {
+          const imported = !!currentOrgs.filter(o => o.dataValues.name === org.login).length
           return {
-            name: org.login
+            name: org.login,
+            image: org.avatar_url,
+            imported
           }
         })
         return formatedResponse

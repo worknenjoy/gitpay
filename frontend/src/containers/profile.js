@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Profile from '../components/profile/profile'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { updateUser } from '../actions/userActions'
-import { fetchOrganizations } from '../actions/organizationsActions'
+import { fetchOrganizations, createOrganizations } from '../actions/organizationsActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
     fetchOrganizations: (userId) => dispatch(fetchOrganizations(userId)),
+    createOrganizations: (org) => dispatch(createOrganizations(org)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
   }
 }

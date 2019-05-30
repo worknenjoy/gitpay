@@ -14,7 +14,7 @@ const mockStore = configureMockStore(middlewares)
 describe('action', () => {
   describe('preference actions', () => {
     beforeEach(() => {
-  
+
     })
     describe('country and language preference actions', () => {
       it('should dispatch a action to get the current language', () => {
@@ -41,11 +41,11 @@ describe('action', () => {
         beforeEach(() => {
           moxios.install()
         })
-  
+
         afterEach(() => {
           moxios.uninstall()
         })
-  
+
         it('fetches the language successfully', () => {
           moxios.stubRequest('http://localhost:3000/authenticated', {
             status: 200,
@@ -93,7 +93,7 @@ describe('action', () => {
         })).toEqual({
           type: 'FETCH_ORGANIZATIONS_SUCCESS',
           completed: true,
-          organizations: []
+          organizations: { 'organizations': [] }
         })
         expect(organizationsActions.fetchOrganizationsError({ error: true })).toEqual({
           type: 'FETCH_ORGANIZATIONS_ERROR',
@@ -102,8 +102,30 @@ describe('action', () => {
         })
       })
     })
+    describe('should create organization', () => {
+      it('should dispatch a action to create organizations', () => {
+        expect(organizationsActions.createOrganizationsRequested({
+          name: 'test',
+          UserId: 1
+        })).toEqual({
+          type: 'CREATE_ORGANIZATIONS_REQUESTED',
+          completed: false
+        })
+        expect(organizationsActions.createOrganizationsSuccess({
+          organizations: []
+        })).toEqual({
+          type: 'CREATE_ORGANIZATIONS_SUCCESS',
+          completed: true,
+          organizations: { 'organizations': [] }
+        })
+        expect(organizationsActions.createOrganizationsError({ error: true })).toEqual({
+          type: 'CREATE_ORGANIZATIONS_ERROR',
+          completed: true,
+          error: { error: true }
+        })
+      })
+    })
     describe('async actions', () => {
-      
       beforeEach(() => {
         moxios.install()
       })
@@ -111,7 +133,7 @@ describe('action', () => {
       afterEach(() => {
         moxios.uninstall()
       })
-      
+
       it('fetches the organizations successfully', () => {
         moxios.stubRequest('http://localhost:3000/authenticated', {
           status: 200,
@@ -127,20 +149,18 @@ describe('action', () => {
           request.respondWith({
             status: 200,
             response: {
-              organizations: [
-                {name: 'test org'}
-              ]
+              organizations: [{ 'name': 'test org' }]
             }
           })
         })
         const expectedActions = [
           { completed: false, logged: false, type: 'LOGGED_IN_REQUESTED' },
-          //{ open: true, text: 'user.login.successfull', type: 'ADD_NOTIFICATION' },
+          // { open: true, text: 'user.login.successfull', type: 'ADD_NOTIFICATION' },
           { completed: true, logged: true, type: 'LOGGED_IN_SUCCESS', user: { id: 2 } },
           { completed: false, type: 'FETCH_ORGANIZATIONS_REQUESTED' },
-          { completed: true, type: 'FETCH_ORGANIZATIONS_SUCCESS', organizations: [{name: 'test org'}] }
+          { completed: true, type: 'FETCH_ORGANIZATIONS_SUCCESS', organizations: { 'organizations': [{ 'name': 'test org' }] } }
         ]
-        const store = mockStore({ intl: { messages: {} }, organizations: [{name: 'test org'}], loggedIn: { logged: true, user: { id: 2 } } })
+        const store = mockStore({ intl: { messages: {} }, organizations: { 'organizations': [{ 'name': 'test org' }] }, loggedIn: { logged: true, user: { id: 2 } } })
         return store.dispatch(organizationsActions.fetchOrganizations(2)).then(() => {
           // return of async actions
           expect(store.getActions()).toEqual(expectedActions)
