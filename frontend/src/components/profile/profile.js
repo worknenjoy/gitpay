@@ -118,12 +118,19 @@ class Profile extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: null
+      selected: null,
+      orgsLoaded: false
     }
   }
 
   componentWillMount () {
     this.setActive(this.props.location.pathname)
+  }
+
+  componentDidMount () {
+    this.props.fetchOrganizations().then(org => {
+      this.setState({ orgsLoaded: true })
+    })
   }
 
   setActive (path) {
@@ -166,7 +173,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, preferences } = this.props
+    const { classes, user, preferences, organizations } = this.props
 
     let titleNavigation = this.getTitleNavigation()
 
@@ -352,25 +359,21 @@ class Profile extends Component {
                   />
                 </Switch>
               </HashRouter>
-              <Grid item xs={ 12 } md={ 12 }>
-                <div style={ { marginTop: 10, marginBottom: 10 } }>
-                  <Typography variant='h5' component='h3'>
-                    <FormattedMessage id='account.profile.welcome.headline' defaultMessage='Welcome to Gitpay!' />
-                  </Typography>
-                  <Typography component='p'>
-                    <FormattedMessage id='account.profile.welcome.description' defaultMessage='This is the first steps to start to work with Gitpay' />
-                  </Typography>
-                  <div style={ { marginTop: 20, marginBottom: 40, display: 'none' } }>
-                    <Organizations data={ [
-                      { key: 0, label: 'Angular' },
-                      { key: 1, label: 'jQuery' },
-                      { key: 2, label: 'Polymer' },
-                      { key: 3, label: 'React' },
-                      { key: 4, label: 'Vue.js' },
-                    ] } />
+              { this.state.orgsLoaded && organizations &&
+                <Grid item xs={ 12 } md={ 12 }>
+                  <div style={ { marginTop: 10, marginBottom: 10 } }>
+                    <Typography variant='h5' component='h3'>
+                      <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+                    </Typography>
+                    <Typography component='p'>
+                      <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
+                    </Typography>
+                    <div style={ { marginTop: 20, marginBottom: 40 } }>
+                      <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
+                    </div>
                   </div>
-                </div>
-              </Grid>
+                </Grid>
+              }
             </Grid>
           </Grid>
         </PageContent>

@@ -190,6 +190,43 @@ describe("Users", () => {
   })
 
   describe('user organizations', () => {
+    it('should create organization and associate with an user', (done) => {
+      nock('https://api.github.com')
+        .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
+        .reply(200, githubOrg);
+      register(agent, {
+        email: 'test_user_organizations_create@gmail.com',
+        username: 'test',
+        password: 'test',
+        provider: 'github'
+      }).then(res => {
+          const UserId = res.body.id
+          login(agent, {
+            email: 'test_user_organizations_create@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .post(`/organizations/create`)
+            .send({ UserId, name: 'test' })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, org) => {
+              expect(org.statusCode).to.equal(200);
+              agent
+              .get(`/user/organizations`)
+              .send({ id: UserId })
+              .set('Authorization', login.headers.authorization)
+              .expect(200)
+              .end((err, orgs) => {
+                expect(orgs.statusCode).to.equal(200);
+                expect(orgs.body[0].name).to.equal('test');
+                expect(orgs.body[0].imported).to.equal(true);
+                done();
+              })
+            })
+          })
+        })
+    })
     it('should retrieve user github organizations', (done) => {
       nock('https://api.github.com')
         .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
@@ -210,9 +247,39 @@ describe("Users", () => {
             .send({ id: userId })
             .set('Authorization', login.headers.authorization)
             .expect(200)
+            .end((err, orgs) => {
+              expect(orgs.statusCode).to.equal(200);
+              console.log('orgs list', orgs.body)
+              expect(orgs.body[0].name).to.equal('test');
+              expect(orgs.body[0].imported).to.equal(false);
+              done();
+            })
+          })
+        })
+    });
+    xit('should check if that organizations exist, if exist return true if already imported', (done) => {
+      nock('https://api.github.com')
+        .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
+        .reply(200, githubOrg);
+      register(agent, {
+        email: 'test_user_organizations_exist@gmail.com',
+        username: 'test',
+        password: 'test',
+        provider: 'github'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_organizations_exist@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .get(`/user/organizations`)
+            .send({ id: userId, organization: 'foo' })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
             .end((err, user) => {
               expect(user.statusCode).to.equal(200);
-              expect(user.body[0].login).to.equal('test');
+              expect(user.body).to.equal(false);
               done();
             })
           })
