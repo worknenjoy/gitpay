@@ -32,9 +32,9 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
           TransferMail.paymentForInvalidAccount(user)
           throw new Error('account_destination_invalid')
         }
-
+        const centavosAmount = paymentParams.value * 100 || task.value * 100
         return stripe.transfers.create({
-          amount: paymentParams.value * 100 || task.value * 100,
+          amount: centavosAmount * 0.92, // 8% base fee
           currency: 'usd',
           destination: dest,
           source_type: 'card',
