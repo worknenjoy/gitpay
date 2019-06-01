@@ -8,7 +8,7 @@ An Open Source Bounty platform to solve tasks with Git
 
 https://gitpitch.com/worknenjoy/gitpay
 
-### [Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU): 
+### [Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU) 
 
 ## What is Gitpay?
 
