@@ -3,8 +3,8 @@ const models = require('../../models')
 const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
-const constants = require('../mail/constants')
-const TaskMail = require('../mail/task')
+// const constants = require('../mail/constants')
+// const TaskMail = require('../mail/task')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
 
@@ -53,7 +53,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
                 // send an email
               }
             }
-            
+
             const taskData = task.dataValues
             /*
             const userData = await task.getUser()
