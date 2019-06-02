@@ -53,7 +53,9 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
                 // send an email
               }
             }
+            
             const taskData = task.dataValues
+            /*
             const userData = await task.getUser()
             TaskMail.send(userData, {
               task: {
@@ -69,6 +71,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
                 url: constants.taskUrl(taskData.id)
               }
             })
+            */
             return taskData
           })
       })
