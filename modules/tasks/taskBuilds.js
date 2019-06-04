@@ -5,7 +5,7 @@ const url = require('url')
 const requestPromise = require('request-promise')
 const constants = require('../mail/constants')
 // const TaskMail = require('../mail/task')
-const { Sendmail } = require('../mail/mail')
+const Sendmail = require('../mail/mail')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
 
