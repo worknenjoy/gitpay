@@ -81,6 +81,7 @@ import AssignActions from './assignment/AssignActions'
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
+import TaskLevel from './task-level'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
@@ -1368,6 +1369,9 @@ class Task extends Component {
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
+              { (task.data.level || taskOwner()) &&
+                <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !taskOwner() } onSelect={ this.props.updateTask } />
+              }
               <StatsCard
                 icon={ TrophyIcon }
                 iconColor='green'
