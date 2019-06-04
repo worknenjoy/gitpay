@@ -3,8 +3,9 @@ const models = require('../../models')
 const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
-// const constants = require('../mail/constants')
+const constants = require('../mail/constants')
 // const TaskMail = require('../mail/task')
+const { Sendmail } = require('../mail/mail')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
 
@@ -55,8 +56,8 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
             }
 
             const taskData = task.dataValues
-            /*
             const userData = await task.getUser()
+            /*
             TaskMail.send(userData, {
               task: {
                 title: taskData.title,
@@ -72,6 +73,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
               }
             })
             */
+            Sendmail.success({email: constants.notificationEmail}, `A task ${taskData.url} was created`, `A task ${taskData.url} from ${userData.email} was created just now`)
             return taskData
           })
       })

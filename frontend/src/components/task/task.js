@@ -80,6 +80,7 @@ import media from 'app/styleguide/media'
 import AssignActions from './assignment/AssignActions'
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
+import TaskLabels from './task-labels'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
@@ -1389,6 +1390,7 @@ class Task extends Component {
                   statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
                 />
               }
+              <TaskLabels labels={task.data.metadata.labels} />
             </Grid>
           </Grid>
         </PageContent>

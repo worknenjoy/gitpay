@@ -118,6 +118,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   projectName: projectName,
                   repoUrl: repoUrl,
                   ownerUrl: ownerUrl,
+                  labels: issueDataJsonGithub.labels,
                   issue: issueDataJsonGithub
                 },
                 orders: data.dataValues.Orders,
