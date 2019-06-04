@@ -1390,7 +1390,7 @@ class Task extends Component {
                   statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
                 />
               }
-              <TaskLabels labels={task.data.metadata.labels} />
+              <TaskLabels labels={ task.data.metadata.labels } />
             </Grid>
           </Grid>
         </PageContent>

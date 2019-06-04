@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages } from 'react-intl'
 
-import invert from 'invert-color';
+import invert from 'invert-color'
 
 import {
   withStyles,
@@ -35,18 +35,10 @@ const styles = theme => ({
   }
 })
 
-const statuses = ['easy', 'medium', 'hard']
-
 class TaskLabels extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     labels: PropTypes.object
   }
-
 
   handleListItemClick = () => {
 
@@ -55,23 +47,23 @@ class TaskLabels extends Component {
   taskLabels = (labels) => {
     return (
       <React.Fragment>
-          {labels.map((label, index) => (
-            <Chip
-              backgroundColor={`#${label.color}`}
-              key={index + 1}
-              label={label.name}
-              style={{marginTop: 10, marginLeft: 10, backgroundColor: `#${label.color}`, fontWeight: 'bold', color: invert(`#${label.color}`, {threshold: 0.75})}}
-            />
-          ))}
-        </React.Fragment>
-      )
+        { labels.map((label, index) => (
+          <Chip
+            backgroundColor={ `#${label.color}` }
+            key={ index + 1 }
+            label={ label.name }
+            style={ { marginTop: 10, marginLeft: 10, backgroundColor: `#${label.color}`, fontWeight: 'bold', color: invert(`#${label.color}`, { threshold: 0.75 }) } }
+          />
+        )) }
+      </React.Fragment>
+    )
   }
 
-  render() {
-    const { classes, labels } = this.props
+  render () {
+    const { labels } = this.props
     return (
       <div>
-        {labels && 
+        { labels &&
           <StatsCard
             icon={ LabelIcon }
             iconColor='green'
