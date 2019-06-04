@@ -104,6 +104,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 title: data.dataValues.title,
                 value: data.dataValues.value || 0,
                 deadline: data.dataValues.deadline,
+                level: data.dataValues.level,
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
                 assignedUser: assigned && assigned.dataValues.User.dataValues,
