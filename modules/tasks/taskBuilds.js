@@ -73,7 +73,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
               }
             })
             */
-            Sendmail.success({ email: constants.notificationEmail }, `A task ${taskData.url} was created`, `A task ${taskData.url} from ${userData.email} was created just now`)
+            Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.url} from ${userData.email} was created just now`)
             return taskData
           })
       })
