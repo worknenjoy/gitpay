@@ -9,7 +9,11 @@ An Open Source Bounty platform to solve tasks with Git
 
 https://gitpitch.com/worknenjoy/gitpay
 
-### [Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU) 
+### Slack channel
+
+We have a slack channel to collaborate with solutions and to help you, and to be fun
+
+[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU) 
 
 ## What is Gitpay?
 
@@ -22,9 +26,10 @@ We offer a marketplace for contributors and projects that use git for on demand 
 [![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/0)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/0)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/1)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/1)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/2)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/2)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/3)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/3)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/4)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/4)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/5)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/5)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/6)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/6)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/7)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/7)
 
 ### Join the team
-Join the Gitpay team
-http://probot-invite.herokuapp.com/join/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3b3JrbmVuam95IiwiaXNzIjo1NTM1NTQsInJvbGUiOiJtZW1iZXIiLCJ0ZWFtcyI6WyIyODA0NDE5IiwiMjYzNzkyOSJdLCJpYXQiOjE1NDY0NzI4NjR9.iHSIS0XuvmvhwOROdkKw64i00PgzeK4e7h_yCxFh1YE
 
+Join the Github team to be assigned to tasks and to be part of the core.
+
+[Join the Gitpay team on Github](https://bit.ly/2Irhfqk)
 
 ## Requirements
 
