@@ -117,6 +117,16 @@ const PlaceholderDiv = styled.div`
    width: 100%;
  }
 `
+
+const assignStatus = {
+  'pending': 'Pending',
+  'approved_by_author': 'Approved by author',
+  'approved_by_interested': 'Approved by user',
+  'approved': 'Approved',
+  'rejected_by_author': 'Rejected by author',
+  'rejected_by_interested': 'Rejected by user'
+}
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -394,6 +404,10 @@ const messages = defineMessages({
     id: 'task.interested.table.label.user',
     defaultMessage: 'User'
   },
+  interestedTableLabelStatus: {
+    id: 'task.interested.table.label.status',
+    defaultMessage: 'Status'
+  },
   interestedTableLabelWhen: {
     id: 'task.interested.table.label.when',
     defaultMessage: 'When'
@@ -471,8 +485,8 @@ class Task extends Component {
 
   componentWillMount () {
     const id = this.props.match.params.id
-    this.props.syncTask(id)
-    this.props.fetchTask(id)
+    const interested_id = this.props.match.params.interested_id
+    const assign_status = this.props.match.params.assign_status
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
       this.props.changeTab(1)
     }
@@ -482,10 +496,30 @@ class Task extends Component {
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
       this.props.changeTab(3)
     }
+    if (this.props.history && this.props.history.location.pathname === `/task/${id}/interested/approve/${interested_id}/${assign_status}`) {
+      this.props.updateTask({
+        id,
+        Assigns: [
+          {
+            id: interested_id,
+            status: assign_status
+          }
+        ]
+      }).then( () => {
+        this.props.changeTab(2)
+        this.props.history.push(`/task/${id}/interested`)
+      }).catch(e => {
+        console.log('error to update task on confirm assign', e)
+      })
+    }
+    
+    this.props.syncTask(id)
+    this.props.fetchTask(id)
   }
 
   handleTabChange = (event, tab) => {
     const id = this.props.match.params.id
+    if (tab === 0) this.props.history.push(`/task/${id}`)
     if (tab === 1) this.props.history.push(`/task/${id}/orders`)
     if (tab === 2) this.props.history.push(`/task/${id}/interested`)
     if (tab === 3) this.props.history.push(`/task/${id}/members`)
@@ -541,8 +575,12 @@ class Task extends Component {
           comment: this.state.interestedComment
         }
       ]
+    }).then(t => {
+      this.setState({ assignDialog: false })
+    }).catch(e => {
+      console.log('error to assign', e)
+      this.setState({ assignDialog: false })
     })
-    this.setState({ assignDialog: false })
   }
 
   handleDeleteTask = () => {
@@ -730,7 +768,7 @@ class Task extends Component {
           </span>
         )
 
-        return [userField(), MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
+        return [userField(), assignStatus[item.status], MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
       })
 
       return items
@@ -1337,6 +1375,7 @@ class Task extends Component {
                           tableHeaderColor='warning'
                           tableHead={ [
                             this.props.intl.formatMessage(messages.interestedTableLabelUser),
+                            this.props.intl.formatMessage(messages.interestedTableLabelStatus),
                             this.props.intl.formatMessage(messages.interestedTableLabelWhen),
                             this.props.intl.formatMessage(messages.interestedTableLabelActions)
                           ] }

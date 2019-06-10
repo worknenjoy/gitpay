@@ -253,16 +253,20 @@ const createTask = (task, history) => {
 }
 
 const updateTask = task => {
+  validToken()
   return (dispatch, getState) => {
     dispatch(updateTaskRequested())
-    axios
+    return axios
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
+        if(!response.data.id) {
+          return dispatch(addNotification('actions.task.update.notification.error'))
+        }
         if (task.Orders) {
           dispatch(addNotification('actions.task.payment.notification.success'))
           dispatch(changeTaskTab(1))
           dispatch(syncTask(task.id))
-          dispatch(updateTaskSuccess())
+          return dispatch(updateTaskSuccess())
         }
         else if (task.Assigns) {
           dispatch(
@@ -270,8 +274,7 @@ const updateTask = task => {
           )
           dispatch(changeTaskTab(2))
           dispatch(updateTaskSuccess())
-        }
-        else {
+        } else {
           dispatch(addNotification('actions.task.update.notification.success'))
           dispatch(updateTaskSuccess())
         }

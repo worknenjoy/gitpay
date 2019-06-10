@@ -13,6 +13,7 @@ import {
 
 const AssignActions = ({ isOwner, assign, task, removeAssignment, assignTask }) => {
   const hasAssignedUser = assign.id === task.assigned
+  const approved_by_user = assign.status !== 'approved_by_interested'
 
   return (
     <div>
@@ -24,7 +25,7 @@ const AssignActions = ({ isOwner, assign, task, removeAssignment, assignTask }) 
 
       { (isOwner && !hasAssignedUser) &&
       <Button
-        disabled={ hasAssignedUser }
+        disabled={ hasAssignedUser || approved_by_user }
         onClick={ () => assignTask(task.id, assign.id) }
         style={ { marginRight: 10 } }
         variant='contained'

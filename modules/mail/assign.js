@@ -17,14 +17,15 @@ const setMomentLocale = (lang) => {
 }
 
 const AssignMail = {
-  owner: (to, task, name, offer) => {},
+  owner: (to, task, interested, offer, interested_id) => {},
+  approve: (user, task, offer, interested_id) => {},
   interested: (to, task, name) => {},
   assigned: (to, task) => {},
   error: (msg) => {}
 }
 
 if (constants.canSendEmail) {
-  AssignMail.owner = (user, task, interested, offer) => {
+  AssignMail.owner = (user, task, interested, offer, interested_id) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
@@ -43,11 +44,41 @@ if (constants.canSendEmail) {
           ${Signatures.buttons(language, {
     primary: {
       label: 'mail.assign.owner.button.primary',
-      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested`
+      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/approve/${interested_id}/approved_by_author`
     },
     secondary: {
       label: 'mail.assign.owner.button.secondary',
-      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/approve/${interested_id}/rejected_by_author`
+    }
+  })}
+          <p>${Signatures.sign(language)}</p>`
+        },
+      ]
+    )
+  }
+
+  AssignMail.approve = (user, task, interested_id) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
+    setMomentLocale(language)
+    request(
+      to,
+      i18n.__('mail.assign.owner.subject'),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>${i18n.__('mail.assign.owner.hello')},</p>
+          <p>${i18n.__('mail.assign.owner.sec')}</p>
+          ${Signatures.buttons(language, {
+    primary: {
+      label: 'mail.assign.owner.button.primary',
+      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/approve/${interested_id}/approved_by_interested`
+    },
+    secondary: {
+      label: 'mail.assign.owner.button.secondary',
+      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/approve/${interested_id}/rejected_by_interested`
     }
   })}
           <p>${Signatures.sign(language)}</p>`
