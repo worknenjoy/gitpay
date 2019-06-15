@@ -1,8 +1,12 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import Chip from 'material-ui/Chip'
-import Typography from 'material-ui/Typography'
+
+import {
+  Chip,
+  Typography,
+} from '@material-ui/core'
+
 import PropTypes from 'prop-types'
 
 const data = [

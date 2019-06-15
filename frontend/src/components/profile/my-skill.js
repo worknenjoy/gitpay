@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
-import FolderIcon from 'material-ui-icons/Folder'
-import { Avatar, Chip } from 'material-ui'
+
+import {
+  Avatar,
+  Chip
+} from '@material-ui/core'
+import Folder from '@material-ui/icons/Folder'
+
 import { withRouter } from 'react-router-dom'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
@@ -13,13 +18,14 @@ class MySkill extends Component {
       <Chip
         avatar={
           <Avatar>
-            <FolderIcon />
+            <Folder />
           </Avatar>
         }
         label={ title }
         className={ classes.chipSkill }
         onDelete={ this.props.onDelete }
-      />)
+      />
+    )
   }
 }
 

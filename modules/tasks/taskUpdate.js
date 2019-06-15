@@ -8,14 +8,16 @@ const TransferMail = require('../mail/transfer')
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists
+const memberExists = require('../members').memberExists
 const i18n = require('i18n')
 const constants = require('../mail/constants')
 const TaskMail = require('../mail/task')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
+    const centavosAmount = orderParameters.amount * 100
     return stripe.charges.create({
-      amount: orderParameters.amount * 100,
+      amount: centavosAmount * 0.92, // 8% base fee
       currency: orderParameters.currency,
       customer: customer.id,
       source: card.id,
@@ -51,6 +53,10 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
         })
       }
       throw new Error('no charge')
+    }).catch(e => {
+      // eslint-disable-next-line no-console
+      console.log('could not create charge', e)
+      throw new Error(e)
     })
   })
 })
@@ -87,7 +93,7 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
       if (!user.account_id) {
         TransferMail.futurePaymentForInvalidAccount(user)
       }
-      AssignMail.interested(user, task.dataValues)
+      AssignMail.interested(user.dataValues, task.dataValues)
       if (task.dataValues.User) {
         const ownerUser = task.dataValues.User.dataValues
         AssignMail.owner(ownerUser, task.dataValues, user, offer)
@@ -103,12 +109,12 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
       where: {
         id: taskParameters.id,
       },
-      include: [models.User, models.Order]
+      include: [models.User, models.Order, models.Offer, models.Member]
     }).then((data) => {
       if (!data) {
         return new Error('task_updated_failed')
       }
-      return models.Task.findById(taskParameters.id, { include: [ models.User, models.Order, models.Assign ] })
+      return models.Task.findById(taskParameters.id, { include: [ models.User, models.Order, models.Assign, models.Member ] })
         .then((task) => {
           if (!task) {
             return new Error('task_find_failed')
@@ -149,31 +155,47 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
             }
           }
 
-          if (taskParameters.Assigns) {
-            assignExist({
+          if (taskParameters.Offers || taskParameters.Assigns) {
+            return assignExist({
               userId: taskParameters.Assigns[0].userId,
               taskId: taskParameters.id
-            }).then(resp => {
-              if (!resp) {
-                return task.createAssign(taskParameters.Assigns[0])
-              }
+            }).then(existingAssign => {
+              return task.createAssign(taskParameters.Assigns[0]).then(assign => {
+                return offerExists({
+                  userId: taskParameters.Offers[0].userId,
+                  taskId: taskParameters.id
+                }).then(resp => {
+                  if (!resp) {
+                    return task.createOffer(taskParameters.Offers[0]).then(offer => {
+                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                    })
+                  }
+                  else {
+                    return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
+                      taskId: taskParameters.id } }).then(update => {
+                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                    })
+                  }
+                })
+              })
             })
           }
 
-          if (taskParameters.Offers) {
-            offerExists({
-              userId: taskParameters.Offers[0].userId,
-              taskId: taskParameters.id
+          if (taskParameters.Members) {
+            return memberExists({
+              userId: taskParameters.Members[0].userId
             }).then(resp => {
               if (!resp) {
-                return task.createOffer(taskParameters.Offers[0]).then(offer => {
-                  return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                return task.createMember(taskParameters.Members[0]).then(member => {
+                  return task.dataValues
+                }).catch(e => {
+                  return task.dataValues
                 })
               }
               else {
-                return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
+                return models.Member.update(taskParameters.Members[0], { where: { userId: taskParameters.Members[0].userId,
                   taskId: taskParameters.id } }).then(update => {
-                  return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                  return task.dataValues
                 })
               }
             })

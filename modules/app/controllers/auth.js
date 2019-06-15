@@ -39,6 +39,17 @@ exports.preferences = (req, res) => {
     })
 }
 
+exports.organizations = (req, res) => {
+  user.userOrganizations({ id: req.user.id })
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}
+
 exports.customer = (req, res) => {
   user.userCustomer({ id: req.user.id })
     .then(data => {

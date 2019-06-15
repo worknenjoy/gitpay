@@ -1,28 +1,37 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
-import Divider from 'material-ui/Divider'
-import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
-import Avatar from 'material-ui/Avatar'
-import Tabs from 'material-ui/Tabs/Tabs'
-import Tab from 'material-ui/Tabs/Tab'
-import AppBar from 'material-ui/AppBar'
-import mainStyles from '../styles/style'
-import scrollToComponent from 'react-scroll-to-component'
+import 'typeface-roboto'
+import {
+  withStyles,
+  Grid,
+  Typography,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Avatar,
+  Tabs,
+  Tab,
+  AppBar,
+  Button
+} from '@material-ui/core'
 
-import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
-import WorkIcon from 'material-ui-icons/Work'
-import AppsIcon from 'material-ui-icons/Apps'
-import AssignmentIcon from 'material-ui-icons/Assignment'
-import GroupWorkIcon from 'material-ui-icons/GroupWork'
-import ArchiveIcon from 'material-ui-icons/Archive'
-import CardMembershipIcon from 'material-ui-icons/CardMembership'
-import BugReportIcon from 'material-ui-icons/BugReport'
-import SubscribeForm from '../form/subscribe-form'
-import ArrowIcon from 'material-ui-icons/ArrowForward'
+import {
+  AccountBalanceWallet,
+  Work,
+  Apps,
+  Assignment,
+  GroupWork,
+  Archive,
+  CardMembership,
+  BugReport,
+  ArrowForward
+} from '@material-ui/icons'
+
+import scrollToComponent from 'react-scroll-to-component'
+import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
 import './mailchimp.css'
 
@@ -31,10 +40,10 @@ import InfoContainer from '../../containers/info'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
 import Pricing from './pricing'
-
 import messages from './messages'
-
 import OurStack from './components/OurStack'
+import mainStyles from '../styles/style'
+import SubscribeForm from '../form/subscribe-form'
 
 const freelancerImage = require('../../images/welcome-freelancer.png')
 const companiesImage = require('../../images/welcome-companies.png')
@@ -51,35 +60,103 @@ import {
   ShadowImage,
   Section
 } from './components/CommonStyles'
-import { Button } from 'material-ui'
 
-const styles = (theme) => mainStyles(theme)
+const styles = theme => mainStyles(theme)
+const isIntegrations = ref => ref === 'integrations'
 
 class Welcome extends Component {
   constructor (props) {
     super(props)
+
     this.state = {
       value: 0
     }
+
+    this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
   componentDidMount () {
-    // window.addEventListener('scroll', this.handleScroll);
+    const clientX = ReactDOM.findDOMNode(
+      this.refs.intro
+    ).getBoundingClientRect().width
+
+    this.offsets = { offset: clientX * 0.04, integrations: clientX * 0.06 }
+    if (this.offsets.offset > 30) {
+      this.offsets = { offset: 30, integrations: 48 }
+    }
+    const { offset, integrations } = this.offsets
+
+    for (let ref in this.refs) {
+      const domNode = ReactDOM.findDOMNode(this.refs[ref])
+
+      const clientY = Math.ceil(domNode.getBoundingClientRect().top)
+      const offsetY = isIntegrations(ref)
+        ? clientY - integrations
+        : clientY - offset
+
+      const position = { [ref]: offsetY }
+
+      this.positions = { ...this.positions, ...position }
+    }
+
+    window.addEventListener('scroll', this.handleSectionsScroll)
   }
 
-  handleScroll = (event) => {
-
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.handleSectionsScroll)
   }
 
-  handleSectionTab = (event, value) => {
+  handleSectionTab = ({ currentTarget }, value) => {
     this.setState({ value })
-    let offset = -30
-    if (event.currentTarget.id === 'integrations') offset = -50
-    scrollToComponent(this.refs[event.currentTarget.id], {
-      offset: offset,
+
+    const ref = this.refs[currentTarget.id]
+    const { offset, integrations } = this.offsets
+    scrollToComponent(ref, {
+      offset: isIntegrations(ref) ? 0 - integrations : 0 - offset,
       align: 'top',
       ease: 'inExpo'
     })
+  }
+
+  handleSectionsScroll = () => {
+    const scrollPosition = document.documentElement.scrollTop
+    const offsetPostion = scrollPosition + this.offsets.offset
+
+    const {
+      intro,
+      contrib,
+      companies,
+      collab,
+      'how-it-works': howItWorks,
+      pricing,
+      integrations,
+      'get-started': getStarted
+    } = this.positions
+
+    if (offsetPostion >= getStarted) {
+      this.setState({ value: 7 })
+    }
+    else if (offsetPostion >= integrations) {
+      this.setState({ value: 6 })
+    }
+    else if (offsetPostion >= pricing) {
+      this.setState({ value: 5 })
+    }
+    else if (offsetPostion >= howItWorks) {
+      this.setState({ value: 4 })
+    }
+    else if (offsetPostion >= collab) {
+      this.setState({ value: 3 })
+    }
+    else if (offsetPostion >= companies) {
+      this.setState({ value: 2 })
+    }
+    else if (offsetPostion >= contrib - 35) {
+      this.setState({ value: 1 })
+    }
+    else if (offsetPostion >= intro) {
+      this.setState({ value: 0 })
+    }
   }
 
   render () {
@@ -89,30 +166,77 @@ class Welcome extends Component {
       <div className={ classes.root }>
         <TopBarContainer ref='intro' />
         <AppBar position='sticky' color='default'>
-          <Tabs variant='scrollable' value={ this.state.value } onChange={ this.handleSectionTab } scrollable scrollButtons='off'>
-            <Tab id='intro' value={ 0 } label={ this.props.intl.formatMessage(messages.topMenu1) } />
-            <Tab id='contrib' value={ 1 } label={ this.props.intl.formatMessage(messages.topMenu2) } />
-            <Tab id='companies' value={ 2 } label={ this.props.intl.formatMessage(messages.topMenu3) } />
-            <Tab id='collab' value={ 3 } label={ this.props.intl.formatMessage(messages.topMenu4) } />
-            <Tab id='how-it-works' value={ 4 } label={ this.props.intl.formatMessage(messages.topMenu5) } />
-            <Tab id='pricing' value={ 5 } label={ this.props.intl.formatMessage(messages.topMenu6) } />
-            <Tab id='integrations' value={ 6 } label={ this.props.intl.formatMessage(messages.topMenu7) } />
-            <Tab id='get-started' value={ 7 } label={ this.props.intl.formatMessage(messages.topMenu8) } />
+          <Tabs
+            variant='fullWidth'
+            value={ this.state.value }
+            onChange={ this.handleSectionTab }
+          >
+            <Tab
+              id='intro'
+              value={ 0 }
+              label={ this.props.intl.formatMessage(messages.topMenu1) }
+            />
+            <Tab
+              id='contrib'
+              value={ 1 }
+              label={ this.props.intl.formatMessage(messages.topMenu2) }
+            />
+            <Tab
+              id='companies'
+              value={ 2 }
+              label={ this.props.intl.formatMessage(messages.topMenu3) }
+            />
+            <Tab
+              id='collab'
+              value={ 3 }
+              label={ this.props.intl.formatMessage(messages.topMenu4) }
+            />
+            <Tab
+              id='how-it-works'
+              value={ 4 }
+              label={ this.props.intl.formatMessage(messages.topMenu5) }
+            />
+            <Tab
+              id='pricing'
+              value={ 5 }
+              label={ this.props.intl.formatMessage(messages.topMenu6) }
+            />
+            <Tab
+              id='integrations'
+              value={ 6 }
+              label={ this.props.intl.formatMessage(messages.topMenu7) }
+            />
+            <Tab
+              id='get-started'
+              value={ 7 }
+              label={ this.props.intl.formatMessage(messages.topMenu8) }
+            />
           </Tabs>
         </AppBar>
         <MainBanner>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
-              <div className={ classes.mainBlock } style={ { margin: 0, paddingTop: 10 } }>
+              <div
+                className={ classes.mainBlock }
+                style={ { margin: 0, paddingTop: 10 } }
+              >
                 <Typography className={ classes.tagline } gutterBottom>
-                  <FormattedMessage id='welcome.tagline' defaultMessage='Welcome to Gitpay' />
+                  <FormattedMessage
+                    id='welcome.tagline'
+                    defaultMessage='Welcome to Gitpay'
+                  />
                 </Typography>
-                <Typography variant='title' gutterBottom>
-                  <FormattedMessage id='welcome.tagline1' defaultMessage='Work in tasks on demand' />
+                <Typography variant='h6' gutterBottom>
+                  <FormattedMessage
+                    id='welcome.tagline1'
+                    defaultMessage='Work in tasks on demand'
+                  />
                 </Typography>
-                <Typography type='subheading' gutterBottom noWrap>
+                <Typography type='subtitle1' gutterBottom noWrap>
                   <FormattedHTMLMessage
-                    id='welcome.tagline2' defaultMessage='and receive bounty for your contributions' />
+                    id='welcome.tagline2'
+                    defaultMessage='and receive bounty for your contributions'
+                  />
                 </Typography>
                 <div className='subscribe-form'>
                   <SubscribeForm type='subscribe-form-main' />
@@ -127,12 +251,16 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </MainBanner>
+
         <Section ref='contrib'>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography variant='headline' gutterBottom>
-                  <FormattedMessage id='welcome.headline.forfreelancers' defaultMessage='For freelancers' />
+                <Typography variant='h5' gutterBottom>
+                  <FormattedMessage
+                    id='welcome.headline.forfreelancers'
+                    defaultMessage='For freelancers'
+                  />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -140,34 +268,48 @@ class Welcome extends Component {
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <AppsIcon />
+                        <Apps />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOnePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemOneSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeFreelancersItemOnePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeFreelancersItemOneSecondary
+                      ) }
                     />
                   </ListItem>
+
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <WorkIcon />
+                        <Work />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoPrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemTwoSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeFreelancersItemTwoPrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeFreelancersItemTwoSecondary
+                      ) }
                     />
                   </ListItem>
+
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <AccountBalanceWalletIcon />
+                        <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeFreelancersItemThreeSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeFreelancersItemThreePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeFreelancersItemThreeSecondary
+                      ) }
                     />
                   </ListItem>
                 </List>
@@ -178,12 +320,16 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
+
         <Section ref='companies' alternative className={ classes.bgContrast }>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography variant='headline' gutterBottom>
-                  <FormattedMessage id='welcome.tagline.companies.main.headline' defaultMessage='For companies' />
+                <Typography variant='h5' gutterBottom>
+                  <FormattedMessage
+                    id='welcome.tagline.companies.main.headline'
+                    defaultMessage='For companies'
+                  />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -191,34 +337,46 @@ class Welcome extends Component {
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <AssignmentIcon />
+                        <Assignment />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemOnePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemOneSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeCompaniesItemOnePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeCompaniesItemOneSecondary
+                      ) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <GroupWorkIcon />
+                        <GroupWork />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoPrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemTwoSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeCompaniesItemTwoPrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeCompaniesItemTwoSecondary
+                      ) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <AccountBalanceWalletIcon />
+                        <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemThreePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeCompaniesItemThreeSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeCompaniesItemThreePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeCompaniesItemThreeSecondary
+                      ) }
                     />
                   </ListItem>
                 </List>
@@ -229,12 +387,16 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
+
         <Section ref='collab'>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
-                <Typography variant='headline' gutterBottom>
-                  <FormattedMessage id='welcome.headline.collab' defaultMessage='For collaboration' />
+                <Typography variant='h5' gutterBottom>
+                  <FormattedMessage
+                    id='welcome.headline.collab'
+                    defaultMessage='For collaboration'
+                  />
                 </Typography>
               </MainTitle>
               <MainList>
@@ -242,34 +404,46 @@ class Welcome extends Component {
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <AppsIcon />
+                        <Apps />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemOnePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemOneSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeCollabItemOnePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeCollabItemOneSecondary
+                      ) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <WorkIcon />
+                        <Work />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemTwoPrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemTwoSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeCollabItemTwoPrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeCollabItemTwoSecondary
+                      ) }
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
                       <Avatar className={ classes.iconFill }>
-                        <AccountBalanceWalletIcon />
+                        <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeCollabItemThreePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeCollabItemThreeSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeCollabItemThreePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeCollabItemThreeSecondary
+                      ) }
                     />
                   </ListItem>
                 </List>
@@ -280,10 +454,14 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
+
         <Section ref='how-it-works' className={ classes.sectionBgAlt }>
           <MainTitle>
-            <Typography variant='headline' gutterBottom>
-              <FormattedMessage id='welcome.tagline.headline.how.title' defaultMessage='How it works' />
+            <Typography variant='h5' gutterBottom>
+              <FormattedMessage
+                id='welcome.tagline.headline.how.title'
+                defaultMessage='How it works'
+              />
             </Typography>
           </MainTitle>
           <Grid container spacing={ 24 }>
@@ -295,41 +473,57 @@ class Welcome extends Component {
                 <List>
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <ArchiveIcon />
+                      <Archive />
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemOnePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemOneSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemOnePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemOneSecondary
+                      ) }
                     />
                   </ListItem>
                   <Divider />
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <BugReportIcon />
+                      <BugReport />
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemTwoPrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemTwoSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemTwoPrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemTwoSecondary
+                      ) }
                     />
                   </ListItem>
                   <Divider />
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <CardMembershipIcon />
+                      <CardMembership />
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemThreePrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemThreeSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemThreePrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemThreeSecondary
+                      ) }
                     />
                   </ListItem>
                   <Divider />
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <BugReportIcon />
+                      <BugReport />
                     </ListItemIcon>
                     <ListItemText
-                      primary={ this.props.intl.formatMessage(messages.welcomeHowToItemFourPrimary) }
-                      secondary={ this.props.intl.formatMessage(messages.welcomeHowToItemFourSecondary) }
+                      primary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemFourPrimary
+                      ) }
+                      secondary={ this.props.intl.formatMessage(
+                        messages.welcomeHowToItemFourSecondary
+                      ) }
                     />
                   </ListItem>
                 </List>
@@ -337,25 +531,46 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
+
         <Section ref='pricing'>
           <Pricing />
         </Section>
+
         <Section ref='integrations' className={ classes.gutterBottomBig }>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 4 } className={ classes.alignRight }>
               <div className={ classes.gutterTop }>
-                <Typography variant='caption' gutterBottom>
-                  <FormattedMessage id='welcome.integration.title' defaultMessage='Integration' />
+                <Typography variant='h6' gutterBottom>
+                  <FormattedMessage
+                    id='welcome.integration.title'
+                    defaultMessage='Integration'
+                  />
                 </Typography>
-                <Typography variant='headline' gutterBottom>
-                  <FormattedMessage id='welcome.integration.subtitle' defaultMessage='Check out our Github app' />
+                <Typography variant='h4' gutterBottom>
+                  <FormattedMessage
+                    id='welcome.integration.subtitle'
+                    defaultMessage='Check out our Github app'
+                  />
                 </Typography>
-                <Typography variant='subheading' gutterBottom>
-                  <FormattedMessage id='welcome.integration.desc' defaultMessage='You can install our Gitpay app on your Github and start to boost your issues' />
+                <Typography variant='subtitle1' gutterBottom>
+                  <FormattedMessage
+                    id='welcome.integration.desc'
+                    defaultMessage='You can install our Gitpay app on your Github and start to boost your issues'
+                  />
                 </Typography>
-                <Button component='a' target='_blank' href='https://github.com/apps/gitpay-me' variant='raised' color='primary' className={ classes.gutterTopSmall }>
-                  <FormattedMessage id='welcome.integration.button' defaultMessage='Checkout our Github App' />
-                  <ArrowIcon />
+                <Button
+                  component='a'
+                  target='_blank'
+                  href='https://github.com/apps/gitpay-me'
+                  variant='contained'
+                  color='primary'
+                  className={ classes.gutterTopSmall }
+                >
+                  <FormattedMessage
+                    id='welcome.integration.button'
+                    defaultMessage='Checkout our Github App'
+                  />
+                  <ArrowForward />
                 </Button>
               </div>
             </Grid>
@@ -364,27 +579,53 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-        <Section ref='get-started' style={ { background: `url(${citySoftware}) no-repeat`, backgroundSize: 'contain', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' } }>
-          <Grid container spacing={ 24 }>
-            <Grid item xs={ 12 } sm={ 12 }>
-              <Typography variant='display1' gutterBottom style={ { } }>
-                <FormattedHTMLMessage id='welcome.bottom.call' defaultMessage='A better way to build your project, <br /> a better way to work in projects' />
-              </Typography>
-            </Grid>
 
-            <Grid item xs={ 12 } sm={ 12 }>
-              <Button component='a' href='https://gitpay.me/#/login' size='large' variant='raised' color='primary' className={ classes.gutterTopSmall }>
-                <FormattedMessage id='welcome.bottom.link' defaultMessage='Get started' />
-              </Button>
-            </Grid>
-
-            <Grid item xs={ 12 } sm={ 12 }>
-              <Button component='a' href='https://docs.gitpay.me' size='large' variant='flat' color='primary' className={ classes.gutterTopSmall }>
-                <FormattedMessage id='welcome.bottom.linkAlt' defaultMessage='See our docs' />
-              </Button>
-            </Grid>
-          </Grid>
+        <Section
+          ref='get-started'
+          style={ {
+            background: `url(${citySoftware}) no-repeat`,
+            backgroundSize: 'cover',
+            height: 300,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+          } }
+        >
+          <Typography variant='h6' gutterBottom style={ { padding: '0 60px' } }>
+            <FormattedHTMLMessage
+              id='welcome.bottom.call'
+              defaultMessage='A better way to build your project, <br /> a better way to work in projects'
+            />
+          </Typography>
+          <Button
+            component='a'
+            href='https://gitpay.me/#/login'
+            size='large'
+            variant='contained'
+            color='primary'
+            className={ classes.gutterTopSmall }
+          >
+            <FormattedMessage
+              id='welcome.bottom.link'
+              defaultMessage='Get started'
+            />
+          </Button>
+          <Button
+            component='a'
+            href='https://docs.gitpay.me'
+            size='large'
+            variant='text'
+            color='primary'
+            className={ classes.gutterTopSmall }
+          >
+            <FormattedMessage
+              id='welcome.bottom.linkAlt'
+              defaultMessage='See our docs'
+            />
+          </Button>
         </Section>
+
         <Bottom />
       </div>
     )
@@ -393,7 +634,7 @@ class Welcome extends Component {
 
 Welcome.propTypes = {
   classes: PropTypes.object.isRequired,
-  location: PropTypes.string,
+  location: PropTypes.object
 }
 
 export default injectIntl(withStyles(styles)(Welcome))

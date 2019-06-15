@@ -6,11 +6,17 @@ const expect = require('chai').expect
 const api = require('../server');
 const agent = request.agent(api);
 const models = require('../models');
-const { registerAndLogin } = require('./helpers')
+const { registerAndLogin, register, login } = require('./helpers')
+const nock = require('nock')
+const githubOrg = require('./data/github.org')
+const secrets = require('../config/secrets')
 
 describe("Users", () => {
 
   beforeEach(() => {
+
+    nock.cleanAll()
+
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');
@@ -135,10 +141,19 @@ describe("Users", () => {
           })
       })
     });
-    xit('should try get customer info with customer id set', (done) => {
+    it('should try get customer info with customer id set', (done) => {
       registerAndLogin(agent, {
-        customer_id: 'cus_CuK03K2mStPxBt'
+        customer_id: 'cus_Ec8ZOuHXnSlBh8'
       }).then(res => {
+        nock('https://api.stripe.com')
+        .get('/v1/customers/cus_Ec8ZOuHXnSlBh8')
+        .reply(200, {
+          id: 'cus_Ec8ZOuHXnSlBh8',
+          object: 'customer',
+        })
+        nock('https://api.stripe.com')
+        .post('/v1/accounts')
+        .reply(200, {});
         agent
           .get(`/user/customer/`)
           .set('Authorization', res.headers.authorization)
@@ -174,61 +189,193 @@ describe("Users", () => {
     });
   })
 
+  describe('user organizations', () => {
+    it('should create organization and associate with an user', (done) => {
+      nock('https://api.github.com')
+        .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
+        .reply(200, githubOrg);
+      register(agent, {
+        email: 'test_user_organizations_create@gmail.com',
+        username: 'test',
+        password: 'test',
+        provider: 'github'
+      }).then(res => {
+          const UserId = res.body.id
+          login(agent, {
+            email: 'test_user_organizations_create@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .post(`/organizations/create`)
+            .send({ UserId, name: 'test' })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, org) => {
+              expect(org.statusCode).to.equal(200);
+              agent
+              .get(`/user/organizations`)
+              .send({ id: UserId })
+              .set('Authorization', login.headers.authorization)
+              .expect(200)
+              .end((err, orgs) => {
+                expect(orgs.statusCode).to.equal(200);
+                expect(orgs.body[0].name).to.equal('test');
+                expect(orgs.body[0].imported).to.equal(true);
+                done();
+              })
+            })
+          })
+        })
+    })
+    it('should retrieve user github organizations', (done) => {
+      nock('https://api.github.com')
+        .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
+        .reply(200, githubOrg);
+      register(agent, {
+        email: 'test_user_organizations@gmail.com',
+        username: 'test',
+        password: 'test',
+        provider: 'github'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_organizations@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .get(`/user/organizations`)
+            .send({ id: userId })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, orgs) => {
+              expect(orgs.statusCode).to.equal(200);
+              console.log('orgs list', orgs.body)
+              expect(orgs.body[0].name).to.equal('test');
+              expect(orgs.body[0].imported).to.equal(false);
+              done();
+            })
+          })
+        })
+    });
+    xit('should check if that organizations exist, if exist return true if already imported', (done) => {
+      nock('https://api.github.com')
+        .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
+        .reply(200, githubOrg);
+      register(agent, {
+        email: 'test_user_organizations_exist@gmail.com',
+        username: 'test',
+        password: 'test',
+        provider: 'github'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_organizations_exist@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .get(`/user/organizations`)
+            .send({ id: userId, organization: 'foo' })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body).to.equal(false);
+              done();
+            })
+          })
+        })
+    });
+  })
+
   describe('user account', () => {
-    xit('should retrieve account for user', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste1234566@gmail.com', password: 'teste', account_id: 'acct_1CVSl2EI8tTzMKoL'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          agent
-            .get(`/users/${res.body.id}/account`)
-            .send({ id: res.body.id })
+    it('should retrieve account for user', (done) => {
+      nock('https://api.stripe.com')
+        .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL')
+        .reply(200, {
+          object: 'account'
+        });
+      register(agent, {
+        email: 'test_user_account@gmail.com',
+        password: 'test',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_account@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .get(`/user/account`)
+            .send({ id: userId })
+            .set('Authorization', login.headers.authorization)
             .expect(200)
             .end((err, user) => {
               expect(user.statusCode).to.equal(200);
               expect(user.body.object).to.equal('account');
               done();
             })
+          })
         })
     });
-    it('should create account for user', (done) => {
-      registerAndLogin(agent).then(res => {
-        agent
-          .post(`/user/account`)
-          .set('Authorization', res.headers.authorization)
-          .expect(200)
-          .end((err, account) => {
-            expect(account.statusCode).to.equal(200);
-            //expect(account.body.object).to.equal('account');
-            done();
-          })
-      })
-    });
-    xit('should update account for user', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste', account_id: 'acct_1CVlaHBN91lK7tu6'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          agent
-            .put(`/user/account`)
-            .send({
-              id: res.body.id,
-              account: {}
+    it('should create account for user in US', (done) => {
+      nock('https://api.stripe.com')
+            .post('/v1/accounts')
+            .replyWithFile(200, __dirname + '/data/account.json', {
+              'Content-Type': 'application/json',
             })
+      register(agent, {
+        email: 'test_user_account_create@gmail.com',
+        password: 'test'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_account_create@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .post(`/user/account`)
+            .send({ id: userId, country: 'US' })
+            .set('Authorization', login.headers.authorization)
             .expect(200)
-            .end((err, account) => {
-              expect(account.statusCode).to.equal(200);
-              expect(account.body.object).to.equal('account');
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body.object).to.equal('account');
+              expect(user.body.country).to.equal('US');
               done();
             })
+          })
+        })
+    });
+    it('should update account for user', (done) => {
+      nock('https://api.stripe.com')
+        .post('/v1/accounts/acct_1CVSl2EI8tTzMKoL')
+        .reply(200, {
+          object: 'account'
+        });
+      register(agent, {
+        email: 'test_user_account_update@gmail.com',
+        password: 'test',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_account_update@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .put(`/user/account`)
+            .send({
+              id: userId,
+              account: {}
+            })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body.object).to.equal('account');
+              done();
+            })
+          })
         })
     });
   });

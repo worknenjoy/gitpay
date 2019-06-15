@@ -1,18 +1,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List'
-import Dialog from 'material-ui/Dialog'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
-import CloseIcon from 'material-ui-icons/Close'
 
-import Typography from 'material-ui/Typography'
-import Avatar from 'material-ui/Avatar'
-import AppsIcon from 'material-ui-icons/Apps'
-import WorkIcon from 'material-ui-icons/Work'
-import AccountBalanceWalletIcon from 'material-ui-icons/AccountBalanceWallet'
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Dialog,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Avatar,
+} from '@material-ui/core'
+import {
+  Apps,
+  Work,
+  AccountBalanceWallet,
+  Close
+} from '@material-ui/icons'
+
 import Transition from '../transition'
 import messages from './messages'
 
@@ -40,28 +48,35 @@ class WhichCompanies extends Component {
     const { classes } = this.props
 
     return (
-      <ListItem button onClick={ this.handleClickOpen } component='a'>
-        <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?'>
-          { (msg) => (
-            <ListItemText primary={ msg } />
-          ) }
-        </FormattedMessage>
+      <ListItem button component='a'>
+        <Typography
+          variant='h6'
+          onClick={ this.handleClickOpen }
+          component='div'
+          style={ { display: 'block', width: '100%' } }
+        >
+          <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?'>
+            { (msg) => (
+              <ListItemText primary={ msg } />
+            ) }
+          </FormattedMessage>
+        </Typography>
         <Dialog
           fullScreen
           open={ this.state.open }
           onClose={ this.handleClose }
-          transition={ Transition }
+          TransitionComponent={ Transition }
         >
-          <AppBar className={ classes.appBar } >
+          <AppBar className={ classes.appBar }>
             <Toolbar>
-              <IconButton color='inherits' onClick={ this.handleClose } aria-label='Close'>
-                <CloseIcon />
+              <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
+                <Close />
               </IconButton>
               <Typography variant='title' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.companies.title' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
-            <div classeName={ classes.spacedTop }>
+            <div className={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
                   <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?' />
@@ -73,7 +88,7 @@ class WhichCompanies extends Component {
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
-                      <AppsIcon />
+                      <Apps />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
@@ -84,7 +99,7 @@ class WhichCompanies extends Component {
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
-                      <WorkIcon />
+                      <Work />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
@@ -95,7 +110,7 @@ class WhichCompanies extends Component {
                 <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
-                      <AccountBalanceWalletIcon />
+                      <AccountBalanceWallet />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText

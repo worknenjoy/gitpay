@@ -65,6 +65,23 @@ describe("tasks", () => {
       })
     })
 
+    it('should create a new task with one member', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .post('/tasks/create/')
+          .send({url: 'https://github.com/worknenjoy/truppie/issues/99', provider: 'github', userId: res.body.id})
+          .set('Authorization', res.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.exist;
+            expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
+            done();
+          })
+      })
+    })
+
     it('should invite for a task', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
@@ -160,7 +177,7 @@ describe("tasks", () => {
     xit('should update task with associated order declined', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste_order_declined@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -191,7 +208,7 @@ describe("tasks", () => {
     it('should update task with associated user assigned', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste_task_user_assigned@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -201,7 +218,7 @@ describe("tasks", () => {
           models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
             agent
               .put("/tasks/update")
-              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}]})
+              .send({id: task.dataValues.id, value: 200, Offers: [{userId: userId, value: 100}], Assigns: [{userId: userId}]})
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
@@ -212,10 +229,10 @@ describe("tasks", () => {
         })
     });
 
-    it('should update task with associated user assigned and offer', (done) => {
+    it('should update task with associated user offer', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'teste@gmail.com', password: 'teste'})
+        .send({email: 'teste_user_assigned_and_offer@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -236,7 +253,64 @@ describe("tasks", () => {
         })
     });
 
-    xit('should update task with an user assigned', (done) => {
+    xit('should accept offer', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste_user_accept_work@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/77777';
+
+          models.Task.build({url: github_url, userId: userId}).save().then((task) => {
+            agent
+              .put("/tasks/update")
+              .send({id: task.dataValues.id, value: 200, Assigns: [{userId: userId}], Offers: [{userId: userId, value: 100}]})
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.body.value).to.equal('200');
+                agent
+                  .get(`/tasks/${task.dataValues.id}/accept/${1}`)
+                  .expect('Content-Type', /json/)
+                  .expect(200)
+                  .end((err, res) => {
+                    expect(res.body.value).to.equal('200');
+                    done();
+                  })
+              })
+          })
+        })
+    });
+
+    it('should update task with members and roles', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'test23232fafa32@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+
+          models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+            models.Role.build({name: 'admin', label: 'admin'}).save().then((role) => {
+              agent
+                .put("/tasks/update")
+                .send({id: task.dataValues.id, value: 200, Members: [{userId: userId, roleId: role.dataValues.id}]})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.body.value).to.equal('200');
+                  done();
+                })
+              })
+          })
+        })
+    });
+
+    it('should update task with an existent user assigned', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
@@ -294,7 +368,7 @@ describe("tasks", () => {
   });
 
   describe('sync task', () => {
-    it('should sync with a open order', (done) => {
+    it('should sync with an open order', (done) => {
       models.Task.build({url: 'http://github.com/check/issue/1'}).save().then((task) => {
         task.createOrder({
           source_id: '12345',

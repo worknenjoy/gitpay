@@ -1,4 +1,8 @@
-import BaseCard, { CardMedia as BaseCardMedia } from 'material-ui/Card'
+import {
+  Card as BaseCard,
+  CardMedia as BaseCardMedia
+} from '@material-ui/core'
+
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
@@ -29,5 +33,5 @@ export const CardMedia = styled(BaseCardMedia)`
   width: 128px;
   height: 128px;
   margin-top: 20px;
-  display: inline-block;
+  display: inline-block !important;
 `

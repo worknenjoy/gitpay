@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Dialog, {
+import {
+  Dialog,
   DialogContent,
   DialogContentText,
-  DialogTitle
-} from 'material-ui/Dialog'
-import Checkbox from 'material-ui/Checkbox'
+  DialogTitle,
+  Checkbox,
+} from '@material-ui/core'
 
 class PaypalPaymentDialog extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { termsPaypal: false }
-  }
-
   componentWillMount () { }
 
   handleNewOrder = (e) => {
@@ -33,10 +29,6 @@ class PaypalPaymentDialog extends Component {
     window.location.href = order.payment_url
   }
 
-  agreeTermsPaypal = () => {
-    this.setState({ termsPaypal: !this.state.termsPaypal })
-  }
-
   render () {
     return (
       <Dialog
@@ -53,8 +45,14 @@ class PaypalPaymentDialog extends Component {
         <DialogContent>
           <DialogContentText id='alert-dialog-payment-description'>
             <FormattedMessage id='payment.paypal.description' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
-            <div style={
-              { margin: 'auto', textAlign: 'center', width: '50%', marginTop: 40, fontFamily: 'Roboto', background: '#ecf0f1', padding: '20px' } }>
+            <div style={ {
+              margin: 'auto',
+              textAlign: 'center',
+              width: '50%',
+              marginTop: 40,
+              fontFamily: 'Roboto',
+              background: '#ecf0f1',
+              padding: '20px' } }>
               <FormattedMessage id='payment.paypal.warning' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
             </div>
             <div style={ { textAlign: 'center' } }>

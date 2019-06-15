@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-
+        User.hasMany(models.Organization)
       },
       generateHash: (password) => {
         /* eslint-disable no-sync */

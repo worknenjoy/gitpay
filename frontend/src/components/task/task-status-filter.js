@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import Chip from 'material-ui/Chip'
+
+import {
+  withStyles,
+  Chip
+} from '@material-ui/core'
 
 const messages = defineMessages({
   openStatus: {
@@ -35,6 +38,11 @@ class TaskStatusFilter extends Component {
     this.state = {
       selected: 'all'
     }
+  }
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    onFilter: PropTypes.func
   }
 
   componentDidUpdate (prevProps) {
@@ -128,11 +136,6 @@ class TaskStatusFilter extends Component {
       </div>
     )
   }
-}
-
-TaskStatusFilter.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onFilter: PropTypes.func
 }
 
 export default injectIntl(withRouter(withStyles(styles)(TaskStatusFilter)))

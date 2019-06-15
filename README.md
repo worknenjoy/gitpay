@@ -1,16 +1,23 @@
-![Gitpay](https://user-images.githubusercontent.com/88840/49310112-ab148a80-f4dd-11e8-9d66-9800d6a4b04d.png)
+![Gitpay](https://alexandremagno.net/wp-content/uploads/2019/05/gitpaydesigntop.png)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/398ca838e49e4db2a537feb5568e7a87)](https://app.codacy.com/app/alexanmtz/gitpay?utm_source=github.com&utm_medium=referral&utm_content=worknenjoy/gitpay&utm_campaign=badger)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield) [![Waffle.io - Columns and their card count](https://badge.waffle.io/worknenjoy/gitpay.png?columns=all)](https://waffle.io/worknenjoy/gitpay?utm_source=badge) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Percentage of issues still open")
 
-Freelancing with development workflow
+An Open Source Bounty platform to solve tasks with Git
 
 https://gitpitch.com/worknenjoy/gitpay
 
+### Slack channel
+
+We have a slack channel to collaborate with solutions and to help you, and to be fun
+
+[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU) 
+
 ## What is Gitpay?
 
-We offer a marketplace for developersand platforms that use git for on demand project needs, using the Git Workflow as contract to deliver issues solved and be rewarded for contribute.
+We offer a marketplace for contributors and projects that use git for on demand project needs, using the Git Workflow as contract to solve issues and reward contributors.
 
 * You can complete tasks with open collaboration and receive bounties for it
 * Companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
@@ -19,9 +26,10 @@ We offer a marketplace for developersand platforms that use git for on demand pr
 [![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/0)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/0)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/1)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/1)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/2)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/2)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/3)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/3)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/4)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/4)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/5)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/5)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/6)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/6)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/7)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/7)
 
 ### Join the team
-Join the Gitpay team
-http://probot-invite.herokuapp.com/join/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3b3JrbmVuam95IiwiaXNzIjo1NTM1NTQsInJvbGUiOiJtZW1iZXIiLCJ0ZWFtcyI6WyIyODA0NDE5IiwiMjYzNzkyOSJdLCJpYXQiOjE1NDY0NzI4NjR9.iHSIS0XuvmvhwOROdkKw64i00PgzeK4e7h_yCxFh1YE
 
+Join the Github team to be assigned to tasks and to be part of the core.
+
+[Join the Gitpay team on Github](https://bit.ly/2Irhfqk)
 
 ## Requirements
 
@@ -104,6 +112,7 @@ Here you can start to learn how to create your first pull request and start to b
 [https://github.com/worknenjoy/gitpay/issues/247](https://github.com/worknenjoy/gitpay/issues/247)
 - [Prerna Verma]( https://github.com/PrernaVerma ) 
 - [I Gede Wicaksana]( https://github.com/wicaker ) 
+- [Luísa Barros]( https://github.com/luisabfs )
 
 
 ## License

@@ -12,16 +12,19 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
     )
     .then(user => {
       if (user && user.dataValues && user.dataValues.account_id) {
-        return { error: 'user already exist' }
+        return { error: 'user already have an account' }
       }
 
       return stripe.accounts.create({
         type: 'custom',
-        country: 'BR',
+        country: userParameters.country || 'US',
         email: user.dataValues.email
       }).then(account => {
+        // eslint-disable-next-line no-console
+        console.log('account created', account)
         return user.updateAttributes({
-          account_id: account.id
+          account_id: account.id,
+          country: userParameters.country
         }).then(userUpdated => {
           return account
         })

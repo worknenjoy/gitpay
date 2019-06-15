@@ -4,7 +4,7 @@ const constants = require('./constants')
 const i18n = require('i18n')
 
 const Sendmail = {
-  success: (to, subject, msg) => {},
+  success: (user, subject, msg) => {},
   error: (to, subject, msg) => {}
 }
 

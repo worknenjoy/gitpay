@@ -69,6 +69,7 @@ router.use('/user/', secure)
 
 router.get('/user/customer', controllers.customer)
 router.get('/user/preferences', controllers.preferences)
+router.get('/user/organizations', controllers.organizations)
 router.put('/user/update', controllers.userUpdate)
 
 router.post('/user/account', controllers.accountCreate)
