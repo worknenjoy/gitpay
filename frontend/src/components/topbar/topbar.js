@@ -23,7 +23,6 @@ import {
   withStyles
 } from '@material-ui/core'
 import {
-  Home,
   AddBox,
   Person,
   LibraryBooks,
@@ -282,7 +281,6 @@ class TopBar extends Component {
         <Container>
           <LeftSide>
             <StyledButton href='/'>
-              <Home color='primary' />
               <Logo src={ logo } />
             </StyledButton>
           </LeftSide>
@@ -511,6 +509,9 @@ class TopBar extends Component {
                 open={ anchorEl && anchorEl.id === 'account-menu' }
                 onClose={ this.handleClose }
               >
+                <MenuItem onClick={ this.handleProfile }>
+                  {`${user.name || user.username} (${user.email})`}
+                </MenuItem>
                 <MenuItem onClick={ this.handleProfile }>
                   <FormattedMessage id='task.actions.account.access' defaultMessage='Access account' />
                 </MenuItem>
