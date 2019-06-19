@@ -510,7 +510,7 @@ class TopBar extends Component {
                 onClose={ this.handleClose }
               >
                 <MenuItem onClick={ this.handleProfile }>
-                  {`${user.name || user.username} (${user.email})`}
+                  { `${user.name || user.username} (${user.email})` }
                 </MenuItem>
                 <MenuItem onClick={ this.handleProfile }>
                   <FormattedMessage id='task.actions.account.access' defaultMessage='Access account' />
