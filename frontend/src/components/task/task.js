@@ -505,14 +505,14 @@ class Task extends Component {
             status: assign_status
           }
         ]
-      }).then( () => {
+      }).then(() => {
         this.props.changeTab(2)
         this.props.history.push(`/task/${id}/interested`)
       }).catch(e => {
         console.log('error to update task on confirm assign', e)
       })
     }
-    
+
     this.props.syncTask(id)
     this.props.fetchTask(id)
   }

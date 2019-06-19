@@ -104,16 +104,15 @@ const postCreateOrUpdateOffer = Promise.method((task, offer, assignId) => {
 })
 
 module.exports = Promise.method(async function taskUpdate (taskParameters) {
-  
   let canUpdate = ''
   const taskData = await models.Task.findById(taskParameters.id)
-  if(taskData.dataValues.userId === taskParameters.userId) canUpdate = 'owner'
-  if(taskParameters.Assigns) {
+  if (taskData.dataValues.userId === taskParameters.userId) canUpdate = 'owner'
+  if (taskParameters.Assigns) {
     const assignUser = await models.Assign.findById(taskParameters.Assigns[0].id)
     canUpdate = assignUser && assignUser.get('userId') === taskParameters.userId ? 'assigned' : ''
-  } 
-  if(taskParameters.userId) canUpdate = 'user'
-  if(canUpdate === '') throw new Error('task_updated_not_authorized')
+  }
+  if (taskParameters.userId) canUpdate = 'user'
+  if (canUpdate === '') throw new Error('task_updated_not_authorized')
 
   return models.Task
     .update(taskParameters, {
@@ -172,19 +171,20 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
               userId: taskParameters.Assigns[0].userId,
               taskId: taskParameters.id
             }).then(existingAssign => {
-              if(existingAssign) {
+              if (existingAssign) {
                 const assignedUser = existingAssign.get('User')
                 return models.Assign.update({
-                  status: taskParameters.Assigns[0].status 
+                  status: taskParameters.Assigns[0].status
                 }, {
                   where: {
                     id: taskParameters.Assigns[0].id,
                   }
-                }).then( a => {
+                }).then(a => {
                   AssignMail.approve(assignedUser.dataValues, task, taskParameters.Assigns[0].id, taskParameters.Assigns[0].status)
                   return task.dataValues
                 })
-              } else {
+              }
+              else {
                 return task.createAssign(taskParameters.Assigns[0]).then(assign => {
                   return offerExists({
                     userId: taskParameters.Offers[0].userId,

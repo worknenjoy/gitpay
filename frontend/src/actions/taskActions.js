@@ -259,7 +259,7 @@ const updateTask = task => {
     return axios
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
-        if(!response.data.id) {
+        if (!response.data.id) {
           return dispatch(addNotification('actions.task.update.notification.error'))
         }
         if (task.Orders) {
@@ -274,7 +274,8 @@ const updateTask = task => {
           )
           dispatch(changeTaskTab(2))
           dispatch(updateTaskSuccess())
-        } else {
+        }
+        else {
           dispatch(addNotification('actions.task.update.notification.success'))
           dispatch(updateTaskSuccess())
         }

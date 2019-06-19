@@ -19,7 +19,7 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
         throw new Error('find_task_error')
       }
 
-      if(task.dataValues.userId !== paymentParams.userId) throw new Error('task_updated_not_authorized')
+      if (task.dataValues.userId !== paymentParams.userId) throw new Error('task_updated_not_authorized')
 
       return models.Assign.findOne({
         where: {
