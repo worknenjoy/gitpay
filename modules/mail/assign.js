@@ -16,6 +16,15 @@ const setMomentLocale = (lang) => {
   }
 }
 
+const assignStatuses = {
+  'pending': 'Pending',
+  'approved_by_author': 'approved',
+  'approved_by_interested': 'approved',
+  'approved': 'approved',
+  'rejected_by_author': 'rejected',
+  'rejected_by_interested': 'rejected'
+}
+
 const AssignMail = {
   owner: (to, task, interested, offer, interested_id) => {},
   approve: (user, task, offer, interested_id) => {},
@@ -57,20 +66,21 @@ if (constants.canSendEmail) {
     )
   }
 
-  AssignMail.approve = (user, task, interested_id) => {
+  AssignMail.approve = (user, task, interested_id, status) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
     setMomentLocale(language)
     request(
       to,
-      i18n.__('mail.assign.owner.subject'),
+      i18n.__('mail.assign.approve.subject', { status: assignStatuses[status] }),
       [
         {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.assign.owner.sec')}</p>
+          <p>${i18n.__('mail.assign.approve.main', { status: assignStatuses[status], url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.assign.approve.intro')}</p>
           ${Signatures.buttons(language, {
     primary: {
       label: 'mail.assign.owner.button.primary',

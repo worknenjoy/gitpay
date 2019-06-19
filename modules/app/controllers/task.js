@@ -40,6 +40,8 @@ exports.updateTask = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on task update', error)
       res.status(400).send(error)
     })
 }

@@ -104,14 +104,16 @@ const postCreateOrUpdateOffer = Promise.method((task, offer, assignId) => {
 })
 
 module.exports = Promise.method(async function taskUpdate (taskParameters) {
-  let canUpdate = false
+  
+  let canUpdate = ''
   const taskData = await models.Task.findById(taskParameters.id)
-  if(taskData.dataValues.userId === taskParameters.userId) canUpdate = true
+  if(taskData.dataValues.userId === taskParameters.userId) canUpdate = 'owner'
   if(taskParameters.Assigns) {
     const assignUser = await models.Assign.findById(taskParameters.Assigns[0].id)
-    canUpdate = assignUser.get('userId') === taskParameters.userId ? true : false
+    canUpdate = assignUser && assignUser.get('userId') === taskParameters.userId ? 'assigned' : ''
   } 
-  if(!canUpdate) throw new Error('task_updated_not_authorized')
+  if(taskParameters.userId) canUpdate = 'user'
+  if(canUpdate === '') throw new Error('task_updated_not_authorized')
 
   return models.Task
     .update(taskParameters, {
@@ -179,7 +181,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
                     id: taskParameters.Assigns[0].id,
                   }
                 }).then( a => {
-                  AssignMail.approve(assignedUser.dataValues, task, taskParameters.Assigns[0].id)
+                  AssignMail.approve(assignedUser.dataValues, task, taskParameters.Assigns[0].id, taskParameters.Assigns[0].status)
                   return task.dataValues
                 })
               } else {

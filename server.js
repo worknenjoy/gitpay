@@ -25,7 +25,7 @@ app.use(session({
 }))
 
 i18n.configure({
-  directory: `${__dirname}/locales/result`,
+  directory: process.env.NODE_ENV === 'production' ? `${__dirname}/locales/result` : `${__dirname}/locales`,
   locales: ['en', 'br'],
   defaultLocale: 'en',
   updateFiles: false
