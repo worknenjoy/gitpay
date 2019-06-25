@@ -16,9 +16,9 @@ module.exports = {
       transfer_id: 1,
       assigned: null,
       createdAt: '2019-06-24',
-      updatedAt: null
-    }],
-    [{
+      updatedAt: '2019-06-24'
+    },
+    {
       provider: 'github',
       type: 'Improvement',
       level: 'Beginner',
@@ -32,9 +32,9 @@ module.exports = {
       transfer_id: 1,
       assigned: null,
       createdAt: '2019-06-24',
-      updatedAt: null
-    }],
-    [{
+      updatedAt: '2019-06-24'
+    },
+    {
       provider: 'github',
       type: 'Bug',
       level: 'Intermediate',

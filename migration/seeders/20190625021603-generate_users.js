@@ -23,9 +23,9 @@ module.exports = {
       languages: null,
       receiveNotifications: true,
       createdAt: '2019-06-24',
-      updatedAt: null
-    }],
-    [{
+      updatedAt: '2019-06-24'
+    },
+    {
       provider: null,
       email: 'usuario2@teste.com',
       password: bcrypt.hashSync('1234', bcrypt.genSaltSync(8), null),
@@ -44,7 +44,7 @@ module.exports = {
       languages: null,
       receiveNotifications: false,
       createdAt: '2019-06-11',
-      updatedAt: null
+      updatedAt: '2019-06-24'
     }]);
   },
 
