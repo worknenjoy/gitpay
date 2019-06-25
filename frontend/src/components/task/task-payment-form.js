@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import { FormattedMessage } from 'react-intl'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Chip from 'material-ui/Chip'
-import { FormControl } from 'material-ui/Form'
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
-import Collapse from 'material-ui/transitions/Collapse'
+
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Chip,
+  FormControl,
+  Input,
+  InputLabel,
+  InputAdornment,
+  Collapse
+} from '@material-ui/core'
 
 const paymentIcon = require('../../images/payment-icon-alt.png')
 
@@ -58,7 +65,7 @@ class TaskPaymentForm extends Component {
             </FormattedMessage>
             <div className={ classes.details }>
               <CardContent className={ classes.content }>
-                <Typography variant='headline'>
+                <Typography variant='h5'>
                   <FormattedMessage id='task.payment.headline.bounty.add' defaultMessage='Add a bounty for this task' />
                 </Typography>
                 <Typography variant='subheading' color='textSecondary'>
@@ -111,12 +118,24 @@ class TaskPaymentForm extends Component {
                       ) }
                     </FormattedMessage>
                   </FormControl>
-                  <Button style={ { marginLeft: 20 } } disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
+                  <Button
+                    style={ { marginLeft: 20 } }
+                    disabled={ !this.state.currentPrice }
+                    onClick={ () => this.handlePayment('PaymentDialog') }
+                    variant='contained'
+                    color='primary'
+                    className={ classes.btnPayment }>
                     <FormattedMessage id='task.payment.creditcard.action' defaultMessage='Pay $ {amount} with Credit Card' values={ {
                       amount: this.state.currentPrice
                     } } />
                   </Button>
-                  <Button disabled={ !this.state.currentPrice } onClick={ () => this.handlePayment('PaypalPaymentDialog') } variant='raised' color='primary' className={ classes.btnPayment }>
+                  <Button
+                    disabled={ !this.state.currentPrice }
+                    onClick={ () => this.handlePayment('PaypalPaymentDialog') }
+                    variant='contained'
+                    color='primary'
+                    className={ classes.btnPayment }
+                  >
                     <FormattedMessage id='task.payment.paypal.action' defaultMessage='Pay $ {amount} with PayPal' values={ {
                       amount: this.state.currentPrice
                     } } />

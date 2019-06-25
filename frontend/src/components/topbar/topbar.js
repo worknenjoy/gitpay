@@ -3,37 +3,41 @@ import PropTypes from 'prop-types'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { store } from '../../main/app'
 
-import Dialog, {
+import {
+  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from 'material-ui/Dialog'
-
-import Grid from 'material-ui/Grid'
-import Tooltip from 'material-ui/Tooltip'
-import { FormControl, FormHelperText } from 'material-ui/Form'
-import Avatar from 'material-ui/Avatar'
-import TextField from 'material-ui/TextField'
-import Typography from 'material-ui/Typography'
-import HomeIcon from 'material-ui-icons/Home'
-import PlusIcon from 'material-ui-icons/Queue'
-import UserIcon from 'material-ui-icons/AccountCircle'
-import LibraryIcon from 'material-ui-icons/LibraryBooks'
-import TasksIcon from 'material-ui-icons/ViewList'
-import CircularProgress from 'material-ui/Progress/CircularProgress'
+  Grid,
+  Tooltip,
+  FormControl,
+  FormHelperText,
+  Avatar,
+  TextField,
+  Typography,
+  CircularProgress,
+  Menu,
+  MenuItem,
+  Button,
+  withStyles
+} from '@material-ui/core'
+import {
+  Home,
+  AddBox,
+  Person,
+  LibraryBooks,
+  ViewList
+} from '@material-ui/icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSlack } from '@fortawesome/free-brands-svg-icons'
 
 import humanFormat from 'human-format'
 
-import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
 
-import Menu, { MenuItem } from 'material-ui/Menu'
-import Button from 'material-ui/Button'
 import nameInitials from 'name-initials'
 import isGithubUrl from 'is-github-url'
 
@@ -47,10 +51,7 @@ import {
   LabelButton,
   StyledAvatar,
   StyledAvatarIconOnly,
-  OnlyDesktop,
-  LogoButton,
-  StyledLanguageButton,
-  StyledSlackButton,
+  OnlyDesktop
 } from './TopbarStyles'
 
 import messagesBr from '../../translations/result/br.json'
@@ -280,58 +281,59 @@ class TopBar extends Component {
       <Bar>
         <Container>
           <LeftSide>
-            <LogoButton href='/'>
-              <HomeIcon color='primary' />
+            <StyledButton href='/'>
+              <Home color='primary' />
               <Logo src={ logo } />
-            </LogoButton>
+            </StyledButton>
           </LeftSide>
           <RightSide>
             <StyledButton
               onClick={ this.handleClickDialogCreateTask }
-              variant='raised'
+              variant='contained'
               size='small'
               color='primary'
             >
               <LabelButton>
                 <FormattedMessage id='task.actions.create' defaultMessage='Create task' />
-              </LabelButton><PlusIcon />
+              </LabelButton>
+              <AddBox />
             </StyledButton>
+
             <StyledButton
               onClick={ this.handleViewTasks }
-              variant='raised'
+              variant='contained'
               size='small'
               color='primary'
             >
               <LabelButton>
                 <FormattedMessage id='task.actions.explore' defaultMessage='Explore tasks' />
               </LabelButton>
-              <TasksIcon />
+              <ViewList />
             </StyledButton>
 
-            <div>
-              <StyledButton
-                onClick={ this.handleDocsLink }
-                variant='raised'
-                size='small'
-                color='default'
-              >
-                <LabelButton>
-                  <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
-                </LabelButton><LibraryIcon />
-              </StyledButton>
-            </div>
+            <StyledButton
+              onClick={ this.handleDocsLink }
+              variant='contained'
+              size='small'
+              color='default'
+            >
+              <LabelButton>
+                <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
+              </LabelButton>
+              <LibraryBooks />
+            </StyledButton>
 
             { !isLoggedIn
-              ? (<div>
+              ? (<React.Fragment>
                 <StyledButton
                   onClick={ this.handleClickDialogSignUser }
-                  variant='raised'
+                  variant='contained'
                   size='small'
                   color='secondary'
                 >
                   <LabelButton>
                     <FormattedMessage id='task.bar.signin' defaultMessage='Signin' />
-                  </LabelButton><UserIcon />
+                  </LabelButton><Person />
                 </StyledButton>
 
                 <Dialog
@@ -346,11 +348,11 @@ class TopBar extends Component {
                     <LoginButton referer={ this.props.location } size='medium' includeForm />
                   </DialogContent>
                 </Dialog>
-              </div>) : (
-                <div>
+              </React.Fragment>) : (
+                <React.Fragment>
                   <StyledButton
                     onClick={ this.handleMenu }
-                    variant='raised'
+                    variant='contained'
                     size='small'
                     color='secondary'
                     id='account-menu'
@@ -367,11 +369,11 @@ class TopBar extends Component {
 
                     { !user.picture_url &&
                       <StyledAvatar alt={ user.username || '' } src=''>
-                        { user.username ? nameInitials(user.username) : <UserIcon /> }
+                        { user.username ? nameInitials(user.username) : <Person /> }
                       </StyledAvatar>
                     }
                   </StyledButton>
-                </div>
+                </React.Fragment>
               )
             }
 
@@ -379,17 +381,19 @@ class TopBar extends Component {
               <Dialog
                 open={ this.state.createTaskDialog }
                 onClose={ this.handleClickDialogCreateTaskClose }
-                aria-labelledby='form-dialog-title'
+                aria-label='form-dialog-title'
               >
                 <DialogTitle id='form-dialog-title'>
                   <FormattedMessage id='task.actions.insert.new' defaultMessage='Insert a new task' />
                 </DialogTitle>
+
                 <DialogContent>
                   <DialogContentText>
                     <Typography type='subheading' gutterBottom>
                       <FormattedHTMLMessage id='task.actions.insert.subheading' defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
                     </Typography>
                   </DialogContentText>
+
                   <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
                     <TextField error={ this.state.task.url.error }
                       onChange={ this.onChange }
@@ -405,7 +409,7 @@ class TopBar extends Component {
                       <Button
                         style={ { marginRight: 10 } }
                         color='primary'
-                        variant={ this.state.provider === 'github' ? 'raised' : 'contained' }
+                        variant={ this.state.provider === 'github' ? 'raised' : 'outline' }
                         id='github'
                         onClick={ (e) => this.handleProvider(e, 'github') }
                       >
@@ -415,7 +419,7 @@ class TopBar extends Component {
 
                       <Button
                         color='primary'
-                        variant={ this.state.provider === 'bitbucket' ? 'raised' : 'contained' }
+                        variant={ this.state.provider === 'bitbucket' ? 'raised' : 'outline' }
                         id='bitbucket'
                         onClick={ (e) => this.handleProvider(e, 'bitbucket') }
                       >
@@ -423,27 +427,30 @@ class TopBar extends Component {
                         <span style={ { marginLeft: 10 } }>Bitbucket</span>
                       </Button>
                     </div>
+
                     { this.state.task.url.error &&
-                    <FormHelperText error={ this.state.task.url.error }>
-                      <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
-                    </FormHelperText>
+                      <FormHelperText error={ this.state.task.url.error }>
+                        <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
+                      </FormHelperText>
                     }
                   </FormControl>
                 </DialogContent>
+
                 <DialogActions>
                   <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
                     <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                   </Button>
-                  <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='raised' color='secondary' >
+                  <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='contained' color='secondary' >
                     <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
                   </Button>
                 </DialogActions>
               </Dialog>
             </form>
+
             <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
               { (msg) => (
                 <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-                  <StyledLanguageButton style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
+                  <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
                     { completed ? (
                       <StyledAvatarIconOnly
                         alt={ user.username || '' }
@@ -454,10 +461,11 @@ class TopBar extends Component {
                         <CircularProgress />
                       </Avatar>
                     ) }
-                  </StyledLanguageButton>
+                  </Button>
                 </Tooltip>
               ) }
             </FormattedMessage>
+
             <Menu
               id='menu-appbar'
               anchorEl={ anchorEl }
@@ -473,7 +481,7 @@ class TopBar extends Component {
                 />
                 <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
               </MenuItem>
-              <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') } >
+              <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') }>
                 <StyledAvatarIconOnly
                   alt='Português'
                   src={ logoLangBr }
@@ -481,6 +489,7 @@ class TopBar extends Component {
                 <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
               </MenuItem>
             </Menu>
+
             <OnlyDesktop>
               <FormattedMessage id='task.actions.tooltip.git' defaultMessage='See our project on Github'>
                 { (msg) => (
@@ -511,7 +520,7 @@ class TopBar extends Component {
               </Menu>
             </OnlyDesktop>
 
-            <StyledSlackButton
+            <StyledButton
               onClick={ this.handleClickDialogJoinSlack }
               size='small'
               color='secondary'
@@ -519,7 +528,7 @@ class TopBar extends Component {
               <LabelButton>
                 <FormattedMessage id='task.bar.slack' defaultMessage='Slack {count}' values={ { count: channelUserCount } } />
               </LabelButton><FontAwesomeIcon icon={ faSlack } size='2x' />
-            </StyledSlackButton>
+            </StyledButton>
             <Dialog
               open={ this.state.joinSlackDialog }
               onClose={ this.handleJoinSlackDialogClose }

@@ -6,47 +6,47 @@ import {
   TableRow,
   TableBody,
   TableCell
-} from 'material-ui'
+} from '@material-ui/core'
 
 import PropTypes from 'prop-types'
 
 import tableStyle from '../styles/material-dashboard-react/tableStyle'
 
-function CustomTable ({ ...props }) {
+function CustomTable({ ...props }) {
   const { classes, tableHead, tableData, tableHeaderColor } = props
   return (
-    <div className={ classes.tableResponsive }>
-      <Table className={ classes.table }>
-        { tableHead !== undefined ? (
-          <TableHead className={ classes[tableHeaderColor + 'TableHeader'] }>
+    <div className={classes.tableResponsive}>
+      <Table className={classes.table}>
+        {tableHead !== undefined ? (
+          <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
             <TableRow>
-              { tableHead.map((prop, key) => {
+              {tableHead.map((prop, key) => {
                 return (
                   <TableCell
-                    className={ classes.tableCell + ' ' + classes.tableHeadCell }
-                    key={ key }
+                    className={classes.tableCell + ' ' + classes.tableHeadCell}
+                    key={key}
                   >
-                    { prop }
+                    {prop}
                   </TableCell>
                 )
-              }) }
+              })}
             </TableRow>
           </TableHead>
-        ) : null }
+        ) : null}
         <TableBody>
-          { tableData.map((prop, key) => {
+          {tableData.map((prop, key) => {
             return (
-              <TableRow key={ key }>
-                { prop.map((prop, key) => {
+              <TableRow key={key}>
+                {prop.map((prop, key) => {
                   return (
-                    <TableCell className={ classes.tableCell } key={ key }>
-                      { prop }
+                    <TableCell className={classes.tableCell} key={key}>
+                      {prop}
                     </TableCell>
                   )
-                }) }
+                })}
               </TableRow>
             )
-          }) }
+          })}
         </TableBody>
       </Table>
     </div>

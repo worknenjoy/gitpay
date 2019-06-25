@@ -3,23 +3,31 @@ import PropTypes from 'prop-types'
 import { Route, Switch, HashRouter } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import Grid from 'material-ui/Grid'
-import Avatar from 'material-ui/Avatar'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Paper from 'material-ui/Paper'
-import { ListItemIcon, ListItemText } from 'material-ui/List'
-import { MenuList, MenuItem } from 'material-ui/Menu'
-import DeviceHubIcon from 'material-ui-icons/DeviceHub'
-import LibraryBooks from 'material-ui-icons/LibraryBooks'
-import CreditCard from 'material-ui-icons/CreditCard'
-import Tune from 'material-ui-icons/Tune'
-import UserIcon from 'material-ui-icons/AccountCircle'
-import ArrowBackIcon from 'material-ui-icons/ArrowBack'
+import {
+  Grid,
+  Avatar,
+  Typography,
+  Button,
+  Paper,
+  ListItemIcon,
+  ListItemText,
+  MenuList,
+  MenuItem,
+  withStyles,
+  Toolbar,
+  AppBar,
+} from '@material-ui/core'
+import {
+  DeviceHub,
+  LibraryBooks,
+  CreditCard,
+  Tune,
+  Person,
+  ArrowBack
+} from '@material-ui/icons'
 
 import classNames from 'classnames'
 import nameInitials from 'name-initials'
-import { withStyles } from 'material-ui/styles'
 
 import api from '../../consts'
 
@@ -28,10 +36,10 @@ import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
-import Preferences from '../../components/profile/preferences'
+import Preferences from './preferences'
+import Organizations from './organizations'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
-import { Toolbar, AppBar } from 'material-ui'
 
 import PreferencesBar from './preferences-bar'
 
@@ -110,12 +118,19 @@ class Profile extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: null
+      selected: null,
+      orgsLoaded: false
     }
   }
 
   componentWillMount () {
     this.setActive(this.props.location.pathname)
+  }
+
+  componentDidMount () {
+    this.props.fetchOrganizations().then(org => {
+      this.setState({ orgsLoaded: true })
+    })
   }
 
   setActive (path) {
@@ -158,7 +173,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, preferences } = this.props
+    const { classes, user, preferences, organizations } = this.props
 
     let titleNavigation = this.getTitleNavigation()
 
@@ -175,8 +190,8 @@ class Profile extends Component {
             <Grid container alignItems='center' spacing={ 8 }>
               <Grid item xs>
                 <Typography color='primary' variant='title'>
-                  <Button onClick={ this.handleBackToTaskList } variant='flat' size='small' aria-label='Back' color='primary'>
-                    <ArrowBackIcon />
+                  <Button onClick={ this.handleBackToTaskList } variant='text' size='small' aria-label='Back' color='primary'>
+                    <ArrowBack />
                   </Button>
                   <span style={ { marginLeft: 10 } }>
                     { titleNavigation }
@@ -191,29 +206,7 @@ class Profile extends Component {
         }
         <PageContent>
           <Grid container className={ classes.root } spacing={ 24 }>
-            <Grid item xs={ 12 } md={ 8 }>
-              <HashRouter>
-                <Switch>
-                  <Route exact path='/profile' component={ ProfileOptions } />
-                  <Route
-                    exact
-                    path='/profile/tasks'
-                    component={ () => <TaskListContainer /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/payment-options'
-                    component={ () => <PaymentOptions user={ user } /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/preferences'
-                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
-                  />
-                </Switch>
-              </HashRouter>
-            </Grid>
-            <Grid item xs={ 12 } md={ 4 }>
+            <Grid item xs={ 12 } md={ 3 }>
               <div className={ classes.bigRow }>
                 <div className={ classes.row }>
                   { user.picture_url ? (
@@ -228,7 +221,7 @@ class Profile extends Component {
                       src=''
                       className={ classNames(classes.avatar, classes.bigAvatar) }
                     >
-                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <UserIcon />) }
+                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <Person />) }
                     </Avatar>
                   ) }
                 </div>
@@ -237,7 +230,7 @@ class Profile extends Component {
                     <Button
                       disabled={ user.provider === 'github' }
                       href={ `${api.API_URL}/authorize/github` }
-                      variant='raised'
+                      variant='contained'
                       size='small'
                       color='secondary'
                       className={ classes.altButton }
@@ -248,7 +241,7 @@ class Profile extends Component {
                     <Button
                       disabled={ user.provider === 'bitbucket' }
                       href={ `${api.API_URL}/authorize/bitbucket` }
-                      variant='raised'
+                      variant='contained'
                       size='small'
                       color='secondary'
                       className={ classes.altButton }
@@ -275,7 +268,7 @@ class Profile extends Component {
                     <div className={ classes.infoItem }>
                       <Typography>
                         <h4>
-                          <DeviceHubIcon />
+                          <DeviceHub />
                           <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
                         </h4>
                         <p>{ user.repos }</p>
@@ -344,6 +337,43 @@ class Profile extends Component {
                   </Paper>
                 </div>
               </div>
+            </Grid>
+            <Grid item xs={ 12 } md={ 9 }>
+              <HashRouter>
+                <Switch>
+                  <Route exact path='/profile' component={ ProfileOptions } />
+                  <Route
+                    exact
+                    path='/profile/tasks'
+                    component={ () => <TaskListContainer /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/payment-options'
+                    component={ () => <PaymentOptions user={ user } /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/preferences'
+                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
+                  />
+                </Switch>
+              </HashRouter>
+              { this.state.orgsLoaded && organizations &&
+                <Grid item xs={ 12 } md={ 12 }>
+                  <div style={ { marginTop: 10, marginBottom: 10 } }>
+                    <Typography variant='h5' component='h3'>
+                      <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+                    </Typography>
+                    <Typography component='p'>
+                      <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
+                    </Typography>
+                    <div style={ { marginTop: 20, marginBottom: 40 } }>
+                      <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
+                    </div>
+                  </div>
+                </Grid>
+              }
             </Grid>
           </Grid>
         </PageContent>

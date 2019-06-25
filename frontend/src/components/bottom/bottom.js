@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
-import List from 'material-ui/List'
-import Button from 'material-ui/Button'
-import Divider from 'material-ui/Divider'
 
-import { withStyles } from 'material-ui/styles'
+import {
+  Grid,
+  Typography,
+  Divider,
+  List,
+  Button,
+  withStyles,
+} from '@material-ui/core'
 
 import SubscribeForm from '../form/subscribe-form'
 import HowItWorksPeople from '../welcome/how-it-works-people'
@@ -39,7 +41,7 @@ class Bottom extends Component {
         <Container>
           <Grid container spacing={ 24 }>
             <Grid item xs={ 12 } sm={ 3 }>
-              <Typography type='subheading'>
+              <Typography component='div'>
                 <strong>
                   <FormattedMessage id='bottom.header.subheading1' defaultMessage='For Freelancers' />
                 </strong>
@@ -51,7 +53,7 @@ class Bottom extends Component {
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 3 }>
-              <Typography type='subheading'>
+              <Typography component='div'>
                 <strong>
                   <FormattedMessage id='bottom.header.subheading2' defaultMessage='For Companies' />
                 </strong>
@@ -63,7 +65,7 @@ class Bottom extends Component {
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 2 }>
-              <Typography type='subheading'>
+              <Typography component='div'>
                 <strong>
                   <FormattedMessage id='bottom.subheading3' defaultMessage='Partners' />
                 </strong>
@@ -76,13 +78,13 @@ class Bottom extends Component {
               </Button>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
-              <Typography type='subheading'>
+              <Typography component='div'>
                 <FormattedMessage id='bottom.subheading.newsletter' defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!' />
               </Typography>
               <SubscribeFromWrapper className='subscribe-form'>
                 <SubscribeForm />
               </SubscribeFromWrapper>
-              <Typography type='caption'>
+              <Typography component='div'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
                 2035 Sunset Lake Road, Suite B-2 <br />
                 Newark, DE 19702 - US
@@ -94,7 +96,7 @@ class Bottom extends Component {
             <div>
               <img className={ classes.img } src={ logoCompleteGray } width='100' />
             </div>
-            <Typography varian='caption' component='span' style={ { marginLeft: 10, marginRight: 10, display: 'inline-block' } }>
+            <Typography component='span' style={ { marginLeft: 10, marginRight: 10, display: 'inline-block' } }>
               <FormattedMessage id='bottom.company.org' defaultMessage='is part of' />
             </Typography>
             <a href='http://worknenjoy.com' target='_blank'>

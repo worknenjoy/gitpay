@@ -4,7 +4,10 @@ import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
 
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import {
+  MuiThemeProvider,
+  createMuiTheme
+} from '@material-ui/core'
 import Palette from '../components/styles/palette'
 import './app.css'
 import ReactGA from 'react-ga'
@@ -36,7 +39,7 @@ const messages = {
 
 const composeEnhancers =
   typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
     }) : compose
 

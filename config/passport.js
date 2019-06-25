@@ -200,7 +200,7 @@ passport.use(
       clientID: github.id,
       clientSecret: github.secret,
       callbackURL: oauthCallbacks.githubCallbackUrl,
-      scope: ['user:email']
+      scope: ['user:email', 'read:org']
     },
     (accessToken, accessTokenSecret, profile, done) => {
       process.nextTick(() => {

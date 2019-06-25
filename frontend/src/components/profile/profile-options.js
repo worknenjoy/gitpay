@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import { CardActions, CardContent } from 'material-ui/Card'
-import { withStyles } from 'material-ui/styles'
+import {
+  Typography,
+  Button,
+  CardActions,
+  CardContent,
+  withStyles
+} from '@material-ui/core'
 
 import { Card, CardList, CardMedia } from './ProfileStyles'
 
@@ -22,13 +25,17 @@ const styles = theme => ({
 })
 
 class ProfileOptions extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  }
+
   render () {
     const { classes } = this.props
 
     return (
       <div>
         <div>
-          <Typography variant='headline' component='h3'>
+          <Typography variant='h5' component='h3'>
             <FormattedMessage id='account.profile.welcome.headline' defaultMessage='Welcome to Gitpay!' />
           </Typography>
           <Typography component='p'>
@@ -47,7 +54,7 @@ class ProfileOptions extends Component {
               ) }
             </FormattedMessage>
             <CardContent>
-              <Typography variant='headline' component='h2'>
+              <Typography variant='h5' component='h2'>
                 <FormattedMessage id='account.profile.tasks.headline' defaultMessage='Tasks' />
               </Typography>
               <Typography component='p'>
@@ -73,7 +80,7 @@ class ProfileOptions extends Component {
               ) }
             </FormattedMessage>
             <CardContent>
-              <Typography variant='headline' component='h2'>
+              <Typography variant='h5' component='h2'>
                 <FormattedMessage id='account.profile.tasks.payment.headline' defaultMessage='Payment' />
               </Typography>
               <Typography component='p'>
@@ -95,7 +102,7 @@ class ProfileOptions extends Component {
               title='Contemplative Reptile'
             />
             <CardContent>
-              <Typography variant='headline' component='h2'>
+              <Typography variant='h5' component='h2'>
                 <FormattedMessage id='account.profile.preferences.headline' defaultMessage='Preferences' />
               </Typography>
               <Typography component='p'>
@@ -114,10 +121,6 @@ class ProfileOptions extends Component {
       </div>
     )
   }
-}
-
-ProfileOptions.propTypes = {
-  classes: PropTypes.object.isRequired
 }
 
 export default injectIntl(withStyles(styles)(ProfileOptions))

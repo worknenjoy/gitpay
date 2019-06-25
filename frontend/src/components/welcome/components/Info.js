@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import Chip from 'material-ui/Chip'
-import Avatar from 'material-ui/Avatar'
-import Typography from 'material-ui/Typography'
+
+import {
+  Chip,
+  Avatar,
+  Typography
+} from '@material-ui/core'
 
 const Content = styled.span`
   margin-top: 5px;

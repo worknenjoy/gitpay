@@ -1,28 +1,32 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import { withStyles } from 'material-ui/styles'
-import Button from 'material-ui/Button'
-import Avatar from 'material-ui/Avatar'
-import Typography from 'material-ui/Typography'
-import List from 'material-ui/List'
-import ListItem from 'material-ui/List/ListItem'
-import ListItemAvatar from 'material-ui/List/ListItemAvatar'
-import Divider from 'material-ui/Divider'
-import ListItemText from 'material-ui/List/ListItemText'
-import DialogTitle from 'material-ui/Dialog/DialogTitle'
-import DialogContent from 'material-ui/Dialog/DialogContent'
-import DialogContentText from 'material-ui/Dialog/DialogContentText'
-import Dialog from 'material-ui/Dialog'
-import AppBar from 'material-ui/AppBar'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import Chip from 'material-ui/Chip'
 
+import {
+  withStyles,
+  Button,
+  Typography,
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  AppBar,
+  Tabs,
+  Tab,
+  Chip,
+} from '@material-ui/core'
+import {
+  FilterList as FilterListIcon,
+  Redeem as RedeemIcon
+} from '@material-ui/icons'
+import blue from '@material-ui/core/colors/blue'
 import PaymentTypeIcon from '../payment/payment-type-icon'
-
-import FilterListIcon from 'material-ui-icons/FilterList'
-import RedeemIcon from 'material-ui-icons/Redeem'
-import blue from 'material-ui/colors/blue'
 
 const styles = {
   avatar: {
@@ -189,9 +193,24 @@ class TaskPayment extends Component {
                 indicatorColor='primary'
                 textColor='primary'
               >
-                <Tab style={ { margin: 10 } } value={ 0 } label={ this.props.intl.formatMessage(messages.allPayments) } icon={ <RedeemIcon /> } />
-                <Tab style={ { margin: 10 } } value={ 1 } label={ this.props.intl.formatMessage(messages.creditCardPayment) } icon={ <PaymentTypeIcon type='card' notext /> } />
-                <Tab style={ { margin: 10 } } value={ 2 } label={ this.props.intl.formatMessage(messages.payPalPayment) } icon={ <PaymentTypeIcon type='paypal' /> } />
+                <Tab
+                  style={ { margin: 10 } }
+                  value={ 0 }
+                  label={ this.props.intl.formatMessage(messages.allPayments) }
+                  icon={ <RedeemIcon /> }
+                />
+                <Tab
+                  style={ { margin: 10 } }
+                  value={ 1 }
+                  label={ this.props.intl.formatMessage(messages.creditCardPayment) }
+                  icon={ <PaymentTypeIcon type='card' notext /> }
+                />
+                <Tab
+                  style={ { margin: 10 } }
+                  value={ 2 }
+                  label={ this.props.intl.formatMessage(messages.payPalPayment) }
+                  icon={ <PaymentTypeIcon type='paypal' /> }
+                />
               </Tabs>
             </AppBar>
             <TabContainer>
@@ -225,7 +244,7 @@ class TaskPayment extends Component {
                               <Button
                                 onClick={ (e) => this.payOrder(e, order.id) }
                                 style={ { float: 'right', margin: 10 } }
-                                variant='raised'
+                                variant='contained'
                                 color='primary'
                                 disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
                               >
@@ -245,8 +264,7 @@ class TaskPayment extends Component {
                             )
                           }
                         </ListItem>
-                      )
-                      : (
+                      ) : (
                         <ListItem key={ order.id }>
                           <ListItemAvatar>
                             <Avatar className={ classes.avatar }>
@@ -274,7 +292,8 @@ class TaskPayment extends Component {
                       to: sendTo(this.props.assigned).username,
                       payments: paymentSupport(sendTo(this.props.assigned))
                     })
-                    : this.props.intl.formatMessage(messages.taskNoAssigned) }
+                    : this.props.intl.formatMessage(messages.taskNoAssigned)
+                  }
                 </div>
               ) : (
                 <div>
@@ -292,7 +311,7 @@ class TaskPayment extends Component {
                 <Button
                   onClick={ this.payTask }
                   style={ { float: 'right', margin: 10 } }
-                  variant='raised'
+                  variant='contained'
                   color='primary'
                   disabled={ !this.props.assigned || this.props.transferId || this.state.currentTab === 2 }
                 >
@@ -307,7 +326,7 @@ class TaskPayment extends Component {
             <FormattedMessage id='task.payment.types.notype' defaultMessage='No payment for this payment type'>
               { (msg) => (
                 <ListItemText
-                  variant='raised'
+                  variant='contained'
                   disabled
                   primary={ msg }
                 />

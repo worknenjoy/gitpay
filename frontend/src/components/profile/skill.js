@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
-import FolderIcon from 'material-ui-icons/Folder'
-import { Checkbox, Avatar } from 'material-ui'
-import classNames from 'classnames'
 import { withRouter } from 'react-router-dom'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+
+import {
+  Grid,
+  Typography,
+  Checkbox,
+  Avatar,
+} from '@material-ui/core'
+import FolderIcon from '@material-ui/icons/Folder'
 
 class Skill extends Component {
   render () {

@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import { FormattedMessage } from 'react-intl'
-import MomentComponent from 'moment'
-import Avatar from 'material-ui/Avatar'
-import classNames from 'classnames'
-import Typography from 'material-ui/Typography'
-import Tooltip from 'material-ui/Tooltip'
-import Card, { CardHeader } from 'material-ui/Card'
-import Chip from 'material-ui/Chip'
 import nameInitials from 'name-initials'
-import UserIcon from 'material-ui-icons/AccountCircle'
+import MomentComponent from 'moment'
+import classNames from 'classnames'
+
+import {
+  withStyles,
+  Avatar,
+  Typography,
+  Tooltip,
+  Card,
+  CardHeader,
+  Chip
+} from '@material-ui/core'
+import UserIcon from '@material-ui/icons/AccountCircle'
+
+import AssignActions from './assignment/AssignActions'
 
 const styles = theme => ({
   main: {
@@ -27,6 +33,16 @@ class TaskAssigned extends Component {
     }
   }
 
+  static propTypes = {
+    task: PropTypes.object,
+    isOwner: PropTypes.bool,
+    status: PropTypes.string,
+    classes: PropTypes.object,
+    user: PropTypes.object,
+    removeAssignment: PropTypes.func,
+    assignTask: PropTypes.func
+  }
+
   pickTaskPrice = (price) => {
 
   }
@@ -40,7 +56,7 @@ class TaskAssigned extends Component {
   }
 
   render () {
-    const { user, classes, status } = this.props
+    const { user, classes, status, isOwner, task, assign, removeAssignment, assignTask } = this.props
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
     const timePlaceholder = (
       <Typography type='subheading' style={ { padding: 25, color: 'gray' } }>
@@ -94,6 +110,7 @@ class TaskAssigned extends Component {
                   label={ status }
                   className={ classes.chipStatus }
                 />
+                { isOwner && <AssignActions isOwner={ isOwner } assign={ assign } task={ task } removeAssignment={ removeAssignment } assignTask={ assignTask } /> }
               </div>
             }
             action={
@@ -105,12 +122,6 @@ class TaskAssigned extends Component {
       </div>
     )
   }
-}
-
-TaskAssigned.propTypes = {
-  classes: PropTypes.object,
-  status: PropTypes.string,
-  user: PropTypes.object
 }
 
 export default withStyles(styles)(TaskAssigned)
