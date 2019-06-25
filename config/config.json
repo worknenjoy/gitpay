@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": "postgres",
     "database": "gitpay_dev",
-    "host": "0.0.0.0",
+    "host": "127.0.0.1",
     "port": 5432,
     "dialect": "postgres",
     "logging": false,
