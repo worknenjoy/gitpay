@@ -257,7 +257,7 @@ class CustomPaginationActionsTable extends React.Component {
                       </TableCell>
                       <TableCell numeric style={ { padding: 5 } }>
                         <div style={ { width: 40 } }>
-                          { n.value ? `$ ${n.value}` : `$ 0` }
+                          { n.value ? `$ ${n.value}` : '$ 0' }
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 0 } }>
