@@ -122,7 +122,6 @@ class TaskList extends Component {
       let pathName = this.props.history.location.pathname
       this.handleRoutePath(pathName)
       this.setState({ loading: false })
-      
       const currentTab = this.state.tab
 
       this.appropriatePathByCurrentTab(currentTab, false)
