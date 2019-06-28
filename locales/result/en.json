@@ -40,7 +40,7 @@
   "mail.deadline.end.hello": "Hello {{name}}",
   "mail.deadline.end.intro": "The issue <strong>{{title}}</strong> (<a href=\"{{url}}\">{{url}}</a></p>) you were assigned on Gitpay reached the deadline, and we will need to review your assignment.",
   "mail.deadline.end.message": "The deadline was {{deadline}}, {{deadlineFromNow}}.",
-  "mail.deadline.end.button.primary": "Review task assignment",
+  "mail.deadline.end.button.primary": "Review issue assignment on Gitpay",
   "mail.deadline.end.button.secondary": "I'm not working on this anymore",
   "mail.deadline.end.owner.subject": "The deadline for the issue added to Gitpay ended",
   "mail.deadline.end.owner.hello": "Hello {{name}}",
