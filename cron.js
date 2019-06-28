@@ -17,7 +17,7 @@ const TaskCron = {
       status: 'in_progress',
       deadline: {
         $lt: moment(new Date()).format(),
-        $gt: moment(new Date()).subtract(14, 'days').format()
+        $gt: moment(new Date()).subtract(2, 'days').format()
       }
     },
     include: [ models.User ]
