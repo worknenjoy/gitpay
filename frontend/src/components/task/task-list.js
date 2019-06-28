@@ -77,11 +77,55 @@ class TaskList extends Component {
     }
   }
 
+  appropriatePathByCurrentTab = (currentTab, tabChange) => {
+    if (tabChange) {
+      switch (currentTab) {
+        case 0:
+          this.props.history.push('/tasks/explore')
+          this.props.filterTasks('open')
+          break
+        case 1:
+          this.props.history.push('/tasks/createdbyme')
+          this.props.filterTasks('userId')
+          break
+        case 2:
+          this.props.history.push('/tasks/interested')
+          this.props.filterTasks('Assigns')
+          break
+        case 3:
+          this.props.history.push('/tasks/assignedtome')
+          this.props.filterTasks('assigned')
+          break
+        default:
+      }
+    }
+    else {
+      switch (currentTab) {
+        case 0:
+          this.props.filterTasks('open')
+          break
+        case 1:
+          this.props.filterTasks('userId')
+          break
+        case 2:
+          this.props.filterTasks('Assigns')
+          break
+        case 3:
+          this.props.filterTasks('assigned')
+          break
+      }
+    }
+  }
+
   componentDidMount () {
     this.props.listTasks().then(t => {
       let pathName = this.props.history.location.pathname
       this.handleRoutePath(pathName)
       this.setState({ loading: false })
+      
+      const currentTab = this.state.tab
+
+      this.appropriatePathByCurrentTab(currentTab, false)
     })
   }
 
@@ -106,26 +150,7 @@ class TaskList extends Component {
 
   handleTabChange = (event, value) => {
     this.setState({ tab: value })
-    switch (value) {
-      case 0:
-        this.props.history.push('/tasks/explore')
-        this.props.filterTasks('open')
-        break
-      case 1:
-        this.props.history.push('/tasks/createdbyme')
-        this.props.filterTasks('userId')
-        break
-      case 2:
-        this.props.history.push('/tasks/interested')
-        this.props.filterTasks('Assigns')
-        break
-      case 3:
-        this.props.history.push('/tasks/assignedtome')
-        this.props.filterTasks('assigned')
-        break
-      default:
-      // this.props.filterTasks()
-    }
+    this.appropriatePathByCurrentTab(value, true)
   }
 
   render () {
