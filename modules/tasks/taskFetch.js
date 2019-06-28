@@ -87,12 +87,24 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   // send an email
                 }
               }
+
+              const repoInfo = await requestPromise({
+                uri: `${issueDataJsonGithub.repository_url}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
+                headers: {
+                  'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+                }
+              })
+              const repoInfoJSON = JSON.parse(repoInfo)
+              const repoUrl = repoInfoJSON.html_url
+              const ownerUrl = repoInfoJSON.owner.html_url
+
               const responseGithub = {
                 id: data.dataValues.id,
                 url: issueUrl,
                 title: data.dataValues.title,
                 value: data.dataValues.value || 0,
                 deadline: data.dataValues.deadline,
+                level: data.dataValues.level,
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
                 assignedUser: assigned && assigned.dataValues.User.dataValues,
@@ -105,6 +117,9 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   user: userOrCompany,
                   company: userOrCompany,
                   projectName: projectName,
+                  repoUrl: repoUrl,
+                  ownerUrl: ownerUrl,
+                  labels: issueDataJsonGithub.labels,
                   issue: issueDataJsonGithub
                 },
                 orders: data.dataValues.Orders,

@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import { withStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
-import TagFacesIcon from '@material-ui/icons/TagFaces'
+import Avatar from '@material-ui/core/Avatar'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Button from '@material-ui/core/Button'
+import WorkRoundedIcon from '@material-ui/icons/WorkRounded'
+import DoneIcon from '@material-ui/icons/Done'
+import ImportIcon from '@material-ui/icons/ImportExport'
 
 const styles = theme => ({
   root: {
     display: 'flex',
-
     flexWrap: 'wrap',
     padding: theme.spacing.unit / 2,
   },
@@ -17,59 +27,93 @@ const styles = theme => ({
 })
 
 class Organizations extends Component {
-  state = {
-    chipData: [
-      { key: 0, label: 'Angular' },
-      { key: 1, label: 'jQuery' },
-      { key: 2, label: 'Polymer' },
-      { key: 3, label: 'React' },
-      { key: 4, label: 'Vue.js' },
-    ],
-  };
-
-  handleDelete = data => () => {
-    if (data.label === 'React') {
-      console.log('Why would you want to delete React?! :)') // eslint-disable-line no-console
-      return
+  constructor (props) {
+    super(props)
+    this.state = {
+      dialogOpen: false,
+      currentOrg: {}
     }
+  }
 
-    this.setState(state => {
-      const chipData = [...state.chipData]
-      const chipToDelete = chipData.indexOf(data)
-      chipData.splice(chipToDelete, 1)
-      return { chipData }
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    data: PropTypes.object,
+    user: PropTypes.object,
+    onImport: PropTypes.func
+  }
+
+  handleClick = (org) => {
+    this.setState({ dialogOpen: true, currentOrg: org })
+  }
+
+  handleClose = () => {
+    this.setState({ dialogOpen: false })
+  }
+
+  handleImport = () => {
+    this.props.onImport({
+      name: this.state.currentOrg.name,
+      userId: this.props.user.id
+    }).then(org => {
+      this.setState({ dialogOpen: false })
+    }).catch(e => {
+      // eslint-disable-next-line no-console
+      console.log('error', e)
+      this.setState({ dialogOpen: false })
     })
-  };
+  }
 
   render () {
-    const { classes } = this.props
+    const { classes, data } = this.props
+    const { dialogOpen, currentOrg } = this.state
 
     return (
       <div className={ classes.root }>
-        { this.state.chipData.map(data => {
-          let icon = null
-
-          if (data.label === 'React') {
-            icon = <TagFacesIcon />
-          }
-
+        { data.length && data.map(org => {
           return (
             <Chip
-              key={ data.key }
-              icon={ icon }
-              label={ data.label }
-              onDelete={ this.handleDelete(data) }
+              avatar={ <Avatar src={ org.image } /> }
+              key={ org.name }
+              clickable
+              icon={ <WorkRoundedIcon /> }
+              label={ org.name }
+              onDelete={ () => this.handleClick(org) }
+              onClick={ () => this.handleClick(org) }
               className={ classes.chip }
+              deleteIcon={ org.imported ? <DoneIcon /> : <ImportIcon /> }
             />
           )
         }) }
+        <Dialog open={ dialogOpen } onClose={ this.handleClose } aria-labelledby='form-dialog-title'>
+          <DialogTitle id='form-dialog-title'>
+            <FormattedMessage id='organization.dialog.title' defaultMessage='Import organizations' />
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <FormattedMessage id='organization.dialog.desc' defaultMessage='You can import organizations in order to manage on Gitpay' />
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin='dense'
+              id='name'
+              label='Organization name'
+              value={ currentOrg.name }
+              disabled
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={ this.handleClose } color='primary'>
+              <FormattedMessage id='organization.dialog.cancel' defaultMessage='Cancel' />
+            </Button>
+            <Button onClick={ this.handleImport } disabled={ currentOrg.imported } color='primary'>
+              <FormattedMessage id='organization.dialog.action' defaultMessage='Import' />
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
-}
-
-Organizations.propTypes = {
-  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(Organizations)

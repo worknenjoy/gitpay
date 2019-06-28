@@ -45,7 +45,7 @@ describe('Crons', () => {
         .expect(200)
         .end((err, res) => {
           MockDate.set('2000-11-25')
-          models.Task.build({deadline: new Date('2000-11-22'), url: 'https://github.com/worknenjoy/truppie/issues/7336', userId: res.body.id, status: 'in_progress'}).save().then( task => {
+          models.Task.build({deadline: new Date('2000-11-24'), url: 'https://github.com/worknenjoy/truppie/issues/7336', userId: res.body.id, status: 'in_progress'}).save().then( task => {
             task.createAssign({userId: res.body.id}).then((assign) => {
                 task.update({
                   assigned: assign.dataValues.id

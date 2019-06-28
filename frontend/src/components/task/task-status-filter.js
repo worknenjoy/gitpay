@@ -40,6 +40,11 @@ class TaskStatusFilter extends Component {
     }
   }
 
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    onFilter: PropTypes.func
+  }
+
   componentDidUpdate (prevProps) {
     if (this.props.loading !== prevProps.loading) {
       let pathName = this.props.history.location.pathname
@@ -131,11 +136,6 @@ class TaskStatusFilter extends Component {
       </div>
     )
   }
-}
-
-TaskStatusFilter.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onFilter: PropTypes.func
 }
 
 export default injectIntl(withRouter(withStyles(styles)(TaskStatusFilter)))

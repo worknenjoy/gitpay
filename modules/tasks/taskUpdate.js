@@ -15,8 +15,9 @@ const TaskMail = require('../mail/task')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
+    const centavosAmount = orderParameters.amount * 100
     return stripe.charges.create({
-      amount: orderParameters.amount * 100,
+      amount: centavosAmount * 0.92, // 8% base fee
       currency: orderParameters.currency,
       customer: customer.id,
       source: card.id,
@@ -52,6 +53,10 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
         })
       }
       throw new Error('no charge')
+    }).catch(e => {
+      // eslint-disable-next-line no-console
+      console.log('could not create charge', e)
+      throw new Error(e)
     })
   })
 })

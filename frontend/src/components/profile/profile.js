@@ -45,7 +45,6 @@ import PreferencesBar from './preferences-bar'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
-const bannerDiscount = require('../../images/discount-99.png')
 
 const styles = theme => ({
   root: {
@@ -119,12 +118,19 @@ class Profile extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: null
+      selected: null,
+      orgsLoaded: false
     }
   }
 
   componentWillMount () {
     this.setActive(this.props.location.pathname)
+  }
+
+  componentDidMount () {
+    this.props.fetchOrganizations().then(org => {
+      this.setState({ orgsLoaded: true })
+    })
   }
 
   setActive (path) {
@@ -167,7 +173,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, preferences } = this.props
+    const { classes, user, preferences, organizations } = this.props
 
     let titleNavigation = this.getTitleNavigation()
 
@@ -333,24 +339,6 @@ class Profile extends Component {
               </div>
             </Grid>
             <Grid item xs={ 12 } md={ 9 }>
-              <Grid item xs={ 12 } md={ 12 }>
-                <div style={ { marginTop: 10, marginBottom: 10, display: 'none' } }>
-                  <Typography variant='h5' component='h3'>
-                    <FormattedMessage id='account.profile.welcome.headline' defaultMessage='Welcome to Gitpay!' />
-                  </Typography>
-                  <Typography component='p'>
-                    <FormattedMessage id='account.profile.welcome.description' defaultMessage='This is the first steps to start to work with Gitpay' />
-                  </Typography>
-                  <div style={ { marginTop: 20, marginBottom: 40 } }>
-                    <Organizations />
-                  </div>
-                </div>
-              </Grid>
-              <div style={ { marginTop: 20, marginBottom: 20, textAlign: 'center', display: 'none' } }>
-                <a href='https://app.turbomkt.com.br/checkout?tm=NLEAUIIG&fp=335084580644244&ga=UA-134720490-1&jc=dZZJJOyciC&src=gitpay'>
-                  <img src={ bannerDiscount } width='450' />
-                </a>
-              </div>
               <HashRouter>
                 <Switch>
                   <Route exact path='/profile' component={ ProfileOptions } />
@@ -371,6 +359,21 @@ class Profile extends Component {
                   />
                 </Switch>
               </HashRouter>
+              { this.state.orgsLoaded && organizations &&
+                <Grid item xs={ 12 } md={ 12 }>
+                  <div style={ { marginTop: 10, marginBottom: 10 } }>
+                    <Typography variant='h5' component='h3'>
+                      <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+                    </Typography>
+                    <Typography component='p'>
+                      <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
+                    </Typography>
+                    <div style={ { marginTop: 20, marginBottom: 40 } }>
+                      <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
+                    </div>
+                  </div>
+                </Grid>
+              }
             </Grid>
           </Grid>
         </PageContent>

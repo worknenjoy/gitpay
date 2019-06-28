@@ -1,0 +1,111 @@
+{
+    "id": "acct_1EYDS6IbQaEige6l",
+    "object": "account",
+    "business_logo": null,
+    "business_logo_large": null,
+    "business_name": null,
+    "business_primary_color": null,
+    "business_url": null,
+    "charges_enabled": true,
+    "country": "US",
+    "created": 1557412950,
+    "debit_negative_balances": false,
+    "decline_charge_on": {
+      "avs_failure": false,
+      "cvc_failure": false
+    },
+    "default_currency": "usd",
+    "details_submitted": false,
+    "display_name": null,
+    "email": "bob@example.com",
+    "external_accounts": {
+      "object": "list",
+      "data": [
+  
+      ],
+      "has_more": false,
+      "total_count": 0,
+      "url": "/v1/accounts/acct_1EYDS6IbQaEige6l/external_accounts"
+    },
+    "keys": {
+      "secret": "sk_test_HoxUg33d42xndxv4DZXSLY7o006yyasSHH",
+      "publishable": "pk_test_UQUVseztgujcIIFOBOsYQiSG00A1XA3Ozy"
+    },
+    "legal_entity": {
+      "additional_owners": [
+  
+      ],
+      "address": {
+        "city": null,
+        "country": "US",
+        "line1": null,
+        "line2": null,
+        "postal_code": null,
+        "state": null
+      },
+      "business_name": null,
+      "business_tax_id_provided": false,
+      "dob": {
+        "day": null,
+        "month": null,
+        "year": null
+      },
+      "first_name": null,
+      "last_name": null,
+      "personal_address": {
+        "city": null,
+        "country": "US",
+        "line1": null,
+        "line2": null,
+        "postal_code": null,
+        "state": null
+      },
+      "personal_id_number_provided": false,
+      "ssn_last_4_provided": false,
+      "type": null,
+      "verification": {
+        "details": null,
+        "details_code": null,
+        "document": null,
+        "document_back": null,
+        "status": "pending"
+      }
+    },
+    "mcc": null,
+    "metadata": {
+    },
+    "payout_schedule": {
+      "delay_days": 2,
+      "interval": "daily"
+    },
+    "payout_statement_descriptor": null,
+    "payouts_enabled": false,
+    "product_description": null,
+    "statement_descriptor": "",
+    "support_address": null,
+    "support_email": null,
+    "support_phone": null,
+    "support_url": null,
+    "timezone": "Etc/UTC",
+    "tos_acceptance": {
+      "date": null,
+      "ip": null,
+      "user_agent": null
+    },
+    "type": "custom",
+    "verification": {
+      "disabled_reason": "fields_needed",
+      "due_by": null,
+      "fields_needed": [
+        "external_account",
+        "legal_entity.dob.day",
+        "legal_entity.dob.month",
+        "legal_entity.dob.year",
+        "legal_entity.first_name",
+        "legal_entity.last_name",
+        "legal_entity.type",
+        "tos_acceptance.date",
+        "tos_acceptance.ip"
+      ]
+    }
+  }

@@ -45,7 +45,8 @@ import {
   Warning as WarningIcon,
   Info as InfoIcon,
   Delete as DeleteIcon,
-  SupervisedUserCircle as Members
+  SupervisedUserCircle as Members,
+  OpenInNew as ExternalLinkIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -79,6 +80,8 @@ import media from 'app/styleguide/media'
 import AssignActions from './assignment/AssignActions'
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
+import TaskLabels from './task-labels'
+import TaskLevel from './task-level'
 
 const TaskHeader = styled.div`
   box-sizing: border-box;
@@ -614,6 +617,10 @@ class Task extends Component {
     })
   }
 
+  goToProjectRepo = (url) => {
+    window.open(url, '_blank')
+  }
+
   render () {
     const { classes, task, order } = this.props
 
@@ -761,9 +768,28 @@ class Task extends Component {
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
                 { task.data.metadata &&
-                  <a className={ classes.white } href={ task.data.url }>
-                    { task.data.metadata.company }
-                  </a>
+                  <div style={ { marginTop: 20 } }>
+                    <Chip
+                      key={ task.data.metadata.company }
+                      clickable
+                      label={ task.data.metadata.company }
+                      onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                      className={ classes.chip }
+                      color='secondary'
+                      onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                      deleteIcon={ <ExternalLinkIcon /> }
+                    />
+                    <Chip
+                      key={ task.data.metadata.projectName }
+                      clickable
+                      label={ task.data.metadata.projectName }
+                      onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                      className={ classes.chip }
+                      color='secondary'
+                      onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                      deleteIcon={ <ExternalLinkIcon /> }
+                    />
+                  </div>
                 }
               </ReactPlaceholder>
             </Typography>
@@ -1343,6 +1369,9 @@ class Task extends Component {
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
+              { (task.data.level || taskOwner()) &&
+                <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !taskOwner() } onSelect={ this.props.updateTask } />
+              }
               <StatsCard
                 icon={ TrophyIcon }
                 iconColor='green'
@@ -1365,6 +1394,7 @@ class Task extends Component {
                   statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
                 />
               }
+              <TaskLabels labels={ task.data.metadata.labels } />
             </Grid>
           </Grid>
         </PageContent>
