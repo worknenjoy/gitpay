@@ -221,14 +221,12 @@ class TaskList extends Component {
                       id='task.user.account.create.headline'
                       defaultMessage='Login / signup to work in our tasks'
                     />
-                    ,
                   </Typography>
                   <Typography component='p'>
                     <FormattedMessage
                       id='task.user.account.create.description'
                       defaultMessage='Creating your account, you can be assigned to a task and receive bounties'
                     />
-                    ,
                   </Typography>
                 </CardContent>
                 <CardActions>
