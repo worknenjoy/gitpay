@@ -7,6 +7,7 @@ module.exports = Promise.method(function taskSearch () {
       {
         include: [ models.User, models.Order, models.Assign ],
         order: [
+          ['id', 'DESC'],
           ['status', 'DESC'],
         ]
       }
