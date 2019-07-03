@@ -914,7 +914,7 @@ class Account extends Component {
                           { this.state.countryCode && (
                             <div>
                               <Typography component='p' color='textSecondary'>
-                                <FormattedMessage id='account.register.country.label' defaultMessage='The country you choose to create your account' />
+                                <FormattedMessage id='account.register.country.label' defaultMessage='The country you chose to create your account' />
                               </Typography>
                               <Chip
                                 avatar={ <Avatar><img width={ 72 } src={ require(`../../images/countries/${this.state.countryImage}.png`) } /></Avatar> }
