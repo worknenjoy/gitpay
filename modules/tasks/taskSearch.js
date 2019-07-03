@@ -4,7 +4,12 @@ const models = require('../../models')
 module.exports = Promise.method(function taskSearch () {
   return models.Task
     .findAll(
-      { include: [ models.User, models.Order, models.Assign ] }
+      { 
+        include: [ models.User, models.Order, models.Assign ],  
+        order: [
+            ['status', 'DESC'],
+        ]
+      }
     )
     .then(data => {
       return data
