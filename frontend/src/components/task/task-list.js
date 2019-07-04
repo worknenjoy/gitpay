@@ -82,6 +82,24 @@ class TaskList extends Component {
       let pathName = this.props.history.location.pathname
       this.handleRoutePath(pathName)
       this.setState({ loading: false })
+
+      const currentTab = this.state.tab
+
+      switch (currentTab) {
+        case 0:
+          this.props.filterTasks('open')
+          break
+        case 1:
+          this.props.filterTasks('userId')
+          break
+        case 2:
+          this.props.filterTasks('Assigns')
+          break
+        case 3:
+          this.props.filterTasks('assigned')
+          break
+        default:
+      }
     })
   }
 
@@ -203,14 +221,12 @@ class TaskList extends Component {
                       id='task.user.account.create.headline'
                       defaultMessage='Login / signup to work in our tasks'
                     />
-                    ,
                   </Typography>
                   <Typography component='p'>
                     <FormattedMessage
                       id='task.user.account.create.description'
                       defaultMessage='Creating your account, you can be assigned to a task and receive bounties'
                     />
-                    ,
                   </Typography>
                 </CardContent>
                 <CardActions>

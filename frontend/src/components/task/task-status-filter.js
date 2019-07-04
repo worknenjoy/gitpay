@@ -45,11 +45,9 @@ class TaskStatusFilter extends Component {
     onFilter: PropTypes.func
   }
 
-  componentDidUpdate (prevProps) {
-    if (this.props.loading !== prevProps.loading) {
-      let pathName = this.props.history.location.pathname
-      this.handleFromUrl(pathName)
-    }
+  componentDidMount () {
+    let pathName = this.props.history.location.pathname
+    this.handleFromUrl(pathName)
   }
 
   handleFromUrl = value => {
