@@ -301,7 +301,7 @@
   "welcome.howto.item.two.primary": "Your demand was sent to our community",
   "welcome.howto.item.two.secondary": "We do internal campaigns to let users know about projects and opportunities that match their interest. You're notified by interested users, from beginners looking for learning to advanced contributors",
   "welcome.howto.item.three.primary": "The contributor send a pull request to claim for your bounty",
-  "welcome.howto.item.three.secondary": "A Pull Request is created and once reviewed and approved, the bounty is sent",
+  "welcome.howto.item.three.secondary": "A Pull Request is the proposed solution that will be reviewed, and once is approved, the bounty is sent directly to the contributor bank account",
   "welcome.howto.item.four.primary": "Agile and integrated process between management and development",
   "welcome.howto.item.four.secondary": "We want to make transactions and payment between collaborators and companies easier, so we use existing tools and agile process used from startups to big companies",
   "welcome.headline.forfreelancers": "For contributors",
