@@ -15,7 +15,7 @@ Os Pull Requests são nossos contratos para integração da mudança e finaliza�
 
 Por lá também acontece os feedbacks, comentários e até trabalho em conjunto, para a partir dali, após aprovado, o código.
 
-Baixe um (resumo prático do git (em inglês))[http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf]
+Baixe um resumo prático do git: http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf
 
 ## Testes automatizados para cada Pull Request
 
