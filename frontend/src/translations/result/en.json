@@ -289,7 +289,7 @@
   "welcome.main.item.two.primary": "Be assigned to issues you have interest and send your solution",
   "welcome.main.item.two.secondary": "Work in different projects, colaborate and learn with stacks",
   "welcome.main.item.three.primary": "Receive bounties by collaboration",
-  "welcome.main.item.three.secondary": "Receive bounties for the task you concluded with direct payment when your code is merged on the codebase",
+  "welcome.main.item.three.secondary": "Receive bounties for the issues concluded with direct payment to your account",
   "welcome.companies.item.one.primary": "Import issues thats need to be solved",
   "welcome.companies.item.one.secondary": "Add issues from Github or Bitbucket and set deadlines in Gitpay in order to track their progress and delivery",
   "welcome.companies.item.two.primary": "A community of passionate collaborators",
