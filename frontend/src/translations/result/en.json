@@ -214,7 +214,7 @@
   "task.members.table.label.user": "User",
   "task.members.table.label.role": "Role",
   "task.members.table.label.actions": "Actions",
-  "task.status.value": "Task value",
+  "task.status.value": "Amount paid",
   "task.status.info": "Approved: $ {approved}, Pending: $ {pending}, Failed: $ {failed}",
   "task.status.limit.date": "Deadline to conclude this task",
   "task.status.limit.date.not.informed": "(not informed)",
