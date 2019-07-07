@@ -395,5 +395,6 @@
   "task.deadline.level4": " daqui um mês ",
   "task.actions.tooltip.language": "Escolher idioma",
   "task.actions.tooltip.git": "Acessar nosso Github",
-  "task.status.deadline.headline": "Data de entrega"
+  "task.status.deadline.headline": "Data de entrega",
+  "task.paypal.payment.failed.button": "Tentar novamente"
 }

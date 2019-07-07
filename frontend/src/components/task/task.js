@@ -669,13 +669,37 @@ class Task extends Component {
       </span>)
     }
 
+    const resendNewOrder = (e, itemPrice, userId, taskId) => {
+      e.preventDefault()
+      this.props.createOrder({
+        provider: 'paypal',
+        currency: 'USD',
+        amount: itemPrice,
+        userId: userId,
+        TaskId: taskId
+      })
+    }
+
+    const retryPaypalPaymentButton = (item, status) => {
+      return (
+        <div style={ { display: 'inline-block' } }>
+          <span style={ { marginRight: '1rem' } }>{ status }</span>
+          <Button style={ { fontSize: 10, paddingTop: '2px', paddingBottom: '2px' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+            resendNewOrder(e, item.amount, item.User.id, item.TaskId)
+          } }>
+            <FormattedMessage id='task.paypal.payment.failed.button' defaultMessage='Retry' />
+          </Button>
+        </div>
+      )
+    }
+
     const displayOrders = orders => {
       if (!orders.length) {
         return []
       }
       return orders.map((item, i) => [
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
-        statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
+        item.status === 'fail' ? retryPaypalPaymentButton(item, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
