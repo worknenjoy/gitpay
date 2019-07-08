@@ -431,6 +431,5 @@
   "task.deadline.level4": " In on month ",
   "task.actions.tooltip.language": "Choose your language",
   "task.actions.tooltip.git": "See our project on Github",
-  "task.status.deadline.headline": "Finish date",
-  "task.paypal.payment.failed.button": "Retry"
+  "task.status.deadline.headline": "Finish date"
 }

@@ -46,7 +46,8 @@ import {
   Info as InfoIcon,
   Delete as DeleteIcon,
   SupervisedUserCircle as Members,
-  OpenInNew as ExternalLinkIcon
+  OpenInNew as ExternalLinkIcon,
+  Refresh as RefreshIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -687,7 +688,7 @@ class Task extends Component {
           <Button style={ { fontSize: 10, paddingTop: '2px', paddingBottom: '2px' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
             resendNewOrder(e, item.amount, item.User.id, item.TaskId)
           } }>
-            <FormattedMessage id='task.paypal.payment.failed.button' defaultMessage='Retry' />
+            <RefreshIcon />
           </Button>
         </div>
       )
