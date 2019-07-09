@@ -670,23 +670,20 @@ class Task extends Component {
       </span>)
     }
 
-    const resendNewOrder = (e, itemPrice, userId, taskId) => {
+    const retryPaypalOrderPayment = (e, paymentUrl) => {
       e.preventDefault()
-      this.props.createOrder({
-        provider: 'paypal',
-        currency: 'USD',
-        amount: itemPrice,
-        userId: userId,
-        TaskId: taskId
-      })
+
+      if (paymentUrl) {
+        window.location.href = paymentUrl
+      }
     }
 
-    const retryPaypalPaymentButton = (item, status) => {
+    const retryPaypalPaymentButton = (paymentUrl, status) => {
       return (
         <div style={ { display: 'inline-block' } }>
           <span style={ { marginRight: '1rem' } }>{ status }</span>
           <Button style={ { fontSize: 10, paddingTop: '2px', paddingBottom: '2px' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
-            resendNewOrder(e, item.amount, item.User.id, item.TaskId)
+            retryPaypalOrderPayment(e, paymentUrl)
           } }>
             <RefreshIcon />
           </Button>
@@ -700,7 +697,7 @@ class Task extends Component {
       }
       return orders.map((item, i) => [
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
-        item.status === 'fail' ? retryPaypalPaymentButton(item, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
+        item.status === 'fail' && item.payment_url ? retryPaypalPaymentButton(item.payment_url, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
