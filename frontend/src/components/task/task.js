@@ -670,7 +670,7 @@ class Task extends Component {
       </span>)
     }
 
-    const retryPaypalOrderPayment = (e, paymentUrl) => {
+    const retryPaypalPayment = (e, paymentUrl) => {
       e.preventDefault()
 
       if (paymentUrl) {
@@ -682,8 +682,8 @@ class Task extends Component {
       return (
         <div style={ { display: 'inline-block' } }>
           <span style={ { marginRight: '1rem' } }>{ status }</span>
-          <Button style={ { fontSize: 10, paddingTop: '2px', paddingBottom: '2px' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
-            retryPaypalOrderPayment(e, paymentUrl)
+          <Button style={ { paddingTop: '2px', paddingBottom: '2px', width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+            retryPaypalPayment(e, paymentUrl)
           } }>
             <RefreshIcon />
           </Button>
