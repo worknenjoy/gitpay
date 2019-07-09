@@ -58,7 +58,7 @@ class PaypalPaymentDialog extends Component {
               marginTop: 40,
               fontFamily: 'Roboto',
               background: '#ecf0f1',
-              padding: '20px'
+              padding: 20
             } }>
               <FormattedMessage id='payment.paypal.warning' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
             </div>

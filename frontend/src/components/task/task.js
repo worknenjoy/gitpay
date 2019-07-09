@@ -682,7 +682,7 @@ class Task extends Component {
       return (
         <div style={ { display: 'inline-block' } }>
           <span style={ { marginRight: '1rem' } }>{ status }</span>
-          <Button style={ { paddingTop: '2px', paddingBottom: '2px', width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+          <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
             retryPaypalPayment(e, paymentUrl)
           } }>
             <RefreshIcon />
