@@ -46,7 +46,8 @@ import {
   Info as InfoIcon,
   Delete as DeleteIcon,
   SupervisedUserCircle as Members,
-  OpenInNew as ExternalLinkIcon
+  OpenInNew as ExternalLinkIcon,
+  Refresh as RefreshIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -669,13 +670,34 @@ class Task extends Component {
       </span>)
     }
 
+    const retryPaypalPayment = (e, paymentUrl) => {
+      e.preventDefault()
+
+      if (paymentUrl) {
+        window.location.href = paymentUrl
+      }
+    }
+
+    const retryPaypalPaymentButton = (paymentUrl, status) => {
+      return (
+        <div style={ { display: 'inline-block' } }>
+          <span style={ { marginRight: '1rem' } }>{ status }</span>
+          <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+            retryPaypalPayment(e, paymentUrl)
+          } }>
+            <RefreshIcon />
+          </Button>
+        </div>
+      )
+    }
+
     const displayOrders = orders => {
       if (!orders.length) {
         return []
       }
       return orders.map((item, i) => [
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
-        statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
+        item.status === 'fail' && item.payment_url ? retryPaypalPaymentButton(item.payment_url, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
