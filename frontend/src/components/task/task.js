@@ -695,9 +695,16 @@ class Task extends Component {
       if (!orders.length) {
         return []
       }
+
+      let userId
+
+      if (this.props.logged) {
+        userId = this.props.user.id
+      }
+
       return orders.map((item, i) => [
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
-        item.status === 'fail' && item.payment_url ? retryPaypalPaymentButton(item.payment_url, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
+        item.status === 'fail' && item.payment_url && userId === item.User.id ? retryPaypalPaymentButton(item.payment_url, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
