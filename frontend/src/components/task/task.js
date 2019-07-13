@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import MomentComponent from 'moment'
 import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
 import 'react-placeholder/lib/reactPlaceholder.css'
+import { messages } from './messages/task-messages'
+import TaskTabs from './task-tabs'
 
 import {
   Dialog,
@@ -15,9 +17,6 @@ import {
   Avatar,
   Card,
   CardHeader,
-  AppBar,
-  Tabs,
-  Tab,
   Typography,
   Button,
   Tooltip,
@@ -33,21 +32,18 @@ import {
 
 import {
   Redeem as RedeemIcon,
-  ShoppingBasket,
+  // ShoppingBasket,
   AddBox as AddIcon,
   FilterList as FilterIcon,
   HowToReg as TrophyIcon,
   DateRange as DateIcon,
   CalendarToday as CalendarIcon,
-  HowToReg as GroupWorkIcon,
   Done as DoneIcon,
   Navigation as NavigationIcon,
   Warning as WarningIcon,
   Info as InfoIcon,
   Delete as DeleteIcon,
-  SupervisedUserCircle as Members,
-  OpenInNew as ExternalLinkIcon,
-  Refresh as RefreshIcon
+  OpenInNew as ExternalLinkIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -56,21 +52,18 @@ import TaskPaymentForm from './task-payment-form'
 import TaskDeadlineForm from './task-deadline-form'
 
 import StatsCard from '../Cards/StatsCard'
-import RegularCard from '../Cards/RegularCard'
-import Table from '../Table/Table'
+// import RegularCard from '../Cards/RegularCard'
+// import Table from '../Table/Table'
 
 import classNames from 'classnames'
 
-import marked from 'marked'
-import renderHTML from 'react-render-html'
+// import marked from 'marked'
+// import renderHTML from 'react-render-html'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import LoginButton from '../session/login-button'
 
-const logoGithub = require('../../images/github-logo.png')
-
-import PaymentTypeIcon from '../payment/payment-type-icon'
 import Constants from '../../consts'
 
 import { PageContent } from 'app/styleguide/components/Page'
@@ -78,7 +71,6 @@ import { PageContent } from 'app/styleguide/components/Page'
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
-import AssignActions from './assignment/AssignActions'
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
@@ -113,11 +105,6 @@ const Tags = styled.div`
   `}
 `
 
-const PlaceholderDiv = styled.div`
- img {
-   width: 100%;
- }
-`
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -306,141 +293,6 @@ const styles = theme => ({
   }
 })
 
-const messages = defineMessages({
-  openStatus: {
-    id: 'task.status.status.payment.open',
-    defaultMessage: 'Open'
-  },
-  succeededStatus: {
-    id: 'task.status.filter.payment.succeeded',
-    defaultMessage: 'Successfull payment'
-  },
-  failStatus: {
-    id: 'task.status.filter.payment.failed',
-    defaultMessage: 'Payment failed'
-  },
-  noUserFound: {
-    id: 'task.user.find.none',
-    defaultMessage: 'User not registered'
-  },
-  labelYes: {
-    id: 'task.order.paid.yes',
-    defaultMessage: 'Yes'
-  },
-  labelNo: {
-    id: 'task.order.paid.no',
-    defaultMessage: 'No'
-  },
-  unprocessed: {
-    id: 'task.order.paid.proccess.none',
-    defaultMessage: 'Pending'
-  },
-  taskLabel: {
-    id: 'task.tab.label',
-    defaultMessage: 'Task'
-  },
-  orderLabel: {
-    id: 'task.tab.order',
-    defaultMessage: 'Orders'
-  },
-  interestedLabel: {
-    id: 'task.tab.interested',
-    defaultMessage: 'Interested'
-  },
-  membersLabel: {
-    id: 'task.tab.members',
-    defaultMessage: 'Members'
-  },
-  cardTitle: {
-    id: 'task.card.title',
-    defaultMessage: 'Payments for this task'
-  },
-  cardSubtitle: {
-    id: 'task.card.subtitle',
-    defaultMessage: 'This payments will be transfered after the task be finished'
-  },
-  cardTableHeaderPaid: {
-    id: 'task.card.table.header.paid',
-    defaultMessage: 'Paid'
-  },
-  cardTableHeaderStatus: {
-    id: 'task.card.table.header.status',
-    defaultMessage: 'Status'
-  },
-  cardTableHeaderValue: {
-    id: 'task.card.table.header.value',
-    defaultMessage: 'Value'
-  },
-  cardTableHeaderCreated: {
-    id: 'task.card.table.header.created',
-    defaultMessage: 'Created at'
-  },
-  cardTableHeaderUser: {
-    id: 'task.card.table.header.user',
-    defaultMessage: 'User'
-  },
-  cardTableHeaderPayment: {
-    id: 'task.card.table.header.payment',
-    defaultMessage: 'Payment'
-  },
-  interestedCardTitle: {
-    id: 'task.card.interested.title',
-    defaultMessage: 'Interest to work in this task'
-  },
-  interestedCardSubTitle: {
-    id: 'task.card.interested.subtitle',
-    defaultMessage: 'This is interested users to conclude this task'
-  },
-  interestedTableLabelUser: {
-    id: 'task.interested.table.label.user',
-    defaultMessage: 'User'
-  },
-  interestedTableLabelWhen: {
-    id: 'task.interested.table.label.when',
-    defaultMessage: 'When'
-  },
-  interestedTableLabelActions: {
-    id: 'task.interested.table.label.actions',
-    defaultMessage: 'Actions'
-  },
-  membersCardTitle: {
-    id: 'task.members.table.label.title',
-    defaultMessage: 'Members of this task'
-  },
-  membersCardSubTitle: {
-    id: 'task.members.table.label.subtitle',
-    defaultMessage: 'When you create a task on Gitpay, it import members and original owners'
-  },
-  membersTableLabelUser: {
-    id: 'task.members.table.label.user',
-    defaultMessage: 'User'
-  },
-  membersTableLabelRole: {
-    id: 'task.members.table.label.role',
-    defaultMessage: 'Role'
-  },
-  membersTableLabelActions: {
-    id: 'task.members.table.label.actions',
-    defaultMessage: 'Actions'
-  },
-  taskValueLabel: {
-    id: 'task.status.value',
-    defaultMessage: 'Task value'
-  },
-  taskValuesStatus: {
-    id: 'task.status.info',
-    defaultMessage: 'Approved: $ {approved}, Pending: $ {pending}, Failed: $ {failed}'
-  },
-  taskLimitDate: {
-    id: 'task.status.limit.date',
-    defaultMessage: 'Deadline to conclude this task'
-  },
-  deliveryDateNotInformed: {
-    id: 'task.status.limit.date.not.informed',
-    defaultMessage: '(not informed)'
-  }
-})
-
 class Task extends Component {
   constructor (props) {
     super(props)
@@ -483,14 +335,6 @@ class Task extends Component {
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
       this.props.changeTab(3)
     }
-  }
-
-  handleTabChange = (event, tab) => {
-    const id = this.props.match.params.id
-    if (tab === 1) this.props.history.push(`/task/${id}/orders`)
-    if (tab === 2) this.props.history.push(`/task/${id}/interested`)
-    if (tab === 3) this.props.history.push(`/task/${id}/members`)
-    this.props.changeTab(tab)
   }
 
   handleAssignDialogClose = () => {
@@ -625,20 +469,6 @@ class Task extends Component {
   render () {
     const { classes, task, order } = this.props
 
-    const TabContainer = props => {
-      return (
-        <Typography component='div' style={ { padding: 8 * 3 } }>
-          { props.children }
-        </Typography>
-      )
-    }
-
-    const statuses = {
-      open: this.props.intl.formatMessage(messages.openStatus),
-      succeeded: this.props.intl.formatMessage(messages.succeededStatus),
-      fail: this.props.intl.formatMessage(messages.failStatus)
-    }
-
     const taskOwner = () => {
       const creator = this.props.logged && this.props.user.id === task.data.userId
       const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === this.props.user.id).length > 0 : false
@@ -649,120 +479,8 @@ class Task extends Component {
       return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
     }
 
-    const userRow = user => {
-      return (<span>
-        { user && user.length && user.profile_url
-          ? (
-            <FormattedMessage id='task.payment.user.check.github' defaultMessage='Check this user profile at Github'>
-              { (msg) => (
-                <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                  <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                    <span>{ user.username || user.name || ' - ' }</span>
-                    <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
-                  </a>
-                </Tooltip>
-              ) }
-            </FormattedMessage>
-          ) : (
-            `${user && (user.username || user.name || this.props.intl.formatMessage(messages.noUserFound))}`
-          )
-        }
-      </span>)
-    }
-
-    const retryPaypalPayment = (e, paymentUrl) => {
-      e.preventDefault()
-
-      if (paymentUrl) {
-        window.location.href = paymentUrl
-      }
-    }
-
-    const retryPaypalPaymentButton = (paymentUrl, status) => {
-      return (
-        <div style={ { display: 'inline-block' } }>
-          <span style={ { marginRight: '1rem' } }>{ status }</span>
-          <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
-            retryPaypalPayment(e, paymentUrl)
-          } }>
-            <RefreshIcon />
-          </Button>
-        </div>
-      )
-    }
-
-    const displayOrders = orders => {
-      if (!orders.length) {
-        return []
-      }
-
-      let userId
-
-      if (this.props.logged) {
-        userId = this.props.user.id
-      }
-
-      return orders.map((item, i) => [
-        item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
-        item.status === 'fail' && item.payment_url && userId === item.User.id ? retryPaypalPaymentButton(item.payment_url, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
-        `$ ${item.amount}`,
-        MomentComponent(item.updatedAt).fromNow(),
-        userRow(item.User),
-        <PaymentTypeIcon type={ item.provider } />
-      ])
-    }
-
-    const displayMembers = members => {
-      if (!members.length) {
-        return []
-      }
-      return members.map((item, i) => [
-        item.User.username,
-        item.Role && item.Role.label,
-        ''
-      ])
-    }
-
     const isAssignOwner = () => {
       return taskOwner() || isCurrentUserAssigned()
-    }
-
-    const assignActions = assign => {
-      const task = this.props.task.data
-      return <AssignActions isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } />
-    }
-
-    const displayAssigns = assign => {
-      if (!assign.length) {
-        return []
-      }
-
-      const items = assign.map((item, i) => {
-        const userField = () => (
-          <span>
-            { item.User.profile_url
-              ? (
-                <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
-                  { (msg) => (
-                    <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                      <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                        <span>{ item.User.username || item.User.name || ' - ' }</span>
-                        <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
-                      </a>
-                    </Tooltip>
-                  ) }
-                </FormattedMessage>
-              ) : (
-                `${item.User.username || item.User.name || ' - '}`
-              )
-            }
-          </span>
-        )
-
-        return [userField(), MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
-      })
-
-      return items
     }
 
     const headerPlaceholder = (
@@ -1301,100 +1019,7 @@ class Task extends Component {
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
               <div className={ classes.rootTabs }>
-                <AppBar position='static' color='default'>
-                  <Tabs
-                    value={ task.tab }
-                    onChange={ this.handleTabChange }
-                    scrollable
-                    scrollButtons='on'
-                    indicatorColor='primary'
-                    textColor='primary'
-                  >
-                    <Tab label={ this.props.intl.formatMessage(messages.taskLabel) } icon={ <RedeemIcon /> } />
-                    <Tab label={ this.props.intl.formatMessage(messages.orderLabel) } icon={ <ShoppingBasket /> } />
-                    <Tab label={ this.props.intl.formatMessage(messages.interestedLabel) } icon={ <GroupWorkIcon /> } />
-                    <Tab label={ this.props.intl.formatMessage(messages.membersLabel) } icon={ <Members /> } />
-                  </Tabs>
-                </AppBar>
-                { task.tab === 0 &&
-                  <TabContainer>
-                    <Card className={ classes.paper }>
-                      <Typography variant='title' align='left' gutterBottom>
-                        <FormattedMessage id='task.info.description' defaultMessage='Description' />
-                      </Typography>
-                      <Typography variant='body2' align='left' gutterBottom>
-                        <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
-                          <PlaceholderDiv className={ classes.contentBody }>
-                            { renderHTML(marked(task.data.metadata.issue.body)) }
-                          </PlaceholderDiv>
-                        </ReactPlaceholder>
-                      </Typography>
-                    </Card>
-                  </TabContainer>
-                }
-                { task.tab === 1 &&
-                  <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-                    <RegularCard
-                      headerColor='green'
-                      cardTitle={ this.props.intl.formatMessage(messages.cardTitle) }
-                      cardSubtitle={ this.props.intl.formatMessage(messages.cardSubtitle) }
-                      content={
-                        <Table
-                          tableHeaderColor='warning'
-                          tableHead={ [
-                            this.props.intl.formatMessage(messages.cardTableHeaderPaid),
-                            this.props.intl.formatMessage(messages.cardTableHeaderStatus),
-                            this.props.intl.formatMessage(messages.cardTableHeaderValue),
-                            this.props.intl.formatMessage(messages.cardTableHeaderCreated),
-                            this.props.intl.formatMessage(messages.cardTableHeaderUser),
-                            this.props.intl.formatMessage(messages.cardTableHeaderPayment)
-                          ] }
-                          tableData={ task.data.orders.length ? displayOrders(task.data.orders) : [] }
-                        />
-                      }
-                    />
-                  </div>
-                }
-                { task.tab === 2 &&
-                  <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-                    <RegularCard
-                      headerColor='green'
-                      cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
-                      cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
-                      content={
-                        <Table
-                          tableHeaderColor='warning'
-                          tableHead={ [
-                            this.props.intl.formatMessage(messages.interestedTableLabelUser),
-                            this.props.intl.formatMessage(messages.interestedTableLabelWhen),
-                            this.props.intl.formatMessage(messages.interestedTableLabelActions)
-                          ] }
-                          tableData={ task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
-                        />
-                      }
-                    />
-                  </div>
-                }
-                { task.tab === 3 &&
-                  <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-                    <RegularCard
-                      headerColor='green'
-                      cardTitle={ this.props.intl.formatMessage(messages.membersCardTitle) }
-                      cardSubtitle={ this.props.intl.formatMessage(messages.membersCardSubTitle) }
-                      content={
-                        <Table
-                          tableHeaderColor='warning'
-                          tableHead={ [
-                            this.props.intl.formatMessage(messages.membersTableLabelUser),
-                            this.props.intl.formatMessage(messages.membersTableLabelRole),
-                            this.props.intl.formatMessage(messages.membersTableLabelActions)
-                          ] }
-                          tableData={ task.data.members && task.data.members.length ? displayMembers(task.data.members) : [] }
-                        />
-                      }
-                    />
-                  </div>
-                }
+                <TaskTabs isAssignOwner={ isAssignOwner() } task={ task } match={ this.props.match } />
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
