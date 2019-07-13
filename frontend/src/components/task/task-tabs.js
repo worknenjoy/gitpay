@@ -56,7 +56,6 @@ const styles = theme => ({
 
 class TaskTabs extends React.Component {
   handleTabChange = (event, tab) => {
-    debugger
     const id = this.props.match.params.id
     if (tab === 1) this.props.history.push(`/task/${id}/orders`)
     if (tab === 2) this.props.history.push(`/task/${id}/interested`)
