@@ -32,7 +32,6 @@ import {
 
 import {
   Redeem as RedeemIcon,
-  // ShoppingBasket,
   AddBox as AddIcon,
   FilterList as FilterIcon,
   HowToReg as TrophyIcon,
@@ -52,13 +51,7 @@ import TaskPaymentForm from './task-payment-form'
 import TaskDeadlineForm from './task-deadline-form'
 
 import StatsCard from '../Cards/StatsCard'
-// import RegularCard from '../Cards/RegularCard'
-// import Table from '../Table/Table'
-
 import classNames from 'classnames'
-
-// import marked from 'marked'
-// import renderHTML from 'react-render-html'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
@@ -335,6 +328,14 @@ class Task extends Component {
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
       this.props.changeTab(3)
     }
+  }
+
+  handleTabChange = (event, tab) => {
+    const id = this.props.match.params.id
+    if (tab === 1) this.props.history.push(`/task/${id}/orders`)
+    if (tab === 2) this.props.history.push(`/task/${id}/interested`)
+    if (tab === 3) this.props.history.push(`/task/${id}/members`)
+    this.props.changeTab(tab)
   }
 
   handleAssignDialogClose = () => {
@@ -1019,7 +1020,7 @@ class Task extends Component {
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
               <div className={ classes.rootTabs }>
-                <TaskTabs isAssignOwner={ isAssignOwner() } task={ task } match={ this.props.match } />
+                <TaskTabs isAssignOwner={ isAssignOwner } task={ task } handleTabChange={ this.handleTabChange } />
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>

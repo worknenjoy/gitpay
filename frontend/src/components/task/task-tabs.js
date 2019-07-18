@@ -55,14 +55,6 @@ const styles = theme => ({
 })
 
 class TaskTabs extends React.Component {
-  handleTabChange = (event, tab) => {
-    const id = this.props.match.params.id
-    if (tab === 1) this.props.history.push(`/task/${id}/orders`)
-    if (tab === 2) this.props.history.push(`/task/${id}/interested`)
-    if (tab === 3) this.props.history.push(`/task/${id}/members`)
-    this.props.changeTab(tab)
-  }
-
   render () {
     const isAssignOwner = this.props.isAssignOwner
     const { task, classes } = this.props
@@ -198,7 +190,7 @@ class TaskTabs extends React.Component {
         <AppBar position='static' color='default'>
           <Tabs
             value={ task.tab }
-            onChange={ this.handleTabChange }
+            onChange={ this.props.handleTabChange }
             scrollable
             scrollButtons='on'
             indicatorColor='primary'
