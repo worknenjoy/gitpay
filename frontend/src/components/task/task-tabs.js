@@ -57,7 +57,6 @@ const styles = theme => ({
 
 class TaskTabs extends React.Component {
   render () {
-    debugger
     const { task, classes, logged, isAssignOwner, user } = this.props
 
     const statuses = {
