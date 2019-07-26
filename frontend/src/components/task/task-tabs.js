@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import renderHTML from 'react-render-html'
 import marked from 'marked'
@@ -56,8 +57,8 @@ const styles = theme => ({
 
 class TaskTabs extends React.Component {
   render () {
-    const isAssignOwner = this.props.isAssignOwner
-    const { task, classes } = this.props
+    debugger
+    const { task, classes, logged, isAssignOwner, user } = this.props
 
     const statuses = {
       open: this.props.intl.formatMessage(messages.openStatus),
@@ -152,8 +153,8 @@ class TaskTabs extends React.Component {
 
       let userId
 
-      if (this.props.logged) {
-        userId = this.props.user.id
+      if (logged) {
+        userId = user.id
       }
 
       return orders.map((item, i) => [
@@ -284,6 +285,15 @@ class TaskTabs extends React.Component {
       </div>
     )
   }
+}
+
+TaskTabs.propTypes = {
+  classes: PropTypes.object.isRequired,
+  task: PropTypes.object,
+  handleTabChange: PropTypes.func,
+  user: PropTypes.object,
+  isAssignOwner: PropTypes.func,
+  logged: PropTypes.bool
 }
 
 export default injectIntl(withStyles(styles)(TaskTabs))

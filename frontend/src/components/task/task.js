@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import MomentComponent from 'moment'
-import ReactPlaceholder from 'react-placeholder'
-import { RectShape } from 'react-placeholder/lib/placeholders'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from './messages/task-messages'
 import TaskTabs from './task-tabs'
+import TaskHeader from './task-header'
 
 import {
   Dialog,
@@ -37,12 +36,9 @@ import {
   HowToReg as TrophyIcon,
   DateRange as DateIcon,
   CalendarToday as CalendarIcon,
-  Done as DoneIcon,
-  Navigation as NavigationIcon,
   Warning as WarningIcon,
   Info as InfoIcon,
-  Delete as DeleteIcon,
-  OpenInNew as ExternalLinkIcon
+  Delete as DeleteIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -61,42 +57,10 @@ import Constants from '../../consts'
 
 import { PageContent } from 'app/styleguide/components/Page'
 
-import styled from 'styled-components'
-import media from 'app/styleguide/media'
-
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
-
-const TaskHeader = styled.div`
-  box-sizing: border-box;
-  background: black;
-  padding: 1rem 3rem 1rem 3rem;
-  position: relative;
-  margin: -2rem -3rem 1rem -3rem;
-
-  border-top: 1px solid #999;
-
-  ${media.phone`
-    margin: -1rem -1rem 1rem -1rem;
-    padding: 1rem;
-
-    & h1 {
-      font-size: 1.75rem;
-    }
-  `}
-`
-
-const Tags = styled.div`
-  display: inline-block;
-
-  ${media.phone`
-    display: block;
-    margin-top: 1rem;
-    margin-left: -20px;
-  `}
-`
 
 const styles = theme => ({
   root: {
@@ -418,10 +382,6 @@ class Task extends Component {
     this.setState({ taskInviteDialog: true })
   }
 
-  handleBackToTaskList = () => {
-    window.location.assign('/#/tasks/explore')
-  }
-
   handleInputInterestedCommentChange = (e) => {
     this.setState({ interestedComment: e.target.value, charactersCount: e.target.value.length })
   }
@@ -484,15 +444,6 @@ class Task extends Component {
       return taskOwner() || isCurrentUserAssigned()
     }
 
-    const headerPlaceholder = (
-      <div className='line-holder'>
-        <RectShape
-          color='white'
-          style={ { marginLeft: 20, marginTop: 20, width: 300, height: 20 } }
-        />
-      </div>
-    )
-
     const updatedAtTimeString = MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A')
     const timePlaceholder = (
       <Typography type='subheading' style={ { padding: 10, color: 'gray', marginRight: 10 } }>
@@ -507,77 +458,7 @@ class Task extends Component {
       <div>
         <TopBarContainer />
         <PageContent>
-          <TaskHeader>
-            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='contained' size='small' aria-label='Delete' className={ classes.button }>
-              <NavigationIcon />
-              <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
-            </Button>
-            <Typography variant='subheading' style={ { color: '#bbb' } }>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
-                ready={ task.completed }>
-                { task.data.metadata &&
-                  <div style={ { marginTop: 20 } }>
-                    <Chip
-                      key={ task.data.metadata.company }
-                      clickable
-                      label={ task.data.metadata.company }
-                      onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                      className={ classes.chip }
-                      color='secondary'
-                      onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                      deleteIcon={ <ExternalLinkIcon /> }
-                    />
-                    <Chip
-                      key={ task.data.metadata.projectName }
-                      clickable
-                      label={ task.data.metadata.projectName }
-                      onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                      className={ classes.chip }
-                      color='secondary'
-                      onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                      deleteIcon={ <ExternalLinkIcon /> }
-                    />
-                  </div>
-                }
-              </ReactPlaceholder>
-            </Typography>
-
-            <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
-              ready={ task.completed }>
-              <Typography variant='display1' color='primary' align='left' gutterBottom>
-                <a className={ classes.white } href={ task.data.url }>
-                  { task.data.title }
-                </a>
-
-                <Tags>
-                  <Chip
-                    style={ { marginRight: 10 } }
-                    label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                    className={ classes.chipStatus }
-                    onDelete={ this.handleStatusDialog }
-                    onClick={ this.handleStatusDialog }
-                    deleteIcon={ <DoneIcon /> }
-                  />
-
-                  { task.data.paid && (
-                    <FormattedMessage id='task.status.label.paid' defaultMessage='Paid'>
-                      { (msg) => (
-                        <Chip
-                          style={ { marginRight: 10 } }
-                          label={ msg }
-                          className={ classes.chipStatusPaid }
-                          onDelete={ this.handleTaskPaymentDialog }
-                          onClick={ this.handleTaskPaymentDialog }
-                          deleteIcon={ <RedeemIcon /> }
-                        />
-                      ) }
-                    </FormattedMessage>
-                  ) }
-                </Tags>
-
-              </Typography>
-            </ReactPlaceholder>
-          </TaskHeader>
+          <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } />
           <Grid
             container
             justify='flex-start'
@@ -1020,7 +901,7 @@ class Task extends Component {
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
               <div className={ classes.rootTabs }>
-                <TaskTabs isAssignOwner={ isAssignOwner } task={ task } handleTabChange={ this.handleTabChange } />
+                <TaskTabs isAssignOwner={ isAssignOwner } task={ task } handleTabChange={ this.handleTabChange } logged={ this.props.logged } user={ this.props.user } />
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
