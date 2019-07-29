@@ -1,5 +1,6 @@
 import { defineMessages } from 'react-intl'
 
+// messages for translations on Crowdin - https://crowdin.com/project/gitpay
 export const messages = defineMessages({
   openStatus: {
     id: 'task.status.status.payment.open',
