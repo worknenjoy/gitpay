@@ -10,7 +10,7 @@ const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists
 const memberExists = require('../members').memberExists
 const i18n = require('i18n')
-const constants = require('../mail/constants')
+// const constants = require('../mail/constants')
 // const TaskMail = require('../mail/task')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
