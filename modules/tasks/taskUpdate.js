@@ -10,8 +10,8 @@ const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists
 const memberExists = require('../members').memberExists
 const i18n = require('i18n')
-const constants = require('../mail/constants')
-const TaskMail = require('../mail/task')
+// const constants = require('../mail/constants')
+// const TaskMail = require('../mail/task')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
@@ -32,6 +32,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           status: charge.status
         }).then(updatedUser => {
           PaymentMail.success(user, task, order.amount)
+          /*
           TaskMail.notifyPayment(task.dataValues.User, {
             task: {
               title: task.dataValues.title,
@@ -40,6 +41,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
               url: constants.taskUrl(task.dataValues.id)
             }
           })
+          */
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
             return models.Assign.findById(assignedId, {
