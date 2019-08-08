@@ -292,7 +292,9 @@ TaskTabs.propTypes = {
   handleTabChange: PropTypes.func,
   user: PropTypes.object,
   isAssignOwner: PropTypes.func,
-  logged: PropTypes.bool
+  logged: PropTypes.bool,
+  removeAssignment: PropTypes.func,
+  assignTask: PropTypes.func
 }
 
 export default injectIntl(withStyles(styles)(TaskTabs))
