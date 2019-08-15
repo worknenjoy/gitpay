@@ -81,6 +81,7 @@
     "is-github-url": "^1.2.2",
     "jss": "^9.8.7",
     "lodash": "^4.17.11",
+    "logrocket": "^1.0.3",
     "marked": "^0.3.19",
     "moment": "^2.22.1",
     "name-initials": "^0.1.3",

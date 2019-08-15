@@ -3,6 +3,7 @@ import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
+import LogRocket from 'logrocket'
 
 import {
   MuiThemeProvider,
@@ -30,6 +31,7 @@ addLocaleData([...localeEn, ...localeBr])
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize('UA-114655639-1')
   ReactGA.pageview(window.location.pathname + window.location.search)
+  LogRocket.init('ie8a2g/gitpay')
 }
 
 const messages = {
