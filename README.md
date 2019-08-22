@@ -5,7 +5,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Percentage of issues still open")
 
-An Open Source Bounty platform to solve issues from Git
+An Open Source Bounty platform to solve issues from Git, since open source and libraries to real projects demands
 
 https://gitpitch.com/worknenjoy/gitpay
 
