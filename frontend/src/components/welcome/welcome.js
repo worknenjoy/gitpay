@@ -30,10 +30,10 @@ import {
   ArrowForward
 } from '@material-ui/icons'
 
+import './mailchimp.css'
+
 import scrollToComponent from 'react-scroll-to-component'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-
-import './mailchimp.css'
 
 import TopBarContainer from '../../containers/topbar'
 import InfoContainer from '../../containers/info'
@@ -167,9 +167,10 @@ class Welcome extends Component {
         <TopBarContainer ref='intro' />
         <AppBar position='sticky' color='default'>
           <Tabs
-            variant='fullWidth'
+            variant='scrollable'
             value={ this.state.value }
             onChange={ this.handleSectionTab }
+            scrollButtons='on'
           >
             <Tab
               id='intro'
