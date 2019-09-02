@@ -34,6 +34,51 @@ export const MenuMobile = styled(Button)`
   }
 `
 
+export const IconHamburger = styled.span`
+  background-color: #009688;
+  width: 25px;
+  height: 3px;
+  position: relative;
+
+    transition-delay: 200ms;
+    transform-origin: 50% 50%;
+
+  ${({ isActive }) => isActive && css`
+    background-color: transparent;
+  `}
+
+  &::after,
+  &::before {
+    content: '';
+    background-color: #009688;
+    width: 25px;
+    height: 3px;
+    position: absolute;
+    left: 0;
+    transition: all ease 400ms;
+  }
+
+  &::after{
+    top: -6px;
+
+    ${({ isActive }) => isActive && css`
+      top: 0;
+      background-color: #f2f2f2;
+      transform: rotate(135deg)
+    `}
+  }
+
+  &::before{
+    bottom: -6px;
+
+    ${({ isActive }) => isActive && css`
+      bottom: 0;
+      background-color: #f2f2f2;
+      transform: rotate(-135deg)
+    `}
+  }
+`
+
 export const LeftSide = styled(Side)`
   display: flex;
   align-items: center;
@@ -81,8 +126,18 @@ export const RightSide = styled(Side)`
     z-index: 1200;
 
   ${({ isActive }) => isActive && css`
-    transform: translateY(0);
+      transform: translateY(0);
+      overflow: hidden;
     `}
+
+    ${({ isActive }) => {
+    if (isActive) {
+      document.body.style.overflowY = 'hidden'
+    }
+    else {
+      document.body.style.overflowY = 'auto'
+    }
+  }}
   }
 `
 
