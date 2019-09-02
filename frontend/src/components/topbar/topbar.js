@@ -20,14 +20,15 @@ import {
   Menu,
   MenuItem,
   Button,
-  withStyles
+  withStyles,
 } from '@material-ui/core'
 import {
   AddBox,
   Person,
   LibraryBooks,
-  ViewList
+  ViewList,
 } from '@material-ui/icons'
+import MenuIcon from '@material-ui/icons/Menu'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSlack } from '@fortawesome/free-brands-svg-icons'
@@ -50,7 +51,8 @@ import {
   LabelButton,
   StyledAvatar,
   StyledAvatarIconOnly,
-  OnlyDesktop
+  OnlyDesktop,
+  MenuMobile
 } from './TopbarStyles'
 
 import messagesBr from '../../translations/result/br.json'
@@ -126,7 +128,8 @@ class TopBar extends Component {
       provider: 'github',
       createTaskDialog: false,
       signUserDialog: false,
-      joinSlackDialog: false
+      joinSlackDialog: false,
+      isActive: false
     }
   }
 
@@ -205,6 +208,11 @@ class TopBar extends Component {
     return isGithubUrl(url) || isBitbucketUrl(url)
   }
 
+  handleClickMenuMobile = () => {
+    const isActive = this.state.isActive
+    this.setState({ isActive: !isActive })
+  }
+
   handleCreateTask = (e) => {
     const url = this.state.task.url.value
     if (this.validURL(url)) {
@@ -279,12 +287,22 @@ class TopBar extends Component {
     return (
       <Bar>
         <Container>
-          <LeftSide>
+          <LeftSide isActive={ this.state.isActive }>
             <StyledButton href='/'>
               <Logo src={ logo } />
             </StyledButton>
+
+            <MenuMobile
+              onClick={ this.handleClickMenuMobile }
+              variant='text'
+              size='small'
+            >
+              <MenuIcon color='primary' />
+            </MenuMobile>
           </LeftSide>
-          <RightSide>
+
+          <RightSide isActive={ this.state.isActive }>
+
             <StyledButton
               onClick={ this.handleClickDialogCreateTask }
               variant='contained'
@@ -292,7 +310,9 @@ class TopBar extends Component {
               color='primary'
             >
               <LabelButton>
-                <FormattedMessage id='task.actions.create' defaultMessage='Create task' />
+                <FormattedMessage
+                  id='task.actions.create'
+                  defaultMessage='Create task' />
               </LabelButton>
               <AddBox />
             </StyledButton>
@@ -304,7 +324,9 @@ class TopBar extends Component {
               color='primary'
             >
               <LabelButton>
-                <FormattedMessage id='task.actions.explore' defaultMessage='Explore tasks' />
+                <FormattedMessage
+                  id='task.actions.explore'
+                  defaultMessage='Explore tasks' />
               </LabelButton>
               <ViewList />
             </StyledButton>
@@ -316,7 +338,9 @@ class TopBar extends Component {
               color='default'
             >
               <LabelButton>
-                <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' />
+                <FormattedMessage
+                  id='task.actions.docs'
+                  defaultMessage='Documentation' />
               </LabelButton>
               <LibraryBooks />
             </StyledButton>
@@ -330,8 +354,11 @@ class TopBar extends Component {
                   color='secondary'
                 >
                   <LabelButton>
-                    <FormattedMessage id='task.bar.signin' defaultMessage='Signin' />
-                  </LabelButton><Person />
+                    <FormattedMessage
+                      id='task.bar.signin'
+                      defaultMessage='Signin' />
+                  </LabelButton>
+                  <Person />
                 </StyledButton>
 
                 <Dialog
@@ -388,7 +415,9 @@ class TopBar extends Component {
                 <DialogContent>
                   <DialogContentText>
                     <Typography type='subheading' gutterBottom>
-                      <FormattedHTMLMessage id='task.actions.insert.subheading' defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
+                      <FormattedHTMLMessage
+                        id='task.actions.insert.subheading'
+                        defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
                     </Typography>
                   </DialogContentText>
 

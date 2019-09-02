@@ -167,9 +167,10 @@ class Welcome extends Component {
         <TopBarContainer ref='intro' />
         <AppBar position='sticky' color='default'>
           <Tabs
-            variant='fullWidth'
+            variant='scrollable'
             value={ this.state.value }
             onChange={ this.handleSectionTab }
+            scrollButtons='on'
           >
             <Tab
               id='intro'
