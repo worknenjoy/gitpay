@@ -28,7 +28,6 @@ import {
   LibraryBooks,
   ViewList,
 } from '@material-ui/icons'
-import MenuIcon from '@material-ui/icons/Menu'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSlack } from '@fortawesome/free-brands-svg-icons'
@@ -52,7 +51,8 @@ import {
   StyledAvatar,
   StyledAvatarIconOnly,
   OnlyDesktop,
-  MenuMobile
+  MenuMobile,
+  IconHamburger
 } from './TopbarStyles'
 
 import messagesBr from '../../translations/result/br.json'
@@ -297,7 +297,7 @@ class TopBar extends Component {
               variant='text'
               size='small'
             >
-              <MenuIcon color='primary' />
+              <IconHamburger isActive={ this.state.isActive } />
             </MenuMobile>
           </LeftSide>
 
