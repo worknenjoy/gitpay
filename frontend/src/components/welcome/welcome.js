@@ -30,10 +30,10 @@ import {
   ArrowForward
 } from '@material-ui/icons'
 
+import './mailchimp.css'
+
 import scrollToComponent from 'react-scroll-to-component'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-
-import './mailchimp.css'
 
 import TopBarContainer from '../../containers/topbar'
 import InfoContainer from '../../containers/info'
