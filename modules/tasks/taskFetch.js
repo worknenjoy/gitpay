@@ -144,11 +144,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
 
         case 'bitbucket':
           return requestPromise({
-            uri: `https://api.bitbucket.org/1.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
+            uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
           })
             .then(response => {
               const issueDataJsonBitbucket = JSON.parse(response)
-
               const responseBitbucket = {
                 id: data.dataValues.id,
                 url: issueUrl,
@@ -169,10 +168,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   provider: data.provider,
                   issue: {
                     state: issueDataJsonBitbucket.status,
-                    body: issueDataJsonBitbucket.content,
+                    body: issueDataJsonBitbucket.content.raw,
                     user: {
-                      login: issueDataJsonBitbucket.reported_by.username,
-                      avatar_url: issueDataJsonBitbucket.reported_by.avatar
+                      login: issueDataJsonBitbucket.reporter.username,
+                      avatar_url: issueDataJsonBitbucket.reporter.links.avatar.href
                     }
                   }
                 },
