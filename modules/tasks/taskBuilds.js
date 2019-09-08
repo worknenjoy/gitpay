@@ -79,7 +79,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
       })
     case 'bitbucket':
       return requestPromise({
-        uri: `https://api.bitbucket.org/1.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
+        uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       }).then(response => {
         return models.Task
           .build(
