@@ -80,7 +80,7 @@
     "request-promise": "^4.2.0",
     "rxjs": "^5.1.0",
     "sendgrid": "^5.2.3",
-    "sequelize": "^3.30.4",
+    "sequelize": "^5.3.0",
     "sequelize-cli": "^2.7.0",
     "sequelize-heroku": "^1.0.0",
     "stripe": "^5.8.0",
