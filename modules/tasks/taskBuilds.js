@@ -11,23 +11,27 @@ const userExists = require('../users').userExists
 
 module.exports = Promise.method(function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
-  const githubClientId = secrets.github.id
-  const githubClientSecret = secrets.github.secret
+  const githubClientId = taskParameters.clientId || secrets.github.id
+  const githubClientSecret = taskParameters.secret || secrets.github.secret
   const splitIssueUrl = url.parse(repoUrl).path.split('/')
   const userOrCompany = splitIssueUrl[1]
   const projectName = splitIssueUrl[2]
   const issueId = splitIssueUrl[4]
   const userId = taskParameters.userId
+  const token = taskParameters.token
 
   if (!userId) return false
 
   switch (taskParameters.provider) {
     case 'github':
+      const uri = taskParameters.token ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}` : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      const headers = {
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+      }
+      if (taskParameters.token) headers.Authorization = `token ${token}`
       return requestPromise({
-        uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
-        headers: {
-          'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-        }
+        uri,
+        headers
       }).then(response => {
         const issueDataJsonGithub = JSON.parse(response)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title

@@ -6,6 +6,9 @@ const api = require('../server')
 const agent = request.agent(api)
 const models = require('../models')
 const { registerAndLogin } = require('./helpers')
+const nock = require('nock')
+const secrets = require('../config/secrets')
+const sampleIssue = require('./data/github.issue.create')
 
 describe("tasks", () => {
 
@@ -17,6 +20,7 @@ describe("tasks", () => {
     }, function(err){
       console.log(err);
     });
+    nock.cleanAll()
   })
 
   describe('list tasks', () => {
@@ -103,7 +107,34 @@ describe("tasks", () => {
       })
     })
 
+    it('should receive code on the platform from github auth to the redirected url for private tasks but invalid code', (done) => {
+      agent
+        .get('/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7')
+        .expect(401)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(401);
+          expect(res.body).to.exist
+          done();
+        })
+    })
 
+    it('should receive code on the platform from github auth to the redirected url for private tasks with a valid code', (done) => {
+      nock('https://github.com')
+        .get(`/login/oauth/access_token/?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}&code=eb518274e906c68580f7`)
+        .reply(200, {url: 'foo'})
+      nock('https://api.github.com')
+        .get(`/repos/alexanmtz/festifica/issues/1`)
+        .reply(200, sampleIssue.issue)
+      agent
+        .get('/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7')
+        .expect(200)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(200);
+          //expect(res.body.access_token).to.equal("e72e16c7e42f292c6912e7710c838347ae178b4a")
+          expect(res.body.url).to.equal('foo')
+          done();
+        })
+    })
 
     // API rate limit exceed sometimes and this test fails (mock github call)
     xit('should fetch task', (done) => {
