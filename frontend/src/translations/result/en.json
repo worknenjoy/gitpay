@@ -257,7 +257,7 @@
   "task.bar.signin": "Signin",
   "task.actions.gitpay.call": "Join Gitpay community",
   "task.actions.account": "Account",
-  "task.actions.insert.new": "Insert a new task",
+  "task.actions.insert.new": "Import an issue",
   "task.actions.insert.subheading": "Paste the URL of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>",
   "task.actions.insert.novalid": "This is not a valid URL",
   "task.actions.cancel": "Cancel",
