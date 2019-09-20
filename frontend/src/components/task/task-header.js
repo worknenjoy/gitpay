@@ -111,28 +111,28 @@ class TaskHeader extends React.Component {
         <Typography variant='subheading' style={ { color: '#bbb' } }>
           <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
             ready={ task.completed }>
-              <div style={ { marginTop: 20 } }>
-                <Chip
-                  key={ task.data.metadata.company }
-                  clickable
-                  label={ task.data.metadata.company }
-                  onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                  className={ classes.chip }
-                  color='secondary'
-                  onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                  deleteIcon={ <ExternalLinkIcon /> }
-                />
-                <Chip
-                  key={ task.data.metadata.projectName }
-                  clickable
-                  label={ task.data.metadata.projectName }
-                  onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                  className={ classes.chip }
-                  color='secondary'
-                  onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                  deleteIcon={ <ExternalLinkIcon /> }
-                />
-              </div>
+            <div style={ { marginTop: 20 } }>
+              <Chip
+                key={ task.data.metadata.company }
+                clickable
+                label={ task.data.metadata.company }
+                onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                className={ classes.chip }
+                color='secondary'
+                onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                deleteIcon={ <ExternalLinkIcon /> }
+              />
+              <Chip
+                key={ task.data.metadata.projectName }
+                clickable
+                label={ task.data.metadata.projectName }
+                onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                className={ classes.chip }
+                color='secondary'
+                onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                deleteIcon={ <ExternalLinkIcon /> }
+              />
+            </div>
           </ReactPlaceholder>
         </Typography>
         }
@@ -150,7 +150,7 @@ class TaskHeader extends React.Component {
                 color='primary'
                 size='small'
               >
-                <span className={ classes.gutterRight }>See on {task.data.provider} </span>
+                <span className={ classes.gutterRight }>See on { task.data.provider } </span>
                 <img width='16' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } />
               </Button>
               <Chip

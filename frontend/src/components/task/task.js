@@ -476,19 +476,20 @@ class Task extends Component {
                 position: 'relative'
               } }
             >
-              {task.data.metadata ? (
-              <div style={ { position: 'absolute', left: 18, top: 5 } }>
-                <Typography color='default'>
-                  <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
-                </Typography>
-              </div>) : (
+              { task.data.metadata ? (
+                <div style={ { position: 'absolute', left: 18, top: 5 } }>
+                  <Typography color='default'>
+                    <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
+                  </Typography>
+                </div>
+              ) : (
                 <div style={ { position: 'absolute', left: 18, top: 5 } }>
                   <Typography color='default'>
                     <FormattedMessage id='task.status.author.missing' defaultMessage='author info unknown' />
                   </Typography>
                 </div>
-              )}
-              {task.data.metadata &&
+              ) }
+              { task.data.metadata &&
               <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
                 name: task.data.metadata.issue.user.login
               } }>
@@ -687,7 +688,7 @@ class Task extends Component {
                         <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
                       </DialogTitle>
                       <DialogContent>
-                        {task.data.metadata && 
+                        { task.data.metadata &&
                         <Card>
                           <CardHeader
                             className={ classes.cardHeader }
@@ -696,22 +697,22 @@ class Task extends Component {
                                 name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
                               } }>
                                 { (msg) => (
-                                  
-                                    <Tooltip
-                                      id='tooltip-github'
-                                      title={ msg }
-                                      placement='bottom'
+
+                                  <Tooltip
+                                    id='tooltip-github'
+                                    title={ msg }
+                                    placement='bottom'
+                                  >
+                                    <a
+                                      href={ `${task.data.metadata.issue.user.html_url}` }
+                                      target='_blank'
                                     >
-                                      <a
-                                        href={ `${task.data.metadata.issue.user.html_url}` }
-                                        target='_blank'
-                                      >
-                                        <Avatar
-                                          src={ task.data.metadata.issue.user.avatar_url }
-                                          className={ classNames(classes.avatar) }
-                                        />
-                                      </a>
-                                    </Tooltip>
+                                      <Avatar
+                                        src={ task.data.metadata.issue.user.avatar_url }
+                                        className={ classNames(classes.avatar) }
+                                      />
+                                    </a>
+                                  </Tooltip>
                                 ) }
                               </FormattedMessage>
                             }
