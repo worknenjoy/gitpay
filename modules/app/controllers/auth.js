@@ -51,11 +51,13 @@ exports.createPrivateTask = (req, res) => {
         url,
         token: response.access_token
       })
-        .then(data => {
-          return res.send(data)
+        .then(task => {
+          res.redirect(`${process.env.FRONTEND_HOST}/#/task/${task.id}`)
+          // return res.send(data)
         }).catch(error => {
           // eslint-disable-next-line no-console
           console.log(error)
+          // TODO: instead of a response, we need to redirect to an error page
           return res.send(error)
         })
     }
