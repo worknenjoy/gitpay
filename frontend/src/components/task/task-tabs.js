@@ -257,7 +257,7 @@ class TaskTabs extends React.Component {
                   this.props.intl.formatMessage(messages.interestedTableLabelWhen),
                   this.props.intl.formatMessage(messages.interestedTableLabelActions)
                 ] }
-                tableData={ task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
+                tableData={ task && task.data.assigns && task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
               />
             }
           />
