@@ -237,7 +237,7 @@ class TaskTabs extends React.Component {
                   this.props.intl.formatMessage(messages.cardTableHeaderUser),
                   this.props.intl.formatMessage(messages.cardTableHeaderPayment)
                 ] }
-                tableData={ task.data.orders.length ? displayOrders(task.data.orders) : [] }
+                tableData={ task.data.orders && task.data.orders.length ? displayOrders(task.data.orders) : [] }
               />
             }
           />
