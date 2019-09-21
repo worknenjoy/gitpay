@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import api from '../../consts'
 import { store } from '../../main/app'
 
 import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
   Dialog,
   DialogActions,
   DialogContent,
@@ -125,6 +129,7 @@ class TopBar extends Component {
           value: null
         }
       },
+      private: false,
       provider: 'github',
       createTaskDialog: false,
       signUserDialog: false,
@@ -216,6 +221,10 @@ class TopBar extends Component {
   handleCreateTask = (e) => {
     const url = this.state.task.url.value
     if (this.validURL(url)) {
+      if (this.state.private) {
+        window.location = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${this.props.user.id}`
+        return
+      }
       this.props.createTask({
         url: this.state.task.url.value,
         provider: this.state.provider,
@@ -232,6 +241,11 @@ class TopBar extends Component {
         }
       })
     }
+  }
+
+  handlePrivate = (e) => {
+    // this.setState({private: !this.state.private}, () => console.log(this.state.private))
+    this.setState({ private: !this.state.private })
   }
 
   handleSignUserDialogClose = () => {
@@ -401,79 +415,103 @@ class TopBar extends Component {
                 </React.Fragment>
               )
             }
+            { isLoggedIn ? (
+              <form onSubmit={ this.handleCreateTask } action='POST'>
+                <Dialog
+                  open={ this.state.createTaskDialog }
+                  onClose={ this.handleClickDialogCreateTaskClose }
+                  aria-label='form-dialog-title'
+                >
+                  <DialogTitle id='form-dialog-title'>
+                    <FormattedMessage id='task.actions.insert.new' defaultMessage='Insert a new task' />
+                  </DialogTitle>
 
-            <form onSubmit={ this.handleCreateTask } action='POST'>
-              <Dialog
-                open={ this.state.createTaskDialog }
-                onClose={ this.handleClickDialogCreateTaskClose }
-                aria-label='form-dialog-title'
-              >
-                <DialogTitle id='form-dialog-title'>
-                  <FormattedMessage id='task.actions.insert.new' defaultMessage='Insert a new task' />
-                </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      <Typography type='subheading' gutterBottom>
+                        <FormattedHTMLMessage
+                          id='task.actions.insert.subheading'
+                          defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
+                      </Typography>
+                    </DialogContentText>
+                    <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
+                      <TextField error={ this.state.task.url.error }
+                        onChange={ this.onChange }
+                        autoFocus
+                        margin='dense'
+                        id='url'
+                        name='url'
+                        label='URL'
+                        type='url'
+                        fullWidth
+                      />
+                      { this.state.provider === 'github' &&
+                      <FormControl component='fieldset'>
+                        <FormGroup aria-label='position' name='position' value={ 'private' } onChange={ this.handlePrivate } row>
+                          <FormControlLabel
+                            value='private'
+                            control={ <Checkbox color='primary' /> }
+                            label='private'
+                            labelPlacement='right'
+                          />
+                        </FormGroup>
+                      </FormControl>
+                      }
+                      <div style={ { marginTop: 10, marginBottom: 10 } }>
+                        <Button
+                          style={ { marginRight: 10 } }
+                          color='primary'
+                          variant={ this.state.provider === 'github' ? 'raised' : 'outline' }
+                          id='github'
+                          onClick={ (e) => this.handleProvider(e, 'github') }
+                        >
+                          <img width='16' src={ logoGithub } />
+                          <span style={ { marginLeft: 10 } }>Github</span>
+                        </Button>
 
-                <DialogContent>
-                  <DialogContentText>
-                    <Typography type='subheading' gutterBottom>
-                      <FormattedHTMLMessage
-                        id='task.actions.insert.subheading'
-                        defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
-                    </Typography>
-                  </DialogContentText>
+                        <Button
+                          color='primary'
+                          variant={ this.state.provider === 'bitbucket' ? 'raised' : 'outline' }
+                          id='bitbucket'
+                          onClick={ (e) => this.handleProvider(e, 'bitbucket') }
+                        >
+                          <img width='16' src={ logoBitbucket } />
+                          <span style={ { marginLeft: 10 } }>Bitbucket</span>
+                        </Button>
+                      </div>
 
-                  <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
-                    <TextField error={ this.state.task.url.error }
-                      onChange={ this.onChange }
-                      autoFocus
-                      margin='dense'
-                      id='url'
-                      name='url'
-                      label='URL'
-                      type='url'
-                      fullWidth
-                    />
-                    <div style={ { marginTop: 10, marginBottom: 10 } }>
-                      <Button
-                        style={ { marginRight: 10 } }
-                        color='primary'
-                        variant={ this.state.provider === 'github' ? 'raised' : 'outline' }
-                        id='github'
-                        onClick={ (e) => this.handleProvider(e, 'github') }
-                      >
-                        <img width='16' src={ logoGithub } />
-                        <span style={ { marginLeft: 10 } }>Github</span>
-                      </Button>
-
-                      <Button
-                        color='primary'
-                        variant={ this.state.provider === 'bitbucket' ? 'raised' : 'outline' }
-                        id='bitbucket'
-                        onClick={ (e) => this.handleProvider(e, 'bitbucket') }
-                      >
-                        <img width='16' src={ logoBitbucket } />
-                        <span style={ { marginLeft: 10 } }>Bitbucket</span>
-                      </Button>
-                    </div>
-
-                    { this.state.task.url.error &&
+                      { this.state.task.url.error &&
                       <FormHelperText error={ this.state.task.url.error }>
                         <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
                       </FormHelperText>
-                    }
-                  </FormControl>
+                      }
+                    </FormControl>
+                  </DialogContent>
+
+                  <DialogActions>
+                    <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
+                      <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
+                    </Button>
+                    <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='contained' color='secondary' >
+                      <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </form>
+            ) : (
+              <Dialog
+                open={ this.state.createTaskDialog }
+                onClose={ this.handleClickDialogCreateTaskClose }
+                aria-labelledby='form-dialog-title'
+              >
+                <DialogTitle id='form-dialog-title'>
+                  <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
+                </DialogTitle>
+                <DialogContent>
+                  <LoginButton referer={ this.props.location } size='medium' includeForm />
                 </DialogContent>
-
-                <DialogActions>
-                  <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
-                    <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-                  </Button>
-                  <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='contained' color='secondary' >
-                    <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
-                  </Button>
-                </DialogActions>
               </Dialog>
-            </form>
-
+            ) }
             <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
               { (msg) => (
                 <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>

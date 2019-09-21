@@ -143,7 +143,7 @@ class TaskPayment extends Component {
     }
 
     const hasOrders = () => {
-      return !!this.props.orders.length
+      return this.props.orders && !!this.props.orders.length
     }
 
     const paymentSupport = user => {
@@ -225,7 +225,7 @@ class TaskPayment extends Component {
                 </div>
               ) }
               <List>
-                { orders.map((order, index) => (
+                { orders && orders.map((order, index) => (
                   <div>
                     { order.provider === 'paypal'
                       ? (

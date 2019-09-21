@@ -444,7 +444,7 @@ class Task extends Component {
       return taskOwner() || isCurrentUserAssigned()
     }
 
-    const updatedAtTimeString = MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A')
+    const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A') : 'not available'
     const timePlaceholder = (
       <Typography type='subheading' style={ { padding: 10, color: 'gray', marginRight: 10 } }>
         { updatedAtTimeString }
@@ -476,11 +476,20 @@ class Task extends Component {
                 position: 'relative'
               } }
             >
-              <div style={ { position: 'absolute', left: 18, top: 5 } }>
-                <Typography color='default'>
-                  <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
-                </Typography>
-              </div>
+              { task.data.metadata ? (
+                <div style={ { position: 'absolute', left: 18, top: 5 } }>
+                  <Typography color='default'>
+                    <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
+                  </Typography>
+                </div>
+              ) : (
+                <div style={ { position: 'absolute', left: 18, top: 5 } }>
+                  <Typography color='default'>
+                    <FormattedMessage id='task.status.author.missing' defaultMessage='author info unknown' />
+                  </Typography>
+                </div>
+              ) }
+              { task.data.metadata &&
               <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
                 name: task.data.metadata.issue.user.login
               } }>
@@ -502,6 +511,7 @@ class Task extends Component {
                   </Tooltip>
                 ) }
               </FormattedMessage>
+              }
               <div className={ classes.paper }>
                 <Button
                   style={ { marginRight: 10 } }
@@ -592,7 +602,7 @@ class Task extends Component {
                     </Button>
                     <StatusDialog
                       id={ task.data.id }
-                      providerStatus={ task.data.metadata.issue.state }
+                      providerStatus={ task.data.metadata ? task.data.metadata.issue.state : 'unknown' }
                       provider={ task.data.provider }
                       onSelect={ this.props.updateTask }
                       selectedValue={ task.data.status }
@@ -678,14 +688,16 @@ class Task extends Component {
                         <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
                       </DialogTitle>
                       <DialogContent>
+                        { task.data.metadata &&
                         <Card>
                           <CardHeader
                             className={ classes.cardHeader }
                             avatar={
                               <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
-                                name: task.data.metadata.issue.user.login
+                                name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
                               } }>
                                 { (msg) => (
+
                                   <Tooltip
                                     id='tooltip-github'
                                     title={ msg }
@@ -707,7 +719,7 @@ class Task extends Component {
                             title={ task.data.title }
                             subheader={
                               <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={ {
-                                name: task.data.metadata.issue.user.login
+                                name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
                               } } />
                             }
                             action={
@@ -715,7 +727,7 @@ class Task extends Component {
                             }
                           />
                         </Card>
-
+                        }
                         <div style={ { paddingBottom: 10 } }>
                           <Typography type='subheading' gutterBottom style={ { paddingTop: 20, color: 'gray' } }>
                             <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
@@ -930,7 +942,9 @@ class Task extends Component {
                   statText={ `${MomentComponent(task.data.deadline).fromNow()}` }
                 />
               }
-              <TaskLabels labels={ task.data.metadata.labels } />
+              { task.data.metadata &&
+                <TaskLabels labels={ task.data.metadata.labels } />
+              }
             </Grid>
           </Grid>
         </PageContent>

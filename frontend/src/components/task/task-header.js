@@ -24,6 +24,9 @@ import media from 'app/styleguide/media'
 
 import Constants from '../../consts'
 
+const logoGithub = require('../../images/github-logo.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
+
 const TaskHeaderContainer = styled.div`
   box-sizing: border-box;
   background: black;
@@ -71,6 +74,9 @@ const styles = theme => ({
   button: {
     width: 100,
     font: 10
+  },
+  gutterRight: {
+    marginRight: 10
   }
 })
 
@@ -101,44 +107,52 @@ class TaskHeader extends React.Component {
           <NavigationIcon />
           <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
         </Button>
+        { task.data.metadata &&
         <Typography variant='subheading' style={ { color: '#bbb' } }>
           <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
             ready={ task.completed }>
-            { task.data.metadata &&
-              <div style={ { marginTop: 20 } }>
-                <Chip
-                  key={ task.data.metadata.company }
-                  clickable
-                  label={ task.data.metadata.company }
-                  onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                  className={ classes.chip }
-                  color='secondary'
-                  onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                  deleteIcon={ <ExternalLinkIcon /> }
-                />
-                <Chip
-                  key={ task.data.metadata.projectName }
-                  clickable
-                  label={ task.data.metadata.projectName }
-                  onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                  className={ classes.chip }
-                  color='secondary'
-                  onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                  deleteIcon={ <ExternalLinkIcon /> }
-                />
-              </div>
-            }
+            <div style={ { marginTop: 20 } }>
+              <Chip
+                key={ task.data.metadata.company }
+                clickable
+                label={ task.data.metadata.company }
+                onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                className={ classes.chip }
+                color='secondary'
+                onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                deleteIcon={ <ExternalLinkIcon /> }
+              />
+              <Chip
+                key={ task.data.metadata.projectName }
+                clickable
+                label={ task.data.metadata.projectName }
+                onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                className={ classes.chip }
+                color='secondary'
+                onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                deleteIcon={ <ExternalLinkIcon /> }
+              />
+            </div>
           </ReactPlaceholder>
         </Typography>
-
+        }
         <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
           ready={ task.completed }>
           <Typography variant='display1' color='primary' align='left' gutterBottom>
             <a className={ classes.white } href={ task.data.url }>
               { task.data.title }
             </a>
-
             <Tags>
+              <Button
+                style={ { marginLeft: 10, marginRight: 10 } }
+                href={ task.data.url }
+                variant='outlined'
+                color='primary'
+                size='small'
+              >
+                <span className={ classes.gutterRight }>See on { task.data.provider } </span>
+                <img width='16' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } />
+              </Button>
               <Chip
                 style={ { marginRight: 10 } }
                 label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
