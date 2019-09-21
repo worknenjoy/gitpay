@@ -69,7 +69,7 @@ exports.createPrivateTask = (req, res) => {
 
 exports.authorizeGithubPrivateIssue = (req, res) => {
   const params = req.query
-  const uri = encodeURIComponent(`http://localhost:3000/callback/github/private?userId=${params.userId}&url=${params.url}`)
+  const uri = encodeURIComponent(`${process.env.API_HOST}/callback/github/private?userId=${params.userId}&url=${params.url}`)
   res.redirect(`https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&client_id=${secrets.github.id}`)
 }
 
