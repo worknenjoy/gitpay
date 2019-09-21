@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         Task.hasMany(models.Order, { foreignKey: 'TaskId', onDelete: 'cascade' })
         Task.hasMany(models.Assign, { foreignKey: 'TaskId', onDelete: 'cascade' })
         Task.hasMany(models.Offer, { foreignKey: 'taskId', onDelete: 'cascade' })
-        Task.hasMany(models.Member, { foreignKey: 'taskId', onDelete: 'cascade' })
+        Task.hasMany(models.Member, { foreignKey: 'taskId', onDelete: 'cascade', hooks: true })
       }
     },
     instanceMethods: {
