@@ -146,6 +146,8 @@ class TaskTabs extends React.Component {
     }
 
     const displayOrders = orders => {
+      if(!orders) return []
+      
       if (!orders.length) {
         return []
       }
