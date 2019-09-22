@@ -32,10 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         Task.belongsTo(models.User, { foreignKey: 'userId' })
-        Task.hasMany(models.Order, { foreignKey: 'TaskId' })
-        Task.hasMany(models.Assign, { foreignKey: 'TaskId' })
-        Task.hasMany(models.Offer, { foreignKey: 'taskId' })
-        Task.hasMany(models.Member, { foreignKey: 'taskId' })
+        Task.hasMany(models.Order, { foreignKey: 'TaskId', onDelete: 'cascade', hooks: true })
+        Task.hasMany(models.Assign, { foreignKey: 'TaskId', onDelete: 'cascade', hooks: true })
+        Task.hasMany(models.Offer, { foreignKey: 'taskId', onDelete: 'cascade', hooks: true })
+        Task.hasMany(models.Member, { foreignKey: 'taskId', onDelete: 'cascade', hooks: true })
       }
     },
     instanceMethods: {
