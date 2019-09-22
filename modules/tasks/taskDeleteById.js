@@ -5,7 +5,7 @@ module.exports = Promise.method(function taskDeleteById (taskParameters) {
   return models.Task.destroy({
     where: {
       id: taskParameters.id,
-      userId: taskParameters.userId,
+      userId: taskParameters.userId
     }
   }).then(task => {
     // eslint-disable-next-line no-console

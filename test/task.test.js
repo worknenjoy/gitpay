@@ -5,7 +5,7 @@ const expect = require('chai').expect
 const api = require('../server')
 const agent = request.agent(api)
 const models = require('../models')
-const { registerAndLogin } = require('./helpers')
+const { registerAndLogin, register } = require('./helpers')
 const nock = require('nock')
 const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
@@ -14,6 +14,13 @@ describe("tasks", () => {
 
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+      if(rowDeleted === 1){
+        console.log('Deleted successfully');
+      }
+    }, function(err){
+      console.log(err);
+    });
+    models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');
       }
@@ -47,9 +54,9 @@ describe("tasks", () => {
         .then(res => res.body)
     }
 
-    const buildTask = () => {
+    const buildTask = (params) => {
       const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-      return models.Task.create({ url: github_url, provider: 'github' })
+      return models.Task.create({ userId: params.userId, url: github_url, provider: 'github' })
     }
 
     it('should create a new task', (done) => {
@@ -386,7 +393,8 @@ describe("tasks", () => {
     })
 
     it('should only delete own task', async () => {
-      const task = await buildTask({ userId: Number.MAX_VALUE })
+      const firstUser = await register(agent, {email: 'owntask@example.com', password: '1234'}) 
+      const task = await buildTask({ userId: firstUser.id })
       const res = await registerAndLogin(agent)
       await agent
         .delete(`/tasks/delete/${task.id}`)
@@ -397,21 +405,20 @@ describe("tasks", () => {
       ).to.be.ok
     })
 
-  xit('should delete task', (done) => {
-    registerAndLogin(agent).then(res => {
-      buildTask({ userId: res.body.id }).then(task => {
-        agent
-        .delete(`/tasks/delete/${task.id}`)
-        .set('Authorization', res.headers.authorization)
-        .expect(200)
-        .end(deleted => {
-          console.log('deleted response test', deleted)
-          expect(deleted).to.equal(1)
-          done()
-        }) 
+    it('should delete task', (done) => {
+      registerAndLogin(agent).then(res => {
+        createTask(res.headers.authorization).then(task => {
+          agent
+          .delete(`/tasks/delete/${task.id}`)
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, deleted) => {
+            expect(deleted.text).to.equal('1')
+            done()
+          }) 
+        })
       })
     })
-  })
 });
 
   describe('sync task', () => {
