@@ -6,7 +6,9 @@ module.exports = Promise.method(function taskDeleteById (taskParameters) {
     where: {
       id: taskParameters.id,
       userId: taskParameters.userId,
-    }
+    },
+    truncate: true,
+    cascade: true
   }).then(task => {
     // eslint-disable-next-line no-console
     console.log('destroy', task)
