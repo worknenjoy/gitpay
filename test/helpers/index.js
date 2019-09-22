@@ -17,10 +17,12 @@ const login = (agent, params = {}) => {
     .send(params)
 }
 
-const registerAndLogin = (agent, registerParams = {}, loginParams = {}) => 
-  register(agent, registerParams)
-    .then(() => login(agent, loginParams))
-
+const registerAndLogin = (agent, registerParams = {}, loginParams = {}) => {
+  return register(agent, registerParams)
+    .then(() => {
+      return login(agent, loginParams)
+    })
+  }
 module.exports = {
   register,
   login,

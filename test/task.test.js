@@ -396,7 +396,23 @@ describe("tasks", () => {
         await models.Task.findById(task.id)
       ).to.be.ok
     })
-  });
+
+  xit('should delete task', (done) => {
+    registerAndLogin(agent).then(res => {
+      buildTask({ userId: res.body.id }).then(task => {
+        agent
+        .delete(`/tasks/delete/${task.id}`)
+        .set('Authorization', res.headers.authorization)
+        .expect(200)
+        .end(deleted => {
+          console.log('deleted response test', deleted)
+          expect(deleted).to.equal(1)
+          done()
+        }) 
+      })
+    })
+  })
+});
 
   describe('sync task', () => {
     it('should sync with an open order', (done) => {
