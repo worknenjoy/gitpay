@@ -170,7 +170,7 @@ class TaskTabs extends React.Component {
     }
 
     const displayMembers = members => {
-      if(!members) return []
+      if (!members) return []
       if (!members.length) {
         return []
       }
@@ -182,7 +182,7 @@ class TaskTabs extends React.Component {
     }
 
     const displayOffers = offers => {
-      if(!offers) return []
+      if (!offers) return []
       if (!offers.length) {
         return []
       }
