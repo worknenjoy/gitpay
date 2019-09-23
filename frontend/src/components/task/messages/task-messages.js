@@ -46,6 +46,10 @@ export const messages = defineMessages({
     id: 'task.tab.members',
     defaultMessage: 'Members'
   },
+  offersLabel: {
+    id: 'task.tab.offers',
+    defaultMessage: 'Offers'
+  },
   cardTitle: {
     id: 'task.card.title',
     defaultMessage: 'Payments for this task'
@@ -114,9 +118,29 @@ export const messages = defineMessages({
     id: 'task.members.table.label.role',
     defaultMessage: 'Role'
   },
-  membersTableLabelActions: {
-    id: 'task.members.table.label.actions',
-    defaultMessage: 'Actions'
+  offersCardTitle: {
+    id: 'task.offers.table.label.title',
+    defaultMessage: 'Offers for this issue'
+  },
+  offersCardSubTitle: {
+    id: 'task.offers.table.label.subtitle',
+    defaultMessage: 'Offers for this issue from users'
+  },
+  offersTableLabelUser: {
+    id: 'task.offers.table.label.user',
+    defaultMessage: 'User'
+  },
+  offersTableLabelValue: {
+    id: 'task.offers.table.label.value',
+    defaultMessage: 'Value'
+  },
+  offersTableLabelDeadline: {
+    id: 'task.offers.table.label.deadline',
+    defaultMessage: 'Suggested deadline'
+  },
+  offersTableLabelCreated: {
+    id: 'task.offers.table.label.created',
+    defaultMessage: 'Created at'
   },
   taskValueLabel: {
     id: 'task.status.value',
