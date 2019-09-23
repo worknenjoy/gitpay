@@ -94,7 +94,7 @@ class TaskTabs extends React.Component {
 
     const userRow = user => {
       return (<span>
-        { user && user.length && user.profile_url
+        { user && user.profile_url
           ? (
             <FormattedMessage id='task.payment.user.check.github' defaultMessage='Check this user profile at Github'>
               { (msg) => (

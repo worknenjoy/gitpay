@@ -118,6 +118,10 @@ export const messages = defineMessages({
     id: 'task.members.table.label.role',
     defaultMessage: 'Role'
   },
+  membersTableLabelActions: {
+    id: 'task.members.table.label.actions',
+    defaultMessage: 'Actions'
+  },
   offersCardTitle: {
     id: 'task.offers.table.label.title',
     defaultMessage: 'Offers for this issue'
