@@ -25,6 +25,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       {
         model: models.Member,
         include: [models.User, models.Role]
+      },
+      {
+        model: models.Offer,
+        include: [models.User, models.Task]
       }
     ]
   })
@@ -124,7 +128,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 },
                 orders: data.dataValues.Orders,
                 assigns: data.dataValues.Assigns,
-                members: data.dataValues.Members
+                members: data.dataValues.Members,
+                offers: data.dataValues.Offers
               }
 
               if (!data.title && data.title !== issueDataJsonGithub.title) {
@@ -177,7 +182,9 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   }
                 },
                 orders: data.dataValues.Orders,
-                assigns: data.dataValues.Assigns
+                assigns: data.dataValues.Assigns,
+                members: data.dataValues.Members,
+                offers: data.dataValues.Offers
               }
 
               if (!data.title && data.title !== issueDataJsonBitbucket.title) {

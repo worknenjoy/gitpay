@@ -27,8 +27,9 @@ import {
   Redeem as RedeemIcon,
   ShoppingBasket,
   HowToReg as GroupWorkIcon,
-  SupervisedUserCircle as Members,
-  Refresh as RefreshIcon
+  SupervisedUserCircle as MembersIcon,
+  Refresh as RefreshIcon,
+  AttachMoney as OffersIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
@@ -169,6 +170,7 @@ class TaskTabs extends React.Component {
     }
 
     const displayMembers = members => {
+      if (!members) return []
       if (!members.length) {
         return []
       }
@@ -176,6 +178,19 @@ class TaskTabs extends React.Component {
         item.User.username,
         item.Role && item.Role.label,
         ''
+      ])
+    }
+
+    const displayOffers = offers => {
+      if (!offers) return []
+      if (!offers.length) {
+        return []
+      }
+      return offers.map((item, i) => [
+        item.User && userRow(item.User),
+        `$ ${item.value}`,
+        item.suggestedDate ? MomentComponent(item.suggestedDate).fromNow() : ' - ',
+        MomentComponent(item.updatedAt).fromNow()
       ])
     }
 
@@ -201,7 +216,8 @@ class TaskTabs extends React.Component {
             <Tab label={ this.props.intl.formatMessage(messages.taskLabel) } icon={ <RedeemIcon /> } />
             <Tab label={ this.props.intl.formatMessage(messages.orderLabel) } icon={ <ShoppingBasket /> } />
             <Tab label={ this.props.intl.formatMessage(messages.interestedLabel) } icon={ <GroupWorkIcon /> } />
-            <Tab label={ this.props.intl.formatMessage(messages.membersLabel) } icon={ <Members /> } />
+            <Tab label={ this.props.intl.formatMessage(messages.membersLabel) } icon={ <MembersIcon /> } />
+            <Tab label={ this.props.intl.formatMessage(messages.offersLabel) } icon={ <OffersIcon /> } />
           </Tabs>
         </AppBar>
         { task.tab === 0 &&
@@ -278,6 +294,27 @@ class TaskTabs extends React.Component {
                   this.props.intl.formatMessage(messages.membersTableLabelActions)
                 ] }
                 tableData={ task.data.members && task.data.members.length ? displayMembers(task.data.members) : [] }
+              />
+            }
+          />
+        </div>
+        }
+        { task.tab === 4 &&
+        <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
+          <RegularCard
+            headerColor='green'
+            cardTitle={ this.props.intl.formatMessage(messages.offersCardTitle) }
+            cardSubtitle={ this.props.intl.formatMessage(messages.offersCardSubTitle) }
+            content={
+              <Table
+                tableHeaderColor='warning'
+                tableHead={ [
+                  this.props.intl.formatMessage(messages.offersTableLabelUser),
+                  this.props.intl.formatMessage(messages.offersTableLabelValue),
+                  this.props.intl.formatMessage(messages.offersTableLabelDeadline),
+                  this.props.intl.formatMessage(messages.offersTableLabelCreated)
+                ] }
+                tableData={ task.data.offers && task.data.offers.length ? displayOffers(task.data.offers) : [] }
               />
             }
           />

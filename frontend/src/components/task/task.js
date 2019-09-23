@@ -296,9 +296,11 @@ class Task extends Component {
 
   handleTabChange = (event, tab) => {
     const id = this.props.match.params.id
+    if (tab === 0) this.props.history.push(`/task/${id}`)
     if (tab === 1) this.props.history.push(`/task/${id}/orders`)
     if (tab === 2) this.props.history.push(`/task/${id}/interested`)
     if (tab === 3) this.props.history.push(`/task/${id}/members`)
+    if (tab === 4) this.props.history.push(`/task/${id}/offers`)
     this.props.changeTab(tab)
   }
 

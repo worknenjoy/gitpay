@@ -6,10 +6,6 @@
 
 - [ ] where your changes apply
 
-## Status
-
-> On review
-
 ## Related Issue
 
 > #000
@@ -20,8 +16,8 @@
 
 ## Steps to test
 
-- `git clone git@github.com:worknenjoy/gitpay.git`
-- `cd gitpay/frontend`
-- `npm install`
-- `npm run dev`
-- Go to http://localhost:8082
+Steps needed to reproduce the scenario from this change to validate if the pull request solve this issue
+
+- Create / log user
+- Create Task
+- Other steps
