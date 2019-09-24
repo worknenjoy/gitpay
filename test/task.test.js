@@ -11,6 +11,19 @@ const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
 
 describe("tasks", () => {
+  // API rate limit exceeded
+  const createTask = (authorizationHeader) => {
+    return agent
+      .post('/tasks/create/')
+      .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+      .set('Authorization', authorizationHeader)
+      .then(res => res.body)
+  }
+
+  const buildTask = (params) => {
+    const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+    return models.Task.create({ userId: params.userId, url: github_url, provider: 'github' })
+  }
 
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
@@ -44,21 +57,33 @@ describe("tasks", () => {
     })
   })
 
+  describe('task history', () => {
+    it('should create a new task and register on task history', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .post('/tasks/create/')
+          .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+          .set('Authorization', res.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            models.History.findOne({where: {TaskId: res.body.id}}).then(history => {
+              expect(history).to.exist;
+              expect(history.TaskId).to.equal(res.body.id);
+              expect(history.type).to.equal('create');
+              expect(history.fields).to.have.all.members(['url', 'userId'])
+              expect(history.oldValues).to.have.all.members([null, null])
+              expect(history.newValues).to.have.all.members([ 'https://github.com/worknenjoy/truppie/issues/99', `${res.body.userId}` ])
+              done()
+            }).catch(e => {
+              done(e)
+            })
+          })
+      })
+    })
+  })
+
   describe('Task crud', () => {
-    // API rate limit exceeded
-    const createTask = (authorizationHeader) => {
-      return agent
-        .post('/tasks/create/')
-        .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
-        .set('Authorization', authorizationHeader)
-        .then(res => res.body)
-    }
-
-    const buildTask = (params) => {
-      const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-      return models.Task.create({ userId: params.userId, url: github_url, provider: 'github' })
-    }
-
     it('should create a new task', (done) => {
       registerAndLogin(agent).then(res => {
         agent
