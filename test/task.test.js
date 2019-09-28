@@ -81,6 +81,34 @@ describe("tasks", () => {
           })
       })
     })
+    it('should sync with a succeeded order and track history', (done) => {
+      models.Task.build({url: 'http://github.com/check/issue/1'}).save().then((task) => {
+        task.createOrder({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 256,
+          status: 'succeeded'
+        }).then((order) => {
+          agent
+            .get(`/tasks/${task.dataValues.id}/sync/value`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              models.History.findAll({where: {TaskId: task.dataValues.id}, order: [['id', 'DESC']]}).then(histories => {
+                expect(histories.length).to.equal(2)
+                const history = histories[0]
+                expect(history).to.exist;
+                expect(history.TaskId).to.equal(task.dataValues.id);
+                expect(history.type).to.equal('update');
+                expect(history.fields).to.have.all.members(['value'])
+                expect(history.oldValues).to.have.all.members([null])
+                expect(history.newValues).to.have.all.members(['256'])
+                done()
+              })
+            })
+            })
+        });
+      })
   })
 
   describe('Task crud', () => {
