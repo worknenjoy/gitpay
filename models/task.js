@@ -44,31 +44,40 @@ module.exports = (sequelize, DataTypes) => {
     },
     hooks: {
       afterCreate: async (instance, options) => {
-        const changed = instance.changed()
-        const taskHistory = await sequelize.models.History.create({
-          TaskId: instance.id,
-          type: 'create',
-          fields: changed,
-          oldValues: Object.values(instance.previous()),
-          newValues: changed.map(v => instance.dataValues[v])
-        })
-        // eslint-disable-next-line no-console
-        console.log('Task History create', taskHistory)
-      },
-      afterUpdate: async (instance, options) => {
-        const changed = instance.changed()
-        // eslint-disable-next-line no-console
-        console.log('changed', changed, instance.dataValues.url)
         try {
+          const changed = instance.changed()
           const taskHistory = await sequelize.models.History.create({
             TaskId: instance.id,
-            type: 'update',
+            type: 'create',
             fields: changed,
             oldValues: Object.values(instance.previous()),
             newValues: changed.map(v => instance.dataValues[v])
           })
           // eslint-disable-next-line no-console
-          console.log('Task History update success', taskHistory)
+          console.log('Task History create', taskHistory)
+        }
+        catch (e) {
+          // eslint-disable-next-line no-console
+          console.log('Task History update error', e)
+        }
+      },
+      afterUpdate: async (instance, options) => {
+        try {
+          const changed = instance.changed()
+          const previous = Object.values(instance.previous()).map(p => parseInt(p))
+          const newValues = changed.map(v => instance.dataValues[v])
+          console.log('compare', previous, newValues)
+          if (JSON.stringify(previous) !== JSON.stringify(newValues)) {
+            const taskHistory = await sequelize.models.History.create({
+              TaskId: instance.id,
+              type: 'update',
+              fields: changed,
+              oldValues: previous,
+              newValues: newValues
+            })
+            // eslint-disable-next-line no-console
+            console.log('Task History update success', taskHistory)
+          }
         }
         catch (e) {
           // eslint-disable-next-line no-console

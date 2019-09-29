@@ -440,7 +440,6 @@ describe("tasks", () => {
               ).to.be.null
               done()
             })
-            .catch(done)
         })
       })
     })
@@ -466,6 +465,7 @@ describe("tasks", () => {
           .set('Authorization', res.headers.authorization)
           .expect(200)
           .end((err, deleted) => {
+            console.log('result from should deletet ask', deleted)
             expect(deleted.text).to.equal('1')
             done()
           }) 

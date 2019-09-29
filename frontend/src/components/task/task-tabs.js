@@ -29,7 +29,8 @@ import {
   HowToReg as GroupWorkIcon,
   SupervisedUserCircle as MembersIcon,
   Refresh as RefreshIcon,
-  AttachMoney as OffersIcon
+  AttachMoney as OffersIcon,
+  History as HistoryIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
@@ -194,6 +195,17 @@ class TaskTabs extends React.Component {
       ])
     }
 
+    const displayHistory = history => {
+      if (!history) return []
+      if (!history.length) {
+        return []
+      }
+      return history.map((item, i) => [
+        item && item.fields && item.oldValues && item.newValues && `${item.type} - ${item.fields.join(',')} - ${item.oldValues.join(',')} - ${item.newValues.join(',')}`,
+        MomentComponent(item.updatedAt).fromNow()
+      ])
+    }
+
     const TabContainer = props => {
       return (
         <Typography component='div' style={ { padding: 8 * 3 } }>
@@ -218,6 +230,7 @@ class TaskTabs extends React.Component {
             <Tab label={ this.props.intl.formatMessage(messages.interestedLabel) } icon={ <GroupWorkIcon /> } />
             <Tab label={ this.props.intl.formatMessage(messages.membersLabel) } icon={ <MembersIcon /> } />
             <Tab label={ this.props.intl.formatMessage(messages.offersLabel) } icon={ <OffersIcon /> } />
+            <Tab label={ this.props.intl.formatMessage(messages.historyLabel) } icon={ <HistoryIcon /> } />
           </Tabs>
         </AppBar>
         { task.tab === 0 &&
@@ -315,6 +328,25 @@ class TaskTabs extends React.Component {
                   this.props.intl.formatMessage(messages.offersTableLabelCreated)
                 ] }
                 tableData={ task.data.offers && task.data.offers.length ? displayOffers(task.data.offers) : [] }
+              />
+            }
+          />
+        </div>
+        }
+        { task.tab === 5 &&
+        <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
+          <RegularCard
+            headerColor='green'
+            cardTitle={ this.props.intl.formatMessage(messages.historyCardTitle) }
+            cardSubtitle={ this.props.intl.formatMessage(messages.historyCardSubTitle) }
+            content={
+              <Table
+                tableHeaderColor='warning'
+                tableHead={ [
+                  this.props.intl.formatMessage(messages.historyTableLabelEntry),
+                  this.props.intl.formatMessage(messages.historyTableLabelCreated)
+                ] }
+                tableData={ task.data.histories && task.data.histories.length ? displayHistory(task.data.histories) : [] }
               />
             }
           />

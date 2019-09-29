@@ -292,6 +292,12 @@ class Task extends Component {
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
       this.props.changeTab(3)
     }
+    if (this.props.history && this.props.history.location.pathname === `/task/${id}/offers`) {
+      this.props.changeTab(4)
+    }
+    if (this.props.history && this.props.history.location.pathname === `/task/${id}/history`) {
+      this.props.changeTab(5)
+    }
   }
 
   handleTabChange = (event, tab) => {
@@ -301,6 +307,7 @@ class Task extends Component {
     if (tab === 2) this.props.history.push(`/task/${id}/interested`)
     if (tab === 3) this.props.history.push(`/task/${id}/members`)
     if (tab === 4) this.props.history.push(`/task/${id}/offers`)
+    if (tab === 5) this.props.history.push(`/task/${id}/history`)
     this.props.changeTab(tab)
   }
 
@@ -654,8 +661,13 @@ class Task extends Component {
                   ) : (
                     <div>
                       <DialogTitle id='form-dialog-title'>
-                        <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this task?' />
+                        <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
                       </DialogTitle>
+                      <DialogContent>
+                        <Typography type='caption'>
+                          <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
+                        </Typography>
+                      </DialogContent>
                       <DialogActions>
                         <Button onClick={ this.handleDeleteDialogClose } color='primary'>
                           <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />

@@ -50,6 +50,10 @@ export const messages = defineMessages({
     id: 'task.tab.offers',
     defaultMessage: 'Offers'
   },
+  historyLabel: {
+    id: 'task.tab.history',
+    defaultMessage: 'History'
+  },
   cardTitle: {
     id: 'task.card.title',
     defaultMessage: 'Payments for this task'
@@ -145,6 +149,22 @@ export const messages = defineMessages({
   offersTableLabelCreated: {
     id: 'task.offers.table.label.created',
     defaultMessage: 'Created at'
+  },
+  historyCardTitle: {
+    id: 'task.history.table.label.title',
+    defaultMessage: 'History about this issue'
+  },
+  historyCardSubTitle: {
+    id: 'task.history.table.label.subtitle',
+    defaultMessage: 'Updates about this issue'
+  },
+  historyTableLabelEntry: {
+    id: 'task.history.table.label.entry',
+    defaultMessage: 'Updates about this issue'
+  },
+  historyTableLabelCreated: {
+    id: 'task.history.table.label.created',
+    defaultMessage: 'Updated at'
   },
   taskValueLabel: {
     id: 'task.status.value',
