@@ -71,6 +71,20 @@ To create a new migration
 
 `sequelize migration:create --name modelname`
 
+## Database seeding
+
+For more information related to database seeding please refer: https://en.wikipedia.org/wiki/Database_seeding
+
+To seed the database
+
+`npm run seed`
+
+For test environment
+
+`npm run seed-test`
+
+For exhaustive list of options available, refer `migration.js` in root directory
+
 ## Run project
 
 ### Frontend server
