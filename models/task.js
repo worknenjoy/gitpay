@@ -64,10 +64,9 @@ module.exports = (sequelize, DataTypes) => {
       afterUpdate: async (instance, options) => {
         try {
           const changed = instance.changed()
-          const previous = Object.values(instance.previous()).map(p => parseInt(p))
-          const newValues = changed.map(v => instance.dataValues[v])
-          console.log('compare', previous, newValues)
-          if (JSON.stringify(previous) !== JSON.stringify(newValues)) {
+          const previous = Object.values(instance.previous())
+          const newValues = changed.map(v => `${instance.dataValues[v]}`)
+          if ((JSON.stringify(previous) !== JSON.stringify(newValues)) && (JSON.stringify(changed) !== JSON.stringify(['id', 'updatedAt']))) {
             const taskHistory = await sequelize.models.History.create({
               TaskId: instance.id,
               type: 'update',
@@ -83,6 +82,9 @@ module.exports = (sequelize, DataTypes) => {
           // eslint-disable-next-line no-console
           console.log('Task History update error', e)
         }
+      },
+      afterBulkUpdate: (instance) => {
+        console.log('after bulk update', instance)
       }
     }
   })

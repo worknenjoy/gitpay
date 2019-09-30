@@ -111,6 +111,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
       where: {
         id: taskParameters.id,
       },
+      individualHooks: true,
       include: [models.User, models.Order, models.Offer, models.Member]
     }).then((data) => {
       if (!data) {

@@ -195,13 +195,33 @@ class TaskTabs extends React.Component {
       ])
     }
 
+    const historyUpdates = item => {
+      const statement = 'The issue was updated with a new '
+      const itemFields = item.fields.map( (f, i) => { 
+        return { field: f, oldValue: item.oldValues[i], newValue: item.newValues[i] }
+      })
+      const valuesToRemove = ['updatedAt', 'id']
+      const filteredItems = itemFields.filter(item => !valuesToRemove.includes(item.field))
+      if(filteredItems.length) {
+        return filteredItems.map((f, i) => {
+          if(f.field === 'deadline') return `${statement} ${f.field}: ${MomentComponent(f.oldValue).isValid() ? `from ${MomentComponent(f.oldValue).fromNow()}` : ``} to ${MomentComponent(f.newValue).fromNow()}`
+          if(f.field === 'value') return `${statement} ${f.field}: ${f.oldValue ? `from $${f.oldValue}` : ``} to $${f.newValue}`
+          return `${statement} ${f.field}: ${f.oldValue ? `from ${f.oldValue}` : ``} to ${f.newValue}`
+        })
+      } else {
+        return null
+      }
+    }
+
     const displayHistory = history => {
       if (!history) return []
       if (!history.length) {
         return []
       }
       return history.map((item, i) => [
-        item && item.fields && item.oldValues && item.newValues && `${item.type} - ${item.fields.join(',')} - ${item.oldValues.join(',')} - ${item.newValues.join(',')}`,
+        item && item.fields && item.oldValues && item.newValues && item.type === 'create' ? 
+        `A new issue was created with ${item.fields.map((f, i) => `${f}: ${item.newValues[i]}`).join(', ')}`
+        : historyUpdates(item),
         MomentComponent(item.updatedAt).fromNow()
       ])
     }
