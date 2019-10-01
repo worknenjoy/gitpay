@@ -63,7 +63,7 @@ describe('Crons', () => {
     it('remember deadline 2 days past', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'testcrondeadline@gmail.com', password: 'teste'})
+        .send({email: 'testcrondeadline2@gmail.com', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {

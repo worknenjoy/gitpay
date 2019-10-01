@@ -29,6 +29,9 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       {
         model: models.Offer,
         include: [models.User, models.Task]
+      },
+      {
+        model: models.History
       }
     ]
   })
@@ -129,7 +132,9 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 orders: data.dataValues.Orders,
                 assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
-                offers: data.dataValues.Offers
+                offers: data.dataValues.Offers,
+                histories: data.dataValues.Histories
+
               }
 
               if (!data.title && data.title !== issueDataJsonGithub.title) {

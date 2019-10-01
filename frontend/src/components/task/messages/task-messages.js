@@ -2,7 +2,7 @@ import { defineMessages } from 'react-intl'
 
 // messages for translations on Crowdin - https://crowdin.com/project/gitpay
 export const messages = defineMessages({
-  openStatus: {
+  openPaymentStatus: {
     id: 'task.status.status.payment.open',
     defaultMessage: 'Open'
   },
@@ -13,6 +13,18 @@ export const messages = defineMessages({
   failStatus: {
     id: 'task.status.filter.payment.failed',
     defaultMessage: 'Payment failed'
+  },
+  openStatus: {
+    id: 'task.status.filter.open',
+    defaultMessage: 'Open'
+  },
+  inProgressStatus: {
+    id: 'task.status.filter.progress',
+    defaultMessage: 'In progress'
+  },
+  closed: {
+    id: 'task.status.filter.close',
+    defaultMessage: 'Finished'
   },
   noUserFound: {
     id: 'task.user.find.none',
@@ -49,6 +61,10 @@ export const messages = defineMessages({
   offersLabel: {
     id: 'task.tab.offers',
     defaultMessage: 'Offers'
+  },
+  historyLabel: {
+    id: 'task.tab.history',
+    defaultMessage: 'History'
   },
   cardTitle: {
     id: 'task.card.title',
@@ -145,6 +161,22 @@ export const messages = defineMessages({
   offersTableLabelCreated: {
     id: 'task.offers.table.label.created',
     defaultMessage: 'Created at'
+  },
+  historyCardTitle: {
+    id: 'task.history.table.label.title',
+    defaultMessage: 'History about this issue'
+  },
+  historyCardSubTitle: {
+    id: 'task.history.table.label.subtitle',
+    defaultMessage: 'Updates about this issue'
+  },
+  historyTableLabelEntry: {
+    id: 'task.history.table.label.entry',
+    defaultMessage: 'Updates about this issue'
+  },
+  historyTableLabelCreated: {
+    id: 'task.history.table.label.created',
+    defaultMessage: 'Updated at'
   },
   taskValueLabel: {
     id: 'task.status.value',
