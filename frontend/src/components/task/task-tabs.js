@@ -62,9 +62,18 @@ class TaskTabs extends React.Component {
     const { task, classes, logged, isAssignOwner, user } = this.props
 
     const statuses = {
-      open: this.props.intl.formatMessage(messages.openStatus),
+      open: this.props.intl.formatMessage(messages.openPaymentStatus),
       succeeded: this.props.intl.formatMessage(messages.succeededStatus),
       fail: this.props.intl.formatMessage(messages.failStatus)
+    }
+
+    const statusesDisplay = status => {
+      const possibles = {
+        open: this.props.intl.formatMessage(messages.openStatus),
+        in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
+        closed: this.props.intl.formatMessage(messages.closed)
+      }
+      return possibles[status]
     }
 
     const retryPaypalPayment = (e, paymentUrl) => {
@@ -197,20 +206,36 @@ class TaskTabs extends React.Component {
 
     const historyUpdates = item => {
       const statement = 'The issue was updated with a new '
-      const itemFields = item.fields.map( (f, i) => { 
+      const itemFields = item.fields.map((f, i) => {
         return { field: f, oldValue: item.oldValues[i], newValue: item.newValues[i] }
       })
       const valuesToRemove = ['updatedAt', 'id']
       const filteredItems = itemFields.filter(item => !valuesToRemove.includes(item.field))
-      if(filteredItems.length) {
+      if (filteredItems.length) {
         return filteredItems.map((f, i) => {
-          if(f.field === 'deadline') return `${statement} ${f.field}: ${MomentComponent(f.oldValue).isValid() ? `from ${MomentComponent(f.oldValue).fromNow()}` : ``} to ${MomentComponent(f.newValue).fromNow()}`
-          if(f.field === 'value') return `${statement} ${f.field}: ${f.oldValue ? `from $${f.oldValue}` : ``} to $${f.newValue}`
-          return `${statement} ${f.field}: ${f.oldValue ? `from ${f.oldValue}` : ``} to ${f.newValue}`
+          if (f.field === 'deadline') return `${statement} ${f.field} ${MomentComponent(f.oldValue).isValid() ? `from ${MomentComponent(f.oldValue).fromNow()}` : ''} to ${MomentComponent(f.newValue).fromNow()}`
+          if (f.field === 'value') return `${statement} ${f.field} ${f.oldValue ? `from $${f.oldValue}` : ''} to $${f.newValue}`
+          if (f.field === 'status') return `${statement} ${f.field} ${f.oldValue ? `from ${statusesDisplay(f.oldValue)}` : ''} to ${f.newValue ? statusesDisplay(f.newValue) : ''}`
+          if (f.field === 'assigned') {
+            const oldUserAssigned = f.oldValue && task.data.assigns.filter(a => a.id === parseInt(f.oldValue))[0]
+            if (f.newValue === 'null') return `The issue was updated with an unassignment of the user ${oldUserAssigned.User.username || oldUserAssigned.User.name || ' - '}`
+            const newUserAssigned = f.newValue && task.data.assigns.filter(a => a.id === parseInt(f.newValue))[0]
+            return `${statement} ${f.field} ${f.oldValue && oldUserAssigned ? `from ${oldUserAssigned.User.username || oldUserAssigned.User.name || ' - '}` : ''} to ${newUserAssigned.User.username || newUserAssigned.User.name || ' - '}`
+          }
+          return `${statement} ${f.field} ${f.oldValue ? `from ${f.oldValue}` : ''} to ${f.newValue}`
         })
-      } else {
+      }
+      else {
         return null
       }
+    }
+
+    const historyCreate = item => {
+      const fields = item.fields.map((f, i) => {
+        if (f === 'userId') return `User: ${user.name || user.username}`
+        return `${f}: ${item.newValues[i]}`
+      })
+      return `A new issue was created with ${fields.join(', ')}`
     }
 
     const displayHistory = history => {
@@ -219,9 +244,9 @@ class TaskTabs extends React.Component {
         return []
       }
       return history.map((item, i) => [
-        item && item.fields && item.oldValues && item.newValues && item.type === 'create' ? 
-        `A new issue was created with ${item.fields.map((f, i) => `${f}: ${item.newValues[i]}`).join(', ')}`
-        : historyUpdates(item),
+        item && item.fields && item.oldValues && item.newValues && item.type === 'create'
+          ? historyCreate(item)
+          : historyUpdates(item),
         MomentComponent(item.updatedAt).fromNow()
       ])
     }

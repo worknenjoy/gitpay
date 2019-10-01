@@ -2,7 +2,7 @@ import { defineMessages } from 'react-intl'
 
 // messages for translations on Crowdin - https://crowdin.com/project/gitpay
 export const messages = defineMessages({
-  openStatus: {
+  openPaymentStatus: {
     id: 'task.status.status.payment.open',
     defaultMessage: 'Open'
   },
@@ -13,6 +13,18 @@ export const messages = defineMessages({
   failStatus: {
     id: 'task.status.filter.payment.failed',
     defaultMessage: 'Payment failed'
+  },
+  openStatus: {
+    id: 'task.status.filter.open',
+    defaultMessage: 'Open'
+  },
+  inProgressStatus: {
+    id: 'task.status.filter.progress',
+    defaultMessage: 'In progress'
+  },
+  closed: {
+    id: 'task.status.filter.close',
+    defaultMessage: 'Finished'
   },
   noUserFound: {
     id: 'task.user.find.none',
