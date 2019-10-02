@@ -5,7 +5,6 @@ const request = require('supertest')
 const nock = require('nock')
 const models = require('../models')
 const { register } = require('./helpers')
-const i18n = require('i18n')
 const agent = request.agent(api)
 
 const mock_sg = nock('https://api.sendgrid.com')

@@ -38,6 +38,7 @@ describe('Crons', () => {
             expect(tasks[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
             expect(tasks[2].dataValues.value).to.equal('100')
             TaskCron.weeklyBounties().then( r => {
+              expect(r.length).to.equal(1)
               expect(r[0]).to.exist;  
               expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
               MockDate.reset()
