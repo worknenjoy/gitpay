@@ -2,13 +2,13 @@ const { sendgrid } = require('../../config/secrets')
 const constants = require('./constants')
 const sgMail = require('@sendgrid/mail')
 
-module.exports = (to, subject, data) => {
+module.exports = (to, subject, data, name = 'onetask') => {
   sgMail.setApiKey(sendgrid.apiKey)
   let baseMsg = {
     from: constants.fromEmail,
-    templateId: constants.templates.onetask,
+    templateId: constants.templates[name],
     asm: {
-      group_id: constants.groups.onetask
+      group_id: constants.groups[name]
     }
   }
   let msg = []

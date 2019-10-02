@@ -11,8 +11,7 @@ const load = require('./modules/app')
 const feed = require('feed-read')
 const i18n = require('i18n')
 
-const { job } = require('./cron')
-job.start()
+const { dailyJob, weeklyJob } = require('./cron')
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
@@ -25,14 +24,15 @@ app.use(session({
 }))
 
 i18n.configure({
-  directory: `${__dirname}/locales/result`,
-  locales: ['en', 'br'],
+  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
+  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
   updateFiles: false
 })
 
 app.use(i18n.init)
-
+dailyJob.start()
+weeklyJob.start()
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(sslRedirect())
