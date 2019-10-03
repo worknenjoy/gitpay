@@ -199,9 +199,11 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               },
               include: [models.User]
             }).then((assigned) => {
-              const assignedUser = assigned.User.dataValues
-              AssignMail.assigned(assignedUser, task.dataValues)
-              return task.dataValues
+              return task.updateAttributes({ status: 'in_progress' }).then(() => {
+                const assignedUser = assigned.User.dataValues
+                AssignMail.assigned(assignedUser, task.dataValues)
+                return task.dataValues
+              })
             })
           }
           return task.dataValues

@@ -39,7 +39,12 @@ module.exports = Promise.method(function taskSync (taskParameters) {
     const paidStripe = !!task.transfer_id
     const paid = paidPaypal && paidStripe
 
-    return task.updateAttributes({ value: finalValue.available, paid: paid }).then(updatedTask => {
+    let taskAttributes = { value: finalValue.available, paid }
+    if (paid) {
+      taskAttributes.status = 'closed'
+    }
+
+    return task.updateAttributes(taskAttributes).then(updatedTask => {
       if (updatedTask) {
         return {
           value: finalValue
