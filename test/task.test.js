@@ -5,7 +5,7 @@ const expect = require('chai').expect
 const api = require('../server')
 const agent = request.agent(api)
 const models = require('../models')
-const { registerAndLogin, register } = require('./helpers')
+const { registerAndLogin, register, login } = require('./helpers')
 const nock = require('nock')
 const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
@@ -421,6 +421,95 @@ describe("tasks", () => {
                   expect(res.body.value).to.equal('200');
                   expect(res.body.assigned).to.exist;
                   done();
+                })
+            })
+          })
+        })
+    });
+
+    it('should update status to in_progress when an user is assigned', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+            task.createAssign({userId: userId}).then((assign) => {
+              agent
+                .put("/tasks/update")
+                .send({id: task.dataValues.id, value: 200, assigned: assign.dataValues.id})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.body.value).to.equal('200');
+                  expect(res.body.assigned).to.exist;
+                  expect(res.body.status).to.equal('in_progress')
+                  done();
+                })
+            })
+          })
+        })
+    });
+
+    it('should update status to closed when is paid', (done) => {
+      models.Task.build({url: 'http://github.com/check/issue/1', transfer_id: 'foo'}).save().then((task) => {
+        task.createOrder({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 256,
+          status: 'succeeded'
+        }).then((order) => {
+          agent
+            .get(`/tasks/${task.dataValues.id}/sync/value`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              models.Task.findOne({where: {id: task.dataValues.id}}).then(t => {
+                expect(t.dataValues.status).to.equal('closed')
+                done()
+              }).catch(done)
+            })
+        });
+      })
+    });
+
+    it('should update status to open when an user is unassigned', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, user) => {
+          const userId = user.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+            task.createAssign({userId: userId}).then((assign) => {
+              agent
+                .put("/tasks/update")
+                .send({id: task.dataValues.id, value: 200, assigned: assign.dataValues.id})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.body.value).to.equal('200');
+                  expect(res.body.assigned).to.exist;
+                  expect(res.body.status).to.equal('in_progress')
+                  login(agent, {email: 'testetaskuserassigned@gmail.com', password: 'teste'}).then(logged => {
+                    agent
+                      .put(`/tasks/${task.dataValues.id}/assignment/remove`)
+                      .set('Authorization', logged.headers.authorization)
+                      .send({id: task.dataValues.id, userId})
+                      .expect('Content-Type', /json/)
+                      .expect(200)
+                      .end((err, unassign) => {
+                        expect(unassign.body.value).to.equal('200');
+                        expect(unassign.body.assigned).to.not.exist;
+                        expect(unassign.body.status).to.equal('open')
+                        done();
+                      })
+                  })
                 })
             })
           })
