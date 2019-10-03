@@ -236,6 +236,7 @@
   "task.bounties.logged.info": "Você precisa estar logado para ser atribuido a esta tarefa",
   "task.bounties.interested.question": "Você tem interesse em trabalhar nesta tarefa?",
   "task.bounties.delete.confirmation": "Deseja excluir esta tarefa?",
+  "task.bounties.delete.caution": "Se você apagar este incidente, todas as informações relacionadas a ele e ordem de pagamento serão perdidas",
   "task.bounties.interested.descritpion": "Você pode ser associado a esta tarefa e receber sua recompensa quando as mudanças forem integradas",
   "task.bounties.interested.warningMessage": "Por favor apenas envie se você estiver interessado e tiver disponível para terminar a tempo",
   "task.bounties.interested.deliveryDate": "Data de entrega em <strong>{deliveryDate}</strong>",
