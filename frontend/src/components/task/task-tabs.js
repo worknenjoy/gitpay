@@ -29,7 +29,8 @@ import {
   HowToReg as GroupWorkIcon,
   SupervisedUserCircle as MembersIcon,
   Refresh as RefreshIcon,
-  AttachMoney as OffersIcon
+  AttachMoney as OffersIcon,
+  History as HistoryIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
@@ -61,9 +62,18 @@ class TaskTabs extends React.Component {
     const { task, classes, logged, isAssignOwner, user } = this.props
 
     const statuses = {
-      open: this.props.intl.formatMessage(messages.openStatus),
+      open: this.props.intl.formatMessage(messages.openPaymentStatus),
       succeeded: this.props.intl.formatMessage(messages.succeededStatus),
       fail: this.props.intl.formatMessage(messages.failStatus)
+    }
+
+    const statusesDisplay = status => {
+      const possibles = {
+        open: this.props.intl.formatMessage(messages.openStatus),
+        in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
+        closed: this.props.intl.formatMessage(messages.closed)
+      }
+      return possibles[status]
     }
 
     const retryPaypalPayment = (e, paymentUrl) => {
@@ -194,6 +204,53 @@ class TaskTabs extends React.Component {
       ])
     }
 
+    const historyUpdates = item => {
+      const statement = 'The issue was updated with a new '
+      const itemFields = item.fields.map((f, i) => {
+        return { field: f, oldValue: item.oldValues[i], newValue: item.newValues[i] }
+      })
+      const valuesToRemove = ['updatedAt', 'id']
+      const filteredItems = itemFields.filter(item => !valuesToRemove.includes(item.field))
+      if (filteredItems.length) {
+        return filteredItems.map((f, i) => {
+          if (f.field === 'deadline') return `${statement} ${f.field} ${MomentComponent(f.oldValue).isValid() ? `from ${MomentComponent(f.oldValue).fromNow()}` : ''} to ${MomentComponent(f.newValue).fromNow()}`
+          if (f.field === 'value') return `${statement} ${f.field} ${f.oldValue ? `from $${f.oldValue}` : ''} to $${f.newValue}`
+          if (f.field === 'status') return `${statement} ${f.field} ${f.oldValue ? `from ${statusesDisplay(f.oldValue)}` : ''} to ${f.newValue ? statusesDisplay(f.newValue) : ''}`
+          if (f.field === 'assigned') {
+            const oldUserAssigned = f.oldValue && task.data.assigns.filter(a => a.id === parseInt(f.oldValue))[0]
+            if (f.newValue === 'null') return `The issue was updated with an unassignment of the user ${oldUserAssigned.User.username || oldUserAssigned.User.name || ' - '}`
+            const newUserAssigned = f.newValue && task.data.assigns.filter(a => a.id === parseInt(f.newValue))[0]
+            return `${statement} ${f.field} ${f.oldValue && oldUserAssigned ? `from ${oldUserAssigned.User.username || oldUserAssigned.User.name || ' - '}` : ''} to ${newUserAssigned.User.username || newUserAssigned.User.name || ' - '}`
+          }
+          return `${statement} ${f.field} ${f.oldValue ? `from ${f.oldValue}` : ''} to ${f.newValue}`
+        })
+      }
+      else {
+        return null
+      }
+    }
+
+    const historyCreate = item => {
+      const fields = item.fields.map((f, i) => {
+        if (f === 'userId') return `User: ${user.name || user.username}`
+        return `${f}: ${item.newValues[i]}`
+      })
+      return `A new issue was created with ${fields.join(', ')}`
+    }
+
+    const displayHistory = history => {
+      if (!history) return []
+      if (!history.length) {
+        return []
+      }
+      return history.map((item, i) => [
+        item && item.fields && item.oldValues && item.newValues && item.type === 'create'
+          ? historyCreate(item)
+          : historyUpdates(item),
+        MomentComponent(item.updatedAt).fromNow()
+      ])
+    }
+
     const TabContainer = props => {
       return (
         <Typography component='div' style={ { padding: 8 * 3 } }>
@@ -218,6 +275,7 @@ class TaskTabs extends React.Component {
             <Tab label={ this.props.intl.formatMessage(messages.interestedLabel) } icon={ <GroupWorkIcon /> } />
             <Tab label={ this.props.intl.formatMessage(messages.membersLabel) } icon={ <MembersIcon /> } />
             <Tab label={ this.props.intl.formatMessage(messages.offersLabel) } icon={ <OffersIcon /> } />
+            <Tab label={ this.props.intl.formatMessage(messages.historyLabel) } icon={ <HistoryIcon /> } />
           </Tabs>
         </AppBar>
         { task.tab === 0 &&
@@ -315,6 +373,25 @@ class TaskTabs extends React.Component {
                   this.props.intl.formatMessage(messages.offersTableLabelCreated)
                 ] }
                 tableData={ task.data.offers && task.data.offers.length ? displayOffers(task.data.offers) : [] }
+              />
+            }
+          />
+        </div>
+        }
+        { task.tab === 5 &&
+        <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
+          <RegularCard
+            headerColor='green'
+            cardTitle={ this.props.intl.formatMessage(messages.historyCardTitle) }
+            cardSubtitle={ this.props.intl.formatMessage(messages.historyCardSubTitle) }
+            content={
+              <Table
+                tableHeaderColor='warning'
+                tableHead={ [
+                  this.props.intl.formatMessage(messages.historyTableLabelEntry),
+                  this.props.intl.formatMessage(messages.historyTableLabelCreated)
+                ] }
+                tableData={ task.data.histories && task.data.histories.length ? displayHistory(task.data.histories) : [] }
               />
             }
           />

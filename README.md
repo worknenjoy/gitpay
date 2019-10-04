@@ -128,6 +128,7 @@ Here you can start to learn how to create your first pull request and start to b
 - [I Gede Wicaksana]( https://github.com/wicaker ) 
 - [Luísa Barros]( https://github.com/luisabfs )
 - [Caio Reis]( https://github.com/caioreis123 )
+- [Shivam Latawa]( https://github.com/ShivamLatawa )
 
 
 ## License

@@ -1,27 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { messages } from './messages/task-messages'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
   withStyles,
   Chip
 } from '@material-ui/core'
-
-const messages = defineMessages({
-  openStatus: {
-    id: 'task.status.filter.open',
-    defaultMessage: 'Open'
-  },
-  inProgressStatus: {
-    id: 'task.status.filter.progress',
-    defaultMessage: 'In progress'
-  },
-  closed: {
-    id: 'task.status.filter.close',
-    defaultMessage: 'Finished'
-  }
-})
 
 const styles = theme => ({
   selected: {

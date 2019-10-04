@@ -5,12 +5,25 @@ const expect = require('chai').expect
 const api = require('../server')
 const agent = request.agent(api)
 const models = require('../models')
-const { registerAndLogin, register } = require('./helpers')
+const { registerAndLogin, register, login } = require('./helpers')
 const nock = require('nock')
 const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
 
 describe("tasks", () => {
+  // API rate limit exceeded
+  const createTask = (authorizationHeader) => {
+    return agent
+      .post('/tasks/create/')
+      .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+      .set('Authorization', authorizationHeader)
+      .then(res => res.body)
+  }
+
+  const buildTask = (params) => {
+    const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+    return models.Task.create({ userId: params.userId, url: github_url, provider: 'github' })
+  }
 
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
@@ -44,21 +57,61 @@ describe("tasks", () => {
     })
   })
 
+  describe('task history', () => {
+    it('should create a new task and register on task history', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .post('/tasks/create/')
+          .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+          .set('Authorization', res.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            models.History.findOne({where: {TaskId: res.body.id}}).then(history => {
+              expect(history).to.exist;
+              expect(history.TaskId).to.equal(res.body.id);
+              expect(history.type).to.equal('create');
+              expect(history.fields).to.have.all.members(['url', 'userId'])
+              expect(history.oldValues).to.have.all.members([null, null])
+              expect(history.newValues).to.have.all.members([ 'https://github.com/worknenjoy/truppie/issues/99', `${res.body.userId}` ])
+              done()
+            }).catch(e => {
+              done(e)
+            })
+          })
+      })
+    })
+    it('should sync with a succeeded order and track history', (done) => {
+      models.Task.build({url: 'http://github.com/check/issue/1'}).save().then((task) => {
+        task.createOrder({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 256,
+          status: 'succeeded'
+        }).then((order) => {
+          agent
+            .get(`/tasks/${task.dataValues.id}/sync/value`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              models.History.findAll({where: {TaskId: task.dataValues.id}, order: [['id', 'DESC']]}).then(histories => {
+                expect(histories.length).to.equal(2)
+                const history = histories[0]
+                expect(history).to.exist;
+                expect(history.TaskId).to.equal(task.dataValues.id);
+                expect(history.type).to.equal('update');
+                expect(history.fields).to.have.all.members(['value'])
+                expect(history.oldValues).to.have.all.members([null])
+                expect(history.newValues).to.have.all.members(['256'])
+                done()
+              })
+            })
+            })
+        });
+      })
+  })
+
   describe('Task crud', () => {
-    // API rate limit exceeded
-    const createTask = (authorizationHeader) => {
-      return agent
-        .post('/tasks/create/')
-        .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
-        .set('Authorization', authorizationHeader)
-        .then(res => res.body)
-    }
-
-    const buildTask = (params) => {
-      const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-      return models.Task.create({ userId: params.userId, url: github_url, provider: 'github' })
-    }
-
     it('should create a new task', (done) => {
       registerAndLogin(agent).then(res => {
         agent
@@ -374,6 +427,95 @@ describe("tasks", () => {
         })
     });
 
+    it('should update status to in_progress when an user is assigned', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          const userId = res.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+            task.createAssign({userId: userId}).then((assign) => {
+              agent
+                .put("/tasks/update")
+                .send({id: task.dataValues.id, value: 200, assigned: assign.dataValues.id})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.body.value).to.equal('200');
+                  expect(res.body.assigned).to.exist;
+                  expect(res.body.status).to.equal('in_progress')
+                  done();
+                })
+            })
+          })
+        })
+    });
+
+    it('should update status to closed when is paid', (done) => {
+      models.Task.build({url: 'http://github.com/check/issue/1', transfer_id: 'foo'}).save().then((task) => {
+        task.createOrder({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 256,
+          status: 'succeeded'
+        }).then((order) => {
+          agent
+            .get(`/tasks/${task.dataValues.id}/sync/value`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              models.Task.findOne({where: {id: task.dataValues.id}}).then(t => {
+                expect(t.dataValues.status).to.equal('closed')
+                done()
+              }).catch(done)
+            })
+        });
+      })
+    });
+
+    it('should update status to open when an user is unassigned', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, user) => {
+          const userId = user.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+            task.createAssign({userId: userId}).then((assign) => {
+              agent
+                .put("/tasks/update")
+                .send({id: task.dataValues.id, value: 200, assigned: assign.dataValues.id})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.body.value).to.equal('200');
+                  expect(res.body.assigned).to.exist;
+                  expect(res.body.status).to.equal('in_progress')
+                  login(agent, {email: 'testetaskuserassigned@gmail.com', password: 'teste'}).then(logged => {
+                    agent
+                      .put(`/tasks/${task.dataValues.id}/assignment/remove`)
+                      .set('Authorization', logged.headers.authorization)
+                      .send({id: task.dataValues.id, userId})
+                      .expect('Content-Type', /json/)
+                      .expect(200)
+                      .end((err, unassign) => {
+                        expect(unassign.body.value).to.equal('200');
+                        expect(unassign.body.assigned).to.not.exist;
+                        expect(unassign.body.status).to.equal('open')
+                        done();
+                      })
+                  })
+                })
+            })
+          })
+        })
+    });
+
     it('should delete a task by id', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
@@ -387,7 +529,6 @@ describe("tasks", () => {
               ).to.be.null
               done()
             })
-            .catch(done)
         })
       })
     })
@@ -413,6 +554,7 @@ describe("tasks", () => {
           .set('Authorization', res.headers.authorization)
           .expect(200)
           .end((err, deleted) => {
+            console.log('result from should deletet ask', deleted)
             expect(deleted.text).to.equal('1')
             done()
           }) 
