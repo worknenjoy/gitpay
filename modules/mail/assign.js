@@ -17,14 +17,17 @@ const setMomentLocale = (lang) => {
 }
 
 const AssignMail = {
-  owner: (to, task, name, offer) => {},
+  owner: {
+    interested: (to, task, name, offer) => {},
+    assigned: (to, task, name) => {}
+  },
   interested: (to, task, name) => {},
   assigned: (to, task) => {},
   error: (msg) => {}
 }
 
 if (constants.canSendEmail) {
-  AssignMail.owner = (user, task, interested, offer) => {
+  AssignMail.owner.interested = (user, task, interested, offer) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
@@ -50,6 +53,34 @@ if (constants.canSendEmail) {
       url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
     }
   })}
+          <p>${Signatures.sign(language)}</p>`
+        },
+      ]
+    )
+  }
+
+  AssignMail.owner.assigned = (user, task, interested) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const name = user.name || user.username
+    const assignedName = interested.name || interested.username
+    const deadline = task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate')
+    const deadlineFromNow = task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime')
+    i18n.setLocale(language)
+    setMomentLocale(language)
+    request(
+      to,
+      i18n.__('mail.assign.owner.assigned.subject', { assignedName }),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>${i18n.__('mail.hello', { name })}</p>
+          <p>${i18n.__('mail.assign.owner.assigned.main', { assignedName, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.assign.owner.assigned.contact', { assignedEmail: interested.email })}</p>
+          <p>${i18n.__('mail.assign.owner.assigned.deadline.date', { date: deadline })}</p>
+          <p>${i18n.__('mail.assign.owner.assigned.deadline.days', { days: deadlineFromNow })}</p>
+          <p>${i18n.__('mail.assign.owner.assigned.instructions')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -90,7 +121,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-           <p>${i18n.__('mail.assigned.hello', { name: name })}</p>
+           <p>${i18n.__('mail.hello', { name: name })}</p>
            <p>${i18n.__('mail.assigned.main', { name: name, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
            ${i18n.__('mail.assigned.message', {
     deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
