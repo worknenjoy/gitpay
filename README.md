@@ -5,7 +5,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Percentage of issues still open")
 
-An Open Source Bounty platform to solve tasks with Git
+An Open Source Bounty platform to solve issues from Git, since open source and libraries to real projects demands
 
 https://gitpitch.com/worknenjoy/gitpay
 
@@ -71,6 +71,20 @@ To create a new migration
 
 `sequelize migration:create --name modelname`
 
+## Database seeding
+
+For more information related to database seeding please refer: https://en.wikipedia.org/wiki/Database_seeding
+
+To seed the database
+
+`npm run seed`
+
+For test environment
+
+`npm run seed-test`
+
+For exhaustive list of options available, refer `migration.js` in root directory
+
 ## Run project
 
 ### Frontend server
@@ -113,6 +127,8 @@ Here you can start to learn how to create your first pull request and start to b
 - [Prerna Verma]( https://github.com/PrernaVerma ) 
 - [I Gede Wicaksana]( https://github.com/wicaker ) 
 - [Luísa Barros]( https://github.com/luisabfs )
+- [Caio Reis]( https://github.com/caioreis123 )
+- [Shivam Latawa]( https://github.com/ShivamLatawa )
 
 
 ## License

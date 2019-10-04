@@ -11,23 +11,27 @@ const userExists = require('../users').userExists
 
 module.exports = Promise.method(function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
-  const githubClientId = secrets.github.id
-  const githubClientSecret = secrets.github.secret
+  const githubClientId = taskParameters.clientId || secrets.github.id
+  const githubClientSecret = taskParameters.secret || secrets.github.secret
   const splitIssueUrl = url.parse(repoUrl).path.split('/')
   const userOrCompany = splitIssueUrl[1]
   const projectName = splitIssueUrl[2]
   const issueId = splitIssueUrl[4]
   const userId = taskParameters.userId
+  const token = taskParameters.token
 
   if (!userId) return false
 
   switch (taskParameters.provider) {
     case 'github':
+      const uri = taskParameters.token ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}` : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      const headers = {
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+      }
+      if (taskParameters.token) headers.Authorization = `token ${token}`
       return requestPromise({
-        uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
-        headers: {
-          'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-        }
+        uri,
+        headers
       }).then(response => {
         const issueDataJsonGithub = JSON.parse(response)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
@@ -73,13 +77,13 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
               }
             })
             */
-            Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.url} from ${userData.email} was created just now`)
+            Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.id} from ${userData.email} was created just now`)
             return taskData
           })
       })
     case 'bitbucket':
       return requestPromise({
-        uri: `https://api.bitbucket.org/1.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
+        uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       }).then(response => {
         return models.Task
           .build(

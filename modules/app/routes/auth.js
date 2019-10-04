@@ -62,8 +62,11 @@ router.post('/authorize/local', (req, res, next) => {
   })(req, res, next)
 })
 
+router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
+
 router.post('/auth/register', controllers.register)
 router.get('/users', controllers.searchAll)
+router.get('/callback/github/private', controllers.createPrivateTask)
 
 router.use('/user/', secure)
 

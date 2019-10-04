@@ -77,7 +77,6 @@ class LoginButton extends Component {
                 variant='contained'
                 size={ size }
                 color='secondary'
-                className={ classes.logButtons }
               >
                 <img width='16' src={ logoGithub } />
                 <span className={ classes.gutterLeft }>Github</span>
@@ -87,7 +86,6 @@ class LoginButton extends Component {
                 variant='contained'
                 size={ size }
                 color='secondary'
-                className={ classes.logButtons }
               >
                 <img width='16' src={ logoBitbucket } />
                 <span className={ classes.gutterLeft }>Bitbucket</span>

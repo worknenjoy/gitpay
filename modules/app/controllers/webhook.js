@@ -22,7 +22,8 @@ const FAILED_REASON = {
 const CURRENCIES = {
   brl: 'R$',
   usd: '$',
-  eur: '€'
+  eur: '€',
+  dkk: 'DK'
 }
 
 exports.github = async (req, res) => {

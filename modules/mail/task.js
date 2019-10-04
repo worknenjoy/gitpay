@@ -1,15 +1,25 @@
 const moment = require('moment')
-const ptLocale = require('moment/locale/pt-br')
+// const ptLocale = require('moment/locale/pt-br')
 const i18n = require('i18n')
+const constants = require('./constants')
 const withTemplate = require('./template')
 const models = require('../../models')
 
-moment.locale('pt-br', ptLocale)
+// moment.locale('pt-br', ptLocale)
+
+i18n.configure({
+  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
+  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
+  defaultLocale: 'en',
+  updateFiles: false
+})
+
+i18n.init()
 
 const TaskMail = {
-  send: (user, data) => {
-    return true
-  }
+  send: (user, data) => true,
+  notify: (user, data) => true,
+  weeklyBounties: (data) => true
 }
 
 TaskMail.send = (user, data) => {
@@ -60,6 +70,43 @@ TaskMail.notify = async (user, data) => {
     mailList,
     subjectData,
     templateData
+  )
+}
+
+TaskMail.weeklyBounties = async (data) => {
+  const allUsers = await models.User.findAll()
+  let mailList = []
+  let subjectData = []
+  let templateData = []
+  allUsers.map((u, i) => {
+    const language = u.language || 'en'
+    i18n.setLocale(language)
+    mailList.push(u.email)
+    subjectData.push(i18n.__('mail.task.bounties.subject'))
+    const tasks = data.tasks.map(d => {
+      const url = constants.taskUrl(d.id)
+      const deadline = d.deadline ? `${moment(d.deadline).format('DD/MM/YYYY')} (${moment(d.deadline).fromNow()})` : d.deadline
+      const title = d.title
+      const value = d.value
+      return { title, url, value, deadline }
+    })
+    templateData.push({
+      tasks,
+      content: {
+        title: i18n.__('mail.task.bounties.title'),
+        provider_action: i18n.__('mail.task.bounties.action'),
+        call_to_action: i18n.__('mail.task.bounties.calltoaction'),
+        instructions: i18n.__('mail.task.instructions'),
+        docs: i18n.__('mail.task.docs.title'),
+        reason: i18n.__('mail.task.reason'),
+        subject: i18n.__('mail.task.bounties.subject')
+      } })
+  })
+  return withTemplate(
+    mailList,
+    subjectData,
+    templateData,
+    'bounties'
   )
 }
 

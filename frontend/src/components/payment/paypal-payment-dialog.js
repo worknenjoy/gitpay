@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core'
 
 class PaypalPaymentDialog extends Component {
+  state = { termsPaypal: false }
+
   componentWillMount () { }
 
   handleNewOrder = (e) => {
@@ -27,6 +29,10 @@ class PaypalPaymentDialog extends Component {
 
   triggerPayment (order) {
     window.location.href = order.payment_url
+  }
+
+  agreeTermsPaypal = () => {
+    this.setState({ termsPaypal: !this.state.termsPaypal })
   }
 
   render () {
@@ -52,7 +58,8 @@ class PaypalPaymentDialog extends Component {
               marginTop: 40,
               fontFamily: 'Roboto',
               background: '#ecf0f1',
-              padding: '20px' } }>
+              padding: 20
+            } }>
               <FormattedMessage id='payment.paypal.warning' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
             </div>
             <div style={ { textAlign: 'center' } }>

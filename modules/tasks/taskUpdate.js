@@ -10,8 +10,6 @@ const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists
 const memberExists = require('../members').memberExists
 const i18n = require('i18n')
-const constants = require('../mail/constants')
-const TaskMail = require('../mail/task')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
@@ -32,14 +30,6 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           status: charge.status
         }).then(updatedUser => {
           PaymentMail.success(user, task, order.amount)
-          TaskMail.notifyPayment(task.dataValues.User, {
-            task: {
-              title: task.dataValues.title,
-              value: order.dataValues.amount,
-              issue_url: task.dataValues.url,
-              url: constants.taskUrl(task.dataValues.id)
-            }
-          })
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
             return models.Assign.findById(assignedId, {
@@ -109,6 +99,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
       where: {
         id: taskParameters.id,
       },
+      individualHooks: true,
       include: [models.User, models.Order, models.Offer, models.Member]
     }).then((data) => {
       if (!data) {
@@ -208,9 +199,11 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               },
               include: [models.User]
             }).then((assigned) => {
-              const assignedUser = assigned.User.dataValues
-              AssignMail.assigned(assignedUser, task.dataValues)
-              return task.dataValues
+              return task.updateAttributes({ status: 'in_progress' }).then(() => {
+                const assignedUser = assigned.User.dataValues
+                AssignMail.assigned(assignedUser, task.dataValues)
+                return task.dataValues
+              })
             })
           }
           return task.dataValues
