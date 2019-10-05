@@ -7,8 +7,8 @@ Signatures.sign = (language) => {
   return `
 
 <p>
-${i18n.__('mail.payment.sign.thanks')}, <br />
-${i18n.__('mail.payment.sign.team')}
+${i18n.__('mail.sign.thanks')}, <br />
+${i18n.__('mail.sign.team')}
 </p>
 ----------------------
 
