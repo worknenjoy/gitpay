@@ -20,7 +20,7 @@
   "mail.assign.owner.button.secondary": "Check who is interested",
   "mail.assign.owner.assigned.subject": "You have assigned {{assignedName}} to do a task",
   "mail.assign.owner.assigned.main": "You assigned {{assignedName}} to solve an issue {{url}} on <a href=\"https://gitpay.me\">Gitpay</a>",
-  "mail.assign.owner.assigned.contact": "Here is the mail: <a mailto=\"{{assignedEmail}}\">{{assignedEmail}}</a>.<br/>Maybe you can contact him to provide any extra instructions.",
+  "mail.assign.owner.assigned.contact": "You can contact him on email <a mailto=\"{{assignedEmail}}\">{{assignedEmail}}</a> to provide any extra instructions.",
   "mail.assign.owner.assigned.deadline.date": "You set the deadline for this task at: {{date}}",
   "mail.assign.owner.assigned.deadline.days": "So he have to send the solution in {{days}} days.",
   "mail.assign.owner.assigned.instructions": "The assigned user will follow these steps:<br/><br/>-The assigned user will create a fork of your project<br/>- The assigned user will follow the instructions to run locally<br/>- The assigned user will propose a solution<br/>- The assigned user will be synced with the main repo to watch any updates or changes<br/>- If you have a build pipeline, the code will go through your automated tests<br/>- The assigned user will send a Pull Request<br/>- You can review the code (If you use heroku, you can use review apps to test <a href=\"https://devcenter.heroku.com/articles/github-integration-review-apps\" title=\"Heroku Review apps\">Heroku review apps</a>)<br/>- When we have the Pull Request merged, he will receive the bounty you paid for this task",
