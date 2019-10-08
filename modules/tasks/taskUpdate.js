@@ -86,7 +86,7 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
       AssignMail.interested(user.dataValues, task.dataValues)
       if (task.dataValues.User) {
         const ownerUser = task.dataValues.User.dataValues
-        AssignMail.owner(ownerUser, task.dataValues, user, offer)
+        AssignMail.owner.interested(ownerUser, task.dataValues, user, offer)
       }
       return task.dataValues
     })
@@ -201,6 +201,8 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
             }).then((assigned) => {
               return task.updateAttributes({ status: 'in_progress' }).then(() => {
                 const assignedUser = assigned.User.dataValues
+                const ownerUser = task.dataValues.User.dataValues
+                AssignMail.owner.assigned(ownerUser, task.dataValues, assignedUser)
                 AssignMail.assigned(assignedUser, task.dataValues)
                 return task.dataValues
               })
