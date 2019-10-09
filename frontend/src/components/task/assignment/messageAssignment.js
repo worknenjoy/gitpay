@@ -72,7 +72,7 @@ class MessageAssignment extends Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={ this.closeModal } color='primary'>
+            <Button onClick={ onClose } color='primary'>
               <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
             </Button>
             <Button disabled={ message.length === 0 } onClick={ this.messageAssignment } variant='contained' color='secondary' >
