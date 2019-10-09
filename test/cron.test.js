@@ -18,7 +18,6 @@ describe('Crons', () => {
     });
   })
 
-
   describe('Task', () => {
     it('Remember about tasks with bounty invested weekly', (done) => {
       agent

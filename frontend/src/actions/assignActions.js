@@ -4,6 +4,8 @@ import axios from 'axios'
 import { addNotification } from './notificationActions'
 import { fetchTask } from './taskActions'
 
+/* Assign task */
+
 const ASSIGN_TASK_REQUESTED = 'ASSIGN_TASK_REQUESTED'
 const ASSIGN_TASK_SUCCESS = 'ASSIGN_TASK_SUCCESS'
 const ASSIGN_TASK_ERROR = 'ASSIGN_TASK_ERROR'
@@ -36,6 +38,48 @@ const assignTask = (taskId, assignId) => {
       .catch(error => {
         dispatch(addNotification('actions.assign.task.error'))
         return dispatch(assignTaskError(error))
+      })
+  }
+}
+
+/* Message before assign */
+
+const MESSAGE_TASK_REQUESTED = 'MESSAGE_TASK_REQUESTED'
+const MESSAGE_TASK_SUCCESS = 'MESSAGE_TASK_SUCCESSS'
+const MESSAGE_TASK_ERROR = 'MESSAGE_TASK_ERROR'
+
+const messageTaskRequested = () => {
+  return { type: MESSAGE_TASK_REQUESTED, completed: false }
+}
+
+const messageTaskSuccess = tab => {
+  return { type: MESSAGE_TASK_SUCCESS, completed: true, tab: tab }
+}
+
+const messageTaskError = error => {
+  return { type: MESSAGE_TASK_ERROR, completed: true, error: error }
+}
+
+const messageTask = (taskId, assignId, message) => {
+  return dispatch => {
+    dispatch(messageTaskRequested())
+    axios
+      .post(`${api.API_URL}/tasks/${taskId}/message`, {
+        message,
+        interested: assignId
+      })
+      .then(response => {
+        if (!response && !response.data) {
+          dispatch(addNotification('actions.message.task.error'))
+          return dispatch(messageTaskError('actions.message.task.error'))
+        }
+        dispatch(addNotification('actions.message.task.sucess'))
+        dispatch(messageTaskSuccess(2))
+        return dispatch(fetchTask(taskId))
+      })
+      .catch(error => {
+        dispatch(addNotification('actions.message.task.error'))
+        return dispatch(messageTaskError(error))
       })
   }
 }
@@ -79,5 +123,9 @@ export {
   ASSIGN_TASK_REQUESTED,
   ASSIGN_TASK_SUCCESS,
   ASSIGN_TASK_ERROR,
-  assignTask
+  MESSAGE_TASK_REQUESTED,
+  MESSAGE_TASK_SUCCESS,
+  MESSAGE_TASK_ERROR,
+  assignTask,
+  messageTask
 }
