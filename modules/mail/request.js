@@ -5,7 +5,7 @@ const handleError = require('./handleError')
 const Signatures = require('./content')
 const { notificationEmail, fromEmail } = require('./constants')
 
-module.exports = (to, subject, content) => {
+module.exports = (to, subject, content, replyEmail) => {
   return sendgrid.apiKey && sg.API(sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
@@ -27,6 +27,9 @@ module.exports = (to, subject, content) => {
       ],
       from: {
         email: fromEmail
+      },
+      reply_to: {
+        email: replyEmail || fromEmail
       },
       content:
       [{

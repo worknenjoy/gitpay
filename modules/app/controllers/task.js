@@ -90,6 +90,16 @@ exports.inviteUserToTask = ({ params, body }, res) => Tasks
     res.send({ error: error.message })
   })
 
+// message functions
+exports.messageInterestedToTask = ({ params, body }, res) => Tasks
+  .taskMessage(params, body)
+  .then(data => res.send(data))
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.log('error on task controller message', error)
+    res.send({ error: error.message })
+  })
+
 // Assigns functions.
 exports.removeAssignedUser = (req, res) => {
   const params = { id: req.params.id, userId: req.user.id }

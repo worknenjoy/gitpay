@@ -37,6 +37,9 @@ import {
   REMOVE_ASSIGNMENT_REQUESTED,
   REMOVE_ASSIGNMENT_SUCCESS,
   REMOVE_ASSIGNMENT_ERROR,
+  MESSAGE_TASK_REQUESTED,
+  MESSAGE_TASK_SUCCESS,
+  MESSAGE_TASK_ERROR
 } from '../actions/assignActions'
 
 export const task = (state = {
@@ -109,6 +112,13 @@ export const task = (state = {
     case ASSIGN_TASK_SUCCESS:
       return { ...state, completed: true, tab: action.tab }
     case ASSIGN_TASK_ERROR:
+      return { ...state, completed: true, error: action.error }
+
+    case MESSAGE_TASK_REQUESTED:
+      return { ...state, completed: false }
+    case MESSAGE_TASK_SUCCESS:
+      return { ...state, completed: true, tab: action.tab }
+    case MESSAGE_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
 
     case REMOVE_ASSIGNMENT_REQUESTED:

@@ -2,6 +2,7 @@
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
+const chai = require('chai')
 const api = require('../server')
 const agent = request.agent(api)
 const models = require('../models')
@@ -9,13 +10,15 @@ const { registerAndLogin, register, login } = require('./helpers')
 const nock = require('nock')
 const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
+const spies = require('chai-spies')
+const AssignMail = require('../modules/mail/assign')
 
 describe("tasks", () => {
   // API rate limit exceeded
-  const createTask = (authorizationHeader) => {
+  const createTask = (authorizationHeader, params) => {
     return agent
       .post('/tasks/create/')
-      .send({url: 'https://github.com/worknenjoy/truppie/issues/99'})
+      .send(params ? params : {url: 'https://github.com/worknenjoy/truppie/issues/99'})
       .set('Authorization', authorizationHeader)
       .then(res => res.body)
   }
@@ -40,7 +43,7 @@ describe("tasks", () => {
     }, function(err){
       console.log(err);
     });
-    nock.cleanAll()
+    nock.cleanAll() 
   })
 
   describe('list tasks', () => {
@@ -163,6 +166,44 @@ describe("tasks", () => {
               //expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
               done();
             })
+        })
+      })
+    })
+
+    it('should message user interested to solve an issue', (done) => {
+      register(agent, {email: 'firstUser email', password: 'teste'}).then(firstUser => {
+        register(agent, {email: 'teste_order_declined@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, user) => {
+          login(agent, {email: 'firstUser email', password: 'teste'}).then(res => {
+            const userId = user.body.id
+            buildTask({
+              userId: firstUser.body.id,
+              Assigns: [{userId}]
+            }).then(task => {
+              task.createAssign({userId: userId}).then(assign => {
+                chai.use(spies);
+                const mailSpySuccess = chai.spy.on(AssignMail, 'messageInterested')
+                agent
+                .post(`/tasks/${task.id}/message/`)
+                .send({
+                  interested: assign.id,
+                  message: 'Hey, are you prepared to work on this?'
+                })
+                .set('Authorization', res.headers.authorization)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.statusCode).to.equal(200);
+                  expect(res.body).to.exist;
+                  expect(res.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/76');
+                  expect(mailSpySuccess).to.have.been.called()
+                  done(err);
+                })
+              })
+            })
+          })
         })
       })
     })

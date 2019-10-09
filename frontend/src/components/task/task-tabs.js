@@ -86,7 +86,7 @@ class TaskTabs extends React.Component {
 
     const assignActions = assign => {
       const task = this.props.task.data
-      return <AssignActions isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } />
+      return <AssignActions isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
     }
 
     const retryPaypalPaymentButton = (paymentUrl, status) => {
@@ -410,7 +410,8 @@ TaskTabs.propTypes = {
   isAssignOwner: PropTypes.func,
   logged: PropTypes.bool,
   removeAssignment: PropTypes.func,
-  assignTask: PropTypes.func
+  assignTask: PropTypes.func,
+  messageTask: PropTypes.func
 }
 
 export default injectIntl(withStyles(styles)(TaskTabs))
