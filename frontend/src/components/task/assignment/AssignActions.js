@@ -32,30 +32,30 @@ const AssignActions = ({ isOwner, assign, task, removeAssignment, assignTask, me
         visible={ messageOpen }
         onClose={ () => setMessageOpen(false) }
       />
-      { isOwner && 
+      { isOwner &&
         <Button
-        onClick={ () => setMessageOpen(true) }
-        style={ { marginRight: 10 } }
-        variant='contained'
-        size='small'
-        color='primary'
+          onClick={ () => setMessageOpen(true) }
+          style={ { marginRight: 10 } }
+          variant='contained'
+          size='small'
+          color='primary'
         >
           <FormattedMessage id='task.actions.message' defaultMessage='Send message' />
           <MessageIcon style={ { marginLeft: 5 } } />
         </Button>
       }
       { (isOwner && !hasAssignedUser) &&
-          <Button
-            disabled={ hasAssignedUser }
-            onClick={ () => assignTask(task.id, assign.id) }
-            style={ { marginRight: 10 } }
-            variant='contained'
-            size='small'
-            color='primary'
-          >
-            <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
-            <GroupWorkIcon style={ { marginLeft: 5 } } />
-          </Button>
+      <Button
+        disabled={ hasAssignedUser }
+        onClick={ () => assignTask(task.id, assign.id) }
+        style={ { marginRight: 10 } }
+        variant='contained'
+        size='small'
+        color='primary'
+      >
+        <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
+        <GroupWorkIcon style={ { marginLeft: 5 } } />
+      </Button>
       }
       { hasAssignedUser &&
       <FormattedMessage id='task.payment.action.chosen' defaultMessage='Chosen' >
