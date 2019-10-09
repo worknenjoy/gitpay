@@ -19,12 +19,6 @@ const AssignActions = ({ isOwner, assign, task, removeAssignment, assignTask, me
 
   return (
     <div>
-      <RemoveAssignment
-        task={ task }
-        remove={ removeAssignment }
-        visible={ hasAssignedUser && isOwner }
-      />
-
       <MessageAssignment
         assign={ assign }
         task={ task }
@@ -41,9 +35,14 @@ const AssignActions = ({ isOwner, assign, task, removeAssignment, assignTask, me
           color='primary'
         >
           <FormattedMessage id='task.actions.message' defaultMessage='Send message' />
-          <MessageIcon style={ { marginLeft: 5 } } />
+          <MessageIcon style={ { marginLeft: 5, marginRight: 5 } } />
         </Button>
       }
+      <RemoveAssignment
+        task={ task }
+        remove={ removeAssignment }
+        visible={ hasAssignedUser && isOwner }
+      />
       { (isOwner && !hasAssignedUser) &&
       <Button
         disabled={ hasAssignedUser }
