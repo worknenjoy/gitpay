@@ -38,7 +38,8 @@ import {
   CalendarToday as CalendarIcon,
   Warning as WarningIcon,
   Info as InfoIcon,
-  Delete as DeleteIcon
+  Delete as DeleteIcon,
+  MonetizationOn as MonetizationOnIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -946,6 +947,21 @@ class Task extends Component {
                   failed: task.values.failed
                 }) }
               />
+              { !taskOwner() &&
+                <Button
+                  style={ { marginTop: 5, marginBottom: 20, width: '100%' } }
+                  onClick={ this.handleAssignDialogOpen }
+                  size='large'
+                  color='primary'
+                  variant='raised'
+                  className={ classes.button }
+                >
+                  <span className={ classes.spaceRight }>
+                    <FormattedMessage id='task.interested.offer' defaultMessage='Make an offer' />
+                  </span>{ ' ' }
+                  <MonetizationOnIcon />
+                </Button>
+              }
               { MomentComponent(task.data.deadline).isValid() &&
                 <StatsCard
                   icon={ DateIcon }
