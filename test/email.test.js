@@ -97,4 +97,35 @@ describe('Task mail', () => {
       done(new Error(e))
     })
   })
+
+  it('should mail all user for weekly latest issues', (done) => {
+    register(agent, {email: 'owner@mail.com', password: 'foo'}).then(res => {
+      register(agent, {email: 'user1@mail.com', password: 'foo'}).then(anotherResp => {
+        register(agent, {email: 'user2@mail.com', password: 'foo'}).then(thirdResp => {
+          TaskMail.weeklyLatest({tasks:[{
+            id: 1,
+            url: "foo",
+            value: "20"
+          }]}).then(mail => {
+            expect(mail[0][0].statusCode).to.equal(202)
+            expect(mail[0][0].request.body).to.equal('{"from":{"email":"tarefas@gitpay.me"},"subject":"We have open issues for you on Gitpay","personalizations":[{"to":[{"email":"owner@mail.com"}],"dynamic_template_data":{"tasks":[{"url":"http://localhost:8082/#/task/1","value":"$20"}],"content":{"title":"There\'s open issues that needs to be solved on Gitpay. You can show your interest, make an offer or contribute to improve your experience and try new challenges","provider_action":"If want to contribute with open source, check our issues on Gitpay","call_to_action":"See the issue on Gitpay and apply to solve it","instructions":"<p>How to start to work on this project?</p><ul><li>Access the task on Gitpay</li><li>Click \\"I\'m interested\\"</li><li>Access the project repo and create a fork</li><li>Send a Pull Request</li><li>The maintaners will review, then you will receive a proper feedback and you will make the necessary adjustments to fit with the project guidelines</li><li>Then you will be rewarded<br></li></ul>","docs":"We have this documentation to help you (in Portuguese for now)","reason":"You received this message because you subscribed to <a href=\\"http://gitpay.me\\" target=\\"_blank\\">Gitpay</a>","subject":"We have open issues for you on Gitpay"}}}],"asm":{"group_id":11286},"template_id":"d-0decb18add7a4b5f8d501f7e0a630777"}')
+            done()
+        }).catch((e) => {
+          console.log('error on test', e)
+          done(new Error(e))
+        })
+        }).catch((e) => {
+          console.log('error on test', e)
+          done(new Error(e))
+        })
+      }).catch((e) => {
+        console.log('error on test', e)
+        done(new Error(e))
+      })
+    }).catch((e) => {
+      console.log('error on test', e)
+      done(new Error(e))
+    })
+  })
+
 })

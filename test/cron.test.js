@@ -31,7 +31,7 @@ describe('Crons', () => {
             models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7363', userId: res.body.id}).save(),
             models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7364', userId: res.body.id, status: 'in_progress'}).save(),
             models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7365', userId: res.body.id, status: 'closed', value: 100}).save(),
-            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7366', userId: res.body.id}),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7366', userId: res.body.id}).save(),
             models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7367', userId: res.body.id, value: 50}).save()
           ]).then( tasks => {
             expect(tasks[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
@@ -46,6 +46,32 @@ describe('Crons', () => {
           })
         })
       })
+    })
+    it('Remember about latest tasks weekly', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'testcronbasic@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          Promise.all([
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7363', userId: res.body.id}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7364', userId: res.body.id, status: 'in_progress'}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7365', userId: res.body.id, status: 'closed', value: 100}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7366', userId: res.body.id}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7367', userId: res.body.id, value: 50}).save()
+          ]).then( tasks => {
+            expect(tasks[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
+            expect(tasks[2].dataValues.value).to.equal('100')
+            TaskCron.latestTasks().then( r => {
+              expect(r.length).to.equal(3)
+              expect(r[0]).to.exist;  
+              expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
+              expect(r[2].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
+              done()
+            }).catch(done)
+          }).catch(done)
+        })
     })
     it('Send email about bounties', (done) => {
       agent

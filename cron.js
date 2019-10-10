@@ -36,6 +36,27 @@ const TaskCron = {
     }
     return tasks
   },
+  latestTasks: async () => {
+    const tasks = await models.Task.findAll({
+      where: {
+        assigned: {
+          $eq: null
+        },
+        status: {
+          $eq: 'open'
+        }
+      },
+      limit: 5,
+      order: [['id', 'DESC']],
+      include: [ models.User ]
+    })
+    // eslint-disable-next-line no-console
+    console.log('tasks from cron job latest tasks', tasks)
+    if (tasks[0]) {
+      TaskMail.weeklyLatest({ tasks })
+    }
+    return tasks
+  },
   rememberDeadline: async () => {
     const tasks = await models.Task.findAll({ where: {
       status: 'in_progress',
@@ -86,4 +107,14 @@ const weeklyJob = new CronJob({
   }
 })
 
-module.exports = { dailyJob, weeklyJob, TaskCron }
+const weeklyJobLatest = new CronJob({
+  cronTime: '5 8 * * 4',
+  onTick: () => {
+    const d = new Date()
+    // eslint-disable-next-line no-console
+    console.log('Log to confirm cron weekly job run at', d)
+    TaskCron.latestTasks()
+  }
+})
+
+module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron }
