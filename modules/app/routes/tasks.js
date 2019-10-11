@@ -11,6 +11,7 @@ router.post('/:id/invite/', controllers.inviteUserToTask)
 router.put('/update', controllers.updateTask)
 
 router.use(secure)
+router.post('/:id/message/', controllers.messageInterestedToTask)
 router.post('/create', controllers.createTask)
 router.post('/payments', controllers.paymentTask)
 router.delete('/delete/:id', controllers.deleteTaskById)
