@@ -10,7 +10,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
       orderParameters
     )
     .save()
-    .then((order) => {
+    .then(order => {
       if (orderParameters.provider === 'paypal') {
         return requestPromise({
           method: 'POST',
