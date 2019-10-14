@@ -1,17 +1,17 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 const requestPromise = require('request-promise')
-const URLSearchParams = require('url-search-params')
-const URL = require('url')
 
-module.exports = Promise.method(function orderBuilds (orderParameters) {
+module.exports = Promise.method(function orderCancel (orderParameters) {
   return models.Order
-    .build(
-      orderParameters
-    )
-    .save()
+    .findOne({
+      where: {
+        id: orderParameters.id
+      }
+    })
     .then(order => {
-      if (orderParameters.provider === 'paypal') {
+      if (order.dataValues.userId !== orderParameters.userId) throw new Error('User not authorized')
+      if (order.dataValues.provider === 'paypal') {
         return requestPromise({
           method: 'POST',
           uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
@@ -26,9 +26,12 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
             'grant_type': 'client_credentials'
           }
         }).then(response => {
+          // eslint-disable-next-line no-console
+          console.log('response from oauth token', response)
+          const cancelUri = `${process.env.PAYPAL_HOST}/v1/payments/authorizations/${order.dataValues.source_id}/void`
           return requestPromise({
             method: 'POST',
-            uri: `${process.env.PAYPAL_HOST}/v1/payments/payment`,
+            uri: cancelUri,
             headers: {
               'Accept': '*/*',
               'Accept-Language': 'en_US',
@@ -36,34 +39,13 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              'intent': 'authorize',
-              'redirect_urls': {
-                'return_url': `${process.env.API_HOST}/orders/update`,
-                'cancel_url': `${process.env.API_HOST}/orders/update`
-              },
-              'payer': {
-                'payment_method': 'paypal'
-              },
-              'transactions': [{
-                'amount': {
-                  'total': orderParameters.amount,
-                  'currency': orderParameters.currency
-                },
-                'description': 'Development services provided by Gitpay',
-              }]
+              authorization_id: order.dataValues.source_id
             })
           }).then(payment => {
             // eslint-disable-next-line no-console
-            console.log('payment result', payment)
-            const paymentData = JSON.parse(payment)
-            const paymentUrl = paymentData.links[1].href
-            const resultUrl = URL.parse(paymentUrl)
-            const searchParams = new URLSearchParams(resultUrl.search)
-
+            console.log('payment response for cancel', payment)
             return order.updateAttributes({
-              source_id: paymentData.id,
-              payment_url: paymentUrl,
-              token: searchParams.get('token')
+              status: 'canceled'
             }).then(orderUpdated => {
               return orderUpdated
             })

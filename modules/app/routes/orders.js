@@ -13,6 +13,7 @@ router.get('/update', controllers.updateOrders)
 router.post('/create', controllers.createOrder)
 
 router.use(secure)
+router.post('/cancel', controllers.cancelOrder)
 router.post('/payment', controllers.paymentOrder)
 
 module.exports = router
