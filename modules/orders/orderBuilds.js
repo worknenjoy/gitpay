@@ -10,7 +10,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
       orderParameters
     )
     .save()
-    .then((order) => {
+    .then(order => {
       if (orderParameters.provider === 'paypal') {
         return requestPromise({
           method: 'POST',
@@ -26,33 +26,32 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
             'grant_type': 'client_credentials'
           }
         }).then(response => {
-          // eslint-disable-next-line no-console
-          console.log('response from oauth token', response)
           return requestPromise({
             method: 'POST',
-            uri: `${process.env.PAYPAL_HOST}/v1/payments/payment`,
+            uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders`,
             headers: {
               'Accept': '*/*',
+              'Prefer': 'return=representation',
               'Accept-Language': 'en_US',
               'Authorization': 'Bearer ' + JSON.parse(response)['access_token'],
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              'intent': 'authorize',
-              'redirect_urls': {
+              'intent': 'AUTHORIZE',
+              'purchase_units': [{
+                'amount': {
+                  'value': orderParameters.amount,
+                  'currency_code': orderParameters.currency
+                },
+                'description': 'Development services provided by Gitpay',
+              }],
+              'application_context': {
                 'return_url': `${process.env.API_HOST}/orders/update`,
                 'cancel_url': `${process.env.API_HOST}/orders/update`
               },
               'payer': {
                 'payment_method': 'paypal'
-              },
-              'transactions': [{
-                'amount': {
-                  'total': orderParameters.amount,
-                  'currency': orderParameters.currency
-                },
-                'description': 'Development services provided by Gitpay',
-              }]
+              }
             })
           }).then(payment => {
             // eslint-disable-next-line no-console
@@ -61,9 +60,9 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
             const paymentUrl = paymentData.links[1].href
             const resultUrl = URL.parse(paymentUrl)
             const searchParams = new URLSearchParams(resultUrl.search)
-
             return order.updateAttributes({
               source_id: paymentData.id,
+              authorization_id: paymentData.purchase_units && paymentData.purchase_units[0] && paymentData.purchase_units[0].payments && paymentData.purchase_units[0].payments.authorizations[0].id,
               payment_url: paymentUrl,
               token: searchParams.get('token')
             }).then(orderUpdated => {
