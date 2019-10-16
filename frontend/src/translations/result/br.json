@@ -430,7 +430,7 @@
   "actions.task.invite.error": "Não foi possível enviar o convite",
   "actions.order.create.error": "Não foi possível criar o pagamento",
   "actions.order.cancel.success": "Seu pagamento foi cancelado com sucesso",
-  "actions.order.cancel.error": "We could not cancel this payment",
+  "actions.order.cancel.error": "Não foi possível cancelar este pagamento",
   "actions.order.create.payment.error": "Não foi possível criar o pagamento para esta tarefa",
   "actions.order.create.payment.send.success": "Pagamento realizado com sucesso",
   "actions.order.create.payment.send.error": "Não foi possível realizar o pagamento",
