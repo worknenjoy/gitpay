@@ -18,7 +18,7 @@ export const addNotification = (message) => {
 }
 
 export const closeNotification = () => {
-  return { type: CLOSE_NOTIFICATION }
+  return { type: CLOSE_NOTIFICATION, open: false }
 }
 
 /*

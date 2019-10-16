@@ -46,6 +46,10 @@ const messages = defineMessages({
   },
   statusFail: {
     id: 'task.status.label.fail',
+    defaultMessage: 'Payment canceled'
+  },
+  statusCanceled: {
+    id: 'task.status.label.canceled',
     defaultMessage: 'Payment failed'
   },
   labelCreditCard: {
@@ -126,7 +130,8 @@ class TaskPayment extends Component {
     const possibles = {
       open: this.props.intl.formatMessage(messages.statusOpen),
       succeeded: this.props.intl.formatMessage(messages.statusSucceeded),
-      fail: this.props.intl.formatMessage(messages.statusFail)
+      fail: this.props.intl.formatMessage(messages.statusFail),
+      canceled: this.props.intl.formatMessage(messages.statusCanceled)
     }
     return possibles[status]
   }

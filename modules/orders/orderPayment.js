@@ -24,35 +24,33 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
         }).then(response => {
           return requestPromise({
             method: 'POST',
-            uri: `${process.env.PAYPAL_HOST}/v1/payments/payment/${order.source_id}/execute/`,
+            uri: `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.authorization_id}/capture`,
             headers: {
               'Accept': '*/*',
               'Accept-Language': 'en_US',
+              'Prefer': 'return=representation',
               'Authorization': 'Bearer ' + JSON.parse(response)['access_token'],
               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              'payer_id': order.payer_id
-            })
+            }
           }).then(payment => {
             const paymentData = JSON.parse(payment)
             // eslint-disable-next-line no-console
             console.log('payment execute result', payment, paymentData)
-            // eslint-disable-next-line no-console
-            console.log('authorization id', paymentData.transactions[0].related_resources[0].authorization.id)
             return order.updateAttributes({
-              transfer_id: paymentData.transactions[0].related_resources[0].authorization.id
+              transfer_id: paymentData.id
             }, {
               include: [models.Task, models.User],
               returning: true,
               plain: true
             }).then(updatedOrder => {
+              // eslint-disable-next-line no-console
+              console.log('updatedOrder', updatedOrder)
               if (!updatedOrder) {
                 throw new Error('update_order_error')
               }
               const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
               return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
-                return models.Assign.findById(orderData.TaskId, {
+                return models.Assign.findById(task.dataValues.assigned, {
                   include: [models.User]
                 }).then(assign => {
                   TransferMail.notifyOwner(user.dataValues, task.dataValues, orderData.amount)

@@ -928,7 +928,17 @@ class Task extends Component {
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
               <div className={ classes.rootTabs }>
-                <TaskTabs assignTask={ this.props.assignTask } removeAssignment={ this.props.removeAssignment } messageTask={ this.props.messageTask } isAssignOwner={ isAssignOwner } task={ task } handleTabChange={ this.handleTabChange } logged={ this.props.logged } user={ this.props.user } />
+                <TaskTabs
+                  assignTask={ this.props.assignTask }
+                  removeAssignment={ this.props.removeAssignment }
+                  messageTask={ this.props.messageTask }
+                  isAssignOwner={ isAssignOwner }
+                  task={ task }
+                  handleTabChange={ this.handleTabChange }
+                  logged={ this.props.logged }
+                  user={ this.props.user }
+                  cancelPaypalPayment={ this.props.cancelPaypalPayment }
+                />
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
