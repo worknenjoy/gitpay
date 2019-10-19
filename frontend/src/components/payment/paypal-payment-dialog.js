@@ -10,7 +10,9 @@ import {
 } from '@material-ui/core'
 
 class PaypalPaymentDialog extends Component {
-  state = { termsPaypal: false }
+  state = {
+    termsPaypal: false
+  }
 
   componentWillMount () { }
 
@@ -23,6 +25,8 @@ class PaypalPaymentDialog extends Component {
         amount: this.props.itemPrice,
         userId: this.props.user.id,
         TaskId: this.props.task
+      }).then(order => {
+        this.triggerPayment(this.props.order.data)
       })
     }
   }
@@ -67,8 +71,8 @@ class PaypalPaymentDialog extends Component {
               <Checkbox onChange={ this.agreeTermsPaypal } />
             </div>
           </DialogContentText>
-          { this.props.order.data.payment_url ? (
-            this.triggerPayment(this.props.order.data)
+          { !this.props.order.completed ? (
+            'Requesting'
           ) : (
             <div style={ { textAlign: 'center', width: '100%', marginTop: 40, fontFamily: 'Roboto' } }>
               <FormattedMessage id='payment.paypal.paywith' defaultMessage='Pay with ' />

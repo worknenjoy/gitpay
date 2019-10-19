@@ -282,9 +282,14 @@ class Task extends Component {
 
   componentWillMount () {
     const id = this.props.match.params.id
+    const orderId = this.props.match.params.order_id
     this.props.syncTask(id)
     this.props.fetchTask(id)
+
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
+      this.props.changeTab(1)
+    }
+    if (this.props.history && orderId && this.props.history.location.pathname === `/task/${id}/orders/${orderId}`) {
       this.props.changeTab(1)
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/interested`) {
@@ -938,6 +943,9 @@ class Task extends Component {
                   logged={ this.props.logged }
                   user={ this.props.user }
                   cancelPaypalPayment={ this.props.cancelPaypalPayment }
+                  getOrderDetails={ this.props.getOrderDetails }
+                  order={ this.props.order && this.props.order.data }
+                  preloadOrder={ this.props.match.params.order_id }
                 />
               </div>
             </Grid>

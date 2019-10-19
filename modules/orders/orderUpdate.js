@@ -45,8 +45,6 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
           returning: true,
           plain: true
         }).then(order => {
-          // eslint-disable-next-line no-console
-          console.log('order found', order)
           const orderData = order[1].dataValues
           return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
             if (orderData.paid) {

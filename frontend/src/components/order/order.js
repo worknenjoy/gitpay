@@ -39,13 +39,6 @@ const styles = theme => ({
     width: 32,
     height: 32
   },
-  chipContainer: {
-    marginTop: 12,
-    marginBottom: 12
-  },
-  chip: {
-    marginRight: 10
-  },
   paper: {
     padding: 10,
     marginTop: 10,

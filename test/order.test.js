@@ -187,6 +187,73 @@ describe('orders', () => {
       })
     })
 
+    it('should fetch a paypal order with details', (done) => {
+      const url = 'https://api.sandbox.paypal.com'
+      const path = '/v1/oauth2/token'
+      const anotherPath = '/v2/checkout/orders'
+      nock(url)
+      .persist()
+      .post(path)
+      .reply(200, {access_token: 'foo'}, {
+        'Content-Type': 'application/json',
+      })
+      nock(url)
+      .post(anotherPath)
+      .reply(200, {
+        id: 'order_foo',
+        links: [
+          {href: 'http://foo.com'},
+          {href: 'http://foo.com'}
+        ],
+        'purchase_units': [{
+          'payments': {
+            'authorizations': [{
+              id: 'auth_foo'
+            }]
+          }
+        }]
+      }, {
+        'Content-Type': 'application/json',
+      })
+      register(agent, {email: 'testcancelorder@gitpay.me'}).then(user => {
+        login(agent, {email: 'testcancelorder@gitpay.me'}).then(res => {
+          agent
+          .post('/orders/create/')
+          .set('Authorization', res.headers.authorization)
+          .send({
+            currency: 'USD',
+            provider: 'paypal',
+            amount: 200,
+            userId: user.body.id
+          })
+          .expect(200).end((err, order) => {
+            const orderData = order.body
+            const detailsPath = `/v2/checkout/orders/${orderData.source_id}`
+            nock(url)
+              .get(detailsPath)
+              .reply(200, {
+                id: 'order_foo',
+                status: 'CREATED'
+              })
+            agent
+            .get(`/orders/details/${orderData.id}`)
+            .set('Authorization', res.headers.authorization)
+            .expect(200)
+            .end((err, orderDetails) => {
+              expect(orderDetails.statusCode).to.equal(200)
+              expect(orderDetails.body).to.exist
+              expect(orderDetails.body.currency).to.equal('USD')
+              expect(orderDetails.body.amount).to.equal('200')
+              expect(orderDetails.body.status).to.equal('open')
+              expect(orderDetails.body.paid).to.equal(false)
+              expect(orderDetails.body.paypal.status).to.equal('CREATED')
+              done();
+            })
+          })
+        })
+      })
+    })
+
     xit('should update a paypal order', (done) => {
       // need mock update route for Paypal api tests as the previous tests
       models.Order.build({
