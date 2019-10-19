@@ -243,8 +243,8 @@ class TaskTabs extends React.Component {
     }
 
     const retryOrCancel = (item, userId) => {
-      if (item.provider === 'paypal') {
-        if ((item.status === 'fail' || item.status === 'open') && item.payment_url && userId === item.User.id) {
+      if (item.provider === 'paypal' && userId === item.User.id) {
+        if ((item.status === 'fail' || item.status === 'open') && item.payment_url) {
           return retryPaypalPaymentButton(item.payment_url)
         }
         else if (item.status === 'succeeded') {
