@@ -75,6 +75,9 @@ const styles = theme => ({
     marginBottom: 10
   },
   chipContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 12,
     marginBottom: 12
   },
@@ -237,6 +240,69 @@ const styles = theme => ({
     verticalAlign: 'middle',
     paddingRight: 5
   },
+  textCenter: {
+    textAlign: 'center'
+  },
+  banner: {
+    width: '100%',
+    height: 'auto',
+    maxHeight: 300
+  },
+  containerButtonClose: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginBottom: 30,
+  },
+  buttonClose: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    lineHeight: 1.7,
+    textAlign: 'center',
+    borderRadius: 300,
+    padding: 5,
+    height: 32,
+    width: 32,
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    color: '#fff'
+  },
+  applyOnly: {
+    fontSize: 21,
+    textAlign: 'center',
+    width: '30%',
+    margin: '0 auto',
+    marginBottom: 15,
+    color: '#9E9E9E'
+  },
+  title: {
+    fontSize: '2.2rem'
+  }
+})
+
+const messages = defineMessages({
+  openStatus: {
+    id: 'task.status.status.payment.open',
+    defaultMessage: 'Open'
+  },
+  succeededStatus: {
+    id: 'task.status.filter.payment.succeeded',
+    defaultMessage: 'Successfull payment'
+  },
+  failStatus: {
+    id: 'task.status.filter.payment.failed',
+    defaultMessage: 'Payment failed'
+  },
+  noUserFound: {
+    id: 'task.user.find.none',
+    defaultMessage: 'User not registered'
+  },
+  labelYes: {
+    id: 'task.order.paid.yes',
+    defaultMessage: 'Yes'
+  },
+  labelNo: {
+    id: 'task.order.paid.no',
+    defaultMessage: 'No'
+  },
   inputComment: {
     paddingTop: 20,
     [theme.breakpoints.down('sm')]: {
@@ -250,6 +316,7 @@ const styles = theme => ({
     }
   }
 })
+const bannerInterested = require('../../images/banner_task_interested.png')
 
 class Task extends Component {
   constructor (props) {
@@ -703,51 +770,63 @@ class Task extends Component {
                       </DialogContent>
                     </div>
                   ) : (
+                    // dialog i'm interested
                     <div>
-                      <DialogTitle id='form-dialog-title'>
+                <div className={ classes.containerButtonClose }>
+                  <div className={classes.buttonClose}>X</div>
+                </div>
+
+                <div>
+                  <img className={ classes.banner } src={ bannerInterested } alt="banner interested task" />
+                </div>
+                      <DialogTitle id='form-dialog-title' className={classes.textCenter}>
                         <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
                       </DialogTitle>
                       <DialogContent>
-                        { task.data.metadata &&
-                        <Card>
-                          <CardHeader
-                            className={ classes.cardHeader }
-                            avatar={
-                              <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
-                                name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
-                              } }>
-                                { (msg) => (
+                        <div className={classes.applyOnly}>
+                          Please apply only if you're able to do it if you're
+                          available and commited to finish in the deadline
+                        </div>
+                          {task.data.metadata &&
+                            <Card>
+                              <CardHeader
+                                className={classes.cardHeader}
+                                avatar={
+                                  <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={{
+                                    name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
+                                  }}>
+                                    {(msg) => (
 
-                                  <Tooltip
-                                    id='tooltip-github'
-                                    title={ msg }
-                                    placement='bottom'
-                                  >
-                                    <a
-                                      href={ `${task.data.metadata.issue.user.html_url}` }
-                                      target='_blank'
-                                    >
-                                      <Avatar
-                                        src={ task.data.metadata.issue.user.avatar_url }
-                                        className={ classNames(classes.avatar) }
-                                      />
-                                    </a>
-                                  </Tooltip>
-                                ) }
-                              </FormattedMessage>
-                            }
-                            title={ task.data.title }
-                            subheader={
-                              <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={ {
-                                name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
-                              } } />
-                            }
-                            action={
-                              timePlaceholder
-                            }
-                          />
-                        </Card>
-                        }
+                                      <Tooltip
+                                        id='tooltip-github'
+                                        title={msg}
+                                        placement='bottom'
+                                      >
+                                        <a
+                                          href={`${task.data.metadata.issue.user.html_url}`}
+                                          target='_blank'
+                                        >
+                                          <Avatar
+                                            src={task.data.metadata.issue.user.avatar_url}
+                                            className={classNames(classes.avatar)}
+                                          />
+                                        </a>
+                                      </Tooltip>
+                                    )}
+                                  </FormattedMessage>
+                                }
+                                title={task.data.title}
+                                subheader={
+                                  <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
+                                    name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
+                                  }} />
+                                }
+                                action={
+                                  timePlaceholder
+                                }
+                              />
+                            </Card>
+                          }
                         <div style={ { paddingBottom: 10 } }>
                           <Typography type='subheading' gutterBottom style={ { paddingTop: 20, color: 'gray' } }>
                             <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
@@ -846,7 +925,7 @@ class Task extends Component {
                         </div>
 
                         <FormControl fullWidth>
-                          <InputLabel htmlFor='interested-amount'>
+                          <InputLabel htmlFor='interested-amount' style={{ paddingLeft: 10 }}>
                             <FormattedMessage id='task.bounties.interested.amount.value' defaultMessage='Price' />
                           </InputLabel>
                           <FormattedMessage id='task.bounties.interested.input.amount' defaultMessage='Price insert a value for this task' >
@@ -866,7 +945,14 @@ class Task extends Component {
 
                         <Grid container spacing={ 24 } style={ { fontFamily: 'Roboto', marginBottom: '20px', color: '#a9a9a9' } }>
                           <Grid item xs={ 12 } sm={ 6 }>
-                            <Checkbox checked={ this.state.currentPrice === 0 && !this.state.interestedLearn ? 'checked' : '' } onChange={ this.handleCheckboxLeaveItFor } /><FormattedMessage id='task.bounties.interested.leaveItFor' defaultMessage='Or leave it for' />&nbsp;
+                            <Checkbox
+                              color='primary'
+                              checked={ this.state.currentPrice === 0 && !this.state.interestedLearn ? 'checked' : '' }
+                              onChange={ this.handleCheckboxLeaveItFor } />
+                              <FormattedMessage
+                                id='task.bounties.interested.leaveItFor'
+                                defaultMessage='Or leave it for'
+                              />&nbsp;
                             <Chip
                               label={ `$ ${task.values.available}` }
                               className={ classes.chip }
@@ -874,8 +960,14 @@ class Task extends Component {
                             />
                           </Grid>
                           <Grid item xs={ 12 } sm={ 6 }>
-                            <Checkbox style={ { marginLeft: '-15px' } } checked={ this.state.interestedLearn ? 'checked' : '' } onChange={ this.handleCheckboxLearn } />
-                            <FormattedMessage style={ { fontFamily: 'Roboto' } } id='task.bounties.interested.iAmStarter' defaultMessage="Or I'm starter and I just want to gain experience" />
+                            <Checkbox
+                              color='primary'
+                              checked={ this.state.interestedLearn ? 'checked' : '' }
+                              onChange={ this.handleCheckboxLearn } />
+                              <FormattedMessage
+                                id='task.bounties.interested.iAmStarter'
+                                defaultMessage="Or I'm starter and I just want to gain experience"
+                              />
                           </Grid>
                         </Grid>
                         <FormControl fullWidth>
@@ -904,11 +996,12 @@ class Task extends Component {
                         <Button onClick={ this.handleAssignDialogClose } color='primary'>
                           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleAssignTask } variant='contained' color='secondary' >
+                        <Button onClick={ this.handleAssignTask } variant='raised' color='primary' >
                           <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
                         </Button>
                       </DialogActions>
                     </div>
+                    //  end dialog i'm interested
                   ) }
                 </Dialog>
               </div>
