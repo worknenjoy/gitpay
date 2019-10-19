@@ -976,10 +976,10 @@ class Task extends Component {
                               color='primary'
                               checked={ this.state.interestedLearn ? 'checked' : '' }
                               onChange={ this.handleCheckboxLearn } />
-                            <FormattedMessage
-                              id='task.bounties.interested.iAmStarter'
-                              defaultMessage="Or I'm starter and I just want to gain experience"
-                            />
+                              <FormattedMessage
+                                id='task.bounties.interested.iAmStarter'
+                                defaultMessage="Or I'm starter and I just want to gain experience"
+                              />
                           </Grid>
                         </Grid>
                         <FormControl fullWidth>
@@ -1008,7 +1008,7 @@ class Task extends Component {
                         <Button onClick={ this.handleAssignDialogClose } color='primary'>
                           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleModalInterested } variant='raised' color='primary' >
+                        <Button onClick={ this.handleAssignTask } variant='raised' color='primary' >
                           <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
                         </Button>
                       </DialogActions>
