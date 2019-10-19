@@ -934,18 +934,18 @@ class Task extends Component {
                   ) : (
                     // dialog i'm interested
                     <div>
-                <div className={ classes.containerButtonClose }>
-                  <div className={classes.buttonClose}>X</div>
-                </div>
+                      <div className={ classes.containerButtonClose }>
+                        <div className={ classes.buttonClose }>X</div>
+                      </div>
 
-                <div>
-                  <img className={ classes.banner } src={ bannerInterested } alt="banner interested task" />
-                </div>
-                      <DialogTitle id='form-dialog-title' className={classes.textCenter}>
+                      <div>
+                        <img className={ classes.banner } src={ bannerInterested } alt='banner interested task' />
+                      </div>
+                      <DialogTitle id='form-dialog-title' className={ classes.textCenter }>
                         <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
                       </DialogTitle>
                       <DialogContent>
-                        <div className={classes.applyOnly}>
+                        <div className={ classes.applyOnly }>
                           Please apply only if you're able to do it if you're
                           available and commited to finish in the deadline
                         </div>
@@ -955,7 +955,7 @@ class Task extends Component {
                               <FormattedMessage
                                 id='task.status.created.name'
                                 defaultMessage='Created by {name}'
-                                values={{ name: task.data.metadata.issue.user.login }}
+                                values={ { name: task.data.metadata.issue.user.login } }
                               >
                                 { (msg) => (
                                   <Tooltip
@@ -978,11 +978,14 @@ class Task extends Component {
                             }
                             title={ task.data.title }
                             subheader={
-                              <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={ {
+                              <FormattedMessage
+                                id='task.status.created.name.short'
+                                defaultMessage='by {name}' values={ {
                                   name: task.data.metadata.issue.user.login
-                                } } />
+                                } }
+                              />
                             }
-                            action={timePlaceholder}
+                            action={ timePlaceholder }
                           />
                         </Card>
 
@@ -1080,7 +1083,7 @@ class Task extends Component {
                         </div>
 
                         <FormControl fullWidth>
-                          <InputLabel htmlFor='interested-amount' style={{ paddingLeft: 10 }}>
+                          <InputLabel htmlFor='interested-amount' style={ { paddingLeft: 10 } }>
                             <FormattedMessage id='task.bounties.interested.amount.value' defaultMessage='Price' />
                           </InputLabel>
                           <FormattedMessage id='task.bounties.interested.input.amount' defaultMessage='Price insert a value for this task' >
@@ -1105,10 +1108,10 @@ class Task extends Component {
                               color='primary'
                               checked={ this.state.currentPrice === 0 && !this.state.interestedLearn ? 'checked' : '' }
                               onChange={ this.handleCheckboxLeaveItFor } />
-                              <FormattedMessage
-                                id='task.bounties.interested.leaveItFor'
-                                defaultMessage='Or leave it for'
-                              />&nbsp;
+                            <FormattedMessage
+                              id='task.bounties.interested.leaveItFor'
+                              defaultMessage='Or leave it for'
+                            />&nbsp;
                             <Chip
                               label={ `$ ${task.values.available}` }
                               className={ classes.chip }
@@ -1120,10 +1123,10 @@ class Task extends Component {
                               color='primary'
                               checked={ this.state.interestedLearn ? 'checked' : '' }
                               onChange={ this.handleCheckboxLearn } />
-                              <FormattedMessage
-                                id='task.bounties.interested.iAmStarter'
-                                defaultMessage="Or I'm starter and I just want to gain experience"
-                              />
+                            <FormattedMessage
+                              id='task.bounties.interested.iAmStarter'
+                              defaultMessage="Or I'm starter and I just want to gain experience"
+                            />
                           </Grid>
 
                         </Grid>
