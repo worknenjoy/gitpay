@@ -168,20 +168,24 @@ class TaskTabs extends React.Component {
       )
     }
 
-    const detailsOrderButton = (id) => {
-      return (
-        <Button
-          style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
-          variant='contained'
-          size='small'
-          color='primary'
-          className={ classes.button }
-          onClick={ (e) => this.openOrderDetailsDialog(e, id) }
-        >
-          <FormattedMessage id='general.buttons.details' defaultMessage='Details' />
-          <InfoIcon style={ { marginLeft: 5, marginRight: 5 } } />
-        </Button>
-      )
+    const detailsOrderButton = (item, userId) => {
+      if (item.provider === 'paypal') {
+        if (userId === item.User.id) {
+          return (
+            <Button
+              style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
+              variant='contained'
+              size='small'
+              color='primary'
+              className={ classes.button }
+              onClick={ (e) => this.openOrderDetailsDialog(e, item.id) }
+            >
+              <FormattedMessage id='general.buttons.details' defaultMessage='Details' />
+              <InfoIcon style={ { marginLeft: 5, marginRight: 5 } } />
+            </Button>
+          )
+        }
+      }
     }
 
     const userRow = user => {
@@ -269,7 +273,7 @@ class TaskTabs extends React.Component {
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
         <div style={ { display: 'inline-block' } }>
           <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
-          { detailsOrderButton(item.id) }
+          { detailsOrderButton(item, userId) }
           { retryOrCancel(item, userId) }
         </div>,
         `$ ${item.amount}`,
