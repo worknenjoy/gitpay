@@ -14,10 +14,6 @@ import PaymentTypeIcon from '../payment/payment-type-icon'
 
 import {
   Card,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   AppBar,
   Tabs,
   Tab,
@@ -35,10 +31,14 @@ import {
   Refresh as RefreshIcon,
   AttachMoney as OffersIcon,
   History as HistoryIcon,
-  Cancel as CancelIcon
+  Cancel as CancelIcon,
+  Info as InfoIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
+
+import TaskPaymentCancel from './task-payment-cancel'
+import TaskOrderDetails from './order/task-order-details'
 
 const logoGithub = require('../../images/github-logo.png')
 
@@ -68,7 +68,16 @@ class TaskTabs extends React.Component {
 
     this.state = {
       cancelPaypalConfirmDialog: false,
+      orderDetailsDialog: false,
       currentOrderId: null
+    }
+  }
+
+  componentDidMount () {
+    if (this.props.preloadOrder) {
+      this.setState({ currendOrderId: this.props.preloadOrder }, () => {
+        this.openOrderDetailsDialog({}, this.props.preloadOrder)
+      })
     }
   }
 
@@ -84,8 +93,17 @@ class TaskTabs extends React.Component {
   handleCancelPaypalPayment = async (e) => {
     e.preventDefault()
     const orderId = this.state.currentOrderId
-    this.setState({ cancelPaypalConfirmDialog: false })
+    this.setState({ cancelPaypalConfirmDialog: false, orderDetailsDialog: false })
     await this.props.cancelPaypalPayment(orderId)
+  }
+
+  openOrderDetailsDialog = async (e, id) => {
+    await this.props.getOrderDetails(id)
+    this.setState({ orderDetailsDialog: true, currentOrderId: id })
+  }
+
+  closeOrderDetailsDialog = () => {
+    this.setState({ orderDetailsDialog: false })
   }
 
   render () {
@@ -134,7 +152,7 @@ class TaskTabs extends React.Component {
           retryPaypalPayment(e, paymentUrl)
         } }>
           <FormattedMessage id='general.buttons.retry' defaultMessage='Retry' />
-          <RefreshIcon style={ { marginLeft: 5 } } />
+          <RefreshIcon style={ { marginLeft: 5, marginRight: 5 } } />
         </Button>
       )
     }
@@ -145,7 +163,23 @@ class TaskTabs extends React.Component {
           cancelPaypalPayment(e, id)
         } }>
           <FormattedMessage id='general.buttons.cancel' defaultMessage='Cancel' />
-          <CancelIcon style={ { marginLeft: 5 } } />
+          <CancelIcon style={ { marginLeft: 5, marginRight: 5 } } />
+        </Button>
+      )
+    }
+
+    const detailsOrderButton = (id) => {
+      return (
+        <Button
+          style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
+          variant='contained'
+          size='small'
+          color='primary'
+          className={ classes.button }
+          onClick={ (e) => this.openOrderDetailsDialog(e, id) }
+        >
+          <FormattedMessage id='general.buttons.details' defaultMessage='Details' />
+          <InfoIcon style={ { marginLeft: 5, marginRight: 5 } } />
         </Button>
       )
     }
@@ -234,7 +268,8 @@ class TaskTabs extends React.Component {
       return orders.map((item, i) => [
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
         <div style={ { display: 'inline-block' } }>
-          <span style={ { marginRight: '1rem' } }>{ statuses[item.status] }</span>
+          <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
+          { detailsOrderButton(item.id) }
           { retryOrCancel(item, userId) }
         </div>,
         `$ ${item.amount}`,
@@ -462,30 +497,17 @@ class TaskTabs extends React.Component {
           />
         </div>
         }
-        <Dialog
-          open={ this.state.cancelPaypalConfirmDialog }
-          onClose={ this.handlePayPalDialogClose }
-          aria-labelledby='form-dialog-title'
-        >
-          <div>
-            <DialogTitle id='form-dialog-title'>
-              <FormattedMessage id='task.bounties.cancel.paypal.confirmation' defaultMessage='Are you sure you want to cancel this pre-payment?' />
-            </DialogTitle>
-            <DialogContent>
-              <Typography type='caption'>
-                <FormattedMessage id='task.bounties.cancel.paypal.caution' defaultMessage='If you cancel this payment, your pre-approved payment will be canceled and the balance will be canceled from this issue' />
-              </Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={ this.handlePayPalDialogClose } color='primary'>
-                <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-              </Button>
-              <Button onClick={ (e) => this.handleCancelPaypalPayment(e) } variant='raised' color='secondary' >
-                <FormattedMessage id='task.actions.cancelPayment' defaultMessage='Confirm cancelation of pre-authorized payment' />
-              </Button>
-            </DialogActions>
-          </div>
-        </Dialog>
+        <TaskPaymentCancel
+          cancelPaypalConfirmDialog={ this.state.cancelPaypalConfirmDialog }
+          handlePayPalDialogClose={ this.handlePayPalDialogClose }
+          handleCancelPaypalPayment={ this.handleCancelPaypalPayment }
+        />
+        <TaskOrderDetails
+          open={ this.state.orderDetailsDialog }
+          order={ this.props.order }
+          onClose={ this.closeOrderDetailsDialog }
+          onCancel={ this.handlePayPalDialogOpen }
+        />
       </div>
     )
   }

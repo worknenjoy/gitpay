@@ -16,6 +16,10 @@ const CANCEL_ORDER_REQUESTED = 'CANCEL_ORDER_REQUESTED'
 const CANCEL_ORDER_SUCCESS = 'CANCEL_ORDER_SUCCESS'
 const CANCEL_ORDER_ERROR = 'CANCEL_ORDER_ERROR'
 
+const DETAILS_ORDER_REQUESTED = 'DETAILS_ORDER_REQUESTED'
+const DETAILS_ORDER_SUCCESS = 'DETAILS_ORDER_SUCCESS'
+const DETAILS_ORDER_ERROR = 'DETAILS_ORDER_ERROR'
+
 /*
  * Order create
  */
@@ -65,6 +69,22 @@ const cancelOrderError = error => {
 }
 
 /*
+ * Order details
+ */
+
+const detailOrderRequested = () => {
+  return { type: DETAILS_ORDER_REQUESTED, completed: false }
+}
+
+const detailOrderSuccess = order => {
+  return { type: DETAILS_ORDER_SUCCESS, completed: true, order }
+}
+
+const detailOrderError = error => {
+  return { type: DETAILS_ORDER_SUCCESS, completed: true, error: error }
+}
+
+/*
 *
 * Async actions
 *
@@ -73,7 +93,7 @@ const cancelOrderError = error => {
 const createOrder = order => {
   return dispatch => {
     dispatch(createOrderRequested())
-    axios
+    return axios
       .post(api.API_URL + '/orders/create', order)
       .then(order => {
         if (order.data) {
@@ -163,6 +183,32 @@ const cancelOrder = id => {
   }
 }
 
+const detailOrder = id => {
+  validToken()
+  return dispatch => {
+    dispatch(detailOrderRequested())
+    return axios
+      .get(api.API_URL + '/orders/details/' + id)
+      .then(order => {
+        if (order.data) {
+          return dispatch(detailOrderSuccess(order.data))
+        }
+        else {
+          addNotification('actions.order.cancel.error')
+          return dispatch(detailOrderError(new Error('detail_order_failed')))
+        }
+      })
+      .catch(e => {
+        dispatch(
+          addNotification(
+            'actions.order.cancel.payment.error'
+          )
+        )
+        return dispatch(cancelOrderError(e))
+      })
+  }
+}
+
 export {
   CREATE_ORDER_REQUESTED,
   CREATE_ORDER_SUCCESS,
@@ -173,7 +219,11 @@ export {
   CANCEL_ORDER_REQUESTED,
   CANCEL_ORDER_SUCCESS,
   CANCEL_ORDER_ERROR,
+  DETAILS_ORDER_REQUESTED,
+  DETAILS_ORDER_SUCCESS,
+  DETAILS_ORDER_ERROR,
   createOrder,
   payOrder,
-  cancelOrder
+  cancelOrder,
+  detailOrder
 }

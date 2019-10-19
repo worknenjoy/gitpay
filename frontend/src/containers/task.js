@@ -4,7 +4,7 @@ import { addNotification, addDialog, closeDialog } from '../actions/notification
 import { loggedIn } from '../actions/loginActions'
 import { assignTask, removeAssignment, messageTask } from '../actions/assignActions'
 import { updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask } from '../actions/taskActions'
-import { createOrder, payOrder, cancelOrder } from '../actions/orderActions'
+import { createOrder, payOrder, cancelOrder, detailOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 
 const mapStateToProps = (state, ownProps) => {
@@ -37,7 +37,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     changeTab: (tab) => dispatch(changeTaskTab(tab)),
     createOrder: (order) => dispatch(createOrder(order)),
     filterTaskOrders: (filter) => dispatch(filterTaskOrders(filter)),
-    cancelPaypalPayment: (id) => dispatch(cancelOrder(id))
+    cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
+    getOrderDetails: (id) => dispatch(detailOrder(id))
   }
 }
 
