@@ -452,7 +452,7 @@ class Task extends Component {
       console.log(e)
     })
   }
-  
+
   handleModalInterested = () => {
     this.setState({ modalInterested: true })
   }
@@ -800,6 +800,10 @@ class Task extends Component {
                           available and commited to finish in the deadline
                         </div>
                           {task.data.metadata &&
+                            <div className={classes.applyOnly}>
+                                  Please apply only if you're able to do it if you're
+                                  available and commited to finish in the deadline
+                            </div>
                             <Card>
                               <CardHeader
                                 className={classes.cardHeader}
@@ -976,10 +980,10 @@ class Task extends Component {
                               color='primary'
                               checked={ this.state.interestedLearn ? 'checked' : '' }
                               onChange={ this.handleCheckboxLearn } />
-                              <FormattedMessage
-                                id='task.bounties.interested.iAmStarter'
-                                defaultMessage="Or I'm starter and I just want to gain experience"
-                              />
+                            <FormattedMessage
+                              id='task.bounties.interested.iAmStarter'
+                              defaultMessage="Or I'm starter and I just want to gain experience"
+                            />
                           </Grid>
                         </Grid>
                         <FormControl fullWidth>
