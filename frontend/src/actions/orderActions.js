@@ -12,6 +12,14 @@ const PAY_ORDER_REQUESTED = 'PAY_ORDER_REQUESTED'
 const PAY_ORDER_SUCCESS = 'PAY_ORDER_SUCCESS'
 const PAY_ORDER_ERROR = 'PAY_ORDER_ERROR'
 
+const CANCEL_ORDER_REQUESTED = 'CANCEL_ORDER_REQUESTED'
+const CANCEL_ORDER_SUCCESS = 'CANCEL_ORDER_SUCCESS'
+const CANCEL_ORDER_ERROR = 'CANCEL_ORDER_ERROR'
+
+const DETAILS_ORDER_REQUESTED = 'DETAILS_ORDER_REQUESTED'
+const DETAILS_ORDER_SUCCESS = 'DETAILS_ORDER_SUCCESS'
+const DETAILS_ORDER_ERROR = 'DETAILS_ORDER_ERROR'
+
 /*
  * Order create
  */
@@ -44,10 +52,48 @@ const payOrderError = error => {
   return { type: PAY_ORDER_ERROR, completed: true, error: error }
 }
 
+/*
+ * Order cancel
+ */
+
+const cancelOrderRequested = () => {
+  return { type: CANCEL_ORDER_REQUESTED, completed: false }
+}
+
+const cancelOrderSuccess = order => {
+  return { type: CANCEL_ORDER_SUCCESS, completed: true, order }
+}
+
+const cancelOrderError = error => {
+  return { type: CANCEL_ORDER_ERROR, completed: true, error: error }
+}
+
+/*
+ * Order details
+ */
+
+const detailOrderRequested = () => {
+  return { type: DETAILS_ORDER_REQUESTED, completed: false }
+}
+
+const detailOrderSuccess = order => {
+  return { type: DETAILS_ORDER_SUCCESS, completed: true, order }
+}
+
+const detailOrderError = error => {
+  return { type: DETAILS_ORDER_SUCCESS, completed: true, error: error }
+}
+
+/*
+*
+* Async actions
+*
+*/
+
 const createOrder = order => {
   return dispatch => {
     dispatch(createOrderRequested())
-    axios
+    return axios
       .post(api.API_URL + '/orders/create', order)
       .then(order => {
         if (order.data) {
@@ -94,11 +140,7 @@ const payOrder = order => {
         else {
           dispatch(addNotification('actions.order.create.payment.send.error'))
           return dispatch(
-            payOrderError({
-              error: {
-                type: 'pay_order_failed'
-              }
-            })
+            payOrderError(new Error('pay_order_failed'))
           )
         }
       })
@@ -113,6 +155,60 @@ const payOrder = order => {
   }
 }
 
+const cancelOrder = id => {
+  validToken()
+  return dispatch => {
+    dispatch(cancelOrderRequested())
+    return axios
+      .post(api.API_URL + '/orders/cancel', { id })
+      .then(order => {
+        if (order.data) {
+          dispatch(addNotification('actions.order.cancel.success'))
+          dispatch(cancelOrderSuccess(order))
+          return dispatch(fetchTask(order.data.TaskId))
+        }
+        else {
+          addNotification('actions.order.cancel.error')
+          return dispatch(cancelOrderError(new Error('cancel_order_failed')))
+        }
+      })
+      .catch(e => {
+        dispatch(
+          addNotification(
+            'actions.order.cancel.payment.error'
+          )
+        )
+        return dispatch(cancelOrderError(e))
+      })
+  }
+}
+
+const detailOrder = id => {
+  validToken()
+  return dispatch => {
+    dispatch(detailOrderRequested())
+    return axios
+      .get(api.API_URL + '/orders/details/' + id)
+      .then(order => {
+        if (order.data) {
+          return dispatch(detailOrderSuccess(order.data))
+        }
+        else {
+          addNotification('actions.order.cancel.error')
+          return dispatch(detailOrderError(new Error('detail_order_failed')))
+        }
+      })
+      .catch(e => {
+        dispatch(
+          addNotification(
+            'actions.order.cancel.payment.error'
+          )
+        )
+        return dispatch(cancelOrderError(e))
+      })
+  }
+}
+
 export {
   CREATE_ORDER_REQUESTED,
   CREATE_ORDER_SUCCESS,
@@ -120,6 +216,14 @@ export {
   PAY_ORDER_REQUESTED,
   PAY_ORDER_SUCCESS,
   PAY_ORDER_ERROR,
+  CANCEL_ORDER_REQUESTED,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_ERROR,
+  DETAILS_ORDER_REQUESTED,
+  DETAILS_ORDER_SUCCESS,
+  DETAILS_ORDER_ERROR,
   createOrder,
-  payOrder
+  payOrder,
+  cancelOrder,
+  detailOrder
 }

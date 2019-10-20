@@ -282,9 +282,14 @@ class Task extends Component {
 
   componentWillMount () {
     const id = this.props.match.params.id
+    const orderId = this.props.match.params.order_id
     this.props.syncTask(id)
     this.props.fetchTask(id)
+
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
+      this.props.changeTab(1)
+    }
+    if (this.props.history && orderId && this.props.history.location.pathname === `/task/${id}/orders/${orderId}`) {
       this.props.changeTab(1)
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/interested`) {
@@ -928,7 +933,20 @@ class Task extends Component {
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
               <div className={ classes.rootTabs }>
-                <TaskTabs assignTask={ this.props.assignTask } removeAssignment={ this.props.removeAssignment } messageTask={ this.props.messageTask } isAssignOwner={ isAssignOwner } task={ task } handleTabChange={ this.handleTabChange } logged={ this.props.logged } user={ this.props.user } />
+                <TaskTabs
+                  assignTask={ this.props.assignTask }
+                  removeAssignment={ this.props.removeAssignment }
+                  messageTask={ this.props.messageTask }
+                  isAssignOwner={ isAssignOwner }
+                  task={ task }
+                  handleTabChange={ this.handleTabChange }
+                  logged={ this.props.logged }
+                  user={ this.props.user }
+                  cancelPaypalPayment={ this.props.cancelPaypalPayment }
+                  getOrderDetails={ this.props.getOrderDetails }
+                  order={ this.props.order && this.props.order.data }
+                  preloadOrder={ this.props.match.params.order_id }
+                />
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>

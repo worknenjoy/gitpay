@@ -8,9 +8,9 @@ import {
 export const notification = (state = { open: false }, action) => {
   switch (action.type) {
     case ADD_NOTIFICATION:
-      return { ...state, text: action.text, open: true }
+      return { ...state, text: action.text, open: action.open }
     case CLOSE_NOTIFICATION:
-      return { ...state, open: false }
+      return { ...state, open: action.open }
     default:
       return state
   }

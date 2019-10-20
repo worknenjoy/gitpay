@@ -30,10 +30,15 @@ import {
   SupervisedUserCircle as MembersIcon,
   Refresh as RefreshIcon,
   AttachMoney as OffersIcon,
-  History as HistoryIcon
+  History as HistoryIcon,
+  Cancel as CancelIcon,
+  Info as InfoIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
+
+import TaskPaymentCancel from './task-payment-cancel'
+import TaskOrderDetails from './order/task-order-details'
 
 const logoGithub = require('../../images/github-logo.png')
 
@@ -58,13 +63,57 @@ const styles = theme => ({
 })
 
 class TaskTabs extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      cancelPaypalConfirmDialog: false,
+      orderDetailsDialog: false,
+      currentOrderId: null
+    }
+  }
+
+  componentDidMount () {
+    if (this.props.preloadOrder) {
+      this.setState({ currendOrderId: this.props.preloadOrder }, () => {
+        this.openOrderDetailsDialog({}, this.props.preloadOrder)
+      })
+    }
+  }
+
+  handlePayPalDialogOpen = (e, id) => {
+    e.preventDefault()
+    this.setState({ cancelPaypalConfirmDialog: true, currentOrderId: id })
+  }
+
+  handlePayPalDialogClose = () => {
+    this.setState({ cancelPaypalConfirmDialog: false })
+  }
+
+  handleCancelPaypalPayment = async (e) => {
+    e.preventDefault()
+    const orderId = this.state.currentOrderId
+    this.setState({ cancelPaypalConfirmDialog: false, orderDetailsDialog: false })
+    await this.props.cancelPaypalPayment(orderId)
+  }
+
+  openOrderDetailsDialog = async (e, id) => {
+    await this.props.getOrderDetails(id)
+    this.setState({ orderDetailsDialog: true, currentOrderId: id })
+  }
+
+  closeOrderDetailsDialog = () => {
+    this.setState({ orderDetailsDialog: false })
+  }
+
   render () {
     const { task, classes, logged, isAssignOwner, user } = this.props
 
     const statuses = {
       open: this.props.intl.formatMessage(messages.openPaymentStatus),
       succeeded: this.props.intl.formatMessage(messages.succeededStatus),
-      fail: this.props.intl.formatMessage(messages.failStatus)
+      fail: this.props.intl.formatMessage(messages.failStatus),
+      canceled: this.props.intl.formatMessage(messages.canceledStatus)
     }
 
     const statusesDisplay = status => {
@@ -84,22 +133,59 @@ class TaskTabs extends React.Component {
       }
     }
 
+    const cancelPaypalPayment = (e, id) => {
+      e.preventDefault()
+
+      if (id) {
+        this.handlePayPalDialogOpen(e, id)
+      }
+    }
+
     const assignActions = assign => {
       const task = this.props.task.data
       return <AssignActions isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
     }
 
-    const retryPaypalPaymentButton = (paymentUrl, status) => {
+    const retryPaypalPaymentButton = (paymentUrl) => {
       return (
-        <div style={ { display: 'inline-block' } }>
-          <span style={ { marginRight: '1rem' } }>{ status }</span>
-          <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
-            retryPaypalPayment(e, paymentUrl)
-          } }>
-            <RefreshIcon />
-          </Button>
-        </div>
+        <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+          retryPaypalPayment(e, paymentUrl)
+        } }>
+          <FormattedMessage id='general.buttons.retry' defaultMessage='Retry' />
+          <RefreshIcon style={ { marginLeft: 5, marginRight: 5 } } />
+        </Button>
       )
+    }
+
+    const cancelPaypalPaymentButton = (id) => {
+      return (
+        <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+          cancelPaypalPayment(e, id)
+        } }>
+          <FormattedMessage id='general.buttons.cancel' defaultMessage='Cancel' />
+          <CancelIcon style={ { marginLeft: 5, marginRight: 5 } } />
+        </Button>
+      )
+    }
+
+    const detailsOrderButton = (item, userId) => {
+      if (item.provider === 'paypal') {
+        if (userId === item.User.id) {
+          return (
+            <Button
+              style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
+              variant='contained'
+              size='small'
+              color='primary'
+              className={ classes.button }
+              onClick={ (e) => this.openOrderDetailsDialog(e, item.id) }
+            >
+              <FormattedMessage id='general.buttons.details' defaultMessage='Details' />
+              <InfoIcon style={ { marginLeft: 5, marginRight: 5 } } />
+            </Button>
+          )
+        }
+      }
     }
 
     const userRow = user => {
@@ -156,6 +242,20 @@ class TaskTabs extends React.Component {
       return items
     }
 
+    const retryOrCancel = (item, userId) => {
+      if (item.provider === 'paypal' && userId === item.User.id) {
+        if ((item.status === 'fail' || item.status === 'open') && item.payment_url) {
+          return retryPaypalPaymentButton(item.payment_url)
+        }
+        else if (item.status === 'succeeded') {
+          return cancelPaypalPaymentButton(item.id)
+        }
+        else {
+          return ''
+        }
+      }
+    }
+
     const displayOrders = orders => {
       if (!orders) return []
 
@@ -171,7 +271,11 @@ class TaskTabs extends React.Component {
 
       return orders.map((item, i) => [
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
-        item.status === 'fail' && item.payment_url && userId === item.User.id ? retryPaypalPaymentButton(item.payment_url, statuses[item.status]) : statuses[item.status] || this.props.intl.formatMessage(messages.unprocessed),
+        <div style={ { display: 'inline-block' } }>
+          <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
+          { detailsOrderButton(item, userId) }
+          { retryOrCancel(item, userId) }
+        </div>,
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
@@ -213,16 +317,16 @@ class TaskTabs extends React.Component {
       const filteredItems = itemFields.filter(item => !valuesToRemove.includes(item.field))
       if (filteredItems.length) {
         return filteredItems.map((f, i) => {
-          if (f.field === 'deadline') return `${statement} ${f.field} ${MomentComponent(f.oldValue).isValid() ? `from ${MomentComponent(f.oldValue).fromNow()}` : ''} to ${MomentComponent(f.newValue).fromNow()}`
+          if (f.field === 'deadline') return `${statement} ${f.field} ${MomentComponent(f.oldValue).isValid() ? `from ${MomentComponent(f.oldValue).fromNow()}` : ''} to ${MomentComponent(f.newValue).fromNow()} `
           if (f.field === 'value') return `${statement} ${f.field} ${f.oldValue ? `from $${f.oldValue}` : ''} to $${f.newValue}`
-          if (f.field === 'status') return `${statement} ${f.field} ${f.oldValue ? `from ${statusesDisplay(f.oldValue)}` : ''} to ${f.newValue ? statusesDisplay(f.newValue) : ''}`
+          if (f.field === 'status') return `${statement} ${f.field} ${f.oldValue ? `from ${statusesDisplay(f.oldValue)}` : ''} to ${f.newValue ? statusesDisplay(f.newValue) : ' '}`
           if (f.field === 'assigned') {
             const oldUserAssigned = f.oldValue && task.data.assigns.filter(a => a.id === parseInt(f.oldValue))[0]
             if (f.newValue === 'null') return `The issue was updated with an unassignment of the user ${oldUserAssigned.User.username || oldUserAssigned.User.name || ' - '}`
             const newUserAssigned = f.newValue && task.data.assigns.filter(a => a.id === parseInt(f.newValue))[0]
             return `${statement} ${f.field} ${f.oldValue && oldUserAssigned ? `from ${oldUserAssigned.User.username || oldUserAssigned.User.name || ' - '}` : ''} to ${newUserAssigned.User.username || newUserAssigned.User.name || ' - '}`
           }
-          return `${statement} ${f.field} ${f.oldValue ? `from ${f.oldValue}` : ''} to ${f.newValue}`
+          return `${statement} ${f.field} ${f.oldValue ? `from ${f.oldValue}` : ' '} to ${f.newValue} `
         })
       }
       else {
@@ -397,6 +501,17 @@ class TaskTabs extends React.Component {
           />
         </div>
         }
+        <TaskPaymentCancel
+          cancelPaypalConfirmDialog={ this.state.cancelPaypalConfirmDialog }
+          handlePayPalDialogClose={ this.handlePayPalDialogClose }
+          handleCancelPaypalPayment={ this.handleCancelPaypalPayment }
+        />
+        <TaskOrderDetails
+          open={ this.state.orderDetailsDialog }
+          order={ this.props.order }
+          onClose={ this.closeOrderDetailsDialog }
+          onCancel={ this.handlePayPalDialogOpen }
+        />
       </div>
     )
   }

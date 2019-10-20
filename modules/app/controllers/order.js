@@ -3,6 +3,8 @@ const orderSearch = require('../../orders').orderSearch
 const orderFetch = require('../../orders').orderFetch
 const orderUpdate = require('../../orders').orderUpdate
 const orderPayment = require('../../orders').orderPayment
+const orderCancel = require('../../orders').orderCancel
+const orderDetails = require('../../orders').orderDetails
 
 exports.createOrder = (req, res) => {
   orderBuild(req.body)
@@ -11,6 +13,32 @@ exports.createOrder = (req, res) => {
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log(error)
+      res.status(401).send(error)
+    })
+}
+
+exports.cancelOrder = (req, res) => {
+  orderCancel({ ...req.body, userId: req.user.dataValues.id })
+    .then(data => {
+      // eslint-disable-next-line no-console
+      console.log('data send from controller on cancelOrder', data)
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on cancelOrder', error)
+      res.status(401).send(error)
+    })
+}
+
+exports.detailsOrder = (req, res) => {
+  orderDetails(req.params)
+    .then(data => {
+      // eslint-disable-next-line no-console
+      console.log('data send from controller on details Order controller', data)
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on cancelDetails', error)
       res.status(401).send(error)
     })
 }
@@ -46,7 +74,7 @@ exports.updateOrders = (req, res) => {
       }
       res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
     }).catch(error => {
-    // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
       console.log('updateOrders error', error)
       res.redirect(process.env.FRONTEND_HOST)
     })

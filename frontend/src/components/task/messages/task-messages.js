@@ -14,6 +14,10 @@ export const messages = defineMessages({
     id: 'task.status.filter.payment.failed',
     defaultMessage: 'Payment failed'
   },
+  canceledStatus: {
+    id: 'task.status.filter.payment.canceled',
+    defaultMessage: 'Payment canceled'
+  },
   openStatus: {
     id: 'task.status.filter.open',
     defaultMessage: 'Open'

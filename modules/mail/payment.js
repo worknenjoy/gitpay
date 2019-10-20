@@ -4,9 +4,10 @@ const constants = require('./constants')
 const i18n = require('i18n')
 
 const PaymentMail = {
-  success: (to, task, value) => {},
-  assigned: (to, task, value) => {},
-  error: (to, task, value) => {}
+  success: (user, task, value) => {},
+  assigned: (user, task, value) => {},
+  error: (user, task, value) => {},
+  cancel: (user, task, order) => {}
 }
 
 if (constants.canSendEmail) {
@@ -59,6 +60,24 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.payment.content.error', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${Signatures.sign(language)}</p>`
+        },
+      ]
+    )
+  }
+
+  PaymentMail.cancel = (user, task, order) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
+    request(
+      to,
+      i18n.__('mail.payment.subject.cancel'),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
