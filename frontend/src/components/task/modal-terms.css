@@ -1,7 +1,7 @@
 .modalTerms {
   box-sizing: border-box;
   position: absolute;
-  left: 0;
+  left: -100px;
   bottom: 0;
   max-width: 800px;
   width: 100%;
