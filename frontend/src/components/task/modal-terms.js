@@ -19,10 +19,10 @@ export default props => (
       </p>
     </div>
     <div className='modalTerms__containerBtns'>
-      <Button color='primary' onClick={() => props.decline}>
+      <Button color='primary' onClick={ () => props.decline }>
         decline
       </Button>
-      <Button color='primary' onClick={() => props.accept}>
+      <Button color='primary' onClick={ () => props.accept }>
         accept
       </Button>
     </div>
