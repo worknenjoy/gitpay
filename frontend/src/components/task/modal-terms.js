@@ -6,7 +6,6 @@ import './modal-terms.css'
 
 export default props => (
   <Paper className='modalTerms'>
-    { console.log(props) }
     <h3 className='modalTerms__title'>Terms of use</h3>
     <div>
       <p className='modalTerms__text'>
