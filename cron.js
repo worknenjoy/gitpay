@@ -4,6 +4,7 @@ const moment = require('moment')
 const i18n = require('i18n')
 const DeadlineMail = require('./modules/mail/deadline')
 const TaskMail = require('./modules/mail/task')
+const OrderDetails = require('./modules/orders/orderDetails')
 
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
@@ -86,6 +87,30 @@ const TaskCron = {
   }
 }
 
+const OrderCron = {
+  verify: (provider) => {
+    if(provider === 'paypal') {
+      const orders = await models.Order.findAll({ where: {
+        value: {
+          $gt: 0
+        },
+        status: {
+          $eq: 'succeeded'
+        }
+      },
+      include: [ models.User, models.Task ]
+      })
+      // eslint-disable-next-line no-console
+      console.log('orders from cron daily check for paypal payments verification', tasks)
+      if (orders.length) {
+        
+        OrderMails.paymentNot({ tasks })
+      }
+    }
+    return {}
+  }
+}
+
 const dailyJob = new CronJob({
   // Seconds: 0-59   Minutes: 0-59   Hours: 0-23   Day of Month: 1-31   Months: 0-11 (Jan-Dec)   Day of Week: 0-6 (Sun-Sat)
   cronTime: '0 0 0 * * *', // everyday at 12:00AM
@@ -117,4 +142,4 @@ const weeklyJobLatest = new CronJob({
   }
 })
 
-module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron }
+module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron }
