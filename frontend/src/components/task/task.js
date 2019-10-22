@@ -71,6 +71,8 @@ import { FormControl } from 'material-ui/Form'
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
 import Checkbox from 'material-ui/Checkbox'
 
+import ModalInterested from './modal-terms'
+
 const TaskHeader = styled.div`
   box-sizing: border-box;
   background: black;
@@ -449,7 +451,8 @@ class Task extends Component {
         open: false,
         message: 'loading'
       },
-      showSuggestAnotherDateField: false
+      showSuggestAnotherDateField: false,
+      modalInterested: false,
     }
   }
 
@@ -463,7 +466,7 @@ class Task extends Component {
   }
 
   handleAssignDialogClose = () => {
-    this.setState({ assignDialog: false })
+    this.setState({ modalInterested: false, assignDialog: false })
   }
 
   handleAssignDialogOpen = () => {
@@ -505,6 +508,10 @@ class Task extends Component {
       ]
     })
     this.setState({ assignDialog: false })
+  }
+
+  handleModalInterested = () => {
+    this.setState({ modalInterested: true })
   }
 
   handlePaymentForm = (e) => {
@@ -935,7 +942,12 @@ class Task extends Component {
                     // dialog i'm interested
                     <div>
                       <div className={ classes.containerButtonClose }>
-                        <div className={ classes.buttonClose }>X</div>
+                        <Button
+                          onClick={ this.handleAssignDialogClose }
+                          className={ classes.buttonClose }
+                        >
+                          X
+                        </Button>
                       </div>
 
                       <div>
@@ -1155,10 +1167,17 @@ class Task extends Component {
                         <Button onClick={ this.handleAssignDialogClose } color='primary'>
                           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleAssignTask } variant='raised' color='primary' >
+                        <Button onClick={ this.handleModalInterested } variant='raised' color='primary' >
                           <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
                         </Button>
                       </DialogActions>
+
+                      { this.state.modalInterested && (
+                        <ModalInterested
+                          decline={ this.handleAssignDialogClose }
+                          accept={ this.handleAssignTask }
+                        />
+                      ) }
                     </div>
                     //  end dialog i'm interested
                   ) }
