@@ -62,6 +62,12 @@ import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
+import { Paper } from 'material-ui'
+import { FormControl } from 'material-ui/Form'
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
+import Checkbox from 'material-ui/Checkbox'
+
+import ModalInterested from './modal-terms'
 
 import ModalInterested from './modal-terms'
 
@@ -1012,7 +1018,7 @@ class Task extends Component {
                         <Button onClick={ this.handleAssignDialogClose } color='primary'>
                           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleAssignTask } variant='raised' color='primary' >
+                        <Button onClick={ this.handleModalInterested } variant='raised' color='primary' >
                           <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this task!' />
                         </Button>
                       </DialogActions>
