@@ -1,0 +1,35 @@
+.modalTerms {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  max-width: 800px;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+}
+
+.modalTerms__title {
+  font-size: 22px;
+  text-transform: uppercase;
+}
+.modalTerms__text {
+  font-size: 15px;
+  color: gray;
+}
+.modalTerms__containerBtns {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+}
+
+.modalTerms__showModal {
+  display: block;
+  visibility: visible;
+}
+.modalTerms__hideModal {
+  display: none;
+  visibility: hidden;
+}
