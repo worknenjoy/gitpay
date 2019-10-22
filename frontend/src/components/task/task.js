@@ -818,50 +818,50 @@ class Task extends Component {
                         <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
                       </DialogTitle>
                       <DialogContent>
-                          {task.data.metadata &&
-                            <div className={classes.applyOnly}>
-                                  Please apply only if you're able to do it if you're
-                                  available and commited to finish in the deadline
-                            </div>
-                            <Card>
-                              <CardHeader
-                                className={classes.cardHeader}
-                                avatar={
-                                  <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={{
-                                    name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
-                                  }}>
-                                    {(msg) => (
-
-                                      <Tooltip
-                                        id='tooltip-github'
-                                        title={msg}
-                                        placement='bottom'
-                                      >
-                                        <a
-                                          href={`${task.data.metadata.issue.user.html_url}`}
-                                          target='_blank'
-                                        >
-                                          <Avatar
-                                            src={task.data.metadata.issue.user.avatar_url}
-                                            className={classNames(classes.avatar)}
-                                          />
-                                        </a>
-                                      </Tooltip>
-                                    )}
-                                  </FormattedMessage>
-                                }
-                                title={task.data.title}
-                                subheader={
-                                  <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
-                                    name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
-                                  }} />
-                                }
-                                action={
-                                  timePlaceholder
-                                }
+                        <div className={ classes.applyOnly }>
+                          Please apply only if you're able to do it if you're
+                          available and commited to finish in the deadline
+                        </div>
+                        <Card>
+                          <CardHeader
+                            avatar={
+                              <FormattedMessage
+                                id='task.status.created.name'
+                                defaultMessage='Created by {name}'
+                                values={ { name: task.data.metadata.issue.user.login } }
+                              >
+                                { (msg) => (
+                                  <Tooltip
+                                    id='tooltip-github'
+                                    title={ msg }
+                                    placement='bottom'
+                                  >
+                                    <a
+                                      href={ `${task.data.metadata.issue.user.html_url}` }
+                                      target='_blank'
+                                    >
+                                      <Avatar
+                                        src={ task.data.metadata.issue.user.avatar_url }
+                                        className={ classNames(classes.avatar) }
+                                      />
+                                    </a>
+                                  </Tooltip>
+                                ) }
+                              </FormattedMessage>
+                            }
+                            title={ task.data.title }
+                            subheader={
+                              <FormattedMessage
+                                id='task.status.created.name.short'
+                                defaultMessage='by {name}' values={ {
+                                  name: task.data.metadata.issue.user.login
+                                } }
                               />
-                            </Card>
-                          }
+                            }
+                            action={ timePlaceholder }
+                          />
+                        </Card>
+
                         <div style={ { paddingBottom: 10 } }>
                           <Typography type='subheading' gutterBottom style={ { paddingTop: 20, color: 'gray' } }>
                             <InfoIcon className={ classes.iconCenter } style={ { color: '#C5C5C5' } } />
