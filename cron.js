@@ -5,6 +5,7 @@ const i18n = require('i18n')
 const DeadlineMail = require('./modules/mail/deadline')
 const TaskMail = require('./modules/mail/task')
 const OrderDetails = require('./modules/orders/orderDetails')
+const OrderCancel = require('./modules/orders/orderCancel')
 
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
@@ -88,26 +89,57 @@ const TaskCron = {
 }
 
 const OrderCron = {
-  verify: (provider) => {
-    if(provider === 'paypal') {
+  verify: async () => {
+    try {
       const orders = await models.Order.findAll({ where: {
-        value: {
+        amount: {
           $gt: 0
         },
         status: {
           $eq: 'succeeded'
+        },
+        provider: {
+          $eq: 'paypal'
         }
       },
       include: [ models.User, models.Task ]
       })
       // eslint-disable-next-line no-console
-      console.log('orders from cron daily check for paypal payments verification', tasks)
+      console.log('orders from cron daily check for paypal payments verification', orders)
       if (orders.length) {
-        
-        OrderMails.paymentNot({ tasks })
+        let invalids = []
+        orders.forEach(async order => {
+          const orderValues = order.dataValues
+          // eslint-disable-next-line no-console
+          console.log('order values id', orderValues)
+          if (orderValues.source_id) {
+            try {
+              const orderWithDetails = await OrderDetails({ id: orderValues.id })
+              // eslint-disable-next-line no-console
+              console.log('orderStatus', orderWithDetails)
+              if (!orderWithDetails) {
+                const orderCanceled = await OrderCancel({ id: orderValues.id })
+                // eslint-disable-next-line no-console
+                console.log('return from order canceled', orderCanceled)
+                if (orderCanceled) {
+                  invalids.push(order)
+                }
+              }
+            }
+            catch (e) {
+              // eslint-disable-next-line no-console
+              console.log('orderStatusError', e)
+            }
+          }
+        })
+        return invalids
       }
+      return []
     }
-    return {}
+    catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('orderStatusError', e)
+    }
   }
 }
 
@@ -119,6 +151,7 @@ const dailyJob = new CronJob({
     // eslint-disable-next-line no-console
     console.log('Log to confirm cron daily job run at', d)
     TaskCron.rememberDeadline()
+    OrderCron.verify()
   }
 })
 

@@ -18,7 +18,7 @@ exports.createOrder = (req, res) => {
 }
 
 exports.cancelOrder = (req, res) => {
-  orderCancel({ ...req.body, userId: req.user.dataValues.id })
+  orderCancel(req.body)
     .then(data => {
       // eslint-disable-next-line no-console
       console.log('data send from controller on cancelOrder', data)
