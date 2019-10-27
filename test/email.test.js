@@ -7,14 +7,13 @@ const models = require('../models')
 const { register } = require('./helpers')
 const agent = request.agent(api)
 
-const mock_sg = nock('https://api.sendgrid.com')
+describe('Task mail', () => {
+  nock('https://api.sendgrid.com')
   .persist()
   .post('/v3/mail/send')
   .reply(202, [{
       statusCode: 202
   }]);
-
-describe('Task mail', () => {
   beforeEach(() => {
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
