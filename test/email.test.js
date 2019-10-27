@@ -23,6 +23,8 @@ describe('Task mail', () => {
     }, function(err){
       console.log(err);
     });
+    nock.cleanAll()
+
   })
   it('should mail with a template to the author', (done) => {
     TaskMail.send({
