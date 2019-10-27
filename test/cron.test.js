@@ -1,19 +1,23 @@
 const expect = require('chai').expect
 const Promise = require('bluebird')
-const chai = require('chai')
-const spies = require('chai-spies')
-const nock = require('nock')
 const api = require('../server')
 const models = require('../models')
+const nock = require('nock')
 const request = require('supertest')
 const agent = request.agent(api)
 const { TaskCron, OrderCron } = require('../cron')
-const PaymentMail = require('../modules/mail/payment')
 const MockDate = require('mockdate')
 
 describe('Crons', () => {
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+      if(rowDeleted === 1){
+        console.log('Deleted successfully');
+      }
+    }, function(err){
+      console.log(err);
+    });
+    models.Order.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
         console.log('Deleted successfully');
       }
@@ -74,7 +78,7 @@ describe('Crons', () => {
               expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
               expect(r[2].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
               done()
-            })
+            }).catch(done)
           })
         })
     })
@@ -95,27 +99,6 @@ describe('Crons', () => {
               models.Order.build({amount: 20, userId: res.body.id}).save()
             ]).then( orders => {
               expect(orders[0].dataValues.id).to.exist
-              const url = 'https://api.sandbox.paypal.com'
-              const path = '/v1/oauth2/token'
-              const orderDetailsPath = `/v2/checkout/orders/foo`
-              const cancelPath = `/v2/payments/authorizations/foo/void`
-              nock(url)
-              .persist()
-              .post(path)
-              .reply(200, {access_token: 'foo'}, {
-                'Content-Type': 'application/json',
-              })
-              nock(url)
-                .persist()
-                .get(orderDetailsPath)
-                .reply(404)
-              nock(url)
-                .persist()
-                .post(cancelPath)
-                .reply(404)
-
-              // chai.use(spies);
-              // const mailSpyCancelError = chai.spy.on(PaymentMail, 'cancel')
               OrderCron.verify().then( r => {
                 expect(r.length).to.equal(1)
                 expect(r[0]).to.exist;  
