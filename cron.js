@@ -4,6 +4,8 @@ const moment = require('moment')
 const i18n = require('i18n')
 const DeadlineMail = require('./modules/mail/deadline')
 const TaskMail = require('./modules/mail/task')
+const OrderDetails = require('./modules/orders/orderDetails')
+const OrderCancel = require('./modules/orders/orderCancel')
 
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
@@ -86,6 +88,49 @@ const TaskCron = {
   }
 }
 
+const OrderCron = {
+  verify: async () => {
+    const orders = await models.Order.findAll({ where: {
+      amount: {
+        $gt: 0
+      },
+      status: {
+        $eq: 'succeeded'
+      },
+      provider: {
+        $eq: 'paypal'
+      }
+    },
+    include: [ models.User, models.Task ]
+    })
+    // eslint-disable-next-line no-console
+    console.log('orders from cron daily check for paypal payments verification', orders)
+    if (orders.length) {
+      let invalids = []
+      orders.forEach(async order => {
+        const orderValues = order.dataValues
+        // eslint-disable-next-line no-console
+        console.log('order values id', orderValues)
+        if (orderValues.source_id) {
+          const orderWithDetails = await OrderDetails({ id: orderValues.id })
+          // eslint-disable-next-line no-console
+          console.log('orderStatus', orderWithDetails)
+          if (!orderWithDetails) {
+            const orderCanceled = await OrderCancel({ id: orderValues.id })
+            // eslint-disable-next-line no-console
+            console.log('return from order canceled', orderCanceled)
+            if (orderCanceled) {
+              invalids.push(order)
+            }
+          }
+        }
+      })
+      return invalids
+    }
+    return []
+  }
+}
+
 const dailyJob = new CronJob({
   // Seconds: 0-59   Minutes: 0-59   Hours: 0-23   Day of Month: 1-31   Months: 0-11 (Jan-Dec)   Day of Week: 0-6 (Sun-Sat)
   cronTime: '0 0 0 * * *', // everyday at 12:00AM
@@ -94,6 +139,7 @@ const dailyJob = new CronJob({
     // eslint-disable-next-line no-console
     console.log('Log to confirm cron daily job run at', d)
     TaskCron.rememberDeadline()
+    OrderCron.verify()
   }
 })
 
@@ -117,4 +163,4 @@ const weeklyJobLatest = new CronJob({
   }
 })
 
-module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron }
+module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron }
