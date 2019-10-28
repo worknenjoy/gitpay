@@ -28,6 +28,7 @@ const CURRENCIES = {
 
 exports.github = async (req, res) => {
   const response = req.body || res.body
+  const labels = response.issue.labels
   // eslint-disable-next-line no-console
   console.log('request from github started')
   // eslint-disable-next-line no-console
@@ -36,7 +37,6 @@ exports.github = async (req, res) => {
     // eslint-disable-next-line no-console
     console.log('request from webhook catched')
     if (response.action === 'labeled') {
-      const labels = response.issue.labels
       const labelNotify = labels.filter(label => label.name === 'notify')
       if (labelNotify) {
         try {
@@ -119,11 +119,10 @@ exports.github = async (req, res) => {
       }
     }
 
-    // eslint-disable-next-line no-console
-    console.log('request from webhook catched')
-    if (response.action === 'opened') {
+    const labelGitpay = labels.filter(label => label.name === 'gitpay')
+    if (response.action === 'labeled' && labelGitpay) {
       // eslint-disable-next-line no-console
-      console.log('it is a opened Issue')
+      console.log('it is labeled Gitpay')
       try {
         const user = await models.User.findOne({
           where: {
