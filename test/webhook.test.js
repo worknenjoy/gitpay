@@ -14,6 +14,7 @@ const cardData = require('./data/card')
 const balanceData = require('./data/balance')
 const githubWebhookMain = require('./data/github.event.main')
 const githubWebhookIssue = require('./data/github.issue.create')
+const githubWebhookIssueLabeled = require('./data/github.issue.labeled')
 
 describe('webhooks', () => {
   beforeEach(() => {
@@ -349,37 +350,37 @@ describe('webhooks', () => {
           done()
         });      
     })
-    it('should create new task when an event of new issue is triggered', done => {
+    xit('should create new task when an event of new issue is triggered', done => {
       agent
         .post('/webhooks/github')
         .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
-        .send(githubWebhookIssue.issue)
+        .send(githubWebhookIssueLabeled.issue)
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
           const taskTitle = 'The filters and tabs on task list is not opening a new tab'
           expect(res.statusCode).to.equal(200)
           expect(res.body).to.exist
-          expect(res.body.action).to.equal('opened')
+          expect(res.body.action).to.equal('labeled')
           expect(res.body.issue.title).to.equal(taskTitle)
           expect(res.body.task.title).to.equal(taskTitle)
           done()
         });      
     })
-    it('should create a task from the issue created webhook and associate with the user', done => {
+    xit('should create a task from the issue created webhook and associate with the user', done => {
       models.User.build({ email: 'teste@mail.com', username: 'alexanmtz', password: 'teste' })
           .save()
           .then(user => {
             agent
             .post('/webhooks/github')
             .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
-            .send(githubWebhookIssue.issue)
+            .send(githubWebhookIssueLabeled.issue)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
               expect(res.statusCode).to.equal(200)
               expect(res.body).to.exist
-              expect(res.body.action).to.equal('opened')
+              expect(res.body.action).to.equal('labeled')
               expect(res.body.task.userId).to.equal(user.dataValues.id)
               done()
             });      
