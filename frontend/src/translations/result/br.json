@@ -429,6 +429,7 @@
   "actions.task.payment.notification.error": "Tivemos um erro ao processar o pagamento",
   "actions.task.update.notification.error": "Erro ao atualizar tarefa",
   "actions.task.fetch.error": "Não foi possível obter esta tarefa, por favor tente novamente mais tarde",
+  "actions.task.status.forbidden": "You cannot change the status from this task",
   "actions.task.fetch.unavailable": "Tarefa não disponível no momento",
   "actions.task.fetch.other.error": "Não foi possível abrir esta tarefa, por favor tente novamente mais tarde",
   "actions.task.payment.balance.error": "O valor ainda não está disponível para transferência",
