@@ -280,23 +280,25 @@ class Task extends Component {
     }
   }
 
-  async componentWillMount() {
+  async componentWillMount () {
     const id = this.props.match.params.id
     const status = this.props.match.params.status
     const orderId = this.props.match.params.order_id
     let logged = false
     try {
       logged = await this.props.isLogged()
-    } catch (e) {
+    }
+    catch (e) {
       logged = false
     }
-    
+
     await this.props.syncTask(id)
     await this.props.fetchTask(id)
 
     if (id && status && logged && logged.user.id === this.props.task.data.userId) {
       await this.props.updateTask({ id, status })
-    } else {
+    }
+    else {
       this.props.addNotification('actions.task.status.forbidden')
       this.props.history.push(`/task/${id}`)
     }
@@ -320,15 +322,17 @@ class Task extends Component {
       this.props.changeTab(5)
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/status`) {
-      if(logged) {
-        if(task.data && (logged.user.id === this.props.task.data.userId)) {
+      if (logged) {
+        if (this.props.task.data && (logged.user.id === this.props.task.data.userId)) {
           this.handleStatusDialog()
-        } else {
+        }
+        else {
           this.props.addNotification('actions.task.status.forbidden')
           this.props.history.push(`/task/${id}`)
         }
-      } else {
-        this.props.history.push({pathname:`/login`, state: {from: {pathname: `/task/${id}/status`}}})
+      }
+      else {
+        this.props.history.push({ pathname: '/login', state: { from: { pathname: `/task/${id}/status` } } })
       }
     }
   }
