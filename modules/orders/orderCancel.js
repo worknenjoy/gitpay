@@ -12,8 +12,9 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
       include: [models.User, models.Task]
     })
     .then(order => {
-      if (order.dataValues.userId !== orderParameters.userId) throw new Error('User not authorized')
-      if (order.dataValues.provider === 'paypal') {
+      // eslint-disable-next-line no-console
+      console.log('order found in cancel request', order)
+      if (order && order.dataValues && order.dataValues.provider === 'paypal') {
         return requestPromise({
           method: 'POST',
           uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
@@ -54,6 +55,20 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
               }
               return orderUpdated
             })
+          })
+        }).catch(e => {
+          // eslint-disable-next-line no-console
+          console.log('couldnt find payment source cancel anyway, reason:', e)
+          return order.updateAttributes({
+            status: 'canceled',
+            paid: 'false'
+          }).then(orderUpdated => {
+            // eslint-disable-next-line no-console
+            console.log('orderUpdated', orderUpdated)
+            if (orderUpdated) {
+              PaymentMail.cancel(order.dataValues.User, order.dataValues.Task, order)
+            }
+            return orderUpdated
           })
         })
       }

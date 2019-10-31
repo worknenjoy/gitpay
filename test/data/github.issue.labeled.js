@@ -1,5 +1,5 @@
 module.exports.issue = {
-    "action": "opened",
+    "action": "labeled",
     "issue": {
       "url": "https://api.github.com/repos/worknenjoy/gitpay/issues/244",
       "repository_url": "https://api.github.com/repos/worknenjoy/gitpay",
@@ -35,7 +35,7 @@ module.exports.issue = {
         {
           "id": 988235282,
           "node_id": "MDU6TGFiZWw5ODgyMzUyODI=",
-          "url": "https://api.github.com/repos/worknenjoy/gitpay/labels/React",
+          "url": "https://api.github.com/repos/worknenjoy/gitpay/labels/gitpay",
           "name": "gitpay",
           "color": "e4ed6d",
           "default": false

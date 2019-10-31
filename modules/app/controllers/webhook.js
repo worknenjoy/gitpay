@@ -28,16 +28,11 @@ const CURRENCIES = {
 
 exports.github = async (req, res) => {
   const response = req.body || res.body
-  // eslint-disable-next-line no-console
-  console.log('request from github started')
-  // eslint-disable-next-line no-console
-  console.log('response', response)
+  const labels = response && response.issue && response.issue.labels
   if (req.headers.authorization === `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`) {
-    // eslint-disable-next-line no-console
-    console.log('request from webhook catched')
     if (response.action === 'labeled') {
-      const labels = response.issue.labels
       const labelNotify = labels.filter(label => label.name === 'notify')
+      const labelGitpay = labels.filter(label => label.name === 'gitpay')
       if (labelNotify) {
         try {
           const user = await models.User.findOne({
@@ -51,12 +46,7 @@ exports.github = async (req, res) => {
               url: response.issue.html_url
             }
           })
-
-          // eslint-disable-next-line no-console
-          console.log('a user was found inside the label', user)
           const taskData = task.dataValues
-          // eslint-disable-next-line no-console
-          console.log('it has task data inside the label', taskData)
           const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
 
           if (userData && !taskData.notified) {
@@ -107,79 +97,65 @@ exports.github = async (req, res) => {
               deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null,
               userId: userData ? userData.id : null
             } }
-          // eslint-disable-next-line no-console
-          console.log('finalResponse', finalResponse)
+          return res.json(finalResponse)
+        }
+        catch (e) {
+          return res.json({})
+        }
+      }
+      if (labelGitpay) {
+        // eslint-disable-next-line no-console
+        console.log('it is labeled Gitpay')
+        try {
+          const user = await models.User.findOne({
+            where: {
+              username: response.issue.user.login
+            }
+          })
+          const userData = user && user.dataValues
+          const taskExist = await models.Task.findOne({
+            where: {
+              url: response.issue.html_url
+            }
+          })
+
+          const task = taskExist || await models.Task.build(
+            {
+              title: response.issue.title,
+              provider: 'github',
+              url: response.issue.html_url,
+              userId: userData ? userData.id : null
+            }
+          ).save()
+          const taskData = task.dataValues
+          const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
+          if (userData) {
+            SendMail.success(
+              userData,
+              i18n.__('mail.webhook.github.issue.new.subject', {
+                title: response.issue.title
+              }),
+              i18n.__('mail.webhook.github.issue.new.message', {
+                task: taskUrl,
+                issue: response.issue.html_url,
+                repo: response.repository.html_url
+              })
+            )
+          }
+          const finalResponse = { ...response,
+            task: {
+              id: taskData.id,
+              url: taskUrl,
+              title: taskData.title,
+              userId: userData ? userData.id : null
+            } }
           return res.json(finalResponse)
         }
         catch (e) {
           // eslint-disable-next-line no-console
-          console.log('error', e)
+          console.log('error to build task from github webhook on label gitpay', e)
           return res.json({})
         }
-      }
-    }
-
-    // eslint-disable-next-line no-console
-    console.log('request from webhook catched')
-    if (response.action === 'opened') {
-      // eslint-disable-next-line no-console
-      console.log('it is a opened Issue')
-      try {
-        const user = await models.User.findOne({
-          where: {
-            username: response.issue.user.login
-          }
-        })
-        const userData = user && user.dataValues
-        const taskExist = await models.Task.findOne({
-          where: {
-            url: response.issue.html_url
-          }
-        })
-
-        const task = taskExist || await models.Task.build(
-          {
-            title: response.issue.title,
-            provider: 'github',
-            url: response.issue.html_url,
-            userId: userData ? userData.id : null
-          }
-        ).save()
-
-        // eslint-disable-next-line no-console
-        console.log('a user was found', user)
-        const taskData = task.dataValues
-        // eslint-disable-next-line no-console
-        console.log('it has task data', taskData)
-        const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
-        if (userData) {
-          SendMail.success(
-            userData,
-            i18n.__('mail.webhook.github.issue.new.subject', {
-              title: response.issue.title
-            }),
-            i18n.__('mail.webhook.github.issue.new.message', {
-              task: taskUrl,
-              issue: response.issue.html_url,
-              repo: response.repository.html_url
-            })
-          )
-        }
-        const finalResponse = { ...response,
-          task: {
-            id: taskData.id,
-            url: taskUrl,
-            title: taskData.title,
-            userId: userData ? userData.id : null
-          } }
-        // eslint-disable-next-line no-console
-        console.log('finalResponse', finalResponse)
-        return res.json(finalResponse)
-      }
-      catch (e) {
-        // eslint-disable-next-line no-console
-        console.log('error', e)
-        return res.json({})
       }
     }
   }
@@ -378,8 +354,6 @@ exports.updateWebhook = (req, res) => {
           }
           else {
             stripe.accounts.retrieve(event.data.object.destination).then((account) => {
-              // eslint-disable-next-line no-console
-              console.log('account retrieved from transfer.created webhook', account)
               SendMail.success(
                 account.email,
                 i18n.__('mail.webhook.payment.transfer.subject'),
@@ -390,8 +364,6 @@ exports.updateWebhook = (req, res) => {
               )
               return res.json(req.body)
             }).catch(e => {
-              // eslint-disable-next-line no-console
-              console.log('could not find customer', e)
               return res.status(400).send(e)
             })
           }
@@ -419,8 +391,6 @@ exports.updateWebhook = (req, res) => {
             }
           })
           .catch(e => {
-            // eslint-disable-next-line no-console
-            console.log('error on payout.created', e)
             return res.status(400).send(e)
           })
 
@@ -445,8 +415,6 @@ exports.updateWebhook = (req, res) => {
             }
           })
           .catch(e => {
-            // eslint-disable-next-line no-console
-            console.log('error on payout.failed', e)
             return res.status(400).send(e)
           })
         break
@@ -472,8 +440,6 @@ exports.updateWebhook = (req, res) => {
             }
           })
           .catch(e => {
-            // eslint-disable-next-line no-console
-            console.log('error on payout.created', e)
             return res.status(400).send(e)
           })
 
