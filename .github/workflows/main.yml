@@ -1,2 +1,1 @@
-- name: Add an issue reference
-  uses: kentaro-m/add-an-issue-reference-action@v1.0.0
+
