@@ -280,11 +280,28 @@ class Task extends Component {
     }
   }
 
-  componentWillMount () {
+  async componentWillMount () {
     const id = this.props.match.params.id
+    const status = this.props.match.params.status
     const orderId = this.props.match.params.order_id
-    this.props.syncTask(id)
-    this.props.fetchTask(id)
+    let logged = false
+    try {
+      logged = await this.props.isLogged()
+    }
+    catch (e) {
+      logged = false
+    }
+
+    await this.props.syncTask(id)
+    await this.props.fetchTask(id)
+
+    if (id && status && logged && logged.user.id === this.props.task.data.userId) {
+      await this.props.updateTask({ id, status })
+    }
+    else {
+      this.props.addNotification('actions.task.status.forbidden')
+      this.props.history.push(`/task/${id}`)
+    }
 
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
       this.props.changeTab(1)
@@ -303,6 +320,20 @@ class Task extends Component {
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/history`) {
       this.props.changeTab(5)
+    }
+    if (this.props.history && this.props.history.location.pathname === `/task/${id}/status`) {
+      if (logged) {
+        if (this.props.task.data && (logged.user.id === this.props.task.data.userId)) {
+          this.handleStatusDialog()
+        }
+        else {
+          this.props.addNotification('actions.task.status.forbidden')
+          this.props.history.push(`/task/${id}`)
+        }
+      }
+      else {
+        this.props.history.push({ pathname: '/login', state: { from: { pathname: `/task/${id}/status` } } })
+      }
     }
   }
 
@@ -326,10 +357,16 @@ class Task extends Component {
   }
 
   handleStatusDialog = () => {
+    const id = this.props.match.params.id
+    if (this.props.history && this.props.history.location.pathname !== `/task/${id}/status`) {
+      this.props.history.push(`/task/${id}/status`)
+    }
     this.setState({ statusDialog: true })
   }
 
   handleStatusDialogClose = () => {
+    const id = this.props.match.params.id
+    this.props.history.push(`/task/${id}`)
     this.setState({ statusDialog: false })
   }
 
