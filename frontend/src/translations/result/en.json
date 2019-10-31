@@ -429,6 +429,7 @@
   "actions.task.payment.notification.error": "We had a error to process this payment",
   "actions.task.update.notification.error": "Error on task update",
   "actions.task.fetch.error": "We could not obtain this task, please try again later",
+  "actions.task.status.forbidden": "You cannot change the status from this task",
   "actions.task.fetch.unavailable": "Task unavailable",
   "actions.task.fetch.other.error": "We could not obtain this task, please try again later",
   "actions.task.payment.balance.error": "This price is not available for this task yet",
