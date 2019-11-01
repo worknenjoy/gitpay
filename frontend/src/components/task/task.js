@@ -295,12 +295,14 @@ class Task extends Component {
     await this.props.syncTask(id)
     await this.props.fetchTask(id)
 
-    if (id && status && logged && logged.user.id === this.props.task.data.userId) {
-      await this.props.updateTask({ id, status })
-    }
-    else {
-      this.props.addNotification('actions.task.status.forbidden')
-      this.props.history.push(`/task/${id}`)
+    if (status) {
+      if (id && logged && logged.user.id === this.props.task.data.userId) {
+        await this.props.updateTask({ id, status })
+      }
+      else {
+        this.props.addNotification('actions.task.status.forbidden')
+        this.props.history.push(`/task/${id}`)
+      }
     }
 
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
