@@ -398,7 +398,7 @@ class Task extends Component {
     if (agree === true) {
       this.setState({ termsAgreed: true })
     }
-    else if(agree === false) {
+    else if (agree === false) {
       this.setState({ termsAgreed: false })
     }
     this.setState({ termsDialog: false })
@@ -512,7 +512,7 @@ class Task extends Component {
       return taskOwner() || isCurrentUserAssigned()
     }
 
-    //const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A') : 'not available'
+    // const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A') : 'not available'
     const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().fromNow() : 'not available'
     const timePlaceholder = (
       <Typography type='subheading' variant='caption' style={ { padding: 10, color: 'gray', marginRight: 10 } }>
@@ -858,13 +858,13 @@ class Task extends Component {
                             <div style={ { paddingLeft: 5 } }>
                               <Typography type='caption' variant='caption' gutterBottom style={ { color: 'gray' } }>
                                 <FormattedMessage id='task.bounties.interested.deliveryDateSuggest' defaultMessage={ 'You can suggest other delivery date.' }>
-                                { (msg) => (
-                                  <span className={ classes.spanText }>
+                                  { (msg) => (
+                                    <span className={ classes.spanText }>
                                       { msg }
                                     </span>
-                                ) }
-                              </FormattedMessage>
-                            </Typography>
+                                  ) }
+                                </FormattedMessage>
+                              </Typography>
                             </div>
                           </div>
                           <div style={ { display: 'flex', marginTop: 10, marginBottom: 10 } }>
@@ -1004,31 +1004,29 @@ class Task extends Component {
                             </FormattedMessage>
                           </Grid>
                           <Grid item xs={ 12 } >
-
-                                <FormControlLabel
-                                  control={
-                                    <Checkbox
-                                      checked={ this.state.termsAgreed }
-                                      onChange={this.handleCheckboxTerms}
-                                      color='primary'
-                                    />
-                                  }
-                                  onClick={
-                                    (e) => {
-                                      if(e.target.parentElement.nodeName === 'A'){
-                                        e.preventDefault();
-                                      }
-                                    }
-                                  }
-                                  label={ <Typography variant='caption' style={ { marginLeft: '-10px' } }>
-                                    <FormattedMessage id='task.bounties.interested.termsOfUseLabel' defaultMessage='I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION' values={ { termsOfUseAnchor: (
-                                      <Link onClick={ this.handleTermsDialog }>
-                                        <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
-                                      </Link>
-                                    ) } } />
-                                  </Typography> }
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={ this.state.termsAgreed }
+                                  onChange={ this.handleCheckboxTerms }
+                                  color='primary'
                                 />
-
+                              }
+                              onClick={
+                                (e) => {
+                                  if (e.target.parentElement.nodeName === 'A') {
+                                    e.preventDefault()
+                                  }
+                                }
+                              }
+                              label={ <Typography variant='caption' style={ { marginLeft: '-10px' } }>
+                                <FormattedMessage id='task.bounties.interested.termsOfUseLabel' defaultMessage='I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION' values={ { termsOfUseAnchor: (
+                                  <Link onClick={ this.handleTermsDialog }>
+                                    <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
+                                  </Link>
+                                ) } } />
+                              </Typography> }
+                            />
                           </Grid>
 
                         </Grid>
@@ -1054,7 +1052,7 @@ class Task extends Component {
                         </DialogTitle>
                         <DialogContent>
                           <DialogContentText id='terms-dialog-description'>
-                            <FormattedMessage id='task.bounties.interested.termsOfUseText' defaultMessage={ `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.` } />
+                            <FormattedMessage id='task.bounties.interested.termsOfUseText' defaultMessage={ 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.' } />
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>
