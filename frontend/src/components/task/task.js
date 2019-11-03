@@ -263,7 +263,7 @@ class Task extends Component {
       interestedComment: '',
       interestedLearn: false,
       termsAgreed: false,
-      priceAccepted: false,
+      priceConfirmed: false,
       orderPrice: 0,
       assignDialog: false,
       statusDialog: false,
@@ -474,7 +474,7 @@ class Task extends Component {
 
   handleCheckboxTerms = (e) => this.setState({ termsAgreed: e.target.checked })
 
-  handleCheckboxIwillDoFor = (e) => this.setState({ priceAccepted: e.target.checked })
+  handleCheckboxIwillDoFor = (e) => this.setState({ priceConfirmed: e.target.checked })
 
   handleSuggestAnotherDate = (e) => {
     this.setState({ showSuggestAnotherDateField: !this.state.showSuggestAnotherDateField })
@@ -971,24 +971,25 @@ class Task extends Component {
                           <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ this.state.charactersCount + '/120' }</small>
                         </FormControl>
 
-                        <Grid container spacing={ 24 } style={ { fontFamily: 'Roboto', marginBottom: '20px', color: '#a9a9a9' } }>
-                          <Grid item xs={ 12 } sm={ 6 }>
+                        <Grid container spacing={ 24 } style={ { fontFamily: 'Roboto', color: '#a9a9a9' } }>
+                          <Grid item xs={ 12 } sm={ 6 } style={ { paddingBottom: 0 } }>
                             <FormattedMessage id='task.bounties.interested.iWillDoFor' defaultMessage='I will do for'>
                               { msg => (
                                 <FormControlLabel
                                   control={
                                     <Checkbox
-                                      checked={ this.state.priceAccepted }
+                                      checked={ this.state.priceConfirmed }
                                       onChange={ this.handleCheckboxIwillDoFor }
                                       color='primary'
+                                      style={ { paddingRight: 5 } }
                                     />
                                   }
-                                  label={ <Typography style={ { marginLeft: '-10px' } } variant='caption'> { msg } <span style={ { fontWeight: 'bold' } }>${ this.state.currentPrice }</span> </Typography> }
+                                  label={ <Typography variant='caption'> { msg } <span style={ { fontWeight: 'bold' } }>${ this.state.currentPrice }</span> </Typography> }
                                 />
                               ) }
                             </FormattedMessage>
                           </Grid>
-                          <Grid item xs={ 12 } sm={ 6 }>
+                          <Grid item xs={ 12 } sm={ 6 } style={ { paddingBottom: 0 } }>
                             <FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage='I want to do for learning purposes'>
                               { msg => (
                                 <FormControlLabel
@@ -997,20 +998,22 @@ class Task extends Component {
                                       checked={ this.state.interestedLearn }
                                       onChange={ this.handleCheckboxLearn }
                                       color='primary'
+                                      style={ { paddingRight: 5 } }
                                     />
                                   }
-                                  label={ <Typography style={ { marginLeft: '-10px' } } variant='caption'> { msg } </Typography> }
+                                  label={ <Typography variant='caption'> { msg } </Typography> }
                                 />
                               ) }
                             </FormattedMessage>
                           </Grid>
-                          <Grid item xs={ 12 } >
+                          <Grid item xs={ 12 } style={ { paddingTop: 0 } } >
                             <FormControlLabel
                               control={
                                 <Checkbox
                                   checked={ this.state.termsAgreed }
                                   onChange={ this.handleCheckboxTerms }
                                   color='primary'
+                                  style={ { paddingRight: 5 } }
                                 />
                               }
                               onClick={
@@ -1020,7 +1023,7 @@ class Task extends Component {
                                   }
                                 }
                               }
-                              label={ <Typography variant='caption' style={ { marginLeft: '-10px' } }>
+                              label={ <Typography variant='caption' >
                                 <FormattedMessage id='task.bounties.interested.termsOfUseLabel' defaultMessage='I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION' values={ { termsOfUseAnchor: (
                                   <Link onClick={ this.handleTermsDialog }>
                                     <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
@@ -1037,7 +1040,7 @@ class Task extends Component {
                         <Button onClick={ this.handleAssignDialogClose } color='primary'>
                           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleAssignTask } variant='contained' color='primary' >
+                        <Button onClick={ this.handleAssignTask } variant='contained' color='primary' disabled={ !this.state.priceConfirmed || !this.state.termsAgreed }>
                           <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this issue' />
                         </Button>
                       </DialogActions>
