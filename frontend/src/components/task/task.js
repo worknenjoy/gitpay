@@ -67,6 +67,7 @@ import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
+const taskCover = require('../../../public/images/task-cover.png')
 
 const styles = theme => ({
   root: {
@@ -751,7 +752,7 @@ class Task extends Component {
                     </Fab>
                   ) : null }
                   <img
-                    src='/images/task-cover.png'
+                    src={ taskCover }
                     style={ { alignSelf: 'center', marginTop: 50 } }
                   />
                   { !this.props.logged ? (
