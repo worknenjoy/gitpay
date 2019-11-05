@@ -948,7 +948,7 @@ class Task extends Component {
                           </InputLabel>
                           <Input
                             id='interested-amount'
-                            endAdornment={ <InputAdornment position='start'>$</InputAdornment> }
+                            endAdornment={ <InputAdornment position='start'>USD</InputAdornment> }
                             type='text'
                             value={ this.state.currentPrice > 0 ? this.state.currentPrice : '' }
                             onChange={ this.handleInputInterestedAmountChange }
