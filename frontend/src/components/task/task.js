@@ -68,6 +68,8 @@ import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
 const taskCover = require('../../../public/images/task-cover.png')
+const logoGithub = require('../../../public/images/github-logo-black.png')
+const logoBitbucket = require('../../../public/images/bitbucket-logo.png')
 
 const styles = theme => ({
   root: {
@@ -241,6 +243,11 @@ const styles = theme => ({
       textAlign: 'center'
     }
   },
+  cardAvatar: {
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0
+    }
+  },
   closeButton: {
     position: 'absolute',
     right: theme.spacing.unit,
@@ -248,6 +255,47 @@ const styles = theme => ({
     backgroundColor: 'darkgray',
     color: 'white',
     boxShadow: 'none'
+  },
+  taskTitle: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex', alignItems: 'center', justifyContent: 'center'
+    }
+  },
+  deliveryDateSuggestion: {
+    display: 'flex',
+    paddingLeft: 5,
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      alignItems: 'flex-start'
+    }
+  },
+  starterCheckbox: {
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: '0px !important'
+    }
+  },
+  pricesContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap'
+    }
+  },
+  priceChip: { marginBottom: 10 },
+  dateSuggestionBtn: {
+    cursor: 'pointer',
+    [theme.breakpoints.up('sm')]: {
+      marginTop: 4,
+      marginLeft: 10
+    }
+  },
+  taskCoverImg: {
+    alignSelf: 'center',
+    marginTop: 50,
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    }
   }
 })
 
@@ -496,9 +544,29 @@ class Task extends Component {
     window.open(url, '_blank')
   }
 
+  renderIssueAuthorLink = () => {
+    if (this.props.task.data.metadata && this.props.task.data.metadata.issue.user.html_url) {
+      return (
+        <Link
+          href={ `${this.props.task.data.metadata.issue.user.html_url}` }
+          target='_blank'>
+          <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={ {
+            name: this.props.task.data.metadata ? this.props.task.data.metadata.issue.user.login : 'unknown'
+          } } />
+        </Link>
+      )
+    }
+    else {
+      return (
+        <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={ {
+          name: this.props.task.data.metadata ? this.props.task.data.metadata.issue.user.login : 'unknown'
+        } } />
+      )
+    }
+  }
+
   render () {
     const { classes, task, order } = this.props
-
     const taskOwner = () => {
       const creator = this.props.logged && this.props.user.id === task.data.userId
       const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === this.props.user.id).length > 0 : false
@@ -753,7 +821,7 @@ class Task extends Component {
                   ) : null }
                   <img
                     src={ taskCover }
-                    style={ { alignSelf: 'center', marginTop: 50 } }
+                    className={ classes.taskCoverImg }
                   />
                   { !this.props.logged ? (
                     <div>
@@ -776,7 +844,7 @@ class Task extends Component {
                         </DialogTitle>
                       </div>
                       <Grid container justify='center' style={ { textAlign: 'center', marginTop: 15 } }>
-                        <Grid item xs={ 7 }>
+                        <Grid item xs={ 11 } md={ 7 }>
                           <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
                             <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={ 'Please apply only if you\'re able to do it and if you\'re available and commited to finish in the deadline.' }>
                               { (msg) => (
@@ -794,6 +862,7 @@ class Task extends Component {
                         <Card style={ { marginTop: 10 } }>
                           <CardHeader
                             className={ classes.cardHeader }
+                            classes={ { avatar: classes.cardAvatar } }
                             avatar={
                               <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
                                 name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
@@ -820,14 +889,18 @@ class Task extends Component {
                             }
                             title={
                               <Typography variant='h6' color='primary'>
-                                { task.data.title }
+                                <Link
+                                  href={ `${task.data.url}` }
+                                  target='_blank'
+                                  class={ classes.taskTitle }>
+                                  { task.data.title }
+                                  <img width='24' height='24' style={ { marginLeft: 10 } } src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } />
+                                </Link>
                               </Typography>
                             }
                             subheader={
-                              <Typography variant='body1' color='primary'>
-                                <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={ {
-                                  name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
-                                } } />
+                              <Typography variant='body1' style={ { marginTop: 5 } } color='primary'>
+                                { this.renderIssueAuthorLink() }
                               </Typography>
                             }
                             action={
@@ -836,17 +909,21 @@ class Task extends Component {
                           />
                         </Card>
                         }
-                        <div style={ { paddingBottom: 10 } }>
-                          <Typography type='subheading' variants='body1' gutterBottom style={ { color: 'gray', marginTop: 5, fontSize: 11 } }>
+                        <div style={ { paddingBottom: 10, display: 'flex', alignItems: 'center' } }>
+                          <div>
                             <InfoIcon className={ classes.iconCenter } style={ { color: 'action' } } />
-                            <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-                              { (msg) => (
-                                <span className={ classes.spanText }>
-                                  { msg }
-                                </span>
-                              ) }
-                            </FormattedMessage>
-                          </Typography>
+                          </div>
+                          <div>
+                            <Typography type='subheading' variants='body1' gutterBottom style={ { color: 'gray', marginTop: 5, fontSize: 11 } }>
+                              <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
+                                { (msg) => (
+                                  <span className={ classes.spanText }>
+                                    { msg }
+                                  </span>
+                                ) }
+                              </FormattedMessage>
+                            </Typography>
+                          </div>
                         </div>
                         <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10, paddingTop: 0 } }>
                           <div style={ { textAlign: 'center' } }>
@@ -869,8 +946,8 @@ class Task extends Component {
                             </div>
                           </div>
                           <div style={ { display: 'flex', marginTop: 10, marginBottom: 10 } }>
-                            <div style={ { width: 25, justifyContent: 'center', display: 'flex' } }><CalendarIcon style={ { color: 'gray' } } /></div>
-                            <div style={ { display: 'flex', paddingLeft: 5, alignItems: 'center' } }>
+                            <div style={ { width: 25, justifyContent: 'center', display: 'flex', alignItems: 'center' } }><CalendarIcon style={ { color: 'gray' } } /></div>
+                            <div className={ classes.deliveryDateSuggestion }>
                               <Typography type='caption' variant='caption' style={ { color: 'gray' } }>
                                 <span className={ classes.spanText }>
                                   <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={ { deliveryDate: deliveryDate } } />
@@ -879,7 +956,7 @@ class Task extends Component {
                                     : null }
                                 </span>
                               </Typography>
-                              <Link onClick={ this.handleSuggestAnotherDate } variant='body1' style={ { marginLeft: 20, marginTop: 5, cursor: 'pointer' } }>
+                              <Link onClick={ this.handleSuggestAnotherDate } variant='body1' className={ classes.dateSuggestionBtn }>
                                 <FormattedMessage id='task.bounties.actions.sugggestAnotherDate' defaultMessage='SUGGEST ANOTHER DATE' />&nbsp;
                               </Link>
                             </div>
@@ -914,29 +991,34 @@ class Task extends Component {
                           </Typography>
                         </div>
 
-                        <div style={ { display: 'flex', justifyContent: 'space-around' } }>
+                        <div className={ classes.pricesContainer }>
                           <Chip
                             label=' $ 20'
+                            className={ classes.priceChip }
                             color={ this.state.currentPrice === 20 ? 'primary' : '' }
                             onClick={ () => this.pickTaskPrice(20) }
                           />
                           <Chip
                             label=' $ 50'
+                            className={ classes.priceChip }
                             color={ this.state.currentPrice === 50 ? 'primary' : '' }
                             onClick={ () => this.pickTaskPrice(50) }
                           />
                           <Chip
                             label=' $ 100'
+                            className={ classes.priceChip }
                             color={ this.state.currentPrice === 100 ? 'primary' : '' }
                             onClick={ () => this.pickTaskPrice(100) }
                           />
                           <Chip
                             label=' $ 150'
+                            className={ classes.priceChip }
                             color={ this.state.currentPrice === 150 ? 'primary' : '' }
                             onClick={ () => this.pickTaskPrice(150) }
                           />
                           <Chip
                             label=' $ 300'
+                            className={ classes.priceChip }
                             color={ this.state.currentPrice === 300 ? 'primary' : '' }
                             onClick={ () => this.pickTaskPrice(300) }
                           />
@@ -965,7 +1047,7 @@ class Task extends Component {
                             inputProps={ { maxLength: '120' } }
                             value={ this.state.interestedComment }
                             onChange={ this.handleInputInterestedCommentChange }
-                            helperText='Ola'
+
                           />
 
                           <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ this.state.charactersCount + '/120' }</small>
@@ -989,7 +1071,7 @@ class Task extends Component {
                               ) }
                             </FormattedMessage>
                           </Grid>
-                          <Grid item xs={ 12 } sm={ 6 } style={ { paddingBottom: 0 } }>
+                          <Grid item xs={ 12 } sm={ 6 } style={ { paddingBottom: 0 } } className={ classes.starterCheckbox }>
                             <FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage='I want to do for learning purposes'>
                               { msg => (
                                 <FormControlLabel
