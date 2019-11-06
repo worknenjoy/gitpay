@@ -67,9 +67,9 @@ import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
-const taskCover = require('../../../public/images/task-cover.png')
-const logoGithub = require('../../../public/images/github-logo-black.png')
-const logoBitbucket = require('../../../public/images/bitbucket-logo.png')
+const taskCover = require('../../images/task-cover.png')
+const logoGithub = require('../../images/github-logo-black.png')
+const logoBitbucket = require('../../images/bitbucket-logo-blue.png')
 
 const styles = theme => ({
   root: {
