@@ -159,7 +159,7 @@ const weeklyJobLatest = new CronJob({
     const d = new Date()
     // eslint-disable-next-line no-console
     console.log('Log to confirm cron weekly job run at', d)
-    // TaskCron.latestTasks()
+    TaskCron.latestTasks()
   }
 })
 
