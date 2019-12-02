@@ -80,7 +80,7 @@
   "mail.transfer.missing.message": "You received a transfer from Gitpay, but you didn't activate your account yet, please activate your account at <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a> to receive your bounties.",
   "mail.transfer.invalid.message": "To receive a payment for your task, you need to activate your account in <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a>.",
   "mail.assign.remove.subject": "You were unassigned to a task",
-  "mail.assign.remove.message": "<p>You were unassigned of an issue <a href=\"{{url}}\">{{title}}</a> on Gitpay</p><p>The task owner sent the reason:</p><p>{{message}}</p>",
+  "mail.assign.remove.message": "<p>You were unassigned from an issue <a href=\"{{url}}\">{{title}}</a> on Gitpay</p><p>Reason:</p><p>{{message}}</p>",
   "mail.assign.remove.owner.subject": "The user was unassigned of an issue you created on Gitpay",
   "mail.assign.remove.owner.message": "<p>The user {{user}} ({{email}}) was unassigned of an issue <a href=\"{{url}}\">{{title}}</a> on Gitpay</p><p>The reason was:</p><p>{{message}}</p>",
   "mail.invite.send.action": "You were invited to solve an issue added to Gitpay :-)",
