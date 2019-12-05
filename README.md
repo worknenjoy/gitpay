@@ -55,6 +55,7 @@ You can do this with: `cp .env.example .env`
 #### Install postgres
 1. install: `brew install postgres` (mac)
 2. start the service: `brew services start postgresql`
+3. Log to postgres with the defaults: `psql -d postgres`
 3. create postgres user: `create user postgres -s`
 4. Login into postgres cli: `psql -U postgres`
 5. Create test database: `create database gitpay_test;`
