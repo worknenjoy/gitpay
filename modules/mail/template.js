@@ -22,7 +22,7 @@ module.exports = (to, subject, data, name = 'onetask') => {
   }
   return sgMail.send(msg).then((response) => {
     // eslint-disable-next-line no-console
-    console.log(response)
+    console.log('response from sgMail', response)
     return response
   }).catch(e => {
     // eslint-disable-next-line no-console
