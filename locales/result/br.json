@@ -90,6 +90,8 @@
   "mail.webhook.payment.success.message": "<p>Um pagamento por uma tarefa foi realizado com o seu cartão de crédito. Quando a tarefa for concluída, o pagamento será enviado para quem realizou a tarefa.</p><p>Nome do Titular: {{name}}</p><p>Últimos 4 dígitos do cartão: {{number}}</p>",
   "mail.webhook.payment.update.subject": "O pagamento pela sua tarefa foi aprovado!",
   "mail.webhook.payment.update.message": "<p>O pagamento no valor de $ {{amount}} para uma tarefa no Gitpay foi aprovado</p>",
+  "mail.webhook.payment.refund.subject": "You received a refund from an issue that you paid on Gitpay",
+  "mail.webhook.payment.refund.message": "<p>The refund of $ {{amount}} for an issue on Gitpay is concluded, and you should receive the amount in your credit card.</p>",
   "mail.webhook.payment.approved.subject": "O pagamento pela sua tarefa no Gitpay foi aprovado!",
   "mail.webhook.payment.approved.message": "<p>O pagamento no valor de $ {{amount}} por uma tarefa no Gitpay foi aprovado</p>",
   "mail.webhook.payment.unapproved.subject": "O pagamento pela sua tarefa no Gitpay não foi autorizado",
