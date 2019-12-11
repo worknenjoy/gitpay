@@ -199,6 +199,7 @@
   "task.status.filter.payment.succeeded": "Successfull payment",
   "task.status.filter.payment.failed": "Payment failed",
   "task.status.filter.payment.canceled": "Payment canceled",
+  "task.status.filter.payment.refunded": "Payment refunded",
   "task.user.find.none": "User not registered",
   "task.order.paid.yes": "Yes",
   "task.order.paid.no": "No",

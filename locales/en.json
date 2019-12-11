@@ -90,6 +90,8 @@
   "mail.webhook.payment.success.message": "<p>A payment was made in your credit card for a task on Gitpay. When the task been concluded, the payment will be send for who you assigned.</p><p>Name on credit card: {{name}}</p><p>Last 4 digits: {{number}}</p>",
   "mail.webhook.payment.update.subject": "The payment for this task was updated!",
   "mail.webhook.payment.update.message": "<p>The payment of $ {{amount}} for a task on Gitpay was approved</p>",
+  "mail.webhook.payment.refund.subject": "You received a refund from an issue that you paid on Gitpay",
+  "mail.webhook.payment.refund.message": "<p>The refund of $ {{amount}} for an issue on Gitpay is concluded, and you should receive the amount in your credit card.</p>",
   "mail.webhook.payment.approved.subject": "The payment for your task was approved on Gitpay!",
   "mail.webhook.payment.approved.message": "<p>The payment of $ {{amount}} for a task was approved.</p>",
   "mail.webhook.payment.unapproved.subject": "The payment for a task that you made on Gitpay wasn't approved",

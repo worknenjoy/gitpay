@@ -18,6 +18,10 @@ export const messages = defineMessages({
     id: 'task.status.filter.payment.canceled',
     defaultMessage: 'Payment canceled'
   },
+  refundedStatus: {
+    id: 'task.status.filter.payment.refunded',
+    defaultMessage: 'Payment refunded'
+  },
   openStatus: {
     id: 'task.status.filter.open',
     defaultMessage: 'Open'

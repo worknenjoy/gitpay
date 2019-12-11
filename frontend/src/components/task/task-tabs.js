@@ -113,7 +113,8 @@ class TaskTabs extends React.Component {
       open: this.props.intl.formatMessage(messages.openPaymentStatus),
       succeeded: this.props.intl.formatMessage(messages.succeededStatus),
       fail: this.props.intl.formatMessage(messages.failStatus),
-      canceled: this.props.intl.formatMessage(messages.canceledStatus)
+      canceled: this.props.intl.formatMessage(messages.canceledStatus),
+      refunded: this.props.intl.formatMessage(messages.refundedStatus)
     }
 
     const statusesDisplay = status => {

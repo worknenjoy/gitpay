@@ -165,6 +165,8 @@ exports.github = async (req, res) => {
 }
 
 exports.updateWebhook = (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log('webhook body', req.body)
   if (req.body.object === 'event') {
     const event = req.body
     const paid = event.data.object.paid || false
@@ -221,6 +223,48 @@ exports.updateWebhook = (req, res) => {
                         user.dataValues,
                         i18n.__('mail.webhook.payment.update.subject'),
                         i18n.__('mail.webhook.payment.update.message', { amount: event.data.object.amount / 100 })
+                      )
+                    }
+                  }
+                  return res.json(req.body)
+                })
+                .catch(e => {
+                  return res.status(400).send(e)
+                })
+            }
+          })
+          .catch(e => {
+            return res.status(400).send(e)
+          })
+        break
+      case 'charge.refunded':
+        return models.Order.update(
+          {
+            paid: false,
+            status: 'refunded'
+          },
+          {
+            where: {
+              source_id: event.data.object.source.id,
+              source: event.data.object.id
+            },
+            returning: true
+          }
+        )
+          .then(order => {
+            if (order[0]) {
+              return models.User.findOne({
+                where: {
+                  id: order[1][0].dataValues.userId
+                }
+              })
+                .then(user => {
+                  if (user) {
+                    if (paid && status === 'succeeded') {
+                      SendMail.success(
+                        user.dataValues,
+                        i18n.__('mail.webhook.payment.refund.subject'),
+                        i18n.__('mail.webhook.payment.refund.message', { amount: event.data.object.amount / 100 })
                       )
                     }
                   }
