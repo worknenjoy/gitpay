@@ -165,6 +165,8 @@ exports.github = async (req, res) => {
 }
 
 exports.updateWebhook = (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log('webhook body', req.body)
   if (req.body.object === 'event') {
     const event = req.body
     const paid = event.data.object.paid || false
