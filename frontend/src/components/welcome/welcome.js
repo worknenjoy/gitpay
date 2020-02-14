@@ -239,42 +239,42 @@ class Welcome extends Component {
                     defaultMessage='and receive bounty for your contributions'
                   />
                 </Typography>
-                { !logged && 
+                { !logged &&
                 <Button
-                    variant='raised'
-                    color='secondary'
-                    size='large'
-                    onClick={(e) => this.props.openDialog('SignupUser')}
-                    style={{marginTop: 20}}
-                  >
+                  variant='raised'
+                  color='secondary'
+                  size='large'
+                  onClick={ (e) => this.props.openDialog('SignupUser') }
+                  style={ { marginTop: 20 } }
+                >
                   <FormattedMessage
-                      id='general.singup.action'
-                      defaultMessage='Signin / Signup'
-                    />
-                  </Button>
-                } 
+                    id='general.singup.action'
+                    defaultMessage='Signin / Signup'
+                  />
+                </Button>
+                }
                 <div className='subscribe-form'>
-                  <SubscribeForm render={false} type='subscribe-form-main' />
+                  <SubscribeForm render={ false } type='subscribe-form-main' />
                 </div>
               </div>
               <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
-                { !logged ? ( 
+                { !logged ? (
                   <LoginButton referer={ location } contrast includeForm={ false } />
-                  ) : (
-                    <Button
+                ) : (
+                  <Button
                     variant='raised'
                     color='secondary'
                     size='large'
-                    onClick={(e) => window.location.assign('/#/profile')}
-                    style={{marginTop: 20}}
+                    onClick={ (e) => window.location.assign('/#/profile') }
+                    style={ { marginTop: 20 } }
                   >
-                  <FormattedMessage
+                    <FormattedMessage
                       id='general.singup.access'
                       defaultMessage='Access your account'
                     />
                   </Button>
-                  )
-              }
+                )
+                }
               </div>
               <InfoContainer />
               <OurStack />
