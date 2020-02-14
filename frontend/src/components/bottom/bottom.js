@@ -82,7 +82,7 @@ class Bottom extends Component {
                 <FormattedMessage id='bottom.subheading.newsletter' defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!' />
               </Typography>
               <SubscribeFromWrapper className='subscribe-form'>
-                <SubscribeForm />
+                <SubscribeForm render />
               </SubscribeFromWrapper>
               <Typography component='div'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />

@@ -2,7 +2,7 @@ import {
   ADD_NOTIFICATION,
   CLOSE_NOTIFICATION,
   ADD_DIALOG,
-  CLOSE_DIALOG,
+  CLOSE_DIALOG
 } from '../actions/notificationActions'
 
 export const notification = (state = { open: false }, action) => {
