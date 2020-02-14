@@ -160,7 +160,7 @@ class Welcome extends Component {
   }
 
   render () {
-    const { classes, location } = this.props
+    const { classes, location, logged } = this.props
 
     return (
       <div className={ classes.root }>
@@ -239,13 +239,42 @@ class Welcome extends Component {
                     defaultMessage='and receive bounty for your contributions'
                   />
                 </Typography>
+                { !logged && 
+                <Button
+                    variant='raised'
+                    color='secondary'
+                    size='large'
+                    onClick={(e) => this.props.openDialog('SignupUser')}
+                    style={{marginTop: 20}}
+                  >
+                  <FormattedMessage
+                      id='general.singup.action'
+                      defaultMessage='Signin / Signup'
+                    />
+                  </Button>
+                } 
                 <div className='subscribe-form'>
-                  <SubscribeForm type='subscribe-form-main' />
+                  <SubscribeForm render={false} type='subscribe-form-main' />
                 </div>
               </div>
-
               <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
-                <LoginButton referer={ location } contrast includeForm={ false } />
+                { !logged ? ( 
+                  <LoginButton referer={ location } contrast includeForm={ false } />
+                  ) : (
+                    <Button
+                    variant='raised'
+                    color='secondary'
+                    size='large'
+                    onClick={(e) => window.location.assign('/#/profile')}
+                    style={{marginTop: 20}}
+                  >
+                  <FormattedMessage
+                      id='general.singup.access'
+                      defaultMessage='Access your account'
+                    />
+                  </Button>
+                  )
+              }
               </div>
               <InfoContainer />
               <OurStack />

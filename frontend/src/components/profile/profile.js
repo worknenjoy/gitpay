@@ -206,6 +206,43 @@ class Profile extends Component {
         }
         <PageContent>
           <Grid container className={ classes.root } spacing={ 24 }>
+            <Grid item xs={ 12 } md={ 9 }>
+              <HashRouter>
+                <Switch>
+                  <Route exact path='/profile' component={ ProfileOptions } />
+                  <Route
+                    exact
+                    path='/profile/tasks'
+                    component={ () => <TaskListContainer /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/payment-options'
+                    component={ () => <PaymentOptions user={ user } /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/preferences'
+                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
+                  />
+                </Switch>
+              </HashRouter>
+              { this.state.orgsLoaded && organizations &&
+                <Grid item xs={ 12 } md={ 12 }>
+                  <div style={ { marginTop: 10, marginBottom: 10 } }>
+                    <Typography variant='h5' component='h3'>
+                      <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+                    </Typography>
+                    <Typography component='p'>
+                      <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
+                    </Typography>
+                    <div style={ { marginTop: 20, marginBottom: 40 } }>
+                      <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
+                    </div>
+                  </div>
+                </Grid>
+              }
+            </Grid>
             <Grid item xs={ 12 } md={ 3 }>
               <div className={ classes.bigRow }>
                 <div className={ classes.row }>
@@ -337,43 +374,6 @@ class Profile extends Component {
                   </Paper>
                 </div>
               </div>
-            </Grid>
-            <Grid item xs={ 12 } md={ 9 }>
-              <HashRouter>
-                <Switch>
-                  <Route exact path='/profile' component={ ProfileOptions } />
-                  <Route
-                    exact
-                    path='/profile/tasks'
-                    component={ () => <TaskListContainer /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/payment-options'
-                    component={ () => <PaymentOptions user={ user } /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/preferences'
-                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
-                  />
-                </Switch>
-              </HashRouter>
-              { this.state.orgsLoaded && organizations &&
-                <Grid item xs={ 12 } md={ 12 }>
-                  <div style={ { marginTop: 10, marginBottom: 10 } }>
-                    <Typography variant='h5' component='h3'>
-                      <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
-                    </Typography>
-                    <Typography component='p'>
-                      <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
-                    </Typography>
-                    <div style={ { marginTop: 20, marginBottom: 40 } }>
-                      <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
-                    </div>
-                  </div>
-                </Grid>
-              }
             </Grid>
           </Grid>
         </PageContent>
