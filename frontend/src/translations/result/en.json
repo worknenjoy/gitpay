@@ -1,5 +1,7 @@
 {
   "welcome.menu.item.one": "Intro",
+  "general.singup.action": "Signin / Signup",
+  "general.singup.access": "Access your account",
   "general.buttons.ok": "Ok",
   "general.buttons.retry": "Retry",
   "general.buttons.cancel": "Cancel",
