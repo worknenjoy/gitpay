@@ -168,27 +168,26 @@ class Account extends Component {
   handleSubmit (e) {
     e.preventDefault()
     let formData = {
-      'legal_entity[first_name]': e.target['legal_entity[first_name]'].value,
-      'legal_entity[last_name]': e.target['legal_entity[last_name]'].value,
-      'legal_entity[address][city]':
-        e.target['legal_entity[address][city]'].value,
-      'legal_entity[address][line1]':
-        e.target['legal_entity[address][line1]'].value,
-      'legal_entity[address][line2]':
-        e.target['legal_entity[address][line2]'].value,
-      'legal_entity[address][postal_code]':
-        e.target['legal_entity[address][postal_code]'].value,
-      'legal_entity[address][state]':
-        e.target['legal_entity[address][state]'].value,
-      'legal_entity[dob][day]': e.target['legal_entity[dob][day]'].value,
-      'legal_entity[dob][month]': e.target['legal_entity[dob][month]'].value,
-      'legal_entity[dob][year]': e.target['legal_entity[dob][year]'].value,
-      'legal_entity[type]': 'individual'
+      'individual[first_name]': e.target['individual[first_name]'].value,
+      'individual[last_name]': e.target['individual[last_name]'].value,
+      'individual[address][city]':
+        e.target['individual[address][city]'].value,
+      'individual[address][line1]':
+        e.target['individual[address][line1]'].value,
+      'individual[address][line2]':
+        e.target['individual[address][line2]'].value,
+      'individual[address][postal_code]':
+        e.target['individual[address][postal_code]'].value,
+      'individual[address][state]':
+        e.target['individual[address][state]'].value,
+      'individual[dob][day]': e.target['individual[dob][day]'].value,
+      'individual[dob][month]': e.target['individual[dob][month]'].value,
+      'individual[dob][year]': e.target['individual[dob][year]'].value
     }
 
-    if (e.target['legal_entity[personal_id_number]'].value) {
-      formData['legal_entity[personal_id_number]'] =
-        e.target['legal_entity[personal_id_number]'].value
+    if (e.target['individual[id_number]'].value) {
+      formData['individual[id_number]'] =
+        e.target['individual[id_number]'].value
     }
 
     this.props.updateAccount(this.state.userId, formData)
@@ -368,12 +367,12 @@ class Account extends Component {
                             <Typography className={ classes.pos } color='textSecondary'>
                               <FormattedMessage id='account.status' defaultMessage='Your account status:' />
                             </Typography>
-                            { account.data.verification.disabled_reason ? (
+                            { account.data.requirements.disabled_reason ? (
                               <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
                                 { (msg) => (
                                   <Chip
                                     label={
-                                      this.props.intl.formatMessage(Const.ACCOUNT_REASONS[account.data.verification.disabled_reason]) || msg
+                                      this.props.intl.formatMessage(Const.ACCOUNT_REASONS[account.data.requirements.currently_due[1]]) || msg
                                     }
                                     style={ { marginRight: 20, backgroundColor: cyan['500'] } }
                                   />
@@ -411,13 +410,13 @@ class Account extends Component {
                               </div>
                             ) }
                           </div>
-                          { account.data.verification.fields_needed.length && account.data.verification.fields_needed[0] !== 'legal_entity.verification.document' ? (
+                          { account.data.requirements.currently_due.length ? (
                             <div>
                               <Typography component='p'>
                                 <FormattedMessage id='account.pending.title' defaultMessage='We have the following items that needs to be verified:' />
                               </Typography>
                               <div>
-                                { account.data.verification.fields_needed.map(
+                                { account.data.requirements.currently_due.map(
                                   (item, i) => (
                                     <Chip
                                       style={ { margin: 3 } }
@@ -447,7 +446,7 @@ class Account extends Component {
                             color='primary'
                             onClick={ this.openUpdateModal }
                           >
-                            { account.data.verification.disabled_reason
+                            { account.data.requirements.disabled_reason
                               ? <FormattedMessage id='account.activate' defaultMessage='Activate account' />
                               : <FormattedMessage id='account.update' defaultMessage='Update account' /> }
                           </Button>
@@ -742,10 +741,10 @@ class Account extends Component {
                                   { (msg) => (
                                     <Input
                                       id='payment-form-user'
-                                      name='legal_entity[first_name]'
+                                      name='individual[first_name]'
                                       placeholder={ msg }
                                       style={ { marginRight: 20 } }
-                                      defaultValue={ account.data.legal_entity.first_name }
+                                      defaultValue={ account.data.individual && account.data.individual.first_name }
                                     />
                                   ) }
                                 </FormattedMessage>
@@ -754,11 +753,11 @@ class Account extends Component {
                                 <FormattedMessage id='account.verify.lastName' defaultMessage='Last name'>
                                   { (msg) => (
                                     <Input
-                                      name='legal_entity[last_name]'
-                                      id='adornment-email'
+                                      name='individual[last_name]'
+                                      id='last-name'
                                       placeholder={ msg }
                                       style={ { marginRight: 20 } }
-                                      defaultValue={ account.data.legal_entity.last_name }
+                                      defaultValue={ account.data.individual && account.data.individual.last_name }
                                     />
                                   ) }
                                 </FormattedMessage>
@@ -766,19 +765,18 @@ class Account extends Component {
                               <FormControl>
                                 <Input
                                   id='payment-form-user'
-                                  name='legal_entity[personal_id_number]'
+                                  name='individual[id_number]'
                                   placeholder={
-                                    account.data.legal_entity
-                                      .personal_id_number_provided
+                                    account.data.individual && account.data.individual
+                                      .id_number
                                       ? this.props.intl.formatMessage(messages.documentProvided)
                                       : this.props.intl.formatMessage(messages.documentProvide)
                                   }
                                   disabled={
-                                    account.data.legal_entity
-                                      .personal_id_number_provided
+                                    account.data.individual && account.data.individual.id_number
                                   }
                                   defaultValue={
-                                    account.data.legal_entity.personal_id_number
+                                    account.data.individual && account.data.individual.id_number
                                   }
                                 />
                               </FormControl>
@@ -787,32 +785,32 @@ class Account extends Component {
                               <FormControl>
                                 <Input
                                   id='payment-form-user'
-                                  name='legal_entity[address][line1]'
+                                  name='individual[address][line1]'
                                   placeholder={ this.props.intl.formatMessage(messages.addressLine1) }
                                   style={ { marginRight: 20 } }
                                   defaultValue={
-                                    account.data.legal_entity.address.line1
+                                    account.data.individual && account.data.individual.address.line1
                                   }
                                 />
                               </FormControl>
                               <FormControl>
                                 <Input
                                   id='payment-form-user'
-                                  name='legal_entity[address][line2]'
+                                  name='individual[address][line2]'
                                   placeholder={ this.props.intl.formatMessage(messages.addressLine2) }
                                   style={ { marginRight: 20 } }
                                   defaultValue={
-                                    account.data.legal_entity.address.line2
+                                    account.data.individual && account.data.individual.address.line2
                                   }
                                 />
                               </FormControl>
                               <FormControl>
                                 <Input
-                                  name='legal_entity[address][postal_code]'
-                                  id='adornment-email'
+                                  name='individual[address][postal_code]'
+                                  id='postal-code'
                                   placeholder={ this.props.intl.formatMessage(messages.zipCode) }
                                   defaultValue={
-                                    account.data.legal_entity.address.postal_code
+                                    account.data.individual && account.data.individual.address.postal_code
                                   }
                                 />
                               </FormControl>
@@ -820,22 +818,22 @@ class Account extends Component {
                             <Grid item xs={ 12 }>
                               <FormControl>
                                 <Input
-                                  name='legal_entity[address][city]'
+                                  name='individual[address][city]'
                                   id='adornment-city'
                                   placeholder={ this.props.intl.formatMessage(messages.city) }
                                   style={ { marginRight: 20 } }
                                   defaultValue={
-                                    account.data.legal_entity.address.city
+                                    account.data.individual && account.data.individual.address.city
                                   }
                                 />
                               </FormControl>
                               <FormControl>
                                 <Input
                                   id='payment-form-user'
-                                  name='legal_entity[address][state]'
+                                  name='individual[address][state]'
                                   placeholder={ this.props.intl.formatMessage(messages.state) }
                                   defaultValue={
-                                    account.data.legal_entity.address.state
+                                    account.data.individual && account.data.individual.address.state
                                   }
                                 />
                               </FormControl>
@@ -844,17 +842,17 @@ class Account extends Component {
                               <FormControl>
                                 <Input
                                   id='payment-form-user'
-                                  name='legal_entity[dob][day]'
+                                  name='individual[dob][day]'
                                   placeholder={ this.props.intl.formatMessage(messages.dob) }
                                   style={ { marginRight: 20 } }
-                                  defaultValue={ account.data.legal_entity.dob.day }
+                                  defaultValue={ account.data.individual && account.data.individual.dob.day }
                                 />
                               </FormControl>
                               <FormControl>
                                 <Select
                                   autoWidth
                                   native
-                                  name='legal_entity[dob][month]'
+                                  name='individual[dob][month]'
                                   style={ { marginRight: 10 } }
                                   onChange={ (event) => {
                                     this.setState({ monthOfBirth: event.target.value })
@@ -864,7 +862,7 @@ class Account extends Component {
                                   { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                     (item, i) => {
                                       return (
-                                        <option selected={ !!(item === account.data.legal_entity.dob.month) } key={ i } value={ item }>
+                                        <option selected={ !!(item === account.data.individual && account.data.individual.dob.month) } key={ i } value={ item }>
                                           { `${item}` }
                                         </option>
                                       )
@@ -874,10 +872,10 @@ class Account extends Component {
                               </FormControl>
                               <FormControl>
                                 <Input
-                                  name='legal_entity[dob][year]'
-                                  id='adornment-email'
+                                  name='individual[dob][year]'
+                                  id='date-of-birth'
                                   placeholder={ this.props.intl.formatMessage(messages.birthYear) }
-                                  defaultValue={ account.data.legal_entity.dob.year }
+                                  defaultValue={ account.data.individual && account.data.individual.dob.year }
                                 />
                               </FormControl>
                             </Grid>
@@ -1002,7 +1000,7 @@ class Account extends Component {
                           <Input
                             name='paypal_email'
                             type='email'
-                            id='adornment-email'
+                            id='email'
                             style={ { marginRight: 20 } }
                             defaultValue={
                               user.user.paypal_id ? `${user.user.paypal_id}` : `${user.user.email}`
