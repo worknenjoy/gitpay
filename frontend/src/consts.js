@@ -107,7 +107,7 @@ const msgs = defineMessages({
   },
   statusBusinessProfileUrl: {
     id: 'consts.account.statuses.business_profile_url',
-    defaultMessage: 'Business profile url'
+    defaultMessage: 'Website'
   },
   statusBusinessType: {
     id: 'consts.account.statuses.business_type',

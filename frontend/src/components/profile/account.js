@@ -168,6 +168,7 @@ class Account extends Component {
   handleSubmit (e) {
     e.preventDefault()
     let formData = {
+      'business_profile[url]': e.target['business_profile[url]'].value,
       'individual[first_name]': e.target['individual[first_name]'].value,
       'individual[last_name]': e.target['individual[last_name]'].value,
       'individual[address][city]':
@@ -737,6 +738,21 @@ class Account extends Component {
                           <Grid container spacing={ 24 }>
                             <Grid item xs={ 12 }>
                               <FormControl>
+                                <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>
+                                  { (msg) => (
+                                    <Input
+                                      id='payment-form-website'
+                                      name='business_profile[url]'
+                                      placeholder={ msg }
+                                      style={ { marginRight: 20 } }
+                                      defaultValue={ account.data.business_profile && account.data.business_profile.url }
+                                    />
+                                  ) }
+                                </FormattedMessage>
+                              </FormControl>
+                            </Grid>
+                            <Grid item xs={ 12 }>
+                              <FormControl>
                                 <FormattedMessage id='account.verify.firstName' defaultMessage='First name'>
                                   { (msg) => (
                                     <Input
@@ -767,16 +783,16 @@ class Account extends Component {
                                   id='payment-form-user'
                                   name='individual[id_number]'
                                   placeholder={
-                                    account.data.individual && account.data.individual
-                                      .id_number
+                                    account.data.individual
+                                      .id_number_provided
                                       ? this.props.intl.formatMessage(messages.documentProvided)
                                       : this.props.intl.formatMessage(messages.documentProvide)
                                   }
                                   disabled={
-                                    account.data.individual && account.data.individual.id_number
+                                    account.data.individual.id_number_provided
                                   }
                                   defaultValue={
-                                    account.data.individual && account.data.individual.id_number
+                                    account.data.individual.id_number
                                   }
                                 />
                               </FormControl>
@@ -862,7 +878,7 @@ class Account extends Component {
                                   { [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
                                     (item, i) => {
                                       return (
-                                        <option selected={ !!(item === account.data.individual && account.data.individual.dob.month) } key={ i } value={ item }>
+                                        <option selected={ account.data.individual && !!(item === account.data.individual.dob.month) } key={ i } value={ item }>
                                           { `${item}` }
                                         </option>
                                       )
