@@ -21,7 +21,7 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
       ]
 
       if (userParameters.country === 'BR') {
-        requested_capabilities.push('card_payments')
+        requestedCapabilities.push('card_payments')
       }
 
       return stripe.accounts.create({
