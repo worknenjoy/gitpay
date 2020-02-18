@@ -20,7 +20,7 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
         'transfers'
       ]
 
-      if(userParameters.country === 'BR') {
+      if (userParameters.country === 'BR') {
         requested_capabilities.push('card_payments')
       }
 
