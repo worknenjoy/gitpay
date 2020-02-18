@@ -15,7 +15,7 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
         return { error: 'user already have an account' }
       }
 
-      let requested_capabilities = [
+      let requestedCapabilities = [
         'legacy_payments',
         'transfers'
       ]
@@ -29,7 +29,7 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
         country: userParameters.country || 'US',
         email: user.dataValues.email,
         business_type: 'individual',
-        requested_capabilities
+        requested_capabilities: requestedCapabilities
       }).then(account => {
         // eslint-disable-next-line no-console
         console.log('account created', account)
