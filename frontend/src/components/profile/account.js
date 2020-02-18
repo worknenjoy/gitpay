@@ -373,7 +373,7 @@ class Account extends Component {
                                 { (msg) => (
                                   <Chip
                                     label={
-                                      this.props.intl.formatMessage(Const.ACCOUNT_REASONS[account.data.requirements.currently_due[1]]) || msg
+                                      msg
                                     }
                                     style={ { marginRight: 20, backgroundColor: cyan['500'] } }
                                   />
@@ -783,16 +783,16 @@ class Account extends Component {
                                   id='payment-form-user'
                                   name='individual[id_number]'
                                   placeholder={
-                                    account.data.individual
+                                    account.data.individual && account.data.individual
                                       .id_number_provided
                                       ? this.props.intl.formatMessage(messages.documentProvided)
                                       : this.props.intl.formatMessage(messages.documentProvide)
                                   }
                                   disabled={
-                                    account.data.individual.id_number_provided
+                                    account.data.individual && account.data.individual.id_number_provided
                                   }
                                   defaultValue={
-                                    account.data.individual.id_number
+                                    account.data.individual && account.data.individual.id_number
                                   }
                                 />
                               </FormControl>
