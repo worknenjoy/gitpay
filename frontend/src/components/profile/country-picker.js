@@ -99,7 +99,7 @@ class CountryPicker extends Component {
           <DialogTitle id='alert-dialog-title'>{ 'Choose your country' }</DialogTitle>
           <DialogContent>
             <DialogContentText id='alert-dialog-description'>
-            Please choose the country that you have your bank account to receive your bounties when conclude any task
+              Please choose the country that you have your bank account to receive your bounties when conclude any task
             </DialogContentText>
             <div className={ classes.countryContainer }>
               { countryCodes.map((item) => {
