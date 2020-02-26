@@ -86,6 +86,4 @@ const Report = {
   }
 }
 
-Report.montlyBounties()
-
 module.exports = { Report }
