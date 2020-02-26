@@ -31,7 +31,7 @@ const Report = {
       const taskSortTwo = taskSort.map((t) => {
         return [t.createdAt, t.createdAt.toLocaleString('default', { month: 'long' }), t.url]
       })
-      
+      // eslint-disable-next-line no-console
       console.log('tasks', taskSortTwo)
     }
     return new Error('no issues found')
