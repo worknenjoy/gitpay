@@ -13,6 +13,7 @@ i18n.configure({
 
 i18n.init()
 
+
 const Report = {
   montlyBounties: async () => {
     const tasks = await models.Task.findAll({ where: {
@@ -28,11 +29,17 @@ const Report = {
       const taskSort = tasks.sort((ta, tb) => {
         return Math.abs(new Date(ta.created_at) - new Date(tb.created_at))
       })
-      const taskSortTwo = taskSort.map((t) => {
-        return [t.value, t.url, t.createdAt.toLocaleString('en-GB', { month: 'long' }), t.createdAt]
+      let currentObj = {}
+      taskSort.forEach((t) => {
+        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long' })
+        currentObj[currentDate] = 0
+      })
+      taskSort.forEach((t) => {
+        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long' })
+        currentObj[currentDate] += parseInt(t.value)
       })
       // eslint-disable-next-line no-console
-      console.log('tasks', taskSortTwo)
+      console.log('tasks', currentObj, taskSort.map((t) => t.value))
     }
     return new Error('no issues found')
   },
@@ -86,4 +93,6 @@ const Report = {
   }
 }
 
-module.exports = { Report }
+Report.montlyBounties()
+
+//module.exports = { Report }
