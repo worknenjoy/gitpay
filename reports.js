@@ -29,7 +29,7 @@ const Report = {
         return Math.abs(new Date(ta.created_at) - new Date(tb.created_at))
       })
       const taskSortTwo = taskSort.map((t) => {
-        return [t.createdAt, t.createdAt.toLocaleString('default', { month: 'long' }), t.url]
+        return [t.value, t.url, t.createdAt.toLocaleString('en-GB', { month: 'long' }), t.createdAt]
       })
       // eslint-disable-next-line no-console
       console.log('tasks', taskSortTwo)
