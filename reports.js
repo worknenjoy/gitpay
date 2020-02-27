@@ -2,7 +2,6 @@ const models = require('./models')
 const moment = require('moment')
 const i18n = require('i18n')
 const DeadlineMail = require('./modules/mail/deadline')
-const TaskMail = require('./modules/mail/task')
 
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
@@ -39,8 +38,8 @@ const Report = {
         currentObj[currentDate] += parseInt(t.value)
         total += parseInt(t.value)
       })
-      // eslint-disable-next-line no-console
       currentObj.total = total
+      // eslint-disable-next-line no-console
       console.log('tasks', currentObj)
     }
     return new Error('no issues found')
@@ -66,12 +65,11 @@ const Report = {
         currentObj[currentDate] += 1
         total += 1
       })
-      // eslint-disable-next-line no-console
       currentObj.total = total
+      // eslint-disable-next-line no-console
       console.log('users', currentObj)
     }
     return new Error('no issues found')
-    
   },
   rememberDeadline: async () => {
     const tasks = await models.Task.findAll({ where: {
