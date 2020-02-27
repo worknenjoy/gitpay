@@ -13,7 +13,6 @@ i18n.configure({
 
 i18n.init()
 
-
 const Report = {
   montlyBounties: async () => {
     const tasks = await models.Task.findAll({ where: {
@@ -95,4 +94,4 @@ const Report = {
 
 Report.montlyBounties()
 
-//module.exports = { Report }
+// module.exports = { Report }
