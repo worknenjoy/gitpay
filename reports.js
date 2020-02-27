@@ -29,39 +29,49 @@ const Report = {
         return Math.abs(new Date(ta.created_at) - new Date(tb.created_at))
       })
       let currentObj = {}
+      let total = 0
       taskSort.forEach((t) => {
-        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long' })
+        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long', year: 'numeric' })
         currentObj[currentDate] = 0
       })
       taskSort.forEach((t) => {
-        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long' })
+        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long', year: 'numeric' })
         currentObj[currentDate] += parseInt(t.value)
+        total += parseInt(t.value)
       })
       // eslint-disable-next-line no-console
-      console.log('tasks', currentObj, taskSort.map((t) => t.value))
+      currentObj.total = total
+      console.log('tasks', currentObj)
     }
     return new Error('no issues found')
   },
-  latestTasks: async () => {
-    const tasks = await models.Task.findAll({
-      where: {
-        assigned: {
-          $eq: null
-        },
-        status: {
-          $eq: 'open'
-        }
-      },
-      limit: 5,
-      order: [['id', 'DESC']],
-      include: [ models.User ]
+  montlyUsers: async () => {
+    const users = await models.User.findAll({
+      where: {},
+      order: [['id', 'DESC']]
     })
-    // eslint-disable-next-line no-console
-    console.log('tasks from cron job latest tasks', tasks)
-    if (tasks[0]) {
-      TaskMail.weeklyLatest({ tasks })
+
+    if (users[0]) {
+      const usersSort = users.sort((ua, ub) => {
+        return Math.abs(new Date(ua.created_at) - new Date(ub.created_at))
+      })
+      let currentObj = {}
+      let total = 0
+      usersSort.forEach((t) => {
+        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long', year: 'numeric' })
+        currentObj[currentDate] = 0
+      })
+      usersSort.forEach((t) => {
+        const currentDate = t.createdAt.toLocaleString('en-GB', { month: 'long', year: 'numeric' })
+        currentObj[currentDate] += 1
+        total += 1
+      })
+      // eslint-disable-next-line no-console
+      currentObj.total = total
+      console.log('users', currentObj)
     }
-    return tasks
+    return new Error('no issues found')
+    
   },
   rememberDeadline: async () => {
     const tasks = await models.Task.findAll({ where: {
@@ -93,5 +103,7 @@ const Report = {
 }
 
 Report.montlyBounties()
+
+Report.montlyUsers()
 
 // module.exports = { Report }
