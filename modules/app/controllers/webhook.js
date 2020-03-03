@@ -26,6 +26,15 @@ const CURRENCIES = {
   dkk: 'DK'
 }
 
+i18n.configure({
+  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
+  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
+  defaultLocale: 'en',
+  updateFiles: false
+})
+
+i18n.init()
+
 exports.github = async (req, res) => {
   const response = req.body || res.body
   const labels = response && response.issue && response.issue.labels
@@ -50,6 +59,8 @@ exports.github = async (req, res) => {
           const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
 
           if (userData && !taskData.notified) {
+            const language = user.language || 'en'
+            i18n.setLocale(language)
             SendMail.success(
               userData,
               i18n.__('mail.webhook.github.issue.new.subject', {
@@ -130,6 +141,8 @@ exports.github = async (req, res) => {
           const taskData = task.dataValues
           const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
           if (userData) {
+            const language = user.language || 'en'
+            i18n.setLocale(language)
             SendMail.success(
               userData,
               i18n.__('mail.webhook.github.issue.new.subject', {
@@ -177,12 +190,13 @@ exports.updateWebhook = (req, res) => {
         return models.User.findOne({
           where: {
             customer_id: event.data.object.customer
-          },
-          attributes: ['email']
+          }
         }).then((user) => {
           if (!user) {
             return res.status(400).send({ errors: ['User not found'] })
           }
+          const language = user.language || 'en'
+          i18n.setLocale(language)
           SendMail.success(
             user.dataValues,
             i18n.__('mail.webhook.payment.success.subject'),
@@ -219,6 +233,8 @@ exports.updateWebhook = (req, res) => {
                 .then(user => {
                   if (user) {
                     if (paid && status === 'succeeded') {
+                      const language = user.language || 'en'
+                      i18n.setLocale(language)
                       SendMail.success(
                         user.dataValues,
                         i18n.__('mail.webhook.payment.update.subject'),
@@ -261,6 +277,8 @@ exports.updateWebhook = (req, res) => {
                 .then(user => {
                   if (user) {
                     if (paid && status === 'succeeded') {
+                      const language = user.language || 'en'
+                      i18n.setLocale(language)
                       SendMail.success(
                         user.dataValues,
                         i18n.__('mail.webhook.payment.refund.subject'),
@@ -303,6 +321,8 @@ exports.updateWebhook = (req, res) => {
                 .then(user => {
                   if (user) {
                     if (paid && status === 'succeeded') {
+                      const language = user.language || 'en'
+                      i18n.setLocale(language)
                       SendMail.success(
                         user.dataValues,
                         i18n.__('mail.webhook.payment.update.subject'),
@@ -348,6 +368,8 @@ exports.updateWebhook = (req, res) => {
               }).then(user => {
                 if (user) {
                   if (status === 'failed') {
+                    const language = user.language || 'en'
+                    i18n.setLocale(language)
                     SendMail.error(
                       user.dataValues,
                       i18n.__('mail.webhook.payment.unapproved.subject'),
@@ -382,6 +404,8 @@ exports.updateWebhook = (req, res) => {
               include: [models.User]
             })
               .then(assigned => {
+                const language = assigned.dataValues.User.language || 'en'
+                i18n.setLocale(language)
                 SendMail.success(
                   assigned.dataValues.User.dataValues,
                   i18n.__('mail.webhook.payment.transfer.subject'),
@@ -397,7 +421,16 @@ exports.updateWebhook = (req, res) => {
               })
           }
           else {
-            stripe.accounts.retrieve(event.data.object.destination).then((account) => {
+            stripe.accounts.retrieve(event.data.object.destination).then(async (account) => {
+              const user = await models.User.findOne({
+                where: {
+                  email: account.email
+                }
+              })
+              if (user) {
+                const language = user.language || 'en'
+                i18n.setLocale(language)
+              }
               SendMail.success(
                 account.email,
                 i18n.__('mail.webhook.payment.transfer.subject'),
@@ -422,6 +455,8 @@ exports.updateWebhook = (req, res) => {
           .then(user => {
             if (user) {
               const date = new Date(event.data.object.arrival_date * 1000)
+              const language = user.language || 'en'
+              i18n.setLocale(language)
               SendMail.success(
                 user.dataValues,
                 i18n.__('mail.webhook.payment.transfer.intransit.subject'),
@@ -447,6 +482,8 @@ exports.updateWebhook = (req, res) => {
         })
           .then(user => {
             if (user) {
+              const language = user.language || 'en'
+              i18n.setLocale(language)
               SendMail.success(
                 user.dataValues,
                 i18n.__('mail.webhook.payment.transfer.intransit.fail.subject'),
@@ -471,6 +508,8 @@ exports.updateWebhook = (req, res) => {
           .then(user => {
             if (user) {
               const date = new Date(event.data.object.arrival_date * 1000)
+              const language = user.language || 'en'
+              i18n.setLocale(language)
               SendMail.success(
                 user.dataValues,
                 i18n.__('mail.webhook.payment.transfer.finished.subject'),
