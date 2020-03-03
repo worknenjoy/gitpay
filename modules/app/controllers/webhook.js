@@ -190,8 +190,7 @@ exports.updateWebhook = (req, res) => {
         return models.User.findOne({
           where: {
             customer_id: event.data.object.customer
-          },
-          attributes: ['email']
+          }
         }).then((user) => {
           if (!user) {
             return res.status(400).send({ errors: ['User not found'] })
