@@ -162,16 +162,7 @@ if (constants.canSendEmail) {
           value: `
            <p>${i18n.__('mail.hello', { name: name })}</p>
            <p>${i18n.__('mail.interested.user.assigned.main', { username: assignedUserName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-          ${Signatures.buttons(language, {
-    primary: {
-      label: 'mail.assigned.end.owner.button.primary',
-      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
-    },
-    secondary: {
-      label: 'mail.assigned.end.owner.button.secondary',
-      url: `${task.url}`
-    }
-  })}
+          
            <p>${Signatures.sign(language)}</p>`
 
         }
