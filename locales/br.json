@@ -16,6 +16,8 @@
   "mail.assign.owner.main": "{{name}} está interessado na sua tarefa <a href=\"{{url}}\">{{url}}</a>. Você pode entrar em contato com ele pelo e-mail {{email}} para saber mais.",
   "mail.assign.owner.suggest": "<p>Recompensa sugerida: ${{value}}</p><p>Data para entrega sugerida: {{suggestedDate}}</p><p>Quero esta tarefa como aprendizado: {{learn}}</p> <p>Comentários: {{comment}}</p>",
   "mail.assign.owner.sec": "Você pode atribuir esta tarefa na aba 'INTERESSADOS'. Assim ele receberá o valor quando que a tarefa for concluída.",
+  "mail.interested.user.assigned.main": "O usuário {{username}} foi escolhido para tarefa <strong>{{title}}</strong> - {{url}}, uma tarefa que você está interessado.</p><p>Não se preocupe, você pode escolher outra tarefas disponíveis.</p>",
+  "mail.interested.user.assigned.subject": "Um usuário foi escolhido para tarefa que você tem interesse",
   "mail.interested.owner.subject": "Você demonstrou interesse em realizar uma tarefa no Gitpay",
   "mail.interested.main": "Você demonstrou interesse em realizar a tarefa <a href=\"{{url}}\"</a> no Gitpay",
   "mail.interested.owner.sec": "O responsável pela tarefa será notificado e você receberá uma confirmação caso seja escolhido",
