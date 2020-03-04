@@ -22,6 +22,7 @@ const AssignMail = {
     assigned: (to, task, name) => {},
   },
   messageInterested: (user, task, message) => {},
+  notifyInterestedUser: (user, task) => {},
   interested: (to, task, name) => {},
   assigned: (to, task) => {},
   error: (msg) => {}
@@ -128,6 +129,38 @@ if (constants.canSendEmail) {
     deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
     deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime')
   })}
+          ${Signatures.buttons(language, {
+    primary: {
+      label: 'mail.assigned.end.owner.button.primary',
+      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+    },
+    secondary: {
+      label: 'mail.assigned.end.owner.button.secondary',
+      url: `${task.url}`
+    }
+  })}
+           <p>${Signatures.sign(language)}</p>`
+
+        }
+      ]
+    )
+  }
+
+  AssignMail.notifyInterestedUser = (user, task) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const name = user.name || user.username
+    i18n.setLocale(language)
+    setMomentLocale(language)
+    request(
+      to,
+      i18n.__('mail.interested.user.assigned.subject'),
+      [
+        {
+          type: 'text/html',
+          value: `
+           <p>${i18n.__('mail.hello', { name: name })}</p>
+           <p>${i18n.__('mail.interested.user.assigned.main', { username: name, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           ${Signatures.buttons(language, {
     primary: {
       label: 'mail.assigned.end.owner.button.primary',
