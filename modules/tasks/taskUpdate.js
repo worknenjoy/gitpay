@@ -205,16 +205,16 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                 const interestedUsersId = task.Assigns.map(user => user.userId).filter(user => user !== assignedUser.id)
                 AssignMail.owner.assigned(ownerUser, task.dataValues, assignedUser)
                 AssignMail.assigned(assignedUser, task.dataValues)
-                return interestedUsersId
+                return { interestedUsersId, assignedUser }
               })
-            }).then((interestedUsers) => {
+            }).then(({ interestedUsersId, assignedUser }) => {
               return models.User.findAll({
                 where: {
-                  id: interestedUsers
+                  id: interestedUsersId
                 }
               }).then(users => {
                 users.forEach(user => {
-                  AssignMail.notifyInterestedUser(user.dataValues, task.dataValues)
+                  AssignMail.notifyInterestedUser(user.dataValues, task.dataValues, assignedUser)
                 })
                 return task.dataValues
               })

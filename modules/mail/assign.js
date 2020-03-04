@@ -146,10 +146,11 @@ if (constants.canSendEmail) {
     )
   }
 
-  AssignMail.notifyInterestedUser = (user, task) => {
+  AssignMail.notifyInterestedUser = (user, task, assignedUser) => {
     const to = user.email
     const language = user.language || 'en'
     const name = user.name || user.username
+    const assignedUserName = assignedUser.name || assignedUser.username
     i18n.setLocale(language)
     setMomentLocale(language)
     request(
@@ -160,7 +161,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
            <p>${i18n.__('mail.hello', { name: name })}</p>
-           <p>${i18n.__('mail.interested.user.assigned.main', { username: name, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+           <p>${i18n.__('mail.interested.user.assigned.main', { username: assignedUserName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           ${Signatures.buttons(language, {
     primary: {
       label: 'mail.assigned.end.owner.button.primary',
