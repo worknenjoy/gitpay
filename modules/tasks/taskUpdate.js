@@ -202,8 +202,20 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               return task.updateAttributes({ status: 'in_progress' }).then(() => {
                 const assignedUser = assigned.User.dataValues
                 const ownerUser = task.dataValues.User.dataValues
+                const interestedUsersId = task.Assigns.map(user => user.userId).filter(user => user !== assignedUser.id)
                 AssignMail.owner.assigned(ownerUser, task.dataValues, assignedUser)
                 AssignMail.assigned(assignedUser, task.dataValues)
+                return interestedUsersId
+              })
+            }).then((interestedUsers) => {
+              return models.User.findAll({
+                where: {
+                  id: interestedUsers
+                }
+              }).then(users => {
+                users.forEach(user => {
+                  AssignMail.notifyInterestedUser(user.dataValues, task.dataValues)
+                })
                 return task.dataValues
               })
             })
