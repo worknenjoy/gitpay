@@ -7,7 +7,7 @@ const models = require('../models')
 const { register } = require('./helpers')
 const agent = request.agent(api)
 
-describe('Task mail', () => {
+xdescribe('Task mail', () => {
   nock('https://api.sendgrid.com')
   .persist()
   .post('/v3/mail/send')

@@ -132,7 +132,6 @@ class TopBar extends Component {
       private: false,
       provider: 'github',
       createTaskDialog: false,
-      signUserDialog: false,
       joinSlackDialog: false,
       isActive: false
     }
@@ -180,7 +179,8 @@ class TopBar extends Component {
   }
 
   handleClickDialogSignUser = (e) => {
-    this.setState(({ signUserDialog: true }))
+    e.preventDefault()
+    this.props.openDialog('SignupUser')
   }
 
   handleClickDialogJoinSlack = (e) => {
@@ -249,7 +249,7 @@ class TopBar extends Component {
   }
 
   handleSignUserDialogClose = () => {
-    this.setState({ signUserDialog: false })
+    this.props.closeDialog()
   }
 
   handleJoinSlackDialogClose = () => {
@@ -285,7 +285,7 @@ class TopBar extends Component {
   }
 
   render () {
-    const { completed, user, preferences } = this.props
+    const { completed, user, preferences, dialog } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
@@ -376,7 +376,7 @@ class TopBar extends Component {
                 </StyledButton>
 
                 <Dialog
-                  open={ this.state.signUserDialog }
+                  open={ dialog.open && dialog.target === 'SignupUser' }
                   onClose={ this.handleSignUserDialogClose }
                   aria-labelledby='form-dialog-title'
                 >

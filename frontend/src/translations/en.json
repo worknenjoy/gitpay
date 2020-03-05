@@ -1,5 +1,7 @@
 {
   "welcome.menu.item.one": "Intro",
+  "general.singup.action": "Signin / Signup",
+  "general.singup.access": "Access your account",
   "general.buttons.ok": "Ok",
   "general.buttons.retry": "Retry",
   "general.buttons.cancel": "Cancel",
@@ -199,6 +201,7 @@
   "task.status.filter.payment.succeeded": "Successfull payment",
   "task.status.filter.payment.failed": "Payment failed",
   "task.status.filter.payment.canceled": "Payment canceled",
+  "task.status.filter.payment.refunded": "Payment refunded",
   "task.user.find.none": "User not registered",
   "task.order.paid.yes": "Yes",
   "task.order.paid.no": "No",

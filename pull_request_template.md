@@ -4,9 +4,9 @@
 
 ## Changes
 
-- [ ] where your changes apply
+- Where your changes apply
 
-## Related Issue
+## Issue
 
 > #000
 
@@ -21,3 +21,9 @@ Steps needed to reproduce the scenario from this change to validate if the pull 
 - Create / log user
 - Create Task
 - Other steps
+
+## Before
+> Screenshot from the state before
+
+## After
+> Screenshot from the state after your Pull Request

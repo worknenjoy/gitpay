@@ -104,6 +104,14 @@ const msgs = defineMessages({
   statusUndefinedThree: {
     id: 'consts.account.statuses.undefined.three',
     defaultMessage: 'Undefined'
+  },
+  statusBusinessProfileUrl: {
+    id: 'consts.account.statuses.business_profile_url',
+    defaultMessage: 'Website'
+  },
+  statusBusinessType: {
+    id: 'consts.account.statuses.business_type',
+    defaultMessage: 'Business type'
   }
 })
 
@@ -111,23 +119,24 @@ const api = {
   API_URL: process.env.API_HOST || 'http://localhost:3000',
   ACCOUNT_FIELDS: {
     'external_account': msgs.externalAccont,
-    'legal_entity.address.city': msgs.city,
-    'legal_entity.address.line1': msgs.addressLine1,
-    'legal_entity.address.postal_code': msgs.zipcode,
-    'legal_entity.address.state': msgs.state,
-    'legal_entity.dob.day': msgs.birthDay,
-    'legal_entity.dob.month': msgs.birthMonth,
-    'legal_entity.dob.year': msgs.birthYear,
-    'legal_entity.first_name': msgs.firstName,
-    'legal_entity.last_name': msgs.lastName,
-    'legal_entity.personal_id_number': msgs.idNumber,
-    'legal_entity.verification.document': msgs.docNumber,
-    'legal_entity.type': msgs.idType,
+    'individual.address.city': msgs.city,
+    'individual.address.line1': msgs.addressLine1,
+    'individual.address.postal_code': msgs.zipcode,
+    'individual.address.state': msgs.state,
+    'individual.dob.day': msgs.birthDay,
+    'individual.dob.month': msgs.birthMonth,
+    'individual.dob.year': msgs.birthYear,
+    'individual.first_name': msgs.firstName,
+    'individual.last_name': msgs.lastName,
+    'individual.personal_id_number': msgs.idNumber,
+    'individual.verification.document': msgs.docNumber,
+    'individual.type': msgs.idType,
     'tos_acceptance.date': msgs.termsDate,
-    'tos_acceptance.ip': msgs.terms
+    'tos_acceptance.ip': msgs.terms,
+    'business_profile.url': msgs.statusBusinessProfileUrl,
+    'business_type': msgs.statusBusinessType
   },
   ACCOUNT_REASONS: {
-    'fields_needed': msgs.accountReasonsFieldsNeeded,
     'external_account': msgs.accountReasonsFieldsExternal,
     null: msgs.accountReasonsFieldsPending,
     undefined: msgs.accountReasonsFieldsPendingOther

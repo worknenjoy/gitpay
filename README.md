@@ -55,7 +55,7 @@ You can do this with: `cp .env.example .env`
 #### Install postgres
 1. install: `brew install postgres` (mac)
 2. start the service: `brew services start postgresql`
-3. create postgres user: `create user postgres -s`
+3. create postgres user: `createuser postgres -s`
 4. Login into postgres cli: `psql -U postgres`
 5. Create test database: `create database gitpay_test;`
 6. Create a dev database: `create database gitpay_dev;`
@@ -131,6 +131,7 @@ Here you can start to learn how to create your first pull request and start to b
 - [Shivam Latawa]( https://github.com/ShivamLatawa )
 - [Md. Al Amin]( https://github.com/Alamin02 )
 - [Siso]( https://github.com/sisohs ) 
+- [Amrut]( https://github.com/amrut07 )
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_large)

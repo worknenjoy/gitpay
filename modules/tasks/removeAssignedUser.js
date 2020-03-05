@@ -37,7 +37,7 @@ module.exports = Promise.method(function ({ id, userId }, { message }) {
           SendMail.success(
             assign.User,
             i18n.__('mail.assign.remove.subject'),
-            i18n.__('mail.assign.remove.message', { message, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`, title: task.title })
+            i18n.__('mail.assign.remove.message', { message, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`, title: task.title })
           )
 
           const ownerUser = author

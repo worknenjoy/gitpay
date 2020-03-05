@@ -12,6 +12,7 @@ const transferData = require('./data/transfer')
 const payoutData = require('./data/payout')
 const cardData = require('./data/card')
 const balanceData = require('./data/balance')
+const refundData = require('./data/refund')
 const githubWebhookMain = require('./data/github.event.main')
 const githubWebhookIssue = require('./data/github.issue.create')
 const githubWebhookIssueLabeled = require('./data/github.issue.labeled')
@@ -94,6 +95,51 @@ describe('webhooks', () => {
                         )
                         expect(o.dataValues.paid).to.equal(true)
                         expect(o.dataValues.status).to.equal('succeeded')
+                        done()
+                      })
+                    })
+                })
+            })
+        })
+    })
+
+    xit('should update balance after a refund is triggered', done => {
+      models.User.build({ email: 'testrefund@mail.com', password: 'teste' })
+        .save()
+        .then(user => {
+          models.Task.build({
+            url: 'https://github.com/worknenjoy/truppie/issues/199',
+            provider: 'github',
+            userId: user.dataValues.id
+          })
+            .save()
+            .then(task => {
+              task
+                .createOrder({
+                  source_id: 'card_1CcdmoBrSjgsps2Dw7RRQDwp',
+                  currency: 'BRL',
+                  amount: 200,
+                  source: 'card_1FTTdSBrSjgsps2DFfBwigSm',
+                  userId: user.dataValues.id
+                })
+                .then(order => {
+                  agent
+                    .post('/webhooks')
+                    .send(refundData.refund)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+                      expect(res.body).to.exist
+                      expect(res.body.id).to.equal(
+                        'ch_1FTTdqBrSjgsps2DQjHwwqr4'
+                      )
+                      models.Order.findById(order.dataValues.id).then(o => {
+                        expect(o.dataValues.source).to.equal(
+                          'ch_1CcdmsBrSjgsps2DNZiZAyvG'
+                        )
+                        expect(o.dataValues.paid).to.equal(false)
+                        expect(o.dataValues.status).to.equal('refunded')
                         done()
                       })
                     })
