@@ -25,14 +25,14 @@ import {
 
 const paymentIcon = require('../../images/payment-icon-alt.png')
 const styleCardPlanCorners = {
-  float:"left",
+  float: 'left',
   height: 350,
   marginTop: 20,
   width: 270
 }
 const styleCardPlanMiddel = {
-  float:"left",
-  backgroundColor: "#009688",
+  float: 'left',
+  backgroundColor: '#009688',
   height: 390,
   width: 270
 }
@@ -137,8 +137,8 @@ const styleInputPrice = {
   width: '90%'
 }
 const stylePayCreditCardButtom = {
- marginLeft: 20,
- marginRight: 62
+  marginLeft: 20,
+  marginRight: 62
 }
 const styleButtomChoosePlan = {
   margin: '11px 40px 0 0'
@@ -176,7 +176,7 @@ class TaskPaymentForm extends Component {
   render () {
     const { classes } = this.props
 
-    const bull = <span className={classes.bullet}>•</span>;
+    const bull = <span className={ classes.bullet }>•</span>
     return (
       <div>
         <Collapse in={ !!this.props.open }>
@@ -226,9 +226,9 @@ class TaskPaymentForm extends Component {
                   />
                 </div>
                 <form className={ classes.formPayment } action='POST'>
-                  <FormControl style={styleInputPrice}>
+                  <FormControl style={ styleInputPrice }>
                     <InputLabel htmlFor='adornment-amount' >
-                      <FormattedMessage id='task.payment.input.amount.value' defaultMessage='Price'/>
+                      <FormattedMessage id='task.payment.input.amount.value' defaultMessage='Price' />
                     </InputLabel>
                     <FormattedMessage id='task.payment.input.amount' defaultMessage='Price insert a value for this task' >
                       { (msg) => (
@@ -246,28 +246,28 @@ class TaskPaymentForm extends Component {
                       ) }
                     </FormattedMessage>
                   </FormControl>
-                  <div className={ classes.chipContainer } style={styleContainerplans}>
-                    <Card className={classes.card} style={styleCardPlanCorners}>
-                      <CardContent style={styleCardContent}>
-                        <FontAwesomeIcon icon={faPaperPlane} style={styleIconFirstPlan}/>
-                        <Typography component="h4" style={stylePPercent}>
+                  <div className={ classes.chipContainer } style={ styleContainerplans }>
+                    <Card className={ classes.card } style={ styleCardPlanCorners }>
+                      <CardContent style={ styleCardContent }>
+                        <FontAwesomeIcon icon={ faPaperPlane } style={ styleIconFirstPlan } />
+                        <Typography component='h4' style={ stylePPercent }>
                           30% fee
                         </Typography>
-                        <Typography component="p" style={stypePPlan}>
+                        <Typography component='p' style={ stypePPlan }>
                           FULL SUPPORT
                         </Typography>
-                        <Typography className={classes.pos} color="textSecondary" style={stypePPlanDescription}>
+                        <Typography className={ classes.pos } color='textSecondary' style={ stypePPlanDescription }>
                           PRIVATE PLAN WITH SUPPORT
                         </Typography>
-                        <div style={stypeContainerPlanListElement}>
-                          <div style={stypePPlanListElement}>
-                            <FontAwesomeIcon icon={faCheck} style={stypePlanListIcon}/> For public projects
+                        <div style={ stypeContainerPlanListElement }>
+                          <div style={ stypePPlanListElement }>
+                            <FontAwesomeIcon icon={ faCheck } style={ stypePlanListIcon } /> For public projects
                           </div>
-                          <div style={stypePPlanListElement}>
-                            <FontAwesomeIcon icon={faCheck} style={stypePlanListIcon}/> We manage the whole workflow
+                          <div style={ stypePPlanListElement }>
+                            <FontAwesomeIcon icon={ faCheck } style={ stypePlanListIcon } /> We manage the whole workflow
                           </div>
                         </div>
-                        <div style={stylePPricePlan}>
+                        <div style={ stylePPricePlan }>
                           $ 26
                         </div>
                         <Button
@@ -275,7 +275,7 @@ class TaskPaymentForm extends Component {
                           variant='contained'
                           color='primary'
                           className={ classes.btnPayment }
-                          style={styleButtomChoosePlan}
+                          style={ styleButtomChoosePlan }
                         >
                           <FormattedMessage id='task.payment.creditcard.action2' defaultMessage='CHOOSE THIS PLAN' values={ {
                             amount: this.state.currentPrice
@@ -283,27 +283,27 @@ class TaskPaymentForm extends Component {
                         </Button>
                       </CardContent>
                     </Card>
-                    <Card className={classes.card} style={styleCardPlanMiddel}>
-                      <CardContent style={styleCardContent}>
-                        <AirplanemodeActive style={styleIconMiddlePlan}/>
-                        <Typography component="h4" style={stylePPercent}>
+                    <Card className={ classes.card } style={ styleCardPlanMiddel }>
+                      <CardContent style={ styleCardContent }>
+                        <AirplanemodeActive style={ styleIconMiddlePlan } />
+                        <Typography component='h4' style={ stylePPercent }>
                           18% fee
                         </Typography>
-                        <Typography component="p" style={stylePPercentMiddle}>
+                        <Typography component='p' style={ stylePPercentMiddle }>
                           PRIVATE PROJECTS
                         </Typography>
-                        <Typography className={classes.pos} color="textSecondary" style={stypePPlanDescriptionMiddle}>
+                        <Typography className={ classes.pos } color='textSecondary' style={ stypePPlanDescriptionMiddle }>
                           for private projects
                         </Typography>
-                        <div style={stypeContainerPlanListElement}>
-                          <div style={stypePPlanListElement}>
-                            <FontAwesomeIcon icon={faCheck} style={stypePlanListIcon}/> Private projects
+                        <div style={ stypeContainerPlanListElement }>
+                          <div style={ stypePPlanListElement }>
+                            <FontAwesomeIcon icon={ faCheck } style={ stypePlanListIcon } /> Private projects
                           </div>
-                          <div style={stypePPlanListElement}>
-                            <FontAwesomeIcon icon={faCheck} style={stypePlanListIcon}/> Basic campaign
+                          <div style={ stypePPlanListElement }>
+                            <FontAwesomeIcon icon={ faCheck } style={ stypePlanListIcon } /> Basic campaign
                           </div>
                         </div>
-                        <div style={stylePPricePlanMiddle}>
+                        <div style={ stylePPricePlanMiddle }>
                           $ 23,60
                         </div>
                         <Button
@@ -311,7 +311,7 @@ class TaskPaymentForm extends Component {
                           variant='contained'
                           color='primary'
                           className={ classes.btnPayment }
-                          style={styleButtomChoosePlan}
+                          style={ styleButtomChoosePlan }
                         >
                           <FormattedMessage id='task.payment.creditcard.action2' defaultMessage='CHOOSE THIS PLAN' values={ {
                             amount: this.state.currentPrice
@@ -319,27 +319,27 @@ class TaskPaymentForm extends Component {
                         </Button>
                       </CardContent>
                     </Card>
-                    <Card className={classes.card} style={styleCardPlanCorners}>
-                      <CardContent style={styleCardContent}>
-                        <FontAwesomeIcon icon={faRocket} style={styleIconThirdPlan}/>
-                        <Typography component="h4" style={stylePPercent}>
+                    <Card className={ classes.card } style={ styleCardPlanCorners }>
+                      <CardContent style={ styleCardContent }>
+                        <FontAwesomeIcon icon={ faRocket } style={ styleIconThirdPlan } />
+                        <Typography component='h4' style={ stylePPercent }>
                           8% fee
                         </Typography>
-                        <Typography component="p" style={stypePPlan}>
+                        <Typography component='p' style={ stypePPlan }>
                           OPEN SOURCE
                         </Typography>
-                        <Typography className={classes.pos} color="textSecondary" style={stypePPlanDescription}>
+                        <Typography className={ classes.pos } color='textSecondary' style={ stypePPlanDescription }>
                           for Open Souce projects
                         </Typography>
-                        <div style={stypeContainerPlanListElement}>
-                          <div style={stypePPlanListElement}>
-                            <FontAwesomeIcon icon={faCheck} style={stypePlanListIcon}/> For public projects
+                        <div style={ stypeContainerPlanListElement }>
+                          <div style={ stypePPlanListElement }>
+                            <FontAwesomeIcon icon={ faCheck } style={ stypePlanListIcon } /> For public projects
                           </div>
-                          <div style={stypePPlanListElement}>
-                            <FontAwesomeIcon icon={faCheck} style={stypePlanListIcon}/> Basic campaign
+                          <div style={ stypePPlanListElement }>
+                            <FontAwesomeIcon icon={ faCheck } style={ stypePlanListIcon } /> Basic campaign
                           </div>
                         </div>
-                        <div style={stylePPricePlan}>
+                        <div style={ stylePPricePlan }>
                           $ 21,60
                         </div>
                         <Button
@@ -347,7 +347,7 @@ class TaskPaymentForm extends Component {
                           variant='contained'
                           color='primary'
                           className={ classes.btnPayment }
-                          style={styleButtomChoosePlan}
+                          style={ styleButtomChoosePlan }
                         >
                           <FormattedMessage id='task.payment.creditcard.action2' defaultMessage='CHOOSE THIS PLAN' values={ {
                             amount: this.state.currentPrice
@@ -356,7 +356,7 @@ class TaskPaymentForm extends Component {
                       </CardContent>
                     </Card>
                   </div>
-                  <div style={styleContainerButtomsActions}>
+                  <div style={ styleContainerButtomsActions }>
                     <Button
                       style={ stylePayCreditCardButtom }
                       disabled={ !this.state.currentPrice }
