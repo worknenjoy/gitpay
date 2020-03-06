@@ -175,8 +175,6 @@ class TaskPaymentForm extends Component {
 
   render () {
     const { classes } = this.props
-
-    const bull = <span className={ classes.bullet }>•</span>
     return (
       <div>
         <Collapse in={ !!this.props.open }>
