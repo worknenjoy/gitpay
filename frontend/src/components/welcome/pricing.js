@@ -67,7 +67,7 @@ const tiers = [
     ],
     buttonText: 'Sign up',
     buttonVariant: 'contained',
-    link: 'https://gitpay.me/#/login'
+    link: 'http://localhost:8082/#/login'
   },
   {
     title: 'Private',
