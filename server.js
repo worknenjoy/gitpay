@@ -20,7 +20,9 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
-  secret: process.env.SECRET_PHRASE
+  secret: process.env.SECRET_PHRASE,
+  saveUninitialized: true,
+  resave: true
 }))
 
 i18n.configure({
