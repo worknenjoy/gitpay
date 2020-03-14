@@ -88,7 +88,8 @@ For exhaustive list of options available, refer `migration.js` in root directory
 ## Run project
 
 ### Frontend server
-`npm run dev`
+- first go to `frontend` folder: `cd frontend`
+- Then run the server: `npm run dev`
 
 ### Backend (node.js)
 `npm run start:dev`
