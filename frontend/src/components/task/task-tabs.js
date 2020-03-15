@@ -171,7 +171,7 @@ class TaskTabs extends React.Component {
 
     const detailsOrderButton = (item, userId) => {
       if (item.provider === 'paypal') {
-        if (userId === item.User.id) {
+        if (item.User && userId === item.User.id) {
           return (
             <Button
               style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
@@ -218,7 +218,7 @@ class TaskTabs extends React.Component {
       const items = assign.map((item, i) => {
         const userField = () => (
           <span>
-            { item.User.profile_url
+            { item.User && item.User.profile_url
               ? (
                 <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
                   { (msg) => (
