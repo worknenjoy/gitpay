@@ -40,7 +40,7 @@ exports.github = async (req, res) => {
   const labels = response && response.issue && response.issue.labels
   if (req.headers.authorization === `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`) {
     // below would update issue status if someone updates it on Github
-    if (response.action === 'reopened' || 'opened' || 'closed') {
+    if (response.action === 'reopened' || response.action === 'opened' || response.action === 'closed') {
       const status = response.issue.state
       const dbUrl = response.issue.html_url
       models.Task.update({ status: status }, {
