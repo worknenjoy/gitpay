@@ -396,6 +396,19 @@ describe('webhooks', () => {
           done()
         });      
     })
+    it('should update issue status when an issue updates on github', done => {
+      agent
+        .post('/webhooks/github')
+        .send(githubWebhookMain.issue)
+        .expect('Content-Type', /json/)
+        .end((err, res) => {
+          models.Task.findOne({where: {url: "https://github.com/worknenjoy/gitpay/issues/244"}})
+          .then((task)=>{
+            expect(task.dataValues.status).to.equal("open")
+          })
+          done()
+        });      
+    })
     xit('should create new task when an event of new issue is triggered', done => {
       agent
         .post('/webhooks/github')

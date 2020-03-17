@@ -63,8 +63,6 @@ app.post('/webhooks/github', (req, res, next) => {
   if (updateStatus) {
     const status = req.body.issue.state
     const dbUrl = req.body.issue.html_url
-    // eslint-disable-next-line no-console
-    console.log(status)
     models.Task.update({ status: status }, {
       where: {
         url: dbUrl
