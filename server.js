@@ -58,7 +58,7 @@ app.get('/octos', (req, res) => {
 })
 
 // Correct webhook route should be configured according to your GitHub App
-app.post('/webhook', (req, res, next) => {
+app.post('/webhooks/github', (req, res, next) => {
   const updateStatus = (req.body.action === 'reopened' || 'opened' || 'closed')
   if (updateStatus) {
     const status = req.body.issue.state
