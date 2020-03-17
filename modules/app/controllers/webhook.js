@@ -39,6 +39,17 @@ exports.github = async (req, res) => {
   const response = req.body || res.body
   const labels = response && response.issue && response.issue.labels
   if (req.headers.authorization === `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`) {
+    // below would update issue status if someone updates it on Github
+    if (response.action === 'reopened' || 'opened' || 'closed') {
+      const status = response.issue.state
+      const dbUrl = response.issue.html_url
+      models.Task.update({ status: status }, {
+        where: {
+          url: dbUrl
+        }
+      })
+      return res.status(200).end()
+    }
     if (response.action === 'labeled') {
       const labelNotify = labels.filter(label => label.name === 'notify')
       const labelGitpay = labels.filter(label => label.name === 'gitpay')
