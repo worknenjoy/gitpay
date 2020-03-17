@@ -5,6 +5,7 @@ const app = express()
 const session = require('express-session')
 const bodyParser = require('body-parser')
 require('./models')
+const models = require('./models')
 const passport = require('passport')
 require('./config/passport')
 const load = require('./modules/app')
@@ -54,6 +55,23 @@ app.get('/octos', (req, res) => {
     console.log(article)
     return res.json(article).end()
   })
+})
+
+// Correct webhook route should be configured according to your GitHub App
+app.post('/webhook', (req, res, next) => {
+  const updateStatus = (req.body.action === 'reopened' || 'opened' || 'closed')
+  if (updateStatus) {
+    const status = req.body.issue.state
+    const dbUrl = req.body.issue.html_url
+    // eslint-disable-next-line no-console
+    console.log(status)
+    models.Task.update({ status: status }, {
+      where: {
+        url: dbUrl
+      }
+    })
+  }
+  res.status(200).end()
 })
 
 load.init(app)
