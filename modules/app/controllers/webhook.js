@@ -46,7 +46,8 @@ exports.github = async (req, res) => {
       const updated = await models.Task.update({ status: status }, {
         where: {
           url: dbUrl
-        }
+        },
+        returning: true
       })
       const TaskAfter = await models.Task.findOne({
         where: {
