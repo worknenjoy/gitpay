@@ -43,12 +43,21 @@ exports.github = async (req, res) => {
     if (response.action === 'reopened' || response.action === 'opened' || response.action === 'closed') {
       const status = response.issue.state
       const dbUrl = response.issue.html_url
-      models.Task.update({ status: status }, {
+      const updated = await models.Task.update({ status: status }, {
         where: {
           url: dbUrl
         }
       })
-      return res.status(200).end()
+      const TaskAfter = await models.Task.findOne({
+        where: {
+          url: dbUrl
+        }
+      })
+      if (updated) {
+        return res.json({ ...response,
+          task: TaskAfter.dataValues })
+      }
+      else return res.status(500).json({})
     }
     if (response.action === 'labeled') {
       const labelNotify = labels.filter(label => label.name === 'notify')

@@ -396,18 +396,29 @@ describe('webhooks', () => {
           done()
         });      
     })
-    it('should update issue status when an issue updates on github', done => {
-      agent
+    it('should update when issue on github is updated', done => {
+      let customIssue = githubWebhookIssue.issue
+      customIssue.action = 'opened'
+      models.User.build({ email: 'teste@mail.com', username: 'alexanmtz', password: 'teste' })
+      .save()
+      .then(async user =>{
+        const task = await models.Task.create({provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id, status: "closed"})
+        agent
         .post('/webhooks/github')
-        .send(githubWebhookMain.issue)
+        .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
+        .send(customIssue)
         .expect('Content-Type', /json/)
-        .end((err, res) => {
-          models.Task.findOne({where: {url: "https://github.com/worknenjoy/gitpay/issues/244"}})
-          .then((task)=>{
-            expect(task.dataValues.status).to.equal("open")
-          })
-          done()
-        });      
+        .expect(200)
+        .end(async (err, res) => {
+          if(err) console.log(err)
+          else{
+            expect(res.body).to.exist
+            expect(res.body.task.status).to.equal('open')
+            expect(res.statusCode).to.equal(200)
+            done()
+          }
+        }); 
+      })
     })
     xit('should create new task when an event of new issue is triggered', done => {
       agent
