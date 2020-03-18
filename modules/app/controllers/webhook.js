@@ -49,14 +49,9 @@ exports.github = async (req, res) => {
         },
         returning: true
       })
-      const TaskAfter = await models.Task.findOne({
-        where: {
-          url: dbUrl
-        }
-      })
       if (updated) {
         return res.json({ ...response,
-          task: TaskAfter.dataValues })
+          task: updated[1][0].dataValues })
       }
       else return res.status(500).json({})
     }
