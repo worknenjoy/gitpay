@@ -28,9 +28,16 @@ class TaskPaymentForm extends Component {
       currentPrice: 0,
       finalPrice: 0,
       orderPrice: 0,
-      samplePrice: 0
+      samplePrice: 0,
+      plan: null,
+      finalPrice () {
+        return this.plan && Number((parseInt(this.currentPrice) * fee[this.plan]).toFixed(2))
+      },
+      checkPlan (plan) {
+        if (!plan) return false
+        return this.plan === plan
+      }
     }
-  }
 
   pickTaskPrice = (price) => {
     this.setState({
