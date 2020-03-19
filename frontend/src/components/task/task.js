@@ -1122,7 +1122,7 @@ class Task extends Component {
                         <Button onClick={ this.handleAssignDialogClose } color='primary'>
                           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleAssignTask } variant='contained' color='primary' disabled={ !this.state.priceConfirmed || !this.state.termsAgreed }>
+                        <Button onClick={ this.handleAssignTask } variant='contained' color='primary' disabled={ (!this.state.priceConfirmed && !this.state.interestedLearn) || !this.state.termsAgreed }>
                           <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this issue' />
                         </Button>
                       </DialogActions>
