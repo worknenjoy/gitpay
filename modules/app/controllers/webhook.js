@@ -10,6 +10,7 @@ const models = require('../../../models')
 const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')
+const IssueClosedMail = require('../../mail/issueClosed')
 
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
@@ -49,9 +50,23 @@ exports.github = async (req, res) => {
         },
         returning: true
       })
+      const updatedTask = updated[1][0].dataValues
+      const user = await models.User.findOne({
+        where: {
+          id: updatedTask.userId
+        }
+      })
       if (updated) {
+        if (updatedTask.status === 'closed') {
+          IssueClosedMail.success(user.dataValues, {
+            name: user.dataValues.name,
+            url: updatedTask.url,
+            title: updatedTask.title
+          }
+          )
+        }
         return res.json({ ...response,
-          task: updated[1][0].dataValues })
+          task: updatedTask })
       }
       else return res.status(500).json({})
     }
