@@ -70,6 +70,7 @@
   "mail.status.open": "Open",
   "mail.status.progress": "In progress",
   "mail.status.closed": "Done",
+  "mail.status.when.closed": "<p>The issue {{title}} - {{url}} was closed on Github, so we closed on Gitpay.</p><p>You can change the issue status if you want.</p>",
   "mail.notefined": "Undefined",
   "mail.status.error": "We had an issue with some notifications about interested users for a task on Gitpay",
   "mail.transfer.new.subject.success": "A new transfer was made for an issue added to Gitpay.",
