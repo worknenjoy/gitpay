@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from './messages/task-messages'
@@ -15,23 +15,12 @@ import {
   DialogTitle,
   Grid,
   Avatar,
-  Card,
-  CardHeader,
   Typography,
   Button,
   Fab,
   Tooltip,
-  Chip,
   withStyles,
-  Paper,
-  FormControl,
-  Input,
-  InputAdornment,
-  InputLabel,
-  Checkbox,
-  Link,
-  FormControlLabel,
-  DialogContentText
+  Link
 } from '@material-ui/core'
 
 import {
@@ -41,8 +30,6 @@ import {
   HowToReg as TrophyIcon,
   DateRange as DateIcon,
   CalendarToday as CalendarIcon,
-  Warning as WarningIcon,
-  Info as InfoIcon,
   Delete as DeleteIcon,
   MonetizationOn as MonetizationOnIcon,
   Close as CloseIcon,
@@ -70,8 +57,6 @@ import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
 const taskCover = require('../../images/task-cover.png')
-const logoGithub = require('../../images/github-logo-black.png')
-const logoBitbucket = require('../../images/bitbucket-logo-blue.png')
 
 const styles = theme => ({
   root: {
