@@ -79,6 +79,7 @@
     "file-loader": "^3.0.1",
     "history": "^4.7.2",
     "human-format": "^0.10.1",
+    "invert-color": "^2.0.0",
     "is-github-url": "^1.2.2",
     "jss": "^9.8.7",
     "lodash": "^4.17.11",
