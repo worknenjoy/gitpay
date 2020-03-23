@@ -57,6 +57,7 @@ import TaskInvite from './task-invite'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
 const taskCover = require('../../images/task-cover.png')
+const inviteCover = require('../../images/funds.png')
 
 const styles = theme => ({
   root: {
@@ -836,73 +837,44 @@ class Task extends Component {
                     </div>
                   ) }
                 </Dialog>
-                <Dialog
-                  open={ this.state.assignDialog || this.state.taskFundingDialog }
-                  onClose={ this.handleAssignFundingDialogClose }
-                  aria-labelledby='form-dialog-title'
-                  maxWidth='sm'
-                >
-                  { this.state.assignDialog || this.state.taskFundingDialog ? (
-                    <React.Fragment>
-                      <Fab size='small' aria-label='close' className={ classes.closeButton } onClick={ this.handleAssignFundingDialogClose }>
-                        <CloseIcon />
-                      </Fab>
-                      <img
-                        src={ taskCover }
-                        className={ classes.taskCoverImg }
-                      />
-                    </React.Fragment>
-                  ) : null }
-                  { !this.props.logged ? (
-                    <div>
-                      <DialogTitle id='form-dialog-title'>
-                        <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                      </DialogTitle>
-                      <DialogContent>
-                        <div className={ classes.mainBlock }>
-                          <LoginButton referer={ this.props.location } includeForm />
-                        </div>
-                      </DialogContent>
-                    </div>
-                  ) : (
-                    <TaskAssignment
-                      taskFundingDialog={ this.state.taskFundingDialog }
-                      assignDialog={ this.state.assignDialog }
-                      handleAssignFundingDialogClose={ this.handleAssignFundingDialogClose }
-                      renderIssueAuthorLink={ this.renderIssueAuthorLink }
-                      timePlaceholder={ timePlaceholder }
-                      deadline={ deadline }
-                      deliveryDate={ deliveryDate }
-                      handleSuggestAnotherDate={ this.handleSuggestAnotherDate }
-                      showSuggestAnotherDateField={ this.state.showSuggestAnotherDateField }
-                      interestedSuggestedDate={ this.state.interestedSuggestedDate }
-                      handleInputChangeCalendar={ this.handleInputChangeCalendar }
-                      currentPrice={ this.state.currentPrice }
-                      interestedComment={ this.state.interestedComment }
-                      handleInputInterestedCommentChange={ this.handleInputInterestedCommentChange }
-                      handleInputInterestedAmountChange={ this.handleInputInterestedAmountChange }
-                      pickTaskPrice={ this.pickTaskPrice }
-                      priceConfirmed={ this.state.priceConfirmed }
-                      handleCheckboxIwillDoFor={ this.handleCheckboxIwillDoFor }
-                      charactersCount={ this.state.charactersCount }
-                      interestedLearn={ this.state.interestedLearn }
-                      handleCheckboxLearn={ this.handleCheckboxLearn }
-                      termsAgreed={ this.state.termsAgreed }
-                      handleCheckboxTerms={ this.handleCheckboxTerms }
-                      handleTermsDialog={ this.handleTermsDialog }
-                      termsDialog={ this.state.termsDialog }
-                      handleTermsDialogClose={ this.handleTermsDialogClose }
-                      handleAssignTask={ this.handleAssignTask }
-                      logged={ this.props.logged }
-                      task={ task }
-                      classes={ classes }
-                      fundingInvite={ this.state.fundingInvite }
-                      handleFundingEmailInputChange={ this.handleFundingEmailInputChange }
-                      handleFundingInputMessageChange={ this.handleFundingInputMessageChange }
-                      sendFundingInvite={ this.sendFundingInvite }
-                    />
-                  ) }
-                </Dialog>
+                <TaskAssignment
+                  taskFundingDialog={ this.state.taskFundingDialog }
+                  assignDialog={ this.state.assignDialog }
+                  handleAssignFundingDialogClose={ this.handleAssignFundingDialogClose }
+                  renderIssueAuthorLink={ this.renderIssueAuthorLink }
+                  timePlaceholder={ timePlaceholder }
+                  deadline={ deadline }
+                  deliveryDate={ deliveryDate }
+                  handleSuggestAnotherDate={ this.handleSuggestAnotherDate }
+                  showSuggestAnotherDateField={ this.state.showSuggestAnotherDateField }
+                  interestedSuggestedDate={ this.state.interestedSuggestedDate }
+                  handleInputChangeCalendar={ this.handleInputChangeCalendar }
+                  currentPrice={ this.state.currentPrice }
+                  interestedComment={ this.state.interestedComment }
+                  handleInputInterestedCommentChange={ this.handleInputInterestedCommentChange }
+                  handleInputInterestedAmountChange={ this.handleInputInterestedAmountChange }
+                  pickTaskPrice={ this.pickTaskPrice }
+                  priceConfirmed={ this.state.priceConfirmed }
+                  handleCheckboxIwillDoFor={ this.handleCheckboxIwillDoFor }
+                  charactersCount={ this.state.charactersCount }
+                  interestedLearn={ this.state.interestedLearn }
+                  handleCheckboxLearn={ this.handleCheckboxLearn }
+                  termsAgreed={ this.state.termsAgreed }
+                  handleCheckboxTerms={ this.handleCheckboxTerms }
+                  handleTermsDialog={ this.handleTermsDialog }
+                  termsDialog={ this.state.termsDialog }
+                  handleTermsDialogClose={ this.handleTermsDialogClose }
+                  handleAssignTask={ this.handleAssignTask }
+                  logged={ this.props.logged }
+                  task={ task }
+                  classes={ classes }
+                  fundingInvite={ this.state.fundingInvite }
+                  handleFundingEmailInputChange={ this.handleFundingEmailInputChange }
+                  handleFundingInputMessageChange={ this.handleFundingInputMessageChange }
+                  sendFundingInvite={ this.sendFundingInvite }
+                  inviteCover={ inviteCover }
+                  taskCover={ taskCover }
+                />
               </div>
             </Grid>
           </Grid>

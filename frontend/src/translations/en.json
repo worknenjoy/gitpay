@@ -136,6 +136,7 @@
   "task.status.deadline.set.target": "Set deadline to {date}",
   "task.deadline.button.save": "Save date",
   "task.invite.title": "Invite someone to work on this task",
+  "task.funding.title": "Invite someone to add bounties to this issue",
   "task.invite.text.label": "Write an invitation text",
   "task.invite.form.cancel": "Cancel",
   "task.invite.form.send": "Send",

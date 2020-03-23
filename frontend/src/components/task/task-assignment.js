@@ -35,8 +35,6 @@ import {
 } from '@material-ui/icons'
 import LoginButton from '../session/login-button'
 
-const taskCover = require('../../images/task-cover.png')
-const inviteCover = require('../../images/funds.png')
 const logoGithub = require('../../images/github-logo-black.png')
 const logoBitbucket = require('../../images/bitbucket-logo-blue.png')
 
@@ -288,7 +286,7 @@ const TaskAssignment = (props) => {
           <div style={ { display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column' } }>
             <DialogTitle id='form-dialog-title' style={ { padding: 0, marginTop: 10 } }>
               <Typography type='headline' variant='h5' style={ { color: 'black' } }>
-                <FormattedMessage id='task.invite.title' defaultMessage='Invite someone to work on this task' />
+                <FormattedMessage id='task.funding.title' defaultMessage='Invite someone to add bounties to this issue' />
               </Typography>
             </DialogTitle>
           </div>
@@ -314,7 +312,7 @@ const TaskAssignment = (props) => {
     if (props.assignDialog) {
       return (
         <img
-          src={ taskCover }
+          src={ props.taskCover }
           className={ classes.taskCoverImg }
         />
       )
@@ -323,7 +321,7 @@ const TaskAssignment = (props) => {
     if (props.taskFundingDialog) {
       return (
         <img
-          src={ inviteCover }
+          src={ props.inviteCover }
           className={ classes.taskCoverImg }
         />
       )

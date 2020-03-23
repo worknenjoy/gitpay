@@ -14,7 +14,7 @@ module.exports = Promise.method(function ({ id }, { comment, email, suggestedVal
       i18n.setLocale(language)
       SendMail.success(
         { email, language },
-        i18n.__('mail.invite.send.action'),
+        i18n.__('mail.funding.send.action'),
         `${i18n.__('mail.funding.send.message', {
           title: task.title,
           url: taskUrl,
