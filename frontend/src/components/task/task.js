@@ -17,7 +17,6 @@ import {
   Avatar,
   Typography,
   Button,
-  Fab,
   Tooltip,
   withStyles,
   Link
@@ -32,7 +31,6 @@ import {
   CalendarToday as CalendarIcon,
   Delete as DeleteIcon,
   MonetizationOn as MonetizationOnIcon,
-  Close as CloseIcon,
   PeopleOutlined
 } from '@material-ui/icons'
 
