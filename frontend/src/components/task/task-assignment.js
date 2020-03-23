@@ -350,26 +350,6 @@ const TaskAssignment = (props) => {
         </div>
       ) : (
         <div>
-          { /* <div style={ { display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column' } }>
-            <DialogTitle id='form-dialog-title' style={ { padding: 0, marginTop: 10 } }>
-              <Typography type='headline' variant='h5' style={ { color: 'black' } }>
-                <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
-              </Typography>
-            </DialogTitle>
-          </div>
-          <Grid container justify='center' style={ { textAlign: 'center', marginTop: 15 } }>
-            <Grid item xs={ 11 } md={ 7 }>
-              <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
-                <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={ 'Please apply only if you\'re able to do it and if you\'re available and commited to finish in the deadline.' }>
-                  { (msg) => (
-                    <span className={ classes.spanText }>
-                      { msg }
-                    </span>
-                  ) }
-                </FormattedMessage>
-              </Typography>
-            </Grid>
-          </Grid> */ }
           { dialogCoverInvite() }
           <DialogContent>
             { emailInviteInput() }
