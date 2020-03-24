@@ -34,23 +34,16 @@ class TaskPaymentForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentPrice: 0,
+      price: 0,
       orderPrice: 0,
       samplePrice: 0,
       plan: null,
-      finalPrice () {
-        return this.plan && Number((parseInt(this.currentPrice) * fee[this.plan]).toFixed(2))
+      priceAfterFee () {
+        return this.plan && Number((parseInt(this.price) * fee[this.plan]).toFixed(2))
       },
       checkPlan (plan) {
         if (!plan || !this.plan) return false
         return this.plan === plan
-      },
-      feeInCents () {
-        if (!this.plan) return false
-        return (this.finalPriceInCents() * fee[this.plan]) - this.finalPriceInCents()
-      },
-      finalPriceInCents () {
-        return (this.finalPrice() * 100)
       }
     }
   }
@@ -65,12 +58,12 @@ class TaskPaymentForm extends Component {
 
   pickTaskPrice = (price) => {
     this.setState({
-      currentPrice: price,
+      price: price,
     })
   }
 
   handleInputChange = (e) => {
-    this.setState({ currentPrice: e.target.value })
+    this.setState({ price: e.target.value })
   }
 
   handlePayment = (value) => {
@@ -147,8 +140,8 @@ class TaskPaymentForm extends Component {
                           placeholder={ msg }
                           type='number'
                           inputProps={ { 'min': 0 } }
-                          defaultValue={ this.state.currentPrice }
-                          value={ this.state.currentPrice }
+                          defaultValue={ this.state.price }
+                          value={ this.state.price }
                           onChange={ this.handleInputChange }
                         />
                       ) }
@@ -210,7 +203,7 @@ class TaskPaymentForm extends Component {
                           </div>
 
                           <Typography className={ classes.planFinalPrice } align='center' color='textPrimary' >
-                            { (this.state.currentPrice > 0) && this.formatCurrency(Number((parseInt(this.state.currentPrice) * fee['open source']).toFixed(2))) }
+                            { (this.state.price > 0) && this.formatCurrency(Number((parseInt(this.state.price) * fee['open source']).toFixed(2))) }
                           </Typography>
 
                         </CardContent>
@@ -281,7 +274,7 @@ class TaskPaymentForm extends Component {
                           </div>
 
                           <Typography className={ classes.planFinalPrice } align='center' color='textPrimary' >
-                            { (this.state.currentPrice > 0) && this.formatCurrency(Number((parseInt(this.state.currentPrice) * fee['private']).toFixed(2))) }
+                            { (this.state.price > 0) && this.formatCurrency(Number((parseInt(this.state.price) * fee['private']).toFixed(2))) }
                           </Typography>
 
                         </CardContent>
@@ -352,7 +345,7 @@ class TaskPaymentForm extends Component {
                           </div>
 
                           <Typography className={ classes.planFinalPrice } align='center' color='textPrimary' >
-                            { (this.state.currentPrice > 0) && this.formatCurrency(Number((parseInt(this.state.currentPrice) * fee['full']).toFixed(2))) }
+                            { (this.state.price > 0) && this.formatCurrency(Number((parseInt(this.state.price) * fee['full']).toFixed(2))) }
                           </Typography>
 
                         </CardContent>
@@ -380,24 +373,24 @@ class TaskPaymentForm extends Component {
 
                 <Button
                   style={ { marginLeft: 20 } }
-                  disabled={ !this.state.finalPrice() }
+                  disabled={ !this.state.priceAfterFee() }
                   onClick={ () => this.handlePayment('PaymentDialog') }
                   variant='contained'
                   color='primary'
                   className={ classes.btnPayment }>
                   <FormattedMessage id='task.payment.creditcard.action' defaultMessage='Pay {amount} with Credit Card' values={ {
-                    amount: this.formatCurrency(this.state.finalPrice())
+                    amount: this.formatCurrency(this.state.priceAfterFee())
                   } } />
                 </Button>
                 <Button
-                  disabled={ !this.state.finalPrice() }
+                  disabled={ !this.state.priceAfterFee() }
                   onClick={ () => this.handlePayment('PaypalPaymentDialog') }
                   variant='contained'
                   color='primary'
                   className={ classes.btnPayment }
                 >
                   <FormattedMessage id='task.payment.paypal.action' defaultMessage='Pay {amount} with PayPal' values={ {
-                    amount: this.formatCurrency(this.state.finalPrice())
+                    amount: this.formatCurrency(this.state.priceAfterFee())
                   } } />
                 </Button>
               </CardContent>
@@ -409,12 +402,11 @@ class TaskPaymentForm extends Component {
           onClose={ this.props.closeDialog }
           addNotification={ this.props.addNotification }
           onPayment={ this.props.updateTask }
-          finalPriceInCents={ this.state.finalPriceInCents() }
-          finalPrice={ this.state.finalPrice() }
-          planFeeInCents={ this.state.feeInCents() }
-          price={ this.formatCurrency(this.state.finalPrice()) }
+          price={ this.state.price }
+          formatedPrice={ this.formatCurrency(this.state.priceAfterFee()) }
           user={ this.props.user }
           task={ this.props.match.params.id }
+          plan={ this.state.plan }
         />
 
         <PaypalPaymentDialog
@@ -422,14 +414,13 @@ class TaskPaymentForm extends Component {
           onClose={ this.props.closeDialog }
           addNotification={ this.props.addNotification }
           onPayment={ this.props.updateTask }
-          finalPriceInCents={ this.state.finalPriceInCents() }
-          finalPrice={ this.state.finalPrice() }
-          price={ this.formatCurrency(this.state.finalPrice()) }
-          planFeeInCents={ this.state.feeInCents() }
+          price={ this.state.price }
+          formatedPrice={ this.formatCurrency(this.state.priceAfterFee()) }
           task={ this.props.match.params.id }
           createOrder={ this.props.createOrder }
           user={ this.props.user }
           order={ this.props.order }
+          plan={ this.state.plan }
         />
       </div>
     )
