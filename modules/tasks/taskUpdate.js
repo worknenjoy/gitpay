@@ -13,9 +13,9 @@ const i18n = require('i18n')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
-    const centavosAmount = orderParameters.amount * 100
+    const totalPrice = models.Plan.calFinalPrice(orderParameters.amount, orderParameters.plan) * 100
     return stripe.charges.create({
-      amount: centavosAmount * 0.92, // 8% base fee
+      amount: totalPrice,
       currency: orderParameters.currency,
       customer: customer.id,
       source: card.id,
@@ -114,8 +114,8 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
             return new Error('task_find_failed')
           }
           if (taskParameters.Orders) {
-            return task.createOrder(taskParameters.Orders[0]).then((order) => {
-              const orderParameters = taskParameters.Orders[0]
+            return task.createOrder(taskParameters.Orders).then((order) => {
+              const orderParameters = taskParameters.Orders
               if (order.userId) {
                 return models.User.findById(order.userId).then((user) => {
                   if (user && user.dataValues.customer_id) {
