@@ -12,18 +12,14 @@ current behavior
 ### Expected behavior
 expect behavior
 
-### usefull links
+### Useful links
   - https://example.com
 
 ### Screenshot attached
 some screenshot
 
-### How to solve this issue
- - steps to solve
-
 ### How to reproduce the user scenario
-
- - steps to reproduce the issue
+ - Create a user
 
 ### What you will need to complete this issue
 Extra requirements to complete the task

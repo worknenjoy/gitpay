@@ -62,7 +62,7 @@ export const InfoList = styled.div`
 export const MainBanner = styled.div`
   box-sizing: border-box;
   padding: 3rem 1rem 4rem 1rem;
-  background: url(${fallbackBackgroundPicture}), url('https://source.unsplash.com/1433x680/?developers,remote%20work&featured');
+  background: url(${fallbackBackgroundPicture}), url('https://source.unsplash.com/1433x680/?developers');
   background-size: cover;
 `
 
