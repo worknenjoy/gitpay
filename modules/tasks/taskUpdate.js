@@ -29,6 +29,9 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           paid: charge.paid,
           status: charge.status
         }).then(updatedUser => {
+          if (orderParameters.plan === 'full') {
+            PaymentMail.support(user, task, order)
+          }
           PaymentMail.success(user, task, order.amount)
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
