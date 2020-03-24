@@ -14,6 +14,7 @@
   "mail.payment.content.error": "Hello, we had an issue with your payment of ${{value}} for the issue <a href=\"{{url}}\">{{url}}</a>",
   "mail.payment.subject.cancel": "Your request to cancel an authorized payment from Gitay was confirmed",
   "mail.payment.content.cancel": "Hello, we canceled a payment authorization of ${{value}} for the issue <a href=\"{{url}}\">{{url}}</a>",
+  "mail.payment.support": "User request support for Task",
   "mail.assign.owner.subject": "Someone is interested in a task that you created on Gitpay",
   "mail.assign.owner.hello": "Hello",
   "mail.assign.owner.main": "{{name}} is interested to work on the task <a href=\"{{url}}\">{{url}}</a>. You can contact him on {{email}} to know more.",
