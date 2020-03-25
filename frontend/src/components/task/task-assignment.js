@@ -197,7 +197,7 @@ const TaskAssignment = (props) => {
       return (
         <FormControl fullWidth>
           <InputLabel htmlFor='email-funding-invite'>
-            <FormattedMessage id='task.invite.email' defaultMessage='Please provide the invitee e-mail' />
+            <FormattedMessage id='task.funding.email' defaultMessage='Please provide the invitee e-mail' />
           </InputLabel>
           <Input
             id='email-funding-invite'
@@ -259,7 +259,7 @@ const TaskAssignment = (props) => {
           <div style={ { display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column' } }>
             <DialogTitle id='form-dialog-title' style={ { padding: 0, marginTop: 10 } }>
               <Typography type='headline' variant='h5' style={ { color: 'black' } }>
-                <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested solve this task?' />
+                <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested to solve this task?' />
               </Typography>
             </DialogTitle>
           </div>
@@ -293,7 +293,7 @@ const TaskAssignment = (props) => {
           <Grid container justify='center' style={ { textAlign: 'center', marginTop: 15 } }>
             <Grid item xs={ 11 } md={ 7 }>
               <Typography type='caption' gutterBottom style={ { color: 'gray' } }>
-                <FormattedMessage id='task.invite.description' defaultMessage={ 'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions' }>
+                <FormattedMessage id='task.funding.description' defaultMessage={ 'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions' }>
                   { (msg) => (
                     <span className={ classes.spanText }>
                       { msg }
@@ -328,6 +328,24 @@ const TaskAssignment = (props) => {
     }
   }
 
+  const dialogTitleMessage = () => {
+    if (props.taskFundingDialog) {
+      return (
+        <DialogTitle id='form-dialog-title'>
+          <FormattedMessage id='task.funding.logged.info' defaultMessage='You need to login to invite someone' />
+        </DialogTitle>
+      )
+    }
+
+    if (props.assignDialog) {
+      return (
+        <DialogTitle id='form-dialog-title'>
+          <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+        </DialogTitle>
+      )
+    }
+  }
+
   return (
     <Dialog
       open={ props.assignDialog || props.taskFundingDialog }
@@ -339,9 +357,9 @@ const TaskAssignment = (props) => {
       { imageCover() }
       { !props.logged ? (
         <div>
-          <DialogTitle id='form-dialog-title'>
-            <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-          </DialogTitle>
+          { /* <DialogTitle id='form-dialog-title'> */ }
+          { dialogTitleMessage() }
+          { /* </DialogTitle> */ }
           <DialogContent>
             <div className={ classes.mainBlock }>
               <LoginButton referer={ props.location } includeForm />
@@ -531,22 +549,6 @@ const TaskAssignment = (props) => {
                 onChange={ props.handleInputInterestedAmountChange }
               />
             </FormControl>
-
-            { /* <FormControl fullWidth>
-              <InputLabel htmlFor='interested-comment'>
-                <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' />
-              </InputLabel>
-              <Input
-                id='interested-comment'
-                type='text'
-                inputProps={ { maxLength: '120' } }
-                value={ props.interestedComment }
-                onChange={ props.handleInputInterestedCommentChange }
-
-              />
-
-              <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ props.charactersCount + '/120' }</small>
-            </FormControl> */ }
 
             { dialogInputComment() }
 

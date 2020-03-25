@@ -872,6 +872,7 @@ class Task extends Component {
                   sendFundingInvite={ this.sendFundingInvite }
                   inviteCover={ inviteCover }
                   taskCover={ taskCover }
+                  location={ this.props.location }
                 />
               </div>
             </Grid>
