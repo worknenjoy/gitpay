@@ -256,7 +256,7 @@ class CustomPaginationActionsTable extends React.Component {
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 5 } }>
-                        <div style={ { width: 40 } }>
+                        <div style={ { width: 70, textAlign: 'center' } }>
                           { n.value ? (n.value === '0' ? 'No bounty added' : `$ ${n.value}`) : 'No bounty added' }
                         </div>
                       </TableCell>
