@@ -82,6 +82,32 @@ describe('Crons', () => {
           })
         })
     })
+    it('Remember about first-timers-only tasks weekly', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'testcronbasic@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          Promise.all([
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7363', userId: res.body.id}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7364', userId: res.body.id, type: 'first-timers-only'}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7365', userId: res.body.id, status: 'closed', value: 100}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7366', userId: res.body.id, type: 'first-timers-only', status: 'open'}).save(),
+            models.Task.build({url: 'https://github.com/worknenjoy/truppie/issues/7367', userId: res.body.id, value: 50}).save()
+          ]).then( tasks => {
+            expect(tasks[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
+            expect(tasks[2].dataValues.value).to.equal('100')
+            TaskCron.firstTimersOnlyTasks().then( r => {
+              expect(r.length).to.equal(2)
+              expect(r[0]).to.exist;  
+              expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7364')
+              expect(r[1].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7366')
+              done()
+            }).catch(done)
+          })
+        })
+    })
     xit('Paypal payment was canceled notification when we cannot fetch order', (done) => {
       agent
         .post('/auth/register')

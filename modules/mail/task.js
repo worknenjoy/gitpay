@@ -21,7 +21,8 @@ const TaskMail = {
   notify: (user, data) => Promise.resolve({}),
   weeklyBounties: (data) => Promise.resolve({}),
   weeklyLatest: () => Promise.resolve({}),
-  notifyPayment: () => Promise.resolve({})
+  notifyPayment: () => Promise.resolve({}),
+  firstTimersOnlyTasks: () => Promise.resolve({})
 }
 
 if (constants.canSendEmail) {
@@ -176,6 +177,43 @@ if (constants.canSendEmail) {
       mailList,
       subjectData,
       templateData
+    )
+  }
+
+  TaskMail.firstTimersOnlyTasks = async (data) => {
+    const allUsers = await models.User.findAll()
+    let mailList = []
+    let subjectData = []
+    let templateData = []
+    allUsers.map((u, i) => {
+      const language = u.language || 'en'
+      i18n.setLocale(language)
+      mailList.push(u.email)
+      subjectData.push(i18n.__('mail.task.latest.subject'))
+      const tasks = data.tasks.map(d => {
+        const url = constants.taskUrl(d.id)
+        const deadline = d.deadline ? `${moment(d.deadline).format('DD/MM/YYYY')} (${moment(d.deadline).fromNow()})` : d.deadline
+        const title = d.title
+        const value = d.value > 0 ? ('$' + d.value) : i18n.__('mail.task.noValue')
+        return { title, url, value, deadline }
+      })
+      templateData.push({
+        tasks,
+        content: {
+          title: i18n.__('mail.task.latest.title'),
+          provider_action: i18n.__('mail.task.latest.action'),
+          call_to_action: i18n.__('mail.task.latest.calltoaction'),
+          instructions: i18n.__('mail.task.instructions'),
+          docs: i18n.__('mail.task.docs.title'),
+          reason: i18n.__('mail.task.reason'),
+          subject: i18n.__('mail.task.latest.subject')
+        } })
+    })
+    return withTemplate(
+      mailList,
+      subjectData,
+      templateData,
+      'first-timers-only'
     )
   }
 }
