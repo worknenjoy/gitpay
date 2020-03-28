@@ -189,7 +189,7 @@ if (constants.canSendEmail) {
       const language = u.language || 'en'
       i18n.setLocale(language)
       mailList.push(u.email)
-      subjectData.push(i18n.__('mail.task.latest.subject'))
+      subjectData.push(i18n.__('mail.task.first.subject'))
       const tasks = data.tasks.map(d => {
         const url = constants.taskUrl(d.id)
         const deadline = d.deadline ? `${moment(d.deadline).format('DD/MM/YYYY')} (${moment(d.deadline).fromNow()})` : d.deadline
@@ -200,13 +200,13 @@ if (constants.canSendEmail) {
       templateData.push({
         tasks,
         content: {
-          title: i18n.__('mail.task.latest.title'),
-          provider_action: i18n.__('mail.task.latest.action'),
-          call_to_action: i18n.__('mail.task.latest.calltoaction'),
+          title: i18n.__('mail.task.first.title'),
+          provider_action: i18n.__('mail.task.first.action'),
+          call_to_action: i18n.__('mail.task.first.calltoaction'),
           instructions: i18n.__('mail.task.instructions'),
           docs: i18n.__('mail.task.docs.title'),
           reason: i18n.__('mail.task.reason'),
-          subject: i18n.__('mail.task.latest.subject')
+          subject: i18n.__('mail.task.first.subject')
         } })
     })
     return withTemplate(
