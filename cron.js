@@ -96,7 +96,6 @@ const TaskCron = {
           $eq: 'open'
         }
       },
-      order: [['id', 'DESC']],
       include: [ models.User ]
     })
     // eslint-disable-next-line no-console
