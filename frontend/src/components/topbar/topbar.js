@@ -34,7 +34,7 @@ import {
 } from '@material-ui/icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import faSlack from '@fortawesome/free-brands-svg-icons/faSlack'
+import { faSlack } from '@fortawesome/free-brands-svg-icons'
 
 import humanFormat from 'human-format'
 
