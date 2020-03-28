@@ -565,6 +565,28 @@ class Task extends Component {
     }
   }
 
+  rendereAmountStatsCardContent = () => {
+    return (
+      <React.Fragment>
+        { this.props.task.values.available === 0 ? this.props.intl.formatMessage(messages.taskValueLabelNoBounty) : `$ ${this.props.task.values.available}` }
+        { this.props.task.values.available === 0 &&
+          <Button
+            style={ { marginTop: 15, marginBottom: 5, width: '50%' } }
+            onClick={ this.handlePaymentForm }
+            size='small'
+            color='primary'
+            variant='raised'
+            className={ this.props.classes.button }
+          >
+            <span>
+              <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
+            </span>
+          </Button>
+        }
+      </React.Fragment>
+    )
+  }
+
   render () {
     const { classes, task, order } = this.props
     const taskOwner = () => {
@@ -1199,7 +1221,7 @@ class Task extends Component {
                 icon={ TrophyIcon }
                 iconColor='green'
                 title={ this.props.intl.formatMessage(messages.taskValueLabel) }
-                description={ `$ ${task.values.available}` }
+                description={ this.rendereAmountStatsCardContent() }
                 statIcon={ CalendarIcon }
                 statText={ this.props.intl.formatMessage(messages.taskValuesStatus, {
                   approved: task.values.available,
