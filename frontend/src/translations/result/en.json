@@ -11,7 +11,7 @@
   "payment.message.error": "We couldn't process your payment. Try again later",
   "welcome.tagline": "Contribute, learn and receive bounties",
   "welcome.tagline1": "by solving git issues",
-  "welcome.tagline2": "Use <strong>Gitpay</strong> to work in awesome projects using agile process, then receive bounties and / or be hired",
+  "welcome.tagline2": "Use <strong>Gitpay</strong> to work in awesome projects using an agile process, then receive bounties or get hired",
   "notifications.account.update": "Your user was updated successfully",
   "user.logout": "You have logged out of your account.",
   "preferences.headline": "Preferences",
