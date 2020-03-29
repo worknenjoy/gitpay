@@ -248,6 +248,19 @@ const styles = theme => ({
       marginRight: 0
     }
   },
+  cardButton: {
+    maxWidth: 200,
+    width: 150,
+    font: 10,
+    height: 40,
+    maxHeight: 80,
+    marginTop: 15,
+    marginLeft: 10,
+    [theme.breakpoints.only('sm')]: {
+      maxWidth: 100,
+      height: 70,
+    }
+  },
   closeButton: {
     position: 'absolute',
     right: theme.spacing.unit,
@@ -563,6 +576,44 @@ class Task extends Component {
         } } />
       )
     }
+  }
+
+  rendereAmountStatsCardContent = (isOwner) => {
+    return (
+      <React.Fragment>
+        <div>
+          { this.props.task.values.available === 0 ? this.props.intl.formatMessage(messages.taskValueLabelNoBounty) : `$ ${this.props.task.values.available}` }
+        </div>
+        { this.props.task.values.available === 0 &&
+          <Button
+            onClick={ this.handlePaymentForm }
+            size='small'
+            color='primary'
+            variant='raised'
+            className={ this.props.classes.cardButton }
+          >
+            <span className={ this.props.classes.spaceRight }>
+              <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
+            </span>{ ' ' }
+            <RedeemIcon />
+          </Button>
+        }
+        { !isOwner &&
+          <Button
+            onClick={ this.handleAssignDialogOpen }
+            size='small'
+            color='primary'
+            variant='raised'
+            className={ this.props.classes.cardButton }
+          >
+            <span className={ this.props.classes.spaceRight }>
+              <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
+            </span>{ ' ' }
+            <MonetizationOnIcon />
+          </Button>
+        }
+      </React.Fragment>
+    )
   }
 
   render () {
@@ -1199,7 +1250,7 @@ class Task extends Component {
                 icon={ TrophyIcon }
                 iconColor='green'
                 title={ this.props.intl.formatMessage(messages.taskValueLabel) }
-                description={ `$ ${task.values.available}` }
+                description={ this.rendereAmountStatsCardContent(taskOwner()) }
                 statIcon={ CalendarIcon }
                 statText={ this.props.intl.formatMessage(messages.taskValuesStatus, {
                   approved: task.values.available,
@@ -1207,21 +1258,6 @@ class Task extends Component {
                   failed: task.values.failed
                 }) }
               />
-              { !taskOwner() &&
-                <Button
-                  style={ { marginTop: 5, marginBottom: 20, width: '100%' } }
-                  onClick={ this.handleAssignDialogOpen }
-                  size='large'
-                  color='primary'
-                  variant='raised'
-                  className={ classes.button }
-                >
-                  <span className={ classes.spaceRight }>
-                    <FormattedMessage id='task.interested.offer' defaultMessage='Make an offer' />
-                  </span>{ ' ' }
-                  <MonetizationOnIcon />
-                </Button>
-              }
               { MomentComponent(task.data.deadline).isValid() &&
                 <StatsCard
                   icon={ DateIcon }
