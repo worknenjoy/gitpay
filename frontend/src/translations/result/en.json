@@ -327,7 +327,7 @@
   "welcome.companies.item.two.secondary": "Our contributors come from different backgrounds and have the experience to solve your issues. We offer different levels of support to get it done",
   "welcome.companies.item.three.primary": "Add bounties and receive proposals from contributors",
   "welcome.companies.item.three.secondary": "Add bounties to pay collaborators for work accomplished, or crowdfund to reward contributors. You can also give a chance to beginners to solve issues as they learn",
-  "welcome.howto.item.one.primary": "You've imported a new issue from GitHub or Bitbucket",
+  "welcome.howto.item.one.primary": "Import an issue from GitHub or BitBucket",
   "welcome.howto.item.one.secondary": "You can easily import issues from GitHub or Bitbucket and our community will be notified to then make offers of interest to work on your project",
   "welcome.howto.item.two.primary": "Your request has been sent to our community",
   "welcome.howto.item.two.secondary": "We do internal campaigns to let users know about projects and opportunities that match their interest. You will be notified of interested users ranging from beginners looking for learning to advanced contributors",
