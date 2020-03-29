@@ -143,6 +143,7 @@
   "task.status.createdByMe": "Created by me",
   "tasks.status.interested": "I'm interested",
   "task.status.assigned": "Assigned to me",
+  "task.status.value.none": "No bounty added",
   "task.assigned.status.name": "Assigned to {name}",
   "task.assigned.status.name.create": "Assigned to {name}",
   "task.list.headline": "Task list",
