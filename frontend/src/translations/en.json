@@ -192,6 +192,7 @@
   "task.table.page.next": "Next page",
   "task.table.page.last": "Last page",
   "task.table.date.none": "Not yet defined",
+  "task.table.value.none": "No bounty added",
   "task.table.head.author": "Author",
   "task.table.head.task": "Task",
   "task.table.head.status": "Status",
