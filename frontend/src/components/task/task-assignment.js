@@ -155,7 +155,7 @@ const TaskAssignment = (props) => {
           <Button onClick={ props.handleAssignFundingDialogClose } color='primary'>
             <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
           </Button>
-          <Button type='primary' htmlFor='submit' variant='contained' color='primary' disabled={ !props.termsAgreed || !props.currentPrice || !props.fundingInvite.comment }>
+          <Button type='primary' htmlFor='submit' variant='contained' color='primary' disabled={ !props.termsAgreed || !props.currentPrice || !props.fundingInvite.email || !props.fundingInvite.comment }>
             <FormattedMessage id='task.funding.form.send' defaultMessage='Send Invite' />
           </Button>
         </DialogActions>
