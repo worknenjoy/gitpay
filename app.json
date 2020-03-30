@@ -7,8 +7,13 @@
   "image": "heroku/nodejs",
   "addons": ["heroku-postgresql"],
   "env": {
-    "HEROKU_APP_NAME": {
-      "required": true
+    "FRONTEND_HOST": {
+      "required": true,
+      "value": "https://HEROKU_APP_NAME.herokuapp.com"
+    },
+    "API_HOST": {
+      "required": true,
+      "value": "https://HEROKU_APP_NAME.herokuapp.com"
     },
     "BITBUCKET_ID": {
       "value": "123"

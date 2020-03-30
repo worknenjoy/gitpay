@@ -29,7 +29,6 @@ coverage
 build/Release
 frontend/public/
 frontend/build
-!frontend/public/index.html
 
 # Dependency directories
 node_modules

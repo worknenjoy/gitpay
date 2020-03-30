@@ -5,7 +5,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -26,7 +27,14 @@ module.exports = {
     }
   },
   plugins: [
-    new ExtractTextPlugin('app.css'),
+    new MiniCssExtractPlugin({
+      filename: 'app.css'
+    }),
+    new HtmlWebpackPlugin({
+      filename: `${__dirname}/public/index.html`,
+      template: 'src/index.html',
+      chunksSortMode: 'none'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development'),
@@ -47,7 +55,7 @@ module.exports = {
       }
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
+      use: [MiniCssExtractPlugin.loader, 'css-loader']
     }, {
       test: /\.(woff|woff2|ttf|eot|svg)$/,
       loader: 'file-loader'
