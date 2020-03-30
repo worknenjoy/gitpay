@@ -151,11 +151,12 @@ class TaskPaymentForm extends Component {
                 <Grid
                   className={ classes.planContainer }
                   container
-                  justify='center'
+                  justify='space-evenly'
                   alignItems='center'
                   spacing={ 0 }
-                  xs={ 5 }
-                  md={ 12 } >
+                  xs={ 0 }
+                  md={ 12 }
+                  lg={ 12 } >
                   <Grid item className={ classes.planGridItem }>
                     <Card className={ classes.planGrid }
                       { ...this.state.checkPlan('open source')

@@ -312,18 +312,19 @@ const styles = theme => ({
     fontSize: 20
   },
   planIcon: {
-    fontSize: 130
+    fontSize: 100
   },
   planFinalPrice: {
     paddingTop: theme.spacing.unit,
     fontSize: '2rem'
   },
   planGridItem: {
-    width: 260,
+    width: 200,
     padding: theme.spacing.unit,
     margin: 0
   },
   planGridContent: {
+    minHeight: theme.spacing.unit * 10,
     margin: 0,
     padding: 0
   },
