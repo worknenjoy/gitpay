@@ -24,7 +24,7 @@ const messages = defineMessages({
   },
   labelDesc: {
     id: 'task.status.label.desc',
-    defaultMessage: 'Labels can help you understand more about thte context of an issue'
+    defaultMessage: 'Labels can help you understand more about the context of an issue'
   }
 })
 
