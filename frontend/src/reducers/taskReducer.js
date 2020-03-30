@@ -27,7 +27,10 @@ import {
   SYNC_TASK_REQUESTED,
   SYNC_TASK_SUCCESS,
   SYNC_TASK_ERROR,
-  CHANGE_TASK_TAB
+  CHANGE_TASK_TAB,
+  FUNDING_INVITE_TASK_REQUESTED,
+  FUNDING_INVITE_TASK_SUCCESS,
+  FUNDING_INVITE_TASK_ERROR
 } from '../actions/taskActions'
 
 import {
@@ -105,6 +108,13 @@ export const task = (state = {
     case INVITE_TASK_SUCCESS:
       return { ...state, completed: true }
     case INVITE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error }
+
+    case FUNDING_INVITE_TASK_REQUESTED:
+      return { ...state, completed: false }
+    case FUNDING_INVITE_TASK_SUCCESS:
+      return { ...state, completed: true }
+    case FUNDING_INVITE_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
 
     case ASSIGN_TASK_REQUESTED:

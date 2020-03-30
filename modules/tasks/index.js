@@ -9,6 +9,7 @@ const taskDeleteById = require('./taskDeleteById')
 const taskInvite = require('./taskInvite')
 const taskMessage = require('./taskMessage')
 const removeAssignedUser = require('./removeAssignedUser')
+const taskFunding = require('./taskFunding')
 
 module.exports = {
   taskExists,
@@ -21,5 +22,6 @@ module.exports = {
   taskDeleteById,
   taskInvite,
   taskMessage,
-  removeAssignedUser
+  removeAssignedUser,
+  taskFunding
 }
