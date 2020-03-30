@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         Order.belongsTo(models.User, { foreignKey: 'userId' })
         Order.belongsTo(models.Task, { foreignKey: 'TaskId' })
+        Order.hasOne(models.Plan, { foreignKey: 'OrderId' })
       }
     },
     instanceMethods: {
