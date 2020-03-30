@@ -14,6 +14,7 @@
   "mail.payment.content.error": "Olá, nós temos um pagamento da resolução de uma tarefa no valor de ${{value}} pela tarefa <a href=\"{{url}}\">{{url}}</a>",
   "mail.payment.subject.cancel": "Seu pedido para cancelar um pagamento autorizado foi confirmado",
   "mail.payment.content.cancel": "Olá, nós cancelamos a autorização para o pagamento de ${{value}} pela tarefa <a href=\"{{url}}\">{{url}}</a>",
+  "mail.payment.support": "User request support for Task",
   "mail.assign.owner.subject": "Alguém demonstrou interesse por sua tarefa no Gitpay",
   "mail.assign.owner.hello": "Olá",
   "mail.assign.owner.main": "{{name}} está interessado em trabalhar na tarefa <a href=\"{{url}}\">{{url}}</a>. Você pode entrar em contato diretamente com ele por {{email}} para saber mais.",
