@@ -3,6 +3,7 @@ const cors = require('cors')
 const sslRedirect = require('heroku-ssl-redirect')
 const app = express()
 const session = require('express-session')
+const compression = require('compression')
 const bodyParser = require('body-parser')
 require('./models')
 const passport = require('passport')
@@ -44,6 +45,7 @@ app.use(sslRedirect())
 
 app.set('port', (process.env.PORT || 3000))
 
+app.use(compression())
 app.use(express.static(`${__dirname}/frontend/public/`))
 
 app.get('/octos', (req, res) => {

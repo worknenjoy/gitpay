@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
+import fallbackBackgroundPicture from 'app/images/Fallback.png'
 
 import media from 'app/styleguide/media'
-import backgroundPicture from 'app/images/main-background01.jpg'
 
 export const MainTitle = styled.div`
   text-align: center;
@@ -62,7 +62,7 @@ export const InfoList = styled.div`
 export const MainBanner = styled.div`
   box-sizing: border-box;
   padding: 3rem 1rem 4rem 1rem;
-  background: url(${backgroundPicture});
+  background: url(${fallbackBackgroundPicture}), url('https://source.unsplash.com/1433x680/?developers');
   background-size: cover;
 `
 

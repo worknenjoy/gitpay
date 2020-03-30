@@ -201,5 +201,9 @@ export const messages = defineMessages({
   deliveryDateNotInformed: {
     id: 'task.status.limit.date.not.informed',
     defaultMessage: '(not informed)'
+  },
+  taskValueLabelNoBounty: {
+    id: 'task.status.value.none',
+    defaultMessage: 'No bounty added'
   }
 })
