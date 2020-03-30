@@ -295,7 +295,46 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       width: '100%'
     }
+  },
+  planContainer: {
+    paddingTop: 10,
+    paddingBottom: 25
+  },
+  planGrid: {
+    margin: 0
+  },
+  planButton: {
+    display: 'flex', alignItems: 'center', justifyContent: 'center'
+  },
+  checkIcon: {
+    paddingRight: theme.spacing.unit,
+    fontSize: 20
+  },
+  planIcon: {
+    fontSize: 100
+  },
+  planFinalPrice: {
+    paddingTop: theme.spacing.unit,
+    fontSize: '2rem'
+  },
+  planGridItem: {
+    width: 200,
+    padding: theme.spacing.unit,
+    margin: 0
+  },
+  planGridContent: {
+    minHeight: theme.spacing.unit * 10,
+    margin: 0,
+    padding: 0
+  },
+  planBullets: {
+    paddingLeft: theme.spacing.unit * 1,
+    padding: 10
+  },
+  chip: {
+    marginRight: theme.spacing.unit * 2
   }
+
 })
 
 class Task extends Component {
