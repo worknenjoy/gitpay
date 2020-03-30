@@ -52,6 +52,10 @@ const messages = defineMessages({
   noDefined: {
     id: 'task.table.date.none',
     defaultMessage: 'Not yet defined'
+  },
+  noBounty: {
+    id: 'task.table.value.none',
+    defaultMessage: 'No bounty added'
   }
 })
 
@@ -256,8 +260,8 @@ class CustomPaginationActionsTable extends React.Component {
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 5 } }>
-                        <div style={ { width: 40 } }>
-                          { n.value ? `$ ${n.value}` : '$ 0' }
+                        <div style={ { width: 70, textAlign: 'center' } }>
+                          { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 0 } }>
