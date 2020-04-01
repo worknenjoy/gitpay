@@ -119,7 +119,7 @@ class Preferences extends Component {
     })
   }
 
-  handleSave = () => {
+  handleSave = (fetchPreferences = false) => {
     // prevent blink
     this.props.preferences.skills = this.state.selectedSkills.join(',')
     this.props.preferences.os = this.state.selectedOS.join(',')
@@ -131,7 +131,7 @@ class Preferences extends Component {
       language: this.state.selectedLanguage,
       receiveNotifications: this.state.receiveNotifications
     }).then(() => {
-      this.props.fetchPreferences(this.props.user.id)
+      fetchPreferences && this.props.fetchPreferences(this.props.user.id)
     })
   }
 
