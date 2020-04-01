@@ -282,20 +282,6 @@ class Preferences extends Component {
               </Typography>
             </label>
           </Grid>
-          <Grid item xs={ 12 } alignContent='center' alignItems='center' style={ { 'textAlign': 'center' } }>
-            <Button color='primary' onClick={ () => this.handleCancel() }>
-              <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
-            </Button>&nbsp;
-            <Button
-              style={ { color: 'white' } }
-              size='large'
-              variant='contained'
-              color='primary'
-              onClick={ () => this.handleSave() }
-            >
-              <FormattedMessage id='preferences.action.save' defaultMessage='Save' />
-            </Button>
-          </Grid>
         </Grid>
       </Paper>
     )
