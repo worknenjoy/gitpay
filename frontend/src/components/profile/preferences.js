@@ -38,9 +38,24 @@ class Preferences extends Component {
 
     this.state = {
       selectedSkills: this.props.preferences.skills != null && this.props.preferences.skills.length > 0 ? this.props.preferences.skills.split(',') : [],
-      selectedOS: this.props.preferences.os != null && this.props.preferences.skills.length > 0 ? this.props.preferences.os.split(',') : [],
+      selectedOS: this.props.preferences.os ? this.props.preferences.os.split(',') : [],
       selectedLanguage: this.props.preferences.language ? this.props.preferences.language : null,
       receiveNotifications: this.props.preferences.receiveNotifications != null ? this.props.preferences.receiveNotifications : false,
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.preferences.skills !== prevState.selectedSkills.toString() ||
+      prevProps.preferences.os !== prevState.selectedOS.toString() ||
+      prevProps.preferences.receiveNotifications !== this.state.receiveNotifications
+    ) {
+      this.handleSave()
+    }
+    else if (
+      prevState.selectedLanguage !== this.state.selectedLanguage
+    ) {
+      this.handleSave(true)
     }
   }
 
@@ -119,7 +134,7 @@ class Preferences extends Component {
     })
   }
 
-  handleSave = () => {
+  handleSave = (fetchPreferences = false) => {
     // prevent blink
     this.props.preferences.skills = this.state.selectedSkills.join(',')
     this.props.preferences.os = this.state.selectedOS.join(',')
@@ -131,7 +146,7 @@ class Preferences extends Component {
       language: this.state.selectedLanguage,
       receiveNotifications: this.state.receiveNotifications
     }).then(() => {
-      this.props.fetchPreferences(this.props.user.id)
+      fetchPreferences && this.props.fetchPreferences(this.props.user.id)
     })
   }
 
@@ -281,20 +296,6 @@ class Preferences extends Component {
                 <FormattedMessage id='preferences.notifications.checkbox' defaultMessage="I want to receive notifications about all the tasks, not just the ones I'm interested" />
               </Typography>
             </label>
-          </Grid>
-          <Grid item xs={ 12 } alignContent='center' alignItems='center' style={ { 'textAlign': 'center' } }>
-            <Button color='primary' onClick={ () => this.handleCancel() }>
-              <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
-            </Button>&nbsp;
-            <Button
-              style={ { color: 'white' } }
-              size='large'
-              variant='contained'
-              color='primary'
-              onClick={ () => this.handleSave() }
-            >
-              <FormattedMessage id='preferences.action.save' defaultMessage='Save' />
-            </Button>
           </Grid>
         </Grid>
       </Paper>
