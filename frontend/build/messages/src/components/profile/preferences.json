@@ -30,13 +30,5 @@
   {
     "id": "preferences.notifications.checkbox",
     "defaultMessage": "I want to receive notifications about all the tasks, not just the ones I'm interested"
-  },
-  {
-    "id": "general.actions.cancel",
-    "defaultMessage": "Cancel"
-  },
-  {
-    "id": "preferences.action.save",
-    "defaultMessage": "Save"
   }
 ]
