@@ -38,9 +38,24 @@ class Preferences extends Component {
 
     this.state = {
       selectedSkills: this.props.preferences.skills != null && this.props.preferences.skills.length > 0 ? this.props.preferences.skills.split(',') : [],
-      selectedOS: this.props.preferences.os != null && this.props.preferences.skills.length > 0 ? this.props.preferences.os.split(',') : [],
+      selectedOS: this.props.preferences.os ? this.props.preferences.os.split(',') : [],
       selectedLanguage: this.props.preferences.language ? this.props.preferences.language : null,
       receiveNotifications: this.props.preferences.receiveNotifications != null ? this.props.preferences.receiveNotifications : false,
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.preferences.skills !== prevState.selectedSkills.toString() ||
+      prevProps.preferences.os !== prevState.selectedOS.toString() ||
+      prevProps.preferences.receiveNotifications !== this.state.receiveNotifications
+    ) {
+      this.handleSave()
+    }
+    else if (
+      prevState.selectedLanguage !== this.state.selectedLanguage
+    ) {
+      this.handleSave(true)
     }
   }
 
