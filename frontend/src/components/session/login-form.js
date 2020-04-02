@@ -87,7 +87,6 @@ class LoginForm extends Component {
           this.props.history.push('/login')
         })
       }
-
     }
   }
 
