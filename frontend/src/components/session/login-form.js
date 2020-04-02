@@ -52,7 +52,7 @@ class LoginForm extends Component {
       name: '',
       email: '',
       password: '',
-      confirnPassword: '',
+      confirmPassword: '',
       touched: false
     }
   }
