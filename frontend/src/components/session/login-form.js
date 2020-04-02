@@ -91,7 +91,7 @@ class LoginForm extends Component {
     const { classes } = this.props
     const { type, action } = this.state
     const passwordError = (this.state.password !== this.state.confirmPassword) ? (
-      <div className={classes.margins}>Passwords do not match</div>
+      <div className={ classes.margins }>Passwords do not match</div>
     ) : null
     return (
       <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
