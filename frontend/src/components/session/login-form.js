@@ -193,8 +193,8 @@ class LoginForm extends Component {
               id='confirmPassword'
             />
           </div>
-        )}
-        {(type === 'signup' && this.state.touched) ? passwordError : null }
+        ) }
+        { (type === 'signup' && this.state.touched) ? passwordError : null }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
