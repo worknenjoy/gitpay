@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import withRouter from 'react-router-dom/withRouter'
 import { FormattedMessage } from 'react-intl'
@@ -51,7 +52,8 @@ class LoginForm extends Component {
       action: `${api.API_URL}/authorize/local`,
       name: '',
       email: '',
-      password: ''
+      password: '',
+      confirm_password: ''
     }
   }
 
@@ -72,13 +74,20 @@ class LoginForm extends Component {
   handleSubmit = event => {
     if (this.state.type === 'signup') {
       event.preventDefault()
-      this.props.registerUser({
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password
-      }).then((response) => {
-        this.props.history.push('/login')
-      })
+      const { password, confirmPassword } = this.state
+      if (password !== confirmPassword) {
+        alert('Passwords do not match')
+      }
+      else {
+        this.props.registerUser({
+          name: this.state.name,
+          email: this.state.email,
+          password: this.state.password
+        }).then((response) => {
+          this.props.history.push('/login')
+        })
+      }
+
     }
   }
 
@@ -160,6 +169,32 @@ class LoginForm extends Component {
             id='password'
           />
         </div>
+        { type === 'signup' && (
+          <div className={ classes.margins }>
+            <TextField
+              name='confirm_password'
+              onChange={ this.handleChange('confirmPassword') }
+              fullWidth
+              InputLabelProps={ {
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              } }
+              InputProps={ {
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                },
+              } }
+              type='password'
+              label='Confirm Password'
+              variant='outlined'
+              id='confirmPassword'
+            />
+          </div>
+        ) }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
