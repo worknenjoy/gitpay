@@ -11,6 +11,7 @@ import {
 import purple from '@material-ui/core/colors/purple'
 
 import api from '../../consts'
+import { supportsHistory } from 'history/DOMUtils'
 
 const styles = theme => ({
   cssLabel: {
@@ -53,11 +54,13 @@ class LoginForm extends Component {
       name: '',
       email: '',
       password: '',
-      confirm_password: ''
+      confirnPassword: '',
+      touched: false
     }
   }
 
   handleChange = name => event => {
+    if (name === 'password') this.setState({ touched: true })
     this.setState({ [name]: event.target.value })
   }
 
@@ -75,24 +78,23 @@ class LoginForm extends Component {
     if (this.state.type === 'signup') {
       event.preventDefault()
       const { password, confirmPassword } = this.state
-      if (password !== confirmPassword) {
-        alert('Passwords do not match')
-      }
-      else {
-        this.props.registerUser({
-          name: this.state.name,
-          email: this.state.email,
-          password: this.state.password
-        }).then((response) => {
-          this.props.history.push('/login')
-        })
-      }
+      if (password !== confirmPassword) return
+      this.props.registerUser({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
+      }).then((response) => {
+        this.props.history.push('/login')
+      })
     }
   }
 
   render () {
     const { classes } = this.props
     const { type, action } = this.state
+    const passwordError = (this.state.password !== this.state.confirmPassword) ? (
+      <div className={classes.margins}>Passwords do not match</div>
+    ) : null
     return (
       <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
@@ -193,7 +195,8 @@ class LoginForm extends Component {
               id='confirmPassword'
             />
           </div>
-        ) }
+        )}
+        {(type === 'signup' && this.state.touched) ? passwordError : null }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
