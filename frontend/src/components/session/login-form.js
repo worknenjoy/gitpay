@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import withRouter from 'react-router-dom/withRouter'
 import { FormattedMessage } from 'react-intl'
@@ -11,7 +10,6 @@ import {
 import purple from '@material-ui/core/colors/purple'
 
 import api from '../../consts'
-import { supportsHistory } from 'history/DOMUtils'
 
 const styles = theme => ({
   cssLabel: {
