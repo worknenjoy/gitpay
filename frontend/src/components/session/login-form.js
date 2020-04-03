@@ -58,7 +58,7 @@ class LoginForm extends Component {
   }
 
   handleChange = name => event => {
-    if (name === 'password') this.setState({ touched: true })
+    // if (name === 'password') this.setState({ touched: true })
     this.setState({ [name]: event.target.value })
   }
 
@@ -90,9 +90,6 @@ class LoginForm extends Component {
   render () {
     const { classes } = this.props
     const { type, action } = this.state
-    const passwordError = (this.state.password !== this.state.confirmPassword) ? (
-      <div className={ classes.margins }>Passwords do not match</div>
-    ) : null
     return (
       <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
@@ -171,6 +168,8 @@ class LoginForm extends Component {
         { type === 'signup' && (
           <div className={ classes.margins }>
             <TextField
+              error={this.state.password !== this.state.confirmPassword}
+              helperText={this.state.password !== this.state.confirmPassword ? 'Passwords do not match!' : ''}
               name='confirm_password'
               onChange={ this.handleChange('confirmPassword') }
               fullWidth
@@ -194,7 +193,6 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        { (type === 'signup' && this.state.touched) ? passwordError : null }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
