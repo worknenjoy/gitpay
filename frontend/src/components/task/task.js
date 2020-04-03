@@ -15,6 +15,7 @@ import {
   DialogTitle,
   Grid,
   Avatar,
+  Paper,
   Typography,
   Button,
   Tooltip,
@@ -25,6 +26,8 @@ import {
 import {
   Redeem as RedeemIcon,
   AddBox as AddIcon,
+  Lock as PrivateIcon,
+  LockOpen as PublicIcon,
   FilterList as FilterIcon,
   HowToReg as TrophyIcon,
   DateRange as DateIcon,
@@ -631,6 +634,56 @@ class Task extends Component {
     this.props.fundingInviteTask(this.props.task.data.id, this.state.fundingInvite.email, this.state.fundingInvite.comment, this.state.currentPrice, this.state.interestedSuggestedDate)
     this.handleAssignFundingDialogClose()
   }
+  renderTaskStatusIcons = ({ status, bounty }) => {
+    const IconStyle = {
+      fontSize: 80
+    }
+    const Bounty = () => {
+      if (bounty) {
+        return (
+          <React.Fragment>
+            <RedeemIcon style={ IconStyle } />
+            <Typography
+              style={ {
+                padding: 10,
+                fontWeight: '900',
+                fontSize: 20
+              } }>
+           Bounty
+            </Typography>
+          </React.Fragment>
+        )
+      }
+      else return <div />
+    }
+    const Status = () => {
+      if (status) {
+        return (
+          <React.Fragment>
+            { (status === 'private')
+              ? (<PrivateIcon style={ IconStyle } />)
+              : (<PublicIcon style={ IconStyle } />)
+            }
+            <Typography
+              style={ {
+                padding: 10,
+                fontWeight: '900',
+                fontSize: 20
+              } }>
+              { status }
+            </Typography>
+          </React.Fragment>
+        )
+      }
+      else return <div />
+    }
+    return (
+      <React.Fragment>
+        <Bounty />
+        <Status />
+      </React.Fragment>
+    )
+  }
   rendereAmountStatsCardContent = (isOwner) => {
     return (
       <React.Fragment>
@@ -1002,6 +1055,34 @@ class Task extends Component {
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
+              <Paper
+                style={ { margin: 'auto', width: '95%' } }
+                elevation={ 3 }
+                children={
+                  <React.Fragment>
+                    <Typography type='subheading' variant='caption' style={ {
+                      padding: 10,
+                      color: 'gray',
+                      textAlign: 'center',
+                      fontSize: 30
+                    } }>
+                      Task is
+                    </Typography>
+                    <p style={ {
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    } }>
+                      { this.renderTaskStatusIcons({
+                        status: 'public',
+                        bounty: true
+                      }) }
+                    </p>
+                  </React.Fragment>
+                }
+              />
               { (task.data.level || taskOwner()) &&
                 <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !taskOwner() } onSelect={ this.props.updateTask } />
               }
