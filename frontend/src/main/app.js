@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
@@ -68,6 +68,10 @@ store.dispatch(updateIntl({
 const theme = createMuiTheme(Palette)
 
 function App () {
+  useEffect(() => {
+    document.getElementById('spinner').style.display = 'none'
+    return 
+  }, [])
   return (
     <MuiThemeProvider theme={ theme }>
       <Provider store={ store }>

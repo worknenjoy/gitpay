@@ -11,8 +11,37 @@
 		<script src="https://js.stripe.com/v3/"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 		<link rel='shortcut icon' type='image/x-icon' href='favicon-gitpay.ico' />
+
+		<style>
+			.spinner {
+  border: 16px solid #f3f3f3;
+  
+  margin: 50vh 50vw;
+  text-align: center;
+  border-radius: 50%;
+  border-top: 16px solid #009688;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+		</style>
 	</head>
 	<body>
+		<div class="spinner" id="spinner">
+
+		</div>
 		<div id="app">
 		</div>
 	</body>
