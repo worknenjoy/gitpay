@@ -8,7 +8,7 @@
 
 ## Issue
 
-> #000
+> Closes #000
 
 ## Impacted Area
 
