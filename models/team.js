@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Team = sequelize.define('Team', {
     teamname: DataTypes.STRING,
-    members : [{
+    members : [ {
       member: {
         type: DataTypes.INTEGER,
         references:{
@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
         }
       }
-    }],
-    
+    } ], 
   }, {
     classMethods: {
       associate: (models) => {
