@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import {
   Redeem as RedeemIcon,
   Lock as PrivateIcon,
@@ -35,7 +36,7 @@ const TaskStatusIcons = ({ status, bounty }) => {
           <RedeemIcon style={ styles.IconStyle } />
           <Typography
             style={ styles.fontStyle }>
-              Bounty
+            <FormattedMessage id='task.bounty.icon.text' defaultMessage='Bounty' />
           </Typography>
         </React.Fragment>
       )
@@ -43,6 +44,10 @@ const TaskStatusIcons = ({ status, bounty }) => {
     else return <div />
   }
   const Status = () => {
+    const Status = (status === 'private') ? 'Private' : 'Public'
+    function FormattedMessageFixed (props) {
+      return <FormattedMessage { ...props } />
+    }
     if (status) {
       return (
         <React.Fragment>
@@ -52,7 +57,7 @@ const TaskStatusIcons = ({ status, bounty }) => {
           }
           <Typography
             style={ styles.fontStyle }>
-            { (status === 'private') ? 'Private' : 'Public' }
+            <FormattedMessageFixed id='task.status.icon.text' defaultMessage={ Status } />
           </Typography>
         </React.Fragment>
       )
@@ -72,7 +77,7 @@ const TaskStatusIcons = ({ status, bounty }) => {
               textAlign: 'center',
               fontSize: 30
             } }>
-                      Task is
+              <FormattedMessage id='task.text.task_is' defaultMessage='Task is' />
             </Typography>
             <p style={ {
               textAlign: 'center',
