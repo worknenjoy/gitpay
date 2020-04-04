@@ -1,24 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
   const Team = sequelize.define('Team', {
     teamname: DataTypes.STRING,
-    members : [ {
+    members: [{
       member: {
         type: DataTypes.INTEGER,
-        references:{
+        references: {
           model: 'User',
           key: 'id'
         }
       }
-    } ], 
+    }]
   }, {
     classMethods: {
       associate: (models) => {
-        Team.hasMany(models.User, {foreignKey: 'userId'})
+        Team.hasMany(models.User, { foreignKey: 'userId' })
       }
     },
     instanceMethods: {
 
     }
   })
-  return Team;
+  return Team
 }
