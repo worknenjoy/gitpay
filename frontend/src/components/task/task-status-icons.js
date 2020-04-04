@@ -13,7 +13,7 @@ import {
 
 const styles = {
   IconStyle: {
-    fontSize: 48
+    fontSize: 24
   },
   fontStyle: {
     fontWeight: '900',
