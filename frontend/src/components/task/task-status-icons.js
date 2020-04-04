@@ -44,10 +44,6 @@ const TaskStatusIcons = ({ status, bounty }) => {
     else return <div />
   }
   const Status = () => {
-    const Status = (status === 'private') ? 'Private' : 'Public'
-    function FormattedMessageFixed (props) {
-      return <FormattedMessage { ...props } />
-    }
     if (status) {
       return (
         <React.Fragment>
@@ -57,7 +53,9 @@ const TaskStatusIcons = ({ status, bounty }) => {
           }
           <Typography
             style={ styles.fontStyle }>
-            <FormattedMessageFixed id='task.status.icon.text' defaultMessage={ Status } />
+            { (status === 'private') ? <FormattedMessage id='task.private.icon.text' defaultMessage='Private' />
+              : <FormattedMessage id='task.public.icon.text' defaultMessage='Public' />
+            }
           </Typography>
         </React.Fragment>
       )
