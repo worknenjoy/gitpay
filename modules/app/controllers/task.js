@@ -100,8 +100,8 @@ exports.inviteToFundingTask = ({ params, body }, res) => Tasks
   })
 
 // message functions
-exports.messageInterestedToTask = ({ params, body }, res) => Tasks
-  .taskMessage(params, body)
+exports.messageInterestedToTask = ({ params, body, user }, res) => Tasks
+  .taskMessage(params, body, user)
   .then(data => res.send(data))
   .catch(error => {
     // eslint-disable-next-line no-console
