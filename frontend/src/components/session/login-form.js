@@ -169,7 +169,7 @@ class LoginForm extends Component {
           <div className={ classes.margins }>
             <TextField
               error={ this.state.password !== this.state.confirmPassword }
-              helperText={ this.state.password !== this.state.confirmPassword ? 'Passwords do not match!' : '' }
+              helperText={ this.state.password !== this.state.confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : '' }
               name='confirm_password'
               onChange={ this.handleChange('confirmPassword') }
               fullWidth

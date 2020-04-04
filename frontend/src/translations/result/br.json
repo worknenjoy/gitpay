@@ -420,6 +420,7 @@
   "welcome.how.workflow.main.title": "Como trabalhar",
   "welcome.how.workflow.contrib.title": "Para contribuidores",
   "payment.options.warning.message": "Ativando sua conta você irá receber pagamentos por transferência direta. Se o país onde você possui conta não estiver na lista, você pode ativar sua conta usando o Paypal. No entanto, com o Paypal, as taxas dele serão aplicadas.",
+  "user.confirm.password.error": "As senhas não coincidem",
   "user.exist": "Este ursuário já existe, favor logar com sua conta",
   "user.invalid": "E-mail e / ou senha inválidos, por favor tentar novamente",
   "user.login.successfull": "Você logou na sua conta com sucesso",
