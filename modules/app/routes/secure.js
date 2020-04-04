@@ -18,7 +18,8 @@ module.exports = (req, res, next) => {
 
       req.decoded = decoded
       req.user = await userExists(decoded).catch(next)
-
+      // this will be the sender on emails
+      req.body.sender = req.user
       next()
     })
   }
