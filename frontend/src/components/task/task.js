@@ -7,6 +7,7 @@ import { messages } from './messages/task-messages'
 import TaskTabs from './task-tabs'
 import TaskHeader from './task-header'
 import TaskAssignment from './task-assignment'
+import TaskStatusIcons from './task-status-icons'
 
 import {
   Dialog,
@@ -1002,6 +1003,7 @@ class Task extends Component {
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
+              <TaskStatusIcons status={ 'public' } bounty />
               { (task.data.level || taskOwner()) &&
                 <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !taskOwner() } onSelect={ this.props.updateTask } />
               }
