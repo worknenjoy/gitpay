@@ -883,6 +883,7 @@ class Task extends Component {
                 <TaskInvite
                   id={ task.data.id }
                   onInvite={ this.props.inviteTask }
+                  user={ this.props.user }
                   visible={ this.state.taskInviteDialog }
                   onClose={ () => this.setState({ taskInviteDialog: false }) }
                   onOpen={ () => this.setState({ taskInviteDialog: true }) }
