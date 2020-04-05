@@ -134,7 +134,7 @@
   "task.bounty.icon.text": "Bounty",
   "task.private.icon.text": "Private",
   "task.public.icon.text": "Public",
-  "task.text.task_is": "Task is",
+  "task.text.type.headline": "This issue is a",
   "account.dialog.status": "Status da tarefa",
   "task.status.deadline.subheading": "Escolha a data máxima para entrega da tarefa",
   "task.status.deadline.day.label": "Dia",
