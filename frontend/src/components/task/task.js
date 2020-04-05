@@ -305,14 +305,17 @@ const styles = theme => ({
     margin: 0
   },
   planButton: {
-    display: 'flex', alignItems: 'center', justifyContent: 'center'
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   checkIcon: {
     paddingRight: theme.spacing.unit,
     fontSize: 20
   },
   planIcon: {
-    fontSize: 100
+    fontSize: 64,
+    padding: 20
   },
   planFinalPrice: {
     paddingTop: theme.spacing.unit,

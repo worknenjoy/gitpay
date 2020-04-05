@@ -13,12 +13,13 @@ import {
 
 const styles = {
   IconStyle: {
-    fontSize: 24
+    fontSize: 24,
+    marginRight: 5
   },
   fontStyle: {
     fontWeight: '900',
-    fontSize: 20,
-    marginBottom: 30
+    fontSize: 16,
+    marginRight: 20
   }
 }
 
@@ -69,18 +70,17 @@ const TaskStatusIcons = ({ status, bounty }) => {
         elevation={ 0 }
         children={
           <React.Fragment>
-            <Typography type='subheading' variant='caption' style={ {
+            <Typography type='subheading' variant='h6' style={ {
               padding: 10,
               color: 'gray',
-              textAlign: 'center',
-              fontSize: 30
+              textAlign: 'center'
             } }>
-              <FormattedMessage id='task.text.task_is' defaultMessage='Task is' />
+              <FormattedMessage id='task.text.type.headline' defaultMessage='This issue is a' />
             </Typography>
             <p style={ {
               textAlign: 'center',
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center'
             } }>

@@ -134,7 +134,7 @@
   "task.bounty.icon.text":"Bounty",
   "task.private.icon.text":"Private",
   "task.public.icon.text":"Public",
-  "task.text.task_is":"Task is",
+  "task.text.type.headline":"This issue is a",
   "account.dialog.status": "Task status",
   "task.status.deadline.subheading": "Choose a deadline for this task",
   "task.status.deadline.day.label": "Day",
