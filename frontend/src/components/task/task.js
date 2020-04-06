@@ -642,32 +642,32 @@ class Task extends Component {
           { this.props.task.values.available === 0 ? this.props.intl.formatMessage(messages.taskValueLabelNoBounty) : `$ ${this.props.task.values.available}` }
         </div>
         { this.props.task.values.available === 0 &&
-          <Button
-            onClick={ this.handlePaymentForm }
-            size='small'
-            color='primary'
-            variant='raised'
-            className={ this.props.classes.cardButton }
-          >
-            <span className={ this.props.classes.spaceRight }>
-              <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
-            </span>{ ' ' }
-            <RedeemIcon />
-          </Button>
+        <Button
+          onClick={ this.handlePaymentForm }
+          size='small'
+          color='primary'
+          variant='raised'
+          className={ this.props.classes.cardButton }
+        >
+          <span className={ this.props.classes.spaceRight }>
+            <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
+          </span>{ ' ' }
+          <RedeemIcon />
+        </Button>
         }
         { !isOwner &&
-          <Button
-            onClick={ this.handleAssignDialogOpen }
-            size='small'
-            color='primary'
-            variant='raised'
-            className={ this.props.classes.cardButton }
-          >
-            <span className={ this.props.classes.spaceRight }>
-              <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
-            </span>{ ' ' }
-            <MonetizationOnIcon />
-          </Button>
+        <Button
+          onClick={ this.handleAssignDialogOpen }
+          size='small'
+          color='primary'
+          variant='raised'
+          className={ this.props.classes.cardButton }
+        >
+          <span className={ this.props.classes.spaceRight }>
+            <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
+          </span>{ ' ' }
+          <MonetizationOnIcon />
+        </Button>
         }
       </React.Fragment>
     )
@@ -688,7 +688,14 @@ class Task extends Component {
     const isAssignOwner = () => {
       return taskOwner() || isCurrentUserAssigned()
     }
-
+    // Error handling if task does not exist
+    if (task.completed && !task.values) {
+      this.props.history.push('/404')
+      return null
+    }
+    if (!task.completed) {
+      return (<div />)
+    }
     // const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A') : 'not available'
     const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().fromNow() : 'not available'
     const timePlaceholder = (

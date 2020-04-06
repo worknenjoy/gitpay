@@ -28,7 +28,7 @@ export default () => {
          404 Page not Found
         </p>
       </div>
-      <p style={ { fontSize: 25 } }>You may want to visit below pages</p>
+      <p style={ { fontSize: 25 } }>You can go to Home page</p>
       <div style={ {
         fontSize: 20,
         display: 'flex',
@@ -36,8 +36,6 @@ export default () => {
         justifyContent: 'space-between'
       } }>
         <p><Link href='/'>Home</Link></p>
-        <p><Link href='#/tasks/all'>Tasks</Link></p>
-        <p><Link href='#/login'>Login</Link></p>
       </div>
     </div>
   )
