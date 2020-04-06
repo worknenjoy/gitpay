@@ -688,7 +688,7 @@ class Task extends Component {
     const isAssignOwner = () => {
       return taskOwner() || isCurrentUserAssigned()
     }
-    // Error handling if task does not exist
+    // Error handling when task does not exist
     if (task.completed && !task.values) {
       this.props.history.push('/404')
       return null
