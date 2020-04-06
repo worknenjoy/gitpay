@@ -96,7 +96,7 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
   }
 })
 
-module.exports = Promise.method(function taskUpdate (taskParameters) {
+module.exports = Promise.method(function taskUpdate(taskParameters) {
   return models.Task
     .update(taskParameters, {
       where: {
@@ -108,7 +108,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
       if (!data) {
         return new Error('task_updated_failed')
       }
-      return models.Task.findById(taskParameters.id, { include: [ models.User, models.Order, models.Assign, models.Member ] })
+      return models.Task.findById(taskParameters.id, { include: [models.User, models.Order, models.Assign, models.Member] })
         .then((task) => {
           if (!task) {
             return new Error('task_find_failed')
@@ -158,23 +158,27 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                 return task.createAssign(taskParameters.Assigns[0])
               }
             }).then(assign => {
-                return offerExists({
-                  userId: taskParameters.Offers[0].userId,
-                  taskId: taskParameters.id
-                }).then(resp => {
-                  if (!resp) {
-                    return task.createOffer(taskParameters.Offers[0]).then(offer => {
-                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
-                    })
-                  }
-                  else {
-                    return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
-                      taskId: taskParameters.id } }).then(update => {
-                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
-                    })
-                  }
-                })
+              return offerExists({
+                userId: taskParameters.Offers[0].userId,
+                taskId: taskParameters.id
+              }).then(resp => {
+                if (!resp) {
+                  return task.createOffer(taskParameters.Offers[0]).then(offer => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                  })
+                }
+                else {
+                  return models.Offer.update(taskParameters.Offers[0], {
+                    where: {
+                      userId: taskParameters.Offers[0].userId,
+                      taskId: taskParameters.id
+                    }
+                  }).then(update => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                  })
+                }
               })
+            })
           }
 
           if (taskParameters.Members) {
@@ -189,8 +193,12 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                 })
               }
               else {
-                return models.Member.update(taskParameters.Members[0], { where: { userId: taskParameters.Members[0].userId,
-                  taskId: taskParameters.id } }).then(update => {
+                return models.Member.update(taskParameters.Members[0], {
+                  where: {
+                    userId: taskParameters.Members[0].userId,
+                    taskId: taskParameters.id
+                  }
+                }).then(update => {
                   return task.dataValues
                 })
               }
