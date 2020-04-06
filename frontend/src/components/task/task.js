@@ -632,7 +632,7 @@ class Task extends Component {
 
   sendFundingInvite = (e) => {
     e.preventDefault()
-    this.props.fundingInviteTask(this.props.task.data.id, this.state.fundingInvite.email, this.state.fundingInvite.comment, this.state.currentPrice, this.state.interestedSuggestedDate)
+    this.props.fundingInviteTask(this.props.task.data.id, this.state.fundingInvite.email, this.state.fundingInvite.comment, this.state.currentPrice, this.state.interestedSuggestedDate, this.props.user)
     this.handleAssignFundingDialogClose()
   }
   rendereAmountStatsCardContent = (isOwner) => {
