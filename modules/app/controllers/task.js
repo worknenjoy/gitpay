@@ -99,7 +99,7 @@ exports.inviteToFundingTask = ({ params, body }, res) => Tasks
     res.send({ error: error.message })
   })
 
-// message functions
+// message to interest users
 exports.messageInterestedToTask = ({ params, body, user }, res) => Tasks
   .taskMessage(params, body, user)
   .then(data => res.send(data))
