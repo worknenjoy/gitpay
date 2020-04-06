@@ -154,7 +154,10 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               userId: taskParameters.Assigns[0].userId,
               taskId: taskParameters.id
             }).then(existingAssign => {
-              return task.createAssign(taskParameters.Assigns[0]).then(assign => {
+              if(!existingAssign){
+                return task.createAssign(taskParameters.Assigns[0])
+              }
+            }).then(assign => {
                 return offerExists({
                   userId: taskParameters.Offers[0].userId,
                   taskId: taskParameters.id
@@ -172,7 +175,6 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                   }
                 })
               })
-            })
           }
 
           if (taskParameters.Members) {
