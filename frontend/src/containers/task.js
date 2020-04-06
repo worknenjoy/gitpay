@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     messageTask: (taskId, assignId, message) => dispatch(messageTask(taskId, assignId, message)),
     removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
     inviteTask: (id, email, message, user) => dispatch(inviteTask(id, email, message, user)),
-    fundingInviteTask: (id, email, message, suggestedPrice, suggestedDate) => dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate)),
+    fundingInviteTask: (id, email, message, suggestedPrice, suggestedDate, user) => dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate, user)),
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
     syncTask: (taskId) => dispatch(syncTask(taskId)),
     paymentTask: (taskId, value) => dispatch(paymentTask(taskId, value)),
