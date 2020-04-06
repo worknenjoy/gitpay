@@ -420,7 +420,6 @@
   "welcome.how.workflow.main.title": "Workflow",
   "welcome.how.workflow.contrib.title": "For contributors",
   "payment.options.warning.message": "When you activate your bank account you will receive transfers directly. If the country that you have a bank account in is not on the list, it is possible to activate your account with PayPal.",
-  "user.confirm.password.error": "Passwords do not match",
   "user.exist": "This user already exist. Please log in",
   "user.invalid": "Invalid e-mail and/or password. Please try again",
   "user.login.successfull": "You logged in",
