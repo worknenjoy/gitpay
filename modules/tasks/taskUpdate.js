@@ -154,7 +154,7 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               userId: taskParameters.Assigns[0].userId,
               taskId: taskParameters.id
             }).then(existingAssign => {
-              if(!existingAssign){
+              if (!existingAssign) {
                 return task.createAssign(taskParameters.Assigns[0])
               }
             }).then(assign => {
