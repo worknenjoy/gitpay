@@ -51,11 +51,14 @@ class LoginForm extends Component {
       action: `${api.API_URL}/authorize/local`,
       name: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: '',
+      touched: false
     }
   }
 
   handleChange = name => event => {
+    // if (name === 'password') this.setState({ touched: true })
     this.setState({ [name]: event.target.value })
   }
 
@@ -72,6 +75,8 @@ class LoginForm extends Component {
   handleSubmit = event => {
     if (this.state.type === 'signup') {
       event.preventDefault()
+      const { password, confirmPassword } = this.state
+      if (password !== confirmPassword) return
       this.props.registerUser({
         name: this.state.name,
         email: this.state.email,
@@ -160,6 +165,34 @@ class LoginForm extends Component {
             id='password'
           />
         </div>
+        { type === 'signup' && (
+          <div className={ classes.margins }>
+            <TextField
+              error={ this.state.password !== this.state.confirmPassword }
+              helperText={ this.state.password !== this.state.confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : '' }
+              name='confirm_password'
+              onChange={ this.handleChange('confirmPassword') }
+              fullWidth
+              InputLabelProps={ {
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              } }
+              InputProps={ {
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                },
+              } }
+              type='password'
+              label='Confirm Password'
+              variant='outlined'
+              id='confirmPassword'
+            />
+          </div>
+        ) }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>

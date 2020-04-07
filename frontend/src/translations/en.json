@@ -430,6 +430,7 @@
   "welcome.how.workflow.main.title": "Workflow",
   "welcome.how.workflow.contrib.title": "For contributors",
   "payment.options.warning.message": "For now we only support bank accounts in Brazil. But it is possible to activate your account with Paypal instead.",
+  "user.confirm.password.error": "Passwords do not match",
   "user.exist": "This user already exist. Please login",
   "user.invalid": "Invalid e-mail and / or password, please try again",
   "user.login.successfull": "You successfully logged in",
