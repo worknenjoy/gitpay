@@ -154,23 +154,25 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
               userId: taskParameters.Assigns[0].userId,
               taskId: taskParameters.id
             }).then(existingAssign => {
-              return task.createAssign(taskParameters.Assigns[0]).then(assign => {
-                return offerExists({
-                  userId: taskParameters.Offers[0].userId,
-                  taskId: taskParameters.id
-                }).then(resp => {
-                  if (!resp) {
-                    return task.createOffer(taskParameters.Offers[0]).then(offer => {
-                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
-                    })
-                  }
-                  else {
-                    return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
-                      taskId: taskParameters.id } }).then(update => {
-                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
-                    })
-                  }
-                })
+              if(!existingAssign){
+                return task.createAssign(taskParameters.Assigns[0])
+              }
+            }).then(assign => {
+              return offerExists({
+                userId: taskParameters.Offers[0].userId,
+                taskId: taskParameters.id
+              }).then(resp => {
+                if (!resp) {
+                  return task.createOffer(taskParameters.Offers[0]).then(offer => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                  })
+                }
+                else {
+                  return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
+                    taskId: taskParameters.id } }).then(update => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                  })
+                }
               })
             })
           }
