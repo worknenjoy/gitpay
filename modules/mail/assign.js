@@ -42,12 +42,13 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.assign.owner.hello')},</p>
-          <p>${i18n.__('mail.assign.owner.main', { email: interested.email, name: interested.name || interested.username,  title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.assign.owner.main', { email: interested.email, name: interested.name || interested.username, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.assign.owner.suggest', { value: offer.value, suggestedDate: offer.suggestedDate ? offer.suggestedDate : i18n.__('mail.assigned.nodate'), learn: offer.learn ? i18n.__('mail.statement.yes') : i18n.__('mail.statement.no'), comment: offer.comment ? offer.comment : i18n.__('mail.offer.nocomment') })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
           ${Signatures.buttons(language, {
     primary: {
       label: 'mail.assign.owner.button.primary',
+      title: task.title, 
       url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested`
     },
     secondary: {
