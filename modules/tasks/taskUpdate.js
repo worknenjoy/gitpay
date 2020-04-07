@@ -173,7 +173,8 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                     }
                   })
                 })
-              }else{
+              }
+              else {
                 return offerExists({
                   userId: taskParameters.Offers[0].userId,
                   taskId: taskParameters.id
