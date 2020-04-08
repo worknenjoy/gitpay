@@ -4,7 +4,7 @@ const models = require('../../models')
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 
-module.exports = Promise.method(function ({ id }, { comment, email, suggestedValue, suggestedDate }) {
+module.exports = Promise.method(function ({ id }, { comment, email, suggestedValue, suggestedDate, username }) {
   return models.Task
     .findById(id, { include: [ models.User, models.Order, models.Assign ] })
     .then(task => {
@@ -14,13 +14,13 @@ module.exports = Promise.method(function ({ id }, { comment, email, suggestedVal
       i18n.setLocale(language)
       SendMail.success(
         { email, language },
-        i18n.__('mail.funding.send.action'),
+        i18n.__('mail.funding.send.action', { username: username }),
         `${i18n.__('mail.funding.send.message', {
           title: task.title,
           url: taskUrl,
           suggestedValue: suggestedValue,
           message: comment,
-          username: user.name,
+          username: username,
           suggestedDate: suggestedDate
         })}
         `

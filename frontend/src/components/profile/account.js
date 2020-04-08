@@ -419,6 +419,7 @@ class Account extends Component {
                               <div>
                                 { account.data.requirements.currently_due.map(
                                   (item, i) => (
+                                    Const.ACCOUNT_FIELDS[item] &&
                                     <Chip
                                       style={ { margin: 3 } }
                                       key={ i }

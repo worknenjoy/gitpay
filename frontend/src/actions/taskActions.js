@@ -436,12 +436,13 @@ const paymentTask = (taskId, value) => {
   }
 }
 
-const inviteTask = (id, email, message) => {
+const inviteTask = (id, email, message, user) => {
   return dispatch => {
+    const name = user.name
     dispatch(inviteTaskRequested())
     axios
       .post(api.API_URL + `/tasks/${id}/invite/`, {
-        email, message
+        email, message, name
       })
       .then(task => {
         if (task.status === 200) {
@@ -470,12 +471,13 @@ const inviteTask = (id, email, message) => {
   }
 }
 
-const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate) => {
+const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
   return dispatch => {
+    const username = user.name
     dispatch(fundingInviteTaskRequested())
     axios
       .post(api.API_URL + `/tasks/${id}/funding/`, {
-        email, comment, suggestedValue, suggestedDate
+        email, comment, suggestedValue, suggestedDate, username
       })
       .then(task => {
         if (task.status === 200) {
