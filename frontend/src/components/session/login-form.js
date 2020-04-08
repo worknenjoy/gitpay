@@ -53,12 +53,15 @@ class LoginForm extends Component {
       email: '',
       password: '',
       confirmPassword: '',
-      touched: false
+      validating: false
     }
   }
 
+  handleBlur = () => {
+    this.setState({ validating: true })
+  }
+
   handleChange = name => event => {
-    // if (name === 'password') this.setState({ touched: true })
     this.setState({ [name]: event.target.value })
   }
 
@@ -90,6 +93,7 @@ class LoginForm extends Component {
   render () {
     const { classes } = this.props
     const { type, action } = this.state
+    const { validating, password, confirmPassword } = this.state
     return (
       <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
@@ -168,10 +172,11 @@ class LoginForm extends Component {
         { type === 'signup' && (
           <div className={ classes.margins }>
             <TextField
-              error={ this.state.password !== this.state.confirmPassword }
-              helperText={ this.state.password !== this.state.confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : '' }
+              error={ validating && password !== confirmPassword }
+              helperText={ validating && password !== confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : '' }
               name='confirm_password'
               onChange={ this.handleChange('confirmPassword') }
+              onBlur={ this.handleBlur }
               fullWidth
               InputLabelProps={ {
                 classes: {
