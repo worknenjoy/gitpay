@@ -41,7 +41,7 @@ if (constants.canSendEmail) {
           value: `
           <p>Olá ${i18n.__('mail.hello', { name: name })}</p>
           ${i18n.__('mail.assigned.update.intro', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
-          ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -60,8 +60,8 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>Olá ${i18n.__('mail.hello', { name: name })}</p>
-          ${i18n.__('mail.assigned.update.intro', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
-          ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+${i18n.__('mail.assigned.update.intro', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
+${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
           <p>${Signatures.sign(language)}</p>`
         }
       ]
@@ -80,8 +80,8 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>Olá ${i18n.__('mail.hello', { name: name })}</p>
-          ${i18n.__('mail.deadline.remember.intro', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
-          ${i18n.__('mail.deadline.remember.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+${i18n.__('mail.deadline.remember.intro', { url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
+${i18n.__('mail.deadline.remember.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
           <p>${Signatures.sign(language)}</p>`
         }
       ]
@@ -104,9 +104,9 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.deadline.end.hello', { name: name })}</p>
-          ${i18n.__('mail.deadline.end.intro', { url, title: task.title })}
-          ${i18n.__('mail.deadline.end.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
-          ${Signatures.buttons(language, {
+${i18n.__('mail.deadline.end.intro', { url, title: task.title })}
+${i18n.__('mail.deadline.end.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+${Signatures.buttons(language, {
     primary: {
       label: 'mail.deadline.end.button.primary',
       url: urlInterested
@@ -138,9 +138,9 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.deadline.end.owner.hello', { name: name })}</p>
-          ${i18n.__('mail.deadline.end.owner.intro', { url, title: task.title })}
-          ${i18n.__('mail.deadline.end.owner.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
-          ${Signatures.buttons(language, {
+${i18n.__('mail.deadline.end.owner.intro', { url, title: task.title })}
+${i18n.__('mail.deadline.end.owner.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+${Signatures.buttons(language, {
     primary: {
       label: 'mail.deadline.end.owner.button.primary',
       url: urlInterested
