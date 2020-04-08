@@ -213,7 +213,7 @@ ${i18n.__('mail.messageInterested.message', { message })}
   }
 }
 
-function determineCalendarLink (task) {
+const determineCalendarLink = (task) => {
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(`Deadline for Gitpay bounty: ${task.title}`)}&dates=${moment(task.deadline).format('YYYYMMDD')}/${moment(task.deadline).add(1, 'days').format('YYYYMMDD')}&details=${task.url}&trp=true`
 }
 
