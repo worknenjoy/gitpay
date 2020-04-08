@@ -1,6 +1,7 @@
 import React from 'react'
 import { Block } from '@material-ui/icons'
 import { Link } from '@material-ui/core'
+import { FormattedMessage } from 'react-intl'
 
 export default () => {
   return (
@@ -25,17 +26,23 @@ export default () => {
         <p style={ {
           fontSize: 40,
         } }>
-         404 Page not Found
+          <FormattedMessage id='page.404.message' defaultMessage='404 Page Not Found' />
         </p>
       </div>
-      <p style={ { fontSize: 25 } }>You can go to Home page</p>
+      <p style={ { fontSize: 25 } }>
+        <FormattedMessage id='page.404.goto' defaultMessage='You can go to Home Page' />
+      </p>
       <div style={ {
         fontSize: 20,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
       } }>
-        <p><Link href='/'>Home</Link></p>
+        <p>
+          <Link href='/'>
+            <FormattedMessage id='page.404.link.home' defaultMessage='Home' />
+          </Link>
+        </p>
       </div>
     </div>
   )
