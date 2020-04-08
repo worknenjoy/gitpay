@@ -190,7 +190,7 @@ ${Signatures.buttons(language, {
           value: `
            <p>${i18n.__('mail.hello', { name: name })}</p>
            <p>${i18n.__('mail.messageInterested.intro', { name: senderName, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-           ${i18n.__('mail.messageInterested.message', { message })}
+${i18n.__('mail.messageInterested.message', { message })}
            <p>${Signatures.sign(language)}</p>`
 
         }
