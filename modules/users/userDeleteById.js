@@ -1,13 +1,10 @@
-const Promise = require('bluebird')
 const models = require('../../models')
-const db = require('../../models/index');
+const db = require('../../models/index')
 const { taskDeleteById } = require('../tasks/index')
 
 const userDeleteById = async (userParameters) => {
   try {
-
     return await db.sequelize.transaction(async (t) => {
-
       const tasks = await models.Task.findAll({
         where: {
           userId: userParameters.id
@@ -21,7 +18,7 @@ const userDeleteById = async (userParameters) => {
         }, { transaction: t })
       }
 
-      await models.Assign.destroy({ where: { userId: userParameters.id } }, { transaction: t }),
+      await models.Assign.destroy({ where: { userId: userParameters.id } }, { transaction: t })
       await models.Offer.destroy({ where: { userId: userParameters.id } }, { transaction: t })
 
       const user = await models.User.destroy({
@@ -33,13 +30,11 @@ const userDeleteById = async (userParameters) => {
       // eslint-disable-next-line no-console
       console.log('destroy', user)
 
-      return user;
-
-    });
-
-  } catch (err) {
-
+      return user
+    })
+  }
+  catch (err) {
   }
 }
 
-module.exports = userDeleteById;
+module.exports = userDeleteById

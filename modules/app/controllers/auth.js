@@ -181,9 +181,9 @@ exports.deleteUserById = (req, res) => {
   user.userDeleteById(params)
     .then((deleted) => {
       res.status(200).send(`${deleted}`)
-      console.log("ok")
     }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
       res.status(400).send(error)
-      console.log("erro")
     })
 }
