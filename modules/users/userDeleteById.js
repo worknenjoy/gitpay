@@ -1,41 +1,44 @@
 const Promise = require('bluebird')
 const models = require('../../models')
+const db = require('../../models/index');
 const { taskDeleteById } = require('../tasks/index')
 
 const userDeleteById = async (userParameters) => {
   try {
 
-    const tasks = await models.Task.findAll({
-      where: {
-        userId: userParameters.id
-      }
-    })
+    return await db.sequelize.transaction(async (t) => {
 
-    for (const task of tasks) {
-      await taskDeleteById({
-        id: task.dataValues.id,
-        userId: userParameters.id
+      const tasks = await models.Task.findAll({
+        where: {
+          userId: userParameters.id
+        }
       })
-    }
 
-    await models.Assign.destroy({ where: { userId: userParameters.id } }),
-    await models.Offer.destroy({ where: { userId: userParameters.id } })
-
-    // eslint-disable-next-line no-console
-    // console.log('result from delete dependencies', result)
-    const user = await models.User.destroy({
-      where: {
-        id: userParameters.id
+      for (const task of tasks) {
+        await taskDeleteById({
+          id: task.dataValues.id,
+          userId: userParameters.id
+        }, { transaction: t })
       }
-    })
 
-    // eslint-disable-next-line no-console
-    console.log('destroy', user)
+      await models.Assign.destroy({ where: { userId: userParameters.id } }, { transaction: t }),
+      await models.Offer.destroy({ where: { userId: userParameters.id } }, { transaction: t })
 
-    return user;
+      const user = await models.User.destroy({
+        where: {
+          id: userParameters.id
+        }
+      }, { transaction: t })
+
+      // eslint-disable-next-line no-console
+      console.log('destroy', user)
+
+      return user;
+
+    });
 
   } catch (err) {
-    
+
   }
 }
 

@@ -892,7 +892,6 @@ class Task extends Component {
                   onClose={ () => this.setState({ taskInviteDialog: false }) }
                   onOpen={ () => this.setState({ taskInviteDialog: true }) }
                 />
-                <button onClick={ () => this.props.test(this.props.user) }>test</button>
                 <Dialog
                   open={ this.state.deleteDialog }
                   onClose={ this.handleDeleteDialogClose }

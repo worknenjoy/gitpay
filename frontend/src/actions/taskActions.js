@@ -471,23 +471,6 @@ const inviteTask = (id, email, message, user) => {
   }
 }
 
-const test = (user) => {
-  return dispatch => {
-    const id = user.id
-    dispatch(inviteTaskRequested())
-    axios
-      .delete(api.API_URL + `/user/delete/${id}`, {
-        id
-      })
-      .then(task => {
-        console.log("sucesso")
-      })
-      .catch(e => {
-        
-      })
-  }
-}
-
 const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
   return dispatch => {
     const username = user.name
@@ -598,6 +581,5 @@ export {
   syncTask,
   inviteTask,
   fundingInviteTask,
-  changeTaskTab,
-  test
+  changeTaskTab
 }
