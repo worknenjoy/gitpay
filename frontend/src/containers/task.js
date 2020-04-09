@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask, removeAssignment, messageTask } from '../actions/assignActions'
-import { updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask } from '../actions/taskActions'
+import { updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, test } from '../actions/taskActions'
 import { createOrder, payOrder, cancelOrder, detailOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 
@@ -39,7 +39,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     createOrder: (order) => dispatch(createOrder(order)),
     filterTaskOrders: (filter) => dispatch(filterTaskOrders(filter)),
     cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
-    getOrderDetails: (id) => dispatch(detailOrder(id))
+    getOrderDetails: (id) => dispatch(detailOrder(id)),
+    test: (user) => dispatch(test(user))
   }
 }
 
