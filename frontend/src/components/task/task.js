@@ -693,9 +693,6 @@ class Task extends Component {
       this.props.history.push('/404')
       return null
     }
-    if (!task.completed) {
-      return (<div />)
-    }
     // const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A') : 'not available'
     const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().fromNow() : 'not available'
     const timePlaceholder = (
