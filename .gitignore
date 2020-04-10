@@ -86,3 +86,5 @@ Thumbs.db
 
 # Configuration of database and password/tokens/idSercure
 .env
+frontend/src/translations/result/br.json
+frontend/src/translations/result/en.json
