@@ -237,22 +237,21 @@ const updateUser = (_, userData) => {
 const deleteUser = (user) => {
   validToken()
   return (dispatch) => {
-    // dispatch(updateUserRequested())
     const id = user.id
     return axios
       .delete(api.API_URL + `/user/delete/${id}`, {})
-      .then(user => {
-        // dispatch(addNotification('notifications.account.update'))
+      .then(result => {
+        dispatch(addNotification('account.profile.settings.delete.user.notification'))
         dispatch(logOut())
-        // return dispatch(updateUserSuccess(user))
+        return result
       })
       .catch(error => {
         dispatch(
-          addNotification('notifications.account.update.error')
+          addNotification('account.profile.settings.delete.user.notification.error')
         )
         // eslint-disable-next-line no-console
-        console.log('error on create account', error)
-        return dispatch(updateUserError(error))
+        console.log('error on delete account', error)
+        return error
       })
   }
 }

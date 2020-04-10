@@ -126,6 +126,8 @@
   "account.profile.settings.delete.user.form.cancel": "Cancel",
   "account.profile.settings.delete.user.form.confirm": "Confirm",
   "account.profile.settings.delete.user.alert": "When you delete, you erase data associated with the user, such as tasks and interests.",
+  "account.profile.settings.delete.user.notification": "The account was successfully deleted",
+  "account.profile.settings.delete.user.notification.error": "We could not delete your account",
   "account.login.connect.form": "Connect or signup with your account",
   "account.login.connect.provider": "You can also connect or signup with your existing account from other services",
   "task.assignment.remove.action": "Remove",
