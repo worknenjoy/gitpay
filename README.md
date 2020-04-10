@@ -13,7 +13,7 @@ https://gitpitch.com/worknenjoy/gitpay
 
 We have a slack channel to collaborate with solutions and to help you, and to be fun
 
-[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU) 
+[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LTk1ZTlhMGJhOGJlOGJhNjgzNTJjM2QxMmNjM2M4Njk0YjllZDBiZDFjZTVlMzBiMzU0NTI3NjE2YWNhNjllOTQ) 
 
 ## What is Gitpay?
 

@@ -104,9 +104,9 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.deadline.end.hello', { name: name })}</p>
-          ${i18n.__('mail.deadline.end.intro', { url, title: task.title })}
-          ${i18n.__('mail.deadline.end.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
-          ${Signatures.buttons(language, {
+${i18n.__('mail.deadline.end.intro', { url, title: task.title })}
+${i18n.__('mail.deadline.end.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+${Signatures.buttons(language, {
     primary: {
       label: 'mail.deadline.end.button.primary',
       url: urlInterested
@@ -138,9 +138,9 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.deadline.end.owner.hello', { name: name })}</p>
-          ${i18n.__('mail.deadline.end.owner.intro', { url, title: task.title })}
-          ${i18n.__('mail.deadline.end.owner.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
-          ${Signatures.buttons(language, {
+${i18n.__('mail.deadline.end.owner.intro', { url, title: task.title })}
+${i18n.__('mail.deadline.end.owner.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
+${Signatures.buttons(language, {
     primary: {
       label: 'mail.deadline.end.owner.button.primary',
       url: urlInterested

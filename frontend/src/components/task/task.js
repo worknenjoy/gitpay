@@ -7,6 +7,7 @@ import { messages } from './messages/task-messages'
 import TaskTabs from './task-tabs'
 import TaskHeader from './task-header'
 import TaskAssignment from './task-assignment'
+import TaskStatusIcons from './task-status-icons'
 
 import {
   Dialog,
@@ -304,14 +305,17 @@ const styles = theme => ({
     margin: 0
   },
   planButton: {
-    display: 'flex', alignItems: 'center', justifyContent: 'center'
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   checkIcon: {
     paddingRight: theme.spacing.unit,
     fontSize: 20
   },
   planIcon: {
-    fontSize: 100
+    fontSize: 64,
+    padding: 20
   },
   planFinalPrice: {
     paddingTop: theme.spacing.unit,
@@ -628,7 +632,7 @@ class Task extends Component {
 
   sendFundingInvite = (e) => {
     e.preventDefault()
-    this.props.fundingInviteTask(this.props.task.data.id, this.state.fundingInvite.email, this.state.fundingInvite.comment, this.state.currentPrice, this.state.interestedSuggestedDate)
+    this.props.fundingInviteTask(this.props.task.data.id, this.state.fundingInvite.email, this.state.fundingInvite.comment, this.state.currentPrice, this.state.interestedSuggestedDate, this.props.user)
     this.handleAssignFundingDialogClose()
   }
   rendereAmountStatsCardContent = (isOwner) => {
@@ -684,7 +688,11 @@ class Task extends Component {
     const isAssignOwner = () => {
       return taskOwner() || isCurrentUserAssigned()
     }
-
+    // Error handling when task does not exist
+    if (task.completed && !task.values) {
+      this.props.history.push('/404')
+      return null
+    }
     // const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().format('hh:mm A') : 'not available'
     const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().fromNow() : 'not available'
     const timePlaceholder = (
@@ -883,6 +891,7 @@ class Task extends Component {
                 <TaskInvite
                   id={ task.data.id }
                   onInvite={ this.props.inviteTask }
+                  user={ this.props.user }
                   visible={ this.state.taskInviteDialog }
                   onClose={ () => this.setState({ taskInviteDialog: false }) }
                   onOpen={ () => this.setState({ taskInviteDialog: true }) }
@@ -1002,6 +1011,7 @@ class Task extends Component {
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
+              <TaskStatusIcons status={ 'public' } bounty />
               { (task.data.level || taskOwner()) &&
                 <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !taskOwner() } onSelect={ this.props.updateTask } />
               }

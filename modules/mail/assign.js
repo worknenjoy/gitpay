@@ -45,7 +45,7 @@ if (constants.canSendEmail) {
           <p>${i18n.__('mail.assign.owner.main', { email: interested.email, name: interested.name || interested.username, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.assign.owner.suggest', { value: offer.value, suggestedDate: offer.suggestedDate ? offer.suggestedDate : i18n.__('mail.assigned.nodate'), learn: offer.learn ? i18n.__('mail.statement.yes') : i18n.__('mail.statement.no'), comment: offer.comment ? offer.comment : i18n.__('mail.offer.nocomment') })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
-          ${Signatures.buttons(language, {
+${Signatures.buttons(language, {
     primary: {
       label: 'mail.assign.owner.button.primary',
       title: task.title, 
@@ -115,8 +115,10 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     const name = user.name || user.username
+
     i18n.setLocale(language)
     setMomentLocale(language)
+
     request(
       to,
       i18n.__('mail.assigned.subject'),
@@ -171,9 +173,9 @@ if (constants.canSendEmail) {
     )
   }
 
-  AssignMail.messageInterested = (user, task, message) => {
-    const taskUserName = task.User.name || task.User.username
-    const taskUserEmail = task.User.email
+  AssignMail.messageInterested = (user, task, message, sender) => {
+    const senderName = sender.name
+    const senderEmail = sender.email
     const to = user.email
     const language = user.language || 'en'
     const name = user.name || user.username
@@ -193,7 +195,7 @@ if (constants.canSendEmail) {
 
         }
       ],
-      taskUserEmail
+      senderEmail
     )
   }
 
@@ -209,6 +211,10 @@ if (constants.canSendEmail) {
       ]
     )
   }
+}
+
+const determineCalendarLink = (task) => {
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(`Deadline for Gitpay bounty: ${task.title}`)}&dates=${moment(task.deadline).format('YYYYMMDD')}/${moment(task.deadline).add(1, 'days').format('YYYYMMDD')}&details=${task.url}&trp=true`
 }
 
 module.exports = AssignMail
