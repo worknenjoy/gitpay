@@ -46,7 +46,7 @@ if (constants.canSendEmail) {
           <p>${i18n.__('mail.assign.owner.suggest', { value: offer.value, suggestedDate: offer.suggestedDate ? offer.suggestedDate : i18n.__('mail.assigned.nodate'), learn: offer.learn ? i18n.__('mail.statement.yes') : i18n.__('mail.statement.no'), comment: offer.comment ? offer.comment : i18n.__('mail.offer.nocomment') })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
 ${Signatures.buttons(language, {
-    primary: {
+    primary: { 
       label: 'mail.assign.owner.button.primary',
       title: task.title, 
       url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested`
@@ -127,14 +127,10 @@ ${Signatures.buttons(language, {
           type: 'text/html',
           value: `
            <p>${i18n.__('mail.hello', { name: name })}</p>
-           <p>${i18n.__('mail.assigned.main', { name: name, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-           ${i18n.__('mail.assigned.message', {
-    deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
+           <p>${i18n.__('mail.assigned.main', { name: name, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p> ${i18n.__('mail.assigned.message', { deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'),
     deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime')
-  })}
-          ${Signatures.buttons(language, {
-    primary: {
-      label: 'mail.assigned.end.owner.button.primary',
+  })} ${Signatures.buttons(language, {
+    primary: { label: 'mail.assigned.end.owner.button.primary',
       url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
     },
     secondary: {
@@ -189,12 +185,9 @@ ${Signatures.buttons(language, {
           type: 'text/html',
           value: `
            <p>${i18n.__('mail.hello', { name: name })}</p>
-           <p>${i18n.__('mail.messageInterested.intro', { name: taskUserName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-           ${i18n.__('mail.messageInterested.message', { message })}
-           <p>${Signatures.sign(language)}</p>`
-
-        }
-      ],
+           <p>${i18n.__('mail.messageInterested.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+           ${i18n.__('mail.messageInterested.message', { message })} <p>${Signatures.sign(language)}</p>`
+        }],
       senderEmail
     )
   }
@@ -211,10 +204,6 @@ ${Signatures.buttons(language, {
       ]
     )
   }
-}
-
-const determineCalendarLink = (task) => {
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(`Deadline for Gitpay bounty: ${task.title}`)}&dates=${moment(task.deadline).format('YYYYMMDD')}/${moment(task.deadline).add(1, 'days').format('YYYYMMDD')}&details=${task.url}&trp=true`
 }
 
 module.exports = AssignMail
