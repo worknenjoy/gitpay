@@ -77,8 +77,7 @@ ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? mom
         {
           type: 'text/html',
           value: `
-          <p>Olá ${i18n.__('mail.hello', { name: name })}</p>
-          ${i18n.__('mail.deadline.remember.intro', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })} ${i18n.__('mail.deadline.remember.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })} <p>${Signatures.sign(language)}</p>`}
+          <p>Olá ${i18n.__('mail.hello', { name: name })}</p> ${i18n.__('mail.deadline.remember.intro', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })} ${i18n.__('mail.deadline.remember.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })} <p>${Signatures.sign(language)}</p>` }
       ]
     )
   }
