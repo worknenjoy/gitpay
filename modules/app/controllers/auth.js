@@ -179,3 +179,15 @@ exports.userBankAccount = (req, res) => {
       res.send(error)
     })
 }
+
+exports.deleteUserById = (req, res) => {
+  const params = { id: req.params.id }
+  user.userDeleteById(params)
+    .then((deleted) => {
+      res.status(200).send(`${deleted}`)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.status(400).send(error)
+    })
+}
