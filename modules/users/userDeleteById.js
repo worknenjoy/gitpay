@@ -15,17 +15,16 @@ const userDeleteById = async (userParameters) => {
         await taskDeleteById({
           id: task.dataValues.id,
           userId: userParameters.id
-        }, { transaction: t })
+        })
       }
 
-      await models.Assign.destroy({ where: { userId: userParameters.id } }, { transaction: t })
-      await models.Offer.destroy({ where: { userId: userParameters.id } }, { transaction: t })
+      await models.Assign.destroy({ where: { userId: userParameters.id }, transaction: t })
+      await models.Offer.destroy({ where: { userId: userParameters.id }, transaction: t })
 
       const user = await models.User.destroy({
         where: {
           id: userParameters.id
-        }
-      }, { transaction: t })
+        }, transaction: t })
 
       // eslint-disable-next-line no-console
       console.log('destroy', user)

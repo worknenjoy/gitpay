@@ -20,10 +20,10 @@ const Container = styled.div`
 
 const styles = theme => ({
   deleteButton: {
-    backgroundColor: '#F52A2A',
-    color: '#E5E5E5',
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.primary.contrastText,
     '&:hover': {
-      backgroundColor: '#F16060'
+      backgroundColor: theme.palette.error.light
     }
   }
 })
