@@ -30,7 +30,8 @@ import {
   Checkbox,
   Link,
   FormControlLabel,
-  DialogContentText
+  DialogContentText,
+  MobileStepper
 } from '@material-ui/core'
 
 import {
@@ -70,6 +71,10 @@ import TaskLevel from './task-level'
 const taskCover = require('../../images/task-cover.png')
 const logoGithub = require('../../images/github-logo-black.png')
 const logoBitbucket = require('../../images/bitbucket-logo-blue.png')
+
+const bounty = require('../../images/bounty.png')
+const sharing = require('../../images/sharing.png')
+const notifications = require('../../images/notifications.png')
 
 const styles = theme => ({
   root: {
@@ -327,7 +332,9 @@ class Task extends Component {
       },
       showSuggestAnotherDateField: false,
       charactersCount: 0,
-      maxWidth: 'md'
+      maxWidth: 'md',
+      isFirstTask: false,
+      firstTaskSteps: 0
     }
   }
 
@@ -387,6 +394,13 @@ class Task extends Component {
       else {
         this.props.history.push({ pathname: '/login', state: { from: { pathname: `/task/${id}/status` } } })
       }
+    }
+    /* eslint-disable no-undef */
+    const hadFirstTask = localStorage.getItem('hadFirstTask')
+    if (!hadFirstTask) {
+      this.setState({ isFirstTask: true })
+      /* eslint-disable no-undef */
+      localStorage.setItem('hadFirstTask', true)
     }
   }
 
@@ -565,6 +579,62 @@ class Task extends Component {
     }
   }
 
+  handleFirstTaskBounties = () => {
+    this.setState({
+      isFirstTask: false,
+      taskPaymentDialog: true
+    })
+  }
+
+  handleFirstTaskNotifications = () => {
+    this.setState({
+      isFirstTask: false,
+      deadlineForm: true
+    })
+  }
+
+  handleFirstTaskContent = () => {
+    const { firstTaskSteps } = this.state
+
+    if (firstTaskSteps === 0) {
+      return {
+        image: bounty,
+        title: <FormattedMessage id='first.task.bounties.title' />,
+        description: (
+          <div>
+            <FormattedMessage id='first.task.bounties.description' />
+            <Button onClick={ this.handleFirstTaskBounties } color='primary' variant='contained' style={ { display: 'block', margin: '20px auto' } }>
+              <FormattedMessage id='first.task.bounties.action' />
+            </Button>
+          </div>
+        )
+      }
+    }
+
+    if (firstTaskSteps === 1) {
+      return {
+        image: notifications,
+        title: <FormattedMessage id='first.task.deadline.title' />,
+        description: (
+          <div>
+            <FormattedMessage id='first.task.deadline.description' />
+            <Button onClick={ this.handleFirstTaskNotifications } color='primary' variant='contained' style={ { display: 'block', margin: '20px auto' } }>
+              <FormattedMessage id='first.task.deadline.action' />
+            </Button>
+          </div>
+        )
+      }
+    }
+
+    if (firstTaskSteps === 2) {
+      return {
+        image: sharing,
+        title: <FormattedMessage id='first.task.community.title' />,
+        description: <FormattedMessage id='first.task.community.description' />
+      }
+    }
+  }
+
   render () {
     const { classes, task, order } = this.props
     const taskOwner = () => {
@@ -592,8 +662,66 @@ class Task extends Component {
     const deliveryDate = task.data.deadline !== null ? MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') : this.props.intl.formatMessage(messages.deliveryDateNotInformed)
     const deadline = task.data.deadline !== null ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days') : false
 
+    const firstStepsContent = this.handleFirstTaskContent()
+
     return (
       <div>
+        <Dialog
+          open={ this.state.isFirstTask }
+          maxWidth='xs'
+          aria-labelledby='form-dialog-title'
+        >
+          <DialogContent>
+            <div style={ { textAlign: 'center' } }>
+              <img
+                src={ firstStepsContent.image }
+                style={ { margin: '20px auto 0' } }
+                width='70%'
+              />
+              <DialogTitle style={ { marginTop: 20 } }>
+                <Fab
+                  size='small'
+                  aria-label='close'
+                  className={ classes.closeButton }
+                  onClick={ () => this.setState({ isFirstTask: false }) }
+                >
+                  <CloseIcon />
+                </Fab>
+
+                <Typography variant='h4'>
+                  { firstStepsContent.title }
+                </Typography>
+              </DialogTitle>
+              <DialogContentText>
+                { firstStepsContent.description }
+              </DialogContentText>
+            </div>
+          </DialogContent>
+          <MobileStepper
+            variant='dots'
+            steps={ 3 }
+            position='static'
+            activeStep={ this.state.firstTaskSteps }
+            nextButton={
+              <Button
+                size='small'
+                onClick={ () => this.setState((prevState) => ({ firstTaskSteps: prevState.firstTaskSteps + 1 })) }
+                disabled={ this.state.firstTaskSteps === 2 }
+              >
+                <FormattedMessage id='first.task.next' />
+              </Button>
+            }
+            backButton={
+              <Button
+                onClick={ () => this.setState((prevState) => ({ firstTaskSteps: prevState.firstTaskSteps - 1 })) }
+                disabled={ this.state.firstTaskSteps === 0 }
+                size='small'
+              >
+                <FormattedMessage id='first.task.back' />
+              </Button>
+            }
+          />
+        </Dialog>
         <TopBarContainer />
         <PageContent>
           <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } />

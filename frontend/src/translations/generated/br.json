@@ -3,9 +3,8 @@
     "loading": ""
   },
   "account": {
-    "status": "",
     "update": "",
-    "details": "",
+    "status": "",
     "activate": "",
     "type": {
       "card": ""
@@ -22,7 +21,27 @@
       "desc": "",
       "title": "",
       "lastName": "",
-      "firstName": ""
+      "firstName": "",
+      "business_profile_url": ""
+    },
+    "details": {
+      "dob": "",
+      "city": "",
+      "state": "",
+      "month": "",
+      "zipcode": "",
+      "complete": "",
+      "birthYear": "",
+      "terms": {
+        "read": "",
+        "access": ""
+      },
+      "numbersOnly": "",
+      "accountNumber": "",
+      "rountingNumber": "",
+      "activate": {
+        "action": ""
+      }
     },
     "bank": {
       "select": "",
@@ -47,6 +66,10 @@
           "headline": ""
         }
       },
+      "org": {
+        "headline": "",
+        "description": ""
+      },
       "payment": {
         "setup": ""
       },
@@ -59,22 +82,25 @@
       "accept": "",
       "accepted": ""
     },
-    "address": {
-      "line2": "",
-      "line1": ""
-    },
-    "login": {
-      "connect": ""
-    },
     "pending": {
       "title": ""
     },
     "dialog": {
       "status": ""
     },
+    "address": {
+      "line1": "",
+      "line2": ""
+    },
     "actions": {
       "update": "",
       "cancel": ""
+    },
+    "id": {
+      "verification": "",
+      "register": {
+        "bank": ""
+      }
     },
     "register": {
       "status": "",
@@ -85,27 +111,38 @@
         "description": ""
       },
       "paypay": {
-        "email": ""
+        "email": "",
+        "update": "",
+        "activate": ""
+      },
+      "country": {
+        "label": ""
       },
       "create": {
-        "action": ""
+        "action": "",
+        "country": ""
       },
       "account": {
         "status": ""
       }
     },
-    "id": {
-      "verification": "",
-      "register": {
-        "bank": ""
+    "banks": {
+      "list": {
+        "title": ""
       }
     },
     "active": {
       "statement": ""
     },
-    "banks": {
-      "list": {
-        "title": ""
+    "login": {
+      "connect": {
+        "form": "",
+        "provider": ""
+      },
+      "label": {
+        "signup": "",
+        "signin": "",
+        "cancel": ""
       }
     },
     "document": {
@@ -117,9 +154,21 @@
   },
   "task": {
     "tab": {
-      "order": "",
       "label": "",
+      "order": "",
+      "offers": "",
+      "history": "",
+      "members": "",
       "interested": ""
+    },
+    "bar": {
+      "slack": "",
+      "signin": ""
+    },
+    "level": {
+      "easy": "",
+      "hard": "",
+      "medium": ""
     },
     "card": {
       "title": "",
@@ -139,20 +188,20 @@
         }
       }
     },
-    "bar": {
-      "signin": ""
-    },
     "status": {
       "info": "",
       "value": "",
       "assigned": "",
       "label": {
         "and": "",
-        "fail": "",
-        "paid": "",
         "open": "",
+        "paid": "",
+        "desc": "",
+        "fail": "",
         "none": "",
+        "title": "",
         "paypal": "",
+        "canceled": "",
         "succeeded": "",
         "creditcard": ""
       },
@@ -163,6 +212,8 @@
         "progress": "",
         "payment": {
           "failed": "",
+          "refunded": "",
+          "canceled": "",
           "succeeded": ""
         }
       },
@@ -171,7 +222,8 @@
       },
       "createdByMe": "",
       "author": {
-        "label": ""
+        "label": "",
+        "missing": ""
       },
       "created": {
         "name": ""
@@ -184,32 +236,15 @@
             "label": ""
           }
         },
+        "subheading": "",
         "set": {
           "target": ""
-        },
-        "subheading": ""
+        }
       },
       "status": {
         "payment": {
           "open": ""
         }
-      }
-    },
-    "actions": {
-      "docs": "",
-      "cancel": "",
-      "choose": "",
-      "create": "",
-      "explore": "",
-      "account": "",
-      "insert": {
-        "new": "",
-        "label": "",
-        "novalid": "",
-        "subheading": ""
-      },
-      "gitpay": {
-        "call": ""
       }
     },
     "bounties": {
@@ -223,7 +258,8 @@
       },
       "actions": {
         "work": "",
-        "cancel": ""
+        "cancel": "",
+        "sugggestAnotherDate": ""
       },
       "status": {
         "change": ""
@@ -231,9 +267,56 @@
       "date": {
         "deadline": ""
       },
+      "delete": {
+        "caution": "",
+        "confirmation": ""
+      },
+      "details": {
+        "paypal": ""
+      },
+      "order": {
+        "details": {
+          "id": "",
+          "title": "",
+          "intent": "",
+          "status": "",
+          "message": "",
+          "created": "",
+          "provider": "",
+          "action": {
+            "cancel": ""
+          },
+          "authorization_id": ""
+        }
+      },
       "interested": {
+        "agree": "",
+        "created": "",
+        "disagree": "",
         "question": "",
-        "descritpion": ""
+        "deadline": "",
+        "termsOfUse": "",
+        "iWillDoFor": "",
+        "iAmStarter": "",
+        "descritpion": "",
+        "deliveryDate": "",
+        "amount": {
+          "value": ""
+        },
+        "comment": {
+          "value": ""
+        },
+        "warningMessage": "",
+        "termsOfUseText": "",
+        "termsOfUseLabel": "",
+        "canSuggestBounty": "",
+        "deliveryDateTitle": "",
+        "deliveryDateSuggest": ""
+      },
+      "cancel": {
+        "paypal": {
+          "caution": ""
+        }
       }
     },
     "invite": {
@@ -245,6 +328,33 @@
       "text": {
         "label": ""
       }
+    },
+    "actions": {
+      "docs": "",
+      "delete": "",
+      "create": "",
+      "choose": "",
+      "cancel": "",
+      "message": "",
+      "explore": "",
+      "account": "",
+      "insert": {
+        "new": "",
+        "label": "",
+        "novalid": "",
+        "subheading": ""
+      },
+      "slack": {
+        "call": ""
+      },
+      "tooltip": {
+        "git": "",
+        "language": ""
+      },
+      "gitpay": {
+        "call": ""
+      },
+      "cancelPayment": ""
     },
     "list": {
       "headline": "",
@@ -281,6 +391,12 @@
       }
     },
     "table": {
+      "page": {
+        "last": "",
+        "next": "",
+        "first": "",
+        "previous": ""
+      },
       "head": {
         "task": "",
         "value": "",
@@ -290,12 +406,6 @@
       },
       "date": {
         "none": ""
-      },
-      "page": {
-        "next": "",
-        "last": "",
-        "first": "",
-        "previous": ""
       },
       "body": {
         "author": {
@@ -322,24 +432,26 @@
       "action": {
         "title": "",
         "close": "",
-        "cancel": "",
-        "chosen": ""
+        "chosen": "",
+        "cancel": ""
       },
       "input": {
         "amount": ""
-      },
-      "paypal": {
-        "action": ""
       },
       "transfer": {
         "done": "",
         "message": ""
       },
+      "paypal": {
+        "action": ""
+      },
       "status": {
         "undefined": ""
       },
-      "creditcard": {
-        "action": ""
+      "user": {
+        "check": {
+          "github": ""
+        }
       },
       "pay": {
         "button": {
@@ -347,13 +459,8 @@
           "paypal": ""
         }
       },
-      "user": {
-        "check": {
-          "github": ""
-        }
-      },
-      "transfers": {
-        "concluded": ""
+      "creditcard": {
+        "action": ""
       },
       "headline": {
         "bounty": {
@@ -361,19 +468,29 @@
           "create": ""
         }
       },
+      "transfers": {
+        "concluded": ""
+      },
       "form": {
         "message": {
           "subheading": ""
         }
       }
     },
-    "title": {
-      "navigation": ""
+    "deadline": {
+      "level1": "",
+      "level2": "",
+      "level3": "",
+      "level4": "",
+      "button": {
+        "save": ""
+      }
     },
     "info": {
       "description": ""
     },
     "interested": {
+      "offer": "",
       "action": "",
       "table": {
         "label": {
@@ -383,51 +500,89 @@
         }
       }
     },
-    "deadline": {
-      "button": {
-        "save": ""
+    "title": {
+      "navigation": ""
+    },
+    "assigned": {
+      "status": {
+        "name": ""
       }
     },
     "assignment": {
       "remove": {
         "user": "",
-        "reason": "",
-        "action": ""
+        "action": "",
+        "reason": ""
+      },
+      "message": {
+        "send": "",
+        "user": "",
+        "reason": ""
       },
       "actions": {
         "apply": "",
         "cancel": ""
       }
+    },
+    "offers": {
+      "table": {
+        "label": {
+          "user": "",
+          "value": "",
+          "title": "",
+          "created": "",
+          "deadline": "",
+          "subtitle": ""
+        }
+      }
+    },
+    "members": {
+      "table": {
+        "label": {
+          "user": "",
+          "role": "",
+          "title": "",
+          "actions": "",
+          "subtitle": ""
+        }
+      }
+    },
+    "history": {
+      "table": {
+        "label": {
+          "title": "",
+          "entry": "",
+          "created": "",
+          "subtitle": ""
+        }
+      }
     }
   },
-  "payment": {
-    "headline": "",
-    "new": {
-      "text": "",
-      "title": ""
+  "preferences": {
+    "os": "",
+    "subtitle": "",
+    "subtitle2": "",
+    "action": {
+      "save": ""
     },
-    "creditcard": "",
-    "paypal": {
-      "title": "",
-      "paywith": "",
-      "logo": {
+    "notifications": {
+      "checkbox": ""
+    },
+    "actions": {
+      "language": {
         "title": ""
       },
-      "description": ""
-    },
-    "options": {
-      "description": "",
-      "warning": {
-        "message": ""
+      "choose": {
+        "language": ""
       }
     }
   },
   "welcome": {
+    "tagline": "",
+    "tagline2": "",
+    "tagline1": "",
     "how": {
       "title": "",
-      "people": {
-        "title": ""
-      },
       "item": {
         "primary": "",
         "secondary": "",
@@ -439,6 +594,9 @@
           "primary": "",
           "secondary": ""
         }
+      },
+      "people": {
+        "title": ""
       },
       "workflow": {
         "main": {
@@ -456,6 +614,28 @@
           "subscribers": ""
         }
       }
+    },
+    "bottom": {
+      "call": "",
+      "link": "",
+      "linkAlt": ""
+    },
+    "menu": {
+      "item": {
+        "one": "",
+        "two": "",
+        "six": "",
+        "four": "",
+        "five": "",
+        "eight": "",
+        "three": "",
+        "seven": ""
+      }
+    },
+    "pricing": {
+      "month": "",
+      "title": "",
+      "description": ""
     },
     "companies": {
       "title": "",
@@ -476,7 +656,22 @@
         }
       }
     },
+    "headline": {
+      "collab": "",
+      "forfreelancers": ""
+    },
+    "integration": {
+      "desc": "",
+      "title": "",
+      "button": "",
+      "subtitle": ""
+    },
     "who": {
+      "title": {
+        "contrib": ""
+      }
+    },
+    "workflow": {
       "item": {
         "primary": "",
         "secondary": "",
@@ -488,9 +683,6 @@
           "primary": "",
           "secondary": ""
         }
-      },
-      "title": {
-        "contrib": ""
       }
     },
     "main": {
@@ -509,27 +701,13 @@
         }
       }
     },
-    "workflow": {
-      "item": {
-        "primary": "",
-        "secondary": "",
-        "two": {
-          "primary": "",
-          "secondary": ""
-        },
-        "three": {
-          "primary": "",
-          "secondary": ""
-        }
-      }
-    },
     "howto": {
       "item": {
-        "two": {
+        "one": {
           "primary": "",
           "secondary": ""
         },
-        "one": {
+        "two": {
           "primary": "",
           "secondary": ""
         },
@@ -543,14 +721,13 @@
         }
       }
     },
-    "headline": {
-      "forfreelancers": ""
-    },
-    "consulting": {
+    "collab": {
       "item": {
-        "primary": "",
-        "secondary": "",
         "two": {
+          "primary": "",
+          "secondary": ""
+        },
+        "one": {
           "primary": "",
           "secondary": ""
         },
@@ -558,23 +735,59 @@
           "primary": "",
           "secondary": ""
         }
-      },
+      }
+    },
+    "consulting": {
       "title": {
         "company": "",
         "consulting": ""
       }
     },
-    "tagline": {
-      "headline": {
-        "how": {
-          "title": ""
-        }
-      },
+    "which": {
       "companies": {
-        "main": {
-          "headline": ""
+        "item": {
+          "primary": "",
+          "secondary": "",
+          "two": {
+            "secondary": ""
+          },
+          "three": {
+            "primary": "",
+            "secondary": ""
+          }
         }
       }
+    }
+  },
+  "payment": {
+    "new": {
+      "text": "",
+      "title": ""
+    },
+    "headline": "",
+    "creditcard": "",
+    "paypal": {
+      "title": "",
+      "warning": "",
+      "paywith": "",
+      "confirm": "",
+      "logo": {
+        "title": ""
+      },
+      "description": ""
+    },
+    "options": {
+      "description": "",
+      "warning": {
+        "message": ""
+      }
+    }
+  },
+  "prefences": {
+    "skills": "",
+    "my": {
+      "skills": "",
+      "notifications": ""
     }
   },
   "checkout": {
@@ -584,6 +797,9 @@
     }
   },
   "bottom": {
+    "company": {
+      "org": ""
+    },
     "subheading3": "",
     "header": {
       "subheading1": "",
@@ -629,7 +845,9 @@
         "open": "",
         "finish": "",
         "progress": "",
-        "undefined": ""
+        "undefined": "",
+        "business_type": "",
+        "business_profile_url": ""
       },
       "reasons": {
         "fields": {
@@ -643,14 +861,44 @@
       "account": ""
     }
   },
-  "preferences": {
-    "subtitle": "",
-    "headline": "",
-    "language": {
-      "name": "",
-      "currency": {
-        "name": ""
+  "form": {
+    "slack": {
+      "join": {
+        "label": ""
       }
+    },
+    "email": {
+      "leave": {
+        "label": ""
+      },
+      "submit": {
+        "error": "",
+        "success": ""
+      },
+      "signup": {
+        "label": ""
+      },
+      "subscribing": {
+        "label": ""
+      }
+    }
+  },
+  "general": {
+    "buttons": {
+      "close": "",
+      "retry": "",
+      "cancel": "",
+      "details": ""
+    },
+    "singup": {
+      "access": "",
+      "action": ""
+    },
+    "actions": {
+      "cancel": ""
+    },
+    "messages": {
+      "missing": ""
     }
   },
   "info": {
@@ -662,37 +910,23 @@
     },
     "stats": {
       "number": {
-        "tasks": "",
         "users": "",
+        "tasks": "",
         "bounty": ""
-      }
-    }
-  },
-  "general": {
-    "actions": {
-      "cancel": ""
-    }
-  },
-  "form": {
-    "email": {
-      "leave": {
-        "label": ""
-      },
-      "signup": {
-        "label": ""
-      },
-      "submit": {
-        "error": "",
-        "success": ""
-      },
-      "subscribing": {
-        "label": ""
       }
     }
   },
   "tasks": {
     "status": {
       "interested": ""
+    }
+  },
+  "organization": {
+    "dialog": {
+      "desc": "",
+      "title": "",
+      "action": "",
+      "cancel": ""
     }
   }
 }
