@@ -4,7 +4,7 @@ const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
 const roleExists = require('../roles').roleExists
-const userExists = require('../users').userExists
+const { userExists } = require('../users')
 const memberExists = require('../members').memberExists
 
 module.exports = Promise.method(function taskFetch (taskParams) {
