@@ -75,7 +75,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 })
                 const userInfoJSON = JSON.parse(userInfo)
                 const userExist = userExists && await userExists({ email: userInfoJSON.email })
-                if (userExist.dataValues && userExist.dataValues.id) {
+                if (userExist && userExist.dataValues && userExist.dataValues.id) {
                   const memberExist = await memberExists({ userId: userExist.dataValues.id, taskId: data.id })
                   if (memberExist.dataValues && memberExist.dataValues.id) {
                     // alerady member
