@@ -386,7 +386,7 @@ class Task extends Component {
       charactersCount: 0,
       maxWidth: 'md',
       isFirstTask: false,
-      firstTaskSteps: 0
+      firstTaskSteps: 0,
       fundingInvite: {
         email: '',
         comment: ''
