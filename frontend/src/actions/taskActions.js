@@ -19,6 +19,10 @@ const INVITE_TASK_REQUESTED = 'INVITE_TASK_REQUESTED'
 const INVITE_TASK_SUCCESS = 'INVITE_TASK_SUCCESS'
 const INVITE_TASK_ERROR = 'INVITE_TASK_ERROR'
 
+const FUNDING_INVITE_TASK_REQUESTED = 'FUNDING_INVITE_TASK_REQUESTED'
+const FUNDING_INVITE_TASK_SUCCESS = 'FUNDING_INVITE_TASK_SUCCESS'
+const FUNDING_INVITE_TASK_ERROR = 'FUNDING_INVITE_TASK_ERROR'
+
 const FETCH_TASK_REQUESTED = 'FETCH_TASK_REQUESTED'
 const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS'
 const FETCH_TASK_ERROR = 'FETCH_TASK_ERROR'
@@ -97,6 +101,22 @@ const inviteTaskSuccess = () => {
 }
 
 const inviteTaskError = error => {
+  return { type: UPDATE_TASK_ERROR, completed: true, error }
+}
+
+/*
+*  Task funding
+ */
+
+const fundingInviteTaskRequested = () => {
+  return { type: FUNDING_INVITE_TASK_REQUESTED, completed: false }
+}
+
+const fundingInviteTaskSuccess = () => {
+  return { type: FUNDING_INVITE_TASK_SUCCESS, completed: true }
+}
+
+const fundingInviteTaskError = error => {
   return { type: UPDATE_TASK_ERROR, completed: true, error }
 }
 
@@ -416,12 +436,13 @@ const paymentTask = (taskId, value) => {
   }
 }
 
-const inviteTask = (id, email, message) => {
+const inviteTask = (id, email, message, user) => {
   return dispatch => {
+    const name = user.name
     dispatch(inviteTaskRequested())
     axios
       .post(api.API_URL + `/tasks/${id}/invite/`, {
-        email, message
+        email, message, name
       })
       .then(task => {
         if (task.status === 200) {
@@ -442,6 +463,41 @@ const inviteTask = (id, email, message) => {
           addNotification('actions.task.invite.error')
         )
         dispatch(inviteTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible send invite')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
+const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
+  return dispatch => {
+    const username = user.name
+    dispatch(fundingInviteTaskRequested())
+    axios
+      .post(api.API_URL + `/tasks/${id}/funding/`, {
+        email, comment, suggestedValue, suggestedDate, username
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('actions.task.invite.success'))
+          return dispatch(fundingInviteTaskSuccess())
+        }
+        dispatch(addNotification('actions.task.invite.error'))
+        return dispatch(
+          fundingInviteTaskError({
+            error: {
+              type: 'task_invite_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.invite.error')
+        )
+        dispatch(fundingInviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
         // eslint-disable-next-line no-console
@@ -493,6 +549,9 @@ export {
   INVITE_TASK_REQUESTED,
   INVITE_TASK_SUCCESS,
   INVITE_TASK_ERROR,
+  FUNDING_INVITE_TASK_REQUESTED,
+  FUNDING_INVITE_TASK_SUCCESS,
+  FUNDING_INVITE_TASK_ERROR,
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
@@ -521,5 +580,6 @@ export {
   paymentTask,
   syncTask,
   inviteTask,
+  fundingInviteTask,
   changeTaskTab
 }

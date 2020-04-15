@@ -7,11 +7,26 @@ const URL = require('url')
 module.exports = Promise.method(function orderBuilds (orderParameters) {
   return models.Order
     .build(
-      orderParameters
+      {
+        source_id: orderParameters.source_id,
+        currency: orderParameters.currency,
+        provider: orderParameters.provider,
+        amount: orderParameters.amount,
+        email: orderParameters.email,
+        userId: orderParameters.userId,
+        plan: {
+          plan: orderParameters.plan
+        },
+        include: [{
+          association: models.Order.Plan,
+          include: [ models.Plan.plan ]
+        }]
+      }
     )
     .save()
     .then(order => {
       if (orderParameters.provider === 'paypal') {
+        const totalPrice = models.Plan.calFinalPrice(orderParameters.amount, orderParameters.plan)
         return requestPromise({
           method: 'POST',
           uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
@@ -40,7 +55,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               'intent': 'AUTHORIZE',
               'purchase_units': [{
                 'amount': {
-                  'value': orderParameters.amount,
+                  'value': totalPrice,
                   'currency_code': orderParameters.currency
                 },
                 'description': 'Development services provided by Gitpay',

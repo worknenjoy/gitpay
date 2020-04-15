@@ -23,7 +23,8 @@ import {
   CreditCard,
   Tune,
   Person,
-  ArrowBack
+  ArrowBack,
+  Settings
 } from '@material-ui/icons'
 
 import classNames from 'classnames'
@@ -38,6 +39,7 @@ import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
 import Organizations from './organizations'
+import SettingsComponent from './settings'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
@@ -144,6 +146,9 @@ class Profile extends Component {
       case '/profile/preferences':
         this.setState({ selected: 2 })
         break
+      case '/profile/settings':
+        this.setState({ selected: 3 })
+        break
       default:
         this.setState({ selected: null })
         break
@@ -157,14 +162,17 @@ class Profile extends Component {
   }
 
   getTitleNavigation = () => {
-    if (this.state.selected === 0) {
-      return (<FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />)
-    }
-    else if (this.state.selected === 1) {
-      return (<FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />)
-    }
-    else {
-      return (<FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />)
+    switch (this.state.selected) {
+      case 0:
+        return (<FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />)
+      case 1:
+        return (<FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />)
+      case 2:
+        return (<FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />)
+      case 3:
+        return (<FormattedMessage id='account.profile.settings' defaultMessage='Settings' />)
+      default:
+        return null
     }
   }
 
@@ -224,6 +232,11 @@ class Profile extends Component {
                     exact
                     path='/profile/preferences'
                     component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/settings'
+                    component={ () => <SettingsComponent deleteUser={ this.props.deleteUser } classes={ classes } user={ this.props.user } /> }
                   />
                 </Switch>
               </HashRouter>
@@ -366,6 +379,24 @@ class Profile extends Component {
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />
+                            </span>
+                          }
+                        />
+                      </MenuItem>
+                      <MenuItem
+                        onClick={ () => this.props.history.push('/profile/settings') }
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 3 }
+                      >
+                        <ListItemIcon className={ classes.icon }>
+                          <Settings />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={ { primary: classes.primary } }
+                          inset
+                          primary={
+                            <span>
+                              <FormattedMessage id='account.profile.settings' defaultMessage='Settings' />
                             </span>
                           }
                         />

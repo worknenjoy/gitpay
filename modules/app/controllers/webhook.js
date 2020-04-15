@@ -10,6 +10,7 @@ const models = require('../../../models')
 const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')
+const IssueClosedMail = require('../../mail/issueClosed')
 
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
@@ -39,6 +40,36 @@ exports.github = async (req, res) => {
   const response = req.body || res.body
   const labels = response && response.issue && response.issue.labels
   if (req.headers.authorization === `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`) {
+    // below would update issue status if someone updates it on Github
+    if (response.action === 'reopened' || response.action === 'opened' || response.action === 'closed') {
+      const status = response.issue.state
+      const dbUrl = response.issue.html_url
+      const updated = await models.Task.update({ status: status }, {
+        where: {
+          url: dbUrl
+        },
+        returning: true
+      })
+      const updatedTask = updated[1][0].dataValues
+      const user = await models.User.findOne({
+        where: {
+          id: updatedTask.userId
+        }
+      })
+      if (updated) {
+        if (updatedTask.status === 'closed') {
+          IssueClosedMail.success(user.dataValues, {
+            name: user.dataValues.name,
+            url: updatedTask.url,
+            title: updatedTask.title
+          }
+          )
+        }
+        return res.json({ ...response,
+          task: updatedTask })
+      }
+      else return res.status(500).json({})
+    }
     if (response.action === 'labeled') {
       const labelNotify = labels.filter(label => label.name === 'notify')
       const labelGitpay = labels.filter(label => label.name === 'gitpay')

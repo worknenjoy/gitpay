@@ -13,7 +13,7 @@ https://gitpitch.com/worknenjoy/gitpay
 
 We have a slack channel to collaborate with solutions and to help you, and to be fun
 
-[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU) 
+[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LTk1ZTlhMGJhOGJlOGJhNjgzNTJjM2QxMmNjM2M4Njk0YjllZDBiZDFjZTVlMzBiMzU0NTI3NjE2YWNhNjllOTQ) 
 
 ## What is Gitpay?
 
@@ -88,7 +88,8 @@ For exhaustive list of options available, refer `migration.js` in root directory
 ## Run project
 
 ### Frontend server
-`npm run dev`
+- first go to `frontend` folder: `cd frontend`
+- Then run the server: `npm run dev`
 
 ### Backend (node.js)
 `npm run start:dev`
@@ -132,6 +133,8 @@ Here you can start to learn how to create your first pull request and start to b
 - [Md. Al Amin]( https://github.com/Alamin02 )
 - [Siso]( https://github.com/sisohs ) 
 - [Amrut]( https://github.com/amrut07 )
+- [Usman Sakirat Kehinde]( https://github.com/oyinkan )
+- [Qiwei]( https://github.com/qiweiii )
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_large)

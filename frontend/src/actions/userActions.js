@@ -1,6 +1,7 @@
 import api from '../consts'
 import axios from 'axios'
 import { addNotification } from './notificationActions'
+import { logOut } from './loginActions'
 import { validToken } from './helpers'
 
 const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
@@ -233,6 +234,28 @@ const updateUser = (_, userData) => {
   }
 }
 
+const deleteUser = (user) => {
+  validToken()
+  return (dispatch) => {
+    const id = user.id
+    return axios
+      .delete(api.API_URL + `/user/delete/${id}`, {})
+      .then(result => {
+        dispatch(addNotification('account.profile.settings.delete.user.notification'))
+        dispatch(logOut())
+        return result
+      })
+      .catch(error => {
+        dispatch(
+          addNotification('account.profile.settings.delete.user.notification.error')
+        )
+        // eslint-disable-next-line no-console
+        console.log('error on delete account', error)
+        return error
+      })
+  }
+}
+
 const getBankAccount = () => {
   validToken()
   return (dispatch) => {
@@ -307,5 +330,6 @@ export {
   updateAccount,
   updateUser,
   createBankAccount,
-  getBankAccount
+  getBankAccount,
+  deleteUser
 }

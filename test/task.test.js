@@ -214,26 +214,42 @@ describe("tasks", () => {
         .expect(401)
         .end((err, res) => {
           expect(res.statusCode).to.equal(401);
+          expect(res.body.error).to.equal('bad_verification_code');
           expect(res.body).to.exist
           done();
         })
     })
 
     it('should receive code on the platform from github auth to the redirected url for private tasks with a valid code', (done) => {
+
+      https://api.github.com/repos/alexanmtz/festifica/issues/1                                     │
+
       nock('https://github.com')
-        .get(`/login/oauth/access_token/?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}&code=eb518274e906c68580f7`)
-        .reply(200, {url: 'foo'})
+        .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
+        .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
+        .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
       nock('https://api.github.com')
-        .get(`/repos/alexanmtz/festifica/issues/1`)
+        .get('/repos/alexanmtz/festifica/issues/1')
         .reply(200, sampleIssue.issue)
+        .get('/users/alexanmtz')
+        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+        .reply(200, {email: 'test@gmail.com'})
       agent
-        .get('/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7')
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
-          //expect(res.body.access_token).to.equal("e72e16c7e42f292c6912e7710c838347ae178b4a")
-          expect(res.body.url).to.equal('foo')
-          done();
+          expect(res.body).to.exist;
+          const userId = res.body.id
+        agent
+          .get(`/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(302);
+            done();
+          })
         })
     })
 

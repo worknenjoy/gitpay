@@ -50,8 +50,8 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
                 }
               })
               const userInfoJSON = JSON.parse(userInfo)
-              const userExist = await userExists({ email: userInfoJSON.email })
-              if (userExist.dataValues && userExist.dataValues.id) {
+              const userExist = userExists && await userExists({ email: userInfoJSON.email })
+              if (userExist && userExist.dataValues && userExist.dataValues.id) {
                 await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
               }
               else {

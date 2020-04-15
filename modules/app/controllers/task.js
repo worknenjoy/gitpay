@@ -90,9 +90,18 @@ exports.inviteUserToTask = ({ params, body }, res) => Tasks
     res.send({ error: error.message })
   })
 
-// message functions
-exports.messageInterestedToTask = ({ params, body }, res) => Tasks
-  .taskMessage(params, body)
+exports.inviteToFundingTask = ({ params, body }, res) => Tasks
+  .taskFunding(params, body)
+  .then(data => res.send(data))
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.log('error on task controller funding', error)
+    res.send({ error: error.message })
+  })
+
+// message to interest users
+exports.messageInterestedToTask = ({ params, body, user }, res) => Tasks
+  .taskMessage(params, body, user)
   .then(data => res.send(data))
   .catch(error => {
     // eslint-disable-next-line no-console

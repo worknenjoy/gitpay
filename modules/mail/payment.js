@@ -7,7 +7,8 @@ const PaymentMail = {
   success: (user, task, value) => {},
   assigned: (user, task, value) => {},
   error: (user, task, value) => {},
-  cancel: (user, task, order) => {}
+  cancel: (user, task, order) => {},
+  support: (user, task, order) => {}
 }
 
 if (constants.canSendEmail) {
@@ -22,8 +23,23 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.payment.success.content.main', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.payment.success.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${Signatures.sign(language)}</p>`
+        },
+      ]
+    )
+  }
+
+  PaymentMail.support = (user, task, order) => {
+    i18n.setLocale('en')
+    request(
+      constants.notificationEmail,
+      i18n.__('mail.payment.support'),
+      [
+        {
+          type: 'text/html',
+          value: `Support was requested by the user ${user.name}, (${user.email})
+          for the task: ${task.id}, order: ${order.id}, for the value of ${order.amount}.`
         },
       ]
     )
@@ -40,7 +56,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.payment.assigned.content.main', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.payment.assigned.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.payment.assigned.content.secondary')}</p>
           <p>${Signatures.sign(language)}</p>`
         },
@@ -59,7 +75,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.payment.content.error', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.payment.content.error', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -77,7 +93,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]

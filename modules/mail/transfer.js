@@ -23,7 +23,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.transfer.new.message.success', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
+          <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -41,7 +41,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.transfer.notify.message.success', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
+          <p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -59,7 +59,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.transfer.error.message', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
+          <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]

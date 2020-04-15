@@ -4,7 +4,7 @@ const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
 const roleExists = require('../roles').roleExists
-const userExists = require('../users').userExists
+const { userExists } = require('../users')
 const memberExists = require('../members').memberExists
 
 module.exports = Promise.method(function taskFetch (taskParams) {
@@ -74,8 +74,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   }
                 })
                 const userInfoJSON = JSON.parse(userInfo)
-                const userExist = await userExists({ email: userInfoJSON.email })
-                if (userExist.dataValues && userExist.dataValues.id) {
+                const userExist = userExists && await userExists({ email: userInfoJSON.email })
+                if (userExist && userExist.dataValues && userExist.dataValues.id) {
                   const memberExist = await memberExists({ userId: userExist.dataValues.id, taskId: data.id })
                   if (memberExist.dataValues && memberExist.dataValues.id) {
                     // alerady member

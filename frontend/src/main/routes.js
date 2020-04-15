@@ -11,6 +11,7 @@ import TaskOrdersContainer from '../containers/task-orders'
 import TaskExplorer from '../components/task/task-explorer'
 import LoginPage from '../components/session/login-page'
 import LoginPageContainer from '../containers/login-page'
+import FourOFour from '../components/FourOFour.js'
 
 export default props => (
   <HashRouter>
@@ -42,6 +43,8 @@ export default props => (
         path='/task/:id/order/:order_id/status/:status'
         component={ TaskOrdersContainer }
       />
+      <Route path='/404' component={ FourOFour } />
+      <Route component={ FourOFour } />
     </Switch>
   </HashRouter>
 )
