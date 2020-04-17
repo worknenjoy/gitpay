@@ -40,7 +40,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
               <Typography variant='body1'>
                 <FormattedMessage id='task.bounties.order.details.provider' defaultMessage='Provider:' />
               </Typography>
-              <Typography variant='subtitle1'>
+              <Typography variant='body1'>
                 { order && order.provider ? order.provider : <FormattedMessage id='general.messages.missing' defaultMessage='Not found' /> }
               </Typography>
             </div>
@@ -48,7 +48,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
               <Typography variant='body1'>
                 <FormattedMessage id='task.bounties.order.details.id' defaultMessage='Order ID:' />
               </Typography>
-              <Typography variant='subtitle1'>
+              <Typography variant='body1'>
                 { order && order.source_id ? order.source_id : <FormattedMessage id='general.messages.missing' defaultMessage='Not found' /> }
               </Typography>
             </div>
@@ -56,7 +56,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
               <Typography variant='body1'>
                 <FormattedMessage id='task.bounties.order.details.authorization_id' defaultMessage='Authorization ID:' />
               </Typography>
-              <Typography variant='subtitle1'>
+              <Typography variant='body1'>
                 { order && order.authorization_id ? order.authorization_id : <FormattedMessage id='general.messages.missing' defaultMessage='Not found' /> }
               </Typography>
             </div>
@@ -66,7 +66,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
                 <Typography variant='body1'>
                   <FormattedMessage id='task.bounties.order.details.created' defaultMessage='Created:' />
                 </Typography>
-                <Typography variant='subtitle1'>
+                <Typography variant='body1'>
                   { order && order.paypal ? MomentComponent(order.paypal.created_at).fromNow() : ' - ' }
                 </Typography>
               </div>
@@ -74,7 +74,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
                 <Typography variant='body1'>
                   <FormattedMessage id='task.bounties.order.details.intent' defaultMessage='Intent:' />
                 </Typography>
-                <Typography variant='subtitle1'>
+                <Typography variant='body1'>
                   { order && order.paypal ? order.paypal.intent : <FormattedMessage id='general.messages.missing' defaultMessage='Not found' /> }
                 </Typography>
               </div>
@@ -82,7 +82,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
                 <Typography variant='body1'>
                   <FormattedMessage id='task.bounties.order.details.status' defaultMessage='Status:' />
                 </Typography>
-                <Typography variant='subtitle1'>
+                <Typography variant='body1'>
                   { order && order.paypal ? order.paypal.status : <FormattedMessage id='general.messages.missing' defaultMessage='Not found' /> }
                 </Typography>
               </div>

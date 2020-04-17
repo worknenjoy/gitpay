@@ -108,7 +108,7 @@ class TaskHeader extends React.Component {
           <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
         </Button>
         { task.data.metadata &&
-        <Typography variant='subtitle1' style={ { color: '#bbb' } }>
+        <Typography variant='body1' style={ { color: '#bbb' } }>
           <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
             ready={ task.completed }>
             <div style={ { marginTop: 20 } }>

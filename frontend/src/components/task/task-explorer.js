@@ -71,7 +71,7 @@ class TaskExplorer extends Component {
       <Page>
         <TopBarContainer />
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 24 }>
+          <Grid container className={ classes.root } spacing={ 3 }>
             <Grid item xs={ 12 } md={ 12 }>
               <TaskListContainer />
             </Grid>

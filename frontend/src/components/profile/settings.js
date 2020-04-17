@@ -48,7 +48,7 @@ class Settings extends Component {
 
     return (
       <Paper elevation={ 0 }>
-        <Grid container alignItems='center' spacing={ 8 }>
+        <Grid container alignItems='center' spacing={ 1 }>
           <Grid item xs={ 5 } style={ { marginBottom: 20 } }>
             <Button onClick={ this.handleDelete }
               variant='contained'

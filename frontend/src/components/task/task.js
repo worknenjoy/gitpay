@@ -713,7 +713,7 @@ class Task extends Component {
             container
             justify='flex-start'
             direction='row'
-            spacing={ 24 }
+            spacing={ 3 }
           >
             <Grid
               item
@@ -975,7 +975,7 @@ class Task extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 8 }>
               { task.data.assigned &&
                 <TaskAssigned

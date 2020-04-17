@@ -195,7 +195,7 @@ class Profile extends Component {
           position='static'
           elevation={ 0 }>
           <Toolbar>
-            <Grid container alignItems='center' spacing={ 8 }>
+            <Grid container alignItems='center' spacing={ 1 }>
               <Grid item xs>
                 <Typography color='primary' variant='title'>
                   <Button onClick={ this.handleBackToTaskList } variant='text' size='small' aria-label='Back' color='primary'>
@@ -213,7 +213,7 @@ class Profile extends Component {
           <PreferencesBar classes={ classes } />
         }
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 24 }>
+          <Grid container className={ classes.root } spacing={ 3 }>
             <Grid item xs={ 12 } md={ 9 }>
               <HashRouter>
                 <Switch>
@@ -339,7 +339,6 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />
@@ -357,7 +356,6 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />
@@ -375,7 +373,6 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />
@@ -393,7 +390,6 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.settings' defaultMessage='Settings' />

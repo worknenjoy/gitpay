@@ -41,7 +41,7 @@ const handleClick = url => event => {
 
 const OurStack = ({ technologies }) => (
   <Content>
-    <Typography variant='subtitle1' color='inherit' gutterBottom>
+    <Typography variant='body1' color='inherit' gutterBottom>
       <FormattedMessage id='info.stack.subheading' defaultMessage='Our stack' />
       <Stack>
         { technologies.map((technology, index) =>

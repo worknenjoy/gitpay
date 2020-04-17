@@ -44,7 +44,7 @@ const TaskAssignment = (props) => {
   const taskAssignmentCheckboxes = () => {
     if (props.taskFundingDialog) {
       return (
-        <Grid container spacing={ 24 } style={ { fontFamily: 'Roboto', color: '#a9a9a9' } }>
+        <Grid container spacing={ 3 } style={ { fontFamily: 'Roboto', color: '#a9a9a9' } }>
           <Grid item xs={ 12 } style={ { paddingTop: 0 } } >
             <FormControlLabel
               control={
@@ -79,7 +79,7 @@ const TaskAssignment = (props) => {
     }
     if (props.assignDialog) {
       return (
-        <Grid container spacing={ 24 } style={ { fontFamily: 'Roboto', color: '#a9a9a9' } }>
+        <Grid container spacing={ 3 } style={ { fontFamily: 'Roboto', color: '#a9a9a9' } }>
           <Grid item xs={ 12 } sm={ 6 } style={ { paddingBottom: 0 } }>
             <FormattedMessage id='task.bounties.interested.iWillDoFor' defaultMessage='I will do for'>
               { msg => (

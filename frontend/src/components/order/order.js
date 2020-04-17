@@ -166,7 +166,7 @@ class Order extends Component {
 
     return (
       <div>
-        <Grid container className={ classes.root } spacing={ 24 }>
+        <Grid container className={ classes.root } spacing={ 3 }>
           <TopBar />
           <Grid item xs={ 12 }>
             <Typography

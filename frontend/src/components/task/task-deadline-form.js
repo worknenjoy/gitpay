@@ -109,7 +109,7 @@ class TaskDeadlineForm extends Component {
                 <Typography variant='h5'>
                   <FormattedMessage id='task.status.deadline.headline' defaultMessage='Finish date' />
                 </Typography>
-                <Typography variant='subtitle1' color='textSecondary'>
+                <Typography variant='body1' color='textSecondary'>
                   <FormattedMessage id='task.status.deadline.subheading' defaultMessage='Choose a date that this task should be finished' />,
                 </Typography>
                 <div className={ classes.chipContainer }>
