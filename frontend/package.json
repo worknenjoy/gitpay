@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "description": "The marketplace for on demmand changes",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --progress --colors --inline --hot",
@@ -129,8 +129,5 @@
     "url-loader": "^0.6.2",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1"
-  },
-  "directories": {
-    "test": "tests"
   }
 }
