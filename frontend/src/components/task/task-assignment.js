@@ -442,7 +442,7 @@ const TaskAssignment = (props) => {
               </div>
               <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10, paddingTop: 0 } }>
                 <div style={ { textAlign: 'center' } }>
-                  <Typography type='title' variant='subtitle1'>
+                  <Typography type='title' variant='body1'>
                     <FormattedMessage id='task.bounties.interested.deliveryDateTitle' defaultMessage='Review Delivery Dates' />
                   </Typography>
                 </div>
@@ -501,7 +501,7 @@ const TaskAssignment = (props) => {
               </Paper>
 
               <div style={ { textAlign: 'center' } }>
-                <Typography type='heading' style={ { padding: 10 } } variant='subtitle1'>
+                <Typography type='heading' style={ { padding: 10 } } variant='body1'>
                   <FormattedMessage id='task.bounties.interested.canSuggestBounty' defaultMessage='Suggest a bounty' />
                 </Typography>
               </div>

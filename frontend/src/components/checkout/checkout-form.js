@@ -147,7 +147,7 @@ class CheckoutForm extends Component {
                     <Typography variant='caption'>
                       <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
                     </Typography>
-                    <Typography variant='subheading'>
+                    <Typography variant='subtitle1'>
                       { `${this.state.fullname} (${this.state.email})` }
                     </Typography>
                   </div>

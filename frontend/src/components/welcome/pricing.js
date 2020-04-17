@@ -21,11 +21,11 @@ import {
 const styles = theme => ({
   layout: {
     width: 'auto',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 6,
-    marginTop: theme.spacing.unit * 2,
-    [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    marginBottom: theme.spacing(6),
+    marginTop: theme.spacing(2),
+    [theme.breakpoints.up(900 + theme.spacing(3) * 2)]: {
       width: 900,
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -34,10 +34,10 @@ const styles = theme => ({
   heroContent: {
     maxWidth: 600,
     margin: '0 auto',
-    padding: `0 0 ${theme.spacing.unit * 4}px`,
+    padding: `0 0 ${theme.spacing(4)}px`,
   },
   heroDesc: {
-    paddingTop: theme.spacing.unit * 2
+    paddingTop: theme.spacing(2)
   },
   cardHeader: {
     backgroundColor: theme.palette.primary.light,
@@ -46,11 +46,11 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'baseline',
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   cardActions: {
     [theme.breakpoints.up('sm')]: {
-      paddingBottom: theme.spacing.unit * 2,
+      paddingBottom: theme.spacing(2),
     },
   }
 })
@@ -115,7 +115,7 @@ class Pricing extends Component {
           </Typography>
         </div>
         { /* End hero unit */ }
-        <Grid container spacing={ 40 } alignItems='flex-end'>
+        <Grid container spacing={ 10 } alignItems='flex-end'>
           { tiers.map(tier => (
             // Enterprise card is full width at sm breakpoint
             <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 4 }>
@@ -132,7 +132,7 @@ class Pricing extends Component {
                     <Typography variant='h5' color='textPrimary'>
                       <small>Fee</small> { tier.price }
                     </Typography>
-                    <Typography variant='subheading' color='textSecondary'>
+                    <Typography variant='subtitle1' color='textSecondary'>
                       <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
                     </Typography>
                   </div>

@@ -215,7 +215,7 @@ class Welcome extends Component {
           </Tabs>
         </AppBar>
         <MainBanner>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div
                 className={ classes.mainBlock }
@@ -233,7 +233,7 @@ class Welcome extends Component {
                     defaultMessage='Work in tasks on demand'
                   />
                 </Typography>
-                <Typography type='subtitle1' gutterBottom noWrap>
+                <Typography type='body1' gutterBottom noWrap>
                   <FormattedHTMLMessage
                     id='welcome.tagline2'
                     defaultMessage='and receive bounty for your contributions'
@@ -241,7 +241,7 @@ class Welcome extends Component {
                 </Typography>
                 { !logged &&
                 <Button
-                  variant='raised'
+                  variant='contained'
                   color='secondary'
                   size='large'
                   onClick={ (e) => this.props.openDialog('SignupUser') }
@@ -262,7 +262,7 @@ class Welcome extends Component {
                   <LoginButton referer={ location } contrast includeForm={ false } />
                 ) : (
                   <Button
-                    variant='raised'
+                    variant='contained'
                     color='secondary'
                     size='large'
                     onClick={ (e) => window.location.assign('/#/profile') }
@@ -283,7 +283,7 @@ class Welcome extends Component {
         </MainBanner>
 
         <Section ref='contrib'>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
@@ -352,7 +352,7 @@ class Welcome extends Component {
         </Section>
 
         <Section ref='companies' alternative className={ classes.bgContrast }>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
@@ -419,7 +419,7 @@ class Welcome extends Component {
         </Section>
 
         <Section ref='collab'>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
@@ -494,7 +494,7 @@ class Welcome extends Component {
               />
             </Typography>
           </MainTitle>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <ResponsiveImage width='400' src={ deal } />
             </Grid>
@@ -567,7 +567,7 @@ class Welcome extends Component {
         </Section>
 
         <Section ref='integrations' className={ classes.gutterBottomBig }>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 4 } className={ classes.alignRight }>
               <div className={ classes.gutterTop }>
                 <Typography variant='h6' gutterBottom>
@@ -582,7 +582,7 @@ class Welcome extends Component {
                     defaultMessage='Check out our Github app'
                   />
                 </Typography>
-                <Typography variant='subtitle1' gutterBottom>
+                <Typography variant='body1' gutterBottom>
                   <FormattedMessage
                     id='welcome.integration.desc'
                     defaultMessage='You can install our Gitpay app on your Github and start to boost your issues'

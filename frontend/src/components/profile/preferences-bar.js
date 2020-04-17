@@ -18,7 +18,7 @@ class PreferencesBar extends Component {
         <Toolbar>
           <Grid container alignItems='center' spacing={ 8 }>
             <Grid item xs style={ { paddingTop: 15, paddingBottom: 15 } }>
-              <Typography color='primary' variant='subheading' gutterBottom>
+              <Typography color='primary' variant='subtitle1' gutterBottom>
                 <FormattedMessage id='preferences.subtitle' defaultMessage='Setup your preferences about skill and how you should receive the notifications about new tasks and projects' />
               </Typography>
               <Typography variant='body2' color='textSecondary' gutterBottom>

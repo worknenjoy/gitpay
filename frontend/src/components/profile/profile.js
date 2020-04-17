@@ -104,10 +104,10 @@ const styles = theme => ({
     marginBottom: 20
   },
   chipSkill: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   chipLanguage: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   chipContainer: {
     marginTop: 12,
@@ -339,7 +339,7 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          inset
+                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />
@@ -357,7 +357,7 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          inset
+                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />
@@ -375,7 +375,7 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          inset
+                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />
@@ -393,7 +393,7 @@ class Profile extends Component {
                         </ListItemIcon>
                         <ListItemText
                           classes={ { primary: classes.primary } }
-                          inset
+                          variant='inset'
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.settings' defaultMessage='Settings' />

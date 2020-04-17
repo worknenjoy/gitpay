@@ -97,7 +97,7 @@ class TaskPaymentForm extends Component {
                 <Typography variant='h5'>
                   <FormattedMessage id='task.payment.headline.bounty.add' defaultMessage='Add a bounty for this task' />
                 </Typography>
-                <Typography variant='subheading' color='textSecondary'>
+                <Typography variant='subtitle1' color='textSecondary'>
                   <FormattedMessage id='task.payment.form.message.subheading' defaultMessage='Create a bounty for this task and who you assign will receive the payment for this bounty' />
                 </Typography>
                 <div className={ classes.chipContainer }>
