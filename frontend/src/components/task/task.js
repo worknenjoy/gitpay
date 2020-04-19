@@ -20,7 +20,10 @@ import {
   Button,
   Tooltip,
   withStyles,
-  Link
+  Link,
+  DialogContentText,
+  MobileStepper,
+  Fab
 } from '@material-ui/core'
 
 import {
@@ -32,6 +35,7 @@ import {
   CalendarToday as CalendarIcon,
   Delete as DeleteIcon,
   MonetizationOn as MonetizationOnIcon,
+  Close as CloseIcon,
   PeopleOutlined
 } from '@material-ui/icons'
 
@@ -57,6 +61,10 @@ import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
 const taskCover = require('../../images/task-cover.png')
 const inviteCover = require('../../images/funds.png')
+
+const bounty = require('../../images/bounty.png')
+const sharing = require('../../images/sharing.png')
+const notifications = require('../../images/notifications.png')
 
 const styles = theme => ({
   root: {
@@ -371,6 +379,8 @@ class Task extends Component {
       showSuggestAnotherDateField: false,
       charactersCount: 0,
       maxWidth: 'md',
+      isFirstTask: false,
+      firstTaskSteps: 0,
       fundingInvite: {
         email: '',
         comment: ''
@@ -433,6 +443,22 @@ class Task extends Component {
       }
       else {
         this.props.history.push({ pathname: '/login', state: { from: { pathname: `/task/${id}/status` } } })
+      }
+    }
+  }
+
+  componentDidUpdate () {
+    this.checkFirstTask()
+  }
+
+  checkFirstTask () {
+    if (this.taskOwner()) {
+      /* eslint-disable no-undef */
+      const hadFirstTask = localStorage.getItem('hadFirstTask')
+      if (!hadFirstTask) {
+        this.setState({ isFirstTask: true })
+        /* eslint-disable no-undef */
+        localStorage.setItem('hadFirstTask', true)
       }
     }
   }
@@ -622,6 +648,61 @@ class Task extends Component {
     }
   }
 
+  handleFirstTaskBounties = () => {
+    this.setState({
+      isFirstTask: false,
+      paymentForm: true
+    })
+  }
+
+  handleFirstTaskNotifications = () => {
+    this.setState({
+      isFirstTask: false,
+      deadlineForm: true
+    })
+  }
+
+  handleFirstTaskContent = () => {
+    const { firstTaskSteps } = this.state
+
+    if (firstTaskSteps === 0) {
+      return {
+        image: bounty,
+        title: <FormattedMessage id='first.task.bounties.title' defaultMessage='Add Bounties' />,
+        description: (
+          <div>
+            <FormattedMessage id='first.task.bounties.description' defaultMessage='Add bounties to reward contributors to solve your issue' />
+            <Button onClick={ this.handleFirstTaskBounties } color='primary' variant='contained' style={ { display: 'block', margin: '20px auto' } }>
+              <FormattedMessage id='first.task.bounties.action' defaultMessage='Add bounties now' />
+            </Button>
+          </div>
+        )
+      }
+    }
+
+    if (firstTaskSteps === 1) {
+      return {
+        image: notifications,
+        title: <FormattedMessage id='first.task.deadline.title' defaultMessage='Set a deadline' />,
+        description: (
+          <div>
+            <FormattedMessage id='first.task.deadline.description' defaultMessage='Set a deadline in order to define when your issues should be solved' />
+            <Button onClick={ this.handleFirstTaskNotifications } color='primary' variant='contained' style={ { display: 'block', margin: '20px auto' } }>
+              <FormattedMessage id='first.task.deadline.action' defaultMessage='Set deadline' />
+            </Button>
+          </div>
+        )
+      }
+    }
+
+    if (firstTaskSteps === 2) {
+      return {
+        image: sharing,
+        title: <FormattedMessage id='first.task.community.title' defaultMessage='Send to our community' />,
+        description: <FormattedMessage id='first.task.community.description' defaultMessage='We will make a campaign to let our community know that you have an issue to be solved' />
+      }
+    }
+  }
   handleFundingEmailInputChange = event => {
     this.setState({ fundingInvite: { ...this.state.fundingInvite, email: event.target.value } })
   }
@@ -673,20 +754,22 @@ class Task extends Component {
     )
   }
 
+  taskOwner = () => {
+    const { task } = this.props
+    const creator = this.props.logged && this.props.user.id === task.data.userId
+    const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === this.props.user.id).length > 0 : false
+    return creator || owner
+  }
+
   render () {
     const { classes, task, order } = this.props
-    const taskOwner = () => {
-      const creator = this.props.logged && this.props.user.id === task.data.userId
-      const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === this.props.user.id).length > 0 : false
-      return creator || owner
-    }
 
     const isCurrentUserAssigned = () => {
       return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
     }
 
     const isAssignOwner = () => {
-      return taskOwner() || isCurrentUserAssigned()
+      return this.taskOwner() || isCurrentUserAssigned()
     }
     // Error handling when task does not exist
     if (task.completed && !task.values) {
@@ -704,8 +787,66 @@ class Task extends Component {
     const deliveryDate = task.data.deadline !== null ? MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') : this.props.intl.formatMessage(messages.deliveryDateNotInformed)
     const deadline = task.data.deadline !== null ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days') : false
 
+    const firstStepsContent = this.handleFirstTaskContent()
+
     return (
       <div>
+        <Dialog
+          open={ this.state.isFirstTask }
+          maxWidth='xs'
+          aria-labelledby='form-dialog-title'
+        >
+          <DialogContent>
+            <div style={ { textAlign: 'center' } }>
+              <img
+                src={ firstStepsContent.image }
+                style={ { margin: '20px auto 0' } }
+                width='70%'
+              />
+              <DialogTitle style={ { marginTop: 20 } }>
+                <Fab
+                  size='small'
+                  aria-label='close'
+                  className={ classes.closeButton }
+                  onClick={ () => this.setState({ isFirstTask: false }) }
+                >
+                  <CloseIcon />
+                </Fab>
+
+                <Typography variant='h4'>
+                  { firstStepsContent.title }
+                </Typography>
+              </DialogTitle>
+              <DialogContentText>
+                { firstStepsContent.description }
+              </DialogContentText>
+            </div>
+          </DialogContent>
+          <MobileStepper
+            variant='dots'
+            steps={ 3 }
+            position='static'
+            activeStep={ this.state.firstTaskSteps }
+            nextButton={
+              <Button
+                size='small'
+                onClick={ () => this.setState((prevState) => ({ firstTaskSteps: prevState.firstTaskSteps + 1 })) }
+                disabled={ this.state.firstTaskSteps === 2 }
+              >
+                <FormattedMessage id='first.task.next' defaultMessage='Next' />
+              </Button>
+            }
+            backButton={
+              <Button
+                onClick={ () => this.setState((prevState) => ({ firstTaskSteps: prevState.firstTaskSteps - 1 })) }
+                disabled={ this.state.firstTaskSteps === 0 }
+                size='small'
+              >
+                <FormattedMessage id='first.task.back' defaultMessage='Back' />
+              </Button>
+            }
+          />
+        </Dialog>
         <TopBarContainer />
         <PageContent>
           <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } />
@@ -799,7 +940,7 @@ class Task extends Component {
                   </span>{ ' ' }
                   <PeopleOutlined />
                 </Button>
-                { !taskOwner() &&
+                { !this.taskOwner() &&
                   <Button
                     style={ { marginRight: 10 } }
                     onClick={ this.handleAssignDialogOpen }
@@ -813,7 +954,7 @@ class Task extends Component {
                     <AddIcon />
                   </Button>
                 }
-                { taskOwner() && (
+                { this.taskOwner() && (
                   <div style={ { display: 'inline-block' } }>
                     <Button
                       style={ { marginRight: 10 } }
@@ -990,7 +1131,7 @@ class Task extends Component {
                 />
               }
               <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
-              { taskOwner() &&
+              { this.taskOwner() &&
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
               <div className={ classes.rootTabs }>
@@ -1012,14 +1153,14 @@ class Task extends Component {
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
               <TaskStatusIcons status={ 'public' } bounty />
-              { (task.data.level || taskOwner()) &&
-                <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !taskOwner() } onSelect={ this.props.updateTask } />
+              { (task.data.level || this.taskOwner()) &&
+                <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !this.taskOwner() } onSelect={ this.props.updateTask } />
               }
               <StatsCard
                 icon={ TrophyIcon }
                 iconColor='green'
                 title={ this.props.intl.formatMessage(messages.taskValueLabel) }
-                description={ this.rendereAmountStatsCardContent(taskOwner()) }
+                description={ this.rendereAmountStatsCardContent(this.taskOwner()) }
                 statIcon={ CalendarIcon }
                 statText={ this.props.intl.formatMessage(messages.taskValuesStatus, {
                   approved: task.values.available,
