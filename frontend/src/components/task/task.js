@@ -727,20 +727,20 @@ class Task extends Component {
               } }
             >
               { task.data.metadata ? (
-                <div style={ { position: 'absolute', left: 18, top: 5 } }>
+                <div style={ { position: 'absolute', left: 38, top: 5 } }>
                   <Typography color='default'>
                     <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
                   </Typography>
                 </div>
               ) : (
-                <div style={ { position: 'absolute', left: 18, top: 5 } }>
+                <div style={ { position: 'absolute', left: 38, top: 5 } }>
                   <Typography color='default'>
                     <FormattedMessage id='task.status.author.missing' defaultMessage='author info unknown' />
                   </Typography>
                 </div>
               ) }
               { task.data.metadata &&
-              <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
+              <FormattedMessage id='task.status.author.name' defaultMessage='Author from provider {name}' values={ {
                 name: task.data.metadata.issue.user.login
               } }>
                 { (msg) => (
@@ -755,6 +755,29 @@ class Task extends Component {
                     >
                       <Avatar
                         src={ task.data.metadata.issue.user.avatar_url }
+                        className={ classNames(classes.avatar) }
+                      />
+                    </a>
+                  </Tooltip>
+                ) }
+              </FormattedMessage>
+              }
+              { task.data.metadata &&
+              <FormattedMessage id='task.status.author.name' defaultMessage='Author from provider {name}' values={ {
+                name: this.props.user.name
+              } }>
+                { (msg) => (
+                  <Tooltip
+                    id='tooltip-github'
+                    title={ msg }
+                    placement='bottom'
+                  >
+                    <a
+                      href={`${this.props.user.html_url}` }
+                      target='_blank'
+                    >
+                      <Avatar
+                        src={ this.props.user.avatar_url }
                         className={ classNames(classes.avatar) }
                       />
                     </a>
