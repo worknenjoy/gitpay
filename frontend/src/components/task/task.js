@@ -682,7 +682,7 @@ class Task extends Component {
     }
 
     const isCurrentUserAssigned = () => {
-      return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
+      return task.data && CustomPaginationActionsTable && task.data.assignedUser.id === this.props.user.id
     }
 
     const isAssignOwner = () => {
@@ -727,21 +727,21 @@ class Task extends Component {
               } }
             >
               { task.data.metadata ? (
-                <div style={ { position: 'absolute', left: 18, top: 5 } }>
+                <div style={ { position: 'absolute', left: 38, top: 5} }>
                   <Typography color='default'>
                     <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
                   </Typography>
                 </div>
               ) : (
-                <div style={ { position: 'absolute', left: 18, top: 5 } }>
+                <div style={ { position: 'absolute', left: 38, top: 5 } }>
                   <Typography color='default'>
                     <FormattedMessage id='task.status.author.missing' defaultMessage='author info unknown' />
                   </Typography>
                 </div>
               ) }
               { task.data.metadata &&
-              <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
-                name: task.data.metadata.issue.user.login
+              <FormattedMessage id='task.status.author.name' defaultMessage='Author from provider {name}' values={ {
+                name:  task.data.metadata.issue.user.login
               } }>
                 { (msg) => (
                   <Tooltip
@@ -749,22 +749,71 @@ class Task extends Component {
                     title={ msg }
                     placement='bottom'
                   >
+				
+				
                     <a
                       href={ `${task.data.metadata.issue.user.html_url}` }
                       target='_blank'
+					 
                     >
-                      <Avatar
+                
+					 <Avatar
                         src={ task.data.metadata.issue.user.avatar_url }
-                        className={ classNames(classes.avatar) }
+                      className={ classNames(classes.avatar) }
+						
                       />
-                    </a>
+					
+  
+					
+					</a>
+				     
                   </Tooltip>
                 ) }
               </FormattedMessage>
               }
-              <div className={ classes.paper }>
+			
+			
+			  
+			  { task.data.metadata && 
+              <FormattedMessage id='task.status.imported.name' defaultMessage='Imported to Gitpay by {name}' values={ {
+                name:  this.props.user.name
+				
+              } }>
+                { (msg) => (
+                  <Tooltip
+                    id='tooltip-github'
+                    title={ msg }
+                    placement='bottom'
+                  >
+				
+				
+                    <a
+                      href={ `${this.props.user.html_url}` }
+                      target='_blank'
+					 
+                    >
+                
+					 <Avatar
+                        src={ this.props.user.avatar_url }
+                      className={ classNames(classes.avatar) }
+						
+                      />
+					
+  
+					
+					</a>
+				     
+                  </Tooltip>
+                ) }
+              </FormattedMessage>
+              }
+			  
+			  
+			
+				
+              <div className={ classes.paper } >
                 <Button
-                  style={ { marginRight: 10 } }
+                  style={ { marginRight: 10} }
                   onClick={ this.handlePaymentForm }
                   size='small'
                   color='primary'
