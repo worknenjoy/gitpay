@@ -447,8 +447,12 @@ class Task extends Component {
     }
   }
 
-  componentDidUpdate() {
-    if(this.taskOwner()) {
+  componentDidUpdate () {
+    this.checkFirstTask()
+  }
+
+  checkFirstTask () {
+    if (this.taskOwner()) {
       /* eslint-disable no-undef */
       const hadFirstTask = localStorage.getItem('hadFirstTask')
       if (!hadFirstTask) {
