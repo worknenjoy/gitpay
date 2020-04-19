@@ -763,7 +763,7 @@ class Task extends Component {
               </FormattedMessage>
               }
               { task.data.metadata &&
-              <FormattedMessage id='task.status.author.name' defaultMessage='Author from provider {name}' values={ {
+              <FormattedMessage id='task.status.author.name' defaultMessage='Imported to Giplay by {name}' values={ {
                 name: this.props.user.name
               } }>
                 { (msg) => (
