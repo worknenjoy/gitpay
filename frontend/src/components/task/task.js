@@ -8,6 +8,7 @@ import TaskTabs from './task-tabs'
 import TaskHeader from './task-header'
 import TaskAssignment from './task-assignment'
 import TaskStatusIcons from './task-status-icons'
+import nameInitials from 'name-initials'
 
 import {
   Dialog,
@@ -404,7 +405,7 @@ class Task extends Component {
     await this.props.fetchTask(id)
 
     if (status) {
-      if (id && logged && logged.user.id === this.props.task.data.userId) {
+      if (id && logged && this.props.task.data.user && logged.user.id === this.props.task.data.user.id) {
         await this.props.updateTask({ id, status })
       }
       else {
@@ -433,7 +434,7 @@ class Task extends Component {
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/status`) {
       if (logged) {
-        if (this.props.task.data && (logged.user.id === this.props.task.data.userId)) {
+        if (this.props.task.data && this.props.task.data.user && (logged.user.id === this.props.task.data.user.id)) {
           this.handleStatusDialog()
         }
         else {
@@ -756,7 +757,7 @@ class Task extends Component {
 
   taskOwner = () => {
     const { task } = this.props
-    const creator = this.props.logged && this.props.user.id === task.data.userId
+    const creator = this.props.logged && task.data.user && this.props.user.id === task.data.user.id
     const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === this.props.user.id).length > 0 : false
     return creator || owner
   }
@@ -881,7 +882,8 @@ class Task extends Component {
                 </div>
               ) }
               { task.data.metadata &&
-              <FormattedMessage id='task.status.author.name' defaultMessage='Author from provider {name}' values={ {
+              <FormattedMessage id='task.status.author.name' defaultMessage='Imported from {provider} by {name}' values={ {
+                provider: task.data.provider,
                 name: task.data.metadata.issue.user.login
               } }>
                 { (msg) => (
@@ -904,9 +906,9 @@ class Task extends Component {
                 ) }
               </FormattedMessage>
               }
-              { task.data.metadata &&
+              { task.data.user &&
               <FormattedMessage id='task.status.importer.name' defaultMessage='Imported to Gitpay by {name}' values={ {
-                name: this.props.user.name
+                name: task.data.user.name
               } }>
                 { (msg) => (
                   <Tooltip
@@ -915,14 +917,17 @@ class Task extends Component {
                     placement='bottom'
                   >
                     <a
-                      href={ `${this.props.user.html_url}` }
+                      href={ `${task.data.user.website}` }
                       target='_blank'
                       style={ { marginLeft: 5 } }
                     >
                       <Avatar
-                        src={ this.props.user.avatar_url }
+                        alt={ task.data.user.name }
+                        src=''
                         className={ classNames(classes.avatar) }
-                      />
+                      >
+                        { nameInitials(task.data.user.name) }
+                      </Avatar>
                     </a>
                   </Tooltip>
                 ) }
