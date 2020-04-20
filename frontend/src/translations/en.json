@@ -510,5 +510,15 @@
   "task.deadline.level4": " In on month ",
   "task.actions.tooltip.language": "Choose your language",
   "task.actions.tooltip.git": "See our project on Github",
-  "task.status.deadline.headline": "Finish date"
+  "task.status.deadline.headline": "Finish date",
+  "first.task.bounties.description": "Add bounties to reward contributors to solve your issue and delivery your task",
+  "first.task.bounties.title": "Add bounties",
+  "first.task.bounties.action": "Add bounties now",
+  "first.task.deadline.description": "Set a deadline in order to define when your issue should be solved",
+  "first.task.deadline.title": "Set a deadline",
+  "first.task.deadline.action": "Set deadline",
+  "first.task.community.description": "We will make a campaign to let our community know that you have an issue to be solved",
+  "first.task.community.title": "Send to our community",
+  "first.task.next": "Next",
+  "first.task.back": "Back"
 }

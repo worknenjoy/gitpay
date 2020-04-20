@@ -433,5 +433,15 @@
   "task.deadline.level4": " daqui um mês ",
   "task.actions.tooltip.language": "Escolher idioma",
   "task.actions.tooltip.git": "Acessar nosso Github",
-  "task.status.deadline.headline": "Data de entrega"
+  "task.status.deadline.headline": "Data de entrega",
+  "first.task.bounties.description": "Adicione recompensas para os contribuidores resolverem suas tarefas e entregá-las",
+  "first.task.bounties.title": "Adicione recompensas",
+  "first.task.bounties.action": "Adicionar recomponsesas agora",
+  "first.task.deadline.description": "Estabeleça um prazo para definir quando suas tarefas devem ser resolvidas",
+  "first.task.deadline.title": "Estabeleça um prazo",
+  "first.task.deadline.action": "Estabelecer um prazo",
+  "first.task.community.description": "Iremos fazer uma campanha para que nossa comunidade saiba que você tem uma tarefa a ser resolvida",
+  "first.task.community.title": "Envie para nossa comunidade",
+  "first.task.next": "Próximo",
+  "first.task.back": "Anterior"
 }
