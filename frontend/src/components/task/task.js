@@ -727,13 +727,13 @@ class Task extends Component {
               } }
             >
               { task.data.metadata ? (
-                <div style={ { position: 'absolute', left: 38, top: 5 } }>
+                <div style={ { position: 'absolute', left: 40, top: 5 } }>
                   <Typography color='default'>
                     <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
                   </Typography>
                 </div>
               ) : (
-                <div style={ { position: 'absolute', left: 38, top: 5 } }>
+                <div style={ { position: 'absolute', left: 40, top: 5 } }>
                   <Typography color='default'>
                     <FormattedMessage id='task.status.author.missing' defaultMessage='author info unknown' />
                   </Typography>
@@ -752,6 +752,7 @@ class Task extends Component {
                     <a
                       href={ `${task.data.metadata.issue.user.html_url}` }
                       target='_blank'
+					  
                     >
                       <Avatar
                         src={ task.data.metadata.issue.user.avatar_url }
@@ -773,8 +774,9 @@ class Task extends Component {
                     placement='bottom'
                   >
                     <a
-                      href={`${this.props.user.html_url}` }
+                      href={ `${this.props.user.html_url}` }
                       target='_blank'
+					  style={ { marginLeft: 5 } }
                     >
                       <Avatar
                         src={ this.props.user.avatar_url }
