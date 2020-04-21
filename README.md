@@ -135,6 +135,7 @@ Here you can start to learn how to create your first pull request and start to b
 - [Amrut]( https://github.com/amrut07 )
 - [Usman Sakirat Kehinde]( https://github.com/oyinkan )
 - [Qiwei]( https://github.com/qiweiii )
+- [Adam Ash](https://github.com/adamash99) 
 - [Shawn Noruzi]( https://github.com/shawn-noruzi )
 
 ## License
