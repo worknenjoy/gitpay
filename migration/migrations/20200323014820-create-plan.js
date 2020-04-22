@@ -12,13 +12,14 @@ module.exports = {
       OrderId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Order',
+          model: 'Orders',
           key: 'id'
         },
         allowNull: true
       },
       plan: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM,
+        values: ['open source', 'private', 'with support']
       },
       fee: {
         type: Sequelize.DECIMAL
@@ -29,6 +30,6 @@ module.exports = {
     })
   },
   down: function (queryInterface, Sequelize) {
-    return queryInterface.dropTable('Plan');
+    return queryInterface.dropTable('Plans');
   }
 };
