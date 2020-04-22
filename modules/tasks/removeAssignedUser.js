@@ -28,8 +28,9 @@ module.exports = Promise.method(function ({ id, userId }, { message }) {
       // Unset assigned value,
       const saveTaskPromise = task.set('assigned', null).save()
       const changeStatusPromise = task.set('status', 'open').save()
+      const changeStatusAssign = assignedPromise.set('status', 'pending').save()
 
-      return Promise.all([assignedPromise, saveTaskPromise, changeStatusPromise])
+      return Promise.all([assignedPromise, saveTaskPromise, changeStatusPromise, changeStatusAssign])
         .then(([ assign ]) => {
           const user = assign.User
           const language = user.language || 'en'
