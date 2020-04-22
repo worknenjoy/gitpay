@@ -346,6 +346,7 @@ class Task extends Component {
     super(props)
 
     this.state = {
+      logged: null,
       deadline: null,
       assigned: null,
       finalPrice: 0,
@@ -385,9 +386,11 @@ class Task extends Component {
     let logged = false
     try {
       logged = await this.props.isLogged()
+      this.setState({ logged })
     }
     catch (e) {
       logged = false
+      this.setState({ logged })
     }
 
     await this.props.syncTask(id)
@@ -510,23 +513,16 @@ class Task extends Component {
     this.setState({ termsDialog: false })
   }
 
-  handleAssignTask = () => {
+  handleOfferTask = () => {
     this.props.updateTask({
       id: this.props.match.params.id,
-      Assigns: [
-        {
-          userId: this.props.user.id
-        }
-      ],
-      Offers: [
-        {
-          userId: this.props.user.id,
-          suggestedDate: this.state.interestedSuggestedDate,
-          value: this.state.currentPrice,
-          learn: this.state.interestedLearn,
-          comment: this.state.interestedComment
-        }
-      ]
+      Offer: {
+        userId: this.props.user.id,
+        suggestedDate: this.state.interestedSuggestedDate,
+        value: this.state.currentPrice,
+        learn: this.state.interestedLearn,
+        comment: this.state.interestedComment
+      }
     })
     this.setState({ assignDialog: false, termsAgreed: false })
   }
@@ -960,7 +956,7 @@ class Task extends Component {
                   handleTermsDialog={ this.handleTermsDialog }
                   termsDialog={ this.state.termsDialog }
                   handleTermsDialogClose={ this.handleTermsDialogClose }
-                  handleAssignTask={ this.handleAssignTask }
+                  handleOfferTask={ this.handleOfferTask }
                   logged={ this.props.logged }
                   task={ task }
                   classes={ classes }
@@ -995,6 +991,8 @@ class Task extends Component {
               }
               <div className={ classes.rootTabs }>
                 <TaskTabs
+                  hash={ this.props.location.hash }
+                  actionAssign={ this.props.actionAssign }
                   assignTask={ this.props.assignTask }
                   removeAssignment={ this.props.removeAssignment }
                   messageTask={ this.props.messageTask }
@@ -1057,6 +1055,7 @@ Task.propTypes = {
   location: PropTypes.object,
   paymentTask: PropTypes.func,
   assignTask: PropTypes.func,
+  actionAssign: PropTypes.func,
   task: PropTypes.object,
   logged: PropTypes.bool,
   user: PropTypes.object,
