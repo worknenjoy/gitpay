@@ -31,7 +31,7 @@ export const PaymentHeader = ({...props}) => {
 
   const userPaymentHeader = () => {
     // console.log(checkPaymentAvailable);
-    if (checkPaymentAvailable) {
+    if (!checkPaymentAvailable) {
       return (
         <div>
 

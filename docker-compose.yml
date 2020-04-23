@@ -5,7 +5,7 @@ services:
     image: node:8.6
     command: sh -c "npm install && npm run dev"
     working_dir: /gitpay/frontend
-    volumes: 
+    volumes:
       - .:/gitpay
     network_mode: host
     ports:
@@ -18,13 +18,14 @@ services:
     image: node:8.6
     command: sh -c "npm install && npm run migrate && npm run start"
     working_dir: /gitpay
-    volumes: 
+    volumes:
       - .:/gitpay
     network_mode: host
     ports:
       - "3000:3000"
   db:
-    image: postgres    
+    image: postgres
     environment:
       POSTGRES_DB: gitpay_dev
+      POSTGRES_PASSWORD: postgres
     network_mode: host

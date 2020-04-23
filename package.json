@@ -32,7 +32,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bitbucket-api-v2": "^0.6.2",
     "bitbucket-v2": "^0.4.3",
-    "bluebird": "^3.5.3",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.4.1",
     "color": "^3.1.2",

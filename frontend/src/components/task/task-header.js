@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactPlaceholder from 'react-placeholder'
-import {RectShape} from 'react-placeholder/lib/placeholders'
+import { RectShape } from 'react-placeholder/lib/placeholders'
 import {
   Typography,
   Button,
@@ -10,7 +10,7 @@ import {
   withStyles
 } from '@material-ui/core'
 
-import {injectIntl, FormattedMessage} from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
   Redeem as RedeemIcon,
@@ -23,7 +23,7 @@ import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
 import Constants from '../../consts'
-import {PaymentHeader} from "../Cards/PaymentHeaderCard";
+import { PaymentHeader } from '../Cards/PaymentHeaderCard'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -45,7 +45,7 @@ const TaskHeaderContainer = styled.div`
       font-size: 1.75rem;
     }
   `}
-`;
+`
 
 const Tags = styled.div`
   display: inline-block;
@@ -90,109 +90,108 @@ class TaskHeader extends React.Component {
     window.location.assign('/#/tasks/explore')
   }
 
-  render() {
-    const {classes, task} = this.props;
+  render () {
+    const { classes, task } = this.props
 
     const headerPlaceholder = (
       <div className='line-holder'>
-      <RectShape
-    color='white'
-    style={{marginLeft: 20, marginTop: 20, width: 300, height: 20}}
-    />
-    </div>
-  );
+        <RectShape
+          color='white'
+          style={ { marginLeft: 20, marginTop: 20, width: 300, height: 20 } }
+        />
+      </div>
+    )
 
     return (
       <TaskHeaderContainer>
-      <Grid container spacing={9}>
-      <Grid item xs={12} sm={12} md={6}>
-      <Button onClick={this.handleBackToTaskList} style={{marginBottom: 10}} variant='contained' size='small'
-    aria-label='Delete' className={classes.button}>
-      <NavigationIcon/>
-      <FormattedMessage id='task.title.navigation' defaultMessage='Tasks'/>
-      </Button>
-    {task.data.metadata &&
-    <Typography variant='subheading' style={{color: '#bbb'}}>
-    <ReactPlaceholder showLoadingAnimation type='text' rows={1}
-      ready={task.completed}>
-        <div style={{marginTop: 20}}>
-    <Chip
-      key={task.data.metadata.company}
-      clickable
-      label={task.data.metadata.company}
-      onClick={() => this.goToProjectRepo(task.data.metadata.ownerUrl)}
-      className={classes.chip}
-      color='secondary'
-      onDelete={() => this.goToProjectRepo(task.data.metadata.ownerUrl)}
-      deleteIcon={<ExternalLinkIcon/>}
-      />
-      <Chip
-      key={task.data.metadata.projectName}
-      clickable
-      label={task.data.metadata.projectName}
-      onClick={() => this.goToProjectRepo(task.data.metadata.repoUrl)}
-      className={classes.chip}
-      color='secondary'
-      onDelete={() => this.goToProjectRepo(task.data.metadata.repoUrl)}
-      deleteIcon={<ExternalLinkIcon/>}
-      />
-      </div>
-      </ReactPlaceholder>
-      </Typography>
-    }
-  <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation
-    ready={task.completed}>
-      <Typography variant='display1' color='primary' align='left' gutterBottom>
-    <a className={classes.white} href={task.data.url}>
-      {task.data.title}
-      </a>
-      <Tags>
-      <Button
-    style={{marginLeft: 10, marginRight: 10}}
-    href={task.data.url}
-    variant='outlined'
-    color='primary'
-    size='small'
-      >
-      <span className={classes.gutterRight}>See on {task.data.provider} </span>
-    <img width='16' src={task.data.provider === 'github' ? logoGithub : logoBitbucket}/>
-    </Button>
-    <Chip
-    style={{marginRight: 10}}
-    label={this.props.intl.formatMessage(Constants.STATUSES[task.data.status])}
-    className={classes.chipStatus}
-    onDelete={this.handleStatusDialog}
-    onClick={this.handleStatusDialog}
-    deleteIcon={<DoneIcon/>}
-    />
+        <Grid container spacing={ 9 }>
+          <Grid item xs={ 12 } sm={ 12 } md={ 6 }>
+            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='contained' size='small'
+              aria-label='Delete' className={ classes.button }>
+              <NavigationIcon />
+              <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
+            </Button>
+            { task.data.metadata &&
+            <Typography variant='subheading' style={ { color: '#bbb' } }>
+              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
+                ready={ task.completed }>
+                <div style={ { marginTop: 20 } }>
+                  <Chip
+                    key={ task.data.metadata.company }
+                    clickable
+                    label={ task.data.metadata.company }
+                    onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                    className={ classes.chip }
+                    color='secondary'
+                    onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
+                    deleteIcon={ <ExternalLinkIcon /> }
+                  />
+                  <Chip
+                    key={ task.data.metadata.projectName }
+                    clickable
+                    label={ task.data.metadata.projectName }
+                    onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                    className={ classes.chip }
+                    color='secondary'
+                    onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
+                    deleteIcon={ <ExternalLinkIcon /> }
+                  />
+                </div>
+              </ReactPlaceholder>
+            </Typography>
+            }
+            <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
+              ready={ task.completed }>
+              <Typography variant='display1' color='primary' align='left' gutterBottom>
+                <a className={ classes.white } href={ task.data.url }>
+                  { task.data.title }
+                </a>
+                <Tags>
+                  <Button
+                    style={ { marginLeft: 10, marginRight: 10 } }
+                    href={ task.data.url }
+                    variant='outlined'
+                    color='primary'
+                    size='small'
+                  >
+                    <span className={ classes.gutterRight }>See on { task.data.provider } </span>
+                    <img width='16' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } />
+                  </Button>
+                  <Chip
+                    style={ { marginRight: 10 } }
+                    label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                    className={ classes.chipStatus }
+                    onDelete={ this.handleStatusDialog }
+                    onClick={ this.handleStatusDialog }
+                    deleteIcon={ <DoneIcon /> }
+                  />
 
-    {task.data.paid && (
-    <FormattedMessage id='task.status.label.paid' defaultMessage='Paid'>
-      {(msg) => (
-    <Chip
-      style={{marginRight: 10}}
-      label={msg}
-      className={classes.chipStatusPaid}
-      onDelete={this.handleTaskPaymentDialog}
-      onClick={this.handleTaskPaymentDialog}
-      deleteIcon={<RedeemIcon/>}
-      />
-    )}
-    </FormattedMessage>
-    )}
-  </Tags>
+                  { task.data.paid && (
+                    <FormattedMessage id='task.status.label.paid' defaultMessage='Paid'>
+                      { (msg) => (
+                        <Chip
+                          style={ { marginRight: 10 } }
+                          label={ msg }
+                          className={ classes.chipStatusPaid }
+                          onDelete={ this.handleTaskPaymentDialog }
+                          onClick={ this.handleTaskPaymentDialog }
+                          deleteIcon={ <RedeemIcon /> }
+                        />
+                      ) }
+                    </FormattedMessage>
+                  ) }
+                </Tags>
 
-    </Typography>
-    </ReactPlaceholder>
-    </Grid>
-    <Grid item xs={12} sm={12} md={6} className={classes.paymentInfo}>
-      <PaymentHeader>{task}</PaymentHeader>
-      </Grid>
-      </Grid>
-
+              </Typography>
+            </ReactPlaceholder>
+          </Grid>
+          <Grid item xs={ 12 } sm={ 12 } md={ 6 } className={ classes.paymentInfo }>
+            <PaymentHeader>{ task }</PaymentHeader>
+          </Grid>
+        </Grid>
 
       </TaskHeaderContainer>
-  )
+    )
   }
 }
 
