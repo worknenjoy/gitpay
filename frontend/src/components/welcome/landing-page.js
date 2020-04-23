@@ -14,6 +14,7 @@ import Grid from "@material-ui/core/Grid";
 //Landing Page for GitPay
 //Total hours worked on this: ~10hours 
 //Still need to add in functionality for buttons 
+//Export Styles to seperate file to clean up code but left here for you to see for now
 
 const styles = (theme) => ({
   signText: {
