@@ -13,6 +13,7 @@ describe('preferences reducer', () => {
         'languages': null,
         'os': null,
         'receiveNotifications': null,
+        'openForJobs': null,
         'skills': null
       }
     )
