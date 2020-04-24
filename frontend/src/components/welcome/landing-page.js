@@ -155,7 +155,7 @@ const styles = (theme) => ({
 });
 
 function LandingPage(props) {
-  const {visible, setVisible} = useState(false)
+  // const {visible, setVisible} = useState(false)
   const { classes } = props;
   const Paragraph = [
     "Filium morte multavit si sine dubio praeclara sunt, explicabo nemo ",
@@ -174,10 +174,10 @@ function LandingPage(props) {
               <Toolbar>
                 <img src={logoGrey} alt="logo" className={classes.logoImage} />
                 <div className={classes.grow} />
-                <Button onClick={setVisible(true)} className={classes.buttonSignin}>
+                <Button  className={classes.buttonSignin}>
                   <p className={classes.signText}>Sign In</p>
                 </Button>
-                <Button onClick={setVisible(true)} className={classes.buttonSignup}>
+                <Button  className={classes.buttonSignup}>
                   <p className={classes.signText}>Sign Up</p>
                 </Button>
               </Toolbar>
