@@ -139,6 +139,7 @@ const styles = (theme) => ({
   },
   paragraph: {
     fontSize: '1.45em',
+    lineHeight: 1.5,
     [theme.breakpoints.down('sm')]: {
       lineHeight: 1.5,
       fontSize: '1em',
@@ -165,7 +166,7 @@ function LandingPage (props) {
   return (
     <div>
       <div className={ classes.root }>
-        <Grid container className={ classes.center } spacing={ 12 }>
+        <Grid container className={ classes.center } spacing={ 8 }>
           <Grid item xs={ 12 }>
             <AppBar
               position='static'
@@ -186,7 +187,7 @@ function LandingPage (props) {
               <h1 className={ classes.header }>
                 We can find the right candidate for you
               </h1>
-              <p className={ classes.paragraph }>{ Paragraph }</p>
+              <p className={ classes.paragraph }>{ Paragraph } </p>
             </Grid>
             <Grid item xs={ 12 } className={ classes.margin }>
               <Button
