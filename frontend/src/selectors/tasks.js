@@ -30,6 +30,20 @@ export const getFilteredTasks = createSelector(
               return item.assigned === interested[0].id
             }
           }) }
+      case 'value':
+        return {
+          ...tasks,
+          data: tasks.data.filter(item => {
+            const filterValue = tasks.filterValue
+
+            if (filterValue === 'issuesWithBounties') {
+              return parseFloat(item.value) > parseFloat('0')
+            }
+            else if (filterValue === 'contribution') {
+              return parseFloat(item.value) === parseFloat('0')
+            }
+          })
+        }
       default:
         return tasks
     }

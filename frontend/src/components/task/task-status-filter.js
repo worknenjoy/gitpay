@@ -16,7 +16,7 @@ const styles = theme => ({
   }
 })
 
-const statuses = ['open', 'in_progress', 'closed']
+const statuses = ['open', 'in_progress', 'closed', 'issuesWithBounties', 'contribution']
 
 class TaskStatusFilter extends Component {
   constructor (props) {
@@ -50,6 +50,14 @@ class TaskStatusFilter extends Component {
         this.props.onFilter('status', 'closed')
         this.setState({ selected: 'closed' })
         break
+      case '/tasks/with-bounties':
+        this.props.onFilter('status', 'issuesWithBounties')
+        this.setState({ selected: 'issuesWithBounties' })
+        break
+      case '/tasks/contribution':
+        this.props.onFilter('status', 'contribution')
+        this.setState({ selected: 'contribution' })
+        break
       default:
         this.props.onFilter()
     }
@@ -69,6 +77,14 @@ class TaskStatusFilter extends Component {
         this.props.history.push('/tasks/finished')
         this.props.onFilter('status', value)
         break
+      case 'issuesWithBounties':
+        this.props.history.push('/tasks/with-bounties')
+        this.props.onFilter('value', value)
+        break
+      case 'contribution':
+        this.props.history.push('/tasks/contribution')
+        this.props.onFilter('value', value)
+        break
       default:
         this.props.onFilter()
     }
@@ -85,7 +101,9 @@ class TaskStatusFilter extends Component {
     const possibles = {
       open: this.props.intl.formatMessage(messages.openStatus),
       in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
-      closed: this.props.intl.formatMessage(messages.closed)
+      closed: this.props.intl.formatMessage(messages.closed),
+      issuesWithBounties: this.props.intl.formatMessage(messages.issuesWithBounties),
+      contribution: this.props.intl.formatMessage(messages.contribution)
     }
     return possibles[status]
   }
