@@ -116,6 +116,20 @@ function cmdMigrateNext() {
         })
 }
 
+ function cmdUpdateAll() {
+    return cmdStatus()
+        .then(({ executed, pending }) => {
+            let length = pending.length;
+            if (length === 0) {
+                return Promise.reject(new Error('No pending migrations'));
+            }
+            length -= 1;
+            const next = pending[0].name;
+            const last = pending[length].name;
+            return umzug.up({ from: next, to: last });
+        })
+}
+
 function cmdReset() {
     return umzug.down({ to: 0 });
 }
@@ -179,6 +193,10 @@ switch (cmd) {
 
     case 'reset-hard':
         executedCmd = cmdHardReset();
+        break;
+
+    case 'update':
+        executedCmd = cmdUpdateAll();
         break;
 
     default:

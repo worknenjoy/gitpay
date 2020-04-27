@@ -8,6 +8,7 @@
   },
   "scripts": {
     "migrate": "node migrate.js up",
+    "migrate-update": "node migrate.js update",
     "migrate-test": "NODE_ENV=test node migrate.js up",
     "seed": "TYPE=seed node migrate.js up",
     "seed-test": "TYPE=seed NODE_ENV=test node migrate.js up",
