@@ -1,4 +1,11 @@
 {
+  "welcome.landing.signin": "Assinar em" ,
+  "welcome.landing.signup": "Inscrever-se" ,
+  "welcome.landing.hire": "Contratar" ,
+  "welcome.landing.work": "Trabalhos" ,
+  "welcome.landing.title": "Podemos encontrar o candidato certo para você" ,
+  "welcome.landing.description": "Filium morte multavit si sine dubio praeclara sunt, explicabo nemo " ,
+  "welcome.landing.description2": "enim ad minima. Probabo, inquit, modo ista sis aequitate, quam ob " ,
   "payment.message.error": "Erro ao realizar o pagamento",
   "welcome.tagline": "Sua contribuição vira recompensa",
   "welcome.tagline1": "solucionando tarefas no git",

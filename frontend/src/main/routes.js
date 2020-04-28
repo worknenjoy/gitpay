@@ -12,10 +12,12 @@ import TaskExplorer from '../components/task/task-explorer'
 import LoginPage from '../components/session/login-page'
 import LoginPageContainer from '../containers/login-page'
 import FourOFour from '../components/FourOFour.js'
+import LandingPage from '../components/welcome/landing-page'
 
 export default props => (
   <HashRouter>
     <Switch>
+      <Route path='/recruitment' component={ LandingPage } />
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Redirect path='/tasks/explore' to='/tasks/all' />
