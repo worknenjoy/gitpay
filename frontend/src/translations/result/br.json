@@ -1,4 +1,11 @@
 {
+  "welcome.landing.signin": "Sign In",
+  "welcome.landing.signup": "Sign Up",
+  "welcome.landing.hire": "Hire",
+  "welcome.landing.work": "Work",
+  "welcome.landing.title": "We can find the right candidate for you",
+  "welcome.landing.description": "Filium morte multavit si sine dubio praeclara sunt, explicabo nemo ",
+  "welcome.landing.description2": "enim ad minima. Probabo, inquit, modo ista sis aequitate, quam ob ",
   "welcome.menu.item.one": "Início",
   "general.singup.action": "Signin / Signup",
   "general.singup.access": "Access your account",
