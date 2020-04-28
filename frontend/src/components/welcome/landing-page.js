@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AppBar from '@material-ui/core/AppBar'
@@ -7,12 +8,9 @@ import Toolbar from '@material-ui/core/Toolbar'
 import peopleImage from '../../images/landingPage_People.png'
 import logoGrey from '../../images/logo-complete-gray.png'
 import Grid from '@material-ui/core/Grid'
-// import LoginButton from "../session/login-button";
-// import DialogTitle from '@material-ui/core/DialogTitle';
-// import Dialog from '@material-ui/core/Dialog';
 
 // Landing Page for GitPay
-// Total hours worked on this: ~10hours
+// Total hours worked on this: ~12hours
 // Still need to add in functionality for buttons
 // Export Styles to seperate file to clean up code but left here for you to see for now
 
@@ -28,7 +26,7 @@ const styles = (theme) => ({
   },
   buttonSignin: {
     textTransform: 'none',
-    width: 100,
+    width: 120,
     borderRadius: 25,
     marginRight: 20,
     '&:hover': {
@@ -36,7 +34,7 @@ const styles = (theme) => ({
       background: '#7F83FF',
     },
     [theme.breakpoints.down('sm')]: {
-      width: 50,
+      width: 90,
     },
   },
   buttonSignup: {
@@ -49,7 +47,7 @@ const styles = (theme) => ({
       background: '#4A4EDD',
     },
     [theme.breakpoints.down('sm')]: {
-      width: 50,
+      width: 90,
     },
   },
   buttonHire: {
@@ -110,6 +108,10 @@ const styles = (theme) => ({
   textContainer: {
     marginTop: 60,
     marginLeft: 30,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 10,
+      marginRight: 10
+    },
   },
   textSize: {
     fontSize: '1.5em',
@@ -143,12 +145,14 @@ const styles = (theme) => ({
     [theme.breakpoints.down('sm')]: {
       lineHeight: 1.5,
       fontSize: '1em',
+      margin: '0 auto',
+      width: 270
     },
   },
   margin: {
     marginTop: 60,
     marginBottom: 100,
-    marginLeft: 90,
+    marginLeft: 30,
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
     },
@@ -156,13 +160,8 @@ const styles = (theme) => ({
 })
 
 function LandingPage (props) {
-  // const {visible, setVisible} = useState(false)
   const { classes } = props
-  const Paragraph = [
-    'Filium morte multavit si sine dubio praeclara sunt, explicabo nemo ',
-    <br />,
-    'enim ad minima. Probabo, inquit, modo ista sis aequitate, quam ob ',
-  ]
+
   return (
     <div>
       <div className={ classes.root }>
@@ -176,18 +175,19 @@ function LandingPage (props) {
                 <img src={ logoGrey } alt='logo' className={ classes.logoImage } />
                 <div className={ classes.grow } />
                 <Button className={ classes.buttonSignin }>
-                  <p className={ classes.signText }>Sign In</p>
+                  <p className={ classes.signText }><FormattedMessage id='welcome.landing.signin' defaultMessage='Sign In' /></p>
                 </Button>
                 <Button className={ classes.buttonSignup }>
-                  <p className={ classes.signText }>Sign Up</p>
+                  <p className={ classes.signText }><FormattedMessage id='welcome.landing.signup' defaultMessage='Sign Up' /></p>
                 </Button>
               </Toolbar>
             </AppBar>
             <Grid item xs={ 12 } className={ classes.textContainer }>
               <h1 className={ classes.header }>
-                We can find the right candidate for you
+                <FormattedMessage id='welcome.landing.title' defaultMessage='We can find the right candidate for you ' />
               </h1>
-              <p className={ classes.paragraph }>{ Paragraph } </p>
+              <p className={ classes.paragraph }><FormattedMessage id='welcome.landing.description' defaultMessage='Filium morte multavit si sine dubio praeclara sunt, explicabo nemo ' /></p>
+              <p className={ classes.paragraph }><FormattedMessage id='welcome.landing.description2' defaultMessage='enim ad minima. Probabo, inquit, modo ista sis aequitate, quam ob ' /></p>
             </Grid>
             <Grid item xs={ 12 } className={ classes.margin }>
               <Button
@@ -196,7 +196,7 @@ function LandingPage (props) {
                 color='primary'
                 className={ classes.buttonHire }
               >
-                <p className={ classes.textSize }>Hire</p>
+                <p className={ classes.textSize }>                <FormattedMessage id='welcome.landing.hire' defaultMessage='Hire' /></p>
               </Button>
               <Button
                 variant='outlined'
@@ -204,7 +204,7 @@ function LandingPage (props) {
                 color='primary'
                 className={ classes.buttonWork }
               >
-                <p className={ classes.textSize }>Work</p>
+                <p className={ classes.textSize }><FormattedMessage id='welcome.landing.work' defaultMessage='Work' /></p>
               </Button>
             </Grid>
           </Grid>
