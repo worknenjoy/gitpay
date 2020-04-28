@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -71,141 +72,170 @@ exports.github = async (req, res) => {
       else return res.status(500).json({})
     }
     if (response.action === 'labeled') {
-      const labelNotify = labels.filter(label => label.name === 'notify')
-      const labelGitpay = labels.filter(label => label.name === 'gitpay')
-      if (labelNotify) {
-        try {
-          const user = await models.User.findOne({
-            where: {
-              username: response.issue.user.login
-            }
-          })
-          const userData = user && user.dataValues
-          const task = await models.Task.findOne({
-            where: {
-              url: response.issue.html_url
-            }
-          })
-          const taskData = task.dataValues
-          const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
-
-          if (userData && !taskData.notified) {
-            const language = user.language || 'en'
-            i18n.setLocale(language)
-            SendMail.success(
-              userData,
-              i18n.__('mail.webhook.github.issue.new.subject', {
-                title: response.issue.title
-              }),
-              i18n.__('mail.webhook.github.issue.new.message', {
-                task: taskUrl,
-                issue: response.issue.html_url,
-                repo: response.repository.html_url
-              })
-            )
-          }
-          TaskMail.notify(userData, {
-            task: {
-              title: taskData.title,
-              issue_url: taskData.url,
-              url: constants.taskUrl(taskData.id),
-              value: taskData.value > 0 ? taskData.value : null,
-              deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null
-            }
-          })
-
-          const taskUpdate = await models.Task.update(
-            {
-              notified: true
-            },
-            {
-              where: {
-                url: response.issue.html_url
-              }
-            }
-          )
-
-          if (!taskUpdate) {
-            SendMail.error('notifications@gitpay.me', 'Error to update task', `An error ocurred to update the task ${task}`)
-            return res.status(404)
-          }
-
-          const finalResponse = { ...response,
-            task: {
-              id: taskData.id,
-              url: taskUrl,
-              title: taskData.title,
-              value: taskData.value > 0 ? taskData.value : null,
-              deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null,
-              userId: userData ? userData.id : null
-            } }
-          return res.json(finalResponse)
-        }
-        catch (e) {
-          return res.json({})
-        }
-      }
-      if (labelGitpay) {
-        // eslint-disable-next-line no-console
-        console.log('it is labeled Gitpay')
-        try {
-          const user = await models.User.findOne({
-            where: {
-              username: response.issue.user.login
-            }
-          })
-          const userData = user && user.dataValues
-          const taskExist = await models.Task.findOne({
-            where: {
-              url: response.issue.html_url
-            }
-          })
-
-          const task = taskExist || await models.Task.build(
-            {
-              title: response.issue.title,
-              provider: 'github',
-              url: response.issue.html_url,
-              userId: userData ? userData.id : null
-            }
-          ).save()
-          const taskData = task.dataValues
-          const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
-          if (userData) {
-            const language = user.language || 'en'
-            i18n.setLocale(language)
-            SendMail.success(
-              userData,
-              i18n.__('mail.webhook.github.issue.new.subject', {
-                title: response.issue.title
-              }),
-              i18n.__('mail.webhook.github.issue.new.message', {
-                task: taskUrl,
-                issue: response.issue.html_url,
-                repo: response.repository.html_url
-              })
-            )
-          }
-          const finalResponse = { ...response,
-            task: {
-              id: taskData.id,
-              url: taskUrl,
-              title: taskData.title,
-              userId: userData ? userData.id : null
-            } }
-          return res.json(finalResponse)
-        }
-        catch (e) {
+      try {
+        const totalLabelResponse = []
+        await Promise.all(labels.map(async (label) => {
           // eslint-disable-next-line no-console
-          console.log('error to build task from github webhook on label gitpay', e)
-          return res.json({})
-        }
+          const persistedLabel = await models.Label.findOne({
+            where: {
+              name: label.name
+            }
+          })
+          if (persistedLabel === null) {
+            await models.Label.create({
+              name: label.name
+            })
+          }
+          if (label.name === 'notify') {
+            let finalResponse = {}
+            try {
+              console.log('it is labeled Gitpay')
+              const user = await models.User.findOne({
+                where: {
+                  username: response.issue.user.login
+                }
+              })
+              const userData = user && user.dataValues
+              const task = await models.Task.findOne({
+                where: {
+                  url: response.issue.html_url
+                }
+              })
+              const taskData = task.dataValues
+              const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
+
+              if (userData && !taskData.notified) {
+                const language = user.language || 'en'
+                i18n.setLocale(language)
+                SendMail.success(
+                  userData,
+                  i18n.__('mail.webhook.github.issue.new.subject', {
+                    title: response.issue.title
+                  }),
+                  i18n.__('mail.webhook.github.issue.new.message', {
+                    task: taskUrl,
+                    issue: response.issue.html_url,
+                    repo: response.repository.html_url
+                  })
+                )
+              }
+              TaskMail.notify(userData, {
+                task: {
+                  title: taskData.title,
+                  issue_url: taskData.url,
+                  url: constants.taskUrl(taskData.id),
+                  value: taskData.value > 0 ? taskData.value : null,
+                  deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null
+                }
+              })
+
+              const taskUpdate = await models.Task.update(
+                {
+                  notified: true
+                },
+                {
+                  where: {
+                    url: response.issue.html_url
+                  }
+                }
+              )
+
+              if (!taskUpdate) {
+                SendMail.error('notifications@gitpay.me', 'Error to update task', `An error ocurred to update the task ${task}`)
+              }
+              finalResponse = {
+                task: {
+                  id: taskData.id,
+                  url: taskUrl,
+                  title: taskData.title,
+                  value: taskData.value > 0 ? taskData.value : null,
+                  deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null,
+                  userId: userData ? userData.id : null,
+                  label: label.name,
+                  status: !taskUpdate ? 404 : 200,
+                } }
+            }
+            catch (e) {
+              finalResponse = {}
+            }
+            totalLabelResponse.push(finalResponse.task)
+          }
+          if (label.name === 'gitpay') {
+            // eslint-disable-next-line no-console
+            console.log('it is labeled Gitpay')
+            let finalResponse = {}
+            try {
+              const user = await models.User.findOne({
+                where: {
+                  username: response.issue.user.login
+                }
+              })
+              const userData = user && user.dataValues
+              const taskExist = await models.Task.findOne({
+                where: {
+                  url: response.issue.html_url
+                }
+              })
+
+              const task = taskExist || await models.Task.build(
+                {
+                  title: response.issue.title,
+                  provider: 'github',
+                  url: response.issue.html_url,
+                  userId: userData ? userData.id : null
+                }
+              ).save()
+              const taskData = task.dataValues
+              const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
+              if (userData) {
+                const language = user.language || 'en'
+                i18n.setLocale(language)
+                SendMail.success(
+                  userData,
+                  i18n.__('mail.webhook.github.issue.new.subject', {
+                    title: response.issue.title
+                  }),
+                  i18n.__('mail.webhook.github.issue.new.message', {
+                    task: taskUrl,
+                    issue: response.issue.html_url,
+                    repo: response.repository.html_url
+                  })
+                )
+              }
+              finalResponse = {
+                task: {
+                  id: taskData.id,
+                  url: taskUrl,
+                  title: taskData.title,
+                  userId: userData ? userData.id : null,
+                  label: label.name,
+                  status: 200,
+                } }
+            }
+            catch (e) {
+              // eslint-disable-next-line no-console
+              console.log('error to build task from github webhook on label gitpay', e)
+              finalResponse = {}
+            }
+            totalLabelResponse.push(finalResponse.task)
+          }
+        }))
+        const allResponse = { ...response, totalLabelResponse }
+        console.log(allResponse, 'this is all our response')
+        return res.json({ ...allResponse })
+      }
+      catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('error to build task from github webhook on label gitpay', e)
+        return res.json({})
       }
     }
   }
+  else {
+    console.log('send req body that as it is.....')
+    return res.json(req.body)
+  }
   // eslint-disable-next-line no-console
-  console.log('send req body that as it is')
-  return res.json(req.body)
 }
 
 exports.updateWebhook = (req, res) => {
