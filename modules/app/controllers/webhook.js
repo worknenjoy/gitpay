@@ -89,7 +89,7 @@ exports.github = async (req, res) => {
           if (label.name === 'notify') {
             let finalResponse = {}
             try {
-              console.log('it is labeled Gitpay')
+              console.log('it is labeled notify')
               const user = await models.User.findOne({
                 where: {
                   username: response.issue.user.login
@@ -221,7 +221,7 @@ exports.github = async (req, res) => {
           }
         }))
         const allResponse = { ...response, totalLabelResponse }
-        console.log(allResponse, 'this is all our response')
+        console.log(allResponse, 'response after executing labls')
         return res.json({ ...allResponse })
       }
       catch (e) {
