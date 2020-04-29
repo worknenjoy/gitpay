@@ -42,7 +42,7 @@ export const PaymentHeader = ({...props}) => {
           </Typography>
           <Typography variant='subheading'
                        style={{color: '#bbb', textTransform: 'uppercase', fontWeight: 'bold'}}>
-            <FormattedMessage id='task.header.payment.type' defaultMessage='paid with credit card' />
+            <FormattedMessage id='task.header.payment.type' defaultMessage='paid with {payment}' values={{payment: modeOfPayment()}} />
           </Typography>
           <Typography variant='body2' style={{color: '#bbb', fontWeight: 'bold'}}>
             <FormattedMessage id='task.header.payment.condition' defaultMessage='You will only be paid when you' />
