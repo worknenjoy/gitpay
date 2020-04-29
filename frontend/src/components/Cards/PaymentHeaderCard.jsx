@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { FormattedMessage } from 'react-intl'
 
 const PaymentHeaderContainer = styled.div`
   padding:10px;
@@ -11,7 +12,8 @@ const PaymentHeaderContainer = styled.div`
 export const PaymentHeader = ({...props}) => {
   const userVals = props.children ? props.children : 0;
   const paymentBounty = parseInt(userVals.values.available);
-
+  const user = props.user
+  console.log('user', user)
 
   //if available bounty is not equal to zero
   const checkPaymentAvailable = paymentBounty !== 0;
@@ -25,46 +27,73 @@ export const PaymentHeader = ({...props}) => {
     } else if (card > 0 && paypal < 1) {
       return 'Credit Card';
     } else {
-      return 'Wallet'
+      return 'Paypal and Credit Card'
     }
   }
 
   const userPaymentHeader = () => {
-    // console.log(checkPaymentAvailable);
-    if (!checkPaymentAvailable) {
+    if (checkPaymentAvailable) {
       return (
         <div>
-
           <Typography
             variant='display1' color='primary'
-            style={{color: '#bbb', fontWeight: 'bold'}}>${paymentBounty}</Typography>
-          < Typography variant='subheading'
+            style={{color: '#bbb', fontWeight: 'bold'}}>
+              ${paymentBounty}
+          </Typography>
+          <Typography variant='subheading'
                        style={{color: '#bbb', textTransform: 'uppercase', fontWeight: 'bold'}}>
-            paid with credit card
+            <FormattedMessage id='task.header.payment.type' defaultMessage='paid with credit card' />
           </Typography>
-          <Typography variant='body2'
-                      style={{color: '#bbb', fontWeight: 'bold'}}>
-            You will only be paid when you
+          <Typography variant='body2' style={{color: '#bbb', fontWeight: 'bold'}}>
+            <FormattedMessage id='task.header.payment.condition' defaultMessage='You will only be paid when you' />
             <span style={{color: '#009688'}}>
-        &nbsp;activate your account for {modeOfPayment()}
-        </span>
+              &nbsp;<FormattedMessage id='task.header.payment.activation' defaultMessage='activate your account for {payment}' values={{payment: modeOfPayment()}} />
+            </span>
           </Typography>
-          <Typography variant='body2'
-                      style={{color: '#bbb', fontWeight: 'bold'}}>
-            Status
-            <span style={{color: 'orange'}}>
-     &nbsp;pending
-    </span>
-          </Typography>
-        </div>
+          { user &&  
+          <React.Fragment>
+            <Typography variant='body2'
+                        style={{color: '#bbb', fontWeight: 'bold'}}>
+              <FormattedMessage id='task.header.payment.status' defaultMessage='Status of your account:' />
+            </Typography>
+            <Typography variant='body2' style={{color: '#bbb', fontWeight: 'bold'}}>
+              <FormattedMessage id='task.header.payment.creditcard.label' defaultMessage='Credit card' />
+              {user.account_id ?
+                (
+                  <span style={{color: 'green'}}>
+                    &nbsp; <FormattedMessage id='task.header.payment.status.creditcard.active' defaultMessage='active' />
+                  </span>
+                ) : (
+                  <span style={{color: 'orange'}}>
+                    &nbsp;<FormattedMessage id='task.header.payment.status.creditcard.pending' defaultMessage='pending' />
+                  </span>
+                )
+              }
+            </Typography>
+            <Typography variant='body2' style={{color: '#bbb', fontWeight: 'bold'}}>
+              Paypal 
+              {user.paypal_id ?
+                (
+                  <span style={{color: 'green'}}>
+                    &nbsp;<FormattedMessage id='task.header.payment.status.paypal.active' defaultMessage='active' />
+                  </span>
+                ) : (
+                  <span style={{color: 'orange'}}>
+                    &nbsp;<FormattedMessage id='task.header.payment.status.paypal.pending' defaultMessage='pending' />
+                  </span>
+                )
+              }
+            </Typography>
+          </React.Fragment>
+        }
+      </div>
       )
     }
   }
 
   return (
     <PaymentHeaderContainer>
-      {userPaymentHeader()}
+      {userPaymentHeader(props)}
     </PaymentHeaderContainer>
-
   )
 }
