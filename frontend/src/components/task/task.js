@@ -850,7 +850,7 @@ class Task extends Component {
         </Dialog>
         <TopBarContainer />
         <PageContent>
-          <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } />
+          <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } />
           <Grid
             container
             justify='flex-start'
