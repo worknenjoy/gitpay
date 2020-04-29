@@ -5,14 +5,13 @@ services:
     image: node:8.6
     command: sh -c "npm install && npm run migrate-test && npm run test"
     working_dir: /gitpay
-    volumes:
-      - .:/gitpay
+    volumes: 
+      - .:/gitpay    
     environment:
       - NODE_ENV=test
     network_mode: host
   db_test:
     image: postgres
-    environment:
+    environment:      
       POSTGRES_DB: gitpay_test
-      POSTGRES_PASSWORD: postgres
     network_mode: host
