@@ -515,7 +515,7 @@
   "task.deadline.level2": " In fifteen days ",
   "task.deadline.level3": " In twenty days ",
   "task.deadline.level4": " In on month ",
-  "task.header.payment.type": "paid with credit card",
+  "task.header.payment.type": "paid with {payment}",
   "task.header.payment.condition": "You will only be paid when you",
   "task.header.payment.activation": "activate your account for {payment}",
   "task.header.payment.status": "Status of your account:",
