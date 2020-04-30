@@ -152,6 +152,14 @@ class TaskStatusFilter extends Component {
             className={ selected === status ? classes.selected : {} }
           />
         )) }
+        <span style={ {
+          flexGrow: 1,
+          flexBasis: 'auto',
+          margin: '.25em 0',
+          padding: '5px 0.3em',
+          borderLeft: '1px solid #CCC',
+          backgroundColor: '#FFF',
+        } } />
         {
           additionalStatuses.map((status, index) => (
             <Chip
