@@ -196,7 +196,7 @@ export default defineMessages({
   welcomeCollabItemThreeSecondary: {
     id: 'welcome.collab.item.three.secondary',
     defaultMessage: 'The open source allow us to work in descentralized and independent projects and we follow this path to provide our deliveries'
-  }, 
+  },
   topMenu1: {
     id: 'welcome.menu.item.one',
     defaultMessage: 'Intro'

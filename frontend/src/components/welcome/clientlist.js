@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { 
-  Card, 
+import {
+  Card,
   Grid,
   Typography,
   withStyles
@@ -14,7 +14,7 @@ import {
   MainTitle,
   ResponsiveImage
 } from './components/CommonStyles'
- 
+
 
 const styles = theme => ({
   layout: {
@@ -53,24 +53,23 @@ const styles = theme => ({
   }
 })
 
-
 const clientimg1 = require('../../images/clients/client1.png')
 const clientimg2 = require('../../images/clients/client2.png')
 const clientimg3 = require('../../images/clients/client3.png')
 
 const clients = [
   {
-    title: 'Grafana', 
+    title: 'Grafana',
     img: clientimg1,
     link:''
   },
   {
-    title: 'Retro Share', 
+    title: 'Retro Share',
     img: clientimg2,
     link:''
   },
   {
-    title: 'Vagrant', 
+    title: 'Vagrant',
     img: clientimg3,
     link:''
   },
@@ -80,9 +79,9 @@ class Clientlist extends Component {
     const { classes } = this.props
 
     return (
-      <div className={ classes.layout }> 
+      <div className={ classes.layout }>
         <div className={ classes.heroContent }>
-          <MainTitle style={{width:'auto'}}>
+          <MainTitle style={{ width:'auto' }}>
             <Typography variant='h5' gutterBottom>
               <FormattedMessage id='welcome.clientlist.title' defaultMessage='Who is using Gitpay' />
             </Typography>
@@ -90,14 +89,13 @@ class Clientlist extends Component {
         </div>
         <Grid container spacing={ 20 } alignItems='center' justify='center'>
           { clients.map(client => (
-            // Enterprise card is full width at sm breakpoint
             <Grid item key={ client.title } xs={ 12 } sm={6} md={ 4 } >
-              <Card style={{boxShadow:'none'}}> 
-                <a href={client.link}><ResponsiveImage src={client.img}/></a> 
+              <Card style={{ boxShadow:'none' }}> 
+                <a href={ client.link }><ResponsiveImage src={ client.img }/></a>
               </Card>
             </Grid>
           )) }
-        </Grid>  
+        </Grid>
       </div>
     )
   }

@@ -290,7 +290,7 @@ class Welcome extends Component {
               <OurStack />
             </Grid>
           </Grid>
-        </MainBanner> 
+        </MainBanner>
 
         <Section ref='clients'>
           <Clientlist />
