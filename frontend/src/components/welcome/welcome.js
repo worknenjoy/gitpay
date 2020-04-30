@@ -40,6 +40,7 @@ import InfoContainer from '../../containers/info'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
 import Pricing from './pricing'
+import Clientlist from './clientlist'
 import messages from './messages'
 import OurStack from './components/OurStack'
 import mainStyles from '../styles/style'
@@ -124,6 +125,7 @@ class Welcome extends Component {
 
     const {
       intro,
+      clients,
       contrib,
       companies,
       collab,
@@ -134,24 +136,27 @@ class Welcome extends Component {
     } = this.positions
 
     if (offsetPostion >= getStarted) {
-      this.setState({ value: 7 })
+      this.setState({ value: 8 })
     }
     else if (offsetPostion >= integrations) {
-      this.setState({ value: 6 })
+      this.setState({ value: 7 })
     }
     else if (offsetPostion >= pricing) {
-      this.setState({ value: 5 })
+      this.setState({ value: 6 })
     }
     else if (offsetPostion >= howItWorks) {
-      this.setState({ value: 4 })
+      this.setState({ value: 5 })
     }
     else if (offsetPostion >= collab) {
-      this.setState({ value: 3 })
+      this.setState({ value: 4 })
     }
     else if (offsetPostion >= companies) {
+      this.setState({ value: 3 })
+    }
+    else if (offsetPostion >= contrib) {
       this.setState({ value: 2 })
     }
-    else if (offsetPostion >= contrib - 35) {
+    else if (offsetPostion >= clients) {
       this.setState({ value: 1 })
     }
     else if (offsetPostion >= intro) {
@@ -178,38 +183,43 @@ class Welcome extends Component {
               label={ this.props.intl.formatMessage(messages.topMenu1) }
             />
             <Tab
-              id='contrib'
+              id='clients'
               value={ 1 }
+              label={ this.props.intl.formatMessage(messages.topMenu9) }
+            />
+            <Tab
+              id='contrib'
+              value={ 2 }
               label={ this.props.intl.formatMessage(messages.topMenu2) }
             />
             <Tab
               id='companies'
-              value={ 2 }
+              value={ 3 }
               label={ this.props.intl.formatMessage(messages.topMenu3) }
             />
             <Tab
               id='collab'
-              value={ 3 }
+              value={ 4 }
               label={ this.props.intl.formatMessage(messages.topMenu4) }
             />
             <Tab
               id='how-it-works'
-              value={ 4 }
+              value={ 5 }
               label={ this.props.intl.formatMessage(messages.topMenu5) }
             />
             <Tab
               id='pricing'
-              value={ 5 }
+              value={ 6 }
               label={ this.props.intl.formatMessage(messages.topMenu6) }
             />
             <Tab
               id='integrations'
-              value={ 6 }
+              value={ 7 }
               label={ this.props.intl.formatMessage(messages.topMenu7) }
             />
             <Tab
               id='get-started'
-              value={ 7 }
+              value={ 8 }
               label={ this.props.intl.formatMessage(messages.topMenu8) }
             />
           </Tabs>
@@ -280,7 +290,11 @@ class Welcome extends Component {
               <OurStack />
             </Grid>
           </Grid>
-        </MainBanner>
+        </MainBanner> 
+
+        <Section ref='clients'>
+          <Clientlist />
+        </Section>
 
         <Section ref='contrib'>
           <Grid container spacing={ 24 }>
