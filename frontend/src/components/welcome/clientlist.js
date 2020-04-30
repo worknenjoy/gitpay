@@ -15,7 +15,6 @@ import {
   ResponsiveImage
 } from './components/CommonStyles'
 
-
 const styles = theme => ({
   layout: {
     width: 'auto',
@@ -61,19 +60,19 @@ const clients = [
   {
     title: 'Grafana',
     img: clientimg1,
-    link:''
+    link: ''
   },
   {
     title: 'Retro Share',
     img: clientimg2,
-    link:''
+    link: ''
   },
   {
     title: 'Vagrant',
     img: clientimg3,
-    link:''
+    link: ''
   },
-] 
+]
 class Clientlist extends Component {
   render () {
     const { classes } = this.props
@@ -81,17 +80,17 @@ class Clientlist extends Component {
     return (
       <div className={ classes.layout }>
         <div className={ classes.heroContent }>
-          <MainTitle style={{ width:'auto' }}>
+          <MainTitle style={ { width: 'auto' } }>
             <Typography variant='h5' gutterBottom>
               <FormattedMessage id='welcome.clientlist.title' defaultMessage='Who is using Gitpay' />
             </Typography>
-          </MainTitle> 
+          </MainTitle>
         </div>
         <Grid container spacing={ 20 } alignItems='center' justify='center'>
           { clients.map(client => (
-            <Grid item key={ client.title } xs={ 12 } sm={6} md={ 4 } >
-              <Card style={{ boxShadow:'none' }}> 
-                <a href={ client.link }><ResponsiveImage src={ client.img }/></a>
+            <Grid item key={ client.title } xs={ 12 } sm={ 6 } md={ 4 } >
+              <Card style={ { boxShadow: 'none' } }>
+                <a href={ client.link }><ResponsiveImage src={ client.img } /></a>
               </Card>
             </Grid>
           )) }
