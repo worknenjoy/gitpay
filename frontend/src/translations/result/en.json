@@ -206,6 +206,8 @@
   "task.status.filter.open": "Open",
   "task.status.filter.progress": "In progress",
   "task.status.filter.close": "Finished",
+  "task.status.filter.contribution": "Contribution",
+  "task.status.filter.issuesWithBounties": "$",
   "task.status.filter.all": "All",
   "task.table.page.first": "First page",
   "task.table.page.previous": "Previous page",

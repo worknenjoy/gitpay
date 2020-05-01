@@ -28,6 +28,8 @@ export default props => (
       <Route path='/tasks/open' component={ TaskExplorer } />
       <Route path='/tasks/progress' component={ TaskExplorer } />
       <Route path='/tasks/finished' component={ TaskExplorer } />
+      <Route path='/tasks/with-bounties' component={ TaskExplorer } />
+      <Route path='/tasks/contribution' component={ TaskExplorer } />
       <Route exact path='/login' component={ LoginPage } />
       <Route exact path='/login/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
