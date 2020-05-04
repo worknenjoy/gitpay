@@ -18,37 +18,17 @@ import {
 const styles = theme => ({
   layout: {
     width: 'auto',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 6,
     marginTop: theme.spacing.unit * 2,
     [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-      width: 900,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      width: '100%'
     },
+    textAlign: 'center'
   },
   heroContent: {
     maxWidth: 600,
     margin: '0 auto',
     padding: `0 0 ${theme.spacing.unit * 4}px`,
-  },
-  heroDesc: {
-    paddingTop: theme.spacing.unit * 2
-  },
-  cardHeader: {
-    backgroundColor: theme.palette.primary.light,
-  },
-  cardPricing: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    marginBottom: theme.spacing.unit * 2,
-  },
-  cardActions: {
-    [theme.breakpoints.up('sm')]: {
-      paddingBottom: theme.spacing.unit * 2,
-    },
   }
 })
 
@@ -86,9 +66,9 @@ class Clientlist extends Component {
             </Typography>
           </MainTitle>
         </div>
-        <Grid container spacing={ 20 } alignItems='center' justify='center'>
+        <Grid container spacing={ 50 } alignItems='center' justify='center'>
           { clients.map(client => (
-            <Grid item key={ client.title } xs={ 12 } sm={ 6 } md={ 4 } >
+            <Grid item key={ client.title } xs={ 12 } sm={ 6 } md={ 4 } lg={ 3 } xl={ 2 }>
               <Card style={ { boxShadow: 'none' } }>
                 <a href={ client.link }><ResponsiveImage src={ client.img } /></a>
               </Card>
