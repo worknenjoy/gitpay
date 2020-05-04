@@ -56,6 +56,10 @@ const messages = defineMessages({
   noBounty: {
     id: 'task.table.value.none',
     defaultMessage: 'No bounty added'
+  },
+  onHoverTaskProvider: {
+    id: 'task.table.onHover',
+    defaultMessage: 'See on'
   }
 })
 
@@ -245,10 +249,10 @@ class CustomPaginationActionsTable extends React.Component {
                       <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
                         <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
                           <a style={ { cursor: 'pointer' } } onClick={ () => this.handleClickListItem(n.id) }>
-                            { TextEllipsis(`${n.title || 'sem título'}`, 30) }
+                            { TextEllipsis(`${n.title || 'no title'}`, 30) }
                           </a>
-                          <a target='_blank' href={ n.url } rel='nooprner noreferrer'>
-                            <Tooltip id='tooltip-fab' title={ `Ver no ${n.provider}` } placement='top'>
+                          <a target='_blank' href={ n.url }>
+                            <Tooltip id='tooltip-fab' title={ `${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` } placement='top'>
                               <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
                             </Tooltip>
                           </a>
