@@ -159,13 +159,14 @@ const filterTaskRequested = () => {
   return { type: FILTER_TASK_REQUESTED, completed: false }
 }
 
-const filterTaskSuccess = (tasks, filter, value) => {
+const filterTaskSuccess = (tasks, filter, value, additional) => {
   return {
     type: FILTER_TASK_SUCCESS,
     completed: true,
     data: tasks.data,
     filterType: filter,
-    filterValue: value
+    filterValue: value,
+    filterAdditional: additional
   }
 }
 
@@ -350,11 +351,11 @@ const listTasks = () => {
   }
 }
 
-const filterTasks = (key = 'all', value) => {
+const filterTasks = (key = 'all', value, additional) => {
   return (dispatch, getState) => {
     const tasks = getState().tasks
     dispatch(filterTaskRequested())
-    return dispatch(filterTaskSuccess(tasks, key, value))
+    return dispatch(filterTaskSuccess(tasks, key, value, additional))
   }
 }
 
@@ -436,12 +437,13 @@ const paymentTask = (taskId, value) => {
   }
 }
 
-const inviteTask = (id, email, message) => {
+const inviteTask = (id, email, message, user) => {
   return dispatch => {
+    const name = user.name
     dispatch(inviteTaskRequested())
     axios
       .post(api.API_URL + `/tasks/${id}/invite/`, {
-        email, message
+        email, message, name
       })
       .then(task => {
         if (task.status === 200) {
@@ -470,12 +472,13 @@ const inviteTask = (id, email, message) => {
   }
 }
 
-const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate) => {
+const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
   return dispatch => {
+    const username = user.name
     dispatch(fundingInviteTaskRequested())
     axios
       .post(api.API_URL + `/tasks/${id}/funding/`, {
-        email, comment, suggestedValue, suggestedDate
+        email, comment, suggestedValue, suggestedDate, username
       })
       .then(task => {
         if (task.status === 200) {

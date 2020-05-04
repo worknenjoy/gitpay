@@ -249,7 +249,7 @@ class CustomPaginationActionsTable extends React.Component {
                       <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
                         <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
                           <a style={ { cursor: 'pointer' } } onClick={ () => this.handleClickListItem(n.id) }>
-                            { TextEllipsis(`${n.title || 'sem título'}`, 30) }
+                            { TextEllipsis(`${n.title || 'no title'}`, 30) }
                           </a>
                           <a target='_blank' href={ n.url }>
                             <Tooltip id='tooltip-fab' title={ `${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` } placement='top'>

@@ -36,13 +36,17 @@ exports.createPrivateTask = (req, res) => {
   const githubClientId = secrets.github.id
   const githubClientSecret = secrets.github.secret
   return requestPromise({
-    uri: `https://github.com/login/oauth/access_token/?client_id=${githubClientId}&client_secret=${githubClientSecret}&code=${code}`,
+    method: 'POST',
+    uri: 'https://github.com/login/oauth/access_token/',
     headers: {
-      'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+      'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+      Authorization: 'Basic ' + Buffer.from(`${githubClientId}:${githubClientSecret}`).toString('base64')
+    },
+    body: {
+      code
     },
     json: true
   }).then(response => {
-    if (response.error) return res.status(401).send(response.error)
     if (response.access_token) {
       return task.taskBuilds({
         provider: 'github',
@@ -61,7 +65,7 @@ exports.createPrivateTask = (req, res) => {
           return res.send(error)
         })
     }
-    return res.status(200).send(response)
+    return res.status(response.access_token ? 200 : 401).send(response)
   }).catch(e => {
     return res.status(401).send(e)
   })
@@ -173,5 +177,17 @@ exports.userBankAccount = (req, res) => {
       // eslint-disable-next-line no-console
       console.log(error)
       res.send(error)
+    })
+}
+
+exports.deleteUserById = (req, res) => {
+  const params = { id: req.params.id }
+  user.userDeleteById(params)
+    .then((deleted) => {
+      res.status(200).send(`${deleted}`)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.status(400).send(error)
     })
 }

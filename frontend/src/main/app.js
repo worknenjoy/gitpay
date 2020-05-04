@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
@@ -26,6 +26,7 @@ import messagesEn from '../translations/result/en.json'
 
 import localeEn from 'react-intl/locale-data/en'
 import localeBr from 'react-intl/locale-data/br'
+import Loader from '../components/loader/loader'
 
 addLocaleData([...localeEn, ...localeBr])
 
@@ -68,18 +69,26 @@ store.dispatch(updateIntl({
 const theme = createMuiTheme(Palette)
 
 function App () {
-  return (
-    <MuiThemeProvider theme={ theme }>
-      <Provider store={ store }>
-        <IntlProvider>
-          <div>
-            <NotificationContainer />
-            <Routes />
-          </div>
-        </IntlProvider>
-      </Provider>
-    </MuiThemeProvider>
-  )
+  const [isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    setIsLoading(false)
+  }, [isLoading])
+  if (!isLoading) {
+    return (
+      <MuiThemeProvider theme={ theme }>
+        <Provider store={ store }>
+          <IntlProvider>
+            <div>
+              <NotificationContainer />
+              <Routes />
+            </div>
+          </IntlProvider>
+        </Provider>
+      </MuiThemeProvider>
+    )
+  }
+  else {
+    return <Loader />
+  }
 }
-
 export default App
