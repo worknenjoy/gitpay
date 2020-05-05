@@ -590,10 +590,18 @@ class Task extends Component {
   }
 
   handleInputInterestedAmountChange = (e) => {
-    this.setState({ currentPrice: parseFloat(e.target.value) })
-    if (e.target.value !== 0) {
+    let _interestedAmount = this.handleCheckIfAmountIsNaN(e.target.value)
+    this.setState({ currentPrice: parseFloat(_interestedAmount) })
+    if (_interestedAmount !== 0) {
       this.setState({ interestedLearn: false })
     }
+  }
+
+  handleCheckIfAmountIsNaN = (amount) => {
+    if (isNaN(parseFloat(amount))) {
+      amount = 0
+    }
+    return amount
   }
 
   handleCheckboxLearn = (e) => {
@@ -882,56 +890,56 @@ class Task extends Component {
                 </div>
               ) }
               { task.data.metadata &&
-              <FormattedMessage id='task.status.author.name' defaultMessage='Imported from {provider} by {name}' values={ {
-                provider: task.data.provider,
-                name: task.data.metadata.issue.user.login
-              } }>
-                { (msg) => (
-                  <Tooltip
-                    id='tooltip-github'
-                    title={ msg }
-                    placement='bottom'
-                  >
-                    <a
-                      href={ `${task.data.metadata.issue.user.html_url}` }
-                      target='_blank'
-
+                <FormattedMessage id='task.status.author.name' defaultMessage='Imported from {provider} by {name}' values={ {
+                  provider: task.data.provider,
+                  name: task.data.metadata.issue.user.login
+                } }>
+                  { (msg) => (
+                    <Tooltip
+                      id='tooltip-github'
+                      title={ msg }
+                      placement='bottom'
                     >
-                      <Avatar
-                        src={ task.data.metadata.issue.user.avatar_url }
-                        className={ classNames(classes.avatar) }
-                      />
-                    </a>
-                  </Tooltip>
-                ) }
-              </FormattedMessage>
+                      <a
+                        href={ `${task.data.metadata.issue.user.html_url}` }
+                        target='_blank'
+
+                      >
+                        <Avatar
+                          src={ task.data.metadata.issue.user.avatar_url }
+                          className={ classNames(classes.avatar) }
+                        />
+                      </a>
+                    </Tooltip>
+                  ) }
+                </FormattedMessage>
               }
               { task.data.user &&
-              <FormattedMessage id='task.status.importer.name' defaultMessage='Imported to Gitpay by {name}' values={ {
-                name: task.data.user.name
-              } }>
-                { (msg) => (
-                  <Tooltip
-                    id='tooltip-github'
-                    title={ msg }
-                    placement='bottom'
-                  >
-                    <a
-                      href={ `${task.data.user.website}` }
-                      target='_blank'
-                      style={ { marginLeft: 5 } }
+                <FormattedMessage id='task.status.importer.name' defaultMessage='Imported to Gitpay by {name}' values={ {
+                  name: task.data.user.name
+                } }>
+                  { (msg) => (
+                    <Tooltip
+                      id='tooltip-github'
+                      title={ msg }
+                      placement='bottom'
                     >
-                      <Avatar
-                        alt={ task.data.user.name }
-                        src=''
-                        className={ classNames(classes.avatar) }
+                      <a
+                        href={ `${task.data.user.website}` }
+                        target='_blank'
+                        style={ { marginLeft: 5 } }
                       >
-                        { nameInitials(task.data.user.name) }
-                      </Avatar>
-                    </a>
-                  </Tooltip>
-                ) }
-              </FormattedMessage>
+                        <Avatar
+                          alt={ task.data.user.name }
+                          src=''
+                          className={ classNames(classes.avatar) }
+                        >
+                          { nameInitials(task.data.user.name) }
+                        </Avatar>
+                      </a>
+                    </Tooltip>
+                  ) }
+                </FormattedMessage>
               }
               <div className={ classes.paper }>
                 <Button
