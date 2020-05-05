@@ -331,6 +331,7 @@
   "task.actions.account.logout": "Logout",
   "info.status.subheading": "Stats",
   "info.stack.subheading": "Our stack",
+  "welcome.clientlist.title": "Who is using Gitpay",
   "welcome.consulting.item.primary": "We help you to use agile processes and push your company forward",
   "welcome.consulting.item.secondary": "You create demmands for your business and we make this happen using agile tools",
   "welcome.consulting.item.two.primary": "For all kind of roles",
