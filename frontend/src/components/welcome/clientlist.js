@@ -40,17 +40,17 @@ const clients = [
   {
     title: 'Grafana',
     img: clientimg1,
-    link: ''
+    link: 'https://grafana.com/'
   },
   {
     title: 'Retro Share',
     img: clientimg2,
-    link: ''
+    link: 'https://retroshare.cc/'
   },
   {
     title: 'Vagrant',
     img: clientimg3,
-    link: ''
+    link: 'https://www.vagrantup.com/'
   },
 ]
 class Clientlist extends Component {
