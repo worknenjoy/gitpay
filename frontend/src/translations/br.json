@@ -453,5 +453,7 @@
   "first.task.community.description": "Iremos fazer uma campanha para que nossa comunidade saiba que você tem uma tarefa a ser resolvida",
   "first.task.community.title": "Envie para nossa comunidade",
   "first.task.next": "Próximo",
-  "first.task.back": "Anterior"
+  "first.task.back": "Anterior",
+  "tiers.title":"Código aberto"
+
 }

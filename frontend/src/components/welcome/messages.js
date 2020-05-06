@@ -232,5 +232,13 @@ export default defineMessages({
   topMenu9: {
     id: 'welcome.menu.item.nine',
     defaultMessage: 'Who is using Gitpay'
+  },
+   
+  tiers: {
+    id:'tiers.title',
+    defaultMessage: 'Open source',
+    
   }
+  
+  
 })

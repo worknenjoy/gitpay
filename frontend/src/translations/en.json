@@ -534,5 +534,6 @@
   "first.task.community.description": "We will make a campaign to let our community know that you have an issue to be solved",
   "first.task.community.title": "Send to our community",
   "first.task.next": "Next",
-  "first.task.back": "Back"
+  "first.task.back": "Back",
+  "tiers.title":"Open source"
 }

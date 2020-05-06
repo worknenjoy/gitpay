@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
-
+import messages from './messages'
 import {
   MainTitle
 } from './components/CommonStyles'
@@ -121,7 +121,7 @@ class Pricing extends Component {
             <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 4 }>
               <Card>
                 <CardHeader
-                  title={ tier.title }
+                  title={ this.props.intl.formatMessage(messages.tiers)}
                   subheader={ tier.subheader }
                   titleTypographyProps={ { align: 'center' } }
                   subheaderTypographyProps={ { align: 'center' } }
