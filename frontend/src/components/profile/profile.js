@@ -197,7 +197,7 @@ class Profile extends Component {
           <Toolbar>
             <Grid container alignItems='center' spacing={ 1 }>
               <Grid item xs>
-                <Typography color='primary' variant='title'>
+                <Typography color='primary' variant='h6'>
                   <Button onClick={ this.handleBackToTaskList } variant='text' size='small' aria-label='Back' color='primary'>
                     <ArrowBack />
                   </Button>

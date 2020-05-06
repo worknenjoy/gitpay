@@ -64,7 +64,9 @@ class ProfileOptions extends Component {
             <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
                 <Link to={ '/profile/tasks' }>
-                  <FormattedMessage id='account.profile.tasks.link.tasks' defaultMessage='See tasks' />
+                  <Typography variant='h5'>
+                    <FormattedMessage id='account.profile.tasks.link.tasks' defaultMessage='See tasks' />
+                  </Typography>
                 </Link>
               </Button>
             </CardActions>
@@ -90,7 +92,9 @@ class ProfileOptions extends Component {
             <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
                 <Link to={ '/profile/payment-options' }>
-                  <FormattedMessage id='account.profile.tasks.payment.setup' defaultMessage='Setup payment' />
+                  <Typography variant='h5'>
+                    <FormattedMessage id='account.profile.tasks.payment.setup' defaultMessage='Setup payment' />
+                  </Typography>
                 </Link>
               </Button>
             </CardActions>
@@ -112,7 +116,9 @@ class ProfileOptions extends Component {
             <CardActions className={ classes.cardActions }>
               <Button size='small' color='primary'>
                 <Link to='/profile/preferences'>
-                  <FormattedMessage id='account.profile.preferences.link' defaultMessage='Setup preferences' />
+                  <Typography variant='h5'>
+                    <FormattedMessage id='account.profile.preferences.link' defaultMessage='Setup preferences' />
+                  </Typography>
                 </Link>
               </Button>
             </CardActions>
