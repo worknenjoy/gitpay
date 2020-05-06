@@ -211,8 +211,8 @@ const styles = theme => ({
   controls: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   playIcon: {
     height: 38,
@@ -259,8 +259,8 @@ const styles = theme => ({
   },
   closeButton: {
     position: 'absolute',
-    right: theme.spacing.unit,
-    top: theme.spacing.unit,
+    right: theme.spacing(1),
+    top: theme.spacing(1),
     backgroundColor: 'darkgray',
     color: 'white',
     boxShadow: 'none'
@@ -319,7 +319,7 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   checkIcon: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
     fontSize: 20
   },
   planIcon: {
@@ -327,25 +327,25 @@ const styles = theme => ({
     padding: 20
   },
   planFinalPrice: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing(1),
     fontSize: '2rem'
   },
   planGridItem: {
     width: 200,
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     margin: 0
   },
   planGridContent: {
-    minHeight: theme.spacing.unit * 10,
+    minHeight: theme.spacing(10),
     margin: 0,
     padding: 0
   },
   planBullets: {
-    paddingLeft: theme.spacing.unit * 1,
+    paddingLeft: theme.spacing(1),
     padding: 10
   },
   chip: {
-    marginRight: theme.spacing.unit * 2
+    marginRight: theme.spacing(2)
   }
 
 })
@@ -728,7 +728,7 @@ class Task extends Component {
             onClick={ this.handlePaymentForm }
             size='small'
             color='primary'
-            variant='raised'
+            variant='contained'
             className={ this.props.classes.cardButton }
           >
             <span className={ this.props.classes.spaceRight }>
@@ -742,7 +742,7 @@ class Task extends Component {
             onClick={ this.handleAssignDialogOpen }
             size='small'
             color='primary'
-            variant='raised'
+            variant='contained'
             className={ this.props.classes.cardButton }
           >
             <span className={ this.props.classes.spaceRight }>
@@ -855,7 +855,7 @@ class Task extends Component {
             container
             justify='flex-start'
             direction='row'
-            spacing={ 24 }
+            spacing={ 3 }
           >
             <Grid
               item
@@ -1097,7 +1097,7 @@ class Task extends Component {
                         <Button onClick={ this.handleDeleteDialogClose } color='primary'>
                           <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleDeleteTask } variant='raised' color='secondary' >
+                        <Button onClick={ this.handleDeleteTask } variant='contained' color='secondary' >
                           <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
                         </Button>
                       </DialogActions>
@@ -1146,7 +1146,7 @@ class Task extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 8 }>
               { task.data.assigned &&
                 <TaskAssigned

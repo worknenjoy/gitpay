@@ -67,7 +67,7 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5,
+    marginLeft: theme.spacing(2.5),
   },
 })
 
@@ -145,7 +145,7 @@ const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { wit
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
   },
   table: {
     minWidth: 500
@@ -228,10 +228,7 @@ class CustomPaginationActionsTable extends React.Component {
                                   </a>
                                 ) : (
                                   <div style={ { display: 'flex', alignItems: 'center', height: 20 } }>
-                                    <Avatar
-                                      src={ n.User.picture_url }
-                                      style={ { width: 24, height: 24, display: 'inline-block' } }
-                                    />
+                                    <Avatar />
                                     <span style={ { marginLeft: 10 } }>
                                       { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
                                     </span>
