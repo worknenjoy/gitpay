@@ -216,11 +216,10 @@ class CustomPaginationActionsTable extends React.Component {
                             <div>
                               { n.User.profile_url
                                 ? (
-                                  <a style={ { display: 'flex', alignItems: 'center', height: 20 } } target='_blank'
+                                  <a style={ { display: 'flex', alignItems: 'center' } } target='_blank'
                                     href={ n.User.profile_url }>
                                     <Avatar
                                       src={ n.User.picture_url }
-                                      style={ { width: 24, height: 24, display: 'inline-block' } }
                                     />
                                     <span style={ { marginLeft: 10 } }>
                                       { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
