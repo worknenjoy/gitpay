@@ -926,7 +926,7 @@ class Task extends Component {
                         src=''
                         className={ classNames(classes.avatar) }
                       >
-                        { nameInitials(task.data.user.name) }
+                        { task.data.user.name && nameInitials(task.data.user.name) }
                       </Avatar>
                     </a>
                   </Tooltip>
