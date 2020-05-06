@@ -285,7 +285,7 @@ const updateTask = task => {
           dispatch(syncTask(task.id))
           dispatch(updateTaskSuccess())
         }
-        else if (task.Assigns) {
+        else if (task.Offer) {
           dispatch(
             addNotification('actions.task.interested.notification.success')
           )
