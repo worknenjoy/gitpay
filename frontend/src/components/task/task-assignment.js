@@ -369,7 +369,7 @@ const TaskAssignment = (props) => {
       ) : (
         <div>
           { dialogCoverInvite() }
-          <form onSubmit={ props.assignDialog ? props.handleAssignTask : props.sendFundingInvite }>
+          <form onSubmit={ props.assignDialog ? props.handleOfferTask : props.sendFundingInvite }>
             <DialogContent>
 
               { emailInviteInput() }
