@@ -1,4 +1,3 @@
-'use strict'
 
 const assert = require('assert')
 const request = require('supertest')
@@ -20,24 +19,24 @@ const githubWebhookIssueLabeled = require('./data/github.issue.labeled')
 describe('webhooks', () => {
   beforeEach(() => {
     models.Task.destroy({ where: {}, truncate: true, cascade: true }).then(
-      function(rowDeleted) {
+      function (rowDeleted) {
         // rowDeleted will return number of rows deleted
         if (rowDeleted === 1) {
           console.log('Deleted successfully')
         }
       },
-      function(err) {
+      function (err) {
         console.log(err)
       }
     )
     models.User.destroy({ where: {}, truncate: true, cascade: true }).then(
-      function(rowDeleted) {
+      function (rowDeleted) {
         // rowDeleted will return number of rows deleted
         if (rowDeleted === 1) {
           console.log('Deleted successfully')
         }
       },
-      function(err) {
+      function (err) {
         console.log(err)
       }
     )
@@ -378,7 +377,7 @@ describe('webhooks', () => {
           expect(res.body).to.exist
           expect(res.body.id).to.equal('evt_1234')
           done()
-        });      
+        })
     })
   })
 
@@ -394,31 +393,31 @@ describe('webhooks', () => {
           expect(res.body).to.exist
           expect(res.body.hook_id).to.equal(74489783)
           done()
-        });      
+        })
     })
     it('should update when issue on github is updated', done => {
       let customIssue = githubWebhookIssue.issue
       customIssue.action = 'opened'
       models.User.build({ email: 'teste@mail.com', username: 'alexanmtz', password: 'teste' })
-      .save()
-      .then(async user =>{
-        const task = await models.Task.create({provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id, status: "closed"})
-        agent
-        .post('/webhooks/github')
-        .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
-        .send(customIssue)
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end(async (err, res) => {
-          if(err) console.log(err)
-          else{
-            expect(res.body).to.exist
-            expect(res.body.task.status).to.equal('open')
-            expect(res.statusCode).to.equal(200)
-            done()
-          }
-        }); 
-      })
+        .save()
+        .then(async user => {
+          const task = await models.Task.create({ provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id, status: 'closed' })
+          agent
+            .post('/webhooks/github')
+            .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
+            .send(customIssue)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(async (err, res) => {
+              if (err) console.log(err)
+              else {
+                expect(res.body).to.exist
+                expect(res.body.task.status).to.equal('open')
+                expect(res.statusCode).to.equal(200)
+                done()
+              }
+            })
+        })
     })
     xit('should create new task when an event of new issue is triggered', done => {
       agent
@@ -435,13 +434,13 @@ describe('webhooks', () => {
           expect(res.body.issue.title).to.equal(taskTitle)
           expect(res.body.task.title).to.equal(taskTitle)
           done()
-        });      
+        })
     })
     xit('should create a task from the issue created webhook and associate with the user', done => {
       models.User.build({ email: 'teste@mail.com', username: 'alexanmtz', password: 'teste' })
-          .save()
-          .then(user => {
-            agent
+        .save()
+        .then(user => {
+          agent
             .post('/webhooks/github')
             .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
             .send(githubWebhookIssueLabeled.issue)
@@ -453,33 +452,60 @@ describe('webhooks', () => {
               expect(res.body.action).to.equal('labeled')
               expect(res.body.task.userId).to.equal(user.dataValues.id)
               done()
-            });      
-          })
+            })
+        })
     })
-    it('should notify when a label notify is created', done => {
+
+    it('should  handle two or more labels at once', done => {
       let customIssue = githubWebhookIssue.issue
       customIssue.action = 'labeled'
-      customIssue.issue.labels = [{name: 'notify'}]
+      customIssue.issue.labels = [{ name: 'gitpay' }, { name: 'notify' }]
       models.User.build({ email: 'alexanmtz@gmail.com', username: 'alexanmtz', password: 'teste' })
-          .save()
-          .then(async user => {
-            const task = await models.Task.create({provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id})
-            agent
+        .save()
+        .then(async user => {
+          const task = await models.Task.create({ provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id })
+          agent
             .post('/webhooks/github')
             .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
             .send(customIssue)
             .expect('Content-Type', /json/)
             .expect(200)
             .end(async (err, res) => {
-              const taskAfter = await models.Task.findOne({where: {id: task.dataValues.id}})
+              const taskAfter = await models.Task.findOne({ where: { id: task.dataValues.id } })
               expect(res.statusCode).to.equal(200)
               expect(res.body).to.exist
               expect(res.body.action).to.equal('labeled')
-              expect(res.body.task.userId).to.equal(user.dataValues.id)
+              expect(res.body.totalLabelResponse.length).to.equal(2)
+              expect(res.body.totalLabelResponse[0].label).to.equal('gitpay')
+              expect(res.body.totalLabelResponse[1].label).to.equal('notify')
               expect(taskAfter.notified).to.equal(true)
               done()
-            });      
-          })
+            })
+        })
+    })
+
+    it('should persist a label that does not exist before', done => {
+      let customIssue = githubWebhookIssue.issue
+      customIssue.action = 'labeled'
+      customIssue.issue.labels = [{ name: 'notexist' }]
+      models.User.build({ email: 'alexanmtz@gmail.com', username: 'alexanmtz', password: 'teste' })
+        .save()
+        .then(async user => {
+          agent
+            .post('/webhooks/github')
+            .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
+            .send(customIssue)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(async (err, res) => {
+              const newLabel = await models.Label.findOne({ where: { name: 'notexist' } })
+              expect(res.statusCode).to.equal(200)
+              expect(res.body).to.exist
+              expect(res.body.action).to.equal('labeled')
+              expect(newLabel.name).to.equal('notexist')
+              done()
+            })
+        })
     })
   })
 })
