@@ -19,9 +19,10 @@ const data = [
 ]
 
 export const Technology = styled(Chip)`
-  outline: 1px solid orange;
-  margin: 10px;
-  font-weight: bold;
+  && {
+    margin: 10px;
+    font-weight: bold;
+  }
 `
 
 export const Stack = styled.div`

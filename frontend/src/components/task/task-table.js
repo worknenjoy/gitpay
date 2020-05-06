@@ -224,10 +224,7 @@ class CustomPaginationActionsTable extends React.Component {
                                   </a>
                                 ) : (
                                   <div style={ { display: 'flex', alignItems: 'center', height: 20 } }>
-                                    <Avatar
-                                      src={ n.User.picture_url }
-                                      style={ { width: 24, height: 24, display: 'inline-block' } }
-                                    />
+                                    <Avatar />
                                     <span style={ { marginLeft: 10 } }>
                                       { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
                                     </span>
