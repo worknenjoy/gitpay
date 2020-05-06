@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     receiveNotifications: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
+    },
+    openForJobs: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     classMethods: {

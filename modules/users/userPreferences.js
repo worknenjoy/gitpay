@@ -20,7 +20,8 @@ module.exports = Promise.method(function userPreferences (userAttributes) {
         os: user.dataValues.os,
         skills: user.dataValues.skills,
         languages: user.dataValues.languages,
-        receiveNotifications: user.dataValues.receiveNotifications != null && user.dataValues.receiveNotifications
+        receiveNotifications: user.dataValues.receiveNotifications != null && user.dataValues.receiveNotifications,
+        openForJobs: user.dataValues.openForJobs != null && user.dataValues.openForJobs
       }
     }).catch(error => {
       // eslint-disable-next-line no-console

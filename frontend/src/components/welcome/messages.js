@@ -228,5 +228,9 @@ export default defineMessages({
   topMenu8: {
     id: 'welcome.menu.item.eight',
     defaultMessage: 'Get started'
+  },
+  topMenu9: {
+    id: 'welcome.menu.item.nine',
+    defaultMessage: 'Who is using Gitpay'
   }
 })

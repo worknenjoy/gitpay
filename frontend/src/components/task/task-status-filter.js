@@ -17,12 +17,14 @@ const styles = theme => ({
 })
 
 const statuses = ['open', 'in_progress', 'closed']
+const additionalStatuses = ['issuesWithBounties', 'contribution']
 
 class TaskStatusFilter extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected: 'all'
+      selected: 'all',
+      additionalSelected: null
     }
   }
 
@@ -50,6 +52,14 @@ class TaskStatusFilter extends Component {
         this.props.onFilter('status', 'closed')
         this.setState({ selected: 'closed' })
         break
+      case '/tasks/with-bounties':
+        this.props.onFilter('status', 'issuesWithBounties')
+        this.setState({ additionalSelected: 'issuesWithBounties' })
+        break
+      case '/tasks/contribution':
+        this.props.onFilter('status', 'contribution')
+        this.setState({ additionalSelected: 'contribution' })
+        break
       default:
         this.props.onFilter()
     }
@@ -59,15 +69,15 @@ class TaskStatusFilter extends Component {
     switch (value) {
       case 'open':
         this.props.history.push('/tasks/open')
-        this.props.onFilter('status', value)
+        this.props.onFilter('status', value, this.state.additionalSelected)
         break
       case 'in_progress':
         this.props.history.push('/tasks/progress')
-        this.props.onFilter('status', value)
+        this.props.onFilter('status', value, this.state.additionalSelected)
         break
       case 'closed':
         this.props.history.push('/tasks/finished')
-        this.props.onFilter('status', value)
+        this.props.onFilter('status', value, this.state.additionalSelected)
         break
       default:
         this.props.onFilter()
@@ -75,10 +85,26 @@ class TaskStatusFilter extends Component {
     this.setState({ selected: value })
   }
 
+  handleListAdditionalStatusesClick = value => {
+    switch (value) {
+      case 'issuesWithBounties':
+        this.props.history.push('/tasks/with-bounties')
+        this.props.onFilter('status', this.state.selected, value) // passing value as third parameter to consider as additional
+        break
+      case 'contribution':
+        this.props.history.push('/tasks/contribution')
+        this.props.onFilter('status', this.state.selected, value) // passing value as third parameter to consider as additional
+        break
+      default:
+        this.props.onFilter()
+    }
+    this.setState({ additionalSelected: value })
+  }
+
   handleClickAll = () => {
     this.props.history.push('/tasks/all')
     this.props.onFilter()
-    this.setState({ selected: 'all' })
+    this.setState({ selected: 'all', additionalSelected: null })
   }
 
   statusesDisplay = status => {
@@ -90,8 +116,17 @@ class TaskStatusFilter extends Component {
     return possibles[status]
   }
 
+  additionalStatusDisplay = status => {
+    const additional = {
+      issuesWithBounties: this.props.intl.formatMessage(messages.issuesWithBounties),
+      contribution: this.props.intl.formatMessage(messages.contribution)
+    }
+
+    return additional[status]
+  }
+
   render () {
-    const { selected } = this.state
+    const { selected, additionalSelected } = this.state
     const { classes } = this.props
     return (
       <div>
@@ -117,6 +152,26 @@ class TaskStatusFilter extends Component {
             className={ selected === status ? classes.selected : {} }
           />
         )) }
+        <span style={ {
+          flexGrow: 1,
+          flexBasis: 'auto',
+          margin: '.25em 0',
+          padding: '5px 0.3em',
+          borderLeft: '1px solid #CCC',
+          backgroundColor: '#FFF',
+        } } />
+        {
+          additionalStatuses.map((status, index) => (
+            <Chip
+              style={ { marginRight: 10 } }
+              onClick={ () => this.handleListAdditionalStatusesClick(status) }
+              clickable
+              key={ index + 1 }
+              label={ this.additionalStatusDisplay(status) }
+              className={ additionalSelected === status ? classes.selected : {} }
+            />
+          ))
+        }
       </div>
     )
   }
