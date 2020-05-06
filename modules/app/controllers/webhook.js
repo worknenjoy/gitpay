@@ -75,17 +75,17 @@ exports.github = async (req, res) => {
       try {
         const totalLabelResponse = []
         await Promise.all(labels.map(async (label) => {
-          // eslint-disable-next-line no-console
-          const persistedLabel = await models.Label.findOne({
+          let persistedLabel = await models.Label.findOne({
             where: {
               name: label.name
             }
           })
           if (persistedLabel === null) {
-            await models.Label.create({
+            persistedLabel = await models.Label.create({
               name: label.name
             })
           }
+          const labelId = persistedLabel.dataValues.id
           if (label.name === 'notify') {
             let finalResponse = {}
             try {
@@ -118,6 +118,7 @@ exports.github = async (req, res) => {
                     repo: response.repository.html_url
                   })
                 )
+                await task.addLabels(labelId)
               }
               TaskMail.notify(userData, {
                 task: {
@@ -176,7 +177,6 @@ exports.github = async (req, res) => {
                   url: response.issue.html_url
                 }
               })
-
               const task = taskExist || await models.Task.build(
                 {
                   title: response.issue.title,
@@ -185,6 +185,7 @@ exports.github = async (req, res) => {
                   userId: userData ? userData.id : null
                 }
               ).save()
+              await task.addLabels(labelId)
               const taskData = task.dataValues
               const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
               if (userData) {
