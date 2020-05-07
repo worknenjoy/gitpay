@@ -454,6 +454,14 @@
   "first.task.community.title": "Envie para nossa comunidade",
   "first.task.next": "Próximo",
   "first.task.back": "Anterior",
-  "tiers.title":"Código aberto"
+  "tiers.title":"Código aberto",
+  "tiers.subheader":"Para projetos de código aberto" ,
+  "tiers.price":"8%",
+  "tiers.description":"Projetos públicos no Github ou Bitbucket, comunidade de desenvolvimento disposta a resolver seus problemas, taxa de 8% para cada transação",
+  "tiers.buttonText":"Inscrever-se",
+  "tiers.button.variant":"contido",
+  "tiers.link":"https://gitpay.me/#/login"
+
+   
 
 }

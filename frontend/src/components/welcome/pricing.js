@@ -121,8 +121,8 @@ class Pricing extends Component {
             <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 4 }>
               <Card>
                 <CardHeader
-                  title={ this.props.intl.formatMessage(messages.tiers)}
-                  subheader={ tier.subheader }
+                  title={ this.props.intl.formatMessage(messages.tiersTitle)}
+                  subheader={ this.props.intl.formatMessage(messages.tiersSubheader) }
                   titleTypographyProps={ { align: 'center' } }
                   subheaderTypographyProps={ { align: 'center' } }
                   className={ classes.cardHeader }
@@ -130,13 +130,13 @@ class Pricing extends Component {
                 <CardContent>
                   <div className={ classes.cardPricing }>
                     <Typography variant='h5' color='textPrimary'>
-                      <small>Fee</small> { tier.price }
+                      <small>Fee</small> { this.props.intl.formatMessage(messages.tiersPrice) }
                     </Typography>
                     <Typography variant='subheading' color='textSecondary'>
                       <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
                     </Typography>
                   </div>
-                  { tier.description.map(line => (
+                  { this.props.intl.formatMessage(messages.tiersDescription).split(',').map(line => (
                     <Typography variant='body1' align='center' key={ line }>
                       { line }
                     </Typography>
@@ -144,7 +144,7 @@ class Pricing extends Component {
                 </CardContent>
                 <CardActions className={ classes.cardActions }>
                   <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
-                    { tier.buttonText }
+                    { this.props.intl.formatMessage(messages.tiersButtonText) }
                   </Button>
                 </CardActions>
               </Card>

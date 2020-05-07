@@ -535,5 +535,15 @@
   "first.task.community.title": "Send to our community",
   "first.task.next": "Next",
   "first.task.back": "Back",
-  "tiers.title":"Open source"
+  "tiers.title":"Open source",
+  "tiers.subheader":"For open source projects",
+  "tiers.price":"8%",
+  "tiers.description":"Public projects on Github or Bitbucket,Development community willing to solve your issues,8% fee for each transaction",
+  "tiers.buttonText":"Sign up",
+  "tiers.button.variant":"contained",
+  "tiers.link":"https://gitpay.me/#/login"
+
+
+
+
 }

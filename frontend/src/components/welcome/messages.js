@@ -233,12 +233,33 @@ export default defineMessages({
     id: 'welcome.menu.item.nine',
     defaultMessage: 'Who is using Gitpay'
   },
-   
-  tiers: {
+  tiersTitle: {
     id:'tiers.title',
     defaultMessage: 'Open source',
-    
-  }
-  
+  },
+  tiersSubheader: {
+    id:'tiers.subheader',
+    defaultMessage: 'For open source projects'
+  },
+  tiersPrice: {
+    id:'tiers.price',
+    defaultMessage: '8%'
+  },
+  tiersDescription: {
+    id:'tiers.description',
+    defaultMessage: 'Public projects on Github or Bitbucket,Development community willing to solve your issues,8% fee for each transaction'
+  },
+  tiersButtonText: {
+    id:'tiers.buttonText',
+    defaultMessage: 'Sign up'
+  },
+  tiersButtonVariant: {
+    id:'tiers.button.variant',
+    defaultMessage: 'contained'
+  },
+  tiersLinks: {
+    id:'tiers.link',
+    defaultMessage: 'https://gitpay.me/#/login'
+  },
   
 })
