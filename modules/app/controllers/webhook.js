@@ -22,10 +22,27 @@ const FAILED_REASON = {
 }
 
 const CURRENCIES = {
-  brl: 'R$',
-  usd: '$',
+  aud: '$',
   eur: '€',
-  dkk: 'DK'
+  brl: 'R$',
+  cad: 'C$',
+  czk: 'Kč',
+  dkk: 'DK',
+  hkd: 'HK$',
+  inr: '₹',
+  jpy: '¥',
+  myr: 'RM',
+  mxn: 'Mex$',
+  nzd: 'NZ$',
+  nok: 'kr',
+  isk: 'kr',
+  pln: 'zł',
+  ron: 'lei',
+  sgd: 'S$',
+  sek: 'kr',
+  chf: 'fr',
+  gbp: '£',
+  usd: '$'
 }
 
 i18n.configure({
