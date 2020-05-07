@@ -17,7 +17,8 @@ router.post('/create', controllers.createTask)
 router.post('/payments', controllers.paymentTask)
 router.delete('/delete/:id', controllers.deleteTaskById)
 
-// Assignment routes
 router.put('/:id/assignment/remove', controllers.removeAssignedUser)
+router.put('/assignment/request', controllers.assignedUser)
+router.post('/assignment/request', controllers.requestAssignedUser)
 
 module.exports = router

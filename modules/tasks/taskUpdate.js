@@ -149,28 +149,31 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
             }
           }
 
-          if (taskParameters.Offers || taskParameters.Assigns) {
+          if (taskParameters.Offer) {
             return assignExist({
-              userId: taskParameters.Assigns[0].userId,
+              userId: taskParameters.Offer.userId,
               taskId: taskParameters.id
             }).then(existingAssign => {
               if (!existingAssign) {
-                return task.createAssign(taskParameters.Assigns[0])
+                return task.createAssign({ userId: taskParameters.Offer.userId })
               }
             }).then(assign => {
               return offerExists({
-                userId: taskParameters.Offers[0].userId,
+                userId: taskParameters.Offer.userId,
                 taskId: taskParameters.id
               }).then(resp => {
                 if (!resp) {
-                  return task.createOffer(taskParameters.Offers[0]).then(offer => {
-                    return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                  return task.createOffer(taskParameters.Offer).then(offer => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offer)
                   })
                 }
                 else {
-                  return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
-                    taskId: taskParameters.id } }).then(update => {
-                    return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
+                  return models.Offer.update(taskParameters.Offer,
+                    { where:
+                       { userId: taskParameters.Offer.userId,
+                         taskId: taskParameters.id }
+                    }).then(update => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offer)
                   })
                 }
               })

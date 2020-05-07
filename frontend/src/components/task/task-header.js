@@ -142,7 +142,7 @@ class TaskHeader extends React.Component {
             }
             <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
               ready={ task.completed }>
-              <Typography variant='display1' color='primary' align='left' gutterBottom>
+              <Typography variant='h4' color='primary' align='left' gutterBottom>
                 <a className={ classes.white } href={ task.data.url }>
                   { task.data.title }
                 </a>

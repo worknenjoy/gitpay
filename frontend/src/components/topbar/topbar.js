@@ -461,7 +461,7 @@ class TopBar extends Component {
                         <Button
                           style={ { marginRight: 10 } }
                           color='primary'
-                          variant={ this.state.provider === 'github' ? 'raised' : 'outline' }
+                          variant={ this.state.provider === 'github' ? 'contained' : 'outline' }
                           id='github'
                           onClick={ (e) => this.handleProvider(e, 'github') }
                         >
@@ -471,7 +471,7 @@ class TopBar extends Component {
 
                         <Button
                           color='primary'
-                          variant={ this.state.provider === 'bitbucket' ? 'raised' : 'outline' }
+                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outline' }
                           id='bitbucket'
                           onClick={ (e) => this.handleProvider(e, 'bitbucket') }
                         >

@@ -172,7 +172,8 @@ export const tasks = (state = {
   },
   data: [],
   filterType: 'all',
-  filterValue: null
+  filterValue: null,
+  filterAdditional: null
 }, action) => {
   switch (action.type) {
     case LIST_TASK_REQUESTED:
@@ -184,7 +185,7 @@ export const tasks = (state = {
     case FILTER_TASK_REQUESTED:
       return { ...state, completed: false }
     case FILTER_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data, filterType: action.filterType, filterValue: action.filterValue }
+      return { ...state, completed: true, data: action.data, filterType: action.filterType, filterValue: action.filterValue, filterAdditional: action.filterAdditional }
     default:
       return state
   }

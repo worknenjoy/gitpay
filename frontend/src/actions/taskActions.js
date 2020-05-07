@@ -159,13 +159,14 @@ const filterTaskRequested = () => {
   return { type: FILTER_TASK_REQUESTED, completed: false }
 }
 
-const filterTaskSuccess = (tasks, filter, value) => {
+const filterTaskSuccess = (tasks, filter, value, additional) => {
   return {
     type: FILTER_TASK_SUCCESS,
     completed: true,
     data: tasks.data,
     filterType: filter,
-    filterValue: value
+    filterValue: value,
+    filterAdditional: additional
   }
 }
 
@@ -284,7 +285,7 @@ const updateTask = task => {
           dispatch(syncTask(task.id))
           dispatch(updateTaskSuccess())
         }
-        else if (task.Assigns) {
+        else if (task.Offer) {
           dispatch(
             addNotification('actions.task.interested.notification.success')
           )
@@ -350,11 +351,11 @@ const listTasks = () => {
   }
 }
 
-const filterTasks = (key = 'all', value) => {
+const filterTasks = (key = 'all', value, additional) => {
   return (dispatch, getState) => {
     const tasks = getState().tasks
     dispatch(filterTaskRequested())
-    return dispatch(filterTaskSuccess(tasks, key, value))
+    return dispatch(filterTaskSuccess(tasks, key, value, additional))
   }
 }
 

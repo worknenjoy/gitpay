@@ -36,13 +36,13 @@ export const PaymentHeader = ({...props}) => {
       return (
         <div>
           <Typography
-            variant='display1' color='primary'
+            variant='h5' color='primary'
             style={{color: '#bbb', fontWeight: 'bold'}}>
               ${paymentBounty}
           </Typography>
-          <Typography variant='subheading'
+          <Typography variant='h6'
                        style={{color: '#bbb', textTransform: 'uppercase', fontWeight: 'bold'}}>
-            <FormattedMessage id='task.header.payment.type' defaultMessage='paid with credit card' />
+            <FormattedMessage id='task.header.payment.type' defaultMessage='paid with {payment}' values={{payment: modeOfPayment()}} />
           </Typography>
           <Typography variant='body2' style={{color: '#bbb', fontWeight: 'bold'}}>
             <FormattedMessage id='task.header.payment.condition' defaultMessage='You will only be paid when you' />

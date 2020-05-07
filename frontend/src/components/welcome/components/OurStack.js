@@ -19,9 +19,10 @@ const data = [
 ]
 
 export const Technology = styled(Chip)`
-  outline: 1px solid orange;
-  margin: 10px;
-  font-weight: bold;
+  && {
+    margin: 10px;
+    font-weight: bold;
+  }
 `
 
 export const Stack = styled.div`
@@ -41,7 +42,7 @@ const handleClick = url => event => {
 
 const OurStack = ({ technologies }) => (
   <Content>
-    <Typography variant='subheading' color='inherit' gutterBottom>
+    <Typography variant='body1' color='inherit' gutterBottom>
       <FormattedMessage id='info.stack.subheading' defaultMessage='Our stack' />
       <Stack>
         { technologies.map((technology, index) =>

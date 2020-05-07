@@ -39,7 +39,7 @@ class Bottom extends Component {
     return (
       <div className={ classes.secBlock }>
         <Container>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography component='div'>
                 <strong>

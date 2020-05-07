@@ -9,13 +9,13 @@ const styles = theme => ({
     textAlign: 'left'
   },
   gutterTop: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing(2)
   },
   gutterTopSmall: {
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing(1)
   },
   gutterBottomBig: {
-    marginBottom: theme.spacing.unit * 3
+    marginBottom: theme.spacing(3)
   },
   bgContrast: {
     backgroundColor: '#D1DDE9'
@@ -42,13 +42,13 @@ const styles = theme => ({
     marginRight: 5
   },
   button: {
-    margin: theme.spacing.unit,
-    padding: [theme.spacing.unit * 2, theme.spacing.unit * 4],
+    margin: theme.spacing(1),
+    padding: [theme.spacing(2), theme.spacing(4)],
     color: 'white'
   },
   altButton: {
-    margin: [theme.spacing.unit],
-    padding: [theme.spacing.unit / 2, theme.spacing.unit * 6],
+    margin: [theme.spacing(1)],
+    padding: [theme.spacing(0.5), theme.spacing(6)],
     color: 'white',
     fontSize: 12
   },

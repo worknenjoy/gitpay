@@ -211,8 +211,8 @@ const styles = theme => ({
   controls: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   playIcon: {
     height: 38,
@@ -259,8 +259,8 @@ const styles = theme => ({
   },
   closeButton: {
     position: 'absolute',
-    right: theme.spacing.unit,
-    top: theme.spacing.unit,
+    right: theme.spacing(1),
+    top: theme.spacing(1),
     backgroundColor: 'darkgray',
     color: 'white',
     boxShadow: 'none'
@@ -319,7 +319,7 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   checkIcon: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
     fontSize: 20
   },
   planIcon: {
@@ -327,25 +327,25 @@ const styles = theme => ({
     padding: 20
   },
   planFinalPrice: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing(1),
     fontSize: '2rem'
   },
   planGridItem: {
     width: 200,
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     margin: 0
   },
   planGridContent: {
-    minHeight: theme.spacing.unit * 10,
+    minHeight: theme.spacing(10),
     margin: 0,
     padding: 0
   },
   planBullets: {
-    paddingLeft: theme.spacing.unit * 1,
+    paddingLeft: theme.spacing(1),
     padding: 10
   },
   chip: {
-    marginRight: theme.spacing.unit * 2
+    marginRight: theme.spacing(2)
   }
 
 })
@@ -355,6 +355,7 @@ class Task extends Component {
     super(props)
 
     this.state = {
+      logged: null,
       deadline: null,
       assigned: null,
       finalPrice: 0,
@@ -396,9 +397,11 @@ class Task extends Component {
     let logged = false
     try {
       logged = await this.props.isLogged()
+      this.setState({ logged })
     }
     catch (e) {
       logged = false
+      this.setState({ logged })
     }
 
     await this.props.syncTask(id)
@@ -537,23 +540,16 @@ class Task extends Component {
     this.setState({ termsDialog: false })
   }
 
-  handleAssignTask = () => {
+  handleOfferTask = () => {
     this.props.updateTask({
       id: this.props.match.params.id,
-      Assigns: [
-        {
-          userId: this.props.user.id
-        }
-      ],
-      Offers: [
-        {
-          userId: this.props.user.id,
-          suggestedDate: this.state.interestedSuggestedDate,
-          value: this.state.currentPrice,
-          learn: this.state.interestedLearn,
-          comment: this.state.interestedComment
-        }
-      ]
+      Offer: {
+        userId: this.props.user.id,
+        suggestedDate: this.state.interestedSuggestedDate,
+        value: this.state.currentPrice,
+        learn: this.state.interestedLearn,
+        comment: this.state.interestedComment
+      }
     })
     this.setState({ assignDialog: false, termsAgreed: false })
   }
@@ -736,7 +732,7 @@ class Task extends Component {
             onClick={ this.handlePaymentForm }
             size='small'
             color='primary'
-            variant='raised'
+            variant='contained'
             className={ this.props.classes.cardButton }
           >
             <span className={ this.props.classes.spaceRight }>
@@ -750,7 +746,7 @@ class Task extends Component {
             onClick={ this.handleAssignDialogOpen }
             size='small'
             color='primary'
-            variant='raised'
+            variant='contained'
             className={ this.props.classes.cardButton }
           >
             <span className={ this.props.classes.spaceRight }>
@@ -863,7 +859,7 @@ class Task extends Component {
             container
             justify='flex-start'
             direction='row'
-            spacing={ 24 }
+            spacing={ 3 }
           >
             <Grid
               item
@@ -1105,7 +1101,7 @@ class Task extends Component {
                         <Button onClick={ this.handleDeleteDialogClose } color='primary'>
                           <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleDeleteTask } variant='raised' color='secondary' >
+                        <Button onClick={ this.handleDeleteTask } variant='contained' color='secondary' >
                           <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
                         </Button>
                       </DialogActions>
@@ -1139,7 +1135,7 @@ class Task extends Component {
                   handleTermsDialog={ this.handleTermsDialog }
                   termsDialog={ this.state.termsDialog }
                   handleTermsDialogClose={ this.handleTermsDialogClose }
-                  handleAssignTask={ this.handleAssignTask }
+                  handleOfferTask={ this.handleOfferTask }
                   logged={ this.props.logged }
                   task={ task }
                   classes={ classes }
@@ -1154,7 +1150,7 @@ class Task extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 8 }>
               { task.data.assigned &&
                 <TaskAssigned
@@ -1174,6 +1170,8 @@ class Task extends Component {
               }
               <div className={ classes.rootTabs }>
                 <TaskTabs
+                  hash={ this.props.location.hash }
+                  actionAssign={ this.props.actionAssign }
                   assignTask={ this.props.assignTask }
                   removeAssignment={ this.props.removeAssignment }
                   messageTask={ this.props.messageTask }
@@ -1236,6 +1234,7 @@ Task.propTypes = {
   location: PropTypes.object,
   paymentTask: PropTypes.func,
   assignTask: PropTypes.func,
+  actionAssign: PropTypes.func,
   task: PropTypes.object,
   logged: PropTypes.bool,
   user: PropTypes.object,
