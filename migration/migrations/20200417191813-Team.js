@@ -9,16 +9,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      teamname: DataTypes.STRING,
-      members: [{
-        member: {
-          type: DataTypes.INTEGER,
+      teamname: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      members: {
+        type: Sequelize.ARRAY({
+          type: Sequelize.INTEGER,
           references: {
             model: 'Users',
-            key: 'id'
-          }
-        }
-      }],
+            key: 'id',
+            deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+          },
+          allowNull: false
+        })
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

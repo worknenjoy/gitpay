@@ -1,15 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
   const Team = sequelize.define('Team', {
     teamname: DataTypes.STRING,
-    members: [{
-      member: {
-        type: DataTypes.INTEGER,
+    members: {
+      type: DataTypes.ARRAY({
+        type: DataTypes.UUID,
         references: {
-          model: 'User',
-          key: 'id'
+          model: 'Users',
+          key: 'id',
         }
-      }
-    }]
+      })
+    }
+
   }, {
     classMethods: {
       associate: (models) => {
