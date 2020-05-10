@@ -26,7 +26,7 @@ module.exports = (to, subject, content, replyEmail) => {
         },
       ],
       from: {
-        email: fromEmail
+        email: replyEmail || notificationEmail
       },
       reply_to: {
         email: replyEmail || fromEmail

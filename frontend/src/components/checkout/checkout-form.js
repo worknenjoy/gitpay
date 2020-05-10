@@ -138,7 +138,7 @@ class CheckoutForm extends Component {
         onChange={ this.onChange }
         style={ { marginTop: 20 } }
       >
-        <Grid container spacing={ 24 }>
+        <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
             { logged ? (
               <div>
@@ -147,7 +147,7 @@ class CheckoutForm extends Component {
                     <Typography variant='caption'>
                       <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
                     </Typography>
-                    <Typography variant='subheading'>
+                    <Typography variant='body1'>
                       { `${this.state.fullname} (${this.state.email})` }
                     </Typography>
                   </div>

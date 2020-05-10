@@ -8,6 +8,7 @@
   },
   "scripts": {
     "migrate": "node migrate.js up",
+    "migrate-update": "node migrate.js update",
     "migrate-test": "NODE_ENV=test node migrate.js up",
     "seed": "TYPE=seed node migrate.js up",
     "seed-test": "TYPE=seed NODE_ENV=test node migrate.js up",
@@ -19,8 +20,8 @@
     "start": "node ./server.js",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --timeout 30000 test/*.test.js",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css",
-    "lint": "./node_modules/.bin/eslint .",
-    "lint-fix": "./node_modules/.bin/eslint . --fix",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
     "prepush": "npm run lint",
     "postbuild": "cd frontend && npm run test",
     "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate",
@@ -46,6 +47,7 @@
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-node": "^6.0.1",
     "express-session": "^1.15.2",
+    "extract-text-webpack-plugin": "^3.0.2",
     "feed-read": "0.0.1",
     "heroku-ssl-redirect": "0.0.4",
     "i18n": "^0.8.3",
@@ -75,8 +77,11 @@
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "query-string": "^5.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-intl": "^2.6.0",
     "react-query-params": "^1.0.7",
+    "react-router": "^5.1.2",
     "reactjs-localstorage": "0.0.6",
     "request-promise": "^4.2.0",
     "rxjs": "^5.1.0",
@@ -88,6 +93,8 @@
     "umzug": "^1.12.0",
     "url": "^0.11.0",
     "url-search-params": "^1.0.2",
+    "webpack": "^4.42.1",
+    "webpack-dev-server": "^3.10.3",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
@@ -112,6 +119,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.6",
+    "mini-css-extract-plugin": "^0.9.0",
     "mocha": "^3.4.1",
     "mockdate": "^2.0.2",
     "nock": "^10.0.6",
@@ -123,5 +131,20 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0"
-  }
+  },
+  "description": "![Gitpay](https://alexandremagno.net/wp-content/uploads/2019/05/gitpaydesigntop.png)",
+  "main": "cron.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caiofp27/gitpay.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/caiofp27/gitpay/issues"
+  },
+  "homepage": "https://github.com/caiofp27/gitpay#readme"
 }

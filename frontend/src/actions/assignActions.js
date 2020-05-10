@@ -1,6 +1,7 @@
 import api from '../consts'
 import axios from 'axios'
 
+import { validToken } from './helpers'
 import { addNotification } from './notificationActions'
 import { fetchTask } from './taskActions'
 
@@ -26,9 +27,9 @@ const assignTask = (taskId, assignId) => {
   return dispatch => {
     dispatch(assignTaskRequested())
     axios
-      .put(api.API_URL + '/tasks/update', {
-        id: taskId,
-        assigned: assignId
+      .post(api.API_URL + '/tasks/assignment/request', {
+        taskId,
+        assignId
       })
       .then(response => {
         dispatch(addNotification('actions.assign.task.sucess'))
@@ -36,6 +37,31 @@ const assignTask = (taskId, assignId) => {
         return dispatch(fetchTask(taskId))
       })
       .catch(error => {
+        dispatch(addNotification('actions.assign.task.error'))
+        return dispatch(assignTaskError(error))
+      })
+  }
+}
+
+const actionAssign = (taskId, assignId, action, message) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(assignTaskRequested())
+    axios
+      .put(api.API_URL + '/tasks/assignment/request', {
+        taskId,
+        assignId,
+        confirm: action,
+        message
+      })
+      .then(response => {
+        dispatch(addNotification('actions.assign.task.sucess'))
+        dispatch(assignTaskSuccess(2))
+        return dispatch(fetchTask(taskId))
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.log(error)
         dispatch(addNotification('actions.assign.task.error'))
         return dispatch(assignTaskError(error))
       })
@@ -127,5 +153,6 @@ export {
   MESSAGE_TASK_SUCCESS,
   MESSAGE_TASK_ERROR,
   assignTask,
-  messageTask
+  messageTask,
+  actionAssign
 }

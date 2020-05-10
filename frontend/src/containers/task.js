@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
-import { assignTask, removeAssignment, messageTask } from '../actions/assignActions'
+import { assignTask, removeAssignment, messageTask, actionAssign } from '../actions/assignActions'
 import { updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask } from '../actions/taskActions'
 import { createOrder, payOrder, cancelOrder, detailOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
@@ -27,10 +27,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     closeDialog: () => dispatch(closeDialog()),
     addNotification: (message) => dispatch(addNotification(message)),
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
+    actionAssign: (taskId, assignId, action, message) => dispatch(actionAssign(taskId, assignId, action, message)),
     messageTask: (taskId, assignId, message) => dispatch(messageTask(taskId, assignId, message)),
     removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
-    inviteTask: (id, email, message) => dispatch(inviteTask(id, email, message)),
-    fundingInviteTask: (id, email, message, suggestedPrice, suggestedDate) => dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate)),
+    inviteTask: (id, email, message, user) => dispatch(inviteTask(id, email, message, user)),
+    fundingInviteTask: (id, email, message, suggestedPrice, suggestedDate, user) => dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate, user)),
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
     syncTask: (taskId) => dispatch(syncTask(taskId)),
     paymentTask: (taskId, value) => dispatch(paymentTask(taskId, value)),

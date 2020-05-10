@@ -4,7 +4,7 @@ const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
 const roleExists = require('../roles').roleExists
-const userExists = require('../users').userExists
+const { userExists } = require('../users')
 const memberExists = require('../members').memberExists
 
 module.exports = Promise.method(function taskFetch (taskParams) {
@@ -74,8 +74,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   }
                 })
                 const userInfoJSON = JSON.parse(userInfo)
-                const userExist = await userExists({ email: userInfoJSON.email })
-                if (userExist.dataValues && userExist.dataValues.id) {
+                const userExist = userExists && await userExists({ email: userInfoJSON.email })
+                if (userExist && userExist.dataValues && userExist.dataValues.id) {
                   const memberExist = await memberExists({ userId: userExist.dataValues.id, taskId: data.id })
                   if (memberExist.dataValues && memberExist.dataValues.id) {
                     // alerady member
@@ -104,7 +104,6 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               const repoInfoJSON = JSON.parse(repoInfo)
               const repoUrl = repoInfoJSON.html_url
               const ownerUrl = repoInfoJSON.owner.html_url
-
               const responseGithub = {
                 id: data.dataValues.id,
                 url: issueUrl,
@@ -115,7 +114,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
                 assignedUser: assigned && assigned.dataValues.User.dataValues,
-                userId: data.dataValues.userId,
+                user: data.dataValues.User.dataValues,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
                 provider: data.dataValues.provider,

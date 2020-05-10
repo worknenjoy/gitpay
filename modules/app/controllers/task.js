@@ -99,9 +99,9 @@ exports.inviteToFundingTask = ({ params, body }, res) => Tasks
     res.send({ error: error.message })
   })
 
-// message functions
-exports.messageInterestedToTask = ({ params, body }, res) => Tasks
-  .taskMessage(params, body)
+// message to interest users
+exports.messageInterestedToTask = ({ params, body, user }, res) => Tasks
+  .taskMessage(params, body, user)
   .then(data => res.send(data))
   .catch(error => {
     // eslint-disable-next-line no-console
@@ -116,4 +116,18 @@ exports.removeAssignedUser = (req, res) => {
     .removeAssignedUser(params, req.body)
     .then(data => res.send(data))
     .catch(error => res.send({ error: error.message }))
+}
+
+exports.requestAssignedUser = (req, res) => {
+  Tasks
+    .requestAssignedUser.invite(req.body)
+    .then(data => res.send(data))
+    .catch(error => res.send({ error: error.message }))
+}
+
+exports.assignedUser = (req, res) => {
+  Tasks
+    .requestAssignedUser.confirm(req.body)
+    .then(data => res.send(data))
+    .catch(error => res.status(400).send({ error: error.message }))
 }

@@ -110,7 +110,7 @@ class TaskAssigned extends Component {
                   label={ status }
                   className={ classes.chipStatus }
                 />
-                { isOwner && <AssignActions isOwner={ isOwner } assign={ assign } task={ task } removeAssignment={ removeAssignment } assignTask={ assignTask } /> }
+                { isOwner && <AssignActions logged={ isOwner } isOwner={ isOwner } assign={ assign } task={ task } removeAssignment={ removeAssignment } assignTask={ assignTask } /> }
               </div>
             }
             action={

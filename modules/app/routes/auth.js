@@ -82,4 +82,6 @@ router.put('/user/account', controllers.accountUpdate)
 router.post('/user/bank_accounts', controllers.createBankAccount)
 router.get('/user/bank_accounts', controllers.userBankAccount)
 
+router.delete('/user/delete/:id', controllers.deleteUserById)
+
 module.exports = router

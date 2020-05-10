@@ -5,7 +5,7 @@ module.exports = Promise.method(function taskSearch () {
   return models.Task
     .findAll(
       {
-        include: [ models.User, models.Order, models.Assign ],
+        include: [ models.User, models.Order, models.Assign, models.Label ],
         order: [
           ['status', 'DESC'],
           ['id', 'DESC']

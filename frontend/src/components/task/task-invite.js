@@ -39,7 +39,7 @@ class TaskInvite extends Component {
 
   sendInvite = (e) => {
     e.preventDefault()
-    this.props.onInvite(this.props.id, this.state.email, this.state.message)
+    this.props.onInvite(this.props.id, this.state.email, this.state.message, this.props.user)
     this.props.onClose()
   }
 

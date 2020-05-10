@@ -68,7 +68,7 @@ class Info extends React.Component {
 
     return (
       <Content>
-        <Typography variant='subheading' color='inherit' gutterBottom>
+        <Typography variant='body1' color='inherit' gutterBottom>
           <FormattedMessage id='info.status.subheading' defaultMessage='Stats' />
         </Typography>
         <Items>
