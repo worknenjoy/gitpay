@@ -569,12 +569,12 @@ class Task extends Component {
 
   handlePaymentForm = (e) => {
     e.preventDefault()
-    this.state.paymentForm ? this.setState({ paymentForm: false }) : this.setState({ paymentForm: true })
+    this.state.paymentForm ? this.setState({ paymentForm: false }) : this.setState({ paymentForm: true, deadlineForm: false })
   }
 
   handleDeadlineForm = (e) => {
     e.preventDefault()
-    this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true })
+    this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true, paymentForm: false })
   }
 
   handleInvite = () => {
