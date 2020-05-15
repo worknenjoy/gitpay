@@ -7,8 +7,8 @@ exports.createTask = (req, res) => {
       res.send(data)
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(error)
+      console.log('createTask error on controller', error)
+      res.status(error.StatusCodeError || 400).send(error)
     })
 }
 
