@@ -133,6 +133,21 @@ describe("tasks", () => {
       })
     })
 
+    it('should try to create an invalid task', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .post('/tasks/create/')
+          .send({url: 'https://github.com/worknenjoy/truppie/issues/test', provider: 'github'})
+          .set('Authorization', res.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(400);
+            done();
+          })
+      })
+    })
+
     it('should create a new task with one member', (done) => {
       registerAndLogin(agent).then(res => {
         agent
