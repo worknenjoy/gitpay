@@ -62,19 +62,19 @@ const scripts = {
             resolveWithFullResponse: true
           }).then(response => {
             // eslint-disable-next-line no-console
-            console.log('response status code for issue', response.statusCode, t.url)
+            // console.log('response status code for issue', response.statusCode, t.url)
             // eslint-disable-next-line no-console
-            console.log('task successfull from Github', t.url)
+            // console.log('task successfull from Github', t.url)
             return false
           }).catch(e => {
             // eslint-disable-next-line no-console
-            console.log('task with error from Github', t.url)
+            // console.log('task with error from Github', t.url)
             return t
           })
         })
         return Promise.all(tasksPromises).then(results => {
           // eslint-disable-next-line no-console
-          console.log('results from tasksPromises', results)
+          // console.log('results from tasksPromises', results)
           return results.filter(t => t.id)
         })
       }).catch(error => {
