@@ -6,6 +6,15 @@ const i18n = require('i18n')
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 const SendMail = require('./modules/mail/mail')
 
+i18n.configure({
+  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
+  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
+  defaultLocale: 'en',
+  updateFiles: false
+})
+
+i18n.init()
+
 const scripts = {
   accountInfo: () => {
     return models.User
@@ -43,7 +52,6 @@ const scripts = {
       })
   },
   deleteInvalidTasks: () => {
-    i18n.init()
     return models.Task
       .findAll(
         {
