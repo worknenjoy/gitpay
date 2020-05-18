@@ -65,7 +65,7 @@
   "mail.assigned.end.owner.button.primary": "Review issue assignment",
   "mail.assigned.end.owner.button.secondary": "See issue",
   "mail.assigned.request.subject": "You were accepted to work on an issue on Gitpay",
-  "mail.assigned.request.deny.subject": "The user interested to work in an issue on Gitpay rejected the assignment",
+  "mail.assigned.request.deny.subject": "The user interested to work on an issue on Gitpay rejected the assignment",
   "mail.assigned.request.deny.body": "<p>Hello {{name}}</p> <p> The assignment of an issue {{title}} <strong>{{title}}</strong> - <a href=\"{{url}}\">{{url}}</a>  was rejected by the user <strong>{{user}}</strong>.</p> <p>The reason was: {{message}} </p> ",
   "mail.assigned.request.body": "<p>Hello {{name}}</p> <p> You're interested to work in the issue <strong>{{title}}</strong> - <a href=\"{{url}}\">{{url}}</a> on Gitpay.</p> <p>To start your work, please accept or reject this proposal.</p> ",
   "mail.assigned.request.button.primary": "Accept",
@@ -140,5 +140,5 @@
   "mail.task.docs.title": "We have this documentation to help you (in Portuguese for now)",
   "mail.task.reason": "You received this message because you subscribed to <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>",
   "task.invalid.script.subject": "The issue you created on Gitpay was deleted",
-  "task.invalid.script.message": "The task you imported with the {{url}} to Gitpay was deleted from our list on Gitpay, because is an invalid issue URL."
+  "task.invalid.script.message": "The task you imported with the {{url}} to Gitpay was deleted from our list on Gitpay, because this issue is an invalid issue URL."
 }
