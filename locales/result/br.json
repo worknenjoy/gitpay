@@ -138,5 +138,7 @@
   "mail.task.calltoaction": "Ver a tarefa no Gitpay",
   "mail.task.instructions": "<p>Como trabalhar neste projeto?</p><ul><li>Acesse a tarefa no Gitpay;</li><li>Clique em \"Estou interessado\";</li><li>Acesse o projeto e crie uma solução;</li><li>Envie um Pull Request com a solução;</li><li>O dono do projeto revisará e você fará os ajustes necessários para que a tarefa atenda os requisitos;</li><li>Receba a recompensa quando a tarefa for concluída.</li></ul>",
   "mail.task.docs.title": "Nós temos esta documentação completa para ajudá-lo (apenas em Português por enquanto)",
-  "mail.task.reason": "Você recebeu esta mensagem pois se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
+  "mail.task.reason": "Você recebeu esta mensagem pois se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>",
+  "task.invalid.script.subject": "The issue you created on Gitpay was deleted",
+  "task.invalid.script.message": "The task you imported with the {{url}} to Gitpay was deleted from our list on Gitpay, because is an invalid issue URL."
 }
