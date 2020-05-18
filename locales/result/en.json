@@ -64,6 +64,12 @@
   "mail.deadline.end.owner.button.secondary": "See issue",
   "mail.assigned.end.owner.button.primary": "Review issue assignment",
   "mail.assigned.end.owner.button.secondary": "See issue",
+  "mail.assigned.request.subject": "You were accepted to work on an issue on Gitpay",
+  "mail.assigned.request.deny.subject": "The user interested to work in an issue on Gitpay rejected the assignment",
+  "mail.assigned.request.deny.body": "<p>Hello {{name}}</p> <p> The assignment of an issue {{title}} <strong>{{title}}</strong> - <a href=\"{{url}}\">{{url}}</a>  was rejected by the user <strong>{{user}}</strong>.</p> <p>The reason was: {{message}} </p> ",
+  "mail.assigned.request.body": "<p>Hello {{name}}</p> <p> You're interested to work in the issue <strong>{{title}}</strong> - <a href=\"{{url}}\">{{url}}</a> on Gitpay.</p> <p>To start your work, please accept or reject this proposal.</p> ",
+  "mail.assigned.request.button.primary": "Accept",
+  "mail.assigned.request.button.secondary": "Reject",
   "mail.status.subject": "We updated the status of an issue added on Gitpay.",
   "mail.status.message.first": "<p>We updated the deadline for this task you're working at: <a href=\"{{url}}\">{{title}}</a></p>",
   "mail.status.message.second": "This issue is <strong>{{status}}</strong>.",
@@ -132,5 +138,7 @@
   "mail.task.calltoaction": "Checkout the task on Gitpay",
   "mail.task.instructions": "<p>How to start to work on this project?</p><ul><li>Access the task on Gitpay</li><li>Click \"I'm interested\"</li><li>Access the project repo and create a fork</li><li>Send a Pull Request</li><li>The maintaners will review, then you will receive a proper feedback and you will make the necessary adjustments to fit with the project guidelines</li><li>Then you will be rewarded<br></li></ul>",
   "mail.task.docs.title": "We have this documentation to help you (in Portuguese for now)",
-  "mail.task.reason": "You received this message because you subscribed to <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
+  "mail.task.reason": "You received this message because you subscribed to <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>",
+  "task.invalid.script.subject": "The issue you created on Gitpay was deleted",
+  "task.invalid.script.message": "The task you imported with the {{url}} to Gitpay was deleted from our list on Gitpay, because is an invalid issue URL."
 }
