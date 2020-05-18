@@ -2,7 +2,9 @@ const models = require('./models')
 const Promise = require('bluebird')
 const url = require('url')
 const requestPromise = require('request-promise')
+const i18n = require('i18n')
 const stripe = require('stripe')(process.env.STRIPE_KEY)
+const SendMail = require('./modules/mail/mail')
 
 const scripts = {
   accountInfo: () => {
@@ -46,7 +48,8 @@ const scripts = {
         {
           where: {
             provider: 'github'
-          }
+          },
+          include: [ models.User ]
         }
       )
       .then(tasks => {
@@ -75,7 +78,37 @@ const scripts = {
         return Promise.all(tasksPromises).then(results => {
           // eslint-disable-next-line no-console
           // console.log('results from tasksPromises', results)
-          return results.filter(t => t.id)
+          const invalidTasksToDelete = results.filter(t => t.id)
+          const invalidTasksDeleted = invalidTasksToDelete.map(invalidTask => {
+            return Promise.all([
+              models.History.destroy({ where: { TaskId: invalidTask.id } }),
+              models.Order.destroy({ where: { TaskId: invalidTask.id } }),
+              models.Assign.destroy({ where: { TaskId: invalidTask.id } }),
+              models.Offer.destroy({ where: { taskId: invalidTask.id } }),
+              models.Member.destroy({ where: { taskId: invalidTask.id } }),
+            ]).then(result => {
+              return models.Task.destroy({
+                where: {
+                  id: invalidTask.id
+                }
+              }).then(task => {
+                if (task) {
+                  const user = invalidTask.User
+                  const language = user.language || 'en'
+                  i18n.setLocale(language)
+                  SendMail.success(
+                    user,
+                    i18n.__('task.invalid.script.subject'),
+                    i18n.__('task.invalid.script.message', {
+                      url: invalidTask.url
+                    })
+                  )
+                }
+                return invalidTask
+              })
+            })
+          })
+          return Promise.all(invalidTasksDeleted).then(result => result)
         })
       }).catch(error => {
         // eslint-disable-next-line no-console

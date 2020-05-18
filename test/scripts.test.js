@@ -1,10 +1,13 @@
 const expect = require('chai').expect
+const chai = require('chai')
+const spies = require('chai-spies')
 const Promise = require('bluebird')
 const api = require('../server')
 const models = require('../models')
 const nock = require('nock')
 const request = require('supertest')
 const agent = request.agent(api)
+const SendMail = require('../modules/mail/mail')
 const { scripts } = require('../scripts')
 
 describe('Scripts', () => {
@@ -30,7 +33,7 @@ describe('Scripts', () => {
     it('Check for invalid tasks and delete it', (done) => {
       agent
         .post('/auth/register')
-        .send({email: 'testscripts@gmail.com', password: 'teste'})
+        .send({email: 'testscripts@gitpay.me', password: 'teste'})
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
@@ -41,11 +44,28 @@ describe('Scripts', () => {
             models.Task.build({provider: 'github', url: 'https://github.com/worknenjoy/truppie/issues/7366', userId: res.body.id}).save(),
             models.Task.build({provider: 'github', url: 'https://github.com/worknenjoy/truppie/issues/test', userId: res.body.id, value: 50}).save()
           ]).then( tasks => {
+            chai.use(spies)
+            const mailSpySuccess = chai.spy.on(SendMail, 'success')
             scripts.deleteInvalidTasks().then(result => {
               const resulUrls = result.map(r => r.dataValues.url)
               expect(resulUrls).to.include('https://github.com/worknenjoy/truppie/issues/7366')
               expect(resulUrls).to.include('https://github.com/worknenjoy/truppie/issues/test')
-              done()
+              const deletedArrays = [
+                models.Task.findOne({where: {url: 'https://github.com/worknenjoy/truppie/issues/7366'}}),
+                models.Task.findOne({where: {url: 'https://github.com/worknenjoy/truppie/issues/test'}}),
+                models.Task.findOne({where: {url: 'https://github.com/worknenjoy/truppie/issues/120'}}),
+                models.Task.findOne({where: {url: 'https://github.com/worknenjoy/truppie/issues/130'}}),
+                models.Task.findOne({where: {url: 'https://github.com/worknenjoy/truppie/issues/143'}})
+              ]
+              Promise.all(deletedArrays).then((deletedTasks) => {
+                expect(deletedTasks[0]).to.equal(null)
+                expect(deletedTasks[1]).to.equal(null)
+                expect(deletedTasks[2]).not.to.equal(null)
+                expect(deletedTasks[3]).not.to.equal(null)
+                expect(deletedTasks[4]).not.to.equal(null)
+                expect(mailSpySuccess).to.have.been.called()
+                done()
+              })
             })
           })
         })
