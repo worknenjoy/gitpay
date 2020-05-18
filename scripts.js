@@ -43,6 +43,7 @@ const scripts = {
       })
   },
   deleteInvalidTasks: () => {
+    i18n.init()
     return models.Task
       .findAll(
         {
