@@ -22,7 +22,7 @@ import Skill from './skill'
 import MySkill from './my-skill'
 
 const skills = [
-  'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation', 'React', 'Angular', 'Vue.js', 'Blogging', 'Wordpress', 'PHP', 'Testing', 'Git', 'Continuous Integration'
+  'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation', 'React', 'React Native', 'Angular', 'Vue.js', 'Blogging', 'Wordpress', 'PHP', 'Testing', 'Git', 'Continuous Integration'
 ]
 
 const logoLangEn = require('../../images/united-states-of-america.png')
