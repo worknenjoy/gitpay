@@ -57,7 +57,7 @@ class LoginButton extends Component {
         <Content>
           { includeForm && (
             <div>
-              <Typography type='subtitle1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+              <Typography type='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
               <LoginFormContainer />
@@ -65,7 +65,7 @@ class LoginButton extends Component {
           ) }
 
           <div style={ { textAlign: 'center' } }>
-            <Typography type='subtitle1' color={ contrast ? 'inherit' : 'default' } gutterBottom>
+            <Typography type='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom>
               <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
             </Typography>
           </div>

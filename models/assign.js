@@ -3,6 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       defaultValue: 'pending'
+    },
+    message: {
+      type: DataTypes.STRING,
     }
   }, {
     classMethods: {

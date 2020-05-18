@@ -34,6 +34,14 @@ export const messages = defineMessages({
     id: 'task.status.filter.close',
     defaultMessage: 'Finished'
   },
+  issuesWithBounties: {
+    id: 'task.status.filter.issuesWithBounties',
+    defaultMessage: '$'
+  },
+  contribution: {
+    id: 'task.status.filter.contribution',
+    defaultMessage: 'Contribution'
+  },
   noUserFound: {
     id: 'task.user.find.none',
     defaultMessage: 'User not registered'

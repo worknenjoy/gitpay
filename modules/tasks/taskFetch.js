@@ -104,7 +104,6 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               const repoInfoJSON = JSON.parse(repoInfo)
               const repoUrl = repoInfoJSON.html_url
               const ownerUrl = repoInfoJSON.owner.html_url
-
               const responseGithub = {
                 id: data.dataValues.id,
                 url: issueUrl,
@@ -115,7 +114,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
                 assignedUser: assigned && assigned.dataValues.User.dataValues,
-                userId: data.dataValues.userId,
+                user: data.dataValues.User.dataValues,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
                 provider: data.dataValues.provider,

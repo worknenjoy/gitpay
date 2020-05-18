@@ -8,6 +8,7 @@ import TaskTabs from './task-tabs'
 import TaskHeader from './task-header'
 import TaskAssignment from './task-assignment'
 import TaskStatusIcons from './task-status-icons'
+import nameInitials from 'name-initials'
 
 import {
   Dialog,
@@ -210,8 +211,8 @@ const styles = theme => ({
   controls: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   playIcon: {
     height: 38,
@@ -258,8 +259,8 @@ const styles = theme => ({
   },
   closeButton: {
     position: 'absolute',
-    right: theme.spacing.unit,
-    top: theme.spacing.unit,
+    right: theme.spacing(1),
+    top: theme.spacing(1),
     backgroundColor: 'darkgray',
     color: 'white',
     boxShadow: 'none'
@@ -318,7 +319,7 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   checkIcon: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
     fontSize: 20
   },
   planIcon: {
@@ -326,25 +327,25 @@ const styles = theme => ({
     padding: 20
   },
   planFinalPrice: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing(1),
     fontSize: '2rem'
   },
   planGridItem: {
     width: 200,
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     margin: 0
   },
   planGridContent: {
-    minHeight: theme.spacing.unit * 10,
+    minHeight: theme.spacing(10),
     margin: 0,
     padding: 0
   },
   planBullets: {
-    paddingLeft: theme.spacing.unit * 1,
+    paddingLeft: theme.spacing(1),
     padding: 10
   },
   chip: {
-    marginRight: theme.spacing.unit * 2
+    marginRight: theme.spacing(2)
   }
 
 })
@@ -354,6 +355,7 @@ class Task extends Component {
     super(props)
 
     this.state = {
+      logged: null,
       deadline: null,
       assigned: null,
       finalPrice: 0,
@@ -395,16 +397,18 @@ class Task extends Component {
     let logged = false
     try {
       logged = await this.props.isLogged()
+      this.setState({ logged })
     }
     catch (e) {
       logged = false
+      this.setState({ logged })
     }
 
     await this.props.syncTask(id)
     await this.props.fetchTask(id)
 
     if (status) {
-      if (id && logged && logged.user.id === this.props.task.data.userId) {
+      if (id && logged && this.props.task.data.user && logged.user.id === this.props.task.data.user.id) {
         await this.props.updateTask({ id, status })
       }
       else {
@@ -433,7 +437,7 @@ class Task extends Component {
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/status`) {
       if (logged) {
-        if (this.props.task.data && (logged.user.id === this.props.task.data.userId)) {
+        if (this.props.task.data && this.props.task.data.user && (logged.user.id === this.props.task.data.user.id)) {
           this.handleStatusDialog()
         }
         else {
@@ -536,23 +540,16 @@ class Task extends Component {
     this.setState({ termsDialog: false })
   }
 
-  handleAssignTask = () => {
+  handleOfferTask = () => {
     this.props.updateTask({
       id: this.props.match.params.id,
-      Assigns: [
-        {
-          userId: this.props.user.id
-        }
-      ],
-      Offers: [
-        {
-          userId: this.props.user.id,
-          suggestedDate: this.state.interestedSuggestedDate,
-          value: this.state.currentPrice,
-          learn: this.state.interestedLearn,
-          comment: this.state.interestedComment
-        }
-      ]
+      Offer: {
+        userId: this.props.user.id,
+        suggestedDate: this.state.interestedSuggestedDate,
+        value: this.state.currentPrice,
+        learn: this.state.interestedLearn,
+        comment: this.state.interestedComment
+      }
     })
     this.setState({ assignDialog: false, termsAgreed: false })
   }
@@ -572,12 +569,12 @@ class Task extends Component {
 
   handlePaymentForm = (e) => {
     e.preventDefault()
-    this.state.paymentForm ? this.setState({ paymentForm: false }) : this.setState({ paymentForm: true })
+    this.state.paymentForm ? this.setState({ paymentForm: false }) : this.setState({ paymentForm: true, deadlineForm: false })
   }
 
   handleDeadlineForm = (e) => {
     e.preventDefault()
-    this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true })
+    this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true, paymentForm: false })
   }
 
   handleInvite = () => {
@@ -727,7 +724,7 @@ class Task extends Component {
             onClick={ this.handlePaymentForm }
             size='small'
             color='primary'
-            variant='raised'
+            variant='contained'
             className={ this.props.classes.cardButton }
           >
             <span className={ this.props.classes.spaceRight }>
@@ -741,7 +738,7 @@ class Task extends Component {
             onClick={ this.handleAssignDialogOpen }
             size='small'
             color='primary'
-            variant='raised'
+            variant='contained'
             className={ this.props.classes.cardButton }
           >
             <span className={ this.props.classes.spaceRight }>
@@ -756,7 +753,7 @@ class Task extends Component {
 
   taskOwner = () => {
     const { task } = this.props
-    const creator = this.props.logged && this.props.user.id === task.data.userId
+    const creator = this.props.logged && task.data.user && this.props.user.id === task.data.user.id
     const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === this.props.user.id).length > 0 : false
     return creator || owner
   }
@@ -849,12 +846,12 @@ class Task extends Component {
         </Dialog>
         <TopBarContainer />
         <PageContent>
-          <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } />
+          <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } />
           <Grid
             container
             justify='flex-start'
             direction='row'
-            spacing={ 24 }
+            spacing={ 3 }
           >
             <Grid
               item
@@ -881,7 +878,8 @@ class Task extends Component {
                 </div>
               ) }
               { task.data.metadata &&
-              <FormattedMessage id='task.status.author.name' defaultMessage='Author from provider {name}' values={ {
+              <FormattedMessage id='task.status.author.name' defaultMessage='Imported from {provider} by {name}' values={ {
+                provider: task.data.provider,
                 name: task.data.metadata.issue.user.login
               } }>
                 { (msg) => (
@@ -904,9 +902,9 @@ class Task extends Component {
                 ) }
               </FormattedMessage>
               }
-              { task.data.metadata &&
+              { task.data.user &&
               <FormattedMessage id='task.status.importer.name' defaultMessage='Imported to Gitpay by {name}' values={ {
-                name: this.props.user.name
+                name: task.data.user.name
               } }>
                 { (msg) => (
                   <Tooltip
@@ -915,14 +913,17 @@ class Task extends Component {
                     placement='bottom'
                   >
                     <a
-                      href={ `${this.props.user.html_url}` }
+                      href={ `${task.data.user.website}` }
                       target='_blank'
                       style={ { marginLeft: 5 } }
                     >
                       <Avatar
-                        src={ this.props.user.avatar_url }
+                        alt={ task.data.user.name }
+                        src=''
                         className={ classNames(classes.avatar) }
-                      />
+                      >
+                        { task.data.user.name && nameInitials(task.data.user.name) }
+                      </Avatar>
                     </a>
                   </Tooltip>
                 ) }
@@ -1092,7 +1093,7 @@ class Task extends Component {
                         <Button onClick={ this.handleDeleteDialogClose } color='primary'>
                           <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                         </Button>
-                        <Button onClick={ this.handleDeleteTask } variant='raised' color='secondary' >
+                        <Button onClick={ this.handleDeleteTask } variant='contained' color='secondary' >
                           <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
                         </Button>
                       </DialogActions>
@@ -1126,7 +1127,7 @@ class Task extends Component {
                   handleTermsDialog={ this.handleTermsDialog }
                   termsDialog={ this.state.termsDialog }
                   handleTermsDialogClose={ this.handleTermsDialogClose }
-                  handleAssignTask={ this.handleAssignTask }
+                  handleOfferTask={ this.handleOfferTask }
                   logged={ this.props.logged }
                   task={ task }
                   classes={ classes }
@@ -1141,7 +1142,7 @@ class Task extends Component {
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 8 }>
               { task.data.assigned &&
                 <TaskAssigned
@@ -1161,6 +1162,8 @@ class Task extends Component {
               }
               <div className={ classes.rootTabs }>
                 <TaskTabs
+                  hash={ this.props.location.hash }
+                  actionAssign={ this.props.actionAssign }
                   assignTask={ this.props.assignTask }
                   removeAssignment={ this.props.removeAssignment }
                   messageTask={ this.props.messageTask }
@@ -1223,6 +1226,7 @@ Task.propTypes = {
   location: PropTypes.object,
   paymentTask: PropTypes.func,
   assignTask: PropTypes.func,
+  actionAssign: PropTypes.func,
   task: PropTypes.object,
   logged: PropTypes.bool,
   user: PropTypes.object,

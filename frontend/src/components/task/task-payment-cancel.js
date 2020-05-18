@@ -29,7 +29,7 @@ const TaskPaymentCancel = ({ cancelPaypalConfirmDialog, handlePayPalDialogClose,
           <Button onClick={ handlePayPalDialogClose } color='primary'>
             <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
           </Button>
-          <Button onClick={ (e) => handleCancelPaypalPayment(e) } variant='raised' color='secondary' >
+          <Button onClick={ (e) => handleCancelPaypalPayment(e) } variant='contained' color='secondary' >
             <FormattedMessage id='task.actions.cancelPayment' defaultMessage='Confirm cancelation of pre-authorized payment' />
           </Button>
         </DialogActions>

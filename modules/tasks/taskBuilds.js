@@ -33,6 +33,7 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
         uri,
         headers
       }).then(response => {
+        if (!response && !response.title) return false
         const issueDataJsonGithub = JSON.parse(response)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
         return models.Task

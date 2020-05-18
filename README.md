@@ -44,11 +44,13 @@ To run the test:
 
 `npm run test` (to run the tests)
 
-## Env to do some actions
+## Setup environment
 
 For fully integration with api services used by the platform, you will need the api keys. *You should make a copy of your `.env.example` to `.env`* with the right credentials. Please let me know if you need any of those to solve a issue (mail tarefas@gitpay.me)
 
 You can do this with: `cp .env.example .env`
+
+#### You need to run create the .env in order to run the project: `cp .env.example .env`
 
 ### Database
 
@@ -135,6 +137,9 @@ Here you can start to learn how to create your first pull request and start to b
 - [Amrut]( https://github.com/amrut07 )
 - [Usman Sakirat Kehinde]( https://github.com/oyinkan )
 - [Qiwei]( https://github.com/qiweiii )
+- [Adam Ash](https://github.com/adamash99) 
+- [Shawn Noruzi]( https://github.com/shawn-noruzi )
+- [Ssentongo Alex]( https://github.com/aleku399 )
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_large)

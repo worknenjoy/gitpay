@@ -7,8 +7,8 @@ exports.createTask = (req, res) => {
       res.send(data)
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(error)
+      console.log('createTask error on controller', error)
+      res.status(error.StatusCodeError || 400).send(error)
     })
 }
 
@@ -116,4 +116,18 @@ exports.removeAssignedUser = (req, res) => {
     .removeAssignedUser(params, req.body)
     .then(data => res.send(data))
     .catch(error => res.send({ error: error.message }))
+}
+
+exports.requestAssignedUser = (req, res) => {
+  Tasks
+    .requestAssignedUser.invite(req.body)
+    .then(data => res.send(data))
+    .catch(error => res.send({ error: error.message }))
+}
+
+exports.assignedUser = (req, res) => {
+  Tasks
+    .requestAssignedUser.confirm(req.body)
+    .then(data => res.send(data))
+    .catch(error => res.status(400).send({ error: error.message }))
 }
