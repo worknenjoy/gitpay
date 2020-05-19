@@ -3,7 +3,7 @@ const Promise = require('bluebird')
 
 module.exports = Promise.method(async function comment (offer, task) {
   const { provider, url, id } = task.dataValues
-  if (provider !== 'github') return
+  if (provider !== 'github' || process.env.NODE_ENV !== 'production') return
   const { currency, amount } = offer
   const [, , , owner, repo, , issueNumber] = url.split('/')
 
