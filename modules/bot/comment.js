@@ -23,7 +23,7 @@ module.exports = Promise.method(async function comment (offer, task) {
     },
     json: true,
     body: {
-      body: `A bounty of *${amount} ${currency}* was added on this issue. See task on [GitPay](${gitPayURL})`
+      body: `A bounty of *${amount} ${currency}* was added to this issue. See task on [GitPay](${gitPayURL})`
     }
   })
 
