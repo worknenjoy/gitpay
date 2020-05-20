@@ -1,3 +1,5 @@
+const comment = require('../modules/bot/comment')
+
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define('Order', {
     source_id: DataTypes.STRING,
@@ -36,6 +38,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     instanceMethods: {
 
+    },
+    hooks: {
+      afterUpdate: async (instance, options) => {
+        if (instance.paid) {
+          const task = await sequelize.models.Task.findById(instance.TaskId)
+          await comment(instance, task)
+        }
+      }
     }
   })
 
