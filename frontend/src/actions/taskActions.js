@@ -507,7 +507,7 @@ const messageAuthor = (userId, taskId, message) => {
         dispatch(addNotification('actions.task.message.author.error'))
         return dispatch(
           messageAuthorError(
-             { code: task.status }
+            { code: task.status }
           )
         )
       })

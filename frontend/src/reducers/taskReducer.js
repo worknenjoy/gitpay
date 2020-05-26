@@ -24,6 +24,9 @@ import {
   INVITE_TASK_REQUESTED,
   INVITE_TASK_SUCCESS,
   INVITE_TASK_ERROR,
+  MESSAGE_AUTHOR_REQUESTED,
+  MESSAGE_AUTHOR_SUCCESS,
+  MESSAGE_AUTHOR_ERROR,
   SYNC_TASK_REQUESTED,
   SYNC_TASK_SUCCESS,
   SYNC_TASK_ERROR,
@@ -108,6 +111,13 @@ export const task = (state = {
     case INVITE_TASK_SUCCESS:
       return { ...state, completed: true }
     case INVITE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error }
+
+    case MESSAGE_AUTHOR_REQUESTED:
+      return { ...state, completed: false }
+    case MESSAGE_AUTHOR_SUCCESS:
+      return { ...state, completed: true }
+    case MESSAGE_AUTHOR_ERROR:
       return { ...state, completed: true, error: action.error }
 
     case FUNDING_INVITE_TASK_REQUESTED:
