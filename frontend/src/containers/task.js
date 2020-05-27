@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask, removeAssignment, messageTask, actionAssign } from '../actions/assignActions'
-import { updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask } from '../actions/taskActions'
+import { updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor } from '../actions/taskActions'
 import { createOrder, payOrder, cancelOrder, detailOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 
@@ -31,6 +31,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     messageTask: (taskId, assignId, message) => dispatch(messageTask(taskId, assignId, message)),
     removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
     inviteTask: (id, email, message, user) => dispatch(inviteTask(id, email, message, user)),
+    messageAuthor: (userId, taskId, message) => dispatch(messageAuthor(userId, taskId, message)),
     fundingInviteTask: (id, email, message, suggestedPrice, suggestedDate, user) => dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate, user)),
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
     syncTask: (taskId) => dispatch(syncTask(taskId)),

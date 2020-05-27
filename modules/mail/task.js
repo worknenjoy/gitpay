@@ -201,14 +201,14 @@ if (constants.canSendEmail) {
     setMomentLocale(language)
     request(
       to,
-      i18n.__('mail.messageInterested.subject'),
+      i18n.__('mail.messageAuthor.subject'),
       [
         {
           type: 'text/html',
           value: `
            <p>${i18n.__('mail.hello', { name: name })}</p>
-           <p>${i18n.__('mail.messageInterested.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-${i18n.__('mail.messageInterested.message', { message })} <p>${Signatures.sign(language)}</p>`
+           <p>${i18n.__('mail.messageAuthor.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(language)}</p>`
         }],
       senderEmail
     )

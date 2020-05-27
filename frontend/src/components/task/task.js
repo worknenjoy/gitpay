@@ -37,7 +37,8 @@ import {
   Delete as DeleteIcon,
   MonetizationOn as MonetizationOnIcon,
   Close as CloseIcon,
-  PeopleOutlined
+  PeopleOutlined,
+  MailSharp as MessageIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -58,6 +59,7 @@ import { PageContent } from 'app/styleguide/components/Page'
 
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
+import MessageAuthor from './task-message-author'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
 const taskCover = require('../../images/task-cover.png')
@@ -374,6 +376,7 @@ class Task extends Component {
       taskPaymentDialog: false,
       taskInviteDialog: false,
       taskFundingDialog: false,
+      taskMessageAuthorDialog: false,
       notification: {
         open: false,
         message: 'loading'
@@ -520,6 +523,10 @@ class Task extends Component {
 
   handleTaskPaymentDialog = () => {
     this.setState({ taskPaymentDialog: true })
+  }
+
+  handleMessageAuthorDialog = () => {
+    this.setState({ taskMessageAuthorDialog: true })
   }
 
   handleTaskPaymentDialogClose = () => {
@@ -760,6 +767,7 @@ class Task extends Component {
 
   render () {
     const { classes, task, order } = this.props
+     const { taskMessageAuthorDialog } = this.state
 
     const isCurrentUserAssigned = () => {
       return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
@@ -980,7 +988,7 @@ class Task extends Component {
                     <AddIcon />
                   </Button>
                 }
-                { this.taskOwner() && (
+                { this.taskOwner() ? (
                   <div style={ { display: 'inline-block' } }>
                     <Button
                       style={ { marginRight: 10 } }
@@ -1054,6 +1062,42 @@ class Task extends Component {
                       onPayOrder={ this.props.paymentOrder }
                     />
                   </div>
+                ) : (
+                  <React.Fragment>
+                    <Button
+                        onClick={ this.handleMessageAuthorDialog }
+                        size='small'
+                        color='primary'
+                        className={ classes.altButton }
+                      >
+                        <span className={ classes.spaceRight }>
+                          <FormattedMessage id='task.bounties.contact.label' defaultMessage='Contact author' />
+                        </span>
+                        <MessageIcon />
+                    </Button>
+                    {!this.props.logged ? (
+                      <Dialog open={ taskMessageAuthorDialog }>
+                        <DialogTitle id='form-dialog-title'>
+                          <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+                        </DialogTitle>
+                        <DialogContent>
+                          <div className={ classes.mainBlock }>
+                            <LoginButton referer={ this.props.location } includeForm />
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                      ) : (
+                      <MessageAuthor 
+                        open={taskMessageAuthorDialog}
+                        userId={this.props.user.id}
+                        taskId={task.data.id}
+                        name={this.props.user.name}
+                        onClose={ () => this.setState({ taskMessageAuthorDialog: false }) }
+                        onSend={ this.props.messageAuthor }
+
+                      />
+                    )}
+                  </React.Fragment>
                 ) }
                 <TaskInvite
                   id={ task.data.id }

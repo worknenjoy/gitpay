@@ -627,9 +627,7 @@ describe("tasks", () => {
       chai.use(spies);
       const mailSpySuccess = chai.spy.on(TaskMail, 'messageAuthor')
       const firstUser = await register(agent, {email: 'owntask@gitpay.me', password: '1234'}) 
-      console.log('firstUser', firstUser.body)
       const task = await buildTask({ userId: firstUser.body.id })
-      console.log('task created with user', task)
       const res = await registerAndLogin(agent)
       await agent
         .post(`/tasks/${task.id}/message/author`)
