@@ -1,11 +1,23 @@
+const Signatures = require('./content')
+const request = require('./request')
 const moment = require('moment')
-// const ptLocale = require('moment/locale/pt-br')
+const ptLocale = require('moment/locale/pt-br')
+const enLocale = require('moment/locale/en-gb')
 const i18n = require('i18n')
 const constants = require('./constants')
 const withTemplate = require('./template')
 const models = require('../../models')
 
 // moment.locale('pt-br', ptLocale)
+
+const setMomentLocale = (lang) => {
+  if (lang === 'br') {
+    moment.locale('pt-br', ptLocale)
+  }
+  else {
+    moment.locale('en-gb', enLocale)
+  }
+}
 
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
@@ -21,7 +33,8 @@ const TaskMail = {
   notify: (user, data) => Promise.resolve({}),
   weeklyBounties: (data) => Promise.resolve({}),
   weeklyLatest: () => Promise.resolve({}),
-  notifyPayment: () => Promise.resolve({})
+  notifyPayment: () => Promise.resolve({}),
+  messageAuthor: (user, task, message) => Promise.resolve({})
 }
 
 if (constants.canSendEmail) {
@@ -176,6 +189,28 @@ if (constants.canSendEmail) {
       mailList,
       subjectData,
       templateData
+    )
+  }
+  TaskMail.messageAuthor = (user, task, message) => {
+    const senderName = user.name
+    const senderEmail = user.email
+    const to = task.User.email
+    const language = user.language || 'en'
+    const name = user.name || user.username
+    i18n.setLocale(language)
+    setMomentLocale(language)
+    request(
+      to,
+      i18n.__('mail.messageAuthor.subject'),
+      [
+        {
+          type: 'text/html',
+          value: `
+           <p>${i18n.__('mail.hello', { name: name })}</p>
+           <p>${i18n.__('mail.messageAuthor.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(language)}</p>`
+        }],
+      senderEmail
     )
   }
 }

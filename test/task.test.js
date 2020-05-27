@@ -12,6 +12,7 @@ const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
 const spies = require('chai-spies')
 const AssignMail = require('../modules/mail/assign')
+const TaskMail = require('../modules/mail/task')
 const taskUpdate = require('../modules/tasks/taskUpdate')
 
 describe("tasks", () => {
@@ -238,7 +239,7 @@ describe("tasks", () => {
 
     it('should receive code on the platform from github auth to the redirected url for private tasks with a valid code', (done) => {
 
-      https://api.github.com/repos/alexanmtz/festifica/issues/1                                     │
+      // https://api.github.com/repos/alexanmtz/festifica/issues/1                                     │
 
       nock('https://github.com')
         .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
@@ -606,20 +607,7 @@ describe("tasks", () => {
       })
     })
 
-    it('should only delete own task', async () => {
-      const firstUser = await register(agent, {email: 'owntask@example.com', password: '1234'}) 
-      const task = await buildTask({ userId: firstUser.id })
-      const res = await registerAndLogin(agent)
-      await agent
-        .delete(`/tasks/delete/${task.id}`)
-        .set('Authorization', res.headers.authorization)
-        .expect(200)
-      expect(
-        await models.Task.findById(task.id)
-      ).to.be.ok
-    })
-
-    it('should delete task', (done) => {
+    it('should only delete own task', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
           agent
@@ -633,6 +621,22 @@ describe("tasks", () => {
           }) 
         })
       })
+    })
+
+    it('should send message to the author', async () => {
+      chai.use(spies);
+      const mailSpySuccess = chai.spy.on(TaskMail, 'messageAuthor')
+      const firstUser = await register(agent, {email: 'owntask@gitpay.me', password: '1234'}) 
+      const task = await buildTask({ userId: firstUser.body.id })
+      const res = await registerAndLogin(agent)
+      await agent
+        .post(`/tasks/${task.id}/message/author`)
+        .send({
+          message: 'foo message'
+        })
+        .set('Authorization', res.headers.authorization)
+        .expect(200)
+        expect(mailSpySuccess).to.have.been.called()
     })
 });
 
@@ -680,6 +684,7 @@ describe("tasks", () => {
         });
       })
     });
+
   })
 
   describe('assigned user to a task', () => {

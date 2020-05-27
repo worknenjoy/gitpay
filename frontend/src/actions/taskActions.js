@@ -15,6 +15,10 @@ const DELETE_TASK_REQUESTED = 'DELETE_TASK_REQUESTED'
 const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS'
 const DELETE_TASK_ERROR = 'DELETE_TASK_ERROR'
 
+const MESSAGE_AUTHOR_REQUESTED = 'MESSAGE_AUTHOR_REQUESTED'
+const MESSAGE_AUTHOR_SUCCESS = 'MESSAGE_AUTHOR_SUCCESS'
+const MESSAGE_AUTHOR_ERROR = 'MESSAGE_AUTHOR_ERROR'
+
 const INVITE_TASK_REQUESTED = 'INVITE_TASK_REQUESTED'
 const INVITE_TASK_SUCCESS = 'INVITE_TASK_SUCCESS'
 const INVITE_TASK_ERROR = 'INVITE_TASK_ERROR'
@@ -86,6 +90,22 @@ const updateTaskSuccess = () => {
 
 const updateTaskError = error => {
   return { type: UPDATE_TASK_ERROR, completed: true, error: error }
+}
+
+/*
+*  Task message to author
+ */
+
+const messageAuthorRequested = () => {
+  return { type: MESSAGE_AUTHOR_REQUESTED, completed: false }
+}
+
+const messageAuthorSuccess = () => {
+  return { type: MESSAGE_AUTHOR_SUCCESS, completed: true }
+}
+
+const messageAuthorError = error => {
+  return { type: MESSAGE_AUTHOR_ERROR, completed: true, error }
 }
 
 /*
@@ -472,6 +492,38 @@ const inviteTask = (id, email, message, user) => {
   }
 }
 
+const messageAuthor = (userId, taskId, message) => {
+  return dispatch => {
+    dispatch(messageAuthorRequested())
+    return axios
+      .post(api.API_URL + `/tasks/${taskId}/message/author/`, {
+        userId, message
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('actions.task.message.author.success'))
+          return dispatch(messageAuthorSuccess())
+        }
+        dispatch(addNotification('actions.task.message.author.error'))
+        return dispatch(
+          messageAuthorError(
+            { code: task.status }
+          )
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.message.author.error')
+        )
+        dispatch(inviteTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible send invite')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
 const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
   return dispatch => {
     const username = user.name
@@ -550,6 +602,9 @@ export {
   INVITE_TASK_REQUESTED,
   INVITE_TASK_SUCCESS,
   INVITE_TASK_ERROR,
+  MESSAGE_AUTHOR_REQUESTED,
+  MESSAGE_AUTHOR_SUCCESS,
+  MESSAGE_AUTHOR_ERROR,
   FUNDING_INVITE_TASK_REQUESTED,
   FUNDING_INVITE_TASK_SUCCESS,
   FUNDING_INVITE_TASK_ERROR,
@@ -581,6 +636,10 @@ export {
   paymentTask,
   syncTask,
   inviteTask,
+  messageAuthorRequested,
+  messageAuthorSuccess,
+  messageAuthorError,
+  messageAuthor,
   fundingInviteTask,
   changeTaskTab
 }

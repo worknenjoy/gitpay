@@ -8,6 +8,7 @@ const taskSync = require('./taskSync')
 const taskDeleteById = require('./taskDeleteById')
 const taskInvite = require('./taskInvite')
 const taskMessage = require('./taskMessage')
+const taskMessageAuthor = require('./taskMessageAuthor')
 const removeAssignedUser = require('./removeAssignedUser')
 const taskFunding = require('./taskFunding')
 const requestAssignedUser = require('./requestAssignedUser.js')
@@ -23,6 +24,7 @@ module.exports = {
   taskDeleteById,
   taskInvite,
   taskMessage,
+  taskMessageAuthor,
   removeAssignedUser,
   taskFunding,
   requestAssignedUser

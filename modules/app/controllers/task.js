@@ -109,6 +109,16 @@ exports.messageInterestedToTask = ({ params, body, user }, res) => Tasks
     res.send({ error: error.message })
   })
 
+// message to authors
+exports.messageAuthor = ({ params, body, user }, res) => Tasks
+  .taskMessageAuthor(params, body, user)
+  .then(data => res.send(data))
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.log('error on task controller message to author', error)
+    res.send({ error: error.message })
+  })
+
 // Assigns functions.
 exports.removeAssignedUser = (req, res) => {
   const params = { id: req.params.id, userId: req.user.id }
