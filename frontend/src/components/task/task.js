@@ -1091,7 +1091,7 @@ class Task extends Component {
                         open={ taskMessageAuthorDialog }
                         userId={ this.props.user.id }
                         taskId={ task.data.id }
-                        name={ this.props.user.name }
+                        name={ "" }
                         onClose={ () => this.setState({ taskMessageAuthorDialog: false }) }
                         onSend={ this.props.messageAuthor }
 
