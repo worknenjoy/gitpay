@@ -64,11 +64,11 @@ class MessageAuthor extends Component {
                 <Typography type='subheading' gutterBottom>
                   <FormattedMessage id='task.message.author.label' defaultMessage='Write a message to the author of this issue' />
                 </Typography>
-                {name && (
-                    <Typography type='subheading' gutterBottom>
-                        {name}
-                    </Typography>
-                )}
+                { name && (
+                  <Typography type='subheading' gutterBottom>
+                    { name }
+                  </Typography>
+                ) }
                 <TextField
                   autoFocus
                   name='message'

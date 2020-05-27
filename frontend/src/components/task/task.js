@@ -767,7 +767,7 @@ class Task extends Component {
 
   render () {
     const { classes, task, order } = this.props
-     const { taskMessageAuthorDialog } = this.state
+    const { taskMessageAuthorDialog } = this.state
 
     const isCurrentUserAssigned = () => {
       return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
@@ -1065,17 +1065,17 @@ class Task extends Component {
                 ) : (
                   <React.Fragment>
                     <Button
-                        onClick={ this.handleMessageAuthorDialog }
-                        size='small'
-                        color='primary'
-                        className={ classes.altButton }
-                      >
-                        <span className={ classes.spaceRight }>
-                          <FormattedMessage id='task.bounties.contact.label' defaultMessage='Contact author' />
-                        </span>
-                        <MessageIcon />
+                      onClick={ this.handleMessageAuthorDialog }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>
+                        <FormattedMessage id='task.bounties.contact.label' defaultMessage='Contact author' />
+                      </span>
+                      <MessageIcon />
                     </Button>
-                    {!this.props.logged ? (
+                    { !this.props.logged ? (
                       <Dialog open={ taskMessageAuthorDialog }>
                         <DialogTitle id='form-dialog-title'>
                           <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
@@ -1086,17 +1086,17 @@ class Task extends Component {
                           </div>
                         </DialogContent>
                       </Dialog>
-                      ) : (
-                      <MessageAuthor 
-                        open={taskMessageAuthorDialog}
-                        userId={this.props.user.id}
-                        taskId={task.data.id}
-                        name={this.props.user.name}
+                    ) : (
+                      <MessageAuthor
+                        open={ taskMessageAuthorDialog }
+                        userId={ this.props.user.id }
+                        taskId={ task.data.id }
+                        name={ this.props.user.name }
                         onClose={ () => this.setState({ taskMessageAuthorDialog: false }) }
                         onSend={ this.props.messageAuthor }
 
                       />
-                    )}
+                    ) }
                   </React.Fragment>
                 ) }
                 <TaskInvite
