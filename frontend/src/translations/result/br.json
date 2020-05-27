@@ -503,6 +503,8 @@
   "actions.task.payment.plan.bullte.private": "Private Projects",
   "actions.task.invite.success": "Convite enviado com sucesso",
   "actions.task.invite.error": "Não foi possível enviar o convite",
+  "actions.task.message.author.success": "Your message was sent successfully",
+  "actions.task.message.author.error": "We could not send this message",
   "actions.order.create.error": "Não foi possível criar o pagamento",
   "actions.order.cancel.success": "Seu pagamento foi cancelado com sucesso",
   "actions.order.cancel.error": "Não foi possível cancelar este pagamento",
