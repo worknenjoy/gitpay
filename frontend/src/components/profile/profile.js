@@ -51,7 +51,8 @@ const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    flexFlow: 'row-reverse wrap'
   },
   altButton: {
     marginRight: 10
@@ -251,7 +252,8 @@ class Profile extends Component {
                   />
                 </Switch>
               </HashRouter>
-              { this.state.orgsLoaded && organizations &&
+              { /* Uncomment the below section to enable the 'Your Organizations section' */ }
+              { /* { this.state.orgsLoaded && organizations &&
                 <Grid item xs={ 12 } md={ 12 }>
                   <div style={ { marginTop: 10, marginBottom: 10 } }>
                     <Typography variant='h5' component='h3'>
@@ -265,7 +267,7 @@ class Profile extends Component {
                     </div>
                   </div>
                 </Grid>
-              }
+              } */ }
             </Grid>
             <Grid item xs={ 12 } md={ 3 }>
               <div className={ classes.bigRow }>
