@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         User.hasMany(models.Organization)
-        User.hasMany(models.Role)
+        User.hasMany(models.Role, { foreignKey: 'userId' })
       },
       generateHash: (password) => {
         /* eslint-disable no-sync */
