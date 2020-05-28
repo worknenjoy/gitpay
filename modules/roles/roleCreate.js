@@ -4,10 +4,11 @@ const Promise = require('bluebird')
 
 roleCreate = async (roleParameters)=>{
 try{
+    console.log(roleParameters)
     let doc = await Role.findOne(
         {
             where:
-            { 
+            {                 
                 id:roleParameters.id,
                 name:{ $or:['funder','contributor','maintainer'] }
             }
@@ -15,9 +16,11 @@ try{
     )
     if(!doc){
         let createRole = {
+            userId: roleParameters.userId,
             name:roleParameters.name,
             label:roleParameters.label,            
         }
+        console.log(createRole)
         let role = await Role.create(createRole);
         return role;
     }

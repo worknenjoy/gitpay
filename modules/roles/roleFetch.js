@@ -15,7 +15,6 @@ try{
 }
 catch(err){
 console.log(err);
-return false
 }
 }
 module.exports = Promise.method(roleFetch);

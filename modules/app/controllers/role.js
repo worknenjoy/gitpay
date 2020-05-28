@@ -5,7 +5,7 @@ exports.fetchRoleById = async(req, res)=>{
 try{
     let doc = await Role.roleFetchById(req.params)
     if(doc!==[]){
-    console.log('found role')
+    console.log('found role',doc)
     return res.status(200).send(doc)
     }
 }
@@ -19,7 +19,7 @@ exports.fetchRole = async(req, res)=>{
     try{
         let doc = await Role.roleFetch()
         if(doc!==[]){
-        console.log('found role')
+        console.log('found role',doc)
         return res.status(200).send(doc)
         }
     }
@@ -31,9 +31,10 @@ exports.fetchRole = async(req, res)=>{
 
 exports.createRole = async(req, res) =>{
     try{
+        req.body.userId = req.user.id
         let doc = await Role.roleCreate(req.body)
         if(doc!==[]){
-        console.log('role created')
+        console.log('role created',doc)
         return res.status(201).send(doc)
         }
     }catch(err){
