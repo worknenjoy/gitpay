@@ -9,8 +9,8 @@ try{
         {
             where:
             {                 
-                id:roleParameters.id,
-                name:{ $or:['funder','contributor','maintainer'] }
+                userId:roleParameters.userId,
+                // name:{ $or:['funder','contributor','maintainer'] }
             }
         }
     )

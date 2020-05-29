@@ -5,7 +5,14 @@ const Promise = require('bluebird')
 roleFetch = async(roleParameters)=>{
 try{
     // console.log(roleParameters)
-    let role = await Role.findAll()
+    let role = await Role.findOne(
+        {
+            where:
+            {
+                userId:roleParameters.userId
+            }
+        }
+    )
     if(!role){
         console.log('role not found')
         return false
