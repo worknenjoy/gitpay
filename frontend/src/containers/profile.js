@@ -6,6 +6,7 @@ import { updateUser, deleteUser } from '../actions/userActions'
 import { fetchOrganizations, createOrganizations } from '../actions/organizationsActions'
 
 const mapStateToProps = (state, ownProps) => {
+  // console.log('state is: ',state)
   return {
     logged: state.loggedIn.logged,
     user: state.loggedIn.user,
@@ -17,9 +18,11 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  // console.log('state2 : ',dispatch(fetchPreferences(),dispatch(fetchRoles())))
   return {
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
-    fetchRoles: (userId) => dispatch(fetchRoles(userId)),
+    // fetchRoles: (userId) => dispatch(fetchRoles(userId)),
+    fetchRoles: dispatch(fetchRoles()),
     fetchOrganizations: (userId) => dispatch(fetchOrganizations(userId)),
     createOrganizations: (org) => dispatch(createOrganizations(org)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
