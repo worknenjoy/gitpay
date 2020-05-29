@@ -121,6 +121,7 @@ const styles = theme => ({
 class Profile extends Component {
   constructor (props) {
     super(props)
+    // console.dir(props)
     this.state = {
       selected: null,
       orgsLoaded: false
@@ -243,7 +244,7 @@ class Profile extends Component {
                   <Route
                     exact
                     path='/profile/roles'
-                    component={ () => <Roles /> }
+                    component={ () => <Roles user={ user } roles={ roles } updateUser={ this.props.updateUser } /> }
                   />
                   <Route
                     exact
@@ -427,7 +428,8 @@ Profile.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object,
   user: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  roles: PropTypes.object
 }
 
 export default injectIntl(withStyles(styles)(Profile))

@@ -16,9 +16,6 @@ import {
   Menu,
   MenuItem,
   Button,
-  Container,
-  Box,
-  FormControlLabel,
   Card,
   CardMedia,
   CardContent,
@@ -36,7 +33,8 @@ row:{
     margin : '0 5% 0',
     alignItems:'center',
     // justifyContent:'center'
-    width:'100%'
+    width:'100%',
+
 },
 bigRow:{
 margin:'0 5% 0',
@@ -53,7 +51,8 @@ rowList:{
     margin:'0 5% 0 0',
 },
 rowContent:{
-border:'2px solid gray',
+// border:'2px solid gray',
+borderRadius:0,
 height:'100%',
 '& img':{
     width:'100%',
@@ -134,18 +133,23 @@ sButton:{
 })
 
 class Roles extends Component {
+    constructor (props) {
+        super(props)
+        console.dir('where is u',props)
+    }
   render () {
-    const { classes, user, preferences, roles, organizations } = this.props
+    const { classes, user, preferences, roles, organizations } = this.props    
     //const classes = styles();
-    return (
+    return (        
       <React.Fragment>
         <div className={classes.bigRow}>
           <h1>Who are you?</h1>
           <p>Tempor veniam est id occaecat. Duis aute consectetur sunt ea laborum reprehenderit elit excepteur ex laborum culpa. Labore voluptate do commodo eiusmod minim sint cupidatat quis
           </p>
-        </div>
-        <Grid container className={classes.row} direction="row"  alignItems="strech">
-          <Grid item  xs={3} className={classes.rowList} xs>
+        </div>        
+        <Grid container className={classes.row} direction="row"  alignItems="strech">        
+          <Grid item  xs={1} className={classes.rowList} xs>
+          <Paper>
                  <Card className={classes.rowContent} variant="outlined">
                     <CardMedia>
                     <img src={funder}></img>
@@ -156,7 +160,7 @@ class Roles extends Component {
                         </Typography>                   
                     </CardContent>
                     <CardActions className={classes.action}>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="body2" color="textSecondary" component="p" noWrap>
                             You will mostly fund issues.
                     </Typography>
                         <Checkbox
@@ -165,8 +169,10 @@ class Roles extends Component {
                         />
                     </CardActions>
                  </Card>
-          </Grid>
-          <Grid item  xs={3} className={classes.rowList} xs>
+                 </Paper>
+          </Grid>          
+          <Grid item  xs={1} className={classes.rowList} xs>
+          <Paper>
               <Card className={classes.rowContent} variant="outlined">
                     <CardMedia>
                     <img src={contributor}></img>
@@ -177,7 +183,7 @@ class Roles extends Component {
                         </Typography>                   
                     </CardContent>
                     <CardActions className={classes.action}>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="body2" color="textSecondary" component="p" noWrap>
                             You will solve issues.
                     </Typography>
                         <Checkbox
@@ -186,8 +192,10 @@ class Roles extends Component {
                         />
                     </CardActions>
                  </Card>
-          </Grid>
-          <Grid item  xs={3} className={classes.rowList} xs>
+                 </Paper>
+          </Grid>          
+          <Grid item  xs={1} className={classes.rowList} xs>
+          <Paper>
               <Card className={classes.rowContent} variant="outlined">
                     <CardMedia>
                     <img src={maintainer}></img>
@@ -198,7 +206,7 @@ class Roles extends Component {
                         </Typography>                   
                     </CardContent>
                     <CardActions className={classes.action}>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="body2" color="textSecondary" component="p" noWrap>
                             You have a project
                     </Typography>
                         <Checkbox
@@ -207,8 +215,10 @@ class Roles extends Component {
                         />
                     </CardActions>
                  </Card>
+                 </Paper>
           </Grid>
         </Grid>
+        
         <div className={classes.bigRow}>          
           <p>Tempor veniam est id occaecat. Duis aute consectetur sunt ea laborum reprehenderit elit excepteur ex laborum culpa. Labore voluptate do commodo eiusmod minim sint cupidatat quis
           </p>
@@ -221,6 +231,16 @@ class Roles extends Component {
     )
   }
 }
+
+Roles.PropTypes = {
+    classes: PropTypes.object.isRequired,
+    preferences: PropTypes.string,
+    language: PropTypes.string,
+    updateUser: PropTypes.func,
+    roles: PropTypes.object,
+    fetchPreferences: PropTypes.func
+  }
+  
 
 export default withStyles(styles)(Roles)
 /* eslint-enable */

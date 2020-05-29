@@ -12,7 +12,7 @@ const fetchRolesRequested = () => {
 }
 
 const fetchRolesSuccess = (response) => {
-  return { type: FETCH_ROLES_SUCCESS, completed: true, roles: response.roles }
+  return { type: FETCH_ROLES_SUCCESS, completed: true, name: response.name, label: response.label, userId: response.userId, id: response.id }
   // return { type: FETCH_ROLES_SUCCESS, completed: true, language: response.language, os: response.os, languages: response.languages, skills: response.skills, receiveNotifications: response.receiveNotifications, openForJobs: response.openForJobs }
 }
 
@@ -26,8 +26,10 @@ const fetchRoles = () => {
     return dispatch(loggedIn()).then(user => {
       dispatch(fetchRolesRequested())
       return axios
-        .get(`${api.API_URL}/user/roles`)
+        .get(`${api.API_URL}/roles/fetch`)
         .then(response => {
+          // eslint-disable-next-line no-console
+          console.log(response.data)
           return dispatch(fetchRolesSuccess(response.data))
         })
         .catch(error => {
