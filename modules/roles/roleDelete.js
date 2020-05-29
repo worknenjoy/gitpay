@@ -8,7 +8,7 @@ try{
         {
             where:
             {
-                id:roleParameters.id
+                userId:roleParameters.userId
             }
         }
     )
