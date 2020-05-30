@@ -5,10 +5,11 @@ const Promise = require('bluebird')
 roleUpdate = async(roleParameters)=>{
 try{
     console.log(roleParameters)
-    let role = await Role.findOne({where:{userId:roleParameters.userId}})
+    // let role = await Role.findOne({where:{userId:roleParameters.userId}})
+    // console.log(role)
     let doc = await Role.update(
         {
-            name:role.name+','+roleParameters.name
+            name:roleParameters.name
         },
         {
             where:
@@ -22,7 +23,9 @@ try{
         return false
         }        
     else{
-    return doc;
+    // return doc;  returns [1]
+    return await Role.findOne({where:{userId:roleParameters.userId}})
+    // return tthe update doc because the roleAction function requires json {name:'<something_here>'} and not [1]
 }
 }
 catch(err){

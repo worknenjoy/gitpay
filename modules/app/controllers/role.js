@@ -6,7 +6,8 @@ exports.fetchRoleById = async(req, res)=>{
 try{
     let doc = await Role.roleFetchById(req.params)
     if(doc){
-    console.log('found role',doc)
+    // console.log('found role',doc)
+    console.log('found role')
     return res.status(200).send(doc)
     }
 }
@@ -24,7 +25,8 @@ exports.fetchRole = async(req, res)=>{
         req.body.userId = req.user.id
         let doc = await Role.roleFetch(req.body)
         if(doc){
-        console.log('found role',doc)
+        // console.log('found role',doc)
+        console.log('found role')
         return res.status(200).send(doc)
         }
     }
@@ -42,7 +44,8 @@ exports.createRole = async(req, res) =>{
         req.body.userId = req.user.id
         let doc = await Role.roleCreate(req.body)
         if(doc){
-        console.log('role created',doc)
+        // console.log('role created',doc)
+        console.log('role created')
         return res.status(201).send(doc)
         }
     }catch(err){
@@ -59,7 +62,8 @@ exports.updateRole = async(req, res) =>{
         req.body.userId = req.user.id
         let doc = await Role.roleUpdate(req.body)
         if(doc){
-        console.log('role updated',doc)
+        // console.log('role updated',doc)
+        console.log('role updated')
         return res.status(201).send(doc)
         }
     }catch(err){

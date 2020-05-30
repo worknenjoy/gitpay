@@ -244,7 +244,7 @@ class Profile extends Component {
                   <Route
                     exact
                     path='/profile/roles'
-                    component={ () => <Roles user={ user } roles={ roles } updateUser={ this.props.updateUser } /> }
+                    component={ () => <Roles user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } /> }
                   />
                   <Route
                     exact

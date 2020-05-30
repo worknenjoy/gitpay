@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import PropTypes, { element } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import funder from '../../images/funder.png'
 import contributor from '../../images/contributor.png'
@@ -26,6 +26,7 @@ import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createClassExpression } from 'typescript'
+// import { threadId } from 'worker_threads'
 
 const styles = theme => ({
 row:{
@@ -40,7 +41,8 @@ bigRow:{
 margin:'0 5% 0',
 padding:'0 0% 3% 5%',
 '& h1':{
-    fontWeight:'200'
+    fontWeight:'500',
+    fontFamily:'roboto',
 },
 '& p':{
     color:'gray',
@@ -116,7 +118,8 @@ cButton:{
     border:'none',
     backgroundColor:'transparent',
     color:'#00b58e',
-    fontWeight:'bold'
+    fontWeight:'bold',
+    fontFamily:'arial'
 },
 sButton:{   
         border:0,
@@ -128,7 +131,8 @@ sButton:{
         height:'20%',
         color:'#FFFFFF',
         cursor:'pointer',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        fontFamily:'roboto'
 }
 })
 
@@ -136,7 +140,65 @@ class Roles extends Component {
     constructor (props) {
         super(props)
         console.dir('where is u',props)
+        this.state = {
+            selectedRoles:this.props.roles.name != null && this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : [],
+            save:false
+        }
     }
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.roles.name !== prevState.selectedRoles.join(',') && this.state.save == true) {
+            // if (prevProps.roles.name !== prevState.selectedRoles.join(',') ) {
+          this.handleSave(true)
+        // this.handleSave()
+        console.log(prevState.selectedRoles.join(','),this.state)
+        }
+      }
+      handleRoleClick = (item) =>{
+        let data = this.state.selectedRoles
+        if (!this.isRoleSelected(item)) {
+            data.push(item)
+        }
+        else {
+            data.splice(data.indexOf(item), 1)
+        }
+
+        this.setState({
+            selectedRoles: data
+        })
+    }
+      isRoleSelected = (item) => {
+        return this.state.selectedRoles.indexOf(item) > -1
+      }
+      handleRemoveRole = (item) =>{
+        if (this.isRoleSelected(item)) {
+            this.handleRoleClick(item)
+          }
+      }
+      handleCancelClick = () => {
+        this.reloadPreferences()
+      }
+          
+      reloadPreferences = () => {
+         this.setState({
+          save:false,selectedRoles: this.props.roles.name != null && this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : []        
+        })
+      }
+
+      handleSaveClick = () => {
+          this.setState({save:true})
+      }
+
+      handleSave = async(fetchRoles = false) => {
+        // prevent blink
+        this.props.roles.name = await this.state.selectedRoles.join(',')        
+    
+        this.props.updateRoles({
+          name: this.state.selectedRoles.join(','),          
+        }).then(() => {
+          fetchRoles && this.props.fetchRoles()
+        })
+      }
+    
   render () {
     const { classes, user, preferences, roles, organizations } = this.props    
     //const classes = styles();
@@ -166,6 +228,8 @@ class Roles extends Component {
                         <Checkbox
                             color="primary"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            checked={this.isRoleSelected('funder')}
+                            onClick={ () => this.handleRoleClick('funder') }
                         />
                     </CardActions>
                  </Card>
@@ -189,6 +253,8 @@ class Roles extends Component {
                         <Checkbox
                             color="primary"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            checked={this.isRoleSelected('contributor')}
+                            onClick={ () => this.handleRoleClick('contributor') }
                         />
                     </CardActions>
                  </Card>
@@ -212,6 +278,8 @@ class Roles extends Component {
                         <Checkbox
                             color="primary"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            checked={this.isRoleSelected('maintainer')}
+                            onClick={ () => this.handleRoleClick('maintainer') }
                         />
                     </CardActions>
                  </Card>
@@ -224,8 +292,10 @@ class Roles extends Component {
           </p>
           </div>
           <div className={classes.buttons}>
-             <button className={classes.cButton}>CANCEL</button>
-              <button className={classes.sButton}>SAVE</button>
+             <button onClick={() => this.handleCancelClick()} className={classes.cButton}>CANCEL</button>
+              <button onClick={() => this.handleSaveClick()} className={classes.sButton}>SAVE</button>
+              {/* <button  className={classes.cButton}>CANCEL</button>
+              <button  className={classes.sButton}>SAVE</button> */}
           </div>
       </React.Fragment>
     )
