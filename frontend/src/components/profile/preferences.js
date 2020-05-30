@@ -35,7 +35,7 @@ const styles = theme => ({
 class Preferences extends Component {
   constructor (props) {
     super(props)
-    console.dir('I am here',props)
+    // console.dir('I am here',props)
     this.state = {
       selectedSkills: this.props.preferences.skills != null && this.props.preferences.skills.length > 0 ? this.props.preferences.skills.split(',') : [],
       selectedOS: this.props.preferences.os ? this.props.preferences.os.split(',') : [],
