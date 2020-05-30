@@ -2,9 +2,9 @@
 import React, { Component } from 'react'
 import PropTypes, { element } from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import funder from '../../images/funder.png'
-import contributor from '../../images/contributor.png'
-import maintainer from '../../images/maintainer.png'
+import funder from '../../images/bounty.png'
+import contributor from '../../images/sharing.png'
+import maintainer from '../../images/notifications.png'
 
 import {
   withStyles,
@@ -21,7 +21,8 @@ import {
   CardContent,
   CardActions
 } from '@material-ui/core'
-import LanguageIcon from '@material-ui/icons/Language'
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -57,13 +58,18 @@ rowContent:{
 borderRadius:0,
 height:'100%',
 '& img':{
+    backgroundColor:'#263238',
+    objectFit:'cover',
     width:'100%',
     height:'100%'
 }
 },
+media:{
+height:'100%'
+},
 rootLabel:{
     padding:'5px 16px 0px',
-    backgroundColor:'gray',
+    backgroundColor:'#455a64',
     '& h5':{
         color:'white',
     }
@@ -71,7 +77,7 @@ rootLabel:{
 action:{
     // justifyContent:'center',
     paddingTop:'0 ',
-    backgroundColor:'gray',
+    backgroundColor:'#455a64',
     '& p':{
         padding:'0 10px 0 15px',
         float:'left',
@@ -82,7 +88,7 @@ action:{
 },
 infoItem:{    
     paddingLeft:'10px',
-    backgroundColor:'#606060',
+    backgroundColor:'#455a64',
     display:'flex',
     flexDirection:'row',    
     '& Checkbox':{
@@ -119,7 +125,10 @@ cButton:{
     backgroundColor:'transparent',
     color:'#00b58e',
     fontWeight:'bold',
-    fontFamily:'arial'
+    fontFamily:'arial',
+    '& button:focus': {
+        outline:'none'
+    }
 },
 sButton:{   
         border:0,
@@ -226,6 +235,8 @@ class Roles extends Component {
                             You will mostly fund issues.
                     </Typography>
                         <Checkbox
+                            icon={<CheckBoxOutlineBlankIcon fontSize="large" color="primary" /> }
+                            checkedIcon={<CheckBoxIcon color="white" fontSize="large" />}
                             color="primary"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                             checked={this.isRoleSelected('funder')}
@@ -251,6 +262,8 @@ class Roles extends Component {
                             You will solve issues.
                     </Typography>
                         <Checkbox
+                            icon={<CheckBoxOutlineBlankIcon fontSize="large" color="primary" /> }
+                            checkedIcon={<CheckBoxIcon color="white" fontSize="large" />}
                             color="primary"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                             checked={this.isRoleSelected('contributor')}
@@ -276,6 +289,8 @@ class Roles extends Component {
                             You have a project
                     </Typography>
                         <Checkbox
+                            icon={<CheckBoxOutlineBlankIcon fontSize="large" color="primary" /> }
+                            checkedIcon={<CheckBoxIcon color="white" fontSize="large" />}
                             color="primary"
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                             checked={this.isRoleSelected('maintainer')}
