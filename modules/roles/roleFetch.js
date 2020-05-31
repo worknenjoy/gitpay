@@ -1,27 +1,33 @@
-/*eslint-disable */ 
 const Role = require('../../models').Role
 const Promise = require('bluebird')
+const roleCreate = require('./roleCreate')
 
-roleFetch = async(roleParameters)=>{
-try{
+// eslint-disable-next-line no-undef
+roleFetch = async (roleParameters) => {
+  try {
     // console.log(roleParameters)
     let role = await Role.findOne(
-        {
-            where:
+      {
+        where:
             {
-                userId:roleParameters.userId
+              userId: roleParameters.userId,
             }
-        }
+      }
     )
-    if(!role){
-        console.log('role not found')
-        return false
+    if (!role) {
+      // eslint-disable-next-line no-console
+      console.log('role not found , creating a new role')
+      return roleCreate(roleParameters)
+      // if a new user joins , they wont have a role thus we define a blank role for the new user which later can get updated in the roleActions
     }
-    else
-    return role;
+    else {
+      return role
+    }
+  }
+  catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
+  }
 }
-catch(err){
-console.log(err);
-}
-}
-module.exports = Promise.method(roleFetch);
+// eslint-disable-next-line no-undef
+module.exports = Promise.method(roleFetch)

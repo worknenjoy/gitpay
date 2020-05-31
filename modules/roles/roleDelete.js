@@ -1,26 +1,30 @@
-/*eslint-disable */ 
 const Role = require('../../models').Role
 const Promise = require('bluebird')
 
-roleDelete = async(roleParameters)=>{
-try{
+// eslint-disable-next-line no-undef
+roleDelete = async (roleParameters) => {
+  try {
     let role = await Role.destroy(
-        {
-            where:
+      {
+        where:
             {
-                userId:roleParameters.userId
+              userId: roleParameters.userId
             }
-        }
+      }
     )
-    if(!role){
-        console.log('role not found');
-        return false
+    if (!role) {
+      // eslint-disable-next-line no-console
+      console.log('role not found')
+      return false
     }
-    else
-    return true;
+    else {
+      return true
+    }
+  }
+  catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
+  }
 }
-catch(err){
-    console.log(err);
-}
-}
-module.exports = Promise.method(roleDelete);
+// eslint-disable-next-line no-undef
+module.exports = Promise.method(roleDelete)
