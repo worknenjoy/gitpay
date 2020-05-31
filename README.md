@@ -141,7 +141,7 @@ Here you can start to learn how to create your first pull request and start to b
 - [Adam Ash](https://github.com/adamash99) 
 - [Shawn Noruzi]( https://github.com/shawn-noruzi )
 - [Ssentongo Alex]( https://github.com/aleku399 )
-
+- [Tushar Kudal]( https://github.com/tusharkudal )
 
 ## Contributors
 
