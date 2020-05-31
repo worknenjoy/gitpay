@@ -1,37 +1,39 @@
-/* eslint-disable */
 const Role = require('../../models').Role
 const Promise = require('bluebird')
 
-roleCreate = async (roleParameters)=>{
-try{
-    console.log(roleParameters)
+// eslint-disable-next-line no-undef
+roleCreate = async (roleParameters) => {
+  try {
+    // console.log(roleParameters)
     let doc = await Role.findOne(
-        {
-            where:
-            {                 
-                userId:roleParameters.userId,
-                // name:{ $or:['funder','contributor','maintainer'] }
+      {
+        where:
+            {
+              userId: roleParameters.userId,
+            //   name: { $or: ['', 'funder', 'contributor', 'maintainer'] }
             }
-        }
+      }
     )
-    if(!doc){
-        let createRole = {
-            userId: roleParameters.userId,
-            name:roleParameters.name,
-            label:roleParameters.label,            
-        }
-        console.log(createRole)
-        let role = await Role.create(createRole);
-        return role;
+    if (!doc) {
+      let createRole = {
+        userId: roleParameters.userId,
+        name: roleParameters.name,
+        label: roleParameters.label,
+      }
+      //   console.log(createRole)
+      let role = await Role.create(createRole)
+      return role
     }
-    else{
-        console.log('Role exists');
-        return false;
+    else {
+      // eslint-disable-next-line no-console
+      console.log('Role exists')
+      return false
     }
-}
-catch(err){
+  }
+  catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err)
+  }
 }
-}
-module.exports = Promise.method(roleCreate);
-/* eslint-enable */
+// eslint-disable-next-line no-undef
+module.exports = Promise.method(roleCreate)

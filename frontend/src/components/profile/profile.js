@@ -39,7 +39,7 @@ import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
 import Roles from './roles'
-import Organizations from './organizations'
+// import Organizations from './organizations'
 import SettingsComponent from './settings'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
@@ -189,7 +189,8 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, preferences, roles, organizations } = this.props
+    // const { classes, user, preferences, roles, organizations } = this.props
+    const { classes, user, preferences, roles, } = this.props
 
     let titleNavigation = this.getTitleNavigation()
 

@@ -16,7 +16,6 @@ const fetchRolesRequested = () => {
 
 const fetchRolesSuccess = (response) => {
   return { type: FETCH_ROLES_SUCCESS, completed: true, name: response.name, label: response.label, userId: response.userId, id: response.id }
-  // return { type: FETCH_ROLES_SUCCESS, completed: true, language: response.language, os: response.os, languages: response.languages, skills: response.skills, receiveNotifications: response.receiveNotifications, openForJobs: response.openForJobs }
 }
 
 const fetchRolesError = (error) => {
@@ -80,7 +79,6 @@ const updateRoles = (rolesData) => {
     })
   }
 }
-
 
 export {
   FETCH_ROLES_REQUESTED,
