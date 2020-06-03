@@ -13,7 +13,7 @@ import peopleImage from '../../images/landingPage_People.png'
 import logoGrey from '../../images/logo-complete-gray.png'
 import screenImage from '../../images/gitpay-explore-task-screenshot.png'
 import profileImage from '../../images/avatar-alexandre.png'
-
+import Bottom from '../../components/bottom/bottom'
 import Clientlist from './clientlist'
 
 const deal = require('../../images/deal.png')
@@ -315,6 +315,7 @@ function LandingPage (props) {
           </Grid>
         </Grid>
       </Section>
+      <Bottom/>
     </div>
   )
 }
