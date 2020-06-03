@@ -34,6 +34,7 @@ describe("Roles", () => {
         registerAndLogin(agent).then(user => {
             agent
             .get('/roles/fetch')
+            .set('Authorization',user.headers.authorization)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
