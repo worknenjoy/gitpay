@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt-nodejs')
 const Promise = require('bluebird')
 const models = require('../../models')
 
@@ -17,6 +18,8 @@ module.exports = Promise.method(function userUpdate (userParameters) {
       }
     }
   }
+  // eslint-disable-next-line no-sync
+  userParameters.password = bcrypt.hashSync(userParameters.password, bcrypt.genSaltSync(8), null)
   return models.User
     .update(userParameters, { ...condition, returning: true, plain: true }).then(data => {
       // eslint-disable-next-line no-console

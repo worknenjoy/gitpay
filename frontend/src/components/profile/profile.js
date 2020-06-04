@@ -39,6 +39,7 @@ import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
 import Roles from './roles'
+import AccountSettings from './accountSettings'
 // import Organizations from './organizations'
 import SettingsComponent from './settings'
 
@@ -155,6 +156,9 @@ class Profile extends Component {
       case '/profile/roles':
         this.setState({ selected: 4 })
         break
+      case '/profile/account-settings':
+        this.setState({ selected: 5 })
+        break
       default:
         this.setState({ selected: null })
         break
@@ -179,6 +183,8 @@ class Profile extends Component {
         return (<FormattedMessage id='account.profile.settings' defaultMessage='Settings' />)
       case 4:
         return (<FormattedMessage id='account.profile.roles' defaultMessage='Roles' />)
+      case 5:
+        return (<FormattedMessage id='account.profile.account-settings' defaultMessage='Account Settings' />)
       default:
         return null
     }
@@ -246,6 +252,11 @@ class Profile extends Component {
                     exact
                     path='/profile/roles'
                     component={ () => <Roles user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/account-settings'
+                    component={ () => <AccountSettings user={ user } updateUser={ this.props.updateUser } /> }
                   />
                   <Route
                     exact
