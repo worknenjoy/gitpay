@@ -85,6 +85,27 @@ const TaskCron = {
       })
     }
     return tasks
+  },
+  weeklyAvailableTaskBasedOnPreference: async () => {
+    const tasks = await models.Task.findAll({
+      where: {
+        assigned: {
+          $eq: null
+        },
+        status: {
+          $eq: 'open'
+        }
+      },
+      limit: 1,
+      order: [['id', 'DESC']],
+      include: [ models.User, models.Label ]
+    })
+    // eslint-disable-next-line no-console
+    console.log('tasks from cron job to email tasks by preference ', tasks)
+    if (tasks[0]) {
+      TaskMail.weeklyAvailableTaskByUserPrefrence({ tasks })
+    }
+    return tasks
   }
 }
 
@@ -163,4 +184,13 @@ const weeklyJobLatest = new CronJob({
   }
 })
 
-module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron }
+const weeklyJobPreference = new CronJob({
+  cronTime: '5 8 * * 5',
+  onTick: () => {
+    const d = new Date()
+    // eslint-disable-next-line no-console
+    console.log('Log to confirm cron weekly job run at', d)
+    TaskCron.weeklyAvailableTaskBasedOnPreference()
+  }
+})
+module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron, weeklyJobPreference }

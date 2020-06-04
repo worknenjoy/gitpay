@@ -12,7 +12,7 @@ const load = require('./modules/app')
 const feed = require('feed-read')
 const i18n = require('i18n')
 
-const { dailyJob, weeklyJob, weeklyJobLatest } = require('./cron')
+const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobPreference } = require('./cron')
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
@@ -38,6 +38,7 @@ app.use(i18n.init)
 dailyJob.start()
 weeklyJob.start()
 weeklyJobLatest.start()
+weeklyJobPreference.start()
 
 app.use(passport.initialize())
 app.use(passport.session())

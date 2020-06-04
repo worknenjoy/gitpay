@@ -127,6 +127,8 @@
   "mail.task.bounties.title": "Ainda temos tarefas abertas com recompensas pagas no Gitpay que você pode se candidatar para resolver. Está achando o valor baixo? Você pode demonstrar interesse e fazer uma oferta!",
   "mail.task.bounties.action": "Se você quer contribuir com software livre, veja as tarefas que temos no Gitpay",
   "mail.task.bounties.calltoaction": "Veja as tarefas e envie seu interesse em resolvê-la",
+  "mail.task.interest.subject": "Temos problemas em aberto para você com base em suas preferências no Gitpay",
+  "mail.task.interest.title": "Existem problemas abertos com base na sua preferência que precisam ser resolvidos no Gitpay. Você pode mostrar seu interesse, fazer uma oferta ou contribuir para melhorar sua experiência e tentar novos desafios",
   "mail.task.latest.subject": "Temos tarefas abertas no Gitpay",
   "mail.task.latest.title": "Há tarefas em aberto que precisam ser resolvidas no Gitpay. Você pode demonstrar seu interesse, fazer uma oferta ou contribuir para aumentar sua experiência e enfrentar novos desafios",
   "mail.task.latest.action": "Se você quiser contribuir com o software livre, veja nossas tarefas disponíveis no Gitpay",
