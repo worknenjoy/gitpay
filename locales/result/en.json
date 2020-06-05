@@ -127,8 +127,6 @@
   "mail.task.bounties.title": "There's still open issues with bounties on Gitpay. Apply to solve it. You think the bounty is low? You can make an offer",
   "mail.task.bounties.action": "Check our issues on Gitpay",
   "mail.task.bounties.calltoaction": "See the issue on Gitpay and apply to solve it",
-  "mail.task.interest.subject": "We have open issues for you based on your preferences on Gitpay",
-  "mail.task.interest.title": "There's open issues based on your preference that needs to be solved on Gitpay. You can show your interest, make an offer or contribute to improve your experience and try new challenges",
   "mail.task.latest.subject": "We have open issues for you on Gitpay",
   "mail.task.latest.title": "There's open issues that needs to be solved on Gitpay. You can show your interest, make an offer or contribute to improve your experience and try new challenges",
   "mail.task.latest.action": "If want to contribute with open source, check our issues on Gitpay",
