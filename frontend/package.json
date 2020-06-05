@@ -73,6 +73,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "bcrypt-nodejs": "0.0.3",
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^0.28.4",

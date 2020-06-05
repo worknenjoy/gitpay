@@ -1,43 +1,24 @@
 /* eslint-disable*/
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Route, Switch, HashRouter } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
-  Grid,
-  Avatar,
   Typography,
   Button,
-  Paper,
   withStyles,
-  AppBar,
   TextField,
   InputAdornment,
   Link,
   Checkbox
 } from '@material-ui/core'
-import {
-  DeviceHub,
-  LibraryBooks,
-  CreditCard,
-  Tune,
-  Person,
-  ArrowBack,
-  Settings
-} from '@material-ui/icons'
 
-import classNames from 'classnames'
-import nameInitials from 'name-initials'
+import bcrypt from 'bcrypt-nodejs'
 
 import api from '../../consts'
 
 import PersonIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
-
-const logoGithub = require('../../images/github-logo.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const styles = theme => ({
 header:{
@@ -60,6 +41,14 @@ divider:{
         height:'5%',
         margin:'1.25% 1% 0 1%',
         color:'rgb(220,220,220,0.3)'
+    },
+    [theme.breakpoints.down('sm')]:{
+        '& hr':{
+            width:'10%',
+            height:'5%',
+            margin:'3% 1% 0 1%',
+            color:'rgb(220,220,220,0.3)'
+        }
     }
 },
 providerBtns:{
@@ -73,6 +62,17 @@ providerBtns:{
     },
     '& a:hover':{
         backgroundColor:'#1239ff'
+    },
+    [theme.breakpoints.down('sm')]:{
+        '& a':{
+            margin:'2% 1%',
+            width:'35%',
+            fontSize:'1rem',
+            backgroundColor:'#1239ff'
+        },
+        '& a:hover':{
+            backgroundColor:'#1239ff'
+        },
     }
 },
 form:{
@@ -83,8 +83,14 @@ form:{
         justifyContent:'center',
         alignItems:'center',
         '& > div':{
-            margin:'0.5% 0',
+            margin:'1% 0',
             width:'55%'
+        },
+        [theme.breakpoints.down('sm')]:{
+            '& > div':{
+                margin:'2% 0',
+                width:'70%'
+            },
         }
     }
 },
@@ -100,7 +106,18 @@ checkboxes:{
     },
     '& button:hover':{
         backgroundColor:'#1239ff'
-    }
+    },
+    [theme.breakpoints.down('sm')]:{
+        margin:'0 0 0 15%',
+        '& button':{
+            margin:'5% 0 0 0',
+            width:'81%',
+            fontSize:'1rem',
+        },
+        '& button:hover':{
+            backgroundColor:'#1239ff'
+        },
+    },
 },
 tnc:{
     display:'flex',
@@ -120,8 +137,9 @@ newsletter:{
 
 class AccountSettings extends Component{
     state={
-        name:'',
-        email:'',
+        name:this.props.user.name||'',
+        email:this.props.user.email||'',
+        oldPassword:'',
         password:'',
         confirmPassword:'',
         provider:this.props.user.provider||'',
@@ -129,13 +147,18 @@ class AccountSettings extends Component{
         checkedConditions:false,
         newsletter:false
     }
+    
     componentDidUpdate = () => {
+        let props = {'email':this.state.email}
+        console.dir('old pass is correct :',bcrypt.compareSync(this.state.oldPassword,this.props.user.password))
         if (this.state.name !== '' &&
-            this.state.password !== '' &&
             this.state.email !== '' &&
+            this.state.oldPassword !== '' &&
             this.state.save === true &&
-            this.state.checkedConditions === true
-            ) {
+            this.state.password === this.state.confirmPassword &&
+            this.state.checkedConditions === true &&
+            bcrypt.compareSync(this.state.oldPassword,this.props.user.password) === true
+            ) {                
           this.handleSave()
       }
     }
@@ -144,6 +167,9 @@ class AccountSettings extends Component{
     }
     handleEmail = (element)=>{
         this.setState({email:element.target.value})
+    }
+    handleOldPassword = (element)=>{
+        this.setState({oldPassword:element.target.value})
     }
     handlePassword = (element)=>{
         this.setState({password:element.target.value})
@@ -155,7 +181,7 @@ class AccountSettings extends Component{
         this.setState({provider:element.target.value})
     }
     handleUpdate = (e)=>{
-        if(this.state.checkedConditions === true){
+        if(this.state.checkedConditions === true && this.state.oldPassword !== ''){
             e.preventDefault()
             this.setState({save:true})
         }
@@ -173,20 +199,17 @@ class AccountSettings extends Component{
             this.setState({newsletter:false})
     }
     handleSave =()=>{
-        if(this.state.password === this.state.confirmPassword){
-            this.setState({password:this.state.password})
-        }
         this.props.updateUser(this.props.user.id, {
-            name:this.state.name,
-            email:this.state.email,
-            password:this.state.password
+            name:this.state.name.length>0?this.state.name:this.props.user.name,
+            email:this.state.email.length>0?this.state.email:this.props.user.email,
+            password:this.state.password!==''?this.state.password:this.state.oldPassword
           })
-        //   .then(() => {
-        //     fetchPreferences && this.props.fetchPreferences(this.props.user.id)
-        //   })
+          .then(() => {
+            console.dir('update user called')
+          })
     }
     render(){
-        console.dir(this.state,this.props)
+        console.dir(this.state,this.props,)
         const { classes, user, preferences, roles, organizations } = this.props        
         return(
             <React.Fragment>
@@ -223,12 +246,14 @@ class AccountSettings extends Component{
                 <div className={classes.form}>
                     <form>
                         <TextField id="outlined-basic" label="Full Name" variant="outlined"  onChange = {this.handleName}
+                        value={this.state.name}
                         InputProps={{                           
                             startAdornment: (
                             <InputAdornment position="start">
                             <PersonIcon style={{ color: '#2a60e4' }} />
                             </InputAdornment>),}}/>
-                        <TextField id="outlined-basic" label="Email Address" variant="outlined" onChange = {this.handleEmail}
+                        <TextField disabled id="outlined-basic" label="Email Address" variant="outlined" onChange = {this.handleEmail}
+                        value={this.state.email}
                         InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -236,7 +261,7 @@ class AccountSettings extends Component{
                               </InputAdornment>
                             ),
                           }}/>
-                        <TextField id="outlined-password-input" label="Password" variant="outlined" onChange = {this.handlePassword}
+                        <TextField id="outlined-password-input" label="Old Password" variant="outlined" onChange = {this.handleOldPassword}                        
                         type="password"
                         InputProps={{
                             startAdornment: (
@@ -245,7 +270,16 @@ class AccountSettings extends Component{
                               </InputAdornment>
                             ),
                           }}/>
-                        <TextField id="outlined-password-input" label="Confirm Password" variant="outlined" onChange = {this.handleConfirmPassword}
+                        <TextField id="outlined-password-input" label="New Password" variant="outlined" onChange = {this.handlePassword}                        
+                        type="password"
+                        InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <LockIcon style={{ color: '#2a60e4' }} />
+                              </InputAdornment>
+                            ),
+                          }}/>
+                        <TextField id="outlined-password-input" label="Confirm Password" variant="outlined" onChange = {this.handleConfirmPassword}                        
                         type="password"
                         InputProps={{
                             startAdornment: (
@@ -273,10 +307,7 @@ class AccountSettings extends Component{
                         UPDATE ACCOUNT
                     </Button>
                 </div>
-            </React.Fragment>
-            
-
-            
+            </React.Fragment>                        
         );
     }
 }
