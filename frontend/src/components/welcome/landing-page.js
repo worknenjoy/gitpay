@@ -15,6 +15,8 @@ import screenImage from '../../images/gitpay-explore-task-screenshot.png'
 import profileImage from '../../images/avatar-alexandre.png'
 import Bottom from '../../components/bottom/bottom'
 import Clientlist from './clientlist'
+import TeamCard from '../Cards/TeamCard'
+import ContactRecruiterForm from './contact-recruiter-form'
 
 const deal = require('../../images/deal.png')
 
@@ -29,6 +31,21 @@ import {
 // Total hours worked on this: ~12hours
 // Still need to add in functionality for buttons
 // Export Styles to seperate file to clean up code but left here for you to see for now
+
+const recruiterTeam = [
+  {
+    name: 'Kevin Kautzman',
+    description: 'Kevin is a proven front-end expert, digital marketer and award-winning writer with an MFA from the prestigious Michener Center for Writers at UT Austin.',
+    image: require('../../images/teams/headhunter-team-member2.png'),
+    linkedinUrl: 'https://www.linkedin.com/in/kevinwrites/'
+  },
+  {
+    name: 'Hollie Bayliss',
+    description: 'Founder of Neural Networking, a search firm working with forward thinking companies who want to stay ahead on the AI adoption curve.',
+    image: require('../../images/teams/headhunter-team-member1.png'),
+    linkedinUrl: 'https://www.linkedin.com/in/holliebayliss/'
+  }
+]
 
 const styles = (theme) => ({
   signText: {
@@ -314,6 +331,22 @@ function LandingPage (props) {
             <ResponsiveImage width='400' src={ deal } />
           </Grid>
         </Grid>
+      </Section>
+      <Section>
+        <Grid container spacing={ 3 }>
+          <Grid item xs={ 12 } justify>
+            <TeamCard data={recruiterTeam} />
+          </Grid>
+        </Grid>
+      </Section>
+      <Section>
+        <form>
+          <Grid container spacing={ 3 }>
+            <Grid item xs={ 12 } justify>
+              <ContactRecruiterForm />
+            </Grid>
+          </Grid>
+        </form>
       </Section>
       <Bottom/>
     </div>
