@@ -16,7 +16,7 @@ import profileImage from '../../images/avatar-alexandre.png'
 import Bottom from '../../components/bottom/bottom'
 import Clientlist from './clientlist'
 import TeamCard from '../Cards/TeamCard'
-import ContactRecruiterForm from './contact-recruiter-form'
+import ContactRecruiterFormContainer from '../../containers/contact-recruiter-form'
 
 const deal = require('../../images/deal.png')
 
@@ -87,6 +87,13 @@ const styles = (theme) => ({
     textTransform: 'none',
     background: '#4A4EDD',
     height: 50,
+    '&:hover': {
+      background: '#7F83FF',
+    },
+  },
+  buttonHireSmall: {
+    textTransform: 'none',
+    background: '#4A4EDD',
     '&:hover': {
       background: '#7F83FF',
     },
@@ -192,6 +199,15 @@ const styles = (theme) => ({
 
 function LandingPage (props) {
   const { classes } = props
+  const ref = React.createRef();
+
+  const handleClick = (event) => {
+    event.preventDefault()
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
 
   return (
     <div>
@@ -205,10 +221,13 @@ function LandingPage (props) {
               <Toolbar>
                 <img src={ logoGrey } alt='logo' className={ classes.logoImage } />
                 <div className={ classes.grow } />
-                <Button className={ classes.buttonSignin }>
+                <Button 
+                  className={ classes.buttonSignin }
+                  onClick={handleClick}
+                >
                   <p className={ classes.signText }><FormattedMessage id='welcome.landing.signin' defaultMessage='Contact us' /></p>
                 </Button>
-                <Button className={ classes.buttonSignup }>
+                <Button href={'https://gitpay.me'} target='_blank' className={ classes.buttonSignup }>
                   <p className={ classes.signText }><FormattedMessage id='welcome.landing.signup' defaultMessage='GitPay.me' /></p>
                 </Button>
               </Toolbar>
@@ -225,6 +244,7 @@ function LandingPage (props) {
                 size='medium'
                 color='primary'
                 className={ classes.buttonHire }
+                onClick={handleClick}
               >
                 <p className={ classes.textSize }>                <FormattedMessage id='welcome.landing.hire' defaultMessage='Connect with a Recruiter' /></p>
               </Button>
@@ -247,7 +267,6 @@ function LandingPage (props) {
       <Grid item xs={ 12 }>
         <Clientlist />
       </Grid>
-
       <Section>
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } sm={ 6 }>
@@ -266,6 +285,18 @@ function LandingPage (props) {
                   defaultMessage='GitPay is a new marketplace platform and community of technical talent who work collaboratively to solve issues in GitHub and Bitbucket in exchange for experience and/or bounties. As the future of work becomes reality and distributed, agile teams become the norm, we are poised to support open source and proprietary projects with a ready-to-work community of talent. Visit gitpay.me to learn more.'
                 />
               </Typography>
+              <div style={ { textAlign: 'center', marginTop: 20, paddingBottom: 40 } }>
+                <Button
+                  variant='contained'
+                  size='small'
+                  color='secondary'
+                  className={classes.buttonHireSmall}
+                  href={'https://gitpay.me'}
+                  target={'_blank'}
+                >
+                  <FormattedMessage id='welcome.landing.about.button' defaultMessage='Visit Gitpay' />
+                </Button>
+              </div>
             </MainList>
           </Grid>
           <Grid item xs={ 12 } sm={ 6 }>
@@ -296,6 +327,8 @@ function LandingPage (props) {
                   variant='contained'
                   size='small'
                   color='secondary'
+                  className={classes.buttonHireSmall}
+                  onClick={handleClick}
                 >
                   <FormattedMessage id='welcome.landing.hire' defaultMessage='Connect with a Recruiter' />
                 </Button>
@@ -325,6 +358,18 @@ function LandingPage (props) {
                   defaultMessage='GitPay is designed to allow project and product managers to immediately access talent for pressing issues. Have a pressing issue you need solved? Visit gitpay.me to add tasks for bounties.'
                 />
               </Typography>
+              <div style={ { textAlign: 'center', marginTop: 20, paddingBottom: 40 } }>
+                <Button
+                  variant='contained'
+                  size='small'
+                  color='secondary'
+                  className={classes.buttonHireSmall}
+                  href={'https://gitpay.me'}
+                  target={'_blank'}
+                >
+                  <FormattedMessage id='welcome.landing.services' defaultMessage='Join Gitpay' />
+                </Button>
+              </div>
             </MainList>
           </Grid>
           <Grid item xs={ 12 } sm={ 6 }>
@@ -340,13 +385,13 @@ function LandingPage (props) {
         </Grid>
       </Section>
       <Section>
-        <form>
+        <div ref={ref}>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } justify>
-              <ContactRecruiterForm />
+              <ContactRecruiterFormContainer />
             </Grid>
           </Grid>
-        </form>
+        </div>
       </Section>
       <Bottom />
     </div>

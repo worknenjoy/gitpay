@@ -27,6 +27,7 @@ export default class CountryList extends Component {
             paddingLeft: 10,
             paddingRight: 10
           } }
+          name={'country'}
           value={ country }
           onChange={ (val) => this.selectCountry(val) } />
       </div>

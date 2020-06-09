@@ -15,12 +15,12 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `Here's the contact from ${params.name} to Gitpay team.
-          title: ${params.title}
-          email: ${params.email}
-          phone: ${params.phone}
-          company: ${params.company}
-          country: ${params.country}
-          message: ${params.message}
+          title: ${params.title} <br />
+          email: ${params.email} <br />
+          phone: ${params.phone} <br />
+          company: ${params.company} <br />
+          country: ${params.country} <br />
+          message: ${params.message} <br />
           ${Signatures.sign()}`
         },
       ]

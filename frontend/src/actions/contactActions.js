@@ -18,19 +18,11 @@ const messageRecruitersError = error => {
   return { type: MESSAGE_RECRUITERS_ERROR, completed: true, error: error }
 }
 
-const messageRecruiters = (name, title, email, phone, company, country, message) => {
+const messageRecruiters = (params) => {
   return dispatch => {
     dispatch(messageRecruitersRequested())
     return axios
-      .post(api.API_URL + '/message/recruiters', {
-        name,
-        title,
-        email,
-        phone,
-        company,
-        country,
-        message
-      })
+      .post(api.API_URL + '/contact/recruiters', params)
       .then(response => {
         dispatch(addNotification('actions.message.recruiters.success'))
         return dispatch(messageRecruitersSuccess())

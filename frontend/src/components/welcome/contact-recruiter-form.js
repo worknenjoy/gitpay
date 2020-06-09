@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid'
 import MuiPhoneNumber from 'material-ui-phone-number'
 import {
@@ -12,6 +13,26 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import CountryList from './country-list'
+
+function checkEmail(emailAddress) {
+  var sQtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
+  var sDtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
+  var sAtom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+';
+  var sQuotedPair = '\\x5c[\\x00-\\x7f]';
+  var sDomainLiteral = '\\x5b(' + sDtext + '|' + sQuotedPair + ')*\\x5d';
+  var sQuotedString = '\\x22(' + sQtext + '|' + sQuotedPair + ')*\\x22';
+  var sDomain_ref = sAtom;
+  var sSubDomain = '(' + sDomain_ref + '|' + sDomainLiteral + ')';
+  var sWord = '(' + sAtom + '|' + sQuotedString + ')';
+  var sDomain = sSubDomain + '(\\x2e' + sSubDomain + ')*';
+  var sLocalPart = sWord + '(\\x2e' + sWord + ')*';
+  var sAddrSpec = sLocalPart + '\\x40' + sDomain; // complete RFC822 email address spec
+  var sValidEmail = '^' + sAddrSpec + '$'; // as whole string
+
+  var reValidEmail = new RegExp(sValidEmail);
+
+  return reValidEmail.test(emailAddress);
+}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,11 +54,54 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  },
+    textTransform: 'none',
+    background: '#4A4EDD',
+    height: 50,
+    '&:hover': {
+      background: '#7F83FF',
+    },
+  }
 }))
 
-export default function ContactRecruiterForm () {
+export default function ContactRecruiterForm (props) {
+  const [formData, setFormData] = useState({})
+  const [formErrors, setFormErrors] = useState({})
   const classes = useStyles()
+  const { contact } = props
+
+  const validate = (event) => {
+    const name = event.nativeEvent.target.name
+    const value = event.nativeEvent.target.value
+    const required = event.nativeEvent.target.hasAttribute('required')
+    if(required) {
+      if(name === 'email' && !checkEmail(value)) {
+        setFormErrors({...formErrors, email: 'invalid email'})
+      } else 
+      if(value === '' || value.length < 3) {
+        setFormErrors({...formErrors, [name]: `invalid ${name}`})
+      } else {
+        setFormErrors({})
+      }
+    }
+  }
+
+  const onChange = (event) => {
+    const name = event.nativeEvent.target.name
+    const value = event.nativeEvent.target.value
+    setFormData({...formData, [name]: value})
+  }
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    validate(event)
+    if(formErrors.length) {
+      props.contactRecruiters(formData)
+    }
+  }
+
+  const onBlur = (event) => {
+    validate(event)
+  }
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -49,16 +113,18 @@ export default function ContactRecruiterForm () {
         <Typography component='h1' variant='h5'>
           Contact us
         </Typography>
-        <form className={ classes.form } noValidate>
+        <form className={ classes.form } noValidate onChange={onChange} onSubmit={onSubmit} onBlur={onBlur}>
           <Grid container spacing={ 2 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <TextField
-                autoComplete='fname'
-                name='firstName'
+                error={formErrors.name}
+                helperText={formErrors.name}
+                autoComplete='name'
+                name='name'
                 variant='outlined'
                 required
                 fullWidth
-                id='firstName'
+                id='name'
                 label='Name'
                 autoFocus
               />
@@ -66,19 +132,21 @@ export default function ContactRecruiterForm () {
             <Grid item xs={ 12 } sm={ 6 }>
               <TextField
                 variant='outlined'
-                required
                 fullWidth
-                id='lastName'
+                id='title'
                 label='Title'
-                name='lastName'
-                autoComplete='lname'
+                name='title'
+                autoComplete='title'
               />
             </Grid>
             <Grid item xs={ 12 }>
               <TextField
+                error={formErrors.email}
+                helperText={formErrors.email}
                 variant='outlined'
                 required
                 fullWidth
+                type='email'
                 id='email'
                 label='Email Address'
                 name='email'
@@ -92,6 +160,7 @@ export default function ContactRecruiterForm () {
                 </Grid>
                 <Grid item xs={ 10 }>
                   <MuiPhoneNumber
+                    name={'phone'}
                     defaultCountry={ 'us' }
                     inputClass={ classes.phonePicker }
                   />
@@ -100,13 +169,15 @@ export default function ContactRecruiterForm () {
             </Grid>
             <Grid item xs={ 12 }>
               <TextField
+                error={formErrors.company}
+                helperText={formErrors.company}
                 variant='outlined'
                 required
                 fullWidth
-                name=''
+                name='company'
                 label='Company'
                 type='text'
-                id='password'
+                id='company'
               />
             </Grid>
             <Grid item xs={ 12 }>
@@ -114,15 +185,17 @@ export default function ContactRecruiterForm () {
             </Grid>
             <Grid item xs={ 12 }>
               <TextField
+                error={formErrors.message}
+                helperText={formErrors.message}
                 variant='outlined'
                 rows={ 4 }
                 multiline
                 required
                 fullWidth
-                name=''
+                name='message'
                 label='Message'
                 type='text'
-                id='password'
+                id='message'
               />
             </Grid>
           </Grid>
@@ -131,9 +204,17 @@ export default function ContactRecruiterForm () {
             fullWidth
             variant='contained'
             color='primary'
+            disabled={!contact.completed}
             className={ classes.submit }
           >
-            Contact us
+            {contact.completed ? (
+              <span>Contact us</span>
+            ) : (
+              <CircularProgress color="primary" />
+            )}
+          </Button>
+          <Button onClick={() => window.scroll({top: 0, behavior: 'smooth'})} variant='text' size="small">
+            back to top
           </Button>
         </form>
       </div>
