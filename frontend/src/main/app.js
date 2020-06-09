@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'production') {
   ReactGA.pageview(window.location.pathname + window.location.search)
   LogRocket.init('ie8a2g/gitpay')
   setupLogRocketReact(LogRocket)
-} 
+}
 
 const messages = {
   'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,

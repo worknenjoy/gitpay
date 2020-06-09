@@ -233,7 +233,7 @@ function LandingPage (props) {
                 size='medium'
                 color='primary'
                 className={ classes.buttonWork }
-                style={{display: 'none'}}
+                style={ { display: 'none' } }
               >
                 <p className={ classes.textSize }><FormattedMessage id='welcome.landing.work' defaultMessage='Work' /></p>
               </Button>
@@ -247,7 +247,7 @@ function LandingPage (props) {
       <Grid item xs={ 12 }>
         <Clientlist />
       </Grid>
-     
+
       <Section>
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } sm={ 6 }>
@@ -262,9 +262,9 @@ function LandingPage (props) {
             <MainList>
               <Typography align='center'>
                 <FormattedMessage
-                    id='welcome.landing.about.description'
-                    defaultMessage='GitPay is a new marketplace platform and community of technical talent who work collaboratively to solve issues in GitHub and Bitbucket in exchange for experience and/or bounties. As the future of work becomes reality and distributed, agile teams become the norm, we are poised to support open source and proprietary projects with a ready-to-work community of talent. Visit gitpay.me to learn more.'
-                  />
+                  id='welcome.landing.about.description'
+                  defaultMessage='GitPay is a new marketplace platform and community of technical talent who work collaboratively to solve issues in GitHub and Bitbucket in exchange for experience and/or bounties. As the future of work becomes reality and distributed, agile teams become the norm, we are poised to support open source and proprietary projects with a ready-to-work community of talent. Visit gitpay.me to learn more.'
+                />
               </Typography>
             </MainList>
           </Grid>
@@ -274,40 +274,40 @@ function LandingPage (props) {
         </Grid>
       </Section>
       <Section alternative className={ classes.bgContrast }>
-          <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 6 }>
-              <MainTitle center>
-                <Typography variant='h5' gutterBottom>
-                  <FormattedMessage
-                    id='welcome.landing.recruitment.title'
-                    defaultMessage='GitPay for recruitment'
-                  />
-                </Typography>
-              </MainTitle>
-              <MainList>
-                <Typography align='center'>
-                  <FormattedMessage
-                      id='welcome.landing.recruitment.description'
-                      defaultMessage='We know finding technical talent is competitive and challenging. How? Our co-founders are developers and have worked at major organizations including Dansk Bank and the NeuroLeadership Institute and have solved technical challenges for clients on five continents. We understand the unique requirements of technical recruitment and have built a team of recruiters backed by our platform who are able to identify and help place the best candidate for nearly any technical role. Connect with a recruiter to start a discussion.'
-                    />
-                </Typography>
-                <div style={{textAlign: 'center', marginTop: 20, paddingBottom: 40}}>
-                  <Button
-                    variant='contained'
-                    size='small'
-                    color='secondary'
-                  >
-                    <FormattedMessage id='welcome.landing.hire' defaultMessage='Connect with a Recruiter' />
-                  </Button>
-                </div>
-              </MainList>
-            </Grid>
-            <Grid item xs={ 12 } sm={ 6 }>
-              <ResponsiveImage src={ profileImage } />
-            </Grid>
+        <Grid container spacing={ 3 }>
+          <Grid item xs={ 12 } sm={ 6 }>
+            <MainTitle center>
+              <Typography variant='h5' gutterBottom>
+                <FormattedMessage
+                  id='welcome.landing.recruitment.title'
+                  defaultMessage='GitPay for recruitment'
+                />
+              </Typography>
+            </MainTitle>
+            <MainList>
+              <Typography align='center'>
+                <FormattedMessage
+                  id='welcome.landing.recruitment.description'
+                  defaultMessage='We know finding technical talent is competitive and challenging. How? Our co-founders are developers and have worked at major organizations including Dansk Bank and the NeuroLeadership Institute and have solved technical challenges for clients on five continents. We understand the unique requirements of technical recruitment and have built a team of recruiters backed by our platform who are able to identify and help place the best candidate for nearly any technical role. Connect with a recruiter to start a discussion.'
+                />
+              </Typography>
+              <div style={ { textAlign: 'center', marginTop: 20, paddingBottom: 40 } }>
+                <Button
+                  variant='contained'
+                  size='small'
+                  color='secondary'
+                >
+                  <FormattedMessage id='welcome.landing.hire' defaultMessage='Connect with a Recruiter' />
+                </Button>
+              </div>
+            </MainList>
           </Grid>
-        </Section>
-        <Section>
+          <Grid item xs={ 12 } sm={ 6 }>
+            <ResponsiveImage src={ profileImage } />
+          </Grid>
+        </Grid>
+      </Section>
+      <Section>
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } sm={ 6 }>
             <MainTitle center>
@@ -321,9 +321,9 @@ function LandingPage (props) {
             <MainList>
               <Typography align='center'>
                 <FormattedMessage
-                    id='welcome.landing.issues.description'
-                    defaultMessage='GitPay is designed to allow project and product managers to immediately access talent for pressing issues. Have a pressing issue you need solved? Visit gitpay.me to add tasks for bounties.'
-                  />
+                  id='welcome.landing.issues.description'
+                  defaultMessage='GitPay is designed to allow project and product managers to immediately access talent for pressing issues. Have a pressing issue you need solved? Visit gitpay.me to add tasks for bounties.'
+                />
               </Typography>
             </MainList>
           </Grid>
@@ -335,7 +335,7 @@ function LandingPage (props) {
       <Section>
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } justify>
-            <TeamCard data={recruiterTeam} />
+            <TeamCard data={ recruiterTeam } />
           </Grid>
         </Grid>
       </Section>
@@ -348,7 +348,7 @@ function LandingPage (props) {
           </Grid>
         </form>
       </Section>
-      <Bottom/>
+      <Bottom />
     </div>
   )
 }

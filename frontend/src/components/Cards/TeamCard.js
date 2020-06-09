@@ -1,7 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { FormattedMessage } from 'react-intl'
-import Link from '@material-ui/core/Card'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
@@ -30,57 +29,57 @@ const useStyles = makeStyles({
   media: {
     height: 220,
   },
-});
+})
 
-export default function TeamCard(props) {
+export default function TeamCard (props) {
   const { data } = props
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
-    <div class={classes.wrapper}>
+    <div className={ classes.wrapper }>
       <Typography variant='h5' gutterBottom>
         <FormattedMessage
           id='team.title'
           defaultMessage='Team'
         />
       </Typography>
-      <div class={classes.root}>
-        {data && data.map( member => {
+      <div className={ classes.root }>
+        { data && data.map(member => {
           return (
-            <Card className={classes.card}>
+            <Card className={ classes.card }>
               <CardActionArea>
                 <CardMedia
-                  className={classes.media}
-                  image={member.image}
-                  title={member.name}
+                  className={ classes.media }
+                  image={ member.image }
+                  title={ member.name }
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {member.name}
+                  <Typography gutterBottom variant='h5' component='h2'>
+                    { member.name }
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    {member.description}
+                  <Typography variant='body2' color='textSecondary' component='p'>
+                    { member.description }
                   </Typography>
                 </CardContent>
               </CardActionArea>
-              <CardActions style={{display: 'flex', flexDirection: 'row', justifyContent:'center'}}>
-                {member.linkedinUrl && 
-                  <Button target='_blank' href={member.linkedinUrl} size="small" color="secondary" variant='outlined'>
+              <CardActions style={ { display: 'flex', flexDirection: 'row', justifyContent: 'center' } }>
+                { member.linkedinUrl &&
+                  <Button target='_blank' href={ member.linkedinUrl } size='small' color='secondary' variant='outlined'>
                     <span>Linkedin</span>
                     <LinkedInIcon />
                   </Button>
                 }
-                {member.githubUrl &&  
-                  <Button target='_blank' href={member.githubUrl} size="small" color="primary">
+                { member.githubUrl &&
+                  <Button target='_blank' href={ member.githubUrl } size='small' color='primary'>
                     Github
                   </Button>
                 }
               </CardActions>
             </Card>
-            )
-          })
+          )
+        })
         }
       </div>
     </div>
-  );
+  )
 }

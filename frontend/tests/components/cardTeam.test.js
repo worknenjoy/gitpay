@@ -15,9 +15,8 @@ describe('components', () => {
     })
 
     it('should start a new card with data', () => {
-      const component = mount(<TeamCard data={[{name: 'foo'}]} />)
+      const component = mount(<TeamCard data={ [{ name: 'foo' }] } />)
       expect(component.props().data[0].name).toEqual('foo')
-      console.log(component)
       component.unmount()
     })
   })
