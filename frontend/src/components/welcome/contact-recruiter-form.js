@@ -128,7 +128,6 @@ export default function ContactRecruiterForm (props) {
                 fullWidth
                 id='name'
                 label='Name'
-                autoFocus
               />
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
