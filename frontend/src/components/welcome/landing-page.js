@@ -200,14 +200,14 @@ const styles = (theme) => ({
 
 function LandingPage (props) {
   const { classes } = props
-  const ref = React.createRef();
+  const ref = React.createRef()
 
   const handleClick = (event) => {
     event.preventDefault()
     ref.current.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
-    });
+    })
   }
 
   return (
@@ -220,17 +220,17 @@ function LandingPage (props) {
               style={ { background: 'transparent', boxShadow: 'none' } }
             >
               <Toolbar>
-                <Link href="https://gitpay.me/#/recruitment">
+                <Link href='https://gitpay.me/#/recruitment'>
                   <img src={ logoGrey } alt='logo' className={ classes.logoImage } />
                 </Link>
                 <div className={ classes.grow } />
-                <Button 
+                <Button
                   className={ classes.buttonSignin }
-                  onClick={handleClick}
+                  onClick={ handleClick }
                 >
                   <p className={ classes.signText }><FormattedMessage id='welcome.landing.signin' defaultMessage='Contact us' /></p>
                 </Button>
-                <Button href={'https://gitpay.me'} target='_blank' className={ classes.buttonSignup }>
+                <Button href={ 'https://gitpay.me' } target='_blank' className={ classes.buttonSignup }>
                   <p className={ classes.signText }><FormattedMessage id='welcome.landing.signup' defaultMessage='GitPay.me' /></p>
                 </Button>
               </Toolbar>
@@ -247,7 +247,7 @@ function LandingPage (props) {
                 size='medium'
                 color='primary'
                 className={ classes.buttonHire }
-                onClick={handleClick}
+                onClick={ handleClick }
               >
                 <p className={ classes.textSize }>                <FormattedMessage id='welcome.landing.hire' defaultMessage='Connect with a Recruiter' /></p>
               </Button>
@@ -293,9 +293,9 @@ function LandingPage (props) {
                   variant='contained'
                   size='small'
                   color='secondary'
-                  className={classes.buttonHireSmall}
-                  href={'https://gitpay.me'}
-                  target={'_blank'}
+                  className={ classes.buttonHireSmall }
+                  href={ 'https://gitpay.me' }
+                  target={ '_blank' }
                 >
                   <FormattedMessage id='welcome.landing.about.button' defaultMessage='Visit Gitpay' />
                 </Button>
@@ -330,8 +330,8 @@ function LandingPage (props) {
                   variant='contained'
                   size='small'
                   color='secondary'
-                  className={classes.buttonHireSmall}
-                  onClick={handleClick}
+                  className={ classes.buttonHireSmall }
+                  onClick={ handleClick }
                 >
                   <FormattedMessage id='welcome.landing.hire' defaultMessage='Connect with a Recruiter' />
                 </Button>
@@ -366,9 +366,9 @@ function LandingPage (props) {
                   variant='contained'
                   size='small'
                   color='secondary'
-                  className={classes.buttonHireSmall}
-                  href={'https://gitpay.me'}
-                  target={'_blank'}
+                  className={ classes.buttonHireSmall }
+                  href={ 'https://gitpay.me' }
+                  target={ '_blank' }
                 >
                   <FormattedMessage id='welcome.landing.services' defaultMessage='Join Gitpay' />
                 </Button>
@@ -388,7 +388,7 @@ function LandingPage (props) {
         </Grid>
       </Section>
       <Section>
-        <div ref={ref}>
+        <div ref={ ref }>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } justify>
               <ContactRecruiterFormContainer />
