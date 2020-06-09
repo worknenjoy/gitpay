@@ -7,7 +7,8 @@ import {
   AppBar,
   Toolbar,
   Grid,
-  Typography
+  Typography,
+  Link
 } from '@material-ui/core'
 import peopleImage from '../../images/landingPage_People.png'
 import logoGrey from '../../images/logo-complete-gray.png'
@@ -165,7 +166,7 @@ const styles = (theme) => ({
     width: '100vw',
     [theme.breakpoints.down('sm')]: {
       bottom: 0,
-    },
+    }
   },
   header: {
     fontSize: '2.5em',
@@ -175,7 +176,7 @@ const styles = (theme) => ({
     [theme.breakpoints.down('sm')]: {
       lineHeight: 1.5,
       fontSize: '1.3em',
-    },
+    }
   },
   paragraph: {
     fontSize: '1.2em',
@@ -185,7 +186,7 @@ const styles = (theme) => ({
       fontSize: '1em',
       margin: '0 auto',
       width: 270
-    },
+    }
   },
   margin: {
     marginTop: 60,
@@ -219,7 +220,9 @@ function LandingPage (props) {
               style={ { background: 'transparent', boxShadow: 'none' } }
             >
               <Toolbar>
-                <img src={ logoGrey } alt='logo' className={ classes.logoImage } />
+                <Link href="https://gitpay.me/#/recruitment">
+                  <img src={ logoGrey } alt='logo' className={ classes.logoImage } />
+                </Link>
                 <div className={ classes.grow } />
                 <Button 
                   className={ classes.buttonSignin }

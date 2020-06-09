@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -20,7 +20,10 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     justifyContent: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    }
   },
   card: {
     maxWidth: 400,
@@ -29,7 +32,7 @@ const useStyles = makeStyles({
   media: {
     height: 220,
   },
-})
+}))
 
 export default function TeamCard (props) {
   const { data } = props
