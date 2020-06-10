@@ -58,6 +58,10 @@ app.get('/octos', (req, res) => {
   })
 })
 
+app.get('/recruitment', (req, res) => {
+  res.redirect('https://gitpay.me/#/recruitment')
+})
+
 load.init(app)
 
 app.listen(app.get('port'), () => {
