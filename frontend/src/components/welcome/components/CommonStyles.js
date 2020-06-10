@@ -19,6 +19,11 @@ export const MainTitle = styled.div`
     margin-right: 18%;
   `}
 
+  ${props => props.center && `
+    margin-right: 5%;
+    width: 70%;
+  `}
+
   ${media.phone`
     width: 60%;
     margin: 20px auto;

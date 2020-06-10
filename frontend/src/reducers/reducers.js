@@ -10,6 +10,7 @@ import { info } from './infoReducer'
 import { preferences } from './preferencesReducer'
 import { roles } from './roleReducer'
 import { organizations } from './organizationsReducer'
+import { contact } from './contactReducer'
 
 const reducers = combineReducers({
   notification,
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   preferences,
   roles,
   organizations,
+  contact,
   intl: intlReducer
 })
 

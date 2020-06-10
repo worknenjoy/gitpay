@@ -24,6 +24,9 @@ import { addLocaleData } from 'react-intl'
 import messagesBr from '../translations/result/br.json'
 import messagesEn from '../translations/result/en.json'
 
+import messagesBrLocal from '../translations/br.json'
+import messagesEnLocal from '../translations/en.json'
+
 import localeEn from 'react-intl/locale-data/en'
 import localeBr from 'react-intl/locale-data/br'
 import Loader from '../components/loader/loader'
@@ -38,8 +41,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const messages = {
-  'br': messagesBr,
-  'en': messagesEn
+  'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
+  'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
 const composeEnhancers =
