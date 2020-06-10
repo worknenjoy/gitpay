@@ -95,7 +95,6 @@ export default function ContactRecruiterForm (props) {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    validate(event)
     if (Object.keys(formErrors).length === 0) {
       props.contactRecruiters(formData)
     }
