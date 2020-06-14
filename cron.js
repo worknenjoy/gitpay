@@ -96,7 +96,7 @@ const TaskCron = {
           $eq: 'open'
         }
       },
-      limit: 1,
+      limit: 5,
       order: [['id', 'DESC']],
       include: [ models.User, models.Label ]
     })

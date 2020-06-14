@@ -221,12 +221,11 @@ ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(langu
     let subjectData = []
     let templateData = []
 
-    allUsers.map((u, i) => {
+    allUsers.filter((u, i) => {
       const language = u.language || 'en'
       i18n.setLocale(language)
-      mailList.push(u.email)
-      subjectData.push(i18n.__('mail.taskweeklyAvailableTaskByUserPrefrence.interest.subject'))
-      const tasks = data.tasks.map(d => {
+      subjectData.push(i18n.__('mail.task.interest.subject'))
+      const tasks = data.tasks.filter(d => {
         // assign task labels array to labels variable
         const labels = d.Labels
         // create regex to check if any word matches the label
@@ -239,25 +238,27 @@ ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(langu
           const value = d.value > 0 ? ('$' + d.value) : i18n.__('mail.task.noValue')
           return { title, url, value, deadline }
         }
-        // eslint-disable-next-line no-console
-        return false
       })
-      templateData.push({
-        tasks,
-        content: {
-          title: i18n.__('mail.task.interest.title'),
-          provider_action: i18n.__('mail.task.latest.action'),
-          call_to_action: i18n.__('mail.task.latest.calltoaction'),
-          instructions: i18n.__('mail.task.instructions'),
-          docs: i18n.__('mail.task.docs.title'),
-          reason: i18n.__('mail.task.reason'),
-          subject: i18n.__('mail.task.interest.subject')
-        } })
+      if (tasks.length !== 0) {
+        mailList.push(u.email)
+        templateData.push({
+          tasks,
+          content: {
+            title: i18n.__('mail.task.interest.title'),
+            provider_action: i18n.__('mail.task.latest.action'),
+            call_to_action: i18n.__('mail.task.latest.calltoaction'),
+            instructions: i18n.__('mail.task.instructions'),
+            docs: i18n.__('mail.task.docs.title'),
+            reason: i18n.__('mail.task.reason'),
+            subject: i18n.__('mail.task.interest.subject')
+          } })
+      }
     })
     return withTemplate(
       mailList,
       subjectData,
       templateData,
+      'latest'
     )
   }
 }
