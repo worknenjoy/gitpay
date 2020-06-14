@@ -226,10 +226,14 @@ ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(langu
       i18n.setLocale(language)
       subjectData.push(i18n.__('mail.task.interest.subject'))
       const tasks = data.tasks.filter(d => {
-        // assign task labels array to labels variable
+        // assign task labels array [{name: "value"}] to labels variable
         const labels = d.Labels
+        // convert  [{name: "value"},{name: "value"}] to ["value","value"]
+        const labelNames = labels.map(function (label) {
+          return label['name']
+        })
         // create regex to check if any word matches the label
-        const regexp = new RegExp(`\\b(${labels.join('|')})\\b`, 'gi')
+        const regexp = new RegExp(`\\b(${labelNames.join('|')})\\b`, 'gi')
         // boolean test if any of user skills match any of the task labels condition
         if (regexp.test(u.skills)) {
           const url = constants.taskUrl(d.id)
