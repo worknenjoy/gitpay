@@ -9,6 +9,7 @@ import { order } from './orderReducer'
 import { info } from './infoReducer'
 import { preferences } from './preferencesReducer'
 import { organizations } from './organizationsReducer'
+import { contact } from './contactReducer'
 
 const reducers = combineReducers({
   notification,
@@ -22,6 +23,7 @@ const reducers = combineReducers({
   info,
   preferences,
   organizations,
+  contact,
   intl: intlReducer
 })
 

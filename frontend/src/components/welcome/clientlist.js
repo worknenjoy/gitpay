@@ -69,7 +69,7 @@ class Clientlist extends Component {
         <Grid container spacing={ 50 } alignItems='center' justify='center'>
           { clients.map(client => (
             <Grid item key={ client.title } xs={ 12 } sm={ 6 } md={ 4 } lg={ 3 } xl={ 2 }>
-              <Card style={ { boxShadow: 'none' } }>
+              <Card style={ { boxShadow: 'none', backgroundColor: 'transparent' } }>
                 <a href={ client.link }><ResponsiveImage src={ client.img } /></a>
               </Card>
             </Grid>
