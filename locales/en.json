@@ -121,6 +121,8 @@
   "mail.webhook.github.issue.new.subject": "A new task from your issue was added on Gitpay: {{title}}",
   "mail.webhook.github.issue.new.message": "<p>Your issue <a href=\"{{issue}}\">{{issue}}</a> from your repo <a href=\"{{repo}}\">{{repo}}</a> was added on Gitpay and now you can add a bounty and assign developers interested in solving your tasks.</p><p>Here is the URL: <a href=\"{{task}}\">{{task}}</a> </p>",
   "mail.task.me.subject": "You created a new task on Gitpay",
+  "mail.task.digest.subject":"We have open weekly digest issues for you on Gitpay",
+  "mail.task.digest.title": "There's open weekly digest issues that needs to be solved on Gitpay. You can show your interest, make an offer or contribute to improve your experience and try new challenges",
   "mail.task.payment.subject": "A bounty of $ {{value}} for the task: {{title}} was added on Gitpay",
   "mail.task.payment.title": "A payment of $ {{value}} with credit card was added to the task",
   "mail.task.bounties.subject": "We have issues with bounties on Gitpay",

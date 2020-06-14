@@ -85,9 +85,38 @@ const TaskCron = {
       })
     }
     return tasks
+  },
+  weeklyDigest: async () => {
+    const tasks = await models.Task.findAll({
+      where: {
+        assigned: {
+          $eq: null
+        },
+        status: {
+          $eq: 'open'
+        }
+      },
+      limit: 5,
+      order: [['id', 'DESC']],
+      include: [{
+        model: models.Label,
+        as: 'Label',
+        where: {
+          'Label.name': 'Weekly digest'
+        },
+        through: {
+          attributes: []
+        }
+      }]
+    })
+    // eslint-disable-next-line no-console
+    console.log('tasks from cron job to email weekly Digest tasks by label ', tasks)
+    if (tasks[0]) {
+      TaskMail.weeklyDigest({ tasks })
+    }
+    return tasks
   }
 }
-
 const OrderCron = {
   verify: async () => {
     const orders = await models.Order.findAll({ where: {
@@ -163,4 +192,13 @@ const weeklyJobLatest = new CronJob({
   }
 })
 
-module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron }
+const weeklyDigest = new CronJob({
+  cronTime: '0 0 * * 5',
+  onTick: () => {
+    const d = new Date()
+    // eslint-disable-next-line no-console
+    console.log('Log to confirm weeklyDigest cron job run at', d)
+    TaskCron.weeklyDigest()
+  }
+})
+module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron, weeklyDigest }

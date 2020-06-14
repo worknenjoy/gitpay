@@ -34,6 +34,7 @@ const TaskMail = {
   weeklyBounties: (data) => Promise.resolve({}),
   weeklyLatest: () => Promise.resolve({}),
   notifyPayment: () => Promise.resolve({}),
+  weeklyDigest: (data) => Promise.resolve({}),
   messageAuthor: (user, task, message) => Promise.resolve({})
 }
 
@@ -211,6 +212,42 @@ if (constants.canSendEmail) {
 ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(language)}</p>`
         }],
       senderEmail
+    )
+  }
+  TaskMail.weeklyDigest = async (data) => {
+    const allUsers = await models.User.findAll()
+    let mailList = []
+    let subjectData = []
+    let templateData = []
+    allUsers.map((u, i) => {
+      const language = u.language || 'en'
+      i18n.setLocale(language)
+      mailList.push(u.email)
+      subjectData.push(i18n.__('mail.task.digest.subject'))
+      const tasks = data.tasks.map(d => {
+        const url = constants.taskUrl(d.id)
+        const deadline = d.deadline ? `${moment(d.deadline).format('DD/MM/YYYY')} (${moment(d.deadline).fromNow()})` : d.deadline
+        const title = d.title
+        const value = d.value > 0 ? ('$' + d.value) : i18n.__('mail.task.noValue')
+        return { title, url, value, deadline }
+      })
+      templateData.push({
+        tasks,
+        content: {
+          title: i18n.__('mail.task.digest.title'),
+          provider_action: i18n.__('mail.task.latest.action'),
+          call_to_action: i18n.__('mail.task.latest.calltoaction'),
+          instructions: i18n.__('mail.task.instructions'),
+          docs: i18n.__('mail.task.docs.title'),
+          reason: i18n.__('mail.task.reason'),
+          subject: i18n.__('mail.task.digest.subject')
+        } })
+    })
+    return withTemplate(
+      mailList,
+      subjectData,
+      templateData,
+      'latest'
     )
   }
 }
