@@ -243,7 +243,7 @@ ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(langu
           return { title, url, value, deadline }
         }
       })
-      if (tasks.length !== 0) {
+      if (tasks.length > 0) {
         mailList.push(u.email)
         templateData.push({
           tasks,
