@@ -228,7 +228,7 @@ ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(langu
       const tasks = data.tasks.filter(d => {
         // assign task labels array [{name: "value"}] to labels variable
         const labels = d.Labels
-        // convert  [{name: "value"},{name: "value"}] to ["value","value"]
+        // convert  [{name: "value1"},{name: "value2"}] to ["value1","value2"]
         const labelNames = labels.map(function (label) {
           return label['name']
         })

@@ -34,11 +34,10 @@ i18n.configure({
 })
 
 app.use(i18n.init)
-
 dailyJob.start()
+weeklyJobPreference.start()
 weeklyJob.start()
 weeklyJobLatest.start()
-weeklyJobPreference.start()
 
 app.use(passport.initialize())
 app.use(passport.session())
