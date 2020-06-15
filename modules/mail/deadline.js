@@ -29,7 +29,7 @@ const DeadlineMail = {
 
 if (constants.canSendEmail) {
   DeadlineMail.update = (user, task, name) => {
-    const to = user.email
+    const to = user
     const language = user.language || 'en'
     i18n.setLocale(language)
     request(
