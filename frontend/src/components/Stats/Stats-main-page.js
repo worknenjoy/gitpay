@@ -15,10 +15,10 @@ const Wrapper = styled.div`
   justify-content: space-around;
   flex-direction: row;
   margin-top: 1em;
-  ${media.phone`
+  ${ media.phone`
     display: flex;
     flex-direction: column;
-  `}
+  ` }
 `
 
 const ChartWrapper = styled.div`
@@ -27,9 +27,9 @@ const ChartWrapper = styled.div`
   justify-content: space-around;
   flex-direction: row;
   margin-top: 7em;
-  ${media.phone`
+  ${ media.phone`
     width: 400px;
-  `}
+  ` }
 `
 
 class Stats extends Component {
@@ -44,7 +44,7 @@ class Stats extends Component {
             </Wrapper>
             <InformationCard />
             <ChartWrapper>
-              <Barchart style={{width: '400px'}} />
+              <Barchart style={ { width: '400px' } } />
             </ChartWrapper>
           </React.Fragment>
         )
