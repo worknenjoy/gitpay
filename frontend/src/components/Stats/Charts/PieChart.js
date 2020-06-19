@@ -8,7 +8,6 @@ const data = [
   { name: 'Bugs', value: 30 },
 ]
 
-
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180
   const {
