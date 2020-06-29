@@ -41,10 +41,10 @@ const recruiterTeam = [
     linkedinUrl: 'https://www.linkedin.com/in/kevinwrites/'
   },
   {
-    name: 'Hollie Bayliss',
-    description: 'Founder of Neural Networking, a search firm working with forward thinking companies who want to stay ahead on the AI adoption curve.',
-    image: require('../../images/teams/headhunter-team-member1.png'),
-    linkedinUrl: 'https://www.linkedin.com/in/holliebayliss/'
+    name: 'Alexandre Magno',
+    description: 'Founder of Gitpay, and senior software engineer, sharing and helping developers to face the challenges of technical recruitment.',
+    image: require('../../images/teams/88840.jpeg'),
+    linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/'
   }
 ]
 
