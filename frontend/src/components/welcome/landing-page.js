@@ -43,7 +43,7 @@ const recruiterTeam = [
   {
     name: 'Alexandre Magno',
     description: 'Founder of Gitpay, and senior software engineer, sharing and helping developers to face the challenges of technical recruitment.',
-    image: require('../../images/teams/88840.jpeg'),
+    image: require('../../images/teams/headhunter-team-member2.png'),
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/'
   }
 ]
