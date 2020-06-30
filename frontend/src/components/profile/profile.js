@@ -113,7 +113,77 @@ const styles = theme => ({
     marginTop: 12,
     marginBottom: 12,
     width: '100%'
-  }
+  },
+  paper: {
+    padding: '10px 0 30px 0',
+    backgroundColor: '#0b0d21',
+  },
+  profile: {
+    '& .profile-image': {
+      width: 175,
+      height: 175,
+      objectFit: 'cover',
+      maxWitdh: '100%',
+      borderRadius: '50%',
+      marginBottom: 8,
+      border: '4px solid white',
+    },
+    '& .name': {
+      textAlign: 'center',
+      color: '#eee',
+      fontSize: '1.2rem',
+    },
+    '& .website': {
+      textAlign: 'center',
+      color: '#515bc4',
+      fontSize: '0.8rem',
+    },
+    '& .details': {
+      textAlign: 'center',
+      marginTop: 10,
+      padding: '12px 0 5px 0',
+      backgroundColor: 'rgba(47, 168, 233, 1)',
+      color: 'rgba(255, 255, 255, 0.7)',
+    },
+    '& .details-mid': {
+      textAlign: 'center',
+      marginTop: 10,
+      padding: '12px 0 5px 0',
+      backgroundColor: 'rgba(21, 139, 203, 1)',
+      color: 'rgba(255, 255, 255, 0.7)',
+    },
+    '& .num': {
+      color: '#eee',
+      fontSize: '1.5rem',
+    },
+    '& .buttons': {
+      background: 'transparent',
+      width: '220px',
+      height: '50px',
+      textTransform: 'none',
+      marginTop: '25px',
+      borderRadius: 0,
+      justifyContent: 'center',
+      border: '2px solid white',
+      color: 'white',
+    },
+    '& .buttons-disabled': {
+      background: 'transparent',
+      width: '220px',
+      height: '50px',
+      textTransform: 'none',
+      marginTop: '25px',
+      borderRadius: 0,
+      justifyContent: 'center',
+      border: '2px solid #999',
+      color: '#999',
+    },
+    '& .icon': {
+      height: '25px',
+      width: '25px',
+      marginLeft: 15,
+    },
+  },
 })
 
 class Profile extends Component {
@@ -258,74 +328,139 @@ class Profile extends Component {
             </Grid>
             <Grid item xs={ 12 } md={ 3 }>
               <div className={ classes.bigRow }>
-                <div className={ classes.row }>
-                  { user.picture_url ? (
-                    <Avatar
-                      alt={ user.username }
-                      src={ user.picture_url }
-                      className={ classNames(classes.avatar, classes.bigAvatar) }
-                    />
-                  ) : (
-                    <Avatar
-                      alt={ user.username }
-                      src=''
-                      className={ classNames(classes.avatar, classes.bigAvatar) }
-                    >
-                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <Person />) }
-                    </Avatar>
-                  ) }
-                </div>
-                <div className={ classes.rowList }>
-                  <div className={ classes.rowContent }>
-                    <Button
-                      disabled={ user.provider === 'github' }
-                      href={ `${api.API_URL}/authorize/github` }
-                      variant='contained'
-                      size='small'
-                      color='secondary'
-                      className={ classes.altButton }
-                    >
-                      <img width='16' src={ logoGithub } className={ classes.icon } />{ ' ' }
-                      Github
-                    </Button>
-                    <Button
-                      disabled={ user.provider === 'bitbucket' }
-                      href={ `${api.API_URL}/authorize/bitbucket` }
-                      variant='contained'
-                      size='small'
-                      color='secondary'
-                      className={ classes.altButton }
-                    >
-                      <img
-                        width='16'
-                        src={ logoBitbucket }
-                        className={ classes.icon }
-                      />{ ' ' }
-                      Bitbucket
-                    </Button>
-                  </div>
-                </div>
-                <div className={ classes.rowList }>
-                  <div className={ classes.infoItem }>
-                    <Typography>{ user.name }</Typography>
-                  </div>
-                  <div className={ classes.infoItem }>
-                    <Typography>
-                      <a href={ user.website }>{ user.website }</a>
-                    </Typography>
-                  </div>
-                  { user.repos && (
+                <Paper className={ classes.paper }>
+                  <div className={ classes.profile }>
+                    <div className={ classes.row }>
+                      { !user.picture_url ? (
+                        <Avatar
+                          alt={ user.username }
+                          src={user.picture_url}
+                          className={ classNames(
+                            classes.avatar,
+                            classes.bigAvatar,
+                            'profile-image'
+                          ) }
+                        />
+                      ) : (
+                        <Avatar
+                          alt={ user.username }
+                          src=''
+                          className={ classNames(
+                            classes.avatar,
+                            classes.bigAvatar,
+                            'profile-image'
+                          ) }
+                        >
+                          { user.name ? (
+                            nameInitials(user.name)
+                          ) : user.username ? (
+                            nameInitials(user.username)
+                          ) : (
+                            <Person />
+                          ) }
+                        </Avatar>
+                      ) }
+                    </div>
                     <div className={ classes.infoItem }>
-                      <Typography>
-                        <h4>
-                          <DeviceHub />
-                          <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
-                        </h4>
-                        <p>{ user.repos }</p>
+                      <Typography className='name'>
+                        {user.name}
                       </Typography>
                     </div>
-                  ) }
-                </div>
+                    <div className={ classes.infoItem }>
+                      <Typography className='website'>
+                        <a href={user.website} target='__blank'>
+                          { user.website.replace(/^https?:\/\//, '')  }
+                        </a>
+                      </Typography>
+                    </div>
+                    <div className={ classes.rowList }>
+                      <Grid
+                        container
+                        direction='row'
+                        justify='center'
+                        alignItems='center'
+                      >
+                        <Grid item xs={ 4 }>
+                          { !user.repos && (
+                            <div className={ classes.infoItem }>
+                              <Typography className='details'>
+                                <span className='num'>{user.tasks}</span>
+                                <br />
+                                tasks
+                              </Typography>
+                            </div>
+                          ) }
+                        </Grid>
+                        <Grid item xs={ 4 }>
+                          { !user.repos && (
+                            <div className={ classes.infoItem }>
+                              <Typography className='details-mid'>
+                                <span className='num'>${user.bounties}</span>
+                                <br />
+                                bounties
+                              </Typography>
+                            </div>
+                          ) }
+                        </Grid>
+                        <Grid item xs={ 4 }>
+                          { !user.repos && (
+                            <div className={ classes.infoItem }>
+                              <Typography className='details'>
+                                <span className='num'>{user.repos}</span>
+                                <br />
+                                repositories
+                              </Typography>
+                            </div>
+                          ) }
+                        </Grid>
+                      </Grid>
+                    </div>
+                    <Grid
+                      container
+                      direction='column'
+                      justify='center'
+                      alignItems='center'
+                      className={ classes.rowList }
+                    >
+                      <Grid item className={ classNames(classes.rowContent) }>
+                        <Button
+                          disabled={ user.provider === 'github' }
+                          href={ `${api.API_URL}/authorize/github` }
+                          variant='outlined'
+                          size='medium'
+                          className={
+                            user.provider === 'github'
+                              ? 'buttons-disabled'
+                              : 'buttons'
+                          }
+                        >
+                          Connect to Github
+                          <img width='16' src={ logoGithub } className='icon' />
+                        </Button>
+                      </Grid>
+                      <Grid item className={ classNames(classes.rowContent) }>
+                        <Button
+                          disabled={ user.provider === 'bitbucket' }
+                          href={ `${api.API_URL}/authorize/bitbucket` }
+                          variant='contained'
+                          size='medium'
+                          className={
+                            user.provider === 'bitbucket'
+                              ? 'buttons-disabled'
+                              : 'buttons'
+                          }
+                        >
+                          Connect to Bitbucket
+                          <img
+                            width='16'
+                            src={ logoBitbucket }
+                            className='icon'
+                          />
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                </Paper>
                 <div className={ classes.row }>
                   <Paper className={ classes.menuContainer }>
                     <MenuList>
