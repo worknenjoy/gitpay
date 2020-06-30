@@ -18,7 +18,7 @@ import {
   AppBar,
 } from '@material-ui/core'
 import {
-  DeviceHub,
+  // DeviceHub,
   LibraryBooks,
   CreditCard,
   Tune,
@@ -187,7 +187,7 @@ const styles = (theme) => ({
 })
 
 class Profile extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       selected: null,
@@ -195,17 +195,17 @@ class Profile extends Component {
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.setActive(this.props.location.pathname)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.fetchOrganizations().then((org) => {
       this.setState({ orgsLoaded: true })
     })
   }
 
-  setActive(path) {
+  setActive (path) {
     switch (path) {
       case '/profile/tasks':
         this.setState({ selected: 0 })
@@ -225,7 +225,7 @@ class Profile extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.setActive(nextProps.location.pathname)
     }
@@ -270,7 +270,7 @@ class Profile extends Component {
     window.history.back()
   }
 
-  render() {
+  render () {
     const { classes, user, preferences, organizations } = this.props
 
     let titleNavigation = this.getTitleNavigation()
@@ -280,17 +280,17 @@ class Profile extends Component {
         <TopBarContainer />
         <AppBar
           component='div'
-          classes={{ colorPrimary: classes.secondaryBar }}
+          classes={ { colorPrimary: classes.secondaryBar } }
           color='primary'
           position='static'
-          elevation={0}
+          elevation={ 0 }
         >
           <Toolbar>
-            <Grid container alignItems='center' spacing={1}>
+            <Grid container alignItems='center' spacing={ 1 }>
               <Grid item xs>
                 <Typography color='primary' variant='h6'>
                   <Button
-                    onClick={this.handleBackToTaskList}
+                    onClick={ this.handleBackToTaskList }
                     variant='text'
                     size='small'
                     aria-label='Back'
@@ -298,58 +298,58 @@ class Profile extends Component {
                   >
                     <ArrowBack />
                   </Button>
-                  <span style={{ marginLeft: 10 }}>{titleNavigation}</span>
+                  <span style={ { marginLeft: 10 } }>{ titleNavigation }</span>
                 </Typography>
               </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
-        {this.state.selected === 2 && <PreferencesBar classes={classes} />}
+        { this.state.selected === 2 && <PreferencesBar classes={ classes } /> }
         <PageContent>
-          <Grid container className={classes.root} spacing={3}>
-            <Grid item xs={12} md={9}>
+          <Grid container className={ classes.root } spacing={ 3 }>
+            <Grid item xs={ 12 } md={ 9 }>
               <HashRouter>
                 <Switch>
-                  <Route exact path='/profile' component={ProfileOptions} />
+                  <Route exact path='/profile' component={ ProfileOptions } />
                   <Route
                     exact
                     path='/profile/tasks'
-                    component={() => <TaskListContainer />}
+                    component={ () => <TaskListContainer /> }
                   />
                   <Route
                     exact
                     path='/profile/payment-options'
-                    component={() => <PaymentOptions user={user} />}
+                    component={ () => <PaymentOptions user={ user } /> }
                   />
                   <Route
                     exact
                     path='/profile/preferences'
-                    component={() => (
+                    component={ () => (
                       <Preferences
-                        user={user}
-                        preferences={preferences}
-                        classes={classes}
-                        updateUser={this.props.updateUser}
-                        fetchPreferences={this.props.fetchPreferences}
+                        user={ user }
+                        preferences={ preferences }
+                        classes={ classes }
+                        updateUser={ this.props.updateUser }
+                        fetchPreferences={ this.props.fetchPreferences }
                       />
-                    )}
+                    ) }
                   />
                   <Route
                     exact
                     path='/profile/settings'
-                    component={() => (
+                    component={ () => (
                       <SettingsComponent
-                        deleteUser={this.props.deleteUser}
-                        classes={classes}
-                        user={this.props.user}
+                        deleteUser={ this.props.deleteUser }
+                        classes={ classes }
+                        user={ this.props.user }
                       />
-                    )}
+                    ) }
                   />
                 </Switch>
               </HashRouter>
-              {this.state.orgsLoaded && organizations && (
-                <Grid item xs={12} md={12}>
-                  <div style={{ marginTop: 10, marginBottom: 10 }}>
+              { this.state.orgsLoaded && organizations && (
+                <Grid item xs={ 12 } md={ 12 }>
+                  <div style={ { marginTop: 10, marginBottom: 10 } }>
                     <Typography variant='h5' component='h3'>
                       <FormattedMessage
                         id='account.profile.org.headline'
@@ -362,108 +362,108 @@ class Profile extends Component {
                         defaultMessage='Here is your organizations that you can import to Gitpay'
                       />
                     </Typography>
-                    <div style={{ marginTop: 20, marginBottom: 40 }}>
+                    <div style={ { marginTop: 20, marginBottom: 40 } }>
                       <Organizations
-                        user={user}
-                        data={organizations}
-                        onImport={this.props.createOrganizations}
+                        user={ user }
+                        data={ organizations }
+                        onImport={ this.props.createOrganizations }
                       />
                     </div>
                   </div>
                 </Grid>
-              )}
+              ) }
             </Grid>
-            <Grid item xs={12} md={3}>
-              <div className={classes.bigRow}>
-                <Paper className={classes.paper}>
-                  <div className={classes.profile}>
-                    <div className={classes.row}>
-                      {user.picture_url ? (
+            <Grid item xs={ 12 } md={ 3 }>
+              <div className={ classes.bigRow }>
+                <Paper className={ classes.paper }>
+                  <div className={ classes.profile }>
+                    <div className={ classes.row }>
+                      { user.picture_url ? (
                         <Avatar
-                          alt={user.username}
-                          src={user.picture_url}
-                          className={classNames(
+                          alt={ user.username }
+                          src={ user.picture_url }
+                          className={ classNames(
                             classes.avatar,
                             classes.bigAvatar,
                             'profile-image'
-                          )}
+                          ) }
                         />
                       ) : (
-                          <Avatar
-                            alt={user.username}
-                            src=''
-                            className={classNames(
-                              classes.avatar,
-                              classes.bigAvatar,
-                              'profile-image'
-                            )}
-                          >
-                            {user.name ? (
-                              nameInitials(user.name)
-                            ) : user.username ? (
-                              nameInitials(user.username)
-                            ) : (
-                                  <Person />
-                                )}
-                          </Avatar>
-                        )}
+                        <Avatar
+                          alt={ user.username }
+                          src=''
+                          className={ classNames(
+                            classes.avatar,
+                            classes.bigAvatar,
+                            'profile-image'
+                          ) }
+                        >
+                          { user.name ? (
+                            nameInitials(user.name)
+                          ) : user.username ? (
+                            nameInitials(user.username)
+                          ) : (
+                            <Person />
+                          ) }
+                        </Avatar>
+                      ) }
                     </div>
-                    <div className={classes.infoItem}>
-                      <Typography className='name'>{user.name}</Typography>
+                    <div className={ classes.infoItem }>
+                      <Typography className='name'>{ user.name }</Typography>
                     </div>
-                    <div className={classes.infoItem}>
+                    <div className={ classes.infoItem }>
                       <Typography className='website'>
-                        <a href={user.website} target='__blank'>
-                          {user.website &&
-                            user.website.replace(/^https?:\/\//, '')}
+                        <a href={ user.website } target='__blank'>
+                          { user.website &&
+                            user.website.replace(/^https?:\/\//, '') }
                         </a>
                       </Typography>
                     </div>
-                    <div className={classes.rowList}>
+                    <div className={ classes.rowList }>
                       <Grid
                         container
                         direction='row'
                         justify='center'
                         alignItems='center'
                       >
-                        <Grid item xs={4}>
-                          {user && (
-                            <div className={classes.infoItem}>
+                        <Grid item xs={ 4 }>
+                          { user && (
+                            <div className={ classes.infoItem }>
                               <Typography className='details'>
                                 <span className='num'>
-                                  {user.tasks ? user.tasks : 0}
+                                  { user.tasks ? user.tasks : 0 }
                                 </span>
                                 <br />
                                 tasks
                               </Typography>
                             </div>
-                          )}
+                          ) }
                         </Grid>
-                        <Grid item xs={4}>
-                          {user && (
-                            <div className={classes.infoItem}>
+                        <Grid item xs={ 4 }>
+                          { user && (
+                            <div className={ classes.infoItem }>
                               <Typography className='details-mid'>
                                 <span className='num'>
-                                  ${user.bounties ? user.bounties : 0}
+                                  ${ user.bounties ? user.bounties : 0 }
                                 </span>
                                 <br />
                                 bounties
                               </Typography>
                             </div>
-                          )}
+                          ) }
                         </Grid>
-                        <Grid item xs={4}>
-                          {user && (
-                            <div className={classes.infoItem}>
+                        <Grid item xs={ 4 }>
+                          { user && (
+                            <div className={ classes.infoItem }>
                               <Typography className='details'>
                                 <span className='num'>
-                                  {user.repos ? user.repos : 0}
+                                  { user.repos ? user.repos : 0 }
                                 </span>
                                 <br />
                                 repositories
                               </Typography>
                             </div>
-                          )}
+                          ) }
                         </Grid>
                       </Grid>
                     </div>
@@ -472,12 +472,12 @@ class Profile extends Component {
                       direction='column'
                       justify='center'
                       alignItems='center'
-                      className={classes.rowList}
+                      className={ classes.rowList }
                     >
-                      <Grid item className={classNames(classes.rowContent)}>
+                      <Grid item className={ classNames(classes.rowContent) }>
                         <Button
-                          disabled={user.provider === 'github'}
-                          href={`${api.API_URL}/authorize/github`}
+                          disabled={ user.provider === 'github' }
+                          href={ `${api.API_URL}/authorize/github` }
                           variant='outlined'
                           size='medium'
                           className={
@@ -487,13 +487,13 @@ class Profile extends Component {
                           }
                         >
                           Connect to Github
-                          <img width='16' src={logoGithub} className='icon' />
+                          <img width='16' src={ logoGithub } className='icon' />
                         </Button>
                       </Grid>
-                      <Grid item className={classNames(classes.rowContent)}>
+                      <Grid item className={ classNames(classes.rowContent) }>
                         <Button
-                          disabled={user.provider === 'bitbucket'}
-                          href={`${api.API_URL}/authorize/bitbucket`}
+                          disabled={ user.provider === 'bitbucket' }
+                          href={ `${api.API_URL}/authorize/bitbucket` }
                           variant='contained'
                           size='medium'
                           className={
@@ -505,7 +505,7 @@ class Profile extends Component {
                           Connect to Bitbucket
                           <img
                             width='16'
-                            src={logoBitbucket}
+                            src={ logoBitbucket }
                             className='icon'
                           />
                         </Button>
@@ -513,21 +513,21 @@ class Profile extends Component {
                     </Grid>
                   </div>
                 </Paper>
-                <div className={classes.row}>
-                  <Paper className={classes.menuContainer}>
+                <div className={ classes.row }>
+                  <Paper className={ classes.menuContainer }>
                     <MenuList>
                       <MenuItem
-                        onClick={() =>
+                        onClick={ () =>
                           this.props.history.push('/profile/tasks')
                         }
-                        className={classes.menuItem}
-                        selected={this.state.selected === 0}
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 0 }
                       >
-                        <ListItemIcon className={classes.icon}>
+                        <ListItemIcon className={ classes.icon }>
                           <LibraryBooks />
                         </ListItemIcon>
                         <ListItemText
-                          classes={{ primary: classes.primary }}
+                          classes={ { primary: classes.primary } }
                           primary={
                             <span>
                               <FormattedMessage
@@ -539,17 +539,17 @@ class Profile extends Component {
                         />
                       </MenuItem>
                       <MenuItem
-                        onClick={() =>
+                        onClick={ () =>
                           this.props.history.push('/profile/payment-options')
                         }
-                        className={classes.menuItem}
-                        selected={this.state.selected === 1}
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 1 }
                       >
-                        <ListItemIcon className={classes.icon}>
+                        <ListItemIcon className={ classes.icon }>
                           <CreditCard />
                         </ListItemIcon>
                         <ListItemText
-                          classes={{ primary: classes.primary }}
+                          classes={ { primary: classes.primary } }
                           primary={
                             <span>
                               <FormattedMessage
@@ -561,17 +561,17 @@ class Profile extends Component {
                         />
                       </MenuItem>
                       <MenuItem
-                        onClick={() =>
+                        onClick={ () =>
                           this.props.history.push('/profile/preferences')
                         }
-                        className={classes.menuItem}
-                        selected={this.state.selected === 2}
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 2 }
                       >
-                        <ListItemIcon className={classes.icon}>
+                        <ListItemIcon className={ classes.icon }>
                           <Tune />
                         </ListItemIcon>
                         <ListItemText
-                          classes={{ primary: classes.primary }}
+                          classes={ { primary: classes.primary } }
                           primary={
                             <span>
                               <FormattedMessage
@@ -583,17 +583,17 @@ class Profile extends Component {
                         />
                       </MenuItem>
                       <MenuItem
-                        onClick={() =>
+                        onClick={ () =>
                           this.props.history.push('/profile/settings')
                         }
-                        className={classes.menuItem}
-                        selected={this.state.selected === 3}
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 3 }
                       >
-                        <ListItemIcon className={classes.icon}>
+                        <ListItemIcon className={ classes.icon }>
                           <Settings />
                         </ListItemIcon>
                         <ListItemText
-                          classes={{ primary: classes.primary }}
+                          classes={ { primary: classes.primary } }
                           primary={
                             <span>
                               <FormattedMessage
@@ -611,7 +611,7 @@ class Profile extends Component {
             </Grid>
           </Grid>
         </PageContent>
-        <Bottom classes={classes} />
+        <Bottom classes={ classes } />
       </Page>
     )
   }
