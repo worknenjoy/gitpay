@@ -26,7 +26,10 @@ const fetchPreferences = () => {
       dispatch(fetchPreferencesRequested())
       return axios
         .get(`${api.API_URL}/user/preferences`)
+        // .get(`${api.API_URL}/roles/fetch`)
         .then(response => {
+          // eslint-disable-next-line no-console
+          // console.log(response.data)
           return dispatch(fetchPreferencesSuccess(response.data))
         })
         .catch(error => {

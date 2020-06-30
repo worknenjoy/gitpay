@@ -38,7 +38,8 @@ import ProfileOptions from './profile-options'
 import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
-import Organizations from './organizations'
+import Roles from './roles'
+// import Organizations from './organizations'
 import SettingsComponent from './settings'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
@@ -50,7 +51,8 @@ const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    flexFlow: 'row-reverse wrap'
   },
   altButton: {
     marginRight: 10
@@ -119,6 +121,7 @@ const styles = theme => ({
 class Profile extends Component {
   constructor (props) {
     super(props)
+    // console.dir(props)
     this.state = {
       selected: null,
       orgsLoaded: false
@@ -149,6 +152,9 @@ class Profile extends Component {
       case '/profile/settings':
         this.setState({ selected: 3 })
         break
+      case '/profile/roles':
+        this.setState({ selected: 4 })
+        break
       default:
         this.setState({ selected: null })
         break
@@ -171,6 +177,8 @@ class Profile extends Component {
         return (<FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />)
       case 3:
         return (<FormattedMessage id='account.profile.settings' defaultMessage='Settings' />)
+      case 4:
+        return (<FormattedMessage id='account.profile.roles' defaultMessage='Roles' />)
       default:
         return null
     }
@@ -181,7 +189,8 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, preferences, organizations } = this.props
+    // const { classes, user, preferences, roles, organizations } = this.props
+    const { classes, user, preferences, roles, } = this.props
 
     let titleNavigation = this.getTitleNavigation()
 
@@ -235,12 +244,18 @@ class Profile extends Component {
                   />
                   <Route
                     exact
+                    path='/profile/roles'
+                    component={ () => <Roles user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } /> }
+                  />
+                  <Route
+                    exact
                     path='/profile/settings'
                     component={ () => <SettingsComponent deleteUser={ this.props.deleteUser } classes={ classes } user={ this.props.user } /> }
                   />
                 </Switch>
               </HashRouter>
-              { this.state.orgsLoaded && organizations &&
+              { /* Uncomment the below section to enable the 'Your Organizations section' */ }
+              { /* { this.state.orgsLoaded && organizations &&
                 <Grid item xs={ 12 } md={ 12 }>
                   <div style={ { marginTop: 10, marginBottom: 10 } }>
                     <Typography variant='h5' component='h3'>
@@ -254,7 +269,7 @@ class Profile extends Component {
                     </div>
                   </div>
                 </Grid>
-              }
+              } */ }
             </Grid>
             <Grid item xs={ 12 } md={ 3 }>
               <div className={ classes.bigRow }>
@@ -414,7 +429,8 @@ Profile.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object,
   user: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  roles: PropTypes.object
 }
 
 export default injectIntl(withStyles(styles)(Profile))
