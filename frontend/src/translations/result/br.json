@@ -512,6 +512,8 @@
   "actions.order.create.payment.error": "Não foi possível criar o pagamento para esta tarefa",
   "actions.order.create.payment.send.success": "Pagamento realizado com sucesso",
   "actions.order.create.payment.send.error": "Não foi possível realizar o pagamento",
+  "actions.order.transfer.success": "The order was transfered successfully",
+  "actions.order.transfer.error": "We could not make this transfer, try again later",
   "actions.assign.task.sucess": "Tarefa atualizada com sucesso!",
   "actions.assign.task.error": "Não foi possível atualizar tarefa",
   "actions.message.task.sucess": "Sua mensagem foi enviada com sucesso",
