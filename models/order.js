@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     token: DataTypes.STRING,
     authorization_id: DataTypes.STRING,
     transfer_id: DataTypes.STRING,
+    transfer_group: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       defaultValue: 'open'

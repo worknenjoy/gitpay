@@ -6,6 +6,7 @@ const orderFetch = require('./orderFetch')
 const orderPayment = require('./orderPayment')
 const orderCancel = require('./orderCancel')
 const orderDetails = require('./orderDetails')
+const orderTransfer = require('./orderTransfer')
 
 module.exports = {
   orderExists,
@@ -15,5 +16,6 @@ module.exports = {
   orderFetch,
   orderPayment,
   orderCancel,
-  orderDetails
+  orderDetails,
+  orderTransfer
 }
