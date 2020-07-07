@@ -32,13 +32,15 @@ import {
   AttachMoney as OffersIcon,
   History as HistoryIcon,
   Cancel as CancelIcon,
-  Info as InfoIcon
+  Info as InfoIcon,
+  SwapHoriz as TransferIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
 
 import TaskPaymentCancel from './task-payment-cancel'
 import TaskOrderDetails from './order/task-order-details'
+import TaskOrderTransfer from './order/task-order-transfer'
 
 const logoGithub = require('../../images/github-logo.png')
 
@@ -69,6 +71,7 @@ class TaskTabs extends React.Component {
     this.state = {
       cancelPaypalConfirmDialog: false,
       orderDetailsDialog: false,
+      transferDialogOpen: false,
       currentOrderId: null
     }
   }
@@ -102,8 +105,23 @@ class TaskTabs extends React.Component {
     this.setState({ orderDetailsDialog: true, currentOrderId: id })
   }
 
+  openTransferDialog = async (e, item) => {
+    await this.props.listTasks()
+    await this.props.filterTasks('userId')
+    this.setState({ transferDialogOpen: true })
+  }
+
+  closeTransferDialog = (e, item) => {
+    // await this.props.getOrderDetails(item.id)
+    this.setState({ transferDialogOpen: false })
+  }
+
   closeOrderDetailsDialog = () => {
     this.setState({ orderDetailsDialog: false })
+  }
+
+  getTasksFromUser = (key, value) => {
+    return this.props.listTasks()
   }
 
   render () {
@@ -243,13 +261,39 @@ class TaskTabs extends React.Component {
       return items
     }
 
-    const retryOrCancel = (item, userId) => {
+    const retryOrCancelButton = (item, userId) => {
       if (item.User && item.provider === 'paypal' && userId === item.User.id) {
         if ((item.status === 'fail' || item.status === 'open') && item.payment_url) {
           return retryPaypalPaymentButton(item.payment_url)
         }
         else if (item.status === 'succeeded') {
           return cancelPaypalPaymentButton(item.id)
+        }
+        else {
+          return ''
+        }
+      }
+    }
+
+    const transferButton = (item, userId) => {
+      if (item.User && item.provider === 'stripe' && userId === item.User.id) {
+        if (item.status === 'succeeded' && !task.paid) {
+          return (
+            <React.Fragment>
+              <Button
+                style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
+                variant='contained'
+                size='small'
+                color='primary'
+                className={ classes.button }
+                onClick={ (e) => this.openTransferDialog(e, item) }
+              >
+                <FormattedMessage id='general.buttons.transfer' defaultMessage='Transfer' />
+                <TransferIcon style={ { marginLeft: 5, marginRight: 5 } } />
+              </Button>
+              <TaskOrderTransfer order={ item } onSend={ this.props.transferOrder } tasks={ this.props.tasks } open={ this.state.transferDialogOpen } onClose={ this.closeTransferDialog } />
+            </React.Fragment>
+          )
         }
         else {
           return ''
@@ -275,8 +319,9 @@ class TaskTabs extends React.Component {
         <div style={ { display: 'inline-block' } }>
           <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
           { detailsOrderButton(item, userId) }
-          { retryOrCancel(item, userId) }
+          { retryOrCancelButton(item, userId) }
         </div>,
+        transferButton(item, userId),
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
@@ -411,6 +456,7 @@ class TaskTabs extends React.Component {
                 tableHead={ [
                   this.props.intl.formatMessage(messages.cardTableHeaderPaid),
                   this.props.intl.formatMessage(messages.cardTableHeaderStatus),
+                  this.props.intl.formatMessage(messages.cardTableHeaderActions),
                   this.props.intl.formatMessage(messages.cardTableHeaderValue),
                   this.props.intl.formatMessage(messages.cardTableHeaderCreated),
                   this.props.intl.formatMessage(messages.cardTableHeaderUser),

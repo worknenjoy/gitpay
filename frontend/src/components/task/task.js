@@ -1209,6 +1209,7 @@ class Task extends Component {
                   hash={ this.props.location.hash }
                   actionAssign={ this.props.actionAssign }
                   assignTask={ this.props.assignTask }
+                  listOrders={ this.props.listOrders }
                   removeAssignment={ this.props.removeAssignment }
                   messageTask={ this.props.messageTask }
                   isAssignOwner={ isAssignOwner }
@@ -1218,6 +1219,10 @@ class Task extends Component {
                   user={ this.props.user }
                   cancelPaypalPayment={ this.props.cancelPaypalPayment }
                   getOrderDetails={ this.props.getOrderDetails }
+                  filterTasks={ this.props.filterTasks }
+                  listTasks={ this.props.listTasks }
+                  transferOrder={ this.props.transferOrder }
+                  tasks={ this.props.tasks }
                   order={ this.props.order && this.props.order.data }
                   preloadOrder={ this.props.match.params.order_id }
                 />
