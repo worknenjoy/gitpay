@@ -98,6 +98,10 @@ export const messages = defineMessages({
     id: 'task.card.table.header.status',
     defaultMessage: 'Status'
   },
+  cardTableHeaderActions: {
+    id: 'task.card.table.header.actions',
+    defaultMessage: 'Actions'
+  },
   cardTableHeaderValue: {
     id: 'task.card.table.header.value',
     defaultMessage: 'Value'
