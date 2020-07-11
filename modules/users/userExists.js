@@ -14,6 +14,12 @@ module.exports = Promise.method(function userExists (userAttributes) {
 
       if (user.length <= 0) return false
 
+      // TODO make endpoint to find actual value
+      user.dataValues['tasks'] = '2'
+
+      // TODO make endpoint to find actual value
+      user.dataValues['bounties'] = '35'
+
       /* return {
         id: user.dataValues.id,
         website: user.dataValues.website,
