@@ -13,24 +13,30 @@ module.exports = Promise.method(function userTasks (id) {
       return assigns.map(a => {
         return models.Task
           .findOne({
-            attributes: ['id', 'value', 'paid'],
+            attributes: ['value', 'paid'],
             where: {
               id: a.dataValues.TaskId,
               status: 'closed'
             }
           }).then(res => {
-            return res.dataValues
+            if (res !== null) {
+              return res.dataValues
+            }
+          }).catch(error => {
+            // eslint-disable-next-line no-console
+            console.log('Error at userTasks', error)
+            throw error
           })
       })
     }).all().then(res => {
       let bounties = 0
       res.forEach(t => {
-        if (t.paid === true) {
+        if (t !== undefined && t.paid === true) {
           bounties += Number(t.value)
         }
       })
       return {
-        tasks: res.length.toString(),
+        tasks: res.filter(t => t === null).length.toString(),
         bounties: bounties.toString()
       }
     })
