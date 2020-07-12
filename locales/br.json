@@ -81,6 +81,8 @@
   "mail.webhook.payment.transfer.finished.message": "<p>Uma transferência no valor de {{currency}} {{amount}} foi realizada para a sua conta e deve constar nas suas transações como um pagamento do Gitpay.</p><p>Ela foi realizada em {{date}}</p>",
   "mail.webhook.github.issue.new.subject": "Uma nova tarefa no Gitpay foi criada a partir de seu incidente: {{title}}",
   "mail.webhook.github.issue.new.message": "<p>Seu incidente <a href=\"{{issue}}\">{{issue}}</a> do repositório <a href=\"{{repo}}\">{{repo}}</a> foi adicionado no Gitpay e agora você pode adicionar recompensas para atribuir contribuidores interessados em conclui-las.</p><p>Aqui está a URL: <a href=\"{{task}}\">{{task}}</a> </p>",
+  "mail.task.interest.subject": "Temos problemas em aberto para você com base em suas preferências no Gitpay",
+  "mail.task.interest.title": "Existem problemas abertos com base na sua preferência que precisam ser resolvidos no Gitpay. Você pode mostrar seu interesse, fazer uma oferta ou contribuir para melhorar sua experiência e tentar novos desafios",
   "mail.task.me.subject": "Você criou uma nova tarefa no Gitpay",
   "mail.task.payment.subject": "Uma recompensa de $ {{value}} pela tarefa: {{title}} foi adicionada ao Gitpay",
   "mail.task.payment.title": "O pagamento de $ {{value}} foi realizado via cartão de crédito foi feito pela tarefa",

@@ -34,6 +34,7 @@ const TaskMail = {
   weeklyBounties: (data) => Promise.resolve({}),
   weeklyLatest: () => Promise.resolve({}),
   notifyPayment: () => Promise.resolve({}),
+  weeklyAvailableTaskByUserPrefrence: (data) => Promise.resolve({}),
   messageAuthor: (user, task, message) => Promise.resolve({})
 }
 
@@ -209,6 +210,57 @@ if (constants.canSendEmail) {
 ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(language)}</p>`
         }],
       senderEmail
+    )
+  }
+
+  TaskMail.weeklyAvailableTaskByUserPrefrence = async (data) => {
+    const allUsers = await models.User.findAll()
+    let mailList = []
+    let subjectData = []
+    let templateData = []
+
+    allUsers.filter((u, i) => {
+      const language = u.language || 'en'
+      i18n.setLocale(language)
+      subjectData.push(i18n.__('mail.task.interest.subject'))
+      const tasks = data.tasks.filter(d => {
+        // assign task labels array [{name: "value"}] to labels variable
+        const labels = d.Labels
+        // convert  [{name: "value1"},{name: "value2"}] to ["value1","value2"]
+        const labelNames = labels.map(function (label) {
+          return label['name']
+        })
+        // create regex to check if any word matches the label
+        const regexp = new RegExp(`\\b(${labelNames.join('|')})\\b`, 'gi')
+        // boolean test if any of user skills match any of the task labels condition
+        if (regexp.test(u.skills)) {
+          const url = constants.taskUrl(d.id)
+          const deadline = d.deadline ? `${moment(d.deadline).format('DD/MM/YYYY')} (${moment(d.deadline).fromNow()})` : d.deadline
+          const title = d.title
+          const value = d.value > 0 ? ('$' + d.value) : i18n.__('mail.task.noValue')
+          return { title, url, value, deadline }
+        }
+      })
+      if (tasks.length > 0) {
+        mailList.push(u.email)
+        templateData.push({
+          tasks,
+          content: {
+            title: i18n.__('mail.task.interest.title'),
+            provider_action: i18n.__('mail.task.latest.action'),
+            call_to_action: i18n.__('mail.task.latest.calltoaction'),
+            instructions: i18n.__('mail.task.instructions'),
+            docs: i18n.__('mail.task.docs.title'),
+            reason: i18n.__('mail.task.reason'),
+            subject: i18n.__('mail.task.interest.subject')
+          } })
+      }
+    })
+    return withTemplate(
+      mailList,
+      subjectData,
+      templateData,
+      'latest'
     )
   }
 }
