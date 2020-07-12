@@ -35,9 +35,7 @@ function isAuth (req, res, next) {
       // check if a user exists
       return userExist(userData).then(user => {
         return userTasks(user.dataValues.id).then(tasks => {
-          // eslint-disable-next-line no-console
-          console.log(tasks)
-          user.dataValues['tasks'] = '3'
+          user.dataValues['tasks'] = tasks.length.toString()
           user.dataValues['bounties'] = '45'
           return res.send({ authenticated: true, user: user })
         })
