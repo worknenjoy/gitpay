@@ -35,8 +35,8 @@ function isAuth (req, res, next) {
       // check if a user exists
       return userExist(userData).then(user => {
         return userTasks(user.dataValues.id).then(tasks => {
-          user.dataValues['tasks'] = tasks.length.toString()
-          user.dataValues['bounties'] = '45'
+          user.dataValues['tasks'] = tasks.tasks
+          user.dataValues['bounties'] = tasks.bounties
           return res.send({ authenticated: true, user: user })
         })
       }).catch(e => {
