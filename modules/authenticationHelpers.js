@@ -35,6 +35,7 @@ function isAuth (req, res, next) {
       // check if a user exists
       return userExist(userData).then(user => {
         return userTasks(user.dataValues.id).then(tasks => {
+          // assigns 'tasks' and 'bounties' to user object
           user.dataValues['tasks'] = tasks.tasks
           user.dataValues['bounties'] = tasks.bounties
           return res.send({ authenticated: true, user: user })
