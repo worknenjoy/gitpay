@@ -13,7 +13,6 @@ module.exports = Promise.method(function userExists (userAttributes) {
       if (user && !user.dataValues) return false
 
       if (user.length <= 0) return false
-
       /* return {
         id: user.dataValues.id,
         website: user.dataValues.website,
