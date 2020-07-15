@@ -116,7 +116,7 @@ function cmdMigrateNext() {
         })
 }
 
- function cmdUpdateAll() {
+function cmdUpdateAll() {
     return cmdStatus()
         .then(({ executed, pending }) => {
             let length = pending.length;
