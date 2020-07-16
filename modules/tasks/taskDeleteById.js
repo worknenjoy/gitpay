@@ -19,6 +19,8 @@ module.exports = Promise.method(function taskDeleteById (taskParameters) {
     }).then(task => {
       // eslint-disable-next-line no-console
       console.log('destroy', task)
+      // eslint-disable-next-line no-console
+      console.log('userId is', taskParameters.userId)
       return task
     })
   })

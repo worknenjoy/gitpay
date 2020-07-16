@@ -51,6 +51,10 @@ const SYNC_TASK_ERROR = 'SYNC_TASK_ERROR'
 
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB'
 
+const REPORT_TASK_REQUESTED = 'REPORT_TASK_REQUESTED'
+const REPORT_TASK_SUCCESS = 'REPORT_TASK_SUCCESS'
+const REPORT_TASK_ERROR = 'REPORT_TASK_ERROR'
+
 const VALIDATION_ERRORS = {
   'url must be unique': 'actions.task.create.validation.url',
   'Not Found': 'actions.task.create.validation.invalid'
@@ -257,6 +261,22 @@ const syncTaskSuccess = values => {
 
 const syncTaskError = error => {
   return { type: SYNC_TASK_ERROR, completed: true, error: error }
+}
+
+/*
+ * Task Report
+ */
+
+const reportTaskRequested = () => {
+  return { type: REPORT_TASK_REQUESTED, completed: false }
+}
+
+const reportTaskSuccess = () => {
+  return { type: REPORT_TASK_SUCCESS, completed: true }
+}
+
+const reportTaskError = error => {
+  return { type: REPORT_TASK_ERROR, completed: true, error: error }
 }
 
 const createTask = (task, history) => {
@@ -589,6 +609,40 @@ const syncTask = taskId => {
   }
 }
 
+const reportTask = (task, reason) => {
+  return dispatch => {
+    dispatch(reportTaskRequested())
+    return axios
+      .post(api.API_URL + `/tasks/${task.id}/report`, {
+        task, reason, baseUrl: api.API_URL
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('actions.task.report.success'))
+          return dispatch(reportTaskSuccess())
+        }
+        dispatch(addNotification('actions.task.report.error'))
+        return dispatch(
+          reportTaskError({
+            error: {
+              type: 'task_report_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.report.error')
+        )
+        dispatch(reportTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible to send report')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
 export {
   CREATE_TASK_REQUESTED,
   CREATE_TASK_SUCCESS,
@@ -625,6 +679,9 @@ export {
   SYNC_TASK_SUCCESS,
   SYNC_TASK_ERROR,
   CHANGE_TASK_TAB,
+  REPORT_TASK_REQUESTED,
+  REPORT_TASK_SUCCESS,
+  REPORT_TASK_ERROR,
   addNotification,
   createTask,
   fetchTask,
@@ -641,5 +698,6 @@ export {
   messageAuthorError,
   messageAuthor,
   fundingInviteTask,
-  changeTaskTab
+  changeTaskTab,
+  reportTask
 }
