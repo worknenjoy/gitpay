@@ -54,7 +54,7 @@ class Settings extends Component {
               variant='contained'
               className={ classes.deleteButton }
             >
-              <FormattedMessage id='account.profile.settings.delete.user.title' defaultMessage='Delete my account' />
+              <FormattedMessage id='account.profile.settings.delete.user.button' defaultMessage='Delete my account' />
             </Button>
             <DeleteUser
               deleteUser={ this.deleteUser }
