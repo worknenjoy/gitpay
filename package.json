@@ -22,11 +22,15 @@
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "precommit": "cd frontend && npm run translate",
     "prepush": "npm run lint",
     "postbuild": "cd frontend && npm run test",
     "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate",
     "pretest": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd frontend && npm run translate"
+    }
   },
   "private": true,
   "dependencies": {
