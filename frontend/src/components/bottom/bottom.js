@@ -87,7 +87,7 @@ class Bottom extends Component {
               <Typography component='div'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
                 2035 Sunset Lake Road, Suite B-2 <br />
-                Newark, DE 19702 - US
+                Newark, DE 19709 - US
               </Typography>
             </Grid>
           </Grid>

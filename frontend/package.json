@@ -8,7 +8,7 @@
     "test": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache",
     "update-snapshot": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache --updateSnapshot",
     "production": "webpack --progress --config webpack.config.prod.js",
-    "translate": "NODE_ENV=development extract-messages -l=en,br -o src/translations/generated 'src/**/*.js'",
+    "translate": "NODE_ENV=development extract-messages --flat true -l=en -o src/translations/generated 'src/**/*.js'",
     "output-translation": "node translation.js",
     "sitemap": "node sitemap-builder.js"
   },

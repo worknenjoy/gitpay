@@ -27,6 +27,11 @@
     "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate",
     "pretest": "npm run lint"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd frontend && npm run translate"
+    }
+  },
   "private": true,
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
