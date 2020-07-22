@@ -16,10 +16,6 @@ const Content = styled.span`
   text-align: center;
 `
 
-const Items = styled.div`
-  margin-top: 5px;
-`
-
 const ItemBig = styled(Chip)`
   outline: 1px solid orange;
   margin: 10px;
@@ -27,31 +23,6 @@ const ItemBig = styled(Chip)`
   width: 170px;
   justify-Content: space-between !important;
 `
-
-const ItemSmall = styled(ItemBig)`
-  width: 120px;
-`
-
-const Icon = styled(Avatar)`
-  width: 50px !important;
-  font-size: 0.8rem !important;
-  border-radius: 16px !important;
-`
-
-const messages = defineMessages({
-  infoStatusTasks: {
-    id: 'info.stats.number.tasks',
-    defaultMessage: 'tasks'
-  },
-  infoStatusBounties: {
-    id: 'info.stats.number.bounty',
-    defaultMessage: 'paid for bounties'
-  },
-  infoStatusUsers: {
-    id: 'info.stats.number.users',
-    defaultMessage: 'users'
-  }
-})
 
 class Info extends React.Component {
   componentDidMount () {
@@ -69,11 +40,11 @@ class Info extends React.Component {
     return (
       <Content>
         <Typography variant='body1' color='primary' gutterBottom>
-          <FormattedMessage id='info.status.message' defaultMessage='We have a community of {users} contributors who earned {bounties} USD in bounties by completing {tasks} tasks' values={{
+          <FormattedMessage id='info.status.message' defaultMessage='We have a community of {users} contributors who earned {bounties} USD in bounties by completing {tasks} tasks' values={ {
             tasks: stats.tasks.value,
             bounties: stats.bounties.value,
             users: stats.users.value
-          }} />
+          } } />
         </Typography>
       </Content>
     )

@@ -302,7 +302,7 @@ class TopBar extends Component {
       <Bar>
         <Container>
           <LeftSide isActive={ this.state.isActive }>
-            <div style={{display: this.props.hide ? 'none' : 'block'}}>
+            <div style={ { display: this.props.hide ? 'none' : 'block' } }>
               <StyledButton href='/'>
                 <Logo src={ logo } />
               </StyledButton>

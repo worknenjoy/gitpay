@@ -169,7 +169,7 @@ class Welcome extends Component {
 
     return (
       <div className={ classes.root }>
-        <TopBarContainer ref='intro' hide={true} />
+        <TopBarContainer ref='intro' hide />
         <AppBar position='sticky' color='default'>
           <Tabs
             variant='scrollable'
@@ -231,7 +231,7 @@ class Welcome extends Component {
                 className={ classes.mainBlock }
                 style={ { margin: 0, paddingTop: 2 } }
               >
-                <img width={240} src={logo} />
+                <img width={ 240 } src={ logo } />
                 <Typography className={ classes.tagline } gutterBottom>
                   <FormattedMessage
                     id='welcome.tagline'
@@ -259,7 +259,7 @@ class Welcome extends Component {
               </div>
               <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
                 { !logged ? (
-                  <LoginButton hideExtra={ true } size='small' referer={ location } contrast includeForm={ false } />
+                  <LoginButton hideExtra size='small' referer={ location } contrast includeForm={ false } />
                 ) : (
                   <Button
                     variant='contained'

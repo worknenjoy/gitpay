@@ -63,7 +63,7 @@ class LoginButton extends Component {
               <LoginFormContainer />
             </div>
           ) }
-          <div style={{display: hideExtra ? 'none' : 'block'}}>
+          <div style={ { display: hideExtra ? 'none' : 'block' } }>
             <div style={ { textAlign: 'center' } }>
               <Typography type='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom>
                 <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
