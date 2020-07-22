@@ -58,24 +58,23 @@ class Info extends React.Component {
     this.props.info()
   }
   render () {
-    const { tasks, bounties, users, intl } = this.props
+    const { tasks, bounties, users } = this.props
 
     const stats = {
-      tasks: { text: intl.formatMessage(messages.infoStatusTasks), value: tasks || '0' },
-      bounties: { text: intl.formatMessage(messages.infoStatusBounties), value: '$' + (bounties || '0') },
-      users: { text: intl.formatMessage(messages.infoStatusUsers), value: users || '0' }
+      tasks: { value: tasks || '0' },
+      bounties: { value: '$' + (bounties || '0') },
+      users: { value: users || '0' }
     }
 
     return (
       <Content>
-        <Typography variant='body1' color='inherit' gutterBottom>
-          <FormattedMessage id='info.status.subheading' defaultMessage='Stats' />
+        <Typography variant='body1' color='primary' gutterBottom>
+          <FormattedMessage id='info.status.message' defaultMessage='We have a community of {users} contributors who earned {bounties} USD in bounties by completing {tasks} tasks' values={{
+            tasks: stats.tasks.value,
+            bounties: stats.bounties.value,
+            users: stats.users.value
+          }} />
         </Typography>
-        <Items>
-          <ItemSmall label={ stats.tasks.text } avatar={ <Icon children={ stats.tasks.value } /> } />
-          <ItemBig label={ stats.bounties.text } avatar={ <Icon children={ stats.bounties.value } /> } />
-          <ItemSmall label={ stats.users.text } avatar={ <Icon children={ stats.users.value } /> } />
-        </Items>
       </Content>
     )
   }

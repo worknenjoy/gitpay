@@ -32,7 +32,7 @@ export const Stack = styled.div`
 export const Content = styled.div`
    margin-top: 20px;
    padding-bottom: 10px;
-   color: white;
+   color: black;
    text-align: center;
 `
 
