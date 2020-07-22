@@ -456,5 +456,17 @@
   "first.task.community.description": "Iremos fazer uma campanha para que nossa comunidade saiba que você tem uma tarefa a ser resolvida",
   "first.task.community.title": "Envie para nossa comunidade",
   "first.task.next": "Próximo",
-  "first.task.back": "Anterior"
+  "first.task.back": "Anterior",
+  "task.report.action": "Relatório",
+  "task.report.title": "Reportar Problema",
+  "task.report.subtitle": "Se você acha que esse problema é inválido, é apenas para fins de teste ou com algum erro e até mesmo conteúdo inapropriado, informe nos e tomaremos medidas",
+  "task.report.reason.invalid": "O problema é inválido, foi removido pelos fornecedores (Github, Bitbucket) e não está mais disponível",
+  "task.report.reason.fourOFour": "Esta página é um erro, por algun motivo o conteúdo não está carregado un ou recebo uma mensagem 404",
+  "task.report.reason.testOrAccident": "Esse problema parece ser um problema de teste ou foi adicionado acidentalmente",
+  "task.report.reason.another": "Outra Razão",
+  "task.report.reason.custom" : "Razão",
+  "task.report.form.cancel": "Cancelar",
+  "task.report.form.report": "Relatório",
+  "actions.task.report.success": "Tarefa relatada com sucesso",
+  "actions.task.report.error": "Erro na tarefa de relatório"
 }

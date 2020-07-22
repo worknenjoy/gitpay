@@ -141,3 +141,34 @@ exports.assignedUser = (req, res) => {
     .then(data => res.send(data))
     .catch(error => res.status(400).send({ error: error.message }))
 }
+
+// Report Task
+exports.reportTask = ({ params, body }, res) => {
+  Tasks
+    .taskReport(params, body)
+    .then(data => res.send(data))
+    .catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on task controller report', error)
+      res.send({ error: error.message })
+    })
+}
+
+// Delete task from report email
+exports.deleteTaskFromReport = (req, res) => {
+  const params = { id: req.params.taskId, userId: req.params.userId, title: req.query.title, reason: req.query.reason }
+  Tasks.taskDeleteById(params)
+    .then((deleted) => {
+      deleted === 0 ? res.status(200).send('There was an error in deleting the task from the database, or the task was already deleted') : res.status(200).send(`${deleted} rows were deleted from the database`)
+    }).catch(error => {
+      res.status(400).send(error)
+    }).then(() => {
+      Tasks.taskDeleteConfirmation(params)
+        .then(() => res.send('Confirmation email sent to user'))
+        .catch(error => {
+          res.send({ error: error.message })
+        })
+    })
+  // eslint-disable-next-line no-console
+  console.log('The task was deleted')
+}
