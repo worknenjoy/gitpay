@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
 import {
-  Chip,
-  Avatar,
   Typography
 } from '@material-ui/core'
 
@@ -14,14 +12,6 @@ const Content = styled.span`
   padding-bottom: 10px;
   color: white;
   text-align: center;
-`
-
-const ItemBig = styled(Chip)`
-  outline: 1px solid orange;
-  margin: 10px;
-  font-weight: bold;
-  width: 170px;
-  justify-Content: space-between !important;
 `
 
 class Info extends React.Component {
