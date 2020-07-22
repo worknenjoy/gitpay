@@ -98,6 +98,15 @@ For exhaustive list of options available, refer `migration.js` in root directory
 
 Then you can access at http://localhost:8082
 
+## Translation
+
+Please don't change the translation files directly, they will be managed on Crowdin.
+The only thing you need to do is run 
+
+`npm run translate` 
+
+on front-end and use the React Intl (https://formatjs.io/docs/react-intl/) library to give id and default text to your strings.
+
 ## Docker
 
 ### Requirements

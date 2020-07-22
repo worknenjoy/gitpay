@@ -54,7 +54,7 @@ const styles = theme => ({
   },
   mainBlock: {
     textAlign: 'center',
-    padding: 8,
+    padding: 12,
     color: theme.palette.text.primary
   },
   secBlock: {
@@ -70,11 +70,11 @@ const styles = theme => ({
     alignItems: 'flex-start'
   },
   spacedTop: {
-    marginTop: 20
+    marginTop: 10
   },
   tagline: {
-    fontSize: 36,
-    color: 'black'
+    fontSize: 18,
+    color: 'white'
   }
 })
 
