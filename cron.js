@@ -100,9 +100,8 @@ const TaskCron = {
       order: [['id', 'DESC']],
       include: [{
         model: models.Label,
-        as: 'Label',
         where: {
-          'Label.name': 'Weekly digest'
+          'name': 'Weekly digest'
         },
         through: {
           attributes: []
