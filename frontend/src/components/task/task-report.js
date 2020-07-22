@@ -43,7 +43,7 @@ class TaskReport extends Component {
   getLanguage = () => {
     if (_.isEmpty(this.props.user)) {
       // eslint-disable-next-line no-undef
-      return localStorage.getItem('userLanguage')
+      return localStorage.getItem('userLanguage') || 'en'
     }
     return this.props.user.language
   }
