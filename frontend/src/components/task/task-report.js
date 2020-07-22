@@ -45,7 +45,7 @@ class TaskReport extends Component {
       // eslint-disable-next-line no-undef
       return localStorage.getItem('userLanguage') || 'en'
     }
-    return this.props.user.language
+    return this.props.user.language || 'en'
   }
 
   onChangeReason = (e) => {
