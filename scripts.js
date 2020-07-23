@@ -154,6 +154,8 @@ const scripts = {
                 }
               }
             })
+            // eslint-disable-next-line no-console
+            .catch(err => console.log(`error occured in assigns.map: ${err}`))
         })
       }).all().then(updateFields => {
         return updateFields.forEach(uf => {
@@ -165,12 +167,11 @@ const scripts = {
                 id: uf.id
               }
             })
-            // eslint-disable-next-line no-console
-            .catch(err => console.log(err))
         })
-      })
+        // eslint-disable-next-line no-console
+      }).then(console.log('Assigns successfully updated.'))
       // eslint-disable-next-line no-console
-      .catch(err => console.log(err))
+      .catch(err => console.log(`error while updating assigns status: ${err}`))
   }
 }
 
