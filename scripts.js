@@ -128,7 +128,7 @@ const scripts = {
   updateAssignsStatus: () => {
     return models.Assign
       .findAll({
-        attributes: ['id','TaskId'], 
+        attributes: ['id', 'TaskId'],
         where: {
           status: null
         }
@@ -146,7 +146,7 @@ const scripts = {
                   id: a.dataValues.id,
                   status: 'accepted'
                 }
-              } 
+              }
               else if (task.dataValues.status === 'open') {
                 return {
                   id: a.dataValues.id,
