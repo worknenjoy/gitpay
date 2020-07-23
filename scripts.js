@@ -124,6 +124,37 @@ const scripts = {
         console.log('error when search task: ', error)
         return false
       })
+  },
+  updateAssignsStatus: () => {
+    return models.Assign
+      .findAll({
+        attributes: ['id','TaskId'],
+        where: {
+          status: null
+        }
+      }).then(assigns => {
+        return assigns.map(a => {
+          return models.Task
+            .findOne({
+              attributes: ['status'],
+              where: {
+                id: a.dataValues.TaskId
+              }
+            }).then(task => {
+              if (task.dataValues.status === 'closed' || task.dataValues.status === 'in_progress') {
+                return {
+                  id: a.dataValues.id,
+                  status: 'accepted'
+                }
+              } else if (task.dataValues.status === 'open') {
+                return {
+                  id: a.dataValues.id,
+                  status: 'pending'
+                }
+              }
+            })
+        })
+      }).all().then(res => console.log(res))
   }
 }
 
