@@ -155,8 +155,22 @@ const scripts = {
               }
             })
         })
-        // eslint-disable-next-line no-console
-      }).all().then(res => console.log(res))
+      }).all().then(updateFields => {
+        return updateFields.forEach(uf => {
+          return models.Assign
+            .update({
+              status: uf.status
+            }, {
+              where: {
+                id: uf.id
+              }
+            })
+            // eslint-disable-next-line no-console
+            .catch(err => console.log(err))
+        })
+      })
+      // eslint-disable-next-line no-console
+      .catch(err => console.log(err))
   }
 }
 
