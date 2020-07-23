@@ -144,6 +144,10 @@
   "mail.task.instructions": "<p>Como trabalhar neste projeto?</p><ul><li>Acesse a tarefa no Gitpay;</li><li>Clique em \"Estou interessado\";</li><li>Acesse o projeto e crie uma solução;</li><li>Envie um Pull Request com a solução;</li><li>O dono do projeto revisará e você fará os ajustes necessários para que a tarefa atenda os requisitos;</li><li>Receba a recompensa quando a tarefa for concluída.</li></ul>",
   "mail.task.docs.title": "Nós temos esta documentação completa para ajudá-lo (apenas em Português por enquanto)",
   "mail.task.reason": "Você recebeu esta mensagem pois se cadastrou no <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>",
+  "mail.report.send.action": "We received a new report from an issue imported to Gitpay",
+  "mail.report.send.message": "We received a new report from the task <a href=\"{{url}}\">{{title}}<a/>:<br/><br/>Reason: {{selectedReason}}<br/><br/> <a href=\"{{approveURL}}\">Approve</a>",
+  "mail.report.delete.send.action": "Your task created on Gitpay was deleted by our team",
+  "mail.report.delete.send.message": "The task you've created on Gitpay: <a href=\"{{url}}\">{{title}}</a><br/><br/>It was deleted by our team because it violates our guidelines.<br/><br/>Reason: {{selectedReason}}",
   "task.invalid.script.subject": "The issue you created on Gitpay was deleted",
   "task.invalid.script.message": "The task you imported with the {{url}} to Gitpay was deleted from our list on Gitpay, because is an invalid issue URL."
 }
