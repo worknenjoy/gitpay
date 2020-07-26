@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import media from '../../styleguide/media'
 import LabelPieCharts from './Charts/PieCharts/LabelPieChart'
@@ -16,12 +16,12 @@ const StackWrapper = styled.div`
   height: 25em;
   align-items: center;
   vertical-align: center; 
-  box-shadow: 1px 1px 10px grey;
+  box-shadow: 1px 1px 10px #dadada;
   ${media.phone`
     width: 380px;
     margin: auto;
     margin-bottom: 1em;
-    box-shadow: 1px 1px 30px grey;
+    box-shadow: 1px 1px 30px #dadada;
   `} 
 `
 const NavMenu = styled.div`
@@ -59,41 +59,41 @@ const PieChartWrapper = styled.div`
   margin: auto;
   vertical-align: middle;
 `
-
 export default function StackData () {
+  const [label, setLabel] = useState('flex')
+  const [stack, setStack] = useState('none')
+  const [status, setStatus] = useState('none')
 
-    const [label, setLabel] = useState("flex");
-    const [stack, setStack] = useState("none");
-    const [status, setStatus] = useState("none");
-
-    const ChangeChart = (event) => {
-      if(event.target.id === "label"){
-        setLabel("flex");
-        setStack("none");
-        setStatus("none");
-      } else if(event.target.id === "stack"){
-        setLabel("none");
-        setStack("flex");
-        setStatus("none");
-      } else if(event.target.id === "status"){
-        setLabel("none");
-        setStack("none");
-        setStatus("flex");
-      }
+  const ChangeChart = (event) => {
+    if (event.target.id === 'label') {
+      setLabel('flex')
+      setStack('none')
+      setStatus('none')
     }
+    else if (event.target.id === 'stack') {
+      setLabel('none')
+      setStack('flex')
+      setStatus('none')
+    }
+    else if (event.target.id === 'status') {
+      setLabel('none')
+      setStack('none')
+      setStatus('flex')
+    }
+  }
 
-    return (
-      <StackWrapper>
-        <NavMenu>
-          <MenuItem onClick={ChangeChart} id="stack">Stacks</MenuItem>
-          <MenuItem onClick={ChangeChart} id="label">Labels</MenuItem>
-          <MenuItem onClick={ChangeChart} id="status">Status</MenuItem>
-        </NavMenu>
-        <PieChartWrapper>
-          <LabelPieCharts display={label}/>
-          <StatusPieCharts display={status} />
-          <StackPieCharts display={stack} />
-        </PieChartWrapper>
-      </StackWrapper>
-    )
+  return (
+    <StackWrapper>
+      <NavMenu>
+        <MenuItem onClick={ ChangeChart } id='stack'>Stacks</MenuItem>
+        <MenuItem onClick={ ChangeChart } id='label'>Labels</MenuItem>
+        <MenuItem onClick={ ChangeChart } id='status'>Status</MenuItem>
+      </NavMenu>
+      <PieChartWrapper>
+        <LabelPieCharts display={ label } />
+        <StatusPieCharts display={ status } />
+        <StackPieCharts display={ stack } />
+      </PieChartWrapper>
+    </StackWrapper>
+  )
 }

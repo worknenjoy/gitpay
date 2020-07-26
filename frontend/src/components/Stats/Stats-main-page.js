@@ -40,13 +40,11 @@ const StatsPageWrapper = styled.div`
   `}
 `
 
-
-
 class Stats extends Component {
     render () {
         return (
           <React.Fragment>
-            <div style={{background: "#FFFFFF"}}>
+            <div style={ { background: '#FFFFFF' } }>
               <TopBarContiner />
               <StatsPageWrapper>
                 <TopDashboard />

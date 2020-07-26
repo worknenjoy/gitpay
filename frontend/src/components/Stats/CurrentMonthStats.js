@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 0.4em;
-  box-shadow: 1px 1px 10px grey;
+  box-shadow: 1px 1px 10px #dadada;
   ${media.phone`
     width: 400px;
     margin: auto;
@@ -74,7 +74,7 @@ export default class CurrentMonthStats extends Component {
             <Percent>-05%</Percent>
             <Money>$213,314.52</Money>
           </InfoPart>
-          <img src={require('./Asstes/graph.png')} alt="graph" width="120px" />
+          <img src={ require('./Asstes/graph.png') } alt='graph' width='120px' />
         </Body>
       </Wrapper>
     )

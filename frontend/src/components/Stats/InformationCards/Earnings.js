@@ -11,7 +11,7 @@ const Card = styled.div`
   flex-direction: row;
   border-radius: 0.4em;
   align-items: center;
-  box-shadow: 1px 1px 10px grey;
+  box-shadow: 1px 1px 10px #dadada;
 `
 
 const Icon = styled.div`

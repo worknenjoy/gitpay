@@ -6,7 +6,7 @@ const BarChartWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 1px 1px 10px grey;
+  box-shadow: 1px 1px 10px #dadada;
   border-radius: 0.4em;
   padding-top: 2em;
   padding-right: 2em;
@@ -34,7 +34,7 @@ export default class Barchart extends Component {
     return (
       <BarChartWrapper>
         <BarChartHeader>Bounties by month</BarChartHeader>
-        <BarChart style={ { margin: 'auto', backgroundColor: '#FFFFFF', paddingTop: '2em', paddingRight: '2em', paddingLeft: '2em', marginBottom: '1em', fontFamily: 'sans-serif', fontWeight: 'bold' }} width={ window.innerWidth < 520 ? 400 : 1000 } height={ window.innerWidth < 520 ? 300 : 500 } data={ data }> 
+        <BarChart style={ { margin: 'auto', backgroundColor: '#FFFFFF', paddingTop: '2em', paddingRight: '2em', paddingLeft: '2em', marginBottom: '1em', fontFamily: 'sans-serif', fontWeight: 'bold' } } width={ window.innerWidth < 520 ? 400 : 1000 } height={ window.innerWidth < 520 ? 300 : 500 } data={ data }>
           <XAxis dataKey='name' stroke='darkgrey' />
           <YAxis stroke='darkgrey' axisLine={ false } />
           <CartesianGrid strokeDasharray='7 7' vertical={ false } />
