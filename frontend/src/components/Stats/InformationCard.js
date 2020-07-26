@@ -12,7 +12,7 @@ const Wrapper = styled.div`
  align-items: center;
  vertical-align: center;
  justify-content: space-around;
- margin-top: 2em;
+ margin-top: 5em;
  ${media.phone`
     display: flex;
     flex-direction: column;
