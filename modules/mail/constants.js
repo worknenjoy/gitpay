@@ -2,6 +2,7 @@
 module.exports = {
   notificationEmail: 'notifications@gitpay.me',
   recruitersEmail: 'recruitment@gitpay.me',
+  reportEmail: 'report@gitpay.me',
   fromEmail: 'tarefas@gitpay.me',
   canSendEmail: process.env.NODE_ENV !== 'test' && process.env.SENDGRID_API_KEY,
   dateFormat: 'fullDate',

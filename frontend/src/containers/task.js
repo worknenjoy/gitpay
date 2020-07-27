@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask, removeAssignment, messageTask, actionAssign } from '../actions/assignActions'
-import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor } from '../actions/taskActions'
+import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask } from '../actions/taskActions'
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks } from '../selectors/tasks'
@@ -47,7 +47,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     listTasks: () => dispatch(listTasks()),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
     cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
-    getOrderDetails: (id) => dispatch(detailOrder(id))
+    getOrderDetails: (id) => dispatch(detailOrder(id)),
+    reportTask: (task, reason) => dispatch(reportTask(task, reason))
   }
 }
 

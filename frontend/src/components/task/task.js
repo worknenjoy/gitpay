@@ -38,7 +38,8 @@ import {
   MonetizationOn as MonetizationOnIcon,
   Close as CloseIcon,
   PeopleOutlined,
-  MailSharp as MessageIcon
+  MailSharp as MessageIcon,
+  Info as InfoIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -59,6 +60,7 @@ import { PageContent } from 'app/styleguide/components/Page'
 
 import TaskAssigned from './task-assigned'
 import TaskInvite from './task-invite'
+import TaskReport from './task-report'
 import MessageAuthor from './task-message-author'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
@@ -377,6 +379,7 @@ class Task extends Component {
       taskInviteDialog: false,
       taskFundingDialog: false,
       taskMessageAuthorDialog: false,
+      reportIssueDialog: false,
       notification: {
         open: false,
         message: 'loading'
@@ -586,6 +589,10 @@ class Task extends Component {
 
   handleInvite = () => {
     this.setState({ taskInviteDialog: true })
+  }
+
+  handleReportIssueDialog = () => {
+    this.setState({ reportIssueDialog: true })
   }
 
   handleInputInterestedCommentChange = (e) => {
@@ -1065,6 +1072,7 @@ class Task extends Component {
                 ) : (
                   <React.Fragment>
                     <Button
+                      style={ { marginRight: 10 } }
                       onClick={ this.handleMessageAuthorDialog }
                       size='small'
                       color='primary'
@@ -1099,6 +1107,27 @@ class Task extends Component {
                     ) }
                   </React.Fragment>
                 ) }
+                { !this.taskOwner() &&
+                  <Button
+                    style={ { marginRight: 10 } }
+                    onClick={ this.handleReportIssueDialog }
+                    size='small'
+                    color='primary'
+                    className={ classes.altButton }
+                  >
+                    <span className={ classes.spaceRight }>
+                      <FormattedMessage id='task.report.action' defaultMessage='Report' />
+                    </span>{ ' ' }
+                    <InfoIcon />
+                  </Button> }
+                <TaskReport
+                  taskData={ task.data }
+                  reportTask={ this.props.reportTask }
+                  user={ this.props.user }
+                  visible={ this.state.reportIssueDialog }
+                  onClose={ () => this.setState({ reportIssueDialog: false }) }
+                  onOpen={ () => this.setState({ reportIssueDialog: true }) }
+                />
                 <TaskInvite
                   id={ task.data.id }
                   onInvite={ this.props.inviteTask }
@@ -1291,7 +1320,8 @@ Task.propTypes = {
   filterTaskOrders: PropTypes.func,
   paymentOrder: PropTypes.func,
   inviteTask: PropTypes.func,
-  fundingInviteTask: PropTypes.func
+  fundingInviteTask: PropTypes.func,
+  reportTask: PropTypes.func
 }
 
 export default injectIntl(withStyles(styles)(Task))
