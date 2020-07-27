@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  margin-top: 1em;
+  margin-top: 3em;
   ${media.phone`
     display: flex;
     flex-direction: column;
@@ -25,8 +25,16 @@ const ChartWrapper = styled.div`
   margin: 0;
   display: flex;
   justify-content: space-around;
-  flex-direction: row;
-  margin-top: 7em;
+  flex-direction: column;
+  margin-top: 5em;
+  ${media.phone`
+    width: 400px;
+  `}
+`
+const StatsPageWrapper = styled.div`
+  background-color: #FFFFFF;
+  width: 1150px;
+  margin: 0 auto;
   ${media.phone`
     width: 400px;
   `}
@@ -36,16 +44,20 @@ class Stats extends Component {
     render () {
         return (
           <React.Fragment>
-            <TopBarContiner />
-            <TopDashboard />
-            <Wrapper>
-              <StackData />
-              <CurrentMonthStats />
-            </Wrapper>
-            <InformationCard />
-            <ChartWrapper>
-              <Barchart style={ { width: '400px' } } />
-            </ChartWrapper>
+            <div style={ { background: '#FFFFFF' } }>
+              <TopBarContiner />
+              <StatsPageWrapper>
+                <TopDashboard />
+                <Wrapper>
+                  <StackData />
+                  <CurrentMonthStats />
+                </Wrapper>
+                <InformationCard />
+                <ChartWrapper>
+                  <Barchart style={ { width: '400px' } } />
+                </ChartWrapper>
+              </StatsPageWrapper>
+            </div>
           </React.Fragment>
         )
     }

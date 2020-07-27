@@ -6,12 +6,12 @@ const Card = styled.div`
   margin: 0;
   width: 20em;
   height: 6em;
-  background: linear-gradient(346deg, rgba(255,255,255,1) 54%, rgba(222,222,222,1) 100%);
+  background: #ffffff;
   display: flex;
   flex-direction: row;
-  border-radius: 0.2em;
-  box-shadow: 0.2em 0.2em 0.2em grey;
+  border-radius: 0.4em;
   align-items: center;
+  box-shadow: 1px 1px 10px #dadada;
 `
 
 const Icon = styled.div`
@@ -21,9 +21,9 @@ const Icon = styled.div`
   align-items: center;
   height: 4em;
   margin: 0em 1em;
-  color: #8E74FE;
+  color: #0085ff;
   border-radius: 10em;
-  background-color: #8e74fe6b
+  background-color: #80D8FF;
 `
 
 const Head = styled.p`

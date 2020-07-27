@@ -5,11 +5,12 @@ import media from '../../styleguide/media'
 const Wrapper = styled.div`
   box-sizing: border-box;
   padding: 10px 20px;
-  background-color: #efefef;
+  background-color: #EEEEEE;
   margin: 0.3em;
   position: relative;
   display: flex;
   font-family: sans-serif;
+  border-radius: 0.4em;
 
   ${media.phone`
     padding: 10px 15px;

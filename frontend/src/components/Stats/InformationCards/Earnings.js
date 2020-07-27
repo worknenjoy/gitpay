@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import LocalAtmIcon from '@material-ui/icons/LocalAtm'
+import LocalMallIcon from '@material-ui/icons/LocalMall'
 
 const Card = styled.div`
   margin: 0;
   width: 20em;
   height: 6em;
-  background: linear-gradient(346deg, rgba(255,255,255,1) 54%, rgba(222,222,222,1) 100%);
+  background: #ffffff;
   display: flex;
   flex-direction: row;
-  border-radius: 0.2em;
-  box-shadow: 0.2em 0.2em 0.2em grey;
+  border-radius: 0.4em;
   align-items: center;
+  box-shadow: 1px 1px 10px #dadada;
 `
 
 const Icon = styled.div`
@@ -21,9 +21,9 @@ const Icon = styled.div`
   align-items: center;
   height: 4em;
   margin: 0em 1em;
-  color: #8E74FE;
+  color: #FF8F00;
   border-radius: 10em;
-  background-color: #8e74fe6b
+  background-color: #FFECB3;
 `
 
 const Head = styled.p`
@@ -81,7 +81,7 @@ export default class Earnings extends Component {
   render () {
     return (
       <Card>
-        <Icon><LocalAtmIcon style={ { fontSize: '2em', margin: 'auto' } } /></Icon>
+        <Icon><LocalMallIcon style={ { fontSize: '2em', margin: 'auto' } } /></Icon>
         <Info>
           <Head>
             Earnings
