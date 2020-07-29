@@ -59,7 +59,7 @@ const styles = theme => ({
     borderRadius: 0,
     height: '100%',
     '& div': {
-      width: '100%',
+      // width: '100%',
       height: '100%'
     },
     '& img': {

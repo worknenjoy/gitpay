@@ -8,7 +8,8 @@ roleUpdate = async (roleParameters) => {
     console.log(roleParameters)
     let doc = await Role.update(
       {
-        name: roleParameters.name
+        name: roleParameters.name,
+        label: roleParameters.label
       },
       {
         where:

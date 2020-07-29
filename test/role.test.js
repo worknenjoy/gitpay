@@ -41,9 +41,9 @@ describe("Roles", () => {
             expect(res.statusCode).to.equal(200)
             expect(res.body).to.exist
             done()
-            })
+        })
     })
-  })  
+  }) 
 });
 
 describe('create Roles',()=>{
@@ -52,18 +52,18 @@ describe('create Roles',()=>{
             agent
             .post('/roles/create')
             .send({
-                name: 'funder',
-                label: '0'
+                name: "maintainer",
+                label: "0"
             })
             .set('Authorization',user.headers.authorization)
             .expect('Content-Type', /json/)
             .expect(200)
             .end((err, res) => {
-                expect(res.statusCode).to.equal(200);
+                expect(res.statusCode).to.equal(201);
                 expect(res.body).to.exist;
-                expect(res.body.name).to.equal('funder');
+                expect(res.body.name).to.equal('maintainer');
                 expect(res.body.label).to.equal('0');
-                done();
+                done()
         })
     })
 })
@@ -73,7 +73,7 @@ describe('update Roles',()=>{
     it('should update user roles',(done)=>{
         registerAndLogin(agent).then(user => {
             agent
-            .put('/roles/create')
+            .post('/roles/create')
             .send({
                 name: 'funder',
                 label: '0'
@@ -83,17 +83,18 @@ describe('update Roles',()=>{
                 agent
                 .put('/roles/update')
                 .send({
-                    name:'funder,maintainer'
+                    name:'funder,maintainer',
+                    label:'2'
                 })
                 .set('Authorization',user.headers.authorization)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end((err, res) => {
-                    expect(res.statusCode).to.equal(200);
+                    expect(res.statusCode).to.equal(201);
                     expect(res.body).to.exist;
                     expect(res.body.name).to.equal('funder,maintainer');
-                    expect(res.body.label).to.equal('0');
-                    done();
+                    expect(res.body.label).to.equal('2');  //label not updating check later
+                    done()
             })
             })
             })
@@ -119,7 +120,7 @@ it('should delete user roles',(done)=>{
                 expect(res.statusCode).to.equal(200);
                 expect(res.body).to.exist;
                 expect(res.body.msg).to.equal('ok');
-                done();
+                done()
         })
         })
         })
