@@ -100,7 +100,7 @@ const styles = theme => ({
     marginBottom: 12
   },
   chip: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   label: {}
 })
@@ -419,6 +419,7 @@ class Account extends Component {
                               <div>
                                 { account.data.requirements.currently_due.map(
                                   (item, i) => (
+                                    Const.ACCOUNT_FIELDS[item] &&
                                     <Chip
                                       style={ { margin: 3 } }
                                       key={ i }
@@ -474,7 +475,7 @@ class Account extends Component {
                             <div style={ { marginBottom: 10 } }>
                               <Typography>{ getStepContent(1) }</Typography>
                             </div>
-                            <Grid container spacing={ 24 }>
+                            <Grid container spacing={ 3 }>
                               <Grid item xs={ 12 }>
                                 { bankAccount.data.routing_number ? (
                                   <Typography color='primary'>
@@ -519,7 +520,7 @@ class Account extends Component {
                                 ) }
                               </Grid>
                             </Grid>
-                            <Grid container spacing={ 24 }>
+                            <Grid container spacing={ 3 }>
                               <Grid item xs={ 12 }>
                                 { (user.user.country !== 'DK' || user.user.country !== 'BE') && (
                                   <FormControl>
@@ -614,7 +615,7 @@ class Account extends Component {
                                     { getStepContent(2) }
                                   </Typography>
                                 </div>
-                                <Grid container spacing={ 24 }>
+                                <Grid container spacing={ 3 }>
                                   <Grid item xs={ 12 }>
                                     <Typography color='primary'>
                                       <a
@@ -677,7 +678,7 @@ class Account extends Component {
                               <div style={ { marginBottom: 10 } }>
                                 <Typography>{ getStepContent(2) }</Typography>
                               </div>
-                              <Grid container spacing={ 24 }>
+                              <Grid container spacing={ 3 }>
                                 <Grid item xs={ 12 }>
                                   <Typography color='primary'>
                                     <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
@@ -735,7 +736,7 @@ class Account extends Component {
                           onChange={ this.onChange }
                           style={ { marginTop: 20, marginBottom: 20, width: '100%' } }
                         >
-                          <Grid container spacing={ 24 }>
+                          <Grid container spacing={ 3 }>
                             <Grid item xs={ 12 }>
                               <FormControl>
                                 <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>

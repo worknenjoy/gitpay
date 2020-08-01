@@ -39,7 +39,7 @@ class Bottom extends Component {
     return (
       <div className={ classes.secBlock }>
         <Container>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography component='div'>
                 <strong>
@@ -87,7 +87,7 @@ class Bottom extends Component {
               <Typography component='div'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
                 2035 Sunset Lake Road, Suite B-2 <br />
-                Newark, DE 19702 - US
+                Newark, DE 19709 - US
               </Typography>
             </Grid>
           </Grid>

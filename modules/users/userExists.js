@@ -13,7 +13,6 @@ module.exports = Promise.method(function userExists (userAttributes) {
       if (user && !user.dataValues) return false
 
       if (user.length <= 0) return false
-
       /* return {
         id: user.dataValues.id,
         website: user.dataValues.website,
@@ -33,7 +32,7 @@ module.exports = Promise.method(function userExists (userAttributes) {
       return user
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(error)
+      console.log('error on user exists', error)
       throw error
     })
 })

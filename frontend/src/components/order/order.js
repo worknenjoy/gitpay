@@ -149,8 +149,8 @@ const styles = theme => ({
   controls: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   playIcon: {
     height: 38,
@@ -166,7 +166,7 @@ class Order extends Component {
 
     return (
       <div>
-        <Grid container className={ classes.root } spacing={ 24 }>
+        <Grid container className={ classes.root } spacing={ 3 }>
           <TopBar />
           <Grid item xs={ 12 }>
             <Typography

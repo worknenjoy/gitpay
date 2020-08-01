@@ -51,8 +51,14 @@ class LoginForm extends Component {
       action: `${api.API_URL}/authorize/local`,
       name: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: '',
+      validating: false
     }
+  }
+
+  handleBlur = () => {
+    this.setState({ validating: true })
   }
 
   handleChange = name => event => {
@@ -72,6 +78,8 @@ class LoginForm extends Component {
   handleSubmit = event => {
     if (this.state.type === 'signup') {
       event.preventDefault()
+      const { password, confirmPassword } = this.state
+      if (password !== confirmPassword) return
       this.props.registerUser({
         name: this.state.name,
         email: this.state.email,
@@ -85,6 +93,7 @@ class LoginForm extends Component {
   render () {
     const { classes } = this.props
     const { type, action } = this.state
+    const { validating, password, confirmPassword } = this.state
     return (
       <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
@@ -160,6 +169,35 @@ class LoginForm extends Component {
             id='password'
           />
         </div>
+        { type === 'signup' && (
+          <div className={ classes.margins }>
+            <TextField
+              error={ validating && password !== confirmPassword }
+              helperText={ validating && password !== confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : '' }
+              name='confirm_password'
+              onChange={ this.handleChange('confirmPassword') }
+              onBlur={ this.handleBlur }
+              fullWidth
+              InputLabelProps={ {
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              } }
+              InputProps={ {
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                },
+              } }
+              type='password'
+              label='Confirm Password'
+              variant='outlined'
+              id='confirmPassword'
+            />
+          </div>
+        ) }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>

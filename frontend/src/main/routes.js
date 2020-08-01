@@ -11,10 +11,14 @@ import TaskOrdersContainer from '../containers/task-orders'
 import TaskExplorer from '../components/task/task-explorer'
 import LoginPage from '../components/session/login-page'
 import LoginPageContainer from '../containers/login-page'
+import FourOFour from '../components/FourOFour.js'
+import LandingPage from '../components/welcome/landing-page'
+import Stats from '../components/Stats/Stats-main-page'
 
 export default props => (
   <HashRouter>
     <Switch>
+      <Route path='/recruitment' component={ LandingPage } />
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Redirect path='/tasks/explore' to='/tasks/all' />
@@ -25,6 +29,8 @@ export default props => (
       <Route path='/tasks/open' component={ TaskExplorer } />
       <Route path='/tasks/progress' component={ TaskExplorer } />
       <Route path='/tasks/finished' component={ TaskExplorer } />
+      <Route path='/tasks/with-bounties' component={ TaskExplorer } />
+      <Route path='/tasks/contribution' component={ TaskExplorer } />
       <Route exact path='/login' component={ LoginPage } />
       <Route exact path='/login/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
@@ -37,11 +43,14 @@ export default props => (
       <Route exact path='/task/:id/members' component={ TaskContainer } />
       <Route exact path='/task/:id/offers' component={ TaskContainer } />
       <Route exact path='/task/:id/history' component={ TaskContainer } />
+      <Route path='/stats' component={ Stats } />
       <Route
         exact
         path='/task/:id/order/:order_id/status/:status'
         component={ TaskOrdersContainer }
       />
+      <Route path='/404' component={ FourOFour } />
+      <Route component={ FourOFour } />
     </Switch>
   </HashRouter>
 )

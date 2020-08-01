@@ -4,11 +4,21 @@
     "react"
   ],
   "plugins": [
+    ["transform-imports", {
+      "@material-ui/icons": {
+        "transform": "@material-ui/icons/${member}",
+        "preventFullImport": true
+      }
+    }
+    ],
     "add-react-displayname",
     "transform-object-rest-spread",
     "transform-class-properties",
     ["react-intl", {
-        "messagesDir": "./build/messages/"
+        "messagesDir": "./build/messages/",
+        "removeDefaultMessage": true,
+        "extractFromFormatMessageCall": true,
+        "workspaceRoot": "src"
     }]
   ]
 }

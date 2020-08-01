@@ -15,9 +15,17 @@ const DELETE_TASK_REQUESTED = 'DELETE_TASK_REQUESTED'
 const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS'
 const DELETE_TASK_ERROR = 'DELETE_TASK_ERROR'
 
+const MESSAGE_AUTHOR_REQUESTED = 'MESSAGE_AUTHOR_REQUESTED'
+const MESSAGE_AUTHOR_SUCCESS = 'MESSAGE_AUTHOR_SUCCESS'
+const MESSAGE_AUTHOR_ERROR = 'MESSAGE_AUTHOR_ERROR'
+
 const INVITE_TASK_REQUESTED = 'INVITE_TASK_REQUESTED'
 const INVITE_TASK_SUCCESS = 'INVITE_TASK_SUCCESS'
 const INVITE_TASK_ERROR = 'INVITE_TASK_ERROR'
+
+const FUNDING_INVITE_TASK_REQUESTED = 'FUNDING_INVITE_TASK_REQUESTED'
+const FUNDING_INVITE_TASK_SUCCESS = 'FUNDING_INVITE_TASK_SUCCESS'
+const FUNDING_INVITE_TASK_ERROR = 'FUNDING_INVITE_TASK_ERROR'
 
 const FETCH_TASK_REQUESTED = 'FETCH_TASK_REQUESTED'
 const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS'
@@ -42,6 +50,10 @@ const SYNC_TASK_SUCCESS = 'SYNC_TASK_SUCCESS'
 const SYNC_TASK_ERROR = 'SYNC_TASK_ERROR'
 
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB'
+
+const REPORT_TASK_REQUESTED = 'REPORT_TASK_REQUESTED'
+const REPORT_TASK_SUCCESS = 'REPORT_TASK_SUCCESS'
+const REPORT_TASK_ERROR = 'REPORT_TASK_ERROR'
 
 const VALIDATION_ERRORS = {
   'url must be unique': 'actions.task.create.validation.url',
@@ -85,6 +97,22 @@ const updateTaskError = error => {
 }
 
 /*
+*  Task message to author
+ */
+
+const messageAuthorRequested = () => {
+  return { type: MESSAGE_AUTHOR_REQUESTED, completed: false }
+}
+
+const messageAuthorSuccess = () => {
+  return { type: MESSAGE_AUTHOR_SUCCESS, completed: true }
+}
+
+const messageAuthorError = error => {
+  return { type: MESSAGE_AUTHOR_ERROR, completed: true, error }
+}
+
+/*
 *  Task invite
  */
 
@@ -97,6 +125,22 @@ const inviteTaskSuccess = () => {
 }
 
 const inviteTaskError = error => {
+  return { type: UPDATE_TASK_ERROR, completed: true, error }
+}
+
+/*
+*  Task funding
+ */
+
+const fundingInviteTaskRequested = () => {
+  return { type: FUNDING_INVITE_TASK_REQUESTED, completed: false }
+}
+
+const fundingInviteTaskSuccess = () => {
+  return { type: FUNDING_INVITE_TASK_SUCCESS, completed: true }
+}
+
+const fundingInviteTaskError = error => {
   return { type: UPDATE_TASK_ERROR, completed: true, error }
 }
 
@@ -139,13 +183,14 @@ const filterTaskRequested = () => {
   return { type: FILTER_TASK_REQUESTED, completed: false }
 }
 
-const filterTaskSuccess = (tasks, filter, value) => {
+const filterTaskSuccess = (tasks, filter, value, additional) => {
   return {
     type: FILTER_TASK_SUCCESS,
     completed: true,
     data: tasks.data,
     filterType: filter,
-    filterValue: value
+    filterValue: value,
+    filterAdditional: additional
   }
 }
 
@@ -218,6 +263,22 @@ const syncTaskError = error => {
   return { type: SYNC_TASK_ERROR, completed: true, error: error }
 }
 
+/*
+ * Task Report
+ */
+
+const reportTaskRequested = () => {
+  return { type: REPORT_TASK_REQUESTED, completed: false }
+}
+
+const reportTaskSuccess = () => {
+  return { type: REPORT_TASK_SUCCESS, completed: true }
+}
+
+const reportTaskError = error => {
+  return { type: REPORT_TASK_ERROR, completed: true, error: error }
+}
+
 const createTask = (task, history) => {
   validToken()
   return dispatch => {
@@ -264,7 +325,7 @@ const updateTask = task => {
           dispatch(syncTask(task.id))
           dispatch(updateTaskSuccess())
         }
-        else if (task.Assigns) {
+        else if (task.Offer) {
           dispatch(
             addNotification('actions.task.interested.notification.success')
           )
@@ -330,11 +391,11 @@ const listTasks = () => {
   }
 }
 
-const filterTasks = (key = 'all', value) => {
+const filterTasks = (key = 'all', value, additional) => {
   return (dispatch, getState) => {
     const tasks = getState().tasks
     dispatch(filterTaskRequested())
-    return dispatch(filterTaskSuccess(tasks, key, value))
+    return dispatch(filterTaskSuccess(tasks, key, value, additional))
   }
 }
 
@@ -416,12 +477,13 @@ const paymentTask = (taskId, value) => {
   }
 }
 
-const inviteTask = (id, email, message) => {
+const inviteTask = (id, email, message, user) => {
   return dispatch => {
+    const name = user.name
     dispatch(inviteTaskRequested())
     axios
       .post(api.API_URL + `/tasks/${id}/invite/`, {
-        email, message
+        email, message, name
       })
       .then(task => {
         if (task.status === 200) {
@@ -442,6 +504,73 @@ const inviteTask = (id, email, message) => {
           addNotification('actions.task.invite.error')
         )
         dispatch(inviteTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible send invite')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
+const messageAuthor = (userId, taskId, message) => {
+  return dispatch => {
+    dispatch(messageAuthorRequested())
+    return axios
+      .post(api.API_URL + `/tasks/${taskId}/message/author/`, {
+        userId, message
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('actions.task.message.author.success'))
+          return dispatch(messageAuthorSuccess())
+        }
+        dispatch(addNotification('actions.task.message.author.error'))
+        return dispatch(
+          messageAuthorError(
+            { code: task.status }
+          )
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.message.author.error')
+        )
+        dispatch(inviteTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible send invite')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
+const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
+  return dispatch => {
+    const username = user.name
+    dispatch(fundingInviteTaskRequested())
+    axios
+      .post(api.API_URL + `/tasks/${id}/funding/`, {
+        email, comment, suggestedValue, suggestedDate, username
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('actions.task.invite.success'))
+          return dispatch(fundingInviteTaskSuccess())
+        }
+        dispatch(addNotification('actions.task.invite.error'))
+        return dispatch(
+          fundingInviteTaskError({
+            error: {
+              type: 'task_invite_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.invite.error')
+        )
+        dispatch(fundingInviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
         // eslint-disable-next-line no-console
@@ -480,6 +609,40 @@ const syncTask = taskId => {
   }
 }
 
+const reportTask = (task, reason) => {
+  return dispatch => {
+    dispatch(reportTaskRequested())
+    return axios
+      .post(api.API_URL + `/tasks/${task.id}/report`, {
+        task, reason, baseUrl: api.API_URL
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('actions.task.report.success'))
+          return dispatch(reportTaskSuccess())
+        }
+        dispatch(addNotification('actions.task.report.error'))
+        return dispatch(
+          reportTaskError({
+            error: {
+              type: 'task_report_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.report.error')
+        )
+        dispatch(reportTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible to send report')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
 export {
   CREATE_TASK_REQUESTED,
   CREATE_TASK_SUCCESS,
@@ -493,6 +656,12 @@ export {
   INVITE_TASK_REQUESTED,
   INVITE_TASK_SUCCESS,
   INVITE_TASK_ERROR,
+  MESSAGE_AUTHOR_REQUESTED,
+  MESSAGE_AUTHOR_SUCCESS,
+  MESSAGE_AUTHOR_ERROR,
+  FUNDING_INVITE_TASK_REQUESTED,
+  FUNDING_INVITE_TASK_SUCCESS,
+  FUNDING_INVITE_TASK_ERROR,
   FETCH_TASK_REQUESTED,
   FETCH_TASK_SUCCESS,
   FETCH_TASK_ERROR,
@@ -510,6 +679,9 @@ export {
   SYNC_TASK_SUCCESS,
   SYNC_TASK_ERROR,
   CHANGE_TASK_TAB,
+  REPORT_TASK_REQUESTED,
+  REPORT_TASK_SUCCESS,
+  REPORT_TASK_ERROR,
   addNotification,
   createTask,
   fetchTask,
@@ -521,5 +693,11 @@ export {
   paymentTask,
   syncTask,
   inviteTask,
-  changeTaskTab
+  messageAuthorRequested,
+  messageAuthorSuccess,
+  messageAuthorError,
+  messageAuthor,
+  fundingInviteTask,
+  changeTaskTab,
+  reportTask
 }

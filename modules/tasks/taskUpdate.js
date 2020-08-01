@@ -13,9 +13,9 @@ const i18n = require('i18n')
 
 const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
   return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
-    const centavosAmount = orderParameters.amount * 100
+    const totalPrice = models.Plan.calFinalPrice(orderParameters.amount, orderParameters.plan) * 100
     return stripe.charges.create({
-      amount: centavosAmount * 0.92, // 8% base fee
+      amount: totalPrice,
       currency: orderParameters.currency,
       customer: customer.id,
       source: card.id,
@@ -29,6 +29,9 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
           paid: charge.paid,
           status: charge.status
         }).then(updatedUser => {
+          if (orderParameters.plan === 'full') {
+            PaymentMail.support(user, task, order)
+          }
           PaymentMail.success(user, task, order.amount)
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
@@ -105,14 +108,14 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
       if (!data) {
         return new Error('task_updated_failed')
       }
-      return models.Task.findById(taskParameters.id, { include: [ models.User, models.Order, models.Assign, models.Member ] })
+      return models.Task.findById(taskParameters.id, { include: [models.User, models.Order, models.Assign, models.Member] })
         .then((task) => {
           if (!task) {
             return new Error('task_find_failed')
           }
           if (taskParameters.Orders) {
-            return task.createOrder(taskParameters.Orders[0]).then((order) => {
-              const orderParameters = taskParameters.Orders[0]
+            return task.createOrder(taskParameters.Orders).then((order) => {
+              const orderParameters = taskParameters.Orders
               if (order.userId) {
                 return models.User.findById(order.userId).then((user) => {
                   if (user && user.dataValues.customer_id) {
@@ -146,28 +149,33 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
             }
           }
 
-          if (taskParameters.Offers || taskParameters.Assigns) {
+          if (taskParameters.Offer) {
             return assignExist({
-              userId: taskParameters.Assigns[0].userId,
+              userId: taskParameters.Offer.userId,
               taskId: taskParameters.id
             }).then(existingAssign => {
-              return task.createAssign(taskParameters.Assigns[0]).then(assign => {
-                return offerExists({
-                  userId: taskParameters.Offers[0].userId,
-                  taskId: taskParameters.id
-                }).then(resp => {
-                  if (!resp) {
-                    return task.createOffer(taskParameters.Offers[0]).then(offer => {
-                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
-                    })
-                  }
-                  else {
-                    return models.Offer.update(taskParameters.Offers[0], { where: { userId: taskParameters.Offers[0].userId,
-                      taskId: taskParameters.id } }).then(update => {
-                      return postCreateOrUpdateOffer(task, taskParameters.Offers[0])
-                    })
-                  }
-                })
+              if (!existingAssign) {
+                return task.createAssign({ userId: taskParameters.Offer.userId })
+              }
+            }).then(assign => {
+              return offerExists({
+                userId: taskParameters.Offer.userId,
+                taskId: taskParameters.id
+              }).then(resp => {
+                if (!resp) {
+                  return task.createOffer(taskParameters.Offer).then(offer => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offer)
+                  })
+                }
+                else {
+                  return models.Offer.update(taskParameters.Offer,
+                    { where:
+                       { userId: taskParameters.Offer.userId,
+                         taskId: taskParameters.id }
+                    }).then(update => {
+                    return postCreateOrUpdateOffer(task, taskParameters.Offer)
+                  })
+                }
               })
             })
           }
@@ -184,8 +192,12 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                 })
               }
               else {
-                return models.Member.update(taskParameters.Members[0], { where: { userId: taskParameters.Members[0].userId,
-                  taskId: taskParameters.id } }).then(update => {
+                return models.Member.update(taskParameters.Members[0], {
+                  where: {
+                    userId: taskParameters.Members[0].userId,
+                    taskId: taskParameters.id
+                  }
+                }).then(update => {
                   return task.dataValues
                 })
               }

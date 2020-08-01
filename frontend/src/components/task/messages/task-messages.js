@@ -34,6 +34,14 @@ export const messages = defineMessages({
     id: 'task.status.filter.close',
     defaultMessage: 'Finished'
   },
+  issuesWithBounties: {
+    id: 'task.status.filter.issuesWithBounties',
+    defaultMessage: '$'
+  },
+  contribution: {
+    id: 'task.status.filter.contribution',
+    defaultMessage: 'Contribution'
+  },
   noUserFound: {
     id: 'task.user.find.none',
     defaultMessage: 'User not registered'
@@ -89,6 +97,10 @@ export const messages = defineMessages({
   cardTableHeaderStatus: {
     id: 'task.card.table.header.status',
     defaultMessage: 'Status'
+  },
+  cardTableHeaderActions: {
+    id: 'task.card.table.header.actions',
+    defaultMessage: 'Actions'
   },
   cardTableHeaderValue: {
     id: 'task.card.table.header.value',
@@ -201,5 +213,9 @@ export const messages = defineMessages({
   deliveryDateNotInformed: {
     id: 'task.status.limit.date.not.informed',
     defaultMessage: '(not informed)'
+  },
+  taskValueLabelNoBounty: {
+    id: 'task.status.value.none',
+    defaultMessage: 'No bounty added'
   }
 })

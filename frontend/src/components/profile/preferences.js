@@ -22,7 +22,7 @@ import Skill from './skill'
 import MySkill from './my-skill'
 
 const skills = [
-  'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation', 'React', 'Angular', 'Vue.js', 'Blogging', 'Wordpress', 'PHP', 'Testing', 'Git', 'Continuous Integration'
+  'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation', 'React', 'React Native', 'Angular', 'Vue.js', 'Blogging', 'Wordpress', 'PHP', 'Testing', 'Git', 'Continuous Integration'
 ]
 
 const logoLangEn = require('../../images/united-states-of-america.png')
@@ -38,9 +38,26 @@ class Preferences extends Component {
 
     this.state = {
       selectedSkills: this.props.preferences.skills != null && this.props.preferences.skills.length > 0 ? this.props.preferences.skills.split(',') : [],
-      selectedOS: this.props.preferences.os != null && this.props.preferences.skills.length > 0 ? this.props.preferences.os.split(',') : [],
+      selectedOS: this.props.preferences.os ? this.props.preferences.os.split(',') : [],
       selectedLanguage: this.props.preferences.language ? this.props.preferences.language : null,
       receiveNotifications: this.props.preferences.receiveNotifications != null ? this.props.preferences.receiveNotifications : false,
+      openForJobs: this.props.preferences.openForJobs != null ? this.props.preferences.openForJobs : false,
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      prevProps.preferences.skills !== prevState.selectedSkills.toString() ||
+      prevProps.preferences.os !== prevState.selectedOS.toString() ||
+      prevProps.preferences.receiveNotifications !== this.state.receiveNotifications ||
+      prevProps.preferences.openForJobs !== this.state.openForJobs
+    ) {
+      this.handleSave()
+    }
+    else if (
+      prevState.selectedLanguage !== this.state.selectedLanguage
+    ) {
+      this.handleSave(true)
     }
   }
 
@@ -57,7 +74,11 @@ class Preferences extends Component {
       'receiveNotifications': !this.state.receiveNotifications,
     }))
   }
-
+  handleJobsCheck = (event, hidden) => {
+    this.setState(state => ({
+      'openForJobs': !this.state.openForJobs,
+    }))
+  }
   handleSkillClick = (item) => {
     let data = this.state.selectedSkills
 
@@ -119,19 +140,21 @@ class Preferences extends Component {
     })
   }
 
-  handleSave = () => {
+  handleSave = (fetchPreferences = false) => {
     // prevent blink
     this.props.preferences.skills = this.state.selectedSkills.join(',')
     this.props.preferences.os = this.state.selectedOS.join(',')
     this.props.preferences.receiveNotifications = this.state.receiveNotifications
+    this.props.preferences.openForJobs = this.state.openForJobs
 
     this.props.updateUser(this.props.user.id, {
       skills: this.state.selectedSkills.join(','),
       os: this.state.selectedOS.join(','),
       language: this.state.selectedLanguage,
-      receiveNotifications: this.state.receiveNotifications
+      receiveNotifications: this.state.receiveNotifications,
+      openForJobs: this.state.openForJobs
     }).then(() => {
-      this.props.fetchPreferences(this.props.user.id)
+      fetchPreferences && this.props.fetchPreferences(this.props.user.id)
     })
   }
 
@@ -156,7 +179,7 @@ class Preferences extends Component {
 
     return (
       <Paper elevation={ 0 }>
-        <Grid container alignItems='center' spacing={ 8 }>
+        <Grid container alignItems='center' spacing={ 1 }>
           <Grid item xs={ 5 } style={ { marginBottom: 20 } }>
             <Typography color='primary' variant='title' gutterBottom>
               <FormattedMessage id='preferences.actions.language.title' defaultMessage='Language' />
@@ -282,19 +305,19 @@ class Preferences extends Component {
               </Typography>
             </label>
           </Grid>
-          <Grid item xs={ 12 } alignContent='center' alignItems='center' style={ { 'textAlign': 'center' } }>
-            <Button color='primary' onClick={ () => this.handleCancel() }>
-              <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
-            </Button>&nbsp;
-            <Button
-              style={ { color: 'white' } }
-              size='large'
-              variant='contained'
-              color='primary'
-              onClick={ () => this.handleSave() }
-            >
-              <FormattedMessage id='preferences.action.save' defaultMessage='Save' />
-            </Button>
+          <Grid item xs={ 12 } style={ { marginTop: 20, marginBottom: 20 } }>
+            <Typography color='primary' variant='title'>
+              <FormattedMessage id='prefences.my.openforjobs' defaultMessage='Open For Jobs' />
+            </Typography>
+            <Checkbox
+              onClick={ this.handleJobsCheck }
+              checked={ this.state.openForJobs ? 'checked' : '' } />
+            &nbsp;
+            <label htmlFor='check_open_for_jobs'>
+              <Typography component='span' style={ { display: 'inline-block' } } color='default' variant='body2'>
+                <FormattedMessage id='preferences.jobs.checkbox' defaultMessage='Are you open for job opportunities?' />
+              </Typography>
+            </label>
           </Grid>
         </Grid>
       </Paper>

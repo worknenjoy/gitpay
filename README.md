@@ -1,7 +1,7 @@
 ![Gitpay](https://alexandremagno.net/wp-content/uploads/2019/05/gitpaydesigntop.png)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/398ca838e49e4db2a537feb5568e7a87)](https://app.codacy.com/app/alexanmtz/gitpay?utm_source=github.com&utm_medium=referral&utm_content=worknenjoy/gitpay&utm_campaign=badger)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
+[![Financial Contributors on Open Collective](https://opencollective.com/gitpay/all/badge.svg?label=financial+contributors)](https://opencollective.com/gitpay) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Percentage of issues still open")
 
@@ -13,7 +13,7 @@ https://gitpitch.com/worknenjoy/gitpay
 
 We have a slack channel to collaborate with solutions and to help you, and to be fun
 
-[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LWE1MzZlM2VhOGJhM2QyNmFhMjlhNzQyZjY0NjcwOGVlMGU1ZmIyMDZmOTEwOTBjNWU1ZTA0NjBlYjUyZGE2ZWU) 
+[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LTk1ZTlhMGJhOGJlOGJhNjgzNTJjM2QxMmNjM2M4Njk0YjllZDBiZDFjZTVlMzBiMzU0NTI3NjE2YWNhNjllOTQ) 
 
 ## What is Gitpay?
 
@@ -44,11 +44,13 @@ To run the test:
 
 `npm run test` (to run the tests)
 
-## Env to do some actions
+## Setup environment
 
 For fully integration with api services used by the platform, you will need the api keys. *You should make a copy of your `.env.example` to `.env`* with the right credentials. Please let me know if you need any of those to solve a issue (mail tarefas@gitpay.me)
 
 You can do this with: `cp .env.example .env`
+
+#### You need to run create the .env in order to run the project: `cp .env.example .env`
 
 ### Database
 
@@ -96,6 +98,15 @@ For exhaustive list of options available, refer `migration.js` in root directory
 
 Then you can access at http://localhost:8082
 
+## Translation
+
+Please don't change the translation files directly, they will be managed on Crowdin.
+The only thing you need to do is run 
+
+`npm run translate` 
+
+on front-end and use the React Intl (https://formatjs.io/docs/react-intl/) library to give id and default text to your strings.
+
 ## Docker
 
 ### Requirements
@@ -125,6 +136,7 @@ Then you can access at http://localhost:8082
 ### First timers
 Here you can start to learn how to create your first pull request and start to be a contributor:
 [https://github.com/worknenjoy/gitpay/issues/247](https://github.com/worknenjoy/gitpay/issues/247)
+- [Unnatii](https://github.com/unnatii )
 - [Prerna Verma]( https://github.com/PrernaVerma ) 
 - [I Gede Wicaksana]( https://github.com/wicaker ) 
 - [Luísa Barros]( https://github.com/luisabfs )
@@ -134,6 +146,43 @@ Here you can start to learn how to create your first pull request and start to b
 - [Siso]( https://github.com/sisohs ) 
 - [Amrut]( https://github.com/amrut07 )
 - [Usman Sakirat Kehinde]( https://github.com/oyinkan )
+- [Qiwei]( https://github.com/qiweiii )
+- [Adam Ash](https://github.com/adamash99) 
+- [Shawn Noruzi]( https://github.com/shawn-noruzi )
+- [Ssentongo Alex]( https://github.com/aleku399 )
+- [Onamade Okikioluwa]( https://github.com/khoded)
+- [Basukinath Tiwari](https://github.com/basuki57)
+
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/worknenjoy/gitpay/graphs/contributors"><img src="https://opencollective.com/gitpay/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/gitpay/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/gitpay"><img src="https://opencollective.com/gitpay/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/gitpay/contribute)]
+
+<a href="https://opencollective.com/gitpay/organization/0/website"><img src="https://opencollective.com/gitpay/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/1/website"><img src="https://opencollective.com/gitpay/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/2/website"><img src="https://opencollective.com/gitpay/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/3/website"><img src="https://opencollective.com/gitpay/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/4/website"><img src="https://opencollective.com/gitpay/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/5/website"><img src="https://opencollective.com/gitpay/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/6/website"><img src="https://opencollective.com/gitpay/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/7/website"><img src="https://opencollective.com/gitpay/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/8/website"><img src="https://opencollective.com/gitpay/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/gitpay/organization/9/website"><img src="https://opencollective.com/gitpay/organization/9/avatar.svg"></a>
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_large)

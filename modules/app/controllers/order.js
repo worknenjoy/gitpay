@@ -5,6 +5,7 @@ const orderUpdate = require('../../orders').orderUpdate
 const orderPayment = require('../../orders').orderPayment
 const orderCancel = require('../../orders').orderCancel
 const orderDetails = require('../../orders').orderDetails
+const orderTransfer = require('../../orders').orderTransfer
 
 exports.createOrder = (req, res) => {
   orderBuild(req.body)
@@ -44,7 +45,7 @@ exports.detailsOrder = (req, res) => {
 }
 
 exports.listOrders = (req, res) => {
-  orderSearch()
+  orderSearch(req.query)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -87,6 +88,19 @@ exports.paymentOrder = (req, res) => {
     }).catch(error => {
     // eslint-disable-next-line no-console
       console.log(error)
+      res.status(401).send(error)
+    })
+}
+
+exports.transferOrder = (req, res) => {
+  orderTransfer(req.params, req.body)
+    .then(data => {
+      // eslint-disable-next-line no-console
+      console.log('data sent from transfer order', data)
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on transfer order', error)
       res.status(401).send(error)
     })
 }

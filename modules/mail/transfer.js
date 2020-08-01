@@ -8,7 +8,8 @@ const TransferMail = {
   notifyOwner: (to, task, value) => {},
   error: (to, task, value) => {},
   paymentForInvalidAccount: (to) => {},
-  futurePaymentForInvalidAccount: (to) => {}
+  futurePaymentForInvalidAccount: (to) => {},
+  transferBounty: (order, taskFrom, taskTo, user) => {}
 }
 
 if (constants.canSendEmail) {
@@ -23,7 +24,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.transfer.new.message.success', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
+          <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -41,7 +42,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.transfer.notify.message.success', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
+          <p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -59,7 +60,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-          <p>${i18n.__('mail.transfer.error.message', { value: value, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
+          <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]
@@ -96,6 +97,30 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.transfer.invalid.message')}</p>
+          <p>${Signatures.sign(language)}</p>`
+        },
+      ]
+    )
+  }
+
+  TransferMail.transferBounty = (order, taskFrom, taskTo, user) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
+    request(
+      to,
+      i18n.__('mail.transfer.bounty.subject'),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>${i18n.__('mail.transfer.bounty.message', {
+    taskFromTitle: taskFrom.title,
+    taskFromUrl: taskFrom.url,
+    taskToTitle: taskTo.title,
+    taskToUrl: taskTo.url,
+    amount: order.amount
+  })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]

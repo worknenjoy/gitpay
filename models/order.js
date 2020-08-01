@@ -1,3 +1,5 @@
+const comment = require('../modules/bot/comment')
+
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define('Order', {
     source_id: DataTypes.STRING,
@@ -12,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     token: DataTypes.STRING,
     authorization_id: DataTypes.STRING,
     transfer_id: DataTypes.STRING,
+    transfer_group: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       defaultValue: 'open'
@@ -31,10 +34,19 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         Order.belongsTo(models.User, { foreignKey: 'userId' })
         Order.belongsTo(models.Task, { foreignKey: 'TaskId' })
+        Order.hasOne(models.Plan, { foreignKey: 'OrderId' })
       }
     },
     instanceMethods: {
 
+    },
+    hooks: {
+      afterUpdate: async (instance, options) => {
+        if (instance.paid) {
+          const task = await sequelize.models.Task.findById(instance.TaskId)
+          await comment(instance, task)
+        }
+      }
     }
   })
 

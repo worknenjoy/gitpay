@@ -14,7 +14,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     listTasks: () => dispatch(listTasks()),
-    filterTasks: (tasks, key, value) => dispatch(filterTasks(tasks, key, value))
+    filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional))
   }
 }
 

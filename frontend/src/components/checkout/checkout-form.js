@@ -64,16 +64,15 @@ class CheckoutForm extends Component {
           try {
             this.props.onPayment({
               id: this.props.task,
-              Orders: [
-                {
-                  source_id: token.id,
-                  currency: 'usd',
-                  provider: 'stripe',
-                  amount: this.props.itemPrice,
-                  email: this.state.email,
-                  userId: this.state.userId
-                }
-              ]
+              Orders: {
+                source_id: token.id,
+                currency: 'usd',
+                provider: 'stripe',
+                amount: this.props.price,
+                email: this.state.email,
+                userId: this.state.userId,
+                plan: this.props.plan
+              }
             })
             this.props.onClose()
           }
@@ -139,7 +138,7 @@ class CheckoutForm extends Component {
         onChange={ this.onChange }
         style={ { marginTop: 20 } }
       >
-        <Grid container spacing={ 24 }>
+        <Grid container spacing={ 3 }>
           <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
             { logged ? (
               <div>
@@ -148,7 +147,7 @@ class CheckoutForm extends Component {
                     <Typography variant='caption'>
                       <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
                     </Typography>
-                    <Typography variant='subheading'>
+                    <Typography variant='body1'>
                       { `${this.state.fullname} (${this.state.email})` }
                     </Typography>
                   </div>
@@ -174,7 +173,7 @@ class CheckoutForm extends Component {
                 color='secondary'
                 disabled={ this.state.paymentRequested }
               >
-                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay $ {price}' values={ { price: this.props.itemPrice } } />
+                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: this.props.formatedPrice } } />
               </Button>
             </div>
           </Grid>
@@ -190,7 +189,8 @@ CheckoutForm.propTypes = {
   task: PropTypes.any,
   onClose: PropTypes.func,
   addNotification: PropTypes.func,
-  itemPrice: PropTypes.any,
+  price: PropTypes.any,
+  priceAfterFee: PropTypes.string,
   user: PropTypes.object
 }
 

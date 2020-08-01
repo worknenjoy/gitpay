@@ -1,6 +1,8 @@
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // Minify hangs in 92% when build in production, so now we are testing the uglify above
 // const MinifyPlugin = require('babel-minify-webpack-plugin')
 
@@ -8,11 +10,24 @@ module.exports = {
   mode: 'production',
   optimization: {
     minimizer: [new UglifyJsPlugin()],
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      // minimum chunk size 30KB
+      minSize: 30000,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/](@material-ui)[\\/]/,
+          name: 'vendor'
+        },
+      },
+    },
   },
   entry: './src/index.js',
   output: {
     path: `${__dirname}/public`,
-    filename: './app.js'
+    filename: '[name].[hash].js'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -23,7 +38,14 @@ module.exports = {
   },
   plugins: [
     // new MinifyPlugin(),
-    new ExtractTextPlugin('app.css'),
+    new HtmlWebpackPlugin({
+      filename: `${__dirname}/public/index.html`,
+      template: 'src/index.html',
+      chunksSortMode: 'none'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'app.css'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
@@ -31,6 +53,9 @@ module.exports = {
         'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY),
         'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK)
       }
+    }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['!favicon-gitpay.ico']
     })
   ],
   module: {
@@ -39,12 +64,12 @@ module.exports = {
       loader: 'babel-loader',
       exclude: /node_modules/,
       query: {
-        presets: ['es2015', 'react'],
+        presets: [['es2015', { 'modules': false }], 'react'],
         plugins: ['transform-object-rest-spread', 'transform-class-properties']
       }
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
+      use: [MiniCssExtractPlugin.loader, 'css-loader']
     }, {
       test: /\.(woff|woff2|ttf|eot|svg)$/,
       loader: 'file-loader'

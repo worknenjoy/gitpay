@@ -52,6 +52,14 @@ const messages = defineMessages({
   noDefined: {
     id: 'task.table.date.none',
     defaultMessage: 'Not yet defined'
+  },
+  noBounty: {
+    id: 'task.table.value.none',
+    defaultMessage: 'No bounty added'
+  },
+  onHoverTaskProvider: {
+    id: 'task.table.onHover',
+    defaultMessage: 'See on'
   }
 })
 
@@ -59,7 +67,7 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5,
+    marginLeft: theme.spacing(2.5),
   },
 })
 
@@ -137,7 +145,7 @@ const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { wit
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
   },
   table: {
     minWidth: 500
@@ -208,11 +216,10 @@ class CustomPaginationActionsTable extends React.Component {
                             <div>
                               { n.User.profile_url
                                 ? (
-                                  <a style={ { display: 'flex', alignItems: 'center', height: 20 } } target='_blank'
+                                  <a style={ { display: 'flex', alignItems: 'center' } } target='_blank'
                                     href={ n.User.profile_url }>
                                     <Avatar
                                       src={ n.User.picture_url }
-                                      style={ { width: 24, height: 24, display: 'inline-block' } }
                                     />
                                     <span style={ { marginLeft: 10 } }>
                                       { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
@@ -220,10 +227,7 @@ class CustomPaginationActionsTable extends React.Component {
                                   </a>
                                 ) : (
                                   <div style={ { display: 'flex', alignItems: 'center', height: 20 } }>
-                                    <Avatar
-                                      src={ n.User.picture_url }
-                                      style={ { width: 24, height: 24, display: 'inline-block' } }
-                                    />
+                                    <Avatar />
                                     <span style={ { marginLeft: 10 } }>
                                       { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
                                     </span>
@@ -241,10 +245,10 @@ class CustomPaginationActionsTable extends React.Component {
                       <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
                         <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
                           <a style={ { cursor: 'pointer' } } onClick={ () => this.handleClickListItem(n.id) }>
-                            { TextEllipsis(`${n.title || 'sem título'}`, 30) }
+                            { TextEllipsis(`${n.title || 'no title'}`, 30) }
                           </a>
                           <a target='_blank' href={ n.url }>
-                            <Tooltip id='tooltip-fab' title={ `Ver no ${n.provider}` } placement='top'>
+                            <Tooltip id='tooltip-fab' title={ `${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` } placement='top'>
                               <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
                             </Tooltip>
                           </a>
@@ -256,8 +260,8 @@ class CustomPaginationActionsTable extends React.Component {
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 5 } }>
-                        <div style={ { width: 40 } }>
-                          { n.value ? `$ ${n.value}` : '$ 0' }
+                        <div style={ { width: 70, textAlign: 'center' } }>
+                          { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
                         </div>
                       </TableCell>
                       <TableCell numeric style={ { padding: 0 } }>

@@ -21,7 +21,7 @@ class Notification extends Component {
         open={ this.props.open }
         onClose={ this.props.onClose }
         autoHideDuration={ 6000 }
-        SnackbarContentProps={ {
+        snackbarcontentprops={ {
           'aria-describedby': 'message-id'
         } }
         message={ <span id='message-id'>{ this.props.message }</span> }

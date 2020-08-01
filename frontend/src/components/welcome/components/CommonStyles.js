@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
-import fallbackBackgroundPicture from 'app/images/Fallback.png'
+import mainBackground from '../../../images/backgrounds/bg-mail-top.png'
 
-import media from 'app/styleguide/media'
+import media from '../../../styleguide/media'
 
 export const MainTitle = styled.div`
   text-align: center;
@@ -17,6 +17,11 @@ export const MainTitle = styled.div`
 
   ${props => props.left && `
     margin-right: 18%;
+  `}
+
+  ${props => props.center && `
+    margin-right: 5%;
+    width: 70%;
   `}
 
   ${media.phone`
@@ -61,9 +66,14 @@ export const InfoList = styled.div`
 
 export const MainBanner = styled.div`
   box-sizing: border-box;
-  padding: 3rem 1rem 4rem 1rem;
-  background: url(${fallbackBackgroundPicture}), url('https://source.unsplash.com/1433x680/?developers');
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: url(${mainBackground});
   background-size: cover;
+  ${media.phone`
+    background: none;
+    background-color: black;
+  `}
 `
 
 export const Section = styled.div`

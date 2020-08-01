@@ -40,8 +40,8 @@ import InfoContainer from '../../containers/info'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
 import Pricing from './pricing'
+import Clientlist from './clientlist'
 import messages from './messages'
-import OurStack from './components/OurStack'
 import mainStyles from '../styles/style'
 import SubscribeForm from '../form/subscribe-form'
 
@@ -51,6 +51,7 @@ const teamImage = require('../../images/welcome-teamwork.png')
 const appSnapshotImage = require('../../images/gitpay-app.png')
 const citySoftware = require('../../images/city-software.png')
 const deal = require('../../images/deal.png')
+const logo = require('../../images/gitpay-logo.png')
 
 import {
   MainTitle,
@@ -124,6 +125,7 @@ class Welcome extends Component {
 
     const {
       intro,
+      clients,
       contrib,
       companies,
       collab,
@@ -134,24 +136,27 @@ class Welcome extends Component {
     } = this.positions
 
     if (offsetPostion >= getStarted) {
-      this.setState({ value: 7 })
+      this.setState({ value: 8 })
     }
     else if (offsetPostion >= integrations) {
-      this.setState({ value: 6 })
+      this.setState({ value: 7 })
     }
     else if (offsetPostion >= pricing) {
-      this.setState({ value: 5 })
+      this.setState({ value: 6 })
     }
     else if (offsetPostion >= howItWorks) {
-      this.setState({ value: 4 })
+      this.setState({ value: 5 })
     }
     else if (offsetPostion >= collab) {
-      this.setState({ value: 3 })
+      this.setState({ value: 4 })
     }
     else if (offsetPostion >= companies) {
+      this.setState({ value: 3 })
+    }
+    else if (offsetPostion >= contrib) {
       this.setState({ value: 2 })
     }
-    else if (offsetPostion >= contrib - 35) {
+    else if (offsetPostion >= clients) {
       this.setState({ value: 1 })
     }
     else if (offsetPostion >= intro) {
@@ -164,7 +169,7 @@ class Welcome extends Component {
 
     return (
       <div className={ classes.root }>
-        <TopBarContainer ref='intro' />
+        <TopBarContainer ref='intro' hide />
         <AppBar position='sticky' color='default'>
           <Tabs
             variant='scrollable'
@@ -178,78 +183,73 @@ class Welcome extends Component {
               label={ this.props.intl.formatMessage(messages.topMenu1) }
             />
             <Tab
-              id='contrib'
+              id='clients'
               value={ 1 }
+              label={ this.props.intl.formatMessage(messages.topMenu9) }
+            />
+            <Tab
+              id='contrib'
+              value={ 2 }
               label={ this.props.intl.formatMessage(messages.topMenu2) }
             />
             <Tab
               id='companies'
-              value={ 2 }
+              value={ 3 }
               label={ this.props.intl.formatMessage(messages.topMenu3) }
             />
             <Tab
               id='collab'
-              value={ 3 }
+              value={ 4 }
               label={ this.props.intl.formatMessage(messages.topMenu4) }
             />
             <Tab
               id='how-it-works'
-              value={ 4 }
+              value={ 5 }
               label={ this.props.intl.formatMessage(messages.topMenu5) }
             />
             <Tab
               id='pricing'
-              value={ 5 }
+              value={ 6 }
               label={ this.props.intl.formatMessage(messages.topMenu6) }
             />
             <Tab
               id='integrations'
-              value={ 6 }
+              value={ 7 }
               label={ this.props.intl.formatMessage(messages.topMenu7) }
             />
             <Tab
               id='get-started'
-              value={ 7 }
+              value={ 8 }
               label={ this.props.intl.formatMessage(messages.topMenu8) }
             />
           </Tabs>
         </AppBar>
         <MainBanner>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
               <div
                 className={ classes.mainBlock }
-                style={ { margin: 0, paddingTop: 10 } }
+                style={ { margin: 0, paddingTop: 2 } }
               >
+                <img width={ 240 } src={ logo } />
                 <Typography className={ classes.tagline } gutterBottom>
                   <FormattedMessage
                     id='welcome.tagline'
-                    defaultMessage='Welcome to Gitpay'
+                    defaultMessage='A worldwide community of contributors working in projects on demmand'
                   />
                 </Typography>
-                <Typography variant='h6' gutterBottom>
-                  <FormattedMessage
-                    id='welcome.tagline1'
-                    defaultMessage='Work in tasks on demand'
-                  />
-                </Typography>
-                <Typography type='subtitle1' gutterBottom noWrap>
-                  <FormattedHTMLMessage
-                    id='welcome.tagline2'
-                    defaultMessage='and receive bounty for your contributions'
-                  />
-                </Typography>
+                <InfoContainer />
                 { !logged &&
                 <Button
-                  variant='raised'
+                  variant='contained'
                   color='secondary'
-                  size='large'
+                  size='big'
                   onClick={ (e) => this.props.openDialog('SignupUser') }
                   style={ { marginTop: 20 } }
                 >
                   <FormattedMessage
                     id='general.singup.action'
-                    defaultMessage='Signin / Signup'
+                    defaultMessage='Get started'
                   />
                 </Button>
                 }
@@ -259,10 +259,10 @@ class Welcome extends Component {
               </div>
               <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
                 { !logged ? (
-                  <LoginButton referer={ location } contrast includeForm={ false } />
+                  <LoginButton hideExtra size='small' referer={ location } contrast includeForm={ false } />
                 ) : (
                   <Button
-                    variant='raised'
+                    variant='contained'
                     color='secondary'
                     size='large'
                     onClick={ (e) => window.location.assign('/#/profile') }
@@ -270,26 +270,27 @@ class Welcome extends Component {
                   >
                     <FormattedMessage
                       id='general.singup.access'
-                      defaultMessage='Access your account'
+                      defaultMessage='Go to your dashboard'
                     />
                   </Button>
                 )
                 }
               </div>
-              <InfoContainer />
-              <OurStack />
             </Grid>
           </Grid>
         </MainBanner>
+        <Section ref='clients'>
+          <Clientlist />
+        </Section>
 
         <Section ref='contrib'>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
                     id='welcome.headline.forfreelancers'
-                    defaultMessage='For freelancers'
+                    defaultMessage='What we can do for contributors'
                   />
                 </Typography>
               </MainTitle>
@@ -352,13 +353,13 @@ class Welcome extends Component {
         </Section>
 
         <Section ref='companies' alternative className={ classes.bgContrast }>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
                     id='welcome.tagline.companies.main.headline'
-                    defaultMessage='For companies'
+                    defaultMessage='What we can do for organizations'
                   />
                 </Typography>
               </MainTitle>
@@ -419,13 +420,13 @@ class Welcome extends Component {
         </Section>
 
         <Section ref='collab'>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
                     id='welcome.headline.collab'
-                    defaultMessage='For collaboration'
+                    defaultMessage='A place for collaboration'
                   />
                 </Typography>
               </MainTitle>
@@ -490,11 +491,11 @@ class Welcome extends Component {
             <Typography variant='h5' gutterBottom>
               <FormattedMessage
                 id='welcome.tagline.headline.how.title'
-                defaultMessage='How it works'
+                defaultMessage='This is our workflow'
               />
             </Typography>
           </MainTitle>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
               <ResponsiveImage width='400' src={ deal } />
             </Grid>
@@ -545,7 +546,7 @@ class Welcome extends Component {
                   <Divider />
                   <ListItem className={ classes.listIconTop }>
                     <ListItemIcon>
-                      <BugReport />
+                      <Work />
                     </ListItemIcon>
                     <ListItemText
                       primary={ this.props.intl.formatMessage(
@@ -567,25 +568,25 @@ class Welcome extends Component {
         </Section>
 
         <Section ref='integrations' className={ classes.gutterBottomBig }>
-          <Grid container spacing={ 24 }>
+          <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 4 } className={ classes.alignRight }>
               <div className={ classes.gutterTop }>
                 <Typography variant='h6' gutterBottom>
                   <FormattedMessage
                     id='welcome.integration.title'
-                    defaultMessage='Integration'
+                    defaultMessage='Integrations'
                   />
                 </Typography>
                 <Typography variant='h4' gutterBottom>
                   <FormattedMessage
                     id='welcome.integration.subtitle'
-                    defaultMessage='Check out our Github app'
+                    defaultMessage='We can connect your repository to Gitpay by installing our Github app'
                   />
                 </Typography>
-                <Typography variant='subtitle1' gutterBottom>
+                <Typography variant='body1' gutterBottom>
                   <FormattedMessage
                     id='welcome.integration.desc'
-                    defaultMessage='You can install our Gitpay app on your Github and start to boost your issues'
+                    defaultMessage='Once installed, your issues will be managed by Gitpay, and you can add funds and it will be solved by our community'
                   />
                 </Typography>
                 <Button
@@ -609,7 +610,6 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-
         <Section
           ref='get-started'
           style={ {
@@ -625,7 +625,7 @@ class Welcome extends Component {
           <Typography variant='h6' gutterBottom style={ { padding: '0 60px' } }>
             <FormattedHTMLMessage
               id='welcome.bottom.call'
-              defaultMessage='A better way to build your project, <br /> a better way to work in projects'
+              defaultMessage='A better way to build your project, a better way to work in projects'
             />
           </Typography>
           <Button
@@ -651,11 +651,10 @@ class Welcome extends Component {
           >
             <FormattedMessage
               id='welcome.bottom.linkAlt'
-              defaultMessage='See our docs'
+              defaultMessage='See our documentation'
             />
           </Button>
         </Section>
-
         <Bottom />
       </div>
     )

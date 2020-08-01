@@ -8,15 +8,21 @@ router.get('/fetch/:id', controllers.fetchTask)
 router.get('/:id/sync/:field', controllers.syncTask)
 router.get('/list', controllers.listTasks)
 router.post('/:id/invite/', controllers.inviteUserToTask)
+router.post('/:id/funding/', controllers.inviteToFundingTask)
 router.put('/update', controllers.updateTask)
+router.post('/:id/report', controllers.reportTask)
 
 router.use(secure)
 router.post('/:id/message/', controllers.messageInterestedToTask)
+router.post('/:id/message/author', controllers.messageAuthor)
+
 router.post('/create', controllers.createTask)
 router.post('/payments', controllers.paymentTask)
 router.delete('/delete/:id', controllers.deleteTaskById)
+router.get('/delete/:taskId/:userId', controllers.deleteTaskFromReport)
 
-// Assignment routes
 router.put('/:id/assignment/remove', controllers.removeAssignedUser)
+router.put('/assignment/request', controllers.assignedUser)
+router.post('/assignment/request', controllers.requestAssignedUser)
 
 module.exports = router

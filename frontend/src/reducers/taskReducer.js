@@ -24,10 +24,16 @@ import {
   INVITE_TASK_REQUESTED,
   INVITE_TASK_SUCCESS,
   INVITE_TASK_ERROR,
+  MESSAGE_AUTHOR_REQUESTED,
+  MESSAGE_AUTHOR_SUCCESS,
+  MESSAGE_AUTHOR_ERROR,
   SYNC_TASK_REQUESTED,
   SYNC_TASK_SUCCESS,
   SYNC_TASK_ERROR,
-  CHANGE_TASK_TAB
+  CHANGE_TASK_TAB,
+  FUNDING_INVITE_TASK_REQUESTED,
+  FUNDING_INVITE_TASK_SUCCESS,
+  FUNDING_INVITE_TASK_ERROR
 } from '../actions/taskActions'
 
 import {
@@ -107,6 +113,20 @@ export const task = (state = {
     case INVITE_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
 
+    case MESSAGE_AUTHOR_REQUESTED:
+      return { ...state, completed: false }
+    case MESSAGE_AUTHOR_SUCCESS:
+      return { ...state, completed: true }
+    case MESSAGE_AUTHOR_ERROR:
+      return { ...state, completed: true, error: action.error }
+
+    case FUNDING_INVITE_TASK_REQUESTED:
+      return { ...state, completed: false }
+    case FUNDING_INVITE_TASK_SUCCESS:
+      return { ...state, completed: true }
+    case FUNDING_INVITE_TASK_ERROR:
+      return { ...state, completed: true, error: action.error }
+
     case ASSIGN_TASK_REQUESTED:
       return { ...state, completed: false }
     case ASSIGN_TASK_SUCCESS:
@@ -162,7 +182,8 @@ export const tasks = (state = {
   },
   data: [],
   filterType: 'all',
-  filterValue: null
+  filterValue: null,
+  filterAdditional: null
 }, action) => {
   switch (action.type) {
     case LIST_TASK_REQUESTED:
@@ -174,7 +195,7 @@ export const tasks = (state = {
     case FILTER_TASK_REQUESTED:
       return { ...state, completed: false }
     case FILTER_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data, filterType: action.filterType, filterValue: action.filterValue }
+      return { ...state, completed: true, data: action.data, filterType: action.filterType, filterValue: action.filterValue, filterAdditional: action.filterAdditional }
     default:
       return state
   }

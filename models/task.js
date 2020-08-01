@@ -37,6 +37,11 @@ module.exports = (sequelize, DataTypes) => {
         Task.hasMany(models.Assign, { foreignKey: 'TaskId' })
         Task.hasMany(models.Offer, { foreignKey: 'taskId' })
         Task.hasMany(models.Member, { foreignKey: 'taskId' })
+        Task.belongsToMany(models.Label, { foreignKey: 'taskId',
+          otherKey: 'labelId',
+          through: 'TaskLabels',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE' })
       }
     },
     instanceMethods: {

@@ -12,6 +12,8 @@ const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
 const spies = require('chai-spies')
 const AssignMail = require('../modules/mail/assign')
+const TaskMail = require('../modules/mail/task')
+const taskUpdate = require('../modules/tasks/taskUpdate')
 
 describe("tasks", () => {
   // API rate limit exceeded
@@ -25,7 +27,7 @@ describe("tasks", () => {
 
   const buildTask = (params) => {
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-    return models.Task.create({ userId: params.userId, url: github_url, provider: 'github' })
+    return models.Task.create({ userId: params.userId, url: github_url, provider: 'github', title: params.title || "Issue 76!" })
   }
 
   beforeEach(() => {
@@ -132,6 +134,21 @@ describe("tasks", () => {
       })
     })
 
+    it('should try to create an invalid task', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .post('/tasks/create/')
+          .send({url: 'https://github.com/worknenjoy/truppie/issues/test', provider: 'github'})
+          .set('Authorization', res.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(400);
+            done();
+          })
+      })
+    })
+
     it('should create a new task with one member', (done) => {
       registerAndLogin(agent).then(res => {
         agent
@@ -214,26 +231,42 @@ describe("tasks", () => {
         .expect(401)
         .end((err, res) => {
           expect(res.statusCode).to.equal(401);
+          expect(res.body.error).to.equal('bad_verification_code');
           expect(res.body).to.exist
           done();
         })
     })
 
     it('should receive code on the platform from github auth to the redirected url for private tasks with a valid code', (done) => {
+
+      // https://api.github.com/repos/alexanmtz/festifica/issues/1                                     │
+
       nock('https://github.com')
-        .get(`/login/oauth/access_token/?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}&code=eb518274e906c68580f7`)
-        .reply(200, {url: 'foo'})
+        .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
+        .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
+        .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
       nock('https://api.github.com')
-        .get(`/repos/alexanmtz/festifica/issues/1`)
+        .get('/repos/alexanmtz/festifica/issues/1')
         .reply(200, sampleIssue.issue)
+        .get('/users/alexanmtz')
+        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+        .reply(200, {email: 'test@gmail.com'})
       agent
-        .get('/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7')
+        .post('/auth/register')
+        .send({email: 'teste@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
-          //expect(res.body.access_token).to.equal("e72e16c7e42f292c6912e7710c838347ae178b4a")
-          expect(res.body.url).to.equal('foo')
-          done();
+          expect(res.body).to.exist;
+          const userId = res.body.id
+        agent
+          .get(`/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(302);
+            done();
+          })
         })
     })
 
@@ -574,20 +607,7 @@ describe("tasks", () => {
       })
     })
 
-    it('should only delete own task', async () => {
-      const firstUser = await register(agent, {email: 'owntask@example.com', password: '1234'}) 
-      const task = await buildTask({ userId: firstUser.id })
-      const res = await registerAndLogin(agent)
-      await agent
-        .delete(`/tasks/delete/${task.id}`)
-        .set('Authorization', res.headers.authorization)
-        .expect(200)
-      expect(
-        await models.Task.findById(task.id)
-      ).to.be.ok
-    })
-
-    it('should delete task', (done) => {
+    it('should only delete own task', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
           agent
@@ -601,6 +621,22 @@ describe("tasks", () => {
           }) 
         })
       })
+    })
+
+    it('should send message to the author', async () => {
+      chai.use(spies);
+      const mailSpySuccess = chai.spy.on(TaskMail, 'messageAuthor')
+      const firstUser = await register(agent, {email: 'owntask@gitpay.me', password: '1234'}) 
+      const task = await buildTask({ userId: firstUser.body.id })
+      const res = await registerAndLogin(agent)
+      await agent
+        .post(`/tasks/${task.id}/message/author`)
+        .send({
+          message: 'foo message'
+        })
+        .set('Authorization', res.headers.authorization)
+        .expect(200)
+        expect(mailSpySuccess).to.have.been.called()
     })
 });
 
@@ -648,5 +684,147 @@ describe("tasks", () => {
         });
       })
     });
+
+  })
+
+  describe('assigned user to a task', () => {
+
+    it('should send email for a user interested to and user accept',(done) => {
+      // create user, login and task
+      register(agent, {name: "Task Owner", email: 'owner@example.com', password: '1234'}).then(({body: {id}}) => {
+        const ownerId = id
+        buildTask({ userId: ownerId, title: 'Test Title!' }).then( (task) => {
+        const taskId = task.id
+
+        register(agent, {name: "Assigned User", email: 'assigned@example.com', password: '1234'}).then( ({body: {id}}) => {
+          const userToBeAssignedId = id
+
+          login(agent, {email: 'owner@example.com', password: '1234'}).then(logged => {
+
+            // create Offer and Assign for task
+            taskUpdate({id: taskId, Offer: {userId: userToBeAssignedId, taskId, value: 101}}).then(res => {
+
+              // get Assign ID
+              models.Assign.findAll({where: {TaskId: res.id}}).then(res => {
+              const assignId  = res[0].dataValues.id
+
+              // assign user to a task 
+              agent
+                .post('/tasks/assignment/request/')
+                .set('Authorization', logged.headers.authorization)
+                .send({
+                  assignId,
+                  taskId
+                })
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+
+                  // send token rejecting task as send by web
+                  agent
+                    .put(`/tasks/assignment/request/`)
+                    .set('Authorization', logged.headers.authorization)
+                    .send({
+                      assignId,
+                      taskId,
+                      confirm: true
+                    })
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+
+                    // check if Task updated correctly
+                    models.Task.findAll({
+                      include: { all: true}
+                      }
+                      ).then( res => {
+                        const assign = res[0].Assigns[0]
+                        const offer = res[0].Offers[0]
+                        const task = res[0]
+                        expect(assign.status).to.equal('accepted')
+                        expect(task.status).to.equal('in_progress')
+                        expect(offer.userId).to.equal(userToBeAssignedId)
+                        expect(offer.taskId).to.equal(taskId)
+                        expect(assign.userId).to.equal(userToBeAssignedId)
+                        expect(assign.TaskId).to.equal(taskId)
+                        done()
+                      })
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+
+    it('should send email for a user interested to and user rejected ',(done) => {
+      // create user, login and task
+      register(agent, {name: "Task Owner", email: 'owner@example.com', password: '1234'}).then(({body: {id}}) => {
+        const ownerId = id
+        buildTask({ userId: ownerId, title: 'Test Title!' }).then( (task) => {
+        const taskId = task.id
+
+        register(agent, {name: "Assigned User", email: 'assigned@example.com', password: '1234'}).then( ({body: {id}}) => {
+          const userToBeAssignedId = id
+
+          login(agent, {email: 'owner@example.com', password: '1234'}).then(logged => {
+
+            // create Offer and Assign for task
+            taskUpdate({id: taskId, Offer: {userId: userToBeAssignedId, taskId, value: 101}}).then(res => {
+
+              // get Assign ID
+              models.Assign.findAll({where: {TaskId: res.id}}).then(res => {
+              const assignId  = res[0].dataValues.id
+
+              // assign user to a task 
+              agent
+                .post('/tasks/assignment/request/')
+                .set('Authorization', logged.headers.authorization)
+                .send({
+                  assignId,
+                  taskId
+                })
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+
+                  // send token rejecting task as send by web
+                  agent
+                    .put(`/tasks/assignment/request/`)
+                    .set('Authorization', logged.headers.authorization)
+                    .send({
+                      assignId,
+                      taskId,
+                      confirm: false,
+                      message: 'reject message'
+                    })
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+
+                    // check if Task updated correctly
+                    models.Task.findAll({
+                      include: { all: true}
+                      }
+                      ).then( res => {
+                        const assign = res[0].Assigns[0]
+                        const task = res[0]
+                        expect(assign.status).to.be.equal('rejected')
+                        expect(assign.message).to.equal('reject message')
+                        expect(task.status).to.be.equal('open')
+                        done()
+                      })
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+
   })
 });

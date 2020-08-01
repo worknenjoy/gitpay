@@ -59,8 +59,8 @@ import {
   IconHamburger
 } from './TopbarStyles'
 
-import messagesBr from '../../translations/result/br.json'
-import messagesEn from '../../translations/result/en.json'
+import messagesBr from '../../translations/generated/br.json'
+import messagesEn from '../../translations/generated/en.json'
 
 import LoginButton from '../session/login-button'
 
@@ -302,9 +302,11 @@ class TopBar extends Component {
       <Bar>
         <Container>
           <LeftSide isActive={ this.state.isActive }>
-            <StyledButton href='/'>
-              <Logo src={ logo } />
-            </StyledButton>
+            <div style={ { display: this.props.hide ? 'none' : 'block' } }>
+              <StyledButton href='/'>
+                <Logo src={ logo } />
+              </StyledButton>
+            </div>
 
             <MenuMobile
               onClick={ this.handleClickMenuMobile }
@@ -461,7 +463,7 @@ class TopBar extends Component {
                         <Button
                           style={ { marginRight: 10 } }
                           color='primary'
-                          variant={ this.state.provider === 'github' ? 'raised' : 'outline' }
+                          variant={ this.state.provider === 'github' ? 'contained' : 'outline' }
                           id='github'
                           onClick={ (e) => this.handleProvider(e, 'github') }
                         >
@@ -471,7 +473,7 @@ class TopBar extends Component {
 
                         <Button
                           color='primary'
-                          variant={ this.state.provider === 'bitbucket' ? 'raised' : 'outline' }
+                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outline' }
                           id='bitbucket'
                           onClick={ (e) => this.handleProvider(e, 'bitbucket') }
                         >
@@ -641,6 +643,7 @@ TopBar.propTypes = {
   signOut: PropTypes.func,
   logged: PropTypes.bool,
   completed: PropTypes.bool,
+  hide: PropTypes.bool
 }
 
 export default withRouter(withStyles(styles)(TopBar))

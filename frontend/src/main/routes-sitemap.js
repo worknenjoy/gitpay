@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom'
 export default (
   <Route>
     <Route exact path='/' />
+    <Route path='/recruitment' />
     <Redirect path='/tasks/explore' to='/tasks/open' />
     <Route path='/tasks/createdbyme' />
     <Route path='/tasks/interested' />

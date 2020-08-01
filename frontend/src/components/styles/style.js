@@ -9,13 +9,13 @@ const styles = theme => ({
     textAlign: 'left'
   },
   gutterTop: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing(2)
   },
   gutterTopSmall: {
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing(1)
   },
   gutterBottomBig: {
-    marginBottom: theme.spacing.unit * 3
+    marginBottom: theme.spacing(3)
   },
   bgContrast: {
     backgroundColor: '#D1DDE9'
@@ -42,19 +42,19 @@ const styles = theme => ({
     marginRight: 5
   },
   button: {
-    margin: theme.spacing.unit,
-    padding: [theme.spacing.unit * 2, theme.spacing.unit * 4],
+    margin: theme.spacing(1),
+    padding: [theme.spacing(2), theme.spacing(4)],
     color: 'white'
   },
   altButton: {
-    margin: [theme.spacing.unit],
-    padding: [theme.spacing.unit / 2, theme.spacing.unit * 6],
+    margin: [theme.spacing(1)],
+    padding: [theme.spacing(0.5), theme.spacing(6)],
     color: 'white',
     fontSize: 12
   },
   mainBlock: {
     textAlign: 'center',
-    padding: 8,
+    padding: 12,
     color: theme.palette.text.primary
   },
   secBlock: {
@@ -70,11 +70,11 @@ const styles = theme => ({
     alignItems: 'flex-start'
   },
   spacedTop: {
-    marginTop: 20
+    marginTop: 10
   },
   tagline: {
-    fontSize: 36,
-    color: 'black'
+    fontSize: 18,
+    color: 'white'
   }
 })
 

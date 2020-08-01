@@ -41,6 +41,14 @@ const msgs = defineMessages({
     id: 'consts.account.lastname',
     defaultMessage: 'Last name'
   },
+  email: {
+    id: 'consts.account.email',
+    defaultMessage: 'E-mail'
+  },
+  phone: {
+    id: 'consts.account.phone',
+    defaultMessage: 'Phone number'
+  },
   idNumber: {
     id: 'consts.account.id.number',
     defaultMessage: 'document number'
@@ -112,6 +120,10 @@ const msgs = defineMessages({
   statusBusinessType: {
     id: 'consts.account.statuses.business_type',
     defaultMessage: 'Business type'
+  },
+  statusBusinessTypeMCC: {
+    id: 'consts.account.statuses.business_type.mcc',
+    defaultMessage: 'MCC Bksiness type'
   }
 })
 
@@ -123,6 +135,8 @@ const api = {
     'individual.address.line1': msgs.addressLine1,
     'individual.address.postal_code': msgs.zipcode,
     'individual.address.state': msgs.state,
+    'individual.email': msgs.email,
+    'individual.phone': msgs.phone,
     'individual.dob.day': msgs.birthDay,
     'individual.dob.month': msgs.birthMonth,
     'individual.dob.year': msgs.birthYear,
@@ -134,7 +148,8 @@ const api = {
     'tos_acceptance.date': msgs.termsDate,
     'tos_acceptance.ip': msgs.terms,
     'business_profile.url': msgs.statusBusinessProfileUrl,
-    'business_type': msgs.statusBusinessType
+    'business_type': msgs.statusBusinessType,
+    'business_profile.mcc': msgs.statusBusinessTypeMCC
   },
   ACCOUNT_REASONS: {
     'external_account': msgs.accountReasonsFieldsExternal,
