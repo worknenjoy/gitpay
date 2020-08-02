@@ -120,8 +120,8 @@ const styles = (theme) => ({
   },
   profile: {
     '& .profile-image': {
-      width: 175,
-      height: 175,
+      width: 140,
+      height: 140,
       objectFit: 'cover',
       maxWitdh: '100%',
       borderRadius: '50%',
@@ -434,7 +434,7 @@ class Profile extends Component {
                                   { user.tasks ? user.tasks : 0 }
                                 </span>
                                 <br />
-                                tasks
+                                Tasks
                               </Typography>
                             </div>
                           ) }
@@ -447,7 +447,7 @@ class Profile extends Component {
                                   ${ user.bounties ? user.bounties : 0 }
                                 </span>
                                 <br />
-                                bounties
+                                Bounties
                               </Typography>
                             </div>
                           ) }
@@ -460,7 +460,7 @@ class Profile extends Component {
                                   { user.repos ? user.repos : 0 }
                                 </span>
                                 <br />
-                                repositories
+                                Repositories
                               </Typography>
                             </div>
                           ) }

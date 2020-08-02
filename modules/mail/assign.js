@@ -80,7 +80,6 @@ ${Signatures.buttons(language, {
           value: `
           <p>${i18n.__('mail.hello', { name })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.main', { assignedName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-          <p>${i18n.__('mail.assign.owner.assigned.contact', { assignedEmail: interested.email })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.deadline.date', { date: deadline })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.deadline.days', { days: deadlineFromNow })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.instructions')}</p>
@@ -161,7 +160,7 @@ ${Signatures.buttons(language, {
           value: `
            <p>${i18n.__('mail.hello', { name: name })}</p>
            <p>${i18n.__('mail.interested.user.assigned.main', { username: assignedUserName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-          
+
            <p>${Signatures.sign(language)}</p>`
 
         }
