@@ -42,7 +42,7 @@ const StatsPageWrapper = styled.div`
 `
 
 class Stats extends Component {
-  render() {
+  render () {
     return (
       <React.Fragment>
         <div style={ { background: '#FFFFFF' } }>
