@@ -45,7 +45,7 @@ class Stats extends Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ background: '#FFFFFF' }}>
+        <div style={ { background: '#FFFFFF' } }>
           <TopBarContiner />
           <StatsPageWrapper>
             <TopDashboard />
@@ -55,7 +55,7 @@ class Stats extends Component {
             </Wrapper>
             <InformationCard />
             <ChartWrapper>
-              <Barchart style={{ width: '400px' }} />
+              <Barchart style={ { width: '400px' } } />
             </ChartWrapper>
           </StatsPageWrapper>
           <Bottom />
