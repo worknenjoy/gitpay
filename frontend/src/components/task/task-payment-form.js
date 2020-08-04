@@ -417,7 +417,7 @@ class TaskPaymentForm extends Component {
           onPayment={ this.props.updateTask }
           price={ this.state.price }
           formatedPrice={ this.formatCurrency(this.state.priceAfterFee()) }
-          task={ this.props.match.params.id }
+          taskId={ this.props.match.params.id }
           createOrder={ this.props.createOrder }
           user={ this.props.user }
           order={ this.props.order }
