@@ -8,6 +8,7 @@ import { task, tasks } from './taskReducer'
 import { order, orders } from './orderReducer'
 import { info } from './infoReducer'
 import { preferences } from './preferencesReducer'
+import { roles } from './userRoleReducer'
 import { organizations } from './organizationsReducer'
 import { contact } from './contactReducer'
 
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   tasks,
   info,
   preferences,
+  roles,
   organizations,
   contact,
   intl: intlReducer
