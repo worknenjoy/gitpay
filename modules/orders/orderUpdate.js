@@ -46,7 +46,11 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
           plain: true
         }).then(order => {
           const orderData = order[1].dataValues
+          // eslint-disable-next-line no-console
+          console.log('orderData', orderData)
           return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
+            // eslint-disable-next-line no-console
+            console.log('send email task', task)
             if (orderData.paid) {
               PaymentMail.success(user, task, orderData.amount)
             }

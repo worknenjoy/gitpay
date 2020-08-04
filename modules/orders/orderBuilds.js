@@ -14,6 +14,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
         amount: orderParameters.amount,
         email: orderParameters.email,
         userId: orderParameters.userId,
+        TaskId: orderParameters.taskId,
         plan: {
           plan: orderParameters.plan
         },
