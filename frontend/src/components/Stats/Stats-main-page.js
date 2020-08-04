@@ -8,6 +8,7 @@ import StackData from './StackData'
 import CurrentMonthStats from './CurrentMonthStats'
 import Barchart from './Charts/Barchart'
 import media from '../../styleguide/media'
+import Bottom from '../../components/bottom/bottom'
 
 const Wrapper = styled.div`
   margin: 0;
@@ -41,26 +42,27 @@ const StatsPageWrapper = styled.div`
 `
 
 class Stats extends Component {
-    render () {
-        return (
-          <React.Fragment>
-            <div style={ { background: '#FFFFFF' } }>
-              <TopBarContiner />
-              <StatsPageWrapper>
-                <TopDashboard />
-                <Wrapper>
-                  <StackData />
-                  <CurrentMonthStats />
-                </Wrapper>
-                <InformationCard />
-                <ChartWrapper>
-                  <Barchart style={ { width: '400px' } } />
-                </ChartWrapper>
-              </StatsPageWrapper>
-            </div>
-          </React.Fragment>
-        )
-    }
+  render () {
+    return (
+      <React.Fragment>
+        <div style={ { background: '#FFFFFF' } }>
+          <TopBarContiner />
+          <StatsPageWrapper>
+            <TopDashboard />
+            <Wrapper>
+              <StackData />
+              <CurrentMonthStats />
+            </Wrapper>
+            <InformationCard />
+            <ChartWrapper>
+              <Barchart style={ { width: '400px' } } />
+            </ChartWrapper>
+          </StatsPageWrapper>
+          <Bottom />
+        </div>
+      </React.Fragment>
+    )
+  }
 }
 
 export default Stats
