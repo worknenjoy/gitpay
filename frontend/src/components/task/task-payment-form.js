@@ -406,6 +406,7 @@ class TaskPaymentForm extends Component {
           price={ this.state.price }
           formatedPrice={ this.formatCurrency(this.state.priceAfterFee()) }
           user={ this.props.user }
+          logged={ this.props.logged }
           task={ this.props.match.params.id }
           plan={ this.state.plan }
         />
@@ -433,6 +434,7 @@ TaskPaymentForm.propTypes = {
   classes: PropTypes.object.isRequired,
   dialog: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  logged: PropTypes.bool,
   user: PropTypes.object,
   order: PropTypes.object,
   openDialog: PropTypes.func.isRequired,

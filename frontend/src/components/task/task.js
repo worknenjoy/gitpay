@@ -24,7 +24,8 @@ import {
   Link,
   DialogContentText,
   MobileStepper,
-  Fab
+  Fab,
+  Collapse
 } from '@material-ui/core'
 
 import {
@@ -1229,7 +1230,15 @@ class Task extends Component {
                   assign={ { id: task.data.assigned } }
                 />
               }
-              <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
+              { this.props.logged ? (
+                <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
+              ) : (
+                <Collapse in={ this.state.paymentForm }>
+                  <div className={ classes.mainBlock } style={ { marginBottom: 40 } }>
+                    <LoginButton referer={ this.props.location } includeForm />
+                  </div>
+                </Collapse>
+              ) }
               { this.taskOwner() &&
                 <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
               }
