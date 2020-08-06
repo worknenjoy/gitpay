@@ -1,5 +1,4 @@
 import { defineMessages } from 'react-intl'
-import { defaultCipherList } from 'constants'
 
 const messages = defineMessages({
   notificationLoginSuccessfull: {
