@@ -7,33 +7,58 @@ import { addNotification } from './notificationActions'
 const FETCH_ROLES_REQUESTED = 'FETCH_ROLES_REQUESTED'
 const FETCH_ROLES_SUCCESS = 'FETCH_ROLES_SUCCESS'
 const FETCH_ROLES_ERROR = 'FETCH_ROLES_ERROR'
-const UPDATE_ROLE_REQUESTED = 'UPDATE_ROLE_REQUESTED'
-const UPDATE_ROLE_SUCCESS = 'UPDATE_ROLE_SUCCESS'
-const UPDATE_ROLE_ERROR = 'UPDATE_ROLE_ERROR'
+const CREATE_ROLE_REQUESTED = 'CREATE_ROLE_REQUESTED'
+const CREATE_ROLE_SUCCESS = 'CREATE_ROLE_SUCCESS'
+const CREATE_ROLE_ERROR = 'CREATE_ROLE_ERROR'
+const DELETE_ROLE_REQUESTED = 'DELETE_ROLE_REQUESTED'
+const DELETE_ROLE_SUCCESS = 'DELETE_ROLE_SUCCESS'
+const DELETE_ROLE_ERROR = 'DELETE_ROLE_ERROR'
 
 const fetchRolesRequested = () => {
   return { type: FETCH_ROLES_REQUESTED, completed: false }
 }
 
-const fetchRolesSuccess = (response) => {
-  return { type: FETCH_ROLES_SUCCESS, completed: true, name: response.name, label: response.label, userId: response.userId, id: response.id }
+const fetchRolesSuccess = (responses) => {
+  // eslint-disable-next-line one-var
+  let name = [], userId = null, id = []
+  responses.map(function (response) {
+    name.push(response.name)
+    id.push(response.id)
+  })
+  let nameString = name.join(',')
+  userId = responses.length > 0 ? responses[0].userId : null
+  // console.dir('data:', nameString, userId, id)
+  return { type: FETCH_ROLES_SUCCESS, completed: true, name: nameString, userId: userId, id: id }
 }
 
 const fetchRolesError = (error) => {
   return { type: FETCH_ROLES_ERROR, completed: true, error }
 }
 
-const updateRoleRequested = () => {
-  return { type: UPDATE_ROLE_REQUESTED, completed: false }
+const createRoleRequested = () => {
+  return { type: CREATE_ROLE_REQUESTED, completed: false }
 }
 
-const updateRoleSuccess = (response) => {
+const createRoleSuccess = (response) => {
   return {
-    type: UPDATE_ROLE_SUCCESS, completed: true, name: response.name, label: response.label, userId: response.userId, id: response.id }
+    type: CREATE_ROLE_SUCCESS, completed: true, name: response.name, userId: response.userId, id: response.id }
 }
 
-const updateRoleError = (error) => {
-  return { type: UPDATE_ROLE_ERROR, completed: true, error: error }
+const createRoleError = (error) => {
+  return { type: CREATE_ROLE_ERROR, completed: true, error: error }
+}
+
+const deleteRoleRequested = () => {
+  return { type: DELETE_ROLE_REQUESTED, completed: false }
+}
+
+const deleteRoleSuccess = (response) => {
+  return {
+    type: DELETE_ROLE_SUCCESS, completed: true, name: response.name, userId: response.userId, id: response.id }
+}
+
+const deleteRoleError = (error) => {
+  return { type: DELETE_ROLE_ERROR, completed: true, error: error }
 }
 
 const fetchRoles = () => {
@@ -44,40 +69,63 @@ const fetchRoles = () => {
       return axios
         .get(`${api.API_URL}/roles/fetch`)
         .then(response => {
-          // eslint-disable-next-line no-console
-          // console.log(response.data)
           return dispatch(fetchRolesSuccess(response.data))
         })
         .catch(error => {
-          // eslint-disable-next-line no-console
-          // console.log(error)
           return dispatch(fetchRolesError(error))
         })
     })
   }
 }
 
-const updateRoles = (rolesData) => {
-  // console.log(rolesData)
+const createRoles = (rolesData) => {
   validToken()
   return (dispatch) => {
     return dispatch(loggedIn()).then(user => {
-      dispatch(updateRoleRequested())
+      dispatch(createRoleRequested())
       return axios
-        .put(`${api.API_URL}/roles/update`, {
+        .post(`${api.API_URL}/roles/create`, {
           name: rolesData.name
         })
-        .then(response => {
-          // eslint-disable-next-line no-console
-          // console.log(response)
+        .then((resp) => {
           // dispatch(addNotification('user.role.update.success'))
           dispatch(addNotification('Role Updated Successfully'))
-          return dispatch(fetchRolesSuccess(response.data))
+          // return dispatch(createRoleSuccess(response.data))
+          return axios
+            .get(`${api.API_URL}/roles/fetch`)
+            .then(response => {
+              return dispatch(fetchRolesSuccess(response.data))
+            })
+        })
+        // })
+        .catch(error => {
+          return dispatch(createRoleError(error))
+        })
+    })
+  }
+}
+
+const deleteRoles = (rolesData) => {
+  validToken()
+  return (dispatch) => {
+    return dispatch(loggedIn()).then(user => {
+      dispatch(deleteRoleRequested())
+      return axios
+        .delete(`${api.API_URL}/roles/delete`, {
+          data: { name: rolesData.name }
+        })
+        .then(response => {
+          // dispatch(addNotification('user.role.update.success'))
+          dispatch(addNotification('Role Updated Successfully'))
+          // return dispatch(deleteRoleSuccess(response.data))
+          return axios
+            .get(`${api.API_URL}/roles/fetch`)
+            .then(resp => {
+              return dispatch(fetchRolesSuccess(resp.data))
+            })
         })
         .catch(error => {
-          // eslint-disable-next-line no-console
-          // console.log(error)
-          return dispatch(fetchRolesError(error))
+          return dispatch(deleteRoleError(error))
         })
     })
   }
@@ -87,15 +135,22 @@ export {
   FETCH_ROLES_REQUESTED,
   FETCH_ROLES_SUCCESS,
   FETCH_ROLES_ERROR,
-  UPDATE_ROLE_REQUESTED,
-  UPDATE_ROLE_SUCCESS,
-  UPDATE_ROLE_ERROR,
+  CREATE_ROLE_REQUESTED,
+  CREATE_ROLE_SUCCESS,
+  CREATE_ROLE_ERROR,
+  DELETE_ROLE_REQUESTED,
+  DELETE_ROLE_SUCCESS,
+  DELETE_ROLE_ERROR,
   fetchRolesRequested,
   fetchRolesSuccess,
   fetchRolesError,
   fetchRoles,
-  updateRoleRequested,
-  updateRoleSuccess,
-  updateRoleError,
-  updateRoles
+  createRoleRequested,
+  createRoleSuccess,
+  createRoleError,
+  createRoles,
+  deleteRoleRequested,
+  deleteRoleSuccess,
+  deleteRoleError,
+  deleteRoles
 }
