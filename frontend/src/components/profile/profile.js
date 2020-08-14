@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch, HashRouter } from 'react-router-dom'
@@ -39,7 +40,7 @@ import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
 import Roles from './user-roles'
-// import Organizations from './organizations'
+import Organizations from './organizations'
 import SettingsComponent from './settings'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
@@ -121,7 +122,6 @@ const styles = theme => ({
 class Profile extends Component {
   constructor (props) {
     super(props)
-    // console.dir(props)
     this.state = {
       selected: null,
       orgsLoaded: false
@@ -187,10 +187,8 @@ class Profile extends Component {
   handleBackToTaskList = () => {
     window.history.back()
   }
-
   render () {
-    // const { classes, user, preferences, roles, organizations } = this.props
-    const { classes, user, preferences, roles, } = this.props
+    const { classes, user, preferences, roles, organizations } = this.props
 
     let titleNavigation = this.getTitleNavigation()
 
@@ -245,7 +243,7 @@ class Profile extends Component {
                   <Route
                     exact
                     path='/profile/roles'
-                    component={ () => <Roles user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } addNotification={ this.props.addNotification } /> }
+                    component={ () => <Roles user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
                   />
                   <Route
                     exact

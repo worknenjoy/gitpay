@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
@@ -16,7 +18,6 @@ import {
   CardContent,
   CardActions
 } from '@material-ui/core'
-import Notification from '../notification/notification'
 import { injectIntl, defineMessages } from 'react-intl'
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
@@ -61,7 +62,6 @@ const styles = theme => ({
     borderRadius: 0,
     height: '100%',
     '& div': {
-      // width: '100%',
       height: '100%'
     },
     '& img': {
@@ -170,29 +170,20 @@ const messages = defineMessages({
 class Roles extends Component {
   constructor (props) {
     super(props)
-    // eslint-disable-next-line no-console
-    // console.dir('where is u', this.state)
     this.state = {
       selectedRoles: this.props.roles.name != null && this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : [],
       save: false
     }
-    // eslint-disable-next-line no-console
-    // console.dir('where is u', this.props)
   }
   componentWillMount () {
     if (this.state.save === true) {
       this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess))
     }
-    // else {
-    //   this.props.addNotification(this.props.intl.formatMessage("Roles Successfully updated"))
-    // }
   }
     componentDidUpdate = (prevProps, prevState) => {
       if (prevProps.roles.name !== prevState.selectedRoles.join(',') && this.state.save === true) {
         this.handleSave(true)
-        // this.setState({ save: false })
-        // eslint-disable-next-line no-console
-        console.log(this.state)
+        this.setState({ save: false })
       }
       else if (prevProps.roles.name === prevState.selectedRoles.join(',') && this.state.save === true) {
         this.setState({ save: false })
@@ -234,20 +225,39 @@ class Roles extends Component {
       }
 
       handleSave = async (fetchRoles = false) => {
-        // prevent blink
-        this.props.roles.name = await this.state.selectedRoles.join(',')
-
-        this.props.updateRoles({
-          name: this.state.selectedRoles.join(','),
-        }).then(() => {
-          fetchRoles && this.props.fetchRoles()
+        let data = this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : []
+        let data1 = this.state.selectedRoles
+        let array3 = []
+        data.map(val => {
+          if (data1.indexOf(val) === -1) {
+            array3.push(val)
+          }
+        })
+        data1.map(val => {
+          if (data.indexOf(val) === -1) {
+            array3.push(val)
+          }
+        })
+        array3.map(async (val) => {
+          let dataVal = { name: val }
+          if (!data.includes(val)) {
+            await this.props.createRoles(dataVal).then(async (val) => {
+            }).catch((err) => {
+              console.dir(err)
+            })
+          }
+          else {
+            await this.props.deleteRoles(dataVal).then(async (val) => {
+            }).catch((err) => {
+              console.dir(err)
+            })
+          }
         })
       }
 
       render () {
         // eslint-disable-next-line no-unused-vars
         const { classes, user, preferences, roles, organizations, addNotification } = this.props
-        // const classes = styles();
         return (
           <React.Fragment>
             <div className={ classes.bigRow }>
@@ -276,8 +286,8 @@ class Roles extends Component {
                         checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
                         color='primary'
                         inputProps={ { 'aria-label': 'secondary checkbox' } }
-                        checked={ this.isRoleSelected('funder') }
-                        onClick={ () => this.handleRoleClick('funder') }
+                        checked={ this.isRoleSelected('Funder') }
+                        onClick={ () => this.handleRoleClick('Funder') }
                       />
                     </CardActions>
                   </Card>
@@ -303,8 +313,8 @@ class Roles extends Component {
                         checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
                         color='primary'
                         inputProps={ { 'aria-label': 'secondary checkbox' } }
-                        checked={ this.isRoleSelected('contributor') }
-                        onClick={ () => this.handleRoleClick('contributor') }
+                        checked={ this.isRoleSelected('Contributor') }
+                        onClick={ () => this.handleRoleClick('Contributor') }
                       />
                     </CardActions>
                   </Card>
@@ -330,14 +340,13 @@ class Roles extends Component {
                         checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
                         color='primary'
                         inputProps={ { 'aria-label': 'secondary checkbox' } }
-                        checked={ this.isRoleSelected('maintainer') }
-                        onClick={ () => this.handleRoleClick('maintainer') }
+                        checked={ this.isRoleSelected('Maintainer') }
+                        onClick={ () => this.handleRoleClick('Maintainer') }
                       />
                     </CardActions>
                   </Card>
                 </Paper>
               </Grid>
-              {/* { this.state.save === true ? <Notification message='Role successfully updated' open /> : <Notification message='Role successfully updated' /> } */}
             </Grid>
 
             <div className={ classes.bigRow }>
@@ -347,7 +356,6 @@ class Roles extends Component {
             <div className={ classes.buttons }>
               <button onClick={ () => this.handleCancelClick() } className={ classes.cButton }>CANCEL</button>
               <button onClick={ () => this.handleSaveClick() } className={ classes.sButton }>SAVE</button>
-              {/* <Notification message='Role successfully updated' onClose /> */}
             </div>
           </React.Fragment>
         )
@@ -359,6 +367,9 @@ Roles.PropTypes = {
   preferences: PropTypes.string,
   language: PropTypes.string,
   updateUser: PropTypes.func,
+  createRoles: PropTypes.func,
+  deleteRoles: PropTypes.func,
+  fetchRoles: PropTypes.func,
   roles: PropTypes.object,
   fetchPreferences: PropTypes.func,
   addNotification: PropTypes.func.isRequired,
