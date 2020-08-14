@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Profile from '../components/profile/profile'
 import { fetchPreferences } from '../actions/preferencesActions'
-import { fetchRoles, updateRoles } from '../actions/userRoleActions'
+import { fetchRoles, createRoles, deleteRoles } from '../actions/userRoleActions'
 import { updateUser, deleteUser } from '../actions/userActions'
 import { fetchOrganizations, createOrganizations } from '../actions/organizationsActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
@@ -21,7 +21,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
     fetchRoles: dispatch(fetchRoles()),
-    updateRoles: (rolesData) => dispatch(updateRoles(rolesData)),
+    createRoles: (rolesData) => dispatch(createRoles(rolesData)),
+    deleteRoles: (rolesData) => dispatch(deleteRoles(rolesData)),
     fetchOrganizations: (userId) => dispatch(fetchOrganizations(userId)),
     createOrganizations: (org) => dispatch(createOrganizations(org)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
