@@ -11,6 +11,7 @@ router.post('/:id/invite/', controllers.inviteUserToTask)
 router.post('/:id/funding/', controllers.inviteToFundingTask)
 router.put('/update', controllers.updateTask)
 router.post('/:id/report', controllers.reportTask)
+router.post('/:id/claim', controllers.requestClaimTask)
 
 router.use(secure)
 router.post('/:id/message/', controllers.messageInterestedToTask)

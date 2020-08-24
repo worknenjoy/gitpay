@@ -258,7 +258,23 @@ const messages = defineMessages({
   notificationTaskStatusForbidden: {
     id: 'actions.task.status.forbidden',
     defaultMessage: 'You cannot change the status from this task'
-  }
+  },
+  notificationTaskClaimSuccess: {
+    id: 'actions.task.claim.success',
+    defaultMessage: 'Issue successfuly claimed'
+  },
+  notificationTaskClaimError: {
+    id: 'actions.task.claim.error',
+    defaultMessage: 'Error on claim issue'
+  },
+  notificationTaskClaimErrorInvalidProvider: {
+    id: 'actions.task.claim.error.invalid_provider',
+    defaultMessage: 'Invalid provider'
+  },
+  notificationTaskClaimErrorUserIsNotTheOwner: {
+    id: 'actions.task.claim.error.user_is_not_the_owner',
+    defaultMessage: 'You cannot claim this issue because you\'re not the Owner.'
+  },
 })
 
 export default messages

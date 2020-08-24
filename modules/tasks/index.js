@@ -12,6 +12,7 @@ const taskMessageAuthor = require('./taskMessageAuthor')
 const removeAssignedUser = require('./removeAssignedUser')
 const taskFunding = require('./taskFunding')
 const taskReport = require('./taskReport')
+const taskClaim = require('./taskClaim')
 const taskDeleteConfirmation = require('./taskDeleteConfirmation')
 const requestAssignedUser = require('./requestAssignedUser.js')
 
@@ -30,6 +31,7 @@ module.exports = {
   removeAssignedUser,
   taskFunding,
   taskReport,
+  taskClaim,
   taskDeleteConfirmation,
   requestAssignedUser
 }

@@ -40,7 +40,8 @@ import {
   Close as CloseIcon,
   PeopleOutlined,
   MailSharp as MessageIcon,
-  Info as InfoIcon
+  Info as InfoIcon,
+  TransferWithinAStation as TransferWithinAStationIcon
 } from '@material-ui/icons'
 
 import StatusDialog from './status-dialog'
@@ -65,6 +66,7 @@ import TaskReport from './task-report'
 import MessageAuthor from './task-message-author'
 import TaskLabels from './task-labels'
 import TaskLevel from './task-level'
+import TaskClaim from './task-claim'
 const taskCover = require('../../images/task-cover.png')
 const inviteCover = require('../../images/funds.png')
 
@@ -381,6 +383,7 @@ class Task extends Component {
       taskFundingDialog: false,
       taskMessageAuthorDialog: false,
       reportIssueDialog: false,
+      taskClaimDialog: false,
       notification: {
         open: false,
         message: 'loading'
@@ -401,6 +404,7 @@ class Task extends Component {
     const id = this.props.match.params.id
     const status = this.props.match.params.status
     const orderId = this.props.match.params.order_id
+    const comments = this.props.match.params.comments
     let logged = false
     try {
       logged = await this.props.isLogged()
@@ -454,6 +458,12 @@ class Task extends Component {
       }
       else {
         this.props.history.push({ pathname: '/login', state: { from: { pathname: `/task/${id}/status` } } })
+      }
+    }
+
+    if (this.props.history && this.props.history.location.pathname.startsWith(`/task/${id}/claim/`)) {
+      if (logged) {
+        this.props.requestClaimTask(id, this.props.user.id, comments, true, this.props.history)
       }
     }
   }
@@ -531,6 +541,10 @@ class Task extends Component {
 
   handleMessageAuthorDialog = () => {
     this.setState({ taskMessageAuthorDialog: true })
+  }
+
+  handleClaimDialog = () => {
+    this.setState({ taskClaimDialog: true })
   }
 
   handleTaskPaymentDialogClose = () => {
@@ -775,7 +789,7 @@ class Task extends Component {
 
   render () {
     const { classes, task, order } = this.props
-    const { taskMessageAuthorDialog } = this.state
+    const { taskMessageAuthorDialog, taskClaimDialog } = this.state
 
     const isCurrentUserAssigned = () => {
       return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
@@ -1121,6 +1135,42 @@ class Task extends Component {
                     </span>{ ' ' }
                     <InfoIcon />
                   </Button> }
+                { !this.taskOwner() &&
+                  <React.Fragment>
+                    <Button
+                      style={ { marginRight: 10 } }
+                      onClick={ this.handleClaimDialog }
+                      size='small'
+                      color='primary'
+                      className={ classes.altButton }
+                    >
+                      <span className={ classes.spaceRight }>
+                        <FormattedMessage id='task.actions.claim' defaultMessage='Claim' />
+                      </span>{ ' ' }
+                      <TransferWithinAStationIcon />
+                    </Button>
+                    { !this.props.logged ? (
+                      <Dialog open={ taskClaimDialog }>
+                        <DialogTitle id='form-dialog-title'>
+                          <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+                        </DialogTitle>
+                        <DialogContent>
+                          <div className={ classes.mainBlock }>
+                            <LoginButton referer={ this.props.location } includeForm />
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    ) : (
+                      <TaskClaim
+                        taskData={ task.data }
+                        requestClaimTask={ this.props.requestClaimTask }
+                        user={ this.props.user }
+                        open={ this.state.taskClaimDialog }
+                        onClose={ () => this.setState({ taskClaimDialog: false }) }
+                        onOpen={ () => this.setState({ taskClaimDialog: true }) }
+                      />
+                    ) }
+                  </React.Fragment> }
                 <TaskReport
                   taskData={ task.data }
                   reportTask={ this.props.reportTask }
@@ -1330,7 +1380,8 @@ Task.propTypes = {
   paymentOrder: PropTypes.func,
   inviteTask: PropTypes.func,
   fundingInviteTask: PropTypes.func,
-  reportTask: PropTypes.func
+  reportTask: PropTypes.func,
+  requestClaimTask: PropTypes.func
 }
 
 export default injectIntl(withStyles(styles)(Task))
