@@ -15,22 +15,20 @@ import SubscribeForm from '../form/subscribe-form'
 import HowItWorksPeople from '../welcome/how-it-works-people'
 import WhoSubscribes from '../welcome/who-subscribes'
 import Workflow from '../welcome/workflow'
+import TermsOfServicePeople from '../welcome/terms-of-service-people'
+import TermsOfServiceCompany from '../welcome/terms-of-service-company'
 import HowItWorksCompany from '../welcome/how-it-works-company'
 import WhichCompanies from '../welcome/which-companies'
 import Consulting from '../welcome/consulting'
 
 import mainStyles from '../styles/style'
 
-import {
-  Container,
-  BaseFooter,
-  SubscribeFromWrapper
-} from './FooterStyles'
+import { Container, BaseFooter, SubscribeFromWrapper } from './FooterStyles'
 
 const logoCompleteGray = require('../../images/logo-complete-gray.png')
 const logoWorknEnjoy = require('../../images/worknenjoy-logo.png')
 
-const styles = theme => mainStyles(theme)
+const styles = (theme) => mainStyles(theme)
 
 class Bottom extends Component {
   render () {
@@ -43,31 +41,42 @@ class Bottom extends Component {
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography component='div'>
                 <strong>
-                  <FormattedMessage id='bottom.header.subheading1' defaultMessage='For Freelancers' />
+                  <FormattedMessage
+                    id='bottom.header.subheading1'
+                    defaultMessage='For Freelancers'
+                  />
                 </strong>
               </Typography>
               <List component='nav'>
                 <HowItWorksPeople classes={ classes } />
                 <WhoSubscribes classes={ classes } />
                 <Workflow classes={ classes } />
+                <TermsOfServicePeople classes={ classes } />
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography component='div'>
                 <strong>
-                  <FormattedMessage id='bottom.header.subheading2' defaultMessage='For Companies' />
+                  <FormattedMessage
+                    id='bottom.header.subheading2'
+                    defaultMessage='For Companies'
+                  />
                 </strong>
               </Typography>
               <List component='nav'>
                 <HowItWorksCompany classes={ classes } />
                 <WhichCompanies classes={ classes } />
                 <Consulting classes={ classes } />
+                <TermsOfServiceCompany classes={ classes } />
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 2 }>
               <Typography component='div'>
                 <strong>
-                  <FormattedMessage id='bottom.subheading3' defaultMessage='Partners' />
+                  <FormattedMessage
+                    id='bottom.subheading3'
+                    defaultMessage='Partners'
+                  />
                 </strong>
               </Typography>
               <Button
@@ -79,7 +88,10 @@ class Bottom extends Component {
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
               <Typography component='div'>
-                <FormattedMessage id='bottom.subheading.newsletter' defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!' />
+                <FormattedMessage
+                  id='bottom.subheading.newsletter'
+                  defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!'
+                />
               </Typography>
               <SubscribeFromWrapper className='subscribe-form'>
                 <SubscribeForm render />
@@ -92,12 +104,24 @@ class Bottom extends Component {
             </Grid>
           </Grid>
           <Divider className={ classes.spacedTop } />
-          <BaseFooter style={ { float: 'right', display: 'flex', alignItems: 'center' } }>
+          <BaseFooter
+            style={ { float: 'right', display: 'flex', alignItems: 'center' } }
+          >
             <div>
               <img className={ classes.img } src={ logoCompleteGray } width='100' />
             </div>
-            <Typography component='span' style={ { marginLeft: 10, marginRight: 10, display: 'inline-block' } }>
-              <FormattedMessage id='bottom.company.org' defaultMessage='is part of' />
+            <Typography
+              component='span'
+              style={ {
+                marginLeft: 10,
+                marginRight: 10,
+                display: 'inline-block',
+              } }
+            >
+              <FormattedMessage
+                id='bottom.company.org'
+                defaultMessage='is part of'
+              />
             </Typography>
             <a href='http://worknenjoy.com' target='_blank'>
               <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
@@ -110,7 +134,7 @@ class Bottom extends Component {
 }
 
 Bottom.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(Bottom)
