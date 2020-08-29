@@ -12,7 +12,11 @@ import {
 const styles = theme => ({
   selected: {
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
+    '&:hover': {
+      color: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.primary.main,
+    }
   }
 })
 
