@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import withRouter from 'react-router-dom/withRouter';
-import { FormattedMessage } from 'react-intl';
-import WelcomeUser from './welcome-user';
+import React, { Component } from 'react'
+import withRouter from 'react-router-dom/withRouter'
+import { FormattedMessage } from 'react-intl'
+import WelcomeUser from './welcome-user'
 
-import { Button, withStyles, TextField } from '@material-ui/core';
-import purple from '@material-ui/core/colors/purple';
+import { Button, withStyles, TextField } from '@material-ui/core'
+import purple from '@material-ui/core/colors/purple'
 
-import api from '../../consts';
-import { Fragment } from 'react';
+import api from '../../consts'
+import { Fragment } from 'react'
 
 const styles = theme => ({
   cssLabel: {
@@ -39,11 +39,11 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center'
   }
-});
+})
 
 class LoginForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       type: 'signin',
       action: `${api.API_URL}/authorize/local`,
@@ -53,32 +53,32 @@ class LoginForm extends Component {
       confirmPassword: '',
       validating: false,
       signupSuccess: true
-    };
+    }
   }
 
   handleBlur = () => {
-    this.setState({ validating: true });
-  };
+    this.setState({ validating: true })
+  }
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
+    this.setState({ [name]: event.target.value })
+  }
 
   handleType = type => event => {
     if (type === 'signin') {
-      this.setState({ type: 'signin' });
+      this.setState({ type: 'signin' })
     }
 
     if (type === 'signup') {
-      this.setState({ type: 'signup', action: `${api.API_URL}/auth/register` });
+      this.setState({ type: 'signup', action: `${api.API_URL}/auth/register` })
     }
-  };
+  }
 
   handleSubmit = event => {
     if (this.state.type === 'signup') {
-      event.preventDefault();
-      const { password, confirmPassword } = this.state;
-      if (password !== confirmPassword) return;
+      event.preventDefault()
+      const { password, confirmPassword } = this.state
+      if (password !== confirmPassword) return
       this.props
         .registerUser({
           name: this.state.name,
@@ -86,17 +86,17 @@ class LoginForm extends Component {
           password: this.state.password
         })
         .then(response => {
-          this.props.history.push('/login');
-          this.setState({ signupSuccess: true });
+          this.props.history.push('/login')
+          this.setState({ signupSuccess: true })
           // welcome user on successful signup
-        });
+        })
     }
-  };
+  }
 
   render() {
-    const { classes } = this.props;
-    const { type, action } = this.state;
-    const { validating, password, confirmPassword } = this.state;
+    const { classes } = this.props
+    const { type, action } = this.state
+    const { validating, password, confirmPassword } = this.state
     return (
       <Fragment>
         <form
@@ -273,8 +273,8 @@ class LoginForm extends Component {
         </form>
         {this.state.signupSuccess && <WelcomeUser />}
       </Fragment>
-    );
+    )
   }
 }
 
-export default withRouter(withStyles(styles)(LoginForm));
+export default withRouter(withStyles(styles)(LoginForm))

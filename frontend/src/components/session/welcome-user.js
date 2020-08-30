@@ -5,21 +5,21 @@ import {
   Button,
   DialogContentText,
   MobileStepper
-} from '@material-ui/core';
-import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+} from '@material-ui/core'
+import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 
-const welcome1 = require('../../images/welcome1.png');
-const welcome2 = require('../../images/welcome2.png');
-const welcome3 = require('../../images/welcome3.png');
+const welcome1 = require('../../images/welcome1.png')
+const welcome2 = require('../../images/welcome2.png')
+const welcome3 = require('../../images/welcome3.png')
 
 export default class WelcomeUser extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       currentStepIndex: 0,
       dialogueVisible: true
-    };
+    }
   }
   render() {
     const content = {
@@ -41,7 +41,7 @@ export default class WelcomeUser extends Component {
           'Get some fantastic online videos and content to learn more and gain extra knowledge',
         image: welcome3
       }
-    };
+    }
     return (
       <Dialog
         open={this.state.dialogueVisible}
@@ -105,6 +105,6 @@ export default class WelcomeUser extends Component {
           }
         />
       </Dialog>
-    );
+    )
   }
 }
