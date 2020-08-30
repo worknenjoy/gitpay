@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import withRouter from 'react-router-dom/withRouter'
 import { FormattedMessage } from 'react-intl'
 import WelcomeUser from './welcome-user'
@@ -7,7 +7,6 @@ import { Button, withStyles, TextField } from '@material-ui/core'
 import purple from '@material-ui/core/colors/purple'
 
 import api from '../../consts'
-import { Fragment } from 'react'
 
 const styles = theme => ({
   cssLabel: {
@@ -52,7 +51,7 @@ class LoginForm extends Component {
       password: '',
       confirmPassword: '',
       validating: false,
-      signupSuccess: true
+      signupSuccess: false
     }
   }
 
@@ -79,6 +78,7 @@ class LoginForm extends Component {
       event.preventDefault()
       const { password, confirmPassword } = this.state
       if (password !== confirmPassword) return
+      this.setState({ signupSuccess: true })
       this.props
         .registerUser({
           name: this.state.name,
@@ -87,8 +87,7 @@ class LoginForm extends Component {
         })
         .then(response => {
           this.props.history.push('/login')
-          this.setState({ signupSuccess: true })
-          // welcome user on successful signup
+          console.log('popup')
         })
     }
   }
