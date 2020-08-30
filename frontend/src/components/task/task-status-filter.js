@@ -21,7 +21,7 @@ const statuses = ['open', 'in_progress', 'closed']
 const additionalStatuses = ['issuesWithBounties', 'contribution']
 
 class TaskStatusFilter extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       selected: 'all',
@@ -34,7 +34,7 @@ class TaskStatusFilter extends Component {
     onFilter: PropTypes.func
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let pathName = this.props.history.location.pathname
     this.handleFromUrl(pathName)
   }
@@ -128,53 +128,53 @@ class TaskStatusFilter extends Component {
     return additional[status]
   }
 
-  render() {
+  render () {
     const { selected, additionalSelected } = this.state
     const { classes } = this.props
     return (
       <div>
-        <FormattedMessage id="task.status.filter.all" defaultMessage="All">
-          {msg => (
+        <FormattedMessage id='task.status.filter.all' defaultMessage='All'>
+          { msg => (
             <Chip
-              style={{ marginRight: 10 }}
-              onClick={() => this.handleClickAll()}
+              style={ { marginRight: 10 } }
+              onClick={ () => this.handleClickAll() }
               clickable
-              key={0}
-              label={msg}
-              className={selected === 'all' ? classes.selected : {}}
+              key={ 0 }
+              label={ msg }
+              className={ selected === 'all' ? classes.selected : {} }
             />
-          )}
+          ) }
         </FormattedMessage>
-        {statuses.map((status, index) => (
+        { statuses.map((status, index) => (
           <Chip
-            style={{ marginRight: 10 }}
-            onClick={() => this.handleListItemClick(status)}
+            style={ { marginRight: 10 } }
+            onClick={ () => this.handleListItemClick(status) }
             clickable
-            key={index + 1}
-            label={this.statusesDisplay(status)}
-            className={selected === status ? classes.selected : {}}
+            key={ index + 1 }
+            label={ this.statusesDisplay(status) }
+            className={ selected === status ? classes.selected : {} }
           />
-        ))}
+        )) }
         <span
-          style={{
+          style={ {
             flexGrow: 1,
             flexBasis: 'auto',
             margin: '.25em 0',
             padding: '5px 0.3em',
             borderLeft: '1px solid #CCC',
             backgroundColor: '#FFF'
-          }}
+          } }
         />
-        {additionalStatuses.map((status, index) => (
+        { additionalStatuses.map((status, index) => (
           <Chip
-            style={{ marginRight: 10 }}
-            onClick={() => this.handleListAdditionalStatusesClick(status)}
+            style={ { marginRight: 10 } }
+            onClick={ () => this.handleListAdditionalStatusesClick(status) }
             clickable
-            key={index + 1}
-            label={this.additionalStatusDisplay(status)}
-            className={additionalSelected === status ? classes.selected : {}}
+            key={ index + 1 }
+            label={ this.additionalStatusDisplay(status) }
+            className={ additionalSelected === status ? classes.selected : {} }
           />
-        ))}
+        )) }
       </div>
     )
   }
