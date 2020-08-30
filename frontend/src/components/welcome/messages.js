@@ -173,6 +173,14 @@ export default defineMessages({
     id: 'welcome.workflow.item.three.secondary',
     defaultMessage: 'Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges'
   },
+  termsItemOnePrimary: {
+    id: 'welcome.terms.item.one.primary',
+    defaultMessage: 'Terms'
+  },
+  termsItemOneSecondary: {
+    id: 'welcome.terms.item.one.secondary',
+    defaultMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet vestibulum elit et sollicitudin. Sed vel efficitur dolor, eget commodo nisl. Fusce laoreet pulvinar turpis. Cras eu lorem non nisl interdum rutrum et non nisl. Quisque nec consequat nibh, eget congue dolor. Duis non dictum nisi. Sed non consectetur turpis. Donec turpis metus, posuere eget sagittis vitae, lobortis sit amet dui. Pellentesque lacinia in massa nec viverra. Praesent sed quam vel lectus facilisis volutpat. Aliquam in consequat lorem, faucibus mollis mi. Suspendisse ultricies tortor in justo dictum, eu elementum lorem scelerisque. Pellentesque faucibus venenatis ex, ut bibendum purus venenatis vitae. Suspendisse hendrerit tristique arcu eget ultricies. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam sollicitudin tortor sit amet fermentum scelerisque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet vestibulum elit et sollicitudin. Sed vel efficitur dolor, eget commodo nisl. Fusce laoreet pulvinar turpis. Cras eu lorem non nisl interdum rutrum et non nisl. Quisque nec consequat nibh, eget congue dolor. Duis non dictum nisi. Sed non consectetur turpis. Donec turpis metus, posuere eget sagittis vitae, lobortis sit amet dui. Pellentesque lacinia in massa nec viverra. Praesent sed quam vel lectus facilisis volutpat. Aliquam in consequat lorem, faucibus mollis mi. Suspendisse ultricies tortor in justo dictum, eu elementum lorem scelerisque. Pellentesque faucibus venenatis ex, ut bibendum purus venenatis vitae. Suspendisse hendrerit tristique arcu eget ultricies. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam sollicitudin tortor sit amet fermentum scelerisque.'
+  },
   welcomeCollabItemOnePrimary: {
     id: 'welcome.collab.item.one.primary',
     defaultMessage: 'Work with collaboration between members, maintainers and clients'
