@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import withRouter from 'react-router-dom/withRouter'
 import { FormattedMessage } from 'react-intl'
+import WelcomeUser from './welcome-user'
 
 import {
   Button,
@@ -10,6 +11,7 @@ import {
 import purple from '@material-ui/core/colors/purple'
 
 import api from '../../consts'
+import { Fragment } from 'react';
 
 const styles = theme => ({
   cssLabel: {
@@ -53,7 +55,8 @@ class LoginForm extends Component {
       email: '',
       password: '',
       confirmPassword: '',
-      validating: false
+      validating: false,
+      signupSuccess : true
     }
   }
 
@@ -85,7 +88,9 @@ class LoginForm extends Component {
         email: this.state.email,
         password: this.state.password
       }).then((response) => {
-        this.props.history.push('/login')
+        this.props.history.push('/login');
+        this.setState({signupSuccess:true})
+        // welcome user on successful signup
       })
     }
   }
@@ -95,6 +100,7 @@ class LoginForm extends Component {
     const { type, action } = this.state
     const { validating, password, confirmPassword } = this.state
     return (
+        <Fragment>
       <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
           <div className={ classes.margins }>
@@ -219,6 +225,8 @@ class LoginForm extends Component {
           ) }
         </div>
       </form>
+    {this.state.signupSuccess && <WelcomeUser/>}
+      </Fragment>
     )
   }
 }
