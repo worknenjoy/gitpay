@@ -4,15 +4,18 @@ import { withRouter } from 'react-router-dom'
 import { messages } from './messages/task-messages'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import { withStyles, Chip } from '@material-ui/core'
+import {
+  withStyles,
+  Chip
+} from '@material-ui/core'
 
 const styles = theme => ({
   selected: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
-    '&:focus': {
+    '&:active': {
+      color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText
     }
   }
 })
@@ -119,9 +122,7 @@ class TaskStatusFilter extends Component {
 
   additionalStatusDisplay = status => {
     const additional = {
-      issuesWithBounties: this.props.intl.formatMessage(
-        messages.issuesWithBounties
-      ),
+      issuesWithBounties: this.props.intl.formatMessage(messages.issuesWithBounties),
       contribution: this.props.intl.formatMessage(messages.contribution)
     }
 
@@ -155,26 +156,26 @@ class TaskStatusFilter extends Component {
             className={ selected === status ? classes.selected : {} }
           />
         )) }
-        <span
-          style={ {
-            flexGrow: 1,
-            flexBasis: 'auto',
-            margin: '.25em 0',
-            padding: '5px 0.3em',
-            borderLeft: '1px solid #CCC',
-            backgroundColor: '#FFF'
-          } }
-        />
-        { additionalStatuses.map((status, index) => (
-          <Chip
-            style={ { marginRight: 10 } }
-            onClick={ () => this.handleListAdditionalStatusesClick(status) }
-            clickable
-            key={ index + 1 }
-            label={ this.additionalStatusDisplay(status) }
-            className={ additionalSelected === status ? classes.selected : {} }
-          />
-        )) }
+        <span style={ {
+          flexGrow: 1,
+          flexBasis: 'auto',
+          margin: '.25em 0',
+          padding: '5px 0.3em',
+          borderLeft: '1px solid #CCC',
+          backgroundColor: '#FFF',
+        } } />
+        {
+          additionalStatuses.map((status, index) => (
+            <Chip
+              style={ { marginRight: 10 } }
+              onClick={ () => this.handleListAdditionalStatusesClick(status) }
+              clickable
+              key={ index + 1 }
+              label={ this.additionalStatusDisplay(status) }
+              className={ additionalSelected === status ? classes.selected : {} }
+            />
+          ))
+        }
       </div>
     )
   }
