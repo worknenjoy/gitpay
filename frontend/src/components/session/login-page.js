@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { withRouter, Link } from 'react-router-dom'
 import LoginButton from './login-button'
+import WelcomeUser from './welcome-user'
 
-import {
-  withStyles,
-  Card,
-  CardContent
-} from '@material-ui/core'
+import { withStyles, Card, CardContent } from '@material-ui/core'
 
 import cyan from '@material-ui/core/colors/cyan'
 
@@ -27,10 +24,10 @@ const styles = theme => ({
     textAlign: 'center'
   },
   title: {
-    fontSize: 14,
+    fontSize: 14
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 12
   }
 })
 
@@ -50,18 +47,21 @@ class LoginPage extends Component {
   render () {
     const { classes } = this.props
     return (
-      <div className={ classes.container }>
-        <Card className={ classes.card }>
-          <CardContent className={ classes.cardContent }>
-            <Link to='/'>
-              <img src={ logo } width={ 200 } />
-            </Link>
-            <Content>
-              <LoginButton includeForm />
-            </Content>
-          </CardContent>
-        </Card>
-      </div>
+      <Fragment>
+        <div className={ classes.container }>
+          <Card className={ classes.card }>
+            <CardContent className={ classes.cardContent }>
+              <Link to='/'>
+                <img src={ logo } width={ 200 } />
+              </Link>
+              <Content>
+                <LoginButton includeForm />
+              </Content>
+            </CardContent>
+          </Card>
+        </div>
+        <WelcomeUser />
+      </Fragment>
     )
   }
 }
