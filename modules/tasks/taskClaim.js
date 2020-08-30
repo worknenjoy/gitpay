@@ -4,9 +4,12 @@ const models = require('../../models')
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 const taskFetch = require('./taskFetch')
+const jwt = require('jsonwebtoken')
 
 const sendConfirmationEmail = (task, user, comments) => {
-  const approveURL = `${process.env.FRONTEND_HOST}/#/task/${task.id}/claim/${comments}`
+  const token = jwt.sign(task.id, process.env.SECRET_PHRASE)
+  const formattedfComments = comments.replace(/\s/g, '-')
+  const approveURL = `${process.env.FRONTEND_HOST}/#/task/${task.id}/claim?comments=${formattedfComments}&token=${token}`
   const language = user.language || 'en'
   i18n.setLocale(language)
 
@@ -22,38 +25,43 @@ const sendConfirmationEmail = (task, user, comments) => {
   )
 }
 
-const verifyIssueAndClaim = async (task, user, comments) => {
+const verifyIssueAndClaim = async (task, user, comments, token) => {
   const language = user.language || 'en'
   i18n.setLocale(language)
 
-  if (task.provider === 'github' && user.provider === task.provider) {
-    if (task.metadata.user === user.provider_username) {
-      const taskUser = task.user
-
-      // Update task
-      await taskUpdate({ id: task.id, userId: user.id })
-
-      const body = `${i18n.__('mail.task.claim.confirmation.body', {
-        title: task.title,
-        url: task.url,
-        comments: comments
-      })}`
-
-      return SendMail.success(
-        { email: taskUser.email, language },
-        i18n.__('mail.task.claim.confirmation.subject'), body
-      )
+  return jwt.verify(token, process.env.SECRET_PHRASE, async (err, decoded) => {
+    // the 401 code is for unauthorized status
+    if (err || decoded !== task.id) {
+      throw new Error('invalid_token')
     }
-    else {
+
+    if (task.provider !== 'github' || user.provider !== task.provider) {
+      throw new Error('invalid_provider')
+    }
+
+    if (task.metadata.user !== user.provider_username) {
       throw new Error('user_is_not_the_owner')
     }
-  }
-  else {
-    throw new Error('invalid_provider')
-  }
+
+    const taskUser = task.user
+
+    // Update task
+    await taskUpdate({ id: task.id, userId: user.id })
+
+    const body = `${i18n.__('mail.task.claim.confirmation.body', {
+      title: task.title,
+      url: task.url,
+      comments: comments
+    })}`
+
+    return SendMail.success(
+      { email: taskUser.email, language },
+      i18n.__('mail.task.claim.confirmation.subject'), body
+    )
+  })
 }
 
-const requestClaim = Promise.method(async ({ taskId, userId, comments, isApproved }) => {
+const requestClaim = Promise.method(async ({ taskId, userId, comments, isApproved, token }) => {
   const task = await taskFetch({ id: taskId })
   const user = await models.User.findOne({
     where: {
@@ -62,7 +70,7 @@ const requestClaim = Promise.method(async ({ taskId, userId, comments, isApprove
   })
 
   if (isApproved) {
-    return verifyIssueAndClaim(task, user, comments)
+    return verifyIssueAndClaim(task, user, comments, token)
   }
   else {
     return sendConfirmationEmail(task, user, comments)

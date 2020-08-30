@@ -9,6 +9,7 @@ import TaskHeader from './task-header'
 import TaskAssignment from './task-assignment'
 import TaskStatusIcons from './task-status-icons'
 import nameInitials from 'name-initials'
+import queryString from 'query-string'
 
 import {
   Dialog,
@@ -404,7 +405,7 @@ class Task extends Component {
     const id = this.props.match.params.id
     const status = this.props.match.params.status
     const orderId = this.props.match.params.order_id
-    const comments = this.props.match.params.comments
+
     let logged = false
     try {
       logged = await this.props.isLogged()
@@ -461,9 +462,10 @@ class Task extends Component {
       }
     }
 
-    if (this.props.history && this.props.history.location.pathname.startsWith(`/task/${id}/claim/`)) {
+    if (this.props.history && this.props.history.location.pathname.startsWith(`/task/${id}/claim`)) {
       if (logged) {
-        this.props.requestClaimTask(id, this.props.user.id, comments, true, this.props.history)
+        let params = queryString.parse(this.props.location.search)
+        this.props.requestClaimTask(id, this.props.user.id, params.comments, true, params.token, this.props.history)
       }
     }
   }

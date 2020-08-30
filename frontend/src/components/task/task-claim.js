@@ -38,7 +38,7 @@ class TaskClaim extends Component {
 
   sendClaim = (e) => {
     e.preventDefault()
-    this.props.requestClaimTask(this.props.taskData.id, this.props.user.id, this.state.comments, false, this.props.history)
+    this.props.requestClaimTask(this.props.taskData.id, this.props.user.id, this.state.comments, false, null, this.props.history)
     this.setState({ comments: '', charactersCount: 0 })
     this.props.onClose()
   }

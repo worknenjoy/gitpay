@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
     getOrderDetails: (id) => dispatch(detailOrder(id)),
     reportTask: (task, reason) => dispatch(reportTask(task, reason)),
-    requestClaimTask: (task, userId, comments, isApproved, history) => dispatch(requestClaimTask(task, userId, comments, isApproved, history))
+    requestClaimTask: (taskId, userId, comments, isApproved, token, history) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history))
   }
 }
 

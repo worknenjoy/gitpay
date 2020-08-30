@@ -663,15 +663,15 @@ const requestClaimTaskError = error => {
   return { type: CLAIM_TASK_ERROR, completed: true, error: error }
 }
 
-const requestClaimTask = (taskId, userId, comments, isApproved, history) => {
+const requestClaimTask = (taskId, userId, comments, isApproved, token, history) => {
   return dispatch => {
     dispatch(requestClaimTaskRequested())
     return axios
       .post(api.API_URL + `/tasks/${taskId}/claim`, {
-        taskId, userId, comments, isApproved, baseUrl: api.API_URL
+        taskId, userId, comments, isApproved, token: token, baseUrl: api.API_URL
       })
       .then(task => {
-        if (task.status === 200 && !task.data.error) {
+        if (task.status === 200 && !task.data && !task.data.error) {
           dispatch(addNotification('actions.task.claim.success'))
           if (isApproved) {
             history.push(`/task/${taskId}`)
