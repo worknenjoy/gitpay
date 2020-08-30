@@ -14,14 +14,14 @@ const welcome2 = require('../../images/welcome2.png')
 const welcome3 = require('../../images/welcome3.png')
 
 export default class WelcomeUser extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       currentStepIndex: 0,
       dialogueVisible: true
     }
   }
-  render() {
+  render () {
     const content = {
       '0': {
         textHeading: 'Be rewarded by work done',
@@ -44,63 +44,63 @@ export default class WelcomeUser extends Component {
     }
     return (
       <Dialog
-        open={this.state.dialogueVisible}
-        maxWidth={'xs'}
-        aria-labelledby="form-dialog-title"
+        open={ this.state.dialogueVisible }
+        maxWidth={ 'xs' }
+        aria-labelledby='form-dialog-title'
       >
         <DialogContent>
           <button
-            style={{ float: 'right', border: 'none' }}
-            onClick={() => this.setState({ dialogueVisible: false })}
+            style={ { float: 'right', border: 'none' } }
+            onClick={ () => this.setState({ dialogueVisible: false }) }
           >
-            <Typography variant="h6">
-              <FormattedMessage id="skip" defaultMessage="Skip" />
+            <Typography variant='h6'>
+              <FormattedMessage id='skip' defaultMessage='Skip' />
             </Typography>
           </button>
-          <div style={{ textAlign: 'center' }}>
+          <div style={ { textAlign: 'center' } }>
             <img
-              src={content[this.state.currentStepIndex]['image']}
-              style={{ margin: '20px auto 0' }}
-              width="70%"
+              src={ content[this.state.currentStepIndex]['image'] }
+              style={ { margin: '20px auto 0' } }
+              width='70%'
             />
 
-            <Typography variant="h5">
-              {content[this.state.currentStepIndex]['textHeading']}
+            <Typography variant='h5'>
+              { content[this.state.currentStepIndex]['textHeading'] }
             </Typography>
             <DialogContentText>
-              {content[this.state.currentStepIndex]['textContent']}
+              { content[this.state.currentStepIndex]['textContent'] }
             </DialogContentText>
           </div>
         </DialogContent>
         <MobileStepper
-          variant="dots"
-          steps={3}
-          position="static"
-          activeStep={this.state.currentStepIndex}
+          variant='dots'
+          steps={ 3 }
+          position='static'
+          activeStep={ this.state.currentStepIndex }
           nextButton={
             <Button
-              size="small"
-              onClick={() =>
+              size='small'
+              onClick={ () =>
                 this.setState(prevState => ({
                   currentStepIndex: prevState.currentStepIndex + 1
                 }))
               }
-              disabled={this.state.currentStepIndex === 2}
+              disabled={ this.state.currentStepIndex === 2 }
             >
-              <FormattedMessage id="first.task.next" defaultMessage="Next" />
+              <FormattedMessage id='first.task.next' defaultMessage='Next' />
             </Button>
           }
           backButton={
             <Button
-              onClick={() =>
+              onClick={ () =>
                 this.setState(prevState => ({
                   currentStepIndex: prevState.currentStepIndex - 1
                 }))
               }
-              disabled={this.state.currentStepIndex === 0}
-              size="small"
+              disabled={ this.state.currentStepIndex === 0 }
+              size='small'
             >
-              <FormattedMessage id="first.task.back" defaultMessage="Back" />
+              <FormattedMessage id='first.task.back' defaultMessage='Back' />
             </Button>
           }
         />
