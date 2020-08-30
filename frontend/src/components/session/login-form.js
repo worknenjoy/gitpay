@@ -46,7 +46,7 @@ const styles = theme => ({
 })
 
 class LoginForm extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       type: 'signin',
@@ -56,7 +56,7 @@ class LoginForm extends Component {
       password: '',
       confirmPassword: '',
       validating: false,
-      signupSuccess : true
+      signupSuccess: true
     }
   }
 
@@ -89,143 +89,143 @@ class LoginForm extends Component {
         password: this.state.password
       }).then((response) => {
         this.props.history.push('/login');
-        this.setState({signupSuccess:true})
+        this.setState({ signupSuccess: true })
         // welcome user on successful signup
       })
     }
   }
 
-  render () {
+  render() {
     const { classes } = this.props
     const { type, action } = this.state
     const { validating, password, confirmPassword } = this.state
     return (
-        <Fragment>
-      <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
-        { type === 'signup' && (
-          <div className={ classes.margins }>
+      <Fragment>
+        <form onSubmit={this.handleSubmit} action={action} method='POST' autoComplete='off' style={{ marginBottom: 40 }}>
+          {type === 'signup' && (
+            <div className={classes.margins}>
+              <TextField
+                name='name'
+                onChange={this.handleChange('name')}
+                fullWidth
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                label='Name'
+                variant='outlined'
+                id='name'
+              />
+            </div>
+          )}
+          <div className={classes.margins}>
             <TextField
-              name='name'
-              onChange={ this.handleChange('name') }
+              name='email'
+              onChange={this.handleChange('email')}
               fullWidth
-              InputLabelProps={ {
+              InputLabelProps={{
                 classes: {
                   root: classes.cssLabel,
                   focused: classes.cssFocused,
                 },
-              } }
-              InputProps={ {
+              }}
+              InputProps={{
                 classes: {
                   root: classes.cssOutlinedInput,
                   focused: classes.cssFocused,
                   notchedOutline: classes.notchedOutline,
                 },
-              } }
-              label='Name'
+              }}
+              type='email'
+              label='E-mail'
               variant='outlined'
-              id='name'
+              id='email'
             />
           </div>
-        ) }
-        <div className={ classes.margins }>
-          <TextField
-            name='email'
-            onChange={ this.handleChange('email') }
-            fullWidth
-            InputLabelProps={ {
-              classes: {
-                root: classes.cssLabel,
-                focused: classes.cssFocused,
-              },
-            } }
-            InputProps={ {
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              },
-            } }
-            type='email'
-            label='E-mail'
-            variant='outlined'
-            id='email'
-          />
-        </div>
-        <div className={ classes.margins }>
-          <TextField
-            name='password'
-            onChange={ this.handleChange('password') }
-            fullWidth
-            InputLabelProps={ {
-              classes: {
-                root: classes.cssLabel,
-                focused: classes.cssFocused,
-              },
-            } }
-            InputProps={ {
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              },
-            } }
-            type='password'
-            label='Password'
-            variant='outlined'
-            id='password'
-          />
-        </div>
-        { type === 'signup' && (
-          <div className={ classes.margins }>
+          <div className={classes.margins}>
             <TextField
-              error={ validating && password !== confirmPassword }
-              helperText={ validating && password !== confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : '' }
-              name='confirm_password'
-              onChange={ this.handleChange('confirmPassword') }
-              onBlur={ this.handleBlur }
+              name='password'
+              onChange={this.handleChange('password')}
               fullWidth
-              InputLabelProps={ {
+              InputLabelProps={{
                 classes: {
                   root: classes.cssLabel,
                   focused: classes.cssFocused,
                 },
-              } }
-              InputProps={ {
+              }}
+              InputProps={{
                 classes: {
                   root: classes.cssOutlinedInput,
                   focused: classes.cssFocused,
                   notchedOutline: classes.notchedOutline,
                 },
-              } }
+              }}
               type='password'
-              label='Confirm Password'
+              label='Password'
               variant='outlined'
-              id='confirmPassword'
+              id='password'
             />
           </div>
-        ) }
-        <div className={ classes.center } style={ { marginTop: 30 } }>
-          { type === 'signin' ? (
-            <div>
-              <Button onClick={ this.handleType('signup') } variant='contained' color='primary' className={ classes.button }>
+          {type === 'signup' && (
+            <div className={classes.margins}>
+              <TextField
+                error={validating && password !== confirmPassword}
+                helperText={validating && password !== confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : ''}
+                name='confirm_password'
+                onChange={this.handleChange('confirmPassword')}
+                onBlur={this.handleBlur}
+                fullWidth
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+                type='password'
+                label='Confirm Password'
+                variant='outlined'
+                id='confirmPassword'
+              />
+            </div>
+          )}
+          <div className={classes.center} style={{ marginTop: 30 }}>
+            {type === 'signin' ? (
+              <div>
+                <Button onClick={this.handleType('signup')} variant='contained' color='primary' className={classes.button}>
+                  <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+                </Button>
+                <Button type='submit' variant='contained' color='primary' className={classes.button}>
+                  <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+                </Button>
+              </div>
+            ) : (<div>
+              <Button onClick={this.handleType('signin')} variant='contained' color='primary' className={classes.button}>
+                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+              </Button>
+              <Button type='submit' variant='contained' color='primary' className={classes.button}>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
               </Button>
-              <Button type='submit' variant='contained' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
-              </Button>
             </div>
-          ) : (<div>
-            <Button onClick={ this.handleType('signin') } variant='contained' color='primary' className={ classes.button }>
-              <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
-            </Button>
-            <Button type='submit' variant='contained' color='primary' className={ classes.button }>
-              <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
-            </Button>
+              )}
           </div>
-          ) }
-        </div>
-      </form>
-    {this.state.signupSuccess && <WelcomeUser/>}
+        </form>
+        {this.state.signupSuccess && <WelcomeUser />}
       </Fragment>
     )
   }
