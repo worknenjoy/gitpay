@@ -55,6 +55,10 @@ const REPORT_TASK_REQUESTED = 'REPORT_TASK_REQUESTED'
 const REPORT_TASK_SUCCESS = 'REPORT_TASK_SUCCESS'
 const REPORT_TASK_ERROR = 'REPORT_TASK_ERROR'
 
+const CLAIM_TASK_REQUESTED = 'CLAIM_TASK_REQUESTED'
+const CLAIM_TASK_SUCCESS = 'CLAIM_TASK_SUCCESS'
+const CLAIM_TASK_ERROR = 'CLAIM_TASK_ERROR'
+
 const VALIDATION_ERRORS = {
   'url must be unique': 'actions.task.create.validation.url',
   'Not Found': 'actions.task.create.validation.invalid'
@@ -643,6 +647,69 @@ const reportTask = (task, reason) => {
   }
 }
 
+/*
+ * Task Claim
+ */
+
+const requestClaimTaskRequested = () => {
+  return { type: CLAIM_TASK_REQUESTED, completed: false }
+}
+
+const requestClaimTaskSuccess = () => {
+  return { type: CLAIM_TASK_SUCCESS, completed: true }
+}
+
+const requestClaimTaskError = error => {
+  return { type: CLAIM_TASK_ERROR, completed: true, error: error }
+}
+
+const requestClaimTask = (taskId, userId, comments, isApproved, token, history) => {
+  return dispatch => {
+    dispatch(requestClaimTaskRequested())
+    return axios
+      .post(api.API_URL + `/tasks/${taskId}/claim`, {
+        taskId, userId, comments, isApproved, token: token, baseUrl: api.API_URL
+      })
+      .then(task => {
+        if (task.status === 200 && !task.data && !task.data.error) {
+          dispatch(addNotification('actions.task.claim.success'))
+          if (isApproved) {
+            history.push(`/task/${taskId}`)
+            return dispatch(fetchTask(taskId))
+          }
+          return dispatch(requestClaimTaskSuccess())
+        }
+
+        if (task.data.error === 'user_is_not_the_owner') {
+          dispatch(addNotification('actions.task.claim.error.user_is_not_the_owner'))
+        }
+        else if (task.data.error === 'invalid_provider') {
+          dispatch(addNotification('actions.task.claim.error.invalid_provider'))
+        }
+        else {
+          dispatch(addNotification('actions.task.claim.error'))
+        }
+        return dispatch(
+          requestClaimTaskError({
+            error: {
+              type: 'task_claim_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.claim.error')
+        )
+        dispatch(requestClaimTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible request claim')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
 export {
   CREATE_TASK_REQUESTED,
   CREATE_TASK_SUCCESS,
@@ -682,6 +749,9 @@ export {
   REPORT_TASK_REQUESTED,
   REPORT_TASK_SUCCESS,
   REPORT_TASK_ERROR,
+  CLAIM_TASK_REQUESTED,
+  CLAIM_TASK_SUCCESS,
+  CLAIM_TASK_ERROR,
   addNotification,
   createTask,
   fetchTask,
@@ -699,5 +769,6 @@ export {
   messageAuthor,
   fundingInviteTask,
   changeTaskTab,
-  reportTask
+  reportTask,
+  requestClaimTask
 }

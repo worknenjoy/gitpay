@@ -206,6 +206,7 @@ passport.use(
       process.nextTick(() => {
         const data = {
           provider: profile.provider,
+          provider_username: profile.username,
           social_id: profile.id,
           name: profile.displayName,
           username: profile.username,

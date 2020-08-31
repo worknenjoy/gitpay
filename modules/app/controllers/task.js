@@ -172,3 +172,11 @@ exports.deleteTaskFromReport = (req, res) => {
   // eslint-disable-next-line no-console
   console.log('The task was deleted')
 }
+
+// Request Claim Task
+exports.requestClaimTask = (req, res) => {
+  Tasks
+    .taskClaim.requestClaim(req.body)
+    .then(data => res.send(data))
+    .catch(error => res.send({ error: error.message }))
+}
