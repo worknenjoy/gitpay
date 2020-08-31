@@ -30,9 +30,6 @@ exports.info = async (req, res) => {
   try {
     const countTasks = await models.Task.count()
     const tasks = await models.Task.findAll({
-      where: {
-        paid: true
-      },
       attributes: ['value']
     })
     const countUsers = await models.User.count()
