@@ -39,7 +39,7 @@ const verifyIssueAndClaim = async (task, user, comments, token) => {
       throw new Error('invalid_provider')
     }
 
-    if (task.metadata.user !== user.provider_username) {
+    if (task.metadata.issue.user.login !== user.provider_username) {
       throw new Error('user_is_not_the_owner')
     }
 
