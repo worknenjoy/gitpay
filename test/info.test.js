@@ -62,7 +62,7 @@ describe("info", () => {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end((err, res) => {
-                    expect(res.body.bounties).to.equal(0);
+                    expect(res.body.bounties).to.equal(10);
                     done();
                     })
                 })
