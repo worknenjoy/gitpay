@@ -6,6 +6,9 @@ const Signatures = require('./content')
 const { notificationEmail, fromEmail } = require('./constants')
 
 module.exports = (to, subject, content, replyEmail) => {
+  console.log(' ----- email content ---- ')
+  console.log(content)
+  console.log(' ----- end email content ---- ')
   return sendgrid.apiKey && sg.API(sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
