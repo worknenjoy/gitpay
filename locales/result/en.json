@@ -148,6 +148,10 @@
   "mail.report.send.message": "We received a new report from the task <a href=\"{{url}}\">{{title}}<a/>:<br/><br/>Reason: {{selectedReason}}<br/><br/> <a href=\"{{approveURL}}\">Approve</a>",
   "mail.report.delete.send.action": "Your task created on Gitpay was deleted by our team",
   "mail.report.delete.send.message": "The task you've created on Gitpay: <a href=\"{{url}}\">{{title}}</a><br/><br/>It was deleted by our team because it violates our guidelines.<br/><br/>Reason: {{selectedReason}}",
+  "mail.task.claim.request.subject": "You claimed an issue on Gitpay",
+  "mail.task.claim.request.body": "<p>You claimed the issue <a href=\"{{url}}\">{{title}}</a> on Gitpay.<br><br>You need to be registered on Gitpay with the same Github login from the source repository.<br><br><a href=\"{{approveURL}}\">Claim</a></p>",
+  "mail.task.claim.confirmation.subject": "Your issue was claimed on Gitpay",
+  "mail.task.claim.confirmation.body": "<p>The issue <a href=\"{{url}}\">{{title}}</a> you imported on Gitpay was claimed by the author.<br><br>So now you don't have admin access to this issue anymore.<br><br>Comments: {{comments}}</p>",
   "task.invalid.script.subject": "The issue you created on Gitpay was deleted",
   "task.invalid.script.message": "The task you imported with the {{url}} to Gitpay was deleted from our list on Gitpay, because this issue is an invalid issue URL."
 }
