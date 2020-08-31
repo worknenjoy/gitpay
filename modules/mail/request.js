@@ -6,8 +6,11 @@ const Signatures = require('./content')
 const { notificationEmail, fromEmail } = require('./constants')
 
 module.exports = (to, subject, content, replyEmail) => {
+  // eslint-disable-next-line no-console
   console.log(' ----- email content ---- ')
+  // eslint-disable-next-line no-console
   console.log(content)
+  // eslint-disable-next-line no-console
   console.log(' ----- end email content ---- ')
   return sendgrid.apiKey && sg.API(sg.emptyRequest({
     method: 'POST',
