@@ -31,7 +31,7 @@ const verifyIssueAndClaim = async (task, user, comments, token) => {
 
   return jwt.verify(token, process.env.SECRET_PHRASE, async (err, decoded) => {
     // the 401 code is for unauthorized status
-    if (err || decoded !== task.id) {
+    if (err || parseInt(decoded) !== parseInt(task.id)) {
       throw new Error('invalid_token')
     }
 
