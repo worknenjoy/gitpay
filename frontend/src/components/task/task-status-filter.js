@@ -13,7 +13,7 @@ const styles = theme => ({
   selected: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
-    '&:hover': {
+    '&:active': {
       color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.primary.main,
     }

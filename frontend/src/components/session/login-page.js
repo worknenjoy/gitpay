@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { withRouter, Link } from 'react-router-dom'
 import LoginButton from './login-button'
-
-import {
-  withStyles,
-  Card,
-  CardContent
-} from '@material-ui/core'
+import { withStyles, Card, CardContent } from '@material-ui/core'
 
 import cyan from '@material-ui/core/colors/cyan'
 
@@ -27,10 +22,10 @@ const styles = theme => ({
     textAlign: 'center'
   },
   title: {
-    fontSize: 14,
+    fontSize: 14
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 12
   }
 })
 
