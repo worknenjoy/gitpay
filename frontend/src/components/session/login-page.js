@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { withRouter, Link } from 'react-router-dom'
 import LoginButton from './login-button'
@@ -45,20 +45,18 @@ class LoginPage extends Component {
   render () {
     const { classes } = this.props
     return (
-      <Fragment>
-        <div className={ classes.container }>
-          <Card className={ classes.card }>
-            <CardContent className={ classes.cardContent }>
-              <Link to='/'>
-                <img src={ logo } width={ 200 } />
-              </Link>
-              <Content>
-                <LoginButton includeForm />
-              </Content>
-            </CardContent>
-          </Card>
-        </div>
-      </Fragment>
+      <div className={ classes.container }>
+        <Card className={ classes.card }>
+          <CardContent className={ classes.cardContent }>
+            <Link to='/'>
+              <img src={ logo } width={ 200 } />
+            </Link>
+            <Content>
+              <LoginButton includeForm />
+            </Content>
+          </CardContent>
+        </Card>
+      </div>
     )
   }
 }
