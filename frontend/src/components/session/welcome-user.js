@@ -51,7 +51,10 @@ export default class WelcomeUser extends Component {
         <DialogContent>
           <button
             style={ { float: 'right', border: 'none' } }
-            onClick={ () => this.setState({ dialogueVisible: false }) }
+            onClick={ () => {
+              this.setState({ dialogueVisible: false })
+              window.localStorage.setItem('firstLogin', false)
+            } }
           >
             <Typography variant='caption'>
               <FormattedMessage id='skip' defaultMessage='Skip' />
@@ -80,14 +83,26 @@ export default class WelcomeUser extends Component {
           nextButton={
             <Button
               size='small'
-              onClick={ () =>
-                this.setState(prevState => ({
-                  currentStepIndex: prevState.currentStepIndex + 1
-                }))
-              }
-              disabled={ this.state.currentStepIndex === 2 }
+              onClick={ () => {
+                if (this.state.currentStepIndex === 2) {
+                  this.setState({ dialogueVisible: false })
+                  window.localStorage.setItem('firstLogin', false)
+                }
+                else {
+                  this.setState(prevState => ({
+                    currentStepIndex: prevState.currentStepIndex + 1
+                  }))
+                }
+              } }
             >
-              <FormattedMessage id='first.task.next' defaultMessage='Next' />
+              { this.state.currentStepIndex === 2 ? (
+                <FormattedMessage
+                  id='first.task.Finish'
+                  defaultMessage='Finish'
+                />
+              ) : (
+                <FormattedMessage id='first.task.next' defaultMessage='Next' />
+              ) }
             </Button>
           }
           backButton={
@@ -100,7 +115,9 @@ export default class WelcomeUser extends Component {
               disabled={ this.state.currentStepIndex === 0 }
               size='small'
             >
-              <FormattedMessage id='first.task.back' defaultMessage='Back' />
+              { this.state.currentStepIndex !== 0 && (
+                <FormattedMessage id='first.task.back' defaultMessage='Back' />
+              ) }
             </Button>
           }
         />

@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { withRouter, Link } from 'react-router-dom'
 import LoginButton from './login-button'
-import WelcomeUser from './welcome-user'
-
 import { withStyles, Card, CardContent } from '@material-ui/core'
 
 import cyan from '@material-ui/core/colors/cyan'
@@ -60,7 +58,6 @@ class LoginPage extends Component {
             </CardContent>
           </Card>
         </div>
-        <WelcomeUser />
       </Fragment>
     )
   }
