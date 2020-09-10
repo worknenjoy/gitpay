@@ -43,7 +43,7 @@ class Bottom extends Component {
                 <strong>
                   <FormattedMessage
                     id='bottom.header.subheading1'
-                    defaultMessage='For Freelancers'
+                    defaultMessage='For contributors and freelancers'
                   />
                 </strong>
               </Typography>
@@ -59,7 +59,7 @@ class Bottom extends Component {
                 <strong>
                   <FormattedMessage
                     id='bottom.header.subheading2'
-                    defaultMessage='For Companies'
+                    defaultMessage='For maintainers and organizations'
                   />
                 </strong>
               </Typography>
