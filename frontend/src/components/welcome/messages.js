@@ -71,15 +71,15 @@ export default defineMessages({
   },
   welcomeHowToItemThreeSecondary: {
     id: 'welcome.howto.item.three.secondary',
-    defaultMessage: 'An easy way to have your work integrated with development tools the developers love it'
+    defaultMessage: 'An easy way to have your work integrated with development tools approved by the development community'
   },
   welcomeHowToItemFourPrimary: {
     id: 'welcome.howto.item.four.primary',
-    defaultMessage: 'Your issue is solved, is on production and the contributor received the payment'
+    defaultMessage: 'Your issue was solved, and the contributor received the payment'
   },
   welcomeHowToItemFourSecondary: {
     id: 'welcome.howto.item.four.secondary',
-    defaultMessage: 'We are facilitating payments between maintainers and contributors by facilitate the development with an agile proccess'
+    defaultMessage: 'We support payments with Credit Card or Paypal and the bounties are transfered directly to your bank account'
   },
   consultingItemPrimary: {
     id: 'welcome.how.item.primary',
