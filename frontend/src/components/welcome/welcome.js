@@ -235,7 +235,7 @@ class Welcome extends Component {
                 <Typography className={ classes.tagline } gutterBottom>
                   <FormattedMessage
                     id='welcome.tagline'
-                    defaultMessage='A worldwide community of contributors working in projects on demmand'
+                    defaultMessage='Leveraging payments for Open Source bounties and freelancer work'
                   />
                 </Typography>
                 <InfoContainer />
@@ -290,7 +290,7 @@ class Welcome extends Component {
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
                     id='welcome.headline.forfreelancers'
-                    defaultMessage='What we can do for contributors'
+                    defaultMessage='For contributors and freelancers'
                   />
                 </Typography>
               </MainTitle>
@@ -359,7 +359,7 @@ class Welcome extends Component {
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
                     id='welcome.tagline.companies.main.headline'
-                    defaultMessage='What we can do for organizations'
+                    defaultMessage='For maintainers and organizations'
                   />
                 </Typography>
               </MainTitle>
@@ -426,7 +426,7 @@ class Welcome extends Component {
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
                     id='welcome.headline.collab'
-                    defaultMessage='A place for collaboration'
+                    defaultMessage='Working in development communities'
                   />
                 </Typography>
               </MainTitle>
@@ -491,7 +491,7 @@ class Welcome extends Component {
             <Typography variant='h5' gutterBottom>
               <FormattedMessage
                 id='welcome.tagline.headline.how.title'
-                defaultMessage='This is our workflow'
+                defaultMessage='How Gitpay works'
               />
             </Typography>
           </MainTitle>
@@ -586,7 +586,7 @@ class Welcome extends Component {
                 <Typography variant='body1' gutterBottom>
                   <FormattedMessage
                     id='welcome.integration.desc'
-                    defaultMessage='Once installed, your issues will be managed by Gitpay, and you can add funds and it will be solved by our community'
+                    defaultMessage='With the Gitpay app on Github, you can import issues from your repository to Gitpay and start to allow payments for contributions'
                   />
                 </Typography>
                 <Button

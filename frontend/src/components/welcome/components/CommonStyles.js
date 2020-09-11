@@ -8,7 +8,7 @@ export const MainTitle = styled.div`
   display: block;
   padding-bottom: 10px;
   border-bottom: 5px solid black;
-  width: 30%;
+  width: 60%;
 
   margin-top: 20px;
   margin-left: auto;

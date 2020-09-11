@@ -62,7 +62,7 @@ class Clientlist extends Component {
         <div className={ classes.heroContent }>
           <MainTitle style={ { width: 'auto' } }>
             <Typography variant='h5' gutterBottom>
-              <FormattedMessage id='welcome.clientlist.title' defaultMessage='Who is using Gitpay' />
+              <FormattedMessage id='welcome.clientlist.title' defaultMessage='Projects using Gitpay' />
             </Typography>
           </MainTitle>
         </div>

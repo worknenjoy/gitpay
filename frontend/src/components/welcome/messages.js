@@ -3,83 +3,83 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   welcomeFreelancersItemOnePrimary: {
     id: 'welcome.main.item.one.primary',
-    defaultMessage: 'Work in projects using the best development tools'
+    defaultMessage: 'Get paid by contributing with Open Source'
   },
   welcomeFreelancersItemOneSecondary: {
     id: 'welcome.main.item.one.secondary',
-    defaultMessage: 'We use all the Git tools and version control to manage deliveries for our clients'
+    defaultMessage: 'Contribute with Open Source projects and receive rewards in bounties'
   },
   welcomeFreelancersItemTwoPrimary: {
     id: 'welcome.main.item.two.primary',
-    defaultMessage: 'Colaboration with companies by tasks on demand'
+    defaultMessage: 'Work with on-demand projects as a freelancer using a development workflow'
   },
   welcomeFreelancersItemTwoSecondary: {
     id: 'welcome.main.item.two.secondary',
-    defaultMessage: 'Work in different projects, you can colaborate and learn with many projects and stacks'
+    defaultMessage: 'We use a Git Workflow to facilitate the process of delivery tasks on demand'
   },
   welcomeFreelancersItemThreePrimary: {
     id: 'welcome.main.item.three.primary',
-    defaultMessage: 'Receive bounties by colaboration'
+    defaultMessage: 'Contribute with projects, get paid, receive tailored feedbacks and get your code into production'
   },
   welcomeFreelancersItemThreeSecondary: {
     id: 'welcome.main.item.three.secondary',
-    defaultMessage: 'Receive bounties for the task you concluded with direct payment when your code is merged on the codebase'
+    defaultMessage: 'We use a very effective agile process to delivery tasks using Git, and we provide support to learn and improve your skills'
   },
   welcomeCompaniesItemOnePrimary: {
     id: 'welcome.companies.item.one.primary',
-    defaultMessage: 'Manage the tasks of your projects'
+    defaultMessage: 'Maintainers of Open Source projects can use Gitpay to outsource the development'
   },
   welcomeCompaniesItemOneSecondary: {
     id: 'welcome.companies.item.one.secondary',
-    defaultMessage: 'With our platform the companies are able to manage your tasks on demand with development tools that suits your needs'
+    defaultMessage: 'Import issues from Git, add bounties, then pay contributors when the the related Pull Request is merged'
   },
   welcomeCompaniesItemTwoPrimary: {
     id: 'welcome.companies.item.two.primary',
-    defaultMessage: 'Pay for your tasks concluded with a smart and automated development process'
+    defaultMessage: 'Organizations can use Gitpay to develop tasks on demand, using a development workflow'
   },
   welcomeCompaniesItemTwoSecondary: {
     id: 'welcome.companies.item.two.secondary',
-    defaultMessage: 'You will have different contributors, with wide experience that will help on the development using tools that they are confortable with established processes'
+    defaultMessage: 'Pay for on-demand freelancer work using an integrated workflow and get issues from your project solved'
   },
   welcomeCompaniesItemThreePrimary: {
     id: 'welcome.companies.item.three.primary',
-    defaultMessage: 'Develop your business with open source tools, and pay on demand'
+    defaultMessage: 'Funding your Open Source project'
   },
   welcomeCompaniesItemThreeSecondary: {
     id: 'welcome.companies.item.three.secondary',
-    defaultMessage: 'Companies can use the Gitpay for all the development needs, from create a repository until release, paying for concluded and merged tasks that are integrated in your project for real'
+    defaultMessage: 'You can crowdfunding your Open Source projects on Gitpay, and get funding by inviting sponsor to add bounties'
   },
   welcomeHowToItemOnePrimary: {
     id: 'welcome.howto.item.one.primary',
-    defaultMessage: 'A new task is created'
+    defaultMessage: 'Import an issue from a Git repository'
   },
   welcomeHowToItemOneSecondary: {
     id: 'welcome.howto.item.one.secondary',
-    defaultMessage: 'A new issue, demand, enhancement or suggestion is created on the platform, that represents needs like development, SEO, content, infrastructure or even new ideas'
+    defaultMessage: 'Import an issue to be solved, then you can set deadlines, add bounties and we will send to our community'
   },
   welcomeHowToItemTwoPrimary: {
     id: 'welcome.howto.item.two.primary',
-    defaultMessage: 'Your demand is send to our community'
+    defaultMessage: 'Contributors and freelancers can apply to solve your issue'
   },
   welcomeHowToItemTwoSecondary: {
     id: 'welcome.howto.item.two.secondary',
-    defaultMessage: 'Differents colaborators group will be interested to solve this issue for the price invested for that bounty'
+    defaultMessage: 'The users can send offers and the ones who applied can be assigned to complete the work'
   },
   welcomeHowToItemThreePrimary: {
     id: 'welcome.howto.item.three.primary',
-    defaultMessage: 'Sent a pull request to receive a bounty'
+    defaultMessage: 'When the solution is ready, you can review, and once approved, you can merge and send the payment to the peer'
   },
   welcomeHowToItemThreeSecondary: {
     id: 'welcome.howto.item.three.secondary',
-    defaultMessage: 'A Pull Request is send in the repo and once approved the bounty is sent'
+    defaultMessage: 'An easy way to have your work integrated with development tools approved by the development community'
   },
   welcomeHowToItemFourPrimary: {
     id: 'welcome.howto.item.four.primary',
-    defaultMessage: 'Agile process between business, payment, consulting and development'
+    defaultMessage: 'Your issue was solved, and the contributor received the payment'
   },
   welcomeHowToItemFourSecondary: {
     id: 'welcome.howto.item.four.secondary',
-    defaultMessage: 'We want to facilitate the transactions and payment between colaborators and companies by facilitate the development with smart tools, consolidated process already used in agile companies and emerging startups'
+    defaultMessage: 'We support payments with Credit Card or Paypal and the bounties are transfered directly to your bank account'
   },
   consultingItemPrimary: {
     id: 'welcome.how.item.primary',
@@ -183,27 +183,27 @@ export default defineMessages({
   },
   welcomeCollabItemOnePrimary: {
     id: 'welcome.collab.item.one.primary',
-    defaultMessage: 'Work with collaboration between members, maintainers and clients'
+    defaultMessage: 'From developers, to developers'
   },
   welcomeCollabItemOneSecondary: {
     id: 'welcome.collab.item.one.secondary',
-    defaultMessage: 'Working with collaboration, you can help and support from a community'
+    defaultMessage: 'We use tools like Git, and integrations with Github and Gitlab to automate the freelancer proccess'
   },
   welcomeCollabItemTwoPrimary: {
     id: 'welcome.collab.item.two.primary',
-    defaultMessage: 'Work with smart integrations and tools'
+    defaultMessage: 'We are fully Open Source'
   },
   welcomeCollabItemTwoSecondary: {
     id: 'welcome.collab.item.two.secondary',
-    defaultMessage: 'Focus on the task instead of worry about how you will deliver, using git tools and integration the delivery is more efficient'
+    defaultMessage: 'We are a open source project made by contributors, and we help our community of contributors to shift their careers to the the next level'
   },
   welcomeCollabItemThreePrimary: {
     id: 'welcome.collab.item.three.primary',
-    defaultMessage: 'Learn with open source'
+    defaultMessage: 'Collaborate from anywhere, empowering development communities'
   },
   welcomeCollabItemThreeSecondary: {
     id: 'welcome.collab.item.three.secondary',
-    defaultMessage: 'The open source allow us to work in descentralized and independent projects and we follow this path to provide our deliveries'
+    defaultMessage: 'We use collaborative remote tools like Slack and discuss and review code on Github or Bitbucket, and we do payments for bounties and freelancer work worldwide'
   },
   topMenu1: {
     id: 'welcome.menu.item.one',
@@ -215,11 +215,11 @@ export default defineMessages({
   },
   topMenu3: {
     id: 'welcome.menu.item.three',
-    defaultMessage: 'For companies'
+    defaultMessage: 'For organizations'
   },
   topMenu4: {
     id: 'welcome.menu.item.four',
-    defaultMessage: 'For collaboration'
+    defaultMessage: 'Community'
   },
   topMenu5: {
     id: 'welcome.menu.item.five',
