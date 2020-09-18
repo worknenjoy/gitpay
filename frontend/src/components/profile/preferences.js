@@ -181,7 +181,7 @@ class Preferences extends Component {
       <Paper elevation={ 0 }>
         <Grid container alignItems='center' spacing={ 1 }>
           <Grid item xs={ 5 } style={ { marginBottom: 20 } }>
-            <Typography color='primary' variant='title' gutterBottom>
+            <Typography color='primary' variant='h5' gutterBottom>
               <FormattedMessage id='preferences.actions.language.title' defaultMessage='Language' />
             </Typography>
             <Button
@@ -237,7 +237,7 @@ class Preferences extends Component {
             </Menu>
           </Grid>
           <Grid item xs={ 7 } >
-            <Typography color='primary' variant='title'>
+            <Typography color='primary' variant='h5'>
               <FormattedMessage id='preferences.os' defaultMessage='OS' />
             </Typography>
             <Checkbox id='checkbox_windows' checked={ this.isOSSelected('Windows') } onClick={ () => this.handleOSClick('Windows') } />
@@ -260,7 +260,7 @@ class Preferences extends Component {
             </label>
           </Grid>
           <Grid item xs={ 12 }>
-            <Typography color='primary' variant='title'>
+            <Typography color='primary' variant='h5'>
               <FormattedMessage id='prefences.skills' defaultMessage='Skills' />
             </Typography>
           </Grid>
@@ -271,7 +271,7 @@ class Preferences extends Component {
           </Grid>
           <div style={ { 'width': '100%', 'flex': 'auto', 'display': 'flex', marginTop: 20 } }>
             <Grid item xs={ 12 }>
-              <Typography color='primary' variant='title'>
+              <Typography color='primary' variant='h5'>
                 <FormattedMessage id='prefences.my.skills' defaultMessage='My Skills' />
               </Typography>
               <Grid container xs={ 12 } style={ { padding: 10 } }>
@@ -288,7 +288,7 @@ class Preferences extends Component {
             </Grid>
           </div>
           <Grid item xs={ 12 } style={ { marginTop: 20, marginBottom: 20 } }>
-            <Typography color='primary' variant='title'>
+            <Typography color='primary' variant='h5'>
               <FormattedMessage id='prefences.my.notifications' defaultMessage='Notifications' />
             </Typography>
             <Switch
@@ -306,7 +306,7 @@ class Preferences extends Component {
             </label>
           </Grid>
           <Grid item xs={ 12 } style={ { marginTop: 20, marginBottom: 20 } }>
-            <Typography color='primary' variant='title'>
+            <Typography color='primary' variant='h5'>
               <FormattedMessage id='prefences.my.openforjobs' defaultMessage='Open For Jobs' />
             </Typography>
             <Checkbox

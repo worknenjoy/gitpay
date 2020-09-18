@@ -74,13 +74,13 @@ class TermsOfServicePeople extends Component {
               <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='h5' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.terms.contrib.title' defaultMessage='For Contributors' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
                   <FormattedMessage id='welcome.terms.main.title' defaultMessage='Terms Of Service' />
                 </Typography>
               </MainTitle>

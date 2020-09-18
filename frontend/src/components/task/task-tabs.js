@@ -431,7 +431,7 @@ class TaskTabs extends React.Component {
         { task.tab === 0 &&
         <TabContainer>
           <Card className={ classes.paper }>
-            <Typography variant='title' align='left' gutterBottom>
+            <Typography variant='h5' align='left' gutterBottom>
               <FormattedMessage id='task.info.description' defaultMessage='Description' />
             </Typography>
             <Typography variant='body2' align='left' gutterBottom>
