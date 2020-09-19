@@ -59,7 +59,7 @@ class WhoSubscribes extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.how.consulting.who.subscribers' defaultMessage='Gitpay is for you?'>
+          <FormattedMessage id='welcome.who.title.menu' defaultMessage='Community'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -76,13 +76,13 @@ class WhoSubscribes extends Component {
               <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='h5' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.who.title.contrib' defaultMessage='For contributors' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
                   <FormattedMessage id='welcome.who.title.contrib.users' defaultMessage='How may I contribute?' />
                 </Typography>
               </MainTitle>
@@ -96,8 +96,8 @@ class WhoSubscribes extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.communityItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.communityItemSecondary) }
                   />
                 </ListItem>
 
@@ -108,8 +108,8 @@ class WhoSubscribes extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.communityItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.communityItemTwoSecondary) }
                   />
                 </ListItem>
 
@@ -120,8 +120,8 @@ class WhoSubscribes extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.communityItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.communityItemThreeSecondary) }
                   />
                 </ListItem>
               </List>

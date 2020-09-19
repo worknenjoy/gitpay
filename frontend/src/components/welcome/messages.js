@@ -83,27 +83,75 @@ export default defineMessages({
   },
   consultingItemPrimary: {
     id: 'welcome.how.item.primary',
-    defaultMessage: 'Once subscribed you will know when new tasks are available to assign'
+    defaultMessage: 'Create an account on Gitpay'
   },
   consultingItemSecondary: {
     id: 'welcome.how.item.secondary',
-    defaultMessage: 'Clients create demands and they are looking for contributors with different skills'
+    defaultMessage: 'When you create an account, you can setup payment methods to receive bounties, setup your preferences and explore tasks. You can receive issues funded according to your preferences'
   },
   consultingItemTwoPrimary: {
     id: 'welcome.how.item.two.primary',
-    defaultMessage: 'You are assigned and receive all the instructions need to start'
+    defaultMessage: 'Solve issues'
   },
   consultingItemTwoSecondary: {
     id: 'welcome.how.item.two.secondary',
-    defaultMessage: 'You get access to repo info with all you need to start and discuss about possible solutions'
+    defaultMessage: 'You can apply to solve issues and receive the payment for a bounty, or even apply for learning purposes, to improve your skills'
   },
   consultingItemThreePrimary: {
     id: 'welcome.how.item.three.primary',
-    defaultMessage: 'We validate your change, integrate the code and you receive a bounty'
+    defaultMessage: 'Receive payments with direct transfer or Paypal'
   },
   consultingItemThreeSecondary: {
     id: 'welcome.how.item.three.secondary',
-    defaultMessage: 'Your change goes to test and your solution will be reviewed and once integrated on the codebase, you receive a bounty'
+    defaultMessage: 'Once your changes are merged into the code base and the issue was solved, you will receive the payment in your bank account'
+  },
+  communityItemPrimary: {
+    id: 'welcome.community.item.primary',
+    defaultMessage: 'Help to build Gitpay while develop your skills'
+  },
+  communityItemSecondary: {
+    id: 'welcome.community.item.secondary',
+    defaultMessage: 'We are an Open-Source project, and you can apply to solve our bounties, we support you to solve our features, and we usually support contributors with fair bounties'
+  },
+  communityItemTwoPrimary: {
+    id: 'welcome.community.item.two.primary',
+    defaultMessage: 'A place for opportunities'
+  },
+  communityItemTwoSecondary: {
+    id: 'welcome.community.item.two.secondary',
+    defaultMessage: 'You may become one of our top talents and there is chances that you can be hired by partner companies'
+  },
+  communityItemThreePrimary: {
+    id: 'welcome.community.item.three.primary',
+    defaultMessage: 'A great workflow that helps you to focus in what matter'
+  },
+  communityItemThreeSecondary: {
+    id: 'welcome.community.item.three.secondary',
+    defaultMessage: 'We follow git good practices to automate your delivery using git, and now you can work with tools you love and you will be supported with collaboration to solve issues'
+  },
+  companiesHowItWorksItemPrimary: {
+    id: 'welcome.howitworks.companies.item.primary',
+    defaultMessage: 'Import git issues to Gitpay'
+  },
+  companiesHowItWorksItemSecondary: {
+    id: 'welcome.howitworks.companies.item.secondary',
+    defaultMessage: 'Import issues from your Github or Bitbucket projects using git to be able to add bounties and manage fundings, and set deadlines and workflows for payments'
+  },
+  companiesHowItWorksItemTwoPrimary: {
+    id: 'welcome.howitworks.companies.item.two.primary',
+    defaultMessage: 'Assign contributors to solve'
+  },
+  companiesHowItWorksItemTwoSecondary: {
+    id: 'welcome.howitworks.companies.item.two.secondary',
+    defaultMessage: 'Contributors can apply for interest and make offers and you can approve their offers to solve your issues'
+  },
+  companiesHowItWorksItemThreePrimary: {
+    id: 'welcome.howitworks.companies.item.three.primary',
+    defaultMessage: 'Receive a change proposal using Pull Requests'
+  },
+  companiesHowItWorksItemThreeSecondary: {
+    id: 'welcome.howitworks.companies.item.three.secondary',
+    defaultMessage: 'The change request will be send directly to your approval, and once approved, the change is merged and the payment will be send to the peer'
   },
   companiesItemPrimary: {
     id: 'welcome.which.companies.item.primary',
@@ -127,51 +175,51 @@ export default defineMessages({
   },
   companiesItemPrimary1: {
     id: 'welcome.companies.item.primary',
-    defaultMessage: 'For any company'
+    defaultMessage: 'Sponsor Gitpay'
   },
   companiesItemSecondary1: {
     id: 'welcome.companies.item.secondary',
-    defaultMessage: 'The distributed colaboration helps company grows and provide a great solution to have the tasks solved using agile process and colaboration throught development'
+    defaultMessage: 'You can help to leverage open source by sponsoring Gitpay and our developers, and you will be featured in our platform'
   },
   companiesItemTwoPrimary1: {
     id: 'welcome.companies.item.two.primary.alt',
-    defaultMessage: 'A community of passionate colaborators'
+    defaultMessage: 'Sponsor any of our projects'
   },
   companiesItemTwoSecondary1: {
     id: 'welcome.companies.item.two.secondary.alt',
-    defaultMessage: 'Companies will be able to use Open Source if they want to create colaborative tools that will help other companies and contribute with the OSS ecosystem'
+    defaultMessage: 'You can sponsor projects you like to growth open source and increase the colaboration in projects with issues to be solved'
   },
   companiesItemThreePrimary1: {
     id: 'welcome.companies.item.three.primary.alt',
-    defaultMessage: 'We validate your business integration process'
+    defaultMessage: 'We share your brand to our community'
   },
   companiesItemThreeSecondary1: {
     id: 'welcome.companies.item.three.secondary.alt',
-    defaultMessage: 'We will help to fit in agile process to have your tasks concluded in an independent way and according to your business'
+    defaultMessage: 'As a crowdfunding platform, you can sponsor us and you will have your brand featured in our weekly newsletter'
   },
   workflowItemPrimary: {
     id: 'welcome.workflow.item.primary',
-    defaultMessage: 'Gitpay is for all'
+    defaultMessage: 'Use of personal information'
   },
   workflowItemSecondary: {
     id: 'welcome.workflow.item.secondary',
-    defaultMessage: 'Clients, team leads, designers, content creators and managers, everyone can follow the progress and status using already known tools to manage their projects for remote teams'
+    defaultMessage: 'The company may use personal information for the following purposes: login and signup for Gitpay service, email notifications when enabled, and statitic data when authorized'
   },
   workflowItemTwoPrimary: {
     id: 'welcome.workflow.item.two.primary',
-    defaultMessage: 'For all levels'
+    defaultMessage: 'Integration with third party'
   },
   workflowItemTwoSecondary: {
     id: 'welcome.workflow.item.two.secondary',
-    defaultMessage: 'Beginners will learn for real of how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with '
+    defaultMessage: 'We never provide access to your data to a third party without your previous consent'
   },
   workflowItemThreePrimary: {
     id: 'welcome.workflow.item.three.primary',
-    defaultMessage: 'Learn by doing and receive bounties'
+    defaultMessage: 'Use of Cookies'
   },
   workflowItemThreeSecondary: {
     id: 'welcome.workflow.item.three.secondary',
-    defaultMessage: 'Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges'
+    defaultMessage: 'We use cookies to help to improve your experience with Gitpay, providing a custom experience according with your needs'
   },
   termsItemOnePrimary: {
     id: 'welcome.terms.item.one.primary',
@@ -179,11 +227,11 @@ export default defineMessages({
   },
   termsItemOneSecondary: {
     id: 'welcome.terms.item.one.secondary',
-    defaultMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet vestibulum elit et sollicitudin. Sed vel efficitur dolor, eget commodo nisl. Fusce laoreet pulvinar turpis. Cras eu lorem non nisl interdum rutrum et non nisl. Quisque nec consequat nibh, eget congue dolor. Duis non dictum nisi. Sed non consectetur turpis. Donec turpis metus, posuere eget sagittis vitae, lobortis sit amet dui. Pellentesque lacinia in massa nec viverra. Praesent sed quam vel lectus facilisis volutpat. Aliquam in consequat lorem, faucibus mollis mi. Suspendisse ultricies tortor in justo dictum, eu elementum lorem scelerisque. Pellentesque faucibus venenatis ex, ut bibendum purus venenatis vitae. Suspendisse hendrerit tristique arcu eget ultricies. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam sollicitudin tortor sit amet fermentum scelerisque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet vestibulum elit et sollicitudin. Sed vel efficitur dolor, eget commodo nisl. Fusce laoreet pulvinar turpis. Cras eu lorem non nisl interdum rutrum et non nisl. Quisque nec consequat nibh, eget congue dolor. Duis non dictum nisi. Sed non consectetur turpis. Donec turpis metus, posuere eget sagittis vitae, lobortis sit amet dui. Pellentesque lacinia in massa nec viverra. Praesent sed quam vel lectus facilisis volutpat. Aliquam in consequat lorem, faucibus mollis mi. Suspendisse ultricies tortor in justo dictum, eu elementum lorem scelerisque. Pellentesque faucibus venenatis ex, ut bibendum purus venenatis vitae. Suspendisse hendrerit tristique arcu eget ultricies. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam sollicitudin tortor sit amet fermentum scelerisque.'
+    defaultMessage: 'THIS IS A LEGALLY BINDING AGREEMENT between you and Work n Enjoy Inc., former company of Gitpay. By using gitpay.me website ("Site") or any of the Gitpay services and integrations ("Services"), you agree to all the terms and conditions of this Terms of Service ("Agreement"). If you are entering into this Agreement on behalf of a company or other legal entity, you represent that you have the authority to bind such entity to these terms and conditions, in which case the terms "you" or "your" shall refer to such entity. If you do not have such authority, or if you do not agree with these terms and conditions, you must not proceed with the registration process or use our Site or Service.'
   },
   welcomeCollabItemOnePrimary: {
     id: 'welcome.collab.item.one.primary',
-    defaultMessage: 'From developers, to developers'
+    defaultMessage: 'By developers, for developers'
   },
   welcomeCollabItemOneSecondary: {
     id: 'welcome.collab.item.one.secondary',

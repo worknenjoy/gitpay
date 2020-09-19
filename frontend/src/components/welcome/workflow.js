@@ -59,7 +59,7 @@ class Workflow extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Workflow'>
+          <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Privacy'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -76,14 +76,14 @@ class Workflow extends Component {
               <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='h5' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.how.workflow.contrib.title' defaultMessage='For contributors' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Workflow' />
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
+                  <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Privacy' />
                 </Typography>
               </MainTitle>
             </div>
