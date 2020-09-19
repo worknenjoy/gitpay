@@ -95,7 +95,7 @@ export default defineMessages({
   },
   consultingItemTwoSecondary: {
     id: 'welcome.how.item.two.secondary',
-    defaultMessage: 'You can apply to solve issues and receive the payment for a bounty, or even apply for learning purposes'
+    defaultMessage: 'You can apply to solve issues and receive the payment for a bounty, or even apply for learning purposes, to improve your skills'
   },
   consultingItemThreePrimary: {
     id: 'welcome.how.item.three.primary',
@@ -111,7 +111,7 @@ export default defineMessages({
   },
   communityItemSecondary: {
     id: 'welcome.community.item.secondary',
-    defaultMessage: 'We are an Open-Source project, and you can apply to solve our bounties, and we support you to solve our features, and we usually support contributors with fair bounties'
+    defaultMessage: 'We are an Open-Source project, and you can apply to solve our bounties, we support you to solve our features, and we usually support contributors with fair bounties'
   },
   communityItemTwoPrimary: {
     id: 'welcome.community.item.two.primary',
@@ -127,7 +127,7 @@ export default defineMessages({
   },
   communityItemThreeSecondary: {
     id: 'welcome.community.item.three.secondary',
-    defaultMessage: 'We follow git good practices to automate your delivery using git, and now you can work with tools you love and you will be supported with collaboration to solve issues, and work as a freelancer'
+    defaultMessage: 'We follow git good practices to automate your delivery using git, and now you can work with tools you love and you will be supported with collaboration to solve issues'
   },
   companiesHowItWorksItemPrimary: {
     id: 'welcome.howitworks.companies.item.primary',
@@ -143,7 +143,7 @@ export default defineMessages({
   },
   companiesHowItWorksItemTwoSecondary: {
     id: 'welcome.howitworks.companies.item.two.secondary',
-    defaultMessage: 'Contributors can apply for interest and make offers and you can approve their offers and start work'
+    defaultMessage: 'Contributors can apply for interest and make offers and you can approve their offers to solve your issues'
   },
   companiesHowItWorksItemThreePrimary: {
     id: 'welcome.howitworks.companies.item.three.primary',
@@ -179,7 +179,7 @@ export default defineMessages({
   },
   companiesItemSecondary1: {
     id: 'welcome.companies.item.secondary',
-    defaultMessage: 'You can help to leverage open source by sponsoring Gitpay and our developers, and we will give your credit'
+    defaultMessage: 'You can help to leverage open source by sponsoring Gitpay and our developers, and you will be featured in our platform'
   },
   companiesItemTwoPrimary1: {
     id: 'welcome.companies.item.two.primary.alt',
@@ -187,7 +187,7 @@ export default defineMessages({
   },
   companiesItemTwoSecondary1: {
     id: 'welcome.companies.item.two.secondary.alt',
-    defaultMessage: 'You can sponsor projects you like and believe in order to growth open source and increase the engagement and colaboration in projects you want to solve issues'
+    defaultMessage: 'You can sponsor projects you like to growth open source and increase the colaboration in projects with issues to be solved'
   },
   companiesItemThreePrimary1: {
     id: 'welcome.companies.item.three.primary.alt',
@@ -195,7 +195,7 @@ export default defineMessages({
   },
   companiesItemThreeSecondary1: {
     id: 'welcome.companies.item.three.secondary.alt',
-    defaultMessage: 'We can share in our newsletter and notifications your brand to create a win-win partnership'
+    defaultMessage: 'As a crowdfunding platform, you can sponsor us and you will have your brand featured in our weekly newsletter'
   },
   workflowItemPrimary: {
     id: 'welcome.workflow.item.primary',
