@@ -235,7 +235,7 @@ class Welcome extends Component {
                 <Typography className={ classes.tagline } gutterBottom>
                   <FormattedMessage
                     id='welcome.tagline'
-                    defaultMessage='Collaborate, learn and receive payments by solving issues from projects throught bounties'
+                    defaultMessage='Collaborate, learn and receive payments by solving issues from projects'
                   />
                 </Typography>
                 <InfoContainer />
