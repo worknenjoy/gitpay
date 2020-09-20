@@ -1,0 +1,50 @@
+[
+  {
+    "id": "task.bounties.order.details.title",
+    "defaultMessage": "Order details"
+  },
+  {
+    "id": "task.bounties.order.details.message",
+    "defaultMessage": "We have here more info about your order"
+  },
+  {
+    "id": "task.bounties.order.details.status",
+    "defaultMessage": "Status:"
+  },
+  {
+    "id": "task.bounties.order.details.provider",
+    "defaultMessage": "Provider:"
+  },
+  {
+    "id": "general.messages.missing",
+    "defaultMessage": "Not found"
+  },
+  {
+    "id": "task.bounties.order.details.id",
+    "defaultMessage": "Order ID:"
+  },
+  {
+    "id": "task.bounties.order.details.authorization_id",
+    "defaultMessage": "Authorization ID:"
+  },
+  {
+    "id": "task.bounties.order.details.created",
+    "defaultMessage": "Created:"
+  },
+  {
+    "id": "task.bounties.order.details.intent",
+    "defaultMessage": "Intent:"
+  },
+  {
+    "id": "task.bounties.order.details.action.cancel",
+    "defaultMessage": "Cancel payment authorization"
+  },
+  {
+    "id": "general.buttons.retry",
+    "defaultMessage": "Retry"
+  },
+  {
+    "id": "general.buttons.close",
+    "defaultMessage": "Close"
+  }
+]

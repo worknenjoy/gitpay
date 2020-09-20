@@ -1,0 +1,10 @@
+[
+  {
+    "id": "welcome.how.title",
+    "defaultMessage": "How it works"
+  },
+  {
+    "id": "welcome.how.title.company",
+    "defaultMessage": "For companies"
+  }
+]

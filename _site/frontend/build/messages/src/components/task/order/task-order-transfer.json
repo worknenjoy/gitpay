@@ -1,0 +1,18 @@
+[
+  {
+    "id": "task.bounties.order.transfer.title",
+    "defaultMessage": "Transfer bounty to another task"
+  },
+  {
+    "id": "task.bounties.order.transfer.message",
+    "defaultMessage": "You can transfer the bounty paid to one of these issues you created:"
+  },
+  {
+    "id": "general.buttons.close",
+    "defaultMessage": "Close"
+  },
+  {
+    "id": "task.bounties.order.transfer.action",
+    "defaultMessage": "transfer bounty order"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "task.status.label.open",
+    "defaultMessage": "Open"
+  },
+  {
+    "id": "task.status.label.succeeded",
+    "defaultMessage": "Paid"
+  },
+  {
+    "id": "task.status.label.fail",
+    "defaultMessage": "Payment canceled"
+  },
+  {
+    "id": "task.status.label.canceled",
+    "defaultMessage": "Payment failed"
+  },
+  {
+    "id": "task.status.label.creditcard",
+    "defaultMessage": "Credit Card"
+  },
+  {
+    "id": "task.status.label.paypal",
+    "defaultMessage": "Paypal"
+  },
+  {
+    "id": "task.status.label.none",
+    "defaultMessage": "No payment type"
+  },
+  {
+    "id": "task.status.label.and",
+    "defaultMessage": "and"
+  },
+  {
+    "id": "task.payment.filter.all",
+    "defaultMessage": "All payments"
+  },
+  {
+    "id": "task.payment.filter.creditcard",
+    "defaultMessage": "Credit Card payments"
+  },
+  {
+    "id": "task.payment.filter.paypal",
+    "defaultMessage": "Paypal payments"
+  },
+  {
+    "id": "task.payment.status.undefined",
+    "defaultMessage": "Undefined status"
+  },
+  {
+    "id": "task.payment.transfer.message",
+    "defaultMessage": "You will send the payment for this task to {to} that receive payments in {payments}"
+  },
+  {
+    "id": "task.payment.noAssigned",
+    "defaultMessage": "Noboby assigned to this task, so you need to first assign and then we can conclude the payment"
+  },
+  {
+    "id": "task.payment.action.title",
+    "defaultMessage": "Pay for this task"
+  },
+  {
+    "id": "task.payment.transfers.concluded",
+    "defaultMessage": "All transfers was succeeded to the destination account"
+  },
+  {
+    "id": "task.payment.transfer.done",
+    "defaultMessage": "All your transfer was concluded with your credit card and the transaction id is:"
+  },
+  {
+    "id": "task.payment.pay.button.credit",
+    "defaultMessage": "Pay $ {value}"
+  },
+  {
+    "id": "task.payment.pay.button.paypal",
+    "defaultMessage": "Pay with PayPal (id: {transfer}"
+  },
+  {
+    "id": "task.payment.done.to",
+    "defaultMessage": "You made a payment to $ {user}"
+  },
+  {
+    "id": "task.payment.start.payTo",
+    "defaultMessage": "Pay $ {value}"
+  },
+  {
+    "id": "task.payment.types.notype",
+    "defaultMessage": "No payment for this payment type"
+  },
+  {
+    "id": "task.payment.action.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "task.payment.action.close",
+    "defaultMessage": "Close"
+  }
+]

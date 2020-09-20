@@ -26,6 +26,12 @@
             </div>
         </div>
         <div class="uk-margin-medium uk-text-small copyright">{{ site.footer.copyright }}</div>
-
+        <div class="uk-margin-medium uk-text-small">
+            <em>{{ site.data.translations.languages[page.lang] }}:</em>
+            {% for lang in site.data.languages %}
+            {% assign language = lang[1] %}
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/{{lang[0]}}">{{language.icon}} {{ language.label }}</a>
+            {% endfor %}
+        </div>
     </div>
 </footer>

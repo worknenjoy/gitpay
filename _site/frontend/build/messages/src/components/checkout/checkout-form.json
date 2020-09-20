@@ -1,0 +1,14 @@
+[
+  {
+    "id": "checkout.loggedas",
+    "defaultMessage": "Logged as"
+  },
+  {
+    "id": "general.actions.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "checkout.payment.action",
+    "defaultMessage": "Pay {price}"
+  }
+]

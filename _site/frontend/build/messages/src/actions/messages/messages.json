@@ -1,0 +1,274 @@
+[
+  {
+    "id": "user.login.successfull",
+    "defaultMessage": "You successfully logged in"
+  },
+  {
+    "id": "user.login.error",
+    "defaultMessage": "We could not log to your account"
+  },
+  {
+    "id": "user.register.successfull",
+    "defaultMessage": "You're now registered on our platform, now you can log in with your credentials"
+  },
+  {
+    "id": "user.register.error",
+    "defaultMessage": "There's was an error to create user"
+  },
+  {
+    "id": "user.exist",
+    "defaultMessage": "This user already exist. Please login"
+  },
+  {
+    "id": "user.logout",
+    "defaultMessage": "You have logged out of your account."
+  },
+  {
+    "id": "actions.assign.task.sucess",
+    "defaultMessage": "This task was updated successfully!"
+  },
+  {
+    "id": "actions.assign.task.error",
+    "defaultMessage": "We could not update this task."
+  },
+  {
+    "id": "actions.message.task.error",
+    "defaultMessage": "We have an issue to send your message. Please try again later"
+  },
+  {
+    "id": "actions.message.task.sucess",
+    "defaultMessage": "Your message was sent successfully"
+  },
+  {
+    "id": "action.task.remove.assign.success",
+    "defaultMessage": "This task was unassigned successfully!"
+  },
+  {
+    "id": "action.task.remove.assign.error",
+    "defaultMessage": "We could not unassign this user from this task"
+  },
+  {
+    "id": "actions.message.recruiters.success",
+    "defaultMessage": "Thanks for your message, we will contact you soon"
+  },
+  {
+    "id": "actions.message.recruiters.error",
+    "defaultMessage": "There was an issue to send this message, please try again later"
+  },
+  {
+    "id": "actions.order.create.error",
+    "defaultMessage": "We could not create this payment"
+  },
+  {
+    "id": "actions.order.create.payment.error",
+    "defaultMessage": "We could not process the payment for this task"
+  },
+  {
+    "id": "actions.order.create.payment.send.success",
+    "defaultMessage": "Payment completed successfully"
+  },
+  {
+    "id": "actions.order.create.payment.send.error",
+    "defaultMessage": "We could not process this payment"
+  },
+  {
+    "id": "actions.order.transfer.success",
+    "defaultMessage": "The order was transfered successfully"
+  },
+  {
+    "id": "actions.order.transfer.error",
+    "defaultMessage": "We could not make this transfer, try again later"
+  },
+  {
+    "id": "actions.order.cancel.success",
+    "defaultMessage": "Your payment was canceled successfully"
+  },
+  {
+    "id": "actions.order.cancel.error",
+    "defaultMessage": "We could not cancel this payment"
+  },
+  {
+    "id": "actions.task.create.notification.success",
+    "defaultMessage": "Task created successfully"
+  },
+  {
+    "id": "actions.task.create.notification.error",
+    "defaultMessage": "Error to update task"
+  },
+  {
+    "id": "actions.task.create.auth.error",
+    "defaultMessage": "You need to login first to create a task"
+  },
+  {
+    "id": "actions.task.payment.notification.success",
+    "defaultMessage": "Your payment was completed successfully"
+  },
+  {
+    "id": "actions.task.payment.notification.error",
+    "defaultMessage": "We had a error to process this payment"
+  },
+  {
+    "id": "actions.task.interested.notification.success",
+    "defaultMessage": "You add as interested for this task sucessfully"
+  },
+  {
+    "id": "actions.task.update.notification.success",
+    "defaultMessage": "Task updated successfully"
+  },
+  {
+    "id": "actions.task.update.notification.error",
+    "defaultMessage": "Error on task update"
+  },
+  {
+    "id": "actions.task.delete.notification.success",
+    "defaultMessage": "Task deleted successfully"
+  },
+  {
+    "id": "actions.task.delete.notification.error",
+    "defaultMessage": "Error to delete task"
+  },
+  {
+    "id": "actions.task.delete.auth.error",
+    "defaultMessage": "You need to login first to delete a task"
+  },
+  {
+    "id": "actions.task.fetch.error",
+    "defaultMessage": "We could not obtain this task, please try again later"
+  },
+  {
+    "id": "actions.task.fetch.unavailable",
+    "defaultMessage": "Task unavailable"
+  },
+  {
+    "id": "actions.task.fetch.other.error",
+    "defaultMessage": "We could not obtain this task, please try again later"
+  },
+  {
+    "id": "actions.task.payment.balance.error",
+    "defaultMessage": "This price is not available for this task yet"
+  },
+  {
+    "id": "actions.task.payment.balance.other.error",
+    "defaultMessage": "We had a issue to make this transfer"
+  },
+  {
+    "id": "actions.task.payment.transfer.sucess",
+    "defaultMessage": "The transfer was completed successfully!"
+  },
+  {
+    "id": "actions.task.payment.error.send",
+    "defaultMessage": "We could not process the payment for this task"
+  },
+  {
+    "id": "actions.task.invite.success",
+    "defaultMessage": "Invite sent"
+  },
+  {
+    "id": "actions.task.invite.error",
+    "defaultMessage": "We could not send this invite"
+  },
+  {
+    "id": "actions.task.message.author.success",
+    "defaultMessage": "Your message was sent successfully"
+  },
+  {
+    "id": "actions.task.message.author.error",
+    "defaultMessage": "We could not send this message"
+  },
+  {
+    "id": "actions.task.report.success",
+    "defaultMessage": "Task successfuly reported"
+  },
+  {
+    "id": "actions.task.report.error",
+    "defaultMessage": "Error in reporting task"
+  },
+  {
+    "id": "actions.user.account.exist",
+    "defaultMessage": "There's already an account created for this user"
+  },
+  {
+    "id": "actions.user.account.create.success",
+    "defaultMessage": "You successfully created your account to receive payments"
+  },
+  {
+    "id": "actions.user.account.create.error",
+    "defaultMessage": "Your account could not be created"
+  },
+  {
+    "id": "actions.user.account.update.success",
+    "defaultMessage": "Your account was updated successfully"
+  },
+  {
+    "id": "actions.user.account.update.error.missing",
+    "defaultMessage": "We had an issue to update your account. Please review the information provided"
+  },
+  {
+    "id": "notifications.account.update.error",
+    "defaultMessage": "We could not create your account"
+  },
+  {
+    "id": "account.profile.settings.delete.user.notification",
+    "defaultMessage": "The account was successfully deleted"
+  },
+  {
+    "id": "account.profile.settings.delete.user.notification.error",
+    "defaultMessage": "We could not delete your account"
+  },
+  {
+    "id": "notifications.bank.get.success",
+    "defaultMessage": "We could not obtain your bank account data"
+  },
+  {
+    "id": "notifications.bank.get.error",
+    "defaultMessage": "We could not obtain your bank account data"
+  },
+  {
+    "id": "notifications.bank.create.error",
+    "defaultMessage": "We could not create your account"
+  },
+  {
+    "id": "notifications.bank.create.success",
+    "defaultMessage": "Your bank account was registered successfully"
+  },
+  {
+    "id": "notifications.bank.create.other.error",
+    "defaultMessage": "We could not update your account"
+  },
+  {
+    "id": "payment.message.error",
+    "defaultMessage": "We couldn't process your payment"
+  },
+  {
+    "id": "user.invalid",
+    "defaultMessage": "Invalid e-mail and / or password, please try again"
+  },
+  {
+    "id": "task.order.payment.success",
+    "defaultMessage": "Your order was completed successfully"
+  },
+  {
+    "id": "task.order.payment.error",
+    "defaultMessage": "We had a issue to process your payment"
+  },
+  {
+    "id": "actions.task.status.forbidden",
+    "defaultMessage": "You cannot change the status from this task"
+  },
+  {
+    "id": "actions.task.claim.success",
+    "defaultMessage": "Issue successfuly claimed"
+  },
+  {
+    "id": "actions.task.claim.error",
+    "defaultMessage": "Error on claim issue"
+  },
+  {
+    "id": "actions.task.claim.error.invalid_provider",
+    "defaultMessage": "Invalid provider"
+  },
+  {
+    "id": "actions.task.claim.error.user_is_not_the_owner",
+    "defaultMessage": "You cannot claim this issue because you're not the Owner."
+  }
+]

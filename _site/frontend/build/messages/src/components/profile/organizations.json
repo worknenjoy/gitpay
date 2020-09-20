@@ -1,0 +1,18 @@
+[
+  {
+    "id": "organization.dialog.title",
+    "defaultMessage": "Import organizations"
+  },
+  {
+    "id": "organization.dialog.desc",
+    "defaultMessage": "You can import organizations in order to manage on Gitpay"
+  },
+  {
+    "id": "organization.dialog.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "organization.dialog.action",
+    "defaultMessage": "Import"
+  }
+]

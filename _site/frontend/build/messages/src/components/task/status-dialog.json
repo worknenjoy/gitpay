@@ -1,0 +1,18 @@
+[
+  {
+    "id": "task.status.filter.open",
+    "defaultMessage": "Open"
+  },
+  {
+    "id": "task.status.filter.progress",
+    "defaultMessage": "In progress"
+  },
+  {
+    "id": "task.status.filter.close",
+    "defaultMessage": "Finished"
+  },
+  {
+    "id": "account.dialog.status",
+    "defaultMessage": "Task status"
+  }
+]

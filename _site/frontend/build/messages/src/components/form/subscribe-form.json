@@ -1,0 +1,22 @@
+[
+  {
+    "id": "form.email.leave.label",
+    "defaultMessage": "Leave your email"
+  },
+  {
+    "id": "form.email.signup.label",
+    "defaultMessage": "Signup!"
+  },
+  {
+    "id": "form.email.subscribing.label",
+    "defaultMessage": "Subscribing..."
+  },
+  {
+    "id": "form.email.submit.success",
+    "defaultMessage": "You now registered and soon you will receive new challenges"
+  },
+  {
+    "id": "form.email.submit.error",
+    "defaultMessage": "We could not register your e-mail, maybe you're already registered?"
+  }
+]

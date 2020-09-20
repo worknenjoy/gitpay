@@ -1,0 +1,18 @@
+[
+  {
+    "id": "task.bounties.details.paypal",
+    "defaultMessage": "Are you sure you want to cancel this pre-payment?"
+  },
+  {
+    "id": "task.bounties.cancel.paypal.caution",
+    "defaultMessage": "If you cancel this payment, your pre-approved payment will be canceled and the balance will be canceled from this issue"
+  },
+  {
+    "id": "task.actions.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "task.actions.cancelPayment",
+    "defaultMessage": "Confirm cancelation of pre-authorized payment"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "account.profile.tasks.setup",
+    "defaultMessage": "Tasks"
+  },
+  {
+    "id": "account.profile.payment.setup",
+    "defaultMessage": "Setup payment"
+  },
+  {
+    "id": "account.profile.preferences",
+    "defaultMessage": "Preferences"
+  },
+  {
+    "id": "account.profile.settings",
+    "defaultMessage": "Settings"
+  },
+  {
+    "id": "account.profile.org.headline",
+    "defaultMessage": "Your organizations"
+  },
+  {
+    "id": "account.profile.org.description",
+    "defaultMessage": "Here is your organizations that you can import to Gitpay"
+  }
+]

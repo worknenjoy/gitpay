@@ -1,0 +1,10 @@
+[
+  {
+    "id": "welcome.how.workflow.main.title",
+    "defaultMessage": "Privacy"
+  },
+  {
+    "id": "welcome.how.workflow.contrib.title",
+    "defaultMessage": "For contributors"
+  }
+]

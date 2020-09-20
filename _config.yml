@@ -5,8 +5,8 @@
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 
 # Site title and description
-title:              Documentação do Gitpay
-description:        Guias, dúvidas e informações de como funciona o Gitpay.
+title:              Gitpay Documentation
+description:        The guide for Gitpay.
 
 # Site subpath, e.g. /blog
 baseurl:            ""
@@ -20,7 +20,7 @@ url:                "https://docs.gitpay.me"
 # Site logo, image or text
 brand:
     image:          logo.png  # e.g. logo.png, upload logo image file to /assets/img/ folder
-    text:           Documentação      # if the above "logo:" image variable  is not set, this text logo is displayed instead
+    text:           Documentation      # if the above "logo:" image variable  is not set, this text logo is displayed instead
 
 # Default author settings
 author:
@@ -54,7 +54,7 @@ twitter_username:
 
 # Default footer image settings
 footer:
-    copyright:      Desenvolvido de forma colaborativa pelo Gitpay
+    copyright:      Developed with collaboration using Gitpay
 
 # Disqus comments shortname, requires Disqus account https://disqus.com/
 disqus:
@@ -70,7 +70,7 @@ google_maps_api_key:
 paginate: 10
 
 # Blog path
-paginate_path:      "/news/:num/"
+paginate_path:      "/blog/:num/"
 
 # Path to post content assets directory i.e post images, pdfs etc
 post_assets:        /assets/posts/

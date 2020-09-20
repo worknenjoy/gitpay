@@ -1,0 +1,138 @@
+[
+  {
+    "id": "account.document.cpf.provided",
+    "defaultMessage": "id provided"
+  },
+  {
+    "id": "account.document.cpf.provide",
+    "defaultMessage": "Please provide your id number"
+  },
+  {
+    "id": "account.address.line1",
+    "defaultMessage": "Adress line 1"
+  },
+  {
+    "id": "account.address.line2",
+    "defaultMessage": "Adress line 2"
+  },
+  {
+    "id": "account.type.card",
+    "defaultMessage": "Bank Account"
+  },
+  {
+    "id": "account.status.paypal",
+    "defaultMessage": "PayPal"
+  },
+  {
+    "id": "account.details.state",
+    "defaultMessage": "State"
+  },
+  {
+    "id": "account.details.dob",
+    "defaultMessage": "Date of birth"
+  },
+  {
+    "id": "account.details.zipcode",
+    "defaultMessage": "Zipcode"
+  },
+  {
+    "id": "account.details.city",
+    "defaultMessage": "City"
+  },
+  {
+    "id": "account.details.birthYear",
+    "defaultMessage": "Birth year"
+  },
+  {
+    "id": "account.register.status",
+    "defaultMessage": "Active"
+  },
+  {
+    "id": "consts.external.account",
+    "defaultMessage": "Bank account"
+  },
+  {
+    "id": "consts.address.zipcode",
+    "defaultMessage": "Zip code"
+  },
+  {
+    "id": "consts.address.birth.day",
+    "defaultMessage": "Day of birth"
+  },
+  {
+    "id": "consts.address.birth.month",
+    "defaultMessage": "Month of Birth"
+  },
+  {
+    "id": "consts.account.firstname",
+    "defaultMessage": "First name"
+  },
+  {
+    "id": "consts.account.lastname",
+    "defaultMessage": "Last name"
+  },
+  {
+    "id": "consts.account.id.number",
+    "defaultMessage": "document number"
+  },
+  {
+    "id": "consts.account.id.doc",
+    "defaultMessage": "document"
+  },
+  {
+    "id": "consts.account.id.type",
+    "defaultMessage": "identification type"
+  },
+  {
+    "id": "consts.account.terms.date",
+    "defaultMessage": "Accepted terms date"
+  },
+  {
+    "id": "consts.account.terms.accept",
+    "defaultMessage": "Accepted terms"
+  },
+  {
+    "id": "consts.account.reasons.fields.needed",
+    "defaultMessage": "Pending fields"
+  },
+  {
+    "id": "consts.account.reasons.fields.external",
+    "defaultMessage": "Register bank account"
+  },
+  {
+    "id": "consts.account.reasons.fields.pending",
+    "defaultMessage": "Verification pending"
+  },
+  {
+    "id": "consts.account.reasons.fields.pending.other",
+    "defaultMessage": "Pending"
+  },
+  {
+    "id": "consts.account.statuses.open",
+    "defaultMessage": "Open"
+  },
+  {
+    "id": "consts.account.statuses.open.two",
+    "defaultMessage": "Open"
+  },
+  {
+    "id": "consts.account.statuses.progress",
+    "defaultMessage": "In progress"
+  },
+  {
+    "id": "consts.account.statuses.finish",
+    "defaultMessage": "Finished"
+  },
+  {
+    "id": "consts.account.statuses.undefined",
+    "defaultMessage": "Undefined"
+  },
+  {
+    "id": "consts.account.statuses.undefined.two",
+    "defaultMessage": "Undefined"
+  },
+  {
+    "id": "consts.account.statuses.undefined.three",
+    "defaultMessage": "Undefined"
+  }
+]

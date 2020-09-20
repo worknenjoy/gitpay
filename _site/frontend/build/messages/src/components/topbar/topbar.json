@@ -1,0 +1,74 @@
+[
+  {
+    "id": "task.actions.create",
+    "defaultMessage": "Create task"
+  },
+  {
+    "id": "task.actions.explore",
+    "defaultMessage": "Explore tasks"
+  },
+  {
+    "id": "task.actions.docs",
+    "defaultMessage": "Documentation"
+  },
+  {
+    "id": "task.bar.signin",
+    "defaultMessage": "Signin"
+  },
+  {
+    "id": "task.actions.gitpay.call",
+    "defaultMessage": "Join the Gitpay community"
+  },
+  {
+    "id": "task.actions.account",
+    "defaultMessage": "Account"
+  },
+  {
+    "id": "task.actions.insert.new",
+    "defaultMessage": "Insert a new task"
+  },
+  {
+    "id": "task.actions.insert.subheading",
+    "defaultMessage": "Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>"
+  },
+  {
+    "id": "task.actions.insert.novalid",
+    "defaultMessage": "This is not a valid URL"
+  },
+  {
+    "id": "task.actions.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "task.actions.insert.label",
+    "defaultMessage": "Insert"
+  },
+  {
+    "id": "task.actions.tooltip.language",
+    "defaultMessage": "Choose your language"
+  },
+  {
+    "id": "task.actions.tooltip.git",
+    "defaultMessage": "See our project on Github"
+  },
+  {
+    "id": "task.actions.account.access",
+    "defaultMessage": "Access account"
+  },
+  {
+    "id": "task.actions.account.logout",
+    "defaultMessage": "Logout"
+  },
+  {
+    "id": "task.bar.slack",
+    "defaultMessage": "Slack {count}"
+  },
+  {
+    "id": "task.actions.slack.call",
+    "defaultMessage": "Join our Slack channel"
+  },
+  {
+    "id": "form.slack.join.label",
+    "defaultMessage": "Join channel!"
+  }
+]

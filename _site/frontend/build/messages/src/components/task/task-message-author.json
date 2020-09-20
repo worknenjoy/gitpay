@@ -1,0 +1,18 @@
+[
+  {
+    "id": "task.message.title",
+    "defaultMessage": "Send a message to the author"
+  },
+  {
+    "id": "task.message.author.label",
+    "defaultMessage": "Write a message to the author of this issue"
+  },
+  {
+    "id": "task.message.form.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "task.message.form.send",
+    "defaultMessage": "Send"
+  }
+]

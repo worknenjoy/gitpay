@@ -1,0 +1,18 @@
+[
+  {
+    "id": "task.invite.title",
+    "defaultMessage": "Invite someone to work on this task"
+  },
+  {
+    "id": "task.invite.text.label",
+    "defaultMessage": "Write a text to be sent with the invite"
+  },
+  {
+    "id": "task.invite.form.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "task.invite.form.send",
+    "defaultMessage": "Send"
+  }
+]

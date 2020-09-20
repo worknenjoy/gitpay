@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
+  <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Trabalhando com o Git Workflow | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Trabalhando com o Git Workflow" />
+<meta name="author" content="Alexandre Magno" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="O que você vai aprender aqui" />
+<meta property="og:description" content="O que você vai aprender aqui" />
+<link rel="canonical" href="http://localhost:4000/docs/br/quickstart/" />
+<meta property="og:url" content="http://localhost:4000/docs/br/quickstart/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-20T22:40:09+02:00" />
+<script type="application/ld+json">
+{"headline":"Trabalhando com o Git Workflow","dateModified":"2020-09-20T22:40:09+02:00","datePublished":"2020-09-20T22:40:09+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/docs/br/quickstart/"},"description":"O que você vai aprender aqui","url":"http://localhost:4000/docs/br/quickstart/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
+  <script src="/assets/js/main.js"></script>
+  
+</head>
+
+
+    <body>
+
+    <header class="uk-background-secondary">
+    <div data-uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" class="uk-sticky uk-sticky-fixed" style="position: fixed; top: 0px; width: 1904px;">
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+    <div data-uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title=""></a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+            </ul>
+
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+            
+
+            <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
+
+        </div>
+    </div>
+</div>
+
+        </nav>
+    </div>
+</header>
+
+
+    
+
+    <div class="uk-section">
+    <div class="uk-container">
+        <div class="uk-grid-large" data-uk-grid>
+
+            <div class="sidebar-fixed-width uk-visible@m">
+                <div class="sidebar-docs uk-position-fixed">
+                    
+                    <h5>Conceitos básicos</h5>
+                    <ul class="uk-nav uk-nav-default doc-nav">
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                    </ul>
+                    
+                    <h5>Conta e pagamento</h5>
+                    <ul class="uk-nav uk-nav-default doc-nav">
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                    </ul>
+                    
+                    <h5>Dúvidas comuns</h5>
+                    <ul class="uk-nav uk-nav-default doc-nav">
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                    </ul>
+                    
+                </div>
+            </div>
+
+            <div class="uk-width-1-1 uk-width-expand@m">
+
+                <article class="uk-article">
+
+                    <h1 class="uk-article-title">Trabalhando com o Git Workflow</h1>
+
+                    <p class="subtitle uk-text-lead uk-text-muted">O processo de entrega intregado de uma tarefa no Gitpay</p>
+
+                    <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
+                        
+
+
+
+
+
+<time datetime="2020-09-20T22:40:09+02:00" itemprop="datePublished">
+    
+    Sep 20, 2020
+</time>
+
+<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/br/quickstart.md">Editar esta página</a>
+
+                    </div>
+
+                    <div class="article-content">
+                        <h4 id="o-que-você-vai-aprender-aqui">O que você vai aprender aqui</h4>
+
+<ul class="no_toc" id="markdown-toc">
+  <li><a href="#o-que-você-vai-aprender-aqui" id="markdown-toc-o-que-você-vai-aprender-aqui">O que você vai aprender aqui</a></li>
+  <li><a href="#o-nosso-workflow" id="markdown-toc-o-nosso-workflow">O nosso Workflow</a></li>
+  <li><a href="#git-workflow" id="markdown-toc-git-workflow">Git Workflow</a></li>
+  <li><a href="#forking-workflow" id="markdown-toc-forking-workflow">Forking Workflow</a></li>
+  <li><a href="#avaliando-as-mudanças" id="markdown-toc-avaliando-as-mudanças">Avaliando as mudanças</a></li>
+</ul>
+
+<p>O Git Workflow é um processo já existente no desenvolvimento de software que usamos como base para validar uma tarefa de um projeto Open Source, ou até mesmo de forma interna em projetos privados.</p>
+
+<p>Ele consiste em disseminar diretrizes e processos de trabalho com o Git para times distribuidos.</p>
+
+<h2 id="o-nosso-workflow">O nosso Workflow</h2>
+
+<p>Usamos os processo de contribuição de um repositório git para validar o trabalho. O Git é o nosso contrato inteligente. A partir de uma integração de mudança que passa por testes automatizados e validações em vários ambientes, é possível realizar processos de trabalhos independnetes de forma integrada.</p>
+
+<h2 id="git-workflow">Git Workflow</h2>
+
+<p>O Git Workflow é um processo e recomendação de como devemos usar o Git para finalizar tarefas de uma maneira consistente e produtiva.</p>
+
+<p>Trabalhando em projeto, quando usamos o Git para o controle de versão, temos um fluxo de trabalho tendo ele como base. Para garantir que times e projetos em grande escala estejam na mesma página, acordamos de ter o Git Workflow para considerar a tarefa como finalizada.</p>
+
+<p>Há diversos tipos de Workflow para times, e aqui vamos falar do que usamos no Gitpay e que muitas empresas também usam</p>
+
+<blockquote>
+  <p>Workflows são formas de apresentar um processo de trabalho no desenvolvimento de software ágil. Ele se baseia em regras claras e concretas de como trabalhamos em projetos usando o Git como controle de versão.</p>
+</blockquote>
+
+<h2 id="forking-workflow">Forking Workflow</h2>
+
+<p><img src="/uploads/img-multidev-forking-800-2.png" alt="" /></p>
+
+<p>Este é o processo que usamos para integração das tarefas. No Forking Workflow, repositórios são criados a partir do principal onde contém a sua mudança. Você deve ser capaz de reproduzir um ambiente com o que você precisa para concluir aquela tarefa.</p>
+
+<p>Toda mudança passa por um processo de aprovação. Este processo é concreto e segue as linhas das práticas de desenvolvimento.</p>
+
+<h2 id="avaliando-as-mudanças">Avaliando as mudanças</h2>
+
+<p>Avaliamos as mudanças seguindo as seguintes premissas:</p>
+
+<ol>
+  <li>Não vamos nos atentar a detalhes, e sim no valor daquela entrega</li>
+  <li>Seremos sempre flexíveis e abertos a discutir melhores soluções, no entanto, uma tarefa bem descrita evita que o escopo aumente descontrolodamente</li>
+  <li>Adotamos o desenvolvimento ágil, então estimulamos o desenvolvimento juntamente com testes automatizados, principalmente na correção de bugs</li>
+</ol>
+
+                        <div class="share uk-text-center">
+    <a href="https://twitter.com/intent/tweet?text=Trabalhando com o Git Workflow&url=http://localhost:4000/docs/br/quickstart/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fbr%2Fquickstart%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+</div>
+
+                    </div>
+
+                    <hr class="uk-margin-medium">
+
+                    
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+                    <div class="uk-margin-large-top">
+    
+    
+    
+    
+    <ul class="uk-list">
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+    </ul>
+</div>
+
+
+                    
+                </article>
+
+                <script>
+                    // Table of contents scroll to
+                    UIkit.scroll('#markdown-toc a', {
+                        duration: 400,
+                        offset: 120
+                    });
+                </script>
+
+            </div>
+
+    </div>
+</div>
+
+
+    <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            
+                
+            <li><a href="https://gitpay.me" target="_blank" ></a></li>
+            
+                
+            <li><a href="http://localhost:4000/" ></a></li>
+            
+                
+            <li><a href="http://localhost:4000/blog/" ></a></li>
+            
+                
+            <li><a href="http://localhost:4000/changelog/" ></a></li>
+            
+                
+            <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+            
+                
+            <li><a href="http://localhost:4000/contact/" ></a></li>
+            
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    
+
+    </body>
+
+
+</html>

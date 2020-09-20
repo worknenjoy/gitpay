@@ -1,0 +1,18 @@
+[
+  {
+    "id": "skip",
+    "defaultMessage": "Skip"
+  },
+  {
+    "id": "first.task.Finish",
+    "defaultMessage": "Finish"
+  },
+  {
+    "id": "first.task.next",
+    "defaultMessage": "Next"
+  },
+  {
+    "id": "first.task.back",
+    "defaultMessage": "Back"
+  }
+]

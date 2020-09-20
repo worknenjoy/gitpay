@@ -1,0 +1,14 @@
+[
+  {
+    "id": "user.data.fullname",
+    "defaultMessage": "Full name"
+  },
+  {
+    "id": "user.data.fullname.error",
+    "defaultMessage": "Provide your full name"
+  },
+  {
+    "id": "user.data.email.error",
+    "defaultMessage": "Provide your email correctly"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "task.claim.title",
+    "defaultMessage": "Claim issue"
+  },
+  {
+    "id": "task.claim.subtitle",
+    "defaultMessage": "If you're the original author of this issue, you can claim this issue so you will be admin and transfer the property to manage the issue on Gitpay."
+  },
+  {
+    "id": "task.claim.comments.label",
+    "defaultMessage": "Comments"
+  },
+  {
+    "id": "task.claim.form.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "task.claim.form.send",
+    "defaultMessage": "Claim"
+  }
+]

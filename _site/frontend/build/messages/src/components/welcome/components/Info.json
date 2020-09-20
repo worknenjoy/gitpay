@@ -1,0 +1,6 @@
+[
+  {
+    "id": "info.status.message",
+    "defaultMessage": "We paid {bounties} USD in bounties and freelancer work for {tasks} tasks to our community of {users} users"
+  }
+]

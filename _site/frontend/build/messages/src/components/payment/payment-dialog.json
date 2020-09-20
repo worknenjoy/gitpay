@@ -1,0 +1,10 @@
+[
+  {
+    "id": "payment.new.title",
+    "defaultMessage": "Make a new payment"
+  },
+  {
+    "id": "payment.new.text",
+    "defaultMessage": "Please fill your credit card details"
+  }
+]

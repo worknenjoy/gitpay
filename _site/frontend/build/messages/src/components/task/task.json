@@ -1,0 +1,130 @@
+[
+  {
+    "id": "task.status.created.name.short",
+    "defaultMessage": "by {name}"
+  },
+  {
+    "id": "first.task.bounties.title",
+    "defaultMessage": "Add Bounties"
+  },
+  {
+    "id": "first.task.bounties.description",
+    "defaultMessage": "Add bounties to reward contributors to solve your issue"
+  },
+  {
+    "id": "first.task.bounties.action",
+    "defaultMessage": "Add bounties now"
+  },
+  {
+    "id": "first.task.deadline.title",
+    "defaultMessage": "Set a deadline"
+  },
+  {
+    "id": "first.task.deadline.description",
+    "defaultMessage": "Set a deadline in order to define when your issues should be solved"
+  },
+  {
+    "id": "first.task.deadline.action",
+    "defaultMessage": "Set deadline"
+  },
+  {
+    "id": "first.task.community.title",
+    "defaultMessage": "Send to our community"
+  },
+  {
+    "id": "first.task.community.description",
+    "defaultMessage": "We will make a campaign to let our community know that you have an issue to be solved"
+  },
+  {
+    "id": "task.bounties.add",
+    "defaultMessage": "Add bounty"
+  },
+  {
+    "id": "this.props.ask.interested.offer",
+    "defaultMessage": "Make an offer"
+  },
+  {
+    "id": "task.bounties.interested.created",
+    "defaultMessage": "created"
+  },
+  {
+    "id": "first.task.next",
+    "defaultMessage": "Next"
+  },
+  {
+    "id": "first.task.back",
+    "defaultMessage": "Back"
+  },
+  {
+    "id": "task.status.author.label",
+    "defaultMessage": "Author"
+  },
+  {
+    "id": "task.status.author.missing",
+    "defaultMessage": "author info unknown"
+  },
+  {
+    "id": "task.status.author.name",
+    "defaultMessage": "Imported from {provider} by {name}"
+  },
+  {
+    "id": "task.status.importer.name",
+    "defaultMessage": "Imported to Gitpay by {name}"
+  },
+  {
+    "id": "task.bounties.invite",
+    "defaultMessage": "Invite"
+  },
+  {
+    "id": "task.funding.action",
+    "defaultMessage": "Invite sponsor"
+  },
+  {
+    "id": "task.interested.action",
+    "defaultMessage": "Im interested"
+  },
+  {
+    "id": "task.bounties.date.deadline",
+    "defaultMessage": "Deadline"
+  },
+  {
+    "id": "task.bounties.status.change",
+    "defaultMessage": "Change status"
+  },
+  {
+    "id": "task.actions.delete",
+    "defaultMessage": "Delete"
+  },
+  {
+    "id": "task.bounties.send.label",
+    "defaultMessage": "Send bounty"
+  },
+  {
+    "id": "task.bounties.contact.label",
+    "defaultMessage": "Contact author"
+  },
+  {
+    "id": "task.bounties.logged.info",
+    "defaultMessage": "You need to login to be assigned to this task"
+  },
+  {
+    "id": "task.report.action",
+    "defaultMessage": "Report"
+  },
+  {
+    "id": "task.actions.claim",
+    "defaultMessage": "Claim"
+  },
+  {
+    "id": "task.bounties.delete.confirmation",
+    "defaultMessage": "Are you sure you want to delete this issue?"
+  },
+  {
+    "id": "task.bounties.delete.caution",
+    "defaultMessage": "If you delete this issue, all the records related about orders and payments will be lost"
+  },
+  {
+    "id": "task.actions.cancel",
+    "defaultMessage": "Cancel"
+  }
+]

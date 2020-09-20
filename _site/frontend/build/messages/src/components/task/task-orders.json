@@ -1,0 +1,10 @@
+[
+  {
+    "id": "task.order.payment.success",
+    "defaultMessage": "Your order was completed successfully"
+  },
+  {
+    "id": "task.order.payment.error",
+    "defaultMessage": "We had a issue to process your payment"
+  }
+]

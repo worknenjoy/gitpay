@@ -1,0 +1,14 @@
+[
+  {
+    "id": "welcome.who.title.menu",
+    "defaultMessage": "Community"
+  },
+  {
+    "id": "welcome.who.title.contrib",
+    "defaultMessage": "For contributors"
+  },
+  {
+    "id": "welcome.who.title.contrib.users",
+    "defaultMessage": "How may I contribute?"
+  }
+]

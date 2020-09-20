@@ -1,15 +1,27 @@
 # Navbar menu navigation links
 
-- title: Entrar
+- en:
+    title: Join!
+  br:
+    title: Acesse agora
   url: https://gitpay.me
 
-- title: Documentação
+- en:
+    title: Documentation
+  br:
+    title: Documentação
   url: /
 
-#- title: Novidades
-#  url: /news/
+- en:
+    title: Blog
+  br:
+    title: Blog
+  url: /news/
 
-- title: Planejamento das versões
+- en:
+    title: Roadmap
+  br:
+    title: Planejamento das versões
   url: /changelog/
 
 - title: Github

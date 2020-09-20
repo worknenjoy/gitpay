@@ -7,24 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
   <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Documentação do Gitpay | Guias, dúvidas e informações de como funciona o Gitpay.</title>
+<title>Docs is a premium documentation Jekyll theme | Gitpay Documentation</title>
 <meta name="generator" content="Jekyll v3.7.3" />
-<meta property="og:title" content="Documentação do Gitpay" />
+<meta property="og:title" content="Docs is a premium documentation Jekyll theme" />
 <meta name="author" content="Alexandre Magno" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Guias, dúvidas e informações de como funciona o Gitpay." />
-<meta property="og:description" content="Guias, dúvidas e informações de como funciona o Gitpay." />
-<link rel="canonical" href="https://docs.gitpay.me/" />
-<meta property="og:url" content="https://docs.gitpay.me/" />
-<meta property="og:site_name" content="Documentação do Gitpay" />
+<meta name="description" content="The guide for Gitpay." />
+<meta property="og:description" content="The guide for Gitpay." />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
 <script type="application/ld+json">
-{"name":"Documentação do Gitpay","description":"Guias, dúvidas e informações de como funciona o Gitpay.","author":{"@type":"Person","name":"Alexandre Magno"},"@type":"WebSite","url":"https://docs.gitpay.me/","headline":"Documentação do Gitpay","@context":"http://schema.org"}</script>
+{"headline":"Docs is a premium documentation Jekyll theme","@type":"WebSite","description":"The guide for Gitpay.","url":"http://localhost:4000/","name":"Gitpay Documentation","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
-  <link rel="alternate" type="application/rss+xml" title="Documentação do Gitpay" href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
   <script src="/assets/js/main.js"></script>
   
 </head>
@@ -38,8 +38,8 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentação"></a>
-            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Você pode enviar mudanças para esta página e ser recompensado">Editar esta documentação</a>
+            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title=""></a>
         </div>
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-visible@m">
@@ -47,29 +47,60 @@
                     
                     
                     
-                        <li><a href="https://gitpay.me" target="_blank" >Entrar</a></li>
                     
                 
                     
                     
                     
-                        <li class="uk-active"><a href="/" >Documentação</a></li>
                     
                 
                     
                     
                     
-                        <li><a href="/changelog/" >Roadmap</a></li>
                     
                 
                     
                     
                     
-                        <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+                    
+                    
+                    
                     
                 
             </ul>
 
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
             
 
             <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
@@ -84,113 +115,9 @@
 
 
     
-        <div class="uk-section section-hero" data-uk-scrollspy="cls: uk-animation-slide-bottom-medium; repeat: true">
-    <div class="uk-container uk-container-small">
-        
-        <p class="hero-image uk-text-center"><img src="https://docs.gitpay.me/assets/posts/main-icon.png" alt="Hero"></p>
-        
-        <h1 class="uk-heading-hero uk-text-center uk-margin-remove-top">Como funciona o Gitpay?</h1>
-        <p class="subtitle uk-text-lead uk-text-center">O Gitpay é uma plataforma open source feita para facilitar o desenvolvimento de projetos de forma eficiente, colaborativa e sob demanda</p>
-
-        
-        <div class="hero-search">
-
-            <!-- Html Elements for Search -->
-            <div class="uk-position-relative">
-                <form class="uk-search uk-search-default uk-width-1-1" name="search-hero" onsubmit="return false;">
-                    <span data-uk-search-icon></span>
-                    <input id="hero-search" class="uk-search-input" type="search" placeholder="Search for answers...">
-                </form>
-                <ul id="hero-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
-            </div>
-
-            <script>
-            SimpleJekyllSearch({
-                searchInput: document.getElementById('hero-search'),
-                resultsContainer: document.getElementById('hero-search-results'),
-                noResultsText: '<li>No results found</li>',
-                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
-                json: '/search.json'
-            });
-            </script>
-
-        </div>
-        
-
-    </div>
-</div>
 
     
 
-    
-
-
-<div class="uk-section">
-    <div class="uk-container">
-
-        
-            <h2 class="uk-text-center heading-hero-2">Como começar?</h2>
-        
-
-        <p class="subtitle uk-text-lead uk-text-center">Para entender o processo do Gitpay, temos os seguintes tópicos</p>
-
-        <div class="uk-child-width-1-3@m uk-grid-match uk-text-center uk-margin-medium-top" data-uk-grid>
-        
-            
-            
-            
-            <div>
-                <div class="uk-card uk-card-body uk-inline uk-border-rounded">
-                    <a class="uk-position-cover" href="/docs/home/"></a>
-                    
-                    <span data-uk-icon="icon: settings; ratio: 2" class=""></span>
-                    
-                    <h3 class="uk-card-title uk-margin">Iniciando</h3>
-                    
-                    <p>Comece a trabalhar para o Gitpay</p>
-                    
-                </div>
-            </div>
-            
-        
-            
-            
-            
-            <div>
-                <div class="uk-card uk-card-body uk-inline uk-border-rounded">
-                    <a class="uk-position-cover" href="/docs/frontmatter/"></a>
-                    
-                    <span data-uk-icon="icon: credit-card; ratio: 2" class=""></span>
-                    
-                    <h3 class="uk-card-title uk-margin">Pagamento</h3>
-                    
-                    <p>Saiba como os pagamentos pelas tarefas são realizados</p>
-                    
-                </div>
-            </div>
-            
-        
-            
-            
-            
-            <div>
-                <div class="uk-card uk-card-body uk-inline uk-border-rounded">
-                    <a class="uk-position-cover" href="/docs/variables/"></a>
-                    
-                    <span data-uk-icon="icon: cog; ratio: 2" class=""></span>
-                    
-                    <h3 class="uk-card-title uk-margin">Resolvendo os problemas comuns</h3>
-                    
-                    <p>Respostas para questões dos projetos</p>
-                    
-                </div>
-            </div>
-            
-        
-        </div>
-
-    </div>
-</div>
 
 
 
@@ -209,19 +136,25 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentação"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
-            <li><a href="https://gitpay.me" target="_blank" >Entrar</a></li>
+            <li><a href="https://gitpay.me" target="_blank" ></a></li>
             
                 
-            <li><a href="https://docs.gitpay.me/" >Documentação</a></li>
+            <li><a href="http://localhost:4000/" ></a></li>
             
                 
-            <li><a href="https://docs.gitpay.me/changelog/" >Roadmap</a></li>
+            <li><a href="http://localhost:4000/blog/" ></a></li>
+            
+                
+            <li><a href="http://localhost:4000/changelog/" ></a></li>
             
                 
             <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+            
+                
+            <li><a href="http://localhost:4000/contact/" ></a></li>
             
         </ul>
 
@@ -274,19 +207,17 @@
                     
                     
                     
-                        <li><a href="https://gitpay.me" target="_blank" >Entrar</a></li>
+                
+                    
+                    
                     
                 
                     
                     
                     
-                        <li class="uk-active"><a href="/" >Documentação</a></li>
-                    
                 
                     
                     
-                    
-                        <li><a href="/changelog/" >Planejamento das versões</a></li>
                     
                 
                     
@@ -331,13 +262,23 @@
 
             </div>
         </div>
-        <div class="uk-margin-medium uk-text-small copyright">Desenvolvido de forma colaborativa pelo Gitpay</div>
-
+        <div class="uk-margin-medium uk-text-small copyright">Developed with collaboration using Gitpay</div>
+        <div class="uk-margin-medium uk-text-small">
+            <em>:</em>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/en">🇺🇸 English</a>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/br">🇧🇷 Português</a>
+            
+        </div>
     </div>
 </footer>
 
     
 
     </body>
+
 
 </html>

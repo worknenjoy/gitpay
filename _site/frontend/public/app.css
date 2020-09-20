@@ -1,0 +1,267 @@
+/* roboto-100normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: url(1009f0672b7a725a7561d004025ff21f.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Thin '),
+    local('Roboto-Thin'),
+    url(1009f0672b7a725a7561d004025ff21f.eot?#iefix) format('embedded-opentype'), 
+    url(01dbb814469dc501bd70cf9f13e0b880.woff2) format('woff2'), 
+    url(02fbb4cff7f148a54db366fa4adf086f.woff) format('woff'), 
+    url(bdd892cdf337fc8975aca7ccab6ea06c.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-100italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100;
+  src: url(09bc4a695c3d2208ab07c09d64dda8ca.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Thin italic'),
+    local('Roboto-Thinitalic'),
+    url(09bc4a695c3d2208ab07c09d64dda8ca.eot?#iefix) format('embedded-opentype'), 
+    url(5bfe254da04d4f1a2ed78e818a55a214.woff2) format('woff2'), 
+    url(87528ba9a6e829db88fd8d2b94b362b9.woff) format('woff'), 
+    url(98c79800498e557faaabd49d2fd7b428.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-300normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: url(f83aa6d195038f0103ad63b728d46c35.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Light '),
+    local('Roboto-Light'),
+    url(f83aa6d195038f0103ad63b728d46c35.eot?#iefix) format('embedded-opentype'), 
+    url(68b24b48f11ff8e947976b529c6f5941.woff2) format('woff2'), 
+    url(dc2e21898247b807422ac32ba45f58c6.woff) format('woff'), 
+    url(dd0bea1f9a808d633492fa573039ca1d.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-300italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 300;
+  src: url(8f9f9012053df900bacca33e90a39144.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Light italic'),
+    local('Roboto-Lightitalic'),
+    url(8f9f9012053df900bacca33e90a39144.eot?#iefix) format('embedded-opentype'), 
+    url(31b2bbfb6f231552f1d5c5879664ae03.woff2) format('woff2'), 
+    url(4bcc85a50fd0d42d5e416c56b39b8d71.woff) format('woff'), 
+    url(f8b0d5a9ac4006ad3031052476de8a24.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-400normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url(c3453f443cf8b548b6161300093c779b.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Regular '),
+    local('Roboto-Regular'),
+    url(c3453f443cf8b548b6161300093c779b.eot?#iefix) format('embedded-opentype'), 
+    url(a2647ffe169bbbd94a3238020354c732.woff2) format('woff2'), 
+    url(a9fc51fd0214c75ee5953dda0f2a06a6.woff) format('woff'), 
+    url(8681f434273fd6a267b1a16a035c5f79.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-400italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: url(e086010c63bb51850b7dc905a0c58c2e.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Regular italic'),
+    local('Roboto-Regularitalic'),
+    url(e086010c63bb51850b7dc905a0c58c2e.eot?#iefix) format('embedded-opentype'), 
+    url(347bfb18c4e5fd1642089bd15bf3e628.woff2) format('woff2'), 
+    url(bad78f935b0182bd83ac29a45edcdb25.woff) format('woff'), 
+    url(39c358e4c78546f0f49e624bcbdc8e63.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-500normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: url(713a6623ad820be635f48050f204b4d6.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Medium '),
+    local('Roboto-Medium'),
+    url(713a6623ad820be635f48050f204b4d6.eot?#iefix) format('embedded-opentype'), 
+    url(4b218fc7ca179e548471ff37e3060081.woff2) format('woff2'), 
+    url(ac8381d5023c0187e7a094726d204f6e.woff) format('woff'), 
+    url(95204ac95130828753c0ee0ada537c33.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-500italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 500;
+  src: url(4169600b774f104453205c0bfc27ed0f.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Medium italic'),
+    local('Roboto-Mediumitalic'),
+    url(4169600b774f104453205c0bfc27ed0f.eot?#iefix) format('embedded-opentype'), 
+    url(cfd2fe08211aadeccac1de3fb5d45ad5.woff2) format('woff2'), 
+    url(01ef9f5b9fc166ecdf86e02e34b8fd64.woff) format('woff'), 
+    url(b5bd232e5ae7e364a0e75ba4e480dc03.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-700normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url(2b246a5540c3706485cc74b0066b9711.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Bold '),
+    local('Roboto-Bold'),
+    url(2b246a5540c3706485cc74b0066b9711.eot?#iefix) format('embedded-opentype'), 
+    url(aa3e87117db2b3c27801cbb8dfe40c6c.woff2) format('woff2'), 
+    url(89b469433216121ca9d12c1aef1353d1.woff) format('woff'), 
+    url(57888be7f3e68a7050452ea3157cf4de.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-700italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 700;
+  src: url(7e4c75456c6d92b86060ae2139c013fc.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Bold italic'),
+    local('Roboto-Bolditalic'),
+    url(7e4c75456c6d92b86060ae2139c013fc.eot?#iefix) format('embedded-opentype'), 
+    url(5b2c1edeeb1ce5f7581a22a8cad42410.woff2) format('woff2'), 
+    url(42b4247cf22991d1c26d8f66eb8f38f8.woff) format('woff'), 
+    url(4466317341560ee2759326c4723cae25.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-900normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  src: url(729ed0018076024f69415376817f3d59.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Black '),
+    local('Roboto-Black'),
+    url(729ed0018076024f69415376817f3d59.eot?#iefix) format('embedded-opentype'), 
+    url(fa058128ab6fcaa61257208d085b4d57.woff2) format('woff2'), 
+    url(fceb24a67b9ab2b0074defd70c0c54d9.woff) format('woff'), 
+    url(9c4bedeee9074a7ab438ff0e548d0fba.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+/* roboto-900italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 900;
+  src: url(9ab9a5a09490bde095f2f0ea68af942f.eot); /* IE9 Compat Modes */
+  src:
+    local('Roboto Black italic'),
+    local('Roboto-Blackitalic'),
+    url(9ab9a5a09490bde095f2f0ea68af942f.eot?#iefix) format('embedded-opentype'), 
+    url(450b4cf2cbd89c75135c0d9db9ade5a2.woff2) format('woff2'), 
+    url(968fd8b51b2075525dc4780b2c7affb0.woff) format('woff'), 
+    url(9ede86e9a4bc062655d63c80f9d71d46.svg#Roboto) format('svg'); /* Legacy iOS */
+}
+
+.show-loading-animation.rect-shape, .show-loading-animation.round-shape, .show-loading-animation.text-row,
+.show-loading-animation .rect-shape,
+.show-loading-animation .round-shape,
+.show-loading-animation .text-row {
+  animation: react-placeholder-pulse 1.5s infinite; }
+
+@keyframes react-placeholder-pulse {
+  0% {
+    opacity: .6; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: .6; } }
+body {
+	margin: 0;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.MuiTypography-noWrap-112 {
+  overflow: hidden;
+  white-space: normal !important;
+  text-overflow: ellipsis;
+}
+.subscribe-form {
+  font-family: "Roboto", sans-serif;
+}
+
+.subscribe-form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: 50%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px 5px;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+.subscribe-form button {
+  text-align: center;
+  text-transform: uppercase;
+  outline: 0;
+  background: #00b58e;
+  width: 45%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 12px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.subscribe-form button:hover,.subscribe-form button:active, .subscribe-form button:focus {
+  background: #43A047;
+}
+
+.subscribe-form-main {
+  margin: 20px 0;
+}
+
+.subscribe-form-main input {
+  text-align: center;
+}
+
+.subscribe-form-main button {
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
+  outline: 0;
+  background: #00b58e;
+  width: 200px;
+  margin: 0 auto;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  font-size: 12px;
+}

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
+  <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Como o Git pode ajudar nas organizações | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Como o Git pode ajudar nas organizações" />
+<meta name="author" content="Alexandre Magno" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="O que você vai ver aqui" />
+<meta property="og:description" content="O que você vai ver aqui" />
+<link rel="canonical" href="http://localhost:4000/docs/br/structure/" />
+<meta property="og:url" content="http://localhost:4000/docs/br/structure/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-20T22:40:09+02:00" />
+<script type="application/ld+json">
+{"headline":"Como o Git pode ajudar nas organizações","dateModified":"2020-09-20T22:40:09+02:00","datePublished":"2020-09-20T22:40:09+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/docs/br/structure/"},"description":"O que você vai ver aqui","url":"http://localhost:4000/docs/br/structure/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
+  <script src="/assets/js/main.js"></script>
+  
+</head>
+
+
+    <body>
+
+    <header class="uk-background-secondary">
+    <div data-uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" class="uk-sticky uk-sticky-fixed" style="position: fixed; top: 0px; width: 1904px;">
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+    <div data-uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title=""></a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                
+            </ul>
+
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+            
+
+            <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
+
+        </div>
+    </div>
+</div>
+
+        </nav>
+    </div>
+</header>
+
+
+    
+
+    <div class="uk-section">
+    <div class="uk-container">
+        <div class="uk-grid-large" data-uk-grid>
+
+            <div class="sidebar-fixed-width uk-visible@m">
+                <div class="sidebar-docs uk-position-fixed">
+                    
+                    <h5>Conceitos básicos</h5>
+                    <ul class="uk-nav uk-nav-default doc-nav">
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                    </ul>
+                    
+                    <h5>Conta e pagamento</h5>
+                    <ul class="uk-nav uk-nav-default doc-nav">
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                    </ul>
+                    
+                    <h5>Dúvidas comuns</h5>
+                    <ul class="uk-nav uk-nav-default doc-nav">
+                    
+                      
+                      
+                      <li class=""><a href=""></a></li>
+                    
+                    </ul>
+                    
+                </div>
+            </div>
+
+            <div class="uk-width-1-1 uk-width-expand@m">
+
+                <article class="uk-article">
+
+                    <h1 class="uk-article-title">Como o Git pode ajudar nas organizações</h1>
+
+                    <p class="subtitle uk-text-lead uk-text-muted">Saiba como diferentes envolvidos no projeto podem tirar proveito do Workflow do Git para gerenciar as tarefas do projeto</p>
+
+                    <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
+                        
+
+
+    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+
+
+
+    Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
+
+
+<time datetime="2020-09-20T22:40:09+02:00" itemprop="datePublished">
+    
+    Sep 20, 2020
+</time>
+
+<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/br/structure.md">Editar esta página</a>
+
+                    </div>
+
+                    <div class="article-content">
+                        <h4 class="no_toc" id="o-que-você-vai-ver-aqui">O que você vai ver aqui</h4>
+<ul id="markdown-toc">
+  <li><a href="#git-para-desenvolvedores" id="markdown-toc-git-para-desenvolvedores">Git para desenvolvedores</a>    <ul>
+      <li><a href="#lançamentos-contínuos-de-novas-versões-do-projeto" id="markdown-toc-lançamentos-contínuos-de-novas-versões-do-projeto">Lançamentos contínuos de novas versões do projeto</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>O Git é um sistema de controle de versão descentralizado que muda o jeito como pensamos no desenvolvimento de software. Ele é a evolução de outros controles de versão, como o SVN, e atualmente é difícil imaginar que um projeto consiga escalar pelo uso tradicional do FTP.</p>
+
+<p>Um controle de versão atualmente é indispensável para controlar as versões do projeto e permite que vários conflitos sejam resolvidos e equipes distribuidas podem trabalhar sem maiores complicações.</p>
+
+<p>O uso deste workflow impacta positivamente toda a escala do negócio. Com o Gitpay, é incluído como parte de processo o pagamento pelo trabalho realizado, tornando a empresa mais independente e flexível para realizar as necessidades dos projetos e investindo sob demanda.</p>
+
+<h2 id="git-para-desenvolvedores">Git para desenvolvedores</h2>
+
+<p>Não dá para negar que os desenvolvedores sejam os mais beneficiados por usarem o Git como controle de versão e gerenciar seu projeto em uma das suas plataformas (como Github e Bitbucket).</p>
+
+<p>Para comunidades de desenvolvedores, temos a vantagem de não precisar treinar ou discutir abordagens e possíveis modelos de contratações para projetos.</p>
+
+<p>O que torna o Gitpay uma forma de trabalho para desenvolvedores muito mais vantajosa que trabalhar em projetos que não possuem uma visão ágil dos processos de desenvolvimento.</p>
+
+<p>Desenvolvedores que são adeptos do Git se tornam familiares com times distribuídos.</p>
+
+<h3 id="lançamentos-contínuos-de-novas-versões-do-projeto">Lançamentos contínuos de novas versões do projeto</h3>
+
+<p>Pelo fato de diferentes desenvolvedores trabalharem independente nos seus repositórios a partir dos projetos, o desenvolvimento distribuido se torna eficiente e uma comunidade trabalhando em conjunto sem ter conflitos entre suas soluções torna possível um ciclo de entrega mais rápido.</p>
+
+<p>Projetos de desenvolvimento encorajam pequenas mudanças mas mudanças frequentes para serem integradas rapidamente ao projeto. Com a mudança enviada, um ciclo é iniciado para realizar todas as etapas necessárias para enviar a mudança para o sistema em questão.</p>
+
+<p>O Git trabalha muito bem com integração contínua.</p>
+
+                        <div class="share uk-text-center">
+    <a href="https://twitter.com/intent/tweet?text=Como o Git pode ajudar nas organizações&url=http://localhost:4000/docs/br/structure/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fbr%2Fstructure%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+</div>
+
+                    </div>
+
+                    <hr class="uk-margin-medium">
+
+                    
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+                    <div class="uk-margin-large-top">
+    
+    
+    
+    
+    <ul class="uk-list">
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+    </ul>
+</div>
+
+
+                    
+                </article>
+
+                <script>
+                    // Table of contents scroll to
+                    UIkit.scroll('#markdown-toc a', {
+                        duration: 400,
+                        offset: 120
+                    });
+                </script>
+
+            </div>
+
+    </div>
+</div>
+
+
+    <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            
+                
+            <li><a href="https://gitpay.me" target="_blank" ></a></li>
+            
+                
+            <li><a href="http://localhost:4000/" ></a></li>
+            
+                
+            <li><a href="http://localhost:4000/blog/" ></a></li>
+            
+                
+            <li><a href="http://localhost:4000/changelog/" ></a></li>
+            
+                
+            <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+            
+                
+            <li><a href="http://localhost:4000/contact/" ></a></li>
+            
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    
+
+    </body>
+
+
+</html>

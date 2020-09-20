@@ -1,0 +1,18 @@
+[
+  {
+    "id": "task.bounty.icon.text",
+    "defaultMessage": "Bounty"
+  },
+  {
+    "id": "task.private.icon.text",
+    "defaultMessage": "Private"
+  },
+  {
+    "id": "task.public.icon.text",
+    "defaultMessage": "Public"
+  },
+  {
+    "id": "task.text.type.headline",
+    "defaultMessage": "This issue is a"
+  }
+]

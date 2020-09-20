@@ -1,0 +1,22 @@
+[
+  {
+    "id": "task.assignment.remove.action",
+    "defaultMessage": "Remove"
+  },
+  {
+    "id": "task.assignment.remove.user",
+    "defaultMessage": "Unassign user"
+  },
+  {
+    "id": "task.assignment.remove.reason",
+    "defaultMessage": "Why this user will not work on this task anymore?"
+  },
+  {
+    "id": "task.assignment.actions.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "task.assignment.actions.apply",
+    "defaultMessage": "Apply"
+  }
+]

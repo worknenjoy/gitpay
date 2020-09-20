@@ -1,0 +1,10 @@
+[
+  {
+    "id": "welcome.terms.main.title",
+    "defaultMessage": "Terms Of Service"
+  },
+  {
+    "id": "welcome.terms.company.title",
+    "defaultMessage": "For Companies"
+  }
+]

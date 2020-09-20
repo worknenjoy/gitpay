@@ -1,0 +1,34 @@
+[
+  {
+    "id": "task.list.lable.allTasks",
+    "defaultMessage": "All tasks"
+  },
+  {
+    "id": "task.status.createdByMe",
+    "defaultMessage": "Created by me"
+  },
+  {
+    "id": "tasks.status.interested",
+    "defaultMessage": "I'm interested"
+  },
+  {
+    "id": "task.status.assigned",
+    "defaultMessage": "Assigned to me"
+  },
+  {
+    "id": "task.list.headline",
+    "defaultMessage": "Task list"
+  },
+  {
+    "id": "task.list.description",
+    "defaultMessage": "Available tasks for development"
+  },
+  {
+    "id": "task.user.account.create.headline",
+    "defaultMessage": "Login / signup to work in our tasks"
+  },
+  {
+    "id": "task.user.account.create.description",
+    "defaultMessage": "Creating your account, you can be assigned to a task and receive bounties"
+  }
+]

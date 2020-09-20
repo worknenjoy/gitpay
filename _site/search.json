@@ -4,112 +4,224 @@
       "title"    : "Como configurar um repositório",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/assets/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/assets/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Category hosting Setting up new domain and page",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/collections/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/collections/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Como rodar o projeto do Gitpay",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/configuration/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/configuration/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Cancelling a website subscription",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/drafts/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/drafts/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Plataforma",
       "category" : "",
       "tags"     : "othertag",
-      "url"      : "/docs/frontmatter/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/frontmatter/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Por onde começar?",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/home/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/home/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Getting started with our application",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/installation/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/installation/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Updating your billing credit card",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/pages/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/pages/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Recebendo pagamentos como recompensa",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/posts/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/posts/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Trabalhando com o Git Workflow",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/quickstart/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/quickstart/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Como o Git pode ajudar nas organizações",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/structure/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/structure/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Como são definidas as tarefas?",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/usage/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/usage/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "Entendendo como funciona os pagamentos",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/variables/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/variables/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } ,
   
     {
       "title"    : "O poder e a importância dos Pull Requests",
       "category" : "",
       "tags"     : "",
-      "url"      : "/docs/windows/",
-      "date"     : "2019-11-17 16:03:35 +0000"
+      "url"      : "/docs/br/windows/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Como configurar um repositório",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/assets/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Category hosting Setting up new domain and page",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/collections/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Como rodar o projeto do Gitpay",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/configuration/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Cancelling a website subscription",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/drafts/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Plataforma",
+      "category" : "",
+      "tags"     : "othertag",
+      "url"      : "/docs/en/frontmatter/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "How to getting started?",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/home/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Getting started with our application",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/installation/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Updating your billing credit card",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/pages/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Recebendo pagamentos como recompensa",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/posts/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Trabalhando com o Git Workflow",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/quickstart/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Como o Git pode ajudar nas organizações",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/structure/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Como são definidas as tarefas?",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/usage/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "Entendendo como funciona os pagamentos",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/variables/",
+      "date"     : "2020-09-20 22:40:09 +0200"
+    } ,
+  
+    {
+      "title"    : "O poder e a importância dos Pull Requests",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/windows/",
+      "date"     : "2020-09-20 22:40:09 +0200"
     } 
   
 ]

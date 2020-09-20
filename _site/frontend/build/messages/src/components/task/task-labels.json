@@ -1,0 +1,10 @@
+[
+  {
+    "id": "task.status.label.title",
+    "defaultMessage": "Labels"
+  },
+  {
+    "id": "task.status.label.desc",
+    "defaultMessage": "Labels can help you understand more about the context of an issue"
+  }
+]

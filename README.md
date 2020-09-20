@@ -262,9 +262,7 @@ All available icons can be found [here](https://getuikit.com/docs/icon#library).
 ## Docs
 
 To create a document post, just create a new page inside the root directory and add the following code in content:
-```
-{% include faqs.html %}
-```
+
 
 Create new doc post entries in `_docs` folder, similar to creating posts, but with following front matter settings:
 

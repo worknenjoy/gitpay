@@ -1,0 +1,58 @@
+[
+  {
+    "id": "welcome.tagline",
+    "defaultMessage": "Collaborate, learn and receive payments by solving issues from projects"
+  },
+  {
+    "id": "general.singup.action",
+    "defaultMessage": "Get started"
+  },
+  {
+    "id": "general.singup.access",
+    "defaultMessage": "Go to your dashboard"
+  },
+  {
+    "id": "welcome.headline.forfreelancers",
+    "defaultMessage": "For contributors and freelancers"
+  },
+  {
+    "id": "welcome.tagline.companies.main.headline",
+    "defaultMessage": "For maintainers and organizations"
+  },
+  {
+    "id": "welcome.headline.collab",
+    "defaultMessage": "Working in development communities"
+  },
+  {
+    "id": "welcome.tagline.headline.how.title",
+    "defaultMessage": "How Gitpay works"
+  },
+  {
+    "id": "welcome.integration.title",
+    "defaultMessage": "Integrations"
+  },
+  {
+    "id": "welcome.integration.subtitle",
+    "defaultMessage": "We can connect your repository to Gitpay by installing our Github app"
+  },
+  {
+    "id": "welcome.integration.desc",
+    "defaultMessage": "With the Gitpay app on Github, you can import issues from your repository to Gitpay and start to allow payments for contributions"
+  },
+  {
+    "id": "welcome.integration.button",
+    "defaultMessage": "Checkout our Github App"
+  },
+  {
+    "id": "welcome.bottom.call",
+    "defaultMessage": "A better way to build your project, a better way to work in projects"
+  },
+  {
+    "id": "welcome.bottom.link",
+    "defaultMessage": "Get started"
+  },
+  {
+    "id": "welcome.bottom.linkAlt",
+    "defaultMessage": "See our documentation"
+  }
+]

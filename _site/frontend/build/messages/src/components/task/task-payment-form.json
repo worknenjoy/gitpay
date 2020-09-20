@@ -1,0 +1,82 @@
+[
+  {
+    "id": "task.payment.headline.bounty.create",
+    "defaultMessage": "Create a bounty for this task"
+  },
+  {
+    "id": "task.payment.headline.bounty.add",
+    "defaultMessage": "Add a bounty for this task"
+  },
+  {
+    "id": "task.payment.form.message.subheading",
+    "defaultMessage": "Create a bounty for this task and who you assign will receive the payment for this bounty"
+  },
+  {
+    "id": "task.payment.input.amount.value",
+    "defaultMessage": "Price"
+  },
+  {
+    "id": "task.payment.input.amount",
+    "defaultMessage": "Price insert a value for this task"
+  },
+  {
+    "id": "actions.task.payment.plan.percentagefee",
+    "defaultMessage": "{fee}% fee"
+  },
+  {
+    "id": "actions.task.payment.plan.opensource",
+    "defaultMessage": "Open Source"
+  },
+  {
+    "id": "actions.task.payment.plan.opensource.info",
+    "defaultMessage": "For Open Source Project"
+  },
+  {
+    "id": "actions.task.payment.plan.bullet.public",
+    "defaultMessage": "For Public Projects"
+  },
+  {
+    "id": "actions.task.payment.plan.bullet.basic",
+    "defaultMessage": "Basic Campaign"
+  },
+  {
+    "id": "actions.task.payment.plan.selected",
+    "defaultMessage": "You Choose this Plan"
+  },
+  {
+    "id": "actions.task.payment.plan.not.selected",
+    "defaultMessage": "Choose this Plan"
+  },
+  {
+    "id": "actions.task.payment.plan.private",
+    "defaultMessage": "Private Projects"
+  },
+  {
+    "id": "actions.task.payment.plan.private.info",
+    "defaultMessage": "For Private Project"
+  },
+  {
+    "id": "actions.task.payment.plan.bullet.private",
+    "defaultMessage": "Private Projects"
+  },
+  {
+    "id": "actions.task.payment.plan.full",
+    "defaultMessage": "Full Support"
+  },
+  {
+    "id": "actions.task.payment.plan.full.info",
+    "defaultMessage": "Private Plan With Full Support"
+  },
+  {
+    "id": "actions.task.payment.plan.bullet.full",
+    "defaultMessage": "We manage the whole workflow"
+  },
+  {
+    "id": "task.payment.creditcard.action",
+    "defaultMessage": "Pay {amount} with Credit Card"
+  },
+  {
+    "id": "task.payment.paypal.action",
+    "defaultMessage": "Pay {amount} with PayPal"
+  }
+]

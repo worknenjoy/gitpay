@@ -1,5 +1,6 @@
 ---
 layout: changelog
+lang: en
 title: Changelog
 permalink: /changelog/
 ---

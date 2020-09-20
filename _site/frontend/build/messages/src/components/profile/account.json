@@ -1,0 +1,182 @@
+[
+  {
+    "id": "account.id.verification",
+    "defaultMessage": "Verify identity"
+  },
+  {
+    "id": "account.id.register.bank",
+    "defaultMessage": "Register bank account"
+  },
+  {
+    "id": "account.terms.accept.step",
+    "defaultMessage": "Accept terms"
+  },
+  {
+    "id": "account.status",
+    "defaultMessage": "Your account status:"
+  },
+  {
+    "id": "account.status.pending",
+    "defaultMessage": "Pending"
+  },
+  {
+    "id": "account.bank.activated",
+    "defaultMessage": "Activated"
+  },
+  {
+    "id": "account.bank.missing",
+    "defaultMessage": "Missing bank data (go to next step)"
+  },
+  {
+    "id": "account.pending.title",
+    "defaultMessage": "We have the following items that needs to be verified:"
+  },
+  {
+    "id": "account.details.complete",
+    "defaultMessage": "Your account is now verified and you are able to receive all payments from tasks"
+  },
+  {
+    "id": "account.activate",
+    "defaultMessage": "Activate account"
+  },
+  {
+    "id": "account.update",
+    "defaultMessage": "Update account"
+  },
+  {
+    "id": "account.steps.next",
+    "defaultMessage": "Next step"
+  },
+  {
+    "id": "account.active.statement",
+    "defaultMessage": "Your bank account is active"
+  },
+  {
+    "id": "account.banks.list.title",
+    "defaultMessage": "Select your bank"
+  },
+  {
+    "id": "account.bank.select",
+    "defaultMessage": "Please select your bank"
+  },
+  {
+    "id": "account.details.rountingNumber",
+    "defaultMessage": "Rounting number"
+  },
+  {
+    "id": "account.details.accountNumber",
+    "defaultMessage": "Account number"
+  },
+  {
+    "id": "account.details.numbersOnly",
+    "defaultMessage": "Just numbers only"
+  },
+  {
+    "id": "account.details.activate.action",
+    "defaultMessage": "Activate bank account"
+  },
+  {
+    "id": "account.steps.bank.previous",
+    "defaultMessage": "Previous step"
+  },
+  {
+    "id": "account.details.terms.access",
+    "defaultMessage": "Access Stripe terms"
+  },
+  {
+    "id": "account.details.terms.read",
+    "defaultMessage": "I read and I accept the Stripe terms to receive transfers about payments directly on my account"
+  },
+  {
+    "id": "account.terms.accept",
+    "defaultMessage": "Accept Terms"
+  },
+  {
+    "id": "account.steps.previous",
+    "defaultMessage": "Previous step"
+  },
+  {
+    "id": "account.terms.accepted",
+    "defaultMessage": "You agreed with the terms in"
+  },
+  {
+    "id": "account.steps.finish",
+    "defaultMessage": "Finish"
+  },
+  {
+    "id": "account.verify.title",
+    "defaultMessage": "Verify account"
+  },
+  {
+    "id": "account.verify.desc",
+    "defaultMessage": "Please fill the data to verify your account"
+  },
+  {
+    "id": "account.verify.business_profile_url",
+    "defaultMessage": "Website"
+  },
+  {
+    "id": "account.verify.firstName",
+    "defaultMessage": "First name"
+  },
+  {
+    "id": "account.verify.lastName",
+    "defaultMessage": "Last name"
+  },
+  {
+    "id": "account.details.month",
+    "defaultMessage": "Month of birth"
+  },
+  {
+    "id": "account.actions.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "account.actions.update",
+    "defaultMessage": "Update Account"
+  },
+  {
+    "id": "account.register.headline",
+    "defaultMessage": "There is no account registered to receive the payments"
+  },
+  {
+    "id": "account.register.country.label",
+    "defaultMessage": "The country you chose to create your account"
+  },
+  {
+    "id": "account.register.create.country",
+    "defaultMessage": "Choose your country to start"
+  },
+  {
+    "id": "account.register.create.action",
+    "defaultMessage": "Create account"
+  },
+  {
+    "id": "account.register.paypal.title",
+    "defaultMessage": "Activate PayPal account:"
+  },
+  {
+    "id": "account.register.paypal.description",
+    "defaultMessage": "When you activate your account with PayPal, you will receive the bounties in the account that you will provide here. The Paypal taxes will be applied"
+  },
+  {
+    "id": "account.register.paypal.status",
+    "defaultMessage": "This account is not associated with PayPal"
+  },
+  {
+    "id": "account.register.account.status",
+    "defaultMessage": "Account status"
+  },
+  {
+    "id": "account.register.paypay.email",
+    "defaultMessage": "PayPal registered email"
+  },
+  {
+    "id": "account.register.paypay.activate",
+    "defaultMessage": "Activate account"
+  },
+  {
+    "id": "account.register.paypay.update",
+    "defaultMessage": "Update account"
+  }
+]

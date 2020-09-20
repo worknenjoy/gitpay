@@ -1,0 +1,10 @@
+[
+  {
+    "id": "task.title.navigation",
+    "defaultMessage": "Tasks"
+  },
+  {
+    "id": "task.status.label.paid",
+    "defaultMessage": "Paid"
+  }
+]

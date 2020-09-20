@@ -1,0 +1,18 @@
+[
+  {
+    "id": "user.confirm.password.error",
+    "defaultMessage": "Passwords do not match"
+  },
+  {
+    "id": "account.login.label.signup",
+    "defaultMessage": "Sign up"
+  },
+  {
+    "id": "account.login.label.signin",
+    "defaultMessage": "Sign in"
+  },
+  {
+    "id": "account.login.label.cancel",
+    "defaultMessage": "Cancel"
+  }
+]

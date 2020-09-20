@@ -1,0 +1,10 @@
+[
+  {
+    "id": "actions.assign.task.sucess",
+    "defaultMessage": "This task was updated successfully!"
+  },
+  {
+    "id": "user.login.successfull",
+    "defaultMessage": "You successfully logged in"
+  }
+]

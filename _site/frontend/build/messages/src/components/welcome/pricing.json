@@ -1,0 +1,14 @@
+[
+  {
+    "id": "welcome.pricing.title",
+    "defaultMessage": "Princing"
+  },
+  {
+    "id": "welcome.pricing.description",
+    "defaultMessage": "Check our options to boost your company deliveries that can fit with your needs"
+  },
+  {
+    "id": "welcome.pricing.month",
+    "defaultMessage": "/ issue"
+  }
+]
