@@ -21,12 +21,17 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
+    flexFlow: 'column wrap',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     }
   },
   card: {
     maxWidth: 400,
+    minWidth: 350,
+    [theme.breakpoints.down('sm')]: {
+      minWidth: 0,
+    },
     margin: 40
   },
   media: {
@@ -73,7 +78,7 @@ export default function TeamCard (props) {
                   </Button>
                 }
                 { member.githubUrl &&
-                  <Button target='_blank' href={ member.githubUrl } size='small' color='primary'>
+                  <Button target='_blank' href={ member.githubUrl } size='small' color='primary' variant='outlined'>
                     Github
                   </Button>
                 }
