@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
+import GitHubIcon from '@material-ui/icons/GitHub'
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -78,8 +79,9 @@ export default function TeamCard (props) {
                   </Button>
                 }
                 { member.githubUrl &&
-                  <Button target='_blank' href={ member.githubUrl } size='small' color='primary' variant='outlined'>
-                    Github
+                  <Button target='_blank' href={ member.githubUrl } size='small' variant='outlined'>
+                    <span>Github&thinsp;</span>
+                    <GitHubIcon />
                   </Button>
                 }
               </CardActions>

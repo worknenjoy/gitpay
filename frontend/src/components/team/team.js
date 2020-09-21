@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import axios from 'axios'
+import Typography from '@material-ui/core/Typography'
 import api from '../../consts'
 
 function checkEmail (emailAddress) {
@@ -42,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     '&:before': {
       borderBottomColor: '#009688',
     },
-    color: 'white'
+    color: 'white',
+    marginBottom: 10
   }
 }))
 
@@ -122,7 +124,7 @@ export default function Team (props) {
       <TopBarContainer />
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } justify>
+          <Grid item xs={ 12 } justify='center'>
             <TeamCard data={ recruiterTeam } />
           </Grid>
         </Grid>
@@ -132,14 +134,18 @@ export default function Team (props) {
           <Grid item lg={ 4 } md={ 4 } sm={ 6 } sx={ 12 }>
             <img src={ require('../../images/coreTeamPageAsset.png') } alt='assets' />
           </Grid>
-          <Grid item lg={ 4 } md={ 4 } sm={ 6 } sx={ 12 } >
+          <Grid item lg={ 4 } md={ 5 } sm={ 6 } sx={ 12 } >
             <form onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
-              <Grid container className={ classes.coreTeamForm } spacing={ 1 }>
+              <Grid container className={ classes.coreTeamForm }>
                 <Grid item xs={ 12 } >
-                  Join the team!
+                  <Typography gutterBottom >
+                    Join the team!
+                  </Typography>
                 </Grid>
                 <Grid item xs={ 12 } style={ { color: 'silver' } } >
-                  Work with the best and be part of the core
+                  <Typography gutterBottom >
+                    Work with the best and be part of the core
+                  </Typography>
                 </Grid>
                 <Grid item xs={ 12 }>
                   <TextField
@@ -160,7 +166,9 @@ export default function Team (props) {
                 </Grid>
                 <Grid item xs={ 12 }>
                   <Button color='primary' fullWidth='true' variant='contained' type='submit'>
-                    JOIN NOW!
+                    <Typography gutterBottom >
+                      JOIN NOW!
+                    </Typography>
                   </Button>
                 </Grid>
               </Grid>
