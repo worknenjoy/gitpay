@@ -2,33 +2,24 @@
 
 - en:
     title: Join now!
+    url: https://gitpay.me
   br:
     title: Entre agora!
-  url: https://gitpay.me
+    url: https://gitpay.me
 
 - en:
     title: Documentation
+    url: /docs/en/getting-started
   br:
     title: Documentação
-  url: /
-
-- en:
-    title: Blog
-  br:
-    title: Blog
-  url: /blog/
+    url: /docs/br/getting-started
 
 - en:
     title: Roadmap
+    url: /changelog
   br:
     title: Roadmap
-  url: /changelog/
+    url: /changelog
 
 - title: Github
   url: https://github.com/worknenjoy/gitpay
-
-- en:
-    title: Contact us
-  br:
-    title: Entre em contato
-  url: /contact/

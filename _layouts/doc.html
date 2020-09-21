@@ -9,12 +9,17 @@ layout: default
             <div class="sidebar-fixed-width uk-visible@m">
                 <div class="sidebar-docs uk-position-fixed">
                     {% for section in site.data.navigation_docs %}
+                    {% if section.title %}
                     <h5>{{ section.title }}</h5>
+                    {% endif %}
+                    {% if section[page.lang] %}
+                    <h5>{{ section[page.lang].title }}</h5>
+                    {% endif %}
                     <ul class="uk-nav uk-nav-default doc-nav">
-                    {% for doc in section.docs %}
-                      {% assign doc_url = doc | prepend:"/docs/" | append:"/" %}
-                      {% assign p = site.docs | where:"url", doc_url | first %}
-                      <li class="{% if doc_url == page.url %}uk-active{% endif %}"><a href="{{ p.url }}">{{ p.title }}</a></li>
+                    {% for doc in section.docs[page.lang] %}
+                      {% assign p = section.docs.pages[forloop.index0] %}
+                      {% assign doc_url = page.lang | append: "/" | prepend:"/docs/" | append: p  %}
+                      <li class="{% if doc_url == page.url %}uk-active{% endif %}"><a href="{{ doc_url }}">{{ doc }}</a></li>
                     {% endfor %}
                     </ul>
                     {% endfor %}

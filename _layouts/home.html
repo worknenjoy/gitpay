@@ -39,11 +39,10 @@ lang: en
             </div>
             {% endif %}
             {% if item[page.lang] %}
-            {% assign doc_url = item.doc | prepend:"/docs/" | append:"/" %}
-            {% assign doc_url_language = doc_url ? prepend:"/{{page.lang}}/" %}
+            {% assign doc_url = page.lang | append: "/" | prepend:"/docs/" | append: item.doc %}
             <div>
                 <div class="uk-card uk-card-body uk-inline uk-border-rounded">
-                    <a class="uk-position-cover" href="{{ doc_url_language }}"></a>
+                    <a class="uk-position-cover" href="{{ doc_url }}"></a>
                     {% if item.icon %}
                     <span data-uk-icon="icon: {{ item.icon }}; ratio: 2" class=""></span>
                     {% endif %}

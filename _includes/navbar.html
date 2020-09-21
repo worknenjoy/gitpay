@@ -1,7 +1,7 @@
 <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="{{ "/" | relative_url }}">{% if site.brand.image %}<img width="32" height="32" src="{{ site.post_assets | absolute_url }}{{ site.brand.image }}" alt="{{ site.brand.text | escape }}">{% else %}{{ site.brand.text | escape }}{% endif %}</a>
+            <a class="uk-navbar-item uk-logo" href="{{ "/" | relative_url | append: page.lang }}">{% if site.brand.image %}<img width="32" height="32" src="{{ site.post_assets | absolute_url }}{{ site.brand.image }}" alt="{{ site.brand.text | escape }}">{% else %}{{ site.brand.text | escape }}{% endif %}</a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="{{ site.data.translations.editLabel[page.lang] }}">{{ site.data.translations.editLabel[page.lang] }}</a>
         </div>
         <div class="uk-navbar-right">
@@ -26,7 +26,7 @@
                     {% endif %}
                     {% if link[page.lang] %}
                         <li{{ current }}>
-                            <a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank" {% endif %}>
+                            <a href="{{ link[page.lang].url }}" {% if link.url contains 'http' %}target="_blank" {% endif %}>
                                 {{ link[page.lang].title  }}
                             </a>
                         </li>

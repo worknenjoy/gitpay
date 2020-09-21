@@ -6,7 +6,7 @@
   br:
     title: Iniciando
     desc: Comece a trabalhar para o Gitpay
-  doc: home
+  doc: getting-started
   icon: settings
 
 - en:
@@ -16,7 +16,7 @@
     title: Pagamento
     desc: Saiba como os pagamentos pelas tarefas são realizados
   icon: credit-card
-  doc: frontmatter
+  doc: payments
 
 - en:
     title: FAQ
@@ -25,4 +25,4 @@
     title: FAQ
     desc: Perguntas e Respostas frequentes para questões dos projetos
   icon: cog
-  doc: variables
+  doc: faq

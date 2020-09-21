@@ -1,24 +1,41 @@
-- title: Conceitos básicos
+- en:
+    title: Basic concepts
+  br:
+    title: Conceitos básicos
   docs:
-  - home
-  - quickstart
-  #- installation
-  - windows
-  - usage
+    en:
+      - Getting started
+      - Git Workflow
+      - Pull Requests
+    br:
+      - Getting started
+      - Fluxo de trabalho do git
+      - Requisições de mudança
+    pages:
+      - getting-started
+      - git-workflow
+      - pull-requests
 
-- title: Conta e pagamento
+- en:
+    title: Payments and bank account
+  br:
+    title: Conta e pagamento
   docs:
-  - variables
-  - posts
+    en:
+      - How to receive payments
+    br:
+      - Como receber pagamentos
+    pages:
+      - payments
 
-#
-#- title: Para as organizações
-#  docs:
-#  - structure
-#  - configuration
-
-- title: Dúvidas comuns
+- en:
+    title: Frequently asked questions
+  br:
+    title: Perguntas frequentes
   docs:
-  - frontmatter
-#  - collections
-#  - assets
+    en:
+      - General questions
+    br:
+      - Perguntas gerais
+    pages:
+        - faq

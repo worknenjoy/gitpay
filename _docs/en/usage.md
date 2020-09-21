@@ -1,5 +1,6 @@
 ---
 layout: doc
+lang: en
 title: Como são definidas as tarefas?
 subtitle: Como definimos a tarefa a ser desenvolvida de modo que fique claro e facilite a solução
 author:
