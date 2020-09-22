@@ -196,8 +196,7 @@ export const LabelButton = styled.span`
 export const StyledAvatar = styled(Avatar)`
   margin-left: 20px;
   cursor: pointer;
-  width: 24px !important;
-  height: 24px !important;
+ 
 
   ${media.phone`margin-left: 15px;`}
 `

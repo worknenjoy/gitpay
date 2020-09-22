@@ -66,7 +66,7 @@ const TaskStatusIcons = ({ status, bounty }) => {
   return (
     <React.Fragment>
       <Paper
-        style={ { margin: 'auto', width: '95%' } }
+        style={ { margin: 'auto', marginBottom: 60, width: '95%' } }
         elevation={ 0 }
         children={
           <React.Fragment>

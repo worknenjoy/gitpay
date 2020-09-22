@@ -192,7 +192,7 @@ class TopBar extends Component {
   }
 
   handleDocsLink = () => {
-    window.open('https://docs.gitpay.me', '_blank')
+    window.open('https://docs.gitpay.me/en', '_blank')
   }
 
   handleProvider = (e, option) => {
@@ -321,7 +321,7 @@ class TopBar extends Component {
 
             <StyledButton
               onClick={ this.handleClickDialogCreateTask }
-              variant='contained'
+              variant='text'
               size='small'
               color='primary'
             >
@@ -335,7 +335,7 @@ class TopBar extends Component {
 
             <StyledButton
               onClick={ this.handleViewTasks }
-              variant='contained'
+              variant='text'
               size='small'
               color='primary'
             >
@@ -349,9 +349,9 @@ class TopBar extends Component {
 
             <StyledButton
               onClick={ this.handleDocsLink }
-              variant='contained'
+              variant='text'
               size='small'
-              color='default'
+              color='primary'
             >
               <LabelButton>
                 <FormattedMessage
@@ -365,9 +365,9 @@ class TopBar extends Component {
               ? (<React.Fragment>
                 <StyledButton
                   onClick={ this.handleClickDialogSignUser }
-                  variant='contained'
+                  variant='text'
                   size='small'
-                  color='secondary'
+                  color='primary'
                 >
                   <LabelButton>
                     <FormattedMessage
@@ -393,14 +393,12 @@ class TopBar extends Component {
                 <React.Fragment>
                   <StyledButton
                     onClick={ this.handleMenu }
-                    variant='contained'
+                    variant='text'
                     size='small'
-                    color='secondary'
+                    color='primary'
                     id='account-menu'
                   >
-                    <LabelButton>
-                      <FormattedMessage id='task.actions.account' defaultMessage='Account' />
-                    </LabelButton>
+
                     { user.picture_url &&
                       <StyledAvatar
                         alt={ user.username || '' }
