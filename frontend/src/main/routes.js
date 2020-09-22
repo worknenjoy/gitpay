@@ -9,7 +9,7 @@ import ProfileContainer from '../containers/profile'
 import TaskContainer from '../containers/task'
 import TaskOrdersContainer from '../containers/task-orders'
 import TaskExplorer from '../components/task/task-explorer'
-import Team from '../components/team/team.js'
+import TeamContainer from '../containers/team.js'
 import LoginPage from '../components/session/login-page'
 import LoginPageContainer from '../containers/login-page'
 import FourOFour from '../components/FourOFour.js'
@@ -32,7 +32,7 @@ export default props => (
       <Route path='/tasks/finished' component={ TaskExplorer } />
       <Route path='/tasks/with-bounties' component={ TaskExplorer } />
       <Route path='/tasks/contribution' component={ TaskExplorer } />
-      <Route path='/team' component={ Team } />
+      <Route path='/team' component={ TeamContainer } />
       <Route exact path='/login' component={ LoginPage } />
       <Route exact path='/login/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />

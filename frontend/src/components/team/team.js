@@ -7,9 +7,7 @@ import { Section } from '../welcome/components/CommonStyles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import axios from 'axios'
 import Typography from '@material-ui/core/Typography'
-import api from '../../consts'
 
 function checkEmail (emailAddress) {
   let sQtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]'
@@ -82,36 +80,18 @@ const recruiterTeam = [
 export default function Team (props) {
   const [formData, setFormData] = useState({})
   const [formErrors, setFormErrors] = useState({})
-  const [status, setStatus] = useState('')
   const classes = useStyles()
-
-  const joinCoreTeamAPICall = (email) => {
-    const param = {
-      email: email
-    }
-    axios
-      .post(api.API_URL + '/team/core/join', { param })
-      .then(res => {
-        setStatus('Email sent')
-      })
-      .catch(err => {
-        setStatus('Oops! Error Happended' + err)
-      })
-  }
 
   const onChange = (event) => {
     const name = event.nativeEvent.target.name
     const value = event.target.value
     setFormData({ ...formData, [name]: value })
-    setStatus('')
   }
 
   const onSubmit = (event) => {
     event.preventDefault()
     if (Object.keys(formErrors).length === 0) {
-      joinCoreTeamAPICall(formData.email, () => {
-        formData.email = ''
-      })
+      props.joinTeamAPICall(formData.email)
     }
   }
 
@@ -160,9 +140,6 @@ export default function Team (props) {
                     autoComplete='email'
                     InputProps={ { classes: { underline: classes.underline } } }
                   />
-                </Grid>
-                <Grid item xs={ 12 } style={ { color: 'white' } }>
-                  { status }
                 </Grid>
                 <Grid item xs={ 12 }>
                   <Button color='primary' fullWidth='true' variant='contained' type='submit'>

@@ -5,6 +5,7 @@ import { notification, dialog } from './notificationReducer'
 import { loggedIn } from './loginReducer'
 import { account, bankAccount } from './accountReducer'
 import { task, tasks } from './taskReducer'
+import { team } from './teamReducer'
 import { order, orders } from './orderReducer'
 import { info } from './infoReducer'
 import { preferences } from './preferencesReducer'
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   orders,
   task,
   tasks,
+  team,
   info,
   preferences,
   organizations,
