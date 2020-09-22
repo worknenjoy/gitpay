@@ -965,9 +965,8 @@ class Task extends Component {
                 <Button
                   style={ { marginRight: 10 } }
                   onClick={ this.handlePaymentForm }
-                  size='small'
                   color='primary'
-                  className={ classes.altButton }
+                  variant='outlined'
                 >
                   <span className={ classes.spaceRight }>
                     <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
@@ -977,9 +976,8 @@ class Task extends Component {
                 <Button
                   style={ { marginRight: 10 } }
                   onClick={ this.handleInvite }
-                  size='small'
                   color='primary'
-                  className={ classes.altButton }
+                  variant='outlined'
                 >
                   <span className={ classes.spaceRight }>
                     <FormattedMessage id='task.bounties.invite' defaultMessage='Invite' />
@@ -989,9 +987,8 @@ class Task extends Component {
                 <Button
                   style={ { marginRight: 10 } }
                   onClick={ this.handleTaskFundingDialogOpen }
-                  size='medium'
                   color='primary'
-                  className={ classes.altButton }
+                  variant='outlined'
                 >
                   <span className={ classes.spaceRight }>
                     <FormattedMessage id='task.funding.action' defaultMessage='Invite sponsor' />
@@ -1002,9 +999,8 @@ class Task extends Component {
                   <Button
                     style={ { marginRight: 10 } }
                     onClick={ this.handleAssignDialogOpen }
-                    size='medium'
                     color='primary'
-                    className={ classes.altButton }
+                    variant='outlined'
                   >
                     <span className={ classes.spaceRight }>
                       <FormattedMessage id='task.interested.action' defaultMessage='Im interested' />
@@ -1017,9 +1013,8 @@ class Task extends Component {
                     <Button
                       style={ { marginRight: 10 } }
                       onClick={ this.handleDeadlineForm }
-                      size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      variant='outlined'
                     >
                       <span className={ classes.spaceRight }>
                         <FormattedMessage id='task.bounties.date.deadline' defaultMessage='Deadline' />
@@ -1029,9 +1024,8 @@ class Task extends Component {
                     <Button
                       style={ { marginRight: 10 } }
                       onClick={ this.handleStatusDialog }
-                      size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      variant='outlined'
                     >
                       <span className={ classes.spaceRight }>
                         <FormattedMessage id='task.bounties.status.change' defaultMessage='Change status' />
@@ -1041,9 +1035,8 @@ class Task extends Component {
                     <Button
                       style={ { marginRight: 10 } }
                       onClick={ this.handleDeleteDialog }
-                      size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      variant='outlined'
                     >
                       <span className={ classes.spaceRight }>
                         <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
@@ -1052,9 +1045,8 @@ class Task extends Component {
                     </Button>
                     <Button
                       onClick={ this.handleTaskPaymentDialog }
-                      size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      variant='outlined'
                     >
                       <span className={ classes.spaceRight }>
                         <FormattedMessage id='task.bounties.send.label' defaultMessage='Send bounty' />
@@ -1091,9 +1083,8 @@ class Task extends Component {
                     <Button
                       style={ { marginRight: 10 } }
                       onClick={ this.handleMessageAuthorDialog }
-                      size='small'
                       color='primary'
-                      className={ classes.altButton }
+                      variant='outlined'
                     >
                       <span className={ classes.spaceRight }>
                         <FormattedMessage id='task.bounties.contact.label' defaultMessage='Contact author' />
@@ -1128,9 +1119,8 @@ class Task extends Component {
                   <Button
                     style={ { marginRight: 10 } }
                     onClick={ this.handleReportIssueDialog }
-                    size='small'
                     color='primary'
-                    className={ classes.altButton }
+                    variant='outlined'
                   >
                     <span className={ classes.spaceRight }>
                       <FormattedMessage id='task.report.action' defaultMessage='Report' />

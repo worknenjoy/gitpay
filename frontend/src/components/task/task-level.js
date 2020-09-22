@@ -68,7 +68,7 @@ class TaskLevel extends Component {
       <div style={ { marginTop: 20, marginBottom: 20 } }>
         <CustomTabs
           value={ levels[level] }
-          title='Level:'
+          title={ <Typography variant='body1'><FormattedMessage id='task.level.label' defaultMessage='Level' /></Typography> }
           headerColor='info'
           onTab={ !readOnly ? this.handleClick : null }
           tabs={ [

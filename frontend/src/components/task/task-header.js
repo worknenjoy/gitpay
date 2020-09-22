@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import Link from '@material-ui/core/Link'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
 import {
@@ -15,8 +18,6 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import {
   Redeem as RedeemIcon,
   Done as DoneIcon,
-  Navigation as NavigationIcon,
-  OpenInNew as ExternalLinkIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
@@ -58,9 +59,14 @@ const Tags = styled.div`
 `
 
 const styles = theme => ({
-  chip: {
-    marginRight: 10,
-    marginBottom: 20
+  root: {
+    marginBottom: 20,
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+  breadcrumb: {
+    color: '#bbb'
   },
   chipStatus: {
     marginLeft: 20,
@@ -82,11 +88,13 @@ const styles = theme => ({
 })
 
 class TaskHeader extends React.Component {
-  goToProjectRepo = (url) => {
+  goToProjectRepo = (e, url) => {
+    e.preventDefault()
     window.open(url, '_blank')
   }
 
-  handleBackToTaskList = () => {
+  handleBackToTaskList = (e) => {
+    e.preventDefault()
     window.location.assign('/#/tasks/explore')
   }
 
@@ -106,36 +114,28 @@ class TaskHeader extends React.Component {
       <TaskHeaderContainer>
         <Grid container spacing={ 9 }>
           <Grid item xs={ 12 } sm={ 12 } md={ 6 }>
-            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='contained' size='small'
-              aria-label='Delete' className={ classes.button }>
-              <NavigationIcon />
-              <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
-            </Button>
             { task.data.metadata &&
             <Typography variant='subheading' style={ { color: '#bbb' } }>
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
-                <div style={ { marginTop: 20 } }>
-                  <Chip
-                    key={ task.data.metadata.company }
-                    clickable
-                    label={ task.data.metadata.company }
-                    onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                    className={ classes.chip }
-                    color='secondary'
-                    onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                    deleteIcon={ <ExternalLinkIcon /> }
-                  />
-                  <Chip
-                    key={ task.data.metadata.projectName }
-                    clickable
-                    label={ task.data.metadata.projectName }
-                    onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                    className={ classes.chip }
-                    color='secondary'
-                    onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                    deleteIcon={ <ExternalLinkIcon /> }
-                  />
+                <div style={ { marginTop: 20 } } className={ classes.root }>
+                  <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' style={ { color: 'white' } } /> }>
+                    <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ this.handleBackToTaskList }>
+                      <Typography variant='subheading'>
+                        <FormattedMessage id='task.title.navigation' defaultMessage='Explore issues' />
+                      </Typography>
+                    </Link>
+                    <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+                      <Typography variant='subheading'>
+                        { task.data.metadata.company }
+                      </Typography>
+                    </Link>
+                    <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.repoUrl) }>
+                      <Typography variant='subheading'>
+                        { task.data.metadata.projectName }
+                      </Typography>
+                    </Link>
+                  </Breadcrumbs>
                 </div>
               </ReactPlaceholder>
             </Typography>
