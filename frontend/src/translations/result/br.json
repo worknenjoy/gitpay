@@ -41,7 +41,7 @@
   "account.profile.preferences.headline": "Preferences",
   "account.profile.preferences.link": "Setup preferences",
   "account.profile.settings": "Settings",
-  "account.profile.settings.delete.user.alert": "When you delete, you erase data associated with the user, such as tasks and interests.",
+  "account.profile.settings.delete.user.alert": "Ao excluir, você apaga todos os dados associados ao usuário, como tarefas e interesses.",
   "account.profile.settings.delete.user.button": "Delete my account",
   "account.profile.settings.delete.user.form.cancel": "Cancel",
   "account.profile.settings.delete.user.form.confirm": "Confirm",
