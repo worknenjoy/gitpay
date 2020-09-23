@@ -4,6 +4,7 @@ module.exports = {
   recruitersEmail: 'recruitment@gitpay.me',
   reportEmail: 'report@gitpay.me',
   fromEmail: 'tarefas@gitpay.me',
+  joinTeamEmail: 'team@gitpay.me',
   canSendEmail: process.env.NODE_ENV !== 'test' && process.env.SENDGRID_API_KEY,
   dateFormat: 'fullDate',
   taskUrl: (id) => {

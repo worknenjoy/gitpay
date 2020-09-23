@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Bottom from '../bottom/bottom'
 import TopBarContainer from '../../containers/topbar'
 import TeamCard from '../Cards/TeamCard'
 import { Grid } from '@material-ui/core'
@@ -153,6 +154,7 @@ export default function Team (props) {
           </Grid>
         </Grid>
       </Section>
+      <Bottom />
     </Page>
   )
 }
