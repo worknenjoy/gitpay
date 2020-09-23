@@ -1,7 +1,7 @@
 ---
 layout: doc
 lang: en
-title: How to getting started?
+title: Getting Started
 subtitle: Understand how receive bounties with contributions on Gitpay
 tags:
 ---
