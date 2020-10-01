@@ -35,12 +35,6 @@ import {
 
 const recruiterTeam = [
   {
-    name: 'Kevin Kautzman',
-    description: 'Kevin is a proven front-end expert, digital marketer and award-winning writer with an MFA from the prestigious Michener Center for Writers at UT Austin.',
-    image: require('../../images/teams/headhunter-team-member2.png'),
-    linkedinUrl: 'https://www.linkedin.com/in/kevinwrites/'
-  },
-  {
     name: 'Alexandre Magno',
     description: 'Founder of Gitpay, and senior software engineer, sharing and helping developers to face the challenges of technical recruitment.',
     image: require('../../images/teams/headhunter-team-member1.png'),

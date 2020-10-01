@@ -31,6 +31,7 @@ import {
   Person,
   LibraryBooks,
   ViewList,
+  Group
 } from '@material-ui/icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -191,8 +192,12 @@ class TopBar extends Component {
     window.open('https://github.com/worknenjoy/gitpay', '_blank')
   }
 
+  handleTeamLink = () => {
+    window.location.assign('/#/team')
+  }
+
   handleDocsLink = () => {
-    window.open('https://docs.gitpay.me/en', '_blank')
+    window.open('https://docs.gitpay.me/en')
   }
 
   handleProvider = (e, option) => {
@@ -345,6 +350,20 @@ class TopBar extends Component {
                   defaultMessage='Explore tasks' />
               </LabelButton>
               <ViewList />
+            </StyledButton>
+
+            <StyledButton
+              onClick={ this.handleTeamLink }
+              variant='text'
+              size='small'
+              color='primary'
+            >
+              <LabelButton>
+                <FormattedMessage
+                  id='task.actions.team'
+                  defaultMessage='Team' />
+              </LabelButton>
+              <Group />
             </StyledButton>
 
             <StyledButton
