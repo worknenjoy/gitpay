@@ -61,7 +61,14 @@ const recruiterTeam = [
     image: require('../../images/teams/wharley-team-member.jpg'),
     linkedinUrl: 'https://in.linkedin.com/in/wharley-ornelas-da-rocha-65420932',
     githubUrl: 'http://github.com/wharley'
-  }
+  },
+  {
+    name: 'Mayna Thais',
+    description: 'Project leader, with 9+ years, where she worked in software projects and IT infrastructure. Graduated in Information Systems, MBA in Project Management and Scrum Master certified.',
+    image: require('../../images/teams/core-team-mayna.png'),
+    linkedinUrl: 'https://br.linkedin.com/in/mayna-thais',
+    githubUrl: 'https://github.com/mthais'
+   } 
 ]
 
 export default function Team (props) {
