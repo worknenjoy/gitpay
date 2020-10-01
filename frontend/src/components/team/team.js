@@ -68,7 +68,7 @@ const recruiterTeam = [
     image: require('../../images/teams/core-team-mayna.png'),
     linkedinUrl: 'https://br.linkedin.com/in/mayna-thais',
     githubUrl: 'https://github.com/mthais'
-  } 
+  }
 ]
 
 export default function Team (props) {
