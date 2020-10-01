@@ -38,8 +38,6 @@ With Gitpay, you work using agile practices and continuous integrations, that ca
 
 This means that each task sent by a *Pull Request* goes to production when approved. We use an existent git process to send a solution to an issue in production to validate the work and send the payment.
 
-{% include image.html img="https://alexandremagno.net/wp-content/uploads/2018/09/Global-Business-Deals-Venn-Diagram.png" style="wide" lightbox="true" alt="Alt for image" caption="Image in lightbox" %}
-
 ## How to contribute with a project and receive payments
 We will show in this topic the lifecycle of an issue to be solved. When you register on Gitpay, you can receive proposals for tasks of our platform and from maintainers and organizations that needs an issue solved in their projects.
 
