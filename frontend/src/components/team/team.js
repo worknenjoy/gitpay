@@ -57,7 +57,7 @@ const recruiterTeam = [
   },
   {
     name: 'Wharley Ornelas',
-    description: 'Fullstack developer, with 15+ development experience. First developer to contribute and he helped with the core, and an brazilian developer evangelist',
+    description: 'Fullstack developer, with 15+ development experience. First developer to contribute and he helped with the core, and a brazilian developer evangelist',
     image: require('../../images/teams/wharley-team-member.jpg'),
     linkedinUrl: 'https://in.linkedin.com/in/wharley-ornelas-da-rocha-65420932',
     githubUrl: 'http://github.com/wharley'
