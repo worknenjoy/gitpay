@@ -9,7 +9,7 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
       where: {
         id: userAttributes.id
       },
-      include: [ models.Organization, models.UserRole ]
+      include: [ models.Organization ]
     }).then(user => {
       if (!user) return false
 
