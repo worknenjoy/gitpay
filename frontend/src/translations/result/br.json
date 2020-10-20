@@ -446,7 +446,7 @@
   "task.report.reason.testOrAccident": "Esta questão parece ser um problema de teste ou foi acrescentada acidentalmente",
   "task.report.subtitle": "Se você acha que este problema é inválido, é apenas para fins de teste,\n                ou tem algum erro ou até mesmo conteúdo inapropriado, por favor, nos informe e nós vamos tomar as devidas providências",
   "task.report.title": "Reportar problema",
-  "task.status.assigned": "Atribuidas a mim",
+  "task.status.assigned": "Atribuídas a mim",
   "task.status.author.label": "Autor",
   "task.status.author.missing": "informação do autor desconhecida",
   "task.status.author.name": "Importado de {provider} por {name}",
@@ -641,8 +641,8 @@
   "welcome.who.title.menu": "Comunidade",
   "welcome.workflow.item.primary": "Uso de informações pessoais",
   "welcome.workflow.item.secondary": "A empresa pode usar informações pessoais para os seguintes fins: fazer login e se cadastrar no serviço do Gitpay, notificações de e-mail quando habilitado e dados estáticos quando autorizado",
-  "welcome.workflow.item.three.primary": "Use of Cookies",
-  "welcome.workflow.item.three.secondary": "We use cookies to help to improve your experience with Gitpay, providing a custom experience according with your needs",
-  "welcome.workflow.item.two.primary": "Integration with third party",
-  "welcome.workflow.item.two.secondary": "We never provide access to your data to a third party without your previous consent"
+  "welcome.workflow.item.three.primary": "Uso de Cookies",
+  "welcome.workflow.item.three.secondary": "Usamos cookies para ajudar a melhorar a sua experiência com o Gitpay, fornecendo uma experiência personalizada de acordo com suas necessidades",
+  "welcome.workflow.item.two.primary": "Integração com terceiros",
+  "welcome.workflow.item.two.secondary": "Nunca fornecemos acesso aos seus dados a terceiros sem o seu consentimento"
 }
