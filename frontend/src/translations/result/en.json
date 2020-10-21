@@ -310,7 +310,7 @@
   "task.bounties.interested.created": "created",
   "task.bounties.interested.deadline": "(in {deadline} days)",
   "task.bounties.interested.deliveryDate": "Delivery date at {deliveryDate}",
-  "task.bounties.interested.deliveryDateSuggest": "You can suggest other delivery date.",
+  "task.bounties.interested.deliveryDateSuggest": "You can suggest another delivery date.",
   "task.bounties.interested.deliveryDateTitle": "Review Delivery Dates",
   "task.bounties.interested.descritpion": "You may be assigned to this task and receive your bounty when your code is merged",
   "task.bounties.interested.disagree": "DISAGREE",
