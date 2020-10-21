@@ -114,7 +114,7 @@
   "actions.task.delete.auth.error": "You need to login first to delete an issue imported to Gitpay",
   "actions.task.delete.notification.error": "Error to delete issue",
   "actions.task.delete.notification.success": "Issue deleted successfully",
-  "actions.task.fetch.error": "We could not obtain this task, please try again later",
+  "actions.task.fetch.error": "We could not obtain this issue; please try again later",
   "actions.task.fetch.other.error": "We could not obtain this task, please try again later",
   "actions.task.fetch.unavailable": "Task unavailable",
   "actions.task.interested.notification.success": "You add as interested for this task sucessfully",
