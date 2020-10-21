@@ -37,9 +37,6 @@ class PaymentOptions extends Component {
         <Typography component='p' color='textSecondary' style={ { marginBottom: 10 } }>
           <FormattedMessage id='payment.options.description' defaultMessage='Setup your bank account to receive the payments of your tasks concluded' />
         </Typography>
-        <Typography variant='body1' component='p' color='default' style={ { marginBottom: 20, padding: 10, backgroundColor: orange['100'] } }>
-          <FormattedMessage id='payment.options.warning.message' defaultMessage='For now we support bank accounts onboarding in Brazil only. But it is possible to activate your account with Paypal instead.' />
-        </Typography>
         <AccountContainer />
       </Paper>
     )
