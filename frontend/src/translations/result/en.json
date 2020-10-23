@@ -312,7 +312,7 @@
   "task.bounties.interested.deliveryDate": "Delivery date at {deliveryDate}",
   "task.bounties.interested.deliveryDateSuggest": "You can suggest another delivery date.",
   "task.bounties.interested.deliveryDateTitle": "Review Delivery Dates",
-  "task.bounties.interested.descritpion": "You may be assigned to this task and receive your bounty when your code is merged",
+  "task.bounties.interested.descritpion": "You may be assigned to this issue, and you will receive your bounty when your solution goes to the project codebase",
   "task.bounties.interested.disagree": "DISAGREE",
   "task.bounties.interested.iAmStarter": "I want to do for learning purposes",
   "task.bounties.interested.iWillDoFor": "I will do for",
