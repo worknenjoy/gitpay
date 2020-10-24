@@ -254,7 +254,7 @@ const styles = theme => ({
   },
   cardButton: {
     maxWidth: 200,
-    width: 150,
+    width: 'auto',
     font: 10,
     height: 40,
     maxHeight: 80,
