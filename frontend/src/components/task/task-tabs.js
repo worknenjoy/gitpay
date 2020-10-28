@@ -382,7 +382,7 @@ class TaskTabs extends React.Component {
 
     const historyCreate = item => {
       const fields = item.fields.map((f, i) => {
-        if (f === 'userId') return `User: ${user.name || user.username}`
+        if (f === 'userId') return `User: ${task.data.user.name || task.data.user.username}`
         return `${f}: ${item.newValues[i]}`
       })
       return `A new issue was created with ${fields.join(', ')}`
