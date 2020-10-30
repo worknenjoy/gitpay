@@ -296,7 +296,7 @@
   "task.bounties.actions.cancel": "Cancelar",
   "task.bounties.actions.sugggestAnotherDate": "SUGERIR OUTRA DATA",
   "task.bounties.actions.work": "Quero trabalhar nesta tarefa",
-  "task.bounties.add": "Adicionar recompensa",
+  "task.bounties.add": "Criar recompensa",
   "task.bounties.cancel.paypal.caution": "Se você cancelar este pagamento, seu pagamento pré-aprovado será cancelado e seu saldo será cancelado desta tarefa",
   "task.bounties.contact.label": "Contatar autor",
   "task.bounties.date.deadline": "Data para entrega",
