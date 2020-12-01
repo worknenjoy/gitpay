@@ -474,7 +474,7 @@
   "task.status.label.and": "and",
   "task.status.label.canceled": "Payment failed",
   "task.status.label.creditcard": "Credit Card",
-  "task.status.label.desc": "Labels can help you understand more about the context of an issue",
+  "task.status.label.desc": "Labels from the issue created on Github or Bitbucket",
   "task.status.label.fail": "Payment canceled",
   "task.status.label.none": "No payment type",
   "task.status.label.open": "Open",
