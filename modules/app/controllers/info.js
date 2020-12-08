@@ -34,7 +34,8 @@ exports.info = async (req, res) => {
     })
     const countUsers = await models.User.count()
     if (tasks) {
-      const bounties = tasks.reduce((accumulator, task) => accumulator || 0 + parseInt(task.value || 0), 0)
+      const bounties = tasks.filter(t => t.value)
+        .reduce((accumulator, task) => accumulator + parseInt(task.value), 0)
       const channelUserCount = await fetchChannelUserCount()
       res.send({
         tasks: countTasks,

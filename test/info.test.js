@@ -78,7 +78,7 @@ describe("info", () => {
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
-                expect(res.body.bounties).to.equal(10);
+                expect(res.body.bounties).to.equal(20);
                 done();
               })
           })
@@ -96,6 +96,24 @@ describe("info", () => {
             .expect(200)
             .end((err, res) => {
               expect(res.body.bounties).to.equal(10);
+              done();
+            })
+        })
+    })
+    it('should return the sum of all bounties when is non valid values', (done) => {
+      models.Task.bulkCreate([
+        { value: null, paid: true },
+        { value: 10, paid: true },
+        { value: null, paid: true },
+        { value: 10, paid: false }
+      ])
+        .then((task) => {
+          agent
+            .get('/info/all')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.body.bounties).to.equal(20);
               done();
             })
         })
