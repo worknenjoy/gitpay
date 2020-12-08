@@ -36,9 +36,11 @@ exports.info = async (req, res) => {
     const bounties = tasks.reduce((accumulator, task) => {
       // eslint-disable-next-line no-console
       console.log('---- accumulator --- ')
+      // eslint-disable-next-line no-console
       console.log(accumulator)
       // eslint-disable-next-line no-console
       console.log('---- task value --- ')
+      // eslint-disable-next-line no-console
       console.log(task.value)
       // eslint-disable-next-line no-console
       console.log('------------- ')
