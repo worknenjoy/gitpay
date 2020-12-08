@@ -46,7 +46,7 @@ exports.info = async (req, res) => {
       console.log('------------- ')
       return accumulator + parseInt(task.value)
     }
-    , 0)
+      , 0)
     const channelUserCount = await fetchChannelUserCount()
 
     res.send({
