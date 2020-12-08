@@ -45,7 +45,7 @@
   "mail.assigned.message": "The project owner will get in touch to provide you more details about the kickstart.</p><p>The deadline for this task is: <strong>{{deadline}}</strong>.</p><p>This means that you have to send a solution until <strong>{{deadlineFromNow}}</strong>.</p><p>You can <a href={{deadlineCalendarLink}}>add the deadline to your Google Calendar</a></p><p>To start, follow these steps:</p><ul><li>Fork this project</li><li>Follow the instructions to run locally</li><li>Develop a solution and keep in sync with the maintainer</li><li>Always be up to date to the main repository</li><li>For each project, a build is triggered <strong>and automated tests are executed</strong></li><li>Send a <strong>Pull Request</strong></li><li>We start a <strong>code review</strong></li></ul><p>Once your Pull Request is approved, you will receive a bounty in your account.",
   "mail.assigned.error": "Tivemos um problema com as notificações sobre interessados em uma tarefa no Gitpay.",
   "mail.assigned.nodate": "Nenhum prazo foi definido para esta tarefa",
-  "mail.assigned.anytime": "you're be able to finish",
+  "mail.assigned.anytime": "you're able to finish",
   "mail.deadline.update.subject": "O prazo para esta tarefa foi atualizado",
   "mail.assigned.update.intro": "<p>We updated the deadline for this task <strong>{{title}}</strong> you're working at: <a href=\"{{url}}\">{{title}}</a></p>",
   "mail.assigned.update.message": "<p>O prazo de entrega foi definido para: <strong>{{deadline}}</strong>.</p><p>Isto significa que você tem que enviar uma solução até <strong>{{deadlineFromNow}}</strong>.</p><p>Por favor, avise caso não possa cumprir o prazo. Assim, poderemos revê-lo.</p>",
