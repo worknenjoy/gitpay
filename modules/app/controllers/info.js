@@ -33,28 +33,19 @@ exports.info = async (req, res) => {
       attributes: ['value']
     })
     const countUsers = await models.User.count()
-    const bounties = tasks.reduce((accumulator, task) => {
-      // eslint-disable-next-line no-console
-      console.log('---- accumulator --- ')
-      // eslint-disable-next-line no-console
-      console.log(accumulator)
-      // eslint-disable-next-line no-console
-      console.log('---- task value --- ')
-      // eslint-disable-next-line no-console
-      console.log(task.value)
-      // eslint-disable-next-line no-console
-      console.log('------------- ')
-      return accumulator + parseInt(task.value)
+    if (tasks) {
+      const bounties = tasks.reduce((accumulator, task) => accumulator || 0 + parseInt(task.value || 0), 0)
+      const channelUserCount = await fetchChannelUserCount()
+      res.send({
+        tasks: countTasks,
+        bounties: bounties,
+        users: countUsers,
+        channelUserCount
+      })
     }
-      , 0)
-    const channelUserCount = await fetchChannelUserCount()
-
-    res.send({
-      tasks: countTasks,
-      bounties: bounties,
-      users: countUsers,
-      channelUserCount
-    })
+    else {
+      res.send(500)
+    }
   }
   catch (e) {
     // eslint-disable-next-line no-console
