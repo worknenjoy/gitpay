@@ -218,6 +218,7 @@
   "general.singup.action": "Get started",
   "info.stack.subheading": "Our stack",
   "info.status.message": "We paid {bounties} USD in bounties and freelancer work for {tasks} tasks to our community of {users} users",
+  "notifications.account.update": "Your user was updated sucessfully",
   "notifications.account.update.error": "We could not create your account",
   "notifications.bank.create.error": "We could not create your account",
   "notifications.bank.create.other.error": "We could not update your account",
