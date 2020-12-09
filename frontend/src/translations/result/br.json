@@ -218,6 +218,7 @@
   "general.singup.action": "Comece agora",
   "info.stack.subheading": "Nossas tecnologias",
   "info.status.message": "Pagamos {bounties} USD em recompensas para {tasks} tarefas da nossa comunidade de {users} usuários",
+  "notifications.account.update": "Conta atualizada com sucesso",
   "notifications.account.update.error": "Não foi possível atualizar sua conta",
   "notifications.bank.create.error": "Não foi possível criar sua conta",
   "notifications.bank.create.other.error": "Não foi possível atualizar a sua conta",

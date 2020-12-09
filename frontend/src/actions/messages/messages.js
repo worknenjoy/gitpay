@@ -207,6 +207,10 @@ const messages = defineMessages({
     id: 'actions.user.account.update.error.missing',
     defaultMessage: 'We had an issue to update your account. Please review the information provided'
   },
+  notificationAccountUpdateSuccess: {
+    id: 'notifications.account.update',
+    defaultMessage: 'Your user was updated sucessfully'
+  },
   notificationAccountUpdateError: {
     id: 'notifications.account.update.error',
     defaultMessage: 'We could not create your account'
