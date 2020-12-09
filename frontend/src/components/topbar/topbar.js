@@ -60,8 +60,11 @@ import {
   IconHamburger
 } from './TopbarStyles'
 
-import messagesBr from '../../translations/generated/br.json'
-import messagesEn from '../../translations/generated/en.json'
+import messagesBr from '../../translations/result/br.json'
+import messagesEn from '../../translations/result/en.json'
+
+import messagesBrLocal from '../../translations/generated/br.json'
+import messagesEnLocal from '../../translations/generated/en.json'
 
 import LoginButton from '../session/login-button'
 
@@ -78,8 +81,8 @@ const languagesIcons = {
 }
 
 const messages = {
-  'br': messagesBr,
-  'en': messagesEn
+  'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
+  'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
 const browserLanguage = () => {
