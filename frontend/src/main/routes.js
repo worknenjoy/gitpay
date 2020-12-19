@@ -23,6 +23,7 @@ export default props => (
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Redirect path='/tasks/explore' to='/tasks/all' />
+      <Route path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
       <Route path='/tasks/createdbyme' component={ TaskExplorer } />
       <Route path='/tasks/interested' component={ TaskExplorer } />
       <Route path='/tasks/assignedtome' component={ TaskExplorer } />

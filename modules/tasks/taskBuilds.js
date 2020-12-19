@@ -8,8 +8,9 @@ const constants = require('../mail/constants')
 const Sendmail = require('../mail/mail')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
+// const userOrganizations = require('../users/userOrganizations')
 
-module.exports = Promise.method(function taskBuilds (taskParameters) {
+module.exports = Promise.method(async function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
   const githubClientId = taskParameters.clientId || secrets.github.id
   const githubClientSecret = taskParameters.secret || secrets.github.secret
@@ -21,6 +22,46 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
   const token = taskParameters.token
 
   if (!userId) return false
+
+  const project = async () => {
+    try {
+      const organizationExist = await models.Organization.find(
+        {
+          where: {
+            name: userOrCompany
+          },
+          include: [models.Project]
+        }
+      )
+      if (organizationExist) {
+        const projectFromOrg = await models.Project.find(
+          {
+            where: {
+              name: projectName,
+              OrganizationId: organizationExist.id
+            }
+          }
+        )
+        if (projectFromOrg) {
+          return projectFromOrg
+        }
+        else {
+          const newProject = await organizationExist.createProject({ name: projectName })
+          return newProject
+        }
+      }
+      else {
+        const organization = await models.Organization.create({ name: userOrCompany, UserId: userId })
+        const project = await organization.createProject({ name: projectName })
+        return project
+      }
+    }
+    catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('error', e)
+      throw new Error(e)
+    }
+  }
 
   switch (taskParameters.provider) {
     case 'github':
@@ -36,51 +77,52 @@ module.exports = Promise.method(function taskBuilds (taskParameters) {
         if (!response && !response.title) return false
         const issueDataJsonGithub = JSON.parse(response)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
-        return models.Task
-          .build(
-            taskParameters
-          )
-          .save()
-          .then(async task => {
-            const role = await roleExists({ name: 'company_owner' })
-            if (role.dataValues && role.dataValues.id) {
-              const userInfo = await requestPromise({
-                uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
-                headers: {
-                  'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+        return project().then(p => {
+          return p
+            .createTask(taskParameters)
+            .then(async task => {
+              // eslint-disable-next-line no-console
+              console.log('task result', task.ProjectId)
+              const role = await roleExists({ name: 'company_owner' })
+              if (role.dataValues && role.dataValues.id) {
+                const userInfo = await requestPromise({
+                  uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
+                  headers: {
+                    'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+                  }
+                })
+                const userInfoJSON = JSON.parse(userInfo)
+                const userExist = userExists && await userExists({ email: userInfoJSON.email })
+                if (userExist && userExist.dataValues && userExist.dataValues.id) {
+                  await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
                 }
-              })
-              const userInfoJSON = JSON.parse(userInfo)
-              const userExist = userExists && await userExists({ email: userInfoJSON.email })
-              if (userExist && userExist.dataValues && userExist.dataValues.id) {
-                await task.createMember({ userId: userExist.dataValues.id, roleId: role.dataValues.id })
+                else {
+                  // send an email
+                }
               }
-              else {
-                // send an email
-              }
-            }
 
-            const taskData = task.dataValues
-            const userData = await task.getUser()
-            /*
-            TaskMail.send(userData, {
-              task: {
-                title: taskData.title,
-                issue_url: taskData.url,
-                url: constants.taskUrl(taskData.id)
-              }
+              const taskData = task.dataValues
+              const userData = await task.getUser()
+              /*
+                TaskMail.send(userData, {
+                  task: {
+                    title: taskData.title,
+                    issue_url: taskData.url,
+                    url: constants.taskUrl(taskData.id)
+                  }
+                })
+                TaskMail.notify(userData, {
+                  task: {
+                    title: taskData.title,
+                    issue_url: taskData.url,
+                    url: constants.taskUrl(taskData.id)
+                  }
+                })
+                */
+              Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.id} from ${userData.email} was created just now`)
+              return { ...taskData, ProjectId: taskData.ProjectId }
             })
-            TaskMail.notify(userData, {
-              task: {
-                title: taskData.title,
-                issue_url: taskData.url,
-                url: constants.taskUrl(taskData.id)
-              }
-            })
-            */
-            Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.id} from ${userData.email} was created just now`)
-            return taskData
-          })
+        })
       })
     case 'bitbucket':
       return requestPromise({

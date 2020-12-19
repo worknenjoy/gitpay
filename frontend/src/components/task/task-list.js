@@ -77,30 +77,34 @@ class TaskList extends Component {
     }
   }
 
-  componentDidMount () {
-    this.props.listTasks().then(t => {
-      let pathName = this.props.history.location.pathname
-      this.handleRoutePath(pathName)
-      this.setState({ loading: false })
+  async componentDidMount () {
+    const projectId = this.props.match.params.project_id
+    if(projectId) {
+      await this.props.fetchProject(projectId)
+    } else {
+      await this.props.listTasks()
+    }
+    let pathName = this.props.history.location.pathname
+    this.handleRoutePath(pathName)
+    this.setState({ loading: false })
 
-      const currentTab = this.state.tab
+    const currentTab = this.state.tab
 
-      switch (currentTab) {
-        case 0:
-          this.props.filterTasks('open')
-          break
-        case 1:
-          this.props.filterTasks('userId')
-          break
-        case 2:
-          this.props.filterTasks('Assigns')
-          break
-        case 3:
-          this.props.filterTasks('assigned')
-          break
-        default:
-      }
-    })
+    switch (currentTab) {
+      case 0:
+        await this.props.filterTasks('open')
+        break
+      case 1:
+        await this.props.filterTasks('userId')
+        break
+      case 2:
+        await this.props.filterTasks('Assigns')
+        break
+      case 3:
+        await this.props.filterTasks('assigned')
+        break
+      default:
+    }
   }
 
   handleRoutePath = (path) => {
@@ -118,7 +122,6 @@ class TaskList extends Component {
         this.handleTabChange(0, 3)
         break
       default:
-      // this.props.filterTasks()
     }
   }
 
@@ -161,8 +164,11 @@ class TaskList extends Component {
         <Typography variant='h5' component='h2'>
           <FormattedMessage
             id='task.list.headline'
-            defaultMessage='Task list'
+            defaultMessage='Task list for'
           />
+        </Typography>
+        <Typography variant='h3' component='h2'>
+          { this.props.project.data.name }
         </Typography>
         <Typography component='p' style={ { marginBottom: 20 } }>
           <FormattedMessage
@@ -269,6 +275,7 @@ TaskList.propTypes = {
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
+  project: PropTypes.object,
   user: PropTypes.object
 }
 

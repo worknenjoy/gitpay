@@ -4,6 +4,7 @@ import { intlReducer } from 'react-intl-redux'
 import { notification, dialog } from './notificationReducer'
 import { loggedIn } from './loginReducer'
 import { account, bankAccount } from './accountReducer'
+import { project } from './projectReducer'
 import { task, tasks } from './taskReducer'
 import { team } from './teamReducer'
 import { order, orders } from './orderReducer'
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   bankAccount,
   order,
   orders,
+  project,
   task,
   tasks,
   team,

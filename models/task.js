@@ -27,10 +27,19 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       allowNull: true,
+    },
+    ProjectId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Projects',
+        key: 'id'
+      },
+      allowNull: true,
     }
   }, {
     classMethods: {
       associate: (models) => {
+        Task.belongsTo(models.Project)
         Task.belongsTo(models.User, { foreignKey: 'userId' })
         Task.hasMany(models.History, { foreignKey: 'TaskId' })
         Task.hasMany(models.Order, { foreignKey: 'TaskId' })
@@ -41,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
           otherKey: 'labelId',
           through: 'TaskLabels',
           onUpdate: 'CASCADE',
-          onDelete: 'CASCADE' })
+          onDelete: 'CASCADE' }
+        )
       }
     },
     instanceMethods: {

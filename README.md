@@ -73,6 +73,14 @@ To create a new migration
 
 `sequelize migration:create --name modelname`
 
+How to create new models
+- For Many to Many
+    1. Create migration for first model (table `organizations`)
+    2. Create migration for second model (table `projects`)
+    3. Create migration for joint model (table `organizations_projects`)
+    4. Change in the model to `Project.belongsTo(models.Organization)`
+    5. Change in the second model to `Organization.hasMany(models.Project)`
+
 ## Database seeding
 
 For more information related to database seeding please refer: https://en.wikipedia.org/wiki/Database_seeding

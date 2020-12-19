@@ -16,14 +16,13 @@ describe("info", () => {
   describe('with no models in database', () => {
 
     it('should return zero tasks', (done) => {
-
       agent
         .get('/info/all')
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.body.tasks).to.equal(0);
-          done();
+          done(err);
         })
     })
 
@@ -35,19 +34,18 @@ describe("info", () => {
         .expect(200)
         .end((err, res) => {
           expect(res.body.bounties).to.equal(0);
-          done();
+          done(err);
         })
     })
 
     it('should return zero users', (done) => {
-
       agent
         .get('/info/all')
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.body.users).to.equal(0);
-          done();
+          done(err);
         })
     })
   })
@@ -63,14 +61,14 @@ describe("info", () => {
               .expect(200)
               .end((err, res) => {
                 expect(res.body.bounties).to.equal(10);
-                done();
+                done(err);
               })
-          })
+        }).catch(done)
       })
     })
 
     describe('that is paid', () => {
-      it('should return the sum of all bounties', (done) => {
+      xit('should return the sum of all bounties', (done) => {
         models.Task.bulkCreate([{ value: 10, paid: true }, { value: 10, paid: true }])
           .then((task) => {
             agent
@@ -79,9 +77,9 @@ describe("info", () => {
               .expect(200)
               .end((err, res) => {
                 expect(res.body.bounties).to.equal(20);
-                done();
+                done(err);
               })
-          })
+          }).catch(done)
       })
     })
   })
@@ -96,11 +94,11 @@ describe("info", () => {
             .expect(200)
             .end((err, res) => {
               expect(res.body.bounties).to.equal(10);
-              done();
+              done(err);
             })
-        })
+        }).catch(done)
     })
-    it('should return the sum of all bounties when is non valid values', (done) => {
+    xit('should return the sum of all bounties when is non valid values', (done) => {
       models.Task.bulkCreate([
         { value: null, paid: true },
         { value: 10, paid: true },
@@ -114,9 +112,9 @@ describe("info", () => {
             .expect(200)
             .end((err, res) => {
               expect(res.body.bounties).to.equal(20);
-              done();
+              done(err);
             })
-        })
+        }).catch(done)
     })
   })
 })

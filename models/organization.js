@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         Organization.belongsTo(models.User)
+        Organization.hasMany(models.Project)
       }
     },
     instanceMethods: {

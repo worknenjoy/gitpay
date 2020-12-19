@@ -177,6 +177,12 @@ class CustomPaginationActionsTable extends React.Component {
     this.props.history.push('/task/' + id)
   }
 
+  goToProject = (e, id, organizationId) => {
+    e.preventDefault()
+    window.location.href = '/#/organizations/' + organizationId + '/projects/' + id
+    window.location.reload()
+  }
+
   render () {
     const { classes, tasks } = this.props
     const { rowsPerPage, page } = this.state
@@ -194,6 +200,9 @@ class CustomPaginationActionsTable extends React.Component {
                   </TableCell>
                   <TableCell>
                     <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
                   </TableCell>
                   <TableCell>
                     <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
@@ -252,6 +261,11 @@ class CustomPaginationActionsTable extends React.Component {
                               <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
                             </Tooltip>
                           </a>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div style={ { width: 80 } }>
+                          <Chip label={ n.Project ? n.Project.name : 'no project' } onClick={ (e) => this.goToProject(e, n.Project.id, n.Project.OrganizationId) } />
                         </div>
                       </TableCell>
                       <TableCell>

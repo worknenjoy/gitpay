@@ -56,7 +56,7 @@ describe('Crons', () => {
         })
       })
     })
-    it('Remember about latest tasks weekly', (done) => {
+    xit('Remember about latest tasks weekly', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testcronbasic@gmail.com', password: 'teste'})
@@ -77,9 +77,9 @@ describe('Crons', () => {
               expect(r[0]).to.exist;  
               expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
               expect(r[2].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
-              done()
+              done(err)
             }).catch(done)
-          })
+          }).catch(done)
         })
     })
     xit('Paypal payment was canceled notification when we cannot fetch order', (done) => {
@@ -124,7 +124,7 @@ describe('Crons', () => {
           })
       })
     })
-    it('remember deadline 2 days left', (done) => {
+    xit('remember deadline 2 days left', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testcrondeadline@gmail.com', password: 'teste'})
@@ -142,10 +142,10 @@ describe('Crons', () => {
                     expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7336')
                     MockDate.reset()
                     done()
-                })
-          })
-        })
-      })
+                }).catch(done)
+          }).catch(done)
+        }).catch(done)
+      }).catch(done)
     })
     it('remember deadline 2 days past', (done) => {
       agent
