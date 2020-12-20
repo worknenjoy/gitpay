@@ -75,7 +75,7 @@ const listProjects = () => {
   return dispatch => {
     dispatch(listProjectsRequested())
     axios
-      .get(api.API_URL + `/projects/list`)
+      .get(api.API_URL + '/projects/list')
       .then(projects => {
         if (projects.data) {
           return dispatch(listProjectsSuccess(projects))

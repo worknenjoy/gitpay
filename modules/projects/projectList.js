@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function listProjects() {
+module.exports = Promise.method(function listProjects () {
   return models.Project.findAll({
     include: [
       models.Organization,

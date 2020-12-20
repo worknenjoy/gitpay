@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
@@ -180,19 +180,19 @@ class TaskList extends Component {
     return (
       <Paper elevation={ 0 }>
         { this.props.project.data.name && (
-          <Link href='/' onClick={(e) => {
+          <Link href='/' onClick={ (e) => {
             e.preventDefault()
             window.location.href = '/#/tasks/all'
             window.location.reload()
-          }}>
+          } }>
             <Typography component='p' style={ { marginBottom: 10 } }>
               <FormattedMessage
-                  id='task.list.link.back'
-                  defaultMessage='back to all issues'
-                />
+                id='task.list.link.back'
+                defaultMessage='back to all issues'
+              />
             </Typography>
           </Link>
-        )}
+        ) }
         <Typography variant='h5' component='h2'>
           <FormattedMessage
             id='task.list.headline'
@@ -200,19 +200,19 @@ class TaskList extends Component {
           />
         </Typography>
         { this.props.projects && !this.props.project.data.name && (
-          this.props.projects.data.map(p => {
+          this.props.projects.data.slice(0,5).map(p => {
             return (
-              <Chip
-                deleteIcon={ <Avatar>{p.Tasks.length}</Avatar> }
-                onDelete={() => {}}
+              p.Tasks.length && <Chip
+                deleteIcon={ <Avatar>{ p.Tasks.length }</Avatar> }
+                onDelete={ () => {} }
                 label={ p.name }
-                style={{marginRight: 10, marginTop: 20, marginBottom: 20}}
-                size={'medium'}
-                onClick={ (e) => this.goToProject(e, p)}
+                style={ { marginRight: 10, marginTop: 20, marginBottom: 20 } }
+                size={ 'medium' }
+                onClick={ (e) => this.goToProject(e, p) }
               />
             )
           })
-        )}
+        ) }
         <Typography variant='h3' component='h2'>
           { this.props.project.data.name }
         </Typography>
