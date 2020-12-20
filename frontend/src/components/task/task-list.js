@@ -200,13 +200,13 @@ class TaskList extends Component {
           />
         </Typography>
         { this.props.projects && !this.props.project.data.name && (
-          this.props.projects.data.slice(0, 20).map(p => {
+          this.props.projects.data.slice(0, 10).map(p => {
             return (
               p.Tasks.length && <Chip
                 deleteIcon={ <Avatar>{ p.Tasks.length }</Avatar> }
                 onDelete={ () => {} }
                 label={ p.name }
-                style={ { marginRight: 10, marginTop: 20, marginBottom: 20 } }
+                style={ { marginRight: 10, marginTop: 10, marginBottom: 10 } }
                 size={ 'medium' }
                 onClick={ (e) => this.goToProject(e, p) }
               />
