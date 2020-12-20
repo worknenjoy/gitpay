@@ -497,6 +497,7 @@
   "task.table.date.none": "",
   "task.table.head.author": "",
   "task.table.head.deadline": "",
+  "task.table.head.project": "",
   "task.table.head.status": "",
   "task.table.head.task": "",
   "task.table.head.value": "",
