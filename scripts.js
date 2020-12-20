@@ -31,7 +31,8 @@ const newOrExistingProject = async (userOrCompany, projectName, userId) => {
           where: {
             name: projectName,
             OrganizationId: organizationExist.id
-          }
+          },
+          include: [models.Organization]
         }
       )
       if (projectFromOrg) {
@@ -191,7 +192,7 @@ const scripts = {
             const issueId = splitIssueUrl[4]
             if (!userOrCompany || !projectName || !issueId || isNaN(issueId)) return task
             return newOrExistingProject(userOrCompany, projectName, task.userId).then((project) => {
-              task.update({ ProjectId: project.id })
+              return task.update({ ProjectId: project.id }).then(u => u)
             })
           })
         })
