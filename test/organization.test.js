@@ -39,7 +39,7 @@ describe("Organizations", () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
-          done();
+          done(err);
         })
     })
   })
@@ -56,19 +56,19 @@ describe("Organizations", () => {
           login(agent, {
             email: 'test_register_organization@gmail.com',
             password: 'test'
-          }).then(login => {
+          }).then(user => {
             agent
             .post(`/organizations/create`)
             .send({ UserId, name: 'foo' })
-            .set('Authorization', login.headers.authorization)
+            .set('Authorization', user.headers.authorization)
             .expect(200)
             .end((err, org) => {
               expect(org.statusCode).to.equal(200);
               expect(org.body.name).to.equal('foo');
-              done();
+              done(err);
             })
-          })
-        })
+          }).catch(done)
+        }).catch(done)
     })
     xit('dont allow register with the same organization', (done) => {
       agent

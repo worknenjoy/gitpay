@@ -6,7 +6,7 @@ import { assignTask, removeAssignment, messageTask, actionAssign } from '../acti
 import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask } from '../actions/taskActions'
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
-import { getFilteredTasks } from '../selectors/tasks'
+import { getFilteredTasks, getProject } from '../selectors/tasks'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -16,6 +16,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.loggedIn.user,
     task: getTaskOrdersByFilter(state),
     tasks: getFilteredTasks(state),
+    project: getProject(state.project),
     order: state.order
   }
 }

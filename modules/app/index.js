@@ -1,6 +1,7 @@
 require('../../models')
 
 const routerAuth = require('./routes/auth')
+const routerProject = require('./routes/projects')
 const routerTask = require('./routes/tasks')
 const routerTeam = require('./routes/team')
 const routerOrder = require('./routes/orders')
@@ -12,6 +13,7 @@ const routerContact = require('./routes/contact')
 exports.init = (app) => {
   app.use('/', routerAuth)
   app.use('/tasks', routerTask)
+  app.use('/projects', routerProject)
   app.use('/team', routerTeam)
   app.use('/orders', routerOrder)
   app.use('/webhooks', routerWebhook)

@@ -21,7 +21,7 @@ const login = (agent, params = {}) => {
 
 const registerAndLogin = (agent, registerParams = {}, loginParams = {}) => {
   return register(agent, registerParams)
-    .then(() => {
+    .then((a) => {
       return login(agent, loginParams)
     })
   }

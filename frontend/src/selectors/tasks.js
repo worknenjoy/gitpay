@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 const getVisibilityFilter = (state) => state.tasks.filterType
 export const getTasks = (state) => state.tasks
 export const getUser = (state) => state.loggedIn.user
+export const getProject = (state) => state.project
 
 const filterByAdditional = (task, additional, filteredByPrincipal) => {
   const filteringAllOfAdditional = typeof filteredByPrincipal === 'undefined'
@@ -27,8 +28,8 @@ const evaluateTaskWithoutBountyByValue = (value) => {
 }
 
 export const getFilteredTasks = createSelector(
-  [getVisibilityFilter, getTasks, getUser],
-  (visibilityFilter, tasks, user) => {
+  [getVisibilityFilter, getTasks, getUser, getProject],
+  (visibilityFilter, tasks, user, project) => {
     switch (visibilityFilter) {
       case 'all':
         return tasks

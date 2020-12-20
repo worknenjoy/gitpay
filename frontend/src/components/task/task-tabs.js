@@ -120,10 +120,6 @@ class TaskTabs extends React.Component {
     this.setState({ orderDetailsDialog: false })
   }
 
-  getTasksFromUser = (key, value) => {
-    return this.props.listTasks()
-  }
-
   render () {
     const { task, classes, logged, isAssignOwner, user } = this.props
 

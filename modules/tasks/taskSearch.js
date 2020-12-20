@@ -1,11 +1,12 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function taskSearch () {
+module.exports = Promise.method(function taskSearch (projectId) {
   return models.Task
     .findAll(
       {
-        include: [ models.User, models.Order, models.Assign, models.Label ],
+        where: projectId ? { ProjectId: projectId } : {},
+        include: [ models.User, models.Order, models.Assign, models.Label, models.Project ],
         order: [
           ['status', 'DESC'],
           ['id', 'DESC']
@@ -14,9 +15,5 @@ module.exports = Promise.method(function taskSearch () {
     )
     .then(data => {
       return data
-    }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      return false
     })
 })

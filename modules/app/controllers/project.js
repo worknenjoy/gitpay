@@ -1,0 +1,12 @@
+const Projects = require('../../projects')
+
+exports.fetchProject = (req, res) => {
+  Projects.projectFetch(req.params)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}

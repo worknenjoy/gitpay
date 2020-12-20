@@ -73,76 +73,87 @@ class TaskList extends Component {
     super(props)
     this.state = {
       tab: 0,
-      loading: true
+      loading: true,
+      project: {}
     }
   }
 
-  componentDidMount () {
-    this.props.listTasks().then(t => {
-      let pathName = this.props.history.location.pathname
-      this.handleRoutePath(pathName)
-      this.setState({ loading: false })
+  filterTasksByState () {
+    const currentTab = this.state.tab
 
-      const currentTab = this.state.tab
-
-      switch (currentTab) {
-        case 0:
-          this.props.filterTasks('open')
-          break
-        case 1:
-          this.props.filterTasks('userId')
-          break
-        case 2:
-          this.props.filterTasks('Assigns')
-          break
-        case 3:
-          this.props.filterTasks('assigned')
-          break
-        default:
-      }
-    })
+    switch (currentTab) {
+      case 0:
+        this.props.filterTasks('open')
+        break
+      case 1:
+        this.props.filterTasks('userId')
+        break
+      case 2:
+        this.props.filterTasks('Assigns')
+        break
+      case 3:
+        this.props.filterTasks('assigned')
+        break
+      default:
+    }
   }
 
-  handleRoutePath = (path) => {
-    switch (path) {
-      case '/tasks/explore':
+  async componentDidMount () {
+    const projectId = this.props.match.params.project_id
+    if (projectId) {
+      await this.props.fetchProject(projectId)
+    }
+    else {
+      await this.props.listTasks()
+    }
+    const params = this.props.match.params
+    this.handleRoutePath(params.filter)
+    this.setState({ project: params })
+    this.setState({ loading: false })
+
+    this.filterTasksByState()
+  }
+
+  handleRoutePath = (value) => {
+    switch (value) {
+      case 'explore':
         this.handleTabChange(0, 0)
         break
-      case '/tasks/createdbyme':
+      case 'createdbyme':
         this.handleTabChange(0, 1)
         break
-      case '/tasks/interested':
+      case 'interested':
         this.handleTabChange(0, 2)
         break
-      case '/tasks/assignedtome':
+      case 'assignedtome':
         this.handleTabChange(0, 3)
         break
       default:
-      // this.props.filterTasks()
     }
   }
 
   handleTabChange = (event, value) => {
+    const baseUrl = this.state.project ? '/organizations/' + this.state.project.organization_id + '/projects/' + this.state.project.project_id + '/' : '/tasks/'
     this.setState({ tab: value })
     switch (value) {
       case 0:
-        this.props.history.push('/tasks/explore')
+        this.props.history.push(baseUrl + 'explore')
         this.props.filterTasks('open')
         break
       case 1:
-        this.props.history.push('/tasks/createdbyme')
+        this.props.history.push(baseUrl + 'createdbyme')
         this.props.filterTasks('userId')
         break
       case 2:
-        this.props.history.push('/tasks/interested')
+        this.props.history.push(baseUrl + 'interested')
         this.props.filterTasks('Assigns')
         break
       case 3:
-        this.props.history.push('/tasks/assignedtome')
+        this.props.history.push(baseUrl + 'assigned')
         this.props.filterTasks('assigned')
         break
       default:
-      // this.props.filterTasks()
+        this.props.filterTasks('all')
     }
   }
 
@@ -161,8 +172,11 @@ class TaskList extends Component {
         <Typography variant='h5' component='h2'>
           <FormattedMessage
             id='task.list.headline'
-            defaultMessage='Task list'
+            defaultMessage='Task list for'
           />
+        </Typography>
+        <Typography variant='h3' component='h2'>
+          { this.props.project.data.name }
         </Typography>
         <Typography component='p' style={ { marginBottom: 20 } }>
           <FormattedMessage
@@ -213,7 +227,6 @@ class TaskList extends Component {
                 <CardMedia
                   className={ classes.media }
                   src={ imageGettingStarted }
-                  title='Teste'
                 />
                 <CardContent>
                   <Typography gutterBottom variant='h5' component='h2'>
@@ -269,6 +282,7 @@ TaskList.propTypes = {
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
+  project: PropTypes.object,
   user: PropTypes.object
 }
 

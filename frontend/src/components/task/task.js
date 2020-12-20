@@ -790,7 +790,7 @@ class Task extends Component {
   }
 
   render () {
-    const { classes, task, order } = this.props
+    const { classes, task, order, project } = this.props
     const { taskMessageAuthorDialog, taskClaimDialog } = this.state
 
     const isCurrentUserAssigned = () => {
@@ -878,7 +878,7 @@ class Task extends Component {
         </Dialog>
         <TopBarContainer />
         <PageContent>
-          <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } />
+          <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } project={ project } />
           <Grid
             container
             justify='flex-start'

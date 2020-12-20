@@ -379,7 +379,7 @@ const deleteTask = task => {
 }
 
 const listTasks = () => {
-  validToken()
+  // validToken()
   return (dispatch) => {
     dispatch(listTaskRequested())
     return axios
@@ -756,6 +756,7 @@ export {
   createTask,
   fetchTask,
   listTasks,
+  listTaskSuccess,
   filterTasks,
   filterTaskOrders,
   updateTask,
