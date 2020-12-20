@@ -32,7 +32,6 @@ const logoBitbucket = require('../../images/bitbucket-logo.png')
 const imageGettingStarted = require('../../images/octodex.png')
 
 import api from '../../consts'
-import { filterTasks } from '../../actions/taskActions'
 
 const styles = theme => ({
   icon: {
@@ -79,22 +78,6 @@ class TaskList extends Component {
     }
   }
 
-  async componentDidMount () {
-    const projectId = this.props.match.params.project_id
-    if (projectId) {
-      await this.props.fetchProject(projectId)
-    }
-    else {
-      await this.props.listTasks()
-    }
-    const params = this.props.match.params
-    this.handleRoutePath(params.filter)
-    this.setState({project: params})
-    this.setState({ loading: false })
-
-    filterTasksByState()
-  }
-
   filterTasksByState () {
     const currentTab = this.state.tab
 
@@ -113,6 +96,22 @@ class TaskList extends Component {
         break
       default:
     }
+  }
+
+  async componentDidMount () {
+    const projectId = this.props.match.params.project_id
+    if (projectId) {
+      await this.props.fetchProject(projectId)
+    }
+    else {
+      await this.props.listTasks()
+    }
+    const params = this.props.match.params
+    this.handleRoutePath(params.filter)
+    this.setState({ project: params })
+    this.setState({ loading: false })
+
+    this.filterTasksByState()
   }
 
   handleRoutePath = (value) => {

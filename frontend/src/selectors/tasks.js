@@ -36,7 +36,6 @@ export const getFilteredTasks = createSelector(
       case 'userId':
         return { ...tasks, data: tasks.data.filter(item => item.userId === user.id) }
       case 'Assigns':
-        console.log('assigns')
         return {
           ...tasks,
           data: tasks.data.filter(item => {
