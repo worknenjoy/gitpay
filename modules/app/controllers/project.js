@@ -10,3 +10,14 @@ exports.fetchProject = (req, res) => {
       res.send(false)
     })
 }
+
+exports.listProjects = (req, res) => {
+  Projects.projectList(req.params)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}
