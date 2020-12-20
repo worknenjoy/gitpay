@@ -1,5 +1,7 @@
 const models = require('../models')
 const expect = require('chai').expect
+const request = require('supertest')
+const api = require('../server')
 const agent = request.agent(api)
 
 describe("Projects", () => {

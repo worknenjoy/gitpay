@@ -9,7 +9,7 @@ module.exports = Promise.method(function fetchProject (projectParams) {
     include: [
       {
         model: models.Task,
-        include: [models.Project, models.User]
+        include: [models.Project, models.User, models.Assign]
       },
     ]
   })

@@ -119,23 +119,43 @@ class TaskHeader extends React.Component {
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
                 <div style={ { marginTop: 20 } } className={ classes.root }>
-                  <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' style={ { color: 'white' } } /> }>
-                    <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ this.handleBackToTaskList }>
-                      <Typography variant='subheading'>
-                        <FormattedMessage id='task.title.navigation' defaultMessage='Explore issues' />
-                      </Typography>
-                    </Link>
-                    <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
-                      <Typography variant='subheading'>
-                        { task.data.metadata.company }
-                      </Typography>
-                    </Link>
-                    <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.repoUrl) }>
-                      <Typography variant='subheading'>
-                        { task.data.metadata.projectName }
-                      </Typography>
-                    </Link>
-                  </Breadcrumbs>
+                  { task.data.project ? (
+                    <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' style={ { color: 'white' } } /> }>
+                      <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ this.handleBackToTaskList }>
+                        <Typography variant='subheading'>
+                          <FormattedMessage id='task.title.navigation' defaultMessage='Explore issues' />
+                        </Typography>
+                      </Link>
+                      <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+                        <Typography variant='subheading'>
+                          { task.data.project.organization.name }
+                        </Typography>
+                      </Link>
+                      <Link href={ `/#/organizations/${task.data.project.OrganizationId}/projects/${task.data.project.id}` } className={ classes.breadcrumb } color='inherit'>
+                        <Typography variant='subheading'>
+                          { task.data.project.name }
+                        </Typography>
+                      </Link>
+                    </Breadcrumbs>
+                  ) : (
+                    <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' style={ { color: 'white' } } /> }>
+                      <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ this.handleBackToTaskList }>
+                        <Typography variant='subheading'>
+                          <FormattedMessage id='task.title.navigation' defaultMessage='Explore issues' />
+                        </Typography>
+                      </Link>
+                      <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+                        <Typography variant='subheading'>
+                          { task.data.metadata.company }
+                        </Typography>
+                      </Link>
+                      <Link className={ classes.breadcrumb } href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.repoUrl) }>
+                        <Typography variant='subheading'>
+                          { task.data.metadata.projectName }
+                        </Typography>
+                      </Link>
+                    </Breadcrumbs>
+                  ) }
                 </div>
               </ReactPlaceholder>
             </Typography>

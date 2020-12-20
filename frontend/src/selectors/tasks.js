@@ -30,15 +30,13 @@ const evaluateTaskWithoutBountyByValue = (value) => {
 export const getFilteredTasks = createSelector(
   [getVisibilityFilter, getTasks, getUser, getProject],
   (visibilityFilter, tasks, user, project) => {
-    if(project.data.id) {
-      return { ...tasks, data: project.data.Tasks }
-    }
     switch (visibilityFilter) {
       case 'all':
         return tasks
       case 'userId':
         return { ...tasks, data: tasks.data.filter(item => item.userId === user.id) }
       case 'Assigns':
+        console.log('assigns')
         return {
           ...tasks,
           data: tasks.data.filter(item => {

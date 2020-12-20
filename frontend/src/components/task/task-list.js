@@ -32,6 +32,7 @@ const logoBitbucket = require('../../images/bitbucket-logo.png')
 const imageGettingStarted = require('../../images/octodex.png')
 
 import api from '../../consts'
+import { filterTasks } from '../../actions/taskActions'
 
 const styles = theme => ({
   icon: {
@@ -73,52 +74,59 @@ class TaskList extends Component {
     super(props)
     this.state = {
       tab: 0,
-      loading: true
+      loading: true,
+      project: {}
     }
   }
 
   async componentDidMount () {
     const projectId = this.props.match.params.project_id
-    if(projectId) {
+    if (projectId) {
       await this.props.fetchProject(projectId)
-    } else {
+    }
+    else {
       await this.props.listTasks()
     }
-    let pathName = this.props.history.location.pathname
-    this.handleRoutePath(pathName)
+    const params = this.props.match.params
+    this.handleRoutePath(params.filter)
+    this.setState({project: params})
     this.setState({ loading: false })
 
+    filterTasksByState()
+  }
+
+  filterTasksByState () {
     const currentTab = this.state.tab
 
     switch (currentTab) {
       case 0:
-        await this.props.filterTasks('open')
+        this.props.filterTasks('open')
         break
       case 1:
-        await this.props.filterTasks('userId')
+        this.props.filterTasks('userId')
         break
       case 2:
-        await this.props.filterTasks('Assigns')
+        this.props.filterTasks('Assigns')
         break
       case 3:
-        await this.props.filterTasks('assigned')
+        this.props.filterTasks('assigned')
         break
       default:
     }
   }
 
-  handleRoutePath = (path) => {
-    switch (path) {
-      case '/tasks/explore':
+  handleRoutePath = (value) => {
+    switch (value) {
+      case 'explore':
         this.handleTabChange(0, 0)
         break
-      case '/tasks/createdbyme':
+      case 'createdbyme':
         this.handleTabChange(0, 1)
         break
-      case '/tasks/interested':
+      case 'interested':
         this.handleTabChange(0, 2)
         break
-      case '/tasks/assignedtome':
+      case 'assignedtome':
         this.handleTabChange(0, 3)
         break
       default:
@@ -126,26 +134,27 @@ class TaskList extends Component {
   }
 
   handleTabChange = (event, value) => {
+    const baseUrl = this.state.project ? '/organizations/' + this.state.project.organization_id + '/projects/' + this.state.project.project_id + '/' : '/tasks/'
     this.setState({ tab: value })
     switch (value) {
       case 0:
-        this.props.history.push('/tasks/explore')
+        this.props.history.push(baseUrl + 'explore')
         this.props.filterTasks('open')
         break
       case 1:
-        this.props.history.push('/tasks/createdbyme')
+        this.props.history.push(baseUrl + 'createdbyme')
         this.props.filterTasks('userId')
         break
       case 2:
-        this.props.history.push('/tasks/interested')
+        this.props.history.push(baseUrl + 'interested')
         this.props.filterTasks('Assigns')
         break
       case 3:
-        this.props.history.push('/tasks/assignedtome')
+        this.props.history.push(baseUrl + 'assigned')
         this.props.filterTasks('assigned')
         break
       default:
-      // this.props.filterTasks()
+        this.props.filterTasks('all')
     }
   }
 
@@ -219,7 +228,6 @@ class TaskList extends Component {
                 <CardMedia
                   className={ classes.media }
                   src={ imageGettingStarted }
-                  title='Teste'
                 />
                 <CardContent>
                   <Typography gutterBottom variant='h5' component='h2'>

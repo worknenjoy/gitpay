@@ -15,6 +15,46 @@ i18n.configure({
 
 i18n.init()
 
+const newOrExistingProject = async (userOrCompany, projectName, userId) => {
+  try {
+    const organizationExist = await models.Organization.find(
+      {
+        where: {
+          name: userOrCompany
+        },
+        include: [models.Project]
+      }
+    )
+    if (organizationExist) {
+      const projectFromOrg = await models.Project.find(
+        {
+          where: {
+            name: projectName,
+            OrganizationId: organizationExist.id
+          }
+        }
+      )
+      if (projectFromOrg) {
+        return projectFromOrg
+      }
+      else {
+        const newProject = await organizationExist.createProject({ name: projectName })
+        return newProject
+      }
+    }
+    else {
+      const organization = await models.Organization.create({ name: userOrCompany, UserId: userId })
+      const project = await organization.createProject({ name: projectName })
+      return project
+    }
+  }
+  catch (e) {
+    // eslint-disable-next-line no-console
+    console.log('error', e)
+    throw new Error(e)
+  }
+}
+
 const scripts = {
   accountInfo: () => {
     return models.User
@@ -118,6 +158,42 @@ const scripts = {
             })
           })
           return Promise.all(invalidTasksDeleted).then(result => result)
+        })
+      }).catch(error => {
+        // eslint-disable-next-line no-console
+        console.log('error when search task: ', error)
+        return false
+      })
+  },
+  createProjects: () => {
+    return models.Task
+      .findAll(
+        {
+          where: {
+            provider: 'github'
+          },
+          include: [ models.User, models.Project ]
+        }
+      )
+      .then(tasks => {
+        const tasksPromises = tasks.filter(t => {
+          if (t.ProjectId) return false
+          return true
+        })
+        return Promise.all(tasksPromises).then(results => {
+          // eslint-disable-next-line no-console
+          console.log('results from tasksPromises', results)
+          return results.map(task => {
+            const uri = task.url
+            const splitIssueUrl = url.parse(uri).path.split('/')
+            const userOrCompany = splitIssueUrl[1]
+            const projectName = splitIssueUrl[2]
+            const issueId = splitIssueUrl[4]
+            if (!userOrCompany || !projectName || !issueId || isNaN(issueId)) return task
+            return newOrExistingProject(userOrCompany, projectName, task.userId).then((project) => {
+              task.update({ ProjectId: project.id })
+            })
+          })
         })
       }).catch(error => {
         // eslint-disable-next-line no-console

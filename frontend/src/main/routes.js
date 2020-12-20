@@ -23,16 +23,9 @@ export default props => (
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Redirect path='/tasks/explore' to='/tasks/all' />
-      <Route path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
-      <Route path='/tasks/createdbyme' component={ TaskExplorer } />
-      <Route path='/tasks/interested' component={ TaskExplorer } />
-      <Route path='/tasks/assignedtome' component={ TaskExplorer } />
-      <Route path='/tasks/all' component={ TaskExplorer } />
-      <Route path='/tasks/open' component={ TaskExplorer } />
-      <Route path='/tasks/progress' component={ TaskExplorer } />
-      <Route path='/tasks/finished' component={ TaskExplorer } />
-      <Route path='/tasks/with-bounties' component={ TaskExplorer } />
-      <Route path='/tasks/contribution' component={ TaskExplorer } />
+      <Route exact path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
+      <Route path='/organizations/:organization_id/projects/:project_id/:filter' component={ TaskExplorer } />
+      <Route path='/tasks/:filter' component={ TaskExplorer } />
       <Route path='/team' component={ TeamContainer } />
       <Route exact path='/login' component={ LoginPage } />
       <Route exact path='/login/:status' component={ LoginPageContainer } />
