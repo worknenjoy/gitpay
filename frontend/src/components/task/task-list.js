@@ -216,7 +216,7 @@ class TaskList extends Component {
         <Typography variant='h3' component='h2'>
           { this.props.project.data.name }
         </Typography>
-        <Typography component='p' style={ { marginBottom: 20 } }>
+        <Typography component='p' style={ { marginBottom: 20, marginTop: 20 } }>
           <FormattedMessage
             id='task.list.description'
             defaultMessage='Available tasks for development'
