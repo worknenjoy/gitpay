@@ -25,7 +25,8 @@ import {
   Tune,
   Person,
   ArrowBack,
-  Settings
+  Settings,
+  FaceSharp
 } from '@material-ui/icons'
 
 import classNames from 'classnames'
@@ -406,6 +407,23 @@ class Profile extends Component {
                           primary={
                             <span>
                               <FormattedMessage id='account.profile.settings' defaultMessage='Settings' />
+                            </span>
+                          }
+                        />
+                      </MenuItem>
+                      <MenuItem
+                        onClick={ () => this.props.history.push('/profile/roles') }
+                        className={ classes.menuItem }
+                        selected={ this.state.selected === 4 }
+                      >
+                        <ListItemIcon className={ classes.icon }>
+                          <FaceSharp />
+                        </ListItemIcon>
+                        <ListItemText
+                          classes={ { primary: classes.primary } }
+                          primary={
+                            <span>
+                              <FormattedMessage id='account.profile.roles' defaultMessage='Roles' />
                             </span>
                           }
                         />

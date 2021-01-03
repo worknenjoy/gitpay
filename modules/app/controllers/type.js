@@ -3,7 +3,6 @@ const typeSearch = require('../../types').typeSearch
 exports.typeSearchController = (req, res) => {
   typeSearch(req.body)
     .then(data => {
-      console.log('data', data)
       res.status(200).send(data)
     }).catch(error => {
       // eslint-disable-next-line no-console

@@ -18,7 +18,7 @@ import {
   CardContent,
   CardActions
 } from '@material-ui/core'
-import { injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, defineMessages } from 'react-intl'
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 
@@ -181,46 +181,38 @@ class Roles extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedRoles: [],
-      save: false
+      selectedRoles: []
     }
   }
-  async componentDidMount() {
-    if (this.state.save === true) {
-      this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess))
-    }
-    await this.props.fetchRoles && this.props.fetchRoles()
+  componentDidMount() {
+    this.setState({ selectedRoles: this.props.user.Types })
   }
 
-  handleRoleClick = (item) => {
-    const allItems = this.state.selectedRoles
-    allItems.push(item)
+  handleRoleClick = (event, item) => {
+    let allItems = this.state.selectedRoles
+    const itemExist = allItems.filter(i => i.id === item.id)
+    if(itemExist.length) {
+      allItems = allItems.filter(i => i.id !== item.id)
+    } else {
+      allItems.push(item)
+    }
     this.setState({
-      selectedRoles:  allItems
+      selectedRoles: allItems
     })
   }
+
   shouldBeChecked = (item) => {
-    return this.state.selectedRoles.find(r =>  r.name === item)
+    return this.state.selectedRoles && this.state.selectedRoles.find(s => item.name === s.name) ? true : false
   }
-  handleRemoveRole = (item) => {
-    if (this.isRoleSelected(item)) {
-      this.handleRoleClick(item)
-    }
-  }
+  
   handleCancelClick = () => {
-    this.reloadPreferences()
+    
   }
 
-  reloadPreferences = () => {
-    this.setState({
-      save: false, selectedRoles: this.props.roles.name != null && this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : []
-    })
-  }
-
-  handleSaveClick = async () => {
-    this.setState({ save: true })
+  handleSaveClick = async (e) => {
+    e.preventDefault()
     try {
-      await this.props.updateUser({
+      await this.props.updateUser(this.props.user.id, {
         Types: this.state.selectedRoles
       })
       this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess))
@@ -233,13 +225,16 @@ class Roles extends Component {
 
   render() {
     // eslint-disable-next-line no-unused-vars
-    const { classes, user, preferences, roles, organizations, addNotification } = this.props
+    const { classes, roles } = this.props
     return (
       <React.Fragment>
         <div className={classes.bigRow}>
-          <h1>Who are you?</h1>
-          <p>Tempor veniam est id occaecat. Duis aute consectetur sunt ea laborum reprehenderit elit excepteur ex laborum culpa. Labore voluptate do commodo eiusmod minim sint cupidatat quis
-              </p>
+          <Typography variant='h4' noWrap>
+              <FormattedMessage id='user.type.title' defaultMessage='What type of user are you?' />
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p' noWrap>
+            <FormattedMessage id='user.type.description' defaultMessage='Define how you will use Gitpay. You can choose multiple types of user roles you want.' />
+          </Typography>
         </div>
         <Grid container className={classes.row} direction='row' alignItems='strech'>
         { roles.data && roles.data.map(r => {
@@ -264,8 +259,8 @@ class Roles extends Component {
                       checkedIcon={<CheckBoxIcon color='white' fontSize='large' />}
                       color='primary'
                       inputProps={{ 'aria-label': r.name }}
-                      checked={this.shouldBeChecked(r.name)}
-                      onChange={() => this.handleRoleClick(r.name)}
+                      checked={this.shouldBeChecked(r)}
+                      onChange={(e) => this.handleRoleClick(e, r)}
                     />
                   </CardActions>
                 </Card>
@@ -274,14 +269,9 @@ class Roles extends Component {
           )
         })}
         </Grid>
-
-        <div className={classes.bigRow}>
-          <p>Tempor veniam est id occaecat. Duis aute consectetur sunt ea laborum reprehenderit elit excepteur ex laborum culpa. Labore voluptate do commodo eiusmod minim sint cupidatat quis
-              </p>
-        </div>
         <div className={classes.buttons}>
           <button onClick={() => this.handleCancelClick()} className={classes.cButton}>CANCEL</button>
-          <button onClick={() => this.handleSaveClick()} className={classes.sButton}>SAVE</button>
+          <button onClick={(e) => this.handleSaveClick(e)} className={classes.sButton}>SAVE</button>
         </div>
       </React.Fragment>
     )
