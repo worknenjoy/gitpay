@@ -18,17 +18,8 @@ const fetchRolesRequested = () => {
   return { type: FETCH_ROLES_REQUESTED, completed: false }
 }
 
-const fetchRolesSuccess = (responses) => {
-  // eslint-disable-next-line one-var
-  let name = [], userId = null, id = []
-  responses.map(function (response) {
-    name.push(response.name)
-    id.push(response.id)
-  })
-  let nameString = name.join(',')
-  userId = responses.length > 0 ? responses[0].userId : null
-  // console.dir('data:', nameString, userId, id)
-  return { type: FETCH_ROLES_SUCCESS, completed: true, name: nameString, userId: userId, id: id }
+const fetchRolesSuccess = (response) => {
+  return { type: FETCH_ROLES_SUCCESS, completed: true, response: response }
 }
 
 const fetchRolesError = (error) => {
@@ -67,7 +58,7 @@ const fetchRoles = () => {
     return dispatch(loggedIn()).then(user => {
       dispatch(fetchRolesRequested())
       return axios
-        .get(`${api.API_URL}/roles/fetch`)
+        .get(`${api.API_URL}/types/search`)
         .then(response => {
           return dispatch(fetchRolesSuccess(response.data))
         })

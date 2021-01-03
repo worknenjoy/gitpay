@@ -18,7 +18,11 @@ module.exports = Promise.method(function userUpdate (userParameters) {
     }
   }
   return models.User
-    .update(userParameters, { ...condition, returning: true, plain: true }).then(data => {
+    .update(userParameters, { ...condition, 
+      returning: true,
+      plain: true,
+      include: [models.Type]
+    }).then(data => {
       // eslint-disable-next-line no-console
       // console.log(data)
       return data[1].dataValues

@@ -23,10 +23,6 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         }
       }).then(async response => {
-        // eslint-disable-next-line no-console
-        console.log('responseFromGithub', response)
-        // eslint-disable-next-line no-console
-        console.log('response from user find', user.dataValues)
         const responseFromGithub = JSON.parse(response)
 
         const currentOrgs = await models.Organization.findAll()
