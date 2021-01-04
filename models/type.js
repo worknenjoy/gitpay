@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Type.belongsToMany(models.User, { through: 'User_Types'})
+        Type.belongsToMany(models.User, { through: 'User_Types' })
       }
     },
     instanceMethods: {

@@ -18,15 +18,15 @@ module.exports = Promise.method(function userUpdate (userParameters) {
     }
   }
   return models.User
-    .update(userParameters, { ...condition, 
+    .update(userParameters, { ...condition,
       returning: true,
       plain: true
     }).then(async user => {
       const currentUser = user[1]
-      if(userParameters.Types) {
+      if (userParameters.Types) {
         await currentUser.setTypes([])
         const types = userParameters.Types.map(async t => {
-          const type = await models.Type.findById(t.id) 
+          const type = await models.Type.findById(t.id)
           await currentUser.addType(type)
           return t
         })

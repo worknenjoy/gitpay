@@ -178,22 +178,23 @@ const imageMap = {
 }
 
 class Roles extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       selectedRoles: []
     }
   }
-  componentDidMount() {
+  componentDidMount () {
     this.setState({ selectedRoles: this.props.user.Types })
   }
 
   handleRoleClick = (event, item) => {
     let allItems = this.state.selectedRoles
     const itemExist = allItems.filter(i => i.id === item.id)
-    if(itemExist.length) {
+    if (itemExist.length) {
       allItems = allItems.filter(i => i.id !== item.id)
-    } else {
+    }
+    else {
       allItems.push(item)
     }
     this.setState({
@@ -202,9 +203,9 @@ class Roles extends Component {
   }
 
   shouldBeChecked = (item) => {
-    return this.state.selectedRoles && this.state.selectedRoles.find(s => item.name === s.name) ? true : false
+    return !!(this.state.selectedRoles && this.state.selectedRoles.find(s => item.name === s.name))
   }
-  
+
   handleCancelClick = () => {
     this.props.onClose && this.props.onClose()
   }
@@ -217,62 +218,62 @@ class Roles extends Component {
       })
       this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess))
       this.props.onClose && this.props.onClose()
-    } catch (e) {
+    }
+    catch (e) {
       console.log(e)
       this.props.addNotification(this.props.intl.formatMessage(messages.saveError))
     }
-    
   }
 
-  render() {
+  render () {
     // eslint-disable-next-line no-unused-vars
     const { classes, roles } = this.props
     return (
       <React.Fragment>
-        <div className={classes.bigRow}>
+        <div className={ classes.bigRow }>
           <Typography variant='h4' noWrap>
-              <FormattedMessage id='user.type.title' defaultMessage='What type of user are you?' />
+            <FormattedMessage id='user.type.title' defaultMessage='What type of user are you?' />
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p' noWrap>
             <FormattedMessage id='user.type.description' defaultMessage='Define how you will use Gitpay. You can choose multiple types of user roles you want.' />
           </Typography>
         </div>
-        <Grid container className={classes.row} direction='row' alignItems='strech'>
-        { roles.data && roles.data.map(r => {
-          return (
-            <Grid item xs={1} className={classes.rowList} xs>
-              <Paper>
-                <Card className={classes.rowContent} variant='outlined'>
-                  <CardMedia>
-                    <img src={imageMap[r.name]} />
-                  </CardMedia>
-                  <CardContent className={classes.rootLabel}>
-                    <Typography variant='h5' >
-                      {r.label}
-                        </Typography>
-                  </CardContent>
-                  <CardActions className={classes.action}>
-                    <Typography variant='body2' color='textSecondary' component='p' noWrap>
-                      {r.description}
-                        </Typography>
-                    <Checkbox
-                      icon={<CheckBoxOutlineBlankIcon fontSize='large' style={{ color: 'transparent' }} />}
-                      checkedIcon={<CheckBoxIcon color='white' fontSize='large' />}
-                      color='primary'
-                      inputProps={{ 'aria-label': r.name }}
-                      checked={this.shouldBeChecked(r)}
-                      onChange={(e) => this.handleRoleClick(e, r)}
-                    />
-                  </CardActions>
-                </Card>
-              </Paper>
-            </Grid>
-          )
-        })}
+        <Grid container className={ classes.row } direction='row' alignItems='strech'>
+          { roles.data && roles.data.map(r => {
+            return (
+              <Grid item xs={ 1 } className={ classes.rowList } xs>
+                <Paper>
+                  <Card className={ classes.rowContent } variant='outlined'>
+                    <CardMedia>
+                      <img src={ imageMap[r.name] } />
+                    </CardMedia>
+                    <CardContent className={ classes.rootLabel }>
+                      <Typography variant='h5' >
+                        { r.label }
+                      </Typography>
+                    </CardContent>
+                    <CardActions className={ classes.action }>
+                      <Typography variant='body2' color='textSecondary' component='p' noWrap>
+                        { r.description }
+                      </Typography>
+                      <Checkbox
+                        icon={ <CheckBoxOutlineBlankIcon fontSize='large' style={ { color: 'transparent' } } /> }
+                        checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
+                        color='primary'
+                        inputProps={ { 'aria-label': r.name } }
+                        checked={ this.shouldBeChecked(r) }
+                        onChange={ (e) => this.handleRoleClick(e, r) }
+                      />
+                    </CardActions>
+                  </Card>
+                </Paper>
+              </Grid>
+            )
+          }) }
         </Grid>
-        <div className={classes.buttons}>
-          <button onClick={() => this.handleCancelClick()} className={classes.cButton}>CANCEL</button>
-          <button onClick={(e) => this.handleSaveClick(e)} className={classes.sButton}>SAVE</button>
+        <div className={ classes.buttons }>
+          <button onClick={ () => this.handleCancelClick() } className={ classes.cButton }>CANCEL</button>
+          <button onClick={ (e) => this.handleSaveClick(e) } className={ classes.sButton }>SAVE</button>
         </div>
       </React.Fragment>
     )

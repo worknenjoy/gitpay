@@ -208,9 +208,8 @@ class Profile extends Component {
   componentDidMount () {
     this.props.fetchOrganizations().then(org => {
       this.setState({ orgsLoaded: true })
-      if(this.props.user.Types && !this.props.user.Types.length) this.setState({openUpdateProfileDialog: true})
+      if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
     })
-    
   }
 
   setActive (path) {
@@ -323,22 +322,22 @@ class Profile extends Component {
                   <Route
                     exact
                     path='/profile/roles'
-                    component={ () => <Roles intl={this.props.intl} updateUser={ this.props.updateUser } user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
+                    component={ () => <Roles intl={ this.props.intl } updateUser={ this.props.updateUser } user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
                   />
                 </Switch>
               </HashRouter>
-              <UpdateRole 
-                  intl={this.props.intl} 
-                  updateUser={ this.props.updateUser }
-                  user={ user }
-                  roles={ roles }
-                  updateRoles={ this.props.updateRoles }
-                  fetchRoles={ this.props.fetchRoles }
-                  createRoles={ this.props.createRoles }
-                  deleteRoles={ this.props.deleteRoles }
-                  addNotification={ this.props.addNotification }
-                  visible={this.state.openUpdateProfileDialog}
-                  onClose={() => this.setState({openUpdateProfileDialog: false})}
+              <UpdateRole
+                intl={ this.props.intl }
+                updateUser={ this.props.updateUser }
+                user={ user }
+                roles={ roles }
+                updateRoles={ this.props.updateRoles }
+                fetchRoles={ this.props.fetchRoles }
+                createRoles={ this.props.createRoles }
+                deleteRoles={ this.props.deleteRoles }
+                addNotification={ this.props.addNotification }
+                visible={ this.state.openUpdateProfileDialog }
+                onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
               />
             </Grid>
             <Grid item xs={ 12 } md={ 3 }>
@@ -480,124 +479,124 @@ class Profile extends Component {
                       </Grid>
                     </Grid>
                   </div>
-                <div className={ classes.row }>
-                  <Paper className={ classes.menuContainer } style={{marginTop: 40, marginBottom: 20}}>
-                    <MenuList>
-                      <MenuItem
-                        onClick={ () =>
-                          this.props.history.push('/profile/tasks')
-                        }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 0 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <LibraryBooks />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage
-                                id='account.profile.tasks.setup'
-                                defaultMessage='Tasks'
-                              />
-                            </span>
+                  <div className={ classes.row }>
+                    <Paper className={ classes.menuContainer } style={ { marginTop: 40, marginBottom: 20 } }>
+                      <MenuList>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/tasks')
                           }
-                        />
-                      </MenuItem>
-                      <MenuItem
-                        onClick={ () =>
-                          this.props.history.push('/profile/payment-options')
-                        }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 1 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <CreditCard />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage
-                                id='account.profile.payment.setup'
-                                defaultMessage='Setup payment'
-                              />
-                            </span>
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 0 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <LibraryBooks />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.tasks.setup'
+                                  defaultMessage='Tasks'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/payment-options')
                           }
-                        />
-                      </MenuItem>
-                      <MenuItem
-                        onClick={ () =>
-                          this.props.history.push('/profile/preferences')
-                        }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 2 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <Tune />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage
-                                id='account.profile.preferences'
-                                defaultMessage='Preferences'
-                              />
-                            </span>
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 1 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <CreditCard />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.payment.setup'
+                                  defaultMessage='Setup payment'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/preferences')
                           }
-                        />
-                      </MenuItem>
-                      <MenuItem
-                        onClick={ () =>
-                          this.props.history.push('/profile/settings')
-                        }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 3 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <Settings />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage
-                                id='account.profile.settings'
-                                defaultMessage='Settings'
-                              />
-                            </span>
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 2 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <Tune />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.preferences'
+                                  defaultMessage='Preferences'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/settings')
                           }
-                        />
-                      </MenuItem>
-                      <MenuItem
-                        onClick={ () => this.props.history.push('/profile/roles') }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 4 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <FaceSharp />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage id='account.profile.roles' defaultMessage='Roles' />
-                            </span>
-                          }
-                        />
-                      </MenuItem>
-                    </MenuList>
-                  </Paper>
-                </div>
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 3 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <Settings />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.settings'
+                                  defaultMessage='Settings'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () => this.props.history.push('/profile/roles') }
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 4 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <FaceSharp />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage id='account.profile.roles' defaultMessage='Roles' />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                      </MenuList>
+                    </Paper>
+                  </div>
                 </Paper>
               </div>
             </Grid>
           </Grid>
         </PageContent>
         { /* Uncomment the below section to enable the 'Your Organizations section' */ }
-          { /* { this.state.orgsLoaded && organizations &&
+        { /* { this.state.orgsLoaded && organizations &&
             <Grid item xs={ 12 } md={ 12 }>
               <div style={ { marginTop: 10, marginBottom: 10 } }>
                 <Typography variant='h5' component='h3'>

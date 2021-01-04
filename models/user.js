@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         User.hasMany(models.Organization)
-        User.belongsToMany(models.Type, { through: 'User_Types'})
+        User.belongsToMany(models.Type, { through: 'User_Types' })
       },
       generateHash: (password) => {
         /* eslint-disable no-sync */

@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import Roles from '../components/profile/user-roles'
 import { addNotification, closeNotification } from '../actions/notificationActions'
-import { fetchRoles } from '../actions/userRoleActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -16,4 +15,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome)
+export default connect(mapStateToProps, mapDispatchToProps)(Roles)

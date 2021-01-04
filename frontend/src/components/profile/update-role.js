@@ -28,17 +28,10 @@ const styles = theme => ({
 })
 
 class UpdateRole extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  static defaultProps = { visible: true }
-
   static propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func
   }
-
 
   confirmDelete = (e) => {
     e.preventDefault()
@@ -46,14 +39,14 @@ class UpdateRole extends Component {
     this.props.onClose()
   }
 
-  render() {
+  render () {
     const { visible } = this.props
 
     return (
       <Container>
         <Dialog
-          open={visible}
-          onClose={() => this.props.onClose()}
+          open={ visible }
+          onClose={ () => this.props.onClose() }
           aria-labelledby='alert-dialog-title'
           fullWidth
           fullScreen
