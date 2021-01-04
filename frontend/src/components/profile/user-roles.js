@@ -206,7 +206,7 @@ class Roles extends Component {
   }
   
   handleCancelClick = () => {
-    
+    this.props.onClose && this.props.onClose()
   }
 
   handleSaveClick = async (e) => {
@@ -216,6 +216,7 @@ class Roles extends Component {
         Types: this.state.selectedRoles
       })
       this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess))
+      this.props.onClose && this.props.onClose()
     } catch (e) {
       console.log(e)
       this.props.addNotification(this.props.intl.formatMessage(messages.saveError))
