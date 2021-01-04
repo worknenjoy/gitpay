@@ -25,7 +25,8 @@ import {
   Tune,
   Person,
   ArrowBack,
-  Settings
+  Settings,
+  FaceSharp
 } from '@material-ui/icons'
 
 import classNames from 'classnames'
@@ -42,6 +43,7 @@ import Preferences from './preferences'
 import Roles from './user-roles'
 import Organizations from './organizations'
 import SettingsComponent from './settings'
+import UpdateRole from './update-role'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
@@ -53,7 +55,7 @@ const logoBitbucket = require('../../images/bitbucket-logo.png')
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    flexFlow: 'row-reverse wrap'
+    flexFlow: 'wrap'
   },
   altButton: {
     marginRight: 10
@@ -116,6 +118,76 @@ const styles = theme => ({
     marginTop: 12,
     marginBottom: 12,
     width: '100%'
+  },
+  paper: {
+    padding: '10px 0 30px 0',
+    backgroundColor: '#0b0d21',
+  },
+  profile: {
+    '& .profile-image': {
+      width: 80,
+      height: 80,
+      objectFit: 'cover',
+      maxWitdh: '100%',
+      borderRadius: '50%',
+      marginBottom: 8,
+      border: '4px solid white',
+    },
+    '& .name': {
+      textAlign: 'center',
+      color: '#eee',
+      fontSize: '1.2rem',
+    },
+    '& .website': {
+      textAlign: 'center',
+      color: '#515bc4',
+      fontSize: '0.8rem',
+    },
+    '& .details': {
+      textAlign: 'center',
+      marginTop: 10,
+      padding: '12px 0 5px 0',
+      backgroundColor: 'rgba(47, 168, 233, 1)',
+      color: 'rgba(255, 255, 255, 0.7)',
+    },
+    '& .details-mid': {
+      textAlign: 'center',
+      marginTop: 10,
+      padding: '12px 0 5px 0',
+      backgroundColor: 'rgba(21, 139, 203, 1)',
+      color: 'rgba(255, 255, 255, 0.7)',
+    },
+    '& .num': {
+      color: '#eee',
+      fontSize: '1.5rem',
+    },
+    '& .buttons': {
+      background: 'transparent',
+      width: '220px',
+      height: '50px',
+      textTransform: 'none',
+      marginTop: '25px',
+      borderRadius: 0,
+      justifyContent: 'center',
+      border: '2px solid white',
+      color: 'white',
+    },
+    '& .buttons-disabled': {
+      background: 'transparent',
+      width: '220px',
+      height: '50px',
+      textTransform: 'none',
+      marginTop: '25px',
+      borderRadius: 0,
+      justifyContent: 'center',
+      border: '2px solid #999',
+      color: '#999',
+    },
+    '& .icon': {
+      height: '25px',
+      width: '25px',
+      marginLeft: 15,
+    },
   }
 })
 
@@ -124,7 +196,8 @@ class Profile extends Component {
     super(props)
     this.state = {
       selected: null,
-      orgsLoaded: false
+      orgsLoaded: false,
+      openUpdateProfileDialog: false
     }
   }
 
@@ -135,6 +208,7 @@ class Profile extends Component {
   componentDidMount () {
     this.props.fetchOrganizations().then(org => {
       this.setState({ orgsLoaded: true })
+      if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
     })
   }
 
@@ -242,181 +316,301 @@ class Profile extends Component {
                   />
                   <Route
                     exact
-                    path='/profile/roles'
-                    component={ () => <Roles user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
-                  />
-                  <Route
-                    exact
                     path='/profile/settings'
                     component={ () => <SettingsComponent deleteUser={ this.props.deleteUser } classes={ classes } user={ this.props.user } /> }
                   />
+                  <Route
+                    exact
+                    path='/profile/roles'
+                    component={ () => <Roles intl={ this.props.intl } updateUser={ this.props.updateUser } user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
+                  />
                 </Switch>
               </HashRouter>
-              { /* Uncomment the below section to enable the 'Your Organizations section' */ }
-              { /* { this.state.orgsLoaded && organizations &&
-                <Grid item xs={ 12 } md={ 12 }>
-                  <div style={ { marginTop: 10, marginBottom: 10 } }>
-                    <Typography variant='h5' component='h3'>
-                      <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
-                    </Typography>
-                    <Typography component='p'>
-                      <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
-                    </Typography>
-                    <div style={ { marginTop: 20, marginBottom: 40 } }>
-                      <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
-                    </div>
-                  </div>
-                </Grid>
-              } */ }
+              <UpdateRole
+                intl={ this.props.intl }
+                updateUser={ this.props.updateUser }
+                user={ user }
+                roles={ roles }
+                updateRoles={ this.props.updateRoles }
+                fetchRoles={ this.props.fetchRoles }
+                createRoles={ this.props.createRoles }
+                deleteRoles={ this.props.deleteRoles }
+                addNotification={ this.props.addNotification }
+                visible={ this.state.openUpdateProfileDialog }
+                onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
+              />
             </Grid>
             <Grid item xs={ 12 } md={ 3 }>
               <div className={ classes.bigRow }>
-                <div className={ classes.row }>
-                  { user.picture_url ? (
-                    <Avatar
-                      alt={ user.username }
-                      src={ user.picture_url }
-                      className={ classNames(classes.avatar, classes.bigAvatar) }
-                    />
-                  ) : (
-                    <Avatar
-                      alt={ user.username }
-                      src=''
-                      className={ classNames(classes.avatar, classes.bigAvatar) }
-                    >
-                      { user.name ? nameInitials(user.name) : (user.username ? nameInitials(user.username) : <Person />) }
-                    </Avatar>
-                  ) }
-                </div>
-                <div className={ classes.rowList }>
-                  <div className={ classes.rowContent }>
-                    <Button
-                      disabled={ user.provider === 'github' }
-                      href={ `${api.API_URL}/authorize/github` }
-                      variant='contained'
-                      size='small'
-                      color='secondary'
-                      className={ classes.altButton }
-                    >
-                      <img width='16' src={ logoGithub } className={ classes.icon } />{ ' ' }
-                      Github
-                    </Button>
-                    <Button
-                      disabled={ user.provider === 'bitbucket' }
-                      href={ `${api.API_URL}/authorize/bitbucket` }
-                      variant='contained'
-                      size='small'
-                      color='secondary'
-                      className={ classes.altButton }
-                    >
-                      <img
-                        width='16'
-                        src={ logoBitbucket }
-                        className={ classes.icon }
-                      />{ ' ' }
-                      Bitbucket
-                    </Button>
-                  </div>
-                </div>
-                <div className={ classes.rowList }>
-                  <div className={ classes.infoItem }>
-                    <Typography>{ user.name }</Typography>
-                  </div>
-                  <div className={ classes.infoItem }>
-                    <Typography>
-                      <a href={ user.website }>{ user.website }</a>
-                    </Typography>
-                  </div>
-                  { user.repos && (
+                <Paper className={ classes.paper }>
+                  <div className={ classes.profile }>
+                    <div className={ classes.row }>
+                      { user.picture_url ? (
+                        <Avatar
+                          alt={ user.username }
+                          src={ user.picture_url }
+                          className={ classNames(
+                            classes.avatar,
+                            classes.bigAvatar,
+                            'profile-image'
+                          ) }
+                        />
+                      ) : (
+                        <Avatar
+                          alt={ user.username }
+                          src=''
+                          className={ classNames(
+                            classes.avatar,
+                            classes.bigAvatar,
+                            'profile-image'
+                          ) }
+                        >
+                          { user.name ? (
+                            nameInitials(user.name)
+                          ) : user.username ? (
+                            nameInitials(user.username)
+                          ) : (
+                            <Person />
+                          ) }
+                        </Avatar>
+                      ) }
+                    </div>
                     <div className={ classes.infoItem }>
-                      <Typography>
-                        <h4>
-                          <DeviceHub />
-                          <FormattedMessage id='account.profile.repo' defaultMessage='Repositories' />
-                        </h4>
-                        <p>{ user.repos }</p>
+                      <Typography className='name'>{ user.name }</Typography>
+                    </div>
+                    <div className={ classes.infoItem }>
+                      <Typography className='website'>
+                        <a href={ user.website } target='__blank'>
+                          { user.website &&
+                            user.website.replace(/^https?:\/\//, '') }
+                        </a>
                       </Typography>
                     </div>
-                  ) }
-                </div>
-                <div className={ classes.row }>
-                  <Paper className={ classes.menuContainer }>
-                    <MenuList>
-                      <MenuItem
-                        onClick={ () => this.props.history.push('/profile/tasks') }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 0 }
+                    <div className={ classes.rowList }>
+                      <Grid
+                        container
+                        direction='row'
+                        justify='center'
+                        alignItems='center'
                       >
-                        <ListItemIcon className={ classes.icon }>
-                          <LibraryBooks />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />
-                            </span>
+                        <Grid item xs={ 4 }>
+                          { user && (
+                            <div className={ classes.infoItem }>
+                              <Typography className='details'>
+                                <span className='num'>
+                                  { user.tasks ? user.tasks : 0 }
+                                </span>
+                                <br />
+                                Tasks
+                              </Typography>
+                            </div>
+                          ) }
+                        </Grid>
+                        <Grid item xs={ 4 }>
+                          { user && (
+                            <div className={ classes.infoItem }>
+                              <Typography className='details-mid'>
+                                <span className='num'>
+                                  ${ user.bounties ? user.bounties : 0 }
+                                </span>
+                                <br />
+                                Bounties
+                              </Typography>
+                            </div>
+                          ) }
+                        </Grid>
+                        <Grid item xs={ 4 }>
+                          { user && (
+                            <div className={ classes.infoItem }>
+                              <Typography className='details'>
+                                <span className='num'>
+                                  { user.repos ? user.repos : 0 }
+                                </span>
+                                <br />
+                                Repositories
+                              </Typography>
+                            </div>
+                          ) }
+                        </Grid>
+                      </Grid>
+                    </div>
+                    <Grid
+                      container
+                      direction='column'
+                      justify='center'
+                      alignItems='center'
+                      className={ classes.rowList }
+                    >
+                      <Grid item className={ classNames(classes.rowContent) }>
+                        <Button
+                          disabled={ user.provider === 'github' }
+                          href={ `${api.API_URL}/authorize/github` }
+                          variant='outlined'
+                          size='medium'
+                          className={
+                            user.provider === 'github'
+                              ? 'buttons-disabled'
+                              : 'buttons'
                           }
-                        />
-                      </MenuItem>
-                      <MenuItem
-                        onClick={ () => this.props.history.push('/profile/payment-options') }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 1 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <CreditCard />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />
-                            </span>
+                        >
+                          Connect to Github
+                          <img width='16' src={ logoGithub } className='icon' />
+                        </Button>
+                      </Grid>
+                      <Grid item className={ classNames(classes.rowContent) }>
+                        <Button
+                          disabled={ user.provider === 'bitbucket' }
+                          href={ `${api.API_URL}/authorize/bitbucket` }
+                          variant='contained'
+                          size='medium'
+                          className={
+                            user.provider === 'bitbucket'
+                              ? 'buttons-disabled'
+                              : 'buttons'
                           }
-                        />
-                      </MenuItem>
-                      <MenuItem
-                        onClick={ () => this.props.history.push('/profile/preferences') }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 2 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <Tune />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />
-                            </span>
+                        >
+                          Connect to Bitbucket
+                          <img
+                            width='16'
+                            src={ logoBitbucket }
+                            className='icon'
+                          />
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                  <div className={ classes.row }>
+                    <Paper className={ classes.menuContainer } style={ { marginTop: 40, marginBottom: 20 } }>
+                      <MenuList>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/tasks')
                           }
-                        />
-                      </MenuItem>
-                      <MenuItem
-                        onClick={ () => this.props.history.push('/profile/settings') }
-                        className={ classes.menuItem }
-                        selected={ this.state.selected === 3 }
-                      >
-                        <ListItemIcon className={ classes.icon }>
-                          <Settings />
-                        </ListItemIcon>
-                        <ListItemText
-                          classes={ { primary: classes.primary } }
-                          primary={
-                            <span>
-                              <FormattedMessage id='account.profile.settings' defaultMessage='Settings' />
-                            </span>
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 0 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <LibraryBooks />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.tasks.setup'
+                                  defaultMessage='Tasks'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/payment-options')
                           }
-                        />
-                      </MenuItem>
-                    </MenuList>
-                  </Paper>
-                </div>
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 1 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <CreditCard />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.payment.setup'
+                                  defaultMessage='Setup payment'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/preferences')
+                          }
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 2 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <Tune />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.preferences'
+                                  defaultMessage='Preferences'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/settings')
+                          }
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 3 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <Settings />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.settings'
+                                  defaultMessage='Settings'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                        <MenuItem
+                          onClick={ () => this.props.history.push('/profile/roles') }
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 4 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <FaceSharp />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage id='account.profile.roles' defaultMessage='Roles' />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                      </MenuList>
+                    </Paper>
+                  </div>
+                </Paper>
               </div>
             </Grid>
           </Grid>
         </PageContent>
+        { /* Uncomment the below section to enable the 'Your Organizations section' */ }
+        { /* { this.state.orgsLoaded && organizations &&
+            <Grid item xs={ 12 } md={ 12 }>
+              <div style={ { marginTop: 10, marginBottom: 10 } }>
+                <Typography variant='h5' component='h3'>
+                  <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+                </Typography>
+                <Typography component='p'>
+                  <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your organizations that you can import to Gitpay' />
+                </Typography>
+                <div style={ { marginTop: 20, marginBottom: 40 } }>
+                  <Organizations user={ user } data={ organizations } onImport={ this.props.createOrganizations } />
+                </div>
+              </div>
+            </Grid>
+          } */ }
         <Bottom classes={ classes } />
       </Page>
     )

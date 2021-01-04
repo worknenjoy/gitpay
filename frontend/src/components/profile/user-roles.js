@@ -18,7 +18,7 @@ import {
   CardContent,
   CardActions
 } from '@material-ui/core'
-import { injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, defineMessages } from 'react-intl'
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 
@@ -165,201 +165,119 @@ const messages = defineMessages({
     id: 'user.role.update.success',
     defaultMessage: 'Role updated successfully'
   },
+  saveError: {
+    id: 'user.role.update.error',
+    defaultMessage: 'We couldnt update your information properly'
+  }
 })
+
+const imageMap = {
+  'funding': funder,
+  'contributor': contributor,
+  'maintainer': maintainer
+}
 
 class Roles extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedRoles: this.props.roles.name != null && this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : [],
-      save: false
+      selectedRoles: []
     }
   }
-  componentWillMount () {
-    if (this.state.save === true) {
+  componentDidMount () {
+    this.setState({ selectedRoles: this.props.user.Types })
+  }
+
+  handleRoleClick = (event, item) => {
+    let allItems = this.state.selectedRoles
+    const itemExist = allItems.filter(i => i.id === item.id)
+    if (itemExist.length) {
+      allItems = allItems.filter(i => i.id !== item.id)
+    }
+    else {
+      allItems.push(item)
+    }
+    this.setState({
+      selectedRoles: allItems
+    })
+  }
+
+  shouldBeChecked = (item) => {
+    return !!(this.state.selectedRoles && this.state.selectedRoles.find(s => item.name === s.name))
+  }
+
+  handleCancelClick = () => {
+    this.props.onClose && this.props.onClose()
+  }
+
+  handleSaveClick = async (e) => {
+    e.preventDefault()
+    try {
+      await this.props.updateUser(this.props.user.id, {
+        Types: this.state.selectedRoles
+      })
       this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess))
+      this.props.onClose && this.props.onClose()
+    }
+    catch (e) {
+      console.log(e)
+      this.props.addNotification(this.props.intl.formatMessage(messages.saveError))
     }
   }
-    componentDidUpdate = (prevProps, prevState) => {
-      if (prevProps.roles.name !== prevState.selectedRoles.join(',') && this.state.save === true) {
-        this.handleSave(true)
-        this.setState({ save: false })
-      }
-      else if (prevProps.roles.name === prevState.selectedRoles.join(',') && this.state.save === true) {
-        this.setState({ save: false })
-      }
-    }
-      handleRoleClick = (item) => {
-        let data = this.state.selectedRoles
-        if (!this.isRoleSelected(item)) {
-          data.push(item)
-        }
-        else {
-          data.splice(data.indexOf(item), 1)
-        }
 
-        this.setState({
-          selectedRoles: data
-        })
-      }
-      isRoleSelected = (item) => {
-        return this.state.selectedRoles.indexOf(item) > -1
-      }
-      handleRemoveRole = (item) => {
-        if (this.isRoleSelected(item)) {
-          this.handleRoleClick(item)
-        }
-      }
-      handleCancelClick = () => {
-        this.reloadPreferences()
-      }
-
-      reloadPreferences = () => {
-        this.setState({
-          save: false, selectedRoles: this.props.roles.name != null && this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : []
-        })
-      }
-
-      handleSaveClick = () => {
-        this.setState({ save: true })
-      }
-
-      handleSave = async (fetchRoles = false) => {
-        let data = this.props.roles.name.length > 0 ? this.props.roles.name.split(',') : []
-        let data1 = this.state.selectedRoles
-        let array3 = []
-        data.map(val => {
-          if (data1.indexOf(val) === -1) {
-            array3.push(val)
-          }
-        })
-        data1.map(val => {
-          if (data.indexOf(val) === -1) {
-            array3.push(val)
-          }
-        })
-        array3.map(async (val) => {
-          let dataVal = { name: val }
-          if (!data.includes(val)) {
-            await this.props.createRoles(dataVal).then(async (val) => {
-            }).catch((err) => {
-              console.dir(err)
-            })
-          }
-          else {
-            await this.props.deleteRoles(dataVal).then(async (val) => {
-            }).catch((err) => {
-              console.dir(err)
-            })
-          }
-        })
-      }
-
-      render () {
-        // eslint-disable-next-line no-unused-vars
-        const { classes, user, preferences, roles, organizations, addNotification } = this.props
-        return (
-          <React.Fragment>
-            <div className={ classes.bigRow }>
-              <h1>Who are you?</h1>
-              <p>Tempor veniam est id occaecat. Duis aute consectetur sunt ea laborum reprehenderit elit excepteur ex laborum culpa. Labore voluptate do commodo eiusmod minim sint cupidatat quis
-              </p>
-            </div>
-            <Grid container className={ classes.row } direction='row' alignItems='strech'>
+  render () {
+    // eslint-disable-next-line no-unused-vars
+    const { classes, roles } = this.props
+    return (
+      <React.Fragment>
+        <div className={ classes.bigRow }>
+          <Typography variant='h4' noWrap>
+            <FormattedMessage id='user.type.title' defaultMessage='What type of user are you?' />
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p' noWrap>
+            <FormattedMessage id='user.type.description' defaultMessage='Define how you will use Gitpay. You can choose multiple types of user roles you want.' />
+          </Typography>
+        </div>
+        <Grid container className={ classes.row } direction='row' alignItems='strech'>
+          { roles.data && roles.data.map(r => {
+            return (
               <Grid item xs={ 1 } className={ classes.rowList } xs>
                 <Paper>
                   <Card className={ classes.rowContent } variant='outlined'>
                     <CardMedia>
-                      <img src={ funder } />
+                      <img src={ imageMap[r.name] } />
                     </CardMedia>
                     <CardContent className={ classes.rootLabel }>
                       <Typography variant='h5' >
-                        Funder
+                        { r.label }
                       </Typography>
                     </CardContent>
                     <CardActions className={ classes.action }>
                       <Typography variant='body2' color='textSecondary' component='p' noWrap>
-                        You will mostly fund issues
+                        { r.description }
                       </Typography>
                       <Checkbox
                         icon={ <CheckBoxOutlineBlankIcon fontSize='large' style={ { color: 'transparent' } } /> }
                         checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
                         color='primary'
-                        inputProps={ { 'aria-label': 'secondary checkbox' } }
-                        checked={ this.isRoleSelected('Funder') }
-                        onClick={ () => this.handleRoleClick('Funder') }
+                        inputProps={ { 'aria-label': r.name } }
+                        checked={ this.shouldBeChecked(r) }
+                        onChange={ (e) => this.handleRoleClick(e, r) }
                       />
                     </CardActions>
                   </Card>
                 </Paper>
               </Grid>
-              <Grid item xs={ 1 } className={ classes.rowList } xs>
-                <Paper>
-                  <Card className={ classes.rowContent } variant='outlined'>
-                    <CardMedia>
-                      <img src={ contributor } />
-                    </CardMedia>
-                    <CardContent className={ classes.rootLabel }>
-                      <Typography variant='h5'>
-                        Contributor
-                      </Typography>
-                    </CardContent>
-                    <CardActions className={ classes.action }>
-                      <Typography variant='body2' color='textSecondary' component='p' noWrap>
-                        You will solve issues
-                      </Typography>
-                      <Checkbox
-                        icon={ <CheckBoxOutlineBlankIcon fontSize='large' style={ { color: 'transparent' } } /> }
-                        checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
-                        color='primary'
-                        inputProps={ { 'aria-label': 'secondary checkbox' } }
-                        checked={ this.isRoleSelected('Contributor') }
-                        onClick={ () => this.handleRoleClick('Contributor') }
-                      />
-                    </CardActions>
-                  </Card>
-                </Paper>
-              </Grid>
-              <Grid item xs={ 1 } className={ classes.rowList } xs>
-                <Paper>
-                  <Card className={ classes.rowContent } variant='outlined'>
-                    <CardMedia>
-                      <img src={ maintainer } />
-                    </CardMedia>
-                    <CardContent className={ classes.rootLabel }>
-                      <Typography variant='h5'>
-                        Maintainer
-                      </Typography>
-                    </CardContent>
-                    <CardActions className={ classes.action }>
-                      <Typography variant='body2' color='textSecondary' component='p' noWrap>
-                        You have a project
-                      </Typography>
-                      <Checkbox
-                        icon={ <CheckBoxOutlineBlankIcon fontSize='large' style={ { color: 'transparent' } } /> }
-                        checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
-                        color='primary'
-                        inputProps={ { 'aria-label': 'secondary checkbox' } }
-                        checked={ this.isRoleSelected('Maintainer') }
-                        onClick={ () => this.handleRoleClick('Maintainer') }
-                      />
-                    </CardActions>
-                  </Card>
-                </Paper>
-              </Grid>
-            </Grid>
-
-            <div className={ classes.bigRow }>
-              <p>Tempor veniam est id occaecat. Duis aute consectetur sunt ea laborum reprehenderit elit excepteur ex laborum culpa. Labore voluptate do commodo eiusmod minim sint cupidatat quis
-              </p>
-            </div>
-            <div className={ classes.buttons }>
-              <button onClick={ () => this.handleCancelClick() } className={ classes.cButton }>CANCEL</button>
-              <button onClick={ () => this.handleSaveClick() } className={ classes.sButton }>SAVE</button>
-            </div>
-          </React.Fragment>
-        )
-      }
+            )
+          }) }
+        </Grid>
+        <div className={ classes.buttons }>
+          <button onClick={ () => this.handleCancelClick() } className={ classes.cButton }>CANCEL</button>
+          <button onClick={ (e) => this.handleSaveClick(e) } className={ classes.sButton }>SAVE</button>
+        </div>
+      </React.Fragment>
+    )
+  }
 }
 
 Roles.PropTypes = {

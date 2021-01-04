@@ -18,10 +18,21 @@ module.exports = Promise.method(function userUpdate (userParameters) {
     }
   }
   return models.User
-    .update(userParameters, { ...condition, returning: true, plain: true }).then(data => {
-      // eslint-disable-next-line no-console
-      // console.log(data)
-      return data[1].dataValues
+    .update(userParameters, { ...condition,
+      returning: true,
+      plain: true
+    }).then(async user => {
+      const currentUser = user[1]
+      if (userParameters.Types) {
+        await currentUser.setTypes([])
+        const types = userParameters.Types.map(async t => {
+          const type = await models.Type.findById(t.id)
+          await currentUser.addType(type)
+          return t
+        })
+        return { ...currentUser.dataValues, Types: await Promise.all(types) }
+      }
+      return currentUser.dataValues
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log(error)

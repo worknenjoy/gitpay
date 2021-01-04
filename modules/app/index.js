@@ -9,6 +9,7 @@ const routerWebhook = require('./routes/webhooks')
 const routerInfo = require('./routes/info')
 const routerOrganization = require('./routes/organization')
 const routerContact = require('./routes/contact')
+const routerTypes = require('./routes/types')
 
 exports.init = (app) => {
   app.use('/', routerAuth)
@@ -19,5 +20,6 @@ exports.init = (app) => {
   app.use('/webhooks', routerWebhook)
   app.use('/info', routerInfo)
   app.use('/organizations', routerOrganization)
+  app.use('/types', routerTypes)
   app.use('/contact', routerContact)
 }

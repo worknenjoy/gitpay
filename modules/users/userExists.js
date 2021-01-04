@@ -6,7 +6,8 @@ module.exports = Promise.method(function userExists (userAttributes) {
     .findOne({
       where: {
         email: userAttributes.email
-      }
+      },
+      include: [models.Type]
     }).then(user => {
       if (!user) return false
 
