@@ -17,7 +17,7 @@
   "mail.payment.support": "User request support for Task",
   "mail.assign.owner.subject": "Someone is interested to solve an issue that you added on Gitpay.",
   "mail.assign.owner.hello": "Hello",
-  "mail.assign.owner.main": "{{name}} is interested to work on the task <a href=\"{{url}}\">{{title}}</a>.",
+  "mail.assign.owner.main": "{{name}} is interested to work on the issue <a href=\"{{url}}\">{{title}}</a>.",
   "mail.assign.owner.suggest": "<p>Suggested bounty: <strong>${{value}}</strong></p> <p>Suggested date: <strong>{{suggestedDate}}</strong></p> <p>For learning purposes: <strong>{{learn}}</strong></p><p>Comment: {{comment}}</p>",
   "mail.assign.owner.sec": "You can accept this proposal or leave it for now and wait for another proposals.",
   "mail.assign.owner.button.primary": "Accept work and assign him to this task",
