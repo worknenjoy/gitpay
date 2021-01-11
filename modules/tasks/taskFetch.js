@@ -118,7 +118,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
                 assignedUser: assigned && assigned.dataValues.User.dataValues,
-                user: data.dataValues.User.dataValues,
+                user: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
                 provider: data.dataValues.provider,
