@@ -433,7 +433,7 @@ class TaskTabs extends React.Component {
             <Typography variant='body2' align='left' gutterBottom>
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
                 <PlaceholderDiv className={ classes.contentBody }>
-                  { task.data.metadata ? renderHTML(marked(task.data.metadata.issue.body)) : 'Description not available' }
+                  { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
                 </PlaceholderDiv>
               </ReactPlaceholder>
             </Typography>
