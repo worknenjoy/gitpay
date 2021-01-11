@@ -12,8 +12,8 @@ module.exports = Promise.method(function taskDeleteById (taskParameters) {
     let conditions = {
       id: taskParameters.id
     }
-    if(taskParameters.userId) {
-      conditions = {...conditions, userId: taskParameters.userId }
+    if (taskParameters.userId) {
+      conditions = { ...conditions, userId: taskParameters.userId }
     }
     // eslint-disable-next-line no-console
     console.log('result from delete dependencies', result)

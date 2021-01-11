@@ -12,8 +12,6 @@ module.exports = Promise.method(function listProjects () {
     ]
   })
     .then(data => {
-      // eslint-disable-next-line no-console
-      console.log('projectList', data)
       return data
     })
     .catch(error => {

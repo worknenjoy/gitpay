@@ -137,7 +137,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 members: data.dataValues.Members,
                 offers: data.dataValues.Offers,
                 histories: data.dataValues.Histories,
-                project: { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
+                project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
               }
 
               if (!data.title && data.title !== issueDataJsonGithub.title) {

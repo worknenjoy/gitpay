@@ -84,15 +84,13 @@ module.exports = (sequelize, DataTypes) => {
           if ((JSON.stringify(previous) !== JSON.stringify(newValues)) &&
                 (JSON.stringify(changed) !== JSON.stringify(['id', 'updatedAt']) &&
                 (JSON.stringify(changed) !== JSON.stringify(['value', 'updatedAt']) && previous[0] !== 'null' && newValues[0] !== '0'))) {
-            const taskHistory = await sequelize.models.History.create({
+            await sequelize.models.History.create({
               TaskId: instance.id,
               type: 'update',
               fields: changed,
               oldValues: previous,
               newValues: newValues
             })
-            // eslint-disable-next-line no-console
-            console.log('Task History update success', taskHistory)
           }
         }
         catch (e) {
