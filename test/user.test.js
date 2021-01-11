@@ -276,7 +276,6 @@ describe("Users", () => {
             .expect(200)
             .end((err, orgs) => {
               expect(orgs.statusCode).to.equal(200);
-              console.log('orgs list', orgs.body)
               expect(orgs.body[0].name).to.equal('test');
               expect(orgs.body[0].imported).to.equal(false);
               done(err);

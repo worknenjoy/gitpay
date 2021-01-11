@@ -31,8 +31,6 @@ const TaskCron = {
     },
     include: [ models.User ]
     })
-    // eslint-disable-next-line no-console
-    console.log('tasks from cron job weekly bounties', tasks)
     if (tasks[0]) {
       TaskMail.weeklyBounties({ tasks })
     }
@@ -52,8 +50,6 @@ const TaskCron = {
       order: [['id', 'DESC']],
       include: [ models.User ]
     })
-    // eslint-disable-next-line no-console
-    console.log('tasks from cron job latest tasks', tasks)
     if (tasks[0]) {
       TaskMail.weeklyLatest({ tasks })
     }
@@ -69,8 +65,6 @@ const TaskCron = {
     },
     include: [ models.User ]
     })
-    // eslint-disable-next-line no-console
-    console.log('tasks from cron job to remember deadline', tasks)
     if (tasks[0]) {
       tasks.map(async t => {
         if (t.assigned) {
@@ -103,22 +97,14 @@ const OrderCron = {
     },
     include: [ models.User, models.Task ]
     })
-    // eslint-disable-next-line no-console
-    console.log('orders from cron daily check for paypal payments verification', orders)
     if (orders.length) {
       let invalids = []
       orders.forEach(async order => {
         const orderValues = order.dataValues
-        // eslint-disable-next-line no-console
-        console.log('order values id', orderValues)
         if (orderValues.source_id) {
           const orderWithDetails = await OrderDetails({ id: orderValues.id })
-          // eslint-disable-next-line no-console
-          console.log('orderStatus', orderWithDetails)
           if (!orderWithDetails) {
             const orderCanceled = await OrderCancel({ id: orderValues.id })
-            // eslint-disable-next-line no-console
-            console.log('return from order canceled', orderCanceled)
             if (orderCanceled) {
               invalids.push(order)
             }
@@ -136,8 +122,6 @@ const dailyJob = new CronJob({
   cronTime: '0 0 0 * * *', // everyday at 12:00AM
   onTick: () => {
     const d = new Date()
-    // eslint-disable-next-line no-console
-    console.log('Log to confirm cron daily job run at', d)
     TaskCron.rememberDeadline()
     OrderCron.verify()
   }
@@ -147,8 +131,6 @@ const weeklyJob = new CronJob({
   cronTime: '5 8 * * 0',
   onTick: () => {
     const d = new Date()
-    // eslint-disable-next-line no-console
-    console.log('Log to confirm cron weekly job run at', d)
     TaskCron.weeklyBounties()
   }
 })
@@ -157,8 +139,6 @@ const weeklyJobLatest = new CronJob({
   cronTime: '5 8 * * 4',
   onTick: () => {
     const d = new Date()
-    // eslint-disable-next-line no-console
-    console.log('Log to confirm cron weekly job run at', d)
     TaskCron.latestTasks()
   }
 })

@@ -40,10 +40,6 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
           source_type: 'card',
           transfer_group: transferGroup,
         }).then(transfer => {
-          // eslint-disable-next-line no-console
-          console.log('transfer')
-          // eslint-disable-next-line no-console
-          console.log(transfer)
 
           if (transfer) {
             return models.Task.update({ transfer_id: transfer.id }, {

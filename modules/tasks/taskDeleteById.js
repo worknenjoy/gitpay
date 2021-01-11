@@ -15,15 +15,9 @@ module.exports = Promise.method(function taskDeleteById (taskParameters) {
     if (taskParameters.userId) {
       conditions = { ...conditions, userId: taskParameters.userId }
     }
-    // eslint-disable-next-line no-console
-    console.log('result from delete dependencies', result)
     return models.Task.destroy({
       where: conditions
-    }).then(task => {
-      // eslint-disable-next-line no-console
-      console.log('destroy', task)
-      // eslint-disable-next-line no-console
-      console.log('userId is', taskParameters.userId)
+    }).then(task => { 
       return task
     })
   })

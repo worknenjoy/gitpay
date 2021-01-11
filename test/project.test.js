@@ -17,7 +17,6 @@ describe("Projects", () => {
         models.Organization.create({name: 'Foo Organization', UserId: u.id}).then(o => {
           o.createProject({name: 'Foo Project'}).then(p => {
             p.createTask({url: 'https://task.com', UserId: u.id}).then(pt => {
-              console.log('pt project foo', pt.dataValues)
               expect(p.name).to.equal('Foo Project');
               expect(pt.url).to.equal('https://task.com')
               expect(pt.ProjectId).to.exist
