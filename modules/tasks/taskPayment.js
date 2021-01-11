@@ -40,7 +40,6 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
           source_type: 'card',
           transfer_group: transferGroup,
         }).then(transfer => {
-
           if (transfer) {
             return models.Task.update({ transfer_id: transfer.id }, {
               where: {

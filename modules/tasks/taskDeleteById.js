@@ -17,7 +17,7 @@ module.exports = Promise.method(function taskDeleteById (taskParameters) {
     }
     return models.Task.destroy({
       where: conditions
-    }).then(task => { 
+    }).then(task => {
       return task
     })
   })

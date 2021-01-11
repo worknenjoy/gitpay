@@ -9,7 +9,6 @@ require('./models')
 const passport = require('passport')
 require('./config/passport')
 const load = require('./modules/app')
-const feed = require('feed-read')
 const i18n = require('i18n')
 
 // const { dailyJob, weeklyJob, weeklyJobLatest } = require('./cron')
