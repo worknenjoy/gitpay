@@ -1,6 +1,6 @@
 
 module.exports = {
-  notificationEmail: 'alexanmtz@gmail.com',
+  notificationEmail: 'notifications@gitpay.me',
   recruitersEmail: 'recruitment@gitpay.me',
   reportEmail: 'alexanmtz@gmail.com',
   fromEmail: 'issues@gitpay.me',
