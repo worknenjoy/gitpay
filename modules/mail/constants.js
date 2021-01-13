@@ -1,8 +1,8 @@
 
 module.exports = {
-  notificationEmail: 'alexandre@gitpay.me',
+  notificationEmail: 'alexanmtz@gmail.com',
   recruitersEmail: 'recruitment@gitpay.me',
-  reportEmail: 'alexandre@gitpay.me',
+  reportEmail: 'alexanmtz@gmail.com',
   fromEmail: 'issues@gitpay.me',
   joinTeamEmail: 'team@gitpay.me',
   canSendEmail: process.env.NODE_ENV !== 'test',
