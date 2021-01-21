@@ -3,7 +3,7 @@ const sg = require('sendgrid')(sendgrid.apiKey)
 const handleResponse = require('./handleResponse')
 const handleError = require('./handleError')
 const Signatures = require('./content')
-const { notificationEmail, fromEmail } = require('./constants')
+const { copyEmail, notificationEmail, fromEmail } = require('./constants')
 
 module.exports = (to, subject, content, replyEmail) => {
   // eslint-disable-next-line no-console
@@ -25,7 +25,7 @@ module.exports = (to, subject, content, replyEmail) => {
           ],
           bcc: [
             {
-              email: notificationEmail
+              email: copyEmail
             }
           ],
           subject
