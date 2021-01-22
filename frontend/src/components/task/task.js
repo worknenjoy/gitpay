@@ -1309,7 +1309,7 @@ class Task extends Component {
               </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
-              <TaskStatusIcons status={ task.data.private ? 'private': 'public' } bounty />
+              <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
               { (task.data.level || this.taskOwner()) &&
                 <TaskLevel id={ this.props.match.params.id } level={ task.data.level } readOnly={ !this.taskOwner() } onSelect={ this.props.updateTask } />
               }
