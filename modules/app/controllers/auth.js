@@ -50,7 +50,7 @@ exports.createPrivateTask = (req, res) => {
     if (response.access_token) {
       return task.taskBuilds({
         provider: 'github',
-        // private: true, not yet
+        private: true,
         userId,
         url,
         token: response.access_token

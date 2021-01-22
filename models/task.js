@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define('Task', {
+    private: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     provider: DataTypes.STRING,
     type: DataTypes.STRING,
     level: DataTypes.STRING,

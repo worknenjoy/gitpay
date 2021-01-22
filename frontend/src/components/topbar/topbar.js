@@ -228,12 +228,13 @@ class TopBar extends Component {
 
   handleCreateTask = (e) => {
     const url = this.state.task.url.value
-    if (this.validURL(url)) {
+    if (this.validURL(url)) { 
       if (this.state.private) {
         window.location = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${this.props.user.id}`
         return
       }
       this.props.createTask({
+        private: this.state.private ? true : false,
         url: this.state.task.url.value,
         provider: this.state.provider,
         userId: this.props.user ? this.props.user.id : null
