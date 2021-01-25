@@ -14,12 +14,7 @@ import {
 const styles = {
   IconStyle: {
     fontSize: 24,
-    marginRight: 5
-  },
-  fontStyle: {
-    fontWeight: '900',
-    fontSize: 16,
-    marginRight: 20
+    marginLeft: 12
   }
 }
 
@@ -30,20 +25,6 @@ bounty: Boolean<true | false>
 */
 
 const TaskStatusIcons = ({ status, bounty }) => {
-  const Bounty = () => {
-    if (bounty) {
-      return (
-        <React.Fragment>
-          <RedeemIcon style={ styles.IconStyle } />
-          <Typography
-            style={ styles.fontStyle }>
-            <FormattedMessage id='task.bounty.icon.text' defaultMessage='Bounty' />
-          </Typography>
-        </React.Fragment>
-      )
-    }
-    else return <div />
-  }
   const Status = () => {
     if (status) {
       return (
@@ -52,12 +33,6 @@ const TaskStatusIcons = ({ status, bounty }) => {
             ? (<PrivateIcon style={ styles.IconStyle } />)
             : (<PublicIcon style={ styles.IconStyle } />)
           }
-          <Typography
-            style={ styles.fontStyle }>
-            { (status === 'private') ? <FormattedMessage id='task.private.icon.text' defaultMessage='Private' />
-              : <FormattedMessage id='task.public.icon.text' defaultMessage='Public' />
-            }
-          </Typography>
         </React.Fragment>
       )
     }
@@ -65,31 +40,9 @@ const TaskStatusIcons = ({ status, bounty }) => {
   }
   return (
     <React.Fragment>
-      <Paper
-        style={ { margin: 'auto', marginBottom: 60, width: '95%' } }
-        elevation={ 0 }
-        children={
-          <React.Fragment>
-            <Typography type='subheading' variant='h6' style={ {
-              padding: 10,
-              color: 'gray',
-              textAlign: 'center'
-            } }>
-              <FormattedMessage id='task.text.type.headline' defaultMessage='This issue is a' />
-            </Typography>
-            <p style={ {
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center'
-            } }>
-              <Bounty />
-              <Status />
-            </p>
-          </React.Fragment>
-        }
-      />
+      <span>
+        <Status />
+      </span>
     </React.Fragment>
   )
 }

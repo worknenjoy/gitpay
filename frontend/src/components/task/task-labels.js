@@ -49,10 +49,10 @@ class TaskLabels extends Component {
       <React.Fragment>
         { labels.map((label, index) => (
           <Chip
-            backgroundColor={ `#${label.color}` }
             key={ index + 1 }
             label={ label.name }
-            style={ { marginTop: 10, marginLeft: 10, backgroundColor: `#${label.color}`, fontWeight: 'bold', color: invert(`#${label.color}`, { threshold: 0.75 }) } }
+            style={ { marginRight: 10, marginTop: 10, marginBottom: 10 } }
+            variant='outlined'
           />
         )) }
       </React.Fragment>
@@ -63,16 +63,7 @@ class TaskLabels extends Component {
     const { labels } = this.props
     return (
       <div>
-        { labels &&
-          <StatsCard
-            icon={ LabelIcon }
-            iconColor='green'
-            title={ this.props.intl.formatMessage(messages.labelStatus) }
-            description={ this.taskLabels(labels) }
-            statIcon={ InfoIcon }
-            statText={ this.props.intl.formatMessage(messages.labelDesc) }
-          />
-        }
+        { labels && this.taskLabels(labels) }
       </div>
     )
   }
