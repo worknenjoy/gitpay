@@ -2,70 +2,49 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
+import ReactPlaceholder from 'react-placeholder'
 import 'react-placeholder/lib/reactPlaceholder.css'
+import ShowMoreText from 'react-show-more-text';
+
 import { messages } from './messages/task-messages'
-import TaskTabs from './task-tabs'
 import TaskHeader from './task-header'
-import TaskAssignment from './task-assignment'
-import nameInitials from 'name-initials'
+import AuthorList from './task-author-list'
 import queryString from 'query-string'
+import renderHTML from 'react-render-html'
+import marked from 'marked'
 
 import {
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
-  Avatar,
   Typography,
   Button,
-  Tooltip,
   withStyles,
   Link,
   DialogContentText,
   MobileStepper,
-  Fab,
-  Collapse
+  Fab
 } from '@material-ui/core'
 
 import {
   Redeem as RedeemIcon,
-  AddBox as AddIcon,
-  FilterList as FilterIcon,
   HowToReg as TrophyIcon,
   DateRange as DateIcon,
   CalendarToday as CalendarIcon,
-  Delete as DeleteIcon,
   MonetizationOn as MonetizationOnIcon,
   Close as CloseIcon,
-  PeopleOutlined,
-  MailSharp as MessageIcon,
-  Info as InfoIcon,
-  TransferWithinAStation as TransferWithinAStationIcon
+  ExpandLess,
+  ExpandMore
 } from '@material-ui/icons'
 
-import StatusDialog from './status-dialog'
-import TaskPayment from './task-payment'
-import TaskPaymentForm from './task-payment-form'
-import TaskDeadlineForm from './task-deadline-form'
-
 import StatsCard from '../Cards/StatsCard'
-import classNames from 'classnames'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
-import LoginButton from '../session/login-button'
-
-import Constants from '../../consts'
 
 import { PageContent } from 'app/styleguide/components/Page'
-
-import TaskAssigned from './task-assigned'
-import TaskInvite from './task-invite'
-import TaskReport from './task-report'
-import MessageAuthor from './task-message-author'
 import TaskLevel from './task-level'
-import TaskClaim from './task-claim'
 const taskCover = require('../../images/task-cover.png')
 const inviteCover = require('../../images/funds.png')
 
@@ -413,8 +392,12 @@ class Task extends Component {
       this.setState({ logged })
     }
 
-    await this.props.syncTask(id)
-    await this.props.fetchTask(id)
+    try {
+      await this.props.syncTask(id)
+      await this.props.fetchTask(id)
+    } catch (e) {
+      
+    }
 
     if (status) {
       if (id && logged && this.props.task.data.user && logged.user.id === this.props.task.data.user.id) {
@@ -882,411 +865,58 @@ class Task extends Component {
                 <FormattedMessage id='task.info.description' defaultMessage='Description' />
               </Typography>
               <Typography variant='body2' style={{marginBottom: 20}}>
-                { task.data.metadata.issue.body }
-              </Typography>
-              <Grid
-                container
-                justify='flex-start'
-                direction='row'
-                spacing={ 3 }
-              >
-              </Grid>
-              { task.data.assigned &&
-                <TaskAssigned
-                  task={ task.data }
-                  isOwner={ isAssignOwner() }
-                  status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                  classes={ classes }
-                  user={ task.data.assignedUser || {} }
-                  removeAssignment={ this.props.removeAssignment }
-                  assignTask={ this.props.assignTask }
-                  assign={ { id: task.data.assigned } }
-                />
-              }
-              { this.props.logged ? (
-                <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
-              ) : (
-                <Collapse in={ this.state.paymentForm }>
-                  <div className={ classes.mainBlock } style={ { marginBottom: 40 } }>
-                    <LoginButton referer={ this.props.location } includeForm />
-                  </div>
-                </Collapse>
-              ) }
-              { this.taskOwner() &&
-                <TaskDeadlineForm { ...this.props } open={ this.state.deadlineForm } />
-              }
-              <Grid
-                  item
-                  sm={ 12 }
-                  xs={ 12 }
-                  style={ {
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginTop: 12,
-                    position: 'relative'
-                  } }
-                >
-                  { task.data.metadata ? (
-                    <div style={ { position: 'absolute', left: 40, top: 5 } }>
-                      <Typography color='default'>
-                        <FormattedMessage id='task.status.author.label' defaultMessage='Author' />
-                      </Typography>
-                    </div>
-                  ) : (
-                    <div style={ { position: 'absolute', left: 40, top: 5 } }>
-                      <Typography color='default'>
-                        <FormattedMessage id='task.status.author.missing' defaultMessage='author info unknown' />
-                      </Typography>
-                    </div>
-                  ) }
-                  { task.data.metadata &&
-                  <FormattedMessage id='task.status.author.name' defaultMessage='Imported from {provider} by {name}' values={ {
-                    provider: task.data.provider,
-                    name: task.data.metadata.issue.user.login
-                  } }>
-                    { (msg) => (
-                      <Tooltip
-                        id='tooltip-github'
-                        title={ msg }
-                        placement='bottom'
-                      >
-                        <a
-                          href={ `${task.data.metadata.issue.user.html_url}` }
-                          target='_blank'
-
-                        >
-                          <Avatar
-                            src={ task.data.metadata.issue.user.avatar_url }
-                            className={ classNames(classes.avatar) }
-                          />
-                        </a>
-                      </Tooltip>
-                    ) }
-                  </FormattedMessage>
-                  }
-                  { task.data.user &&
-                  <FormattedMessage id='task.status.importer.name' defaultMessage='Imported to Gitpay by {name}' values={ {
-                    name: task.data.user.name
-                  } }>
-                    { (msg) => (
-                      <Tooltip
-                        id='tooltip-github'
-                        title={ msg }
-                        placement='bottom'
-                      >
-                        <a
-                          href={ `${task.data.user.website}` }
-                          target='_blank'
-                          style={ { marginLeft: 5 } }
-                        >
-                          <Avatar
-                            alt={ task.data.user.name }
-                            src=''
-                            className={ classNames(classes.avatar) }
+                <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
+                  <ShowMoreText
+                        lines={8}
+                        more={
+                          <Button
+                            size='small'
+                            variant='outlined'
                           >
-                            { task.data.user.name && nameInitials(task.data.user.name) }
-                          </Avatar>
-                        </a>
-                      </Tooltip>
-                    ) }
-                  </FormattedMessage>
-                  }
-                  <div className={ classes.paper }>
-                    <Button
-                      style={ { marginRight: 10 } }
-                      onClick={ this.handlePaymentForm }
-                      color='primary'
-                      variant='outlined'
+                            <FormattedMessage id='task.description.more' defaultMessage='Show more' /> 
+                            <ExpandMore />
+                          </Button>
+                        }
+                        less={
+                          <Button
+                            size='small'
+                            variant='outlined'
+                          >
+                            <FormattedMessage id='task.description.less' defaultMessage='Show less' /> 
+                            <ExpandLess />
+                          </Button>
+                        }
                     >
-                      <span className={ classes.spaceRight }>
-                        <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
-                      </span>{ ' ' }
-                      <RedeemIcon />
-                    </Button>
-                    <Button
-                      style={ { marginRight: 10 } }
-                      onClick={ this.handleInvite }
-                      color='primary'
-                      variant='outlined'
-                    >
-                      <span className={ classes.spaceRight }>
-                        <FormattedMessage id='task.bounties.invite' defaultMessage='Invite' />
-                      </span>
-                      <AddIcon />
-                    </Button>
-                    <Button
-                      style={ { marginRight: 10 } }
-                      onClick={ this.handleTaskFundingDialogOpen }
-                      color='primary'
-                      variant='outlined'
-                    >
-                      <span className={ classes.spaceRight }>
-                        <FormattedMessage id='task.funding.action' defaultMessage='Invite sponsor' />
-                      </span>{ ' ' }
-                      <PeopleOutlined />
-                    </Button>
-                    { !this.taskOwner() &&
-                      <Button
-                        style={ { marginRight: 10 } }
-                        onClick={ this.handleAssignDialogOpen }
-                        color='primary'
-                        variant='outlined'
-                      >
-                        <span className={ classes.spaceRight }>
-                          <FormattedMessage id='task.interested.action' defaultMessage='Im interested' />
-                        </span>{ ' ' }
-                        <AddIcon />
-                      </Button>
-                    }
-                    { this.taskOwner() ? (
-                      <div style={ { display: 'inline-block' } }>
-                        <Button
-                          style={ { marginRight: 10 } }
-                          onClick={ this.handleDeadlineForm }
-                          color='primary'
-                          variant='outlined'
-                        >
-                          <span className={ classes.spaceRight }>
-                            <FormattedMessage id='task.bounties.date.deadline' defaultMessage='Deadline' />
-                          </span>
-                          <DateIcon />
-                        </Button>
-                        <Button
-                          style={ { marginRight: 10 } }
-                          onClick={ this.handleStatusDialog }
-                          color='primary'
-                          variant='outlined'
-                        >
-                          <span className={ classes.spaceRight }>
-                            <FormattedMessage id='task.bounties.status.change' defaultMessage='Change status' />
-                          </span>
-                          <FilterIcon />
-                        </Button>
-                        <Button
-                          style={ { marginRight: 10 } }
-                          onClick={ this.handleDeleteDialog }
-                          color='primary'
-                          variant='outlined'
-                        >
-                          <span className={ classes.spaceRight }>
-                            <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
-                          </span>
-                          <DeleteIcon />
-                        </Button>
-                        <Button
-                          onClick={ this.handleTaskPaymentDialog }
-                          color='primary'
-                          variant='outlined'
-                        >
-                          <span className={ classes.spaceRight }>
-                            <FormattedMessage id='task.bounties.send.label' defaultMessage='Send bounty' />
-                          </span>
-                          <RedeemIcon />
-                        </Button>
-                        <StatusDialog
-                          id={ task.data.id }
-                          providerStatus={ task.data.metadata ? task.data.metadata.issue.state : 'unknown' }
-                          provider={ task.data.provider }
-                          onSelect={ this.props.updateTask }
-                          selectedValue={ task.data.status }
-                          open={ this.state.statusDialog }
-                          onClose={ this.handleStatusDialogClose }
-                        />
-                        <TaskPayment
-                          id={ task.data.id }
-                          values={ task.values }
-                          paid={ task.data.paid }
-                          transferId={ task.data.transfer_id }
-                          assigned={ task.data.assigned }
-                          assigns={ task.data.assigns }
-                          orders={ task.data.orders }
-                          order={ order.data }
-                          open={ this.state.taskPaymentDialog }
-                          onClose={ this.handleTaskPaymentDialogClose }
-                          onPayTask={ this.props.paymentTask }
-                          filterTaskOrders={ this.props.filterTaskOrders }
-                          onPayOrder={ this.props.paymentOrder }
-                        />
-                      </div>
-                    ) : (
-                      <React.Fragment>
-                        <Button
-                          style={ { marginRight: 10 } }
-                          onClick={ this.handleMessageAuthorDialog }
-                          color='primary'
-                          variant='outlined'
-                        >
-                          <span className={ classes.spaceRight }>
-                            <FormattedMessage id='task.bounties.contact.label' defaultMessage='Contact author' />
-                          </span>
-                          <MessageIcon />
-                        </Button>
-                        { !this.props.logged ? (
-                          <Dialog open={ taskMessageAuthorDialog }>
-                            <DialogTitle id='form-dialog-title'>
-                              <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                            </DialogTitle>
-                            <DialogContent>
-                              <div className={ classes.mainBlock }>
-                                <LoginButton referer={ this.props.location } includeForm />
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        ) : (
-                          <MessageAuthor
-                            open={ taskMessageAuthorDialog }
-                            userId={ this.props.user.id }
-                            taskId={ task.data.id }
-                            name={ '' }
-                            onClose={ () => this.setState({ taskMessageAuthorDialog: false }) }
-                            onSend={ this.props.messageAuthor }
-
-                          />
-                        ) }
-                      </React.Fragment>
-                    ) }
-                    { !this.taskOwner() &&
-                      <Button
-                        style={ { marginRight: 10 } }
-                        onClick={ this.handleReportIssueDialog }
-                        color='primary'
-                        variant='outlined'
-                      >
-                        <span className={ classes.spaceRight }>
-                          <FormattedMessage id='task.report.action' defaultMessage='Report' />
-                        </span>{ ' ' }
-                        <InfoIcon />
-                      </Button> }
-                    { !this.taskOwner() &&
-                      <React.Fragment>
-                        <Button
-                          style={ { marginRight: 10 } }
-                          onClick={ this.handleClaimDialog }
-                          size='small'
-                          color='primary'
-                          className={ classes.altButton }
-                        >
-                          <span className={ classes.spaceRight }>
-                            <FormattedMessage id='task.actions.claim' defaultMessage='Claim' />
-                          </span>{ ' ' }
-                          <TransferWithinAStationIcon />
-                        </Button>
-                        { !this.props.logged ? (
-                          <Dialog open={ taskClaimDialog }>
-                            <DialogTitle id='form-dialog-title'>
-                              <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                            </DialogTitle>
-                            <DialogContent>
-                              <div className={ classes.mainBlock }>
-                                <LoginButton referer={ this.props.location } includeForm />
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        ) : (
-                          <TaskClaim
-                            taskData={ task.data }
-                            requestClaimTask={ this.props.requestClaimTask }
-                            user={ this.props.user }
-                            open={ this.state.taskClaimDialog }
-                            onClose={ () => this.setState({ taskClaimDialog: false }) }
-                            onOpen={ () => this.setState({ taskClaimDialog: true }) }
-                          />
-                        ) }
-                      </React.Fragment> }
-                    <TaskReport
-                      taskData={ task.data }
-                      reportTask={ this.props.reportTask }
-                      user={ this.props.user }
-                      visible={ this.state.reportIssueDialog }
-                      onClose={ () => this.setState({ reportIssueDialog: false }) }
-                      onOpen={ () => this.setState({ reportIssueDialog: true }) }
-                    />
-                    <TaskInvite
-                      id={ task.data.id }
-                      onInvite={ this.props.inviteTask }
-                      user={ this.props.user }
-                      visible={ this.state.taskInviteDialog }
-                      onClose={ () => this.setState({ taskInviteDialog: false }) }
-                      onOpen={ () => this.setState({ taskInviteDialog: true }) }
-                    />
-                    <Dialog
-                      open={ this.state.deleteDialog }
-                      onClose={ this.handleDeleteDialogClose }
-                      aria-labelledby='form-dialog-title'
-                    >
-                      { !this.props.logged ? (
-                        <div>
-                          <DialogTitle id='form-dialog-title'>
-                            <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                          </DialogTitle>
-                          <DialogContent>
-                            <div className={ classes.mainBlock }>
-                              <LoginButton referer={ this.props.location } includeForm />
-                            </div>
-                          </DialogContent>
-                        </div>
-                      ) : (
-                        <div>
-                          <DialogTitle id='form-dialog-title'>
-                            <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
-                          </DialogTitle>
-                          <DialogContent>
-                            <Typography type='caption'>
-                              <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
-                            </Typography>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button onClick={ this.handleDeleteDialogClose } color='primary'>
-                              <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-                            </Button>
-                            <Button onClick={ this.handleDeleteTask } variant='contained' color='secondary' >
-                              <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
-                            </Button>
-                          </DialogActions>
-                        </div>
-                      ) }
-                    </Dialog>
-                    <TaskAssignment
-                      taskFundingDialog={ this.state.taskFundingDialog }
-                      assignDialog={ this.state.assignDialog }
-                      handleAssignFundingDialogClose={ this.handleAssignFundingDialogClose }
-                      renderIssueAuthorLink={ this.renderIssueAuthorLink }
-                      timePlaceholder={ timePlaceholder }
-                      deadline={ deadline }
-                      deliveryDate={ deliveryDate }
-                      handleSuggestAnotherDate={ this.handleSuggestAnotherDate }
-                      showSuggestAnotherDateField={ this.state.showSuggestAnotherDateField }
-                      interestedSuggestedDate={ this.state.interestedSuggestedDate }
-                      handleInputChangeCalendar={ this.handleInputChangeCalendar }
-                      currentPrice={ this.state.currentPrice }
-                      interestedComment={ this.state.interestedComment }
-                      handleInputInterestedCommentChange={ this.handleInputInterestedCommentChange }
-                      handleInputInterestedAmountChange={ this.handleInputInterestedAmountChange }
-                      pickTaskPrice={ this.pickTaskPrice }
-                      priceConfirmed={ this.state.priceConfirmed }
-                      handleCheckboxIwillDoFor={ this.handleCheckboxIwillDoFor }
-                      charactersCount={ this.state.charactersCount }
-                      interestedLearn={ this.state.interestedLearn }
-                      handleCheckboxLearn={ this.handleCheckboxLearn }
-                      termsAgreed={ this.state.termsAgreed }
-                      handleCheckboxTerms={ this.handleCheckboxTerms }
-                      handleTermsDialog={ this.handleTermsDialog }
-                      termsDialog={ this.state.termsDialog }
-                      handleTermsDialogClose={ this.handleTermsDialogClose }
-                      handleOfferTask={ this.handleOfferTask }
-                      logged={ this.props.logged }
-                      task={ task }
-                      classes={ classes }
-                      fundingInvite={ this.state.fundingInvite }
-                      handleFundingEmailInputChange={ this.handleFundingEmailInputChange }
-                      handleFundingInputMessageChange={ this.handleFundingInputMessageChange }
-                      sendFundingInvite={ this.sendFundingInvite }
-                      inviteCover={ inviteCover }
-                      taskCover={ taskCover }
-                      location={ this.props.location }
-                    />
-                  </div>
-                </Grid>
+                    { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
+                  </ShowMoreText>
+                </ReactPlaceholder>
+              </Typography>
+              <Typography variant='h5' style={{marginBottom: 10, marginTop: 20}}>
+                <FormattedMessage id='task.info.authors' defaultMessage='Author(s)' />
+              </Typography>
+              { task.data.user && 
+                <AuthorList 
+                  logged={this.props.logged}
+                  user={this.props.user}
+                  task={this.props.task}
+                  messageAuthor={this.props.messageAuthor}
+                  location={this.props.location}
+                  authors={
+                    [
+                      {
+                        name: task.data.user.name,
+                        email: task.data.user.email,
+                        href: task.data.user.website
+                      },
+                      {
+                        provider: task.data.provider,
+                        name: task.data.metadata.issue.user.login,
+                        href: task.data.metadata.issue.user.html_url,
+                        avatar_url: task.data.metadata.issue.user.avatar_url
+                      }
+                    ]
+                }/>
+              }
             </Grid>
             <Grid style={{backgroundColor: "#eee"}} item xs={ 12 } sm={ 4 }>
               { (task.data.level || this.taskOwner()) &&

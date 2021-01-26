@@ -112,7 +112,7 @@ class TaskHeader extends React.Component {
     return (
       <TaskHeaderContainer>
         <Grid container>
-          <Grid item xs={ 12 } sm={ 12 } md={ 6 }>
+          <Grid item xs={ 12 } sm={ 12 } md={ 8 }>
             { task.data.metadata &&
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
@@ -121,7 +121,7 @@ class TaskHeader extends React.Component {
                     <Breadcrumbs aria-label='breadcrumb' separator={ ' / ' }>
                       <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          <FormattedMessage id='task.title.navigation' defaultMessage='Explore issues' />
+                          <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
                         </Typography>
                       </Link>
                       <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
@@ -142,7 +142,7 @@ class TaskHeader extends React.Component {
                     <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' /> }>
                       <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          <FormattedMessage id='task.title.navigation' defaultMessage='Explore issues' />
+                          <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
                         </Typography>
                       </Link>
                       <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>

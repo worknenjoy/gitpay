@@ -114,6 +114,7 @@
     "react-router-sitemap": "^1.2.0",
     "react-script-loader": "0.0.1",
     "react-scroll-to-component": "^1.0.2",
+    "react-show-more-text": "^1.4.6",
     "react-stripe-elements": "^1.6.0",
     "react-tap-event-plugin": "^2.0.1",
     "reactjs-localstorage": "0.0.6",
