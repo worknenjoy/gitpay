@@ -35,7 +35,8 @@ import {
   MonetizationOn as MonetizationOnIcon,
   Close as CloseIcon,
   ExpandLess,
-  ExpandMore
+  ExpandMore,
+  BugReport as BugReportIcon
 } from '@material-ui/icons'
 
 import StatsCard from '../Cards/StatsCard'
@@ -45,6 +46,9 @@ import Bottom from '../bottom/bottom'
 
 import { PageContent } from 'app/styleguide/components/Page'
 import TaskLevel from './task-level'
+import TaskReport from './task-report'
+import TaskClaim from './task-claim'
+import LoginButton from '../session/login-button'
 const taskCover = require('../../images/task-cover.png')
 const inviteCover = require('../../images/funds.png')
 
@@ -864,7 +868,7 @@ class Task extends Component {
               <Typography variant='h5' style={{marginBottom: 10, marginTop: 20}}>
                 <FormattedMessage id='task.info.description' defaultMessage='Description' />
               </Typography>
-              <Typography variant='body2' style={{marginBottom: 20}}>
+              <Typography variant='body2' style={{marginBottom: 40}}>
                 <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
                   <ShowMoreText
                         lines={8}
@@ -916,6 +920,66 @@ class Task extends Component {
                       }
                     ]
                 }/>
+              }
+              <Typography variant='subtitle2' style={{marginTop: 10, marginBottom: 10}}>
+                <FormattedMessage id='task.claim.title' defaultMessage="Are you the original author of this issue?" />
+              </Typography>
+              <Typography variant='body2' style={{marginBottom: 10}}>
+                <FormattedMessage id='task.claim.subtitle' defaultMessage="If you're the original author of this issue, you can claim this issue so you will be admin and transfer the property to manage the issue on Gitpay." />
+              </Typography>
+              <div>
+                <Button
+                  onClick={ this.handleClaimDialog }
+                  size='small'
+                  color='primary'
+                >
+                  <span>
+                    <FormattedMessage id='task.actions.claim' defaultMessage='Claim this issue' />
+                  </span>
+                </Button>
+                { !this.props.logged ? (
+                  <Dialog open={ taskClaimDialog } onClose={() => this.setState({ taskClaimDialog: false })}>
+                    <DialogTitle id='form-dialog-title'>
+                      <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+                    </DialogTitle>
+                    <DialogContent>
+                      <div className={ classes.mainBlock }>
+                        <LoginButton referer={ this.props.location } includeForm />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                ) : (
+                  <TaskClaim
+                    taskData={ task.data }
+                    requestClaimTask={ this.props.requestClaimTask }
+                    user={ this.props.user }
+                    open={ this.state.taskClaimDialog }
+                    onClose={ () => this.setState({ taskClaimDialog: false }) }
+                    onOpen={ () => this.setState({ taskClaimDialog: true }) }
+                  />
+                ) }
+              </div>
+              { !this.taskOwner() &&
+              <div style={{marginBottom: 80}}>
+                  <Button
+                    style={ { display: 'inline-block', marginTop: 40 } }
+                    onClick={ this.handleReportIssueDialog }
+                    color='secondary'
+                    variant='contained'
+                  >
+                      <BugReportIcon style={{marginRight: 10, verticalAlign: 'middle'}} />
+                      <FormattedMessage id='task.report.action' defaultMessage='Report issue' />
+                  </Button>
+                  <TaskReport
+                    taskData={ task.data }
+                    reportTask={ this.props.reportTask }
+                    user={ this.props.user }
+                    visible={ this.state.reportIssueDialog }
+                    onClose={ () => this.setState({ reportIssueDialog: false }) }
+                    onOpen={ () => this.setState({ reportIssueDialog: true }) }
+                  /> 
+              </div>
+              
               }
             </Grid>
             <Grid style={{backgroundColor: "#eee"}} item xs={ 12 } sm={ 4 }>

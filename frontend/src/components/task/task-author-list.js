@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { FormattedMessage } from 'react-intl'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -9,6 +10,13 @@ import Typography from '@material-ui/core/Typography'
 import { Forum as MessageIcon } from '@material-ui/icons'
 import nameInitials from 'name-initials'
 import MessageAuthor from './task-message-author'
+import { 
+  Dialog,
+  DialogContent,
+  DialogTitle
+} from '@material-ui/core'
+
+import LoginButton from '../session/login-button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,7 +69,7 @@ export default function AuthorList({ authors, logged, user, task, messageAuthor,
         { !logged ? (
           <Dialog open={ openDialog }>
             <DialogTitle id='form-dialog-title'>
-              <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+              <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to send messages to the author' />
             </DialogTitle>
             <DialogContent>
               <div className={ classes.mainBlock }>

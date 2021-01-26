@@ -9,7 +9,12 @@ const Palette = {
       contrastText: grey[100],
       success: green[400]
     },
-    secondary: indigo
+    secondary: {
+      light: indigo[100],
+      main: '#000',
+      // dark: will be calculated from palette.secondary.main,
+      contrastText: '#fff',
+    }
   }
 }
 
