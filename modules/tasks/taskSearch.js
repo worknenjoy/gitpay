@@ -4,7 +4,7 @@ const models = require('../../models')
 module.exports = Promise.method(function taskSearch (projectId) {
   let query = { $or: [
     { private: null },
-    { private: false } 
+    { private: false }
   ] }
   return models.Task
     .findAll(
