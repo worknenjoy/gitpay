@@ -4,7 +4,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
 import ReactPlaceholder from 'react-placeholder'
 import 'react-placeholder/lib/reactPlaceholder.css'
-import ShowMoreText from 'react-show-more-text';
+import ShowMoreText from 'react-show-more-text'
 
 import { messages } from './messages/task-messages'
 import TaskHeader from './task-header'
@@ -29,11 +29,6 @@ import {
 } from '@material-ui/core'
 
 import {
-  Redeem as RedeemIcon,
-  HowToReg as TrophyIcon,
-  DateRange as DateIcon,
-  CalendarToday as CalendarIcon,
-  MonetizationOn as MonetizationOnIcon,
   Close as CloseIcon,
   ExpandLess,
   ExpandMore,
@@ -399,8 +394,9 @@ class Task extends Component {
     try {
       await this.props.syncTask(id)
       await this.props.fetchTask(id)
-    } catch (e) {
-      
+    }
+    catch (e) {
+
     }
 
     if (status) {
@@ -730,17 +726,17 @@ class Task extends Component {
   }
   rendereAmountStatsCardContent = (isOwner) => {
     return (
-      <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+      <div style={ { display: 'flex', justifyContent: 'space-evenly' } }>
         { this.props.task.values.available === 0 &&
           <Button
             onClick={ this.handlePaymentForm }
             size='small'
             color='secondary'
             variant='contained'
-            style={{marginRight: 20, flexGrow: 1, display: 'flex', justifyContent:'center'}}
+            style={ { marginRight: 20, flexGrow: 1, display: 'flex', justifyContent: 'center' } }
           >
-            <BountyIcon style={{marginRight: 'auto'}} />
-            <span style={{marginRight: 'auto'}}>
+            <BountyIcon style={ { marginRight: 'auto' } } />
+            <span style={ { marginRight: 'auto' } }>
               <FormattedMessage id='task.bounties.add' defaultMessage='Add bounty' />
             </span>{ ' ' }
           </Button>
@@ -751,10 +747,10 @@ class Task extends Component {
             size='small'
             color='secondary'
             variant='contained'
-            style={{flexGrow: 1, display: 'flex', justifyContent:'center'}}
+            style={ { flexGrow: 1, display: 'flex', justifyContent: 'center' } }
           >
-            <OfferIcon style={{marginRight: 'auto'}} />
-            <span style={{marginRight: 'auto'}} className={ this.props.classes.spaceRight }>
+            <OfferIcon style={ { marginRight: 'auto' } } />
+            <span style={ { marginRight: 'auto' } } className={ this.props.classes.spaceRight }>
               <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
             </span>{ ' ' }
           </Button>
@@ -771,16 +767,9 @@ class Task extends Component {
   }
 
   render () {
-    const { classes, task, order, project } = this.props
-    const { taskMessageAuthorDialog, taskClaimDialog } = this.state
+    const { classes, task, project } = this.props
+    const { taskClaimDialog } = this.state
 
-    const isCurrentUserAssigned = () => {
-      return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
-    }
-
-    const isAssignOwner = () => {
-      return this.taskOwner() || isCurrentUserAssigned()
-    }
     // Error handling when task does not exist
     if (task.completed && !task.values) {
       this.props.history.push('/404')
@@ -860,7 +849,7 @@ class Task extends Component {
         <TopBarContainer />
         <PageContent>
           <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 8 } style={{marginBottom: 40}}>
+            <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40 } }>
               <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } project={ project } />
               { this.props.logged ? (
                 <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
@@ -871,46 +860,46 @@ class Task extends Component {
                   </div>
                 </Collapse>
               ) }
-              <Typography variant='h5' style={{marginBottom: 10, marginTop: 20}}>
+              <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
                 <FormattedMessage id='task.info.description' defaultMessage='Description' />
               </Typography>
-              <Typography variant='body2' style={{marginBottom: 40}}>
+              <Typography variant='body2' style={ { marginBottom: 40 } }>
                 <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
                   <ShowMoreText
-                        lines={8}
-                        more={
-                          <Button
-                            size='small'
-                            variant='outlined'
-                          >
-                            <FormattedMessage id='task.description.more' defaultMessage='Show more' /> 
-                            <ExpandMore />
-                          </Button>
-                        }
-                        less={
-                          <Button
-                            size='small'
-                            variant='outlined'
-                          >
-                            <FormattedMessage id='task.description.less' defaultMessage='Show less' /> 
-                            <ExpandLess />
-                          </Button>
-                        }
-                    >
+                    lines={ 8 }
+                    more={
+                      <Button
+                        size='small'
+                        variant='outlined'
+                      >
+                        <FormattedMessage id='task.description.more' defaultMessage='Show more' />
+                        <ExpandMore />
+                      </Button>
+                    }
+                    less={
+                      <Button
+                        size='small'
+                        variant='outlined'
+                      >
+                        <FormattedMessage id='task.description.less' defaultMessage='Show less' />
+                        <ExpandLess />
+                      </Button>
+                    }
+                  >
                     { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
                   </ShowMoreText>
                 </ReactPlaceholder>
               </Typography>
-              <Typography variant='h5' style={{marginBottom: 10, marginTop: 20}}>
+              <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
                 <FormattedMessage id='task.info.authors' defaultMessage='Author(s)' />
               </Typography>
-              { task.data.user && 
-                <AuthorList 
-                  logged={this.props.logged}
-                  user={this.props.user}
-                  task={this.props.task}
-                  messageAuthor={this.props.messageAuthor}
-                  location={this.props.location}
+              { task.data.user &&
+                <AuthorList
+                  logged={ this.props.logged }
+                  user={ this.props.user }
+                  task={ this.props.task }
+                  messageAuthor={ this.props.messageAuthor }
+                  location={ this.props.location }
                   authors={
                     [
                       {
@@ -925,12 +914,12 @@ class Task extends Component {
                         avatar_url: task.data.metadata.issue.user.avatar_url
                       }
                     ]
-                }/>
+                  } />
               }
-              <Typography variant='subtitle2' style={{marginTop: 10, marginBottom: 10}}>
-                <FormattedMessage id='task.claim.title' defaultMessage="Are you the original author of this issue?" />
+              <Typography variant='subtitle2' style={ { marginTop: 10, marginBottom: 10 } }>
+                <FormattedMessage id='task.claim.title' defaultMessage='Are you the original author of this issue?' />
               </Typography>
-              <Typography variant='body2' style={{marginBottom: 10}}>
+              <Typography variant='body2' style={ { marginBottom: 10 } }>
                 <FormattedMessage id='task.claim.subtitle' defaultMessage="If you're the original author of this issue, you can claim this issue so you will be admin and transfer the property to manage the issue on Gitpay." />
               </Typography>
               <div>
@@ -944,7 +933,7 @@ class Task extends Component {
                   </span>
                 </Button>
                 { !this.props.logged ? (
-                  <Dialog open={ taskClaimDialog } onClose={() => this.setState({ taskClaimDialog: false })}>
+                  <Dialog open={ taskClaimDialog } onClose={ () => this.setState({ taskClaimDialog: false }) }>
                     <DialogTitle id='form-dialog-title'>
                       <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
                     </DialogTitle>
@@ -966,50 +955,50 @@ class Task extends Component {
                 ) }
               </div>
               { !this.taskOwner() &&
-              <div style={{marginBottom: 80}}>
-                  <Button
-                    style={ { display: 'inline-block', marginTop: 40 } }
-                    onClick={ this.handleReportIssueDialog }
-                    size='small'
-                    color='secondary'
-                    variant='contained'
-                  >
-                      <BugReportIcon style={{marginRight: 10, verticalAlign: 'middle'}} />
-                      <FormattedMessage id='task.report.action' defaultMessage='Report issue' />
-                  </Button>
-                  <TaskReport
-                    taskData={ task.data }
-                    reportTask={ this.props.reportTask }
-                    user={ this.props.user }
-                    visible={ this.state.reportIssueDialog }
-                    onClose={ () => this.setState({ reportIssueDialog: false }) }
-                    onOpen={ () => this.setState({ reportIssueDialog: true }) }
-                  /> 
+              <div style={ { marginBottom: 80 } }>
+                <Button
+                  style={ { display: 'inline-block', marginTop: 40 } }
+                  onClick={ this.handleReportIssueDialog }
+                  size='small'
+                  color='secondary'
+                  variant='contained'
+                >
+                  <BugReportIcon style={ { marginRight: 10, verticalAlign: 'middle' } } />
+                  <FormattedMessage id='task.report.action' defaultMessage='Report issue' />
+                </Button>
+                <TaskReport
+                  taskData={ task.data }
+                  reportTask={ this.props.reportTask }
+                  user={ this.props.user }
+                  visible={ this.state.reportIssueDialog }
+                  onClose={ () => this.setState({ reportIssueDialog: false }) }
+                  onOpen={ () => this.setState({ reportIssueDialog: true }) }
+                />
               </div>
-              
+
               }
             </Grid>
-            <Grid style={{backgroundColor: "#eee", padding: 25}} item xs={ 12 } sm={ 4 }>
-              <div style={{ display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly'}}>
-                { task.data.level && 
-                  <div style={{textAlign: 'center'}}>
-                    <Typography variant='caption' style={{textTransform: 'uppercase'}}>
+            <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 4 }>
+              <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
+                { task.data.level &&
+                  <div style={ { textAlign: 'center' } }>
+                    <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                       <FormattedMessage id='task.level.label' defaultMessage='Level' />
                     </Typography>
                     <div>
-                      <CoffeeIcon /> 
+                      <CoffeeIcon />
                       <Typography variant='h6' className={ classes.taskInfoContent }>
                         { task.data.level }
                       </Typography>
                     </div>
                   </div>
                 }
-                <div style={{textAlign: 'center'}}>
-                  <Typography variant='caption' style={{textTransform: 'uppercase'}}>
+                <div style={ { textAlign: 'center' } }>
+                  <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                     <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
                   </Typography>
                   <div>
-                    <MoneyIcon /> 
+                    <MoneyIcon />
                     <Typography variant='h6' className={ classes.taskInfoContent }>
                       { task.values.available }
                     </Typography>
@@ -1017,22 +1006,22 @@ class Task extends Component {
                 </div>
               </div>
               { !this.taskOwner() &&
-                <div style={{marginTop: 30, marginBottom: 10}}>
+                <div style={ { marginTop: 30, marginBottom: 10 } }>
                   <Button
-                    style={ { marginRight: 10 } }
                     onClick={ this.handleAssignDialogOpen }
                     color='primary'
                     fullWidth
                     size='large'
                     variant='contained'
-                    style={{
+                    style={ {
+                      marginRight: 10,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
-                    }}
+                    } }
                   >
-                    <CheckIcon style={{marginRight: 'auto'}} />
-                    <span style={{marginRight: 'auto'}} className={ classes.spaceRight }>
+                    <CheckIcon style={ { marginRight: 'auto' } } />
+                    <span style={ { marginRight: 'auto' } } className={ classes.spaceRight }>
                       <FormattedMessage id='task.interested.action' defaultMessage="I'm interested" />
                     </span>{ ' ' }
                   </Button>
@@ -1077,7 +1066,7 @@ class Task extends Component {
                   />
                 </div>
               }
-              <div style={{marginTop: 25}}>
+              <div style={ { marginTop: 25 } }>
                 { this.rendereAmountStatsCardContent(this.taskOwner()) }
               </div>
             </Grid>

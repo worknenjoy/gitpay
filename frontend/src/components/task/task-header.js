@@ -40,16 +40,6 @@ const TaskHeaderContainer = styled.div`
   `}
 `
 
-const Tags = styled.div`
-  display: inline-block;
-
-  ${media.phone`
-    display: block;
-    margin-top: 1rem;
-    margin-left: -20px;
-  `}
-`
-
 const styles = theme => ({
   breadcrumbRoot: {
     marginTop: theme.spacing(2),
@@ -166,7 +156,7 @@ class TaskHeader extends React.Component {
             <ReactPlaceholder ready={ task.completed }>
               <Chip
                 label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                avatar={<Avatar className={ classes.avatarStatus } style={{width: 12, height: 12}}> </Avatar>}
+                avatar={ <Avatar className={ classes.avatarStatus } style={ { width: 12, height: 12 } } /> }
                 className={ classes.chipStatus }
                 onDelete={ this.handleStatusDialog }
                 onClick={ this.handleStatusDialog }

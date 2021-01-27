@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import { Forum as MessageIcon } from '@material-ui/icons'
 import nameInitials from 'name-initials'
 import MessageAuthor from './task-message-author'
-import { 
+import {
   Dialog,
   DialogContent,
   DialogTitle
@@ -20,16 +20,16 @@ import LoginButton from '../session/login-button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    
+
   },
   inline: {
     display: 'inline',
   },
-}));
+}))
 
-export default function AuthorList({ authors, logged, user, task, messageAuthor, location }) {
-  const classes = useStyles();
-  const [openDialog, setOpenDialog] = useState(false);
+export default function AuthorList ({ authors, logged, user, task, messageAuthor, location }) {
+  const classes = useStyles()
+  const [openDialog, setOpenDialog] = useState(false)
 
   const handleMessageAuthorDialog = (e) => {
     e.preventDefault()
@@ -38,32 +38,32 @@ export default function AuthorList({ authors, logged, user, task, messageAuthor,
 
   return (
     <React.Fragment>
-      <List className={classes.root}>
-        {authors && authors.map(a => {
+      <List className={ classes.root }>
+        { authors && authors.map(a => {
           return (
-            <ListItem alignItems="center">
+            <ListItem alignItems='center'>
               <ListItemAvatar>
                 { a.avatar_url ? (
-                  <Avatar alt={nameInitials(a.name)} src={a.avatar_url} />
+                  <Avatar alt={ nameInitials(a.name) } src={ a.avatar_url } />
                 ) : (
-                  <Avatar alt={nameInitials(a.name)}>
-                    {nameInitials(a.name)}
+                  <Avatar alt={ nameInitials(a.name) }>
+                    { nameInitials(a.name) }
                   </Avatar>
-                )}
+                ) }
               </ListItemAvatar>
               <ListItemText
                 primary={
                   <a href='#' onClick={ handleMessageAuthorDialog }>
                     <Typography variant='subtitle2'>
-                      {a.name}
-                      { a.email && <MessageIcon style={{display: 'inline', verticalAlign: 'middle', marginLeft: 10}} />}
+                      { a.name }
+                      { a.email && <MessageIcon style={ { display: 'inline', verticalAlign: 'middle', marginLeft: 10 } } /> }
                     </Typography>
                   </a>
                 }
               />
             </ListItem>
           )
-        })}
+        }) }
       </List>
       <React.Fragment>
         { !logged ? (
@@ -90,5 +90,5 @@ export default function AuthorList({ authors, logged, user, task, messageAuthor,
         ) }
       </React.Fragment>
     </React.Fragment>
-  );
+  )
 }

@@ -1,32 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { injectIntl, defineMessages } from 'react-intl'
-
-import invert from 'invert-color'
+import { injectIntl } from 'react-intl'
 
 import {
   withStyles,
   Chip
 } from '@material-ui/core'
-
-import {
-  Label as LabelIcon,
-  InfoRounded as InfoIcon
-} from '@material-ui/icons'
-
-import StatsCard from '../Cards/StatsCard'
-
-const messages = defineMessages({
-  labelStatus: {
-    id: 'task.status.label.title',
-    defaultMessage: 'Labels'
-  },
-  labelDesc: {
-    id: 'task.status.label.desc',
-    defaultMessage: 'Labels can help you understand more about the context of an issue'
-  }
-})
 
 const styles = theme => ({
   selected: {
