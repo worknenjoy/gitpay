@@ -2,7 +2,10 @@ const Promise = require('bluebird')
 const models = require('../../models')
 
 module.exports = Promise.method(function taskSearch (projectId) {
-  let query = { private: false }
+  let query = { $or: [
+    { private: null },
+    { private: false } 
+  ] }
   return models.Task
     .findAll(
       {
