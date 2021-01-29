@@ -1,6 +1,9 @@
 import { indigo, teal, grey, green } from '@material-ui/core/colors'
 
 const Palette = {
+  typography: {
+    fontFamily: ['Inter', 'Helvetica', 'Roboto']
+  },
   palette: {
     primary: {
       light: teal[50],

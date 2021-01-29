@@ -848,8 +848,8 @@ class Task extends Component {
         </Dialog>
         <TopBarContainer />
         <PageContent>
-          <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40 } }>
+          <Grid container style={ { marginBottom: 4 } }>
+            <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 80 } }>
               <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } project={ project } />
               { this.props.logged ? (
                 <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
@@ -860,11 +860,12 @@ class Task extends Component {
                   </div>
                 </Collapse>
               ) }
-              <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
-                <FormattedMessage id='task.info.description' defaultMessage='Description' />
-              </Typography>
-              <Typography variant='body2' style={ { marginBottom: 40 } }>
-                <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
+              { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body &&
+              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
+                <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
+                  <FormattedMessage id='task.info.description' defaultMessage='Description' />
+                </Typography>
+                <Typography variant='body2' style={ { marginBottom: 40 } }>
                   <ShowMoreText
                     lines={ 8 }
                     more={
@@ -888,8 +889,10 @@ class Task extends Component {
                   >
                     { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
                   </ShowMoreText>
-                </ReactPlaceholder>
-              </Typography>
+
+                </Typography>
+              </ReactPlaceholder>
+              }
               <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
                 <FormattedMessage id='task.info.authors' defaultMessage='Author(s)' />
               </Typography>

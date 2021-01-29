@@ -15,10 +15,6 @@ import {
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import {
-  Done as DoneIcon,
-} from '@material-ui/icons'
-
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
@@ -47,9 +43,6 @@ const styles = theme => ({
   },
   breadcrumbLink: {
     textDecoration: 'underline'
-  },
-  breadcrumbText: {
-    fontWeight: 700
   },
   chipStatus: {
     marginBottom: theme.spacing(1),
@@ -124,8 +117,8 @@ class TaskHeader extends React.Component {
                           { task.data.project.name }
                         </Typography>
                       </Link>
-                      <Typography variant='subtitle2' className={ classes.breadcrumbText }>
-                        { task.data.title }
+                      <Typography variant='subtitle2'>
+                        ...
                       </Typography>
                     </Breadcrumbs>
                   ) : (
@@ -145,8 +138,8 @@ class TaskHeader extends React.Component {
                           { task.data.metadata.projectName }
                         </Typography>
                       </Link>
-                      <Typography variant='subtitle2' className={ classes.breadcrumbText }>
-                        { task.data.title }
+                      <Typography variant='subtitle2'>
+                        ...
                       </Typography>
                     </Breadcrumbs>
                   ) }
@@ -156,11 +149,10 @@ class TaskHeader extends React.Component {
             <ReactPlaceholder ready={ task.completed }>
               <Chip
                 label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                avatar={ <Avatar className={ classes.avatarStatus } style={ { width: 12, height: 12 } } /> }
+                avatar={ <Avatar className={ classes.avatarStatus } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
                 className={ classes.chipStatus }
                 onDelete={ this.handleStatusDialog }
                 onClick={ this.handleStatusDialog }
-                deleteIcon={ <DoneIcon /> }
               />
             </ReactPlaceholder>
             <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
@@ -170,11 +162,11 @@ class TaskHeader extends React.Component {
                 <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
               </Typography>
             </ReactPlaceholder>
-            <ReactPlaceholder ready={ task.completed }>
-              { task.data.metadata &&
+            { task.data.metadata &&
+              <ReactPlaceholder ready={ task.completed }>
                 <TaskLabels labels={ task.data.metadata.labels } />
-              }
-            </ReactPlaceholder>
+              </ReactPlaceholder>
+            }
           </Grid>
         </Grid>
 
