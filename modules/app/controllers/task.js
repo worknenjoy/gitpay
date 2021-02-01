@@ -13,7 +13,8 @@ exports.createTask = (req, res) => {
 }
 
 exports.listTasks = (req, res) => {
-  Tasks.taskSearch()
+  let query = req.user ? { userId: req.user.id } : {}
+  Tasks.taskSearch(query)
     .then(data => {
       res.send(data)
     }).catch(error => {

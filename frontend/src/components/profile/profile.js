@@ -6,6 +6,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
   Grid,
+  Chip,
   Avatar,
   Typography,
   Button,
@@ -19,7 +20,6 @@ import {
   AppBar,
 } from '@material-ui/core'
 import {
-  DeviceHub,
   LibraryBooks,
   CreditCard,
   Tune,
@@ -41,13 +41,14 @@ import TaskListContainer from '../../containers/task-list'
 import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
 import Roles from './user-roles'
-import Organizations from './organizations'
 import SettingsComponent from './settings'
 import UpdateRole from './update-role'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
 import PreferencesBar from './preferences-bar'
+import Tasks from './tasks'
+import UserTasksListContainer from '../../containers/user-tasks'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -262,9 +263,11 @@ class Profile extends Component {
     window.history.back()
   }
   render () {
-    const { classes, user, preferences, roles, organizations } = this.props
+    const { classes, user, preferences, roles } = this.props
 
     let titleNavigation = this.getTitleNavigation()
+
+    console.log(user)
 
     return (
       <Page>
@@ -298,11 +301,16 @@ class Profile extends Component {
             <Grid item xs={ 12 } md={ 9 }>
               <HashRouter>
                 <Switch>
-                  <Route exact path='/profile' component={ ProfileOptions } />
+                  <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } /> } />
                   <Route
                     exact
                     path='/profile/tasks'
                     component={ () => <TaskListContainer /> }
+                  />
+                  <Route
+                    exact
+                    path='/profile/user/tasks'
+                    component={ (props) => <UserTasksListContainer { ...props} history={this.props.history} /> }
                   />
                   <Route
                     exact
@@ -385,6 +393,16 @@ class Profile extends Component {
                             user.website.replace(/^https?:\/\//, '') }
                         </a>
                       </Typography>
+                    </div>
+                    <div style={{marginTop: 20, display: 'flex', justifyContent: 'center'}}>
+                        { user && user.Types && user.Types.map(r => {
+                          return (
+                            <Chip
+                              style={{marginRight: 10}}
+                              label={ r.name }
+                            />
+                          )
+                        })}
                     </div>
                     <div className={ classes.rowList }>
                       <Grid
