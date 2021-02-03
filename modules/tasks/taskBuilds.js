@@ -9,6 +9,7 @@ const Sendmail = require('../mail/mail')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
 // const userOrganizations = require('../users/userOrganizations')
+const project = require('../projectHelpers')
 
 module.exports = Promise.method(async function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
@@ -23,46 +24,6 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
 
   if (!userId) return false
 
-  const project = async () => {
-    try {
-      const organizationExist = await models.Organization.find(
-        {
-          where: {
-            name: userOrCompany
-          },
-          include: [models.Project]
-        }
-      )
-      if (organizationExist) {
-        const projectFromOrg = await models.Project.find(
-          {
-            where: {
-              name: projectName,
-              OrganizationId: organizationExist.id
-            }
-          }
-        )
-        if (projectFromOrg) {
-          return projectFromOrg
-        }
-        else {
-          const newProject = await organizationExist.createProject({ name: projectName })
-          return newProject
-        }
-      }
-      else {
-        const organization = await models.Organization.create({ name: userOrCompany, UserId: userId })
-        const project = await organization.createProject({ name: projectName })
-        return project
-      }
-    }
-    catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('error', e)
-      throw new Error(e)
-    }
-  }
-
   switch (taskParameters.provider) {
     case 'github':
       const uri = taskParameters.token ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}` : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
@@ -76,13 +37,13 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
       }).then(response => {
         if (!response && !response.title) return false
         const issueDataJsonGithub = JSON.parse(response)
+        console.log('issueDataJsonGithub', issueDataJsonGithub)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
-        return project().then(p => {
+        if (!taskParameters.description) taskParameters.description = issueDataJsonGithub.body
+        return project(userOrCompany, projectName, userId).then(p => {
           return p
             .createTask(taskParameters)
             .then(async task => {
-              // eslint-disable-next-line no-console
-              console.log('task result', task.ProjectId)
               const role = await roleExists({ name: 'company_owner' })
               if (role.dataValues && role.dataValues.id) {
                 const userInfo = await requestPromise({

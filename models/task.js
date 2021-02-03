@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     provider: DataTypes.STRING,
+    description: DataTypes.STRING,
     type: DataTypes.STRING,
     level: DataTypes.STRING,
     status: {

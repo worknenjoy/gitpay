@@ -41,27 +41,31 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
       <List className={ classes.root }>
         { authors && authors.map(a => {
           return (
-            <ListItem alignItems='center'>
-              <ListItemAvatar>
-                { a.avatar_url ? (
-                  <Avatar alt={ nameInitials(a.name) } src={ a.avatar_url } />
-                ) : (
-                  <Avatar alt={ nameInitials(a.name) }>
-                    { nameInitials(a.name) }
-                  </Avatar>
-                ) }
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <a href='#' onClick={ handleMessageAuthorDialog }>
-                    <Typography variant='subtitle2'>
-                      { a.name }
-                      { a.email && <MessageIcon style={ { display: 'inline', verticalAlign: 'middle', marginLeft: 10 } } /> }
-                    </Typography>
-                  </a>
-                }
-              />
-            </ListItem>
+            <React.Fragment>
+              {a.name && 
+              <ListItem alignItems='center'>
+                <ListItemAvatar>
+                  { a.avatar_url ? (
+                    <Avatar alt={ nameInitials(a.name) } src={ a.avatar_url } />
+                  ) : (
+                    <Avatar alt={ nameInitials(a.name) }>
+                      { nameInitials(a.name) }
+                    </Avatar>
+                  ) }
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <a href='#' onClick={ handleMessageAuthorDialog }>
+                      <Typography variant='subtitle2'>
+                        { a.name }
+                        { a.email && <MessageIcon style={ { display: 'inline', verticalAlign: 'middle', marginLeft: 10 } } /> }
+                      </Typography>
+                    </a>
+                  }
+                />
+              </ListItem>
+            }
+            </React.Fragment>
           )
         }) }
       </List>

@@ -860,7 +860,7 @@ class Task extends Component {
                   </div>
                 </Collapse>
               ) }
-              { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body &&
+              { task.data &&
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
                 <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
                   <FormattedMessage id='task.info.description' defaultMessage='Description' />
@@ -887,7 +887,7 @@ class Task extends Component {
                       </Button>
                     }
                   >
-                    { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
+                    { task.data.description ? renderHTML(marked(task.data.description)) : renderHTML(marked(task.data.metadata && task.data.metadata.issue.body))}
                   </ShowMoreText>
 
                 </Typography>
@@ -896,7 +896,7 @@ class Task extends Component {
               <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
                 <FormattedMessage id='task.info.authors' defaultMessage='Author(s)' />
               </Typography>
-              { task.data.user &&
+              { task.data.User &&
                 <AuthorList
                   logged={ this.props.logged }
                   user={ this.props.user }
@@ -906,15 +906,15 @@ class Task extends Component {
                   authors={
                     [
                       {
-                        name: task.data.user.name,
-                        email: task.data.user.email,
-                        href: task.data.user.website
+                        name: task.data.User.name,
+                        email: task.data.User.email,
+                        href: task.data.User.website
                       },
                       {
                         provider: task.data.provider,
-                        name: task.data.metadata.issue.user.login,
-                        href: task.data.metadata.issue.user.html_url,
-                        avatar_url: task.data.metadata.issue.user.avatar_url
+                        name: task.data.metadata && task.data.metadata.issue.user.login,
+                        href: task.data.metadata && task.data.metadata.issue.user.html_url,
+                        avatar_url: task.data.metadata && task.data.metadata.issue.user.avatar_url
                       }
                     ]
                   } />

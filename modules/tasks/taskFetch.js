@@ -112,13 +112,14 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 id: data.dataValues.id,
                 url: issueUrl,
                 title: data.dataValues.title,
+                description: data.dataValues.description,
                 value: data.dataValues.value || 0,
                 deadline: data.dataValues.deadline,
                 level: data.dataValues.level,
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
                 assignedUser: assigned && assigned.dataValues.User.dataValues,
-                user: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
+                User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
                 provider: data.dataValues.provider,
@@ -137,7 +138,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 members: data.dataValues.Members,
                 offers: data.dataValues.Offers,
                 histories: data.dataValues.Histories,
-                project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
+                Project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
               }
 
               if (!data.title && data.title !== issueDataJsonGithub.title) {

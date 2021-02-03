@@ -96,11 +96,11 @@ class TaskHeader extends React.Component {
       <TaskHeaderContainer>
         <Grid container>
           <Grid item xs={ 12 } sm={ 12 } md={ 8 }>
-            { task.data.metadata &&
+           
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
                 ready={ task.completed }>
                 <div className={ classes.breadcrumbRoot }>
-                  { task.data.project ? (
+                  { task.data.Project ? (
                     <Breadcrumbs aria-label='breadcrumb' separator={ ' / ' }>
                       <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
@@ -109,12 +109,12 @@ class TaskHeader extends React.Component {
                       </Link>
                       <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          { task.data.project.organization.name }
+                          { task.data.Project.Organization.name }
                         </Typography>
                       </Link>
-                      <Link href={ `/#/organizations/${task.data.project.OrganizationId}/projects/${task.data.project.id}` } className={ classes.breadcrumb } color='inherit'>
+                      <Link href={ `/#/organizations/${task.data.Project.OrganizationId}/projects/${task.data.Project.id}` } className={ classes.breadcrumb } color='inherit'>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          { task.data.project.name }
+                          { task.data.Project.name }
                         </Typography>
                       </Link>
                       <Typography variant='subtitle2'>
@@ -145,7 +145,7 @@ class TaskHeader extends React.Component {
                   ) }
                 </div>
               </ReactPlaceholder>
-            }
+            
             <ReactPlaceholder ready={ task.completed }>
               <Chip
                 label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }

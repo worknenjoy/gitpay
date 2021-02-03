@@ -56,13 +56,16 @@ const logoBitbucket = require('../../images/bitbucket-logo.png')
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    flexFlow: 'wrap'
+    flexFlow: 'wrap',
+    justifyContent: 'center',
+    width: 'calc(100%)'
   },
   altButton: {
     marginRight: 10
   },
   bigRow: {
-    marginTop: 40
+    marginTop: 20,
+    marginBottom: 20
   },
   row: {
     display: 'flex',
@@ -267,8 +270,6 @@ class Profile extends Component {
 
     let titleNavigation = this.getTitleNavigation()
 
-    console.log(user)
-
     return (
       <Page>
         <TopBarContainer />
@@ -297,31 +298,39 @@ class Profile extends Component {
           <PreferencesBar classes={ classes } />
         }
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 3 }>
-            <Grid item xs={ 12 } md={ 9 }>
+          <Grid container className={ classes.root } spacing={ 2 }>
+            <Grid item xs={ 12 } md={ 8 }>
               <HashRouter>
                 <Switch>
                   <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } /> } />
-                  <Route
-                    exact
-                    path='/profile/tasks'
-                    component={ () => <TaskListContainer /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/user/tasks'
-                    component={ (props) => <UserTasksListContainer { ...props} history={this.props.history} /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/payment-options'
-                    component={ () => <PaymentOptions user={ user } /> }
-                  />
+                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
+                    <Route
+                      exact
+                      path='/profile/user/tasks'
+                      component={ (props) => <UserTasksListContainer { ...props} organizations={this.props.organizations} history={this.props.history} /> }
+                    />
+                  }
+                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    <Route
+                      exact
+                      path='/profile/tasks'
+                      component={ () => <TaskListContainer /> }
+                    />
+                  }
+                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    <Route
+                      exact
+                      path='/profile/payment-options'
+                      component={ () => <PaymentOptions user={ user } /> }
+                    />
+                  }
+                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                   <Route
                     exact
                     path='/profile/preferences'
                     component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
                   />
+                  }
                   <Route
                     exact
                     path='/profile/settings'
@@ -348,7 +357,7 @@ class Profile extends Component {
                 onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
               />
             </Grid>
-            <Grid item xs={ 12 } md={ 3 }>
+            <Grid item xs={ 12 } md={ 4 }>
               <div className={ classes.bigRow }>
                 <Paper className={ classes.paper }>
                   <div className={ classes.profile }>
@@ -404,6 +413,7 @@ class Profile extends Component {
                           )
                         })}
                     </div>
+                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                     <div className={ classes.rowList }>
                       <Grid
                         container
@@ -452,54 +462,35 @@ class Profile extends Component {
                         </Grid>
                       </Grid>
                     </div>
-                    <Grid
-                      container
-                      direction='column'
-                      justify='center'
-                      alignItems='center'
-                      className={ classes.rowList }
-                    >
-                      <Grid item className={ classNames(classes.rowContent) }>
-                        <Button
-                          disabled={ user.provider === 'github' }
-                          href={ `${api.API_URL}/authorize/github` }
-                          variant='outlined'
-                          size='medium'
-                          className={
-                            user.provider === 'github'
-                              ? 'buttons-disabled'
-                              : 'buttons'
-                          }
-                        >
-                          Connect to Github
-                          <img width='16' src={ logoGithub } className='icon' />
-                        </Button>
-                      </Grid>
-                      <Grid item className={ classNames(classes.rowContent) }>
-                        <Button
-                          disabled={ user.provider === 'bitbucket' }
-                          href={ `${api.API_URL}/authorize/bitbucket` }
-                          variant='contained'
-                          size='medium'
-                          className={
-                            user.provider === 'bitbucket'
-                              ? 'buttons-disabled'
-                              : 'buttons'
-                          }
-                        >
-                          Connect to Bitbucket
-                          <img
-                            width='16'
-                            src={ logoBitbucket }
-                            className='icon'
-                          />
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </div>
-                  <div className={ classes.row }>
+                    }
+                    <div className={ classes.row }>
                     <Paper className={ classes.menuContainer } style={ { marginTop: 40, marginBottom: 20 } }>
                       <MenuList>
+                      { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile/user/tasks')
+                          }
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 0 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <LibraryBooks />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.issues.maintainer'
+                                  defaultMessage='Your issues'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
+                      }
+                      { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                         <MenuItem
                           onClick={ () =>
                             this.props.history.push('/profile/tasks')
@@ -522,6 +513,7 @@ class Profile extends Component {
                             }
                           />
                         </MenuItem>
+                        }
                         <MenuItem
                           onClick={ () =>
                             this.props.history.push('/profile/payment-options')
@@ -607,6 +599,51 @@ class Profile extends Component {
                         </MenuItem>
                       </MenuList>
                     </Paper>
+                  </div>
+                    <Grid
+                      container
+                      direction='column'
+                      justify='center'
+                      alignItems='center'
+                      className={ classes.rowList }
+                    >
+                      <Grid item className={ classNames(classes.rowContent) }>
+                        <Button
+                          disabled={ user.provider === 'github' }
+                          href={ `${api.API_URL}/authorize/github` }
+                          variant='outlined'
+                          size='medium'
+                          className={
+                            user.provider === 'github'
+                              ? 'buttons-disabled'
+                              : 'buttons'
+                          }
+                        >
+                          Connect to Github
+                          <img width='16' src={ logoGithub } className='icon' />
+                        </Button>
+                      </Grid>
+                      <Grid item className={ classNames(classes.rowContent) }>
+                        <Button
+                          disabled={ user.provider === 'bitbucket' }
+                          href={ `${api.API_URL}/authorize/bitbucket` }
+                          variant='contained'
+                          size='medium'
+                          className={
+                            user.provider === 'bitbucket'
+                              ? 'buttons-disabled'
+                              : 'buttons'
+                          }
+                        >
+                          Connect to Bitbucket
+                          <img
+                            width='16'
+                            src={ logoBitbucket }
+                            className='icon'
+                          />
+                        </Button>
+                      </Grid>
+                    </Grid>
                   </div>
                 </Paper>
               </div>
