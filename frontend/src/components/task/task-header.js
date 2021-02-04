@@ -81,8 +81,8 @@ class TaskHeader extends React.Component {
   }
 
   render () {
-    const { classes, task } = this.props
-
+    const { classes, task, user, history } = this.props
+    
     const headerPlaceholder = (
       <div className='line-holder'>
         <RectShape
@@ -102,11 +102,22 @@ class TaskHeader extends React.Component {
                 <div className={ classes.breadcrumbRoot }>
                   { task.data.Project ? (
                     <Breadcrumbs aria-label='breadcrumb' separator={ ' / ' }>
-                      <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
-                        <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
-                        </Typography>
-                      </Link>
+                      { user && user.id ? (
+                        <Link href='/' color='inherit' onClick={ (e) => {
+                            e.preventDefault()
+                            history.push('/profile/user/tasks')
+                          } }>
+                          <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                            <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />
+                          </Typography>
+                        </Link>
+                      ) : (
+                        <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
+                          <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                            <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
+                          </Typography>
+                        </Link>
+                      )}
                       <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
                           { task.data.Project.Organization.name }

@@ -850,7 +850,7 @@ class Task extends Component {
         <PageContent>
           <Grid container style={ { marginBottom: 4 } }>
             <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 80 } }>
-              <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } project={ project } />
+              <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } history={this.props.history} project={ project } />
               { this.props.logged ? (
                 <TaskPaymentForm { ...this.props } open={ this.state.paymentForm } />
               ) : (
@@ -887,7 +887,7 @@ class Task extends Component {
                       </Button>
                     }
                   >
-                    { task.data.description ? renderHTML(marked(task.data.description)) : renderHTML(marked(task.data.metadata && task.data.metadata.issue.body))}
+                    { task.data.description ? renderHTML(marked(task.data.description)) : renderHTML(marked(task.data.metadata ? task.data.metadata.issue.body : 'not available'))}
                   </ShowMoreText>
 
                 </Typography>

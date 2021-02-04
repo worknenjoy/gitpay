@@ -9,12 +9,7 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
       where: {
         id: userAttributes.id
       },
-      include: [ 
-        {
-          model: models.Organization,
-          include: [models.Project]
-        }
-      ]
+      include: [ models.Organization ]
     }).then(user => {
       if (!user) return false
 
@@ -30,18 +25,14 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
       }).then(async response => {
         const responseFromGithub = JSON.parse(response)
 
-        const currentOrgs = await models.Organization.findAll({
-          include: [{
-            model: models.Project,
-            include: models.Task
-          }, models.User]
-        })
+        const currentOrgs = await models.Organization.findAll()
+
         const formatedResponse = responseFromGithub.map(org => {
-          const imported = currentOrgs.filter(o => o.dataValues.name === org.login)
+          const imported = !!currentOrgs.filter(o => o.dataValues.name === org.login).length
           return {
             name: org.login,
             image: org.avatar_url,
-            Projects: imported[0].Projects
+            imported
           }
         })
         return formatedResponse

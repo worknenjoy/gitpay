@@ -7,7 +7,16 @@ module.exports = Promise.method(function userExists (userAttributes) {
       where: {
         email: userAttributes.email
       },
-      include: [models.Type]
+      include: [
+        models.Type,
+        {
+          model: models.Organization,
+          include: [{
+            model: models.Project,
+            include: [models.Task]
+          }]
+        }
+      ]
     }).then(user => {
       if (!user) return false
 

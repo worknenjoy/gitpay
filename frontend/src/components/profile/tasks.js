@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl, FormattedMessage } from 'react-intl'
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
 
@@ -13,6 +14,8 @@ import {
   LockOpen
 } from '@material-ui/icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+
+import Organizations from './organizations'
 
 function MinusSquare(props) {
   return (
@@ -81,19 +84,28 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserTasksList({ listTasks, organizations, tasks, user, history }) {
+export default function UserTasksList({ createOrganizations, organizations, user, history }) {
   const classes = useStyles();
 
-  const renderTree = (nodes) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
-      {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-    </TreeItem>
-  );
+  console.log('organizations', user.Organizations)
 
   return (
     <div>
-      <Typography variant='h5' style={{marginTop: 20, marginBottom: 40}}>
-          Your issues
+      { organizations &&
+        <div>
+          <Typography variant='h5' component='h3' style={{marginTop: 20, marginBottom: 10}}>
+            <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+          </Typography>
+          <Typography component='p'>
+            <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your public organizations that you can import to Gitpay' />
+          </Typography>
+          <div style={ { marginTop: 20, marginBottom: 40 } }>
+            <Organizations user={ user } data={ organizations } onImport={ createOrganizations } />
+          </div>
+        </div>
+      } 
+      <Typography variant='h5' style={{marginTop: 20, marginBottom: 20}}>
+          Your Organization tree
       </Typography>
       <TreeView
         className={classes.root}
@@ -102,40 +114,27 @@ export default function UserTasksList({ listTasks, organizations, tasks, user, h
         defaultExpandIcon={<PlusSquare />}
         defaultEndIcon={<CloseSquare />}
       >
-        <StyledTreeItem nodeId="1" label="Organizations">
-          { organizations && organizations.map((o, i) => {
-            return (
-              <StyledTreeItem nodeId={i} label={
-                <React.Fragment>
-                <Avatar src={o.image ? o.image : ''} style={{display: 'inline-block'}} />
-                <span style={{position: 'relative', bottom: 14}}> { o.name } </span>
-                </React.Fragment>
-              }>
-                { o.Projects && o.Projects.map((p, i2) => {
-                  return(
-                    <StyledTreeItem nodeId={`${i}-${i2}`} label={
-                      <React.Fragment>
-                      <span> { p.name } </span>
-                      </React.Fragment>
-                    }>
-                      { p.Tasks && p.Tasks.map((t, i3) => {
-                        return(
-                          <StyledTreeItem onClick={() => history.push(`/task/${t.id}`)} nodeId={`${i}-${i2}-${i3}`} label={
-                            <React.Fragment>
-                            <span> { t.title } </span>
-                            </React.Fragment>
-                          }
-                          endIcon={t.private ? <Lock /> : <LockOpen />}
-                          />
-                        )
-                      }) }
-                    </StyledTreeItem>
-                  )
-                }) }
-              </StyledTreeItem>
-            )
-          })}
-        </StyledTreeItem>
+        { user && user.Organizations.map((o, i) => <StyledTreeItem nodeId={i} label={
+          <React.Fragment>
+            <span>{o.name}</span>
+          </React.Fragment>
+        }>
+          { o && o.Projects.map((p, j) => <StyledTreeItem nodeId={`${i}-${j}`} label={
+              <React.Fragment>
+                <span>{p.name}</span>
+              </React.Fragment>
+            }>
+              { p && p.Tasks && p.Tasks.map((t, k) => 
+              <StyledTreeItem
+                onClick={(e) => history.push(`/task/${t.id}`)}
+                endIcon={t.private ? <Lock /> : <LockOpen />}
+                nodeId={`${i}-${j}-${k}`} label={
+              <React.Fragment>
+                <span>{t.title}</span>
+              </React.Fragment>
+            } /> ) }    
+            </StyledTreeItem> ) }    
+        </StyledTreeItem> ) }
       </TreeView>
     </div>
   );
