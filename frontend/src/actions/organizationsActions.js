@@ -12,6 +12,10 @@ const CREATE_ORGANIZATIONS_REQUESTED = 'CREATE_ORGANIZATIONS_REQUESTED'
 const CREATE_ORGANIZATIONS_SUCCESS = 'CREATE_ORGANIZATIONS_SUCCESS'
 const CREATE_ORGANIZATIONS_ERROR = 'CREATE_ORGANIZATIONS_ERROR'
 
+const UPDATE_ORGANIZATIONS_REQUESTED = 'UPDATE_ORGANIZATIONS_REQUESTED'
+const UPDATE_ORGANIZATIONS_SUCCESS = 'UPDATE_ORGANIZATIONS_SUCCESS'
+const UPDATE_ORGANIZATIONS_ERROR = 'UPDATE_ORGANIZATIONS_ERROR'
+
 const fetchOrganizationsRequested = () => {
   return { type: FETCH_ORGANIZATIONS_REQUESTED, completed: false }
 }
@@ -79,6 +83,39 @@ const createOrganizations = (org) => {
   }
 }
 
+const updateOrganizationsRequested = () => {
+  return { type: UPDATE_ORGANIZATIONS_REQUESTED, completed: false }
+}
+
+const updateOrganizationsSuccess = (response) => {
+  return { type: UPDATE_ORGANIZATIONS_SUCCESS, completed: true, organizations: response }
+}
+
+const updateOrganizationsError = (error) => {
+  return { type: UPDATE_ORGANIZATIONS_ERROR, completed: true, error }
+}
+
+const updateOrganization = (organization) => {
+  validToken()
+  return (dispatch) => {
+    return dispatch(loggedIn()).then(userResponse => {
+      dispatch(updateOrganizationsRequested())
+      return axios
+        .put(`${api.API_URL}/organizations/update`, organization)
+        .then(response => {
+          dispatch(addNotification('actions.orgs.update.success'))
+          return dispatch(updateOrganizationsSuccess(response.data))
+        })
+        .catch(error => {
+          dispatch(addNotification('actions.orgs.update.error'))
+          // eslint-disable-next-line no-console
+          console.log('error to fetch organizations', error)
+          return dispatch(updateOrganizationsError(error))
+        })
+    })
+  }
+}
+
 export {
   FETCH_ORGANIZATIONS_REQUESTED,
   FETCH_ORGANIZATIONS_SUCCESS,
@@ -93,5 +130,9 @@ export {
   createOrganizationsRequested,
   createOrganizationsSuccess,
   createOrganizationsError,
-  createOrganizations
+  createOrganizations,
+  UPDATE_ORGANIZATIONS_REQUESTED,
+  UPDATE_ORGANIZATIONS_SUCCESS,
+  UPDATE_ORGANIZATIONS_ERROR,
+  updateOrganization
 }

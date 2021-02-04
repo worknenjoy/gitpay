@@ -37,10 +37,9 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
       }).then(response => {
         if (!response && !response.title) return false
         const issueDataJsonGithub = JSON.parse(response)
-        console.log('issueDataJsonGithub', issueDataJsonGithub)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
         if (!taskParameters.description) taskParameters.description = issueDataJsonGithub.body
-        return project(userOrCompany, projectName, userId).then(p => {
+        return project(userOrCompany, projectName, userId, 'github').then(p => {
           return p
             .createTask(taskParameters)
             .then(async task => {

@@ -307,7 +307,12 @@ class Profile extends Component {
                     <Route
                       exact
                       path='/profile/user/tasks'
-                      component={ (props) => <UserTasksListContainer { ...props} createOrganizations={this.props.createOrganizations} organizations={this.props.organizations} history={this.props.history} /> }
+                      component={ (props) => <UserTasksListContainer { ...props} 
+                        createOrganizations={this.props.createOrganizations}
+                        updateOrganization={this.props.updateOrganization}
+                        organizations={this.props.organizations}
+                        history={this.props.history} 
+                      /> }
                     />
                   }
                   { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&

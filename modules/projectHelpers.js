@@ -1,6 +1,6 @@
 const models = require('../models')
 
-const project = async (userOrCompany, projectName, userId) => {
+const project = async (userOrCompany, projectName, userId, provider) => {
   try {
     const organizationExist = await models.Organization.find(
       {
@@ -28,7 +28,7 @@ const project = async (userOrCompany, projectName, userId) => {
       }
     }
     else {
-      const organization = await models.Organization.create({ name: userOrCompany, UserId: userId })
+      const organization = await models.Organization.create({ name: userOrCompany, UserId: userId, provider: provider })
       const project = await organization.createProject({ name: projectName })
       return project
     }

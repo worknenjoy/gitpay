@@ -384,7 +384,7 @@ const listTasks = ({ projectId, userId }) => {
     dispatch(listTaskRequested())
     return axios
       .get(api.API_URL + '/tasks/list', {
-        params: { projectId, userId }
+        params: { projectId, userId } 
       })
       .then(response => {
         return dispatch(listTaskSuccess(response))

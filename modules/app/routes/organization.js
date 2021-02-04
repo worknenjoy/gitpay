@@ -9,5 +9,6 @@ const secure = require('./secure')
 
 router.use(secure)
 router.post('/create', controllers.createOrganization)
+router.put('/update', controllers.updateOrganization)
 
 module.exports = router

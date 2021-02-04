@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import SvgIcon from '@material-ui/core/SvgIcon';
-import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
-
+import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
-import Collapse from '@material-ui/core/Collapse';
+import TreeView from '@material-ui/lab/TreeView'
+import TreeItem from '@material-ui/lab/TreeItem'
+import Collapse from '@material-ui/core/Collapse'
 import Avatar from '@material-ui/core/Avatar'
+const logoGithub = require('../../images/github-logo-alternative.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
+
 import {
   Lock,
   LockOpen
@@ -16,6 +18,7 @@ import {
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 
 import Organizations from './organizations'
+import OrganizationUpdate from './organization-update'
 
 function MinusSquare(props) {
   return (
@@ -84,10 +87,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserTasksList({ createOrganizations, organizations, user, history }) {
+export default function UserTasksList({ createOrganizations, updateOrganization, organizations, user, history }) {
   const classes = useStyles();
-
-  console.log('organizations', user.Organizations)
 
   return (
     <div>
@@ -105,7 +106,7 @@ export default function UserTasksList({ createOrganizations, organizations, user
         </div>
       } 
       <Typography variant='h5' style={{marginTop: 20, marginBottom: 20}}>
-          Your Organization tree
+          Organizations you own on Gitpay
       </Typography>
       <TreeView
         className={classes.root}
@@ -117,6 +118,23 @@ export default function UserTasksList({ createOrganizations, organizations, user
         { user && user.Organizations.map((o, i) => <StyledTreeItem nodeId={i} label={
           <React.Fragment>
             <span>{o.name}</span>
+            { !o.provider ?
+              (<OrganizationUpdate
+                updateOrganization={ updateOrganization }
+                organization={o}
+              />) : (
+                o.provider === 'github' ? 
+                <span style={{display: 'inline-block'}}>
+                  <Avatar style={{ marginLeft: 10, width: 16, height: 16, backgroundColor: 'black'}}>
+                    <img width={12} src={logoGithub} />
+                  </Avatar></span> : 
+                  <span style={{display: 'inline-block'}}>
+                    <Avatar style={{ width: 16, height: 16, backgroundColor: 'black'}}>
+                      <img width={12} src={logoBitbucket} />
+                    </Avatar>
+                  </span>
+              )
+            }
           </React.Fragment>
         }>
           { o && o.Projects.map((p, j) => <StyledTreeItem nodeId={`${i}-${j}`} label={

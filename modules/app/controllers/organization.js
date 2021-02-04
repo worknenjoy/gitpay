@@ -11,3 +11,15 @@ exports.createOrganization = (req, res) => {
       res.send(error)
     })
 }
+
+exports.updateOrganization = (req, res) => {
+  req.body.userId = req.user.id
+  Organizations.organizationUpdate(req.body)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(error)
+    })
+}
