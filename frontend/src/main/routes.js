@@ -20,7 +20,6 @@ export default props => (
   <HashRouter>
     <Switch>
       <Route path='/recruitment' component={ LandingPage } />
-      <Route exact path='/foo' component={ (p) => console.log(props) } />
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Redirect path='/tasks/explore' to='/tasks/all' />
