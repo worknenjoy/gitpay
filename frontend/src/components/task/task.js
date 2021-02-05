@@ -893,10 +893,11 @@ class Task extends Component {
                 </Typography>
               </ReactPlaceholder>
               }
-              <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
-                <FormattedMessage id='task.info.authors' defaultMessage='Author(s)' />
-              </Typography>
               { task.data.User &&
+              <React.Fragment>
+                <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
+                  <FormattedMessage id='task.info.authors' defaultMessage='Author(s)' />
+                </Typography>
                 <AuthorList
                   logged={ this.props.logged }
                   user={ this.props.user }
@@ -909,16 +910,19 @@ class Task extends Component {
                         name: task.data.User.name,
                         email: task.data.User.email,
                         href: task.data.User.website
-                      },
+                      }  
+                      ,
                       {
                         provider: task.data.provider,
-                        name: task.data.metadata && task.data.metadata.issue.user.login,
-                        href: task.data.metadata && task.data.metadata.issue.user.html_url,
-                        avatar_url: task.data.metadata && task.data.metadata.issue.user.avatar_url
+                        name: task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata.user,
+                        href: task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : '',
+                        avatar_url: task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''
                       }
-                    ]
-                  } />
-              }
+                    ] 
+                   } />
+                   </React.Fragment>
+                }
+              { /*
               <Typography variant='subtitle2' style={ { marginTop: 10, marginBottom: 10 } }>
                 <FormattedMessage id='task.claim.title' defaultMessage='Are you the original author of this issue?' />
               </Typography>
@@ -957,6 +961,7 @@ class Task extends Component {
                   />
                 ) }
               </div>
+              */}
               { !this.taskOwner() &&
               <div style={ { marginBottom: 80 } }>
                 <Button
@@ -978,7 +983,7 @@ class Task extends Component {
                   onOpen={ () => this.setState({ reportIssueDialog: true }) }
                 />
               </div>
-
+            
               }
             </Grid>
             <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 4 }>

@@ -32,7 +32,8 @@ export const CardList = styled.div`
 
 export const CardMedia = styled(BaseCardMedia)`
   width: 48px;
-  height: 48px;
+  height: 60px;
   margin-top: 20px;
+  margin-bottom: -10px;
   display: inline-block !important;
 `

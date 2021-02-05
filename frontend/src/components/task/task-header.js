@@ -22,6 +22,9 @@ import Constants from '../../consts'
 import TaskStatusIcons from './task-status-icons'
 import TaskLabels from './task-labels'
 
+const logoGithub = require('../../images/github-logo.png')
+const logoBitbucket = require('../../images/bitbucket-logo.png')
+
 const TaskHeaderContainer = styled.div`
   box-sizing: border-box;
   position: relative;
@@ -171,6 +174,10 @@ class TaskHeader extends React.Component {
               <Typography variant='h4' align='left' gutterBottom>
                 { task.data.title }
                 <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
+                { task.data.provider && 
+                  <a onClick={() => window.location.href = task.data.url }>
+                    <img width='24' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } /> 
+                  </a>}
               </Typography>
             </ReactPlaceholder>
             { task.data.metadata &&

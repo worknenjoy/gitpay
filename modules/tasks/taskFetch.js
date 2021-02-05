@@ -175,6 +175,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
                 provider: data.dataValues.provider,
+                User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
+                Project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues },
                 metadata: {
                   id: issueId,
                   user: userOrCompany,

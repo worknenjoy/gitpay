@@ -21,12 +21,14 @@ import {
 } from '@material-ui/core'
 import {
   LibraryBooks,
-  CreditCard,
+  Home,
   Tune,
   Person,
   ArrowBack,
   Settings,
-  FaceSharp
+  FaceSharp,
+  Business,
+  AccountBalance
 } from '@material-ui/icons'
 
 import classNames from 'classnames'
@@ -471,6 +473,28 @@ class Profile extends Component {
                     <div className={ classes.row }>
                     <Paper className={ classes.menuContainer } style={ { marginTop: 40, marginBottom: 20 } }>
                       <MenuList>
+                        <MenuItem
+                          onClick={ () =>
+                            this.props.history.push('/profile')
+                          }
+                          className={ classes.menuItem }
+                          selected={ this.state.selected === 0 }
+                        >
+                          <ListItemIcon className={ classes.icon }>
+                            <Home />
+                          </ListItemIcon>
+                          <ListItemText
+                            classes={ { primary: classes.primary } }
+                            primary={
+                              <span>
+                                <FormattedMessage
+                                  id='account.profile.home.link.label'
+                                  defaultMessage='Profile home'
+                                />
+                              </span>
+                            }
+                          />
+                        </MenuItem>
                       { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                         <MenuItem
                           onClick={ () =>
@@ -480,15 +504,15 @@ class Profile extends Component {
                           selected={ this.state.selected === 0 }
                         >
                           <ListItemIcon className={ classes.icon }>
-                            <LibraryBooks />
+                            <Business />
                           </ListItemIcon>
                           <ListItemText
                             classes={ { primary: classes.primary } }
                             primary={
                               <span>
                                 <FormattedMessage
-                                  id='account.profile.issues.maintainer'
-                                  defaultMessage='Your issues'
+                                  id='account.profile.organization.maintainer'
+                                  defaultMessage='Your organizations'
                                 />
                               </span>
                             }
@@ -527,15 +551,15 @@ class Profile extends Component {
                           selected={ this.state.selected === 1 }
                         >
                           <ListItemIcon className={ classes.icon }>
-                            <CreditCard />
+                            <AccountBalance />
                           </ListItemIcon>
                           <ListItemText
                             classes={ { primary: classes.primary } }
                             primary={
                               <span>
                                 <FormattedMessage
-                                  id='account.profile.payment.setup'
-                                  defaultMessage='Setup payment'
+                                  id='account.profile.bank.setup'
+                                  defaultMessage='Setup bank account'
                                 />
                               </span>
                             }

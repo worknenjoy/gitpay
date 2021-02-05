@@ -14,9 +14,11 @@ import {
 import { Card, CardList, CardMedia } from './ProfileStyles'
 import WelcomeUser from '../session/welcome-user'
 
-const taskIcon = require('../../images/task-icon.png')
-const paymentIcon = require('../../images/payment-icon.png')
-const toolsIcon = require('../../images/tools-icon.png')
+const organizationIcon = require('../../images/icons/noun_project management_3063542.svg')
+const toolsIcon = require('../../images/icons/noun_project management_3063515.svg')
+const preferencesIcon = require('../../images/icons/noun_project management_3063532.svg')
+const taskIcon = require('../../images/icons/noun_project management_3063547.svg')
+const configIcon = require('../../images/icons/noun_project management_3063514.svg')
 
 const styles = theme => ({
   cardActions: {
@@ -94,19 +96,19 @@ class ProfileOptions extends Component {
                   id='account.profile.tasks.mine.caption'
                   defaultMessage='Issues'
                 >
-                  { msg => <CardMedia image={ taskIcon } title={ msg } /> }
+                  { msg => <CardMedia image={ organizationIcon } title={ msg } /> }
                 </FormattedMessage>
                 <CardContent>
                   <Typography variant='h6'>
                     <FormattedMessage
                       id='account.profile.tasks.mine.headline'
-                      defaultMessage='Your issues'
+                      defaultMessage='Your organizations'
                     />
                   </Typography>
                   <Typography variant='body2'>
                     <FormattedMessage
                       id='account.profile.tasks.mine.description'
-                      defaultMessage='The issues you created'
+                      defaultMessage='Organizations created from issues'
                     />
                   </Typography>
                 </CardContent>
@@ -114,8 +116,8 @@ class ProfileOptions extends Component {
                   <Button size='small' color='primary'>
                     <Link to={ '/profile/user/tasks' }>
                       <FormattedMessage
-                        id='account.profile.tasks.mine.link.tasks'
-                        defaultMessage='See issues'
+                        id='account.profile.tasks.mine.link'
+                        defaultMessage='See your organizations'
                       />
                     </Link>
                   </Button>
@@ -128,19 +130,19 @@ class ProfileOptions extends Component {
                 id='account.profile.tasks.payment.caption'
                 defaultMessage='Payment'
               >
-                { msg => <CardMedia image={ paymentIcon } title={ msg } /> }
+                { msg => <CardMedia image={ toolsIcon } title={ msg } /> }
               </FormattedMessage>
               <CardContent>
                 <Typography variant='h6'>
                   <FormattedMessage
                     id='account.profile.tasks.paid.headline'
-                    defaultMessage='Receiving account'
+                    defaultMessage='Bank account'
                   />
                 </Typography>
                 <Typography variant='body2'>
                   <FormattedMessage
                     id='account.profile.tasks.bank.desc'
-                    defaultMessage='Register your bank account to receive payments for issues you solved'
+                    defaultMessage='Register your bank accounts'
                   />
                 </Typography>
               </CardContent>
@@ -148,8 +150,8 @@ class ProfileOptions extends Component {
                 <Button size='small' color='primary'>
                   <Link to={ '/profile/payment-options' }>
                     <FormattedMessage
-                      id='account.profile.tasks.payment.setup'
-                      defaultMessage='Setup payment'
+                      id='account.profile.tasks.account.setup'
+                      defaultMessage='Setup bank account'
                     />
                   </Link>
                 </Button>
@@ -157,7 +159,7 @@ class ProfileOptions extends Component {
             </Card>
             }
             <Card>
-              <CardMedia image={ toolsIcon } title='Contemplative Reptile' />
+              <CardMedia image={ preferencesIcon } title='Contemplative Reptile' />
               <CardContent>
                 <Typography variant='h6'>
                   <FormattedMessage
@@ -184,7 +186,7 @@ class ProfileOptions extends Component {
               </CardActions>
             </Card>
             <Card>
-              <CardMedia image={ toolsIcon } title='Contemplative Reptile' />
+              <CardMedia image={ configIcon } title='Contemplative Reptile' />
               <CardContent>
                 <Typography variant='h6'>
                   <FormattedMessage

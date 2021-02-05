@@ -88,13 +88,12 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
       return requestPromise({
         uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       }).then(response => {
-        return models.Task
-          .build(
-            taskParameters
-          )
-          .save()
-          .then(data => {
-            return data.dataValues
+        return project(userOrCompany, projectName, userId, 'bitbucket').then(p => {
+          return p
+            .createTask(taskParameters)
+            .then(task => {
+              return task.dataValues
+            })
           })
       })
 

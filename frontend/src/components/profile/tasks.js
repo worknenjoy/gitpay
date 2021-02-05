@@ -92,19 +92,6 @@ export default function UserTasksList({ createOrganizations, updateOrganization,
 
   return (
     <div>
-      { organizations &&
-        <div>
-          <Typography variant='h5' component='h3' style={{marginTop: 20, marginBottom: 10}}>
-            <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
-          </Typography>
-          <Typography component='p'>
-            <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your public organizations that you can import to Gitpay' />
-          </Typography>
-          <div style={ { marginTop: 20, marginBottom: 40 } }>
-            <Organizations user={ user } data={ organizations } onImport={ createOrganizations } />
-          </div>
-        </div>
-      } 
       <Typography variant='h5' style={{marginTop: 20, marginBottom: 20}}>
           Organizations you own on Gitpay
       </Typography>
@@ -129,7 +116,7 @@ export default function UserTasksList({ createOrganizations, updateOrganization,
                     <img width={12} src={logoGithub} />
                   </Avatar></span> : 
                   <span style={{display: 'inline-block'}}>
-                    <Avatar style={{ width: 16, height: 16, backgroundColor: 'black'}}>
+                    <Avatar style={{ marginLeft: 10, width: 16, height: 16, backgroundColor: 'black'}}>
                       <img width={12} src={logoBitbucket} />
                     </Avatar>
                   </span>
@@ -154,6 +141,19 @@ export default function UserTasksList({ createOrganizations, updateOrganization,
             </StyledTreeItem> ) }    
         </StyledTreeItem> ) }
       </TreeView>
+      { organizations &&
+        <div>
+          <Typography variant='h5' component='h3' style={{marginTop: 20, marginBottom: 10}}>
+            <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+          </Typography>
+          <Typography component='p'>
+            <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your public organizations that you can import to Gitpay' />
+          </Typography>
+          <div style={ { marginTop: 20, marginBottom: 40 } }>
+            <Organizations user={ user } data={ organizations } onImport={ createOrganizations } />
+          </div>
+        </div>
+      } 
     </div>
   );
 }

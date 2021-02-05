@@ -5,7 +5,7 @@ module.exports = {
     queryInterface.addColumn(
       'Tasks',
       'description',
-      Sequelize.STRING
+      Sequelize.TEXT
     );
   },
 
