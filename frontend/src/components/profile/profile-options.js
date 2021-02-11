@@ -17,6 +17,7 @@ import WelcomeUser from '../session/welcome-user'
 const organizationIcon = require('../../images/icons/noun_project management_3063542.svg')
 const toolsIcon = require('../../images/icons/noun_project management_3063515.svg')
 const preferencesIcon = require('../../images/icons/noun_project management_3063532.svg')
+const generalSettingsIcon = require('../../images/icons/noun_project management_3063521.svg')
 const taskIcon = require('../../images/icons/noun_project management_3063547.svg')
 const configIcon = require('../../images/icons/noun_project management_3063514.svg')
 
@@ -41,7 +42,7 @@ class ProfileOptions extends Component {
         ) }
         <div>
           <div>
-            <Typography variant='h5' component='h3'>
+            <Typography style={{marginTop: 10}} variant='h5' component='h3'>
               <FormattedMessage
                 id='account.profile.welcome.headline'
                 defaultMessage='Welcome to Gitpay!'
@@ -158,19 +159,20 @@ class ProfileOptions extends Component {
               </CardActions>
             </Card>
             }
+            { user.Types && user.Types.map(t => t.name).includes('contributor') && 
             <Card>
               <CardMedia image={ preferencesIcon } title='Contemplative Reptile' />
               <CardContent>
                 <Typography variant='h6'>
                   <FormattedMessage
-                    id='account.profile.preferences.headline'
-                    defaultMessage='Preferences'
+                    id='account.profile.skills.headline'
+                    defaultMessage='Skills'
                   />
                 </Typography>
                 <Typography variant='body2'>
                   <FormattedMessage
-                    id='account.profile.preferences.description'
-                    defaultMessage='Setup your account with your preferences'
+                    id='account.profile.skill.preferences.description'
+                    defaultMessage='Setup your skill to receive matching offers'
                   />
                 </Typography>
               </CardContent>
@@ -178,13 +180,14 @@ class ProfileOptions extends Component {
                 <Button size='small' color='primary'>
                   <Link to='/profile/preferences'>
                     <FormattedMessage
-                      id='account.profile.preferences.link'
-                      defaultMessage='Setup preferences'
+                      id='account.profile.skills.link'
+                      defaultMessage='Setup skills preferences'
                     />
                   </Link>
                 </Button>
               </CardActions>
             </Card>
+            }
             <Card>
               <CardMedia image={ configIcon } title='Contemplative Reptile' />
               <CardContent>
@@ -207,6 +210,33 @@ class ProfileOptions extends Component {
                     <FormattedMessage
                       id='account.profile.roles.link'
                       defaultMessage='Setup your roles on Gitpay'
+                    />
+                  </Link>
+                </Button>
+              </CardActions>
+            </Card>
+            <Card>
+              <CardMedia image={ generalSettingsIcon } title='General settings' />
+              <CardContent>
+                <Typography variant='h6'>
+                  <FormattedMessage
+                    id='account.profile.settings.headline'
+                    defaultMessage='General settings'
+                  />
+                </Typography>
+                <Typography variant='body2'>
+                  <FormattedMessage
+                    id='account.profile.settings.description'
+                    defaultMessage='Set your general settings on Gitpay to setups your account'
+                  />
+                </Typography>
+              </CardContent>
+              <CardActions className={ classes.cardActions }>
+                <Button size='small' color='primary'>
+                  <Link to='/profile/settings'>
+                    <FormattedMessage
+                      id='account.profile.settings.link'
+                      defaultMessage='Your general settings'
                     />
                   </Link>
                 </Button>

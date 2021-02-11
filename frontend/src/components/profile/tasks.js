@@ -141,7 +141,7 @@ export default function UserTasksList({ createOrganizations, updateOrganization,
             </StyledTreeItem> ) }    
         </StyledTreeItem> ) }
       </TreeView>
-      { organizations &&
+      { (organizations && organizations.length > 0) && 
         <div>
           <Typography variant='h5' component='h3' style={{marginTop: 20, marginBottom: 10}}>
             <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />

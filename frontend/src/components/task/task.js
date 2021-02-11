@@ -14,6 +14,7 @@ import renderHTML from 'react-render-html'
 import marked from 'marked'
 
 import {
+  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -750,6 +751,7 @@ class Task extends Component {
         
         { !isOwner &&
           <Button
+            disabled={this.props.task.data.paid}
             onClick={ this.handleAssignDialogOpen }
             size='small'
             color='secondary'
@@ -1001,7 +1003,7 @@ class Task extends Component {
                 ) }
               </div>
               */}
-              { !this.taskOwner() &&
+              
               <div style={ { marginBottom: 80 } }>
                 <Button
                   style={ { display: 'inline-block', marginTop: 40 } }
@@ -1022,7 +1024,7 @@ class Task extends Component {
                   onOpen={ () => this.setState({ reportIssueDialog: true }) }
                 />
               </div>
-              }
+              
               { this.taskOwner() && 
               <div>
                 <Button
@@ -1100,6 +1102,7 @@ class Task extends Component {
                     <MoneyIcon />
                     <Typography variant='h6' className={ classes.taskInfoContent }>
                       { task.values.available }
+                      { task.data.paid && <Chip style={{marginLeft: 10}} variant='small' label='paid' />}
                     </Typography>
                   </div>
                 </div>
@@ -1153,6 +1156,7 @@ class Task extends Component {
                       fullWidth
                       size='large'
                       variant='contained'
+                      disabled={task.data.paid}
                       style={ {
                         marginRight: 10,
                         display: 'flex',

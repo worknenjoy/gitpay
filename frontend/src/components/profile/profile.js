@@ -580,8 +580,8 @@ class Profile extends Component {
                             primary={
                               <span>
                                 <FormattedMessage
-                                  id='account.profile.preferences'
-                                  defaultMessage='Preferences'
+                                  id='account.profile.skills'
+                                  defaultMessage='Skills'
                                 />
                               </span>
                             }
