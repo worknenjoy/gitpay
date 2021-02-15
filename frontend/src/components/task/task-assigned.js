@@ -36,7 +36,6 @@ class TaskAssigned extends Component {
   static propTypes = {
     task: PropTypes.object,
     isOwner: PropTypes.bool,
-    status: PropTypes.string,
     classes: PropTypes.object,
     user: PropTypes.object,
     removeAssignment: PropTypes.func,

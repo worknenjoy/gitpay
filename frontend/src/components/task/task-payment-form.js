@@ -3,15 +3,12 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import MotorcycleIcon from '@material-ui/icons/Motorcycle'
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
-import FlightIcon from '@material-ui/icons/Flight'
 import CheckIcon from '@material-ui/icons/Check'
 
 import {
   Card,
   CardContent,
   CardMedia,
-  CardActions,
-  CardActionArea,
   Typography,
   Button,
   Chip,
@@ -48,8 +45,8 @@ class TaskPaymentForm extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.task.private ? this.handlePlan('private') : this.handlePlan('open source') 
+  componentDidMount () {
+    this.props.task.private ? this.handlePlan('private') : this.handlePlan('open source')
   }
 
   formatCurrency = (amount) => {
@@ -162,11 +159,11 @@ class TaskPaymentForm extends Component {
                   md={ 12 }
                   lg={ 12 } >
                   { this.props.plan === 'open source' ? (
-                  <Grid item className={ classes.planGridItem }>
-                    <Card className={ classes.planGrid }
-                      { ...this.state.checkPlan('open source')}
-                    >
-                      
+                    <Grid item className={ classes.planGridItem }>
+                      <Card className={ classes.planGrid }
+                        { ...this.state.checkPlan('open source') }
+                      >
+
                         <CardContent className={ classes.planGridContent }>
                           <div className={ classes.planButton }>
                             <MotorcycleIcon color={ `${this.state.checkPlan('open source') ? 'primary' : 'disabled'}` } className={ classes.planIcon } />
@@ -182,7 +179,7 @@ class TaskPaymentForm extends Component {
                           </Typography>
 
                           <div className={ classes.planBullets }
-                            
+
                           >
                             <Typography>
                               <CheckIcon className={ classes.checkIcon } fontSize='small' color='primary' />
@@ -195,15 +192,15 @@ class TaskPaymentForm extends Component {
                             </Typography>
                           </div>
                         </CardContent>
-                      
-                    </Card>
-                  </Grid>
+
+                      </Card>
+                    </Grid>
                   ) : (
-                  <Grid item className={ classes.planGridItem } >
-                    <Card className={ classes.planGrid }
-                      { ...this.state.checkPlan('private') }
-                    >
-                      
+                    <Grid item className={ classes.planGridItem } >
+                      <Card className={ classes.planGrid }
+                        { ...this.state.checkPlan('private') }
+                      >
+
                         <CardContent className={ classes.planGridContent }>
                           <div className={ classes.planButton }>
                             <DriveEtaIcon color={ `${this.state.checkPlan('private') ? 'primary' : 'disabled'}` } className={ classes.planIcon } />
@@ -219,7 +216,7 @@ class TaskPaymentForm extends Component {
                           </Typography>
 
                           <div className={ classes.planBullets }
-                            
+
                           >
                             <Typography>
                               <CheckIcon className={ classes.checkIcon } fontSize='small' color='primary' />
@@ -232,10 +229,10 @@ class TaskPaymentForm extends Component {
                             </Typography>
                           </div>
                         </CardContent>
-                      
-                    </Card>
-                  </Grid>
-                  )}
+
+                      </Card>
+                    </Grid>
+                  ) }
                 </Grid>
 
                 <Button

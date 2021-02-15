@@ -432,7 +432,7 @@ class Task extends Component {
       this.props.changeTab(1)
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/interested`) {
-      this.setState({assignIssueDialog: true})
+      this.setState({ assignIssueDialog: true })
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
       this.props.changeTab(3)
@@ -795,7 +795,6 @@ class Task extends Component {
       return <AssignActions hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
     }
 
-
     // Error handling when task does not exist
     if (task.completed && !task.values) {
       this.props.history.push('/404')
@@ -919,7 +918,7 @@ class Task extends Component {
             <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 80 } }>
               <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } history={ this.props.history } project={ project } />
               { this.props.logged ? (
-                <TaskPaymentForm { ...this.props } plan={this.props.task.data.private ? 'private' : 'open source'} open={ this.state.paymentForm } />
+                <TaskPaymentForm { ...this.props } plan={ this.props.task.data.private ? 'private' : 'open source' } open={ this.state.paymentForm } />
               ) : (
                 <Collapse in={ this.state.paymentForm }>
                   <div className={ classes.mainBlock } style={ { marginBottom: 40 } }>
@@ -1001,47 +1000,47 @@ class Task extends Component {
                     color='primary'
                     variant='text'
                   >
-                      <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
+                    <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
                     <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
-                  </Button>}
-                  {task.data.assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 && 
+                  </Button> }
+                  { task.data.assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 &&
                     <Button
-                    style={ { display: 'inline-block', marginBottom: 2 } }
-                    onClick={ this.handleAssignDialog }
-                    size='small'
-                    color='primary'
-                    variant='text'
-                  >
-                    
-                  <FormattedMessage id='task.assign.action.review' defaultMessage='Review assignment' />
-                    <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
-                  </Button>
+                      style={ { display: 'inline-block', marginBottom: 2 } }
+                      onClick={ this.handleAssignDialog }
+                      size='small'
+                      color='primary'
+                      variant='text'
+                    >
+
+                      <FormattedMessage id='task.assign.action.review' defaultMessage='Review assignment' />
+                      <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
+                    </Button>
                   }
                   <TaskInterested assigns={ task.data && task.data.assigns } />
-                  <Dialog fullScreen open={this.state.assignIssueDialog} onClose={() => this.setState({ assignIssueDialog: false})}>
+                  <Dialog fullScreen open={ this.state.assignIssueDialog } onClose={ () => this.setState({ assignIssueDialog: false }) }>
                     <DialogContent>
-                        <RegularCard
-                          headerColor='green'
-                          cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
-                          cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
-                          content={
-                            <Table
-                              tableHeaderColor='warning'
-                              tableHead={ [
-                                this.props.intl.formatMessage(messages.interestedTableLabelUser),
-                                this.props.intl.formatMessage(messages.interestedTableLabelWhen),
-                                this.props.intl.formatMessage(messages.interestedTableLabelActions)
-                              ] }
-                              tableData={ task && task.data.assigns && task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
-                            />
-                          }
-                        />
-                      
+                      <RegularCard
+                        headerColor='green'
+                        cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
+                        cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
+                        content={
+                          <Table
+                            tableHeaderColor='warning'
+                            tableHead={ [
+                              this.props.intl.formatMessage(messages.interestedTableLabelUser),
+                              this.props.intl.formatMessage(messages.interestedTableLabelWhen),
+                              this.props.intl.formatMessage(messages.interestedTableLabelActions)
+                            ] }
+                            tableData={ task && task.data.assigns && task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
+                          />
+                        }
+                      />
+
                     </DialogContent>
                     <DialogActions>
                       <Button
                         style={ { display: 'inline-block', marginBottom: 2 } }
-                        onClick={ () => this.setState({assignIssueDialog: false}) }
+                        onClick={ () => this.setState({ assignIssueDialog: false }) }
                         size='small'
                         color='secondary'
                         variant='text'

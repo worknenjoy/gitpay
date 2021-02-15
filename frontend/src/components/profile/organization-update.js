@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { withStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
-import Avatar from '@material-ui/core/Avatar'
-import TextField from '@material-ui/core/TextField'
 import {
   Dialog,
   DialogTitle,
@@ -43,7 +41,6 @@ class OrganizationUpdate extends Component {
   }
 
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     organization: PropTypes.object,
     updateOrganization: PropTypes.func
   }
