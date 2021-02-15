@@ -32,25 +32,25 @@ const styles = theme => ({
   }
 })
 
-const clientimg1 = require('../../images/clients/client1.png')
-const clientimg2 = require('../../images/clients/client2.png')
-const clientimg3 = require('../../images/clients/client3.png')
+const clientimg1 = require('../../images/clients/electron-logo.png')
+const clientimg2 = require('../../images/clients/etherpad-logo.png')
+const clientimg3 = require('../../images/clients/sitespeedio-logo.png')
 
 const clients = [
   {
-    title: 'Grafana',
+    title: 'Electron',
     img: clientimg1,
-    link: 'https://grafana.com/'
+    link: 'https://www.electron.build/'
   },
   {
-    title: 'Retro Share',
+    title: 'Etherpad',
     img: clientimg2,
-    link: 'https://retroshare.cc/'
+    link: 'https://etherpad.org/'
   },
   {
-    title: 'Vagrant',
+    title: 'Sitespeed.io',
     img: clientimg3,
-    link: 'https://www.vagrantup.com/'
+    link: 'https://sitespeed.io'
   },
 ]
 class Clientlist extends Component {
@@ -61,8 +61,8 @@ class Clientlist extends Component {
       <div className={ classes.layout }>
         <div className={ classes.heroContent }>
           <MainTitle style={ { width: 'auto' } }>
-            <Typography variant='h5' gutterBottom>
-              <FormattedMessage id='welcome.clientlist.title' defaultMessage='Projects using Gitpay' />
+            <Typography variant='h6' gutterBottom>
+              <FormattedMessage id='welcome.clientlist.main.title' defaultMessage='Companies using Gitpay' />
             </Typography>
           </MainTitle>
         </div>

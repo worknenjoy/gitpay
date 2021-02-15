@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function organizationUpdate(organizationParameters) {
+module.exports = Promise.method(function organizationUpdate (organizationParameters) {
   return models.Organization
     .update(organizationParameters, {
       where: {
@@ -10,7 +10,7 @@ module.exports = Promise.method(function organizationUpdate(organizationParamete
       returning: true,
       plain: true
     }).then(organization => {
-      if(!organization) return false
+      if (!organization) return false
       return organization[1]
     }).catch(error => {
       // eslint-disable-next-line no-console

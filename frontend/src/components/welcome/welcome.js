@@ -183,11 +183,6 @@ class Welcome extends Component {
               label={ this.props.intl.formatMessage(messages.topMenu1) }
             />
             <Tab
-              id='clients'
-              value={ 1 }
-              label={ this.props.intl.formatMessage(messages.topMenu9) }
-            />
-            <Tab
               id='contrib'
               value={ 2 }
               label={ this.props.intl.formatMessage(messages.topMenu2) }
@@ -196,6 +191,11 @@ class Welcome extends Component {
               id='companies'
               value={ 3 }
               label={ this.props.intl.formatMessage(messages.topMenu3) }
+            />
+            <Tab
+              id='clients'
+              value={ 1 }
+              label={ this.props.intl.formatMessage(messages.topMenu9) }
             />
             <Tab
               id='collab'
@@ -279,10 +279,6 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </MainBanner>
-        <Section ref='clients'>
-          <Clientlist />
-        </Section>
-
         <Section ref='contrib'>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
@@ -418,7 +414,9 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-
+        <Section ref='clients'>
+          <Clientlist />
+        </Section>
         <Section ref='collab'>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>

@@ -111,6 +111,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               const responseGithub = {
                 id: data.dataValues.id,
                 url: issueUrl,
+                private: data.dataValues.private,
                 title: data.dataValues.title,
                 description: data.dataValues.description,
                 value: data.dataValues.value || 0,
@@ -166,6 +167,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               const responseBitbucket = {
                 id: data.dataValues.id,
                 url: issueUrl,
+                private: data.dataValues.private,
                 title: data.dataValues.title,
                 value: data.dataValues.value || 0,
                 deadline: data.dataValues.deadline,

@@ -37,7 +37,7 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
           return {
             name: org.login,
             image: org.avatar_url,
-            organizations: orgExist, 
+            organizations: orgExist,
             imported: isImported
           }
         })

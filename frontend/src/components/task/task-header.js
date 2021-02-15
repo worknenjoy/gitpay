@@ -85,7 +85,7 @@ class TaskHeader extends React.Component {
 
   render () {
     const { classes, task, user, history } = this.props
-    
+
     const headerPlaceholder = (
       <div className='line-holder'>
         <RectShape
@@ -99,67 +99,67 @@ class TaskHeader extends React.Component {
       <TaskHeaderContainer>
         <Grid container>
           <Grid item xs={ 12 } sm={ 12 } md={ 8 }>
-           
-              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
-                ready={ task.completed }>
-                <div className={ classes.breadcrumbRoot }>
-                  { task.data.Project ? (
-                    <Breadcrumbs aria-label='breadcrumb' separator={ ' / ' }>
-                      { user && user.id ? (
-                        <Link href='/' color='inherit' onClick={ (e) => {
-                            e.preventDefault()
-                            history.push('/profile/user/tasks')
-                          } }>
-                          <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                            <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />
-                          </Typography>
-                        </Link>
-                      ) : (
-                        <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
-                          <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                            <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
-                          </Typography>
-                        </Link>
-                      )}
-                      <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+
+            <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
+              ready={ task.completed }>
+              <div className={ classes.breadcrumbRoot }>
+                { task.data.Project ? (
+                  <Breadcrumbs aria-label='breadcrumb' separator={ ' / ' }>
+                    { user && user.id ? (
+                      <Link href='/' color='inherit' onClick={ (e) => {
+                        e.preventDefault()
+                        history.push('/profile/user/tasks')
+                      } }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          { task.data.Project.Organization.name }
+                          <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />
                         </Typography>
                       </Link>
-                      <Link href={ `/#/organizations/${task.data.Project.OrganizationId}/projects/${task.data.Project.id}` } className={ classes.breadcrumb } color='inherit'>
-                        <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          { task.data.Project.name }
-                        </Typography>
-                      </Link>
-                      <Typography variant='subtitle2'>
-                        ...
-                      </Typography>
-                    </Breadcrumbs>
-                  ) : (
-                    <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' /> }>
+                    ) : (
                       <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
                           <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
                         </Typography>
                       </Link>
-                      <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
-                        <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          { task.data.metadata.company }
-                        </Typography>
-                      </Link>
-                      <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.repoUrl) }>
-                        <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
-                          { task.data.metadata.projectName }
-                        </Typography>
-                      </Link>
-                      <Typography variant='subtitle2'>
-                        ...
+                    ) }
+                    <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.Project.Organization.name }
                       </Typography>
-                    </Breadcrumbs>
-                  ) }
-                </div>
-              </ReactPlaceholder>
-            
+                    </Link>
+                    <Link href={ `/#/organizations/${task.data.Project.OrganizationId}/projects/${task.data.Project.id}` } className={ classes.breadcrumb } color='inherit'>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.Project.name }
+                      </Typography>
+                    </Link>
+                    <Typography variant='subtitle2'>
+                        ...
+                    </Typography>
+                  </Breadcrumbs>
+                ) : (
+                  <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' /> }>
+                    <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
+                      </Typography>
+                    </Link>
+                    <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.metadata.company }
+                      </Typography>
+                    </Link>
+                    <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.repoUrl) }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.metadata.projectName }
+                      </Typography>
+                    </Link>
+                    <Typography variant='subtitle2'>
+                        ...
+                    </Typography>
+                  </Breadcrumbs>
+                ) }
+              </div>
+            </ReactPlaceholder>
+
             <ReactPlaceholder ready={ task.completed }>
               <Chip
                 label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
@@ -174,10 +174,10 @@ class TaskHeader extends React.Component {
               <Typography variant='h4' align='left' gutterBottom>
                 { task.data.title }
                 <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
-                { task.data.provider && 
-                  <a onClick={() => window.location.href = task.data.url }>
-                    <img width='24' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } /> 
-                  </a>}
+                { task.data.provider &&
+                  <a onClick={ () => window.location.href = task.data.url }>
+                    <img width='24' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
+                  </a> }
               </Typography>
             </ReactPlaceholder>
             { task.data.metadata &&

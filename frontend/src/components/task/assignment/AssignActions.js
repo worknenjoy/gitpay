@@ -87,7 +87,7 @@ const AssignActions = ({ hash, actionAssign, loggedUser, isOwner, assign, task, 
   }
 
   return (
-    <div style={{marginTop: 10, marginLeft: 10 }}>
+    <div style={ { marginTop: 10, marginLeft: 10 } }>
       {
         <ModalReason callback={ (message) => handleAssign(task.id, assign.id, false, message) } open={ rejectModal } setOpen={ setRejectModal } />
       }

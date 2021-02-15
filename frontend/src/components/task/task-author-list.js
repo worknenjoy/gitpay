@@ -42,7 +42,7 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
         { authors && authors.map(a => {
           return (
             <React.Fragment>
-              {a.name && 
+              { a.name &&
               <ListItem alignItems='center'>
                 <ListItemAvatar>
                   { a.avatar_url ? (
@@ -64,7 +64,7 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
                   }
                 />
               </ListItem>
-            }
+              }
             </React.Fragment>
           )
         }) }

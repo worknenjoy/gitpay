@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
 import Avatar from '@material-ui/core/Avatar'
 import TextField from '@material-ui/core/TextField'
-import { 
+import {
   Dialog,
   DialogTitle,
   DialogContent,
@@ -18,7 +18,7 @@ import {
   Radio
 } from '@material-ui/core'
 
-import { 
+import {
   Sync as SyncIcon
 } from '@material-ui/icons'
 
@@ -75,13 +75,13 @@ class OrganizationUpdate extends Component {
 
     return (
       <React.Fragment>
-       <Chip
-          style={{marginLeft: 10}}
-          size="small"
-          deleteIcon={<SyncIcon />}
-          label="Couldnt obtain provider. Update now to sync"
-          color="secondary"
-          onDelete={() => this.setState({dialogOpen: true})}
+        <Chip
+          style={ { marginLeft: 10 } }
+          size='small'
+          deleteIcon={ <SyncIcon /> }
+          label='Couldnt obtain provider. Update now to sync'
+          color='secondary'
+          onDelete={ () => this.setState({ dialogOpen: true }) }
         />
         <Dialog open={ dialogOpen } onClose={ this.handleClose } aria-labelledby='form-dialog-title'>
           <DialogTitle id='form-dialog-title'>
@@ -92,17 +92,17 @@ class OrganizationUpdate extends Component {
               <FormattedMessage id='organization.update.dialog.desc' defaultMessage='We could find your provider. Please provide to us.' />
             </DialogContentText>
             <FormControl fullWidth>
-                <RadioGroup name={ 'reason' } value={ this.state.provider } onChange={ this.onChangeProvider }>
-                  <FormControlLabel id='organization.provider.github'
-                    value={ 'github' }
-                    label={ 'Github' }
-                    control={ <Radio color='primary' /> } />
-                  <FormControlLabel id='organization.provider.bitbucket'
-                    value={ 'bitbucket' }
-                    label={ 'Bitbucket' }
-                    control={ <Radio color='primary' /> } />
-                </RadioGroup>
-              </FormControl>
+              <RadioGroup name={ 'reason' } value={ this.state.provider } onChange={ this.onChangeProvider }>
+                <FormControlLabel id='organization.provider.github'
+                  value={ 'github' }
+                  label={ 'Github' }
+                  control={ <Radio color='primary' /> } />
+                <FormControlLabel id='organization.provider.bitbucket'
+                  value={ 'bitbucket' }
+                  label={ 'Bitbucket' }
+                  control={ <Radio color='primary' /> } />
+              </RadioGroup>
+            </FormControl>
           </DialogContent>
           <DialogActions>
             <Button onClick={ this.handleClose } color='primary'>

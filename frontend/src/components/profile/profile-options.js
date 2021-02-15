@@ -42,7 +42,7 @@ class ProfileOptions extends Component {
         ) }
         <div>
           <div>
-            <Typography style={{marginTop: 10}} variant='h5' component='h3'>
+            <Typography style={ { marginTop: 10 } } variant='h5' component='h3'>
               <FormattedMessage
                 id='account.profile.welcome.headline'
                 defaultMessage='Welcome to Gitpay!'
@@ -57,7 +57,7 @@ class ProfileOptions extends Component {
           </div>
 
           <CardList>
-            { user.Types && user.Types.map(t => t.name).includes('contributor') && 
+            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
               <Card>
                 <FormattedMessage
                   id='account.profile.tasks.caption'
@@ -91,7 +91,7 @@ class ProfileOptions extends Component {
                 </CardActions>
               </Card>
             }
-            { user.Types && user.Types.map(t => t.name).includes('maintainer') && 
+            { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
               <Card>
                 <FormattedMessage
                   id='account.profile.tasks.mine.caption'
@@ -125,7 +125,7 @@ class ProfileOptions extends Component {
                 </CardActions>
               </Card>
             }
-            { user.Types && user.Types.map(t => t.name).includes('contributor') && 
+            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Card>
               <FormattedMessage
                 id='account.profile.tasks.payment.caption'
@@ -159,7 +159,7 @@ class ProfileOptions extends Component {
               </CardActions>
             </Card>
             }
-            { user.Types && user.Types.map(t => t.name).includes('contributor') && 
+            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Card>
               <CardMedia image={ preferencesIcon } title='Contemplative Reptile' />
               <CardContent>

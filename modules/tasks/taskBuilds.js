@@ -90,11 +90,11 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
       }).then(response => {
         return project(userOrCompany, projectName, userId, 'bitbucket').then(p => {
           return p
-            .createTask(taskParameters)
+            .createTask({...taskParameters, private: true})
             .then(task => {
               return task.dataValues
             })
-          })
+        })
       })
 
     default:

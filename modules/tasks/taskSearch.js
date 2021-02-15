@@ -6,12 +6,12 @@ module.exports = Promise.method(function taskSearch (searchParams) {
     { private: null },
     { private: false }
   ] }
-  
+
   query = searchParams.projectId ? { ...query, ProjectId: searchParams.projectId } : query
   query = searchParams.userId ? { userId: searchParams.userId } : query
 
   console.log('query', query)
-  
+
   return models.Task
     .findAll(
       {

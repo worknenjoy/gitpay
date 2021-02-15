@@ -11,10 +11,10 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
-import { 
+import {
   WorkRounded as WorkRoundedIcon,
   Done as DoneIcon,
-  Sync as ImportIcon 
+  Sync as ImportIcon
 } from '@material-ui/icons'
 import { Typography } from '@material-ui/core'
 
@@ -95,14 +95,14 @@ class Organizations extends Component {
             { currentOrg && currentOrg.organizations &&
               <DialogContentText>
                 <FormattedMessage id='organization.dialog.exist' defaultMessage='We have an project imported already' />
-                  { currentOrg.organizations.map(o => {
-                    return (
-                      <div style={{marginTop: 20, marginBottom: 20}}>
-                        <Typography>Project: {o.name}</Typography>
-                        <Typography>User: {o.User && o.User.name}</Typography>
-                      </div>
-                    )
-                  }  )}
+                { currentOrg.organizations.map(o => {
+                  return (
+                    <div style={ { marginTop: 20, marginBottom: 20 } }>
+                      <Typography>Project: { o.name }</Typography>
+                      <Typography>User: { o.User && o.User.name }</Typography>
+                    </div>
+                  )
+                }) }
               </DialogContentText>
             }
             <DialogContentText>
@@ -123,7 +123,7 @@ class Organizations extends Component {
               <FormattedMessage id='organization.dialog.cancel' defaultMessage='Cancel' />
             </Button>
             { currentOrg && currentOrg.organizations && currentOrg.organizations.length ? (
-              <Button onClick={ this.handleImport } disabled={ true } color='primary'>
+              <Button onClick={ this.handleImport } disabled color='primary'>
                 <FormattedMessage id='organization.dialog.action.transfer' defaultMessage='Cant transfer now' />
               </Button>
             ) : (
@@ -131,7 +131,7 @@ class Organizations extends Component {
                 <FormattedMessage id='organization.dialog.action.import' defaultMessage='Import' />
               </Button>
             ) }
-            
+
           </DialogActions>
         </Dialog>
       </div>

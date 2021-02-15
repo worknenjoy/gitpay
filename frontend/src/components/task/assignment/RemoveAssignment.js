@@ -65,7 +65,7 @@ class RemoveAssignment extends Component {
             size='small'
             onClick={ this.openModal }>
             <RemoveIcon />
-            
+
           </Button>
         }
 

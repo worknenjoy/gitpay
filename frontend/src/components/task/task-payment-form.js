@@ -48,6 +48,10 @@ class TaskPaymentForm extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.task.private ? this.handlePlan('private') : this.handlePlan('open source') 
+  }
+
   formatCurrency = (amount) => {
     return (new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -157,21 +161,12 @@ class TaskPaymentForm extends Component {
                   xs={ 0 }
                   md={ 12 }
                   lg={ 12 } >
+                  { this.props.plan === 'open source' ? (
                   <Grid item className={ classes.planGridItem }>
                     <Card className={ classes.planGrid }
-                      { ...this.state.checkPlan('open source')
-                        ? { elevation: 24,
-                          style: { transform: 'scale(1.09)' },
-                          square: true }
-                        : { elevation: 1 }
-                      }
+                      { ...this.state.checkPlan('open source')}
                     >
-                      <CardActionArea onClick={ () => this.handlePlan('open source') }
-                        style={ this.state.checkPlan('open source')
-                          ? {}
-                          : this.state.plan && { filter: 'blur(0.6px)' }
-                        }
-                      >
+                      
                         <CardContent className={ classes.planGridContent }>
                           <div className={ classes.planButton }>
                             <MotorcycleIcon color={ `${this.state.checkPlan('open source') ? 'primary' : 'disabled'}` } className={ classes.planIcon } />
@@ -187,10 +182,7 @@ class TaskPaymentForm extends Component {
                           </Typography>
 
                           <div className={ classes.planBullets }
-                            style={ this.state.checkPlan('open source')
-                              ? {}
-                              : { filter: 'grayscale(100%)' }
-                            }
+                            
                           >
                             <Typography>
                               <CheckIcon className={ classes.checkIcon } fontSize='small' color='primary' />
@@ -202,47 +194,16 @@ class TaskPaymentForm extends Component {
                               <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />
                             </Typography>
                           </div>
-
-                          <Typography className={ classes.planFinalPrice } align='center' color='textPrimary' >
-                            { (this.state.price > 0) && this.formatCurrency(Number((parseInt(this.state.price) * fee['open source']).toFixed(2))) }
-                          </Typography>
-
                         </CardContent>
-                        <CardActions className={ classes.planButton }>
-                          <Button size='small'
-                            disableRipple
-                            variant='contained'
-                            { ...this.state.checkPlan('open source')
-                              ? { color: 'primary' }
-                              : { color: 'disable' }
-                            }
-                            className={ classes.btnPayment }
-                          >
-                            { this.state.plan === 'open source'
-                              ? <FormattedMessage id='actions.task.payment.plan.selected' defaultMessage='You Choose this Plan' />
-                              : <FormattedMessage id='actions.task.payment.plan.not.selected' defaultMessage='Choose this Plan' />
-                            }
-                          </Button>
-                        </CardActions>
-                      </CardActionArea>
+                      
                     </Card>
                   </Grid>
-
+                  ) : (
                   <Grid item className={ classes.planGridItem } >
                     <Card className={ classes.planGrid }
-                      { ...this.state.checkPlan('private')
-                        ? { elevation: 24,
-                          style: { transform: 'scale(1.09)' },
-                          square: true }
-                        : { elevation: 1 }
-                      }
+                      { ...this.state.checkPlan('private') }
                     >
-                      <CardActionArea onClick={ () => this.handlePlan('private') }
-                        style={ this.state.checkPlan('private')
-                          ? {}
-                          : this.state.plan && { filter: 'blur(0.6px)' }
-                        }
-                      >
+                      
                         <CardContent className={ classes.planGridContent }>
                           <div className={ classes.planButton }>
                             <DriveEtaIcon color={ `${this.state.checkPlan('private') ? 'primary' : 'disabled'}` } className={ classes.planIcon } />
@@ -258,10 +219,7 @@ class TaskPaymentForm extends Component {
                           </Typography>
 
                           <div className={ classes.planBullets }
-                            style={ this.state.checkPlan('private')
-                              ? {}
-                              : { filter: 'grayscale(100%)' }
-                            }
+                            
                           >
                             <Typography>
                               <CheckIcon className={ classes.checkIcon } fontSize='small' color='primary' />
@@ -273,103 +231,11 @@ class TaskPaymentForm extends Component {
                               <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />
                             </Typography>
                           </div>
-
-                          <Typography className={ classes.planFinalPrice } align='center' color='textPrimary' >
-                            { (this.state.price > 0) && this.formatCurrency(Number((parseInt(this.state.price) * fee['private']).toFixed(2))) }
-                          </Typography>
-
                         </CardContent>
-                        <CardActions className={ classes.planButton }>
-                          <Button size='small'
-                            disableRipple
-                            variant='contained'
-                            className={ classes.btnPayment }
-                            { ...this.state.checkPlan('private')
-                              ? { color: 'primary' }
-                              : { color: 'disable' }
-                            }
-                          >
-                            { this.state.checkPlan('private')
-                              ? <FormattedMessage id='actions.task.payment.plan.selected' defaultMessage='You Choose this Plan' />
-                              : <FormattedMessage id='actions.task.payment.plan.not.selected' defaultMessage='Choose this Plan' />
-                            }
-                          </Button>
-                        </CardActions>
-                      </CardActionArea>
+                      
                     </Card>
                   </Grid>
-
-                  <Grid item className={ classes.planGridItem }>
-                    <Card className={ classes.planGrid }
-                      { ...this.state.checkPlan('full')
-                        ? { elevation: 24,
-                          style: { transform: 'scale(1.09)' },
-                          square: true }
-                        : { elevation: 1 }
-                      }
-                    >
-                      <CardActionArea onClick={ () => this.handlePlan('full') }
-                        style={ this.state.checkPlan('full')
-                          ? {}
-                          : this.state.plan && { filter: 'blur(0.6px)' }
-                        }
-                      >
-                        <CardContent className={ classes.planGridContent } >
-                          <div className={ classes.planButton }>
-                            <FlightIcon color={ `${this.state.checkPlan('full') ? 'primary' : 'disabled'}` } className={ classes.planIcon } />
-                          </div>
-                          <Typography align='center' color='textPrimary' variant='h5'>
-                            <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={ { fee: '30' } } />
-                          </Typography>
-                          <Typography align='center' color='textSecondary' variant='h6'>
-                            <FormattedMessage id='actions.task.payment.plan.full' defaultMessage='Full Support' />
-                          </Typography>
-                          <Typography align='center' variant='caption'gutterBottom>
-                            <FormattedMessage id='actions.task.payment.plan.full.info' defaultMessage='Private Plan With Full Support' />
-                          </Typography>
-
-                          <div className={ classes.planBullets }
-                            style={ this.state.checkPlan('full')
-                              ? {}
-                              : { filter: 'grayscale(100%)' }
-                            }
-                          >
-                            <Typography>
-                              <CheckIcon className={ classes.checkIcon } fontSize='small' color='primary' />
-                              <FormattedMessage id='actions.task.payment.plan.bullet.full' defaultMessage='We manage the whole workflow' />
-                            </Typography>
-
-                            <Typography>
-                              <CheckIcon className={ classes.checkIcon } fontSize='small' color='primary' />
-                              <FormattedMessage id='actions.task.payment.plan.bullet.private' defaultMessage='Private Projects' />
-                            </Typography>
-                          </div>
-
-                          <Typography className={ classes.planFinalPrice } align='center' color='textPrimary' >
-                            { (this.state.price > 0) && this.formatCurrency(Number((parseInt(this.state.price) * fee['full']).toFixed(2))) }
-                          </Typography>
-
-                        </CardContent>
-                        <CardActions className={ classes.planButton }>
-                          <Button size='small'
-                            disableRipple
-                            variant='contained'
-                            className={ classes.btnPayment }
-                            { ...this.state.checkPlan('full')
-                              ? { color: 'primary' }
-                              : { color: 'disable' }
-                            }
-                          >
-                            { this.state.checkPlan('full')
-                              ? <FormattedMessage id='actions.task.payment.plan.selected' defaultMessage='You Choose this Plan' />
-                              : <FormattedMessage id='actions.task.payment.plan.not.selected' defaultMessage='Choose this Plan' />
-                            }
-                          </Button>
-                        </CardActions>
-                      </CardActionArea>
-                    </Card>
-                  </Grid>
-
+                  )}
                 </Grid>
 
                 <Button
