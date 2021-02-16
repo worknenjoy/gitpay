@@ -175,7 +175,9 @@ class TaskHeader extends React.Component {
                 { task.data.title }
                 <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
                 { task.data.provider &&
-                  <a onClick={ () => { window.location.href = task.data.url } }>
+                  <a onClick={ () => {
+                    window.location.href = task.data.url
+                  } }>
                     <img width='24' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
                   </a> }
               </Typography>
