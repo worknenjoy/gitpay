@@ -1208,7 +1208,7 @@ class Task extends Component {
                 </div>
               </div>
               <div>
-                <TaskPayments orders={ task.data.orders } />
+                <TaskPayments orders={ task.data.orders && task.data.orders.filter(o => o.paid) } />
               </div>
               { this.taskOwner()
                 ? (
