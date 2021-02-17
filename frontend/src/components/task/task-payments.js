@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import MomentComponent from 'moment'
 
 import Avatar from '@material-ui/core/Avatar'
 
@@ -13,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%'
   },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3)
+  }
 }))
 
 export default function TaskPayments ({ orders }) {
@@ -26,17 +31,25 @@ export default function TaskPayments ({ orders }) {
       { orders && orders.map((order) => {
         return (
           <ListItem key={ order.id }>
-            <ListItemAvatar>
+            <ListItemAvatar style={{minWidth: 34}}>
               <Avatar
+                className={classes.small}
                 alt={
-                  `${order.User.name}`
+                  `${order.User.name||order.User.username||'Anonymous'}`
                 }
+                src={order.User.profile_url}
               />
             </ListItemAvatar>
-            <ListItemText primary={ `${order.User.name}` } />
+            <ListItemText primary={ 
+              <React.Fragment>
+                <Typography variant='body2'>{order.User.name||order.User.username||'Anonymous'}</Typography>
+                <Typography color='textSecondary' variant='caption'> {MomentComponent(order.updatedAt).fromNow()}</Typography>
+                <Typography variant='caption'> with <i>{order.provider === 'paypal' ? 'Paypal' : 'Credit Card'}</i></Typography>
+              </React.Fragment>
+            } />
             <ListItemSecondaryAction>
               <Typography variant='caption'>
-                ${ order.amount }
+                <strong>${ order.amount }</strong>
               </Typography>
             </ListItemSecondaryAction>
           </ListItem>
