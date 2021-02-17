@@ -384,7 +384,7 @@
   "task.history.table.label.subtitle": "Updates about this issue",
   "task.history.table.label.title": "History about this issue",
   "task.info.assigns": "Assigned",
-  "task.info.authors": "Author(s)",
+  "task.info.authors": "Imported by",
   "task.info.description": "Description",
   "task.info.interested": "Candidate(s)",
   "task.interested.action": "Solve issue",
