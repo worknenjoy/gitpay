@@ -14,9 +14,12 @@ import {
 import { Card, CardList, CardMedia } from './ProfileStyles'
 import WelcomeUser from '../session/welcome-user'
 
-const taskIcon = require('../../images/task-icon.png')
-const paymentIcon = require('../../images/payment-icon.png')
-const toolsIcon = require('../../images/tools-icon.png')
+const organizationIcon = require('../../images/icons/noun_project management_3063542.svg')
+const toolsIcon = require('../../images/icons/noun_project management_3063515.svg')
+const preferencesIcon = require('../../images/icons/noun_project management_3063532.svg')
+const generalSettingsIcon = require('../../images/icons/noun_project management_3063521.svg')
+const taskIcon = require('../../images/icons/noun_project management_3063547.svg')
+const configIcon = require('../../images/icons/noun_project management_3063514.svg')
 
 const styles = theme => ({
   cardActions: {
@@ -31,7 +34,7 @@ class ProfileOptions extends Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, user } = this.props
     return (
       <Fragment>
         { window.localStorage.getItem('firstLogin') === 'true' && (
@@ -39,7 +42,7 @@ class ProfileOptions extends Component {
         ) }
         <div>
           <div>
-            <Typography variant='h5' component='h3'>
+            <Typography style={ { marginTop: 10 } } variant='h5' component='h3'>
               <FormattedMessage
                 id='account.profile.welcome.headline'
                 defaultMessage='Welcome to Gitpay!'
@@ -54,101 +57,187 @@ class ProfileOptions extends Component {
           </div>
 
           <CardList>
-            <Card>
-              <FormattedMessage
-                id='account.profile.tasks.caption'
-                defaultMessage='Tasks'
-              >
-                { msg => <CardMedia image={ taskIcon } title={ msg } /> }
-              </FormattedMessage>
-              <CardContent>
-                <Typography variant='h5' component='h2'>
-                  <FormattedMessage
-                    id='account.profile.tasks.headline'
-                    defaultMessage='Tasks'
-                  />
-                </Typography>
-                <Typography component='p'>
-                  <FormattedMessage
-                    id='account.profile.tasks.description'
-                    defaultMessage='Check the tasks available for you'
-                  />
-                </Typography>
-              </CardContent>
-              <CardActions className={ classes.cardActions }>
-                <Button size='small' color='primary'>
-                  <Link to={ '/profile/tasks' }>
-                    <Typography variant='h5'>
+            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+              <Card>
+                <FormattedMessage
+                  id='account.profile.tasks.caption'
+                  defaultMessage='Tasks'
+                >
+                  { msg => <CardMedia image={ taskIcon } title={ msg } /> }
+                </FormattedMessage>
+                <CardContent>
+                  <Typography variant='h6'>
+                    <FormattedMessage
+                      id='account.profile.tasks.headline'
+                      defaultMessage='Tasks'
+                    />
+                  </Typography>
+                  <Typography variant='body2'>
+                    <FormattedMessage
+                      id='account.profile.tasks.description'
+                      defaultMessage='Check the tasks available for you'
+                    />
+                  </Typography>
+                </CardContent>
+                <CardActions className={ classes.cardActions }>
+                  <Button size='small' color='primary'>
+                    <Link to={ '/profile/tasks' }>
                       <FormattedMessage
                         id='account.profile.tasks.link.tasks'
                         defaultMessage='See tasks'
                       />
-                    </Typography>
-                  </Link>
-                </Button>
-              </CardActions>
-            </Card>
-
+                    </Link>
+                  </Button>
+                </CardActions>
+              </Card>
+            }
+            { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+              <Card>
+                <FormattedMessage
+                  id='account.profile.tasks.mine.caption'
+                  defaultMessage='Issues'
+                >
+                  { msg => <CardMedia image={ organizationIcon } title={ msg } /> }
+                </FormattedMessage>
+                <CardContent>
+                  <Typography variant='h6'>
+                    <FormattedMessage
+                      id='account.profile.tasks.mine.headline'
+                      defaultMessage='Your organizations'
+                    />
+                  </Typography>
+                  <Typography variant='body2'>
+                    <FormattedMessage
+                      id='account.profile.tasks.mine.description'
+                      defaultMessage='Organizations created from issues'
+                    />
+                  </Typography>
+                </CardContent>
+                <CardActions className={ classes.cardActions }>
+                  <Button size='small' color='primary'>
+                    <Link to={ '/profile/user/tasks' }>
+                      <FormattedMessage
+                        id='account.profile.tasks.mine.link'
+                        defaultMessage='See your organizations'
+                      />
+                    </Link>
+                  </Button>
+                </CardActions>
+              </Card>
+            }
+            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Card>
               <FormattedMessage
                 id='account.profile.tasks.payment.caption'
                 defaultMessage='Payment'
               >
-                { msg => <CardMedia image={ paymentIcon } title={ msg } /> }
+                { msg => <CardMedia image={ toolsIcon } title={ msg } /> }
               </FormattedMessage>
               <CardContent>
-                <Typography variant='h5' component='h2'>
+                <Typography variant='h6'>
                   <FormattedMessage
-                    id='account.profile.tasks.payment.headline'
-                    defaultMessage='Payment'
+                    id='account.profile.tasks.paid.headline'
+                    defaultMessage='Bank account'
                   />
                 </Typography>
-                <Typography component='p'>
+                <Typography variant='body2'>
                   <FormattedMessage
-                    id='account.profile.tasks.payment.desc'
-                    defaultMessage='Fill all your payment details and receive for the tasks concluded'
+                    id='account.profile.tasks.bank.desc'
+                    defaultMessage='Register your bank accounts'
                   />
                 </Typography>
               </CardContent>
               <CardActions className={ classes.cardActions }>
                 <Button size='small' color='primary'>
                   <Link to={ '/profile/payment-options' }>
-                    <Typography variant='h5'>
-                      <FormattedMessage
-                        id='account.profile.tasks.payment.setup'
-                        defaultMessage='Setup payment'
-                      />
-                    </Typography>
+                    <FormattedMessage
+                      id='account.profile.tasks.account.setup'
+                      defaultMessage='Setup bank account'
+                    />
                   </Link>
                 </Button>
               </CardActions>
             </Card>
-
+            }
+            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Card>
-              <CardMedia image={ toolsIcon } title='Contemplative Reptile' />
+              <CardMedia image={ preferencesIcon } title='Contemplative Reptile' />
               <CardContent>
-                <Typography variant='h5' component='h2'>
+                <Typography variant='h6'>
                   <FormattedMessage
-                    id='account.profile.preferences.headline'
-                    defaultMessage='Preferences'
+                    id='account.profile.skills.headline'
+                    defaultMessage='Skills'
                   />
                 </Typography>
-                <Typography component='p'>
+                <Typography variant='body2'>
                   <FormattedMessage
-                    id='account.profile.preferences.description'
-                    defaultMessage='Setup your account with your preferences'
+                    id='account.profile.skill.preferences.description'
+                    defaultMessage='Setup your skill to receive matching offers'
                   />
                 </Typography>
               </CardContent>
               <CardActions className={ classes.cardActions }>
                 <Button size='small' color='primary'>
                   <Link to='/profile/preferences'>
-                    <Typography variant='h5'>
-                      <FormattedMessage
-                        id='account.profile.preferences.link'
-                        defaultMessage='Setup preferences'
-                      />
-                    </Typography>
+                    <FormattedMessage
+                      id='account.profile.skills.link'
+                      defaultMessage='Setup skills preferences'
+                    />
+                  </Link>
+                </Button>
+              </CardActions>
+            </Card>
+            }
+            <Card>
+              <CardMedia image={ configIcon } title='Contemplative Reptile' />
+              <CardContent>
+                <Typography variant='h6'>
+                  <FormattedMessage
+                    id='account.profile.roles.headline'
+                    defaultMessage='Roles'
+                  />
+                </Typography>
+                <Typography variant='body2'>
+                  <FormattedMessage
+                    id='account.profile.roles.description'
+                    defaultMessage='Set your roles to define your capatibilities on Gitpay'
+                  />
+                </Typography>
+              </CardContent>
+              <CardActions className={ classes.cardActions }>
+                <Button size='small' color='primary'>
+                  <Link to='/profile/roles'>
+                    <FormattedMessage
+                      id='account.profile.roles.link'
+                      defaultMessage='Setup your roles on Gitpay'
+                    />
+                  </Link>
+                </Button>
+              </CardActions>
+            </Card>
+            <Card>
+              <CardMedia image={ generalSettingsIcon } title='General settings' />
+              <CardContent>
+                <Typography variant='h6'>
+                  <FormattedMessage
+                    id='account.profile.settings.headline'
+                    defaultMessage='General settings'
+                  />
+                </Typography>
+                <Typography variant='body2'>
+                  <FormattedMessage
+                    id='account.profile.settings.description'
+                    defaultMessage='Set your general settings on Gitpay to setups your account'
+                  />
+                </Typography>
+              </CardContent>
+              <CardActions className={ classes.cardActions }>
+                <Button size='small' color='primary'>
+                  <Link to='/profile/settings'>
+                    <FormattedMessage
+                      id='account.profile.settings.link'
+                      defaultMessage='Your general settings'
+                    />
                   </Link>
                 </Button>
               </CardActions>

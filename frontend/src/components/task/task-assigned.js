@@ -11,12 +11,12 @@ import {
   Typography,
   Tooltip,
   Card,
-  CardHeader,
-  Chip
+  CardHeader
 } from '@material-ui/core'
 import UserIcon from '@material-ui/icons/AccountCircle'
 
 import AssignActions from './assignment/AssignActions'
+import RemoveAssignment from './assignment/RemoveAssignment'
 
 const styles = theme => ({
   main: {
@@ -36,7 +36,6 @@ class TaskAssigned extends Component {
   static propTypes = {
     task: PropTypes.object,
     isOwner: PropTypes.bool,
-    status: PropTypes.string,
     classes: PropTypes.object,
     user: PropTypes.object,
     removeAssignment: PropTypes.func,
@@ -56,12 +55,20 @@ class TaskAssigned extends Component {
   }
 
   render () {
-    const { user, classes, status, isOwner, task, assign, removeAssignment, assignTask } = this.props
+    const { user, classes, isOwner, task, assign, removeAssignment, assignTask } = this.props
+    const hasAssignedUser = assign.id === task.assigned
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
     const timePlaceholder = (
-      <Typography type='subheading' style={ { padding: 25, color: 'gray' } }>
-        { updatedAtTimeString }
-      </Typography>
+      <div style={ { display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' } }>
+        <Typography type='subheading' style={ { padding: 25, color: 'gray' } }>
+          { updatedAtTimeString }
+        </Typography>
+        <RemoveAssignment
+          task={ task }
+          remove={ removeAssignment }
+          visible={ hasAssignedUser && isOwner }
+        />
+      </div>
     )
 
     return (
@@ -99,23 +106,16 @@ class TaskAssigned extends Component {
                 ) }
               </FormattedMessage>
             }
-            title={ user.user || user.username }
-            subheader={
+
+            title={
               <div>
                 <FormattedMessage id='task.assigned.status.name.create' defaultMessage='Assigned to {name}' values={ {
                   name: user.name || user.username
                 } } />
-                <Chip
-                  style={ { marginRight: 10 } }
-                  label={ status }
-                  className={ classes.chipStatus }
-                />
                 { isOwner && <AssignActions logged={ isOwner } isOwner={ isOwner } assign={ assign } task={ task } removeAssignment={ removeAssignment } assignTask={ assignTask } /> }
               </div>
             }
-            action={
-              timePlaceholder
-            }
+            action={ timePlaceholder }
           />
         </Card>
 

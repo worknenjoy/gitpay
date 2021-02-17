@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
 import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
+import 'fontsource-roboto'
 
 import {
   MuiThemeProvider,

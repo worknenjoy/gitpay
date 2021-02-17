@@ -107,7 +107,7 @@ class TaskList extends Component {
       await this.props.fetchProject(projectId)
     }
     else {
-      await this.props.listTasks()
+      await this.props.listTasks({})
     }
     const params = this.props.match.params
     this.handleRoutePath(params.filter)

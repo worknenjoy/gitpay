@@ -9,6 +9,7 @@ const Sendmail = require('../mail/mail')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
 // const userOrganizations = require('../users/userOrganizations')
+const project = require('../projectHelpers')
 
 module.exports = Promise.method(async function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
@@ -22,46 +23,6 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
   const token = taskParameters.token
 
   if (!userId) return false
-
-  const project = async () => {
-    try {
-      const organizationExist = await models.Organization.find(
-        {
-          where: {
-            name: userOrCompany
-          },
-          include: [models.Project]
-        }
-      )
-      if (organizationExist) {
-        const projectFromOrg = await models.Project.find(
-          {
-            where: {
-              name: projectName,
-              OrganizationId: organizationExist.id
-            }
-          }
-        )
-        if (projectFromOrg) {
-          return projectFromOrg
-        }
-        else {
-          const newProject = await organizationExist.createProject({ name: projectName })
-          return newProject
-        }
-      }
-      else {
-        const organization = await models.Organization.create({ name: userOrCompany, UserId: userId })
-        const project = await organization.createProject({ name: projectName })
-        return project
-      }
-    }
-    catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('error', e)
-      throw new Error(e)
-    }
-  }
 
   switch (taskParameters.provider) {
     case 'github':
@@ -77,12 +38,11 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
         if (!response && !response.title) return false
         const issueDataJsonGithub = JSON.parse(response)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
-        return project().then(p => {
+        if (!taskParameters.description) taskParameters.description = issueDataJsonGithub.body
+        return project(userOrCompany, projectName, userId, 'github').then(p => {
           return p
             .createTask(taskParameters)
             .then(async task => {
-              // eslint-disable-next-line no-console
-              console.log('task result', task.ProjectId)
               const role = await roleExists({ name: 'company_owner' })
               if (role.dataValues && role.dataValues.id) {
                 const userInfo = await requestPromise({
@@ -128,14 +88,13 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
       return requestPromise({
         uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       }).then(response => {
-        return models.Task
-          .build(
-            taskParameters
-          )
-          .save()
-          .then(data => {
-            return data.dataValues
-          })
+        return project(userOrCompany, projectName, userId, 'bitbucket').then(p => {
+          return p
+            .createTask({ ...taskParameters, private: true })
+            .then(task => {
+              return task.dataValues
+            })
+        })
       })
 
     default:

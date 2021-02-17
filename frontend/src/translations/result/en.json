@@ -344,7 +344,7 @@
   "task.card.table.header.actions": "Actions",
   "task.card.table.header.created": "Created at",
   "task.card.table.header.paid": "Paid",
-  "task.card.table.header.payment": "Payment",
+  "task.card.table.header.bank": "Bank account",
   "task.card.table.header.status": "Status",
   "task.card.table.header.user": "User",
   "task.card.table.header.value": "Value",

@@ -3,7 +3,7 @@ import Profile from '../components/profile/profile'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { fetchRoles, createRoles, deleteRoles } from '../actions/userRoleActions'
 import { updateUser, deleteUser } from '../actions/userActions'
-import { fetchOrganizations, createOrganizations } from '../actions/organizationsActions'
+import { fetchOrganizations, createOrganizations, updateOrganization } from '../actions/organizationsActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -25,6 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     deleteRoles: (rolesData) => dispatch(deleteRoles(rolesData)),
     fetchOrganizations: (userId) => dispatch(fetchOrganizations(userId)),
     createOrganizations: (org) => dispatch(createOrganizations(org)),
+    updateOrganization: (org) => dispatch(updateOrganization(org)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
     deleteUser: (user) => dispatch(deleteUser(user)),
     addNotification: (message) => dispatch(addNotification(message)),

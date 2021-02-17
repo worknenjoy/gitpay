@@ -33,14 +33,14 @@ const styles = theme => ({
     [theme.breakpoints.up('lg')]: {
       flexDirection: 'row',
       width: '100%',
-      padding: '0 5% 3% 5%',
-      margin: '0 5% 0',
+      padding: '3% 0 3% 0',
+      margin: '0 0 0 0',
       alignItems: 'center',
     },
   },
   bigRow: {
-    margin: '0 5% 0',
-    padding: '0 0% 3% 5%',
+    margin: '2% 5% 0 0',
+    padding: '0 0 0 0',
     '& h1': {
       fontWeight: '500',
       fontFamily: 'roboto',

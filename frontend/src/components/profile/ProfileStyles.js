@@ -23,6 +23,7 @@ export const CardList = styled.div`
   display: flex;
   margin-top: 40px;
   justify-content: center;
+  flex-wrap: wrap;
 
   ${media.phone`
     display: block;
@@ -30,8 +31,9 @@ export const CardList = styled.div`
 `
 
 export const CardMedia = styled(BaseCardMedia)`
-  width: 128px;
-  height: 128px;
+  width: 48px;
+  height: 60px;
   margin-top: 20px;
+  margin-bottom: -10px;
   display: inline-block !important;
 `

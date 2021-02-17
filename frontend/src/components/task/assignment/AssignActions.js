@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import RemoveAssignment from './RemoveAssignment'
 import MessageAssignment from './messageAssignment'
 import { FormattedMessage } from 'react-intl'
 
@@ -88,7 +87,7 @@ const AssignActions = ({ hash, actionAssign, loggedUser, isOwner, assign, task, 
   }
 
   return (
-    <div>
+    <div style={ { marginTop: 10, marginLeft: 10 } }>
       {
         <ModalReason callback={ (message) => handleAssign(task.id, assign.id, false, message) } open={ rejectModal } setOpen={ setRejectModal } />
       }
@@ -111,11 +110,6 @@ const AssignActions = ({ hash, actionAssign, loggedUser, isOwner, assign, task, 
           <MessageIcon style={ { marginLeft: 5, marginRight: 5 } } />
         </Button>
       }
-      <RemoveAssignment
-        task={ task }
-        remove={ removeAssignment }
-        visible={ hasAssignedUser && isOwner }
-      />
       { (isOwner && !hasAssignedUser) &&
       <Button
         disabled={ hasAssignedUser }
