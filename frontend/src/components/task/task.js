@@ -60,6 +60,7 @@ import TaskAssignment from './task-assignment'
 import TaskPaymentForm from './task-payment-form'
 import TaskInterested from './task-interested'
 import TaskAssigned from './task-assigned'
+import TaskPayments from './task-payments'
 
 import Constants from '../../consts'
 
@@ -962,7 +963,7 @@ class Task extends Component {
               { task.data.User &&
               <React.Fragment>
                 <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
-                  <FormattedMessage id='task.info.authors' defaultMessage='Author(s)' />
+                  <FormattedMessage id='task.info.authors' defaultMessage='Imported by' />
                 </Typography>
                 <AuthorList
                   logged={ this.props.logged }
@@ -976,12 +977,6 @@ class Task extends Component {
                         name: task.data.User.name,
                         email: task.data.User.email,
                         href: task.data.User.website
-                      },
-                      {
-                        provider: task.data.provider,
-                        name: task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user,
-                        href: task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : '',
-                        avatar_url: task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''
                       }
                     ]
                   } />
@@ -1211,6 +1206,9 @@ class Task extends Component {
                     </Typography>
                   </div>
                 </div>
+              </div>
+              <div>
+                <TaskPayments orders={task.data.orders} />
               </div>
               { this.taskOwner()
                 ? (

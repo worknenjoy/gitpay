@@ -174,14 +174,27 @@ class TaskHeader extends React.Component {
               <Typography variant='h4' align='left' gutterBottom>
                 { task.data.title }
                 <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
-                { task.data.provider &&
-                  <a onClick={ () => {
-                    window.location.href = task.data.url
-                  } }>
-                    <img width='24' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
-                  </a> }
               </Typography>
             </ReactPlaceholder>
+            <Typography variant='caption' style={{display: 'inline-block', marginBottom: 20}}>
+              { task.data.provider &&
+                <div>
+                  Created on <a
+                    href={task.data.url} 
+                    style={{textDecoration: 'underline'}}
+                  >
+                    {task.data.provider} <img width='12' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' } } />
+                  </a> 
+                    by <a 
+                          href={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : ''}>
+                      {task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user}
+                      <img style={ { marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'bottom' } }
+                         width='16'
+                         src={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''}
+                      />
+                  </a>
+                </div>}
+            </Typography>
             { task.data.metadata &&
               <ReactPlaceholder ready={ task.completed }>
                 <TaskLabels labels={ task.data.metadata.labels } />
