@@ -384,7 +384,7 @@
   "task.history.table.label.subtitle": "Atualizações sobre esta tarefa",
   "task.history.table.label.title": "Histórico desta tarefa",
   "task.info.assigns": "Atribuído a",
-  "task.info.authors": "Autor(es)",
+  "task.info.authors": "Imported by",
   "task.info.description": "Descrição",
   "task.info.interested": "Candidato(s)",
   "task.interested.action": "Quero resolver este incidente",
