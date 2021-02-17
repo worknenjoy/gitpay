@@ -31,20 +31,20 @@ export default function TaskPayments ({ orders }) {
       { orders && orders.map((order) => {
         return (
           <ListItem key={ order.id }>
-            <ListItemAvatar style={{minWidth: 34}}>
+            <ListItemAvatar style={ { minWidth: 34 } }>
               <Avatar
-                className={classes.small}
+                className={ classes.small }
                 alt={
-                  `${order.User.name||order.User.username||'Anonymous'}`
+                  `${order.User.name || order.User.username || 'Anonymous'}`
                 }
-                src={order.User.profile_url}
+                src={ order.User.profile_url }
               />
             </ListItemAvatar>
-            <ListItemText primary={ 
+            <ListItemText primary={
               <React.Fragment>
-                <Typography variant='body2'>{order.User.name||order.User.username||'Anonymous'}</Typography>
-                <Typography color='textSecondary' variant='caption'> {MomentComponent(order.updatedAt).fromNow()}</Typography>
-                <Typography variant='caption'> with <i>{order.provider === 'paypal' ? 'Paypal' : 'Credit Card'}</i></Typography>
+                <Typography variant='body2'>{ order.User.name || order.User.username || 'Anonymous' }</Typography>
+                <Typography color='textSecondary' variant='caption'> { MomentComponent(order.updatedAt).fromNow() }</Typography>
+                <Typography variant='caption'> with <i>{ order.provider === 'paypal' ? 'Paypal' : 'Credit Card' }</i></Typography>
               </React.Fragment>
             } />
             <ListItemSecondaryAction>
