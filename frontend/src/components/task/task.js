@@ -1057,9 +1057,11 @@ class Task extends Component {
                     status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
                     classes={ classes }
                     user={ task.data.assignedUser || {} }
+                    loggedUser={ this.state.logged && this.state.logged.user }
                     removeAssignment={ this.props.removeAssignment }
                     assignTask={ this.props.assignTask }
                     assign={ { id: task.data.assigned } }
+                    messageTask={ this.props.messageTask }
                   />
                 </div>
               }
