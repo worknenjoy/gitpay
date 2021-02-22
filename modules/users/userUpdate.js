@@ -32,7 +32,10 @@ module.exports = Promise.method(function userUpdate (userParameters) {
         })
         return { ...currentUser.dataValues, Types: await Promise.all(types) }
       }
-      return currentUser.dataValues
+      const updatedUser = models.User.findById(currentUser.dataValues.id, {
+        include: [models.Type]
+      })
+      return updatedUser
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log(error)
