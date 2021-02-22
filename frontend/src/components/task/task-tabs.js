@@ -158,7 +158,7 @@ class TaskTabs extends React.Component {
 
     const assignActions = assign => {
       const task = this.props.task.data
-      return <AssignActions hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
+      return <AssignActions user={ this.props.user } hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
     }
 
     const retryPaypalPaymentButton = (paymentUrl) => {

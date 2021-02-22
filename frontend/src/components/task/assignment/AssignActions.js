@@ -63,7 +63,7 @@ const ModalReason = ({ callback, open, setOpen }) => {
   )
 }
 
-const AssignActions = ({ hash, actionAssign, loggedUser, isOwner, assign, task, assignTask, messageTask }) => {
+const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, task, assignTask, messageTask }) => {
   const hasAssignedUser = assign.id === task.assigned
   const [ messageOpen, setMessageOpen ] = useState(false)
   const [rejectModal, setRejectModal] = useState(false)
@@ -91,7 +91,7 @@ const AssignActions = ({ hash, actionAssign, loggedUser, isOwner, assign, task, 
       {
         <ModalReason callback={ (message) => handleAssign(task.id, assign.id, false, message) } open={ rejectModal } setOpen={ setRejectModal } />
       }
-      { (task && task.User && loggedUser && loggedUser.id === task.User.id) &&
+      { (loggedUser && isOwner && user && loggedUser.id !== user.id) &&
         <React.Fragment>
           <MessageAssignment
             assign={ assign }
