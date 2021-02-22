@@ -140,22 +140,21 @@ class Preferences extends Component {
     })
   }
 
-  handleSave = (fetchPreferences = false) => {
+  handleSave = async (fetchPreferences = false) => {
     // prevent blink
     this.props.preferences.skills = this.state.selectedSkills.join(',')
     this.props.preferences.os = this.state.selectedOS.join(',')
     this.props.preferences.receiveNotifications = this.state.receiveNotifications
     this.props.preferences.openForJobs = this.state.openForJobs
 
-    this.props.updateUser(this.props.user.id, {
+    await this.props.updateUser(this.props.user.id, {
       skills: this.state.selectedSkills.join(','),
       os: this.state.selectedOS.join(','),
       language: this.state.selectedLanguage,
       receiveNotifications: this.state.receiveNotifications,
       openForJobs: this.state.openForJobs
-    }).then(() => {
-      fetchPreferences && this.props.fetchPreferences(this.props.user.id)
     })
+    fetchPreferences && await this.props.fetchPreferences(this.props.user.id)
   }
 
   render () {
