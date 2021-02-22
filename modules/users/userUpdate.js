@@ -1,5 +1,4 @@
 const Promise = require('bluebird')
-const { updateUser } = require('../../frontend/src/actions/userActions')
 const models = require('../../models')
 
 module.exports = Promise.method(function userUpdate (userParameters) {
