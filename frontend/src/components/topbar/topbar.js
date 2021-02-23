@@ -270,8 +270,7 @@ class TopBar extends Component {
   }
 
   handleViewTasks = () => {
-    window.location.href = '/#/tasks/explore'
-    window.location.reload()
+    window.location.assign('/#/tasks/all')
   }
 
   handleSignOut = () => {
