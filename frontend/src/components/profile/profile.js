@@ -39,7 +39,7 @@ import api from '../../consts'
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
-import TaskListContainer from '../../containers/task-list'
+import UserTasksContainer from '../../containers/user-tasks'
 import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
 import Roles from './user-roles'
@@ -49,8 +49,7 @@ import UpdateRole from './update-role'
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
 import PreferencesBar from './preferences-bar'
-import Tasks from './tasks'
-import UserTasksListContainer from '../../containers/user-tasks'
+import UserOganizationTree from '../../containers/user-organization-tree'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -207,33 +206,34 @@ class Profile extends Component {
     }
   }
 
-  componentWillMount () {
-    this.setActive(this.props.location.pathname)
-  }
-
-  componentDidMount () {
-    this.props.fetchOrganizations().then(org => {
-      this.setState({ orgsLoaded: true })
-      if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
-    })
+  async componentDidMount () {
+    await this.props.fetchOrganizations()
+    this.setState({ orgsLoaded: true })
+    if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
   }
 
   setActive (path) {
     switch (path) {
-      case '/profile/tasks':
+      case '/profile':
         this.setState({ selected: 0 })
-        break
-      case '/profile/payment-options':
+      break
+      case '/profile/user/orgs':
         this.setState({ selected: 1 })
-        break
-      case '/profile/preferences':
+      break
+      case '/profile/tasks':
         this.setState({ selected: 2 })
         break
-      case '/profile/settings':
+      case '/profile/payment-options':
         this.setState({ selected: 3 })
         break
-      case '/profile/roles':
+      case '/profile/preferences':
         this.setState({ selected: 4 })
+        break
+      case '/profile/settings':
+        this.setState({ selected: 5 })
+        break
+      case '/profile/roles':
+        this.setState({ selected: 6 })
         break
       default:
         this.setState({ selected: null })
@@ -241,16 +241,10 @@ class Profile extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.props.location.pathname !== nextProps.location.pathname) {
-      this.setActive(nextProps.location.pathname)
-    }
-  }
-
   getTitleNavigation = () => {
     switch (this.state.selected) {
       case 0:
-        return (<FormattedMessage id='account.profile.tasks.setup' defaultMessage='Tasks' />)
+        return (<FormattedMessage id='account.profile.issues.setup' defaultMessage='Issues' />)
       case 1:
         return (<FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />)
       case 2:
@@ -269,6 +263,7 @@ class Profile extends Component {
   }
   render () {
     const { classes, user, preferences, roles } = this.props
+    const userTypes = user.Types && user.Types.map(t => t.name)
 
     let titleNavigation = this.getTitleNavigation()
 
@@ -285,7 +280,7 @@ class Profile extends Component {
             <Grid container alignItems='center' spacing={ 1 }>
               <Grid item xs>
                 <Typography color='primary' variant='h6'>
-                  <Button onClick={ this.handleBackToTaskList } variant='text' size='small' aria-label='Back' color='primary'>
+                  <Button onClick={ (e) => this.handleBackToTaskList(e) } variant='text' size='small' aria-label='Back' color='primary'>
                     <ArrowBack />
                   </Button>
                   <span style={ { marginLeft: 10 } }>
@@ -308,8 +303,8 @@ class Profile extends Component {
                   { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                     <Route
                       exact
-                      path='/profile/user/tasks'
-                      component={ (props) => (<UserTasksListContainer { ...props }
+                      path='/profile/user/orgs'
+                      component={ (props) => (<UserOganizationTree { ...props }
                         createOrganizations={ this.props.createOrganizations }
                         updateOrganization={ this.props.updateOrganization }
                         organizations={ this.props.organizations }
@@ -321,8 +316,16 @@ class Profile extends Component {
                     <Route
                       exact
                       path='/profile/tasks'
-                      component={ () => <TaskListContainer /> }
+                      component={ UserTasksContainer }
                     />
+                  }
+                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    <Route
+                      exact
+                      path='/profile/tasks/:filter'
+                      component={ UserTasksContainer }
+                    />
+                    
                   }
                   { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                     <Route
@@ -436,7 +439,7 @@ class Profile extends Component {
                                   { user.tasks ? user.tasks : 0 }
                                 </span>
                                 <br />
-                                Tasks
+                                Issues
                               </Typography>
                             </div>
                           ) }
@@ -498,10 +501,10 @@ class Profile extends Component {
                           { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                           <MenuItem
                             onClick={ () =>
-                              this.props.history.push('/profile/user/tasks')
+                              this.props.history.push('/profile/user/orgs')
                             }
                             className={ classes.menuItem }
-                            selected={ this.state.selected === 0 }
+                            selected={ this.state.selected === 1 }
                           >
                             <ListItemIcon className={ classes.icon }>
                               <Business />
@@ -519,13 +522,11 @@ class Profile extends Component {
                             />
                           </MenuItem>
                           }
-                          { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                          { userTypes && (userTypes.includes('contributor') || userTypes.includes('maintainer')) &&
                           <MenuItem
-                            onClick={ () =>
-                              this.props.history.push('/profile/tasks')
-                            }
+                            onClick={ (e) => this.props.history.push('/profile/tasks')}
                             className={ classes.menuItem }
-                            selected={ this.state.selected === 0 }
+                            selected={ this.state.selected === 2 }
                           >
                             <ListItemIcon className={ classes.icon }>
                               <LibraryBooks />
@@ -535,8 +536,8 @@ class Profile extends Component {
                               primary={
                                 <span>
                                   <FormattedMessage
-                                    id='account.profile.tasks.setup'
-                                    defaultMessage='Tasks'
+                                    id='account.profile.issues.setup'
+                                    defaultMessage='Issues'
                                   />
                                 </span>
                               }
@@ -548,7 +549,7 @@ class Profile extends Component {
                               this.props.history.push('/profile/payment-options')
                             }
                             className={ classes.menuItem }
-                            selected={ this.state.selected === 1 }
+                            selected={ this.state.selected === 3 }
                           >
                             <ListItemIcon className={ classes.icon }>
                               <AccountBalance />
@@ -570,7 +571,7 @@ class Profile extends Component {
                               this.props.history.push('/profile/preferences')
                             }
                             className={ classes.menuItem }
-                            selected={ this.state.selected === 2 }
+                            selected={ this.state.selected === 4 }
                           >
                             <ListItemIcon className={ classes.icon }>
                               <Tune />
@@ -592,7 +593,7 @@ class Profile extends Component {
                               this.props.history.push('/profile/settings')
                             }
                             className={ classes.menuItem }
-                            selected={ this.state.selected === 3 }
+                            selected={ this.state.selected === 5 }
                           >
                             <ListItemIcon className={ classes.icon }>
                               <Settings />
@@ -612,7 +613,7 @@ class Profile extends Component {
                           <MenuItem
                             onClick={ () => this.props.history.push('/profile/roles') }
                             className={ classes.menuItem }
-                            selected={ this.state.selected === 4 }
+                            selected={ this.state.selected === 6 }
                           >
                             <ListItemIcon className={ classes.icon }>
                               <FaceSharp />

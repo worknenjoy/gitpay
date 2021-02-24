@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
+import { Route, HashRouter, Switch } from 'react-router-dom'
 
 import PrivateRoute from '../components/session/private-route'
 
@@ -22,11 +22,10 @@ export default props => (
       <Route path='/recruitment' component={ LandingPage } />
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
-      <Redirect path='/tasks/explore' to='/tasks/all' />
       <Route exact path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
-      <Route path='/organizations/:organization_id/projects/:project_id/:filter' component={ TaskExplorer } />
-      <Route path='/tasks/:filter' component={ TaskExplorer } />
-      <Route path='/team' component={ TeamContainer } />
+      <Route exact path='/organizations/:organization_id/projects/:project_id/:filter' component={ TaskExplorer } />
+      <Route exact path='/tasks/:filter' component={ TaskExplorer } />
+      <Route exact path='/team' component={ TeamContainer } />
       <Route exact path='/login' component={ LoginPage } />
       <Route exact path='/login/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
@@ -40,7 +39,7 @@ export default props => (
       <Route exact path='/task/:id/offers' component={ TaskContainer } />
       <Route exact path='/task/:id/history' component={ TaskContainer } />
       <Route exact path='/task/:id/claim' component={ TaskContainer } />
-      <Route path='/stats' component={ Stats } />
+      <Route exact path='/stats' component={ Stats } />
       <Route
         exact
         path='/task/:id/order/:order_id/status/:status'

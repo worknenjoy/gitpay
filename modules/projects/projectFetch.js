@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function fetchProject (projectParams) {
+module.exports = Promise.method(function fetchProject (projectParams, params) {
   return models.Project.findOne({
     where: {
       id: projectParams.id
@@ -9,13 +9,12 @@ module.exports = Promise.method(function fetchProject (projectParams) {
     include: [
       {
         model: models.Task,
+        where: params ? params : null,
         include: [models.Project, models.User, models.Assign]
       },
     ]
   })
     .then(data => {
-      // eslint-disable-next-line no-console
-      console.log('projectFetch', data)
       return data
     })
     .catch(error => {

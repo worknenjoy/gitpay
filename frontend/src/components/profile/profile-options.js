@@ -60,22 +60,22 @@ class ProfileOptions extends Component {
             { user.Types && user.Types.map(t => t.name).includes('contributor') &&
               <Card>
                 <FormattedMessage
-                  id='account.profile.tasks.caption'
-                  defaultMessage='Tasks'
+                  id='account.profile.issues.caption'
+                  defaultMessage='Issues'
                 >
                   { msg => <CardMedia image={ taskIcon } title={ msg } /> }
                 </FormattedMessage>
                 <CardContent>
                   <Typography variant='h6'>
                     <FormattedMessage
-                      id='account.profile.tasks.headline'
-                      defaultMessage='Tasks'
+                      id='account.profile.issues.headline'
+                      defaultMessage='Issues'
                     />
                   </Typography>
                   <Typography variant='body2'>
                     <FormattedMessage
-                      id='account.profile.tasks.description'
-                      defaultMessage='Check the tasks available for you'
+                      id='account.profile.issues.description'
+                      defaultMessage='Check the issues available for you'
                     />
                   </Typography>
                 </CardContent>
@@ -83,8 +83,8 @@ class ProfileOptions extends Component {
                   <Button size='small' color='primary'>
                     <Link to={ '/profile/tasks' }>
                       <FormattedMessage
-                        id='account.profile.tasks.link.tasks'
-                        defaultMessage='See tasks'
+                        id='account.profile.issues.link.tasks'
+                        defaultMessage='See issues'
                       />
                     </Link>
                   </Button>
@@ -115,7 +115,7 @@ class ProfileOptions extends Component {
                 </CardContent>
                 <CardActions className={ classes.cardActions }>
                   <Button size='small' color='primary'>
-                    <Link to={ '/profile/user/tasks' }>
+                    <Link to={ '/profile/user/orgs' }>
                       <FormattedMessage
                         id='account.profile.tasks.mine.link'
                         defaultMessage='See your organizations'

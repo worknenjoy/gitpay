@@ -26,11 +26,11 @@ const fetchProjectError = error => {
   return { type: FETCH_PROJECT_ERROR, completed: true, error: error }
 }
 
-const fetchProject = projectId => {
+const fetchProject = (projectId, params) => {
   return dispatch => {
     dispatch(fetchProjectRequested())
     axios
-      .get(api.API_URL + `/projects/fetch/${projectId}`)
+      .get(api.API_URL + `/projects/fetch/${projectId}`, { params })
       .then(project => {
         if (project.data) {
           return dispatch(fetchProjectSuccess(project))

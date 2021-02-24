@@ -68,6 +68,10 @@ export const getFilteredTasks = createSelector(
             }
           })
         }
+      case 'issuesWithBounties':
+        return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) }
+      case 'contribution':
+        return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) }
       default:
         return tasks
     }

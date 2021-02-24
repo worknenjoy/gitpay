@@ -1,7 +1,8 @@
 const Projects = require('../../projects')
 
 exports.fetchProject = (req, res) => {
-  Projects.projectFetch(req.params)
+  console.log('req', req.params, req.query)
+  Projects.projectFetch(req.params, req.query)
     .then(data => {
       res.send(data)
     }).catch(error => {
