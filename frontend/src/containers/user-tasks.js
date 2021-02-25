@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import UserTasks from '../components/profile/user-tasks'
-import { getFilteredTasks, listTasks, filterTasks } from '../actions/taskActions'
+import { listTasks, filterTasks } from '../actions/taskActions'
+import { getFilteredTasks } from '../selectors/tasks'
 
 const mapStateToProps = (state, ownProps) => {
   return {
