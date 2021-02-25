@@ -78,10 +78,10 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
         handleTabChange({}, 'createdbyme')
       }
       if(history.location.pathname === "/profile/tasks/interested") {
-        handleTabChange({}, 'createdbyme')
+        handleTabChange({}, 'interested')
       }
       if(history.location.pathname === "/profile/tasks/assigned") {
-        handleTabChange({}, 'createdbyme')
+        handleTabChange({}, 'assigned')
       }
     })
   }, [])

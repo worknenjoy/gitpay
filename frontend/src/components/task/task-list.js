@@ -246,54 +246,7 @@ class TaskList extends Component {
             </Tabs>
           </AppBar>
           <TabContainer>
-            { !user.id && this.state.tab !== 0 ? (
-              <Card className={ classes.card }>
-                <CardMedia
-                  className={ classes.media }
-                  src={ imageGettingStarted }
-                />
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='h2'>
-                    <FormattedMessage
-                      id='task.user.account.create.headline'
-                      defaultMessage='Login / signup to work in our tasks'
-                    />
-                  </Typography>
-                  <Typography component='p'>
-                    <FormattedMessage
-                      id='task.user.account.create.description'
-                      defaultMessage='Creating your account, you can be assigned to a task and receive bounties'
-                    />
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    style={ { marginRight: 10 } }
-                    href={ `${api.API_URL}/authorize/github` }
-                    variant='contained'
-                    size='small'
-                    color='secondary'
-                    className={ classes.logButtons }
-                  >
-                    <img width='16' src={ logoGithub } />
-                    <span className={ classes.gutterLeft }>Github</span>
-                  </Button>
-
-                  <Button
-                    href={ `${api.API_URL}/authorize/bitbucket` }
-                    variant='contained'
-                    size='small'
-                    color='secondary'
-                    className={ classes.logButtons }
-                  >
-                    <img width='16' src={ logoBitbucket } />
-                    <span className={ classes.gutterLeft }>Bitbucket</span>
-                  </Button>
-                </CardActions>
-              </Card>
-            ) : (
-              <CustomPaginationActionsTable tasks={ this.props.tasks } />
-            ) }
+            <CustomPaginationActionsTable tasks={ this.props.tasks } />
           </TabContainer>
         </div>
       </Paper>
