@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     deleteUser: (user) => dispatch(deleteUser(user)),
     addNotification: (message) => dispatch(addNotification(message)),
     closeNotification: (message) => dispatch(closeNotification(message)),
-    listTasks: ({projectId, userId, status}) => dispatch(listTasks({projectId, userId, status})),
+    listTasks: ({ projectId, userId, status }) => dispatch(listTasks({ projectId, userId, status })),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional))
   }
 }

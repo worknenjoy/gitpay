@@ -9,7 +9,7 @@ module.exports = Promise.method(function fetchProject (projectParams, params) {
     include: [
       {
         model: models.Task,
-        where: params ? params : null,
+        where: params || null,
         include: [models.Project, models.User, models.Assign]
       },
     ]

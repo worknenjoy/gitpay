@@ -4,15 +4,10 @@ import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
-  Button,
   Link,
   Paper,
   Typography,
   AppBar,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Avatar,
   Chip,
   Tabs,
@@ -26,13 +21,6 @@ import {
 } from '@material-ui/icons'
 
 import CustomPaginationActionsTable from './task-table'
-
-const logoGithub = require('../../images/github-logo.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
-
-const imageGettingStarted = require('../../images/octodex.png')
-
-import api from '../../consts'
 
 const styles = theme => ({
   icon: {
@@ -81,7 +69,7 @@ class TaskList extends Component {
     }
   }
 
-  filterTasksByState() {
+  filterTasksByState () {
     const currentTab = this.state.tab
 
     switch (currentTab) {
@@ -101,13 +89,13 @@ class TaskList extends Component {
   async componentDidMount () {
     const projectId = this.props.match.params.project_id
     if (projectId) {
-      await this.props.fetchProject( 
-        projectId, 
+      await this.props.fetchProject(
+        projectId,
         { status: 'open' }
       )
     }
     else {
-      await this.props.listTasks({status: 'open'})
+      await this.props.listTasks({ status: 'open' })
     }
     const params = this.props.match.params
     this.handleRoutePath(params.filter)
@@ -163,7 +151,7 @@ class TaskList extends Component {
   }
 
   render () {
-    const { classes, user } = this.props
+    const { classes } = this.props
     const TabContainer = props => {
       return (
         <Typography component='div' style={ { padding: 8 * 3 } }>
@@ -197,14 +185,14 @@ class TaskList extends Component {
         { this.props.projects && !this.props.project.data.name && (
           this.props.projects.data.slice(0, 10).map(p => {
             return (
-              p.Tasks.length && 
+              p.Tasks.length &&
                 <Chip
                   deleteIcon={ <Avatar>{ p.Tasks.length }</Avatar> }
                   onDelete={ () => {} }
                   label={ p.name }
                   style={ { marginRight: 10, marginTop: 10, marginBottom: 10 } }
                   size={ 'medium' }
-                  onClick={(e) => this.goToProject(e, p)}
+                  onClick={ (e) => this.goToProject(e, p) }
                 />
             )
           })
@@ -259,8 +247,7 @@ TaskList.propTypes = {
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
-  project: PropTypes.object,
-  user: PropTypes.object
+  project: PropTypes.object
 }
 
 export default injectIntl(withRouter(withStyles(styles)(TaskList)))

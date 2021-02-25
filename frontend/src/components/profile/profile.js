@@ -216,10 +216,10 @@ class Profile extends Component {
     switch (path) {
       case '/profile':
         this.setState({ selected: 0 })
-      break
+        break
       case '/profile/user/orgs':
         this.setState({ selected: 1 })
-      break
+        break
       case '/profile/tasks':
         this.setState({ selected: 2 })
         break
@@ -325,7 +325,7 @@ class Profile extends Component {
                       path='/profile/tasks/:filter'
                       component={ UserTasksContainer }
                     />
-                    
+
                   }
                   { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                     <Route
@@ -524,7 +524,7 @@ class Profile extends Component {
                           }
                           { userTypes && (userTypes.includes('contributor') || userTypes.includes('maintainer')) &&
                           <MenuItem
-                            onClick={ (e) => this.props.history.push('/profile/tasks')}
+                            onClick={ (e) => this.props.history.push('/profile/tasks') }
                             className={ classes.menuItem }
                             selected={ this.state.selected === 2 }
                           >

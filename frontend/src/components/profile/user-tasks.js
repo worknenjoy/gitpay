@@ -65,22 +65,22 @@ const messages = defineMessages({
   }
 })
 
-const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user}) => {
-  const [currentTab, setCurrentTab] = useState('');
-  
-  useEffect(() => {  
+const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user }) => {
+  const [currentTab, setCurrentTab] = useState('')
+
+  useEffect(() => {
     listTasks({}).then(() => {
-      if(history.location.pathname === "/profile/tasks") {
+      if (history.location.pathname === '/profile/tasks') {
         user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'interested')
         user.Types && user.Types.map(t => t.name).includes('maintainer') && handleTabChange({}, 'createdbyme')
       }
-      if(history.location.pathname === "/profile/tasks/createdbyme") {
+      if (history.location.pathname === '/profile/tasks/createdbyme') {
         handleTabChange({}, 'createdbyme')
       }
-      if(history.location.pathname === "/profile/tasks/interested") {
+      if (history.location.pathname === '/profile/tasks/interested') {
         handleTabChange({}, 'interested')
       }
-      if(history.location.pathname === "/profile/tasks/assigned") {
+      if (history.location.pathname === '/profile/tasks/assigned') {
         handleTabChange({}, 'assigned')
       }
     })
@@ -105,12 +105,12 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
   }
 
   return (
-    <Paper elevation={0}>
-      <div className={classes.rootTabs} style={{marginTop: 40}}>
+    <Paper elevation={ 0 }>
+      <div className={ classes.rootTabs } style={ { marginTop: 40 } }>
         <AppBar position='static' color='default'>
           <Tabs
-            value={currentTab}
-            onChange={handleTabChange}
+            value={ currentTab }
+            onChange={ handleTabChange }
             scrollable
             scrollButtons='on'
             indicatorColor='primary'
@@ -118,36 +118,36 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
           >
             { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
             <Tab
-              value={'createdbyme'}
-              label={intl.formatMessage(messages.createdByMeTasks)}
-              icon={<CreatedByMeIcon />}
+              value={ 'createdbyme' }
+              label={ intl.formatMessage(messages.createdByMeTasks) }
+              icon={ <CreatedByMeIcon /> }
             />
             }
             { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-            
+
               <Tab
-                value={'interested'}
-                label={intl.formatMessage(messages.interestedTasks)}
-                icon={<AssignIcon />}
+                value={ 'interested' }
+                label={ intl.formatMessage(messages.interestedTasks) }
+                icon={ <AssignIcon /> }
               />
             }
             { user.Types && user.Types.map(t => t.name).includes('contributor') &&
               <Tab
-                value={'assigned'}
+                value={ 'assigned' }
                 label={ intl.formatMessage(
                   messages.assignedToMeTasks
-                )}
-                icon={<ActionIcon />}
+                ) }
+                icon={ <ActionIcon /> }
               />
             }
           </Tabs>
         </AppBar>
-        <div style={{ padding: 8 * 3 }}>
-          {!user.id ? (
-            <Card className={classes.card}>
+        <div style={ { padding: 8 * 3 } }>
+          { !user.id ? (
+            <Card className={ classes.card }>
               <CardMedia
-                className={classes.media}
-                src={imageGettingStarted}
+                className={ classes.media }
+                src={ imageGettingStarted }
               />
               <CardContent>
                 <Typography gutterBottom variant='h5' component='h2'>
@@ -165,37 +165,36 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
               </CardContent>
               <CardActions>
                 <Button
-                  style={{ marginRight: 10 }}
-                  href={`${api.API_URL}/authorize/github`}
+                  style={ { marginRight: 10 } }
+                  href={ `${api.API_URL}/authorize/github` }
                   variant='contained'
                   size='small'
                   color='secondary'
-                  className={classes.logButtons}
+                  className={ classes.logButtons }
                 >
-                  <img width='16' src={logoGithub} />
-                  <span className={classes.gutterLeft}>Github</span>
+                  <img width='16' src={ logoGithub } />
+                  <span className={ classes.gutterLeft }>Github</span>
                 </Button>
 
                 <Button
-                  href={`${api.API_URL}/authorize/bitbucket`}
+                  href={ `${api.API_URL}/authorize/bitbucket` }
                   variant='contained'
                   size='small'
                   color='secondary'
-                  className={classes.logButtons}
+                  className={ classes.logButtons }
                 >
-                  <img width='16' src={logoBitbucket} />
-                  <span className={classes.gutterLeft}>Bitbucket</span>
+                  <img width='16' src={ logoBitbucket } />
+                  <span className={ classes.gutterLeft }>Bitbucket</span>
                 </Button>
               </CardActions>
             </Card>
           ) : (
-              <CustomPaginationActionsTable tasks={tasks} />
-            )}
+            <CustomPaginationActionsTable tasks={ tasks } />
+          ) }
         </div>
       </div>
     </Paper>
   )
-  
 }
 
 UserTasks.propTypes = {
@@ -203,7 +202,6 @@ UserTasks.propTypes = {
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
-  project: PropTypes.object,
   user: PropTypes.object
 }
 
