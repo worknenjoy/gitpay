@@ -108,7 +108,7 @@ class TaskHeader extends React.Component {
                     { user && user.id ? (
                       <Link href='/' color='inherit' onClick={ (e) => {
                         e.preventDefault()
-                        history.push('/profile/user/tasks')
+                        history.push('/profile/tasks')
                       } }>
                         <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
                           <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />

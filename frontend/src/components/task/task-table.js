@@ -97,28 +97,28 @@ class TablePaginationActions extends React.Component {
     return (
       <div className={ classes.root } >
         <IconButton
-          onClick={ this.handleFirstPageButtonClick }
+          onClick={ (e) => this.handleFirstPageButtonClick(e) }
           disabled={ page === 0 }
           aria-label={ this.props.intl.formatMessage(messages.firstPageLabel) }
         >
           { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
         </IconButton>
         <IconButton
-          onClick={ this.handleBackButtonClick }
+          onClick={ (e) => this.handleBackButtonClick(e) }
           disabled={ page === 0 }
           aria-label={ this.props.intl.formatMessage(messages.previousPageLabel) }
         >
           { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
         </IconButton>
         <IconButton
-          onClick={ this.handleNextButtonClick }
+          onClick={ (e) => this.handleNextButtonClick(e) }
           disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
           aria-label={ this.props.intl.formatMessage(messages.nextPageLabel) }
         >
           { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
         </IconButton>
         <IconButton
-          onClick={ this.handleLastPageButtonClick }
+          onClick={ (e) => this.handleLastPageButtonClick(e) }
           disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
           aria-label={ this.props.intl.formatMessage(messages.lastPageLabel) }
         >
@@ -253,7 +253,7 @@ class CustomPaginationActionsTable extends React.Component {
                       </TableCell>
                       <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
                         <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
-                          <a style={ { cursor: 'pointer' } } onClick={ () => this.handleClickListItem(n.id) }>
+                          <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n.id) }>
                             { TextEllipsis(`${n.title || 'no title'}`, 30) }
                           </a>
                           <a target='_blank' href={ n.url }>
@@ -299,8 +299,8 @@ class CustomPaginationActionsTable extends React.Component {
                     count={ tasks.data.length }
                     rowsPerPage={ rowsPerPage }
                     page={ page }
-                    onChangePage={ this.handleChangePage }
-                    onChangeRowsPerPage={ this.handleChangeRowsPerPage }
+                    onChangePage={ (e, page) => this.handleChangePage(e, page) }
+                    onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
                     Actions={ TablePaginationActionsWrapped }
                   />
                 </TableRow>

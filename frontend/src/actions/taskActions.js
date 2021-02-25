@@ -378,13 +378,13 @@ const deleteTask = task => {
   }
 }
 
-const listTasks = ({ projectId, userId }) => {
+const listTasks = ({ projectId, userId, status }) => {
   validToken()
   return (dispatch) => {
     dispatch(listTaskRequested())
     return axios
       .get(api.API_URL + '/tasks/list', {
-        params: { projectId, userId }
+        params: { projectId, userId, status }
       })
       .then(response => {
         return dispatch(listTaskSuccess(response))

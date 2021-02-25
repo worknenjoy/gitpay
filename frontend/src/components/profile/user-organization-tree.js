@@ -87,7 +87,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function UserTasksList ({ createOrganizations, updateOrganization, organizations, user, history }) {
+export default function UserOrganizationTree ({ createOrganizations, updateOrganization, organizations, user, history }) {
   const classes = useStyles()
 
   return (

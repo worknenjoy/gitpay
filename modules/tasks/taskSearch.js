@@ -8,7 +8,8 @@ module.exports = Promise.method(function taskSearch (searchParams) {
   ] }
 
   query = searchParams.projectId ? { ...query, ProjectId: searchParams.projectId } : query
-  query = searchParams.userId ? { userId: searchParams.userId } : query
+  query = searchParams.userId ? { ...query, userId: searchParams.userId } : query
+  query = searchParams.status ? { ...query, status: searchParams.status } : query
 
   return models.Task
     .findAll(
