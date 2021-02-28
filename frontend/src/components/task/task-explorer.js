@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { defineMessages, injectIntl, formatMessage } from 'react-intl'
 
 import {
+  Container,
+  AppBar,
+  Tabs,
+  Tab,
   Grid,
   withStyles,
 } from '@material-ui/core'
@@ -12,6 +17,7 @@ import Bottom from '../bottom/bottom'
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
 import TaskListContainer from '../../containers/task-list'
+import ProjectListContainer from '../../containers/project-list'
 
 const styles = theme => ({
   root: {
@@ -63,7 +69,37 @@ const styles = theme => ({
   }
 })
 
+const messages = defineMessages({
+  issuesLabel: {
+    id: 'task.list.issue.label',
+    defaultMessage: 'Issues'
+  },
+  projectsLabel: {
+    id: 'task.list.issue.projects',
+    defaultMessage: 'Projects'
+  },
+  organizationsLabel: {
+    id: 'task.list.issue.organizations',
+    defaultMessage: 'Organizations'
+  }
+})
+
 class TaskExplorer extends Component {
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      value: 0
+    }
+
+    this.handleSectionTab = this.handleSectionTab.bind(this)
+  }
+
+  handleSectionTab = ({ currentTarget }, value) => {
+    this.setState({ value })
+  }
+
   render () {
     const { classes } = this.props
 
@@ -71,11 +107,43 @@ class TaskExplorer extends Component {
       <Page>
         <TopBarContainer />
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 3 }>
-            <Grid item xs={ 12 } md={ 12 }>
-              <TaskListContainer />
+          <AppBar position='sticky' color='default'>
+            <Container maxWidth="lg">
+              <Tabs
+                variant='scrollable'
+                value={ this.state.value }
+                onChange={ this.handleSectionTab }
+              >
+                <Tab
+                  id='issueas'
+                  value={ 0 }
+                  label={ this.props.intl.formatMessage(messages.issuesLabel) }
+                />
+                <Tab
+                  id='projects'
+                  value={ 1 }
+                  label={ this.props.intl.formatMessage(messages.projectsLabel) }
+                />
+                <Tab
+                  id='organizations'
+                  value={ 2 }
+                  label={ this.props.intl.formatMessage(messages.organizationsLabel) }
+                />
+              </Tabs>
+            </Container>
+          </AppBar>
+          <Container maxWidth="lg">
+            <Grid container className={ classes.root } spacing={ 3 }>
+              <Grid item xs={ 12 } md={ 12 }>
+                { this.state.value === 0 && 
+                  <TaskListContainer />
+                }
+                { this.state.value === 1 && 
+                  <ProjectListContainer />
+                }
+              </Grid>
             </Grid>
-          </Grid>
+          </Container>
         </PageContent>
         <Bottom classes={ classes } />
       </Page>
@@ -87,4 +155,4 @@ TaskExplorer.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(TaskExplorer)
+export default injectIntl(withStyles(styles)(TaskExplorer))

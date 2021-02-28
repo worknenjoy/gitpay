@@ -161,83 +161,85 @@ class TaskList extends Component {
     }
 
     return (
-      <Paper elevation={ 0 }>
-        { this.props.project.data.name && (
-          <Link href='/' onClick={ (e) => {
-            e.preventDefault()
-            window.location.href = '/#/tasks/all'
-            window.location.reload()
-          } }>
-            <Typography component='p' style={ { marginBottom: 10 } }>
-              <FormattedMessage
-                id='task.list.link.back'
-                defaultMessage='back to all issues'
-              />
-            </Typography>
-          </Link>
-        ) }
-        <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-          <FormattedMessage
-            id='task.list.headline'
-            defaultMessage='Project'
-          />
-        </Typography>
-        { this.props.projects && !this.props.project.data.name && (
-          this.props.projects.data.slice(0, 10).map(p => {
-            return (
-              p.Tasks.length &&
-                <Chip
-                  deleteIcon={ <Avatar>{ p.Tasks.length }</Avatar> }
-                  onDelete={ () => {} }
-                  label={ p.name }
-                  style={ { marginRight: 10, marginTop: 10, marginBottom: 10 } }
-                  size={ 'medium' }
-                  onClick={ (e) => this.goToProject(e, p) }
+      <React.Fragment>
+        <Paper elevation={ 0 }>
+          { this.props.project.data.name && (
+            <Link href='/' onClick={ (e) => {
+              e.preventDefault()
+              window.location.href = '/#/tasks/all'
+              window.location.reload()
+            } }>
+              <Typography component='p' style={ { marginBottom: 10 } }>
+                <FormattedMessage
+                  id='task.list.link.back'
+                  defaultMessage='back to all issues'
                 />
-            )
-          })
-        ) }
-        <Typography variant='h3' component='h2'>
-          { this.props.project.data.name }
-        </Typography>
-        <Typography component='p' style={ { marginBottom: 20, marginTop: 20 } }>
-          <FormattedMessage
-            id='task.list.description'
-            defaultMessage='Available issues'
-          />
-        </Typography>
-        <div className={ classes.rootTabs }>
-          <AppBar position='static' color='default'>
-            <Tabs
-              value={ this.state.tab }
-              onChange={ this.handleTabChange }
-              scrollable
-              scrollButtons='on'
-              indicatorColor='primary'
-              textColor='primary'
-            >
-              <Tab
-                value={ 0 }
-                label={ this.props.intl.formatMessage(messages.allTasks) }
-                icon={ <RedeemIcon /> }
-              />
-              <Tab
-                value={ 1 }
-                label={ this.props.intl.formatMessage(messages.allPublicTasksWithBounties) }
-                icon={ <MoneyIcon /> }
-              />
-              <Tab
-                value={ 2 }
-                label={ this.props.intl.formatMessage(messages.allPublicTasksNoBounties) }
-                icon={ <ContributionIcon /> }
-              />
-            </Tabs>
-          </AppBar>
-          <TabContainer>
-            <CustomPaginationActionsTable tasks={ this.props.tasks } />
-          </TabContainer>
-        </div>
-      </Paper>
+              </Typography>
+            </Link>
+          ) }
+          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+            <FormattedMessage
+              id='task.list.headline'
+              defaultMessage='Project'
+            />
+          </Typography>
+          { this.props.projects && !this.props.project.data.name && (
+            this.props.projects.data.slice(0, 10).map(p => {
+              return (
+                p.Tasks.length &&
+                  <Chip
+                    deleteIcon={ <Avatar>{ p.Tasks.length }</Avatar> }
+                    onDelete={ () => {} }
+                    label={ p.name }
+                    style={ { marginRight: 10, marginTop: 10, marginBottom: 10 } }
+                    size={ 'medium' }
+                    onClick={ (e) => this.goToProject(e, p) }
+                  />
+              )
+            })
+          ) }
+          <Typography variant='h3' component='h2'>
+            { this.props.project.data.name }
+          </Typography>
+          <Typography component='p' style={ { marginBottom: 20, marginTop: 20 } }>
+            <FormattedMessage
+              id='task.list.description'
+              defaultMessage='Available issues'
+            />
+          </Typography>
+          <div className={ classes.rootTabs }>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={ this.state.tab }
+                onChange={ this.handleTabChange }
+                scrollable
+                scrollButtons='on'
+                indicatorColor='primary'
+                textColor='primary'
+              >
+                <Tab
+                  value={ 0 }
+                  label={ this.props.intl.formatMessage(messages.allTasks) }
+                  icon={ <RedeemIcon /> }
+                />
+                <Tab
+                  value={ 1 }
+                  label={ this.props.intl.formatMessage(messages.allPublicTasksWithBounties) }
+                  icon={ <MoneyIcon /> }
+                />
+                <Tab
+                  value={ 2 }
+                  label={ this.props.intl.formatMessage(messages.allPublicTasksNoBounties) }
+                  icon={ <ContributionIcon /> }
+                />
+              </Tabs>
+            </AppBar>
+            <TabContainer>
+              <CustomPaginationActionsTable tasks={ this.props.tasks } />
+            </TabContainer>
+          </div>
+        </Paper>
+      </React.Fragment>
     )
   }
 }
