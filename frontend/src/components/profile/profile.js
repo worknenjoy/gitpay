@@ -298,11 +298,11 @@ class Profile extends Component {
         <PageContent>
           <Grid container className={ classes.root } spacing={ 2 }>
             <Grid item xs={ 12 } md={ 8 }>
-              <Container maxWidth="lg">
-              <HashRouter>
-                <Switch>
-                  <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } /> } />
-                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
+              <Container maxWidth='lg'>
+                <HashRouter>
+                  <Switch>
+                    <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } /> } />
+                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                     <Route
                       exact
                       path='/profile/user/orgs'
@@ -313,61 +313,61 @@ class Profile extends Component {
                         history={ this.props.history }
                       />) }
                     />
-                  }
-                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    }
+                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                     <Route
                       exact
                       path='/profile/tasks'
                       component={ UserTasksContainer }
                     />
-                  }
-                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    }
+                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                     <Route
                       exact
                       path='/profile/tasks/:filter'
                       component={ UserTasksContainer }
                     />
 
-                  }
-                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    }
+                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                     <Route
                       exact
                       path='/profile/payment-options'
                       component={ () => <PaymentOptions user={ user } /> }
                     />
-                  }
-                  { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                  <Route
-                    exact
-                    path='/profile/preferences'
-                    component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
-                  />
-                  }
-                  <Route
-                    exact
-                    path='/profile/settings'
-                    component={ () => <SettingsComponent deleteUser={ this.props.deleteUser } classes={ classes } user={ this.props.user } /> }
-                  />
-                  <Route
-                    exact
-                    path='/profile/roles'
-                    component={ () => <Roles intl={ this.props.intl } updateUser={ this.props.updateUser } user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
-                  />
-                </Switch>
-              </HashRouter>
-              <UpdateRole
-                intl={ this.props.intl }
-                updateUser={ this.props.updateUser }
-                user={ user }
-                roles={ roles }
-                updateRoles={ this.props.updateRoles }
-                fetchRoles={ this.props.fetchRoles }
-                createRoles={ this.props.createRoles }
-                deleteRoles={ this.props.deleteRoles }
-                addNotification={ this.props.addNotification }
-                visible={ this.state.openUpdateProfileDialog }
-                onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
-              />
+                    }
+                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    <Route
+                      exact
+                      path='/profile/preferences'
+                      component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
+                    />
+                    }
+                    <Route
+                      exact
+                      path='/profile/settings'
+                      component={ () => <SettingsComponent deleteUser={ this.props.deleteUser } classes={ classes } user={ this.props.user } /> }
+                    />
+                    <Route
+                      exact
+                      path='/profile/roles'
+                      component={ () => <Roles intl={ this.props.intl } updateUser={ this.props.updateUser } user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
+                    />
+                  </Switch>
+                </HashRouter>
+                <UpdateRole
+                  intl={ this.props.intl }
+                  updateUser={ this.props.updateUser }
+                  user={ user }
+                  roles={ roles }
+                  updateRoles={ this.props.updateRoles }
+                  fetchRoles={ this.props.fetchRoles }
+                  createRoles={ this.props.createRoles }
+                  deleteRoles={ this.props.deleteRoles }
+                  addNotification={ this.props.addNotification }
+                  visible={ this.state.openUpdateProfileDialog }
+                  onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
+                />
               </Container>
             </Grid>
             <Grid item xs={ 12 } md={ 4 }>

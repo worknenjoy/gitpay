@@ -57,9 +57,14 @@ export default function ProjectList ({ listProjects, projects }) {
     return hasOpenTasks.length > 0
   }
 
+  const projectsSort = (data) => {
+    const projectWithOpenIssues = data.filter(p => hasOpenIssues(p))
+    return projectWithOpenIssues.sort((a, b) => parseInt(b.Tasks.length) - parseInt(a.Tasks.length))
+  }
+
   return (
     <div className={ classes.root }>
-      { projects && projects.data && projects.data.filter(p => hasOpenIssues(p)).map(p => {
+      { projects && projects.data && projectsSort(projects.data).map(p => {
         return (
           <div className={ classes.item }>
             <Card className={ classes.rootCard }>
@@ -102,8 +107,8 @@ export default function ProjectList ({ listProjects, projects }) {
               </div>
             </Card>
           </div>
-      )
-    }) }
+        )
+      }) }
     </div>
   )
 }
