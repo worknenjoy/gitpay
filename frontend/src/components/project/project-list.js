@@ -62,9 +62,17 @@ export default function ProjectList ({ listProjects, projects }) {
     return projectWithOpenIssues.sort((a, b) => parseInt(b.Tasks.length) - parseInt(a.Tasks.length))
   }
 
+  const projectSortMoreBounties = (data) => {
+    return data.sort((a, b) => projectBounties(b.Tasks) - projectBounties(a.Tasks))
+  }
+
+  const projectBounties = (data) => {
+    return data.map(task => task.value ? task.value : 0).reduce((prev, next) => parseInt(prev) + parseInt(next))
+  }
+
   return (
     <div className={ classes.root }>
-      { projects && projects.data && projectsSort(projects.data).map(p => {
+      { projects && projects.data && projectSortMoreBounties(projectsSort(projects.data)).map(p => {
         return (
           <div className={ classes.item }>
             <Card className={ classes.rootCard }>
@@ -75,7 +83,15 @@ export default function ProjectList ({ listProjects, projects }) {
                   </Avatar>
                 }
                 action={
-                  ''
+                  <IconButton aria-label='provider'>
+                    <Tooltip id='tooltip-fab' title={ p.Organization.provider ? p.Organization.provider : 'See on repository' } placement='right'>
+                      <a target='_blank' href={ p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}` }>
+                        <img width='28' src={ p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub }
+                          style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
+                        />
+                      </a>
+                    </Tooltip>
+                  </IconButton>
                 }
                 title={ p.name }
                 subheader={ `by ${p.Organization.name}` }
@@ -94,15 +110,8 @@ export default function ProjectList ({ listProjects, projects }) {
                     window.location.reload()
                   } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
                   />
-                  <IconButton aria-label='provider'>
-                    <Tooltip id='tooltip-fab' title={ p.Organization.provider ? p.Organization.provider : 'See on repository' } placement='right'>
-                      <a target='_blank' href={ p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}` }>
-                        <img width='28' src={ p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub }
-                          style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
-                        />
-                      </a>
-                    </Tooltip>
-                  </IconButton>
+                  <Chip style={{marginLeft: 10}} size='small' avatar={ <Avatar>{ projectBounties(p.Tasks) }</Avatar> } label={ 'usd in open bounties' }
+                  />
                 </CardActions>
               </div>
             </Card>
