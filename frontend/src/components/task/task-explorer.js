@@ -124,16 +124,18 @@ class TaskExplorer extends Component {
                   value={ 1 }
                   label={ this.props.intl.formatMessage(messages.projectsLabel) }
                 />
+                {/*
                 <Tab
                   id='organizations'
                   value={ 2 }
                   label={ this.props.intl.formatMessage(messages.organizationsLabel) }
                 />
+                */}
               </Tabs>
             </Container>
           </AppBar>
-          <Container maxWidth="lg">
-            <Grid container className={ classes.root } spacing={ 3 }>
+          <Container fixed maxWidth="lg">
+            <Grid container className={ classes.root }>
               <Grid item xs={ 12 } md={ 12 }>
                 { this.state.value === 0 && 
                   <TaskListContainer />

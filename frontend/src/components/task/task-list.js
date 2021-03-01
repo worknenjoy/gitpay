@@ -163,44 +163,19 @@ class TaskList extends Component {
     return (
       <React.Fragment>
         <Paper elevation={ 0 }>
-          { this.props.project.data.name && (
-            <Link href='/' onClick={ (e) => {
-              e.preventDefault()
-              window.location.href = '/#/tasks/all'
-              window.location.reload()
-            } }>
-              <Typography component='p' style={ { marginBottom: 10 } }>
+          {this.props.project.data.name && 
+            <React.Fragment>
+              <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
                 <FormattedMessage
-                  id='task.list.link.back'
-                  defaultMessage='back to all issues'
+                  id='task.list.headline'
+                  defaultMessage='Project'
                 />
               </Typography>
-            </Link>
-          ) }
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id='task.list.headline'
-              defaultMessage='Project'
-            />
-          </Typography>
-          { this.props.projects && !this.props.project.data.name && (
-            this.props.projects.data.slice(0, 10).map(p => {
-              return (
-                p.Tasks.length &&
-                  <Chip
-                    deleteIcon={ <Avatar>{ p.Tasks.length }</Avatar> }
-                    onDelete={ () => {} }
-                    label={ p.name }
-                    style={ { marginRight: 10, marginTop: 10, marginBottom: 10 } }
-                    size={ 'medium' }
-                    onClick={ (e) => this.goToProject(e, p) }
-                  />
-              )
-            })
-          ) }
-          <Typography variant='h3' component='h2'>
-            { this.props.project.data.name }
-          </Typography>
+              <Typography variant='h3' component='h2'>
+                { this.props.project.data.name }
+              </Typography>
+            </React.Fragment>
+          }
           <Typography component='p' style={ { marginBottom: 20, marginTop: 20 } }>
             <FormattedMessage
               id='task.list.description'
