@@ -17,6 +17,7 @@ import renderHTML from 'react-render-html'
 import marked from 'marked'
 
 import {
+  Container,
   Chip,
   Dialog,
   DialogContent,
@@ -916,89 +917,79 @@ class Task extends Component {
         <TopBarContainer />
         <PageContent>
           <Grid container style={ { marginBottom: 4 } }>
-            <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 80 } }>
-              <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } history={ this.props.history } project={ project } />
-              { this.props.logged ? (
-                <TaskPaymentForm { ...this.props } plan={ this.props.task.data.private ? 'private' : 'open source' } open={ this.state.paymentForm } />
-              ) : (
-                <Collapse in={ this.state.paymentForm }>
-                  <div className={ classes.mainBlock } style={ { marginBottom: 40 } }>
-                    <LoginButton referer={ this.props.location } includeForm />
-                  </div>
-                </Collapse>
-              ) }
-              { task.data &&
-              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
-                <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
-                  <FormattedMessage id='task.info.description' defaultMessage='Description' />
-                </Typography>
-                <Typography variant='body2' style={ { marginBottom: 40 } }>
-                  <ShowMoreText
-                    lines={ 8 }
-                    more={
-                      <Button
-                        size='small'
-                        variant='outlined'
-                      >
-                        <FormattedMessage id='task.description.more' defaultMessage='Show more' />
-                        <ExpandMore />
-                      </Button>
-                    }
-                    less={
-                      <Button
-                        size='small'
-                        variant='outlined'
-                      >
-                        <FormattedMessage id='task.description.less' defaultMessage='Show less' />
-                        <ExpandLess />
-                      </Button>
-                    }
-                  >
-                    { task.data.description ? renderHTML(marked(task.data.description)) : renderHTML(marked(task.data.metadata ? task.data.metadata.issue.body : 'not available')) }
-                  </ShowMoreText>
-
-                </Typography>
-              </ReactPlaceholder>
-              }
-              { task.data.User &&
-              <React.Fragment>
-                <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
-                  <FormattedMessage id='task.info.authors' defaultMessage='Imported by' />
-                </Typography>
-                <AuthorList
-                  logged={ this.props.logged }
-                  user={ this.props.user }
-                  task={ this.props.task }
-                  messageAuthor={ this.props.messageAuthor }
-                  location={ this.props.location }
-                  authors={
-                    [
-                      {
-                        name: task.data.User.name,
-                        email: task.data.User.email,
-                        href: task.data.User.website
-                      }
-                    ]
-                  } />
-              </React.Fragment>
-              }
-              { task.data && task.data.assigns && task.data.assigns.length > 0 &&
-                <div style={ { marginBottom: 20 } }>
-                  <Typography variant='h5' style={ { display: 'inline-block', marginBottom: 10, marginTop: 20 } }>
-                    <FormattedMessage id='task.info.interested' defaultMessage='Candidate(s)' />
+            <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 40 } }>
+              <Container fixed maxWidth='lg'>
+                <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } history={ this.props.history } project={ project } />
+                { this.props.logged ? (
+                  <TaskPaymentForm { ...this.props } plan={ this.props.task.data.private ? 'private' : 'open source' } open={ this.state.paymentForm } />
+                ) : (
+                  <Collapse in={ this.state.paymentForm }>
+                    <div className={ classes.mainBlock } style={ { marginBottom: 40 } }>
+                      <LoginButton referer={ this.props.location } includeForm />
+                    </div>
+                  </Collapse>
+                ) }
+                { task.data &&
+                <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
+                  <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
+                    <FormattedMessage id='task.info.description' defaultMessage='Description' />
                   </Typography>
-                  { this.taskOwner() &&
-                  <Button
-                    style={ { display: 'inline-block', marginBottom: 2 } }
-                    onClick={ this.handleAssignDialog }
-                    size='small'
-                    color='primary'
-                    variant='text'
-                  >
-                    <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
-                    <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
-                  </Button> }
-                  { task.data.assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 &&
+                  <Typography variant='body2' style={ { marginBottom: 40 } }>
+                    <ShowMoreText
+                      lines={ 8 }
+                      more={
+                        <Button
+                          size='small'
+                          variant='outlined'
+                        >
+                          <FormattedMessage id='task.description.more' defaultMessage='Show more' />
+                          <ExpandMore />
+                        </Button>
+                      }
+                      less={
+                        <Button
+                          size='small'
+                          variant='outlined'
+                        >
+                          <FormattedMessage id='task.description.less' defaultMessage='Show less' />
+                          <ExpandLess />
+                        </Button>
+                      }
+                    >
+                      { task.data.description ? renderHTML(marked(task.data.description)) : renderHTML(marked(task.data.metadata ? task.data.metadata.issue.body : 'not available')) }
+                    </ShowMoreText>
+
+                  </Typography>
+                </ReactPlaceholder>
+                }
+                { task.data.User &&
+                <React.Fragment>
+                  <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
+                    <FormattedMessage id='task.info.authors' defaultMessage='Imported by' />
+                  </Typography>
+                  <AuthorList
+                    logged={ this.props.logged }
+                    user={ this.props.user }
+                    task={ this.props.task }
+                    messageAuthor={ this.props.messageAuthor }
+                    location={ this.props.location }
+                    authors={
+                      [
+                        {
+                          name: task.data.User.name,
+                          email: task.data.User.email,
+                          href: task.data.User.website
+                        }
+                      ]
+                    } />
+                </React.Fragment>
+                }
+                { task.data && task.data.assigns && task.data.assigns.length > 0 &&
+                  <div style={ { marginBottom: 20 } }>
+                    <Typography variant='h5' style={ { display: 'inline-block', marginBottom: 10, marginTop: 20 } }>
+                      <FormattedMessage id='task.info.interested' defaultMessage='Candidate(s)' />
+                    </Typography>
+                    { this.taskOwner() &&
                     <Button
                       style={ { display: 'inline-block', marginBottom: 2 } }
                       onClick={ this.handleAssignDialog }
@@ -1006,148 +997,95 @@ class Task extends Component {
                       color='primary'
                       variant='text'
                     >
-
-                      <FormattedMessage id='task.assign.action.review' defaultMessage='Review assignment' />
+                      <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
                       <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
-                    </Button>
-                  }
-                  <TaskInterested assigns={ task.data && task.data.assigns } />
-                  <Dialog fullScreen open={ this.state.assignIssueDialog } onClose={ () => this.setState({ assignIssueDialog: false }) }>
-                    <DialogContent>
-                      <RegularCard
-                        headerColor='green'
-                        cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
-                        cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
-                        content={
-                          <Table
-                            tableHeaderColor='warning'
-                            tableHead={ [
-                              this.props.intl.formatMessage(messages.interestedTableLabelUser),
-                              this.props.intl.formatMessage(messages.interestedTableLabelWhen),
-                              this.props.intl.formatMessage(messages.interestedTableLabelActions)
-                            ] }
-                            tableData={ task && task.data.assigns && task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
-                          />
-                        }
-                      />
-
-                    </DialogContent>
-                    <DialogActions>
+                    </Button> }
+                    { task.data.assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 &&
                       <Button
                         style={ { display: 'inline-block', marginBottom: 2 } }
-                        onClick={ () => this.setState({ assignIssueDialog: false }) }
+                        onClick={ this.handleAssignDialog }
                         size='small'
-                        color='secondary'
+                        color='primary'
                         variant='text'
                       >
-                        <FormattedMessage id='task.assgin.action.close' defaultMessage='Close' />
+
+                        <FormattedMessage id='task.assign.action.review' defaultMessage='Review assignment' />
+                        <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
                       </Button>
-                    </DialogActions>
-                  </Dialog>
-                </div>
-              }
-              { task.data && task.data.assigned &&
-                <div style={ { marginBottom: 80 } }>
-                  <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
-                    <FormattedMessage id='task.info.assigns' defaultMessage='Assigned' />
-                  </Typography>
-                  <TaskAssigned
-                    task={ task.data }
-                    isOwner={ isAssignOwner() }
-                    status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                    classes={ classes }
-                    user={ task.data.assignedUser || {} }
-                    loggedUser={ this.state.logged && this.state.logged.user }
-                    removeAssignment={ this.props.removeAssignment }
-                    assignTask={ this.props.assignTask }
-                    assign={ { id: task.data.assigned } }
-                    messageTask={ this.props.messageTask }
-                  />
-                </div>
-              }
-              { /*
-              <Typography variant='subtitle2' style={ { marginTop: 10, marginBottom: 10 } }>
-                <FormattedMessage id='task.claim.title' defaultMessage='Are you the original author of this issue?' />
-              </Typography>
-              <Typography variant='body2' style={ { marginBottom: 10 } }>
-                <FormattedMessage id='task.claim.subtitle' defaultMessage="If you're the original author of this issue, you can claim this issue so you will be admin and transfer the property to manage the issue on Gitpay." />
-              </Typography>
-              <div>
-                <Button
-                  onClick={ this.handleClaimDialog }
-                  size='small'
-                  color='primary'
-                >
-                  <span>
-                    <FormattedMessage id='task.actions.claim' defaultMessage='Claim this issue' />
-                  </span>
-                </Button>
-                { !this.props.logged ? (
-                  <Dialog open={ taskClaimDialog } onClose={ () => this.setState({ taskClaimDialog: false }) }>
-                    <DialogTitle id='form-dialog-title'>
-                      <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                    </DialogTitle>
-                    <DialogContent>
-                      <div className={ classes.mainBlock }>
-                        <LoginButton referer={ this.props.location } includeForm />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                ) : (
-                  <TaskClaim
-                    taskData={ task.data }
-                    requestClaimTask={ this.props.requestClaimTask }
-                    user={ this.props.user }
-                    open={ this.state.taskClaimDialog }
-                    onClose={ () => this.setState({ taskClaimDialog: false }) }
-                    onOpen={ () => this.setState({ taskClaimDialog: true }) }
-                  />
-                ) }
-              </div>
-              */ }
+                    }
+                    <TaskInterested assigns={ task.data && task.data.assigns } />
+                    <Dialog fullScreen open={ this.state.assignIssueDialog } onClose={ () => this.setState({ assignIssueDialog: false }) }>
+                      <DialogContent>
+                        <RegularCard
+                          headerColor='green'
+                          cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
+                          cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
+                          content={
+                            <Table
+                              tableHeaderColor='warning'
+                              tableHead={ [
+                                this.props.intl.formatMessage(messages.interestedTableLabelUser),
+                                this.props.intl.formatMessage(messages.interestedTableLabelWhen),
+                                this.props.intl.formatMessage(messages.interestedTableLabelActions)
+                              ] }
+                              tableData={ task && task.data.assigns && task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
+                            />
+                          }
+                        />
 
-              <div style={ { marginBottom: 80 } }>
-                <Button
-                  style={ { display: 'inline-block', marginTop: 40 } }
-                  onClick={ this.handleReportIssueDialog }
-                  size='small'
-                  color='secondary'
-                  variant='contained'
-                >
-                  <BugReportIcon style={ { marginRight: 10, verticalAlign: 'middle' } } />
-                  <FormattedMessage id='task.report.action' defaultMessage='Report issue' />
-                </Button>
-                <TaskReport
-                  taskData={ task.data }
-                  reportTask={ this.props.reportTask }
-                  user={ this.props.user }
-                  visible={ this.state.reportIssueDialog }
-                  onClose={ () => this.setState({ reportIssueDialog: false }) }
-                  onOpen={ () => this.setState({ reportIssueDialog: true }) }
-                />
-              </div>
-
-              { this.taskOwner() &&
-              <div>
-                <Button
-                  style={ { marginRight: 10 } }
-                  onClick={ this.handleDeleteDialog }
-                  color='secundary'
-                  variant='outlined'
-                >
-                  <span className={ classes.spaceRight }>
-                    <FormattedMessage id='task.actions.issue.delete' defaultMessage='Delete issue' />
-                  </span>
-                  <DeleteIcon />
-                </Button>
-                <Typography variant='caption' style={ { color: 'red' } }>This will remove this issue on Gitpay and all payment data will be lost. </Typography>
-                <Dialog
-                  open={ this.state.deleteDialog }
-                  onClose={ this.handleDeleteDialogClose }
-                  aria-labelledby='form-dialog-title'
-                >
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          style={ { display: 'inline-block', marginBottom: 2 } }
+                          onClick={ () => this.setState({ assignIssueDialog: false }) }
+                          size='small'
+                          color='secondary'
+                          variant='text'
+                        >
+                          <FormattedMessage id='task.assgin.action.close' defaultMessage='Close' />
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </div>
+                }
+                { task.data && task.data.assigned &&
+                  <div style={ { marginBottom: 80 } }>
+                    <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
+                      <FormattedMessage id='task.info.assigns' defaultMessage='Assigned' />
+                    </Typography>
+                    <TaskAssigned
+                      task={ task.data }
+                      isOwner={ isAssignOwner() }
+                      status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                      classes={ classes }
+                      user={ task.data.assignedUser || {} }
+                      loggedUser={ this.state.logged && this.state.logged.user }
+                      removeAssignment={ this.props.removeAssignment }
+                      assignTask={ this.props.assignTask }
+                      assign={ { id: task.data.assigned } }
+                      messageTask={ this.props.messageTask }
+                    />
+                  </div>
+                }
+                { /*
+                <Typography variant='subtitle2' style={ { marginTop: 10, marginBottom: 10 } }>
+                  <FormattedMessage id='task.claim.title' defaultMessage='Are you the original author of this issue?' />
+                </Typography>
+                <Typography variant='body2' style={ { marginBottom: 10 } }>
+                  <FormattedMessage id='task.claim.subtitle' defaultMessage="If you're the original author of this issue, you can claim this issue so you will be admin and transfer the property to manage the issue on Gitpay." />
+                </Typography>
+                <div>
+                  <Button
+                    onClick={ this.handleClaimDialog }
+                    size='small'
+                    color='primary'
+                  >
+                    <span>
+                      <FormattedMessage id='task.actions.claim' defaultMessage='Claim this issue' />
+                    </span>
+                  </Button>
                   { !this.props.logged ? (
-                    <div>
+                    <Dialog open={ taskClaimDialog } onClose={ () => this.setState({ taskClaimDialog: false }) }>
                       <DialogTitle id='form-dialog-title'>
                         <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
                       </DialogTitle>
@@ -1156,30 +1094,95 @@ class Task extends Component {
                           <LoginButton referer={ this.props.location } includeForm />
                         </div>
                       </DialogContent>
-                    </div>
+                    </Dialog>
                   ) : (
-                    <div>
-                      <DialogTitle id='form-dialog-title'>
-                        <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
-                      </DialogTitle>
-                      <DialogContent>
-                        <Typography type='caption'>
-                          <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
-                        </Typography>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={ this.handleDeleteDialogClose } color='primary'>
-                          <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-                        </Button>
-                        <Button onClick={ this.handleDeleteTask } variant='contained' color='secondary' >
-                          <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
-                        </Button>
-                      </DialogActions>
-                    </div>
+                    <TaskClaim
+                      taskData={ task.data }
+                      requestClaimTask={ this.props.requestClaimTask }
+                      user={ this.props.user }
+                      open={ this.state.taskClaimDialog }
+                      onClose={ () => this.setState({ taskClaimDialog: false }) }
+                      onOpen={ () => this.setState({ taskClaimDialog: true }) }
+                    />
                   ) }
-                </Dialog>
-              </div>
-              }
+                </div>
+                */ }
+
+                <div style={ { marginBottom: 80 } }>
+                  <Button
+                    style={ { display: 'inline-block', marginTop: 40 } }
+                    onClick={ this.handleReportIssueDialog }
+                    size='small'
+                    color='secondary'
+                    variant='contained'
+                  >
+                    <BugReportIcon style={ { marginRight: 10, verticalAlign: 'middle' } } />
+                    <FormattedMessage id='task.report.action' defaultMessage='Report issue' />
+                  </Button>
+                  <TaskReport
+                    taskData={ task.data }
+                    reportTask={ this.props.reportTask }
+                    user={ this.props.user }
+                    visible={ this.state.reportIssueDialog }
+                    onClose={ () => this.setState({ reportIssueDialog: false }) }
+                    onOpen={ () => this.setState({ reportIssueDialog: true }) }
+                  />
+                </div>
+
+                { this.taskOwner() &&
+                <div>
+                  <Button
+                    style={ { marginRight: 10 } }
+                    onClick={ this.handleDeleteDialog }
+                    color='secundary'
+                    variant='outlined'
+                  >
+                    <span className={ classes.spaceRight }>
+                      <FormattedMessage id='task.actions.issue.delete' defaultMessage='Delete issue' />
+                    </span>
+                    <DeleteIcon />
+                  </Button>
+                  <Typography variant='caption' style={ { color: 'red' } }>This will remove this issue on Gitpay and all payment data will be lost. </Typography>
+                  <Dialog
+                    open={ this.state.deleteDialog }
+                    onClose={ this.handleDeleteDialogClose }
+                    aria-labelledby='form-dialog-title'
+                  >
+                    { !this.props.logged ? (
+                      <div>
+                        <DialogTitle id='form-dialog-title'>
+                          <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
+                        </DialogTitle>
+                        <DialogContent>
+                          <div className={ classes.mainBlock }>
+                            <LoginButton referer={ this.props.location } includeForm />
+                          </div>
+                        </DialogContent>
+                      </div>
+                    ) : (
+                      <div>
+                        <DialogTitle id='form-dialog-title'>
+                          <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
+                        </DialogTitle>
+                        <DialogContent>
+                          <Typography type='caption'>
+                            <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
+                          </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={ this.handleDeleteDialogClose } color='primary'>
+                            <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
+                          </Button>
+                          <Button onClick={ this.handleDeleteTask } variant='contained' color='secondary' >
+                            <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
+                          </Button>
+                        </DialogActions>
+                      </div>
+                    ) }
+                  </Dialog>
+                </div>
+                }
+              </Container>
             </Grid>
             <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 4 }>
               <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>

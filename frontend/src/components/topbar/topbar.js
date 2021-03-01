@@ -338,7 +338,7 @@ class TopBar extends Component {
               <LabelButton>
                 <FormattedMessage
                   id='task.actions.create'
-                  defaultMessage='Create task' />
+                  defaultMessage='Import issue' />
               </LabelButton>
               <AddBox />
             </StyledButton>
@@ -352,7 +352,7 @@ class TopBar extends Component {
               <LabelButton>
                 <FormattedMessage
                   id='task.actions.explore'
-                  defaultMessage='Explore tasks' />
+                  defaultMessage='Explore' />
               </LabelButton>
               <ViewList />
             </StyledButton>
