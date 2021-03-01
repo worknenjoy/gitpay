@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { defineMessages, injectIntl, formatMessage } from 'react-intl'
+import { defineMessages, injectIntl } from 'react-intl'
 
 import {
   Container,
@@ -85,7 +85,6 @@ const messages = defineMessages({
 })
 
 class TaskExplorer extends Component {
-
   constructor (props) {
     super(props)
 
@@ -108,7 +107,7 @@ class TaskExplorer extends Component {
         <TopBarContainer />
         <PageContent>
           <AppBar position='sticky' color='default'>
-            <Container maxWidth="lg">
+            <Container maxWidth='lg'>
               <Tabs
                 variant='scrollable'
                 value={ this.state.value }
@@ -124,23 +123,23 @@ class TaskExplorer extends Component {
                   value={ 1 }
                   label={ this.props.intl.formatMessage(messages.projectsLabel) }
                 />
-                {/*
+                { /*
                 <Tab
                   id='organizations'
                   value={ 2 }
                   label={ this.props.intl.formatMessage(messages.organizationsLabel) }
                 />
-                */}
+                */ }
               </Tabs>
             </Container>
           </AppBar>
-          <Container fixed maxWidth="lg">
+          <Container fixed maxWidth='lg'>
             <Grid container className={ classes.root }>
               <Grid item xs={ 12 } md={ 12 }>
-                { this.state.value === 0 && 
+                { this.state.value === 0 &&
                   <TaskListContainer />
                 }
-                { this.state.value === 1 && 
+                { this.state.value === 1 &&
                   <ProjectListContainer />
                 }
               </Grid>

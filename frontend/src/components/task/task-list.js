@@ -4,12 +4,9 @@ import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
-  Link,
   Paper,
   Typography,
   AppBar,
-  Avatar,
-  Chip,
   Tabs,
   Tab,
   withStyles
@@ -163,7 +160,7 @@ class TaskList extends Component {
     return (
       <React.Fragment>
         <Paper elevation={ 0 }>
-          {this.props.project.data.name && 
+          { this.props.project.data.name &&
             <React.Fragment>
               <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
                 <FormattedMessage

@@ -918,7 +918,7 @@ class Task extends Component {
         <PageContent>
           <Grid container style={ { marginBottom: 4 } }>
             <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 40 } }>
-              <Container fixed maxWidth="lg">
+              <Container fixed maxWidth='lg'>
                 <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } history={ this.props.history } project={ project } />
                 { this.props.logged ? (
                   <TaskPaymentForm { ...this.props } plan={ this.props.task.data.private ? 'private' : 'open source' } open={ this.state.paymentForm } />
