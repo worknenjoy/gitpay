@@ -17,7 +17,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
-    display: 'flex'
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start'
   },
   rootCard: {
     maxWidth: 345,
@@ -50,51 +52,58 @@ export default function ProjectList ({ listProjects, projects }) {
     listProjects()
   }, [])
 
+  const hasOpenIssues = (project) => {
+    const hasOpenTasks = project.Tasks.filter(t => t.status === 'open')
+    return hasOpenTasks.length > 0
+  }
+
   return (
     <div className={ classes.root }>
-      { projects && projects.data && projects.data.filter(p => p.Tasks.filter(t => t.status === 'open')).map(p =>
-        (<div className={ classes.item }>
-          <Card className={ classes.rootCard }>
-            <CardHeader
-              avatar={
-                <Avatar aria-label='recipe' className={ classes.avatar }>
-                  { p.name[0] }
-                </Avatar>
+      { projects && projects.data && projects.data.filter(p => hasOpenIssues(p)).map(p => {
+        return (
+          <div className={ classes.item }>
+            <Card className={ classes.rootCard }>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label='recipe' className={ classes.avatar }>
+                    { p.name[0] }
+                  </Avatar>
+                }
+                action={
+                  ''
+                }
+                title={ p.name }
+                subheader={ `by ${p.Organization.name}` }
+              />
+              { p.description &&
+              <CardContent>
+                <Typography variant='body2' color='textSecondary' component='p'>
+                  { p.description }
+                </Typography>
+              </CardContent>
               }
-              action={
-                ''
-              }
-              title={ p.name }
-              subheader={ `by ${p.Organization.name}` }
-            />
-            { p.description &&
-            <CardContent>
-              <Typography variant='body2' color='textSecondary' component='p'>
-                { p.description }
-              </Typography>
-            </CardContent>
-            }
-            <div>
-              <CardActions disableSpacing style={ { alignItems: 'center' } }>
-                <Chip size='small' clickable onClick={ () => {
-                  window.location.href = '/#/organizations/' + p.OrganizationId + '/projects/' + p.id
-                  window.location.reload()
-                } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
-                />
-                <IconButton aria-label='provider'>
-                  <Tooltip id='tooltip-fab' title={ p.Organization.provider } placement='right'>
-                    <a target='_blank' href={ p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}` }>
-                      <img width='28' src={ p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub }
-                        style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
-                      />
-                    </a>
-                  </Tooltip>
-                </IconButton>
-              </CardActions>
-            </div>
-          </Card>
-        </div>)
-      ) }
+              <div>
+                <CardActions disableSpacing style={ { alignItems: 'center' } }>
+                  <Chip size='small' clickable onClick={ () => {
+                    window.location.href = '/#/organizations/' + p.OrganizationId + '/projects/' + p.id
+                    window.location.reload()
+                  } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
+                  />
+                  <IconButton aria-label='provider'>
+                    <Tooltip id='tooltip-fab' title={ p.Organization.provider } placement='right'>
+                      <a target='_blank' href={ p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}` }>
+                        <img width='28' src={ p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub }
+                          style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
+                        />
+                      </a>
+                    </Tooltip>
+                  </IconButton>
+                </CardActions>
+              </div>
+            </Card>
+          </div>
+      )
+    }) }
     </div>
   )
 }

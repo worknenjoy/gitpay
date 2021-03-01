@@ -7,6 +7,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import {
   Grid,
   Chip,
+  Container,
   Avatar,
   Typography,
   Button,
@@ -297,6 +298,7 @@ class Profile extends Component {
         <PageContent>
           <Grid container className={ classes.root } spacing={ 2 }>
             <Grid item xs={ 12 } md={ 8 }>
+              <Container maxWidth="lg">
               <HashRouter>
                 <Switch>
                   <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } /> } />
@@ -366,6 +368,7 @@ class Profile extends Component {
                 visible={ this.state.openUpdateProfileDialog }
                 onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
               />
+              </Container>
             </Grid>
             <Grid item xs={ 12 } md={ 4 }>
               <div className={ classes.bigRow }>
