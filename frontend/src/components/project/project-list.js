@@ -70,6 +70,12 @@ export default function ProjectList ({ listProjects, projects }) {
     return data.map(task => task.value ? task.value : 0).reduce((prev, next) => parseInt(prev) + parseInt(next))
   }
 
+  const projectBountiesList = (data) => {
+    const bounties = projectBounties(data)
+    const hasBounties = bounties > 0
+    return hasBounties ? `$${bounties} in open bounties` : 'no bounties'
+  }
+
   return (
     <div className={ classes.root }>
       { projects && projects.data && projectSortMoreBounties(projectsSort(projects.data)).map(p => {
@@ -105,12 +111,12 @@ export default function ProjectList ({ listProjects, projects }) {
               }
               <div>
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
-                  <Chip size='small' clickable onClick={ () => {
+                  <Chip size='medium' clickable onClick={ () => {
                     window.location.href = '/#/organizations/' + p.OrganizationId + '/projects/' + p.id
                     window.location.reload()
                   } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
                   />
-                  <Chip style={{marginLeft: 10}} size='small' avatar={ <Avatar>{ projectBounties(p.Tasks) }</Avatar> } label={ 'usd in open bounties' }
+                  <Chip style={ { marginLeft: 10 } } size='medium' label={ projectBountiesList(p.Tasks) }
                   />
                 </CardActions>
               </div>
