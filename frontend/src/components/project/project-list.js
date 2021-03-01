@@ -111,12 +111,11 @@ export default function ProjectList ({ listProjects, projects }) {
               }
               <div>
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
-                  <Chip size='medium' clickable onClick={ () => {
+                  <Chip size='medium' label={ projectBountiesList(p.Tasks) } />
+                  <Chip style={ { marginLeft: 10 } } size='medium' clickable onClick={ () => {
                     window.location.href = '/#/organizations/' + p.OrganizationId + '/projects/' + p.id
                     window.location.reload()
                   } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
-                  />
-                  <Chip style={ { marginLeft: 10 } } size='medium' label={ projectBountiesList(p.Tasks) }
                   />
                 </CardActions>
               </div>
