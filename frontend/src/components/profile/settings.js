@@ -13,6 +13,7 @@ import DeleteUser from './settings/deleteUser'
 
 const styles = theme => ({
   deleteButton: {
+    marginTop: 40,
     backgroundColor: theme.palette.error.main,
     color: theme.palette.primary.contrastText,
     '&:hover': {
@@ -49,7 +50,7 @@ class Settings extends Component {
     return (
       <Paper elevation={ 0 }>
         <Grid container alignItems='center' spacing={ 1 }>
-          <Grid item xs={ 5 } style={ { marginBottom: 20 } }>
+          <Grid item xs={ 5 } style={ { marginBottom: 20, margintTop: 40 } }>
             <Button onClick={ this.handleDelete }
               variant='contained'
               className={ classes.deleteButton }
