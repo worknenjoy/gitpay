@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import mainBackground from '../../../images/backgrounds/bg-mail-top.png'
 
 import media from '../../../styleguide/media'
 
@@ -66,9 +65,8 @@ export const InfoList = styled.div`
 
 export const MainBanner = styled.div`
   box-sizing: border-box;
-  padding: 1rem;
   margin-bottom: 1rem;
-  background: url(${mainBackground});
+  
   background-size: cover;
   ${media.phone`
     background: none;

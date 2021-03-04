@@ -107,11 +107,11 @@ export default defineMessages({
   },
   communityItemPrimary: {
     id: 'welcome.community.item.primary',
-    defaultMessage: 'Help to build Gitpay while develop your skills'
+    defaultMessage: '8% fee to receive payments for the issues solved'
   },
   communityItemSecondary: {
     id: 'welcome.community.item.secondary',
-    defaultMessage: 'We are an Open-Source project, and you can apply to solve our bounties, we support you to solve our features, and we usually support contributors with fair bounties'
+    defaultMessage: 'We accept direct transfer to your bank account registered on Gitpay or using your Paypal account'
   },
   communityItemTwoPrimary: {
     id: 'welcome.community.item.two.primary',
@@ -175,27 +175,27 @@ export default defineMessages({
   },
   companiesItemPrimary1: {
     id: 'welcome.companies.item.primary',
-    defaultMessage: 'Sponsor Gitpay'
+    defaultMessage: '8% for Open Source projects'
   },
   companiesItemSecondary1: {
     id: 'welcome.companies.item.secondary',
-    defaultMessage: 'You can help to leverage open source by sponsoring Gitpay and our developers, and you will be featured in our platform'
+    defaultMessage: '8% fee for Open Source Projects'
   },
   companiesItemTwoPrimary1: {
     id: 'welcome.companies.item.two.primary.alt',
-    defaultMessage: 'Sponsor any of our projects'
+    defaultMessage: '18% for private projects'
   },
   companiesItemTwoSecondary1: {
     id: 'welcome.companies.item.two.secondary.alt',
-    defaultMessage: 'You can sponsor projects you like to growth open source and increase the colaboration in projects with issues to be solved'
+    defaultMessage: '18% fee for private projects'
   },
   companiesItemThreePrimary1: {
     id: 'welcome.companies.item.three.primary.alt',
-    defaultMessage: 'We share your brand to our community'
+    defaultMessage: 'The fees are not refundable'
   },
   companiesItemThreeSecondary1: {
     id: 'welcome.companies.item.three.secondary.alt',
-    defaultMessage: 'As a crowdfunding platform, you can sponsor us and you will have your brand featured in our weekly newsletter'
+    defaultMessage: 'You can refund your payment, or transfer to another issue, but the fees are not refundable'
   },
   workflowItemPrimary: {
     id: 'welcome.workflow.item.primary',
@@ -275,7 +275,7 @@ export default defineMessages({
   },
   topMenu6: {
     id: 'welcome.menu.item.six',
-    defaultMessage: 'Pricing'
+    defaultMessage: 'Fees'
   },
   topMenu7: {
     id: 'welcome.menu.item.seven',

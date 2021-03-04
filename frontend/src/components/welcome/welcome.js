@@ -65,6 +65,8 @@ import {
 const styles = theme => mainStyles(theme)
 const isIntegrations = ref => ref === 'integrations'
 
+import Cubes from './components/cubes'
+
 class Welcome extends Component {
   constructor (props) {
     super(props)
@@ -184,17 +186,17 @@ class Welcome extends Component {
             />
             <Tab
               id='contrib'
-              value={ 2 }
+              value={ 1 }
               label={ this.props.intl.formatMessage(messages.topMenu2) }
             />
             <Tab
               id='companies'
-              value={ 3 }
+              value={ 2 }
               label={ this.props.intl.formatMessage(messages.topMenu3) }
             />
             <Tab
               id='clients'
-              value={ 1 }
+              value={ 3 }
               label={ this.props.intl.formatMessage(messages.topMenu9) }
             />
             <Tab
@@ -225,57 +227,59 @@ class Welcome extends Component {
           </Tabs>
         </AppBar>
         <MainBanner>
-          <Grid container spacing={ 3 }>
+          <Grid container>
             <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
-              <div
-                className={ classes.mainBlock }
-                style={ { margin: 0, paddingTop: 2 } }
-              >
-                <img width={ 240 } src={ logo } />
-                <Typography className={ classes.tagline } gutterBottom>
-                  <FormattedMessage
-                    id='welcome.tagline'
-                    defaultMessage='Collaborate, learn and receive payments by solving issues from projects'
-                  />
-                </Typography>
-                <InfoContainer />
-                { !logged &&
-                <Button
-                  variant='contained'
-                  color='secondary'
-                  size='big'
-                  onClick={ (e) => this.props.openDialog('SignupUser') }
-                  style={ { marginTop: 20 } }
+              <Cubes>
+                <div
+                  className={ classes.mainBlock }
+                  style={ { margin: 0, paddingTop: 2 } }
                 >
-                  <FormattedMessage
-                    id='general.singup.action'
-                    defaultMessage='Get started'
-                  />
-                </Button>
-                }
-                <div className='subscribe-form'>
-                  <SubscribeForm render={ false } type='subscribe-form-main' />
-                </div>
-              </div>
-              <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
-                { !logged ? (
-                  <LoginButton hideExtra size='small' referer={ location } contrast includeForm={ false } />
-                ) : (
+                  <a href='/'><img width={ 240 } src={ logo } /></a>
+                  <Typography className={ classes.tagline } gutterBottom>
+                    <FormattedMessage
+                      id='welcome.tagline'
+                      defaultMessage='Collaborate, learn and receive payments by solving issues from projects'
+                    />
+                  </Typography>
+                  <InfoContainer />
+                  { !logged &&
                   <Button
                     variant='contained'
                     color='secondary'
-                    size='large'
-                    onClick={ (e) => window.location.assign('/#/profile') }
+                    size='big'
+                    onClick={ (e) => this.props.openDialog('SignupUser') }
                     style={ { marginTop: 20 } }
                   >
                     <FormattedMessage
-                      id='general.singup.access'
-                      defaultMessage='Go to your dashboard'
+                      id='general.singup.action'
+                      defaultMessage='Get started'
                     />
                   </Button>
-                )
-                }
-              </div>
+                  }
+                  <div className='subscribe-form'>
+                    <SubscribeForm render={ false } type='subscribe-form-main' />
+                  </div>
+                </div>
+                <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
+                  { !logged ? (
+                    <LoginButton hideExtra size='small' referer={ location } contrast includeForm={ false } />
+                  ) : (
+                    <Button
+                      variant='contained'
+                      color='secondary'
+                      size='large'
+                      onClick={ (e) => window.location.assign('/#/profile') }
+                      style={ { marginTop: 20 } }
+                    >
+                      <FormattedMessage
+                        id='general.singup.access'
+                        defaultMessage='Go to your dashboard'
+                      />
+                    </Button>
+                  )
+                  }
+                </div>
+              </Cubes>
             </Grid>
           </Grid>
         </MainBanner>

@@ -34,7 +34,9 @@ const styles = theme => ({
   heroContent: {
     maxWidth: 600,
     margin: '0 auto',
-    padding: `0 0 ${theme.spacing(4)}px`,
+    padding: `${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
+    marginTop: theme.spacing(3),
+    marginBottom: 0
   },
   heroDesc: {
     paddingTop: theme.spacing(2)
@@ -55,19 +57,16 @@ const styles = theme => ({
   }
 })
 
-const tiers = [
+const tiersMaintainers = [
   {
     title: 'Open source',
     subheader: 'For open source projects',
     price: '8%',
     description: [
-      'Public projects on Github or Bitbucket',
-      'Development community willing to solve your issues',
-      '8% fee for each transaction'
-    ],
-    buttonText: 'Sign up',
-    buttonVariant: 'contained',
-    link: 'https://gitpay.me/#/login'
+      'Public projects from Github or Bitbucket',
+      'We will match your issues with our contributor skills to find the right candidate',
+      '8% fee for payment with Credit Card or Paypal'
+    ]
   },
   {
     title: 'Private',
@@ -75,26 +74,23 @@ const tiers = [
     price: '18%',
     description: [
       'Private projects on Github or Bitbucket',
-      'Development community willing to solve your issues',
-      '18% fee for each transaction'
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'contained',
-    link: 'https://goo.gl/forms/eSpHlrtXGJ1v3Syv2'
-  },
+      'We will match your issues with our contributor skills to find the right candidate',
+      '18% fee for payment in Credit Card or Paypal'
+    ]
+  }
+]
+
+const tiersContributors = [
   {
-    title: 'Support',
-    subheader: 'Our Support to complete your tasks',
-    price: '30%',
+    title: 'Fee for contributors',
+    subheader: 'For contributors who solve issues, you will have a fee to receive the transfer',
+    price: '8%',
     description: [
-      'We manage your projects on Github or Bitbucket',
-      'Code review',
-      '30% fee for each transaction'
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'contained',
-    link: 'https://goo.gl/forms/eSpHlrtXGJ1v3Syv2'
-  },
+      'We support direct transfer for your bank account registered on Gitpay',
+      'We support Paypal to receive the money',
+      '8% fee to withdraw your bounty after the Pull request is merged'
+    ]
+  }
 ]
 
 class Pricing extends Component {
@@ -103,54 +99,96 @@ class Pricing extends Component {
 
     return (
       <div className={ classes.layout }>
-        { /* Hero unit */ }
-        <div className={ classes.heroContent }>
-          <MainTitle>
-            <Typography variant='h5' gutterBottom>
-              <FormattedMessage id='welcome.pricing.title' defaultMessage='Princing' />
+        <React.Fragment>
+          { /* Hero unit */ }
+          <div className={ classes.heroContent }>
+            <MainTitle>
+              <Typography variant='h5' gutterBottom>
+                <FormattedMessage id='welcome.pricing.maintainers.title' defaultMessage='Fee for maintainers' />
+              </Typography>
+            </MainTitle>
+            <Typography variant='body1' align='center' color='textSecondary' className={ classes.heroDesc }>
+              <FormattedMessage id='welcome.pricing.description' defaultMessage='These are the fees when you pay for an issue to be solved on Gitpay' />
             </Typography>
-          </MainTitle>
-          <Typography variant='body1' align='center' color='textSecondary' className={ classes.heroDesc }>
-            <FormattedMessage id='welcome.pricing.description' defaultMessage='Check our options to boost your company deliveries that can fit with your needs' />
-          </Typography>
-        </div>
-        { /* End hero unit */ }
-        <Grid container spacing={ 5 } alignItems='flex-end'>
-          { tiers.map(tier => (
-            // Enterprise card is full width at sm breakpoint
-            <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 4 }>
-              <Card>
-                <CardHeader
-                  title={ tier.title }
-                  subheader={ tier.subheader }
-                  titleTypographyProps={ { align: 'center' } }
-                  subheaderTypographyProps={ { align: 'center' } }
-                  className={ classes.cardHeader }
-                />
-                <CardContent>
-                  <div className={ classes.cardPricing }>
-                    <Typography variant='h5' color='textPrimary'>
-                      <small>Fee</small> { tier.price }
-                    </Typography>
-                    <Typography variant='body1' color='textSecondary'>
-                      <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
-                    </Typography>
-                  </div>
-                  { tier.description.map(line => (
-                    <Typography variant='body1' align='center' key={ line }>
-                      { line }
-                    </Typography>
-                  )) }
-                </CardContent>
-                <CardActions className={ classes.cardActions }>
-                  <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
-                    { tier.buttonText }
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          )) }
-        </Grid>
+          </div>
+          { /* End hero unit */ }
+          <Grid container spacing={ 5 } justifyContent='center'>
+            { tiersMaintainers.map(tier => (
+              // Enterprise card is full width at sm breakpoint
+              <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 6 }>
+                <Card>
+                  <CardHeader
+                    title={ tier.title }
+                    subheader={ tier.subheader }
+                    titleTypographyProps={ { align: 'center' } }
+                    subheaderTypographyProps={ { align: 'center' } }
+                    className={ classes.cardHeader }
+                  />
+                  <CardContent>
+                    <div className={ classes.cardPricing }>
+                      <Typography variant='h5' color='textPrimary'>
+                        <small>Fee</small> { tier.price }
+                      </Typography>
+                      <Typography variant='body1' color='textSecondary'>
+                        <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
+                      </Typography>
+                    </div>
+                    { tier.description.map(line => (
+                      <Typography variant='body1' align='center' key={ line }>
+                        { line }
+                      </Typography>
+                    )) }
+                  </CardContent>
+                  { tier.link &&
+                    <CardActions className={ classes.cardActions }>
+                      <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
+                        { tier.buttonText }
+                      </Button>
+                    </CardActions>
+                  }
+                </Card>
+              </Grid>
+            )) }
+          </Grid>
+          <Grid container spacing={ 5 } justifyContent='center'>
+            { tiersContributors.map(tier => (
+              // Enterprise card is full width at sm breakpoint
+              <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 12 }>
+                <Card>
+                  <CardHeader
+                    title={ tier.title }
+                    subheader={ tier.subheader }
+                    titleTypographyProps={ { align: 'center' } }
+                    subheaderTypographyProps={ { align: 'center' } }
+                    className={ classes.cardHeader }
+                  />
+                  <CardContent>
+                    <div className={ classes.cardPricing }>
+                      <Typography variant='h5' color='textPrimary'>
+                        <small>Fee</small> { tier.price }
+                      </Typography>
+                      <Typography variant='body1' color='textSecondary'>
+                        <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
+                      </Typography>
+                    </div>
+                    { tier.description.map(line => (
+                      <Typography variant='body1' align='center' key={ line }>
+                        { line }
+                      </Typography>
+                    )) }
+                  </CardContent>
+                  { tier.link &&
+                    <CardActions className={ classes.cardActions }>
+                      <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
+                        { tier.buttonText }
+                      </Button>
+                    </CardActions>
+                  }
+                </Card>
+              </Grid>
+            )) }
+          </Grid>
+        </React.Fragment>
       </div>
     )
   }
