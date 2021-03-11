@@ -66,7 +66,7 @@ export const InfoList = styled.div`
 export const MainBanner = styled.div`
   box-sizing: border-box;
   margin-bottom: 1rem;
-  
+  background-color: black;
   background-size: cover;
   ${media.phone`
     background: none;
