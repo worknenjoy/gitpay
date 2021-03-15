@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
     logged: state.loggedIn.logged,
     dialog: state.dialog,
     user: state.loggedIn.user,
+    roles: state.roles,
     completed: state.loggedIn.completed,
     task: state.task,
     preferences: state.preferences,

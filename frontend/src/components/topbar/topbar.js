@@ -6,6 +6,12 @@ import { store } from '../../main/app'
 
 import {
   Checkbox,
+  Chip,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   FormControlLabel,
   FormGroup,
   Dialog,
@@ -28,10 +34,17 @@ import {
 } from '@material-ui/core'
 import {
   AddBox,
-  Person,
-  LibraryBooks,
   ViewList,
-  Group
+  Group,
+  LibraryBooks,
+  Tune,
+  Home,
+  Person,
+  ExitToApp,
+  Settings,
+  FaceSharp,
+  Business,
+  AccountBalance
 } from '@material-ui/icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -267,6 +280,7 @@ class TopBar extends Component {
 
   handleProfile = () => {
     window.location.assign('/#/profile')
+    this.setState({ anchorEl: null })
   }
 
   handleViewTasks = () => {
@@ -295,7 +309,7 @@ class TopBar extends Component {
   }
 
   render () {
-    const { completed, user, preferences, dialog } = this.props
+    const { completed, user, preferences, dialog, roles } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
@@ -422,19 +436,21 @@ class TopBar extends Component {
                     color='primary'
                     id='account-menu'
                   >
-
-                    { user.picture_url &&
+                  <Chip
+                    avatar={ user.picture_url ?
                       <StyledAvatar
                         alt={ user.username || '' }
                         src={ user.picture_url }
                       />
-                    }
-
-                    { !user.picture_url &&
+                    : 
                       <StyledAvatar alt={ user.username || '' } src=''>
                         { user.username ? nameInitials(user.username) : <Person /> }
                       </StyledAvatar>
                     }
+                    color="secondary"
+                    label="Access your profile"
+                    onClick={this.handleMenu}
+                  />
                   </StyledButton>
                 </React.Fragment>
               )
@@ -591,25 +607,119 @@ class TopBar extends Component {
                   </Tooltip>
                 ) }
               </FormattedMessage>
-
-              <Menu
-                id='menu-appbar-language'
-                anchorEl={ anchorEl }
-                anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-                transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-                open={ anchorEl && anchorEl.id === 'account-menu' }
-                onClose={ this.handleClose }
-              >
-                <MenuItem onClick={ this.handleProfile }>
-                  { `${user.name || user.username} (${user.email})` }
-                </MenuItem>
-                <MenuItem onClick={ this.handleProfile }>
-                  <FormattedMessage id='task.actions.account.access' defaultMessage='Access account' />
-                </MenuItem>
-                <MenuItem onClick={ this.handleSignOut }>
-                  <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
-                </MenuItem>
-              </Menu>
+              <Drawer id='menu-appbar-language' open={anchorEl && anchorEl.id === 'account-menu'} onClose={this.handleClose} anchor={'right'}>
+                <List>
+                  <ListItem>
+                    <ListItemText>
+                    <Chip
+                      avatar={ user.picture_url ?
+                        <StyledAvatar
+                          alt={ user.username || '' }
+                          src={ user.picture_url }
+                        />
+                      : 
+                        <StyledAvatar alt={ user.username || '' } src=''>
+                          { user.username ? nameInitials(user.username) : <Person /> }
+                        </StyledAvatar>
+                      }
+                      color="secondary"
+                      label={ `${user.name || user.username} (${user.email})` }
+                    />
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button onClick={ this.handleProfile }>
+                    <ListItemIcon>
+                      <Home />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile' defaultMessage='Profile home' />
+                    </ListItemText>
+                  </ListItem>
+                  { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+                  <ListItem button onClick={ () => {
+                        window.location.assign('/#/profile/tasks')
+                        this.setState({ anchorEl: null })
+                      } }>
+                    <ListItemIcon>
+                      <LibraryBooks />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile.issues' defaultMessage='Your issues' />
+                    </ListItemText>
+                  </ListItem>
+                  }
+                  { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+                  <ListItem button onClick={ () => {
+                        window.location.assign('/#/profile/user/orgs')
+                        this.setState({ anchorEl: null })
+                      } }>
+                    <ListItemIcon>
+                      <Business />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Your Organizations' />
+                    </ListItemText>
+                  </ListItem>
+                  }
+                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+                  <ListItem button onClick={ () => {
+                        window.location.assign('/#/profile/payment-options')
+                        this.setState({ anchorEl: null })
+                      } }>
+                    <ListItemIcon>
+                      <AccountBalance />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
+                    </ListItemText>
+                  </ListItem>
+                  }
+                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+                  <ListItem button onClick={ () => {
+                        window.location.assign('/#/profile/preferences')
+                        this.setState({ anchorEl: null })
+                      } }>
+                    <ListItemIcon>
+                      <Tune />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile.skills' defaultMessage='Set skills' />
+                    </ListItemText>
+                  </ListItem>
+                  }
+                  <ListItem button button onClick={ () => {
+                        window.location.assign('/#/profile/settings')
+                        this.setState({ anchorEl: null })
+                      } }>
+                    <ListItemIcon>
+                      <Settings />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.settings' defaultMessage='Settings' />
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button button onClick={ () => {
+                        window.location.assign('/#/profile/roles')
+                        this.setState({ anchorEl: null })
+                      } }>
+                    <ListItemIcon>
+                      <FaceSharp />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.roles' defaultMessage='Roles' />
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button onClick={ this.handleSignOut }>
+                    <ListItemIcon>
+                      <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
+                    </ListItemText>
+                  </ListItem>
+                  
+                </List>
+              </Drawer>
             </OnlyDesktop>
 
             <StyledButton
