@@ -309,7 +309,7 @@ class TopBar extends Component {
   }
 
   render () {
-    const { completed, user, preferences, dialog, roles } = this.props
+    const { completed, user, preferences, dialog } = this.props
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
@@ -436,21 +436,20 @@ class TopBar extends Component {
                     color='primary'
                     id='account-menu'
                   >
-                  <Chip
-                    avatar={ user.picture_url ?
-                      <StyledAvatar
-                        alt={ user.username || '' }
-                        src={ user.picture_url }
-                      />
-                    : 
-                      <StyledAvatar alt={ user.username || '' } src=''>
-                        { user.username ? nameInitials(user.username) : <Person /> }
-                      </StyledAvatar>
-                    }
-                    color="secondary"
-                    label="Access your profile"
-                    onClick={this.handleMenu}
-                  />
+                    <Chip
+                      avatar={ user.picture_url
+                        ? <StyledAvatar
+                          alt={ user.username || '' }
+                          src={ user.picture_url }
+                        />
+                        : <StyledAvatar alt={ user.username || '' } src=''>
+                          { user.username ? nameInitials(user.username) : <Person /> }
+                        </StyledAvatar>
+                      }
+                      color='secondary'
+                      label='Access your profile'
+                      onClick={ this.handleMenu }
+                    />
                   </StyledButton>
                 </React.Fragment>
               )
@@ -607,24 +606,23 @@ class TopBar extends Component {
                   </Tooltip>
                 ) }
               </FormattedMessage>
-              <Drawer id='menu-appbar-language' open={anchorEl && anchorEl.id === 'account-menu'} onClose={this.handleClose} anchor={'right'}>
+              <Drawer id='menu-appbar-language' open={ anchorEl && anchorEl.id === 'account-menu' } onClose={ this.handleClose } anchor={ 'right' }>
                 <List>
                   <ListItem>
                     <ListItemText>
-                    <Chip
-                      avatar={ user.picture_url ?
-                        <StyledAvatar
-                          alt={ user.username || '' }
-                          src={ user.picture_url }
-                        />
-                      : 
-                        <StyledAvatar alt={ user.username || '' } src=''>
-                          { user.username ? nameInitials(user.username) : <Person /> }
-                        </StyledAvatar>
-                      }
-                      color="secondary"
-                      label={ `${user.name || user.username} (${user.email})` }
-                    />
+                      <Chip
+                        avatar={ user.picture_url
+                          ? <StyledAvatar
+                            alt={ user.username || '' }
+                            src={ user.picture_url }
+                          />
+                          : <StyledAvatar alt={ user.username || '' } src=''>
+                            { user.username ? nameInitials(user.username) : <Person /> }
+                          </StyledAvatar>
+                        }
+                        color='secondary'
+                        label={ `${user.name || user.username} (${user.email})` }
+                      />
                     </ListItemText>
                   </ListItem>
                   <ListItem button onClick={ this.handleProfile }>
@@ -637,9 +635,9 @@ class TopBar extends Component {
                   </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
                   <ListItem button onClick={ () => {
-                        window.location.assign('/#/profile/tasks')
-                        this.setState({ anchorEl: null })
-                      } }>
+                    window.location.assign('/#/profile/tasks')
+                    this.setState({ anchorEl: null })
+                  } }>
                     <ListItemIcon>
                       <LibraryBooks />
                     </ListItemIcon>
@@ -650,9 +648,9 @@ class TopBar extends Component {
                   }
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
                   <ListItem button onClick={ () => {
-                        window.location.assign('/#/profile/user/orgs')
-                        this.setState({ anchorEl: null })
-                      } }>
+                    window.location.assign('/#/profile/user/orgs')
+                    this.setState({ anchorEl: null })
+                  } }>
                     <ListItemIcon>
                       <Business />
                     </ListItemIcon>
@@ -663,9 +661,9 @@ class TopBar extends Component {
                   }
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
                   <ListItem button onClick={ () => {
-                        window.location.assign('/#/profile/payment-options')
-                        this.setState({ anchorEl: null })
-                      } }>
+                    window.location.assign('/#/profile/payment-options')
+                    this.setState({ anchorEl: null })
+                  } }>
                     <ListItemIcon>
                       <AccountBalance />
                     </ListItemIcon>
@@ -676,9 +674,9 @@ class TopBar extends Component {
                   }
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
                   <ListItem button onClick={ () => {
-                        window.location.assign('/#/profile/preferences')
-                        this.setState({ anchorEl: null })
-                      } }>
+                    window.location.assign('/#/profile/preferences')
+                    this.setState({ anchorEl: null })
+                  } }>
                     <ListItemIcon>
                       <Tune />
                     </ListItemIcon>
@@ -687,10 +685,10 @@ class TopBar extends Component {
                     </ListItemText>
                   </ListItem>
                   }
-                  <ListItem button button onClick={ () => {
-                        window.location.assign('/#/profile/settings')
-                        this.setState({ anchorEl: null })
-                      } }>
+                  <ListItem button onClick={ () => {
+                    window.location.assign('/#/profile/settings')
+                    this.setState({ anchorEl: null })
+                  } }>
                     <ListItemIcon>
                       <Settings />
                     </ListItemIcon>
@@ -698,10 +696,10 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.settings' defaultMessage='Settings' />
                     </ListItemText>
                   </ListItem>
-                  <ListItem button button onClick={ () => {
-                        window.location.assign('/#/profile/roles')
-                        this.setState({ anchorEl: null })
-                      } }>
+                  <ListItem button onClick={ () => {
+                    window.location.assign('/#/profile/roles')
+                    this.setState({ anchorEl: null })
+                  } }>
                     <ListItemIcon>
                       <FaceSharp />
                     </ListItemIcon>
@@ -717,7 +715,7 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
                     </ListItemText>
                   </ListItem>
-                  
+
                 </List>
               </Drawer>
             </OnlyDesktop>
