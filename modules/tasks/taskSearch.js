@@ -11,18 +11,42 @@ module.exports = Promise.method(function taskSearch (searchParams) {
   query = searchParams.userId ? { ...query, userId: searchParams.userId } : query
   query = searchParams.status ? { ...query, status: searchParams.status } : query
 
-  return models.Task
-    .findAll(
-      {
-        where: query,
-        include: [ models.User, models.Order, models.Assign, models.Label, models.Project ],
-        order: [
-          ['status', 'DESC'],
-          ['id', 'DESC']
-        ]
-      }
-    )
-    .then(data => {
-      return data
-    })
+  if (searchParams.organizationId && !searchParams.projectId) {
+    let tasks = []
+    return models.Project
+      .findAll(
+        {
+          where: { OrganizationId: parseInt(searchParams.organizationId) },
+          include: [ {
+            model: models.Task,
+            include: [ models.User, models.Order, models.Assign, models.Label, models.Project ]
+          }],
+          order: [
+            ['id', 'DESC']
+          ]
+        }
+      )
+      .then(projects => {
+        projects.map(p => {
+          p.Tasks.map(t => tasks.push(t))
+        })
+        return tasks
+      })
+  }
+  else {
+    return models.Task
+      .findAll(
+        {
+          where: query,
+          include: [ models.User, models.Order, models.Assign, models.Label, models.Project ],
+          order: [
+            ['status', 'DESC'],
+            ['id', 'DESC']
+          ]
+        }
+      )
+      .then(data => {
+        return data
+      })
+  }
 })

@@ -18,6 +18,7 @@ import { Page, PageContent } from 'app/styleguide/components/Page'
 
 import TaskListContainer from '../../containers/task-list'
 import ProjectListContainer from '../../containers/project-list'
+import OrganizationListContainer from '../../containers/organization-list'
 
 const styles = theme => ({
   root: {
@@ -114,7 +115,7 @@ class TaskExplorer extends Component {
                 onChange={ this.handleSectionTab }
               >
                 <Tab
-                  id='issueas'
+                  id='issues'
                   value={ 0 }
                   label={ this.props.intl.formatMessage(messages.issuesLabel) }
                 />
@@ -123,13 +124,11 @@ class TaskExplorer extends Component {
                   value={ 1 }
                   label={ this.props.intl.formatMessage(messages.projectsLabel) }
                 />
-                { /*
                 <Tab
                   id='organizations'
                   value={ 2 }
                   label={ this.props.intl.formatMessage(messages.organizationsLabel) }
                 />
-                */ }
               </Tabs>
             </Container>
           </AppBar>
@@ -141,6 +140,9 @@ class TaskExplorer extends Component {
                 }
                 { this.state.value === 1 &&
                   <ProjectListContainer />
+                }
+                { this.state.value === 2 &&
+                  <OrganizationListContainer />
                 }
               </Grid>
             </Grid>

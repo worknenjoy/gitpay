@@ -5,6 +5,8 @@ require('../../authenticationHelpers')
 require('../../../models')
 const controllers = require('../controllers/organization')
 
+router.get('/list', controllers.listOrganizations)
+router.get('/fetch/:id', controllers.fetchOrganization)
 const secure = require('./secure')
 
 router.use(secure)

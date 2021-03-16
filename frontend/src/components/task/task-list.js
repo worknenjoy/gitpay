@@ -18,6 +18,7 @@ import {
 } from '@material-ui/icons'
 
 import CustomPaginationActionsTable from './task-table'
+import ProjectList from '../project/project-list'
 
 const styles = theme => ({
   icon: {
@@ -62,7 +63,8 @@ class TaskList extends Component {
     this.state = {
       tab: 0,
       loading: true,
-      project: {}
+      project: {},
+      organization: {}
     }
   }
 
@@ -85,20 +87,25 @@ class TaskList extends Component {
 
   async componentDidMount () {
     const projectId = this.props.match.params.project_id
-    if (projectId) {
+    const organizationId = this.props.match.params.organization_id
+
+    if (organizationId && !projectId) {
+      await this.props.fetchOrganization(organizationId)
+      await this.props.listTasks({ organizationId: organizationId })
+    }
+    if (organizationId && projectId) {
       await this.props.fetchProject(
         projectId,
         { status: 'open' }
       )
     }
-    else {
-      await this.props.listTasks({ status: 'open' })
-    }
+    if (!projectId && !organizationId) await this.props.listTasks({ status: 'open' })
+    await this.props.listProjects()
     const params = this.props.match.params
     this.handleRoutePath(params.filter)
     params.project_id && params.organization_id && this.setState({ project: params })
+    params.organization_id && this.setState({ organization: params })
     this.setState({ loading: false })
-    await this.props.listProjects()
     this.filterTasksByState()
   }
 
@@ -160,6 +167,26 @@ class TaskList extends Component {
     return (
       <React.Fragment>
         <Paper elevation={ 0 }>
+          { this.props.organization && this.props.organization.name &&
+          <React.Fragment>
+            <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+              <FormattedMessage
+                id='task.list.org.headline'
+                defaultMessage='Organization'
+              />
+            </Typography>
+            <Typography variant='h3' component='h2'>
+              { this.props.organization.name }
+            </Typography>
+            <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+              <FormattedMessage
+                id='task.list.org.projects.headline'
+                defaultMessage='Projects'
+              />
+            </Typography>
+            <ProjectList projects={ this.props.organization && this.props.organization.Projects.length > 0 && { data: this.props.organization.Projects } } />
+          </React.Fragment>
+          }
           { this.props.project.data.name &&
             <React.Fragment>
               <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
