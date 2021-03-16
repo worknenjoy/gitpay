@@ -314,19 +314,21 @@ class Profile extends Component {
                       />) }
                     />
                     }
-                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                    <Route
-                      exact
-                      path='/profile/tasks'
-                      component={ UserTasksContainer }
-                    />
+                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') ||
+                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
+                      <Route
+                        exact
+                        path='/profile/tasks'
+                        component={ UserTasksContainer }
+                      />
                     }
-                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                    <Route
-                      exact
-                      path='/profile/tasks/:filter'
-                      component={ UserTasksContainer }
-                    />
+                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') ||
+                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
+                      <Route
+                        exact
+                        path='/profile/tasks/:filter'
+                        component={ UserTasksContainer }
+                      />
 
                     }
                     { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
