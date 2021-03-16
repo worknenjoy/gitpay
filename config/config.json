@@ -1,4 +1,10 @@
 {
+  "production": {
+    "ssl": {
+      "require": true,
+      "rejectUnauthorized": false
+    }
+  },
   "development": {
     "username": "postgres",
     "password": "postgres",
