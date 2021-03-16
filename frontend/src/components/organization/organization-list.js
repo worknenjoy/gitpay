@@ -15,7 +15,7 @@ const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(0),
+    marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
     display: 'flex',
     flexWrap: 'wrap',
@@ -45,81 +45,65 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ProjectList ({ listProjects, projects }) {
+export default function OrganizationList ({ listOrganizations, organizations }) {
   const classes = useStyles()
 
   useEffect(() => {
-    listProjects && listProjects()
+    listOrganizations()
   }, [])
-
-  const hasOpenIssues = (project) => {
-    const hasOpenTasks = project.Tasks.filter(t => t.status === 'open')
-    return hasOpenTasks.length > 0
-  }
-
-  const projectsSort = (data) => {
-    const projectWithOpenIssues = data.filter(p => hasOpenIssues(p))
-    return projectWithOpenIssues.sort((a, b) => parseInt(b.Tasks.length) - parseInt(a.Tasks.length))
-  }
-
-  const projectSortMoreBounties = (data) => {
-    return data.sort((a, b) => projectBounties(b.Tasks) - projectBounties(a.Tasks))
-  }
-
-  const projectBounties = (data) => {
-    return data.map(task => task.value ? task.value : 0).reduce((prev, next) => parseInt(prev) + parseInt(next))
-  }
-
-  const projectBountiesList = (data) => {
-    const bounties = projectBounties(data)
-    const hasBounties = bounties > 0
-    return hasBounties ? `$${bounties} in open bounties` : 'no bounties'
-  }
 
   return (
     <div className={ classes.root }>
-      { projects && projects.data && projectSortMoreBounties(projectsSort(projects.data)).map(p => {
+      { organizations && organizations.data && organizations.data.map(o => {
         return (
           <div className={ classes.item }>
+            { o.Projects && o.Projects.length > 0 &&
             <Card className={ classes.rootCard }>
               <CardHeader
                 avatar={
                   <Avatar aria-label='recipe' className={ classes.avatar }>
-                    { p.name[0] }
+                    { o.name[0] }
                   </Avatar>
                 }
                 action={
                   <IconButton aria-label='provider'>
-                    <Tooltip id='tooltip-fab' title={ p.Organization && (p.Organization.provider ? p.Organization.provider : 'See on repository') } placement='right'>
-                      <a target='_blank' href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) }>
-                        <img width='28' src={ p.Organization && (p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
+                    <Tooltip id='tooltip-fab' title={ o.provider ? o.provider : 'See on repository' } placement='right'>
+                      <a target='_blank' href={ o.provider === 'bitbucket' ? `https://bitbucket.com/${o.name}` : `https://github.com/${o.name}` }>
+                        <img width='28' src={ o.provider === 'bitbucket' ? logoBitbucket : logoGithub }
                           style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
                         />
                       </a>
                     </Tooltip>
                   </IconButton>
                 }
-                title={ p.name }
-                subheader={ `by ${p.Organization && p.Organization.name}` }
+                title={ <a
+                  onClick={ (e) => {
+                    e.preventDefault()
+                    window.location.href = '/#/organizations/' + o.id
+                    window.location.reload()
+                  } }
+                  href={ '' + o.id }>{ o.name }</a> }
+                subheader={ o.User && `by ${o.User.name}` }
               />
-              { p.description &&
+              { o.description &&
               <CardContent>
                 <Typography variant='body2' color='textSecondary' component='p'>
-                  { p.description }
+                  { o.description }
                 </Typography>
               </CardContent>
               }
               <div>
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
-                  <Chip size='medium' label={ projectBountiesList(p.Tasks) } />
-                  <Chip style={ { marginLeft: 10 } } size='medium' clickable onClick={ () => {
-                    window.location.href = '/#/organizations/' + p.OrganizationId + '/projects/' + p.id
-                    window.location.reload()
-                  } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
-                  />
+                  { o.Projects && o.Projects.map(p =>
+                    (<Chip style={ { marginLeft: 10 } } size='medium' clickable onClick={ () => {
+                      window.location.href = '/#/organizations/' + o.id + '/projects/' + p.id
+                      window.location.reload()
+                    } } label={ p.name }
+                    />)
+                  ) }
                 </CardActions>
               </div>
-            </Card>
+            </Card> }
           </div>
         )
       }) }

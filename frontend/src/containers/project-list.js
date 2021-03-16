@@ -16,7 +16,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listTasks: ({ projectId, userId, status }) => dispatch(listTasks({ projectId, userId, status })),
+    listTasks: ({ organizationId, projectId, userId, status }) => dispatch(listTasks({ organizationId, projectId, userId, status })),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
     fetchProject: (projectId, params) => dispatch(fetchProject(projectId, params)),
     listProjects: () => dispatch(listProjects())

@@ -4,6 +4,7 @@ const getVisibilityFilter = (state) => state.tasks.filterType
 export const getTasks = (state) => state.tasks
 export const getUser = (state) => state.loggedIn.user
 export const getProject = (state) => state.project
+export const getOrganization = (state) => state.organization.organization
 
 const filterByAdditional = (task, additional, filteredByPrincipal) => {
   const filteringAllOfAdditional = typeof filteredByPrincipal === 'undefined'
@@ -28,8 +29,8 @@ const evaluateTaskWithoutBountyByValue = (value) => {
 }
 
 export const getFilteredTasks = createSelector(
-  [getVisibilityFilter, getTasks, getUser, getProject],
-  (visibilityFilter, tasks, user, project) => {
+  [getVisibilityFilter, getTasks, getUser, getProject, getOrganization],
+  (visibilityFilter, tasks, user, project, organization) => {
     switch (visibilityFilter) {
       case 'all':
         return tasks

@@ -121,7 +121,10 @@ class TaskHeader extends React.Component {
                         </Typography>
                       </Link>
                     ) }
-                    <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+                    <Link href='' color='inherit' onClick={ (e) => {
+                      e.preventDefault()
+                      window.location.href = '/#/organizations/' + task.data.Project.Organization.id
+                    } }>
                       <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
                         { task.data.Project.Organization.name }
                       </Typography>
