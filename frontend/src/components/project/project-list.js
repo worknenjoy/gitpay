@@ -1,56 +1,47 @@
-import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import Tooltip from '@material-ui/core/Tooltip'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
-import Chip from '@material-ui/core/Chip'
-import Avatar from '@material-ui/core/Avatar'
-import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
-
-const logoGithub = require('../../images/github-logo.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
+import React, { useState, useEffect } from 'react'
+import {
+  Box,
+  Container,
+  Grid,
+  makeStyles
+} from '@material-ui/core'
+import { Pagination } from '@material-ui/lab'
+import ProjectCard from './project-card'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(2),
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start'
+    backgroundColor: theme.palette.background.dark,
+    minHeight: '100%',
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3)
   },
-  rootCard: {
-    maxWidth: 345,
-    marginRight: 20
-  },
-  item: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+  projectCard: {
+    height: '100%'
   }
 }))
 
-export default function ProjectList ({ listProjects, projects }) {
+const paginate = (array, pageSize, pageNumber) => {
+  // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+  return array && array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
+}
+
+const ProjectList = ({ listProjects, projects }) => {
   const classes = useStyles()
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
+  const [currentProjects, setCurrentProjects] = useState([])
+  const recordsPerPage = 12
 
   useEffect(() => {
     listProjects && listProjects()
-  }, [])
+    setTotal(projects.data.length)
+    changePage()
+  }, [projects.data])
+
+  const handlePagination = (e, value) => {
+    setPage(value)
+    changePage()
+  }
 
   const hasOpenIssues = (project) => {
     const hasOpenTasks = project.Tasks.filter(t => t.status === 'open')
@@ -70,59 +61,57 @@ export default function ProjectList ({ listProjects, projects }) {
     return data.map(task => task.value ? task.value : 0).reduce((prev, next) => parseInt(prev) + parseInt(next))
   }
 
-  const projectBountiesList = (data) => {
-    const bounties = projectBounties(data)
-    const hasBounties = bounties > 0
-    return hasBounties ? `$${bounties} in open bounties` : 'no bounties'
+  const filter = (data) => {
+    return projectSortMoreBounties(projectsSort(data))
   }
 
+  const changePage = () => {
+    setCurrentProjects(paginate(filter(projects.data), recordsPerPage, page))
+  }
+
+  const pages = Math.ceil(total / recordsPerPage)
+
   return (
-    <div className={ classes.root }>
-      { projects && projects.data && projectSortMoreBounties(projectsSort(projects.data)).map(p => {
-        return (
-          <div className={ classes.item }>
-            <Card className={ classes.rootCard }>
-              <CardHeader
-                avatar={
-                  <Avatar aria-label='recipe' className={ classes.avatar }>
-                    { p.name[0] }
-                  </Avatar>
-                }
-                action={
-                  <IconButton aria-label='provider'>
-                    <Tooltip id='tooltip-fab' title={ p.Organization && (p.Organization.provider ? p.Organization.provider : 'See on repository') } placement='right'>
-                      <a target='_blank' href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) }>
-                        <img width='28' src={ p.Organization && (p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
-                          style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
-                        />
-                      </a>
-                    </Tooltip>
-                  </IconButton>
-                }
-                title={ p.name }
-                subheader={ `by ${p.Organization && p.Organization.name}` }
-              />
-              { p.description &&
-              <CardContent>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  { p.description }
-                </Typography>
-              </CardContent>
-              }
-              <div>
-                <CardActions disableSpacing style={ { alignItems: 'center' } }>
-                  <Chip size='medium' label={ projectBountiesList(p.Tasks) } />
-                  <Chip style={ { marginLeft: 10 } } size='medium' clickable onClick={ () => {
-                    window.location.href = '/#/organizations/' + p.OrganizationId + '/projects/' + p.id
-                    window.location.reload()
-                  } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
-                  />
-                </CardActions>
-              </div>
-            </Card>
-          </div>
-        )
-      }) }
-    </div>
+    <Container maxWidth={ false }>
+      <Box mt={ 3 } mb={ 3 }>
+        <Grid
+          container
+          spacing={ 3 }
+        >
+          { currentProjects && currentProjects.length > 0 && currentProjects
+            .map(project => (
+              <Grid
+                item
+                key={ project.id }
+                lg={ 4 }
+                md={ 6 }
+                xs={ 12 }
+              >
+                <ProjectCard
+                  className={ classes.projectCard }
+                  project={ project }
+                />
+              </Grid>
+            )) }
+        </Grid>
+      </Box>
+      { total - 1 > recordsPerPage &&
+      <Box
+        mt={ 3 }
+        mb={ 3 }
+        display='flex'
+        justifyContent='center'
+      >
+        <Pagination
+          color='primary'
+          count={ pages }
+          size='small'
+          page={ page } onChange={ handlePagination }
+        />
+      </Box>
+      }
+    </Container>
   )
 }
+
+export default ProjectList

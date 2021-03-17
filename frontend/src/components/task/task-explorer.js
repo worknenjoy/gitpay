@@ -96,8 +96,39 @@ class TaskExplorer extends Component {
     this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
-  handleSectionTab = ({ currentTarget }, value) => {
-    this.setState({ value })
+  async componentDidMount () {
+    switch (this.props.history.location.pathname) {
+      case '/tasks/open':
+        await this.setState({ value: 0 })
+        break
+      case '/projects':
+        await this.setState({ value: 1 })
+        break
+      case '/organizations':
+        await this.setState({ value: 2 })
+        break
+      default:
+        await this.setState({ value: 0 })
+        break
+    }
+  }
+
+  handleSectionTab = async ({ currentTarget }, value) => {
+    await this.setState({ value })
+    switch (value) {
+      case 0:
+        this.props.history.push('/tasks/open')
+        break
+      case 1:
+        this.props.history.push('/projects')
+        break
+      case 2:
+        this.props.history.push('/organizations')
+        break
+      default:
+        this.props.history.push('/tasks/open')
+        break
+    }
   }
 
   render () {
