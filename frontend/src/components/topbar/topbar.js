@@ -447,7 +447,7 @@ class TopBar extends Component {
                         </StyledAvatar>
                       }
                       color='secondary'
-                      label='Access your profile'
+                      label='Account'
                       onClick={ this.handleMenu }
                     />
                   </StyledButton>

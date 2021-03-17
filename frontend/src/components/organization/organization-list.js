@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start'
   },
   rootCard: {
-    maxWidth: 345,
-    marginRight: 20
+    maxWidth: 500,
+    marginRight: 20,
   },
   item: {
     marginTop: theme.spacing(3),
@@ -92,10 +92,13 @@ export default function OrganizationList ({ listOrganizations, organizations }) 
                 </Typography>
               </CardContent>
               }
-              <div>
-                <CardActions disableSpacing style={ { alignItems: 'center' } }>
+              <div style={ { paddingRight: 10 } }>
+                <CardActions disableSpacing style={ { alignItems: 'center', paddingRight: 10, flexWrap: 'wrap' } }>
+                  <Typography variant='body2' color='textSecondary' component='small' style={ { width: '100%', marginBottom: 10, marginLeft: 16 } }>
+                    Projects:
+                  </Typography>
                   { o.Projects && o.Projects.map(p =>
-                    (<Chip style={ { marginLeft: 10 } } size='medium' clickable onClick={ () => {
+                    (<Chip style={ { marginLeft: 10, marginBottom: 10, flexWrap: 'wrap' } } size='medium' clickable onClick={ () => {
                       window.location.href = '/#/organizations/' + o.id + '/projects/' + p.id
                       window.location.reload()
                     } } label={ p.name }
