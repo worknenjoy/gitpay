@@ -92,9 +92,9 @@ export default function OrganizationList ({ listOrganizations, organizations }) 
                 </Typography>
               </CardContent>
               }
-              <div style={{paddingRight: 10}}>
+              <div style={ { paddingRight: 10 } }>
                 <CardActions disableSpacing style={ { alignItems: 'center', paddingRight: 10, flexWrap: 'wrap' } }>
-                  <Typography variant='body2' color='textSecondary' component='small' style={{width: '100%', marginBottom: 10, marginLeft: 16}}>
+                  <Typography variant='body2' color='textSecondary' component='small' style={ { width: '100%', marginBottom: 10, marginLeft: 16 } }>
                     Projects:
                   </Typography>
                   { o.Projects && o.Projects.map(p =>
