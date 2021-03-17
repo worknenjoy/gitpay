@@ -18,7 +18,7 @@ import {
 } from '@material-ui/icons'
 
 import CustomPaginationActionsTable from './task-table'
-import ProjectList from '../project/project-list'
+import ProjectListSimple from '../project/project-list-simple'
 
 const styles = theme => ({
   icon: {
@@ -184,7 +184,7 @@ class TaskList extends Component {
                 defaultMessage='Projects'
               />
             </Typography>
-            <ProjectList projects={ this.props.organization && this.props.organization.Projects.length > 0 && { data: this.props.organization.Projects } } />
+            <ProjectListSimple projects={ this.props.organization && this.props.organization.Projects.length > 0 && { data: this.props.organization.Projects } } />
           </React.Fragment>
           }
           { this.props.project.data.name &&

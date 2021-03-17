@@ -22,6 +22,8 @@ export default props => (
       <Route path='/recruitment' component={ LandingPage } />
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
+      <Route exact path='/projects' component={ TaskExplorer } />
+      <Route exact path='/organizations' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id/projects/:project_id/:filter' component={ TaskExplorer } />
