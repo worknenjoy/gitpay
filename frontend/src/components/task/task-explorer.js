@@ -96,18 +96,19 @@ class TaskExplorer extends Component {
     this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
-  async componentDidMount() {
+  async componentDidMount () {
     switch (this.props.history.location.pathname) {
       case '/tasks/open':
-        await this.setState({value: 0})
+        await this.setState({ value: 0 })
         break
       case '/projects':
-        await this.setState({value: 1})
+        await this.setState({ value: 1 })
         break
       case '/organizations':
-        await this.setState({value: 2})
+        await this.setState({ value: 2 })
         break
       default:
+        await this.setState({ value: 0 })
         break
     }
   }
@@ -123,9 +124,10 @@ class TaskExplorer extends Component {
         break
       case 2:
         this.props.history.push('/organizations')
-      default:
         break
-
+      default:
+        this.props.history.push('/tasks/open')
+        break
     }
   }
 

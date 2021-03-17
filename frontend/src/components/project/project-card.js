@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
+import React from 'react'
+import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import {
   Avatar,
   Box,
@@ -13,7 +13,7 @@ import {
   IconButton,
   Tooltip,
   makeStyles
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   statsIcon: {
     marginRight: theme.spacing(1)
   }
-}));
+}))
 
 const projectBounties = (data) => {
   return data.length > 0 && data.map(task => task.value ? task.value : 0).reduce((prev, next) => parseInt(prev) + parseInt(next))
@@ -43,15 +43,15 @@ const projectBountiesList = (data) => {
 }
 
 const ProjectCard = ({ className, project, ...rest }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Card
-      className={clsx(classes.root, className)}
-      {...rest}
+      className={ clsx(classes.root, className) }
+      { ...rest }
     >
-      <CardContent style={{position: 'relative'}}>
-        <IconButton aria-label='provider' style={{position: 'absolute', right: 10, top: 10}}>
+      <CardContent style={ { position: 'relative' } }>
+        <IconButton aria-label='provider' style={ { position: 'absolute', right: 10, top: 10 } }>
           <Tooltip id='tooltip-fab' title={ project.Organization && (project.Organization.provider ? project.Organization.provider : 'See on repository') } placement='right'>
             <a target='_blank' href={ project.Organization && (project.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${project.Organization.name}/${project.name}` : `https://github.com/${project.Organization.name}/${project.name}`) }>
               <img width='28' src={ project.Organization && (project.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
@@ -61,55 +61,55 @@ const ProjectCard = ({ className, project, ...rest }) => {
           </Tooltip>
         </IconButton>
         <Box
-          display="flex"
-          justifyContent="center"
-          mb={3}
-          mt={3}
+          display='flex'
+          justifyContent='center'
+          mb={ 3 }
+          mt={ 3 }
         >
           <Avatar aria-label='recipe' className={ classes.avatar }>
             { project.name[0] }
           </Avatar>
         </Box>
         <Typography
-          align="center"
-          color="textPrimary"
-          variant="h6"
+          align='center'
+          color='textPrimary'
+          variant='h6'
         >
-          {project.name}
+          { project.name }
         </Typography>
         <Typography
-          align="center"
-          color="textPrimary"
+          align='center'
+          color='textPrimary'
           gutterBottom
-          variant="caption"
-          style={{display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0}}
+          variant='caption'
+          style={ { display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 } }
         >
-          {project.Organization && `by ${project.Organization.name}`}
+          { project.Organization && `by ${project.Organization.name}` }
         </Typography>
         <Typography
-          align="center"
-          color="textPrimary"
-          variant="body1"
+          align='center'
+          color='textPrimary'
+          variant='body1'
         >
-          {project.description}
+          { project.description }
         </Typography>
       </CardContent>
-      <Box flexGrow={1} />
+      <Box flexGrow={ 1 } />
       <Divider />
-      <Box p={2}>
+      <Box p={ 2 }>
         <Grid
           container
-          justify="space-between"
-          spacing={2}
+          justify='space-between'
+          spacing={ 2 }
         >
           <Grid
-            className={classes.statsItem}
+            className={ classes.statsItem }
             item
           >
             <Chip size='small' label={ projectBountiesList(project.Tasks) } />
           </Grid>
           <Grid
-            className={classes.statsItem}
+            className={ classes.statsItem }
             item
           >
             <Chip style={ { marginLeft: 10 } } size='small' clickable onClick={ () => {
@@ -121,12 +121,12 @@ const ProjectCard = ({ className, project, ...rest }) => {
         </Grid>
       </Box>
     </Card>
-  );
-};
+  )
+}
 
 ProjectCard.propTypes = {
   className: PropTypes.string,
   project: PropTypes.object.isRequired
-};
+}
 
-export default ProjectCard;
+export default ProjectCard

@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
+import React from 'react'
+import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import {
   Avatar,
   Box,
@@ -11,7 +11,7 @@ import {
   Grid,
   Typography,
   makeStyles
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,52 +25,52 @@ const useStyles = makeStyles((theme) => ({
   statsIcon: {
     marginRight: theme.spacing(1)
   }
-}));
+}))
 
 const OrganizationCard = ({ className, organization, ...rest }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <Card
-      className={clsx(classes.root, className)}
-      {...rest}
+      className={ clsx(classes.root, className) }
+      { ...rest }
     >
       <CardContent>
         <Box
-          display="flex"
-          justifyContent="center"
-          mb={3}
+          display='flex'
+          justifyContent='center'
+          mb={ 3 }
         >
           <Avatar aria-label='recipe' className={ classes.avatar }>
             { organization.name[0] }
           </Avatar>
         </Box>
         <Typography
-          align="center"
-          color="textPrimary"
+          align='center'
+          color='textPrimary'
           gutterBottom
-          variant="h6"
+          variant='h6'
         >
-          {organization.name}
+          { organization.name }
         </Typography>
         <Typography
-          align="center"
-          color="textPrimary"
-          variant="body1"
+          align='center'
+          color='textPrimary'
+          variant='body1'
         >
-          {organization.description}
+          { organization.description }
         </Typography>
       </CardContent>
-      <Box flexGrow={1} />
+      <Box flexGrow={ 1 } />
       <Divider />
-      <Box p={2}>
+      <Box p={ 2 }>
         <Grid
           container
-          justify="space-between"
-          spacing={2}
+          justify='space-between'
+          spacing={ 2 }
         >
           <Grid
-            className={classes.statsItem}
+            className={ classes.statsItem }
             item
           >
             <Typography variant='body2' color='textSecondary' component='small' style={ { width: '100%', marginBottom: 10, marginLeft: 16 } }>
@@ -78,13 +78,13 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
             </Typography>
           </Grid>
           <Grid
-            className={classes.statsItem}
+            className={ classes.statsItem }
             item
-            style={{flexWrap: 'wrap'}}
+            style={ { flexWrap: 'wrap' } }
           >
             { organization.Projects && organization.Projects.map(p =>
               (<Chip style={ { marginLeft: 10, marginBottom: 10 } } size='medium' clickable onClick={ () => {
-                window.location.href = '/#/organizations/' + o.id + '/projects/' + p.id
+                window.location.href = '/#/organizations/' + organization.id + '/projects/' + p.id
                 window.location.reload()
               } } label={ p.name }
               />)
@@ -93,12 +93,12 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
         </Grid>
       </Box>
     </Card>
-  );
-};
+  )
+}
 
 OrganizationCard.propTypes = {
   className: PropTypes.string,
   organization: PropTypes.object.isRequired
-};
+}
 
-export default OrganizationCard;
+export default OrganizationCard

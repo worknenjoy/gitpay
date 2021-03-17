@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Container,
   Grid,
   makeStyles
-} from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
-import OrganizationCard from './organization-card';
+} from '@material-ui/core'
+import { Pagination } from '@material-ui/lab'
+import OrganizationCard from './organization-card'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,16 +18,16 @@ const useStyles = makeStyles((theme) => ({
   projectCard: {
     height: '100%'
   }
-}));
+}))
 
-const paginate = (array, page_size, page_number) => {
+const paginate = (array, pageSize, pageNumber) => {
   // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
-  return array && array.slice((page_number - 1) * page_size, page_number * page_size);
+  return array && array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
 }
 
 const OrganizationList = ({ listOrganizations, organizations }) => {
-  const classes = useStyles();
-  const [currentOrganizations, setCurrentOrganizations] = useState([]);
+  const classes = useStyles()
+  const [currentOrganizations, setCurrentOrganizations] = useState([])
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const recordsPerPage = 12
@@ -50,45 +50,45 @@ const OrganizationList = ({ listOrganizations, organizations }) => {
   const pages = Math.ceil(total / recordsPerPage)
 
   return (
-      <Container maxWidth={false}>
-        <Box mt={3} mb={3}>
-          <Grid
-            container
-            spacing={3}
-          >
-            { currentOrganizations && currentOrganizations.length && currentOrganizations.map(organization => (
-              <Grid
-                item
-                key={organization.id}
-                lg={4}
-                md={6}
-                xs={12}
-              >
-                <OrganizationCard
-                  className={classes.projectCard}
-                  organization={organization}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-        { total - 1 > recordsPerPage &&
-          <Box
-            mt={3}
-            mb={3}
-            display="flex"
-            justifyContent="center"
-          >
-            <Pagination
-              color="primary"
-              count={pages}
-              size="small"
-              page={page} onChange={handlePagination}
-            />
-          </Box>
-        }
-      </Container>
-  );
-};
+    <Container maxWidth={ false }>
+      <Box mt={ 3 } mb={ 3 }>
+        <Grid
+          container
+          spacing={ 3 }
+        >
+          { currentOrganizations && currentOrganizations.length && currentOrganizations.map(organization => (
+            <Grid
+              item
+              key={ organization.id }
+              lg={ 4 }
+              md={ 6 }
+              xs={ 12 }
+            >
+              <OrganizationCard
+                className={ classes.projectCard }
+                organization={ organization }
+              />
+            </Grid>
+          )) }
+        </Grid>
+      </Box>
+      { total - 1 > recordsPerPage &&
+      <Box
+        mt={ 3 }
+        mb={ 3 }
+        display='flex'
+        justifyContent='center'
+      >
+        <Pagination
+          color='primary'
+          count={ pages }
+          size='small'
+          page={ page } onChange={ handlePagination }
+        />
+      </Box>
+      }
+    </Container>
+  )
+}
 
-export default OrganizationList;
+export default OrganizationList
