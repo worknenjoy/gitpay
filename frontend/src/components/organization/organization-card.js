@@ -10,6 +10,7 @@ import {
   Divider,
   Grid,
   Typography,
+  Link,
   makeStyles
 } from '@material-ui/core'
 
@@ -51,7 +52,26 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           gutterBottom
           variant='h6'
         >
-          { organization.name }
+          <Link color="textPrimary" href={''} onClick={(e) => {
+            e.preventDefault()
+            window.location.href = `/#/organizations/${organization.id}`
+            window.location.reload()
+          }}>
+            { organization.name }
+          </Link>
+        </Typography>
+        <Typography
+          align='center'
+          color='textPrimary'
+          gutterBottom
+          variant='caption'
+          style={ { display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 } }
+        > by {' '} 
+          { organization && <Link color="textSecondary" href={''} onClick={(e) => {
+            e.preventDefault()
+            window.location.href = `/#/organizations/${organization.id}`
+            window.location.reload()
+          }}>{organization.User.name || organization.User.username}</Link> }
         </Typography>
         <Typography
           align='center'

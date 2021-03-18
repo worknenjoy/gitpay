@@ -138,31 +138,33 @@ class TaskExplorer extends Component {
       <Page>
         <TopBarContainer />
         <PageContent>
-          <AppBar position='sticky' color='default'>
-            <Container maxWidth='lg'>
-              <Tabs
-                variant='scrollable'
-                value={ this.state.value }
-                onChange={ this.handleSectionTab }
-              >
-                <Tab
-                  id='issues'
-                  value={ 0 }
-                  label={ this.props.intl.formatMessage(messages.issuesLabel) }
-                />
-                <Tab
-                  id='projects'
-                  value={ 1 }
-                  label={ this.props.intl.formatMessage(messages.projectsLabel) }
-                />
-                <Tab
-                  id='organizations'
-                  value={ 2 }
-                  label={ this.props.intl.formatMessage(messages.organizationsLabel) }
-                />
-              </Tabs>
-            </Container>
-          </AppBar>
+          { this.state.value === 0 &&
+            <AppBar position='sticky' color='default'>
+              <Container maxWidth='lg'>
+                <Tabs
+                  variant='scrollable'
+                  value={ this.state.value }
+                  onChange={ this.handleSectionTab }
+                >
+                  <Tab
+                    id='issues'
+                    value={ 0 }
+                    label={ this.props.intl.formatMessage(messages.issuesLabel) }
+                  />
+                  <Tab
+                    id='projects'
+                    value={ 1 }
+                    label={ this.props.intl.formatMessage(messages.projectsLabel) }
+                  />
+                  <Tab
+                    id='organizations'
+                    value={ 2 }
+                    label={ this.props.intl.formatMessage(messages.organizationsLabel) }
+                  />
+                </Tabs>
+              </Container>
+            </AppBar>
+          }
           <Container fixed maxWidth='lg'>
             <Grid container className={ classes.root }>
               <Grid item xs={ 12 } md={ 12 }>

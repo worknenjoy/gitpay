@@ -12,7 +12,8 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  makeStyles
+  makeStyles,
+  Link
 } from '@material-ui/core'
 
 const logoGithub = require('../../images/github-logo.png')
@@ -72,10 +73,16 @@ const ProjectCard = ({ className, project, ...rest }) => {
         </Box>
         <Typography
           align='center'
-          color='textPrimary'
-          variant='h6'
+          color='textSecondary'
+          
         >
-          { project.name }
+          <Link href={''} onClick={(e) => {
+            e.preventDefault()
+            window.location.href = `/#/organizations/${project.Organization.id}/projects/${project.id}`
+            window.location.reload()
+          }}>
+              { project.name }
+          </Link>
         </Typography>
         <Typography
           align='center'
@@ -83,8 +90,12 @@ const ProjectCard = ({ className, project, ...rest }) => {
           gutterBottom
           variant='caption'
           style={ { display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 } }
-        >
-          { project.Organization && `by ${project.Organization.name}` }
+        > by {' '} 
+          { project.Organization && <Link color="textSecondary" href={''} onClick={(e) => {
+            e.preventDefault()
+            window.location.href = `/#/organizations/${project.Organization.id}`
+            window.location.reload()
+          }}>{project.Organization.name}</Link> }
         </Typography>
         <Typography
           align='center'
