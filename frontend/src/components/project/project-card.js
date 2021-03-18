@@ -74,14 +74,14 @@ const ProjectCard = ({ className, project, ...rest }) => {
         <Typography
           align='center'
           color='textSecondary'
-          
+
         >
-          <Link href={''} onClick={(e) => {
+          <Link href={ '' } onClick={ (e) => {
             e.preventDefault()
             window.location.href = `/#/organizations/${project.Organization.id}/projects/${project.id}`
             window.location.reload()
-          }}>
-              { project.name }
+          } }>
+            { project.name }
           </Link>
         </Typography>
         <Typography
@@ -90,12 +90,12 @@ const ProjectCard = ({ className, project, ...rest }) => {
           gutterBottom
           variant='caption'
           style={ { display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 } }
-        > by {' '} 
-          { project.Organization && <Link color="textSecondary" href={''} onClick={(e) => {
+        > by { ' ' }
+          { project.Organization && <Link color='textSecondary' href={ '' } onClick={ (e) => {
             e.preventDefault()
             window.location.href = `/#/organizations/${project.Organization.id}`
             window.location.reload()
-          }}>{project.Organization.name}</Link> }
+          } }>{ project.Organization.name }</Link> }
         </Typography>
         <Typography
           align='center'

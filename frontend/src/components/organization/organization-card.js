@@ -52,11 +52,11 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           gutterBottom
           variant='h6'
         >
-          <Link color="textPrimary" href={''} onClick={(e) => {
+          <Link color='textPrimary' href={ '' } onClick={ (e) => {
             e.preventDefault()
             window.location.href = `/#/organizations/${organization.id}`
             window.location.reload()
-          }}>
+          } }>
             { organization.name }
           </Link>
         </Typography>
@@ -66,12 +66,12 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           gutterBottom
           variant='caption'
           style={ { display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 } }
-        > by {' '} 
-          { organization && <Link color="textSecondary" href={''} onClick={(e) => {
+        > by { ' ' }
+          { organization && <Link color='textSecondary' href={ '' } onClick={ (e) => {
             e.preventDefault()
             window.location.href = `/#/organizations/${organization.id}`
             window.location.reload()
-          }}>{organization.User.name || organization.User.username}</Link> }
+          } }>{ organization.User.name || organization.User.username }</Link> }
         </Typography>
         <Typography
           align='center'

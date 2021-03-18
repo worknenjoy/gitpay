@@ -90,25 +90,33 @@ class TaskExplorer extends Component {
     super(props)
 
     this.state = {
-      value: 0
+      value: 0,
+      showNavigation: false,
+      isOrganizationPage: false,
+      isProjectPage: false,
+      currentPath: ''
     }
 
     this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
   async componentDidMount () {
-    switch (this.props.history.location.pathname) {
+    const pathname = this.props.history.location.pathname
+    await this.setState({ currentPath: pathname })
+    if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) await this.setState({ isOrganizationPage: true })
+    if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) await this.setState({ isProjectPage: true })
+    switch (pathname) {
       case '/tasks/open':
-        await this.setState({ value: 0 })
+        this.setState({ value: 0, showNavigation: true })
         break
       case '/projects':
-        await this.setState({ value: 1 })
+        this.setState({ value: 1, showNavigation: true })
         break
       case '/organizations':
-        await this.setState({ value: 2 })
+        this.setState({ value: 2, showNavigation: true })
         break
       default:
-        await this.setState({ value: 0 })
+        this.setState({ value: 0, showNavigation: false })
         break
     }
   }
@@ -118,15 +126,19 @@ class TaskExplorer extends Component {
     switch (value) {
       case 0:
         this.props.history.push('/tasks/open')
+        this.setState({ showNavigation: true })
         break
       case 1:
         this.props.history.push('/projects')
+        this.setState({ showNavigation: true })
         break
       case 2:
         this.props.history.push('/organizations')
+        this.setState({ showNavigation: true })
         break
       default:
         this.props.history.push('/tasks/open')
+        this.setState({ showNavigation: true })
         break
     }
   }
@@ -138,7 +150,7 @@ class TaskExplorer extends Component {
       <Page>
         <TopBarContainer />
         <PageContent>
-          { this.state.value === 0 &&
+          { this.state.showNavigation &&
             <AppBar position='sticky' color='default'>
               <Container maxWidth='lg'>
                 <Tabs
