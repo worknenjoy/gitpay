@@ -34,7 +34,7 @@ const ProjectList = ({ listProjects, projects }) => {
 
   useEffect(() => {
     listProjects && listProjects()
-    setTotal(projects.data.length)
+    setTotal(filter(projects.data).length)
     changePage()
   }, [projects.data])
 
