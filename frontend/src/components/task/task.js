@@ -976,7 +976,7 @@ class Task extends Component {
                     authors={
                       [
                         {
-                          name: task.data.User.name,
+                          name: task.data.User.name || 'anonymous',
                           email: task.data.User.email,
                           href: task.data.User.website
                         }
