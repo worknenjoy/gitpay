@@ -134,7 +134,7 @@ const listOrders = query => {
   return dispatch => {
     dispatch(listOrdersRequested())
     return axios
-      .get(api.API_URL + '/orders/list', query)
+      .get(api.API_URL + '/orders/list', { params: query })
       .then(orders => {
         if (orders.data) {
           return dispatch(listOrdersSuccess(orders.data))

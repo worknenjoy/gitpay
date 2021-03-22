@@ -29,7 +29,8 @@ import {
   Settings,
   FaceSharp,
   Business,
-  AccountBalance
+  AccountBalance,
+  Payment as PaymentIcon
 } from '@material-ui/icons'
 
 import classNames from 'classnames'
@@ -38,6 +39,7 @@ import nameInitials from 'name-initials'
 import api from '../../consts'
 
 import TopBarContainer from '../../containers/topbar'
+import PaymentsContainer from '../../containers/payments'
 import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import UserTasksContainer from '../../containers/user-tasks'
@@ -236,6 +238,9 @@ class Profile extends Component {
       case '/profile/roles':
         this.setState({ selected: 6 })
         break
+      case '/profile/payments':
+        this.setState({ selected: 7 })
+        break
       default:
         this.setState({ selected: null })
         break
@@ -328,6 +333,15 @@ class Profile extends Component {
                         exact
                         path='/profile/tasks/:filter'
                         component={ UserTasksContainer }
+                      />
+
+                    }
+                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||
+                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('funding')) &&
+                      <Route
+                        exact
+                        path='/profile/payments'
+                        component={ PaymentsContainer }
                       />
 
                     }
@@ -549,6 +563,7 @@ class Profile extends Component {
                             />
                           </MenuItem>
                           }
+                          { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                           <MenuItem
                             onClick={ () =>
                               this.props.history.push('/profile/payment-options')
@@ -571,6 +586,31 @@ class Profile extends Component {
                               }
                             />
                           </MenuItem>
+                          }
+                          { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                          <MenuItem
+                            onClick={ () =>
+                              this.props.history.push('/profile/payments')
+                            }
+                            className={ classes.menuItem }
+                            selected={ this.state.selected === 3 }
+                          >
+                            <ListItemIcon className={ classes.icon }>
+                              <PaymentIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              classes={ { primary: classes.primary } }
+                              primary={
+                                <span>
+                                  <FormattedMessage
+                                    id='account.profile.payments.list'
+                                    defaultMessage='Your payments'
+                                  />
+                                </span>
+                              }
+                            />
+                          </MenuItem>
+                          }
                           <MenuItem
                             onClick={ () =>
                               this.props.history.push('/profile/preferences')

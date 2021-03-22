@@ -59,8 +59,8 @@ export const messages = defineMessages({
     defaultMessage: 'Pending'
   },
   taskLabel: {
-    id: 'task.tab.label',
-    defaultMessage: 'Task'
+    id: 'task.orders.label',
+    defaultMessage: 'Payments'
   },
   orderLabel: {
     id: 'task.tab.order',
@@ -83,8 +83,8 @@ export const messages = defineMessages({
     defaultMessage: 'History'
   },
   cardTitle: {
-    id: 'task.card.title',
-    defaultMessage: 'Payments for this task'
+    id: 'task.card.payments.title',
+    defaultMessage: 'Payments on Gitpay'
   },
   cardSubtitle: {
     id: 'task.card.subtitle',
@@ -115,8 +115,8 @@ export const messages = defineMessages({
     defaultMessage: 'User'
   },
   cardTableHeaderPayment: {
-    id: 'task.card.table.header.bank',
-    defaultMessage: 'Bank account'
+    id: 'task.card.table.header.payment',
+    defaultMessage: 'Payment type'
   },
   interestedCardTitle: {
     id: 'task.card.interested.title',

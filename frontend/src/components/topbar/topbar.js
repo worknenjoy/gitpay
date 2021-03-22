@@ -292,7 +292,6 @@ class TopBar extends Component {
     this.props.history.replace({ pathname: '/' })
     this.props.signOut()
     this.setState({ anchorEl: null })
-
   }
 
   switchLang = (lang) => {
