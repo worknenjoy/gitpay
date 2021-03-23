@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -20,14 +20,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, onCancel }) => {
+const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task }) => {
   const classes = useStyles()
   const [selectedIndex, setSelectedIndex] = React.useState(null)
   const [currentTaskId, setCurrentTaskId] = React.useState(null)
 
+  useEffect(() => {
+    setCurrentTaskId(task.id)
+    setSelectedIndex(task.id)
+  }, [])
+
   const handleListItemClick = (event, taskId, index) => {
     setCurrentTaskId(taskId)
-    setSelectedIndex(index)
+    setSelectedIndex(taskId)
   }
 
   const sendTransfer = () => {
@@ -57,7 +62,7 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, onCancel }) =>
                 return (
                   <ListItem
                     button
-                    selected={ selectedIndex === index }
+                    selected={ selectedIndex === t.id }
                     onClick={ (event) => handleListItemClick(event, t.id, index) }
                   >
                     <ListItemText primary={ t.title } />

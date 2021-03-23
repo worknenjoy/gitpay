@@ -44,7 +44,8 @@ import {
   Settings,
   FaceSharp,
   Business,
-  AccountBalance
+  AccountBalance,
+  Payment as PaymentIcon
 } from '@material-ui/icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -292,7 +293,6 @@ class TopBar extends Component {
     this.props.history.replace({ pathname: '/' })
     this.props.signOut()
     this.setState({ anchorEl: null })
-
   }
 
   switchLang = (lang) => {
@@ -658,6 +658,19 @@ class TopBar extends Component {
                     </ListItemIcon>
                     <ListItemText>
                       <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Your Organizations' />
+                    </ListItemText>
+                  </ListItem>
+                  }
+                  { user.Types && (user.Types.map(t => t.name).includes('funding') || user.Types.map(t => t.name).includes('maintainer')) &&
+                  <ListItem button onClick={ () => {
+                    window.location.assign('/#/profile/payments')
+                    this.setState({ anchorEl: null })
+                  } }>
+                    <ListItemIcon>
+                      <PaymentIcon />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Your payments' />
                     </ListItemText>
                   </ListItem>
                   }
