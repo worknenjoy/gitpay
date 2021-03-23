@@ -14,7 +14,8 @@ import {
   Tab,
   withStyles,
   Tooltip,
-  Button
+  Button,
+  Link
 } from '@material-ui/core'
 
 import {
@@ -59,11 +60,6 @@ class Payments extends React.Component {
 
   async componentDidMount () {
     await this.props.listOrders({ userId: this.props.user.id })
-    if (this.props.preloadOrder) {
-      this.setState({ currendOrderId: this.props.preloadOrder }, () => {
-        this.openOrderDetailsDialog({}, this.props.preloadOrder)
-      })
-    }
   }
 
   handlePayPalDialogOpen = (e, id) => {
@@ -118,6 +114,7 @@ class Payments extends React.Component {
 
       if (paymentUrl) {
         window.location.href = paymentUrl
+        window.location.reload()
       }
     }
 
@@ -131,7 +128,7 @@ class Payments extends React.Component {
 
     const retryPaypalPaymentButton = (paymentUrl) => {
       return (
-        <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+        <Button style={ { marginTop: 10, paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
           retryPaypalPayment(e, paymentUrl)
         } }>
           <FormattedMessage id='general.buttons.retry' defaultMessage='Retry' />
@@ -156,7 +153,7 @@ class Payments extends React.Component {
         if (item.User && userId === item.User.id) {
           return (
             <Button
-              style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
+              style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginRight: 5 } }
               variant='contained'
               size='small'
               color='primary'
@@ -171,22 +168,17 @@ class Payments extends React.Component {
       }
     }
 
-    const userRow = user => {
+    const issueRow = issue => {
       return (<span>
-        { user && user.profile_url
+        { issue && issue.title
           ? (
-            <FormattedMessage id='task.payment.user.check.github' defaultMessage='Check this user profile at Github'>
-              { (msg) => (
-                <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                  <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                    <span>{ user.username || user.name || ' - ' }</span>
-                    <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
-                  </a>
-                </Tooltip>
-              ) }
-            </FormattedMessage>
+           <Link href="" onClick={(e) => {
+             e.preventDefault()
+             window.location.href = '/#/task/' + issue.id
+             window.location.reload()
+           }}>{issue.title}</Link>
           ) : (
-            `${user && (user.username || user.name || this.props.intl.formatMessage(messages.noUserFound))}`
+            `no issue found`
           )
         }
       </span>)
@@ -222,7 +214,7 @@ class Payments extends React.Component {
                 <FormattedMessage id='general.buttons.transfer' defaultMessage='Transfer' />
                 <TransferIcon style={ { marginLeft: 5, marginRight: 5 } } />
               </Button>
-              <TaskOrderTransfer order={ item } onSend={ this.props.transferOrder } tasks={ this.props.tasks } open={ this.state.transferDialogOpen } onClose={ this.closeTransferDialog } />
+              <TaskOrderTransfer task={item.Task} order={ item } onSend={ this.props.transferOrder } tasks={ this.props.tasks } open={ this.state.transferDialogOpen } onClose={ this.closeTransferDialog } />
             </React.Fragment>
           )
         }
@@ -249,14 +241,17 @@ class Payments extends React.Component {
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
         <div style={ { display: 'inline-block' } }>
           <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
+        </div>,
+        `$ ${item.amount}`,
+        <PaymentTypeIcon type={ item.provider } />,
+        issueRow(item.Task),
+        MomentComponent(item.updatedAt).fromNow(),
+        <div style={ { display: 'inline-block' } }>
           { detailsOrderButton(item, userId) }
           { retryOrCancelButton(item, userId) }
+          { transferButton(item, userId) }
         </div>,
-        transferButton(item, userId),
-        `$ ${item.amount}`,
-        MomentComponent(item.updatedAt).fromNow(),
-        userRow(item.User),
-        <PaymentTypeIcon type={ item.provider } />
+        
       ])
     }
 
@@ -285,11 +280,11 @@ class Payments extends React.Component {
                 tableHead={ [
                   this.props.intl.formatMessage(messages.cardTableHeaderPaid),
                   this.props.intl.formatMessage(messages.cardTableHeaderStatus),
-                  this.props.intl.formatMessage(messages.cardTableHeaderActions),
                   this.props.intl.formatMessage(messages.cardTableHeaderValue),
+                  this.props.intl.formatMessage(messages.cardTableHeaderPayment),
+                  this.props.intl.formatMessage(messages.cardTableHeaderIssue),
                   this.props.intl.formatMessage(messages.cardTableHeaderCreated),
-                  this.props.intl.formatMessage(messages.cardTableHeaderUser),
-                  this.props.intl.formatMessage(messages.cardTableHeaderPayment)
+                  this.props.intl.formatMessage(messages.cardTableHeaderActions)
                 ] }
                 tableData={ orders && orders.data && orders.data.length ? displayOrders(orders.data) : [] }
               />

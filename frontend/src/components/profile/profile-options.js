@@ -20,6 +20,7 @@ const preferencesIcon = require('../../images/icons/noun_project management_3063
 const generalSettingsIcon = require('../../images/icons/noun_project management_3063521.svg')
 const taskIcon = require('../../images/icons/noun_project management_3063547.svg')
 const configIcon = require('../../images/icons/noun_project management_3063514.svg')
+const paymentsIcon = require('../../images/icons/noun_project management_3063535.svg')
 
 const styles = theme => ({
   cardActions: {
@@ -124,6 +125,40 @@ class ProfileOptions extends Component {
                   </Button>
                 </CardActions>
               </Card>
+            }
+            { user.Types && (user.Types.map(t => t.name).includes('funding') || user.Types.map(t => t.name).includes('maintainer')) &&
+            <Card>
+              <FormattedMessage
+                id='account.profile.tasks.payments.caption'
+                defaultMessage='Your payments'
+              >
+                { msg => <CardMedia image={ paymentsIcon } title={ msg } /> }
+              </FormattedMessage>
+              <CardContent>
+                <Typography variant='h6'>
+                  <FormattedMessage
+                    id='account.profile.tasks.payment.paid.headline'
+                    defaultMessage='Payments'
+                  />
+                </Typography>
+                <Typography variant='body2'>
+                  <FormattedMessage
+                    id='account.profile.tasks.payments.desc'
+                    defaultMessage='Access all your payments to any issue on Gitpay'
+                  />
+                </Typography>
+              </CardContent>
+              <CardActions className={ classes.cardActions }>
+                <Button size='small' color='primary'>
+                  <Link to={ '/profile/payments' }>
+                    <FormattedMessage
+                      id='account.profile.payments.setup'
+                      defaultMessage='See your payments'
+                    />
+                  </Link>
+                </Button>
+              </CardActions>
+            </Card>
             }
             { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Card>
