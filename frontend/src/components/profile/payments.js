@@ -13,7 +13,6 @@ import {
   Tabs,
   Tab,
   withStyles,
-  Tooltip,
   Button,
   Link
 } from '@material-ui/core'
@@ -29,8 +28,6 @@ import {
 import TaskPaymentCancel from '../task/task-payment-cancel'
 import TaskOrderDetails from '../task/order/task-order-details'
 import TaskOrderTransfer from '../task/order/task-order-transfer'
-
-const logoGithub = require('../../images/github-logo.png')
 
 const styles = theme => ({
   paper: {
@@ -172,13 +169,13 @@ class Payments extends React.Component {
       return (<span>
         { issue && issue.title
           ? (
-           <Link href="" onClick={(e) => {
-             e.preventDefault()
-             window.location.href = '/#/task/' + issue.id
-             window.location.reload()
-           }}>{issue.title}</Link>
+            <Link href='' onClick={ (e) => {
+              e.preventDefault()
+              window.location.href = '/#/task/' + issue.id
+              window.location.reload()
+            } }>{ issue.title }</Link>
           ) : (
-            `no issue found`
+            'no issue found'
           )
         }
       </span>)
@@ -214,7 +211,7 @@ class Payments extends React.Component {
                 <FormattedMessage id='general.buttons.transfer' defaultMessage='Transfer' />
                 <TransferIcon style={ { marginLeft: 5, marginRight: 5 } } />
               </Button>
-              <TaskOrderTransfer task={item.Task} order={ item } onSend={ this.props.transferOrder } tasks={ this.props.tasks } open={ this.state.transferDialogOpen } onClose={ this.closeTransferDialog } />
+              <TaskOrderTransfer task={ item.Task } order={ item } onSend={ this.props.transferOrder } tasks={ this.props.tasks } open={ this.state.transferDialogOpen } onClose={ this.closeTransferDialog } />
             </React.Fragment>
           )
         }
@@ -251,7 +248,7 @@ class Payments extends React.Component {
           { retryOrCancelButton(item, userId) }
           { transferButton(item, userId) }
         </div>,
-        
+
       ])
     }
 

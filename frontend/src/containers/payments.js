@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Payments from '../components/profile/payments'
 import { addNotification } from '../actions/notificationActions'
 import { listTasks, filterTasks, changeTaskTab } from '../actions/taskActions'
-import { listOrders, transferOrder, detailOrder} from '../actions/orderActions'
+import { listOrders, transferOrder, detailOrder } from '../actions/orderActions'
 import { getFilteredTasks } from '../selectors/tasks'
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
     listTasks: ({ organizationId, projectId, userId, status }) => dispatch(listTasks({ organizationId, projectId, userId, status })),
     listOrders: (query) => dispatch(listOrders(query)),
-    getOrderDetails: (id) =>  dispatch(detailOrder(id)),
+    getOrderDetails: (id) => dispatch(detailOrder(id)),
     transferOrder: (order, params) => dispatch(transferOrder(order, params)),
     changeTab: (tab) => dispatch(changeTaskTab(tab))
   }
