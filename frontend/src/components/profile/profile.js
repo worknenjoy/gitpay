@@ -563,6 +563,30 @@ class Profile extends Component {
                             />
                           </MenuItem>
                           }
+                          { this.props.user.Types && (this.props.user.Types.map(t => t.name).includes('funding') || this.props.user.Types.map(t => t.name).includes('maintainer')) &&
+                          <MenuItem
+                            onClick={ () =>
+                              this.props.history.push('/profile/payments')
+                            }
+                            className={ classes.menuItem }
+                            selected={ this.state.selected === 3 }
+                          >
+                            <ListItemIcon className={ classes.icon }>
+                              <PaymentIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              classes={ { primary: classes.primary } }
+                              primary={
+                                <span>
+                                  <FormattedMessage
+                                    id='account.profile.payments.list'
+                                    defaultMessage='Your payments'
+                                  />
+                                </span>
+                              }
+                            />
+                          </MenuItem>
+                          }
                           { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                           <MenuItem
                             onClick={ () =>
@@ -587,30 +611,7 @@ class Profile extends Component {
                             />
                           </MenuItem>
                           }
-                          { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                          <MenuItem
-                            onClick={ () =>
-                              this.props.history.push('/profile/payments')
-                            }
-                            className={ classes.menuItem }
-                            selected={ this.state.selected === 3 }
-                          >
-                            <ListItemIcon className={ classes.icon }>
-                              <PaymentIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                              classes={ { primary: classes.primary } }
-                              primary={
-                                <span>
-                                  <FormattedMessage
-                                    id='account.profile.payments.list'
-                                    defaultMessage='Your payments'
-                                  />
-                                </span>
-                              }
-                            />
-                          </MenuItem>
-                          }
+                          
                           <MenuItem
                             onClick={ () =>
                               this.props.history.push('/profile/preferences')
