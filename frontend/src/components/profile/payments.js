@@ -71,8 +71,7 @@ class Payments extends React.Component {
     this.setState({ cancelPaypalConfirmDialog: false })
   }
 
-  handleCancelPaypalPayment = async (e) => {
-    e.preventDefault()
+  handleCancelPaypalPayment = async () => {
     const orderId = this.state.currentOrderId
     this.setState({ cancelPaypalConfirmDialog: false, orderDetailsDialog: false })
     await this.props.cancelPaypalPayment(orderId)
@@ -329,6 +328,7 @@ class Payments extends React.Component {
           cancelPaypalConfirmDialog={ this.state.cancelPaypalConfirmDialog }
           handlePayPalDialogClose={ this.handlePayPalDialogClose }
           handleCancelPaypalPayment={ this.handleCancelPaypalPayment }
+          listOrders={ async () => this.props.listOrders({ userId: this.props.user.id }) }
         />
         <TaskOrderDetails
           open={ this.state.orderDetailsDialog }
@@ -339,9 +339,9 @@ class Payments extends React.Component {
         <PaymentRefund
           open={ this.state.refundDialogOpen }
           handleClose={ () => this.closeRefundDialog() }
-          orderId={this.state.currentOrderId}
+          orderId={ this.state.currentOrderId }
           onRefund={ this.props.refundOrder }
-          listOrders={ async () => await this.props.listOrders({ userId: this.props.user.id }) }
+          listOrders={ async () => this.props.listOrders({ userId: this.props.user.id }) }
         />
       </div>
     )

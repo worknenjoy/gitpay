@@ -11,13 +11,12 @@ module.exports = Promise.method(function orderRefund (orderParams) {
       { where: { id: orderParams.id }, include: models.User }
     )
     .then(async order => {
-      switch(order.provider) {
+      switch (order.provider) {
         case 'stripe':
-          console.log('order', order)
           const refund = await stripe.refunds.create({
             charge: order.source,
-          });
-          if(refund.id) {
+          })
+          if (refund.id) {
             return models.Order
               .update({
                 status: 'refunded',
@@ -77,22 +76,19 @@ module.exports = Promise.method(function orderRefund (orderParams) {
                 returning: true,
                 plain: true
               }).then(updatedOrder => {
-                // eslint-disable-next-line no-console
-                console.log('updatedOrder', updatedOrder)
                 if (!updatedOrder) {
                   throw new Error('update_order_error')
                 }
                 const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
                 return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
-                    PaymentMail.refund(user, task.dataValues, orderData)
-                    return orderData
-                  })
+                  PaymentMail.refund(user, task.dataValues, orderData)
+                  return orderData
                 })
               })
             })
-        break
-      default:
-        break
-    }
-  })
+          })
+        default:
+          break
+      }
+    })
 })

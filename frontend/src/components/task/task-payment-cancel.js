@@ -9,7 +9,11 @@ import {
   Button
 } from '@material-ui/core'
 
-const TaskPaymentCancel = ({ cancelPaypalConfirmDialog, handlePayPalDialogClose, handleCancelPaypalPayment }) => {
+const TaskPaymentCancel = ({ cancelPaypalConfirmDialog, handlePayPalDialogClose, handleCancelPaypalPayment, listOrders }) => {
+  const handleCancelOrder = async () => {
+    await handleCancelPaypalPayment()
+    await listOrders()
+  }
   return (
     <Dialog
       open={ cancelPaypalConfirmDialog }
@@ -29,7 +33,7 @@ const TaskPaymentCancel = ({ cancelPaypalConfirmDialog, handlePayPalDialogClose,
           <Button onClick={ handlePayPalDialogClose } color='primary'>
             <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
           </Button>
-          <Button onClick={ (e) => handleCancelPaypalPayment(e) } variant='contained' color='secondary' >
+          <Button onClick={ handleCancelOrder } variant='contained' color='secondary' >
             <FormattedMessage id='task.actions.cancelPayment' defaultMessage='Confirm cancelation of pre-authorized payment' />
           </Button>
         </DialogActions>
