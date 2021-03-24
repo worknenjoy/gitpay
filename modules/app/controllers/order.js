@@ -6,6 +6,7 @@ const orderPayment = require('../../orders').orderPayment
 const orderCancel = require('../../orders').orderCancel
 const orderDetails = require('../../orders').orderDetails
 const orderTransfer = require('../../orders').orderTransfer
+const orderRefund = require('../../orders').orderRefund
 
 exports.createOrder = (req, res) => {
   orderBuild(req.body)
@@ -27,6 +28,19 @@ exports.cancelOrder = (req, res) => {
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log('error on cancelOrder', error)
+      res.status(401).send(error)
+    })
+}
+
+exports.refundOrder = (req, res) => {
+  orderRefund(req.params)
+    .then(data => {
+      // eslint-disable-next-line no-console
+      console.log('data send from controller on details Order controller', data)
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on cancelDetails', error)
       res.status(401).send(error)
     })
 }

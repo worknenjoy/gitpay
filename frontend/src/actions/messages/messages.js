@@ -91,6 +91,14 @@ const messages = defineMessages({
     id: 'actions.order.cancel.error',
     defaultMessage: 'We could not cancel this payment'
   },
+  notificationRefundSuccess: {
+    id: 'actions.order.refund.success',
+    defaultMessage: 'Your payment was refunded successfully'
+  },
+  notificationOrderRefundError: {
+    id: 'actions.order.refund.error',
+    defaultMessage: 'We could not cancel this refund'
+  },
   notificationTaskCreateNotificationSuccess: {
     id: 'actions.task.create.notification.success',
     defaultMessage: 'Task created successfully'

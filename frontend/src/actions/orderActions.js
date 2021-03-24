@@ -24,6 +24,11 @@ const DETAILS_ORDER_REQUESTED = 'DETAILS_ORDER_REQUESTED'
 const DETAILS_ORDER_SUCCESS = 'DETAILS_ORDER_SUCCESS'
 const DETAILS_ORDER_ERROR = 'DETAILS_ORDER_ERROR'
 
+const REFUND_ORDER_REQUESTED = 'REFUND_ORDER_REQUESTED'
+const REFUND_ORDER_SUCCESS = 'REFUND_ORDER_SUCCESS'
+const REFUND_ORDER_ERROR = 'REFUND_ORDER_ERROR'
+
+
 const LIST_ORDERS_REQUESTED = 'LIST_ORDERS_REQUESTED'
 const LIST_ORDERS_SUCCESS = 'LIST_ORDERS_SUCCESS'
 const LIST_ORDERS_ERROR = 'LIST_ORDERS_ERROR'
@@ -106,6 +111,22 @@ const detailOrderSuccess = order => {
 
 const detailOrderError = error => {
   return { type: DETAILS_ORDER_SUCCESS, completed: true, error: error }
+}
+
+/*
+ * Order refund
+ */
+
+const refundOrderRequested = () => {
+  return { type: REFUND_ORDER_REQUESTED, completed: false }
+}
+
+const refundOrderSuccess = order => {
+  return { type: REFUND_ORDER_SUCCESS, completed: true, order }
+}
+
+const refundOrderError = error => {
+  return { type: REFUND_ORDER_SUCCESS, completed: true, error: error }
 }
 
 /*
@@ -314,6 +335,33 @@ const detailOrder = id => {
   }
 }
 
+const refundOrder = id => {
+  validToken()
+  return dispatch => {
+    dispatch(refundOrderRequested())
+    return axios
+      .get(api.API_URL + '/orders/refund/' + id)
+      .then(order => {
+        if (order.data) {
+          dispatch(addNotification('actions.order.refund.success'))
+          return dispatch(refundOrderSuccess(order.data))
+        }
+        else {
+          dispatch(addNotification('actions.order.refund.error'))
+          return dispatch(refundOrderError(new Error('detail_order_failed')))
+        }
+      })
+      .catch(e => {
+        dispatch(
+          addNotification(
+            'actions.order.cancel.payment.error'
+          )
+        )
+        return dispatch(refundOrderError(e))
+      })
+  }
+}
+
 export {
   LIST_ORDERS_REQUESTED,
   LIST_ORDERS_SUCCESS,
@@ -333,10 +381,14 @@ export {
   DETAILS_ORDER_REQUESTED,
   DETAILS_ORDER_SUCCESS,
   DETAILS_ORDER_ERROR,
+  REFUND_ORDER_REQUESTED,
+  REFUND_ORDER_SUCCESS,
+  REFUND_ORDER_ERROR,
   listOrders,
   createOrder,
   payOrder,
   transferOrder,
+  refundOrder,
   cancelOrder,
   detailOrder
 }

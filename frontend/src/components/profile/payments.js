@@ -90,7 +90,7 @@ class Payments extends React.Component {
   }
 
   openRefundDialog = async (e, item) => {
-    this.setState({ refundDialogOpen: true })
+    this.setState({ refundDialogOpen: true, currentOrderId: item.id })
   }
 
   closeRefundDialog = async () => {
@@ -147,7 +147,7 @@ class Payments extends React.Component {
 
     const cancelPaypalPaymentButton = (id) => {
       return (
-        <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+        <Button style={ { paddingTop: 2, paddingBottom: 2, marginTop: 10, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
           cancelPaypalPayment(e, id)
         } }>
           <FormattedMessage id='general.buttons.cancel' defaultMessage='Cancel' />
@@ -233,12 +233,12 @@ class Payments extends React.Component {
     }
 
     const refundButton = (item, userId) => {
-      if (item.User && item.provider === 'stripe' && userId === item.User.id) {
+      if (item.User && userId === item.User.id) {
         if (item.status === 'succeeded') {
           return (
             <React.Fragment>
               <Button
-                style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginTop: 10, marginLeft: 5, marginRight: 5 } }
+                style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginTop: 10, marginRight: 5 } }
                 variant='contained'
                 size='small'
                 color='primary'
@@ -339,6 +339,9 @@ class Payments extends React.Component {
         <PaymentRefund
           open={ this.state.refundDialogOpen }
           handleClose={ () => this.closeRefundDialog() }
+          orderId={this.state.currentOrderId}
+          onRefund={ this.props.refundOrder }
+          listOrders={ async () => await this.props.listOrders({ userId: this.props.user.id }) }
         />
       </div>
     )

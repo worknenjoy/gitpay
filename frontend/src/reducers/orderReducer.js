@@ -16,7 +16,10 @@ import {
   CANCEL_ORDER_ERROR,
   DETAILS_ORDER_REQUESTED,
   DETAILS_ORDER_SUCCESS,
-  DETAILS_ORDER_ERROR
+  DETAILS_ORDER_ERROR,
+  REFUND_ORDER_REQUESTED,
+  REFUND_ORDER_SUCCESS,
+  REFUND_ORDER_ERROR
 } from '../actions/orderActions'
 
 export const order = (state = { data: {}, order: {}, completed: true, error: {} }, action) => {
@@ -50,6 +53,12 @@ export const order = (state = { data: {}, order: {}, completed: true, error: {} 
     case DETAILS_ORDER_SUCCESS:
       return { ...state, completed: action.completed, data: action.order }
     case DETAILS_ORDER_ERROR:
+      return { ...state, completed: action.completed, error: action.error }
+    case REFUND_ORDER_REQUESTED:
+      return { ...state, completed: action.completed }
+    case REFUND_ORDER_SUCCESS:
+      return { ...state, completed: action.completed, data: action.order }
+    case REFUND_ORDER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     default:
       return state
