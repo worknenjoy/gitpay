@@ -15,6 +15,8 @@
   "mail.payment.subject.cancel": "Seu pedido para cancelar um pagamento autorizado foi confirmado",
   "mail.payment.content.cancel": "Hello, we canceled a payment authorization of ${{value}} for the issue <a href=\"{{url}}\">{{title}}</a>",
   "mail.payment.support": "User request support for Task",
+  "mail.payment.subject.refund": "your order from an issue you paid on Gitpay has been refunded",
+  "mail.payment.content.refund": "Hello, a refund of $ {{value}} was made for the payment of the issue <a href=\"{{url}}\">{{title}}</a>",
   "mail.assign.owner.subject": "Alguém demonstrou interesse por sua tarefa no Gitpay",
   "mail.assign.owner.hello": "Olá",
   "mail.assign.owner.main": "{{name}} is interested to work on the task <a href=\"{{url}}\">{{title}}</a>.",
