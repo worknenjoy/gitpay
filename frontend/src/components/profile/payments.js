@@ -22,12 +22,14 @@ import {
   Refresh as RefreshIcon,
   Cancel as CancelIcon,
   Info as InfoIcon,
-  SwapHoriz as TransferIcon
+  SwapHoriz as TransferIcon,
+  Receipt as ReceiptIcon
 } from '@material-ui/icons'
 
 import TaskPaymentCancel from '../task/task-payment-cancel'
 import TaskOrderDetails from '../task/order/task-order-details'
 import TaskOrderTransfer from '../task/order/task-order-transfer'
+import PaymentRefund from './payment-refund'
 
 const styles = theme => ({
   paper: {
@@ -51,6 +53,7 @@ class Payments extends React.Component {
       cancelPaypalConfirmDialog: false,
       orderDetailsDialog: false,
       transferDialogOpen: false,
+      refundDialogOpen: false,
       currentOrderId: null
     }
   }
@@ -68,8 +71,7 @@ class Payments extends React.Component {
     this.setState({ cancelPaypalConfirmDialog: false })
   }
 
-  handleCancelPaypalPayment = async (e) => {
-    e.preventDefault()
+  handleCancelPaypalPayment = async () => {
     const orderId = this.state.currentOrderId
     this.setState({ cancelPaypalConfirmDialog: false, orderDetailsDialog: false })
     await this.props.cancelPaypalPayment(orderId)
@@ -84,6 +86,14 @@ class Payments extends React.Component {
     await this.props.listTasks({})
     await this.props.filterTasks('userId')
     this.setState({ transferDialogOpen: true })
+  }
+
+  openRefundDialog = async (e, item) => {
+    this.setState({ refundDialogOpen: true, currentOrderId: item.id })
+  }
+
+  closeRefundDialog = async () => {
+    this.setState({ refundDialogOpen: false })
   }
 
   closeTransferDialog = (e, item) => {
@@ -136,7 +146,7 @@ class Payments extends React.Component {
 
     const cancelPaypalPaymentButton = (id) => {
       return (
-        <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+        <Button style={ { paddingTop: 2, paddingBottom: 2, marginTop: 10, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
           cancelPaypalPayment(e, id)
         } }>
           <FormattedMessage id='general.buttons.cancel' defaultMessage='Cancel' />
@@ -221,6 +231,31 @@ class Payments extends React.Component {
       }
     }
 
+    const refundButton = (item, userId) => {
+      if (item.User && userId === item.User.id) {
+        if (item.status === 'succeeded') {
+          return (
+            <React.Fragment>
+              <Button
+                style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginTop: 10, marginRight: 5 } }
+                variant='contained'
+                size='small'
+                color='primary'
+                className={ classes.button }
+                onClick={ (e) => this.openRefundDialog(e, item) }
+              >
+                <FormattedMessage id='general.buttons.refund' defaultMessage='Refund' />
+                <ReceiptIcon style={ { marginLeft: 5, marginRight: 5 } } />
+              </Button>
+            </React.Fragment>
+          )
+        }
+        else {
+          return ''
+        }
+      }
+    }
+
     const displayOrders = orders => {
       if (!orders) return []
 
@@ -247,6 +282,7 @@ class Payments extends React.Component {
           { detailsOrderButton(item, userId) }
           { retryOrCancelButton(item, userId) }
           { transferButton(item, userId) }
+          { refundButton(item, userId) }
         </div>,
 
       ])
@@ -292,12 +328,20 @@ class Payments extends React.Component {
           cancelPaypalConfirmDialog={ this.state.cancelPaypalConfirmDialog }
           handlePayPalDialogClose={ this.handlePayPalDialogClose }
           handleCancelPaypalPayment={ this.handleCancelPaypalPayment }
+          listOrders={ async () => this.props.listOrders({ userId: this.props.user.id }) }
         />
         <TaskOrderDetails
           open={ this.state.orderDetailsDialog }
           order={ this.props.order }
           onClose={ this.closeOrderDetailsDialog }
           onCancel={ this.handlePayPalDialogOpen }
+        />
+        <PaymentRefund
+          open={ this.state.refundDialogOpen }
+          handleClose={ () => this.closeRefundDialog() }
+          orderId={ this.state.currentOrderId }
+          onRefund={ this.props.refundOrder }
+          listOrders={ async () => this.props.listOrders({ userId: this.props.user.id }) }
         />
       </div>
     )

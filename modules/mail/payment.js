@@ -8,7 +8,8 @@ const PaymentMail = {
   assigned: (user, task, value) => {},
   error: (user, task, value) => {},
   cancel: (user, task, order) => {},
-  support: (user, task, order) => {}
+  support: (user, task, order) => {},
+  refund: (user, task, order) => {}
 }
 
 if (constants.canSendEmail) {
@@ -94,6 +95,24 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: `
           <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
+          <p>${Signatures.sign(language)}</p>`
+        },
+      ]
+    )
+  }
+
+  PaymentMail.refund = (user, task, order) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
+    request(
+      to,
+      i18n.__('mail.payment.subject.refund'),
+      [
+        {
+          type: 'text/html',
+          value: `
+          <p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${Signatures.sign(language)}</p>`
         },
       ]

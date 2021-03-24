@@ -611,7 +611,7 @@ class Profile extends Component {
                             />
                           </MenuItem>
                           }
-                          
+
                           <MenuItem
                             onClick={ () =>
                               this.props.history.push('/profile/preferences')

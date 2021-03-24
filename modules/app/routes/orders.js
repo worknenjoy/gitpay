@@ -8,6 +8,7 @@ const controllers = require('../controllers/order')
 router.get('/list', controllers.listOrders)
 router.get('/fetch/:id', controllers.fetchOrders)
 router.get('/details/:id', controllers.detailsOrder)
+router.get('/refund/:id', controllers.refundOrder)
 router.get('/update', controllers.updateOrders)
 router.post('/create', controllers.createOrder)
 

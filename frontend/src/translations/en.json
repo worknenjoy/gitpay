@@ -521,6 +521,8 @@
   "actions.order.create.payment.send.error": "We could not process this payment",
   "actions.order.transfer.success": "The order was transfered successfully",
   "actions.order.transfer.error": "We could not make this transfer, try again later",
+  "actions.order.refund.success": "Your payment was refunded sucessfully",
+  "actions.order.refund.error": "There was an error to refundo your payment",
   "actions.assign.task.sucess": "This task was updated successfully!",
   "actions.assign.task.error": "We could not update this task.",
   "actions.message.task.sucess": "Your message was sent successfully",

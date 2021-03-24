@@ -4,8 +4,6 @@ const requestPromise = require('request-promise')
 const models = require('../../models')
 
 module.exports = Promise.method(function orderUpdate (orderParameters) {
-  // eslint-disable-next-line no-console
-  console.log('orderParameters', orderParameters)
   return requestPromise({
     method: 'POST',
     uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,

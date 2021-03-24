@@ -7,6 +7,7 @@ const orderPayment = require('./orderPayment')
 const orderCancel = require('./orderCancel')
 const orderDetails = require('./orderDetails')
 const orderTransfer = require('./orderTransfer')
+const orderRefund = require('./orderRefund')
 
 module.exports = {
   orderExists,
@@ -17,5 +18,6 @@ module.exports = {
   orderPayment,
   orderCancel,
   orderDetails,
-  orderTransfer
+  orderTransfer,
+  orderRefund
 }
