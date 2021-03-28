@@ -1285,10 +1285,10 @@ class Task extends Component {
                 { this.rendereAmountStatsCardContent(this.taskOwner()) }
               </div>
               <TaskInviteCard
-                onInvite={this.props.inviteTask}
-                onFunding={this.handleTaskFundingDialogOpen}
-                user={this.props.user}
-                id={task.data.id}
+                onInvite={ this.props.inviteTask }
+                onFunding={ this.handleTaskFundingDialogOpen }
+                user={ this.props.user }
+                id={ task.data.id }
               />
               <TaskAssignment
                 taskFundingDialog={ this.state.taskFundingDialog }
