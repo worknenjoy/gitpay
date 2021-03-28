@@ -9,6 +9,7 @@ import AssignActions from './assignment/AssignActions'
 
 import { messages } from './messages/task-messages'
 import RegularCard from '../Cards/RegularCard'
+import TaskInviteCard from './task-invite-card'
 import Table from '../Table/Table'
 import TaskHeader from './task-header'
 import AuthorList from './task-author-list'
@@ -1277,51 +1278,57 @@ class Task extends Component {
                         <FormattedMessage id='task.interested.action' defaultMessage="I'm interested" />
                       </span>{ ' ' }
                     </Button>
-                    <TaskAssignment
-                      taskFundingDialog={ this.state.taskFundingDialog }
-                      assignDialog={ this.state.assignDialog }
-                      handleAssignFundingDialogClose={ this.handleAssignFundingDialogClose }
-                      renderIssueAuthorLink={ this.renderIssueAuthorLink }
-                      timePlaceholder={ timePlaceholder }
-                      deadline={ deadline }
-                      deliveryDate={ deliveryDate }
-                      handleSuggestAnotherDate={ this.handleSuggestAnotherDate }
-                      showSuggestAnotherDateField={ this.state.showSuggestAnotherDateField }
-                      interestedSuggestedDate={ this.state.interestedSuggestedDate }
-                      handleInputChangeCalendar={ this.handleInputChangeCalendar }
-                      currentPrice={ this.state.currentPrice }
-                      interestedComment={ this.state.interestedComment }
-                      handleInputInterestedCommentChange={ this.handleInputInterestedCommentChange }
-                      handleInputInterestedAmountChange={ this.handleInputInterestedAmountChange }
-                      pickTaskPrice={ this.pickTaskPrice }
-                      priceConfirmed={ this.state.priceConfirmed }
-                      handleCheckboxIwillDoFor={ this.handleCheckboxIwillDoFor }
-                      charactersCount={ this.state.charactersCount }
-                      interestedLearn={ this.state.interestedLearn }
-                      handleCheckboxLearn={ this.handleCheckboxLearn }
-                      termsAgreed={ this.state.termsAgreed }
-                      handleCheckboxTerms={ this.handleCheckboxTerms }
-                      handleTermsDialog={ this.handleTermsDialog }
-                      termsDialog={ this.state.termsDialog }
-                      handleTermsDialogClose={ this.handleTermsDialogClose }
-                      handleOfferTask={ this.handleOfferTask }
-                      logged={ this.props.logged }
-                      task={ task }
-                      classes={ classes }
-                      fundingInvite={ this.state.fundingInvite }
-                      handleFundingEmailInputChange={ this.handleFundingEmailInputChange }
-                      handleFundingInputMessageChange={ this.handleFundingInputMessageChange }
-                      sendFundingInvite={ this.sendFundingInvite }
-                      inviteCover={ inviteCover }
-                      taskCover={ taskCover }
-                      location={ this.props.location }
-                    />
                   </div>
                 )
               }
-              <div style={ { marginTop: 25 } }>
+              <div style={ { marginTop: 20, marginBottom: 20 } }>
                 { this.rendereAmountStatsCardContent(this.taskOwner()) }
               </div>
+              <TaskInviteCard
+                onInvite={ this.props.inviteTask }
+                onFunding={ this.handleTaskFundingDialogOpen }
+                user={ this.props.user }
+                id={ task.data.id }
+              />
+              <TaskAssignment
+                taskFundingDialog={ this.state.taskFundingDialog }
+                assignDialog={ this.state.assignDialog }
+                handleAssignFundingDialogClose={ this.handleAssignFundingDialogClose }
+                renderIssueAuthorLink={ this.renderIssueAuthorLink }
+                timePlaceholder={ timePlaceholder }
+                deadline={ deadline }
+                deliveryDate={ deliveryDate }
+                handleSuggestAnotherDate={ this.handleSuggestAnotherDate }
+                showSuggestAnotherDateField={ this.state.showSuggestAnotherDateField }
+                interestedSuggestedDate={ this.state.interestedSuggestedDate }
+                handleInputChangeCalendar={ this.handleInputChangeCalendar }
+                currentPrice={ this.state.currentPrice }
+                interestedComment={ this.state.interestedComment }
+                handleInputInterestedCommentChange={ this.handleInputInterestedCommentChange }
+                handleInputInterestedAmountChange={ this.handleInputInterestedAmountChange }
+                pickTaskPrice={ this.pickTaskPrice }
+                priceConfirmed={ this.state.priceConfirmed }
+                handleCheckboxIwillDoFor={ this.handleCheckboxIwillDoFor }
+                charactersCount={ this.state.charactersCount }
+                interestedLearn={ this.state.interestedLearn }
+                handleCheckboxLearn={ this.handleCheckboxLearn }
+                termsAgreed={ this.state.termsAgreed }
+                handleCheckboxTerms={ this.handleCheckboxTerms }
+                handleTermsDialog={ this.handleTermsDialog }
+                termsDialog={ this.state.termsDialog }
+                handleTermsDialogClose={ this.handleTermsDialogClose }
+                handleOfferTask={ this.handleOfferTask }
+                logged={ this.props.logged }
+                task={ task }
+                classes={ classes }
+                fundingInvite={ this.state.fundingInvite }
+                handleFundingEmailInputChange={ this.handleFundingEmailInputChange }
+                handleFundingInputMessageChange={ this.handleFundingInputMessageChange }
+                sendFundingInvite={ this.sendFundingInvite }
+                inviteCover={ inviteCover }
+                taskCover={ taskCover }
+                location={ this.props.location }
+              />
             </Grid>
           </Grid>
         </PageContent>
