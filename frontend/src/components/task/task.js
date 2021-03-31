@@ -41,14 +41,14 @@ import {
   ExpandLess,
   ExpandMore,
   BugReport as BugReportIcon,
-  EmojiFoodBeverage as CoffeeIcon,
   AttachMoney as MoneyIcon,
   CheckCircleOutline as CheckIcon,
   OfflineBolt as BountyIcon,
   Gavel as OfferIcon,
   Redeem as RedeemIcon,
   Delete as DeleteIcon,
-  AssignmentInd as AssignmentIcon
+  AssignmentInd as AssignmentIcon,
+  EmojiFoodBeverage as CoffeeIcon
 } from '@material-ui/icons'
 
 import TopBarContainer from '../../containers/topbar'
@@ -63,6 +63,8 @@ import TaskPaymentForm from './task-payment-form'
 import TaskInterested from './task-interested'
 import TaskAssigned from './task-assigned'
 import TaskPayments from './task-payments'
+import TaskLevelSplitButton from './task-level-split-button'
+import TaskDeadlineForm from './task-deadline-form'
 
 import Constants from '../../consts'
 
@@ -811,7 +813,7 @@ class Task extends Component {
       </Typography>
     )
 
-    const deliveryDate = task.data.deadline !== null ? MomentComponent(task.data.deadline).utc().format('DD-MM-YYYY') : this.props.intl.formatMessage(messages.deliveryDateNotInformed)
+    const deliveryDate = task.data.deadline !== null ? MomentComponent(task.data.deadline).utc().format('MM-DD-YYYY') : this.props.intl.formatMessage(messages.deliveryDateNotInformed)
     const deadline = task.data.deadline !== null ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days') : false
 
     const firstStepsContent = this.handleFirstTaskContent()
@@ -1057,7 +1059,7 @@ class Task extends Component {
                     <TaskAssigned
                       task={ task.data }
                       isOwner={ isAssignOwner() }
-                      status={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                      status={ Constants.STATUSES[task.data.status] ? this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) : 'no status' }
                       classes={ classes }
                       user={ task.data.assignedUser || {} }
                       loggedUser={ this.state.logged && this.state.logged.user }
@@ -1187,7 +1189,7 @@ class Task extends Component {
             </Grid>
             <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 4 }>
               <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
-                { task.data.level &&
+                { task.data.level && !this.taskOwner() &&
                   <div style={ { textAlign: 'center' } }>
                     <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                       <FormattedMessage id='task.level.label' defaultMessage='Level' />
@@ -1196,6 +1198,55 @@ class Task extends Component {
                       <CoffeeIcon />
                       <Typography variant='h6' className={ classes.taskInfoContent }>
                         { task.data.level }
+                      </Typography>
+                    </div>
+                  </div>
+                }
+                { task.data.deadline && !this.taskOwner() &&
+                  <div style={ { textAlign: 'center' } }>
+                    <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                      <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
+                    </Typography>
+                    <div>
+                      <Typography variant='h6' className={ classes.taskInfoContent }>
+                        <div>
+                          <div>{ deliveryDate }</div>
+                          <small>in { deadline } days</small>
+                        </div>
+                      </Typography>
+                    </div>
+                  </div>
+                }
+                { this.taskOwner() &&
+                  <div style={ { textAlign: 'center' } }>
+                    <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                      <FormattedMessage id='task.level.label' defaultMessage='Level' />
+                    </Typography>
+                    <div>
+                      <Typography variant='h6' className={ classes.taskInfoContent }>
+                        <TaskLevelSplitButton id={ task.data.id } level={ task.data.level } updateTask={ this.props.updateTask } />
+                      </Typography>
+                    </div>
+                  </div>
+                }
+                { this.taskOwner() &&
+                  <div style={ { textAlign: 'center' } }>
+                    <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                      <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
+                    </Typography>
+                    <div>
+                      <Typography variant='h6' className={ classes.taskInfoContent }>
+                        <Button onClick={ () => this.setState({ deadlineForm: !this.state.deadlineForm }) }>
+                          { task.data.deadline ? (
+                            <div>
+                              <div>{ deliveryDate }</div>
+                              <small>in { deadline } days</small>
+                            </div>
+                          ) : (
+                            <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
+                          ) }
+
+                        </Button>
                       </Typography>
                     </div>
                   </div>
@@ -1212,6 +1263,12 @@ class Task extends Component {
                     </Typography>
                   </div>
                 </div>
+              </div>
+              <div>
+                <TaskDeadlineForm match={ { params: { id: task.data.id } } } classes={ classes } open={ this.state.deadlineForm } updateTask={ (task) => {
+                  this.props.updateTask(task)
+                  this.setState({ deadlineForm: false })
+                } } />
               </div>
               <div>
                 <TaskPayments orders={ task.data.orders && task.data.orders.filter(o => o.paid && o.status === 'succeeded') } />
