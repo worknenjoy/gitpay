@@ -43,7 +43,8 @@ class TaskDeadlineForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      deadline: null
+      deadline: null,
+      open: false
     }
   }
 
@@ -64,6 +65,7 @@ class TaskDeadlineForm extends Component {
       id: this.props.match.params.id,
       deadline: this.state.deadline
     })
+    this.setState({ open: true })
   }
 
   pickTaskDeadline = (time) => {
@@ -81,7 +83,7 @@ class TaskDeadlineForm extends Component {
   renderChip (label, value) {
     return (
       <Chip
-        style={{marginBottom: 20}}
+        style={ { marginBottom: 20 } }
         label={ label }
         className={ this.props.classes.chip }
         onClick={ () => this.pickTaskDeadline(value) }

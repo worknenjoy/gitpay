@@ -1189,7 +1189,7 @@ class Task extends Component {
             </Grid>
             <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 4 }>
               <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
-                { task.data.level && !this.taskOwner() && 
+                { task.data.level && !this.taskOwner() &&
                   <div style={ { textAlign: 'center' } }>
                     <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                       <FormattedMessage id='task.level.label' defaultMessage='Level' />
@@ -1202,54 +1202,54 @@ class Task extends Component {
                     </div>
                   </div>
                 }
-                { task.data.deadline && !this.taskOwner() && 
+                { task.data.deadline && !this.taskOwner() &&
                   <div style={ { textAlign: 'center' } }>
                     <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                       <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
                     </Typography>
                     <div>
                       <Typography variant='h6' className={ classes.taskInfoContent }>
-                          <div>
-                            <div>{deliveryDate}</div>
-                            <small>in {deadline} days</small>
-                          </div>
+                        <div>
+                          <div>{ deliveryDate }</div>
+                          <small>in { deadline } days</small>
+                        </div>
                       </Typography>
                     </div>
                   </div>
                 }
-                { this.taskOwner() && 
+                { this.taskOwner() &&
                   <div style={ { textAlign: 'center' } }>
                     <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                       <FormattedMessage id='task.level.label' defaultMessage='Level' />
                     </Typography>
                     <div>
                       <Typography variant='h6' className={ classes.taskInfoContent }>
-                        <TaskLevelSplitButton id={task.data.id} level={ task.data.level } updateTask={ this.props.updateTask } />
+                        <TaskLevelSplitButton id={ task.data.id } level={ task.data.level } updateTask={ this.props.updateTask } />
                       </Typography>
                     </div>
-                  </div>  
+                  </div>
                 }
-                { this.taskOwner() && 
+                { this.taskOwner() &&
                   <div style={ { textAlign: 'center' } }>
                     <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                       <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
                     </Typography>
                     <div>
                       <Typography variant='h6' className={ classes.taskInfoContent }>
-                        <Button onClick={() => this.setState({ deadlineForm: !this.state.deadlineForm })}>
+                        <Button onClick={ () => this.setState({ deadlineForm: !this.state.deadlineForm }) }>
                           { task.data.deadline ? (
                             <div>
-                              <div>{deliveryDate}</div>
-                              <small>in {deadline} days</small>
+                              <div>{ deliveryDate }</div>
+                              <small>in { deadline } days</small>
                             </div>
                           ) : (
-                            <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />  
+                            <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
                           ) }
-                          
+
                         </Button>
                       </Typography>
                     </div>
-                  </div>  
+                  </div>
                 }
                 <div style={ { textAlign: 'center' } }>
                   <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
@@ -1265,7 +1265,10 @@ class Task extends Component {
                 </div>
               </div>
               <div>
-                <TaskDeadlineForm match={{params: {id: task.data.id}}} classes={classes} open={this.state.deadlineForm} updateTask={this.props.updateTask} />
+                <TaskDeadlineForm match={ { params: { id: task.data.id } } } classes={ classes } open={ this.state.deadlineForm } updateTask={ (task) => {
+                  this.props.updateTask(task)
+                  this.setState({ deadlineForm: false })
+                } } />
               </div>
               <div>
                 <TaskPayments orders={ task.data.orders && task.data.orders.filter(o => o.paid && o.status === 'succeeded') } />
