@@ -383,6 +383,8 @@
   "task.claim.subtitle": "Se você é o autor original desta tarefa, você pode reinvidica-la para que você se torne o administrador e assim você pode gerenciar esta tarefa no Gitpay.",
   "task.claim.title": "Reivindicar tarefa",
   "task.deadline.button.save": "Salvar data",
+  "task.deadline.call": "Set deadline",
+  "task.deadline.label": "Deadline",
   "task.deadline.level1": "Daqui uma semana",
   "task.deadline.level2": "Daqui quinze dias",
   "task.deadline.level3": "Daqui vinte dias",
