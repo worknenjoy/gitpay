@@ -383,6 +383,8 @@
   "task.claim.subtitle": "If you're the original author of this issue, you can claim this issue so that you will be admin, and we will transfer the property for you, and you can manage the issue on Gitpay.",
   "task.claim.title": "Claim issue",
   "task.deadline.button.save": "Save date",
+  "task.deadline.call": "Set deadline",
+  "task.deadline.label": "Deadline",
   "task.deadline.level1": "In one week",
   "task.deadline.level2": "In fifteen days",
   "task.deadline.level3": "In twenty days",
