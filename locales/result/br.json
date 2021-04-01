@@ -101,7 +101,7 @@
   "mail.assign.remove.owner.subject": "O usuário foi desassociado de uma tarefa que você criou no Gitpay",
   "mail.assign.remove.owner.message": "<p>O usuário {{user}} ({{email}}) foi desassociado da tarefa <a href=\"{{url}}\">{{title}}</a> no Gitpay</p><p>A razão foi:</p><p>{{message}}</p>",
   "mail.invite.send.action": "Você recebeu um convite de {{name}} para trabalhar em uma tarefa no Gitpay :-)",
-  "mail.funding.send.action": "Você está convidado por {{username}} para realizar uma tarefa no Gitpay",
+  "mail.funding.send.action": "Você foi convidado por {{username}} para fazer o pagamento por uma tarefa no Gitpay",
   "mail.invite.send.message": "<p>Você foi convidado por {{name}} para trabalhar nesta tarefa <a href=\"{{url}}\">{{title}}</a> no <a href=\"http://gitpay.me\">Gitpay</a>.</p><p><strong>Título:</strong> {{title}}</p><p><strong>Preço:</strong> $ {{value}}</p><p style=\"marginBottom: 20px\"><a href=\"{{url}}\">Descubra mais e se candidate a trabalhar nele!</a>, basta clicar no botão interessado, e você será atribuído pelo proprietário </p><p><strong>Mensagens:</strong></p><p>{{message}}</p><p><strong>Por que você recebeu este e-mail?</strong></p><p>Talvez você tenha sido convidado porque você já trabalha neste projeto e é recomendado pelo mantenedor para resolver esta tarefa.</p>",
   "mail.funding.send.message": "<p>Olá,<br>{{username}} convidou você para contribuir com esta tarefa no valor de  <strong>${{suggestedValue}}</strong> , pela tarefa {{title}}.</p><p>Ele sugeriu a data para <strong>{{suggestedDate}}</strong></p><p>{{message}}</p><p>E você pode adicionar um pagamento em {{url}}</p>",
   "mail.assign.register.error": "Alguém registrou interesse por esta tarefa, mas não pôde receber o e-mail",
