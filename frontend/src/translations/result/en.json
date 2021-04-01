@@ -389,6 +389,7 @@
   "task.deadline.level2": "In fifteen days",
   "task.deadline.level3": "In twenty days",
   "task.deadline.level4": "In on month",
+  "task.dealine.past": "Overdue",
   "task.description.less": "Show less",
   "task.description.more": "Show more",
   "task.funding.description": "You can invite an investor, sponsor, or the project owner to fund this issue and let them know about your issue funding",
