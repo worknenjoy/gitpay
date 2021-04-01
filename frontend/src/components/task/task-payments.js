@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TaskPayments ({ orders }) {
   const classes = useStyles()
-
-  return orders.length > 0 && (
+  if (!orders) return <div />
+  return orders && orders.length > 0 && (
     <List dense className={ classes.root }>
       <Typography variant='caption' align='center' style={ { display: 'inline-block', width: '100%', marginBottom: 10 } }>
         Paid by
