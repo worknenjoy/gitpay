@@ -389,6 +389,7 @@
   "task.deadline.level2": "Daqui quinze dias",
   "task.deadline.level3": "Daqui vinte dias",
   "task.deadline.level4": "Daqui um mês",
+  "task.dealine.past": "Overdue",
   "task.description.less": "Mostrar menos",
   "task.description.more": "Mostrar mais",
   "task.funding.description": "Você pode convidar um investidor, patrocinador ou o proprietário do projeto para financiar este problema e avisá-los sobre suas sugestões",
