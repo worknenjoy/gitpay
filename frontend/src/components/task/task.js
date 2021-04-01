@@ -1211,7 +1211,9 @@ class Task extends Component {
                       <Typography variant='h6' className={ classes.taskInfoContent }>
                         <div>
                           <div>{ deliveryDate }</div>
-                          <small>in { deadline } days</small>
+                          {deadline && parseInt(deadline) > 0 ? <small>in { deadline } days</small> : 
+                            <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
+                          }
                         </div>
                       </Typography>
                     </div>
@@ -1240,7 +1242,9 @@ class Task extends Component {
                           { task.data.deadline ? (
                             <div>
                               <div>{ deliveryDate }</div>
-                              <small>in { deadline } days</small>
+                              {deadline && parseInt(deadline) > 0 ? <small>in { deadline } days</small> : 
+                                <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
+                              }
                             </div>
                           ) : (
                             <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
