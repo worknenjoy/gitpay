@@ -46,7 +46,7 @@ class TaskPaymentForm extends Component {
   }
 
   componentDidMount () {
-    this.props.task.private ? this.handlePlan('private') : this.handlePlan('open source')
+    this.props.task && this.props.task.data.private ? this.handlePlan('private') : this.handlePlan('open source')
   }
 
   formatCurrency = (amount) => {
@@ -206,7 +206,7 @@ class TaskPaymentForm extends Component {
                             <DriveEtaIcon color={ `${this.state.checkPlan('private') ? 'primary' : 'disabled'}` } className={ classes.planIcon } />
                           </div>
                           <Typography align='center' color='textPrimary' variant='h5'>
-                            <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={ { fee: '15' } } />
+                            <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={ { fee: '18' } } />
                           </Typography >
                           <Typography align='center' color='textSecondary' variant='h6'>
                             <FormattedMessage id='actions.task.payment.plan.private' defaultMessage='Private Projects' />
@@ -297,7 +297,9 @@ TaskPaymentForm.propTypes = {
   dialog: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   user: PropTypes.object,
+  task: PropTypes.object,
   order: PropTypes.object,
+  plan: PropTypes.string,
   openDialog: PropTypes.func.isRequired,
   closeDialog: PropTypes.func.isRequired,
   addNotification: PropTypes.func.isRequired,

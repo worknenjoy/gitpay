@@ -48,6 +48,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       const projectName = splitIssueUrl[2]
       const issueId = splitIssueUrl[4]
 
+      if (data.dataValues.private) return data.dataValues
+
       switch (data.dataValues.provider) {
         case 'github':
           return requestPromise({

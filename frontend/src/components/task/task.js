@@ -923,8 +923,22 @@ class Task extends Component {
             <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 40 } }>
               <Container fixed maxWidth='lg'>
                 <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } history={ this.props.history } project={ project } />
-                { this.props.logged ? (
-                  <TaskPaymentForm { ...this.props } plan={ this.props.task.data.private ? 'private' : 'open source' } open={ this.state.paymentForm } />
+                { (task.completed && this.props.logged && task.data) ? (
+                  <TaskPaymentForm
+                    classes={ classes }
+                    match={ this.props.match }
+                    dialog={ this.props.dialog }
+                    task={ task }
+                    plan={ task.data.private ? 'private' : 'open source' }
+                    order={ this.props.order }
+                    open={ this.state.paymentForm }
+                    user={ this.props.user }
+                    openDialog={ this.props.openDialog }
+                    closeDialog={ this.props.closeDialog }
+                    addNotification={ this.props.addNotification }
+                    updateTask={ this.props.updateTask }
+                    createOrder={ this.props.createOrder }
+                  />
                 ) : (
                   <Collapse in={ this.state.paymentForm }>
                     <div className={ classes.mainBlock } style={ { marginBottom: 40 } }>
@@ -1211,8 +1225,8 @@ class Task extends Component {
                       <Typography variant='h6' className={ classes.taskInfoContent }>
                         <div>
                           <div>{ deliveryDate }</div>
-                          {deadline && parseInt(deadline) > 0 ? <small>in { deadline } days</small> : 
-                            <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
+                          { deadline && parseInt(deadline) > 0 ? <small>in { deadline } days</small>
+                            : <Chip size='small' label={ <FormattedMessage id='task.dealine.past' defaultMessage='Overdue' /> } />
                           }
                         </div>
                       </Typography>
@@ -1242,8 +1256,8 @@ class Task extends Component {
                           { task.data.deadline ? (
                             <div>
                               <div>{ deliveryDate }</div>
-                              {deadline && parseInt(deadline) > 0 ? <small>in { deadline } days</small> : 
-                                <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
+                              { deadline && parseInt(deadline) > 0 ? <small>in { deadline } days</small>
+                                : <Chip size='small' label={ <FormattedMessage id='task.dealine.past' defaultMessage='Overdue' /> } />
                               }
                             </div>
                           ) : (
@@ -1274,9 +1288,11 @@ class Task extends Component {
                   this.setState({ deadlineForm: false })
                 } } />
               </div>
-              <div>
-                <TaskPayments orders={ task.data.orders && task.data.orders.length > 0 && task.data.orders.filter(o => o.paid && o.status === 'succeeded') } />
-              </div>
+              { task.data && task.data.Orders &&
+                <div>
+                  <TaskPayments orders={ task.data.Orders.filter(o => o.paid && o.status === 'succeeded') } />
+                </div>
+              }
               { this.taskOwner()
                 ? (
                   <React.Fragment>
