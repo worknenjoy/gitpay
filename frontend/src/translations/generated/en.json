@@ -473,6 +473,7 @@
   "task.payment.input.amount": "Price insert a value for this task",
   "task.payment.input.amount.value": "Price",
   "task.payment.noAssigned": "Noboby assigned to this task, so you need to first assign and then we can conclude the payment",
+  "task.payment.order.nouser": "Some user",
   "task.payment.pay.button.credit": "Pay $ {value}",
   "task.payment.pay.button.paypal": "Pay with PayPal (id: {transfer}",
   "task.payment.paypal.action": "Pay {amount} with PayPal",

@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { FormattedMessage } from 'react-intl'
 import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -32,17 +33,24 @@ export default function TaskPayments ({ orders }) {
         return (
           <ListItem key={ order.id }>
             <ListItemAvatar style={ { minWidth: 34 } }>
-              <Avatar
-                className={ classes.small }
-                alt={
-                  `${order.User.name || order.User.username || 'Anonymous'}`
-                }
-                src={ order.User.profile_url }
-              />
+              {order.User ?
+                <Avatar
+                  className={ classes.small }
+                  alt={
+                    `${order.User && (order.User.name || order.User.username) || 'Anonymous'}`
+                  }
+                  src={ order.User && order.User.profile_url }
+                /> : <Avatar className={classes.small} />
+              }
             </ListItemAvatar>
             <ListItemText primary={
               <React.Fragment>
-                <Typography variant='body2'>{ order.User.name || order.User.username || 'Anonymous' }</Typography>
+                { order.User ? 
+                  <Typography variant='body2'>{ order.User && order.User.name || order.User.username || 'Anonymous' }</Typography> :
+                  <Typography variant='body2'>
+                    <FormattedMessage id='task.payment.order.nouser' defaultMessage='Some user' />
+                  </Typography>
+                }
                 <Typography color='textSecondary' variant='caption'> { MomentComponent(order.updatedAt).fromNow() }</Typography>
                 <Typography variant='caption'> with <i>{ order.provider === 'paypal' ? 'Paypal' : 'Credit Card' }</i></Typography>
               </React.Fragment>

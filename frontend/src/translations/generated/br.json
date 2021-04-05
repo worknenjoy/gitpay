@@ -473,6 +473,7 @@
   "task.payment.input.amount": "",
   "task.payment.input.amount.value": "",
   "task.payment.noAssigned": "",
+  "task.payment.order.nouser": "",
   "task.payment.pay.button.credit": "",
   "task.payment.pay.button.paypal": "",
   "task.payment.paypal.action": "",
