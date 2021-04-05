@@ -33,21 +33,21 @@ export default function TaskPayments ({ orders }) {
         return (
           <ListItem key={ order.id }>
             <ListItemAvatar style={ { minWidth: 34 } }>
-              {order.User ?
-                <Avatar
+              { order.User
+                ? <Avatar
                   className={ classes.small }
                   alt={
                     `${order.User && (order.User.name || order.User.username) || 'Anonymous'}`
                   }
                   src={ order.User && order.User.profile_url }
-                /> : <Avatar className={classes.small} />
+                /> : <Avatar className={ classes.small } />
               }
             </ListItemAvatar>
             <ListItemText primary={
               <React.Fragment>
-                { order.User ? 
-                  <Typography variant='body2'>{ order.User && order.User.name || order.User.username || 'Anonymous' }</Typography> :
-                  <Typography variant='body2'>
+                { order.User
+                  ? <Typography variant='body2'>{ order.User && order.User.name || order.User.username || 'Anonymous' }</Typography>
+                  : <Typography variant='body2'>
                     <FormattedMessage id='task.payment.order.nouser' defaultMessage='Some user' />
                   </Typography>
                 }
