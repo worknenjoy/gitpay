@@ -1001,7 +1001,7 @@ class Task extends Component {
                     } />
                 </React.Fragment>
                 }
-                { task.data && task.data.assigns && task.data.assigns.length > 0 &&
+                { task.data && task.data.Assigns && task.data.Assigns.length > 0 &&
                   <div style={ { marginBottom: 20 } }>
                     <Typography variant='h5' style={ { display: 'inline-block', marginBottom: 10, marginTop: 20 } }>
                       <FormattedMessage id='task.info.interested' defaultMessage='Candidate(s)' />
@@ -1017,7 +1017,7 @@ class Task extends Component {
                       <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
                       <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
                     </Button> }
-                    { task.data.assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 &&
+                    { task.data.Assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 &&
                       <Button
                         style={ { display: 'inline-block', marginBottom: 2 } }
                         onClick={ this.handleAssignDialog }
@@ -1030,8 +1030,8 @@ class Task extends Component {
                         <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
                       </Button>
                     }
-                    <TaskInterested assigns={ task.data && task.data.assigns } />
-                    <Dialog fullScreen open={ this.state.assignIssueDialog } onClose={ () => this.setState({ assignIssueDialog: false }) }>
+                    <TaskInterested assigns={ task.data && task.data.Assigns } />
+                    <Dialog open={ this.state.assignIssueDialog } onClose={ () => this.setState({ assignIssueDialog: false }) }>
                       <DialogContent>
                         <RegularCard
                           headerColor='green'
@@ -1045,7 +1045,7 @@ class Task extends Component {
                                 this.props.intl.formatMessage(messages.interestedTableLabelWhen),
                                 this.props.intl.formatMessage(messages.interestedTableLabelActions)
                               ] }
-                              tableData={ task && task.data.assigns && task.data.assigns.length ? displayAssigns(task.data.assigns) : [] }
+                              tableData={ task && task.data.Assigns && task.data.Assigns.length > 0 ? displayAssigns(task.data.Assigns) : [] }
                             />
                           }
                         />
@@ -1322,7 +1322,7 @@ class Task extends Component {
                         paid={ task.data.paid }
                         transferId={ task.data.transfer_id }
                         assigned={ task.data.assigned }
-                        assigns={ task.data.assigns }
+                        assigns={ task.data.Assigns }
                         orders={ task.data.orders }
                         order={ order.data }
                         open={ this.state.taskPaymentDialog }
