@@ -26,10 +26,7 @@ if (env === 'production') {
     host: host,
     logging: true,
     dialectOptions: {
-      ssl: {
-        require: true, // This will help you. But you will see nwe error
-        rejectUnauthorized: false // This line will fix new error
-      }
+      ssl: true
     }
   })
   // eslint-disable-next-line no-console
