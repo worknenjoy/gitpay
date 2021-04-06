@@ -25,12 +25,10 @@ if (env === 'production') {
     port: port,
     host: host,
     logging: true,
-    native: true,
-    ssl: true,
     dialectOptions: {
       ssl: {
-        require: true, 
-        rejectUnauthorized: false 
+        require: true, // This will help you. But you will see nwe error
+        rejectUnauthorized: false // This line will fix new error
       }
     }
   })
