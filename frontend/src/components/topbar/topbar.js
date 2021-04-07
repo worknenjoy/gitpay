@@ -742,7 +742,7 @@ class TopBar extends Component {
             >
               <LabelButton>
                 <FormattedMessage id='task.bar.slack.count' defaultMessage='Join our Slack {count}' values={ { count: channelUserCount } } />
-              </LabelButton><FontAwesomeIcon icon={ faSlack } size='2x'  />
+              </LabelButton><FontAwesomeIcon icon={ faSlack } size='2x' />
             </StyledButton>
             <Dialog
               open={ this.state.joinSlackDialog }
