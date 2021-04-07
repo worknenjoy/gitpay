@@ -325,7 +325,7 @@
   "task.assignment.remove.reason": "Por que este usuário não vai mais trabalhar nesta tarefa?",
   "task.assignment.remove.user": "Desassociar usuário",
   "task.bar.signin": "Acessar",
-  "task.bar.slack": "Slack {count}",
+  "task.bar.slack.count": "Join our Slack {count}",
   "task.bounties.actions.cancel": "Cancelar",
   "task.bounties.actions.sugggestAnotherDate": "SUGERIR OUTRA DATA",
   "task.bounties.actions.work": "Quero trabalhar nesta tarefa",
