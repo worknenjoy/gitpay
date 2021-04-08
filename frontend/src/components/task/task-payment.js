@@ -165,7 +165,7 @@ class TaskPayment extends Component {
     }
 
     const sendTo = id => {
-      const chosen = this.props.assigns.filter(item => {
+      const chosen = this.props.assigns && this.props.assigns.filter(item => {
         return item.id === id
       })
       return chosen.length && chosen[0].User || {}
