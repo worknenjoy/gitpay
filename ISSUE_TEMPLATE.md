@@ -13,16 +13,22 @@ current behavior
 expect behavior
 
 ### Useful links
-  - https://example.com
+  - Github API: https://docs.github.com/en/rest
+  - Material-UI: https://material-ui.com/
 
 ### Screenshot attached
-some screenshot
+Screenshot
+Description
 
 ### How to reproduce the user scenario
- - Create a user
+- Scenario 1
+   - Run the project locally
+   - Create a user
+   - Import an issue
 
 ### What you will need to complete this issue
 Extra requirements to complete the task
 
 ### Tips
-Important things to know to better find the solution for this task
+- All the UI will use Material UI (https://material-ui.com/)
+- Use our translation library Run `npm run translate` on the `/frontend` folder to sync translation before sending the PR
