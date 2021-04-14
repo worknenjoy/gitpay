@@ -137,7 +137,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   issue: issueDataJsonGithub
                 },
                 orders: data.dataValues.Orders,
-                assigns: data.dataValues.Assigns,
+                Assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
                 offers: data.dataValues.Offers,
                 histories: data.dataValues.Histories,
