@@ -121,6 +121,22 @@ class TaskExplorer extends Component {
     }
   }
 
+  componentWillReceiveProps (props) {
+    switch (props.history.location.pathname) {
+      case '/tasks/open':
+        this.setState({ value: 0, showNavigation: true })
+        break
+      case '/projects':
+        this.setState({ value: 1, showNavigation: true })
+        break
+      case '/organizations':
+        this.setState({ value: 2, showNavigation: true })
+        break
+      default:
+        break
+    }
+  }
+
   handleSectionTab = async ({ currentTarget }, value) => {
     await this.setState({ value })
     switch (value) {
@@ -180,13 +196,13 @@ class TaskExplorer extends Component {
           <Container fixed maxWidth='lg'>
             <Grid container className={ classes.root }>
               <Grid item xs={ 12 } md={ 12 }>
-                { this.state.value === 0 &&
+                { this.props.location.pathname.startsWith('/tasks/') &&
                   <TaskListContainer />
                 }
-                { this.state.value === 1 &&
+                { this.props.location.pathname.startsWith('/projects') &&
                   <ProjectListContainer />
                 }
-                { this.state.value === 2 &&
+                { this.props.location.pathname.startsWith('/organizations') &&
                   <OrganizationListContainer />
                 }
               </Grid>
