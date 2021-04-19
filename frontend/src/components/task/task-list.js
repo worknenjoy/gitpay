@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
@@ -57,195 +57,200 @@ const messages = defineMessages({
   }
 })
 
-class TaskList extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      tab: 0,
-      loading: true,
-      project: {},
-      organization: {}
-    }
-  }
+const TaskList = (props) => {
+  const [taskListState, setTaskListState] = useState({
+    tab: 0,
+    loading: true
+  })
+  const [projectState, setProjectState] = useState({ projectId: undefined, organizationId: undefined })
 
-  filterTasksByState () {
-    const currentTab = this.state.tab
+  useLayoutEffect(() => {
+    let projectStateChanged
+
+    if (props.match.params.project_id && props.match.params.organization_id) projectStateChanged = { ...props.match.params }
+
+    setProjectState({ ...projectStateChanged })
+    setTaskListState({ ...taskListState, loading: false })
+  }, [props.match.params])
+
+  useEffect(() => {
+    async function fetchData () {
+      const projectId = props.match.params.project_id
+      const organizationId = props.match.params.organization_id
+
+      if (organizationId && !projectId) {
+        await props.fetchOrganization(organizationId)
+        await props.listTasks({ organizationId: organizationId })
+      }
+      if (organizationId && projectId) {
+        await props.fetchProject(
+          projectId,
+          { status: 'open' }
+        )
+      }
+      if (!projectId && !organizationId) await props.listTasks({ status: 'open' })
+      await props.listProjects()
+
+      const params = props.match.params
+      handleRoutePath(params.filter)
+
+      if ((!projectId && !organizationId) && (props.history.location.pathname === '/tasks/open')) {
+        setTaskListState({ ...taskListState, tab: 0 })
+      }
+    }
+
+    fetchData()
+  }, [props.match.params])
+
+  useEffect(() => {
+    filterTasksByState()
+  }, [taskListState.tab])
+
+  function filterTasksByState () {
+    const currentTab = taskListState.tab
 
     switch (currentTab) {
       case 0:
-        this.props.filterTasks('status', 'open')
+        props.filterTasks('status', 'open')
         break
       case 1:
-        this.props.filterTasks('issuesWithBounties')
+        props.filterTasks('issuesWithBounties')
         break
       case 2:
-        this.props.filterTasks('contribution')
+        props.filterTasks('contribution')
         break
       default:
     }
   }
 
-  async componentDidMount () {
-    const projectId = this.props.match.params.project_id
-    const organizationId = this.props.match.params.organization_id
-
-    if (organizationId && !projectId) {
-      await this.props.fetchOrganization(organizationId)
-      await this.props.listTasks({ organizationId: organizationId })
-    }
-    if (organizationId && projectId) {
-      await this.props.fetchProject(
-        projectId,
-        { status: 'open' }
-      )
-    }
-    if (!projectId && !organizationId) await this.props.listTasks({ status: 'open' })
-    await this.props.listProjects()
-    const params = this.props.match.params
-    this.handleRoutePath(params.filter)
-    params.project_id && params.organization_id && this.setState({ project: params })
-    params.organization_id && this.setState({ organization: params })
-    this.setState({ loading: false })
-    this.filterTasksByState()
-  }
-
-  goToProject = (e, project) => {
-    e.preventDefault()
-    window.location.href = '/#/organizations/' + project.OrganizationId + '/projects/' + project.id
-    window.location.reload()
-  }
-
-  handleRoutePath = (value) => {
+  const handleRoutePath = (value) => {
     switch (value) {
       case 'explore':
-        this.handleTabChange(0, 0)
+        handleTabChange(0, 0)
         break
       case 'createdbyme':
-        this.handleTabChange(0, 1)
+        handleTabChange(0, 1)
         break
       case 'interested':
-        this.handleTabChange(0, 2)
+        handleTabChange(0, 2)
         break
       case 'assignedtome':
-        this.handleTabChange(0, 3)
+        handleTabChange(0, 3)
         break
       default:
     }
   }
 
-  handleTabChange = (event, value) => {
-    const baseUrl = this.state.project && this.state.project.organization_id && this.state.project.project_id ? '/organizations/' + this.state.project.organization_id + '/projects/' + this.state.project.project_id + '/' : '/tasks/'
-    this.setState({ tab: value })
+  const handleTabChange = async (event, value) => {
+    const baseUrl = projectState && projectState.organization_id && projectState.project_id ? '/organizations/' + projectState.organization_id + '/projects/' + projectState.project_id + '/' : '/tasks/'
+    await setTaskListState({ ...taskListState, tab: value })
     switch (value) {
       case 0:
-        this.props.history.push(baseUrl + 'open')
-        this.props.filterTasks('status', 'open')
+        props.history.push(baseUrl + 'open')
+        props.filterTasks('status', 'open')
         break
       case 1:
-        this.props.history.push(baseUrl + 'withBounties')
-        this.props.filterTasks('issuesWithBounties')
+        props.history.push(baseUrl + 'withBounties')
+        props.filterTasks('issuesWithBounties')
         break
       case 2:
-        this.props.history.push(baseUrl + 'contribution')
-        this.props.filterTasks('contribution')
+        props.history.push(baseUrl + 'contribution')
+        props.filterTasks('contribution')
         break
       default:
-        this.props.filterTasks('all')
+        props.filterTasks('all')
     }
   }
 
-  render () {
-    const { classes } = this.props
-    const TabContainer = props => {
-      return (
-        <Typography component='div' style={ { padding: 8 * 3 } }>
-          { props.children }
-        </Typography>
-      )
-    }
-
+  const { classes } = props
+  const TabContainer = props => {
     return (
-      <React.Fragment>
-        <Paper elevation={ 0 }>
-          { this.props.organization && this.props.organization.name &&
+      <Typography component='div' style={ { padding: 8 * 3 } }>
+        { props.children }
+      </Typography>
+    )
+  }
+
+  return (
+    <React.Fragment>
+      <Paper elevation={ 0 }>
+        { props.organization && props.organization.name && props.history.location.pathname.includes('organizations') &&
+        <React.Fragment>
+          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+            <FormattedMessage
+              id='task.list.org.headline'
+              defaultMessage='Organization'
+            />
+          </Typography>
+          <Typography variant='h3' component='h2'>
+            { props.organization.name }
+          </Typography>
+          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+            <FormattedMessage
+              id='task.list.org.projects.headline'
+              defaultMessage='Projects'
+            />
+          </Typography>
+          <ProjectListSimple projects={ props.organization && props.organization.Projects.length > 0 && { data: props.organization.Projects } } />
+        </React.Fragment>
+        }
+        { props.project.data.name && props.history.location.pathname.includes('projects') &&
           <React.Fragment>
             <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
               <FormattedMessage
-                id='task.list.org.headline'
-                defaultMessage='Organization'
+                id='task.list.headline'
+                defaultMessage='Project'
               />
             </Typography>
             <Typography variant='h3' component='h2'>
-              { this.props.organization.name }
+              { props.project.data.name }
             </Typography>
-            <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-              <FormattedMessage
-                id='task.list.org.projects.headline'
-                defaultMessage='Projects'
-              />
-            </Typography>
-            <ProjectListSimple projects={ this.props.organization && this.props.organization.Projects.length > 0 && { data: this.props.organization.Projects } } />
           </React.Fragment>
-          }
-          { this.props.project.data.name &&
-            <React.Fragment>
-              <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-                <FormattedMessage
-                  id='task.list.headline'
-                  defaultMessage='Project'
-                />
-              </Typography>
-              <Typography variant='h3' component='h2'>
-                { this.props.project.data.name }
-              </Typography>
-            </React.Fragment>
-          }
-          <Typography component='p' style={ { marginBottom: 20, marginTop: 20 } }>
-            <FormattedMessage
-              id='task.list.description'
-              defaultMessage='Available issues'
-            />
-          </Typography>
-          <div className={ classes.rootTabs }>
-            <AppBar position='static' color='default'>
-              <Tabs
-                value={ this.state.tab }
-                onChange={ this.handleTabChange }
-                scrollable
-                scrollButtons='on'
-                indicatorColor='primary'
-                textColor='primary'
-              >
-                <Tab
-                  value={ 0 }
-                  label={ this.props.intl.formatMessage(messages.allTasks) }
-                  icon={ <RedeemIcon /> }
-                />
-                <Tab
-                  value={ 1 }
-                  label={ this.props.intl.formatMessage(messages.allPublicTasksWithBounties) }
-                  icon={ <MoneyIcon /> }
-                />
-                <Tab
-                  value={ 2 }
-                  label={ this.props.intl.formatMessage(messages.allPublicTasksNoBounties) }
-                  icon={ <ContributionIcon /> }
-                />
-              </Tabs>
-            </AppBar>
-            <TabContainer>
-              <CustomPaginationActionsTable tasks={ this.props.tasks } />
-            </TabContainer>
-          </div>
-        </Paper>
-      </React.Fragment>
-    )
-  }
+        }
+        <Typography component='p' style={ { marginBottom: 20, marginTop: 20 } }>
+          <FormattedMessage
+            id='task.list.description'
+            defaultMessage='Available issues'
+          />
+        </Typography>
+        <div className={ classes.rootTabs }>
+          <AppBar position='static' color='default'>
+            <Tabs
+              value={ taskListState.tab }
+              onChange={ handleTabChange }
+              scrollable
+              scrollButtons='on'
+              indicatorColor='primary'
+              textColor='primary'
+            >
+              <Tab
+                value={ 0 }
+                label={ props.intl.formatMessage(messages.allTasks) }
+                icon={ <RedeemIcon /> }
+              />
+              <Tab
+                value={ 1 }
+                label={ props.intl.formatMessage(messages.allPublicTasksWithBounties) }
+                icon={ <MoneyIcon /> }
+              />
+              <Tab
+                value={ 2 }
+                label={ props.intl.formatMessage(messages.allPublicTasksNoBounties) }
+                icon={ <ContributionIcon /> }
+              />
+            </Tabs>
+          </AppBar>
+          <TabContainer>
+            <CustomPaginationActionsTable tasks={ props.tasks } />
+          </TabContainer>
+        </div>
+      </Paper>
+    </React.Fragment>
+  )
 }
 
 TaskList.propTypes = {
   classes: PropTypes.object.isRequired,
-  listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
   project: PropTypes.object

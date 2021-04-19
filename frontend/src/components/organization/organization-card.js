@@ -103,7 +103,7 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
             style={ { flexWrap: 'wrap' } }
           >
             { organization.Projects && organization.Projects.map(p =>
-              (<Chip style={ { marginLeft: 10, marginBottom: 10 } } size='medium' clickable onClick={ () => {
+              (<Chip key={ p.id } style={ { marginLeft: 10, marginBottom: 10 } } size='medium' clickable onClick={ () => {
                 window.location.href = '/#/organizations/' + organization.id + '/projects/' + p.id
                 window.location.reload()
               } } label={ p.name }
