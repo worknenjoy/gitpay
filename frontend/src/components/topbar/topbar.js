@@ -285,8 +285,7 @@ class TopBar extends Component {
   }
 
   handleViewTasks = () => {
-    window.location.href = '/#/tasks/open'
-    window.location.reload()
+    this.props.history.push('/tasks/open')
   }
 
   handleSignOut = () => {

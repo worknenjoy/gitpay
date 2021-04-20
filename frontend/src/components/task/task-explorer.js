@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { defineMessages, injectIntl } from 'react-intl'
 
@@ -85,118 +85,115 @@ const messages = defineMessages({
   }
 })
 
-class TaskExplorer extends Component {
-  constructor (props) {
-    super(props)
+const TaskExplorer = (props) => {
+  const [state, setState] = useState({
+    value: 0,
+    showNavigation: false,
+    isOrganizationPage: false,
+    isProjectPage: false,
+    currentPath: ''
+  })
 
-    this.state = {
-      value: 0,
-      showNavigation: false,
-      isOrganizationPage: false,
-      isProjectPage: false,
-      currentPath: ''
+  useEffect(() => {
+    function handlePathNameChange () {
+      const pathname = props.history.location.pathname
+      setState({ ...state, currentPath: pathname })
+      if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) setState({ ...state, isOrganizationPage: true })
+      if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) setState({ ...state, isProjectPage: true })
+      switch (pathname) {
+        case '/tasks/open':
+          props.listTasks('open')
+          setState({ ...state, value: 0, showNavigation: true })
+          break
+        case '/projects':
+          setState({ ...state, value: 1, showNavigation: true })
+          break
+        case '/organizations':
+          setState({ ...state, value: 2, showNavigation: true })
+          break
+        default:
+          setState({ ...state, value: 0, showNavigation: false })
+          break
+      }
     }
 
-    this.handleSectionTab = this.handleSectionTab.bind(this)
-  }
+    handlePathNameChange()
+  }, [state.value, props.history.location.pathname])
 
-  async componentDidMount () {
-    const pathname = this.props.history.location.pathname
-    await this.setState({ currentPath: pathname })
-    if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) await this.setState({ isOrganizationPage: true })
-    if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) await this.setState({ isProjectPage: true })
-    switch (pathname) {
-      case '/tasks/open':
-        this.setState({ value: 0, showNavigation: true })
-        break
-      case '/projects':
-        this.setState({ value: 1, showNavigation: true })
-        break
-      case '/organizations':
-        this.setState({ value: 2, showNavigation: true })
-        break
-      default:
-        this.setState({ value: 0, showNavigation: false })
-        break
-    }
-  }
-
-  handleSectionTab = async ({ currentTarget }, value) => {
-    await this.setState({ value })
+  const handleSectionTab = ({ currentTarget }, value) => {
+    setState({ ...state, value })
     switch (value) {
       case 0:
-        this.props.history.push('/tasks/open')
-        this.setState({ showNavigation: true })
+        props.history.push('/tasks/open')
+        setState({ ...state, showNavigation: true })
         break
       case 1:
-        this.props.history.push('/projects')
-        this.setState({ showNavigation: true })
+        props.history.push('/projects')
+        setState({ ...state, showNavigation: true })
         break
       case 2:
-        this.props.history.push('/organizations')
-        this.setState({ showNavigation: true })
+        props.history.push('/organizations')
+        setState({ ...state, showNavigation: true })
         break
       default:
-        this.props.history.push('/tasks/open')
-        this.setState({ showNavigation: true })
+        props.history.push('/tasks/open')
+        setState({ ...state, showNavigation: true })
         break
     }
   }
 
-  render () {
-    const { classes } = this.props
+  const { classes } = props
 
-    return (
-      <Page>
-        <TopBarContainer />
-        <PageContent>
-          { this.state.showNavigation &&
-            <AppBar position='sticky' color='default'>
-              <Container maxWidth='lg'>
-                <Tabs
-                  variant='scrollable'
-                  value={ this.state.value }
-                  onChange={ this.handleSectionTab }
-                >
-                  <Tab
-                    id='issues'
-                    value={ 0 }
-                    label={ this.props.intl.formatMessage(messages.issuesLabel) }
-                  />
-                  <Tab
-                    id='projects'
-                    value={ 1 }
-                    label={ this.props.intl.formatMessage(messages.projectsLabel) }
-                  />
-                  <Tab
-                    id='organizations'
-                    value={ 2 }
-                    label={ this.props.intl.formatMessage(messages.organizationsLabel) }
-                  />
-                </Tabs>
-              </Container>
-            </AppBar>
-          }
-          <Container fixed maxWidth='lg'>
-            <Grid container className={ classes.root }>
-              <Grid item xs={ 12 } md={ 12 }>
-                { this.state.value === 0 &&
-                  <TaskListContainer />
-                }
-                { this.state.value === 1 &&
-                  <ProjectListContainer />
-                }
-                { this.state.value === 2 &&
-                  <OrganizationListContainer />
-                }
-              </Grid>
+  return (
+    <Page>
+      <TopBarContainer />
+      <PageContent>
+        { state.showNavigation &&
+          <AppBar position='sticky' color='default'>
+            <Container maxWidth='lg'>
+              <Tabs
+                variant='scrollable'
+                value={ state.value ? state.value : 0 }
+                onChange={ handleSectionTab }
+              >
+                <Tab
+                  id='issues'
+                  value={ 0 }
+                  label={ props.intl.formatMessage(messages.issuesLabel) }
+                />
+                <Tab
+                  id='projects'
+                  value={ 1 }
+                  label={ props.intl.formatMessage(messages.projectsLabel) }
+                />
+                <Tab
+                  id='organizations'
+                  value={ 2 }
+                  label={ props.intl.formatMessage(messages.organizationsLabel) }
+                />
+              </Tabs>
+            </Container>
+          </AppBar>
+        }
+        <Container fixed maxWidth='lg'>
+          <Grid container className={ classes.root }>
+            <Grid item xs={ 12 } md={ 12 }>
+              { state.value === 0 &&
+                <TaskListContainer />
+              }
+              { state.value === 1 &&
+                <ProjectListContainer />
+              }
+              { state.value === 2 &&
+                <OrganizationListContainer />
+              }
             </Grid>
-          </Container>
-        </PageContent>
-        <Bottom classes={ classes } />
-      </Page>
-    )
-  }
+          </Grid>
+        </Container>
+      </PageContent>
+      <Bottom classes={ classes } />
+    </Page>
+  )
 }
 
 TaskExplorer.propTypes = {
