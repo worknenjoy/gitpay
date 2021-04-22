@@ -757,7 +757,7 @@ class Task extends Component {
           size='small'
           color='secondary'
           variant='contained'
-          disabled={ this.props.task.data.paid }
+          disabled={ this.props.task.data.paid || this.props.task.data.status === "closed" }
           style={ { flexGrow: 1, display: 'flex', justifyContent: 'center' } }
         >
           <BountyIcon style={ { marginRight: 'auto' } } />
@@ -768,7 +768,7 @@ class Task extends Component {
 
         { !isOwner &&
           <Button
-            disabled={ this.props.task.data.paid }
+            disabled={ this.props.task.data.paid || this.props.task.data.status === "closed" }
             onClick={ this.handleAssignDialogOpen }
             size='small'
             color='secondary'
@@ -1342,7 +1342,7 @@ class Task extends Component {
                       fullWidth
                       size='large'
                       variant='contained'
-                      disabled={ task.data.paid }
+                      disabled={ task.data.paid || task.data.status === "closed" }
                       style={ {
                         marginRight: 10,
                         display: 'flex',
