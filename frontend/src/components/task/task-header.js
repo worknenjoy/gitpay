@@ -47,16 +47,27 @@ const styles = theme => ({
   breadcrumbLink: {
     textDecoration: 'underline'
   },
-  chipStatus: {
+  chipStatusSuccess: {
     marginBottom: theme.spacing(1),
     verticalAlign: 'middle',
     backgroundColor: 'transparent',
     color: theme.palette.primary.success
   },
-  avatarStatus: {
-    backgroundColor: theme.palette.primary.success,
+  chipStatusClosed: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.error.main
+  },
+  avatarStatusSuccess: {
     width: theme.spacing(0),
     height: theme.spacing(0),
+    backgroundColor: theme.palette.primary.success,
+  },
+  avatarStatusClosed: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.error.main,
   },
   chipStatusPaid: {
     marginLeft: 0,
@@ -163,11 +174,11 @@ class TaskHeader extends React.Component {
               </div>
             </ReactPlaceholder>
 
-            <ReactPlaceholder ready={ task.completed }>
+            <ReactPlaceholder ready={ task.completed && task.data.status }>
               <Chip
                 label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                avatar={ <Avatar className={ classes.avatarStatus } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
-                className={ classes.chipStatus }
+                avatar={ <Avatar className={ task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
+                className={ task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
                 onDelete={ this.handleStatusDialog }
                 onClick={ this.handleStatusDialog }
               />

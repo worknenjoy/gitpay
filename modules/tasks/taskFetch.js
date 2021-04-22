@@ -150,6 +150,14 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   .updateAttributes({ title: issueDataJsonGithub.title })
                   .then(task => responseGithub)
               }
+
+              if (data.status !== issueDataJsonGithub.state) {
+                /* eslint-disable no-unused-vars */
+                data
+                  .updateAttributes({ status: issueDataJsonGithub.state })
+                  .then(task => responseGithub)
+              }
+
               return responseGithub
             })
             .catch(e => {
