@@ -1269,7 +1269,7 @@ class Task extends Component {
                     </div>
                   </div>
                 }
-                { task.values && task.values.available &&
+                { task.values && task.values.available > 0 &&
                   <div style={ { textAlign: 'center' } }>
                     <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                       <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
