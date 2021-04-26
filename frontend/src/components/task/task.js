@@ -1269,18 +1269,20 @@ class Task extends Component {
                     </div>
                   </div>
                 }
-                <div style={ { textAlign: 'center' } }>
-                  <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
-                    <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
-                  </Typography>
-                  <div>
-                    <MoneyIcon />
-                    <Typography variant='h6' className={ classes.taskInfoContent }>
-                      { task.values.available }
-                      { task.data.paid && <Chip style={ { marginLeft: 10 } } variant='small' label='paid' /> }
+                { task.datavalues.available &&
+                  <div style={ { textAlign: 'center' } }>
+                    <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                      <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
                     </Typography>
+                    <div>
+                      <MoneyIcon />
+                      <Typography variant='h6' className={ classes.taskInfoContent }>
+                        { task.values.available }
+                        { task.data.paid && <Chip style={ { marginLeft: 10 } } variant='small' label='paid' /> }
+                      </Typography>
+                    </div>
                   </div>
-                </div>
+                }
               </div>
               <div>
                 <TaskDeadlineForm match={ { params: { id: task.data.id } } } classes={ classes } open={ this.state.deadlineForm } updateTask={ (task) => {
