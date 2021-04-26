@@ -1017,7 +1017,7 @@ class Task extends Component {
                       <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
                       <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
                     </Button> }
-                    { task.data.Assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 &&
+                    { this.taskOwner() &&
                       <Button
                         style={ { display: 'inline-block', marginBottom: 2 } }
                         onClick={ this.handleAssignDialog }

@@ -91,7 +91,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
       {
         <ModalReason callback={ (message) => handleAssign(task.id, assign.id, false, message) } open={ rejectModal } setOpen={ setRejectModal } />
       }
-      { (loggedUser && isOwner && user && loggedUser.id !== user.id) &&
+      { (loggedUser && isOwner) &&
         <React.Fragment>
           <MessageAssignment
             assign={ assign }
