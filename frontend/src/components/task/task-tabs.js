@@ -519,7 +519,7 @@ class TaskTabs extends React.Component {
                   this.props.intl.formatMessage(messages.offersTableLabelDeadline),
                   this.props.intl.formatMessage(messages.offersTableLabelCreated)
                 ] }
-                tableData={ task.data.offers && task.data.offers.length ? displayOffers(task.data.offers) : [] }
+                tableData={ task.data.Offers && task.data.Offers.length ? displayOffers(task.data.Offers) : [] }
               />
             }
           />

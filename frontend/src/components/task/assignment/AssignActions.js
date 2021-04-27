@@ -215,7 +215,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
                     helperText='Select offers'
                     style={ { marginTop: 10 } }
                   >
-                    { task && task.offers && task.offers.map((option) => (
+                    { task && task.Offers && task.Offers.map((option) => (
                       <MenuItem key={ option.id } value={ option.value }>
                         ${ option.value } - { option.comment }
                       </MenuItem>

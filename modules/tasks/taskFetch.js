@@ -139,7 +139,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 orders: data.dataValues.Orders,
                 Assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
-                offers: data.dataValues.Offers,
+                Offers: data.dataValues.Offers,
                 histories: data.dataValues.Histories,
                 Project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
               }
@@ -207,7 +207,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 orders: data.dataValues.Orders,
                 assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
-                offers: data.dataValues.Offers
+                Offers: data.dataValues.Offers
               }
 
               if (!data.title && data.title !== issueDataJsonBitbucket.title) {
