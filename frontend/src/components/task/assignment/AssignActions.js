@@ -25,7 +25,6 @@ import {
 
 const ModalReason = ({ callback, open, setOpen }) => {
   const [message, setMessage] = useState('')
-  
 
   const handleSubmit = () => {
     callback(message)
@@ -73,7 +72,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
   const [ messageOpen, setMessageOpen ] = useState(false)
   const [rejectModal, setRejectModal] = useState(false)
   const [checked, setChecked] = useState(false)
-  const [offer, setOffer] = React.useState(0);
+  const [offer, setOffer] = React.useState(0)
 
   useEffect(() => {
     if (loggedUser && assign && task) {
@@ -98,7 +97,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
   }
 
   const handleChange = (event) => {
-    setOffer(event.target.value);
+    setOffer(event.target.value)
   }
 
   return (
@@ -129,26 +128,26 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
       { (isOwner && !hasAssignedUser) &&
       <Button
         disabled={ hasAssignedUser }
-          onClick={ async (e) => {
-            e.preventDefault()
-            assignTask(task.id, assign.id)
-            checked && task.id && loggedUser.id && await createOrder({
-              provider: 'stripe',
-              amount: offer,
-              userId: loggedUser.id,
-              email: loggedUser.email,
-              taskId: task.id,
-              currency: 'usd',
-              status: 'open',
-              source_type: 'invoice-item',
-              destination_account: loggedUser.account_id,
-              customer_id: loggedUser.customer_id
-            })
-          } }
+        onClick={ async (e) => {
+          e.preventDefault()
+          assignTask(task.id, assign.id)
+          checked && task.id && loggedUser.id && await createOrder({
+            provider: 'stripe',
+            amount: offer,
+            userId: loggedUser.id,
+            email: loggedUser.email,
+            taskId: task.id,
+            currency: 'usd',
+            status: 'open',
+            source_type: 'invoice-item',
+            destination_account: loggedUser.account_id,
+            customer_id: loggedUser.customer_id
+          })
+        } }
         variant='contained'
         size='small'
         color='primary'
-        style={{marginLeft: 5}}
+        style={ { marginLeft: 5 } }
       >
         { assign.status !== 'pending'
           ? <FormattedMessage id='task.actions.choose.rejected' defaultMessage='Re-send Invite' />
@@ -198,30 +197,30 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
           }
         })()
       }
-      { isOwner && task.id && loggedUser.id && 
-        <div style={{marginTop: 10, marginBottom: 10, marginLeft: 20 }}>
+      { isOwner && task.id && loggedUser.id &&
+        <div style={ { marginTop: 10, marginBottom: 10, marginLeft: 20 } }>
           <FormGroup row>
             <FormControlLabel
-              control={<Checkbox checked={checked} onChange={handleChangeCheck} name="checked" />}
+              control={ <Checkbox checked={ checked } onChange={ handleChangeCheck } name='checked' /> }
               label={
-                <div style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column'}}>
+                <div style={ { display: 'flex', alignItems: 'flex-start', flexDirection: 'column' } }>
                   <FormattedMessage id='task.offer.invoice.create' defaultMessage='Create order' />
-                  { checked && 
+                  { checked &&
                   <TextField
-                    id="standard-select-currency"
+                    id='standard-select-currency'
                     select
-                    label="Select"
-                    value={offer}
-                    onChange={handleChange}
-                    helperText="Select offers"
-                    style={{marginTop: 10}}
+                    label='Select'
+                    value={ offer }
+                    onChange={ handleChange }
+                    helperText='Select offers'
+                    style={ { marginTop: 10 } }
                   >
-                    {task && task.offers && task.offers.map((option) => (
-                      <MenuItem key={option.id} value={option.value}>
-                        ${option.value} - {option.comment}
+                    { task && task.offers && task.offers.map((option) => (
+                      <MenuItem key={ option.id } value={ option.value }>
+                        ${ option.value } - { option.comment }
                       </MenuItem>
-                    ))}
-                  </TextField>}
+                    )) }
+                  </TextField> }
                 </div>
               }
             />

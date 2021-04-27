@@ -29,7 +29,7 @@ class TaskAssigned extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      
+
     }
   }
 
@@ -56,7 +56,7 @@ class TaskAssigned extends Component {
   }
 
   render () {
-    const { user, loggedUser, classes, isOwner, task, assign, removeAssignment, assignTask, messageTask, createOrder} = this.props
+    const { user, loggedUser, classes, isOwner, task, assign, removeAssignment, assignTask, messageTask, createOrder } = this.props
     const hasAssignedUser = assign.id === task.assigned
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
     const timePlaceholder = (
@@ -119,7 +119,7 @@ class TaskAssigned extends Component {
             action={ timePlaceholder }
           />
         </Card>
-        
+
       </div>
     )
   }

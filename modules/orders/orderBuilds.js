@@ -42,7 +42,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
           description: 'Development service for a task on Gitpay: ' + 'https://gitpay.me/#/task/' + orderParameters.taskId,
           unit_amount: orderParameters.amount * 100 * 1.18,
           metadata: {
-            "task_id": orderParameters.taskId
+            'task_id': orderParameters.taskId
           }
         }).then(invoiceItem => {
           stripe.invoices.create({
@@ -51,18 +51,16 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               destination: orderParameters.destination_account
             },
             metadata: {
-              "task_id": orderParameters.taskId
+              'task_id': orderParameters.taskId
             }
-        }).then(invoice => {
-          return order.updateAttributes({
-            source_id: invoice.id
-          }).then(orderUpdated => {
-            console.log('orderUpdated', orderUpdated)
-            return orderUpdated
-          }).catch(e => console.log('error', e))
-
-        }).catch(e => console.log('error', e))
-        }).catch(e => console.log('error', e))
+          }).then(invoice => {
+            return order.updateAttributes({
+              source_id: invoice.id
+            }).then(orderUpdated => {
+              return orderUpdated
+            })
+          })
+        })
       }
       if (orderParameters.provider === 'paypal') {
         const totalPrice = models.Plan.calFinalPrice(orderParameters.amount, orderParameters.plan)
