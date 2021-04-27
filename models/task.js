@@ -57,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE' }
         )
+        Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
       }
     },
     instanceMethods: {

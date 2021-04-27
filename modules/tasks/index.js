@@ -15,6 +15,10 @@ const taskReport = require('./taskReport')
 const taskClaim = require('./taskClaim')
 const taskDeleteConfirmation = require('./taskDeleteConfirmation')
 const requestAssignedUser = require('./requestAssignedUser.js')
+const taskSolutionFetchData = require('./taskSolutionFetchData')
+const taskSolutionCreate = require('./taskSolutionCreate')
+const getTaskSolution = require('./getTaskSolution')
+const updateTaskSolution = require('./updateTaskSolution')
 
 module.exports = {
   taskExists,
@@ -33,5 +37,9 @@ module.exports = {
   taskReport,
   taskClaim,
   taskDeleteConfirmation,
-  requestAssignedUser
+  requestAssignedUser,
+  taskSolutionFetchData,
+  taskSolutionCreate,
+  getTaskSolution,
+  updateTaskSolution
 }
