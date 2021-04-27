@@ -736,6 +736,7 @@ class Task extends Component {
       }
     }
   }
+
   handleFundingEmailInputChange = event => {
     this.setState({ fundingInvite: { ...this.state.fundingInvite, email: event.target.value } })
   }
@@ -749,6 +750,7 @@ class Task extends Component {
     this.props.fundingInviteTask(this.props.task.data.id, this.state.fundingInvite.email, this.state.fundingInvite.comment, this.state.currentPrice, this.state.interestedSuggestedDate, this.props.user)
     this.handleAssignFundingDialogClose()
   }
+
   rendereAmountStatsCardContent = (isOwner) => {
     return (
       <div style={ { display: 'flex', justifyContent: 'space-evenly' } }>
@@ -757,7 +759,7 @@ class Task extends Component {
           size='small'
           color='secondary'
           variant='contained'
-          disabled={ this.props.task.data.paid || this.props.task.data.status === "closed" }
+          disabled={ this.props.task.data.paid || this.props.task.data.status === 'closed' }
           style={ { flexGrow: 1, display: 'flex', justifyContent: 'center' } }
         >
           <BountyIcon style={ { marginRight: 'auto' } } />
@@ -768,7 +770,7 @@ class Task extends Component {
 
         { !isOwner &&
           <Button
-            disabled={ this.props.task.data.paid || this.props.task.data.status === "closed" }
+            disabled={ this.props.task.data.paid || this.props.task.data.status === 'closed' }
             onClick={ this.handleAssignDialogOpen }
             size='small'
             color='secondary'
@@ -1342,7 +1344,7 @@ class Task extends Component {
                       fullWidth
                       size='large'
                       variant='contained'
-                      disabled={ task.data.paid || task.data.status === "closed" }
+                      disabled={ task.data.paid || task.data.status === 'closed' }
                       style={ {
                         marginRight: 10,
                         display: 'flex',
