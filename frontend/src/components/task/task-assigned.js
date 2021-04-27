@@ -29,7 +29,7 @@ class TaskAssigned extends Component {
   constructor (props) {
     super(props)
     this.state = {
-
+      
     }
   }
 
@@ -56,7 +56,7 @@ class TaskAssigned extends Component {
   }
 
   render () {
-    const { user, loggedUser, classes, isOwner, task, assign, removeAssignment, assignTask, messageTask } = this.props
+    const { user, loggedUser, classes, isOwner, task, assign, removeAssignment, assignTask, messageTask, createOrder} = this.props
     const hasAssignedUser = assign.id === task.assigned
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
     const timePlaceholder = (
@@ -113,13 +113,13 @@ class TaskAssigned extends Component {
                 <FormattedMessage id='task.assigned.status.name.create' defaultMessage='Assigned to {name}' values={ {
                   name: user.name || user.username
                 } } />
-                { isOwner && <AssignActions user={ user } messageTask={ messageTask } loggedUser={ loggedUser } isOwner={ isOwner } assign={ assign } task={ task } removeAssignment={ removeAssignment } assignTask={ assignTask } /> }
+                { isOwner && <AssignActions user={ user } messageTask={ messageTask } loggedUser={ loggedUser } isOwner={ isOwner } assign={ assign } task={ task } removeAssignment={ removeAssignment } assignTask={ assignTask } createOrder={ createOrder } /> }
               </div>
             }
             action={ timePlaceholder }
           />
         </Card>
-
+        
       </div>
     )
   }
