@@ -472,7 +472,8 @@ exports.updateWebhook = (req, res) => {
         return models.Order.update(
           {
             paid: event.data.object.status === 'paid',
-            status: event.data.object.status
+            status: event.data.object.status,
+            source: event.data.object.charge
           },
           {
             where: {
