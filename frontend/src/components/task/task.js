@@ -1299,7 +1299,7 @@ class Task extends Component {
               { this.taskOwner()
                 ? (
                   <React.Fragment>
-                    { task.data.assignedUser &&
+                    { task.data.assigned &&
                     <div style={ { marginTop: 30, marginBottom: 30 } }>
                       <Button
                         onClick={ this.handleTaskPaymentDialog }
