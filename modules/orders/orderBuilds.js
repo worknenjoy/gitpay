@@ -47,9 +47,6 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
         }).then(invoiceItem => {
           stripe.invoices.create({
             customer: orderParameters.customer_id,
-            transfer_data: {
-              destination: orderParameters.destination_account
-            },
             metadata: {
               'task_id': orderParameters.taskId
             }

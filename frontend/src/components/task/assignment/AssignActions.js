@@ -140,7 +140,6 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
             currency: 'usd',
             status: 'open',
             source_type: 'invoice-item',
-            destination_account: loggedUser.account_id,
             customer_id: loggedUser.customer_id
           })
         } }
