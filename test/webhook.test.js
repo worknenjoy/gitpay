@@ -15,7 +15,8 @@ const refundData = require('./data/refund')
 const githubWebhookMain = require('./data/github.event.main')
 const githubWebhookIssue = require('./data/github.issue.create')
 const githubWebhookIssueLabeled = require('./data/github.issue.labeled')
-const invoiceUpdated = require('./data/stripe.invoice')
+const invoiceUpdated = require('./data/stripe.invoice.update')
+const invoiceCreated = require('./data/stripe.invoice.create')
 
 describe('webhooks', () => {
   beforeEach(() => {
@@ -383,6 +384,54 @@ describe('webhooks', () => {
   })
 
   describe('webhooks for invoice', () => {
+    it('should notify the user when the invoice is created', done => {
+      agent
+      .post('/auth/register')
+      .send({email: 'invoice_test@gmail.com', password: 'teste'})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then((user) => {
+        if(!user) console.log('error to register user')
+        const userId = user.body.id;
+        const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+        models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+          task.createAssign({userId: userId}).then((assign) => {
+            task.update({ assigned: assign.dataValues.id}).then(taskUpdated => {
+              task.createOrder({
+                provider: 'stripe',
+                type: 'invoice-item',
+                source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
+                userId: userId,
+                currency: 'usd',
+                amount: 200
+              }).then(order => {
+                agent
+                  .post('/webhooks')
+                  .send(invoiceCreated.created)
+                  .expect('Content-Type', /json/)
+                  .expect(200)
+                  .end((err, res) => {
+                    expect(res.statusCode).to.equal(200)
+                    expect(res.body).to.exist
+                    expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx')
+                    expect(res.body.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
+                    models.Order.findOne({
+                      where: {
+                        id: order.id
+                      },
+                      include: [models.Task]
+                    }).then(orderFinal => {
+                      expect(orderFinal.dataValues.paid).to.equal(false)
+                      expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
+                      done()
+                    }).catch(e => done(e))
+                  })
+                })
+              }).catch(e => console.log('cant create order', e))
+            })
+          })
+        })
+    })
     it('should notify the user when the invoice is updated', done => {
       agent
       .post('/auth/register')
