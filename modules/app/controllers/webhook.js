@@ -502,8 +502,8 @@ exports.updateWebhook = (req, res) => {
                 i18n.setLocale(userAssignedlanguage)
                 SendMail.success(
                   userAssigned,
-                  i18n.__('mail.webhook.invoice.created.subject'),
-                  i18n.__('mail.webhook.invoice.created.message', {
+                  i18n.__('mail.webhook.invoice.create.subject'),
+                  i18n.__('mail.webhook.invoice.create.message', {
                     amount: order[1][0].dataValues.amount
                   })
                 )
