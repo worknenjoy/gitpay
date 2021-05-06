@@ -522,6 +522,8 @@ exports.updateWebhook = (req, res) => {
             return res.json(req.body)
           })
           .catch(e => {
+            // eslint-disable-next-line no-console
+            console.log('error on invoice create webhook', e)
             return res.status(400).send(e)
           })
 
