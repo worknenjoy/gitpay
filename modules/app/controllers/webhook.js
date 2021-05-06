@@ -498,26 +498,24 @@ exports.updateWebhook = (req, res) => {
               const userAssigned = userAssign.dataValues.User.dataValues
               const userTask = orderUpdated.User.dataValues
               if (orderUpdated) {
-                if (orderUpdated.status === 'paid') {
-                  const userAssignedlanguage = userAssigned.language || 'en'
-                  i18n.setLocale(userAssignedlanguage)
-                  SendMail.success(
-                    userAssigned,
-                    i18n.__('mail.webhook.invoice.created.subject'),
-                    i18n.__('mail.webhook.invoice.created.message', {
-                      amount: order[1][0].dataValues.amount
-                    })
-                  )
-                  const userTaskLanguage = userTask.language || 'en'
-                  i18n.setLocale(userTaskLanguage)
-                  SendMail.success(
-                    userTask,
-                    i18n.__('mail.webhook.payment.update.subject'),
-                    i18n.__('mail.webhook.payment.approved.message', {
-                      amount: order[1][0].dataValues.amount
-                    })
-                  )
-                }
+                const userAssignedlanguage = userAssigned.language || 'en'
+                i18n.setLocale(userAssignedlanguage)
+                SendMail.success(
+                  userAssigned,
+                  i18n.__('mail.webhook.invoice.created.subject'),
+                  i18n.__('mail.webhook.invoice.created.message', {
+                    amount: order[1][0].dataValues.amount
+                  })
+                )
+                const userTaskLanguage = userTask.language || 'en'
+                i18n.setLocale(userTaskLanguage)
+                SendMail.success(
+                  userTask,
+                  i18n.__('mail.webhook.payment.update.subject'),
+                  i18n.__('mail.webhook.payment.approved.message', {
+                    amount: order[1][0].dataValues.amount
+                  })
+                )
               }
               return res.json(req.body)
             }

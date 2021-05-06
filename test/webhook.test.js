@@ -422,6 +422,7 @@ describe('webhooks', () => {
                       include: [models.Task]
                     }).then(orderFinal => {
                       expect(orderFinal.dataValues.paid).to.equal(false)
+                      expect(orderFinal.dataValues.source_id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
                       expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
                       done()
                     }).catch(e => done(e))

@@ -42,13 +42,15 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
           description: 'Development service for a task on Gitpay: ' + 'https://gitpay.me/#/task/' + orderParameters.taskId,
           unit_amount: orderParameters.amount * 100 * 1.18,
           metadata: {
-            'task_id': orderParameters.taskId
+            'task_id': orderParameters.taskId,
+            'order_id': order.dataValues.id
           }
         }).then(invoiceItem => {
           stripe.invoices.create({
             customer: orderParameters.customer_id,
             metadata: {
-              'task_id': orderParameters.taskId
+              'task_id': orderParameters.taskId,
+              'order_id': order.dataValues.id
             }
           }).then(invoice => {
             return order.updateAttributes({
