@@ -110,7 +110,7 @@
   "mail.webhook.payment.update.subject": "O pagamento pela sua tarefa foi aprovado!",
   "mail.webhook.payment.update.message": "<p>O pagamento no valor de $ {{amount}} para uma tarefa no Gitpay foi aprovado</p>",
   "mail.webhook.invoice.update.subject": "O pagamento pela sua tarefa no Gitpay foi atualizado",
-  "mail.webhook.invoice.update.message": "<p>O pagamento no valor de $ {{amount}} para uma tarefa no Gitpay foi aprovado</p>",
+  "mail.webhook.invoice.update.message": "<p>The payment of $ {{amount}} for a task on you were assigned on Gitpay was processed</p>",
   "mail.webhook.invoice.create.subject": "Há uma nova fatura para a tarefa que você está trabalhando no Gitpay",
   "mail.webhook.invoice.create.message": "<p>Uma fatura de $ {{amount}} para uma tarefa em que você foi escolhido no Gitpay foi gerada e avisaremos quando o pagamento for processado</p>",
   "mail.webhook.payment.refund.subject": "Você recebeu um reembolso pela tarefa que realizou no Gitpay",
