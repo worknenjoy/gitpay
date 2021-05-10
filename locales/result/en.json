@@ -110,7 +110,7 @@
   "mail.webhook.payment.update.subject": "The payment for this task was updated!",
   "mail.webhook.payment.update.message": "<p>The payment of $ {{amount}} for a task on Gitpay was approved</p>",
   "mail.webhook.invoice.update.subject": "The payment for a task you are working on Gitpay has been updated",
-  "mail.webhook.invoice.update.message": "<p>The payment of $ {{amount}} for a task on you were assigned on Gitpay was approved</p>",
+  "mail.webhook.invoice.update.message": "<p>The payment of $ {{amount}} for a task on you were assigned on Gitpay was processed</p>",
   "mail.webhook.invoice.create.subject": "There's a new invoice for the task you're working on Gitpay",
   "mail.webhook.invoice.create.message": "<p>An invoice of $ {{amount}} for a task you were assigned on Gitpay was generated, and we will let you know when the payment has been processed</p>",
   "mail.webhook.payment.refund.subject": "You received a refund from an issue that you paid on Gitpay",
