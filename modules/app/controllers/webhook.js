@@ -565,7 +565,7 @@ exports.updateWebhook = (req, res) => {
                   SendMail.success(
                     userAssigned,
                     i18n.__('mail.webhook.invoice.update.subject'),
-                    i18n.__('mail.webhook.invoice.approved.message', {
+                    i18n.__('mail.webhook.invoice.update.message', {
                       amount: order[1][0].dataValues.amount
                     })
                   )
