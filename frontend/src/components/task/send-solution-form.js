@@ -18,8 +18,8 @@ const SendSolutionForm = props => {
               endAdornment={ <InputAdornment position='end'><GitHubIcon /></InputAdornment> }
               placeholder={ msg }
               type='string'
-              value={ props.solutionURL }
-              onChange={ props.handleSolutionURLChange }
+              value={ props.pullRequestURL }
+              onChange={ props.handlePullRequestURLChange }
             />
           ) }
         </FormattedMessage>

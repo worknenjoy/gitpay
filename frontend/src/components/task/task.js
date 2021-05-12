@@ -1344,7 +1344,7 @@ class Task extends Component {
                       fullWidth
                       size='large'
                       variant='contained'
-                      disabled={ task.data.paid || task.data.status === 'closed' }
+                      disabled={ task.data.paid }
                       style={ {
                         marginRight: 10,
                         display: 'flex',

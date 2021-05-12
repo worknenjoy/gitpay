@@ -37,7 +37,7 @@ import {
   Close as CloseIcon
 } from '@material-ui/icons'
 import LoginButton from '../session/login-button'
-import SendSolutionDialog from './send-solution-dialog'
+import SendSolutionDialog from '../../containers/send-solution-dialog'
 
 const logoGithub = require('../../images/github-logo-black.png')
 const logoBitbucket = require('../../images/bitbucket-logo-blue.png')
@@ -619,7 +619,7 @@ const TaskAssignment = (props) => {
         </React.Fragment>
       ) }
       { currentTab === 1 && (
-        <SendSolutionDialog />
+        <SendSolutionDialog task={ task.data } assignDialog={ props.assignDialog } handleAssignFundingDialogClose={ props.handleAssignFundingDialogClose } />
       ) }
     </Dialog>
   )
