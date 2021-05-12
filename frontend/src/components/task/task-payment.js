@@ -280,6 +280,18 @@ class TaskPayment extends Component {
                             primary={ `$ ${order.amount}` }
                             secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.labelCreditCard)}` }
                           />
+                          <Button
+                            onClick={ this.payTask }
+                            style={ { float: 'right', margin: 10 } }
+                            variant='contained'
+                            color='primary'
+                            disabled={ !this.props.assigned }
+                          >
+                            <RedeemIcon style={ { marginRight: 10 } } />
+                            <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
+                              value: order.amount
+                            } } />
+                          </Button>
                         </ListItem>
                       )
                     }
