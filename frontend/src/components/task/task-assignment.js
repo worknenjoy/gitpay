@@ -356,6 +356,21 @@ const TaskAssignment = (props) => {
     }
   }
 
+  const loginForm = () => {
+    return (
+      <div>
+        { /* <DialogTitle id='form-dialog-title'> */ }
+        { dialogTitleMessage() }
+        { /* </DialogTitle> */ }
+        <DialogContent>
+          <div className={ classes.mainBlock }>
+            <LoginButton referer={ props.location } includeForm />
+          </div>
+        </DialogContent>
+      </div>
+    )
+  }
+
   return (
     <Dialog
       open={ props.assignDialog || props.taskFundingDialog }
@@ -384,16 +399,7 @@ const TaskAssignment = (props) => {
         <React.Fragment>
           { imageCover() }
           { !props.logged ? (
-            <div>
-              { /* <DialogTitle id='form-dialog-title'> */ }
-              { dialogTitleMessage() }
-              { /* </DialogTitle> */ }
-              <DialogContent>
-                <div className={ classes.mainBlock }>
-                  <LoginButton referer={ props.location } includeForm />
-                </div>
-              </DialogContent>
-            </div>
+            loginForm()
           ) : (
             <div>
               { dialogCoverInvite() }
@@ -618,7 +624,7 @@ const TaskAssignment = (props) => {
           }
         </React.Fragment>
       ) }
-      { currentTab === 1 && (
+      { currentTab === 1 && !props.logged ? (loginForm()) : (
         <SendSolutionDialog task={ task.data } assignDialog={ props.assignDialog } handleAssignFundingDialogClose={ props.handleAssignFundingDialogClose } />
       ) }
     </Dialog>

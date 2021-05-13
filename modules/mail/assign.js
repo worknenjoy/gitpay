@@ -49,11 +49,11 @@ ${Signatures.buttons(language, {
     primary: {
       label: 'mail.assign.owner.button.primary',
       title: task.title,
-      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested`
+      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/offers`
     },
     secondary: {
       label: 'mail.assign.owner.button.secondary',
-      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+      url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested`
     }
   })}
           <p>${Signatures.sign(language)}</p>`

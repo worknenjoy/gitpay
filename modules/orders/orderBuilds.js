@@ -4,11 +4,15 @@ const requestPromise = require('request-promise')
 const URLSearchParams = require('url-search-params')
 const URL = require('url')
 
+const Stripe = require('stripe')
+const stripe = new Stripe(process.env.STRIPE_KEY)
+
 module.exports = Promise.method(function orderBuilds (orderParameters) {
   return models.Order
     .build(
       {
-        source_id: orderParameters.source_id,
+        source_id: orderParameters.source_id || 'internal_' + Math.random(),
+        source_type: orderParameters.source_type,
         currency: orderParameters.currency,
         provider: orderParameters.provider,
         amount: orderParameters.amount,
@@ -18,14 +22,45 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
         plan: {
           plan: orderParameters.plan
         },
-        include: [{
-          association: models.Order.Plan,
-          include: [ models.Plan.plan ]
-        }]
+        include: [
+          models.User,
+          {
+            association: models.Order.Plan,
+            include: [ models.Plan.plan ]
+          }
+        ]
       }
     )
     .save()
     .then(order => {
+      if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
+        stripe.invoiceItems.create({
+          customer: orderParameters.customer_id,
+          currency: 'usd',
+          // price: 'price_1IkrS62eZvKYlo2CHsI3LJLi',
+          quantity: 1,
+          description: 'Development service for a task on Gitpay: ' + 'https://gitpay.me/#/task/' + orderParameters.taskId,
+          unit_amount: orderParameters.amount * 100 * 1.18,
+          metadata: {
+            'task_id': orderParameters.taskId,
+            'order_id': order.dataValues.id
+          }
+        }).then(invoiceItem => {
+          stripe.invoices.create({
+            customer: orderParameters.customer_id,
+            metadata: {
+              'task_id': orderParameters.taskId,
+              'order_id': order.dataValues.id
+            }
+          }).then(invoice => {
+            return order.updateAttributes({
+              source_id: invoice.id
+            }).then(orderUpdated => {
+              return orderUpdated
+            })
+          })
+        })
+      }
       if (orderParameters.provider === 'paypal') {
         const totalPrice = models.Plan.calFinalPrice(orderParameters.amount, orderParameters.plan)
         return requestPromise({
