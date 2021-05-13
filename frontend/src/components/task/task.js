@@ -799,7 +799,7 @@ class Task extends Component {
 
     const assignActions = assign => {
       const task = this.props.task.data
-      return <AssignActions hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
+      return <AssignActions hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } createOrder={ this.props.createOrder } />
     }
 
     // Error handling when task does not exist
@@ -1019,7 +1019,7 @@ class Task extends Component {
                       <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
                       <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
                     </Button> }
-                    { task.data.Assigns.filter(a => a.User.id === this.props.user.id && a.status === 'pending-confirmation' || a.status === 'accepted').length > 0 &&
+                    { this.taskOwner() &&
                       <Button
                         style={ { display: 'inline-block', marginBottom: 2 } }
                         onClick={ this.handleAssignDialog }
@@ -1083,6 +1083,7 @@ class Task extends Component {
                       assignTask={ this.props.assignTask }
                       assign={ { id: task.data.assigned } }
                       messageTask={ this.props.messageTask }
+                      createOrder={ this.props.createOrder }
                     />
                   </div>
                 }
@@ -1271,18 +1272,20 @@ class Task extends Component {
                     </div>
                   </div>
                 }
-                <div style={ { textAlign: 'center' } }>
-                  <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
-                    <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
-                  </Typography>
-                  <div>
-                    <MoneyIcon />
-                    <Typography variant='h6' className={ classes.taskInfoContent }>
-                      { task.values.available }
-                      { task.data.paid && <Chip style={ { marginLeft: 10 } } variant='small' label='paid' /> }
+                { task.values && task.values.available > 0 &&
+                  <div style={ { textAlign: 'center' } }>
+                    <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                      <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
                     </Typography>
+                    <div>
+                      <MoneyIcon />
+                      <Typography variant='h6' className={ classes.taskInfoContent }>
+                        { task.values.available }
+                        { task.data.paid && <Chip style={ { marginLeft: 10 } } variant='small' label='paid' /> }
+                      </Typography>
+                    </div>
                   </div>
-                </div>
+                }
               </div>
               <div>
                 <TaskDeadlineForm match={ { params: { id: task.data.id } } } classes={ classes } open={ this.state.deadlineForm } updateTask={ (task) => {
@@ -1298,7 +1301,7 @@ class Task extends Component {
               { this.taskOwner()
                 ? (
                   <React.Fragment>
-                    { task.data.assignedUser &&
+                    { task.data.assigned &&
                     <div style={ { marginTop: 30, marginBottom: 30 } }>
                       <Button
                         onClick={ this.handleTaskPaymentDialog }

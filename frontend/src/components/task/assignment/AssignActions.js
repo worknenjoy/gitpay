@@ -11,7 +11,11 @@ import {
   DialogContent,
   DialogContentText,
   Typography,
-  TextField
+  TextField,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
+  MenuItem
 } from '@material-ui/core'
 
 import {
@@ -63,10 +67,12 @@ const ModalReason = ({ callback, open, setOpen }) => {
   )
 }
 
-const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, task, assignTask, messageTask }) => {
+const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, task, assignTask, messageTask, createOrder }) => {
   const hasAssignedUser = assign.id === task.assigned
   const [ messageOpen, setMessageOpen ] = useState(false)
   const [rejectModal, setRejectModal] = useState(false)
+  const [checked, setChecked] = useState(false)
+  const [offer, setOffer] = React.useState(0)
 
   useEffect(() => {
     if (loggedUser && assign && task) {
@@ -86,12 +92,20 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
     actionAssign(taskId, assignId, accept, message)
   }
 
+  const handleChangeCheck = (event) => {
+    setChecked(event.target.checked)
+  }
+
+  const handleChange = (event) => {
+    setOffer(event.target.value)
+  }
+
   return (
-    <div style={ { marginTop: 10, marginLeft: 10 } }>
+    <div style={ { marginTop: 10 } }>
       {
         <ModalReason callback={ (message) => handleAssign(task.id, assign.id, false, message) } open={ rejectModal } setOpen={ setRejectModal } />
       }
-      { (loggedUser && isOwner && user && loggedUser.id !== user.id) &&
+      { (loggedUser && isOwner) &&
         <React.Fragment>
           <MessageAssignment
             assign={ assign }
@@ -102,30 +116,43 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
           />
           <Button
             onClick={ () => setMessageOpen(true) }
-            style={ { marginRight: 10 } }
             variant='contained'
             size='small'
             color='primary'
           >
             <FormattedMessage id='task.actions.message' defaultMessage='Send message' />
-            <MessageIcon style={ { marginLeft: 5, marginRight: 5 } } />
+            <MessageIcon style={ { marginLeft: 5, marginBottom: 5 } } />
           </Button>
         </React.Fragment>
       }
       { (isOwner && !hasAssignedUser) &&
       <Button
         disabled={ hasAssignedUser }
-        onClick={ () => assignTask(task.id, assign.id) }
-        style={ { marginRight: 10 } }
+        onClick={ async (e) => {
+          e.preventDefault()
+          assignTask(task.id, assign.id)
+          checked && task.id && loggedUser.id && await createOrder({
+            provider: 'stripe',
+            amount: offer,
+            userId: loggedUser.id,
+            email: loggedUser.email,
+            taskId: task.id,
+            currency: 'usd',
+            status: 'open',
+            source_type: 'invoice-item',
+            customer_id: loggedUser.customer_id
+          })
+        } }
         variant='contained'
         size='small'
         color='primary'
+        style={ { marginLeft: 5 } }
       >
         { assign.status !== 'pending'
           ? <FormattedMessage id='task.actions.choose.rejected' defaultMessage='Re-send Invite' />
           : <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
         }
-        <GroupWorkIcon style={ { marginLeft: 5 } } />
+        <GroupWorkIcon style={ { marginLeft: 5, marginBottom: 5 } } />
       </Button>
       }
       {
@@ -168,6 +195,36 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
             </FormattedMessage>)
           }
         })()
+      }
+      { isOwner && task.id && loggedUser.id &&
+        <div style={ { marginTop: 10, marginBottom: 10, marginLeft: 20 } }>
+          <FormGroup row>
+            <FormControlLabel
+              control={ <Checkbox checked={ checked } onChange={ handleChangeCheck } name='checked' /> }
+              label={
+                <div style={ { display: 'flex', alignItems: 'flex-start', flexDirection: 'column' } }>
+                  <FormattedMessage id='task.offer.invoice.create' defaultMessage='Create order' />
+                  { checked &&
+                  <TextField
+                    id='standard-select-currency'
+                    select
+                    label='Select'
+                    value={ offer }
+                    onChange={ handleChange }
+                    helperText='Select offers'
+                    style={ { marginTop: 10 } }
+                  >
+                    { task && task.Offers && task.Offers.map((option) => (
+                      <MenuItem key={ option.id } value={ option.value }>
+                        ${ option.value } - { option.comment }
+                      </MenuItem>
+                    )) }
+                  </TextField> }
+                </div>
+              }
+            />
+          </FormGroup>
+        </div>
       }
     </div>
   )
