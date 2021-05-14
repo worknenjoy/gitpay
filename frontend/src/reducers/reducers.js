@@ -13,6 +13,7 @@ import { preferences } from './preferencesReducer'
 import { roles } from './userRoleReducer'
 import { organizations, organization } from './organizationsReducer'
 import { contact } from './contactReducer'
+import taskSolution from './taskSolutionReducer'
 
 const reducers = combineReducers({
   notification,
@@ -33,6 +34,7 @@ const reducers = combineReducers({
   organizations,
   organization,
   contact,
+  taskSolutionReducer: taskSolution,
   intl: intlReducer
 })
 

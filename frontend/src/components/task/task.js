@@ -736,6 +736,7 @@ class Task extends Component {
       }
     }
   }
+
   handleFundingEmailInputChange = event => {
     this.setState({ fundingInvite: { ...this.state.fundingInvite, email: event.target.value } })
   }
@@ -749,6 +750,7 @@ class Task extends Component {
     this.props.fundingInviteTask(this.props.task.data.id, this.state.fundingInvite.email, this.state.fundingInvite.comment, this.state.currentPrice, this.state.interestedSuggestedDate, this.props.user)
     this.handleAssignFundingDialogClose()
   }
+
   rendereAmountStatsCardContent = (isOwner) => {
     return (
       <div style={ { display: 'flex', justifyContent: 'space-evenly' } }>
@@ -1345,7 +1347,7 @@ class Task extends Component {
                       fullWidth
                       size='large'
                       variant='contained'
-                      disabled={ task.data.paid || task.data.status === 'closed' }
+                      disabled={ task.data.paid }
                       style={ {
                         marginRight: 10,
                         display: 'flex',

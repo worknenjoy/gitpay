@@ -10,6 +10,7 @@ const routerInfo = require('./routes/info')
 const routerOrganization = require('./routes/organization')
 const routerContact = require('./routes/contact')
 const routerTypes = require('./routes/types')
+const routerTaskSolution = require('./routes/taskSolutions')
 
 exports.init = (app) => {
   app.use('/', routerAuth)
@@ -22,4 +23,5 @@ exports.init = (app) => {
   app.use('/organizations', routerOrganization)
   app.use('/types', routerTypes)
   app.use('/contact', routerContact)
+  app.use('/tasksolutions', routerTaskSolution)
 }
