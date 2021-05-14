@@ -25,7 +25,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     })
 
     const taskAssignment = await models.Assign.findOne({
-      where: { id: solutionParams.userId, TaskId: task.dataValues.id }
+      where: { userId: solutionParams.userId, TaskId: task.dataValues.id }
     })
 
     // Verify if the current user is the owner of PR (currently used to verify if user is authenticated to GitHub too)
