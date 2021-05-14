@@ -120,11 +120,11 @@ const updateTaskSolutionError = error => {
   return { type: UPDATE_TASK_SOLUTION_ERROR, completed: true, error: error }
 }
 
-const updateTaskSolution = (taskSolutionId, pullRequestURL) => {
+const updateTaskSolution = ({ taskSolutionId, pullRequestURL, userId, taskId }) => {
   validToken()
   return dispatch => {
     dispatch(updateTaskSolutionRequested())
-    axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL }).then(response => {
+    axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, userId: userId, taskId: taskId }).then(response => {
       if (response.data && response.data.error) {
         dispatch(addNotification(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION']))
         return dispatch(updateTaskSolutionError(JSON.parse(response.data.error)))
