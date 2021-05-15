@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getTaskSolution: (userId, taskId) => dispatch(getTaskSolution(userId, taskId)),
     createTaskSolution: (taskSolution) => dispatch(createTaskSolution(taskSolution)),
-    updateTaskSolution: (taskSolutionId, pullRequestURL) => dispatch(updateTaskSolution(taskSolutionId, pullRequestURL)),
+    updateTaskSolution: (payload) => dispatch(updateTaskSolution(payload)),
     fetchPullRequestData: (owner, repositoryName, pullRequestId, userId, taskId) => dispatch(
       fetchPullRequestData(owner, repositoryName, pullRequestId, userId, taskId)
     ),

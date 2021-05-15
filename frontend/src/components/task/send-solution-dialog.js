@@ -16,6 +16,8 @@ const SendSolutionDialog = props => {
   const [editMode, setEditMode] = useState(false)
   const [timer, setTimer] = useState()
 
+  const { taskSolution, pullRequestData } = props
+
   useEffect(() => {
     props.getTaskSolution(props.user.id, props.task.id)
   }, [])
@@ -43,9 +45,8 @@ const SendSolutionDialog = props => {
   }
 
   const submitTaskSolution = () => {
-    const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id }
-
     if (editMode) {
+      const payload = { pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload)
       setEditMode(false)
 
@@ -53,10 +54,10 @@ const SendSolutionDialog = props => {
       return
     }
 
+    const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id }
+
     props.createTaskSolution(payload)
   }
-
-  const { taskSolution, pullRequestData } = props
 
   return (
     <React.Fragment>
@@ -82,7 +83,7 @@ const SendSolutionDialog = props => {
           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
         </Button>
         { Object.keys(props.taskSolution).length !== 0 && !editMode // Edit mode will change the button to "send solution"
-          ? <Button type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate }>
+          ? <Button type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ props.task.paid }>
             <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />
           </Button>
           : <Button type='primary' htmlFor='submit' variant='contained' color='primary' disabled={
