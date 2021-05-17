@@ -2,6 +2,7 @@ const PaymentMail = require('../mail/payment')
 const Promise = require('bluebird')
 const requestPromise = require('request-promise')
 const models = require('../../models')
+const comment = require('../bot/comment')
 
 module.exports = Promise.method(function orderUpdate (orderParameters) {
   return requestPromise({
@@ -50,6 +51,7 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
             // eslint-disable-next-line no-console
             console.log('send email task', task)
             if (orderData.paid) {
+              comment(orderData, task)
               PaymentMail.success(user, task, orderData.amount)
             }
             else {
