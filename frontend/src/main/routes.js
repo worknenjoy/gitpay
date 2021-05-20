@@ -25,14 +25,17 @@ export default props => (
       <Route exact path='/projects' component={ TaskExplorer } />
       <Route exact path='/organizations' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id' component={ TaskExplorer } />
+      <Route exact path='/organizations/:organization_id/:slug' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
-      <Route exact path='/organizations/:organization_id/projects/:project_id/:filter' component={ TaskExplorer } />
+      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug' component={ TaskExplorer } />
+      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter' component={ TaskExplorer } />
       <Route exact path='/tasks/:filter' component={ TaskExplorer } />
       <Route exact path='/team' component={ TeamContainer } />
       <Route exact path='/login' component={ LoginPage } />
       <Route exact path='/login/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
       <Route exact path='/task/:id' component={ TaskContainer } />
+      <Route exact path='/task/:id/:slug' component={ TaskContainer } />
       <Route exact path='/task/:id/orders' component={ TaskContainer } />
       <Route exact path='/task/:id/status' component={ TaskContainer } />
       <Route exact path='/task/:id/status/:status' component={ TaskContainer } />

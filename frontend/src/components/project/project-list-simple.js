@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip'
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
+import slugify from '@sindresorhus/slugify'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -113,7 +114,7 @@ export default function ProjectListSimple ({ listProjects, projects }) {
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
                   <Chip size='medium' label={ projectBountiesList(p.Tasks) } />
                   <Chip style={ { marginLeft: 10 } } size='medium' clickable onClick={ () => {
-                    window.location.href = '/#/organizations/' + p.OrganizationId + '/projects/' + p.id
+                    window.location.href = `/#/organizations/${p.OrganizationId}/${p.Organization.name}/projects/${p.id}/${slugify(p.name)}`
                     window.location.reload()
                   } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
                   />
