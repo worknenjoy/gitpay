@@ -13,6 +13,7 @@ import {
   Link,
   makeStyles
 } from '@material-ui/core'
+import slugify from '@sindresorhus/slugify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +31,13 @@ const useStyles = makeStyles((theme) => ({
 
 const OrganizationCard = ({ className, organization, ...rest }) => {
   const classes = useStyles()
+
+  const goToOrganization = (event, organization) => {
+    event.preventDefault()
+
+    window.location.href = `/#/organizations/${organization.id}/${slugify(organization.name)}`
+    window.location.reload()
+  }
 
   return (
     <Card
@@ -52,11 +60,7 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           gutterBottom
           variant='h6'
         >
-          <Link color='textPrimary' href={ '' } onClick={ (e) => {
-            e.preventDefault()
-            window.location.href = `/#/organizations/${organization.id}`
-            window.location.reload()
-          } }>
+          <Link color='textPrimary' href={ '' } onClick={ (e) => goToOrganization(e, organization) }>
             { organization.name }
           </Link>
         </Typography>
@@ -67,11 +71,11 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           variant='caption'
           style={ { display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 } }
         > by { ' ' }
-          { organization && <Link color='textSecondary' href={ '' } onClick={ (e) => {
-            e.preventDefault()
-            window.location.href = `/#/organizations/${organization.id}`
-            window.location.reload()
-          } }>{ organization.User.name || organization.User.username }</Link> }
+          { organization &&
+            <Link color='textSecondary' href={ '' } onClick={ (e) => goToOrganization(e, organization) }>
+              { organization.User.name || organization.User.username }
+            </Link>
+          }
         </Typography>
         <Typography
           align='center'
@@ -104,7 +108,7 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           >
             { organization.Projects && organization.Projects.map(p =>
               (<Chip key={ p.id } style={ { marginLeft: 10, marginBottom: 10 } } size='medium' clickable onClick={ () => {
-                window.location.href = '/#/organizations/' + organization.id + '/projects/' + p.id
+                window.location.href = `/#/organizations/${organization.id}/${organization.name}/projects/${p.id}/${slugify(p.name)}`
                 window.location.reload()
               } } label={ p.name }
               />)

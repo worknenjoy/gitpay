@@ -15,6 +15,7 @@ import {
   makeStyles,
   Link
 } from '@material-ui/core'
+import slugify from '@sindresorhus/slugify'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -46,6 +47,12 @@ const projectBountiesList = (data) => {
 const ProjectCard = ({ className, project, ...rest }) => {
   const classes = useStyles()
 
+  const goToProject = (event, project) => {
+    event.preventDefault()
+    window.location.href = `/#/organizations/${project.Organization.id}/${slugify(project.Organization.name)}/projects/${project.id}/${slugify(project.name)}`
+    window.location.reload()
+  }
+
   return (
     <Card
       className={ clsx(classes.root, className) }
@@ -76,11 +83,7 @@ const ProjectCard = ({ className, project, ...rest }) => {
           color='textSecondary'
 
         >
-          <Link href={ '' } onClick={ (e) => {
-            e.preventDefault()
-            window.location.href = `/#/organizations/${project.Organization.id}/projects/${project.id}`
-            window.location.reload()
-          } }>
+          <Link href={ '' } onClick={ (e) => goToProject(e, project) }>
             { project.name }
           </Link>
         </Typography>
@@ -93,7 +96,7 @@ const ProjectCard = ({ className, project, ...rest }) => {
         > by { ' ' }
           { project.Organization && <Link color='textSecondary' href={ '' } onClick={ (e) => {
             e.preventDefault()
-            window.location.href = `/#/organizations/${project.Organization.id}`
+            window.location.href = `/#/organizations/${project.Organization.id}/${slugify(project.Organization.name)}`
             window.location.reload()
           } }>{ project.Organization.name }</Link> }
         </Typography>
@@ -123,10 +126,7 @@ const ProjectCard = ({ className, project, ...rest }) => {
             className={ classes.statsItem }
             item
           >
-            <Chip style={ { marginLeft: 10 } } size='small' clickable onClick={ () => {
-              window.location.href = '/#/organizations/' + project.OrganizationId + '/projects/' + project.id
-              window.location.reload()
-            } } avatar={ <Avatar>{ project.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
+            <Chip style={ { marginLeft: 10 } } size='small' clickable onClick={ (e) => goToProject(e, project) } avatar={ <Avatar>{ project.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
             />
           </Grid>
         </Grid>
