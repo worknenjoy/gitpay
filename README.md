@@ -23,7 +23,8 @@ We offer a marketplace for contributors and projects that use git for on demand 
 * Companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
 
 ## Who is contributing
-[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/0)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/0)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/1)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/1)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/2)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/2)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/3)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/3)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/4)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/4)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/5)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/5)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/6)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/6)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/7)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/7)
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/worknenjoy/gitpay/graphs/contributors"><img src="https://opencollective.com/gitpay/contributors.svg?width=890&button=false" /></a>
 
 ### Join the team
 
@@ -161,13 +162,6 @@ Here you can start to learn how to create your first pull request and start to b
 - [Onamade Okikioluwa]( https://github.com/khoded)
 - [Basukinath Tiwari](https://github.com/basuki57)
 
-
-## Contributors
-
-### Code Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="https://github.com/worknenjoy/gitpay/graphs/contributors"><img src="https://opencollective.com/gitpay/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
 
