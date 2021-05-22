@@ -27,6 +27,7 @@ import {
   KeyboardArrowRight,
   LastPage as LastPageIcon
 } from '@material-ui/icons'
+import slugify from '@sindresorhus/slugify'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -173,8 +174,8 @@ class CustomPaginationActionsTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value })
   };
 
-  handleClickListItem = id => {
-    this.props.history.push('/task/' + id)
+  handleClickListItem = task => {
+    this.props.history.push(`/task/${task.id}/${slugify(task.title)}`)
   }
 
   goToProject = (e, id, organizationId) => {
@@ -253,7 +254,7 @@ class CustomPaginationActionsTable extends React.Component {
                       </TableCell>
                       <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
                         <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
-                          <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n.id) }>
+                          <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n) }>
                             { TextEllipsis(`${n.title || 'no title'}`, 30) }
                           </a>
                           <a target='_blank' href={ n.url }>

@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip'
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
+import slugify from '@material-ui/core'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
@@ -79,7 +80,7 @@ export default function OrganizationList ({ listOrganizations, organizations }) 
                 title={ <a
                   onClick={ (e) => {
                     e.preventDefault()
-                    window.location.href = '/#/organizations/' + o.id
+                    window.location.href = `/#/organizations/${o.id}/${slugify(o.name)}`
                     window.location.reload()
                   } }
                   href={ '' + o.id }>{ o.name }</a> }
@@ -99,7 +100,7 @@ export default function OrganizationList ({ listOrganizations, organizations }) 
                   </Typography>
                   { o.Projects && o.Projects.map(p =>
                     (<Chip style={ { marginLeft: 10, marginBottom: 10, flexWrap: 'wrap' } } size='medium' clickable onClick={ () => {
-                      window.location.href = '/#/organizations/' + o.id + '/projects/' + p.id
+                      window.location.href = `/#/organizations/${o.id}/${slugify(o.name)}/projects/${p.id}`
                       window.location.reload()
                     } } label={ p.name }
                     />)
