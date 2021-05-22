@@ -20,7 +20,7 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
   })
 
   if (fetchTaskSolutionData.isAuthorOfPR && fetchTaskSolutionData.isConnectedToGitHub && fetchTaskSolutionData.isIssueClosed && fetchTaskSolutionData.isPRMerged) {
-    if (!task.dataValues.paid) {
+    if (!task.dataValues.paid && !task.dataValues.transfer_id) {
       taskPayment({ taskId: task.dataValues.id, value: task.dataValues.value })
     }
 
