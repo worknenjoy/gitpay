@@ -25,6 +25,7 @@ import {
   SwapHoriz as TransferIcon,
   Receipt as ReceiptIcon
 } from '@material-ui/icons'
+import slugify from '@sindresorhus/slugify'
 
 import TaskPaymentCancel from '../task/task-payment-cancel'
 import TaskOrderDetails from '../task/order/task-order-details'
@@ -181,7 +182,7 @@ class Payments extends React.Component {
           ? (
             <Link href='' onClick={ (e) => {
               e.preventDefault()
-              window.location.href = '/#/task/' + issue.id
+              window.location.href = `/#/task/${issue.id}/${slugify(issue.title)}`
               window.location.reload()
             } }>{ issue.title }</Link>
           ) : (
