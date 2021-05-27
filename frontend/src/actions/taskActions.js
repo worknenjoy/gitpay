@@ -318,7 +318,7 @@ const createTask = (task, history) => {
 }
 
 const updateTask = task => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(updateTaskRequested())
     axios
       .put(api.API_URL + '/tasks/update', task)
@@ -343,7 +343,6 @@ const updateTask = task => {
         return dispatch(fetchTask(task.id))
       })
       .catch(error => {
-        // eslint-disable-next-line no-console
         if (error.response.data.type === 'StripeCardError') {
           dispatch(addNotification('actions.task.payment.notification.error'))
           dispatch(changeTaskTab(1))

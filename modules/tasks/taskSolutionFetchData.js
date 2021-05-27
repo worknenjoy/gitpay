@@ -57,5 +57,14 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
       isPRMerged: isPRMerged,
       isIssueClosed: isIssueClosed
     }
+  }).catch(err => {
+    // eslint-disable-next-line no-console
+    console.log(err)
+
+    if (err.statusCode === 404) {
+      throw new Error('PULL_REQUEST_NOT_FOUND')
+    }
+
+    throw new Error('COULD_NOT_FETCH_PULL_REQUEST_DATA')
   })
 })

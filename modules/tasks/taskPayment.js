@@ -26,7 +26,13 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
         include: [ models.User ]
       }).then(assign => {
         const user = assign.dataValues.User.dataValues
-        const transferGroup = task.transfer_group ? task.transfer_group : `task_${task.id}`
+
+        let transferGroup = null
+
+        if (!task.Order.couponId) {
+          transferGroup = task.transfer_group ? task.transfer_group : `task_${task.id}`
+        }
+
         const dest = user.account_id
         if (!dest) {
           TransferMail.paymentForInvalidAccount(user)

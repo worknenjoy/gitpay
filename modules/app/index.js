@@ -11,6 +11,7 @@ const routerOrganization = require('./routes/organization')
 const routerContact = require('./routes/contact')
 const routerTypes = require('./routes/types')
 const routerTaskSolution = require('./routes/taskSolutions')
+const routerCoupon = require('./routes/coupon')
 
 exports.init = (app) => {
   app.use('/', routerAuth)
@@ -24,4 +25,5 @@ exports.init = (app) => {
   app.use('/types', routerTypes)
   app.use('/contact', routerContact)
   app.use('/tasksolutions', routerTaskSolution)
+  app.use('/coupon', routerCoupon)
 }

@@ -3,12 +3,12 @@ const models = require('../../models')
 const taskSolutionFetchData = require('./taskSolutionFetchData')
 const taskPayment = require('./taskPayment')
 
-module.exports = Promise.method(function updateTaskSolution (taskSolution, taskSolutionId) {
+module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskSolutionId) {
   return models.TaskSolution.update(taskSolution, {
     where: { id: taskSolutionId }
   }).then(data => {
     if (!data) {
-      return new Error('Task Solution update failed.')
+      throw new Error('COULD_NOT_UPDATE_TASK_SOLUTION')
     }
 
     if (data) {
@@ -29,6 +29,10 @@ module.exports = Promise.method(function updateTaskSolution (taskSolution, taskS
               taskPayment({ taskId: taskData.dataValues.id, value: taskData.dataValues.value })
             }
           }
+        }).catch(err => {
+          // eslint-disable-next-line no-console
+          console.log(err)
+          throw err
         })
       })
     }
@@ -39,6 +43,7 @@ module.exports = Promise.method(function updateTaskSolution (taskSolution, taskS
   }).catch(err => {
     // eslint-disable-next-line no-console
     console.log(err)
-    throw err
+
+    throw new Error('COULD_NOT_UPDATE_TASK_SOLUTION')
   })
 })

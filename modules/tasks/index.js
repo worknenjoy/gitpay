@@ -17,8 +17,8 @@ const taskDeleteConfirmation = require('./taskDeleteConfirmation')
 const requestAssignedUser = require('./requestAssignedUser.js')
 const taskSolutionFetchData = require('./taskSolutionFetchData')
 const taskSolutionCreate = require('./taskSolutionCreate')
-const getTaskSolution = require('./getTaskSolution')
-const updateTaskSolution = require('./updateTaskSolution')
+const taskSolutionGet = require('./taskSolutionGet')
+const taskSolutionUpdate = require('./taskSolutionUpdate')
 
 module.exports = {
   taskExists,
@@ -40,6 +40,6 @@ module.exports = {
   requestAssignedUser,
   taskSolutionFetchData,
   taskSolutionCreate,
-  getTaskSolution,
-  updateTaskSolution
+  taskSolutionGet,
+  taskSolutionUpdate
 }

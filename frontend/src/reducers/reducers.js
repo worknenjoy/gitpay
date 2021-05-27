@@ -14,6 +14,7 @@ import { roles } from './userRoleReducer'
 import { organizations, organization } from './organizationsReducer'
 import { contact } from './contactReducer'
 import taskSolution from './taskSolutionReducer'
+import couponReducer from './couponReducer'
 
 const reducers = combineReducers({
   notification,
@@ -35,6 +36,7 @@ const reducers = combineReducers({
   organization,
   contact,
   taskSolutionReducer: taskSolution,
+  couponReducer: couponReducer,
   intl: intlReducer
 })
 
