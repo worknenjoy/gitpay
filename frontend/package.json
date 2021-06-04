@@ -62,7 +62,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@sindresorhus/slugify": "^2.1.0",
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.0",
     "babel-minify-webpack-plugin": "^0.3.1",
