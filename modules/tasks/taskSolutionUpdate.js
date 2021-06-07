@@ -25,7 +25,7 @@ module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskS
           taskId: taskSolution.taskId
         }).then(response => {
           if (response.isAuthorOfPR && response.isConnectedToGitHub && response.isIssueClosed && response.isPRMerged) {
-            if (!taskData.dataValues.paid) {
+            if (!taskData.dataValues.paid && !taskData.dataValues.transfer_id) {
               taskPayment({ taskId: taskData.dataValues.id, value: taskData.dataValues.value })
             }
           }

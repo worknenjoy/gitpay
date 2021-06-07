@@ -1328,7 +1328,7 @@ class Task extends Component {
                         transferId={ task.data.transfer_id }
                         assigned={ task.data.assigned }
                         assigns={ task.data.Assigns }
-                        orders={ task.data.orders }
+                        orders={ task.data.orders || task.data.Orders }
                         order={ order.data }
                         open={ this.state.taskPaymentDialog }
                         onClose={ this.handleTaskPaymentDialogClose }

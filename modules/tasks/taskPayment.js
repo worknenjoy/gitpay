@@ -24,12 +24,15 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
           id: task.assigned
         },
         include: [ models.User ]
-      }).then(assign => {
+      }).then(async assign => {
         const user = assign.dataValues.User.dataValues
 
         let transferGroup = null
 
-        if (!task.Order.couponId) {
+        const order = await models.Order.findOne({ where: { TaskId: task.id } })
+        const coupon = await models.Coupon.findOne({ where: { id: order.couponId } })
+
+        if (!coupon || (coupon && coupon.amount < 100)) {
           transferGroup = task.transfer_group ? task.transfer_group : `task_${task.id}`
         }
 

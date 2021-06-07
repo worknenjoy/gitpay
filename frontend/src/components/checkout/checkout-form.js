@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import {
@@ -32,6 +32,8 @@ const CheckoutForm = (props) => {
     coupon: '',
     couponApplied: false
   })
+
+  const { couponStoreState } = props
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
@@ -139,11 +141,19 @@ const CheckoutForm = (props) => {
     setCouponState({ ...couponState, couponApplied: false })
   }, [couponState.couponInput])
 
-  useMemo(() => {
-    if (props.couponStoreState.completed && Object.keys(props.couponStoreState.coupon).length > 0) {
+  const setCouponApplied = () => {
+    if (couponStoreState.completed && Object.keys(couponStoreState.coupon).length > 0) {
       setCouponState({ ...couponState, couponApplied: true })
     }
-  }, [props.couponStoreState])
+  }
+
+  const handleCouponApplied = useCallback(() => {
+    setCouponApplied()
+  }, [couponStoreState])
+
+  useEffect(() => {
+    handleCouponApplied()
+  }, [handleCouponApplied])
 
   const showCouponInput = () => {
     setCouponState({ ...couponState, couponInput: true })
@@ -196,7 +206,7 @@ const CheckoutForm = (props) => {
             handleCouponInput={ handleCouponInput }
             showCouponInput={ showCouponInput }
             applyCoupon={ applyCoupon }
-            couponStoreState={ props.couponStoreState.coupon } />
+            couponStoreState={ couponStoreState.coupon } />
         </Grid>
         <Grid item xs={ 12 }>
           <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
@@ -210,8 +220,8 @@ const CheckoutForm = (props) => {
               disabled={ checkoutFormState.paymentRequested }
             >
               {
-                (props.couponStoreState.coupon.orderPrice !== null || props.couponStoreState.coupon.orderPrice !== undefined) && props.couponStoreState.coupon.orderPrice >= 0 && couponState.couponApplied
-                  ? <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: `$${props.couponStoreState.coupon.orderPrice}` } } />
+                (couponStoreState.coupon.orderPrice !== null || couponStoreState.coupon.orderPrice !== undefined) && couponStoreState.coupon.orderPrice >= 0 && couponState.couponApplied
+                  ? <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: `$${couponStoreState.coupon.orderPrice}` } } />
                   : <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: props.formatedPrice } } />
               }
             </Button>
