@@ -60,7 +60,7 @@
     "intl": "^1.2.5",
     "invert-color": "^2.0.0",
     "ip": "^1.1.5",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^8.1.1",
     "mailchimp-api-v3": "^1.12.1",
     "moment": "^2.22.2",
