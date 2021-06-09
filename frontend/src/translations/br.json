@@ -155,6 +155,8 @@
   "task.solution.dialog.create.error": "Erro interno ao tentar criar a sua solução para a tarefa",
   "task.solution.dialog.update.error": "Erro interno ao tentar atualizar a sua solução para a tarefa",
   "task.solution.dialog.get.error": "Erro interno ao tentar buscar a informação da sua solução para a tarefa",
+  "task.solution.dialog.get.notFound": "A solução da tarefa não foi encontrada",
+  "task.solution.dialog.pullRequest.notFound": "Pull Request não encontrado",
   "task.list.lable.allTasks": "Todas as tarefas",
   "task.status.createdByMe": "Criadas por mim",
   "tasks.status.interested": "Estou interessado",
@@ -483,5 +485,8 @@
   "task.report.form.cancel": "Cancelar",
   "task.report.form.report": "Relatório",
   "actions.task.report.success": "Tarefa relatada com sucesso",
-  "actions.task.report.error": "Erro na tarefa de relatório"
+  "actions.task.report.error": "Erro na tarefa de relatório",
+  "coupon.notFound": "Cupom não encontrado",
+  "coupon.failed": "Falha ao utilizar o cupom",
+  "coupon.maxTimesExceeded": "Excedida a quantidade máxima de uso do cupom"
 }

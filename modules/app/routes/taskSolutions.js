@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 require('../../authenticationHelpers')
 const controllers = require('../controllers/taskSolution')
-// const secure = require('./secure')
+const secure = require('./secure')
 
-// router.use(secure)
+router.use(secure)
 
 router.get('/', controllers.getTaskSolution)
 router.get('/fetch', controllers.fetchPullRequestData)

@@ -7,15 +7,18 @@ module.exports = Promise.method(function orderTransfer (transferParams, transfer
     .findOne(
       { where: { id: transferParams.id }, include: [models.User, models.Task] }
     )
-    .then((order) => {
+    .then(async (order) => {
       if (!order) throw new Error('no order found')
       if (transferParams.id && transferData.id) {
         const transferOrderId = transferParams.id
         const transferTaskId = transferData.id
+
+        const coupon = await models.Coupon.findOne({ where: { id: order.couponId } })
+
         return models.Order
           .update({
             TaskId: transferTaskId,
-            transfer_group: `task_${order.Task.dataValues.id}`
+            transfer_group: (!coupon || (coupon && coupon.amount < 100)) ? `task_${order.Task.dataValues.id}` : null
           }, {
             where: {
               id: transferOrderId

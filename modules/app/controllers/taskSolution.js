@@ -1,13 +1,13 @@
 const Tasks = require('../../tasks')
 
 exports.getTaskSolution = (req, res) => {
-  Tasks.getTaskSolution(req.query.taskId, req.query.userId)
+  Tasks.taskSolutionGet(req.query.taskId, req.query.userId)
     .then(data => {
       res.send(data)
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log('taskSolutionFetchData error on controller', error)
-      res.status(error.StatusCodeError || 400).send(error)
+      console.log('taskSolutionGet error on controller', error)
+      res.status(error.StatusCodeError || 400).send({ error: error.message })
     })
 }
 
@@ -25,7 +25,7 @@ exports.fetchPullRequestData = (req, res) => {
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log('taskSolutionFetchData error on controller', error)
-      res.status(error.StatusCodeError || 400).send(error)
+      res.status(error.StatusCodeError || 400).send({ error: error.message })
     })
 }
 
@@ -36,16 +36,16 @@ exports.createTaskSolution = (req, res) => {
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log('taskSolutionCreate error on controller', error)
-      res.status(error.StatusCodeError || 400).send(error)
+      res.status(error.StatusCodeError || 400).send({ error: error.message })
     })
 }
 
 exports.updateTaskSolution = (req, res) => {
-  Tasks.updateTaskSolution(req.body, req.params.id).then(data => {
+  Tasks.taskSolutionUpdate(req.body, req.params.id).then(data => {
     res.send(data)
   }).catch(error => {
     // eslint-disable-next-line no-console
-    console.log('updateTaskSolution error on controller', error)
-    res.status(error.StatusCodeError || 400).send(error)
+    console.log('taskSolutionUpdate error on controller', error)
+    res.status(error.StatusCodeError || 400).send({ error: error.message })
   })
 }
