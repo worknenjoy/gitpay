@@ -471,6 +471,7 @@ describe('webhooks', () => {
                       include: [models.Task]
                     }).then(orderFinal => {
                       expect(orderFinal.dataValues.paid).to.equal(true)
+                      expect(orderFinal.dataValues.status).to.equal('succeeded')
                       expect(orderFinal.dataValues.source).to.equal('ch_1IlAjBBrSjgsps2DLjTdMXwJ')
                       expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
                       done()
