@@ -139,6 +139,10 @@ on front-end and use the React Intl (https://formatjs.io/docs/react-intl/) libra
 ##### Development environment
 - Run `docker-compose up`
 Then you can access at http://localhost:8082
+
++### First timers
+I want to contribute
+
 ##### Test environment
 - Run `docker-compose -f docker-compose.test.yml up`
 
