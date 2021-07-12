@@ -20,12 +20,19 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
   })
 
   if (fetchTaskSolutionData.isAuthorOfPR && fetchTaskSolutionData.isConnectedToGitHub && fetchTaskSolutionData.isIssueClosed && fetchTaskSolutionData.isPRMerged) {
-    if (!task.dataValues.paid) {
+    if (!task.dataValues.paid && !task.dataValues.transfer_id) {
       taskPayment({ taskId: task.dataValues.id, value: task.dataValues.value })
     }
 
-    return models.TaskSolution.create(taskSolutionParams)
+    return models.TaskSolution.create(taskSolutionParams).then(data => {
+      return data.dataValues
+    }).catch(err => {
+      // eslint-disable-next-line no-console
+      console.log(err)
+
+      throw new Error('COULD_NOT_CREATE_TASK_SOLUTION')
+    })
   }
 
-  return new Error('Could not create task solution')
+  throw new Error('COULD_NOT_CREATE_TASK_SOLUTION')
 })

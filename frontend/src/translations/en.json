@@ -179,6 +179,8 @@
   "task.solution.dialog.create.error": "Error when tried to create your tasks solution",
   "task.solution.dialog.update.error": "Error when tried to update your task solution",
   "task.solution.dialog.get.error": "Error when tried to fetch the information of your task solution",
+  "task.solution.dialog.get.notFound": "Task solution not found",
+  "task.solution.dialog.pullRequest.notFound": "Pull Request not found",
   "task.list.lable.allTasks": "All tasks",
   "task.status.createdByMe": "Created by me",
   "tasks.status.interested": "I'm interested",
@@ -574,5 +576,8 @@
   "task.report.form.cancel": "Cancel",
   "task.report.form.report": "Report",
   "actions.task.report.success": "Task successfuly reported",
-  "actions.task.report.error": "Error in reporting task"
+  "actions.task.report.error": "Error in reporting task",
+  "coupon.notFound": "Coupon not found",
+  "coupon.failed": "Failed to use coupon",
+  "coupon.maxTimesExceeded": "Coupon max times exceeded"
 }

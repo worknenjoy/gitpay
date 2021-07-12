@@ -1,14 +1,18 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function getTaskSolution (taskId, userId) {
+module.exports = Promise.method(function taskSolutionGet (taskId, userId) {
   return models.TaskSolution.findOne({
     where: { taskId: taskId, userId: userId }
   }).then(data => {
+    if (!data) {
+      throw new Error('TASK_SOLUTION_NOT_FOUND')
+    }
     return data
   }).catch(err => {
     // eslint-disable-next-line no-console
     console.log(err)
-    return {}
+
+    throw new Error('COULD_NOT_GET_TASK_SOLUTION')
   })
 })

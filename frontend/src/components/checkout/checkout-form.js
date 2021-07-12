@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import {
@@ -10,84 +10,92 @@ import { injectStripe } from 'react-stripe-elements'
 
 import CardSection from './card-section'
 import UserSection from './user-section'
+import Coupon from '../coupon/coupon'
 
-class CheckoutForm extends Component {
-  constructor (props) {
-    super(props)
+const CheckoutForm = (props) => {
+  const [checkoutFormState, setCheckoutFormState] = useState({
+    email: null,
+    fullname: null,
+    authenticated: false,
+    userId: null,
+    error: {
+      fullname: false,
+      email: false,
+      payment: false,
+      message: 'loading'
+    },
+    paymentRequested: false
+  })
 
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
+  const [couponState, setCouponState] = useState({
+    couponInput: false,
+    coupon: '',
+    couponApplied: false
+  })
 
-    this.state = {
-      email: null,
-      fullname: null,
-      authenticated: false,
-      userId: null,
-      error: {
-        fullname: false,
-        email: false,
-        payment: false,
-        message: 'loading'
-      },
-      paymentRequested: false
-    }
-  }
+  const { couponStoreState } = props
 
-  handleSubmit (ev) {
+  const handleSubmit = (ev) => {
     ev.preventDefault()
 
-    this.setState({ paymentRequested: true })
+    setCheckoutFormState({ ...checkoutFormState, paymentRequested: true })
 
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
-    if (!this.state.fullname) {
-      this.setState({ error: { fullname: true } })
+    if (!checkoutFormState.fullname) {
+      setCheckoutFormState({ ...checkoutFormState, error: { fullname: true } })
       return
     }
     else {
-      this.setState({ error: { fullname: false } })
+      setCheckoutFormState({ ...checkoutFormState, error: { fullname: false } })
     }
 
-    if (!this.state.email) {
-      this.setState({ error: { email: true } })
+    if (!checkoutFormState.email) {
+      setCheckoutFormState({ ...checkoutFormState, error: { email: true } })
     }
     else {
-      this.setState({ error: { email: false } })
+      setCheckoutFormState({ ...checkoutFormState, error: { email: false } })
     }
-    if (!this.props.stripe) {
+    if (!props.stripe) {
       return
     }
-    this.props.stripe
-      .createToken({ name: this.state.fullname })
+    props.stripe
+      .createToken({ name: checkoutFormState.fullname })
       .then(({ token }) => {
         if (token) {
           try {
-            this.props.onPayment({
-              id: this.props.task,
+            props.onPayment({
+              id: props.task,
               Orders: {
                 source_id: token.id,
                 currency: 'usd',
                 provider: 'stripe',
-                amount: this.props.price,
-                email: this.state.email,
-                userId: this.state.userId,
-                plan: this.props.plan
-              }
+                amount: props.price,
+                email: checkoutFormState.email,
+                userId: checkoutFormState.userId,
+                plan: props.plan
+              },
+              coupon: couponState.couponApplied ? {
+                code: couponState.coupon ? couponState.coupon : null,
+                originalOrderPrice: props.price
+              } : null
             })
-            this.props.onClose()
+            props.onClose()
           }
           catch (e) {
-            this.props.addNotification(
+            props.addNotification(
               'payment.message.error'
             )
-            this.setState({
+            setCheckoutFormState({
+              ...checkoutFormState,
               paymentRequested: false
             })
           }
         }
         else {
-          this.props.addNotification('payment.message.error')
-          this.setState({
+          props.addNotification('payment.message.error')
+          setCheckoutFormState({
+            ...checkoutFormState,
             paymentRequested: false
           })
         }
@@ -97,90 +105,131 @@ class CheckoutForm extends Component {
         console.log('error to create token')
         // eslint-disable-next-line no-console
         console.log(e)
-        this.props.addNotification('payment.message.error')
-        this.setState({
+        props.addNotification('payment.message.error')
+        setCheckoutFormState({
+          ...checkoutFormState,
           paymentRequested: false
         })
       })
 
     // However, this line of code will do the same thing:
-    // this.props.stripe.createToken({type: 'card', name: 'Jenny Rosen'});
+    // props.stripe.createToken({type: 'card', name: 'Jenny Rosen'});
   }
 
-  onChange (ev) {
+  const onChange = (ev) => {
     ev.preventDefault()
     let formData = {}
     formData[ev.target.name] = ev.target.value
-    this.setState(formData)
-    this.setState({ paymentRequested: false })
+    setCheckoutFormState({ ...checkoutFormState, ...formData, paymentRequested: false })
   }
 
-  componentDidMount () {
-    const { user } = this.props
+  useEffect(() => {
+    const { user } = props
 
     if (user && user.id) {
-      this.setState({
+      setCheckoutFormState({
+        ...checkoutFormState,
         authenticated: true,
         fullname: user.name,
         email: user.email,
         userId: user.id
       })
     }
+  }, [])
+
+  useEffect(() => {
+    setCouponState({ ...couponState, couponApplied: false })
+  }, [couponState.couponInput])
+
+  const setCouponApplied = () => {
+    if (couponStoreState.completed && Object.keys(couponStoreState.coupon).length > 0) {
+      setCouponState({ ...couponState, couponApplied: true })
+    }
   }
 
-  render () {
-    const logged = this.state.authenticated
-    const { user } = this.props
+  const handleCouponApplied = useCallback(() => {
+    setCouponApplied()
+  }, [couponStoreState])
 
-    return (
-      <form
-        onSubmit={ this.handleSubmit }
-        onChange={ this.onChange }
-        style={ { marginTop: 20 } }
-      >
-        <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
-            { logged ? (
-              <div>
-                { user && user.name ? (
-                  <div>
-                    <Typography variant='caption'>
-                      <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
-                    </Typography>
-                    <Typography variant='body1'>
-                      { `${this.state.fullname} (${this.state.email})` }
-                    </Typography>
-                  </div>
-                ) : (
-                  <UserSection error={ this.state.error } name={ this.state.fullname } email={ this.state.email } />
-                ) }
-              </div>
-            ) : (
-              <UserSection error={ this.state.error } />
-            ) }
-          </Grid>
-          <Grid item xs={ 12 }>
-            <CardSection { ...this.props } />
-          </Grid>
-          <Grid item xs={ 12 }>
-            <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
-              <Button color='primary' onClick={ this.props.onClose }>
-                <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
-              </Button>
-              <Button
-                type='submit'
-                variant='contained'
-                color='secondary'
-                disabled={ this.state.paymentRequested }
-              >
-                <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: this.props.formatedPrice } } />
-              </Button>
+  useEffect(() => {
+    handleCouponApplied()
+  }, [handleCouponApplied])
+
+  const showCouponInput = () => {
+    setCouponState({ ...couponState, couponInput: true })
+  }
+
+  const handleCouponInput = (event) => {
+    setCouponState({ ...couponState, coupon: event.target.value })
+  }
+
+  const applyCoupon = () => {
+    props.validateCoupon(couponState.coupon, props.price)
+  }
+
+  const logged = checkoutFormState.authenticated
+  const { user } = props
+
+  return (
+    <form
+      onSubmit={ handleSubmit }
+      onChange={ onChange }
+      style={ { marginTop: 20 } }
+    >
+      <Grid container spacing={ 3 }>
+        <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
+          { logged ? (
+            <div>
+              { user && user.name ? (
+                <div>
+                  <Typography variant='caption'>
+                    <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
+                  </Typography>
+                  <Typography variant='body1'>
+                    { `${checkoutFormState.fullname} (${checkoutFormState.email})` }
+                  </Typography>
+                </div>
+              ) : (
+                <UserSection error={ checkoutFormState.error } name={ checkoutFormState.fullname } email={ checkoutFormState.email } />
+              ) }
             </div>
-          </Grid>
+          ) : (
+            <UserSection error={ checkoutFormState.error } />
+          ) }
         </Grid>
-      </form>
-    )
-  }
+        <Grid item xs={ 12 }>
+          <CardSection { ...props } />
+        </Grid>
+        <Grid item xs={ 12 }>
+          <Coupon
+            couponState={ couponState }
+            handleCouponInput={ handleCouponInput }
+            showCouponInput={ showCouponInput }
+            applyCoupon={ applyCoupon }
+            couponStoreState={ couponStoreState.coupon } />
+        </Grid>
+        <Grid item xs={ 12 }>
+          <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
+            <Button color='primary' onClick={ props.onClose }>
+              <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
+            </Button>
+            <Button
+              type='submit'
+              variant='contained'
+              color='secondary'
+              disabled={ checkoutFormState.paymentRequested }
+            >
+              {
+                (couponStoreState.coupon.orderPrice !== null || couponStoreState.coupon.orderPrice !== undefined) && couponStoreState.coupon.orderPrice >= 0 && couponState.couponApplied
+                  ? <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: `$${couponStoreState.coupon.orderPrice}` } } />
+                  : <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: props.formatedPrice } } />
+              }
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
+    </form>
+  )
 }
 
 CheckoutForm.propTypes = {
