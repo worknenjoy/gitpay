@@ -10,6 +10,7 @@ const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
 // const userOrganizations = require('../users/userOrganizations')
 const project = require('../projectHelpers')
+const issueAddedComment = require('../bot/issueAddedComment')
 
 module.exports = Promise.method(async function taskBuilds (taskParameters) {
   const repoUrl = taskParameters.url
@@ -80,6 +81,7 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
                 })
                 */
               Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.id} from ${userData.email} was created just now`)
+              issueAddedComment(task)
               return { ...taskData, ProjectId: taskData.ProjectId }
             })
         })
