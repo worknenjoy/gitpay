@@ -12,6 +12,7 @@ const load = require('./modules/app')
 const i18n = require('i18n')
 
 // const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid } = require('./cron')
+const { weeklyJobBountiesClosedNotPaid } = require('./cron')
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
@@ -37,7 +38,7 @@ app.use(i18n.init)
 // dailyJob.start()
 // weeklyJob.start()
 // weeklyJobLatest.start()
-// weeklyJobBountiesClosedNotPaid.start();
+weeklyJobBountiesClosedNotPaid.start();
 
 app.use(passport.initialize())
 app.use(passport.session())
