@@ -6,6 +6,7 @@ const DeadlineMail = require('./modules/mail/deadline')
 const TaskMail = require('./modules/mail/task')
 const OrderDetails = require('./modules/orders/orderDetails')
 const OrderCancel = require('./modules/orders/orderCancel')
+const bountyClosedNotPaidComment = require('./modules/bot/bountyClosedNotPaidComment')
 
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
@@ -79,7 +80,38 @@ const TaskCron = {
       })
     }
     return tasks
-  }
+  },
+  weeklyBountiesClosedNotPaid: async () => {
+    const tasks = await models.Task.findAll({
+      where: {
+        value: {
+          $gt: 0
+        },
+        status: {
+          $eq: 'closed'
+        },
+        paid: {
+          $not: true
+        }
+      },
+      include: [models.User]
+    })
+    if (tasks[0]) {
+      tasks.map(async t => {
+        let userInformation = {}
+        if (t.assigned) {
+          if (t.dataValues && t.assigned) {
+            const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
+            if (userAssigned[0].dataValues && userAssigned[0].dataValues.User.provider === 'github') {
+              userInformation = userAssigned[0].dataValues.User
+            }
+          }
+        }
+        bountyClosedNotPaidComment(t, userInformation)
+      })
+    }
+    return tasks
+  },
 }
 
 const OrderCron = {
@@ -140,4 +172,11 @@ const weeklyJobLatest = new CronJob({
   }
 })
 
-module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron }
+const weeklyJobBountiesClosedNotPaid = new CronJob({
+  cronTime: '5 8 * * 0',
+  onTick: () => {
+    TaskCron.weeklyBountiesClosedNotPaid()
+  }
+})
+
+module.exports = { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid, TaskCron, OrderCron }

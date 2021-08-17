@@ -23,10 +23,6 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
         requestedCapabilities.push('card_payments')
       }
 
-      if (userParameters.country !== 'GB') {
-        requestedCapabilities.push('legacy_payments')
-      }
-
       return stripe.accounts.create({
         type: 'custom',
         country: userParameters.country || 'US',

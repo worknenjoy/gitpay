@@ -16,6 +16,8 @@ const IssueClosedMail = require('../../mail/issueClosed')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
+const chargeSucceeded = require('../../webhooks/chargeSucceeded')
+
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
   not_sent_to_network: 'Hight risk card, please provide all the information'
@@ -377,53 +379,7 @@ exports.updateWebhook = (req, res) => {
           })
         break
       case 'charge.succeeded':
-        return models.Order.update(
-          {
-            paid: paid,
-            status: status
-          },
-          {
-            where: {
-              source_id: event.data.object.source.id,
-              source: event.data.object.id
-            },
-            returning: true
-          }
-        )
-          .then(order => {
-            if (order[0]) {
-              return models.User.findOne({
-                where: {
-                  id: order[1][0].dataValues.userId
-                }
-              })
-                .then(user => {
-                  if (user) {
-                    if (paid && status === 'succeeded') {
-                      const language = user.language || 'en'
-                      i18n.setLocale(language)
-                      SendMail.success(
-                        user.dataValues,
-                        i18n.__('mail.webhook.payment.update.subject'),
-                        i18n.__('mail.webhook.payment.approved.message', {
-                          amount: event.data.object.amount / 100
-                        })
-                      )
-                    }
-                  }
-
-                  return res.json(req.body)
-                })
-                .catch(e => {
-                  return res.status(400).send(e)
-                })
-            }
-          })
-          .catch(e => {
-            return res.status(400).send(e)
-          })
-
-        break
+        return chargeSucceeded(event, paid, status, req, res)
       case 'charge.failed':
         return models.Order.update(
           {

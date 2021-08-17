@@ -194,6 +194,42 @@ describe('webhooks', () => {
         })
     })
 
+    it('should create the order when a webhook charge.succeeded is triggered and the order does not exist', done => {
+      models.User.build({ email: 'teste@mail.com', password: 'teste' })
+        .save()
+        .then(user => {
+          models.Task.build({
+            id: 25,
+            url: 'https://github.com/worknenjoy/truppie/issues/99',
+            provider: 'github',
+            userId: user.dataValues.id
+          })
+            .save()
+            .then(() => {
+              agent
+                .post('/webhooks')
+                .send(chargeData.success)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.statusCode).to.equal(200)
+                  expect(res.body).to.exist
+                  expect(res.body.id).to.equal(
+                    'evt_1CeLZlBrSjgsps2DYpOlFCuW'
+                  )
+                  models.Order.findById(chargeData.success.data.object.metadata.order_id).then(o => {
+                    expect(o.dataValues.source).to.equal(
+                      'ch_1CeLZkBrSjgsps2DCNBQmnLA'
+                    )
+                    expect(o.dataValues.paid).to.equal(true)
+                    expect(o.dataValues.status).to.equal('succeeded')
+                    done()
+                  })
+                })
+            })
+        })
+    })
+
     xit('should update the order when a webhook charge.failed is triggered', done => {
       models.User.build({ email: 'teste@mail.com', password: 'teste' })
         .save()
