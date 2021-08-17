@@ -179,7 +179,6 @@
   "task.solution.dialog.create.error": "Error when tried to create your tasks solution",
   "task.solution.dialog.update.error": "Error when tried to update your task solution",
   "task.solution.dialog.get.error": "Error when tried to fetch the information of your task solution",
-  "task.solution.dialog.get.notFound": "Task solution not found",
   "task.solution.dialog.pullRequest.notFound": "Pull Request not found",
   "task.list.lable.allTasks": "All tasks",
   "task.status.createdByMe": "Created by me",

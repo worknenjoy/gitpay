@@ -22,7 +22,6 @@ const UPDATE_TASK_SOLUTION_ERROR = 'UPDATE_TASK_SOLUTION_ERROR'
 const CLEAN_PULL_REQUEST_DATA_STATE = 'CLEAN_PULL_REQUEST_DATA_STATE'
 
 const ERRORS = {
-  'TASK_SOLUTION_NOT_FOUND': 'task.solution.dialog.get.notFound',
   'COULD_NOT_GET_TASK_SOLUTION': 'task.solution.dialog.get.error',
   'COULD_NOT_UPDATE_TASK_SOLUTION': 'task.solution.dialog.update.error',
   'COULD_NOT_CREATE_TASK_SOLUTION': 'task.solution.dialog.create.error',
@@ -51,7 +50,7 @@ const getTaskSolution = (userId, taskId) => {
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))
-        return dispatch(getTaskSolutionError(JSON.parse(error.response.data.error)))
+        return dispatch(getTaskSolutionError(error.response.data.error))
       }
 
       dispatch(addNotification(ERRORS['COULD_NOT_GET_TASK_SOLUTION']))
@@ -87,7 +86,7 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, userId, task
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))
-        return dispatch(fetchPullRequestDataError(JSON.parse(error.response.data.error)))
+        return dispatch(fetchPullRequestDataError(error.response.data.error))
       }
 
       dispatch(addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
@@ -113,7 +112,7 @@ const createTaskSolution = (taskSolution) => {
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))
-        return dispatch(createTaskSolutionError(JSON.parse(error.response.data.error)))
+        return dispatch(createTaskSolutionError(error.response.data.error))
       }
 
       dispatch(addNotification(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION']))
@@ -143,7 +142,7 @@ const updateTaskSolution = ({ taskSolutionId, pullRequestURL, userId, taskId }) 
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))
-        return dispatch(updateTaskSolutionError(JSON.parse(error.response.data.error)))
+        return dispatch(updateTaskSolutionError(error.response.data.error))
       }
 
       dispatch(addNotification(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION']))

@@ -155,7 +155,6 @@
   "task.solution.dialog.create.error": "Erro interno ao tentar criar a sua solução para a tarefa",
   "task.solution.dialog.update.error": "Erro interno ao tentar atualizar a sua solução para a tarefa",
   "task.solution.dialog.get.error": "Erro interno ao tentar buscar a informação da sua solução para a tarefa",
-  "task.solution.dialog.get.notFound": "A solução da tarefa não foi encontrada",
   "task.solution.dialog.pullRequest.notFound": "Pull Request não encontrado",
   "task.list.lable.allTasks": "Todas as tarefas",
   "task.status.createdByMe": "Criadas por mim",
