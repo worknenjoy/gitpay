@@ -6,8 +6,9 @@ module.exports = Promise.method(function taskSolutionGet (taskId, userId) {
     where: { taskId: taskId, userId: userId }
   }).then(data => {
     if (!data) {
-      throw new Error('TASK_SOLUTION_NOT_FOUND')
+      return {}
     }
+
     return data
   }).catch(err => {
     // eslint-disable-next-line no-console
