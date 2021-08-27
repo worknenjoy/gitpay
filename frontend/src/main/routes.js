@@ -15,6 +15,7 @@ import LoginPageContainer from '../containers/login-page'
 import FourOFour from '../components/FourOFour.js'
 import LandingPage from '../components/welcome/landing-page'
 import Stats from '../components/Stats/Stats-main-page'
+import TaskListUser from '../components/task/task-list-user'
 
 export default props => (
   <HashRouter>
@@ -27,6 +28,7 @@ export default props => (
       <Route exact path='/organizations/:organization_id' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id/:slug' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
+      <Route exact path='/organizations/:organization_id/projects/:project_id/:filter' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter' component={ TaskExplorer } />
       <Route exact path='/tasks/:filter' component={ TaskExplorer } />
@@ -51,6 +53,7 @@ export default props => (
         path='/task/:id/order/:order_id/status/:status'
         component={ TaskOrdersContainer }
       />
+      <Route exact path='/:username' component={ TaskListUser } />
       <Route path='/404' component={ FourOFour } />
       <Route component={ FourOFour } />
     </Switch>
