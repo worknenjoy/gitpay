@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import UserOrganizationTree from '../components/profile/user-organization-tree'
 import { listTasks } from '../actions/taskActions'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn.logged,
-    user: state.loggedIn.user,
+    user: getUser(state),
     tasks: state.tasks
   }
 }

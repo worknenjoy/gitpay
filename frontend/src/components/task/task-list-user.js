@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Page } from 'app/styleguide/components/Page'
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
@@ -19,32 +19,31 @@ import {
 import {
   Redeem as RedeemIcon,
   MonetizationOn as MoneyIcon,
-  SupervisedUserCircle as ContributionIcon
+  SupervisedUserCircle as ContributionIcon,
 } from '@material-ui/icons'
+import ProfileHead from '../../containers/profile-head'
 
-const styles = () => ({
-  root: {
-    flexGrow: 1
-  },
+const styles = theme => ({
+  rootTabs: {
+    marginRight: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    backgroundColor: theme.palette.primary.light
+  }
 })
 
 const messages = defineMessages({
-  allTasks: {
-    id: 'task.list.lable.allPublicTasks',
-    defaultMessage: 'All public issues available'
+  issuesCreated: {
+    id: 'task.list.lable.issuesCreated',
+    defaultMessage: 'All issues created'
   },
-  allPublicTasksWithBounties: {
-    id: 'task.list.lable.allPublicTasksWithBounties',
-    defaultMessage: 'Issues with bounties'
+  issuesSupported: {
+    id: 'task.list.lable.issuesSupported',
+    defaultMessage: 'Issues supported'
   },
-  allPublicTasksNoBounties: {
-    id: 'task.list.lable.allPublicTasksNoBounties',
-    defaultMessage: 'Issues for contribution'
+  issuesList: {
+    id: 'task.list.lable.issuesList',
+    defaultMessage: 'Issues list'
   },
-  assignedToMeTasks: {
-    id: 'task.status.assigned',
-    defaultMessage: 'Assigned to me'
-  }
 })
 
 const TaskListUser = (props) => {
@@ -55,9 +54,15 @@ const TaskListUser = (props) => {
     loading: true
   })
 
-  useLayoutEffect(() => {
-    setTaskListState({ ...taskListState, loading: false })
-  }, [props.match.params])
+  useEffect(() => {
+    try {
+      const userId = props.match.params.usernameId.split('-')[0]
+
+      props.listTasks({ userId: userId })
+    }
+    catch (err) {
+    }
+  }, [])
 
   // useEffect(() => {
   //   async function fetchData () {
@@ -110,6 +115,9 @@ const TaskListUser = (props) => {
       <Page>
         <TopBarContainer />
         <Container fixed maxWidth='lg'>
+          <ProfileHead />
+        </Container>
+        <Container fixed maxWidth='lg'>
           <Grid container className={ classes.root }>
             <Grid item xs={ 12 } md={ 12 }>
               <div className={ classes.rootTabs }>
@@ -124,24 +132,23 @@ const TaskListUser = (props) => {
                   >
                     <Tab
                       value={ 0 }
-                      label={ props.intl.formatMessage(messages.allTasks) }
+                      label={ props.intl.formatMessage(messages.issuesCreated) }
                       icon={ <RedeemIcon /> }
                     />
                     <Tab
                       value={ 1 }
-                      label={ props.intl.formatMessage(messages.allPublicTasksWithBounties) }
+                      label={ props.intl.formatMessage(messages.issuesSupported) }
                       icon={ <MoneyIcon /> }
                     />
                     <Tab
                       value={ 2 }
-                      label={ props.intl.formatMessage(messages.allPublicTasksNoBounties) }
+                      label={ props.intl.formatMessage(messages.issuesList) }
                       icon={ <ContributionIcon /> }
                     />
                   </Tabs>
                 </AppBar>
                 <TabContainer>
-                  <CustomPaginationActionsTable tasks={ { data: [{}] } } />
-                  { /* <CustomPaginationActionsTable tasks={ props.tasks } /> */ }
+                  <CustomPaginationActionsTable tasks={ props.tasks } />
                 </TabContainer>
               </div>
             </Grid>

@@ -4,7 +4,8 @@ import TaskList from '../components/task/task-list'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { fetchProject, listProjects } from '../actions/projectActions'
 import { fetchOrganization } from '../actions/organizationsActions'
-import { getFilteredTasks, getUser, getProject, getOrganization } from '../selectors/tasks'
+import { getFilteredTasks, getProject, getOrganization } from '../selectors/tasks'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, props) => {
   return {
