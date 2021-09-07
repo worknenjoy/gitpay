@@ -12,5 +12,9 @@ export const profileReducer = (state = { data: { }, completed: true, error: {} }
       return { ...state, completed: true, data: action.data, error: {} }
     case GET_USER_TYPES_ERROR:
       return { ...state, completed: true, error: action.error }
+    default:
+      return state
   }
 }
+
+export default profileReducer

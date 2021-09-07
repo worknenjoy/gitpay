@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ProfileHead from '../components/profile/profile-head'
-import { getUserTypes } from '../actions/userActions'
+import { getUserTypes } from '../actions/profileActions'
 
 const mapStateToProps = state => {
   return {

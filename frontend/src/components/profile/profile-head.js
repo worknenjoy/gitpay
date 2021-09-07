@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useEffect } from 'react'
 import nameInitials from 'name-initials'
 
 import {
@@ -11,6 +11,7 @@ import {
 import {
   Person as PersonIcon
 } from '@material-ui/icons'
+import { withRouter } from 'react-router'
 
 const logoGithub = require('../../images/github-logo.png')
 
@@ -43,8 +44,11 @@ const styles = theme => ({
 const ProfileHead = (props) => {
   const { classes, profile } = props
 
-  const fetchProfile = useCallback(() => {
-    props.getUserTypes(props.match.params.split('-')[0])
+  useEffect(() => {
+    const userId = props.match.params.usernameId.split('-')[0]
+    if (!isNaN(userId)) {
+      props.getUserTypes(userId)
+    }
   }, [props.match.params])
 
   return (
@@ -87,7 +91,7 @@ const ProfileHead = (props) => {
         </Typography>
       </div>
       <div>
-        { user && profile.Types && profile.Types.map(r => {
+        { profile && profile.Types && profile.Types.map(r => {
           return (
             <Chip
               style={ { marginRight: 10 } }
@@ -100,4 +104,4 @@ const ProfileHead = (props) => {
   )
 }
 
-export default withStyles(styles)(ProfileHead)
+export default withStyles(styles)(withRouter(ProfileHead))

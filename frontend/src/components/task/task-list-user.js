@@ -51,52 +51,19 @@ const TaskListUser = (props) => {
 
   const [taskListState, setTaskListState] = useState({
     tab: 0,
-    loading: true
+    loading: true,
   })
 
   useEffect(() => {
-    try {
-      const userId = props.match.params.usernameId.split('-')[0]
+    const userId = props.match.params.usernameId.split('-')[0]
 
+    if (!isNaN(userId)) {
       props.listTasks({ userId: userId })
     }
-    catch (err) {
+    else {
+      props.history.push('/')
     }
   }, [])
-
-  // useEffect(() => {
-  //   async function fetchData () {
-  //     // const params = props.match.params
-  //     // handleRoutePath(params.filter)
-
-  //     if ((!projectId && !organizationId) && (props.history.location.pathname === '/tasks/open')) {
-  //       setTaskListState({ ...taskListState, tab: 0 })
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [props.match.params])
-
-  // useEffect(() => {
-  //   filterTasksByState()
-  // }, [taskListState.tab])
-
-  // function filterTasksByState () {
-  //   const currentTab = taskListState.tab
-
-  //   switch (currentTab) {
-  //     case 0:
-  //       props.filterTasks('status', 'open')
-  //       break
-  //     case 1:
-  //       props.filterTasks('issuesWithBounties')
-  //       break
-  //     case 2:
-  //       props.filterTasks('contribution')
-  //       break
-  //     default:
-  //   }
-  // }
 
   const handleTabChange = async (event, value) => {
     setTaskListState({ ...taskListState, tab: value })
