@@ -1,11 +1,17 @@
 import { connect } from 'react-redux'
 import ProfileHead from '../components/profile/profile-head'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserTypes } from '../actions/userActions'
 
 const mapStateToProps = state => {
   return {
-    user: getUser(state),
+    profile: state.profileReducer.data
   }
 }
 
-export default connect(mapStateToProps, null)(ProfileHead)
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserTypes: (userId) => dispatch(getUserTypes(userId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileHead)

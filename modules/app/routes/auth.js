@@ -68,6 +68,8 @@ router.post('/auth/register', controllers.register)
 router.get('/users', controllers.searchAll)
 router.get('/callback/github/private', controllers.createPrivateTask)
 
+router.get('/users/types/:id', controllers.getUserTypes)
+
 router.use('/user/', secure)
 
 router.get('/user/customer', controllers.customer)

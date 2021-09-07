@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import nameInitials from 'name-initials'
 
 import {
@@ -41,27 +41,31 @@ const styles = theme => ({
 })
 
 const ProfileHead = (props) => {
-  const { classes, user } = props
+  const { classes, profile } = props
+
+  const fetchProfile = useCallback(() => {
+    props.getUserTypes(props.match.params.split('-')[0])
+  }, [props.match.params])
 
   return (
     <div className={ classes.profile }>
       <div>
-        { user.picture_url ? (
+        { profile.picture_url ? (
           <Avatar
-            alt={ user.username }
-            src={ user.picture_url }
+            alt={ profile.username }
+            src={ profile.picture_url }
             className={ classes.avatar }
           />
         ) : (
           <Avatar
-            alt={ user.username }
+            alt={ profile.username }
             src=''
             className={ classes.avatar }
           >
-            { user.name ? (
-              nameInitials(user.name)
-            ) : user.username ? (
-              nameInitials(user.username)
+            { profile.name ? (
+              nameInitials(profile.name)
+            ) : profile.username ? (
+              nameInitials(profile.username)
             ) : (
               <PersonIcon />
             ) }
@@ -69,21 +73,21 @@ const ProfileHead = (props) => {
         ) }
       </div>
       <div className={ classes.nameContainer }>
-        <Typography component='h4' variant='h4'>{ user.name }</Typography>
-        <a target='_blank' href={ user.profile_url }>
+        <Typography component='h4' variant='h4'>{ profile.name }</Typography>
+        <a target='_blank' href={ profile.profile_url }>
           <img width='20' src={ logoGithub } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
         </a>
       </div>
       <div>
         <Typography className={ classes.website }>
-          <a href={ user.website } target='__blank'>
-            { user.website &&
-                        user.website.replace(/^https?:\/\//, '') }
+          <a href={ profile.website } target='__blank'>
+            { profile.website &&
+                        profile.website.replace(/^https?:\/\//, '') }
           </a>
         </Typography>
       </div>
       <div>
-        { user && user.Types && user.Types.map(r => {
+        { user && profile.Types && profile.Types.map(r => {
           return (
             <Chip
               style={ { marginRight: 10 } }
