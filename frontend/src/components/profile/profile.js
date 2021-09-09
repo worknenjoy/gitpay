@@ -25,6 +25,7 @@ import {
   Home,
   Tune,
   Person,
+  Web,
   ArrowBack,
   Settings,
   FaceSharp,
@@ -429,6 +430,17 @@ class Profile extends Component {
                         <a href={ user.website } target='__blank'>
                           { user.website &&
                             user.website.replace(/^https?:\/\//, '') }
+                        </a>
+                      </Typography>
+                    </div>
+                    <div className={ classes.infoItem }>
+                      <Web />
+                      <Typography className='website'>
+                        <a href={ user.username ? `/#/users/${user.id}-${user.username}` : `/#/users/${user.id}`} target='__blank'>
+                          <FormattedMessage
+                            id='account.profile.public.link.label'
+                            defaultMessage='Profile page'
+                          />
                         </a>
                       </Typography>
                     </div>

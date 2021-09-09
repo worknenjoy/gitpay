@@ -39,6 +39,7 @@ import {
   LibraryBooks,
   Tune,
   Home,
+  Web,
   Person,
   ExitToApp,
   Settings,
@@ -279,8 +280,13 @@ class TopBar extends Component {
     this.setState({ joinSlackDialog: false })
   }
 
-  handleProfile = () => {
+  handleHome = () => {
     window.location.assign('/#/profile')
+    this.setState({ anchorEl: null })
+  }
+
+  handleProfile = (e, id, username) => {
+    username ? window.location.assign(`/#/users/${id}-${username}/`) : window.location.assign(`/#/users/${id}`)
     this.setState({ anchorEl: null })
   }
 
@@ -626,12 +632,20 @@ class TopBar extends Component {
                       />
                     </ListItemText>
                   </ListItem>
-                  <ListItem button onClick={ this.handleProfile }>
+                  <ListItem button onClick={ this.handleHome }>
                     <ListItemIcon>
                       <Home />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile' defaultMessage='Profile home' />
+                      <FormattedMessage id='task.actions.account.profile.dashboard' defaultMessage='Dashboard' />
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem button onClick={ (e) => this.handleProfile(e, user.id, user.username) }>
+                    <ListItemIcon>
+                      <Web />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile.page' defaultMessage='Profile page' />
                     </ListItemText>
                   </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
