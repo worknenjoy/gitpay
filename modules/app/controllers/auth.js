@@ -191,3 +191,14 @@ exports.deleteUserById = (req, res) => {
       res.status(400).send(error)
     })
 }
+
+exports.getUserTypes = (req, res) => {
+  const userId = req.params.id
+  user.userTypes(userId).then((data) => {
+    res.status(200).send(data)
+  }).catch(error => {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(400).send(error)
+  })
+}

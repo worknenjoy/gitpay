@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 import SendSolutionDialog from '../components/task/send-solution-dialog'
 import { getTaskSolution, createTaskSolution, updateTaskSolution, fetchPullRequestData, cleanPullRequestDataState } from '../actions/taskSolutionActions'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = state => {
   return {
-    user: state.loggedIn.user,
+    user: getUser(state),
     taskSolution: state.taskSolutionReducer.taskSolution,
     pullRequestData: state.taskSolutionReducer.pullRequestData,
     completed: state.taskSolutionReducer.completed
