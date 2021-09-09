@@ -436,7 +436,7 @@ class Profile extends Component {
                     <div className={ classes.infoItem }>
                       <Web />
                       <Typography className='website'>
-                        <a href={ user.username ? `/#/users/${user.id}-${user.username}` : `/#/users/${user.id}`} target='__blank'>
+                        <a href={ user.username ? `/#/users/${user.id}-${user.username}` : `/#/users/${user.id}` } target='__blank'>
                           <FormattedMessage
                             id='account.profile.public.link.label'
                             defaultMessage='Profile page'
