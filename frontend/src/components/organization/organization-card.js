@@ -72,7 +72,7 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           style={ { display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 } }
         > by { ' ' }
           { organization &&
-            <Link color='textSecondary' href={ '' } onClick={ (e) => goToOrganization(e, organization) }>
+            <Link color='textSecondary' href={ organization.User.username ? `/#/users/${organization.User.id}-${organization.User.username}` : `/#/users/${organization.User.id}` } >
               { organization.User.name || organization.User.username }
             </Link>
           }
