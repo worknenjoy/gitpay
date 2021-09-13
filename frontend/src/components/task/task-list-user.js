@@ -54,17 +54,6 @@ const TaskListUser = (props) => {
     loading: true,
   })
 
-  // useEffect(() => {
-  //   const userId = props.match.params.usernameId.split('-')[0]
-
-  //   if (!isNaN(userId)) {
-  //     props.listTasks({ userId: userId })
-  //   }
-  //   else {
-  //     props.history.push('/')
-  //   }
-  // }, [])
-
   const verifyUserId = () => {
     const userId = props.match.params.usernameId.split('-')[0]
 
@@ -81,11 +70,10 @@ const TaskListUser = (props) => {
   const listTasksByUserId = () => {
     const userId = verifyUserId()
     props.listTasks({ userId: userId })
+    props.filterTasks('all')
   }
 
-  const listTasksFromOrdersByUserId = () => {
-    const userId = verifyUserId()
-    props.listTasksFromOrders({ userId: userId })
+  const filterTasksWithOrders = () => {
     props.filterTasks('supported')
   }
 
@@ -97,7 +85,7 @@ const TaskListUser = (props) => {
         listTasksByUserId()
         break
       case 1:
-        listTasksFromOrdersByUserId()
+        filterTasksWithOrders()
         break
       case 2:
         break
