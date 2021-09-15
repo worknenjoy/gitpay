@@ -18,8 +18,7 @@ import {
 
 import {
   Redeem as RedeemIcon,
-  MonetizationOn as MoneyIcon,
-  SupervisedUserCircle as ContributionIcon,
+  MonetizationOn as MoneyIcon
 } from '@material-ui/icons'
 import ProfileHead from '../../containers/profile-head'
 
@@ -138,11 +137,6 @@ const TaskListUser = (props) => {
                       value={ 1 }
                       label={ props.intl.formatMessage(messages.issuesSupported) }
                       icon={ <MoneyIcon /> }
-                    />
-                    <Tab
-                      value={ 2 }
-                      label={ props.intl.formatMessage(messages.issuesList) }
-                      icon={ <ContributionIcon /> }
                     />
                   </Tabs>
                 </AppBar>
