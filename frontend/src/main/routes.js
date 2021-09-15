@@ -53,7 +53,7 @@ export default props => (
         path='/task/:id/order/:order_id/status/:status'
         component={ TaskOrdersContainer }
       />
-      <Route exact path='/users/:usernameId' component={ TaskListUser } />
+      <Route exact path='/:usernameId' component={ TaskListUser } />
       <Route path='/404' component={ FourOFour } />
       <Route component={ FourOFour } />
     </Switch>

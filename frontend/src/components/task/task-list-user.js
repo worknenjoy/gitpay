@@ -54,16 +54,48 @@ const TaskListUser = (props) => {
     loading: true,
   })
 
-  useEffect(() => {
+  const verifyUserId = () => {
     const userId = props.match.params.usernameId.split('-')[0]
 
-    if (!isNaN(userId)) {
-      props.listTasks({ userId: userId })
-    }
-    else {
+    if (isNaN(userId)) {
       props.history.push('/')
+
+      // eslint-disable-next-line
+      return
     }
-  }, [])
+
+    return userId
+  }
+
+  const listTasksByUserId = () => {
+    const userId = verifyUserId()
+    props.listTasks({ userId: userId })
+    props.filterTasks('all')
+  }
+
+  const filterTasksWithOrders = () => {
+    props.filterTasks('supported')
+  }
+
+  function filterTasksByState () {
+    const currentTab = taskListState.tab
+
+    switch (currentTab) {
+      case 0:
+        listTasksByUserId()
+        break
+      case 1:
+        filterTasksWithOrders()
+        break
+      case 2:
+        break
+      default:
+    }
+  }
+
+  useEffect(() => {
+    filterTasksByState()
+  }, [taskListState.tab])
 
   const handleTabChange = async (event, value) => {
     setTaskListState({ ...taskListState, tab: value })

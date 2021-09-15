@@ -28,6 +28,12 @@ const evaluateTaskWithoutBountyByValue = (value) => {
   return parseFloat(value) === parseFloat('0')
 }
 
+const getTaskWithAnyOrder = (task) => {
+  if (task.Orders.length > 0) {
+    return task
+  }
+}
+
 export const getFilteredTasks = createSelector(
   [getVisibilityFilter, getTasks, getUser, getProject, getOrganization],
   (visibilityFilter, tasks, user, project, organization) => {
@@ -73,6 +79,9 @@ export const getFilteredTasks = createSelector(
         return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) }
       case 'contribution':
         return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) }
+      case 'supported':
+        return { ...tasks,
+          data: tasks.data.filter(item => getTaskWithAnyOrder(item)) }
       default:
         return tasks
     }
