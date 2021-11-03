@@ -289,7 +289,7 @@ class TaskPayment extends Component {
                           >
                             <RedeemIcon style={ { marginRight: 10 } } />
                             <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
-                              value: order.amount
+                              value: value
                             } } />
                           </Button>
                         </ListItem>
