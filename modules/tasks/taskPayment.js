@@ -27,14 +27,7 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
       }).then(async assign => {
         const user = assign.dataValues.User.dataValues
 
-        let transferGroup = null
-
-        const order = await models.Order.findOne({ where: { TaskId: task.id } })
-        const coupon = await models.Coupon.findOne({ where: { id: order.couponId } })
-
-        if (!coupon || (coupon && coupon.amount < 100)) {
-          transferGroup = task.transfer_group ? task.transfer_group : `task_${task.id}`
-        }
+        const transferGroup = task.transfer_group ? task.transfer_group : `task_${task.id}`
 
         const dest = user.account_id
         if (!dest) {
