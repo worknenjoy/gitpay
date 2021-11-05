@@ -331,5 +331,5 @@ export {
   updateUser,
   createBankAccount,
   getBankAccount,
-  deleteUser
+  deleteUser,
 }

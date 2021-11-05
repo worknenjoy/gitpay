@@ -7,13 +7,14 @@ import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask,
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     completed: state.loggedIn.completed,
     logged: state.loggedIn.logged,
     dialog: state.dialog,
-    user: state.loggedIn.user,
+    user: getUser(state),
     task: getTaskOrdersByFilter(state),
     tasks: getFilteredTasks(state),
     project: getProject(state.project),

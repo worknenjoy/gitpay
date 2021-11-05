@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import ProjectList from '../components/project/project-list'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { fetchProject, listProjects } from '../actions/projectActions'
-import { getFilteredTasks, getUser, getProject } from '../selectors/tasks'
+import { getFilteredTasks, getProject } from '../selectors/tasks'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, props) => {
   return {

@@ -3,11 +3,11 @@ import { defineMessages } from 'react-intl'
 const messages = defineMessages({
   documentProvided: {
     id: 'account.document.cpf.provided',
-    defaultMessage: 'id provided'
+    defaultMessage: 'identification number already provided'
   },
   documentProvide: {
     id: 'account.document.cpf.provide',
-    defaultMessage: 'Please provide your id number'
+    defaultMessage: 'Please provide your identification number'
   },
   addressLine1: {
     id: 'account.address.line1',

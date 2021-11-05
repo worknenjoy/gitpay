@@ -7,11 +7,12 @@ import { updateUser, deleteUser } from '../actions/userActions'
 import { fetchOrganizations, createOrganizations, updateOrganization } from '../actions/organizationsActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
 import { getFilteredTasks } from '../selectors/tasks'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn.logged,
-    user: state.loggedIn.user,
+    user: getUser(state),
     preferences: state.preferences,
     tasks: getFilteredTasks(state),
     roles: state.roles,
