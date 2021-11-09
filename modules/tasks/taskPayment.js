@@ -27,28 +27,28 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
       }).then(async assign => {
         const user = assign.dataValues.User.dataValues
 
-        let transferGroup = null
-
-        const order = await models.Order.findOne({ where: { TaskId: task.id } })
-        const coupon = await models.Coupon.findOne({ where: { id: order.couponId } })
-
-        if (!coupon || (coupon && coupon.amount < 100)) {
-          transferGroup = task.transfer_group ? task.transfer_group : `task_${task.id}`
-        }
-
         const dest = user.account_id
         if (!dest) {
           TransferMail.paymentForInvalidAccount(user)
           throw new Error('account_destination_invalid')
         }
         const centavosAmount = paymentParams.value * 100 || task.value * 100
-        return stripe.transfers.create({
+
+        let transferData = {
           amount: centavosAmount * 0.92, // 8% base fee
           currency: 'usd',
           destination: dest,
           source_type: 'card',
-          transfer_group: transferGroup,
-        }).then(transfer => {
+        }
+
+        const order = await models.Order.findOne({ where: { TaskId: task.id } })
+        const coupon = await models.Coupon.findOne({ where: { id: order.couponId } })
+
+        if (!coupon || (coupon && coupon.amount < 100)) {
+          transferData['transfer_group'] = task.transfer_group ? task.transfer_group : `task_${task.id}`
+        }
+
+        return stripe.transfers.create(transferData).then(transfer => {
           if (transfer) {
             return models.Task.update({ transfer_id: transfer.id }, {
               where: {
