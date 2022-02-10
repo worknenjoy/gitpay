@@ -68,7 +68,7 @@
     "nanoid": "^3.1.23",
     "natives": "^1.1.6",
     "node-okbitbucket": "^1.0.10",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "octonode": "^0.9.5",
     "passport": "^0.3.2",
     "passport-bitbucket": "^2.0.0",
