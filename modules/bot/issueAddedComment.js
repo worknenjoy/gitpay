@@ -22,7 +22,7 @@ module.exports = Promise.method(async function issueAddedComment (task) {
     },
     json: true,
     body: {
-      body: `This issue was added to Gitpay 💝
+      body: `This issue was added to Gitpay, check the task [${gitPayURL}](${gitPayURL}) 💝
 
 [About Gitpay platform](https://gitpay.me).
 
