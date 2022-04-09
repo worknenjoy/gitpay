@@ -520,7 +520,7 @@ describe('webhooks', () => {
           })
         })
     })
-    it('should <something> when invoice is paid', done => {
+    it('should update order and create an user with funding type when the invoice payment is a success', done => {
       agent
       .post('/auth/register')
       .send({email: 'invoice_test@gmail.com', password: 'teste'})
@@ -536,10 +536,12 @@ describe('webhooks', () => {
               task.createOrder({
                 provider: 'stripe',
                 type: 'invoice-item',
-                source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
                 userId: userId,
                 currency: 'usd',
-                amount: 200
+                amount: 200,
+                taskId: task.id,
+                customer_id: 'cus_J4zTz8uySTkLlL',
+                email: 'test@fitnowbrasil.com.br'
               }).then(order => {
                 agent
                   .post('/webhooks')
@@ -549,8 +551,8 @@ describe('webhooks', () => {
                   .end((err, res) => {
                     expect(res.statusCode).to.equal(200)
                     expect(res.body).to.exist
-                    expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx')
-                    expect(res.body.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
+                    expect(res.body.id).to.equal('evt_1KkomkBrSjgsps2DGGBtipW4')
+                    expect(res.body.data.object.id).to.equal('in_1KknpoBrSjgsps2DMwiQEzJ9')
                     models.Order.findOne({
                       where: {
                         id: order.id
@@ -559,7 +561,7 @@ describe('webhooks', () => {
                     }).then(orderFinal => {
                       expect(orderFinal.dataValues.paid).to.equal(true)
                       expect(orderFinal.dataValues.status).to.equal('succeeded')
-                      expect(orderFinal.dataValues.source).to.equal('ch_1IlAjBBrSjgsps2DLjTdMXwJ')
+                      expect(orderFinal.dataValues.source).to.equal('ch_3KknvTBrSjgsps2D036v7gVJ')
                       expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
                       done()
                     }).catch(e => done(e))

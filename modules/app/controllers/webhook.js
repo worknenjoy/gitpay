@@ -261,6 +261,7 @@ exports.github = async (req, res) => {
 exports.updateWebhook = (req, res) => {
   // eslint-disable-next-line no-console
   console.log('webhook body', req.body)
+
   if (req.body.object === 'event') {
     const event = req.body
     const paid = event.data.object.paid || false
@@ -691,7 +692,7 @@ exports.updateWebhook = (req, res) => {
                   <p>We have a new balance:</p>
                   <ul>
                   ${event.data.object.available.map(b => `<li>${b.currency}: ${b.amount}</li>`).join('')}
-                  </ul>              
+                  </ul>
               `)
         return res.json(req.body)
         break
@@ -702,6 +703,32 @@ exports.updateWebhook = (req, res) => {
           }
         })
         break
+      case 'invoice.payment_succeeded':
+        return models.User.create({
+          email: event.data.object.customer_email,
+          name: event.data.object.customer_name,
+          country: event.data.object.account_country,
+          customer_id: event.data.object.customer[0],
+          active: false
+          // type: ?
+        }).then(user => {
+          models.Order.update(
+            {
+              status: event.data.object.status,
+              source: event.data.object.charge[0]
+            },
+            {
+              where: {
+                source_id: event.data.object.id[0]
+              },
+              returning: true
+            }
+          ).then(async order => {
+            return res.json(req.body)
+          })
+        }).catch(e => {
+          return res.status(400).send(e)
+        })
     }
   }
   else {
