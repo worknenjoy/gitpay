@@ -541,7 +541,8 @@ describe('webhooks', () => {
                 amount: 200,
                 taskId: task.id,
                 customer_id: 'cus_J4zTz8uySTkLlL',
-                email: 'test@fitnowbrasil.com.br'
+                email: 'test@fitnowbrasil.com.br',
+                source_id: 'in_1KknpoBrSjgsps2DMwiQEzJ9'
               }).then(order => {
                 agent
                   .post('/webhooks')
@@ -551,8 +552,8 @@ describe('webhooks', () => {
                   .end((err, res) => {
                     expect(res.statusCode).to.equal(200)
                     expect(res.body).to.exist
-                    expect(res.body.id).to.equal('evt_1KkomkBrSjgsps2DGGBtipW4')
-                    expect(res.body.data.object.id).to.equal('in_1KknpoBrSjgsps2DMwiQEzJ9')
+                    expect(res.body.id[0]).to.equal('evt_1KkomkBrSjgsps2DGGBtipW4')
+                    expect(res.body.data.object.id[0]).to.equal('in_1KknpoBrSjgsps2DMwiQEzJ9')
                     models.Order.findOne({
                       where: {
                         id: order.id
@@ -560,11 +561,23 @@ describe('webhooks', () => {
                       include: [models.Task]
                     }).then(orderFinal => {
                       expect(orderFinal.dataValues.paid).to.equal(true)
-                      expect(orderFinal.dataValues.status).to.equal('succeeded')
+                      expect(orderFinal.dataValues.status).to.equal('paid')
                       expect(orderFinal.dataValues.source).to.equal('ch_3KknvTBrSjgsps2D036v7gVJ')
                       expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
-                      done()
-                    }).catch(e => done(e))
+
+                      models.User.findOne(
+                        {
+                          where: {
+                            active: false,
+                            email: "test@fitnowbrasil.com.br"
+                          },
+                        }
+                      ).then(async user => {
+                        const types = await user.getTypes({where: {name: "funding"}})
+                        expect(types).to.not.be.empty
+                        done()
+                      }).catch(e => done(e))
+                    })
                   })
                 })
               }).catch(e => console.log('cant create order', e))

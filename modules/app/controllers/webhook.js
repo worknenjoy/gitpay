@@ -710,12 +710,13 @@ exports.updateWebhook = (req, res) => {
           country: event.data.object.account_country,
           customer_id: event.data.object.customer[0],
           active: false
-          // type: ?
-        }).then(user => {
+        }).then(async user => {
+          await user.addType(await models.Type.find({ name: 'funding' }))
           models.Order.update(
             {
               status: event.data.object.status,
-              source: event.data.object.charge[0]
+              source: event.data.object.charge[0],
+              paid: true
             },
             {
               where: {
@@ -723,7 +724,7 @@ exports.updateWebhook = (req, res) => {
               },
               returning: true
             }
-          ).then(async order => {
+          ).then(order => {
             return res.json(req.body)
           })
         }).catch(e => {
