@@ -704,29 +704,38 @@ exports.updateWebhook = (req, res) => {
         })
         break
       case 'invoice.payment_succeeded':
-        return models.User.create({
-          email: event.data.object.customer_email,
-          name: event.data.object.customer_name,
-          country: event.data.object.account_country,
-          customer_id: event.data.object.customer[0],
-          active: false
-        }).then(async user => {
-          await user.addType(await models.Type.find({ name: 'funding' }))
-          models.Order.update(
-            {
-              status: event.data.object.status,
-              source: event.data.object.charge[0],
-              paid: true
-            },
-            {
-              where: {
-                source_id: event.data.object.id[0]
-              },
-              returning: true
-            }
-          ).then(order => {
-            return res.json(req.body)
-          })
+        return models.User.findOne(
+          {
+            where: { email: event.data.object.customer_email }
+          }
+        ).then(userFound => {
+          if (!userFound) {
+            return models.User.create({
+              email: event.data.object.customer_email,
+              name: event.data.object.customer_name,
+              country: event.data.object.account_country,
+              customer_id: event.data.object.customer[0],
+              active: false
+            }).then(async user => {
+              await user.addType(await models.Type.find({ name: 'funding' }))
+              models.Order.update(
+                {
+                  status: event.data.object.status,
+                  source: event.data.object.charge[0],
+                  paid: true,
+                  userId: user.dataValues.id
+                },
+                {
+                  where: {
+                    source_id: event.data.object.id[0]
+                  },
+                  returning: true
+                }
+              ).then(order => {
+                return res.json(req.body)
+              })
+            })
+          }
         }).catch(e => {
           return res.status(400).send(e)
         })
