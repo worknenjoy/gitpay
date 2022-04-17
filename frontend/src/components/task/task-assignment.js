@@ -28,6 +28,7 @@ import {
   AppBar,
   Tabs,
   Tab,
+  TextareaAutosize,
 } from '@material-ui/core'
 import {
   DateRange as DateIcon,
@@ -225,19 +226,18 @@ const TaskAssignment = (props) => {
     if (props.assignDialog) {
       return (
         <FormControl fullWidth>
-          <InputLabel htmlFor='interested-comment'>
-            <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' />
-          </InputLabel>
-          <Input
+          <TextareaAutosize
             id='interested-comment'
             type='text'
-            inputProps={ { maxLength: '120' } }
+            placeholder='Tell about your interest in solve this task and any plan in mind'
+            rowsMin={ 8 }
+            maxLength={ 1000 }
             value={ props.interestedComment }
             onChange={ props.handleInputInterestedCommentChange }
 
           />
 
-          <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ props.charactersCount + '/120' }</small>
+          <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ props.charactersCount + '/1000' }</small>
         </FormControl>
       )
     }
