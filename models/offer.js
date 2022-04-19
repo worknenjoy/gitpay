@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Offer = sequelize.define('Offer', {
     value: DataTypes.DECIMAL,
     suggestedDate: DataTypes.DATE,
-    comment: DataTypes.STRING,
+    comment: DataTypes.STRING(1000),
     learn: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
