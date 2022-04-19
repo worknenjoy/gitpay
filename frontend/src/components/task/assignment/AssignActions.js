@@ -74,6 +74,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
   const [checked, setChecked] = useState(false)
   const [offer, setOffer] = useState(0)
   const [customerId, setCustomerId] = useState()
+  const [customerEmail, setCustomerEmail] = useState()
 
   useEffect(() => {
     if (loggedUser && assign && task) {
@@ -108,7 +109,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
       provider: 'stripe',
       amount: offer,
       userId: loggedUser.id,
-      email: loggedUser.email,
+      email: customerEmail || loggedUser.email,
       taskId: task.id,
       currency: 'usd',
       status: 'open',
@@ -140,6 +141,10 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
     setCustomerId(event.target.value)
   }
 
+  const handleCustomerEmailChange = (event) => {
+    setCustomerEmail(event.target.value)
+  }
+
   const orderOffersDropdownField = () => {
     return (
       <React.Fragment>
@@ -158,7 +163,8 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
             </MenuItem>
           )) }
         </TextField>
-        <TextField label='Customer Id' name='customerId' onChange={ handleCustomerIdChange } />
+        <TextField label='Customer Id' name='customerId' onChange={ handleCustomerIdChange } style={ { marginTop: 10 } } />
+        <TextField label='Email' onChange={ handleCustomerEmailChange } style={ { marginTop: 10 } } />
       </React.Fragment>
     )
   }
