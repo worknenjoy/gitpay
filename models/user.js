@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     openForJobs: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   }, {
     classMethods: {

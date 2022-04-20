@@ -401,6 +401,7 @@ class Task extends Component {
     const id = this.props.match.params.id
     const status = this.props.match.params.status
     const orderId = this.props.match.params.order_id
+    const slug = this.props.match.params.slug
 
     let logged = false
     try {
@@ -436,7 +437,11 @@ class Task extends Component {
     if (this.props.history && orderId && this.props.history.location.pathname === `/task/${id}/orders/${orderId}`) {
       this.props.changeTab(1)
     }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/interested`) {
+    if (
+      this.props.history && (
+        this.props.history.location.pathname === `/task/${id}/interested` || this.props.history.location.pathname === `/task/${id}/${slug}/interested`
+      )
+    ) {
       this.setState({ assignIssueDialog: true })
     }
     if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {

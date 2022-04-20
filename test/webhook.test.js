@@ -17,6 +17,7 @@ const githubWebhookIssue = require('./data/github.issue.create')
 const githubWebhookIssueLabeled = require('./data/github.issue.labeled')
 const invoiceUpdated = require('./data/stripe.invoice.update')
 const invoiceCreated = require('./data/stripe.invoice.create')
+const invoicePaid = require('./data/stripe.invoice.paid')
 
 describe('webhooks', () => {
   beforeEach(() => {
@@ -512,6 +513,71 @@ describe('webhooks', () => {
                       expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
                       done()
                     }).catch(e => done(e))
+                  })
+                })
+              }).catch(e => console.log('cant create order', e))
+            })
+          })
+        })
+    })
+    it('should update order and create an user with funding type when the invoice payment is a success', done => {
+      agent
+      .post('/auth/register')
+      .send({email: 'invoice_test@gmail.com', password: 'teste'})
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then((user) => {
+        if(!user) console.log('error to register user')
+        const userId = user.body.id;
+        const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+        models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
+          task.createAssign({userId: userId}).then((assign) => {
+            task.update({ assigned: assign.dataValues.id}).then(taskUpdated => {
+              task.createOrder({
+                provider: 'stripe',
+                type: 'invoice-item',
+                userId: userId,
+                currency: 'usd',
+                amount: 200,
+                taskId: task.id,
+                customer_id: 'cus_J4zTz8uySTkLlL',
+                email: 'test@fitnowbrasil.com.br',
+                source_id: 'in_1KknpoBrSjgsps2DMwiQEzJ9'
+              }).then(order => {
+                agent
+                  .post('/webhooks')
+                  .send(invoicePaid.paid)
+                  .expect('Content-Type', /json/)
+                  .expect(200)
+                  .end((err, res) => {
+                    expect(res.statusCode).to.equal(200)
+                    expect(res.body).to.exist
+                    expect(res.body.id[0]).to.equal('evt_1KkomkBrSjgsps2DGGBtipW4')
+                    expect(res.body.data.object.id[0]).to.equal('in_1KknpoBrSjgsps2DMwiQEzJ9')
+                    models.Order.findOne({
+                      where: {
+                        id: order.id
+                      },
+                      include: [models.Task]
+                    }).then(orderFinal => {
+                      expect(orderFinal.dataValues.paid).to.equal(true)
+                      expect(orderFinal.dataValues.status).to.equal('paid')
+                      expect(orderFinal.dataValues.source).to.equal('ch_3KknvTBrSjgsps2D036v7gVJ')
+                      expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
+
+                      models.User.findOne(
+                        {
+                          where: {
+                            active: false,
+                            email: "test@fitnowbrasil.com.br"
+                          },
+                        }
+                      ).then(async user => {
+                        const types = await user.getTypes({where: {name: "funding"}})
+                        expect(types).to.not.be.empty
+                        done()
+                      }).catch(e => done(e))
+                    })
                   })
                 })
               }).catch(e => console.log('cant create order', e))

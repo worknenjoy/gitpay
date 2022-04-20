@@ -72,7 +72,9 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
   const [ messageOpen, setMessageOpen ] = useState(false)
   const [rejectModal, setRejectModal] = useState(false)
   const [checked, setChecked] = useState(false)
-  const [offer, setOffer] = React.useState(0)
+  const [offer, setOffer] = useState(0)
+  const [customerId, setCustomerId] = useState()
+  const [customerEmail, setCustomerEmail] = useState()
 
   useEffect(() => {
     if (loggedUser && assign && task) {
@@ -96,8 +98,93 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
     setChecked(event.target.checked)
   }
 
-  const handleChange = (event) => {
+  const handleOrderOfferChange = (event) => {
     setOffer(event.target.value)
+  }
+
+  const assignTaskAndCreateOrder = async (event) => {
+    event.preventDefault()
+    assignTask(task.id, assign.id)
+    checked && task.id && loggedUser.id && await createOrder({
+      provider: 'stripe',
+      amount: offer,
+      userId: loggedUser.id,
+      email: customerEmail || loggedUser.email,
+      taskId: task.id,
+      currency: 'usd',
+      status: 'open',
+      source_type: 'invoice-item',
+      customer_id: customerId || loggedUser.customer_id
+    })
+  }
+
+  const assignUserActionButtons = () => {
+    return (
+      <Button
+        disabled={ hasAssignedUser }
+        onClick={ async (event) => assignTaskAndCreateOrder(event) }
+        variant='contained'
+        size='small'
+        color='primary'
+        style={ { marginLeft: 5 } }
+      >
+        { assign.status !== 'pending'
+          ? <FormattedMessage id='task.actions.choose.rejected' defaultMessage='Re-send Invite' />
+          : <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
+        }
+        <GroupWorkIcon style={ { marginLeft: 5, marginBottom: 5 } } />
+      </Button>
+    )
+  }
+
+  const handleCustomerIdChange = (event) => {
+    setCustomerId(event.target.value)
+  }
+
+  const handleCustomerEmailChange = (event) => {
+    setCustomerEmail(event.target.value)
+  }
+
+  const orderOffersDropdownField = () => {
+    return (
+      <React.Fragment>
+        <TextField
+          id='standard-select-currency'
+          select
+          label='Select'
+          value={ offer }
+          onChange={ handleOrderOfferChange }
+          helperText='Select offers'
+          style={ { marginTop: 10 } }
+        >
+          { task && task.Offers && task.Offers.map((option) => (
+            <MenuItem key={ option.id } value={ option.value }>
+                      ${ option.value } - { option.comment }
+            </MenuItem>
+          )) }
+        </TextField>
+        <TextField label='Customer Id' name='customerId' onChange={ handleCustomerIdChange } style={ { marginTop: 10 } } />
+        <TextField label='Email' onChange={ handleCustomerEmailChange } style={ { marginTop: 10 } } />
+      </React.Fragment>
+    )
+  }
+
+  const createOrderActionButtons = () => {
+    return (
+      <div style={ { marginTop: 10, marginBottom: 10, marginLeft: 20 } }>
+        <FormGroup row>
+          <FormControlLabel
+            control={ <Checkbox checked={ checked } onChange={ handleChangeCheck } name='checked' /> }
+            label={
+              <div style={ { display: 'flex', alignItems: 'flex-start', flexDirection: 'column' } }>
+                <FormattedMessage id='task.offer.invoice.create' defaultMessage='Create order' />
+                { checked && orderOffersDropdownField() }
+              </div>
+            }
+          />
+        </FormGroup>
+      </div>
+    )
   }
 
   return (
@@ -125,36 +212,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
           </Button>
         </React.Fragment>
       }
-      { (isOwner && !hasAssignedUser) &&
-      <Button
-        disabled={ hasAssignedUser }
-        onClick={ async (e) => {
-          e.preventDefault()
-          assignTask(task.id, assign.id)
-          checked && task.id && loggedUser.id && await createOrder({
-            provider: 'stripe',
-            amount: offer,
-            userId: loggedUser.id,
-            email: loggedUser.email,
-            taskId: task.id,
-            currency: 'usd',
-            status: 'open',
-            source_type: 'invoice-item',
-            customer_id: loggedUser.customer_id
-          })
-        } }
-        variant='contained'
-        size='small'
-        color='primary'
-        style={ { marginLeft: 5 } }
-      >
-        { assign.status !== 'pending'
-          ? <FormattedMessage id='task.actions.choose.rejected' defaultMessage='Re-send Invite' />
-          : <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
-        }
-        <GroupWorkIcon style={ { marginLeft: 5, marginBottom: 5 } } />
-      </Button>
-      }
+      { (isOwner && !hasAssignedUser) && assignUserActionButtons() }
       {
         (() => {
           // FIXME: not updating page after button
@@ -196,36 +254,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
           }
         })()
       }
-      { isOwner && task.id && loggedUser.id &&
-        <div style={ { marginTop: 10, marginBottom: 10, marginLeft: 20 } }>
-          <FormGroup row>
-            <FormControlLabel
-              control={ <Checkbox checked={ checked } onChange={ handleChangeCheck } name='checked' /> }
-              label={
-                <div style={ { display: 'flex', alignItems: 'flex-start', flexDirection: 'column' } }>
-                  <FormattedMessage id='task.offer.invoice.create' defaultMessage='Create order' />
-                  { checked &&
-                  <TextField
-                    id='standard-select-currency'
-                    select
-                    label='Select'
-                    value={ offer }
-                    onChange={ handleChange }
-                    helperText='Select offers'
-                    style={ { marginTop: 10 } }
-                  >
-                    { task && task.Offers && task.Offers.map((option) => (
-                      <MenuItem key={ option.id } value={ option.value }>
-                        ${ option.value } - { option.comment }
-                      </MenuItem>
-                    )) }
-                  </TextField> }
-                </div>
-              }
-            />
-          </FormGroup>
-        </div>
-      }
+      { isOwner && task.id && loggedUser.id && !hasAssignedUser && createOrderActionButtons() }
     </div>
   )
 }
