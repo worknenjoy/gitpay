@@ -27,14 +27,14 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
       await order.updateAttributes({ couponId: couponValidation.id })
 
       // This means that the amount of discount provided by coupon is 100%
-      if (couponValidation.orderPrice === 0) {
+      if (couponValidation.orderPrice <= 0.5) {
         return orderUpdateAfterStripe(order, null, null, orderParameters, user, task, true)
       }
 
-      totalPrice = models.Plan.calFinalPrice(couponValidation.orderPrice, orderParameters.plan) * 100
+      totalPrice = models.Plan.calcFinalPrice(couponValidation.orderPrice, orderParameters.plan) * 100
     }
     else {
-      totalPrice = models.Plan.calFinalPrice(orderParameters.amount, orderParameters.plan) * 100
+      totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan) * 100
     }
 
     return stripe.charges.create({
