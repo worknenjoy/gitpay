@@ -2,6 +2,7 @@ const Promise = require('bluebird')
 const models = require('../../models')
 const taskSolutionFetchData = require('./taskSolutionFetchData')
 const taskPayment = require('./taskPayment')
+const assignExist = require('../assigns').assignExists
 
 module.exports = Promise.method(async function taskSolutionCreate (taskSolutionParams) {
   const pullRequestURLSplitted = taskSolutionParams.pullRequestURL.split('/')
@@ -21,6 +22,12 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
 
   if (fetchTaskSolutionData.isAuthorOfPR && fetchTaskSolutionData.isConnectedToGitHub && fetchTaskSolutionData.isIssueClosed && fetchTaskSolutionData.isPRMerged) {
     if (!task.dataValues.paid && !task.dataValues.transfer_id) {
+      const existingAssignment = await assignExist({ userId: taskSolutionParams.userId, taskId: taskSolutionParams.taskId })
+
+      if (!existingAssignment) {
+        await task.createAssign({ userId: taskSolutionParams.userId })
+      }
+
       taskPayment({ taskId: task.dataValues.id, value: task.dataValues.value })
     }
 

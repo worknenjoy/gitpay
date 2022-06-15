@@ -24,10 +24,6 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
       where: { id: solutionParams.taskId }
     })
 
-    const taskAssignment = await models.Assign.findOne({
-      where: { userId: solutionParams.userId, TaskId: task.dataValues.id }
-    })
-
     // Verify if the current user is the owner of PR (currently used to verify if user is authenticated to GitHub too)
     if (user.dataValues.provider === 'github' && user.dataValues.provider_username === pullRequestData.user.login) {
       isAuthorOfPR = true
@@ -39,16 +35,9 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
       isPRMerged = true
     }
 
-    if (pullRequestData.title.includes('#')) {
-      const linkedPullRequestToIssueId = parseInt(pullRequestData.title.split('#')[1])
-      const githubIssueId = parseInt(task.url.split('/')[6])
-
-      // Verify if Issue is closed (first verify if the user accepted the assignment to the task)
-      if (task.dataValues.assigned && taskAssignment.dataValues.status === 'accepted') {
-        if (task.dataValues.provider === 'github' && task.dataValues.status === 'closed' && githubIssueId === linkedPullRequestToIssueId) {
-          isIssueClosed = true
-        }
-      }
+    // Verify if Issue is closed (trusting in the gitpay/github synchronization)
+    if (task.dataValues.status === 'closed') {
+      isIssueClosed = true
     }
 
     return {
