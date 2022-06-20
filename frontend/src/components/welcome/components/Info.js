@@ -12,7 +12,7 @@ const Content = styled.span`
   margin-top: 5px;
   padding-bottom: 10px;
   color: white;
-  text-align: center;
+  text-align: left;
 `
 
 class Info extends React.Component {

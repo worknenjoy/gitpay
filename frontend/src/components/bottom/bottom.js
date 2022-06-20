@@ -20,6 +20,7 @@ import TermsOfServiceCompany from '../welcome/terms-of-service-company'
 import HowItWorksCompany from '../welcome/how-it-works-company'
 import WhichCompanies from '../welcome/which-companies'
 import Consulting from '../welcome/consulting'
+import InfoContainer from '../../containers/info'
 
 import mainStyles from '../styles/style'
 
@@ -127,6 +128,7 @@ class Bottom extends Component {
               <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
             </a>
           </BaseFooter>
+          <InfoContainer />
         </Container>
       </div>
     )

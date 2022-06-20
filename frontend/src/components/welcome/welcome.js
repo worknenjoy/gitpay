@@ -36,7 +36,6 @@ import scrollToComponent from 'react-scroll-to-component'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
 import TopBarContainer from '../../containers/topbar'
-import InfoContainer from '../../containers/info'
 import Bottom from '../../components/bottom/bottom'
 import LoginButton from '../../components/session/login-button'
 import Pricing from './pricing'
@@ -241,7 +240,7 @@ class Welcome extends Component {
                       defaultMessage='Collaborate, learn and receive payments by solving issues from projects'
                     />
                   </Typography>
-                  <InfoContainer />
+                  
                   { !logged &&
                   <Button
                     variant='contained'
