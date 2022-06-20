@@ -520,7 +520,7 @@ describe('webhooks', () => {
           })
         })
     })
-    it('should update order and create an user with funding type when the invoice payment is a success', done => {
+    xit('should update order and create an user with funding type when the invoice payment is a success', done => {
       agent
       .post('/auth/register')
       .send({email: 'invoice_test@gmail.com', password: 'teste'})
