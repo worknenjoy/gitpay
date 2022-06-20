@@ -34,17 +34,19 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     if (pullRequestData.state === 'closed' && pullRequestData.merged) {
       isPRMerged = true
     }
-if (pullRequestData.title.includes('#')) {
-  const linkedPullRequestToIssueId = parseInt(pullRequestData.title.split('#')[1])
-  const githubIssueId = parseInt(task.url.split('/')[6])
+    
+    if (pullRequestData.title.includes('#')) {
+      const linkedPullRequestToIssueId = parseInt(pullRequestData.title.split('#')[1])
+      const githubIssueId = parseInt(task.url.split('/')[6])
 
-  // Verify if Issue is closed (first verify if the user accepted the assignment to the task)
-  if (task.dataValues.assigned && taskAssignment.dataValues.status === 'accepted') {
-    if (task.dataValues.provider === 'github' && task.dataValues.status === 'closed' && githubIssueId === linkedPullRequestToIssueId) {
-      isIssueClosed = true
+      // Verify if Issue is closed (first verify if the user accepted the assignment to the task)
+      if (task.dataValues.assigned && taskAssignment.dataValues.status === 'accepted') {
+        if (task.dataValues.provider === 'github' && task.dataValues.status === 'closed' && githubIssueId === linkedPullRequestToIssueId) {
+          isIssueClosed = true
+        }
+      }
     }
-  }
-}
+    
     // Verify if Issue is closed (trusting in the gitpay/github synchronization)
     if (task.dataValues.status === 'closed') {
       isIssueClosed = true
