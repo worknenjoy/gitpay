@@ -240,7 +240,7 @@ class Welcome extends Component {
                       defaultMessage='Collaborate, learn and receive payments by solving issues from projects'
                     />
                   </Typography>
-                  
+
                   { !logged &&
                   <Button
                     variant='contained'
