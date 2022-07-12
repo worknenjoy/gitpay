@@ -226,17 +226,20 @@ const TaskAssignment = (props) => {
     if (props.assignDialog) {
       return (
         <FormControl fullWidth>
-          <TextareaAutosize
-            id='interested-comment'
-            type='text'
-            placeholder='Tell about your interest in solve this task and any plan in mind'
-            rowsMin={ 8 }
-            maxLength={ 1000 }
-            value={ props.interestedComment }
-            onChange={ props.handleInputInterestedCommentChange }
+          <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' >
+            { placeholder => (
+              <TextareaAutosize
+                id='interested-comment'
+                type='text'
+                placeholder={ placeholder }
+                rowsMin={ 8 }
+                maxLength={ 1000 }
+                value={ props.interestedComment }
+                onChange={ props.handleInputInterestedCommentChange }
 
-          />
-
+              />
+            ) }
+          </FormattedMessage>
           <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ props.charactersCount + '/1000' }</small>
         </FormControl>
       )
