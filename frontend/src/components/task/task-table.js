@@ -221,7 +221,7 @@ class CustomPaginationActionsTable extends React.Component {
               </TableHead>
               <TableBody>
                 { tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                  const assigned = n.Assigns.find(a => a.id === n.assigned )
+                  const assigned = n.Assigns.find(a => a.id === n.assigned)
                   const assignedUser = assigned && assigned.User
                   return (
                     <TableRow key={ n.id }>
@@ -290,7 +290,7 @@ class CustomPaginationActionsTable extends React.Component {
                         </div>
                       </TableCell>
                       <TableCell component='th' scope='row' style={ { padding: 5 } }>
-                      { assignedUser
+                        { assignedUser
                           ? (
                             <div>
                               { assignedUser.profile_url

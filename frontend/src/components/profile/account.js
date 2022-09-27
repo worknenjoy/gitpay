@@ -738,19 +738,36 @@ class Account extends Component {
                         >
                           <Grid container spacing={ 3 }>
                             <Grid item xs={ 12 }>
-                              <FormControl>
-                                <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>
-                                  { (msg) => (
-                                    <Input
-                                      id='payment-form-website'
-                                      name='business_profile[url]'
-                                      placeholder={ msg }
-                                      style={ { marginRight: 20 } }
-                                      defaultValue={ account.data.business_profile && account.data.business_profile.url }
-                                    />
-                                  ) }
-                                </FormattedMessage>
-                              </FormControl>
+                              <Grid item xs={ 5 }>
+                                <FormControl>
+                                  <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>
+                                    { (msg) => (
+                                      <Input
+                                        id='payment-form-website'
+                                        name='business_profile[url]'
+                                        placeholder={ msg }
+                                        style={ { marginRight: 20 } }
+                                        defaultValue={ account.data.business_profile && account.data.business_profile.url }
+                                      />
+                                    ) }
+                                  </FormattedMessage>
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={ 5 }>
+                                <FormControl>
+                                  <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
+                                    { (msg) => (
+                                      <Input
+                                        id='payment-form-website'
+                                        name='business_profile[support_phone]'
+                                        placeholder={ msg }
+                                        style={ { marginRight: 20 } }
+                                        defaultValue={ account.data.business_profile && account.data.business_profile.support_phone }
+                                      />
+                                    ) }
+                                  </FormattedMessage>
+                                </FormControl>
+                              </Grid>
                             </Grid>
                             <Grid item xs={ 12 }>
                               <FormControl>

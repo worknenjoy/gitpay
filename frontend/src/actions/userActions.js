@@ -200,13 +200,14 @@ const updateAccount = (_, accountData) => {
         return dispatch(updateUserAccountSuccess(account))
       })
       .catch(error => {
+        const errorMessage = error.response.data
         dispatch(
           addNotification(
-            'actions.user.account.update.error.missing'
+            errorMessage ? `${errorMessage.message} ${errorMessage.param}`  : 'actions.user.account.update.error.missing'
           )
         )
         // eslint-disable-next-line no-console
-        console.log('error on create account', error)
+        console.log('error on update account', error)
         return dispatch(updateUserAccountError(error))
       })
   }
@@ -228,7 +229,7 @@ const updateUser = (_, userData) => {
           addNotification('notifications.account.update.error')
         )
         // eslint-disable-next-line no-console
-        console.log('error on create account', error)
+        console.log('error on update user', error)
         return dispatch(updateUserError(error))
       })
   }

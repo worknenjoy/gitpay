@@ -152,7 +152,7 @@ exports.accountUpdate = (req, res) => {
       res.send(data)
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(error)
+      console.log('error on account update', error)
       res.status(401).send(error)
     })
 }
