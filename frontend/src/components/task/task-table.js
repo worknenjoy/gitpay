@@ -214,10 +214,15 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableCell>
                     <FormattedMessage id='task.table.head.deadline' defaultMessage='Deadline' />
                   </TableCell>
+                  <TableCell>
+                    <FormattedMessage id='task.table.head.assignedTo' defaultMessage='Assigned to' />
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 { tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  const assigned = n.Assigns.find(a => a.id === n.assigned )
+                  const assignedUser = assigned && assigned.User
                   return (
                     <TableRow key={ n.id }>
                       <TableCell component='th' scope='row' style={ { padding: 5 } }>
@@ -283,6 +288,38 @@ class CustomPaginationActionsTable extends React.Component {
                         <div style={ { width: 80 } }>
                           { n.deadline ? MomentComponent(n.deadline).fromNow() : this.props.intl.formatMessage(messages.noDefined) }
                         </div>
+                      </TableCell>
+                      <TableCell component='th' scope='row' style={ { padding: 5 } }>
+                      { assignedUser
+                          ? (
+                            <div>
+                              { assignedUser.profile_url
+                                ? (
+                                  <a style={ { display: 'flex', alignItems: 'center' } } target='_blank'
+                                    href={ assignedUser.profile_url }>
+                                    <Avatar
+                                      src={ assignedUser.picture_url }
+                                    />
+                                    <span style={ { marginLeft: 10 } }>
+                                      { TextEllipsis(assignedUser.username || assignedUser.name || ' - ', 10) }
+                                    </span>
+                                  </a>
+                                ) : (
+                                  <div style={ { display: 'flex', alignItems: 'center', height: 20 } }>
+                                    <Avatar />
+                                    <span style={ { marginLeft: 10 } }>
+                                      { TextEllipsis(assignedUser.username || assignedUser.name || ' - ', 10) }
+                                    </span>
+                                  </div>
+                                )
+                              }
+                            </div>
+                          ) : (
+                            <div>
+                              <FormattedMessage id='task.table.body.assigned.none' defaultMessage='No one assigned' />
+                            </div>
+                          )
+                        }
                       </TableCell>
                     </TableRow>
                   )

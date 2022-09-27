@@ -38,7 +38,7 @@ module.exports = Promise.method(function taskSearch (searchParams) {
       .findAll(
         {
           where: query,
-          include: [ models.User, models.Order, models.Assign, models.Label, models.Project ],
+          include: [ models.User, models.Order, { model: models.Assign, include: [models.User] }, models.Label, models.Project ],
           order: [
             ['status', 'DESC'],
             ['id', 'DESC']
