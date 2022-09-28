@@ -203,7 +203,7 @@ const updateAccount = (_, accountData) => {
         const errorMessage = error.response.data
         dispatch(
           addNotification(
-            errorMessage ? `${errorMessage.message} ${errorMessage.param}`  : 'actions.user.account.update.error.missing'
+            errorMessage ? `${errorMessage.message} ${errorMessage.param}` : 'actions.user.account.update.error.missing'
           )
         )
         // eslint-disable-next-line no-console
