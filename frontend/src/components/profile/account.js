@@ -169,6 +169,7 @@ class Account extends Component {
     e.preventDefault()
     let formData = {
       'business_profile[url]': e.target['business_profile[url]'].value,
+      'business_profile[support_phone]': e.target['business_profile[support_phone]'].value,
       'individual[first_name]': e.target['individual[first_name]'].value,
       'individual[last_name]': e.target['individual[last_name]'].value,
       'individual[address][city]':
@@ -758,7 +759,7 @@ class Account extends Component {
                                   <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
                                     { (msg) => (
                                       <Input
-                                        id='payment-form-website'
+                                        id='payment-form-phone'
                                         name='business_profile[support_phone]'
                                         placeholder={ msg }
                                         style={ { marginRight: 20 } }
