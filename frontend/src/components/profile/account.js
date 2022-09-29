@@ -169,7 +169,7 @@ class Account extends Component {
     e.preventDefault()
     let formData = {
       'business_profile[url]': e.target['business_profile[url]'].value,
-      'business_profile[support_phone]': e.target['business_profile[support_phone]'].value,
+      'individual[phone]': e.target['individual[phone]'].value,
       'individual[first_name]': e.target['individual[first_name]'].value,
       'individual[last_name]': e.target['individual[last_name]'].value,
       'individual[address][city]':
@@ -760,10 +760,10 @@ class Account extends Component {
                                     { (msg) => (
                                       <Input
                                         id='payment-form-phone'
-                                        name='business_profile[support_phone]'
+                                        name='individual[phone]'
                                         placeholder={ msg }
                                         style={ { marginRight: 20 } }
-                                        defaultValue={ account.data.business_profile && account.data.business_profile.support_phone }
+                                        defaultValue={ account.data.individual && account.data.individual.phone }
                                       />
                                     ) }
                                   </FormattedMessage>
