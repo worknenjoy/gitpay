@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, HashRouter, Switch } from 'react-router-dom'
+import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
 
 import PrivateRoute from '../components/session/private-route'
 
@@ -16,6 +16,7 @@ import FourOFour from '../components/FourOFour.js'
 import LandingPage from '../components/welcome/landing-page'
 import Stats from '../components/Stats/Stats-main-page'
 import TaskListUser from '../containers/task-list-user'
+import Auth from '../modules/auth'
 
 export default props => (
   <HashRouter>
@@ -23,6 +24,8 @@ export default props => (
       <Route path='/recruitment' component={ LandingPage } />
       <Route exact path='/' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
+      
+      <PrivateRoute path='/account-details' component={ ProfileContainer } />
       <Route exact path='/projects' component={ TaskExplorer } />
       <Route exact path='/organizations' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id' component={ TaskExplorer } />
