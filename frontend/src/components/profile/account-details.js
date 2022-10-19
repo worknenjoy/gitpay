@@ -83,11 +83,12 @@ const AccountDetails = ({
       style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={12}>
           <Typography variant="h4" gutterBottom>
             <FormattedMessage id="account-details-personal-information-title" defaultMessage="Account details" />
           </Typography>
         </Grid>
+        <Grid item xs={12} md={12}>
         <fieldset className={classes.fieldset}>
           <legend className={classes.legend}>
             <Typography>
@@ -117,7 +118,7 @@ const AccountDetails = ({
                 )}
               </FormattedMessage>
             </Grid>
-            <Grid item xs={12} sm={6} md={8}>
+            <Grid item xs={12} sm={6} md={4}>
               <Field 
                 name="individual[id_number]"
                 label="ID number"
@@ -146,7 +147,7 @@ const AccountDetails = ({
                 )}
               </FormattedMessage>
             </Grid>
-            <Grid item xs={12} sm={12} md={12}>
+            <Grid item xs={12} sm={12} md={4}>
               <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>
                 {(msg) => (
                   <Field 
@@ -159,22 +160,27 @@ const AccountDetails = ({
             </Grid>
           </Grid>
           <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <Typography variant="h6" style={{marginBottom: -20, marginTop: 10}}>
+                <FormattedMessage id="account-details-personal-information-birth-date" defaultMessage="Birth date" />
+              </Typography>
+            </Grid>
             <Grid item xs={12} md={4}>
               <Field name="individual[dob][day]" label="Day" type="number" defaultValue={account.data.individual && account.data.individual.dob && account.data.individual.dob.day} />
             </Grid>
             <Grid item xs={12} md={4}>
-              <FormControl>
+              <FormControl style={{width: '100%'}}>
                 <Select
                   autoWidth
                   native
                   name='individual[dob][month]'
-                  style={{ marginRight: 10 }}
+                  style={{ marginRight: 8, marginTop: 16, width: '100%' }}
                   onChange={(event) => {
                     setMonthOfBirth(event.target.value)
                   }}
                 >
                   <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(
+                  {['Jan', 'Fev', 'Mar', 'Apr', 'May', 'June', 'Aug', 'Set', 'Oct', 'Nov', 'Dec'].map(
                     (item, i) => {
                       return (
                         <option selected={account.data.individual && !!(item === account.data.individual.dob.month)} key={i} value={item}>
@@ -187,96 +193,52 @@ const AccountDetails = ({
               </FormControl>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Input
-                name='individual[dob][year]'
-                id='year-of-birth'
-                placeholder={intl.formatMessage(messages.birthYear)}
-                defaultValue={account.data.individual && account.data.individual.dob.year}
-              />
+              <Field name="individual[dob][year]" label="Year" type="number" defaultValue={account.data.individual && account.data.individual.dob && account.data.individual.dob.year} />
             </Grid>
           </Grid>
         </fieldset>
-        <fieldset>
-          <legend>
-            <Typography variant="h6">
+        <fieldset className={classes.fieldset}>
+          <legend className={classes.legend}>
+            <Typography>
               <FormattedMessage id="account-details-address" defaultMessage="Address information" />
             </Typography>
           </legend>
-          <Grid item xs={12}>
-            <FormControl>
-              <Input
-                id='payment-form-user'
-                name='individual[address][line1]'
-                placeholder={intl.formatMessage(messages.addressLine1)}
-                style={{ marginRight: 20 }}
-                defaultValue={
-                  account.data.individual && account.data.individual.address.line1
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <Input
-                id='payment-form-user'
-                name='individual[address][line2]'
-                placeholder={intl.formatMessage(messages.addressLine2)}
-                style={{ marginRight: 20 }}
-                defaultValue={
-                  account.data.individual && account.data.individual.address.line2
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <Input
-                name='individual[address][postal_code]'
-                id='postal-code'
-                placeholder={intl.formatMessage(messages.zipCode)}
-                defaultValue={
-                  account.data.individual && account.data.individual.address.postal_code
-                }
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl>
-              <Input
-                name='individual[address][city]'
-                id='adornment-city'
-                placeholder={intl.formatMessage(messages.city)}
-                style={{ marginRight: 20 }}
-                defaultValue={
-                  account.data.individual && account.data.individual.address.city
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <Input
-                id='payment-form-user'
-                name='individual[address][state]'
-                placeholder={intl.formatMessage(messages.state)}
-                defaultValue={
-                  account.data.individual && account.data.individual.address.state
-                }
-              />
-            </FormControl>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+                <Field name="individual[address][line1]" label="Address line 1" defaultValue={account.data.individual && account.data.individual.address.line1} />          
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field name="individual[address][line2]" label="Address line 2" defaultValue={account.data.individual && account.data.individual.address.line2} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field name="individual[address][city]" label="City" defaultValue={account.data.individual && account.data.individual.address.city} />
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Field name="individual[address][state]" label="State" defaultValue={account.data.individual && account.data.individual.address.state} />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Field name="individual[address][postal_code]" label="Postal code" defaultValue={account.data.individual && account.data.individual.address.postal_code} />
+            </Grid>
           </Grid>
         </fieldset>
-          <Grid item xs={12}>
-            <div style={{ float: 'right' }}>
-              <Button
-                color='primary'
-                //onClick={closeUpdateModal}
-              >
-                <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
-              </Button>
-              <Button
-                type='submit'
-                variant='contained'
-                color='secondary'
-              >
-                <FormattedMessage id='account.actions.update' defaultMessage='Update Account' />
-              </Button>
-            </div>
-          </Grid>
+        <Grid item xs={12}>
+          <div style={{ float: 'right' }}>
+            <Button
+              color='primary'
+              //onClick={closeUpdateModal}
+            >
+              <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
+            </Button>
+            <Button
+              type='submit'
+              variant='contained'
+              color='secondary'
+            >
+              <FormattedMessage id='account.actions.update' defaultMessage='Update Account' />
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
       </Grid>
     </form>
   );

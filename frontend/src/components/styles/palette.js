@@ -23,7 +23,7 @@ const Palette = {
   overrides: {
     MuiInput: {
       root: {
-        margin: '6px 0'
+        margin: '2px 0'
       },
       input: {
         border: '2px solid #E2E5EA',
