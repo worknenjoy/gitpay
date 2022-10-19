@@ -11,6 +11,8 @@ import {
   Select,
 } from '@material-ui/core';
 
+import CountryPicker, { countryCodes } from './country-picker';
+
 import messages from './messages';
 
 const styles = (theme) => ({
@@ -38,10 +40,39 @@ const AccountDetails = ({
   classes
 }) => {
 
-  const [monthOfBirth, setMonthOfBirth] = useState('');
+  const [ accountData, setAccountData ] = useState({})
+  const [ userId, setUserId ] = useState('');
+  const [ openCountryPicker, setOpenCountryPicker ] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(!e.target) return false
+    let formData = {
+      'business_profile[url]': e.target['business_profile[url]'].value,
+      'individual[phone]': e.target['individual[phone]'].value,
+      'individual[first_name]': e.target['individual[first_name]'].value,
+      'individual[last_name]': e.target['individual[last_name]'].value,
+      'individual[address][city]':
+        e.target['individual[address][city]'].value,
+      'individual[address][line1]':
+        e.target['individual[address][line1]'].value,
+      'individual[address][line2]':
+        e.target['individual[address][line2]'].value,
+      'individual[address][postal_code]':
+        e.target['individual[address][postal_code]'].value,
+      'individual[address][state]':
+        e.target['individual[address][state]'].value,
+      'individual[dob][day]': e.target['individual[dob][day]'].value,
+      'individual[dob][month]': e.target['individual[dob][month]'].value,
+      'individual[dob][year]': e.target['individual[dob][year]'].value
+    }
+
+    if (e.target['individual[id_number]'].value) {
+      formData['individual[id_number]'] =
+        e.target['individual[id_number]'].value
+    }
+    setAccountData(formData)
+    updateAccount(userId, formData)
   }
   const onChange = (e) => {
 
@@ -67,12 +98,9 @@ const AccountDetails = ({
   }
 
   useEffect(() => {
-    console.log('account', account)
-    console.log('user', user)
-    if (user.logged) {
+    if (user.user.id) {
       const userId = user.user.id
       fetchAccount(userId)
-      getBankAccount(userId)
     }
   }, [user]);
 
@@ -83,10 +111,35 @@ const AccountDetails = ({
       style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
     >
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <CountryPicker open={openCountryPicker} onClose={() => setOpenCountryPicker(false)} classes={classes} />
+        </Grid>
         <Grid item xs={12} md={12}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h6" gutterBottom>
             <FormattedMessage id="account-details-personal-information-title" defaultMessage="Account details" />
           </Typography>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <fieldset className={classes.fieldset}>
+            <legend className={classes.legend}>
+              <Typography>
+                <FormattedMessage id="account-details-country-information" defaultMessage="Country" />
+              </Typography>
+            </legend>
+            <Grid container spacing={2}>
+              {account && account.data.country ? 
+                <div style={{display: 'flex', alignItems: 'center', padding: 20}}>
+                  <img width='48' src={ require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`) } />
+                  <Typography component='span' style={{marginLeft: 10}}>
+                    { countryCodes.find(c => c.code === account.data.country).country }
+                  </Typography>
+                </div>
+               : 
+                <Typography style={{padding: 20}}>loading...</Typography>
+              }
+              <code style={{display: 'none'}}>{account && JSON.stringify(account.data)}</code>
+            </Grid>
+          </fieldset>
         </Grid>
         <Grid item xs={12} md={12}>
         <fieldset className={classes.fieldset}>
@@ -140,7 +193,7 @@ const AccountDetails = ({
               <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
                 {(msg) => (
                   <Field
-                    name="phone_number"
+                    name="individual[phone]"
                     label={msg}
                     defaultValue={account.data.individual && account.data.individual.phone}
                   />
@@ -161,7 +214,7 @@ const AccountDetails = ({
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
-              <Typography variant="h6" style={{marginBottom: -20, marginTop: 10}}>
+              <Typography color='textPrimary' style={{marginBottom: -20, marginTop: 10}}>
                 <FormattedMessage id="account-details-personal-information-birth-date" defaultMessage="Birth date" />
               </Typography>
             </Grid>
@@ -180,11 +233,11 @@ const AccountDetails = ({
                   }}
                 >
                   <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
-                  {['Jan', 'Fev', 'Mar', 'Apr', 'May', 'June', 'Aug', 'Set', 'Oct', 'Nov', 'Dec'].map(
+                  {[[0, 'Jan'], [1, 'Fev'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'June'], [6, 'Aug'], [7, 'Set'], [8, 'Oct'], [9, 'Nov'], [10, 'Dec']].map(
                     (item, i) => {
                       return (
-                        <option selected={account.data.individual && !!(item === account.data.individual.dob.month)} key={i} value={item}>
-                          {`${item}`}
+                        <option selected={account.data.individual && !!(item === account.data.individual.dob.month)} key={i} value={item[0]}>
+                          {`${item[1]}`}
                         </option>
                       )
                     }

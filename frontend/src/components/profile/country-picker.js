@@ -12,7 +12,7 @@ import {
   Typography
 } from '@material-ui/core'
 
-const countryCodes = [
+export const countryCodes = [
   { country: 'Australia', code: 'AU', image: 'australia' },
   { country: 'Austria', code: 'AT', image: 'austria' },
   { country: 'Belgium', code: 'BE', image: 'belgium' },
