@@ -144,7 +144,7 @@ export default function UserOrganizationTree ({ createOrganizations, updateOrgan
       { (organizations && organizations.length > 0) &&
         <div>
           <Typography variant='h5' component='h3' style={ { marginTop: 20, marginBottom: 10 } }>
-            <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
+            <FormattedMessage id='account.profile.org.headline' defaultMessage='Organizations' />
           </Typography>
           <Typography component='p'>
             <FormattedMessage id='account.profile.org.description' defaultMessage='Here is your public organizations that you can import to Gitpay' />

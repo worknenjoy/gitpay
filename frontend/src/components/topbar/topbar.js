@@ -670,7 +670,7 @@ class TopBar extends Component {
                       <Business />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Your Organizations' />
+                      <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Organizations' />
                     </ListItemText>
                   </ListItem>
                   }
@@ -683,7 +683,7 @@ class TopBar extends Component {
                       <PaymentIcon />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Your payments' />
+                      <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Payments' />
                     </ListItemText>
                   </ListItem>
                   }

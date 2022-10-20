@@ -9,7 +9,12 @@ import {
   FormControl,
   Input,
   Select,
+  FormHelperText,
 } from '@material-ui/core';
+
+import MuiAlert from '@material-ui/lab/Alert';
+import 'react-phone-number-input/style.css'
+import MaskedInput from 'react-text-mask';
 
 import CountryPicker, { countryCodes } from './country-picker';
 
@@ -33,6 +38,7 @@ const AccountDetails = ({
   updateAccount,
   user,
   updateUser,
+  createAccount,
   createBankAccount,
   getBankAccount,
   bankAccount,
@@ -41,6 +47,7 @@ const AccountDetails = ({
 }) => {
 
   const [ accountData, setAccountData ] = useState({})
+  const [ displayCurrentCountry, setDisplayCurrentCountry ] = useState({});
   const [ userId, setUserId ] = useState('');
   const [ openCountryPicker, setOpenCountryPicker ] = useState(false);
 
@@ -78,7 +85,27 @@ const AccountDetails = ({
 
   }
 
-  const Field = ({name, label, type = 'text', required = false, defaultValue, placeholder, disabled}) => {
+  const Alert = (props) => {
+    return <MuiAlert elevation={2} variant="outlined" {...props} />;
+  }
+
+  function TextMaskCustom(props) {
+    const { inputRef, ...other } = props;
+  
+    return (
+      <MaskedInput
+        {...other}
+        ref={(ref) => {
+          inputRef(ref ? ref.inputElement : null);
+        }}
+        mask={['(', '+', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
+        placeholderChar={'\u2000'}
+        showMask
+      />
+    );
+  }
+
+  const Field = ({name, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent}) => {
     return (
       <FormControl style={{width: '100%'}}>
         <InputLabel htmlFor={name}>{label}</InputLabel>
@@ -92,7 +119,13 @@ const AccountDetails = ({
           style={{width: '100%'}}
           placeholder={placeholder}
           disabled={disabled}
+          inputComponent={inputComponent}
         />
+        { help && 
+          <FormHelperText id="component-helper-text">
+            <FormattedMessage id='validation-message' defaultMessage='+Country code and Number' />
+          </FormHelperText>
+        }
       </FormControl>
     )
   }
@@ -104,6 +137,11 @@ const AccountDetails = ({
     }
   }, [user]);
 
+  const closeCountryPicker = (e, country) => {
+    setDisplayCurrentCountry(country);
+    setOpenCountryPicker(false);
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -111,9 +149,6 @@ const AccountDetails = ({
       style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <CountryPicker open={openCountryPicker} onClose={() => setOpenCountryPicker(false)} classes={classes} />
-        </Grid>
         <Grid item xs={12} md={12}>
           <Typography variant="h6" gutterBottom>
             <FormattedMessage id="account-details-personal-information-title" defaultMessage="Account details" />
@@ -123,24 +158,59 @@ const AccountDetails = ({
           <fieldset className={classes.fieldset}>
             <legend className={classes.legend}>
               <Typography>
-                <FormattedMessage id="account-details-country-information" defaultMessage="Country" />
+                <FormattedMessage id="account-details-country-information-title" defaultMessage="Country" />
               </Typography>
             </legend>
             <Grid container spacing={2}>
-              {account && account.data.country ? 
-                <div style={{display: 'flex', alignItems: 'center', padding: 20}}>
-                  <img width='48' src={ require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`) } />
-                  <Typography component='span' style={{marginLeft: 10}}>
-                    { countryCodes.find(c => c.code === account.data.country).country }
-                  </Typography>
+                {displayCurrentCountry.country && 
+                  <Grid item xs={12} md={12}>
+                    <Alert severity="info">
+                      <FormattedMessage id="account-details-country-information-desc" defaultMessage="Please make sure you have bank account on the country selected before continue." />
+                    </Alert>
+                  </Grid>
+                }
+                {account && account.data.country ? 
+                  <Grid item xs={12} md={12}>
+                    <div style={{display: 'flex', alignItems: 'center', padding: 20}}>
+                      <img width='48' src={ require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`) } />
+                      <Typography component='span' style={{marginLeft: 10}}>
+                        { countryCodes.find(c => c.code === account.data.country).country }
+                      </Typography>
+                    </div>
+                  </Grid>
+                : 
+                <div>
+                  <Button variant='outlined' onClick={() => setOpenCountryPicker(true)} style={{margin: 20}}>
+                    <FormattedMessage id="account-details-country-information-action" defaultMessage="Select Country" />
+                  </Button>
+                  <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
                 </div>
-               : 
-                <Typography style={{padding: 20}}>loading...</Typography>
-              }
-              <code style={{display: 'none'}}>{account && JSON.stringify(account.data)}</code>
-            </Grid>
+                }
+                <code style={{display: 'none'}}>{account && JSON.stringify(account.data)}</code>
+              </Grid>
+              {displayCurrentCountry.country ? (
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={12}>
+                    <div style={{display: 'flex', alignItems: 'center', padding: 20}}>
+                      <img width='48' src={ require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`) } />
+                      <Typography component='span' style={{marginLeft: 10}}>
+                        { countryCodes.find(c => c.code === displayCurrentCountry.code).country }
+                      </Typography>
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Button variant='text' onClick={() => {
+                      displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
+                      setDisplayCurrentCountry({})
+                    }} style={{margin: 20}}>
+                      <FormattedMessage id="account-details-country-information-save" defaultMessage="Save Country and continue" />
+                    </Button>
+                  </Grid>
+                </Grid>
+              ) : ('')}
           </fieldset>
         </Grid>
+        {account && account.data.country && (
         <Grid item xs={12} md={12}>
         <fieldset className={classes.fieldset}>
           <legend className={classes.legend}>
@@ -155,7 +225,7 @@ const AccountDetails = ({
                   <Field  
                     name="individual[first_name]"
                     label={msg}
-                    defaultValue={account.data.individual && account.data.individual.first_name}
+                    defaultValue={accountData['individual[first_name]'] || account.data.individual && account.data.individual.first_name}
                   />
                 )}
               </FormattedMessage>
@@ -166,7 +236,7 @@ const AccountDetails = ({
                   <Field
                     name="individual[last_name]"
                     label={msg}
-                    defaultValue={account.data.individual && account.data.individual.last_name}
+                    defaultValue={accountData['individual[last_name]'] || account.data.individual && account.data.individual.last_name}
                   />
                 )}
               </FormattedMessage>
@@ -182,10 +252,10 @@ const AccountDetails = ({
                     : intl.formatMessage(messages.documentProvide)
                 }
                 disabled={
-                  account.data.individual && account.data.individual.id_number_provided
+                  accountData['individual[id_number]'] || account.data.individual && account.data.individual.id_number_provided
                 }
                 defaultValue={
-                  account.data.individual && account.data.individual.id_number
+                  accountData['individual[id_number]'] || account.data.individual && account.data.individual.id_number
                 }
               />
             </Grid>
@@ -195,7 +265,9 @@ const AccountDetails = ({
                   <Field
                     name="individual[phone]"
                     label={msg}
-                    defaultValue={account.data.individual && account.data.individual.phone}
+                    defaultValue={accountData['individual[phone]'] || account.data.individual && account.data.individual.phone}
+                    help={true}
+                    inputComponent={TextMaskCustom}
                   />
                 )}
               </FormattedMessage>
@@ -206,7 +278,7 @@ const AccountDetails = ({
                   <Field 
                     name="business_profile[url]"
                     label={msg}
-                    defaultValue={account.data.business_profile && account.data.business_profile.url}
+                    defaultValue={accountData['business_profile[url]'] || account.data.business_profile && account.data.business_profile.url}
                   />
                 )}
               </FormattedMessage>
@@ -219,7 +291,7 @@ const AccountDetails = ({
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Field name="individual[dob][day]" label="Day" type="number" defaultValue={account.data.individual && account.data.individual.dob && account.data.individual.dob.day} />
+              <Field name="individual[dob][day]" label="Day" type="number" defaultValue={accountData['individual[dob][day]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.day} />
             </Grid>
             <Grid item xs={12} md={4}>
               <FormControl style={{width: '100%'}}>
@@ -233,10 +305,10 @@ const AccountDetails = ({
                   }}
                 >
                   <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
-                  {[[0, 'Jan'], [1, 'Fev'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'June'], [6, 'Aug'], [7, 'Set'], [8, 'Oct'], [9, 'Nov'], [10, 'Dec']].map(
+                  {[[1, 'Jan'], [2, 'Fev'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
                     (item, i) => {
                       return (
-                        <option selected={account.data.individual && !!(item === account.data.individual.dob.month)} key={i} value={item[0]}>
+                        <option selected={account.data.individual && !!(item[0] === account.data.individual.dob.month || item[1] === accountData['individual[dob][month]'])} key={i} value={item[0]}>
                           {`${item[1]}`}
                         </option>
                       )
@@ -246,7 +318,7 @@ const AccountDetails = ({
               </FormControl>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Field name="individual[dob][year]" label="Year" type="number" defaultValue={account.data.individual && account.data.individual.dob && account.data.individual.dob.year} />
+              <Field name="individual[dob][year]" label="Year" type="number" defaultValue={accountData['individual[dob][year]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.year} />
             </Grid>
           </Grid>
         </fieldset>
@@ -258,19 +330,19 @@ const AccountDetails = ({
           </legend>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-                <Field name="individual[address][line1]" label="Address line 1" defaultValue={account.data.individual && account.data.individual.address.line1} />          
+                <Field name="individual[address][line1]" label="Address line 1" defaultValue={ accountData['individual[address][line1]'] || account.data.individual && account.data.individual.address.line1} />          
             </Grid>
             <Grid item xs={12} md={6}>
-              <Field name="individual[address][line2]" label="Address line 2" defaultValue={account.data.individual && account.data.individual.address.line2} />
+              <Field name="individual[address][line2]" label="Address line 2" defaultValue={accountData['individual[address][line2]'] || account.data.individual && account.data.individual.address.line2} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Field name="individual[address][city]" label="City" defaultValue={account.data.individual && account.data.individual.address.city} />
+              <Field name="individual[address][city]" label="City" defaultValue={accountData['individual[address][city]'] || account.data.individual && account.data.individual.address.city} />
             </Grid>
             <Grid item xs={12} md={2}>
-              <Field name="individual[address][state]" label="State" defaultValue={account.data.individual && account.data.individual.address.state} />
+              <Field name="individual[address][state]" label="State" defaultValue={accountData['individual[address][state]'] || account.data.individual && account.data.individual.address.state} />
             </Grid>
             <Grid item xs={12} md={4}>
-              <Field name="individual[address][postal_code]" label="Postal code" defaultValue={account.data.individual && account.data.individual.address.postal_code} />
+              <Field name="individual[address][postal_code]" label="Postal code" defaultValue={accountData['individual[address][postal_code]'] || account.data.individual && account.data.individual.address.postal_code} />
             </Grid>
           </Grid>
         </fieldset>
@@ -291,7 +363,7 @@ const AccountDetails = ({
             </Button>
           </div>
         </Grid>
-      </Grid>
+      </Grid>)}
       </Grid>
     </form>
   );

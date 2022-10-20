@@ -457,6 +457,30 @@ class Profile extends Component {
                               }
                             />
                           </MenuItem>
+                          {this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                            <MenuItem
+                              onClick={() =>
+                                this.props.history.push('/profile/payment-options')
+                              }
+                              className={classes.menuItem}
+                              selected={this.state.selected === 3}
+                            >
+                              <ListItemIcon className={classes.icon}>
+                                <AccountBalance />
+                              </ListItemIcon>
+                              <ListItemText
+                                classes={{ primary: classes.primary }}
+                                primary={
+                                  <span>
+                                    <FormattedMessage
+                                      id='account.profile.bank.setup'
+                                      defaultMessage='Bank account'
+                                    />
+                                  </span>
+                                }
+                              />
+                            </MenuItem>
+                          }
                           {this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                             <MenuItem
                               onClick={() =>
@@ -474,7 +498,7 @@ class Profile extends Component {
                                   <span>
                                     <FormattedMessage
                                       id='account.profile.organization.maintainer'
-                                      defaultMessage='Your organizations'
+                                      defaultMessage='Organizations'
                                     />
                                   </span>
                                 }
@@ -520,31 +544,7 @@ class Profile extends Component {
                                   <span>
                                     <FormattedMessage
                                       id='account.profile.payments.list'
-                                      defaultMessage='Your payments'
-                                    />
-                                  </span>
-                                }
-                              />
-                            </MenuItem>
-                          }
-                          {this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                            <MenuItem
-                              onClick={() =>
-                                this.props.history.push('/profile/payment-options')
-                              }
-                              className={classes.menuItem}
-                              selected={this.state.selected === 3}
-                            >
-                              <ListItemIcon className={classes.icon}>
-                                <AccountBalance />
-                              </ListItemIcon>
-                              <ListItemText
-                                classes={{ primary: classes.primary }}
-                                primary={
-                                  <span>
-                                    <FormattedMessage
-                                      id='account.profile.bank.setup'
-                                      defaultMessage='Setup bank account'
+                                      defaultMessage='Payments'
                                     />
                                   </span>
                                 }

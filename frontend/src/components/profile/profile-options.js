@@ -104,7 +104,7 @@ class ProfileOptions extends Component {
                   <Typography variant='h6'>
                     <FormattedMessage
                       id='account.profile.tasks.mine.headline'
-                      defaultMessage='Your organizations'
+                      defaultMessage='Organizations'
                     />
                   </Typography>
                   <Typography variant='body2'>
@@ -130,7 +130,7 @@ class ProfileOptions extends Component {
             <Card>
               <FormattedMessage
                 id='account.profile.tasks.payments.caption'
-                defaultMessage='Your payments'
+                defaultMessage='Payments'
               >
                 { msg => <CardMedia image={ paymentsIcon } title={ msg } /> }
               </FormattedMessage>
