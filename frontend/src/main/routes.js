@@ -22,9 +22,8 @@ export default props => (
   <HashRouter>
     <Switch>
       <Route path='/recruitment' component={ LandingPage } />
-      <Route exact path='/' component={ WelcomeContainer } />
+      <Route exact path='/' component={ Auth.isUserAuthenticated() ? () => <Redirect to='/profile' /> : WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
-      
       <PrivateRoute path='/account-details' component={ ProfileContainer } />
       <Route exact path='/projects' component={ TaskExplorer } />
       <Route exact path='/organizations' component={ TaskExplorer } />

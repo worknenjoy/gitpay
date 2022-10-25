@@ -34,7 +34,7 @@ const styles = theme => ({
   rootTabs: {
     marginRight: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    backgroundColor: theme.palette.primary.light
+    backgroundColor: 'white'
   }
 })
 
@@ -214,7 +214,7 @@ const TaskList = (props) => {
           />
         </Typography>
         <div className={ classes.rootTabs }>
-          <AppBar position='static' color='default'>
+          <AppBar position='static' color='default'elevation={0}>
             <Tabs
               value={ taskListState.tab }
               onChange={ handleTabChange }

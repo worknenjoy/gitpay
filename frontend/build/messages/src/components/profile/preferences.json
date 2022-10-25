@@ -1,11 +1,7 @@
 [
   {
-    "id": "preferences.actions.language.title",
-    "defaultMessage": "Language"
-  },
-  {
-    "id": "preferences.actions.choose.language",
-    "defaultMessage": "Choose language"
+    "id": "preferences.title",
+    "defaultMessage": "Skills"
   },
   {
     "id": "preferences.os",
@@ -22,14 +18,6 @@
   {
     "id": "prefences.my.skills.zero",
     "defaultMessage": "No skills selected"
-  },
-  {
-    "id": "prefences.my.notifications",
-    "defaultMessage": "Notifications"
-  },
-  {
-    "id": "preferences.notifications.checkbox",
-    "defaultMessage": "I want to receive notifications about all the tasks, not just the ones I'm interested"
   },
   {
     "id": "prefences.my.openforjobs",

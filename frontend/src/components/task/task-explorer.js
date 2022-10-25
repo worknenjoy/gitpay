@@ -149,7 +149,7 @@ const TaskExplorer = (props) => {
       <TopBarContainer />
       <PageContent>
         { state.showNavigation &&
-          <AppBar position='sticky' color='default'>
+          <AppBar position='sticky'  elevation={0}>
             <Container maxWidth='lg'>
               <Tabs
                 variant='scrollable'

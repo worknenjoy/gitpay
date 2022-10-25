@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import {
@@ -116,7 +117,8 @@ class Account extends Component {
     updateAccount: PropTypes.func,
     fetchAccount: PropTypes.func,
     getBankAccount: PropTypes.func,
-    updateUser: PropTypes.func
+    updateUser: PropTypes.func,
+    history: PropTypes.object,
   }
 
   constructor (props) {
@@ -447,7 +449,7 @@ class Account extends Component {
                             size='large'
                             variant='contained'
                             color='primary'
-                            onClick={ this.openUpdateModal }
+                            onClick={ () => this.props.history.push('/account-details') }
                           >
                             { account.data.requirements.disabled_reason
                               ? <FormattedMessage id='account.activate' defaultMessage='Activate account' />
@@ -918,7 +920,10 @@ class Account extends Component {
                               <div style={ { float: 'right' } }>
                                 <Button
                                   color='primary'
-                                  onClick={ this.closeUpdateModal }
+                                  onClick={ (e) => {
+
+                                    this.closeUpdateModal(e)} 
+                                  }
                                 >
                                   <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
                                 </Button>
@@ -1069,4 +1074,4 @@ class Account extends Component {
   }
 }
 
-export default injectIntl(withStyles(styles)(Account))
+export default withRouter(injectIntl(withStyles(styles)(Account)))

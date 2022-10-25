@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { withStyles } from '@material-ui/core';
+import ReactPlaceholder from 'react-placeholder'
 import {
   Grid,
   Button,
@@ -17,6 +18,7 @@ import 'react-phone-number-input/style.css'
 import MaskedInput from 'react-text-mask';
 
 import CountryPicker, { countryCodes } from './country-picker';
+import DeleteUser from './settings/deleteUser';
 
 import messages from './messages';
 
@@ -35,9 +37,11 @@ const styles = (theme) => ({
 const AccountDetails = ({
   intl,
   account,
+  history,
   updateAccount,
   user,
   updateUser,
+  deleteUser,
   createAccount,
   createBankAccount,
   getBankAccount,
@@ -50,6 +54,7 @@ const AccountDetails = ({
   const [ displayCurrentCountry, setDisplayCurrentCountry ] = useState({});
   const [ userId, setUserId ] = useState('');
   const [ openCountryPicker, setOpenCountryPicker ] = useState(false);
+  const [ deleteUserDialog, setDeleteUserDialog ] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -130,6 +135,16 @@ const AccountDetails = ({
     )
   }
 
+  const onDeleteUser = (user) => {
+    deleteUser(user).then(response => {
+      console.log('response', response)
+      history.push('/')
+    }).catch(e => {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    })
+  }
+
   useEffect(() => {
     if (user.user.id) {
       const userId = user.user.id
@@ -155,6 +170,12 @@ const AccountDetails = ({
           </Typography>
         </Grid>
         <Grid item xs={12} md={12}>
+        <ReactPlaceholder
+            showLoadingAnimation
+            type='media'
+            rows={ 1 }
+            ready={ account.completed }
+          >
           <fieldset className={classes.fieldset}>
             <legend className={classes.legend}>
               <Typography>
@@ -209,8 +230,9 @@ const AccountDetails = ({
                 </Grid>
               ) : ('')}
           </fieldset>
+          </ReactPlaceholder>
         </Grid>
-        {account && account.data.country && (
+        {account.completed && account.data.country && (
         <Grid item xs={12} md={12}>
         <fieldset className={classes.fieldset}>
           <legend className={classes.legend}>
@@ -347,7 +369,22 @@ const AccountDetails = ({
           </Grid>
         </fieldset>
         <Grid item xs={12}>
+          <div style={{float: 'left'}}>
+            <Button onClick={ () => setDeleteUserDialog(true) }
+              variant='link'
+              style={{color: '#353A42'}}
+            >
+              <FormattedMessage id='account.profile.settings.delete.user.button' defaultMessage='Delete my account' />
+            </Button>
+          </div>
           <div style={{ float: 'right' }}>
+            <DeleteUser
+              deleteUser={ () => user && onDeleteUser(user.user) }
+              user={ user }
+              visible={ deleteUserDialog }
+              onClose={ () => setDeleteUserDialog(false) }
+              onOpen={ () => setDeleteUserDialog(true)}
+            />
             <Button
               color='primary'
               //onClick={closeUpdateModal}

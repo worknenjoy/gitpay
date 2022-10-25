@@ -21,6 +21,21 @@ const Palette = {
     }
   },
   overrides: {
+    /*
+    MuiAppBar: {
+      colorPrimary: {
+        backgroundColor: '#4D7E6F',
+      },
+      root: {
+        backgroundColor: '#4D7E6F',
+      }
+    },
+    MuiTabs: {
+      root: {
+        backgroundColor: 'transparent',
+        color: '#000'
+      }
+    },*/
     MuiInput: {
       root: {
         margin: '2px 0'

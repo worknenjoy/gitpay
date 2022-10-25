@@ -225,26 +225,29 @@ class Profile extends Component {
       case '/profile':
         this.setState({ selected: 0 })
         break
-      case '/profile/user/orgs':
+      case '/profile/account-details':
         this.setState({ selected: 1 })
-        break
-      case '/profile/tasks':
-        this.setState({ selected: 2 })
-        break
+      break
       case '/profile/payment-options':
+        this.setState({ selected: 2 })
+      break
+      case '/profile/user/orgs':
         this.setState({ selected: 3 })
         break
-      case '/profile/preferences':
+      case '/profile/tasks':
         this.setState({ selected: 4 })
         break
-      case '/profile/settings':
+      case '/profile/preferences':
         this.setState({ selected: 5 })
         break
-      case '/profile/roles':
+      case '/profile/settings':
         this.setState({ selected: 6 })
         break
-      case '/profile/payments':
+      case '/profile/roles':
         this.setState({ selected: 7 })
+        break
+      case '/profile/payments':
+        this.setState({ selected: 8 })
         break
       default:
         this.setState({ selected: null })
@@ -440,7 +443,7 @@ class Profile extends Component {
                               this.props.history.push('/account-details')
                             }
                             className={classes.menuItem}
-                            selected={this.state.selected === 0}
+                            selected={this.state.selected === 1}
                           >
                             <ListItemIcon className={classes.icon}>
                               <AccountBox />
@@ -463,7 +466,7 @@ class Profile extends Component {
                                 this.props.history.push('/profile/payment-options')
                               }
                               className={classes.menuItem}
-                              selected={this.state.selected === 3}
+                              selected={this.state.selected === 2}
                             >
                               <ListItemIcon className={classes.icon}>
                                 <AccountBalance />
@@ -487,7 +490,7 @@ class Profile extends Component {
                                 this.props.history.push('/profile/user/orgs')
                               }
                               className={classes.menuItem}
-                              selected={this.state.selected === 1}
+                              selected={this.state.selected === 3}
                             >
                               <ListItemIcon className={classes.icon}>
                                 <Business />
@@ -509,7 +512,7 @@ class Profile extends Component {
                             <MenuItem
                               onClick={(e) => this.props.history.push('/profile/tasks')}
                               className={classes.menuItem}
-                              selected={this.state.selected === 2}
+                              selected={this.state.selected === 4}
                             >
                               <ListItemIcon className={classes.icon}>
                                 <LibraryBooks />
@@ -533,7 +536,7 @@ class Profile extends Component {
                                 this.props.history.push('/profile/payments')
                               }
                               className={classes.menuItem}
-                              selected={this.state.selected === 3}
+                              selected={this.state.selected === 5}
                             >
                               <ListItemIcon className={classes.icon}>
                                 <PaymentIcon />
@@ -557,7 +560,7 @@ class Profile extends Component {
                               this.props.history.push('/profile/preferences')
                             }
                             className={classes.menuItem}
-                            selected={this.state.selected === 4}
+                            selected={this.state.selected === 6}
                           >
                             <ListItemIcon className={classes.icon}>
                               <Tune />
@@ -579,7 +582,7 @@ class Profile extends Component {
                               this.props.history.push('/profile/settings')
                             }
                             className={classes.menuItem}
-                            selected={this.state.selected === 5}
+                            selected={this.state.selected === 7}
                           >
                             <ListItemIcon className={classes.icon}>
                               <Settings />
@@ -599,7 +602,7 @@ class Profile extends Component {
                           <MenuItem
                             onClick={() => this.props.history.push('/profile/roles')}
                             className={classes.menuItem}
-                            selected={this.state.selected === 6}
+                            selected={this.state.selected === 8}
                           >
                             <ListItemIcon className={classes.icon}>
                               <FaceSharp />
@@ -726,7 +729,7 @@ class Profile extends Component {
                     <Route
                       exact
                       path='/profile/settings'
-                      component={() => <SettingsComponent deleteUser={this.props.deleteUser} classes={classes} user={this.props.user} />}
+                      component={() => <SettingsComponent updateUser={this.props.updateUser} classes={classes} user={this.props.user} />}
                     />
                     <Route
                       exact
