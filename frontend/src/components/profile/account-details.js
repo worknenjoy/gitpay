@@ -61,6 +61,7 @@ const AccountDetails = ({
     let formData = {
       'business_profile[url]': e.target['business_profile[url]'].value,
       'individual[phone]': e.target['individual[phone]'].value,
+      'individual[email]': user.user.data.email,
       'individual[first_name]': e.target['individual[first_name]'].value,
       'individual[last_name]': e.target['individual[last_name]'].value,
       'individual[address][city]':
