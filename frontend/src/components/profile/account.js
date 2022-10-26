@@ -371,7 +371,7 @@ class Account extends Component {
                             <Typography className={ classes.pos } color='textSecondary'>
                               <FormattedMessage id='account.status' defaultMessage='Your account status:' />
                             </Typography>
-                            { account.data.requirements.currently_due.length ? (
+                            { account.data.requirements.currently_due.filter(c => c !== 'business_profile.mcc').length ? (
                               <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
                                 { (msg) => (
                                   <Chip
@@ -422,7 +422,7 @@ class Account extends Component {
                               <div>
                                 { account.data.requirements.currently_due.map(
                                   (item, i) => (
-                                    Const.ACCOUNT_FIELDS[item] && item !== 'business_profile.mcc' && 
+                                    Const.ACCOUNT_FIELDS[item] && item !== 'business_profile.mcc' &&
                                     <Chip
                                       style={ { margin: 3 } }
                                       key={ i }
