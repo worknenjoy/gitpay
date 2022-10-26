@@ -371,7 +371,7 @@ class Account extends Component {
                             <Typography className={ classes.pos } color='textSecondary'>
                               <FormattedMessage id='account.status' defaultMessage='Your account status:' />
                             </Typography>
-                            { account.data.requirements.disabled_reason ? (
+                            { account.data.requirements.currently_due.length ? (
                               <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
                                 { (msg) => (
                                   <Chip
@@ -449,7 +449,7 @@ class Account extends Component {
                             size='large'
                             variant='contained'
                             color='primary'
-                            onClick={ () => this.props.history.push('/account-details') }
+                            onClick={ () => this.props.history.push('/profile/account-details') }
                           >
                             { account.data.requirements.disabled_reason
                               ? <FormattedMessage id='account.activate' defaultMessage='Activate account' />
