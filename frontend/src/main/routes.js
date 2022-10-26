@@ -24,7 +24,7 @@ export default props => (
       <Route path='/recruitment' component={ LandingPage } />
       <Route exact path='/' component={ Auth.isUserAuthenticated() ? () => <Redirect to='/profile' /> : WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
-      <PrivateRoute path='/account-details' component={ ProfileContainer } />
+      <PrivateRoute path='/profile/account-details' component={ ProfileContainer } />
       <Route exact path='/projects' component={ TaskExplorer } />
       <Route exact path='/organizations' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id' component={ TaskExplorer } />

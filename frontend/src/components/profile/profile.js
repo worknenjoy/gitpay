@@ -440,7 +440,7 @@ class Profile extends Component {
                           </MenuItem>
                           <MenuItem
                             onClick={() =>
-                              this.props.history.push('/account-details')
+                              this.props.history.push('/profile/account-details')
                             }
                             className={classes.menuItem}
                             selected={this.state.selected === 1}
@@ -673,7 +673,7 @@ class Profile extends Component {
                 <HashRouter>
                   <Switch>
                     <Route exact path='/profile' component={(props) => <ProfileOptions {...props} user={this.props.user} />} />
-                    <Route exact path='/account-details' component={(props) => <AccountDetails {...props} user={this.props.user} />} />
+                    <Route exact path='/profile/account-details' component={(props) => <AccountDetails {...props} user={this.props.user} />} />
                     {this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                       <Route
                         exact

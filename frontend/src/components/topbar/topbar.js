@@ -45,6 +45,7 @@ import {
   Settings,
   FaceSharp,
   Business,
+  AccountBox as AccountIcon,
   AccountBalance,
   Payment as PaymentIcon
 } from '@material-ui/icons'
@@ -648,6 +649,32 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.profile.page' defaultMessage='Profile page' />
                     </ListItemText>
                   </ListItem>
+                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+                  <ListItem button onClick={ () => {
+                    window.location.assign('/#/profile/account-details')
+                    this.setState({ anchorEl: null })
+                  } }>
+                    <ListItemIcon>
+                      <AccountIcon />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile.accountDetails' defaultMessage='Account details' />
+                    </ListItemText>
+                  </ListItem>
+                  }
+                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+                  <ListItem button onClick={ () => {
+                    window.location.assign('/#/profile/payment-options')
+                    this.setState({ anchorEl: null })
+                  } }>
+                    <ListItemIcon>
+                      <AccountBalance />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
+                    </ListItemText>
+                  </ListItem>
+                  }
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
                   <ListItem button onClick={ () => {
                     window.location.assign('/#/profile/tasks')
@@ -684,19 +711,6 @@ class TopBar extends Component {
                     </ListItemIcon>
                     <ListItemText>
                       <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Payments' />
-                    </ListItemText>
-                  </ListItem>
-                  }
-                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/payment-options')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <AccountBalance />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
                     </ListItemText>
                   </ListItem>
                   }
