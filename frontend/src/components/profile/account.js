@@ -414,7 +414,7 @@ class Account extends Component {
                               </div>
                             ) }
                           </div>
-                          { account.data.requirements.currently_due.length ? (
+                          { account.data.requirements.currently_due.filter(c => c !== 'business_profile.mcc').length ? (
                             <div>
                               <Typography component='p'>
                                 <FormattedMessage id='account.pending.title' defaultMessage='We have the following items that needs to be verified:' />
@@ -422,7 +422,7 @@ class Account extends Component {
                               <div>
                                 { account.data.requirements.currently_due.map(
                                   (item, i) => (
-                                    Const.ACCOUNT_FIELDS[item] &&
+                                    Const.ACCOUNT_FIELDS[item] && item !== 'business_profile.mcc' && 
                                     <Chip
                                       style={ { margin: 3 } }
                                       key={ i }
