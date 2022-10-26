@@ -8,7 +8,6 @@ import {
   Grid,
   Typography,
   Checkbox,
-  Switch,
 } from '@material-ui/core'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -18,9 +17,6 @@ import MySkill from './my-skill'
 const skills = [
   'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation', 'React', 'React Native', 'Angular', 'Vue.js', 'Blogging', 'Wordpress', 'PHP', 'Testing', 'Git', 'Continuous Integration'
 ]
-
-const logoLangEn = require('../../images/united-states-of-america.png')
-const logoLangBr = require('../../images/brazil.png')
 
 const styles = theme => ({
   title: {
@@ -155,10 +151,9 @@ class Preferences extends Component {
   }
 
   render () {
-    const { classes, language } = this.props
+    const { classes } = this.props
 
     let instance = this
-    const { anchorEl, selectedLanguage } = this.state
 
     let listSkills = skills.map(function (item) {
       return (

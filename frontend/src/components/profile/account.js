@@ -921,8 +921,8 @@ class Account extends Component {
                                 <Button
                                   color='primary'
                                   onClick={ (e) => {
-
-                                    this.closeUpdateModal(e)} 
+                                    this.closeUpdateModal(e)
+                                  }
                                   }
                                 >
                                   <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />

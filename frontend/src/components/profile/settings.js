@@ -15,11 +15,10 @@ import LanguageIcon from '@material-ui/icons/Language'
 
 import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
 
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 const logoLangEn = require('../../images/united-states-of-america.png')
 const logoLangBr = require('../../images/brazil.png')
-
 
 const styles = theme => ({
   title: {
@@ -56,7 +55,9 @@ class Settings extends Component {
         await this.props.updateUser(this.props.user.id, {
           language: this.state.selectedLanguage
         })
-      } catch (e) {
+      }
+      catch (e) {
+        // eslint-disable-next-line no-console
         console.log('error', e)
       }
     })
@@ -70,20 +71,22 @@ class Settings extends Component {
       await this.props.updateUser(this.props.user.id, {
         receiveNotifications: event.currentTarget.checked
       })
-    } catch (e) {
+    }
+    catch (e) {
+      // eslint-disable-next-line no-console
       console.log('error', e)
     }
   }
 
   render () {
-    const { classes, updateUser, user } = this.props
+    const { classes, user } = this.props
     const { anchorEl, selectedLanguage } = this.state
     const language = selectedLanguage || user.language
 
     return (
       <Paper elevation={ 0 }>
         <Grid container alignItems='center' spacing={ 1 }>
-        <Grid item xs={ 12 }>
+          <Grid item xs={ 12 }>
             <Typography variant='h4' className={ classes.title }>
               <FormattedMessage id='preferences.title' defaultMessage='Settings' />
             </Typography>
@@ -151,7 +154,7 @@ class Settings extends Component {
             <Switch
               id='switch_receive_notifications'
               checked={ this.state.receiveNotifications }
-              onChange={this.handleHiddenChange}
+              onChange={ this.handleHiddenChange }
               value='hidden'
               color='primary'
             />

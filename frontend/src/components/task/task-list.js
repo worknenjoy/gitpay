@@ -214,7 +214,7 @@ const TaskList = (props) => {
           />
         </Typography>
         <div className={ classes.rootTabs }>
-          <AppBar position='static' color='default'elevation={0}>
+          <AppBar position='static' color='default'elevation={ 0 }>
             <Tabs
               value={ taskListState.tab }
               onChange={ handleTabChange }

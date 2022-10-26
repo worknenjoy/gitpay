@@ -35,7 +35,7 @@ const Palette = {
         backgroundColor: 'transparent',
         color: '#000'
       }
-    },*/
+    }, */
     MuiInput: {
       root: {
         margin: '2px 0'
@@ -56,13 +56,13 @@ const Palette = {
         '&:after': {
           borderBottom: 'none'
         },
-        '&:hover:not(.Mui-disabled):before' : {
+        '&:hover:not(.Mui-disabled):before': {
           borderBottom: 'none',
         },
       }
     },
     MuiFormLabel: {
-      root:{
+      root: {
         '&$focused': {
           color: '#353A42',
         },
