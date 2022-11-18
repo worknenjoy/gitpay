@@ -783,7 +783,7 @@ class TopBar extends Component {
                 <Grid container justify='center'>
                   <Grid item>
                     <Button
-                      href={ process.env.SLACK_CHANNEL_INVITE_LINK }
+                      href='https://join.slack.com/t/gitpay-workspace/shared_invite/zt-1j8yyotnp-EbA3OSuL7cJkZL_CgBW37g' target='_blank'
                       variant='outline'
                       size='medium'
                       color='secondary'
