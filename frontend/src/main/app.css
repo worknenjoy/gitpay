@@ -12,3 +12,7 @@ a {
   text-overflow: ellipsis;
 }
 
+.MuiTypography-body2 img {
+  width: 100%;
+  height: 100%;
+}
