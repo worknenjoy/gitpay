@@ -68,6 +68,13 @@ const recruiterTeam = [
     image: require('../../images/teams/core-team-mayna.jpg'),
     linkedinUrl: 'https://br.linkedin.com/in/mayna-thais',
     githubUrl: 'https://github.com/mthais'
+  },
+  {
+    name: 'Rafael Quintanilha',
+    description: 'Software Developer Intern at Gitpay. Graduated in IT Management and with a master\'s in e-business, Rafael has experience working as a digital project manager and now embraces a new career path as a web developer.',
+    image: require('../../images/teams/profile_rq.jpg'),
+    linkedinUrl: 'https://www.linkedin.com/in/rafael-quintanilha/',
+    githubUrl: 'https://github.com/RafaelQuintanilha18'
   }
 ]
 
