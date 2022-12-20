@@ -137,7 +137,6 @@ const AccountDetails = ({
 
   const onDeleteUser = (user) => {
     deleteUser(user).then(response => {
-      console.log('response', response)
       history.push('/')
     }).catch(e => {
       // eslint-disable-next-line no-console

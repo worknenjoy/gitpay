@@ -242,7 +242,6 @@ const deleteUser = (user) => {
     return axios
       .delete(api.API_URL + `/user/delete/${id}`, {})
       .then(result => {
-        console.log('result', result)
         dispatch(addNotification('account.profile.settings.delete.user.notification'))
         dispatch(logOut())
         return result
