@@ -233,7 +233,7 @@ class Welcome extends Component {
                   className={ classes.mainBlock }
                   style={ { margin: 0, paddingTop: 2 } }
                 >
-                  <a href='/' style={{display: 'inline-block', margin: 20}}>
+                  <a href='/' style={ { display: 'inline-block', margin: 20 } }>
                     <img width={ 240 } src={ logo } />
                   </a>
                   <Typography className={ classes.tagline } gutterBottom>
