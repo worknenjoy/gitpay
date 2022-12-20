@@ -84,7 +84,7 @@ const CheckoutForm = (props) => {
           }
           catch (e) {
             props.addNotification(
-              'payment.message.error'
+              `payment.message.error`, e.message
             )
             setCheckoutFormState({
               ...checkoutFormState,
@@ -93,7 +93,7 @@ const CheckoutForm = (props) => {
           }
         }
         else {
-          props.addNotification('payment.message.error')
+          props.addNotification('payment.message.error', 'No token')
           setCheckoutFormState({
             ...checkoutFormState,
             paymentRequested: false
@@ -105,7 +105,7 @@ const CheckoutForm = (props) => {
         console.log('error to create token')
         // eslint-disable-next-line no-console
         console.log(e)
-        props.addNotification('payment.message.error')
+        props.addNotification('payment.message.error', 'error to create token')
         setCheckoutFormState({
           ...checkoutFormState,
           paymentRequested: false
