@@ -18,7 +18,7 @@ const Palette = {
       main: '#000',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#fff',
-    }
+    },
   },
   overrides: {
     /*

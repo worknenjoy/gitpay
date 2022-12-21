@@ -33,7 +33,6 @@ export const MainTitle = styled.div`
 
 export const MainList = styled.div`
   text-align: left;
-  margin-left: 20%;
 
   ${media.phone`
     margin-left: 0;
@@ -81,4 +80,25 @@ export const Section = styled.div`
   ${props => props.alternative && css`
     background-color: #f1f0ea;
   `}
+`
+
+export const HeroTitle = styled.div`
+
+`
+
+export const HeroSection = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`
+
+export const HeroContent = styled.div`
+  margin-top: 28px;
+  margin-bottom: 20px;
+`
+
+export const HeroActions = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
 `

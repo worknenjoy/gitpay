@@ -4,6 +4,7 @@ import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../components/session/private-route'
 
 import WelcomeContainer from '../containers/welcome'
+import HomeContainer from '../containers/home'
 import Session from '../components/session/session'
 import ProfileContainer from '../containers/profile'
 import TaskContainer from '../containers/task'
@@ -22,7 +23,8 @@ export default props => (
   <HashRouter>
     <Switch>
       <Route path='/recruitment' component={ LandingPage } />
-      <Route exact path='/' component={ Auth.isUserAuthenticated() ? () => <Redirect to='/profile' /> : WelcomeContainer } />
+      <Route exact path='/' component={ Auth.isUserAuthenticated() ? () => <Redirect to='/profile' /> : HomeContainer } />
+      <Route exact path='/welcome' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <PrivateRoute path='/profile/account-details' component={ ProfileContainer } />
       <Route exact path='/projects' component={ TaskExplorer } />
