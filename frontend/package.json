@@ -90,7 +90,7 @@
     "lodash": "^4.17.11",
     "logrocket": "^1.0.3",
     "logrocket-react": "^3.0.1",
-    "marked": "^0.3.19",
+    "marked": "^4.0.10",
     "material-ui-phone-number": "^2.2.6",
     "mini-css-extract-plugin": "^0.9.0",
     "moment": "^2.22.1",
