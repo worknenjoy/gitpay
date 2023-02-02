@@ -50,7 +50,7 @@ class LoginButton extends Component {
   }
 
   render () {
-    const { classes, contrast, size, includeForm, hideExtra } = this.props
+    const { classes, contrast, size, includeForm, hideExtra, mode, onClose } = this.props
 
     return (
       <Wrapper contrast={ contrast }>
@@ -60,7 +60,7 @@ class LoginButton extends Component {
               <Typography type='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
-              <LoginFormContainer />
+              <LoginFormContainer mode={mode} onClose={onClose} />
             </div>
           ) }
           <div style={ { display: hideExtra ? 'none' : 'block' } }>

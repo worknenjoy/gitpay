@@ -9,21 +9,27 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import { FormattedMessage } from 'react-intl';
 
-const options = ['Import', 'Issue', 'Project', 'Organization'];
+const options = ['Issue', 'Project', 'Organization'];
 
-export default function ImportIssueButton() {
+export default function ImportIssueButton({
+  onAddIssueClick
+}) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
+  const handleClick = (e) => {
+    e.preventDefault();
+    onAddIssueClick()
   };
 
   const handleMenuItemClick = (event, index) => {
+    event.preventDefault();
     setSelectedIndex(index);
     setOpen(false);
+    onAddIssueClick()
   };
 
   const handleToggle = () => {
@@ -42,46 +48,13 @@ export default function ImportIssueButton() {
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
         <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-          <Button onClick={handleClick}>{options[selectedIndex]}</Button>
-          <Button
-            color="primary"
-            size="small"
-            aria-controls={open ? 'split-button-menu' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-label="Import"
-            aria-haspopup="menu"
-            onClick={handleToggle}
-          >
-            <ArrowDropDownIcon />
+          <Button onClick={handleClick}>
+            <FormattedMessage
+              id='home.hero.headline.button.secondary'
+              defaultMessage='Import issue'
+            />
           </Button>
         </ButtonGroup>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList id="split-button-menu">
-                    {options.map((option, index) => (
-                      <MenuItem
-                        key={option}
-                        disabled={index === 2}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
-                      >
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
       </Grid>
     </Grid>
   );

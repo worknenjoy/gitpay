@@ -37,8 +37,10 @@ export default props => (
       <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter' component={ TaskExplorer } />
       <Route exact path='/tasks/:filter' component={ TaskExplorer } />
       <Route exact path='/team' component={ TeamContainer } />
-      <Route exact path='/login' component={ LoginPage } />
-      <Route exact path='/login/:status' component={ LoginPageContainer } />
+      <Route exact path='/signin' component={ LoginPage } />
+      <Route exact path='/signup' component={ LoginPage } />
+      <Route exact path='/signin/:status' component={ LoginPageContainer } />
+      <Route exact path='/signup/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
       <Route exact path='/task/:id' component={ TaskContainer } />
       <Route exact path='/task/:id/:slug' component={ TaskContainer } />

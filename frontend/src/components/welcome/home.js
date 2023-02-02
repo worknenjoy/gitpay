@@ -65,7 +65,7 @@ class Home extends Component {
           <HeroSection>
             <Grid container spacing={ 3 }>
                 <Grid item xs={ 12 } sm={ 5 }>
-                  <ResponsiveImage width='600' src={ freelancerImage } />
+                  <ResponsiveImage width='480' src={ freelancerImage } />
                 </Grid>
                 <Grid item xs={ 12 } sm={ 7 }>
                   <HeroTitle>
@@ -89,11 +89,11 @@ class Home extends Component {
                       variant='text'
                       color='primary'
 
-                      onClick={ () => this.props.history.push('/signup') }
+                      onClick={ () => this.props.history.push('/tasks/open') }
                     >
                       <FormattedMessage
                         id='home.hero.headline.button'
-                        defaultMessage='Join our community'
+                        defaultMessage='Check out bounties'
                       />
                     </Button>
                     <Button
@@ -105,7 +105,7 @@ class Home extends Component {
                     >
                       <FormattedMessage
                         id='home.hero.headline.button.secondary'
-                        defaultMessage='Import issues'
+                        defaultMessage='Import issue'
                       />
                     </Button>
                   </HeroActions>

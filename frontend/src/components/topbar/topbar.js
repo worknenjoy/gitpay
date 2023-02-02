@@ -50,9 +50,6 @@ import {
   Payment as PaymentIcon
 } from '@material-ui/icons'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSlack } from '@fortawesome/free-brands-svg-icons'
-
 import humanFormat from 'human-format'
 
 import { withRouter } from 'react-router-dom'
@@ -155,7 +152,8 @@ class TopBar extends Component {
       provider: 'github',
       createTaskDialog: false,
       joinSlackDialog: false,
-      isActive: false
+      isActive: false.value,
+      mode: null
     }
   }
 
@@ -200,9 +198,9 @@ class TopBar extends Component {
     this.setState({ createTaskDialog: false })
   }
 
-  handleClickDialogSignUser = (e) => {
-    e.preventDefault()
+  handleClickDialogSignUser = (e, mode) => {
     this.props.openDialog('SignupUser')
+    this.setState({ mode })
   }
 
   handleClickDialogJoinSlack = (e) => {
@@ -325,6 +323,7 @@ class TopBar extends Component {
 
   render () {
     const { completed, user, preferences, dialog } = this.props
+    const { mode } = this.state
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
@@ -427,7 +426,7 @@ class TopBar extends Component {
               <React.Fragment>
                 <div style={{display: 'flex', justifyContent: 'space-around', marginRight: 20}}>
                   <LinkButton
-                    onClick={ this.handleClickDialogSignUser }
+                    onClick={ (e) => this.handleClickDialogSignUser(e, 'signup') }
                     variant='text'
                     size='small'
                     color='primary'
@@ -440,7 +439,7 @@ class TopBar extends Component {
                   </LinkButton>
 
                   <LinkButton
-                    onClick={ this.handleClickDialogSignUser }
+                    onClick={ (e) => this.handleClickDialogSignUser(e, 'signin') }
                     variant='text'
                     size='small'
                     color='primary'
@@ -502,7 +501,13 @@ class TopBar extends Component {
                     <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
                   </DialogTitle>
                   <DialogContent>
-                    <LoginButton referer={ this.props.location } size='medium' includeForm />
+                    <LoginButton
+                      referer={ this.props.location }
+                      size='medium'
+                      includeForm
+                      mode={ mode }
+                      onClose={this.handleSignUserDialogClose}
+                    />
                   </DialogContent>
                 </Dialog>
               </React.Fragment>) : (
@@ -578,7 +583,7 @@ class TopBar extends Component {
                         <Button
                           style={ { marginRight: 10 } }
                           color='primary'
-                          variant={ this.state.provider === 'github' ? 'contained' : 'outline' }
+                          variant={ this.state.provider === 'github' ? 'contained' : 'outlined' }
                           id='github'
                           onClick={ (e) => this.handleProvider(e, 'github') }
                         >
@@ -588,7 +593,7 @@ class TopBar extends Component {
 
                         <Button
                           color='primary'
-                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outline' }
+                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outlined' }
                           id='bitbucket'
                           onClick={ (e) => this.handleProvider(e, 'bitbucket') }
                         >
@@ -776,7 +781,7 @@ class TopBar extends Component {
                 </List>
               </Drawer>
             </OnlyDesktop>
-            <ImportIssueButton onAddIssueClick={this.handleClickDialogSignUser} />
+            <ImportIssueButton onAddIssueClick={(e) => this.handleClickDialogCreateTask(e)} />
           </RightSide>
         </Container>
       </Bar>

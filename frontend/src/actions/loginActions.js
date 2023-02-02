@@ -109,7 +109,7 @@ export const registerUser = data => {
     return axios
       .post(api.API_URL + '/auth/register', data)
       .then(response => {
-        if (response.data.email) {
+        if (response.data.email.length) {
           dispatch(addNotification('user.register.successfull'))
           return dispatch(registerSuccess(response.data))
         }
@@ -117,7 +117,8 @@ export const registerUser = data => {
         return dispatch(registerError({}))
       })
       .catch(error => {
-        if (error.error === 'user.exist') {
+        const responseError = error.response.data.message
+        if (responseError !== 'user.exist') {
           dispatch(addNotification('user.login.error'))
         }
         else {

@@ -47,7 +47,7 @@ const Palette = {
         height: 52,
         '&:focus': {
           border: '2px solid #353A42'
-        }
+        },
       },
       underline: {
         '&:before': {
@@ -70,17 +70,18 @@ const Palette = {
     },
     MuiInputLabel: {
       root: {
-        padding: '5px 12px',
-        marginTop: 6,
         color: '#929292',
+        marginTop: 10,
+        marginLeft: 10,
+        backgroundColor: 'white',
+        padding: 2,
+        zIndex: 200
       },
-      shrink: {
-        transform: 'translate(10px, 4px) scale(0.75)',
-        backgroundColor: '#fff',
-        zIndex: 1,
-        padding: '2px'
-      }
-    }
+      outlined: {
+        margin: 0,
+        padding: 0
+      },
+    },
   }
 }
 

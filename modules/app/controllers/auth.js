@@ -6,7 +6,7 @@ const task = require('../../tasks')
 exports.register = (req, res) => {
   user.userExists({ email: req.body.email }).then(userData => {
     if (userData.dataValues && userData.dataValues.email) {
-      res.status(403).send({ error: 'user.exist' })
+      res.status(403).send({ message: 'user.exist' })
       return
     }
     user.userBuilds(req.body)

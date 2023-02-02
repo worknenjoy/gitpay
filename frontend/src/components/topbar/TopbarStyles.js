@@ -81,7 +81,7 @@ export const IconHamburger = styled.span`
 
 export const LeftSide = styled(Side)`
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
   z-index: 1300;
   flex: 1;
@@ -109,7 +109,7 @@ export const LeftSide = styled(Side)`
 
 export const RightSide = styled(Side)`
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 
 @media (max-width: 37.5em) {
     display: flex;
