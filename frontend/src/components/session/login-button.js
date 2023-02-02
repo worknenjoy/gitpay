@@ -60,7 +60,7 @@ class LoginButton extends Component {
               <Typography type='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
-              <LoginFormContainer mode={mode} onClose={onClose} />
+              <LoginFormContainer mode={ mode } onClose={ onClose } />
             </div>
           ) }
           <div style={ { display: hideExtra ? 'none' : 'block' } }>

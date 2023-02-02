@@ -19,7 +19,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid,
   Tooltip,
   FormControl,
   FormHelperText,
@@ -33,9 +32,6 @@ import {
   withStyles,
 } from '@material-ui/core'
 import {
-  AddBox,
-  ViewList,
-  Group,
   LibraryBooks,
   Tune,
   Home,
@@ -49,8 +45,6 @@ import {
   AccountBalance,
   Payment as PaymentIcon
 } from '@material-ui/icons'
-
-import humanFormat from 'human-format'
 
 import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
@@ -331,14 +325,6 @@ class TopBar extends Component {
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
-    let channelUserCount = ''
-    if (this.props.channelUserCount) {
-      const count = humanFormat(this.props.channelUserCount, {
-        decimals: 1,
-        separator: ''
-      })
-      channelUserCount = `(${count})`
-    }
 
     return (
       <Bar>
@@ -349,7 +335,7 @@ class TopBar extends Component {
                 <Logo src={ logo } />
               </StyledButton>
             </div>
-            <div style={{marginTop: 12, marginLeft: 20}}>
+            <div style={ { marginTop: 12, marginLeft: 20 } }>
               <LinkButton
                 onClick={ this.handleHowItWorks }
                 variant='text'
@@ -427,94 +413,95 @@ class TopBar extends Component {
           <RightSide isActive={ this.state.isActive }>
             { !isLoggedIn
               ? (
-              <React.Fragment>
-                <div style={{display: 'flex', justifyContent: 'space-around', marginRight: 20}}>
-                  <LinkButton
-                    onClick={ (e) => this.handleClickDialogSignUser(e, 'signup') }
-                    variant='text'
-                    size='small'
-                    color='primary'
-                  >
-                    <LabelButton>
-                      <FormattedMessage
-                        id='topbar.signup.label'
-                        defaultMessage='Signup' />
-                    </LabelButton>
-                  </LinkButton>
+                <React.Fragment>
+                  <div style={ { display: 'flex', justifyContent: 'space-around', marginRight: 20 } }>
+                    <LinkButton
+                      onClick={ (e) => this.handleClickDialogSignUser(e, 'signup') }
+                      variant='text'
+                      size='small'
+                      color='primary'
+                    >
+                      <LabelButton>
+                        <FormattedMessage
+                          id='topbar.signup.label'
+                          defaultMessage='Signup' />
+                      </LabelButton>
+                    </LinkButton>
 
-                  <LinkButton
-                    onClick={ (e) => this.handleClickDialogSignUser(e, 'signin') }
-                    variant='text'
-                    size='small'
-                    color='primary'
-                  >
-                    <LabelButton>
-                      <FormattedMessage
-                        id='topbar.signin.label'
-                        defaultMessage='Signin' />
-                    </LabelButton>
-                  </LinkButton>
-                  <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
-                    { (msg) => (
-                      <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-                        <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
-                          { completed ? (
-                            <StyledAvatarIconOnly
-                              alt={ user.username || '' }
-                              src={ logoLang(userCurrentLanguage) }
-                            />
-                          ) : (
-                            <Avatar>
-                              <CircularProgress />
-                            </Avatar>
-                          ) }
-                        </Button>
-                      </Tooltip>
-                    ) }
-                  </FormattedMessage>
-                  <Menu
+                    <LinkButton
+                      onClick={ (e) => this.handleClickDialogSignUser(e, 'signin') }
+                      variant='text'
+                      size='small'
+                      color='primary'
+                    >
+                      <LabelButton>
+                        <FormattedMessage
+                          id='topbar.signin.label'
+                          defaultMessage='Signin' />
+                      </LabelButton>
+                    </LinkButton>
+                    <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
+                      { (msg) => (
+                        <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
+                          <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
+                            { completed ? (
+                              <StyledAvatarIconOnly
+                                alt={ user.username || '' }
+                                src={ logoLang(userCurrentLanguage) }
+                              />
+                            ) : (
+                              <Avatar>
+                                <CircularProgress />
+                              </Avatar>
+                            ) }
+                          </Button>
+                        </Tooltip>
+                      ) }
+                    </FormattedMessage>
+                    <Menu
                       id='menu-appbar'
                       anchorEl={ anchorEl }
                       anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
                       transformOrigin={ { vertical: 'top', horizontal: 'right' } }
                       open={ anchorEl && anchorEl.id === 'language-menu' }
                       onClose={ this.handleClose }
+                    >
+                      <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
+                        <StyledAvatarIconOnly
+                          alt='English'
+                          src={ logoLangEn }
+                        />
+                        <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
+                      </MenuItem>
+                      <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') }>
+                        <StyledAvatarIconOnly
+                          alt='Português'
+                          src={ logoLangBr }
+                        />
+                        <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                  <Dialog
+                    open={ dialog.open && dialog.target === 'SignupUser' }
+                    onClose={ this.handleSignUserDialogClose }
+                    aria-labelledby='form-dialog-title'
                   >
-                    <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
-                      <StyledAvatarIconOnly
-                        alt='English'
-                        src={ logoLangEn }
+                    <DialogTitle id='form-dialog-title'>
+                      <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
+                    </DialogTitle>
+                    <DialogContent>
+                      <LoginButton
+                        referer={ this.props.location }
+                        size='medium'
+                        includeForm
+                        mode={ mode }
+                        onClose={ this.handleSignUserDialogClose }
                       />
-                      <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
-                    </MenuItem>
-                    <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') }>
-                      <StyledAvatarIconOnly
-                        alt='Português'
-                        src={ logoLangBr }
-                      />
-                      <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
-                    </MenuItem>
-                  </Menu>
-                </div>
-                <Dialog
-                  open={ dialog.open && dialog.target === 'SignupUser' }
-                  onClose={ this.handleSignUserDialogClose }
-                  aria-labelledby='form-dialog-title'
-                >
-                  <DialogTitle id='form-dialog-title'>
-                    <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
-                  </DialogTitle>
-                  <DialogContent>
-                    <LoginButton
-                      referer={ this.props.location }
-                      size='medium'
-                      includeForm
-                      mode={ mode }
-                      onClose={this.handleSignUserDialogClose}
-                    />
-                  </DialogContent>
-                </Dialog>
-              </React.Fragment>) : (
+                    </DialogContent>
+                  </Dialog>
+                </React.Fragment>
+              ) : (
                 <React.Fragment>
                   <StyledButton
                     onClick={ this.handleMenu }
@@ -572,16 +559,16 @@ class TopBar extends Component {
                         fullWidth
                       />
                       { this.state.provider === 'github' &&
-                      <FormControl component='fieldset'>
-                        <FormGroup aria-label='position' name='position' value={ 'private' } onChange={ this.handlePrivate } row>
-                          <FormControlLabel
-                            value='private'
-                            control={ <Checkbox color='primary' /> }
-                            label='private'
-                            labelPlacement='right'
-                          />
-                        </FormGroup>
-                      </FormControl>
+                        <FormControl component='fieldset'>
+                          <FormGroup aria-label='position' name='position' value={ 'private' } onChange={ this.handlePrivate } row>
+                            <FormControlLabel
+                              value='private'
+                              control={ <Checkbox color='primary' /> }
+                              label='private'
+                              labelPlacement='right'
+                            />
+                          </FormGroup>
+                        </FormControl>
                       }
                       <div style={ { marginTop: 10, marginBottom: 10 } }>
                         <Button
@@ -607,9 +594,9 @@ class TopBar extends Component {
                       </div>
 
                       { this.state.task.url.error &&
-                      <FormHelperText error={ this.state.task.url.error }>
-                        <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
-                      </FormHelperText>
+                        <FormHelperText error={ this.state.task.url.error }>
+                          <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
+                        </FormHelperText>
                       }
                     </FormControl>
                   </DialogContent>
@@ -675,82 +662,82 @@ class TopBar extends Component {
                     </ListItemText>
                   </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/account-details')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <AccountIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.accountDetails' defaultMessage='Account details' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/account-details')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <AccountIcon />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.accountDetails' defaultMessage='Account details' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/payment-options')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <AccountBalance />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/payment-options')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <AccountBalance />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/tasks')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <LibraryBooks />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.issues' defaultMessage='Your issues' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/tasks')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <LibraryBooks />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.issues' defaultMessage='Your issues' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/user/orgs')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <Business />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Organizations' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/user/orgs')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <Business />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Organizations' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && (user.Types.map(t => t.name).includes('funding') || user.Types.map(t => t.name).includes('maintainer')) &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/payments')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <PaymentIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Payments' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/payments')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <PaymentIcon />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Payments' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/preferences')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <Tune />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.skills' defaultMessage='Set skills' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/preferences')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <Tune />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.skills' defaultMessage='Set skills' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   <ListItem button onClick={ () => {
                     window.location.assign('/#/profile/settings')
@@ -785,7 +772,7 @@ class TopBar extends Component {
                 </List>
               </Drawer>
             </OnlyDesktop>
-            <ImportIssueButton onAddIssueClick={(e) => this.handleClickDialogCreateTask(e)} />
+            <ImportIssueButton onAddIssueClick={ (e) => this.handleClickDialogCreateTask(e) } />
           </RightSide>
         </Container>
       </Bar>
@@ -803,8 +790,7 @@ TopBar.propTypes = {
   updateUser: PropTypes.func,
   signOut: PropTypes.func,
   logged: PropTypes.bool,
-  completed: PropTypes.bool,
-  hide: PropTypes.bool
+  completed: PropTypes.bool
 }
 
 export default withRouter(withStyles(styles)(TopBar))

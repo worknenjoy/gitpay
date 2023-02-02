@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import 'typeface-roboto'
 import {
@@ -56,7 +55,7 @@ class Home extends Component {
   }
 
   render () {
-    const { classes, location, logged } = this.props
+    const { classes } = this.props
 
     return (
       <div className={ classes.root }>
@@ -64,52 +63,52 @@ class Home extends Component {
         <Section ref='hero'>
           <HeroSection>
             <Grid container spacing={ 3 }>
-                <Grid item xs={ 12 } sm={ 5 }>
-                  <ResponsiveImage width='480' src={ freelancerImage } />
-                </Grid>
-                <Grid item xs={ 12 } sm={ 7 }>
-                  <HeroTitle>
-                    <Typography variant='h3' gutterBottom align='left'>
-                      <FormattedMessage
-                        id='home.hero.headline.title'
-                        defaultMessage='Collaborate and earn bounties for solving issues from projects'
-                      />
-                    </Typography>
-                  </HeroTitle>
-                  <HeroContent>
-                    <Typography variant='h6' gutterBottom align='left'>
-                      <FormattedMessage
-                        id='home.hero.headline.description'
-                        defaultMessage='Gitpay is a platform that allows you to collaborate with other developers and earn bounties for solving issues from projects. You can also create your own projects and invite other developers to collaborate with you.'
-                      />
-                    </Typography>
-                  </HeroContent>
-                  <HeroActions>
-                    <Button
-                      variant='text'
-                      color='primary'
+              <Grid item xs={ 12 } sm={ 5 }>
+                <ResponsiveImage width='480' src={ freelancerImage } />
+              </Grid>
+              <Grid item xs={ 12 } sm={ 7 }>
+                <HeroTitle>
+                  <Typography variant='h3' gutterBottom align='left'>
+                    <FormattedMessage
+                      id='home.hero.headline.title'
+                      defaultMessage='Collaborate and earn bounties for solving issues from projects'
+                    />
+                  </Typography>
+                </HeroTitle>
+                <HeroContent>
+                  <Typography variant='h6' gutterBottom align='left'>
+                    <FormattedMessage
+                      id='home.hero.headline.description'
+                      defaultMessage='Gitpay is a platform that allows you to collaborate with other developers and earn bounties for solving issues from projects. You can also create your own projects and invite other developers to collaborate with you.'
+                    />
+                  </Typography>
+                </HeroContent>
+                <HeroActions>
+                  <Button
+                    variant='text'
+                    color='primary'
 
-                      onClick={ () => this.props.history.push('/tasks/open') }
-                    >
-                      <FormattedMessage
-                        id='home.hero.headline.button'
-                        defaultMessage='Check out bounties'
-                      />
-                    </Button>
-                    <Button
-                      variant='contained'
-                      color='primary'
-                      className={ classes.button }
-                      style={{ marginLeft: 20 }}
-                      onClick={ () => this.props.history.push('/signup') }
-                    >
-                      <FormattedMessage
-                        id='home.hero.headline.button.secondary'
-                        defaultMessage='Import issue'
-                      />
-                    </Button>
-                  </HeroActions>
-                </Grid>
+                    onClick={ () => this.props.history.push('/tasks/open') }
+                  >
+                    <FormattedMessage
+                      id='home.hero.headline.button'
+                      defaultMessage='Check out bounties'
+                    />
+                  </Button>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    className={ classes.button }
+                    style={ { marginLeft: 20 } }
+                    onClick={ () => this.props.history.push('/signup') }
+                  >
+                    <FormattedMessage
+                      id='home.hero.headline.button.secondary'
+                      defaultMessage='Import issue'
+                    />
+                  </Button>
+                </HeroActions>
+              </Grid>
             </Grid>
           </HeroSection>
         </Section>
@@ -242,8 +241,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-  location: PropTypes.object
+  classes: PropTypes.object.isRequired
 }
 
 export default injectIntl(withStyles(styles)(Home))

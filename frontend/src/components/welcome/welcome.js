@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import 'typeface-roboto'
 import {
@@ -11,10 +10,6 @@ import {
   ListItemText,
   ListItemIcon,
   Avatar,
-  Tabs,
-  Tab,
-  AppBar,
-  Button
 } from '@material-ui/core'
 
 import {
@@ -27,8 +22,7 @@ import {
 
 import './mailchimp.css'
 
-import scrollToComponent from 'react-scroll-to-component'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../../components/bottom/bottom'
@@ -39,7 +33,6 @@ import mainStyles from '../styles/style'
 const freelancerImage = require('../../images/welcome-freelancer.png')
 const companiesImage = require('../../images/welcome-companies.png')
 const teamImage = require('../../images/welcome-teamwork.png')
-
 
 import {
   MainTitle,
@@ -57,7 +50,6 @@ class Welcome extends Component {
     this.state = {
       value: 0
     }
-
   }
 
   componentDidMount () {
@@ -285,8 +277,7 @@ class Welcome extends Component {
 }
 
 Welcome.propTypes = {
-  classes: PropTypes.object.isRequired,
-  location: PropTypes.object
+  classes: PropTypes.object.isRequired
 }
 
 export default injectIntl(withStyles(styles)(Welcome))

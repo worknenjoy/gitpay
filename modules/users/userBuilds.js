@@ -3,7 +3,7 @@ const models = require('../../models')
 
 module.exports = Promise.method(function userBuilds (userParameters) {
   userParameters.password = models.User.generateHash(userParameters.password)
-  if(!userParameters.email && !userParameters.password && !userParameters.confirmPassword) return false
+  if (!userParameters.email && !userParameters.password && !userParameters.confirmPassword) return false
   return models.User.build(
     userParameters
   )

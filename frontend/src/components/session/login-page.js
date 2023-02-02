@@ -55,7 +55,7 @@ class LoginPage extends Component {
               <img src={ logo } width={ 280 } />
             </Link>
             <Content>
-              <LoginButton includeForm mode={match.params.mode}  />
+              <LoginButton includeForm mode={ match.params.mode } />
             </Content>
           </CardContent>
         </Card>

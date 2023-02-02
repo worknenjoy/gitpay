@@ -6,8 +6,7 @@ import {
   Button,
   withStyles,
   TextField,
-  Typography,
-  FormControl
+  Typography
 } from '@material-ui/core'
 import purple from '@material-ui/core/colors/purple'
 
@@ -75,17 +74,17 @@ class LoginForm extends Component {
 
   handleType = type => {
     if (type === 'signin') {
-      this.setState({type: type,  action: `${api.API_URL}/authorize/local` })
+      this.setState({ type: type, action: `${api.API_URL}/authorize/local` })
     }
 
     if (type === 'signup') {
       this.setState({ type: type, action: `${api.API_URL}/auth/register` })
     }
-    return false;
+    return false
   }
 
   validateEmail = (email, currentErrors) => {
-    if(email.length < 3) {
+    if (email.length < 3) {
       this.setState({
         error: {
           ...currentErrors,
@@ -94,7 +93,7 @@ class LoginForm extends Component {
       })
       return false
     }
-    if(!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
       this.setState({
         error: {
           ...currentErrors,
@@ -107,7 +106,7 @@ class LoginForm extends Component {
   }
 
   validatePassword = (password, currentErrors) => {
-    if(password.length < 3) {
+    if (password.length < 3) {
       this.setState({
         error: {
           ...currentErrors,
@@ -120,7 +119,7 @@ class LoginForm extends Component {
   }
 
   validatePasswordDontMatch = (password, confirmPassword, currentErrors) => {
-    if(password !== confirmPassword) {
+    if (password !== confirmPassword) {
       this.setState({
         error: {
           ...currentErrors,
@@ -147,9 +146,10 @@ class LoginForm extends Component {
         password: this.state.password
       }).then((response) => {
         const errorType = response.error.response.data.message
-        if(errorType ==='user.exist') {
-         window.location.reload('/#/signin')
-        } else {
+        if (errorType === 'user.exist') {
+          window.location.reload('/#/signin')
+        }
+        else {
           this.props.history.push('/signup')
         }
       }).catch((error) => {
@@ -159,11 +159,13 @@ class LoginForm extends Component {
             'general': 'We couldnt register this user'
           }
         })
-      });
-
-    } else {
-     this.validateEmail(email, currentErrors)
-     this.validatePassword(password, currentErrors)
+        /* eslint-disable no-console */
+        console.log(error)
+      })
+    }
+    else {
+      this.validateEmail(email, currentErrors)
+      this.validatePassword(password, currentErrors)
     }
   }
 
@@ -220,7 +222,7 @@ class LoginForm extends Component {
             label='E-mail'
             variant='outlined'
             id='email'
-            error={error.email}
+            error={ error.email }
             helperText={ error.email }
           />
         </div>
@@ -247,7 +249,7 @@ class LoginForm extends Component {
             label='Password'
             variant='outlined'
             id='password'
-            error={error.password}
+            error={ error.password }
             helperText={ error.password }
           />
         </div>
@@ -289,7 +291,7 @@ class LoginForm extends Component {
               <Button type='submit' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
               </Button>
-              <div style={{marginTop: 40}}>
+              <div style={ { marginTop: 40 } }>
                 <Typography type='body1' component='span'>
                   <FormattedMessage id='account.login.label.or' defaultMessage='or' />
                 </Typography>
@@ -308,7 +310,7 @@ class LoginForm extends Component {
             <Button type='submit' variant='contained' color='primary' className={ classes.button }>
               <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
             </Button>
-            <div style={{marginTop: 40}}>
+            <div style={ { marginTop: 40 } }>
               <Typography type='body1' component='span'>
                 <FormattedMessage id='account.login.label.or' defaultMessage='or' />
               </Typography>
