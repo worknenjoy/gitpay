@@ -113,7 +113,11 @@ const AccountDetails = ({
   const Field = ({ name, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent }) => {
     return (
       <FormControl style={ { width: '100%' } }>
-        <InputLabel htmlFor={ name }>{ label }</InputLabel>
+        <InputLabel
+          htmlFor={ name }
+        >
+          { label }
+        </InputLabel>
         <Input
           id={ name }
           name={ name }

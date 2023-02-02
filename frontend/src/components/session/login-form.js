@@ -5,7 +5,8 @@ import { FormattedMessage } from 'react-intl'
 import {
   Button,
   withStyles,
-  TextField
+  TextField,
+  Typography
 } from '@material-ui/core'
 import purple from '@material-ui/core/colors/purple'
 
@@ -47,53 +48,131 @@ class LoginForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      type: 'signin',
+      type: 'signup',
       action: `${api.API_URL}/authorize/local`,
       name: '',
       email: '',
       password: '',
       confirmPassword: '',
-      validating: false
+      validating: false,
+      error: {}
     }
   }
 
-  handleBlur = () => {
-    this.setState({ validating: true })
+  componentDidMount () {
+    const modeByPath = this.props.location.pathname.split('/')[1]
+    this.handleType(this.props.mode || modeByPath)
+  }
+
+  handleBlur = (event) => {
+    this.setState({ validating: true, error: {} })
   }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value })
   }
 
-  handleType = type => event => {
+  handleType = type => {
     if (type === 'signin') {
-      this.setState({ type: 'signin' })
+      this.setState({ type: type, action: `${api.API_URL}/authorize/local` })
     }
 
     if (type === 'signup') {
-      this.setState({ type: 'signup', action: `${api.API_URL}/auth/register` })
+      this.setState({ type: type, action: `${api.API_URL}/auth/register` })
     }
+    return false
+  }
+
+  validateEmail = (email, currentErrors) => {
+    if (email.length < 3) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          email: 'Email cannot be empty'
+        }
+      })
+      return false
+    }
+    if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          email: 'Invalid email'
+        }
+      })
+      return false
+    }
+    return true
+  }
+
+  validatePassword = (password, currentErrors) => {
+    if (password.length < 3) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          password: 'Password cannot be empty or too short'
+        }
+      })
+      return false
+    }
+    return true
+  }
+
+  validatePasswordDontMatch = (password, confirmPassword, currentErrors) => {
+    if (password !== confirmPassword) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          password: 'Password dont match'
+        }
+      })
+      return false
+    }
+    return true
   }
 
   handleSubmit = event => {
+    const currentErrors = this.state.error
+    const { email, password, confirmPassword } = this.state
     if (this.state.type === 'signup') {
-      event.preventDefault()
-      const { password, confirmPassword } = this.state
-      if (password !== confirmPassword) return
+      event && event.preventDefault()
+      const validPassword = this.validatePassword(password, currentErrors)
+      const validPasswordConfirm = this.validatePasswordDontMatch(password, confirmPassword, currentErrors)
+      const validEmail = this.validateEmail(email, currentErrors)
+      validPassword && validPasswordConfirm && validEmail &&
       this.props.registerUser({
         name: this.state.name,
         email: this.state.email,
         password: this.state.password
       }).then((response) => {
-        this.props.history.push('/login')
+        const errorType = response.error.response.data.message
+        if (errorType === 'user.exist') {
+          window.location.reload('/#/signin')
+        }
+        else {
+          this.props.history.push('/signup')
+        }
+      }).catch((error) => {
+        this.setState({
+          error: {
+            ...currentErrors,
+            'general': 'We couldnt register this user'
+          }
+        })
+        /* eslint-disable no-console */
+        console.log(error)
       })
+    }
+    else {
+      this.validateEmail(email, currentErrors)
+      this.validatePassword(password, currentErrors)
     }
   }
 
   render () {
-    const { classes } = this.props
-    const { type, action } = this.state
-    const { validating, password, confirmPassword } = this.state
+    const { classes, onClose } = this.props
+    const { action, type } = this.state
+    const { validating, password, confirmPassword, error } = this.state
     return (
       <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off' style={ { marginBottom: 40 } }>
         { type === 'signup' && (
@@ -125,6 +204,7 @@ class LoginForm extends Component {
           <TextField
             name='email'
             onChange={ this.handleChange('email') }
+            onBlur={ this.handleBlur }
             fullWidth
             InputLabelProps={ {
               classes: {
@@ -139,16 +219,18 @@ class LoginForm extends Component {
                 notchedOutline: classes.notchedOutline,
               },
             } }
-            type='email'
             label='E-mail'
             variant='outlined'
             id='email'
+            error={ error.email }
+            helperText={ error.email }
           />
         </div>
         <div className={ classes.margins }>
           <TextField
             name='password'
             onChange={ this.handleChange('password') }
+            onBlur={ this.handleBlur }
             fullWidth
             InputLabelProps={ {
               classes: {
@@ -167,6 +249,8 @@ class LoginForm extends Component {
             label='Password'
             variant='outlined'
             id='password'
+            error={ error.password }
+            helperText={ error.password }
           />
         </div>
         { type === 'signup' && (
@@ -201,20 +285,42 @@ class LoginForm extends Component {
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
-              <Button onClick={ this.handleType('signup') } variant='contained' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+              <Button onClick={ onClose } variant='text' color='primary' className={ classes.button }>
+                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
               </Button>
               <Button type='submit' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
               </Button>
+              <div style={ { marginTop: 40 } }>
+                <Typography type='body1' component='span'>
+                  <FormattedMessage id='account.login.label.or' defaultMessage='or' />
+                </Typography>
+                <Button onClick={ () => this.handleType('signup') } variant='text' color='primary'>
+                  <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+                </Button>
+                <Typography type='body1' component='span'>
+                  <FormattedMessage id='account.login.label.instead' defaultMessage='instead' />
+                </Typography>
+              </div>
             </div>
           ) : (<div>
-            <Button onClick={ this.handleType('signin') } variant='contained' color='primary' className={ classes.button }>
+            <Button onClick={ onClose } variant='text' color='primary' className={ classes.button }>
               <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
             </Button>
             <Button type='submit' variant='contained' color='primary' className={ classes.button }>
               <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
             </Button>
+            <div style={ { marginTop: 40 } }>
+              <Typography type='body1' component='span'>
+                <FormattedMessage id='account.login.label.or' defaultMessage='or' />
+              </Typography>
+              <Button onClick={ () => this.handleType('signin') } variant='text' color='primary'>
+                <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+              </Button>
+              <Typography type='body1' component='span'>
+                <FormattedMessage id='account.login.label.instead' defaultMessage='instead' />
+              </Typography>
+            </div>
           </div>
           ) }
         </div>

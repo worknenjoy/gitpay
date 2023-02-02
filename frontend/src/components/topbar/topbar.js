@@ -19,7 +19,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid,
   Tooltip,
   FormControl,
   FormHelperText,
@@ -33,9 +32,6 @@ import {
   withStyles,
 } from '@material-ui/core'
 import {
-  AddBox,
-  ViewList,
-  Group,
   LibraryBooks,
   Tune,
   Home,
@@ -50,11 +46,6 @@ import {
   Payment as PaymentIcon
 } from '@material-ui/icons'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSlack } from '@fortawesome/free-brands-svg-icons'
-
-import humanFormat from 'human-format'
-
 import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
 
@@ -68,6 +59,7 @@ import {
   RightSide,
   Logo,
   StyledButton,
+  LinkButton,
   LabelButton,
   StyledAvatar,
   StyledAvatarIconOnly,
@@ -83,6 +75,7 @@ import messagesBrLocal from '../../translations/generated/br.json'
 import messagesEnLocal from '../../translations/generated/en.json'
 
 import LoginButton from '../session/login-button'
+import ImportIssueButton from './import-issue'
 
 const logo = require('../../images/gitpay-logo.png')
 const logoGithub = require('../../images/github-logo-alternative.png')
@@ -153,7 +146,8 @@ class TopBar extends Component {
       provider: 'github',
       createTaskDialog: false,
       joinSlackDialog: false,
-      isActive: false
+      isActive: false.value,
+      mode: null
     }
   }
 
@@ -198,9 +192,9 @@ class TopBar extends Component {
     this.setState({ createTaskDialog: false })
   }
 
-  handleClickDialogSignUser = (e) => {
-    e.preventDefault()
+  handleClickDialogSignUser = (e, mode) => {
     this.props.openDialog('SignupUser')
+    this.setState({ mode })
   }
 
   handleClickDialogJoinSlack = (e) => {
@@ -286,6 +280,11 @@ class TopBar extends Component {
     this.setState({ anchorEl: null })
   }
 
+  handleHowItWorks = () => {
+    window.location.assign('/#/welcome')
+    this.setState({ anchorEl: null })
+  }
+
   handleProfile = (e, id, username) => {
     username ? window.location.assign(`/#/users/${id}-${username}/`) : window.location.assign(`/#/users/${id}`)
     this.setState({ anchorEl: null })
@@ -293,6 +292,10 @@ class TopBar extends Component {
 
   handleViewTasks = () => {
     this.props.history.push('/tasks/open')
+  }
+
+  handlePricing = () => {
+    this.props.history.push('/pricing')
   }
 
   handleSignOut = () => {
@@ -318,26 +321,85 @@ class TopBar extends Component {
 
   render () {
     const { completed, user, preferences, dialog } = this.props
+    const { mode } = this.state
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
-    let channelUserCount = ''
-    if (this.props.channelUserCount) {
-      const count = humanFormat(this.props.channelUserCount, {
-        decimals: 1,
-        separator: ''
-      })
-      channelUserCount = `(${count})`
-    }
 
     return (
       <Bar>
         <Container>
           <LeftSide isActive={ this.state.isActive }>
-            <div style={ { display: this.props.hide ? 'none' : 'block' } }>
+            <div>
               <StyledButton href='/'>
                 <Logo src={ logo } />
               </StyledButton>
+            </div>
+            <div style={ { marginTop: 12, marginLeft: 20 } }>
+              <LinkButton
+                onClick={ this.handleHowItWorks }
+                variant='text'
+                size='small'
+                color='primary'
+              >
+                <LabelButton>
+                  <FormattedMessage
+                    id='topbar.link.howitworks'
+                    defaultMessage='How it works' />
+                </LabelButton>
+              </LinkButton>
+
+              <LinkButton
+                onClick={ this.handlePricing }
+                variant='text'
+                size='small'
+                color='primary'
+              >
+                <LabelButton>
+                  <FormattedMessage
+                    id='topbar.link.prices'
+                    defaultMessage='Prices' />
+                </LabelButton>
+              </LinkButton>
+
+              <LinkButton
+                onClick={ this.handleTeamLink }
+                variant='text'
+                size='small'
+                color='primary'
+              >
+                <LabelButton>
+                  <FormattedMessage
+                    id='task.actions.team'
+                    defaultMessage='Team' />
+                </LabelButton>
+              </LinkButton>
+
+              <LinkButton
+                onClick={ this.handleDocsLink }
+                variant='text'
+                size='small'
+                color='primary'
+              >
+                <LabelButton>
+                  <FormattedMessage
+                    id='task.actions.docs'
+                    defaultMessage='Documentation' />
+                </LabelButton>
+              </LinkButton>
+
+              <LinkButton
+                onClick={ this.handleViewTasks }
+                variant='text'
+                size='small'
+                color='primary'
+              >
+                <LabelButton>
+                  <FormattedMessage
+                    id='topbar.link.explore'
+                    defaultMessage='Explore' />
+                </LabelButton>
+              </LinkButton>
             </div>
 
             <MenuMobile
@@ -348,94 +410,98 @@ class TopBar extends Component {
               <IconHamburger isActive={ this.state.isActive } />
             </MenuMobile>
           </LeftSide>
-
           <RightSide isActive={ this.state.isActive }>
-
-            <StyledButton
-              onClick={ this.handleClickDialogCreateTask }
-              variant='text'
-              size='small'
-              color='primary'
-            >
-              <LabelButton>
-                <FormattedMessage
-                  id='task.actions.create'
-                  defaultMessage='Import issue' />
-              </LabelButton>
-              <AddBox />
-            </StyledButton>
-
-            <StyledButton
-              onClick={ this.handleViewTasks }
-              variant='text'
-              size='small'
-              color='primary'
-            >
-              <LabelButton>
-                <FormattedMessage
-                  id='task.actions.explore'
-                  defaultMessage='Explore' />
-              </LabelButton>
-              <ViewList />
-            </StyledButton>
-
-            <StyledButton
-              onClick={ this.handleTeamLink }
-              variant='text'
-              size='small'
-              color='primary'
-            >
-              <LabelButton>
-                <FormattedMessage
-                  id='task.actions.team'
-                  defaultMessage='Team' />
-              </LabelButton>
-              <Group />
-            </StyledButton>
-
-            <StyledButton
-              onClick={ this.handleDocsLink }
-              variant='text'
-              size='small'
-              color='primary'
-            >
-              <LabelButton>
-                <FormattedMessage
-                  id='task.actions.docs'
-                  defaultMessage='Documentation' />
-              </LabelButton>
-              <LibraryBooks />
-            </StyledButton>
-
             { !isLoggedIn
-              ? (<React.Fragment>
-                <StyledButton
-                  onClick={ this.handleClickDialogSignUser }
-                  variant='text'
-                  size='small'
-                  color='primary'
-                >
-                  <LabelButton>
-                    <FormattedMessage
-                      id='task.bar.signin'
-                      defaultMessage='Signin' />
-                  </LabelButton>
-                  <Person />
-                </StyledButton>
+              ? (
+                <React.Fragment>
+                  <div style={ { display: 'flex', justifyContent: 'space-around', marginRight: 20 } }>
+                    <LinkButton
+                      onClick={ (e) => this.handleClickDialogSignUser(e, 'signup') }
+                      variant='text'
+                      size='small'
+                      color='primary'
+                    >
+                      <LabelButton>
+                        <FormattedMessage
+                          id='topbar.signup.label'
+                          defaultMessage='Signup' />
+                      </LabelButton>
+                    </LinkButton>
 
-                <Dialog
-                  open={ dialog.open && dialog.target === 'SignupUser' }
-                  onClose={ this.handleSignUserDialogClose }
-                  aria-labelledby='form-dialog-title'
-                >
-                  <DialogTitle id='form-dialog-title'>
-                    <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
-                  </DialogTitle>
-                  <DialogContent>
-                    <LoginButton referer={ this.props.location } size='medium' includeForm />
-                  </DialogContent>
-                </Dialog>
-              </React.Fragment>) : (
+                    <LinkButton
+                      onClick={ (e) => this.handleClickDialogSignUser(e, 'signin') }
+                      variant='text'
+                      size='small'
+                      color='primary'
+                    >
+                      <LabelButton>
+                        <FormattedMessage
+                          id='topbar.signin.label'
+                          defaultMessage='Signin' />
+                      </LabelButton>
+                    </LinkButton>
+                    <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
+                      { (msg) => (
+                        <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
+                          <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
+                            { completed ? (
+                              <StyledAvatarIconOnly
+                                alt={ user.username || '' }
+                                src={ logoLang(userCurrentLanguage) }
+                              />
+                            ) : (
+                              <Avatar>
+                                <CircularProgress />
+                              </Avatar>
+                            ) }
+                          </Button>
+                        </Tooltip>
+                      ) }
+                    </FormattedMessage>
+                    <Menu
+                      id='menu-appbar'
+                      anchorEl={ anchorEl }
+                      anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
+                      transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+                      open={ anchorEl && anchorEl.id === 'language-menu' }
+                      onClose={ this.handleClose }
+                    >
+                      <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
+                        <StyledAvatarIconOnly
+                          alt='English'
+                          src={ logoLangEn }
+                        />
+                        <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
+                      </MenuItem>
+                      <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') }>
+                        <StyledAvatarIconOnly
+                          alt='Português'
+                          src={ logoLangBr }
+                        />
+                        <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                  <Dialog
+                    open={ dialog.open && dialog.target === 'SignupUser' }
+                    onClose={ this.handleSignUserDialogClose }
+                    aria-labelledby='form-dialog-title'
+                  >
+                    <DialogTitle id='form-dialog-title'>
+                      <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
+                    </DialogTitle>
+                    <DialogContent>
+                      <LoginButton
+                        referer={ this.props.location }
+                        size='medium'
+                        includeForm
+                        mode={ mode }
+                        onClose={ this.handleSignUserDialogClose }
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </React.Fragment>
+              ) : (
                 <React.Fragment>
                   <StyledButton
                     onClick={ this.handleMenu }
@@ -493,22 +559,22 @@ class TopBar extends Component {
                         fullWidth
                       />
                       { this.state.provider === 'github' &&
-                      <FormControl component='fieldset'>
-                        <FormGroup aria-label='position' name='position' value={ 'private' } onChange={ this.handlePrivate } row>
-                          <FormControlLabel
-                            value='private'
-                            control={ <Checkbox color='primary' /> }
-                            label='private'
-                            labelPlacement='right'
-                          />
-                        </FormGroup>
-                      </FormControl>
+                        <FormControl component='fieldset'>
+                          <FormGroup aria-label='position' name='position' value={ 'private' } onChange={ this.handlePrivate } row>
+                            <FormControlLabel
+                              value='private'
+                              control={ <Checkbox color='primary' /> }
+                              label='private'
+                              labelPlacement='right'
+                            />
+                          </FormGroup>
+                        </FormControl>
                       }
                       <div style={ { marginTop: 10, marginBottom: 10 } }>
                         <Button
                           style={ { marginRight: 10 } }
                           color='primary'
-                          variant={ this.state.provider === 'github' ? 'contained' : 'outline' }
+                          variant={ this.state.provider === 'github' ? 'contained' : 'outlined' }
                           id='github'
                           onClick={ (e) => this.handleProvider(e, 'github') }
                         >
@@ -518,7 +584,7 @@ class TopBar extends Component {
 
                         <Button
                           color='primary'
-                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outline' }
+                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outlined' }
                           id='bitbucket'
                           onClick={ (e) => this.handleProvider(e, 'bitbucket') }
                         >
@@ -528,9 +594,9 @@ class TopBar extends Component {
                       </div>
 
                       { this.state.task.url.error &&
-                      <FormHelperText error={ this.state.task.url.error }>
-                        <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
-                      </FormHelperText>
+                        <FormHelperText error={ this.state.task.url.error }>
+                          <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
+                        </FormHelperText>
                       }
                     </FormControl>
                   </DialogContent>
@@ -559,61 +625,7 @@ class TopBar extends Component {
                 </DialogContent>
               </Dialog>
             ) }
-            <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
-              { (msg) => (
-                <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-                  <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
-                    { completed ? (
-                      <StyledAvatarIconOnly
-                        alt={ user.username || '' }
-                        src={ logoLang(userCurrentLanguage) }
-                      />
-                    ) : (
-                      <Avatar>
-                        <CircularProgress />
-                      </Avatar>
-                    ) }
-                  </Button>
-                </Tooltip>
-              ) }
-            </FormattedMessage>
-
-            <Menu
-              id='menu-appbar'
-              anchorEl={ anchorEl }
-              anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-              transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-              open={ anchorEl && anchorEl.id === 'language-menu' }
-              onClose={ this.handleClose }
-            >
-              <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
-                <StyledAvatarIconOnly
-                  alt='English'
-                  src={ logoLangEn }
-                />
-                <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
-              </MenuItem>
-              <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') }>
-                <StyledAvatarIconOnly
-                  alt='Português'
-                  src={ logoLangBr }
-                />
-                <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
-              </MenuItem>
-            </Menu>
-
             <OnlyDesktop>
-              <FormattedMessage id='task.actions.tooltip.git' defaultMessage='See our project on Github'>
-                { (msg) => (
-                  <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                    <StyledAvatarIconOnly
-                      alt={ user.username || '' }
-                      src={ logoGithub }
-                      onClick={ this.handleGithubLink }
-                    />
-                  </Tooltip>
-                ) }
-              </FormattedMessage>
               <Drawer id='menu-appbar-language' open={ anchorEl && anchorEl.id === 'account-menu' } onClose={ this.handleClose } anchor={ 'right' }>
                 <List>
                   <ListItem>
@@ -650,82 +662,82 @@ class TopBar extends Component {
                     </ListItemText>
                   </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/account-details')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <AccountIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.accountDetails' defaultMessage='Account details' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/account-details')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <AccountIcon />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.accountDetails' defaultMessage='Account details' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/payment-options')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <AccountBalance />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/payment-options')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <AccountBalance />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/tasks')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <LibraryBooks />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.issues' defaultMessage='Your issues' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/tasks')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <LibraryBooks />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.issues' defaultMessage='Your issues' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/user/orgs')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <Business />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Organizations' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/user/orgs')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <Business />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Organizations' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && (user.Types.map(t => t.name).includes('funding') || user.Types.map(t => t.name).includes('maintainer')) &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/payments')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <PaymentIcon />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Payments' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/payments')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <PaymentIcon />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Payments' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/preferences')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <Tune />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.skills' defaultMessage='Set skills' />
-                    </ListItemText>
-                  </ListItem>
+                    <ListItem button onClick={ () => {
+                      window.location.assign('/#/profile/preferences')
+                      this.setState({ anchorEl: null })
+                    } }>
+                      <ListItemIcon>
+                        <Tune />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <FormattedMessage id='task.actions.account.profile.skills' defaultMessage='Set skills' />
+                      </ListItemText>
+                    </ListItem>
                   }
                   <ListItem button onClick={ () => {
                     window.location.assign('/#/profile/settings')
@@ -757,46 +769,10 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
                     </ListItemText>
                   </ListItem>
-
                 </List>
               </Drawer>
             </OnlyDesktop>
-
-            <StyledButton
-              onClick={ this.handleClickDialogJoinSlack }
-              size='small'
-              color='primary'
-            >
-              <LabelButton>
-                <FormattedMessage id='task.bar.slack.count' defaultMessage='Join our Slack {count}' values={ { count: channelUserCount } } />
-              </LabelButton><FontAwesomeIcon icon={ faSlack } size='2x' />
-            </StyledButton>
-            <Dialog
-              open={ this.state.joinSlackDialog }
-              onClose={ this.handleJoinSlackDialogClose }
-              aria-labelledby='form-dialog-title'
-            >
-              <DialogTitle id='form-dialog-title'>
-                <FormattedMessage id='task.actions.slack.call' defaultMessage='Join our Slack channel' />
-              </DialogTitle>
-              <DialogContent>
-                <Grid container justify='center'>
-                  <Grid item>
-                    <Button
-                      href={ process.env.SLACK_CHANNEL_INVITE_LINK }
-                      variant='outline'
-                      size='medium'
-                      color='secondary'
-                    >
-                      <FontAwesomeIcon icon={ faSlack } size='2x' />
-                      <LabelButton right>
-                        <FormattedMessage id='form.slack.join.label' defaultMessage='Join channel!' />
-                      </LabelButton>
-                    </Button>
-                  </Grid>
-                </Grid>
-              </DialogContent>
-            </Dialog>
+            <ImportIssueButton onAddIssueClick={ (e) => this.handleClickDialogCreateTask(e) } />
           </RightSide>
         </Container>
       </Bar>
@@ -814,8 +790,7 @@ TopBar.propTypes = {
   updateUser: PropTypes.func,
   signOut: PropTypes.func,
   logged: PropTypes.bool,
-  completed: PropTypes.bool,
-  hide: PropTypes.bool
+  completed: PropTypes.bool
 }
 
 export default withRouter(withStyles(styles)(TopBar))

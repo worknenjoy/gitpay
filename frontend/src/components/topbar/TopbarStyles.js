@@ -81,7 +81,7 @@ export const IconHamburger = styled.span`
 
 export const LeftSide = styled(Side)`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   z-index: 1300;
   flex: 1;
@@ -108,7 +108,8 @@ export const LeftSide = styled(Side)`
 `
 
 export const RightSide = styled(Side)`
-  justify-content: flex-end;
+  justify-content: flex-start;
+  align-items: flex-start;
 
 @media (max-width: 37.5em) {
     display: flex;
@@ -164,6 +165,10 @@ export const LogoButton = styled(StyledButton)`
   `}
 `
 
+export const LinkButton = styled(StyledButton)`
+  color: #fff !important;
+`
+
 export const StyledLanguageButton = styled(StyledButton)`
   ${media.phone`
     display: none !important;
@@ -196,7 +201,7 @@ export const LabelButton = styled.span`
 export const StyledAvatar = styled(Avatar)`
   margin-left: 20px;
   cursor: pointer;
- 
+
 
   ${media.phone`margin-left: 15px;`}
 `

@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import 'typeface-roboto'
 import {
   withStyles,
   Grid,
   Typography,
-  Divider,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
   Avatar,
-  Tabs,
-  Tab,
-  AppBar,
-  Button
 } from '@material-ui/core'
 
 import {
@@ -23,48 +17,31 @@ import {
   Work,
   Apps,
   Assignment,
-  GroupWork,
-  Archive,
-  CardMembership,
-  BugReport,
-  ArrowForward
+  GroupWork
 } from '@material-ui/icons'
 
 import './mailchimp.css'
 
-import scrollToComponent from 'react-scroll-to-component'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../../components/bottom/bottom'
-import LoginButton from '../../components/session/login-button'
-import Pricing from './pricing'
 import Clientlist from './clientlist'
 import messages from './messages'
 import mainStyles from '../styles/style'
-import SubscribeForm from '../form/subscribe-form'
 
 const freelancerImage = require('../../images/welcome-freelancer.png')
 const companiesImage = require('../../images/welcome-companies.png')
 const teamImage = require('../../images/welcome-teamwork.png')
-const appSnapshotImage = require('../../images/gitpay-app.png')
-const citySoftware = require('../../images/city-software.png')
-const deal = require('../../images/deal.png')
-const logo = require('../../images/gitpay-logo.png')
 
 import {
   MainTitle,
   MainList,
-  MainBanner,
   ResponsiveImage,
-  ShadowImage,
   Section
 } from './components/CommonStyles'
 
 const styles = theme => mainStyles(theme)
-const isIntegrations = ref => ref === 'integrations'
-
-import Cubes from './components/cubes'
 
 class Welcome extends Component {
   constructor (props) {
@@ -73,217 +50,22 @@ class Welcome extends Component {
     this.state = {
       value: 0
     }
-
-    this.handleSectionTab = this.handleSectionTab.bind(this)
   }
 
   componentDidMount () {
-    const clientX = ReactDOM.findDOMNode(
-      this.refs.intro
-    ).getBoundingClientRect().width
 
-    this.offsets = { offset: clientX * 0.04, integrations: clientX * 0.06 }
-    if (this.offsets.offset > 30) {
-      this.offsets = { offset: 30, integrations: 48 }
-    }
-    const { offset, integrations } = this.offsets
-
-    for (let ref in this.refs) {
-      const domNode = ReactDOM.findDOMNode(this.refs[ref])
-
-      const clientY = Math.ceil(domNode.getBoundingClientRect().top)
-      const offsetY = isIntegrations(ref)
-        ? clientY - integrations
-        : clientY - offset
-
-      const position = { [ref]: offsetY }
-
-      this.positions = { ...this.positions, ...position }
-    }
-
-    window.addEventListener('scroll', this.handleSectionsScroll)
   }
 
   componentWillUnmount () {
-    window.removeEventListener('scroll', this.handleSectionsScroll)
-  }
 
-  handleSectionTab = ({ currentTarget }, value) => {
-    this.setState({ value })
-
-    const ref = this.refs[currentTarget.id]
-    const { offset, integrations } = this.offsets
-    scrollToComponent(ref, {
-      offset: isIntegrations(ref) ? 0 - integrations : 0 - offset,
-      align: 'top',
-      ease: 'inExpo'
-    })
-  }
-
-  handleSectionsScroll = () => {
-    const scrollPosition = document.documentElement.scrollTop
-    const offsetPostion = scrollPosition + this.offsets.offset
-
-    const {
-      intro,
-      clients,
-      contrib,
-      companies,
-      collab,
-      'how-it-works': howItWorks,
-      pricing,
-      integrations,
-      'get-started': getStarted
-    } = this.positions
-
-    if (offsetPostion >= getStarted) {
-      this.setState({ value: 8 })
-    }
-    else if (offsetPostion >= integrations) {
-      this.setState({ value: 7 })
-    }
-    else if (offsetPostion >= pricing) {
-      this.setState({ value: 6 })
-    }
-    else if (offsetPostion >= howItWorks) {
-      this.setState({ value: 5 })
-    }
-    else if (offsetPostion >= collab) {
-      this.setState({ value: 4 })
-    }
-    else if (offsetPostion >= companies) {
-      this.setState({ value: 3 })
-    }
-    else if (offsetPostion >= contrib) {
-      this.setState({ value: 2 })
-    }
-    else if (offsetPostion >= clients) {
-      this.setState({ value: 1 })
-    }
-    else if (offsetPostion >= intro) {
-      this.setState({ value: 0 })
-    }
   }
 
   render () {
-    const { classes, location, logged } = this.props
+    const { classes } = this.props
 
     return (
       <div className={ classes.root }>
         <TopBarContainer ref='intro' hide />
-        <AppBar position='sticky' color='default'>
-          <Tabs
-            variant='scrollable'
-            value={ this.state.value }
-            onChange={ this.handleSectionTab }
-            scrollButtons='on'
-          >
-            <Tab
-              id='intro'
-              value={ 0 }
-              label={ this.props.intl.formatMessage(messages.topMenu1) }
-            />
-            <Tab
-              id='contrib'
-              value={ 1 }
-              label={ this.props.intl.formatMessage(messages.topMenu2) }
-            />
-            <Tab
-              id='companies'
-              value={ 2 }
-              label={ this.props.intl.formatMessage(messages.topMenu3) }
-            />
-            <Tab
-              id='clients'
-              value={ 3 }
-              label={ this.props.intl.formatMessage(messages.topMenu9) }
-            />
-            <Tab
-              id='collab'
-              value={ 4 }
-              label={ this.props.intl.formatMessage(messages.topMenu4) }
-            />
-            <Tab
-              id='how-it-works'
-              value={ 5 }
-              label={ this.props.intl.formatMessage(messages.topMenu5) }
-            />
-            <Tab
-              id='pricing'
-              value={ 6 }
-              label={ this.props.intl.formatMessage(messages.topMenu6) }
-            />
-            <Tab
-              id='integrations'
-              value={ 7 }
-              label={ this.props.intl.formatMessage(messages.topMenu7) }
-            />
-            <Tab
-              id='get-started'
-              value={ 8 }
-              label={ this.props.intl.formatMessage(messages.topMenu8) }
-            />
-          </Tabs>
-        </AppBar>
-        <MainBanner>
-          <Grid container>
-            <Grid item xs={ 12 } style={ { padding: 0, margin: 0 } }>
-              <Cubes>
-                <div
-                  className={ classes.mainBlock }
-                  style={ { margin: 0, paddingTop: 2 } }
-                >
-                  <a href='/' style={ { display: 'inline-block', margin: 20 } }>
-                    <img width={ 240 } src={ logo } />
-                  </a>
-                  <Typography className={ classes.tagline } gutterBottom>
-                    <FormattedMessage
-                      id='welcome.tagline'
-                      defaultMessage='Collaborate, learn and receive payments by solving issues from projects'
-                    />
-                  </Typography>
-
-                  { !logged &&
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    size='big'
-                    onClick={ (e) => this.props.openDialog('SignupUser') }
-                    style={ { marginTop: 20 } }
-                  >
-                    <FormattedMessage
-                      id='general.singup.action'
-                      defaultMessage='Get started'
-                    />
-                  </Button>
-                  }
-                  <div className='subscribe-form'>
-                    <SubscribeForm render={ false } type='subscribe-form-main' />
-                  </div>
-                </div>
-                <div className={ classes.mainBlock } style={ { paddingBottom: 40 } }>
-                  { !logged ? (
-                    <LoginButton hideExtra size='small' referer={ location } contrast includeForm={ false } />
-                  ) : (
-                    <Button
-                      variant='contained'
-                      color='secondary'
-                      size='large'
-                      onClick={ (e) => window.location.assign('/#/profile') }
-                      style={ { marginTop: 20 } }
-                    >
-                      <FormattedMessage
-                        id='general.singup.access'
-                        defaultMessage='Go to your dashboard'
-                      />
-                    </Button>
-                  )
-                  }
-                </div>
-              </Cubes>
-            </Grid>
-          </Grid>
-        </MainBanner>
         <Section ref='contrib'>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
@@ -488,176 +270,6 @@ class Welcome extends Component {
             </Grid>
           </Grid>
         </Section>
-
-        <Section ref='how-it-works' className={ classes.sectionBgAlt }>
-          <MainTitle>
-            <Typography variant='h5' gutterBottom>
-              <FormattedMessage
-                id='welcome.tagline.headline.how.title'
-                defaultMessage='How Gitpay works'
-              />
-            </Typography>
-          </MainTitle>
-          <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 6 }>
-              <ResponsiveImage width='400' src={ deal } />
-            </Grid>
-            <Grid item xs={ 12 } sm={ 6 }>
-              <div className={ classes.seclist }>
-                <List>
-                  <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon>
-                      <Archive />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemOnePrimary
-                      ) }
-                      secondary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemOneSecondary
-                      ) }
-                    />
-                  </ListItem>
-                  <Divider />
-                  <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon>
-                      <BugReport />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemTwoPrimary
-                      ) }
-                      secondary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemTwoSecondary
-                      ) }
-                    />
-                  </ListItem>
-                  <Divider />
-                  <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon>
-                      <CardMembership />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemThreePrimary
-                      ) }
-                      secondary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemThreeSecondary
-                      ) }
-                    />
-                  </ListItem>
-                  <Divider />
-                  <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon>
-                      <Work />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemFourPrimary
-                      ) }
-                      secondary={ this.props.intl.formatMessage(
-                        messages.welcomeHowToItemFourSecondary
-                      ) }
-                    />
-                  </ListItem>
-                </List>
-              </div>
-            </Grid>
-          </Grid>
-        </Section>
-
-        <Section ref='pricing'>
-          <Pricing />
-        </Section>
-
-        <Section ref='integrations' className={ classes.gutterBottomBig }>
-          <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 4 } className={ classes.alignRight }>
-              <div className={ classes.gutterTop }>
-                <Typography variant='h6' gutterBottom>
-                  <FormattedMessage
-                    id='welcome.integration.title'
-                    defaultMessage='Integrations'
-                  />
-                </Typography>
-                <Typography variant='h4' gutterBottom>
-                  <FormattedMessage
-                    id='welcome.integration.subtitle'
-                    defaultMessage='We can connect your repository to Gitpay by installing our Github app'
-                  />
-                </Typography>
-                <Typography variant='body1' gutterBottom>
-                  <FormattedMessage
-                    id='welcome.integration.desc'
-                    defaultMessage='With the Gitpay app on Github, you can import issues from your repository to Gitpay and start to allow payments for contributions'
-                  />
-                </Typography>
-                <Button
-                  component='a'
-                  target='_blank'
-                  href='https://github.com/apps/gitpay-me'
-                  variant='contained'
-                  color='primary'
-                  className={ classes.gutterTopSmall }
-                >
-                  <FormattedMessage
-                    id='welcome.integration.button'
-                    defaultMessage='Checkout our Github App'
-                  />
-                  <ArrowForward />
-                </Button>
-              </div>
-            </Grid>
-            <Grid item xs={ 12 } sm={ 8 } className={ classes.alignLeft }>
-              <ShadowImage width='600' src={ appSnapshotImage } />
-            </Grid>
-          </Grid>
-        </Section>
-        <Section
-          ref='get-started'
-          style={ {
-            background: `url(${citySoftware}) no-repeat`,
-            backgroundSize: 'cover',
-            height: 300,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-          } }
-        >
-          <Typography variant='h6' gutterBottom style={ { padding: '0 60px' } }>
-            <FormattedHTMLMessage
-              id='welcome.bottom.call'
-              defaultMessage='A better way to build your project, a better way to work in projects'
-            />
-          </Typography>
-          <Button
-            component='a'
-            href='https://gitpay.me/#/login'
-            size='large'
-            variant='contained'
-            color='primary'
-            className={ classes.gutterTopSmall }
-          >
-            <FormattedMessage
-              id='welcome.bottom.link'
-              defaultMessage='Get started'
-            />
-          </Button>
-          <Button
-            component='a'
-            href='https://docs.gitpay.me'
-            size='large'
-            variant='text'
-            color='primary'
-            className={ classes.gutterTopSmall }
-          >
-            <FormattedMessage
-              id='welcome.bottom.linkAlt'
-              defaultMessage='See our documentation'
-            />
-          </Button>
-        </Section>
         <Bottom />
       </div>
     )
@@ -665,8 +277,7 @@ class Welcome extends Component {
 }
 
 Welcome.propTypes = {
-  classes: PropTypes.object.isRequired,
-  location: PropTypes.object
+  classes: PropTypes.object.isRequired
 }
 
 export default injectIntl(withStyles(styles)(Welcome))

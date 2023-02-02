@@ -46,7 +46,7 @@ router.post('/authorize/local', (req, res, next) => {
     if (!user) {
       // res.status(401)
       // res.send({ 'reason': 'Invalid credentials' })
-      res.redirect(`${process.env.FRONTEND_HOST}/#/login/invalid`)
+      res.redirect(`${process.env.FRONTEND_HOST}/#/signin/invalid`)
     }
     else {
       req.logIn(user, { session: false }, (err) => {
