@@ -4,19 +4,22 @@ import { withRouter, Link } from 'react-router-dom'
 import LoginButton from './login-button'
 import { withStyles, Card, CardContent } from '@material-ui/core'
 
-import cyan from '@material-ui/core/colors/cyan'
-
+import Background from '../../images/login_bg.png'
 const styles = theme => ({
   container: {
     width: '100%',
     height: '100vh',
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: cyan[500]
+    backgroundImage: `url(${Background})`,
+    backgroundSize: '100% 100%',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
   },
   card: {
     width: '50%',
-    marginTop: 50
+    marginTop: 50,
+    opacity: 0.7
   },
   cardContent: {
     textAlign: 'center'
@@ -33,7 +36,7 @@ const Content = styled.div`
   margin-top: 10px;
 `
 
-const logo = require('../../images/logo-complete-gray.png')
+const logo = require('../../images/logo-complete.png')
 
 class LoginPage extends Component {
   componentDidMount () {
