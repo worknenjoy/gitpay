@@ -17,6 +17,7 @@ import FourOFour from '../components/FourOFour.js'
 import LandingPage from '../components/welcome/landing-page'
 import Stats from '../components/Stats/Stats-main-page'
 import TaskListUser from '../containers/task-list-user'
+import Pricing from '../components/welcome/pricing'
 import Auth from '../modules/auth'
 
 export default props => (
@@ -26,6 +27,7 @@ export default props => (
       <Route exact path='/' component={ Auth.isUserAuthenticated() ? () => <Redirect to='/profile' /> : HomeContainer } />
       <Route exact path='/welcome' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
+      <PrivateRoute path='/pricing' component={ Pricing } />
       <PrivateRoute path='/profile/account-details' component={ ProfileContainer } />
       <Route exact path='/projects' component={ TaskExplorer } />
       <Route exact path='/organizations' component={ TaskExplorer } />

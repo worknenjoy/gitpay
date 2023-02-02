@@ -300,6 +300,10 @@ class TopBar extends Component {
     this.props.history.push('/tasks/open')
   }
 
+  handlePricing = () => {
+    this.props.history.push('/pricing')
+  }
+
   handleSignOut = () => {
     this.props.history.replace({ pathname: '/' })
     this.props.signOut()
@@ -360,7 +364,7 @@ class TopBar extends Component {
               </LinkButton>
 
               <LinkButton
-                onClick={ this.handleViewTasks }
+                onClick={ this.handlePricing }
                 variant='text'
                 size='small'
                 color='primary'
