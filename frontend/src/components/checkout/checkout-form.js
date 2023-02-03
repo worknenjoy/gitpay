@@ -84,7 +84,7 @@ const CheckoutForm = (props) => {
           }
           catch (e) {
             props.addNotification(
-              `payment.message.error`, e.message
+              'payment.message.error', e.message
             )
             setCheckoutFormState({
               ...checkoutFormState,
