@@ -46,16 +46,16 @@ class LoginPage extends Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, match } = this.props
     return (
       <div className={ classes.container }>
         <Card className={ classes.card }>
           <CardContent className={ classes.cardContent }>
             <Link to='/'>
-              <img src={ logo } width={ 200 } />
+              <img src={ logo } width={ 280 } />
             </Link>
             <Content>
-              <LoginButton includeForm />
+              <LoginButton includeForm mode={ match.params.mode } />
             </Content>
           </CardContent>
         </Card>

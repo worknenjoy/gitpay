@@ -13,7 +13,8 @@ import {
 } from '@material-ui/core'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
-
+import TopBarContainer from '../../containers/topbar'
+import Bottom from '../../components/bottom/bottom'
 import {
   MainTitle
 } from './components/CommonStyles'
@@ -98,97 +99,101 @@ class Pricing extends Component {
     const { classes } = this.props
 
     return (
-      <div className={ classes.layout }>
-        <React.Fragment>
-          { /* Hero unit */ }
-          <div className={ classes.heroContent }>
-            <MainTitle>
-              <Typography variant='h5' gutterBottom>
-                <FormattedMessage id='welcome.pricing.maintainers.title' defaultMessage='Fee for maintainers' />
+      <div className={ classes.root }>
+        <TopBarContainer ref='intro' hide />
+        <div className={ classes.layout }>
+          <React.Fragment>
+            { /* Hero unit */ }
+            <div className={ classes.heroContent }>
+              <MainTitle>
+                <Typography variant='h5' gutterBottom>
+                  <FormattedMessage id='welcome.pricing.maintainers.title' defaultMessage='Fee for maintainers' />
+                </Typography>
+              </MainTitle>
+              <Typography variant='body1' align='center' color='textSecondary' className={ classes.heroDesc }>
+                <FormattedMessage id='welcome.pricing.description' defaultMessage='These are the fees when you pay for an issue to be solved on Gitpay' />
               </Typography>
-            </MainTitle>
-            <Typography variant='body1' align='center' color='textSecondary' className={ classes.heroDesc }>
-              <FormattedMessage id='welcome.pricing.description' defaultMessage='These are the fees when you pay for an issue to be solved on Gitpay' />
-            </Typography>
-          </div>
-          { /* End hero unit */ }
-          <Grid container spacing={ 5 } justifyContent='center'>
-            { tiersMaintainers.map(tier => (
-              // Enterprise card is full width at sm breakpoint
-              <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 6 }>
-                <Card>
-                  <CardHeader
-                    title={ tier.title }
-                    subheader={ tier.subheader }
-                    titleTypographyProps={ { align: 'center' } }
-                    subheaderTypographyProps={ { align: 'center' } }
-                    className={ classes.cardHeader }
-                  />
-                  <CardContent>
-                    <div className={ classes.cardPricing }>
-                      <Typography variant='h5' color='textPrimary'>
-                        <small>Fee</small> { tier.price }
-                      </Typography>
-                      <Typography variant='body1' color='textSecondary'>
-                        <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
-                      </Typography>
-                    </div>
-                    { tier.description.map(line => (
-                      <Typography variant='body1' align='center' key={ line }>
-                        { line }
-                      </Typography>
-                    )) }
-                  </CardContent>
-                  { tier.link &&
-                    <CardActions className={ classes.cardActions }>
-                      <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
-                        { tier.buttonText }
-                      </Button>
-                    </CardActions>
-                  }
-                </Card>
-              </Grid>
-            )) }
-          </Grid>
-          <Grid container spacing={ 5 } justifyContent='center'>
-            { tiersContributors.map(tier => (
-              // Enterprise card is full width at sm breakpoint
-              <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 12 }>
-                <Card>
-                  <CardHeader
-                    title={ tier.title }
-                    subheader={ tier.subheader }
-                    titleTypographyProps={ { align: 'center' } }
-                    subheaderTypographyProps={ { align: 'center' } }
-                    className={ classes.cardHeader }
-                  />
-                  <CardContent>
-                    <div className={ classes.cardPricing }>
-                      <Typography variant='h5' color='textPrimary'>
-                        <small>Fee</small> { tier.price }
-                      </Typography>
-                      <Typography variant='body1' color='textSecondary'>
-                        <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
-                      </Typography>
-                    </div>
-                    { tier.description.map(line => (
-                      <Typography variant='body1' align='center' key={ line }>
-                        { line }
-                      </Typography>
-                    )) }
-                  </CardContent>
-                  { tier.link &&
-                    <CardActions className={ classes.cardActions }>
-                      <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
-                        { tier.buttonText }
-                      </Button>
-                    </CardActions>
-                  }
-                </Card>
-              </Grid>
-            )) }
-          </Grid>
-        </React.Fragment>
+            </div>
+            { /* End hero unit */ }
+            <Grid container spacing={ 5 } justifyContent='center'>
+              { tiersMaintainers.map(tier => (
+                // Enterprise card is full width at sm breakpoint
+                <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 6 }>
+                  <Card>
+                    <CardHeader
+                      title={ tier.title }
+                      subheader={ tier.subheader }
+                      titleTypographyProps={ { align: 'center' } }
+                      subheaderTypographyProps={ { align: 'center' } }
+                      className={ classes.cardHeader }
+                    />
+                    <CardContent>
+                      <div className={ classes.cardPricing }>
+                        <Typography variant='h5' color='textPrimary'>
+                          <small>Fee</small> { tier.price }
+                        </Typography>
+                        <Typography variant='body1' color='textSecondary'>
+                          <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
+                        </Typography>
+                      </div>
+                      { tier.description.map(line => (
+                        <Typography variant='body1' align='center' key={ line }>
+                          { line }
+                        </Typography>
+                      )) }
+                    </CardContent>
+                    { tier.link &&
+                      <CardActions className={ classes.cardActions }>
+                        <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
+                          { tier.buttonText }
+                        </Button>
+                      </CardActions>
+                    }
+                  </Card>
+                </Grid>
+              )) }
+            </Grid>
+            <Grid container spacing={ 5 } justifyContent='center'>
+              { tiersContributors.map(tier => (
+                // Enterprise card is full width at sm breakpoint
+                <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 12 }>
+                  <Card>
+                    <CardHeader
+                      title={ tier.title }
+                      subheader={ tier.subheader }
+                      titleTypographyProps={ { align: 'center' } }
+                      subheaderTypographyProps={ { align: 'center' } }
+                      className={ classes.cardHeader }
+                    />
+                    <CardContent>
+                      <div className={ classes.cardPricing }>
+                        <Typography variant='h5' color='textPrimary'>
+                          <small>Fee</small> { tier.price }
+                        </Typography>
+                        <Typography variant='body1' color='textSecondary'>
+                          <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
+                        </Typography>
+                      </div>
+                      { tier.description.map(line => (
+                        <Typography variant='body1' align='center' key={ line }>
+                          { line }
+                        </Typography>
+                      )) }
+                    </CardContent>
+                    { tier.link &&
+                      <CardActions className={ classes.cardActions }>
+                        <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
+                          { tier.buttonText }
+                        </Button>
+                      </CardActions>
+                    }
+                  </Card>
+                </Grid>
+              )) }
+            </Grid>
+          </React.Fragment>
+        </div>
+        <Bottom />
       </div>
     )
   }
