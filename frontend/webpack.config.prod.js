@@ -8,6 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   mode: 'production',
+  /*
   optimization: {
     minimizer: [new UglifyJsPlugin()],
     runtimeChunk: 'single',
@@ -24,6 +25,7 @@ module.exports = {
       },
     },
   },
+  */
   entry: './src/index.js',
   output: {
     path: `${__dirname}/public`,
