@@ -40,7 +40,7 @@ export default function TaskPayments ({ orders }) {
                       `${order.User && (order.User.name || order.User.username) || 'Anonymous'}`
                     }
                     src={ order.User && order.User.profile_url }
-                />
+                  />
                 : <Avatar className={ classes.small } />
               }
             </ListItemAvatar>
