@@ -6,14 +6,23 @@ module.exports = Promise.method(function userExists (userAttributes) {
     .findOne({
       where: {
         email: userAttributes.email
-      }
+      },
+      include: [
+        models.Type,
+        {
+          model: models.Organization,
+          include: [{
+            model: models.Project,
+            include: [models.Task]
+          }]
+        }
+      ]
     }).then(user => {
       if (!user) return false
 
       if (user && !user.dataValues) return false
 
       if (user.length <= 0) return false
-
       /* return {
         id: user.dataValues.id,
         website: user.dataValues.website,

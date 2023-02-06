@@ -9,10 +9,9 @@ require('./models')
 const passport = require('passport')
 require('./config/passport')
 const load = require('./modules/app')
-const feed = require('feed-read')
 const i18n = require('i18n')
 
-const { dailyJob, weeklyJob, weeklyJobLatest } = require('./cron')
+// const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid } = require('./cron')
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
@@ -35,9 +34,10 @@ i18n.configure({
 
 app.use(i18n.init)
 
-dailyJob.start()
-weeklyJob.start()
-weeklyJobLatest.start()
+// dailyJob.start()
+// weeklyJob.start()
+// weeklyJobLatest.start()
+// weeklyJobBountiesClosedNotPaid.start();
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -48,14 +48,8 @@ app.set('port', (process.env.PORT || 3000))
 app.use(compression())
 app.use(express.static(`${__dirname}/frontend/public/`))
 
-app.get('/octos', (req, res) => {
-  feed('http://feeds.feedburner.com/Octocats', (err, articles) => {
-    if (err) throw err
-    const article = articles[Math.floor(Math.random() * articles.length)]
-    // eslint-disable-next-line no-console
-    console.log(article)
-    return res.json(article).end()
-  })
+app.get('/recruitment', (req, res) => {
+  res.redirect('https://gitpay.me/#/recruitment')
 })
 
 load.init(app)

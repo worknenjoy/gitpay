@@ -5,15 +5,16 @@ require('../../authenticationHelpers')
 require('../../../models')
 const controllers = require('../controllers/order')
 
-const secure = require('./secure')
-
 router.get('/list', controllers.listOrders)
 router.get('/fetch/:id', controllers.fetchOrders)
 router.get('/details/:id', controllers.detailsOrder)
+router.get('/refund/:id', controllers.refundOrder)
 router.get('/update', controllers.updateOrders)
 router.post('/create', controllers.createOrder)
 
+const secure = require('./secure')
 router.use(secure)
+router.post('/transfer/:id', controllers.transferOrder)
 router.post('/cancel', controllers.cancelOrder)
 router.post('/payment', controllers.paymentOrder)
 

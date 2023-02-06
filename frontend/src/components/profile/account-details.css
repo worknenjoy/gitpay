@@ -1,0 +1,11 @@
+.PhoneInputInput {
+  height: 52px;
+  border: 2px solid #E2E5EA;
+  border-radius: 3px;
+  padding: 0px 12px;
+  height: 52;
+}
+
+.PhoneInput.PhoneInput--focus input {
+  border: 2px solid #353A42 !important;
+}

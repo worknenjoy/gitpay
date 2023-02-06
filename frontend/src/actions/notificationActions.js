@@ -10,10 +10,10 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG'
  *
  */
 
-export const addNotification = (message) => {
+export const addNotification = (message, extra = '') => {
   return (dispatch, getState) => {
     const messages = getState().intl.messages
-    return dispatch({ type: ADD_NOTIFICATION, text: messages[message] || message, open: true })
+    return dispatch({ type: ADD_NOTIFICATION, text: extra ? `${messages[message]} ${extra}` : messages[message] || message, open: true })
   }
 }
 

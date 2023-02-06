@@ -15,6 +15,10 @@ module.exports = Promise.method(function taskFetch (taskParams) {
     include: [
       models.User,
       {
+        model: models.Project,
+        include: [models.Organization]
+      },
+      {
         model: models.Order,
         include: [models.User]
       },
@@ -43,6 +47,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       const userOrCompany = splitIssueUrl[1]
       const projectName = splitIssueUrl[2]
       const issueId = splitIssueUrl[4]
+
+      if (data.dataValues.private) return data.dataValues
 
       switch (data.dataValues.provider) {
         case 'github':
@@ -107,14 +113,16 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               const responseGithub = {
                 id: data.dataValues.id,
                 url: issueUrl,
+                private: data.dataValues.private,
                 title: data.dataValues.title,
+                description: data.dataValues.description,
                 value: data.dataValues.value || 0,
                 deadline: data.dataValues.deadline,
                 level: data.dataValues.level,
                 status: data.dataValues.status,
                 assigned: data.dataValues.assigned,
                 assignedUser: assigned && assigned.dataValues.User.dataValues,
-                user: data.dataValues.User.dataValues,
+                User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
                 provider: data.dataValues.provider,
@@ -129,11 +137,11 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   issue: issueDataJsonGithub
                 },
                 orders: data.dataValues.Orders,
-                assigns: data.dataValues.Assigns,
+                Assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
-                offers: data.dataValues.Offers,
-                histories: data.dataValues.Histories
-
+                Offers: data.dataValues.Offers,
+                histories: data.dataValues.Histories,
+                Project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
               }
 
               if (!data.title && data.title !== issueDataJsonGithub.title) {
@@ -142,6 +150,14 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   .updateAttributes({ title: issueDataJsonGithub.title })
                   .then(task => responseGithub)
               }
+
+              if (data.status !== issueDataJsonGithub.state) {
+                /* eslint-disable no-unused-vars */
+                data
+                  .updateAttributes({ status: issueDataJsonGithub.state })
+                  .then(task => responseGithub)
+              }
+
               return responseGithub
             })
             .catch(e => {
@@ -161,6 +177,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               const responseBitbucket = {
                 id: data.dataValues.id,
                 url: issueUrl,
+                private: data.dataValues.private,
                 title: data.dataValues.title,
                 value: data.dataValues.value || 0,
                 deadline: data.dataValues.deadline,
@@ -170,6 +187,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 paid: data.dataValues.paid,
                 transfer_id: data.dataValues.transfer_id,
                 provider: data.dataValues.provider,
+                User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
+                Project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues },
                 metadata: {
                   id: issueId,
                   user: userOrCompany,
@@ -188,7 +207,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 orders: data.dataValues.Orders,
                 assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
-                offers: data.dataValues.Offers
+                Offers: data.dataValues.Offers
               }
 
               if (!data.title && data.title !== issueDataJsonBitbucket.title) {

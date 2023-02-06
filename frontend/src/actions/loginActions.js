@@ -43,7 +43,7 @@ const loggedOutCompleted = () => {
 export const loggedIn = () => {
   const token = Auth.getToken()
   if (token) {
-    return dispatch => {
+    return (dispatch, getState) => {
       dispatch(loggedInRequested())
       return axios
         .get(api.API_URL + '/authenticated', {
@@ -56,12 +56,14 @@ export const loggedIn = () => {
             dispatch(addNotification('user.login.successfull'))
             Auth.authNotified()
           }
+
+          if (window.localStorage.getItem('firstLogin') !== 'false') {
+            window.localStorage.setItem('firstLogin', true)
+          }
           return dispatch(loggedInSuccess(response.data.user))
         })
         .catch(error => {
-          dispatch(
-            addNotification('user.login.error')
-          )
+          dispatch(addNotification('user.login.error'))
           return dispatch(loggedInError(error))
         })
     }
@@ -84,38 +86,43 @@ const registerRequested = () => {
 }
 
 const registerSuccess = user => {
-  return { type: REGISTER_USER_SUCCESS, logged: true, completed: true, user: user }
+  return {
+    type: REGISTER_USER_SUCCESS,
+    logged: true,
+    completed: true,
+    user: user
+  }
 }
 
 const registerError = error => {
-  return { type: REGISTER_USER_ERROR, logged: false, completed: true, error: error }
+  return {
+    type: REGISTER_USER_ERROR,
+    logged: false,
+    completed: true,
+    error: error
+  }
 }
 
-export const registerUser = (data) => {
+export const registerUser = data => {
   return dispatch => {
     dispatch(registerRequested())
     return axios
       .post(api.API_URL + '/auth/register', data)
       .then(response => {
-        if (response.data.email) {
+        if (response.data.email.length) {
           dispatch(addNotification('user.register.successfull'))
           return dispatch(registerSuccess(response.data))
         }
-        dispatch(
-          addNotification('user.register.error')
-        )
+        dispatch(addNotification('user.register.error'))
         return dispatch(registerError({}))
       })
       .catch(error => {
-        if (error.error === 'user.exist') {
-          dispatch(
-            addNotification('user.login.error')
-          )
+        const responseError = error.response.data.message
+        if (responseError !== 'user.exist') {
+          dispatch(addNotification('user.login.error'))
         }
         else {
-          dispatch(
-            addNotification('user.exist')
-          )
+          dispatch(addNotification('user.exist'))
         }
         return dispatch(registerError(error))
       })

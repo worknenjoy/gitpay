@@ -16,6 +16,8 @@ const IssueClosedMail = require('../../mail/issueClosed')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
+const chargeSucceeded = require('../../webhooks/chargeSucceeded')
+
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
   not_sent_to_network: 'Hight risk card, please provide all the information'
@@ -259,6 +261,7 @@ exports.github = async (req, res) => {
 exports.updateWebhook = (req, res) => {
   // eslint-disable-next-line no-console
   console.log('webhook body', req.body)
+
   if (req.body.object === 'event') {
     const event = req.body
     const paid = event.data.object.paid || false
@@ -377,53 +380,7 @@ exports.updateWebhook = (req, res) => {
           })
         break
       case 'charge.succeeded':
-        return models.Order.update(
-          {
-            paid: paid,
-            status: status
-          },
-          {
-            where: {
-              source_id: event.data.object.source.id,
-              source: event.data.object.id
-            },
-            returning: true
-          }
-        )
-          .then(order => {
-            if (order[0]) {
-              return models.User.findOne({
-                where: {
-                  id: order[1][0].dataValues.userId
-                }
-              })
-                .then(user => {
-                  if (user) {
-                    if (paid && status === 'succeeded') {
-                      const language = user.language || 'en'
-                      i18n.setLocale(language)
-                      SendMail.success(
-                        user.dataValues,
-                        i18n.__('mail.webhook.payment.update.subject'),
-                        i18n.__('mail.webhook.payment.approved.message', {
-                          amount: event.data.object.amount / 100
-                        })
-                      )
-                    }
-                  }
-
-                  return res.json(req.body)
-                })
-                .catch(e => {
-                  return res.status(400).send(e)
-                })
-            }
-          })
-          .catch(e => {
-            return res.status(400).send(e)
-          })
-
-        break
+        return chargeSucceeded(event, paid, status, req, res)
       case 'charge.failed':
         return models.Order.update(
           {
@@ -462,6 +419,127 @@ exports.updateWebhook = (req, res) => {
                 }
               })
             }
+          })
+          .catch(e => {
+            return res.status(400).send(e)
+          })
+
+        break
+      case 'invoice.created':
+        return models.Order.update(
+          {
+            status: event.data.object.status,
+            source: event.data.object.charge
+          },
+          {
+            where: {
+              source_id: event.data.object.id
+            },
+            returning: true
+          }
+        )
+          .then(async order => {
+            if (order[0] && order[1].length) {
+              const orderUpdated = await models.Order.findOne({
+                where: {
+                  id: order[1][0].dataValues.id
+                },
+                include: [models.Task, models.User]
+              })
+              const userAssign = await models.Assign.findOne({
+                where: {
+                  id: orderUpdated.Task.dataValues.assigned
+                },
+                include: [models.Task, models.User]
+              })
+              const userAssigned = userAssign.dataValues.User.dataValues
+              const userTask = orderUpdated.User.dataValues
+              if (orderUpdated) {
+                const userAssignedlanguage = userAssigned.language || 'en'
+                i18n.setLocale(userAssignedlanguage)
+                SendMail.success(
+                  userAssigned,
+                  i18n.__('mail.webhook.invoice.create.subject'),
+                  i18n.__('mail.webhook.invoice.create.message', {
+                    amount: order[1][0].dataValues.amount
+                  })
+                )
+                const userTaskLanguage = userTask.language || 'en'
+                i18n.setLocale(userTaskLanguage)
+                SendMail.success(
+                  userTask,
+                  i18n.__('mail.webhook.payment.update.subject'),
+                  i18n.__('mail.webhook.payment.approved.message', {
+                    amount: order[1][0].dataValues.amount
+                  })
+                )
+              }
+              return res.json(req.body)
+            }
+            return res.json(req.body)
+          })
+          .catch(e => {
+            // eslint-disable-next-line no-console
+            console.log('error on invoice create webhook', e)
+            return res.status(400).send(e)
+          })
+
+        break
+      case 'invoice.updated':
+        return models.Order.update(
+          {
+            paid: event.data.object.status === 'paid',
+            status: event.data.object.status === 'paid' ? 'succeeded' : 'failed',
+            source: event.data.object.charge
+          },
+          {
+            where: {
+              source_id: event.data.object.id
+            },
+            returning: true
+          }
+        )
+          .then(async order => {
+            if (order[0] && order[1].length) {
+              const orderUpdated = await models.Order.findOne({
+                where: {
+                  id: order[1][0].dataValues.id
+                },
+                include: [models.Task, models.User]
+              })
+              const userAssign = await models.Assign.findOne({
+                where: {
+                  id: orderUpdated.Task.dataValues.assigned
+                },
+                include: [models.Task, models.User]
+              })
+              const userAssigned = userAssign.dataValues.User.dataValues
+              const userTask = orderUpdated.User.dataValues
+              if (orderUpdated) {
+                if (orderUpdated.status === 'paid') {
+                  const userAssignedlanguage = userAssigned.language || 'en'
+                  i18n.setLocale(userAssignedlanguage)
+                  SendMail.success(
+                    userAssigned,
+                    i18n.__('mail.webhook.invoice.update.subject'),
+                    i18n.__('mail.webhook.invoice.update.message', {
+                      amount: order[1][0].dataValues.amount
+                    })
+                  )
+                  const userTaskLanguage = userTask.language || 'en'
+                  i18n.setLocale(userTaskLanguage)
+                  SendMail.success(
+                    userTask,
+                    i18n.__('mail.webhook.payment.update.subject'),
+                    i18n.__('mail.webhook.payment.approved.message', {
+                      amount: order[1][0].dataValues.amount
+                    })
+                  )
+                }
+              }
+              return res.json(req.body)
+            }
+            return res.json(req.body)
           })
           .catch(e => {
             return res.status(400).send(e)
@@ -614,7 +692,7 @@ exports.updateWebhook = (req, res) => {
                   <p>We have a new balance:</p>
                   <ul>
                   ${event.data.object.available.map(b => `<li>${b.currency}: ${b.amount}</li>`).join('')}
-                  </ul>              
+                  </ul>
               `)
         return res.json(req.body)
         break
@@ -625,6 +703,42 @@ exports.updateWebhook = (req, res) => {
           }
         })
         break
+      case 'invoice.payment_succeeded':
+        return models.User.findOne(
+          {
+            where: { email: event.data.object.customer_email }
+          }
+        ).then(userFound => {
+          if (!userFound) {
+            return models.User.create({
+              email: event.data.object.customer_email,
+              name: event.data.object.customer_name,
+              country: event.data.object.account_country,
+              customer_id: event.data.object.customer[0],
+              active: false
+            }).then(async user => {
+              await user.addType(await models.Type.find({ name: 'funding' }))
+              models.Order.update(
+                {
+                  status: event.data.object.status,
+                  source: event.data.object.charge[0],
+                  paid: true,
+                  userId: user.dataValues.id
+                },
+                {
+                  where: {
+                    source_id: event.data.object.id[0]
+                  },
+                  returning: true
+                }
+              ).then(order => {
+                return res.json(req.body)
+              })
+            })
+          }
+        }).catch(e => {
+          return res.status(400).send(e)
+        })
     }
   }
   else {

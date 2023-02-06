@@ -11,6 +11,8 @@ const userBankAccountCreate = require('./userBankAccountCreate')
 const userPreferences = require('./userPreferences')
 const userOrganizations = require('./userOrganizations')
 const userDeleteById = require('./userDeleteById')
+const userTasks = require('./userTasks')
+const userTypes = require('./userTypes')
 
 module.exports = {
   userExists: userExists,
@@ -25,5 +27,7 @@ module.exports = {
   userBankAccountCreate: userBankAccountCreate,
   userPreferences: userPreferences,
   userOrganizations: userOrganizations,
-  userDeleteById: userDeleteById
+  userDeleteById: userDeleteById,
+  userTasks: userTasks,
+  userTypes: userTypes
 }

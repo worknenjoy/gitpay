@@ -12,7 +12,11 @@ import {
 const styles = theme => ({
   selected: {
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
+    '&:active': {
+      color: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.primary.main,
+    }
   }
 })
 
@@ -34,75 +38,90 @@ class TaskStatusFilter extends Component {
   }
 
   componentDidMount () {
-    let pathName = this.props.history.location.pathname
-    this.handleFromUrl(pathName)
+    const currentFilter = this.props.match.params.filter
+    this.handleFromUrl(currentFilter)
   }
 
   handleFromUrl = value => {
     switch (value) {
-      case '/tasks/open':
+      case 'open':
         this.props.onFilter('status', 'open')
         this.setState({ selected: 'open' })
         break
-      case '/tasks/progress':
+      case 'progress':
         this.props.onFilter('status', 'in_progress')
         this.setState({ selected: 'in_progress' })
         break
-      case '/tasks/finished':
+      case 'finished':
         this.props.onFilter('status', 'closed')
         this.setState({ selected: 'closed' })
         break
-      case '/tasks/with-bounties':
+      case 'with-bounties':
         this.props.onFilter('status', 'issuesWithBounties')
         this.setState({ additionalSelected: 'issuesWithBounties' })
         break
-      case '/tasks/contribution':
+      case 'contribution':
         this.props.onFilter('status', 'contribution')
         this.setState({ additionalSelected: 'contribution' })
         break
       default:
-        this.props.onFilter()
+        this.props.onFilter('all')
     }
   }
 
   handleListItemClick = value => {
+    const currentOrganization = this.props.match.params.organization_id
+    const currentProject = this.props.match.params.project_id
+    const baseUrl = currentOrganization && currentProject
+      ? '/organizations/' + currentOrganization + '/projects/' + currentProject + '/'
+      : '/tasks/'
     switch (value) {
       case 'open':
-        this.props.history.push('/tasks/open')
+        this.props.history.push(baseUrl + 'open')
         this.props.onFilter('status', value, this.state.additionalSelected)
         break
       case 'in_progress':
-        this.props.history.push('/tasks/progress')
+        this.props.history.push(baseUrl + 'progress')
         this.props.onFilter('status', value, this.state.additionalSelected)
         break
       case 'closed':
-        this.props.history.push('/tasks/finished')
+        this.props.history.push(baseUrl + 'finished')
         this.props.onFilter('status', value, this.state.additionalSelected)
         break
       default:
-        this.props.onFilter()
+        this.props.onFilter('all')
     }
     this.setState({ selected: value })
   }
 
   handleListAdditionalStatusesClick = value => {
+    const currentOrganization = this.props.match.params.organization_id
+    const currentProject = this.props.match.params.project_id
+    const baseUrl = currentOrganization && currentProject
+      ? '/organizations/' + currentOrganization + '/projects/' + currentProject + '/'
+      : '/tasks/'
     switch (value) {
       case 'issuesWithBounties':
-        this.props.history.push('/tasks/with-bounties')
+        this.props.history.push(baseUrl + 'with-bounties')
         this.props.onFilter('status', this.state.selected, value) // passing value as third parameter to consider as additional
         break
       case 'contribution':
-        this.props.history.push('/tasks/contribution')
+        this.props.history.push(baseUrl + 'contribution')
         this.props.onFilter('status', this.state.selected, value) // passing value as third parameter to consider as additional
         break
       default:
-        this.props.onFilter()
+        this.props.onFilter('all')
     }
     this.setState({ additionalSelected: value })
   }
 
   handleClickAll = () => {
-    this.props.history.push('/tasks/all')
+    const currentOrganization = this.props.match.params.organization_id
+    const currentProject = this.props.match.params.project_id
+    const baseUrl = currentOrganization && currentProject
+      ? '/organizations/' + currentOrganization + '/projects/' + currentProject + '/'
+      : '/tasks/'
+    this.props.history.push(baseUrl + 'all')
     this.props.onFilter()
     this.setState({ selected: 'all', additionalSelected: null })
   }

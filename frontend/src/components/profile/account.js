@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import {
@@ -116,7 +117,8 @@ class Account extends Component {
     updateAccount: PropTypes.func,
     fetchAccount: PropTypes.func,
     getBankAccount: PropTypes.func,
-    updateUser: PropTypes.func
+    updateUser: PropTypes.func,
+    history: PropTypes.object,
   }
 
   constructor (props) {
@@ -169,6 +171,7 @@ class Account extends Component {
     e.preventDefault()
     let formData = {
       'business_profile[url]': e.target['business_profile[url]'].value,
+      'individual[phone]': e.target['individual[phone]'].value,
       'individual[first_name]': e.target['individual[first_name]'].value,
       'individual[last_name]': e.target['individual[last_name]'].value,
       'individual[address][city]':
@@ -368,7 +371,7 @@ class Account extends Component {
                             <Typography className={ classes.pos } color='textSecondary'>
                               <FormattedMessage id='account.status' defaultMessage='Your account status:' />
                             </Typography>
-                            { account.data.requirements.disabled_reason ? (
+                            { account.data.requirements.currently_due.filter(c => c !== 'business_profile.mcc' || c !== 'individual.political_exposure').length ? (
                               <FormattedMessage id='account.status.pending' defaultMessage='Pending'>
                                 { (msg) => (
                                   <Chip
@@ -411,7 +414,7 @@ class Account extends Component {
                               </div>
                             ) }
                           </div>
-                          { account.data.requirements.currently_due.length ? (
+                          { account.data.requirements.currently_due.filter(c => c !== 'business_profile.mcc').length ? (
                             <div>
                               <Typography component='p'>
                                 <FormattedMessage id='account.pending.title' defaultMessage='We have the following items that needs to be verified:' />
@@ -419,7 +422,7 @@ class Account extends Component {
                               <div>
                                 { account.data.requirements.currently_due.map(
                                   (item, i) => (
-                                    Const.ACCOUNT_FIELDS[item] &&
+                                    Const.ACCOUNT_FIELDS[item] && item !== 'business_profile.mcc' &&
                                     <Chip
                                       style={ { margin: 3 } }
                                       key={ i }
@@ -446,7 +449,7 @@ class Account extends Component {
                             size='large'
                             variant='contained'
                             color='primary'
-                            onClick={ this.openUpdateModal }
+                            onClick={ () => this.props.history.push('/profile/account-details') }
                           >
                             { account.data.requirements.disabled_reason
                               ? <FormattedMessage id='account.activate' defaultMessage='Activate account' />
@@ -738,19 +741,36 @@ class Account extends Component {
                         >
                           <Grid container spacing={ 3 }>
                             <Grid item xs={ 12 }>
-                              <FormControl>
-                                <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>
-                                  { (msg) => (
-                                    <Input
-                                      id='payment-form-website'
-                                      name='business_profile[url]'
-                                      placeholder={ msg }
-                                      style={ { marginRight: 20 } }
-                                      defaultValue={ account.data.business_profile && account.data.business_profile.url }
-                                    />
-                                  ) }
-                                </FormattedMessage>
-                              </FormControl>
+                              <Grid item xs={ 5 }>
+                                <FormControl>
+                                  <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>
+                                    { (msg) => (
+                                      <Input
+                                        id='payment-form-website'
+                                        name='business_profile[url]'
+                                        placeholder={ msg }
+                                        style={ { marginRight: 20 } }
+                                        defaultValue={ account.data.business_profile && account.data.business_profile.url }
+                                      />
+                                    ) }
+                                  </FormattedMessage>
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={ 5 }>
+                                <FormControl>
+                                  <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
+                                    { (msg) => (
+                                      <Input
+                                        id='payment-form-phone'
+                                        name='individual[phone]'
+                                        placeholder={ msg }
+                                        style={ { marginRight: 20 } }
+                                        defaultValue={ account.data.individual && account.data.individual.phone }
+                                      />
+                                    ) }
+                                  </FormattedMessage>
+                                </FormControl>
+                              </Grid>
                             </Grid>
                             <Grid item xs={ 12 }>
                               <FormControl>
@@ -900,7 +920,10 @@ class Account extends Component {
                               <div style={ { float: 'right' } }>
                                 <Button
                                   color='primary'
-                                  onClick={ this.closeUpdateModal }
+                                  onClick={ (e) => {
+                                    this.closeUpdateModal(e)
+                                  }
+                                  }
                                 >
                                   <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
                                 </Button>
@@ -1051,4 +1074,4 @@ class Account extends Component {
   }
 }
 
-export default injectIntl(withStyles(styles)(Account))
+export default withRouter(injectIntl(withStyles(styles)(Account)))

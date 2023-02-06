@@ -32,13 +32,15 @@ import {
   AttachMoney as OffersIcon,
   History as HistoryIcon,
   Cancel as CancelIcon,
-  Info as InfoIcon
+  Info as InfoIcon,
+  SwapHoriz as TransferIcon
 } from '@material-ui/icons'
 
 import styled from 'styled-components'
 
 import TaskPaymentCancel from './task-payment-cancel'
 import TaskOrderDetails from './order/task-order-details'
+import TaskOrderTransfer from './order/task-order-transfer'
 
 const logoGithub = require('../../images/github-logo.png')
 
@@ -69,6 +71,7 @@ class TaskTabs extends React.Component {
     this.state = {
       cancelPaypalConfirmDialog: false,
       orderDetailsDialog: false,
+      transferDialogOpen: false,
       currentOrderId: null
     }
   }
@@ -100,6 +103,17 @@ class TaskTabs extends React.Component {
   openOrderDetailsDialog = async (e, id) => {
     await this.props.getOrderDetails(id)
     this.setState({ orderDetailsDialog: true, currentOrderId: id })
+  }
+
+  openTransferDialog = async (e, item) => {
+    await this.props.listTasks()
+    await this.props.filterTasks('userId')
+    this.setState({ transferDialogOpen: true })
+  }
+
+  closeTransferDialog = (e, item) => {
+    // await this.props.getOrderDetails(item.id)
+    this.setState({ transferDialogOpen: false })
   }
 
   closeOrderDetailsDialog = () => {
@@ -144,7 +158,7 @@ class TaskTabs extends React.Component {
 
     const assignActions = assign => {
       const task = this.props.task.data
-      return <AssignActions hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
+      return <AssignActions user={ this.props.user } hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } />
     }
 
     const retryPaypalPaymentButton = (paymentUrl) => {
@@ -243,13 +257,39 @@ class TaskTabs extends React.Component {
       return items
     }
 
-    const retryOrCancel = (item, userId) => {
+    const retryOrCancelButton = (item, userId) => {
       if (item.User && item.provider === 'paypal' && userId === item.User.id) {
         if ((item.status === 'fail' || item.status === 'open') && item.payment_url) {
           return retryPaypalPaymentButton(item.payment_url)
         }
         else if (item.status === 'succeeded') {
           return cancelPaypalPaymentButton(item.id)
+        }
+        else {
+          return ''
+        }
+      }
+    }
+
+    const transferButton = (item, userId) => {
+      if (item.User && item.provider === 'stripe' && userId === item.User.id) {
+        if (item.status === 'succeeded' && !task.paid) {
+          return (
+            <React.Fragment>
+              <Button
+                style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
+                variant='contained'
+                size='small'
+                color='primary'
+                className={ classes.button }
+                onClick={ (e) => this.openTransferDialog(e, item) }
+              >
+                <FormattedMessage id='general.buttons.transfer' defaultMessage='Transfer' />
+                <TransferIcon style={ { marginLeft: 5, marginRight: 5 } } />
+              </Button>
+              <TaskOrderTransfer order={ item } onSend={ this.props.transferOrder } tasks={ this.props.tasks } open={ this.state.transferDialogOpen } onClose={ this.closeTransferDialog } />
+            </React.Fragment>
+          )
         }
         else {
           return ''
@@ -275,8 +315,9 @@ class TaskTabs extends React.Component {
         <div style={ { display: 'inline-block' } }>
           <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
           { detailsOrderButton(item, userId) }
-          { retryOrCancel(item, userId) }
+          { retryOrCancelButton(item, userId) }
         </div>,
+        transferButton(item, userId),
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
@@ -337,7 +378,7 @@ class TaskTabs extends React.Component {
 
     const historyCreate = item => {
       const fields = item.fields.map((f, i) => {
-        if (f === 'userId') return `User: ${user.name || user.username}`
+        if (f === 'userId') return `User: ${task.data.user.name || task.data.user.username}`
         return `${f}: ${item.newValues[i]}`
       })
       return `A new issue was created with ${fields.join(', ')}`
@@ -386,13 +427,13 @@ class TaskTabs extends React.Component {
         { task.tab === 0 &&
         <TabContainer>
           <Card className={ classes.paper }>
-            <Typography variant='title' align='left' gutterBottom>
+            <Typography variant='h5' align='left' gutterBottom>
               <FormattedMessage id='task.info.description' defaultMessage='Description' />
             </Typography>
             <Typography variant='body2' align='left' gutterBottom>
               <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
                 <PlaceholderDiv className={ classes.contentBody }>
-                  { task.data.metadata ? renderHTML(marked(task.data.metadata.issue.body)) : 'Description not available' }
+                  { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
                 </PlaceholderDiv>
               </ReactPlaceholder>
             </Typography>
@@ -411,6 +452,7 @@ class TaskTabs extends React.Component {
                 tableHead={ [
                   this.props.intl.formatMessage(messages.cardTableHeaderPaid),
                   this.props.intl.formatMessage(messages.cardTableHeaderStatus),
+                  this.props.intl.formatMessage(messages.cardTableHeaderActions),
                   this.props.intl.formatMessage(messages.cardTableHeaderValue),
                   this.props.intl.formatMessage(messages.cardTableHeaderCreated),
                   this.props.intl.formatMessage(messages.cardTableHeaderUser),
@@ -477,7 +519,7 @@ class TaskTabs extends React.Component {
                   this.props.intl.formatMessage(messages.offersTableLabelDeadline),
                   this.props.intl.formatMessage(messages.offersTableLabelCreated)
                 ] }
-                tableData={ task.data.offers && task.data.offers.length ? displayOffers(task.data.offers) : [] }
+                tableData={ task.data.Offers && task.data.Offers.length ? displayOffers(task.data.Offers) : [] }
               />
             }
           />

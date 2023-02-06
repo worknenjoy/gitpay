@@ -55,7 +55,7 @@ class WhichCompanies extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?'>
+          <FormattedMessage id='welcome.bottom.companies.title' defaultMessage='Fees'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -72,14 +72,14 @@ class WhichCompanies extends Component {
               <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='h5' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.companies.title' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.companies.title.which' defaultMessage='Which companies?' />
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
+                  <FormattedMessage id='welcome.companies.bottom.title.which' defaultMessage='Fees' />
                 </Typography>
               </MainTitle>
             </div>
@@ -93,7 +93,7 @@ class WhichCompanies extends Component {
                   </ListItemIcon>
                   <ListItemText
                     primary={ this.props.intl.formatMessage(messages.companiesItemPrimary1) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemSecondary1) }
+
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -104,7 +104,7 @@ class WhichCompanies extends Component {
                   </ListItemIcon>
                   <ListItemText
                     primary={ this.props.intl.formatMessage(messages.companiesItemTwoPrimary1) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemTwoSecondary1) }
+
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>

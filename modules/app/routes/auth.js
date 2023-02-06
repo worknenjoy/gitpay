@@ -46,7 +46,7 @@ router.post('/authorize/local', (req, res, next) => {
     if (!user) {
       // res.status(401)
       // res.send({ 'reason': 'Invalid credentials' })
-      res.redirect(`${process.env.FRONTEND_HOST}/#/login/invalid`)
+      res.redirect(`${process.env.FRONTEND_HOST}/#/signin/invalid`)
     }
     else {
       req.logIn(user, { session: false }, (err) => {
@@ -67,6 +67,8 @@ router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 router.post('/auth/register', controllers.register)
 router.get('/users', controllers.searchAll)
 router.get('/callback/github/private', controllers.createPrivateTask)
+
+router.get('/users/types/:id', controllers.getUserTypes)
 
 router.use('/user/', secure)
 

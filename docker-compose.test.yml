@@ -13,5 +13,6 @@ services:
   db_test:
     image: postgres
     environment:      
-      POSTGRES_DB: gitpay_test
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gitpay_test
     network_mode: host

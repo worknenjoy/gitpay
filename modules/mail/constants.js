@@ -1,8 +1,12 @@
 
 module.exports = {
-  notificationEmail: 'notifications@gitpay.me',
-  fromEmail: 'tarefas@gitpay.me',
-  canSendEmail: process.env.NODE_ENV !== 'test' && process.env.SENDGRID_API_KEY,
+  notificationEmail: 'issues@gitpay.me',
+  copyEmail: 'issues@gitpay.me',
+  recruitersEmail: 'hiringt@gitpay.me',
+  reportEmail: 'alexandre@gitpay.me',
+  fromEmail: 'no-reply@gitpay.me',
+  joinTeamEmail: 'team@gitpay.me',
+  canSendEmail: process.env.NODE_ENV !== 'test',
   dateFormat: 'fullDate',
   taskUrl: (id) => {
     return `${process.env.FRONTEND_HOST}/#/task/${id}`

@@ -1,10 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import Link from '@material-ui/core/Link'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
 import {
+  Avatar,
   Typography,
-  Button,
   Chip,
   Grid,
   withStyles
@@ -12,30 +15,19 @@ import {
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import {
-  Redeem as RedeemIcon,
-  Done as DoneIcon,
-  Navigation as NavigationIcon,
-  OpenInNew as ExternalLinkIcon
-} from '@material-ui/icons'
-
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
 import Constants from '../../consts'
-import { PaymentHeader } from '../Cards/PaymentHeaderCard'
+import TaskStatusIcons from './task-status-icons'
+import TaskLabels from './task-labels'
 
 const logoGithub = require('../../images/github-logo.png')
 const logoBitbucket = require('../../images/bitbucket-logo.png')
 
 const TaskHeaderContainer = styled.div`
   box-sizing: border-box;
-  background: black;
-  padding: 1rem 3rem 1rem 3rem;
   position: relative;
-  margin: -2rem -3rem 1rem -3rem;
-
-  border-top: 1px solid #999;
 
   ${media.phone`
     margin: -1rem -1rem 1rem -1rem;
@@ -47,25 +39,35 @@ const TaskHeaderContainer = styled.div`
   `}
 `
 
-const Tags = styled.div`
-  display: inline-block;
-
-  ${media.phone`
-    display: block;
-    margin-top: 1rem;
-    margin-left: -20px;
-  `}
-`
-
 const styles = theme => ({
-  chip: {
-    marginRight: 10,
-    marginBottom: 20
+  breadcrumbRoot: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
-  chipStatus: {
-    marginLeft: 20,
+  breadcrumbLink: {
+    textDecoration: 'underline'
+  },
+  chipStatusSuccess: {
+    marginBottom: theme.spacing(1),
     verticalAlign: 'middle',
-    backgroundColor: theme.palette.primary.light
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.success
+  },
+  chipStatusClosed: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.error.main
+  },
+  avatarStatusSuccess: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.primary.success,
+  },
+  avatarStatusClosed: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.error.main,
   },
   chipStatusPaid: {
     marginLeft: 0,
@@ -82,16 +84,18 @@ const styles = theme => ({
 })
 
 class TaskHeader extends React.Component {
-  goToProjectRepo = (url) => {
+  goToProjectRepo = (e, url) => {
+    e.preventDefault()
     window.open(url, '_blank')
   }
 
-  handleBackToTaskList = () => {
+  handleBackToTaskList = (e) => {
+    e.preventDefault()
     window.location.assign('/#/tasks/explore')
   }
 
   render () {
-    const { classes, task } = this.props
+    const { classes, task, user, history } = this.props
 
     const headerPlaceholder = (
       <div className='line-holder'>
@@ -104,89 +108,115 @@ class TaskHeader extends React.Component {
 
     return (
       <TaskHeaderContainer>
-        <Grid container spacing={ 9 }>
-          <Grid item xs={ 12 } sm={ 12 } md={ 6 }>
-            <Button onClick={ this.handleBackToTaskList } style={ { marginBottom: 10 } } variant='contained' size='small'
-              aria-label='Delete' className={ classes.button }>
-              <NavigationIcon />
-              <FormattedMessage id='task.title.navigation' defaultMessage='Tasks' />
-            </Button>
-            { task.data.metadata &&
-            <Typography variant='subheading' style={ { color: '#bbb' } }>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
-                ready={ task.completed }>
-                <div style={ { marginTop: 20 } }>
-                  <Chip
-                    key={ task.data.metadata.company }
-                    clickable
-                    label={ task.data.metadata.company }
-                    onClick={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                    className={ classes.chip }
-                    color='secondary'
-                    onDelete={ () => this.goToProjectRepo(task.data.metadata.ownerUrl) }
-                    deleteIcon={ <ExternalLinkIcon /> }
-                  />
-                  <Chip
-                    key={ task.data.metadata.projectName }
-                    clickable
-                    label={ task.data.metadata.projectName }
-                    onClick={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                    className={ classes.chip }
-                    color='secondary'
-                    onDelete={ () => this.goToProjectRepo(task.data.metadata.repoUrl) }
-                    deleteIcon={ <ExternalLinkIcon /> }
-                  />
-                </div>
-              </ReactPlaceholder>
-            </Typography>
-            }
+        <Grid container>
+          <Grid item xs={ 12 } sm={ 12 } md={ 8 }>
+
+            <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
+              ready={ task.completed }>
+              <div className={ classes.breadcrumbRoot }>
+                { task.data.Project ? (
+                  <Breadcrumbs aria-label='breadcrumb' separator={ ' / ' }>
+                    { user && user.id ? (
+                      <Link href='/' color='inherit' onClick={ (e) => {
+                        e.preventDefault()
+                        history.push('/profile/tasks')
+                      } }>
+                        <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                          <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />
+                        </Typography>
+                      </Link>
+                    ) : (
+                      <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
+                        <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                          <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
+                        </Typography>
+                      </Link>
+                    ) }
+                    <Link href='' color='inherit' onClick={ (e) => {
+                      e.preventDefault()
+                      window.location.href = '/#/organizations/' + task.data.Project.Organization.id
+                    } }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.Project.Organization.name }
+                      </Typography>
+                    </Link>
+                    <Link href={ `/#/organizations/${task.data.Project.OrganizationId}/projects/${task.data.Project.id}` } className={ classes.breadcrumb } color='inherit'>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.Project.name }
+                      </Typography>
+                    </Link>
+                    <Typography variant='subtitle2'>
+                      ...
+                    </Typography>
+                  </Breadcrumbs>
+                ) : (
+                  <Breadcrumbs aria-label='breadcrumb' separator={ <NavigateNextIcon fontSize='small' /> }>
+                    <Link href='/' color='inherit' onClick={ this.handleBackToTaskList }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
+                      </Typography>
+                    </Link>
+                    <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.metadata.company }
+                      </Typography>
+                    </Link>
+                    <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.repoUrl) }>
+                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                        { task.data.metadata.projectName }
+                      </Typography>
+                    </Link>
+                    <Typography variant='subtitle2'>
+                      ...
+                    </Typography>
+                  </Breadcrumbs>
+                ) }
+              </div>
+            </ReactPlaceholder>
+
+            <ReactPlaceholder ready={ task.completed && task.data.status }>
+              <Chip
+                label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                avatar={ <Avatar className={ task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
+                className={ task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
+                onDelete={ this.handleStatusDialog }
+                onClick={ this.handleStatusDialog }
+              />
+            </ReactPlaceholder>
             <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
               ready={ task.completed }>
-              <Typography variant='h4' color='primary' align='left' gutterBottom>
-                <a className={ classes.white } href={ task.data.url }>
-                  { task.data.title }
-                </a>
-                <Tags>
-                  <Button
-                    style={ { marginLeft: 10, marginRight: 10 } }
-                    href={ task.data.url }
-                    variant='outlined'
-                    color='primary'
-                    size='small'
-                  >
-                    <span className={ classes.gutterRight }>See on { task.data.provider } </span>
-                    <img width='16' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } />
-                  </Button>
-                  <Chip
-                    style={ { marginRight: 10 } }
-                    label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                    className={ classes.chipStatus }
-                    onDelete={ this.handleStatusDialog }
-                    onClick={ this.handleStatusDialog }
-                    deleteIcon={ <DoneIcon /> }
-                  />
-
-                  { task.data.paid && (
-                    <FormattedMessage id='task.status.label.paid' defaultMessage='Paid'>
-                      { (msg) => (
-                        <Chip
-                          style={ { marginRight: 10 } }
-                          label={ msg }
-                          className={ classes.chipStatusPaid }
-                          onDelete={ this.handleTaskPaymentDialog }
-                          onClick={ this.handleTaskPaymentDialog }
-                          deleteIcon={ <RedeemIcon /> }
-                        />
-                      ) }
-                    </FormattedMessage>
-                  ) }
-                </Tags>
-
+              <Typography variant='h4' align='left' gutterBottom>
+                { task.data.title }
+                <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
               </Typography>
             </ReactPlaceholder>
-          </Grid>
-          <Grid item xs={ 12 } sm={ 12 } md={ 6 } className={ classes.paymentInfo }>
-            <PaymentHeader user={ this.props.user }>{ task }</PaymentHeader>
+            <Typography variant='caption' style={ { display: 'inline-block', marginBottom: 20 } }>
+              { task.data.provider &&
+                <div>
+                  Created on <a
+                    href={ task.data.url }
+                    style={ { textDecoration: 'underline' } }
+                  >
+                    { task.data.provider } <img width='12' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' } } />
+                  </a>
+                  by { ' ' }
+                  <a
+                    href={ task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : '' }
+                  >
+                    { task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user }
+                    <img
+                      style={ { marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'bottom' } }
+                      width='16'
+                      src={ task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : '' }
+                    />
+                  </a>
+                </div> }
+            </Typography>
+            { task.data.metadata &&
+              <ReactPlaceholder ready={ task.completed }>
+                <TaskLabels labels={ task.data.metadata.labels } />
+              </ReactPlaceholder>
+            }
           </Grid>
         </Grid>
 

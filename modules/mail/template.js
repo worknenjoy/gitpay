@@ -18,7 +18,7 @@ module.exports = (to, subject, data, name = 'onetask') => {
     })
   }
   else {
-    msg = [{ ...baseMsg, to, bcc: constants.notificationEmail, dynamic_template_data: data, subject }]
+    msg = [{ ...baseMsg, to, bcc: constants.copyEmail, dynamic_template_data: data, subject }]
   }
   return sgMail.send(msg).then((response) => {
     // eslint-disable-next-line no-console

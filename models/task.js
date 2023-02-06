@@ -1,6 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define('Task', {
+    private: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     provider: DataTypes.STRING,
+    description: DataTypes.STRING,
     type: DataTypes.STRING,
     level: DataTypes.STRING,
     status: {
@@ -27,10 +32,19 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       allowNull: true,
+    },
+    ProjectId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Projects',
+        key: 'id'
+      },
+      allowNull: true,
     }
   }, {
     classMethods: {
       associate: (models) => {
+        Task.belongsTo(models.Project)
         Task.belongsTo(models.User, { foreignKey: 'userId' })
         Task.hasMany(models.History, { foreignKey: 'TaskId' })
         Task.hasMany(models.Order, { foreignKey: 'TaskId' })
@@ -41,7 +55,9 @@ module.exports = (sequelize, DataTypes) => {
           otherKey: 'labelId',
           through: 'TaskLabels',
           onUpdate: 'CASCADE',
-          onDelete: 'CASCADE' })
+          onDelete: 'CASCADE' }
+        )
+        Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
       }
     },
     instanceMethods: {
@@ -74,15 +90,13 @@ module.exports = (sequelize, DataTypes) => {
           if ((JSON.stringify(previous) !== JSON.stringify(newValues)) &&
                 (JSON.stringify(changed) !== JSON.stringify(['id', 'updatedAt']) &&
                 (JSON.stringify(changed) !== JSON.stringify(['value', 'updatedAt']) && previous[0] !== 'null' && newValues[0] !== '0'))) {
-            const taskHistory = await sequelize.models.History.create({
+            await sequelize.models.History.create({
               TaskId: instance.id,
               type: 'update',
               fields: changed,
               oldValues: previous,
               newValues: newValues
             })
-            // eslint-disable-next-line no-console
-            console.log('Task History update success', taskHistory)
           }
         }
         catch (e) {

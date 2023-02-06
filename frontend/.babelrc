@@ -15,7 +15,10 @@
     "transform-object-rest-spread",
     "transform-class-properties",
     ["react-intl", {
-        "messagesDir": "./build/messages/"
+        "messagesDir": "./build/messages/",
+        "removeDefaultMessage": true,
+        "extractFromFormatMessageCall": true,
+        "workspaceRoot": "src"
     }]
   ]
 }

@@ -24,7 +24,7 @@ services:
     ports:
       - "3000:3000"
   db:
+    env_file:
+      - .env
     image: postgres    
-    environment:
-      POSTGRES_DB: gitpay_dev
     network_mode: host

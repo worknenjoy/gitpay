@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
 import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
+import 'fontsource-roboto'
 
 import {
   MuiThemeProvider,
@@ -24,6 +25,9 @@ import { addLocaleData } from 'react-intl'
 import messagesBr from '../translations/result/br.json'
 import messagesEn from '../translations/result/en.json'
 
+import messagesBrLocal from '../translations/generated/br.json'
+import messagesEnLocal from '../translations/generated/en.json'
+
 import localeEn from 'react-intl/locale-data/en'
 import localeBr from 'react-intl/locale-data/br'
 import Loader from '../components/loader/loader'
@@ -38,8 +42,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const messages = {
-  'br': messagesBr,
-  'en': messagesEn
+  'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
+  'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
 const composeEnhancers =

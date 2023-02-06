@@ -1,5 +1,4 @@
 const AssignMail = require('../mail/assign')
-const PaymentMail = require('../mail/payment')
 const Promise = require('bluebird')
 const models = require('../../models')
 const Stripe = require('stripe')
@@ -10,10 +9,34 @@ const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists
 const memberExists = require('../members').memberExists
 const i18n = require('i18n')
+const validateCoupon = require('../coupon/validateCoupon')
+const processCoupon = require('../coupon/processCouponUsage')
+const orderUpdateAfterStripe = require('../orders/orderUpdateAfterStripe')
 
-const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user) => {
-  return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(card => {
-    const totalPrice = models.Plan.calFinalPrice(orderParameters.amount, orderParameters.plan) * 100
+const createSourceAndCharge = Promise.method((customer, orderParameters, order, task, user, couponValidation) => {
+  return stripe.customers.createSource(customer.id, { source: orderParameters.source_id }).then(async card => {
+    let totalPrice = 0
+
+    if (couponValidation) {
+      const couponProcessResult = await processCoupon(couponValidation)
+
+      if (!couponProcessResult) {
+        return task
+      }
+
+      await order.updateAttributes({ couponId: couponValidation.id })
+
+      // This means that the amount of discount provided by coupon is 100%
+      if (couponValidation.orderPrice <= 0.5) {
+        return orderUpdateAfterStripe(order, null, null, orderParameters, user, task, true)
+      }
+
+      totalPrice = models.Plan.calcFinalPrice(couponValidation.orderPrice, orderParameters.plan) * 100
+    }
+    else {
+      totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan) * 100
+    }
+
     return stripe.charges.create({
       amount: totalPrice,
       currency: orderParameters.currency,
@@ -23,27 +46,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
       metadata: { order_id: order.dataValues.id }
     }).then(charge => {
       if (charge) {
-        return order.updateAttributes({
-          source: charge.id,
-          source_id: card.id,
-          paid: charge.paid,
-          status: charge.status
-        }).then(updatedUser => {
-          if (orderParameters.plan === 'full') {
-            PaymentMail.support(user, task, order)
-          }
-          PaymentMail.success(user, task, order.amount)
-          if (task.dataValues.assigned) {
-            const assignedId = task.dataValues.assigned
-            return models.Assign.findById(assignedId, {
-              include: [models.User]
-            }).then(assign => {
-              PaymentMail.assigned(assign.dataValues.User.dataValues.email, task, order.amount)
-              return task
-            })
-          }
-          return task
-        })
+        return orderUpdateAfterStripe(order, charge, card, orderParameters, user, task, false)
       }
       throw new Error('no charge')
     }).catch(e => {
@@ -54,7 +57,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
   })
 })
 
-const createCustomer = Promise.method((orderParameters, order, task, user) => {
+const createCustomer = Promise.method((orderParameters, order, task, user, couponValidation) => {
   return stripe.customers.create({
     email: orderParameters.email
   }).then(customer => {
@@ -63,10 +66,10 @@ const createCustomer = Promise.method((orderParameters, order, task, user) => {
         if (!update) {
           throw new Error('user not updated')
         }
-        return createSourceAndCharge(customer, orderParameters, order, task, user)
+        return createSourceAndCharge(customer, orderParameters, order, task, user, couponValidation)
       })
     }
-    return createSourceAndCharge(customer, orderParameters, order, task, user)
+    return createSourceAndCharge(customer, orderParameters, order, task, user, couponValidation)
   })
 })
 
@@ -96,7 +99,13 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
   }
 })
 
-module.exports = Promise.method(function taskUpdate (taskParameters) {
+module.exports = Promise.method(async function taskUpdate (taskParameters) {
+  let couponValidation = null
+
+  if (taskParameters.coupon) {
+    couponValidation = await validateCoupon(taskParameters.coupon)
+  }
+
   return models.Task
     .update(taskParameters, {
       where: {
@@ -120,16 +129,16 @@ module.exports = Promise.method(function taskUpdate (taskParameters) {
                 return models.User.findById(order.userId).then((user) => {
                   if (user && user.dataValues.customer_id) {
                     return stripe.customers.retrieve(user.customer_id).then((customer) => {
-                      return createSourceAndCharge(customer, orderParameters, order, task, user.dataValues)
+                      return createSourceAndCharge(customer, orderParameters, order, task, user.dataValues, couponValidation)
                     })
                   }
                   else {
-                    return createCustomer(orderParameters, order, task, user.dataValues)
+                    return createCustomer(orderParameters, order, task, user.dataValues, couponValidation)
                   }
                 })
               }
               else {
-                return createCustomer(orderParameters, order, task, { email: taskParameters.Orders[0].email })
+                return createCustomer(orderParameters, order, task, { email: taskParameters.Orders[0].email }, couponValidation)
               }
             })
           }

@@ -6,6 +6,7 @@ const DeadlineMail = require('./modules/mail/deadline')
 const TaskMail = require('./modules/mail/task')
 const OrderDetails = require('./modules/orders/orderDetails')
 const OrderCancel = require('./modules/orders/orderCancel')
+const bountyClosedNotPaidComment = require('./modules/bot/bountyClosedNotPaidComment')
 
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
@@ -31,8 +32,6 @@ const TaskCron = {
     },
     include: [ models.User ]
     })
-    // eslint-disable-next-line no-console
-    console.log('tasks from cron job weekly bounties', tasks)
     if (tasks[0]) {
       TaskMail.weeklyBounties({ tasks })
     }
@@ -52,8 +51,6 @@ const TaskCron = {
       order: [['id', 'DESC']],
       include: [ models.User ]
     })
-    // eslint-disable-next-line no-console
-    console.log('tasks from cron job latest tasks', tasks)
     if (tasks[0]) {
       TaskMail.weeklyLatest({ tasks })
     }
@@ -69,8 +66,6 @@ const TaskCron = {
     },
     include: [ models.User ]
     })
-    // eslint-disable-next-line no-console
-    console.log('tasks from cron job to remember deadline', tasks)
     if (tasks[0]) {
       tasks.map(async t => {
         if (t.assigned) {
@@ -85,7 +80,38 @@ const TaskCron = {
       })
     }
     return tasks
-  }
+  },
+  weeklyBountiesClosedNotPaid: async () => {
+    const tasks = await models.Task.findAll({
+      where: {
+        value: {
+          $gt: 0
+        },
+        status: {
+          $eq: 'closed'
+        },
+        paid: {
+          $not: true
+        }
+      },
+      include: [models.User]
+    })
+    if (tasks[0]) {
+      tasks.map(async t => {
+        let userInformation = {}
+        if (t.assigned) {
+          if (t.dataValues && t.assigned) {
+            const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
+            if (userAssigned[0].dataValues && userAssigned[0].dataValues.User.provider === 'github') {
+              userInformation = userAssigned[0].dataValues.User
+            }
+          }
+        }
+        bountyClosedNotPaidComment(t, userInformation)
+      })
+    }
+    return tasks
+  },
 }
 
 const OrderCron = {
@@ -103,22 +129,14 @@ const OrderCron = {
     },
     include: [ models.User, models.Task ]
     })
-    // eslint-disable-next-line no-console
-    console.log('orders from cron daily check for paypal payments verification', orders)
     if (orders.length) {
       let invalids = []
       orders.forEach(async order => {
         const orderValues = order.dataValues
-        // eslint-disable-next-line no-console
-        console.log('order values id', orderValues)
         if (orderValues.source_id) {
           const orderWithDetails = await OrderDetails({ id: orderValues.id })
-          // eslint-disable-next-line no-console
-          console.log('orderStatus', orderWithDetails)
           if (!orderWithDetails) {
             const orderCanceled = await OrderCancel({ id: orderValues.id })
-            // eslint-disable-next-line no-console
-            console.log('return from order canceled', orderCanceled)
             if (orderCanceled) {
               invalids.push(order)
             }
@@ -135,9 +153,6 @@ const dailyJob = new CronJob({
   // Seconds: 0-59   Minutes: 0-59   Hours: 0-23   Day of Month: 1-31   Months: 0-11 (Jan-Dec)   Day of Week: 0-6 (Sun-Sat)
   cronTime: '0 0 0 * * *', // everyday at 12:00AM
   onTick: () => {
-    const d = new Date()
-    // eslint-disable-next-line no-console
-    console.log('Log to confirm cron daily job run at', d)
     TaskCron.rememberDeadline()
     OrderCron.verify()
   }
@@ -146,9 +161,6 @@ const dailyJob = new CronJob({
 const weeklyJob = new CronJob({
   cronTime: '5 8 * * 0',
   onTick: () => {
-    const d = new Date()
-    // eslint-disable-next-line no-console
-    console.log('Log to confirm cron weekly job run at', d)
     TaskCron.weeklyBounties()
   }
 })
@@ -156,11 +168,15 @@ const weeklyJob = new CronJob({
 const weeklyJobLatest = new CronJob({
   cronTime: '5 8 * * 4',
   onTick: () => {
-    const d = new Date()
-    // eslint-disable-next-line no-console
-    console.log('Log to confirm cron weekly job run at', d)
     TaskCron.latestTasks()
   }
 })
 
-module.exports = { dailyJob, weeklyJob, weeklyJobLatest, TaskCron, OrderCron }
+const weeklyJobBountiesClosedNotPaid = new CronJob({
+  cronTime: '5 8 * * 0',
+  onTick: () => {
+    TaskCron.weeklyBountiesClosedNotPaid()
+  }
+})
+
+module.exports = { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid, TaskCron, OrderCron }

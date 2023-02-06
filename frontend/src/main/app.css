@@ -3,7 +3,6 @@ body {
 }
 
 a {
-  text-decoration: none !important;
   color: inherit;
 }
 
@@ -11,4 +10,9 @@ a {
   overflow: hidden;
   white-space: normal !important;
   text-overflow: ellipsis;
+}
+
+.MuiTypography-body2 img {
+  width: 100%;
+  height: 100%;
 }

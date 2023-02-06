@@ -59,7 +59,7 @@ class Consulting extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.how.consulting.main.title' defaultMessage='Consultancy'>
+          <FormattedMessage id='welcome.how.consulting.main.title' defaultMessage='Privacy'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -76,14 +76,14 @@ class Consulting extends Component {
               <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='h5' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.consulting.title.company' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.consulting.title.consulting' defaultMessage='Consulting' />
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
+                  <FormattedMessage id='welcome.consulting.title.consulting' defaultMessage='Privacy' />
                 </Typography>
               </MainTitle>
             </div>
@@ -96,8 +96,8 @@ class Consulting extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.workflowItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -107,8 +107,8 @@ class Consulting extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.workflowItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -118,8 +118,8 @@ class Consulting extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.workflowItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemThreeSecondary) }
                   />
                 </ListItem>
               </List>

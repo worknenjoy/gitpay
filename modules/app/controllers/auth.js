@@ -6,7 +6,7 @@ const task = require('../../tasks')
 exports.register = (req, res) => {
   user.userExists({ email: req.body.email }).then(userData => {
     if (userData.dataValues && userData.dataValues.email) {
-      res.status(403).send({ error: 'user.exist' })
+      res.status(403).send({ message: 'user.exist' })
       return
     }
     user.userBuilds(req.body)
@@ -50,7 +50,7 @@ exports.createPrivateTask = (req, res) => {
     if (response.access_token) {
       return task.taskBuilds({
         provider: 'github',
-        // private: true, not yet
+        private: true,
         userId,
         url,
         token: response.access_token
@@ -152,7 +152,7 @@ exports.accountUpdate = (req, res) => {
       res.send(data)
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log(error)
+      console.log('error on account update', error)
       res.status(401).send(error)
     })
 }
@@ -190,4 +190,15 @@ exports.deleteUserById = (req, res) => {
       console.log(error)
       res.status(400).send(error)
     })
+}
+
+exports.getUserTypes = (req, res) => {
+  const userId = req.params.id
+  user.userTypes(userId).then((data) => {
+    res.status(200).send(data)
+  }).catch(error => {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(400).send(error)
+  })
 }

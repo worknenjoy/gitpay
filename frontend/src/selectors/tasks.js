@@ -3,6 +3,8 @@ import { createSelector } from 'reselect'
 const getVisibilityFilter = (state) => state.tasks.filterType
 export const getTasks = (state) => state.tasks
 export const getUser = (state) => state.loggedIn.user
+export const getProject = (state) => state.project
+export const getOrganization = (state) => state.organization.organization
 
 const filterByAdditional = (task, additional, filteredByPrincipal) => {
   const filteringAllOfAdditional = typeof filteredByPrincipal === 'undefined'
@@ -26,9 +28,15 @@ const evaluateTaskWithoutBountyByValue = (value) => {
   return parseFloat(value) === parseFloat('0')
 }
 
+const getTaskWithAnyOrder = (task) => {
+  if (task.Orders.length > 0) {
+    return task
+  }
+}
+
 export const getFilteredTasks = createSelector(
-  [getVisibilityFilter, getTasks, getUser],
-  (visibilityFilter, tasks, user) => {
+  [getVisibilityFilter, getTasks, getUser, getProject, getOrganization],
+  (visibilityFilter, tasks, user, project, organization) => {
     switch (visibilityFilter) {
       case 'all':
         return tasks
@@ -67,6 +75,13 @@ export const getFilteredTasks = createSelector(
             }
           })
         }
+      case 'issuesWithBounties':
+        return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) }
+      case 'contribution':
+        return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) }
+      case 'supported':
+        return { ...tasks,
+          data: tasks.data.filter(item => getTaskWithAnyOrder(item)) }
       default:
         return tasks
     }

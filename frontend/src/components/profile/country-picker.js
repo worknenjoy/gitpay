@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import MuiAlert from '@material-ui/lab/Alert'
+import { FormattedMessage } from 'react-intl'
 
 import {
   withStyles,
@@ -12,7 +14,7 @@ import {
   Typography
 } from '@material-ui/core'
 
-const countryCodes = [
+export const countryCodes = [
   { country: 'Australia', code: 'AU', image: 'australia' },
   { country: 'Austria', code: 'AT', image: 'austria' },
   { country: 'Belgium', code: 'BE', image: 'belgium' },
@@ -82,6 +84,10 @@ class CountryPicker extends Component {
   render () {
     const { classes } = this.props
 
+    const Alert = (props) => {
+      return <MuiAlert elevation={ 2 } variant='outlined' { ...props } />
+    }
+
     return (
       <div>
         <Dialog
@@ -99,7 +105,11 @@ class CountryPicker extends Component {
           <DialogTitle id='alert-dialog-title'>{ 'Choose your country' }</DialogTitle>
           <DialogContent>
             <DialogContentText id='alert-dialog-description'>
-              Please choose the country that you have your bank account to receive your bounties when conclude any task
+              <Alert severity='info'>
+                <Typography variant='body1'>
+                  <FormattedMessage id='countryPicker.info' defaultMessage='If your country is not listed, please contact us at contact@gitpay.me' />
+                </Typography>
+              </Alert>
             </DialogContentText>
             <div className={ classes.countryContainer }>
               { countryCodes.map((item) => {

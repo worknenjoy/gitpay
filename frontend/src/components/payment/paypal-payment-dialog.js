@@ -22,11 +22,23 @@ class PaypalPaymentDialog extends Component {
       this.props.createOrder({
         provider: 'paypal',
         currency: 'USD',
-        amount: this.props.itemPrice,
+        amount: this.props.price,
+        plan: this.props.plan,
         userId: this.props.user.id,
-        TaskId: this.props.task
+        taskId: this.props.taskId
       }).then(order => {
-        this.triggerPayment(this.props.order.data)
+        if (order) {
+          // eslint-disable-next-line no-console
+          console.log('Paypal order order', order)
+          this.triggerPayment(this.props.order.data)
+        }
+        else {
+          // eslint-disable-next-line no-console
+          console.log('no paypal order', order)
+        }
+      }).catch(e => {
+        // eslint-disable-next-line no-console
+        console.log('failed paypal order', e)
       })
     }
   }
@@ -93,13 +105,13 @@ class PaypalPaymentDialog extends Component {
 }
 
 PaypalPaymentDialog.propTypes = {
-  task: PropTypes.string,
+  taskId: PropTypes.number,
   open: PropTypes.bool,
   user: PropTypes.object.isRequired,
   createOrder: PropTypes.func,
   onClose: PropTypes.func,
   order: PropTypes.object.isRequired,
-  itemPrice: PropTypes.any
+  price: PropTypes.any
 }
 
 export default PaypalPaymentDialog

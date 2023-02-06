@@ -2,19 +2,28 @@
 import { connect } from 'react-redux'
 import TaskList from '../components/task/task-list'
 import { listTasks, filterTasks } from '../actions/taskActions'
-import { getFilteredTasks, getUser } from '../selectors/tasks'
+import { fetchProject, listProjects } from '../actions/projectActions'
+import { fetchOrganization } from '../actions/organizationsActions'
+import { getFilteredTasks, getProject, getOrganization } from '../selectors/tasks'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, props) => {
   return {
     user: getUser(state),
-    tasks: getFilteredTasks(state)
+    tasks: getFilteredTasks(state),
+    project: getProject(state),
+    projects: state.projects,
+    organization: getOrganization(state)
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listTasks: () => dispatch(listTasks()),
-    filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional))
+    listTasks: ({ organizationId, projectId, userId, status }) => dispatch(listTasks({ organizationId, projectId, userId, status })),
+    filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
+    fetchProject: (projectId, params) => dispatch(fetchProject(projectId, params)),
+    listProjects: () => dispatch(listProjects()),
+    fetchOrganization: (id) => dispatch(fetchOrganization(id))
   }
 }
 

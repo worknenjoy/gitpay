@@ -30,21 +30,23 @@ exports.info = async (req, res) => {
   try {
     const countTasks = await models.Task.count()
     const tasks = await models.Task.findAll({
-      where: {
-        paid: true
-      },
       attributes: ['value']
     })
     const countUsers = await models.User.count()
-    const bounties = tasks.reduce((accumulator, task) => accumulator + parseInt(task.value), 0)
-    const channelUserCount = await fetchChannelUserCount()
-
-    res.send({
-      tasks: countTasks,
-      bounties: bounties,
-      users: countUsers,
-      channelUserCount
-    })
+    if (tasks) {
+      const bounties = tasks.filter(t => t.value)
+        .reduce((accumulator, task) => accumulator + parseInt(task.value), 0)
+      const channelUserCount = await fetchChannelUserCount()
+      res.send({
+        tasks: countTasks,
+        bounties: bounties,
+        users: countUsers,
+        channelUserCount
+      })
+    }
+    else {
+      res.send(500)
+    }
   }
   catch (e) {
     // eslint-disable-next-line no-console

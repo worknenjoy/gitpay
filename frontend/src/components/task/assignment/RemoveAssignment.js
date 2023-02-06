@@ -13,7 +13,7 @@ import {
   Typography,
   TextField
 } from '@material-ui/core'
-import Icon from '@material-ui/icons/RemoveCircleOutline'
+import Icon from '@material-ui/icons/Delete'
 
 const Container = styled.div`
   display: inline-block;
@@ -65,7 +65,7 @@ class RemoveAssignment extends Component {
             size='small'
             onClick={ this.openModal }>
             <RemoveIcon />
-            <FormattedMessage id='task.assignment.remove.action' defaultMessage='Remove' />
+
           </Button>
         }
 

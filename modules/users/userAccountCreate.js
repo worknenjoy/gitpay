@@ -15,21 +15,19 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
         return { error: 'user already have an account' }
       }
 
-      let requestedCapabilities = [
-        'legacy_payments',
-        'transfers'
-      ]
-
-      if (userParameters.country !== 'US') {
-        requestedCapabilities.push('card_payments')
-      }
-
       return stripe.accounts.create({
         type: 'custom',
         country: userParameters.country || 'US',
         email: user.dataValues.email,
         business_type: 'individual',
-        requested_capabilities: requestedCapabilities
+        capabilities: {
+          transfers: {
+            requested: true
+          }
+        },
+        tos_acceptance: {
+          service_agreement: 'recipient'
+        }
       }).then(account => {
         // eslint-disable-next-line no-console
         console.log('account created', account)

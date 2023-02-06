@@ -13,8 +13,6 @@ module.exports = Promise.method(function userCustomer (userParameters) {
     .then(data => {
       if (data.dataValues.customer_id) {
         return stripe.customers.retrieve(data.dataValues.customer_id).then(customer => {
-          // eslint-disable-next-line no-console
-          console.log('customer', customer)
           return customer
         }).catch(e => {
           // eslint-disable-next-line no-console

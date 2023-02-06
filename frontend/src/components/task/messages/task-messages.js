@@ -59,8 +59,8 @@ export const messages = defineMessages({
     defaultMessage: 'Pending'
   },
   taskLabel: {
-    id: 'task.tab.label',
-    defaultMessage: 'Task'
+    id: 'task.orders.label',
+    defaultMessage: 'Payments'
   },
   orderLabel: {
     id: 'task.tab.order',
@@ -83,8 +83,8 @@ export const messages = defineMessages({
     defaultMessage: 'History'
   },
   cardTitle: {
-    id: 'task.card.title',
-    defaultMessage: 'Payments for this task'
+    id: 'task.card.payments.title',
+    defaultMessage: 'Payments on Gitpay'
   },
   cardSubtitle: {
     id: 'task.card.subtitle',
@@ -98,6 +98,10 @@ export const messages = defineMessages({
     id: 'task.card.table.header.status',
     defaultMessage: 'Status'
   },
+  cardTableHeaderActions: {
+    id: 'task.card.table.header.actions',
+    defaultMessage: 'Actions'
+  },
   cardTableHeaderValue: {
     id: 'task.card.table.header.value',
     defaultMessage: 'Value'
@@ -106,13 +110,13 @@ export const messages = defineMessages({
     id: 'task.card.table.header.created',
     defaultMessage: 'Created at'
   },
-  cardTableHeaderUser: {
-    id: 'task.card.table.header.user',
-    defaultMessage: 'User'
+  cardTableHeaderIssue: {
+    id: 'task.card.table.header.issue',
+    defaultMessage: 'Issue'
   },
   cardTableHeaderPayment: {
     id: 'task.card.table.header.payment',
-    defaultMessage: 'Payment'
+    defaultMessage: 'Payment type'
   },
   interestedCardTitle: {
     id: 'task.card.interested.title',

@@ -23,20 +23,22 @@ module.exports = Promise.method(function userOrganizations (userAttributes) {
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         }
       }).then(async response => {
-        // eslint-disable-next-line no-console
-        console.log('responseFromGithub', response)
-        // eslint-disable-next-line no-console
-        console.log('response from user find', user.dataValues)
         const responseFromGithub = JSON.parse(response)
 
-        const currentOrgs = await models.Organization.findAll()
+        const currentOrgs = user.dataValues.Organizations
+        const allOrgs = await models.Organization.findAll({
+          include: [models.User]
+        })
 
         const formatedResponse = responseFromGithub.map(org => {
-          const imported = !!currentOrgs.filter(o => o.dataValues.name === org.login).length
+          const importedOrgs = currentOrgs.filter(o => o.dataValues.name === org.login)
+          const orgExist = allOrgs.filter(o => o.dataValues.name === org.login)
+          const isImported = !!importedOrgs.length
           return {
             name: org.login,
             image: org.avatar_url,
-            imported
+            organizations: orgExist,
+            imported: isImported
           }
         })
         return formatedResponse

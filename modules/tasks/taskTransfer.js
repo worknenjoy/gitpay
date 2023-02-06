@@ -30,10 +30,6 @@ module.exports = Promise.method(function taskTransfer (taskParameters) {
         }
 
         return stripe.transfers.retrieve(task.transfer_id).then(transfer => {
-          // eslint-disable-next-line no-console
-          console.log('transfer')
-          // eslint-disable-next-line no-console
-          console.log(transfer)
           if (transfer) {
             return models.Task.update({ paid: true, transfer_id: transfer.id }, {
               where: {

@@ -11,9 +11,12 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
-import WorkRoundedIcon from '@material-ui/icons/WorkRounded'
-import DoneIcon from '@material-ui/icons/Done'
-import ImportIcon from '@material-ui/icons/ImportExport'
+import {
+  WorkRounded as WorkRoundedIcon,
+  Done as DoneIcon,
+  Sync as ImportIcon
+} from '@material-ui/icons'
+import { Typography } from '@material-ui/core'
 
 const styles = theme => ({
   root: {
@@ -89,6 +92,19 @@ class Organizations extends Component {
             <FormattedMessage id='organization.dialog.title' defaultMessage='Import organizations' />
           </DialogTitle>
           <DialogContent>
+            { currentOrg && currentOrg.organizations &&
+              <DialogContentText>
+                <FormattedMessage id='organization.dialog.exist' defaultMessage='We have an project imported already' />
+                { currentOrg.organizations.map(o => {
+                  return (
+                    <div style={ { marginTop: 20, marginBottom: 20 } }>
+                      <Typography>Project: { o.name }</Typography>
+                      <Typography>User: { o.User && o.User.name }</Typography>
+                    </div>
+                  )
+                }) }
+              </DialogContentText>
+            }
             <DialogContentText>
               <FormattedMessage id='organization.dialog.desc' defaultMessage='You can import organizations in order to manage on Gitpay' />
             </DialogContentText>
@@ -106,9 +122,16 @@ class Organizations extends Component {
             <Button onClick={ this.handleClose } color='primary'>
               <FormattedMessage id='organization.dialog.cancel' defaultMessage='Cancel' />
             </Button>
-            <Button onClick={ this.handleImport } disabled={ currentOrg.imported } color='primary'>
-              <FormattedMessage id='organization.dialog.action' defaultMessage='Import' />
-            </Button>
+            { currentOrg && currentOrg.organizations && currentOrg.organizations.length ? (
+              <Button onClick={ this.handleImport } disabled color='primary'>
+                <FormattedMessage id='organization.dialog.action.transfer' defaultMessage='Cant transfer now' />
+              </Button>
+            ) : (
+              <Button onClick={ this.handleImport } disabled={ currentOrg.imported } color='primary'>
+                <FormattedMessage id='organization.dialog.action.import' defaultMessage='Import' />
+              </Button>
+            ) }
+
           </DialogActions>
         </Dialog>
       </div>

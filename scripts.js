@@ -15,6 +15,47 @@ i18n.configure({
 
 i18n.init()
 
+const newOrExistingProject = async (userOrCompany, projectName, userId) => {
+  try {
+    const organizationExist = await models.Organization.find(
+      {
+        where: {
+          name: userOrCompany
+        },
+        include: [models.Project]
+      }
+    )
+    if (organizationExist) {
+      const projectFromOrg = await models.Project.find(
+        {
+          where: {
+            name: projectName,
+            OrganizationId: organizationExist.id
+          },
+          include: [models.Organization]
+        }
+      )
+      if (projectFromOrg) {
+        return projectFromOrg
+      }
+      else {
+        const newProject = await organizationExist.createProject({ name: projectName })
+        return newProject
+      }
+    }
+    else {
+      const organization = await models.Organization.create({ name: userOrCompany, UserId: userId })
+      const project = await organization.createProject({ name: projectName })
+      return project
+    }
+  }
+  catch (e) {
+    // eslint-disable-next-line no-console
+    console.log('error', e)
+    throw new Error(e)
+  }
+}
+
 const scripts = {
   accountInfo: () => {
     return models.User
@@ -124,6 +165,90 @@ const scripts = {
         console.log('error when search task: ', error)
         return false
       })
+  },
+  createProjects: () => {
+    return models.Task
+      .findAll(
+        {
+          where: {
+            provider: 'github'
+          },
+          include: [ models.User, models.Project ]
+        }
+      )
+      .then(tasks => {
+        const tasksPromises = tasks.filter(t => {
+          if (t.ProjectId) return false
+          return true
+        })
+        return Promise.all(tasksPromises).then(results => {
+          // eslint-disable-next-line no-console
+          console.log('results from tasksPromises', results)
+          return results.map(task => {
+            const uri = task.url
+            const splitIssueUrl = url.parse(uri).path.split('/')
+            const userOrCompany = splitIssueUrl[1]
+            const projectName = splitIssueUrl[2]
+            const issueId = splitIssueUrl[4]
+            if (!userOrCompany || !projectName || !issueId || isNaN(issueId)) return task
+            return newOrExistingProject(userOrCompany, projectName, task.userId).then((project) => {
+              return task.update({ ProjectId: project.id }).then(u => u)
+            })
+          })
+        })
+      }).catch(error => {
+        // eslint-disable-next-line no-console
+        console.log('error when search task: ', error)
+        return false
+      })
+  },
+  updateAssignsStatus: () => {
+    return models.Assign
+      .findAll({
+        attributes: ['id', 'TaskId'],
+        where: {
+          status: null
+        }
+      }).then(assigns => {
+        return assigns.map(a => {
+          return models.Task
+            .findOne({
+              attributes: ['status'],
+              where: {
+                id: a.dataValues.TaskId
+              }
+            }).then(task => {
+              if (task.dataValues.status === 'closed' || task.dataValues.status === 'in_progress') {
+                return {
+                  id: a.dataValues.id,
+                  status: 'accepted'
+                }
+              }
+              else if (task.dataValues.status === 'open') {
+                return {
+                  id: a.dataValues.id,
+                  status: 'pending'
+                }
+              }
+            })
+            // eslint-disable-next-line no-console
+            .catch(err => console.log(`error occured in assigns.map: ${err}`))
+        })
+      }).all().then(updateFields => {
+        return updateFields.forEach(uf => {
+          return models.Assign
+            .update({
+              status: uf.status
+            }, {
+              where: {
+                id: uf.id
+              }
+            })
+        })
+        // eslint-disable-next-line no-console
+      }).then(console.log('Assigns successfully updated.'))
+      // eslint-disable-next-line no-console
+      .catch(err => console.log(`error while updating assigns status: ${err}`))
   }
 }
 

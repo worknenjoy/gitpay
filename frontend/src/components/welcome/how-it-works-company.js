@@ -76,13 +76,13 @@ class HowItWorksCompany extends Component {
               <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='h5' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.how.title.company' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
                   <FormattedMessage id='welcome.how.title' defaultMessage='How it works' />
                 </Typography>
               </MainTitle>
@@ -96,8 +96,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -107,8 +107,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemTwoSecondary) }
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -118,8 +118,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemThreeSecondary) }
                   />
                 </ListItem>
               </List>

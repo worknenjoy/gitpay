@@ -192,11 +192,10 @@ if (constants.canSendEmail) {
     )
   }
   TaskMail.messageAuthor = (user, task, message) => {
-    const senderName = user.name
+    const senderName = user.name || user.username
     const senderEmail = user.email
     const to = task.User.email
     const language = user.language || 'en'
-    const name = user.name || user.username
     i18n.setLocale(language)
     setMomentLocale(language)
     request(
@@ -206,7 +205,6 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: `
-           <p>${i18n.__('mail.hello', { name: name })}</p>
            <p>${i18n.__('mail.messageAuthor.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
 ${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(language)}</p>`
         }],

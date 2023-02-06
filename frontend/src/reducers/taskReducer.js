@@ -48,6 +48,12 @@ import {
   MESSAGE_TASK_ERROR
 } from '../actions/assignActions'
 
+import {
+  FETCH_PROJECT_REQUESTED,
+  FETCH_PROJECT_SUCCESS,
+  FETCH_PROJECT_ERROR
+} from '../actions/projectActions'
+
 export const task = (state = {
   completed: true,
   filterOrdersBy: {},
@@ -189,8 +195,14 @@ export const tasks = (state = {
     case LIST_TASK_REQUESTED:
       return { ...state, completed: false }
     case LIST_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data, filterType: 'status', filterValue: 'open' }
+      return { ...state, completed: true, data: action.data }
     case LIST_TASK_ERROR:
+      return { ...state, completed: true, error: action.error }
+    case FETCH_PROJECT_REQUESTED:
+      return { ...state, completed: false }
+    case FETCH_PROJECT_SUCCESS:
+      return { ...state, completed: true, data: action.data.Tasks }
+    case FETCH_PROJECT_ERROR:
       return { ...state, completed: true, error: action.error }
     case FILTER_TASK_REQUESTED:
       return { ...state, completed: false }

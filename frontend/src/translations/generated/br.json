@@ -1,932 +1,711 @@
 {
-  "card": {
-    "loading": ""
-  },
-  "account": {
-    "update": "",
-    "status": "",
-    "activate": "",
-    "type": {
-      "card": ""
-    },
-    "steps": {
-      "next": "",
-      "finish": "",
-      "previous": "",
-      "bank": {
-        "previous": ""
-      }
-    },
-    "verify": {
-      "desc": "",
-      "title": "",
-      "lastName": "",
-      "firstName": "",
-      "business_profile_url": ""
-    },
-    "details": {
-      "dob": "",
-      "city": "",
-      "state": "",
-      "month": "",
-      "zipcode": "",
-      "complete": "",
-      "birthYear": "",
-      "terms": {
-        "read": "",
-        "access": ""
-      },
-      "numbersOnly": "",
-      "accountNumber": "",
-      "rountingNumber": "",
-      "activate": {
-        "action": ""
-      }
-    },
-    "bank": {
-      "select": "",
-      "missing": "",
-      "activated": ""
-    },
-    "profile": {
-      "repo": "",
-      "preferences": "",
-      "tasks": {
-        "setup": "",
-        "caption": "",
-        "headline": "",
-        "link": {
-          "tasks": ""
-        },
-        "description": "",
-        "payment": {
-          "desc": "",
-          "setup": "",
-          "caption": "",
-          "headline": ""
-        }
-      },
-      "org": {
-        "headline": "",
-        "description": ""
-      },
-      "payment": {
-        "setup": ""
-      },
-      "welcome": {
-        "headline": "",
-        "description": ""
-      }
-    },
-    "terms": {
-      "accept": "",
-      "accepted": ""
-    },
-    "pending": {
-      "title": ""
-    },
-    "dialog": {
-      "status": ""
-    },
-    "address": {
-      "line1": "",
-      "line2": ""
-    },
-    "actions": {
-      "update": "",
-      "cancel": ""
-    },
-    "id": {
-      "verification": "",
-      "register": {
-        "bank": ""
-      }
-    },
-    "register": {
-      "status": "",
-      "headline": "",
-      "paypal": {
-        "title": "",
-        "status": "",
-        "description": ""
-      },
-      "paypay": {
-        "email": "",
-        "update": "",
-        "activate": ""
-      },
-      "country": {
-        "label": ""
-      },
-      "create": {
-        "action": "",
-        "country": ""
-      },
-      "account": {
-        "status": ""
-      }
-    },
-    "banks": {
-      "list": {
-        "title": ""
-      }
-    },
-    "active": {
-      "statement": ""
-    },
-    "login": {
-      "connect": {
-        "form": "",
-        "provider": ""
-      },
-      "label": {
-        "signup": "",
-        "signin": "",
-        "cancel": ""
-      }
-    },
-    "document": {
-      "cpf": {
-        "provide": "",
-        "provided": ""
-      }
-    }
-  },
-  "task": {
-    "tab": {
-      "label": "",
-      "order": "",
-      "offers": "",
-      "history": "",
-      "members": "",
-      "interested": ""
-    },
-    "bar": {
-      "slack": "",
-      "signin": ""
-    },
-    "level": {
-      "easy": "",
-      "hard": "",
-      "medium": ""
-    },
-    "card": {
-      "title": "",
-      "subtitle": "",
-      "interested": {
-        "title": "",
-        "subtitle": ""
-      },
-      "table": {
-        "header": {
-          "paid": "",
-          "user": "",
-          "value": "",
-          "status": "",
-          "payment": "",
-          "created": ""
-        }
-      }
-    },
-    "status": {
-      "info": "",
-      "value": "",
-      "assigned": "",
-      "label": {
-        "and": "",
-        "open": "",
-        "paid": "",
-        "desc": "",
-        "fail": "",
-        "none": "",
-        "title": "",
-        "paypal": "",
-        "canceled": "",
-        "succeeded": "",
-        "creditcard": ""
-      },
-      "filter": {
-        "all": "",
-        "open": "",
-        "close": "",
-        "progress": "",
-        "payment": {
-          "failed": "",
-          "refunded": "",
-          "canceled": "",
-          "succeeded": ""
-        }
-      },
-      "limit": {
-        "date": ""
-      },
-      "createdByMe": "",
-      "author": {
-        "label": "",
-        "missing": ""
-      },
-      "created": {
-        "name": ""
-      },
-      "deadline": {
-        "headline": "",
-        "day": {
-          "label": "",
-          "insert": {
-            "label": ""
-          }
-        },
-        "subheading": "",
-        "set": {
-          "target": ""
-        }
-      },
-      "status": {
-        "payment": {
-          "open": ""
-        }
-      }
-    },
-    "bounties": {
-      "add": "",
-      "invite": "",
-      "send": {
-        "label": ""
-      },
-      "logged": {
-        "info": ""
-      },
-      "actions": {
-        "work": "",
-        "cancel": "",
-        "sugggestAnotherDate": ""
-      },
-      "status": {
-        "change": ""
-      },
-      "date": {
-        "deadline": ""
-      },
-      "delete": {
-        "caution": "",
-        "confirmation": ""
-      },
-      "details": {
-        "paypal": ""
-      },
-      "order": {
-        "details": {
-          "id": "",
-          "title": "",
-          "intent": "",
-          "status": "",
-          "message": "",
-          "created": "",
-          "provider": "",
-          "action": {
-            "cancel": ""
-          },
-          "authorization_id": ""
-        }
-      },
-      "interested": {
-        "agree": "",
-        "created": "",
-        "disagree": "",
-        "question": "",
-        "deadline": "",
-        "termsOfUse": "",
-        "iWillDoFor": "",
-        "iAmStarter": "",
-        "descritpion": "",
-        "deliveryDate": "",
-        "amount": {
-          "value": ""
-        },
-        "comment": {
-          "value": ""
-        },
-        "warningMessage": "",
-        "termsOfUseText": "",
-        "termsOfUseLabel": "",
-        "canSuggestBounty": "",
-        "deliveryDateTitle": "",
-        "deliveryDateSuggest": ""
-      },
-      "cancel": {
-        "paypal": {
-          "caution": ""
-        }
-      }
-    },
-    "invite": {
-      "title": "",
-      "form": {
-        "send": "",
-        "cancel": ""
-      },
-      "text": {
-        "label": ""
-      }
-    },
-    "actions": {
-      "docs": "",
-      "delete": "",
-      "create": "",
-      "choose": "",
-      "cancel": "",
-      "message": "",
-      "explore": "",
-      "account": "",
-      "insert": {
-        "new": "",
-        "label": "",
-        "novalid": "",
-        "subheading": ""
-      },
-      "slack": {
-        "call": ""
-      },
-      "tooltip": {
-        "git": "",
-        "language": ""
-      },
-      "gitpay": {
-        "call": ""
-      },
-      "cancelPayment": ""
-    },
-    "list": {
-      "headline": "",
-      "description": "",
-      "lable": {
-        "allTasks": ""
-      }
-    },
-    "order": {
-      "paid": {
-        "no": "",
-        "yes": "",
-        "proccess": {
-          "none": ""
-        }
-      },
-      "payment": {
-        "error": "",
-        "success": ""
-      }
-    },
-    "user": {
-      "find": {
-        "none": ""
-      },
-      "check": {
-        "github": ""
-      },
-      "account": {
-        "create": {
-          "headline": "",
-          "description": ""
-        }
-      }
-    },
-    "table": {
-      "page": {
-        "last": "",
-        "next": "",
-        "first": "",
-        "previous": ""
-      },
-      "head": {
-        "task": "",
-        "value": "",
-        "status": "",
-        "author": "",
-        "deadline": ""
-      },
-      "date": {
-        "none": ""
-      },
-      "body": {
-        "author": {
-          "none": ""
-        }
-      }
-    },
-    "payment": {
-      "done": {
-        "to": ""
-      },
-      "filter": {
-        "all": "",
-        "paypal": "",
-        "creditcard": ""
-      },
-      "noAssigned": "",
-      "start": {
-        "payTo": ""
-      },
-      "types": {
-        "notype": ""
-      },
-      "action": {
-        "title": "",
-        "close": "",
-        "chosen": "",
-        "cancel": ""
-      },
-      "input": {
-        "amount": ""
-      },
-      "transfer": {
-        "done": "",
-        "message": ""
-      },
-      "paypal": {
-        "action": ""
-      },
-      "status": {
-        "undefined": ""
-      },
-      "user": {
-        "check": {
-          "github": ""
-        }
-      },
-      "pay": {
-        "button": {
-          "credit": "",
-          "paypal": ""
-        }
-      },
-      "creditcard": {
-        "action": ""
-      },
-      "headline": {
-        "bounty": {
-          "add": "",
-          "create": ""
-        }
-      },
-      "transfers": {
-        "concluded": ""
-      },
-      "form": {
-        "message": {
-          "subheading": ""
-        }
-      }
-    },
-    "deadline": {
-      "level1": "",
-      "level2": "",
-      "level3": "",
-      "level4": "",
-      "button": {
-        "save": ""
-      }
-    },
-    "info": {
-      "description": ""
-    },
-    "interested": {
-      "offer": "",
-      "action": "",
-      "table": {
-        "label": {
-          "when": "",
-          "user": "",
-          "actions": ""
-        }
-      }
-    },
-    "title": {
-      "navigation": ""
-    },
-    "assigned": {
-      "status": {
-        "name": ""
-      }
-    },
-    "assignment": {
-      "remove": {
-        "user": "",
-        "action": "",
-        "reason": ""
-      },
-      "message": {
-        "send": "",
-        "user": "",
-        "reason": ""
-      },
-      "actions": {
-        "apply": "",
-        "cancel": ""
-      }
-    },
-    "offers": {
-      "table": {
-        "label": {
-          "user": "",
-          "value": "",
-          "title": "",
-          "created": "",
-          "deadline": "",
-          "subtitle": ""
-        }
-      }
-    },
-    "members": {
-      "table": {
-        "label": {
-          "user": "",
-          "role": "",
-          "title": "",
-          "actions": "",
-          "subtitle": ""
-        }
-      }
-    },
-    "history": {
-      "table": {
-        "label": {
-          "title": "",
-          "entry": "",
-          "created": "",
-          "subtitle": ""
-        }
-      }
-    }
-  },
-  "preferences": {
-    "os": "",
-    "subtitle": "",
-    "subtitle2": "",
-    "action": {
-      "save": ""
-    },
-    "notifications": {
-      "checkbox": ""
-    },
-    "actions": {
-      "language": {
-        "title": ""
-      },
-      "choose": {
-        "language": ""
-      }
-    }
-  },
-  "welcome": {
-    "tagline": "",
-    "tagline2": "",
-    "tagline1": "",
-    "how": {
-      "title": "",
-      "item": {
-        "primary": "",
-        "secondary": "",
-        "two": {
-          "primary": "",
-          "secondary": ""
-        },
-        "three": {
-          "primary": "",
-          "secondary": ""
-        }
-      },
-      "people": {
-        "title": ""
-      },
-      "workflow": {
-        "main": {
-          "title": ""
-        },
-        "contrib": {
-          "title": ""
-        }
-      },
-      "consulting": {
-        "main": {
-          "title": ""
-        },
-        "who": {
-          "subscribers": ""
-        }
-      }
-    },
-    "bottom": {
-      "call": "",
-      "link": "",
-      "linkAlt": ""
-    },
-    "menu": {
-      "item": {
-        "one": "",
-        "two": "",
-        "six": "",
-        "four": "",
-        "five": "",
-        "eight": "",
-        "three": "",
-        "seven": ""
-      }
-    },
-    "pricing": {
-      "month": "",
-      "title": "",
-      "description": ""
-    },
-    "companies": {
-      "title": "",
-      "item": {
-        "primary": "",
-        "secondary": "",
-        "two": {
-          "primary": "",
-          "secondary": ""
-        },
-        "one": {
-          "primary": "",
-          "secondary": ""
-        },
-        "three": {
-          "primary": "",
-          "secondary": ""
-        }
-      }
-    },
-    "headline": {
-      "collab": "",
-      "forfreelancers": ""
-    },
-    "integration": {
-      "desc": "",
-      "title": "",
-      "button": "",
-      "subtitle": ""
-    },
-    "who": {
-      "title": {
-        "contrib": ""
-      }
-    },
-    "workflow": {
-      "item": {
-        "primary": "",
-        "secondary": "",
-        "two": {
-          "primary": "",
-          "secondary": ""
-        },
-        "three": {
-          "primary": "",
-          "secondary": ""
-        }
-      }
-    },
-    "main": {
-      "item": {
-        "one": {
-          "primary": "",
-          "secondary": ""
-        },
-        "two": {
-          "primary": "",
-          "secondary": ""
-        },
-        "three": {
-          "primary": "",
-          "secondary": ""
-        }
-      }
-    },
-    "howto": {
-      "item": {
-        "one": {
-          "primary": "",
-          "secondary": ""
-        },
-        "two": {
-          "primary": "",
-          "secondary": ""
-        },
-        "four": {
-          "primary": "",
-          "secondary": ""
-        },
-        "three": {
-          "primary": "",
-          "secondary": ""
-        }
-      }
-    },
-    "collab": {
-      "item": {
-        "two": {
-          "primary": "",
-          "secondary": ""
-        },
-        "one": {
-          "primary": "",
-          "secondary": ""
-        },
-        "three": {
-          "primary": "",
-          "secondary": ""
-        }
-      }
-    },
-    "consulting": {
-      "title": {
-        "company": "",
-        "consulting": ""
-      }
-    },
-    "which": {
-      "companies": {
-        "item": {
-          "primary": "",
-          "secondary": "",
-          "two": {
-            "secondary": ""
-          },
-          "three": {
-            "primary": "",
-            "secondary": ""
-          }
-        }
-      }
-    }
-  },
-  "payment": {
-    "new": {
-      "text": "",
-      "title": ""
-    },
-    "headline": "",
-    "creditcard": "",
-    "paypal": {
-      "title": "",
-      "warning": "",
-      "paywith": "",
-      "confirm": "",
-      "logo": {
-        "title": ""
-      },
-      "description": ""
-    },
-    "options": {
-      "description": "",
-      "warning": {
-        "message": ""
-      }
-    }
-  },
-  "prefences": {
-    "skills": "",
-    "my": {
-      "skills": "",
-      "notifications": ""
-    }
-  },
-  "checkout": {
-    "loggedas": "",
-    "payment": {
-      "action": ""
-    }
-  },
-  "bottom": {
-    "company": {
-      "org": ""
-    },
-    "subheading3": "",
-    "header": {
-      "subheading1": "",
-      "subheading2": ""
-    },
-    "subheading": {
-      "newsletter": ""
-    }
-  },
-  "user": {
-    "data": {
-      "fullname": "",
-      "email": {
-        "error": ""
-      }
-    }
-  },
-  "consts": {
-    "address": {
-      "city": "",
-      "line1": "",
-      "state": "",
-      "zipcode": "",
-      "birth": {
-        "day": "",
-        "year": "",
-        "month": ""
-      }
-    },
-    "account": {
-      "id": {
-        "doc": "",
-        "type": "",
-        "number": ""
-      },
-      "lastname": "",
-      "firstname": "",
-      "terms": {
-        "date": "",
-        "accept": ""
-      },
-      "statuses": {
-        "open": "",
-        "finish": "",
-        "progress": "",
-        "undefined": "",
-        "business_type": "",
-        "business_profile_url": ""
-      },
-      "reasons": {
-        "fields": {
-          "needed": "",
-          "pending": "",
-          "external": ""
-        }
-      }
-    },
-    "external": {
-      "account": ""
-    }
-  },
-  "form": {
-    "slack": {
-      "join": {
-        "label": ""
-      }
-    },
-    "email": {
-      "leave": {
-        "label": ""
-      },
-      "submit": {
-        "error": "",
-        "success": ""
-      },
-      "signup": {
-        "label": ""
-      },
-      "subscribing": {
-        "label": ""
-      }
-    }
-  },
-  "general": {
-    "buttons": {
-      "close": "",
-      "retry": "",
-      "cancel": "",
-      "details": ""
-    },
-    "singup": {
-      "access": "",
-      "action": ""
-    },
-    "actions": {
-      "cancel": ""
-    },
-    "messages": {
-      "missing": ""
-    }
-  },
-  "info": {
-    "stack": {
-      "subheading": ""
-    },
-    "status": {
-      "subheading": ""
-    },
-    "stats": {
-      "number": {
-        "users": "",
-        "tasks": "",
-        "bounty": ""
-      }
-    }
-  },
-  "tasks": {
-    "status": {
-      "interested": ""
-    }
-  },
-  "organization": {
-    "dialog": {
-      "desc": "",
-      "title": "",
-      "action": "",
-      "cancel": ""
-    }
-  }
+  "account.actions.cancel": "",
+  "account.actions.update": "",
+  "account.activate": "",
+  "account.active.statement": "",
+  "account.address.line1": "",
+  "account.address.line2": "",
+  "account.bank.activated": "",
+  "account.bank.missing": "",
+  "account.bank.select": "",
+  "account.banks.list.title": "",
+  "account.details.accountNumber": "",
+  "account.details.activate.action": "",
+  "account.details.birthYear": "",
+  "account.details.city": "",
+  "account.details.complete": "",
+  "account.details.dob": "",
+  "account.details.month": "",
+  "account.details.numbersOnly": "",
+  "account.details.rountingNumber": "",
+  "account.details.state": "",
+  "account.details.terms.access": "",
+  "account.details.terms.read": "",
+  "account.details.zipcode": "",
+  "account.dialog.status": "",
+  "account.document.cpf.provide": "",
+  "account.document.cpf.provided": "",
+  "account.id.register.bank": "",
+  "account.id.verification": "",
+  "account.login.connect.form": "",
+  "account.login.connect.provider": "",
+  "account.login.label.cancel": "",
+  "account.login.label.signin": "",
+  "account.login.label.signup": "",
+  "account.pending.title": "",
+  "account.profile.bank.setup": "",
+  "account.profile.home.link.label": "",
+  "account.profile.issues.caption": "",
+  "account.profile.issues.description": "",
+  "account.profile.issues.headline": "",
+  "account.profile.issues.link.tasks": "",
+  "account.profile.issues.setup": "",
+  "account.profile.org.description": "",
+  "account.profile.org.headline": "",
+  "account.profile.organization.maintainer": "",
+  "account.profile.payment.setup": "",
+  "account.profile.payments.list": "",
+  "account.profile.payments.setup": "",
+  "account.profile.preferences": "",
+  "account.profile.public.link.label": "",
+  "account.profile.roles": "",
+  "account.profile.roles.description": "",
+  "account.profile.roles.headline": "",
+  "account.profile.roles.link": "",
+  "account.profile.settings": "",
+  "account.profile.settings.delete.user.alert": "",
+  "account.profile.settings.delete.user.button": "",
+  "account.profile.settings.delete.user.form.cancel": "",
+  "account.profile.settings.delete.user.form.confirm": "",
+  "account.profile.settings.delete.user.notification": "",
+  "account.profile.settings.delete.user.notification.error": "",
+  "account.profile.settings.delete.user.title": "",
+  "account.profile.settings.description": "",
+  "account.profile.settings.headline": "",
+  "account.profile.settings.link": "",
+  "account.profile.skill.preferences.description": "",
+  "account.profile.skills": "",
+  "account.profile.skills.headline": "",
+  "account.profile.skills.link": "",
+  "account.profile.tasks.account.setup": "",
+  "account.profile.tasks.bank.desc": "",
+  "account.profile.tasks.mine.caption": "",
+  "account.profile.tasks.mine.description": "",
+  "account.profile.tasks.mine.headline": "",
+  "account.profile.tasks.mine.link": "",
+  "account.profile.tasks.paid.headline": "",
+  "account.profile.tasks.payment.caption": "",
+  "account.profile.tasks.payment.paid.headline": "",
+  "account.profile.tasks.payments.caption": "",
+  "account.profile.tasks.payments.desc": "",
+  "account.profile.welcome.description": "",
+  "account.profile.welcome.headline": "",
+  "account.register.account.status": "",
+  "account.register.country.label": "",
+  "account.register.create.action": "",
+  "account.register.create.country": "",
+  "account.register.headline": "",
+  "account.register.paypal.description": "",
+  "account.register.paypal.status": "",
+  "account.register.paypal.title": "",
+  "account.register.paypay.activate": "",
+  "account.register.paypay.email": "",
+  "account.register.paypay.update": "",
+  "account.register.status": "",
+  "account.status": "",
+  "account.status.paypal": "",
+  "account.status.pending": "",
+  "account.steps.bank.previous": "",
+  "account.steps.finish": "",
+  "account.steps.next": "",
+  "account.steps.previous": "",
+  "account.terms.accept": "",
+  "account.terms.accept.step": "",
+  "account.terms.accepted": "",
+  "account.type.card": "",
+  "account.update": "",
+  "account.user.role.dialog.title": "",
+  "account.verify.business_profile_url": "",
+  "account.verify.desc": "",
+  "account.verify.firstName": "",
+  "account.verify.lastName": "",
+  "account.verify.title": "",
+  "action.task.remove.assign.error": "",
+  "action.task.remove.assign.success": "",
+  "actions.assign.task.error": "",
+  "actions.assign.task.sucess": "",
+  "actions.message.recruiters.error": "",
+  "actions.message.recruiters.success": "",
+  "actions.message.task.error": "",
+  "actions.message.task.sucess": "",
+  "actions.order.cancel.error": "",
+  "actions.order.cancel.success": "",
+  "actions.order.create.error": "",
+  "actions.order.create.payment.error": "",
+  "actions.order.create.payment.send.error": "",
+  "actions.order.create.payment.send.success": "",
+  "actions.order.refund.error": "",
+  "actions.order.refund.success": "",
+  "actions.order.transfer.error": "",
+  "actions.order.transfer.success": "",
+  "actions.task.claim.error": "",
+  "actions.task.claim.error.invalid_provider": "",
+  "actions.task.claim.error.user_is_not_the_owner": "",
+  "actions.task.claim.success": "",
+  "actions.task.create.auth.error": "",
+  "actions.task.create.notification.error": "",
+  "actions.task.create.notification.success": "",
+  "actions.task.delete.auth.error": "",
+  "actions.task.delete.notification.error": "",
+  "actions.task.delete.notification.success": "",
+  "actions.task.fetch.error": "",
+  "actions.task.fetch.other.error": "",
+  "actions.task.fetch.unavailable": "",
+  "actions.task.interested.notification.success": "",
+  "actions.task.invite.error": "",
+  "actions.task.invite.success": "",
+  "actions.task.message.author.error": "",
+  "actions.task.message.author.success": "",
+  "actions.task.payment.balance.error": "",
+  "actions.task.payment.balance.other.error": "",
+  "actions.task.payment.error.send": "",
+  "actions.task.payment.notification.error": "",
+  "actions.task.payment.notification.success": "",
+  "actions.task.payment.plan.bullet.basic": "",
+  "actions.task.payment.plan.bullet.private": "",
+  "actions.task.payment.plan.bullet.public": "",
+  "actions.task.payment.plan.opensource": "",
+  "actions.task.payment.plan.opensource.info": "",
+  "actions.task.payment.plan.percentagefee": "",
+  "actions.task.payment.plan.private": "",
+  "actions.task.payment.plan.private.info": "",
+  "actions.task.payment.transfer.sucess": "",
+  "actions.task.report.error": "",
+  "actions.task.report.success": "",
+  "actions.task.status.forbidden": "",
+  "actions.task.update.notification.error": "",
+  "actions.task.update.notification.success": "",
+  "actions.user.account.create.error": "",
+  "actions.user.account.create.success": "",
+  "actions.user.account.exist": "",
+  "actions.user.account.update.error.missing": "",
+  "actions.user.account.update.success": "",
+  "bottom.company.org": "",
+  "bottom.header.subheading1": "",
+  "bottom.header.subheading2": "",
+  "bottom.subheading.newsletter": "",
+  "bottom.subheading3": "",
+  "card.loading": "",
+  "checkout.coupon.orderPrice": "",
+  "checkout.loggedas": "",
+  "checkout.payment.action": "",
+  "consts.account.email": "",
+  "consts.account.firstname": "",
+  "consts.account.id.doc": "",
+  "consts.account.id.number": "",
+  "consts.account.id.type": "",
+  "consts.account.lastname": "",
+  "consts.account.phone": "",
+  "consts.account.reasons.fields.external": "",
+  "consts.account.reasons.fields.needed": "",
+  "consts.account.reasons.fields.pending": "",
+  "consts.account.reasons.fields.pending.other": "",
+  "consts.account.statuses.business_profile_url": "",
+  "consts.account.statuses.business_type": "",
+  "consts.account.statuses.business_type.mcc": "",
+  "consts.account.statuses.finish": "",
+  "consts.account.statuses.open": "",
+  "consts.account.statuses.open.two": "",
+  "consts.account.statuses.progress": "",
+  "consts.account.statuses.undefined": "",
+  "consts.account.statuses.undefined.three": "",
+  "consts.account.statuses.undefined.two": "",
+  "consts.account.terms.accept": "",
+  "consts.account.terms.date": "",
+  "consts.address.birth.day": "",
+  "consts.address.birth.month": "",
+  "consts.address.birth.year": "",
+  "consts.address.city": "",
+  "consts.address.line1": "",
+  "consts.address.state": "",
+  "consts.address.zipcode": "",
+  "consts.external.account": "",
+  "first.task.Finish": "",
+  "first.task.back": "",
+  "first.task.bounties.action": "",
+  "first.task.bounties.description": "",
+  "first.task.bounties.title": "",
+  "first.task.community.description": "",
+  "first.task.community.title": "",
+  "first.task.deadline.action": "",
+  "first.task.deadline.description": "",
+  "first.task.deadline.title": "",
+  "first.task.next": "",
+  "form.email.leave.label": "",
+  "form.email.signup.label": "",
+  "form.email.submit.error": "",
+  "form.email.submit.success": "",
+  "form.email.subscribing.label": "",
+  "form.slack.join.label": "",
+  "general.actions.cancel": "",
+  "general.buttons.cancel": "",
+  "general.buttons.close": "",
+  "general.buttons.details": "",
+  "general.buttons.refund": "",
+  "general.buttons.retry": "",
+  "general.buttons.transfer": "",
+  "general.messages.missing": "",
+  "general.singup.access": "",
+  "general.singup.action": "",
+  "info.stack.subheading": "",
+  "info.status.message": "",
+  "info.status.tasks": "",
+  "info.status.users": "",
+  "notifications.account.update": "",
+  "notifications.account.update.error": "",
+  "notifications.bank.create.error": "",
+  "notifications.bank.create.other.error": "",
+  "notifications.bank.create.success": "",
+  "notifications.bank.get.error": "",
+  "notifications.bank.get.success": "",
+  "organization.dialog.action.import": "",
+  "organization.dialog.action.transfer": "",
+  "organization.dialog.action.update": "",
+  "organization.dialog.cancel": "",
+  "organization.dialog.desc": "",
+  "organization.dialog.exist": "",
+  "organization.dialog.title": "",
+  "organization.update.dialog.desc": "",
+  "organization.update.dialog.title": "",
+  "page.404.goto": "",
+  "page.404.link.home": "",
+  "page.404.message": "",
+  "payment.creditcard": "",
+  "payment.headline": "",
+  "payment.message.error": "",
+  "payment.new.text": "",
+  "payment.new.title": "",
+  "payment.options.description": "",
+  "payment.paypal.confirm": "",
+  "payment.paypal.description": "",
+  "payment.paypal.logo.title": "",
+  "payment.paypal.paywith": "",
+  "payment.paypal.title": "",
+  "payment.paypal.warning": "",
+  "prefences.my.notifications": "",
+  "prefences.my.openforjobs": "",
+  "prefences.my.skills": "",
+  "prefences.my.skills.zero": "",
+  "prefences.skills": "",
+  "preferences.actions.choose.language": "",
+  "preferences.actions.language.title": "",
+  "preferences.jobs.checkbox": "",
+  "preferences.notifications.checkbox": "",
+  "preferences.os": "",
+  "preferences.subtitle": "",
+  "preferences.subtitle2": "",
+  "skip": "",
+  "task.actions.account.logout": "",
+  "task.actions.account.payments.topmenu": "",
+  "task.actions.account.profile.bank": "",
+  "task.actions.account.profile.dashboard": "",
+  "task.actions.account.profile.issues": "",
+  "task.actions.account.profile.orgs": "",
+  "task.actions.account.profile.page": "",
+  "task.actions.account.profile.skills": "",
+  "task.actions.account.roles": "",
+  "task.actions.account.settings": "",
+  "task.actions.cancel": "",
+  "task.actions.cancelPayment": "",
+  "task.actions.choose": "",
+  "task.actions.choose.rejected": "",
+  "task.actions.create": "",
+  "task.actions.delete": "",
+  "task.actions.docs": "",
+  "task.actions.explore": "",
+  "task.actions.gitpay.call": "",
+  "task.actions.insert.label": "",
+  "task.actions.insert.new": "",
+  "task.actions.insert.novalid": "",
+  "task.actions.insert.subheading": "",
+  "task.actions.issue.delete": "",
+  "task.actions.message": "",
+  "task.actions.slack.call": "",
+  "task.actions.team": "",
+  "task.actions.tooltip.git": "",
+  "task.actions.tooltip.language": "",
+  "task.assgin.action.close": "",
+  "task.assign.action.review": "",
+  "task.assigned.status.name": "",
+  "task.assigned.status.name.create": "",
+  "task.assignment.action.assign": "",
+  "task.assignment.actions.apply": "",
+  "task.assignment.actions.cancel": "",
+  "task.assignment.actions.reject": "",
+  "task.assignment.assign.reject": "",
+  "task.assignment.message.reason": "",
+  "task.assignment.message.send": "",
+  "task.assignment.message.user": "",
+  "task.assignment.reject.reason": "",
+  "task.assignment.remove.reason": "",
+  "task.assignment.remove.user": "",
+  "task.bar.signin": "",
+  "task.bar.slack.count": "",
+  "task.bounties.actions.cancel": "",
+  "task.bounties.actions.sugggestAnotherDate": "",
+  "task.bounties.actions.work": "",
+  "task.bounties.cancel.paypal.caution": "",
+  "task.bounties.delete.caution": "",
+  "task.bounties.delete.confirmation": "",
+  "task.bounties.details.paypal": "",
+  "task.bounties.interested.agree": "",
+  "task.bounties.interested.amount.value": "",
+  "task.bounties.interested.canSuggestBounty": "",
+  "task.bounties.interested.comment.value": "",
+  "task.bounties.interested.created": "",
+  "task.bounties.interested.deadline": "",
+  "task.bounties.interested.deliveryDate": "",
+  "task.bounties.interested.deliveryDateSuggest": "",
+  "task.bounties.interested.deliveryDateTitle": "",
+  "task.bounties.interested.descritpion": "",
+  "task.bounties.interested.disagree": "",
+  "task.bounties.interested.iAmStarter": "",
+  "task.bounties.interested.iWillDoFor": "",
+  "task.bounties.interested.question": "",
+  "task.bounties.interested.termsOfUse": "",
+  "task.bounties.interested.termsOfUseLabel": "",
+  "task.bounties.interested.termsOfUseText": "",
+  "task.bounties.interested.warningMessage": "",
+  "task.bounties.logged.info": "",
+  "task.bounties.order.details.action.cancel": "",
+  "task.bounties.order.details.authorization_id": "",
+  "task.bounties.order.details.created": "",
+  "task.bounties.order.details.id": "",
+  "task.bounties.order.details.intent": "",
+  "task.bounties.order.details.message": "",
+  "task.bounties.order.details.provider": "",
+  "task.bounties.order.details.status": "",
+  "task.bounties.order.details.title": "",
+  "task.bounties.order.transfer.action": "",
+  "task.bounties.order.transfer.message": "",
+  "task.bounties.order.transfer.title": "",
+  "task.bounties.payment.add": "",
+  "task.bounties.payment.label": "",
+  "task.card.interested.subtitle": "",
+  "task.card.interested.title": "",
+  "task.card.payments.title": "",
+  "task.card.subtitle": "",
+  "task.card.table.header.actions": "",
+  "task.card.table.header.created": "",
+  "task.card.table.header.issue": "",
+  "task.card.table.header.paid": "",
+  "task.card.table.header.payment": "",
+  "task.card.table.header.status": "",
+  "task.card.table.header.value": "",
+  "task.claim.comments.label": "",
+  "task.claim.form.cancel": "",
+  "task.claim.form.send": "",
+  "task.claim.subtitle": "",
+  "task.claim.title": "",
+  "task.deadline.button.save": "",
+  "task.deadline.call": "",
+  "task.deadline.label": "",
+  "task.deadline.level1": "",
+  "task.deadline.level2": "",
+  "task.deadline.level3": "",
+  "task.deadline.level4": "",
+  "task.dealine.past": "",
+  "task.description.less": "",
+  "task.description.more": "",
+  "task.funding.description": "",
+  "task.funding.email": "",
+  "task.funding.form.send": "",
+  "task.funding.logged.info": "",
+  "task.funding.title": "",
+  "task.history.table.label.created": "",
+  "task.history.table.label.entry": "",
+  "task.history.table.label.subtitle": "",
+  "task.history.table.label.title": "",
+  "task.info.assigns": "",
+  "task.info.authors": "",
+  "task.info.description": "",
+  "task.info.interested": "",
+  "task.interested.action": "",
+  "task.interested.dialog.title": "",
+  "task.interested.table.label.actions": "",
+  "task.interested.table.label.user": "",
+  "task.interested.table.label.when": "",
+  "task.invite.card.button.contributor": "",
+  "task.invite.card.button.sponsor": "",
+  "task.invite.card.content": "",
+  "task.invite.card.title": "",
+  "task.invite.form.cancel": "",
+  "task.invite.form.send": "",
+  "task.invite.text.label": "",
+  "task.invite.title": "",
+  "task.level.easy": "",
+  "task.level.easy.description": "",
+  "task.level.hard": "",
+  "task.level.hard.description": "",
+  "task.level.label": "",
+  "task.level.medium": "",
+  "task.level.medium.description": "",
+  "task.list.description": "",
+  "task.list.headline": "",
+  "task.list.issue.label": "",
+  "task.list.issue.organizations": "",
+  "task.list.issue.projects": "",
+  "task.list.lable.allPublicTasks": "",
+  "task.list.lable.allPublicTasksNoBounties": "",
+  "task.list.lable.allPublicTasksWithBounties": "",
+  "task.list.lable.allTasks": "",
+  "task.list.lable.issuesCreated": "",
+  "task.list.lable.issuesList": "",
+  "task.list.lable.issuesSupported": "",
+  "task.list.org.headline": "",
+  "task.list.org.projects.headline": "",
+  "task.members.table.label.actions": "",
+  "task.members.table.label.role": "",
+  "task.members.table.label.subtitle": "",
+  "task.members.table.label.title": "",
+  "task.members.table.label.user": "",
+  "task.message.author.label": "",
+  "task.message.form.cancel": "",
+  "task.message.form.send": "",
+  "task.message.title": "",
+  "task.offer.invoice.create": "",
+  "task.offers.table.label.created": "",
+  "task.offers.table.label.deadline": "",
+  "task.offers.table.label.subtitle": "",
+  "task.offers.table.label.title": "",
+  "task.offers.table.label.user": "",
+  "task.offers.table.label.value": "",
+  "task.order.paid.no": "",
+  "task.order.paid.proccess.none": "",
+  "task.order.paid.yes": "",
+  "task.order.payment.error": "",
+  "task.order.payment.success": "",
+  "task.orders.label": "",
+  "task.payment.action.cancel": "",
+  "task.payment.action.chosen": "",
+  "task.payment.action.close": "",
+  "task.payment.action.pendingConfirmation": "",
+  "task.payment.action.rejected": "",
+  "task.payment.action.title": "",
+  "task.payment.creditcard.action": "",
+  "task.payment.done.to": "",
+  "task.payment.filter.all": "",
+  "task.payment.filter.creditcard": "",
+  "task.payment.filter.paypal": "",
+  "task.payment.form.message.subheading": "",
+  "task.payment.headline.bounty.add": "",
+  "task.payment.headline.bounty.create": "",
+  "task.payment.input.amount": "",
+  "task.payment.input.amount.value": "",
+  "task.payment.noAssigned": "",
+  "task.payment.order.nouser": "",
+  "task.payment.pay.button.credit": "",
+  "task.payment.pay.button.paypal": "",
+  "task.payment.paypal.action": "",
+  "task.payment.start.payTo": "",
+  "task.payment.status.undefined": "",
+  "task.payment.transfer.done": "",
+  "task.payment.transfer.message": "",
+  "task.payment.transfers.concluded": "",
+  "task.payment.types.notype": "",
+  "task.payment.user.check.github": "",
+  "task.report.action": "",
+  "task.report.form.cancel": "",
+  "task.report.form.report": "",
+  "task.report.reason.another": "",
+  "task.report.reason.fourOFour": "",
+  "task.report.reason.invalid": "",
+  "task.report.reason.testOrAccident": "",
+  "task.report.subtitle": "",
+  "task.report.title": "",
+  "task.solution.dialog.description": "",
+  "task.solution.dialog.message": "",
+  "task.solution.form.edit": "",
+  "task.solution.form.send": "",
+  "task.solution.form.solutionURL": "",
+  "task.status.assigned": "",
+  "task.status.created.name": "",
+  "task.status.created.name.short": "",
+  "task.status.createdByMe": "",
+  "task.status.deadline.day.insert.label": "",
+  "task.status.deadline.day.label": "",
+  "task.status.deadline.headline": "",
+  "task.status.deadline.set.target": "",
+  "task.status.deadline.subheading": "",
+  "task.status.deadline.subheading.main": "",
+  "task.status.filter.all": "",
+  "task.status.filter.close": "",
+  "task.status.filter.contribution": "",
+  "task.status.filter.issuesWithBounties": "",
+  "task.status.filter.open": "",
+  "task.status.filter.payment.canceled": "",
+  "task.status.filter.payment.failed": "",
+  "task.status.filter.payment.refunded": "",
+  "task.status.filter.payment.succeeded": "",
+  "task.status.filter.progress": "",
+  "task.status.info": "",
+  "task.status.label.and": "",
+  "task.status.label.canceled": "",
+  "task.status.label.creditcard": "",
+  "task.status.label.fail": "",
+  "task.status.label.none": "",
+  "task.status.label.open": "",
+  "task.status.label.paypal": "",
+  "task.status.label.succeeded": "",
+  "task.status.limit.date": "",
+  "task.status.limit.date.not.informed": "",
+  "task.status.status.payment.open": "",
+  "task.status.value": "",
+  "task.status.value.none": "",
+  "task.tab.history": "",
+  "task.tab.interested": "",
+  "task.tab.members": "",
+  "task.tab.offers": "",
+  "task.tab.order": "",
+  "task.table.body.author.none": "",
+  "task.table.date.none": "",
+  "task.table.head.author": "",
+  "task.table.head.deadline": "",
+  "task.table.head.project": "",
+  "task.table.head.status": "",
+  "task.table.head.task": "",
+  "task.table.head.value": "",
+  "task.table.onHover": "",
+  "task.table.page.first": "",
+  "task.table.page.last": "",
+  "task.table.page.next": "",
+  "task.table.page.previous": "",
+  "task.table.value.none": "",
+  "task.title.navigation": "",
+  "task.title.navigation.user": "",
+  "task.user.account.create.description": "",
+  "task.user.account.create.headline": "",
+  "task.user.check.github": "",
+  "task.user.find.none": "",
+  "task.value.label": "",
+  "tasks.status.interested": "",
+  "team.title": "",
+  "this.props.ask.interested.offer": "",
+  "user.confirm.password.error": "",
+  "user.data.email.error": "",
+  "user.data.fullname": "",
+  "user.data.fullname.error": "",
+  "user.exist": "",
+  "user.invalid": "",
+  "user.login.error": "",
+  "user.login.successfull": "",
+  "user.logout": "",
+  "user.profile.payments.refund.confirm": "",
+  "user.profile.payments.refund.message": "",
+  "user.register.error": "",
+  "user.register.successfull": "",
+  "user.role.update.error": "",
+  "user.role.update.success": "",
+  "user.type.description": "",
+  "user.type.title": "",
+  "welcome.bottom.call": "",
+  "welcome.bottom.companies.title": "",
+  "welcome.bottom.link": "",
+  "welcome.bottom.linkAlt": "",
+  "welcome.clientlist.main.title": "",
+  "welcome.collab.item.one.primary": "",
+  "welcome.collab.item.one.secondary": "",
+  "welcome.collab.item.three.primary": "",
+  "welcome.collab.item.three.secondary": "",
+  "welcome.collab.item.two.primary": "",
+  "welcome.collab.item.two.secondary": "",
+  "welcome.community.item.primary": "",
+  "welcome.community.item.secondary": "",
+  "welcome.community.item.three.primary": "",
+  "welcome.community.item.three.secondary": "",
+  "welcome.community.item.two.primary": "",
+  "welcome.community.item.two.secondary": "",
+  "welcome.companies.bottom.title.which": "",
+  "welcome.companies.item.one.primary": "",
+  "welcome.companies.item.one.secondary": "",
+  "welcome.companies.item.primary": "",
+  "welcome.companies.item.secondary": "",
+  "welcome.companies.item.three.primary": "",
+  "welcome.companies.item.three.primary.alt": "",
+  "welcome.companies.item.three.secondary": "",
+  "welcome.companies.item.three.secondary.alt": "",
+  "welcome.companies.item.two.primary": "",
+  "welcome.companies.item.two.primary.alt": "",
+  "welcome.companies.item.two.secondary": "",
+  "welcome.companies.item.two.secondary.alt": "",
+  "welcome.companies.title": "",
+  "welcome.consulting.title.company": "",
+  "welcome.consulting.title.consulting": "",
+  "welcome.footer.contributor.fee.title.menu": "",
+  "welcome.footer.item1.header": "",
+  "welcome.headline.collab": "",
+  "welcome.headline.forfreelancers": "",
+  "welcome.how.consulting.main.title": "",
+  "welcome.how.item.primary": "",
+  "welcome.how.item.secondary": "",
+  "welcome.how.item.three.primary": "",
+  "welcome.how.item.three.secondary": "",
+  "welcome.how.item.two.primary": "",
+  "welcome.how.item.two.secondary": "",
+  "welcome.how.people.title": "",
+  "welcome.how.people.title.freelancer": "",
+  "welcome.how.title": "",
+  "welcome.how.title.company": "",
+  "welcome.how.workflow.contrib.title": "",
+  "welcome.how.workflow.main.title": "",
+  "welcome.howitworks.companies.item.primary": "",
+  "welcome.howitworks.companies.item.secondary": "",
+  "welcome.howitworks.companies.item.three.primary": "",
+  "welcome.howitworks.companies.item.three.secondary": "",
+  "welcome.howitworks.companies.item.two.primary": "",
+  "welcome.howitworks.companies.item.two.secondary": "",
+  "welcome.howto.item.four.primary": "",
+  "welcome.howto.item.four.secondary": "",
+  "welcome.howto.item.one.primary": "",
+  "welcome.howto.item.one.secondary": "",
+  "welcome.howto.item.three.primary": "",
+  "welcome.howto.item.three.secondary": "",
+  "welcome.howto.item.two.primary": "",
+  "welcome.howto.item.two.secondary": "",
+  "welcome.integration.button": "",
+  "welcome.integration.desc": "",
+  "welcome.integration.subtitle": "",
+  "welcome.integration.title": "",
+  "welcome.landing.about.button": "",
+  "welcome.landing.about.description": "",
+  "welcome.landing.about.title": "",
+  "welcome.landing.description": "",
+  "welcome.landing.hire": "",
+  "welcome.landing.issues.description": "",
+  "welcome.landing.issues.title": "",
+  "welcome.landing.recruitment.description": "",
+  "welcome.landing.recruitment.title": "",
+  "welcome.landing.services": "",
+  "welcome.landing.signin": "",
+  "welcome.landing.signup": "",
+  "welcome.landing.title": "",
+  "welcome.landing.work": "",
+  "welcome.main.item.one.primary": "",
+  "welcome.main.item.one.secondary": "",
+  "welcome.main.item.three.primary": "",
+  "welcome.main.item.three.secondary": "",
+  "welcome.main.item.two.primary": "",
+  "welcome.main.item.two.secondary": "",
+  "welcome.menu.item.eight": "",
+  "welcome.menu.item.five": "",
+  "welcome.menu.item.four": "",
+  "welcome.menu.item.nine": "",
+  "welcome.menu.item.one": "",
+  "welcome.menu.item.seven": "",
+  "welcome.menu.item.six": "",
+  "welcome.menu.item.three": "",
+  "welcome.menu.item.two": "",
+  "welcome.pricing.description": "",
+  "welcome.pricing.maintainers.title": "",
+  "welcome.pricing.month": "",
+  "welcome.tagline": "",
+  "welcome.tagline.companies.main.headline": "",
+  "welcome.tagline.headline.how.title": "",
+  "welcome.terms.company.title": "",
+  "welcome.terms.contrib.title": "",
+  "welcome.terms.item.one.primary": "",
+  "welcome.terms.item.one.secondary": "",
+  "welcome.terms.main.title": "",
+  "welcome.which.companies.item.primary": "",
+  "welcome.which.companies.item.secondary": "",
+  "welcome.which.companies.item.three.primary": "",
+  "welcome.which.companies.item.three.secondary": "",
+  "welcome.which.companies.item.two.secondary": "",
+  "welcome.who.title.contrib": "",
+  "welcome.workflow.item.primary": "",
+  "welcome.workflow.item.secondary": "",
+  "welcome.workflow.item.three.primary": "",
+  "welcome.workflow.item.three.secondary": "",
+  "welcome.workflow.item.two.primary": "",
+  "welcome.workflow.item.two.secondary": ""
 }

@@ -16,8 +16,6 @@ import {
 } from '@material-ui/core'
 import {
   Apps,
-  Work,
-  AccountBalanceWallet,
   Close
 } from '@material-ui/icons'
 
@@ -59,7 +57,7 @@ class WhoSubscribes extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.how.consulting.who.subscribers' defaultMessage='Gitpay is for you?'>
+          <FormattedMessage id='welcome.footer.contributor.fee.title.menu' defaultMessage='Fees'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -76,14 +74,14 @@ class WhoSubscribes extends Component {
               <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='title' className={ classes.appBarHeader }>
+              <Typography variant='h5' className={ classes.appBarHeader }>
                 <FormattedMessage id='welcome.who.title.contrib' defaultMessage='For contributors' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='title' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.who.title.contrib.users' defaultMessage='How may I contribute?' />
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
+                  <FormattedMessage id='welcome.footer.item1.header' defaultMessage='Fees' />
                 </Typography>
               </MainTitle>
             </div>
@@ -96,32 +94,8 @@ class WhoSubscribes extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
-                  />
-                </ListItem>
-
-                <ListItem className={ classes.listIconTop }>
-                  <ListItemIcon>
-                    <Avatar className={ classes.iconFillAlt }>
-                      <Work />
-                    </Avatar>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
-                  />
-                </ListItem>
-
-                <ListItem className={ classes.listIconTop }>
-                  <ListItemIcon>
-                    <Avatar className={ classes.iconFillAlt }>
-                      <AccountBalanceWallet />
-                    </Avatar>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.communityItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.communityItemSecondary) }
                   />
                 </ListItem>
               </List>

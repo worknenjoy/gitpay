@@ -43,7 +43,8 @@ class TaskDeadlineForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      deadline: null
+      deadline: null,
+      open: false
     }
   }
 
@@ -64,6 +65,7 @@ class TaskDeadlineForm extends Component {
       id: this.props.match.params.id,
       deadline: this.state.deadline
     })
+    this.setState({ open: true })
   }
 
   pickTaskDeadline = (time) => {
@@ -81,6 +83,7 @@ class TaskDeadlineForm extends Component {
   renderChip (label, value) {
     return (
       <Chip
+        style={ { marginBottom: 20 } }
         label={ label }
         className={ this.props.classes.chip }
         onClick={ () => this.pickTaskDeadline(value) }
@@ -141,7 +144,7 @@ class TaskDeadlineForm extends Component {
                   <Button disabled={ !this.state.deadline } onClick={ this.handleDeadline } variant='contained' color='primary' className={ classes.btnPayment }>
                     { this.state.deadline
                       ? <FormattedMessage id='task.status.deadline.set.target' defaultMessage='set to target date to {date}' values={ {
-                        date: MomentComponent(this.state.deadline).format('DD/MM/YYYY')
+                        date: MomentComponent(this.state.deadline).format('MM/DD/YYYY')
                       } } />
                       : <FormattedMessage id='task.deadline.button.save' defaultMessage='Save date' />
                     }

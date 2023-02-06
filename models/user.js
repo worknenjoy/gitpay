@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt-nodejs')
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     provider: DataTypes.STRING,
+    provider_username: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
@@ -26,11 +27,16 @@ module.exports = (sequelize, DataTypes) => {
     openForJobs: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   }, {
     classMethods: {
       associate: (models) => {
         User.hasMany(models.Organization)
+        User.belongsToMany(models.Type, { through: 'User_Types' })
       },
       generateHash: (password) => {
         /* eslint-disable no-sync */

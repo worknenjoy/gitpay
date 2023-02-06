@@ -40,7 +40,7 @@ class TaskInvite extends Component {
   sendInvite = (e) => {
     e.preventDefault()
     this.props.onInvite(this.props.id, this.state.email, this.state.message, this.props.user)
-    this.props.onClose()
+    this.props.onClose(e)
   }
 
   render () {
@@ -85,7 +85,7 @@ class TaskInvite extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={ () => this.props.onClose() } color='primary'>
+            <Button onClick={ (e) => this.props.onClose(e) } color='primary'>
               <FormattedMessage id='task.invite.form.cancel' defaultMessage='Cancel' />
             </Button>
             <Button disabled={ message.length === 0 } onClick={ this.sendInvite } variant='contained' color='secondary' >

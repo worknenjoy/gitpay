@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import MomentComponent from 'moment'
 import classNames from 'classnames'
@@ -24,7 +24,11 @@ import {
   Checkbox,
   Link,
   FormControlLabel,
-  DialogContentText
+  DialogContentText,
+  AppBar,
+  Tabs,
+  Tab,
+  TextareaAutosize,
 } from '@material-ui/core'
 import {
   DateRange as DateIcon,
@@ -34,12 +38,19 @@ import {
   Close as CloseIcon
 } from '@material-ui/icons'
 import LoginButton from '../session/login-button'
+import SendSolutionDialog from '../../containers/send-solution-dialog'
 
 const logoGithub = require('../../images/github-logo-black.png')
 const logoBitbucket = require('../../images/bitbucket-logo-blue.png')
 
 const TaskAssignment = (props) => {
   const { classes, task } = props
+
+  const [currentTab, setCurrentTab] = useState(0)
+
+  const handleTabChange = (event, value) => {
+    setCurrentTab(value)
+  }
 
   const taskAssignmentCheckboxes = () => {
     if (props.taskFundingDialog) {
@@ -215,19 +226,21 @@ const TaskAssignment = (props) => {
     if (props.assignDialog) {
       return (
         <FormControl fullWidth>
-          <InputLabel htmlFor='interested-comment'>
-            <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' />
-          </InputLabel>
-          <Input
-            id='interested-comment'
-            type='text'
-            inputProps={ { maxLength: '120' } }
-            value={ props.interestedComment }
-            onChange={ props.handleInputInterestedCommentChange }
+          <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' >
+            { placeholder => (
+              <TextareaAutosize
+                id='interested-comment'
+                type='text'
+                placeholder={ placeholder }
+                rowsMin={ 8 }
+                maxLength={ 1000 }
+                value={ props.interestedComment }
+                onChange={ props.handleInputInterestedCommentChange }
 
-          />
-
-          <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ props.charactersCount + '/120' }</small>
+              />
+            ) }
+          </FormattedMessage>
+          <small style={ { fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' } }>{ props.charactersCount + '/1000' }</small>
         </FormControl>
       )
     }
@@ -346,247 +359,277 @@ const TaskAssignment = (props) => {
     }
   }
 
+  const loginForm = () => {
+    return (
+      <div>
+        { /* <DialogTitle id='form-dialog-title'> */ }
+        { dialogTitleMessage() }
+        { /* </DialogTitle> */ }
+        <DialogContent>
+          <div className={ classes.mainBlock }>
+            <LoginButton referer={ props.location } includeForm />
+          </div>
+        </DialogContent>
+      </div>
+    )
+  }
+
   return (
     <Dialog
       open={ props.assignDialog || props.taskFundingDialog }
-      onClose={ props.handleAssignFundingDialogClose || props.handleAssignFundingDialogClose }
+      onClose={ props.handleAssignFundingDialogClose }
       aria-labelledby='form-dialog-title'
       maxWidth='sm'
     >
       { closeDialogButton() }
-      { imageCover() }
-      { !props.logged ? (
-        <div>
-          { /* <DialogTitle id='form-dialog-title'> */ }
-          { dialogTitleMessage() }
-          { /* </DialogTitle> */ }
-          <DialogContent>
-            <div className={ classes.mainBlock }>
-              <LoginButton referer={ props.location } includeForm />
-            </div>
-          </DialogContent>
-        </div>
-      ) : (
-        <div>
-          { dialogCoverInvite() }
-          <form onSubmit={ props.assignDialog ? props.handleOfferTask : props.sendFundingInvite }>
-            <DialogContent>
+      <DialogTitle id='form-dialog-title'>
+        <FormattedMessage id='task.interested.dialog.title' defaultMessage='Solve Issue' />
+      </DialogTitle>
+      <AppBar position='static' color='default' style={ { boxShadow: 'none', background: 'transparent' } }>
+        <Tabs
+          value={ currentTab }
+          onChange={ handleTabChange }
+          scrollable
+          scrollButtons='on'
+          indicatorColor='primary'
+          textColor='primary'
+        >
+          <Tab value={ 0 } label='Apply to solve this issue' />
+          <Tab value={ 1 } label='Send the solution' />
+        </Tabs>
+      </AppBar>
+      { currentTab === 0 && (
+        <React.Fragment>
+          { imageCover() }
+          { !props.logged ? (
+            loginForm()
+          ) : (
+            <div>
+              { dialogCoverInvite() }
+              <form onSubmit={ props.assignDialog ? props.handleOfferTask : props.sendFundingInvite }>
+                <DialogContent>
 
-              { emailInviteInput() }
-              { task.data.metadata &&
-              <Card style={ { marginTop: 10 } }>
-                <CardHeader
-                  className={ classes.cardHeader }
-                  classes={ { avatar: classes.cardAvatar } }
-                  avatar={
-                    <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
-                      name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
-                    } }>
-                      { (msg) => (
+                  { emailInviteInput() }
+                  { task.data.metadata &&
+                    <Card style={ { marginTop: 10 } }>
+                      <CardHeader
+                        className={ classes.cardHeader }
+                        classes={ { avatar: classes.cardAvatar } }
+                        avatar={
+                          <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={ {
+                            name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
+                          } }>
+                            { (msg) => (
 
-                        <Tooltip
-                          id='tooltip-github'
-                          title={ msg }
-                          placement='bottom'
-                        >
-                          <a
-                            href={ `${task.data.metadata.issue.user.html_url}` }
-                            target='_blank'
-                          >
-                            <Avatar
-                              src={ task.data.metadata.issue.user.avatar_url }
-                              className={ classNames(classes.avatar) }
-                            />
-                          </a>
-                        </Tooltip>
-                      ) }
-                    </FormattedMessage>
+                              <Tooltip
+                                id='tooltip-github'
+                                title={ msg }
+                                placement='bottom'
+                              >
+                                <a
+                                  href={ `${task.data.metadata.issue.user.html_url}` }
+                                  target='_blank'
+                                >
+                                  <Avatar
+                                    src={ task.data.metadata.issue.user.avatar_url }
+                                    className={ classNames(classes.avatar) }
+                                  />
+                                </a>
+                              </Tooltip>
+                            ) }
+                          </FormattedMessage>
+                        }
+                        title={
+                          <Typography variant='h6' color='primary'>
+                            <Link
+                              href={ `${task.data.url}` }
+                              target='_blank'
+                              class={ classes.taskTitle }>
+                              { task.data.title }
+                              <img width='24' height='24' style={ { marginLeft: 10 } } src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } />
+                            </Link>
+                          </Typography>
+                        }
+                        subheader={
+                          <Typography variant='body1' style={ { marginTop: 5 } } color='primary'>
+                            { props.renderIssueAuthorLink() }
+                          </Typography>
+                        }
+                        action={
+                          props.timePlaceholder
+                        }
+                      />
+                    </Card>
                   }
-                  title={
-                    <Typography variant='h6' color='primary'>
-                      <Link
-                        href={ `${task.data.url}` }
-                        target='_blank'
-                        class={ classes.taskTitle }>
-                        { task.data.title }
-                        <img width='24' height='24' style={ { marginLeft: 10 } } src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } />
-                      </Link>
-                    </Typography>
-                  }
-                  subheader={
-                    <Typography variant='body1' style={ { marginTop: 5 } } color='primary'>
-                      { props.renderIssueAuthorLink() }
-                    </Typography>
-                  }
-                  action={
-                    props.timePlaceholder
-                  }
-                />
-              </Card>
-              }
-              <div style={ { paddingBottom: 10, display: 'flex', alignItems: 'center' } }>
-                <div>
-                  <InfoIcon className={ classes.iconCenter } style={ { color: 'action' } } />
-                </div>
-                <div>
-                  <Typography type='subheading' variants='body1' gutterBottom style={ { color: 'gray', marginTop: 5, fontSize: 11 } }>
-                    <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-                      { (msg) => (
-                        <span className={ classes.spanText }>
-                          { msg }
-                        </span>
-                      ) }
-                    </FormattedMessage>
-                  </Typography>
-                </div>
-              </div>
-              <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10, paddingTop: 0 } }>
-                <div style={ { textAlign: 'center' } }>
-                  <Typography type='title' variant='body1'>
-                    <FormattedMessage id='task.bounties.interested.deliveryDateTitle' defaultMessage='Review Delivery Dates' />
-                  </Typography>
-                </div>
-                <div style={ { display: 'flex', marginTop: 10, marginBottom: 10 } }>
-                  <div style={ { width: 25, justifyContent: 'center', display: 'flex' } }><WarningIcon style={ { color: '#D7472F', fontSize: 18 } } /></div>
-                  <div style={ { paddingLeft: 5 } }>
-                    <Typography type='caption' variant='caption' gutterBottom style={ { color: 'gray' } }>
-                      <FormattedMessage id='task.bounties.interested.deliveryDateSuggest' defaultMessage={ 'You can suggest other delivery date.' }>
-                        { (msg) => (
+                  <div style={ { paddingBottom: 10, display: 'flex', alignItems: 'center' } }>
+                    <div>
+                      <InfoIcon className={ classes.iconCenter } style={ { color: 'action' } } />
+                    </div>
+                    <div>
+                      <Typography type='subheading' variants='body1' gutterBottom style={ { color: 'gray', marginTop: 5, fontSize: 11 } }>
+                        <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
+                          { (msg) => (
+                            <span className={ classes.spanText }>
+                              { msg }
+                            </span>
+                          ) }
+                        </FormattedMessage>
+                      </Typography>
+                    </div>
+                  </div>
+                  <Paper style={ { background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10, paddingTop: 0 } }>
+                    <div style={ { textAlign: 'center' } }>
+                      <Typography type='title' variant='body1'>
+                        <FormattedMessage id='task.bounties.interested.deliveryDateTitle' defaultMessage='Review Delivery Dates' />
+                      </Typography>
+                    </div>
+                    <div style={ { display: 'flex', marginTop: 10, marginBottom: 10 } }>
+                      <div style={ { width: 25, justifyContent: 'center', display: 'flex' } }><WarningIcon style={ { color: '#D7472F', fontSize: 18 } } /></div>
+                      <div style={ { paddingLeft: 5 } }>
+                        <Typography type='caption' variant='caption' gutterBottom style={ { color: 'gray' } }>
+                          <FormattedMessage id='task.bounties.interested.deliveryDateSuggest' defaultMessage={ 'You can suggest other delivery date.' }>
+                            { (msg) => (
+                              <span className={ classes.spanText }>
+                                { msg }
+                              </span>
+                            ) }
+                          </FormattedMessage>
+                        </Typography>
+                      </div>
+                    </div>
+                    <div style={ { display: 'flex', marginTop: 10, marginBottom: 10 } }>
+                      <div style={ { width: 25, justifyContent: 'center', display: 'flex', alignItems: 'center' } }><CalendarIcon style={ { color: 'gray' } } /></div>
+                      <div className={ classes.deliveryDateSuggestion }>
+                        <Typography type='caption' variant='caption' style={ { color: 'gray' } }>
                           <span className={ classes.spanText }>
-                            { msg }
+                            <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={ { deliveryDate: props.deliveryDate } } />
+                            { props.deadline
+                              ? <FormattedHTMLMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={ { deadline: props.deadline } } />
+                              : null }
                           </span>
-                        ) }
-                      </FormattedMessage>
-                    </Typography>
-                  </div>
-                </div>
-                <div style={ { display: 'flex', marginTop: 10, marginBottom: 10 } }>
-                  <div style={ { width: 25, justifyContent: 'center', display: 'flex', alignItems: 'center' } }><CalendarIcon style={ { color: 'gray' } } /></div>
-                  <div className={ classes.deliveryDateSuggestion }>
-                    <Typography type='caption' variant='caption' style={ { color: 'gray' } }>
-                      <span className={ classes.spanText }>
-                        <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={ { deliveryDate: props.deliveryDate } } />
-                        { props.deadline
-                          ? <FormattedHTMLMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={ { deadline: props.deadline } } />
-                          : null }
-                      </span>
-                    </Typography>
-                    <Link onClick={ props.handleSuggestAnotherDate } variant='body1' className={ classes.dateSuggestionBtn }>
-                      <FormattedMessage id='task.bounties.actions.sugggestAnotherDate' defaultMessage='SUGGEST ANOTHER DATE' />&nbsp;
-                    </Link>
-                  </div>
-                </div>
+                        </Typography>
+                        <Link onClick={ props.handleSuggestAnotherDate } variant='body1' className={ classes.dateSuggestionBtn }>
+                          <FormattedMessage id='task.bounties.actions.sugggestAnotherDate' defaultMessage='SUGGEST ANOTHER DATE' />&nbsp;
+                        </Link>
+                      </div>
+                    </div>
 
-                { props.showSuggestAnotherDateField && (
-                  <FormControl fullWidth>
-                    <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
-                      { (msg) => (
-                        <InputLabel htmlFor='interested-date' shrink='true'>{ msg }</InputLabel>
-                      ) }
-                    </FormattedMessage>
-                    <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
-                      { (msg) => (
-                        <Input
-                          id='interested-date'
-                          startAdornment={ <InputAdornment position='start'><DateIcon /></InputAdornment> }
-                          placeholder={ msg }
-                          type='date'
-                          value={ `${MomentComponent(props.interestedSuggestedDate).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}` }
-                          onChange={ props.handleInputChangeCalendar }
-                        />
-                      ) }
-                    </FormattedMessage>
+                    { props.showSuggestAnotherDateField && (
+                      <FormControl fullWidth>
+                        <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
+                          { (msg) => (
+                            <InputLabel htmlFor='interested-date' shrink='true'>{ msg }</InputLabel>
+                          ) }
+                        </FormattedMessage>
+                        <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
+                          { (msg) => (
+                            <Input
+                              id='interested-date'
+                              startAdornment={ <InputAdornment position='start'><DateIcon /></InputAdornment> }
+                              placeholder={ msg }
+                              type='date'
+                              value={ `${MomentComponent(props.interestedSuggestedDate).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}` }
+                              onChange={ props.handleInputChangeCalendar }
+                            />
+                          ) }
+                        </FormattedMessage>
+                      </FormControl>
+                    ) }
+                  </Paper>
+
+                  <div style={ { textAlign: 'center' } }>
+                    <Typography type='heading' style={ { padding: 10 } } variant='body1'>
+                      <FormattedMessage id='task.bounties.interested.canSuggestBounty' defaultMessage='Suggest a bounty' />
+                    </Typography>
+                  </div>
+
+                  <div className={ classes.pricesContainer }>
+                    <Chip
+                      label=' $ 20'
+                      className={ classes.priceChip }
+                      color={ props.currentPrice === 20 ? 'primary' : '' }
+                      onClick={ () => props.pickTaskPrice(20) }
+                    />
+                    <Chip
+                      label=' $ 50'
+                      className={ classes.priceChip }
+                      color={ props.currentPrice === 50 ? 'primary' : '' }
+                      onClick={ () => props.pickTaskPrice(50) }
+                    />
+                    <Chip
+                      label=' $ 100'
+                      className={ classes.priceChip }
+                      color={ props.currentPrice === 100 ? 'primary' : '' }
+                      onClick={ () => props.pickTaskPrice(100) }
+                    />
+                    <Chip
+                      label=' $ 150'
+                      className={ classes.priceChip }
+                      color={ props.currentPrice === 150 ? 'primary' : '' }
+                      onClick={ () => props.pickTaskPrice(150) }
+                    />
+                    <Chip
+                      label=' $ 300'
+                      className={ classes.priceChip }
+                      color={ props.currentPrice === 300 ? 'primary' : '' }
+                      onClick={ () => props.pickTaskPrice(300) }
+                    />
+                  </div>
+
+                  <FormControl fullWidth style={ { marginTop: 15, marginBottom: 15 } }>
+                    <InputLabel htmlFor='interested-amount'>
+                      <FormattedMessage id='task.bounties.interested.amount.value' defaultMessage='Price' />
+                    </InputLabel>
+                    <Input
+                      id='interested-amount'
+                      endAdornment={ <InputAdornment position='start'>USD</InputAdornment> }
+                      type='text'
+                      value={ props.currentPrice > 0 ? props.currentPrice : '' }
+                      onChange={ props.handleInputInterestedAmountChange }
+                    />
                   </FormControl>
-                ) }
-              </Paper>
 
-              <div style={ { textAlign: 'center' } }>
-                <Typography type='heading' style={ { padding: 10 } } variant='body1'>
-                  <FormattedMessage id='task.bounties.interested.canSuggestBounty' defaultMessage='Suggest a bounty' />
-                </Typography>
-              </div>
+                  { dialogInputComment() }
 
-              <div className={ classes.pricesContainer }>
-                <Chip
-                  label=' $ 20'
-                  className={ classes.priceChip }
-                  color={ props.currentPrice === 20 ? 'primary' : '' }
-                  onClick={ () => props.pickTaskPrice(20) }
-                />
-                <Chip
-                  label=' $ 50'
-                  className={ classes.priceChip }
-                  color={ props.currentPrice === 50 ? 'primary' : '' }
-                  onClick={ () => props.pickTaskPrice(50) }
-                />
-                <Chip
-                  label=' $ 100'
-                  className={ classes.priceChip }
-                  color={ props.currentPrice === 100 ? 'primary' : '' }
-                  onClick={ () => props.pickTaskPrice(100) }
-                />
-                <Chip
-                  label=' $ 150'
-                  className={ classes.priceChip }
-                  color={ props.currentPrice === 150 ? 'primary' : '' }
-                  onClick={ () => props.pickTaskPrice(150) }
-                />
-                <Chip
-                  label=' $ 300'
-                  className={ classes.priceChip }
-                  color={ props.currentPrice === 300 ? 'primary' : '' }
-                  onClick={ () => props.pickTaskPrice(300) }
-                />
-              </div>
+                  { taskAssignmentCheckboxes() }
 
-              <FormControl fullWidth style={ { marginTop: 15, marginBottom: 15 } }>
-                <InputLabel htmlFor='interested-amount'>
-                  <FormattedMessage id='task.bounties.interested.amount.value' defaultMessage='Price' />
-                </InputLabel>
-                <Input
-                  id='interested-amount'
-                  endAdornment={ <InputAdornment position='start'>USD</InputAdornment> }
-                  type='text'
-                  value={ props.currentPrice > 0 ? props.currentPrice : '' }
-                  onChange={ props.handleInputInterestedAmountChange }
-                />
-              </FormControl>
+                </DialogContent>
 
-              { dialogInputComment() }
+                { actionButtonsTask() }
 
-              { taskAssignmentCheckboxes() }
+              </form>
 
-            </DialogContent>
-
-            { actionButtonsTask() }
-
-          </form>
-
-          <Dialog
-            open={ props.termsDialog }
-            onClose={ props.handleTermsDialogClose }
-            aria-labelledby='terms-dialog-title'
-            aria-describedby='terms-dialog-description'
-          >
-            <DialogTitle id='terms-dialog-title'>
-              <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id='terms-dialog-description'>
-                <FormattedMessage id='task.bounties.interested.termsOfUseText' defaultMessage={ 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.' } />
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={ () => props.handleTermsDialogClose(false) } color='primary'>
-                <FormattedMessage id='task.bounties.interested.disagree' defaultMessage='DISAGREE' />
-              </Button>
-              <Button onClick={ () => props.handleTermsDialogClose(true) } color='primary' autoFocus>
-                <FormattedMessage id='task.bounties.interested.agree' defaultMessage='AGREE' />
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
+              <Dialog
+                open={ props.termsDialog }
+                onClose={ props.handleTermsDialogClose }
+                aria-labelledby='terms-dialog-title'
+                aria-describedby='terms-dialog-description'
+              >
+                <DialogTitle id='terms-dialog-title'>
+                  <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id='terms-dialog-description'>
+                    <FormattedMessage id='task.bounties.interested.termsOfUseText' defaultMessage={ 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.' } />
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={ () => props.handleTermsDialogClose(false) } color='primary'>
+                    <FormattedMessage id='task.bounties.interested.disagree' defaultMessage='DISAGREE' />
+                  </Button>
+                  <Button onClick={ () => props.handleTermsDialogClose(true) } color='primary' autoFocus>
+                    <FormattedMessage id='task.bounties.interested.agree' defaultMessage='AGREE' />
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+          )
+          }
+        </React.Fragment>
       ) }
+      { currentTab === 1 && (<React.Fragment>
+        { !props.logged ? ((loginForm())) : (<SendSolutionDialog task={ task.data } assignDialog={ props.assignDialog } handleAssignFundingDialogClose={ props.handleAssignFundingDialogClose } />) }
+      </React.Fragment>) }
     </Dialog>
   )
 }

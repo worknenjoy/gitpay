@@ -51,6 +51,14 @@ const SYNC_TASK_ERROR = 'SYNC_TASK_ERROR'
 
 const CHANGE_TASK_TAB = 'CHANGE_TASK_TAB'
 
+const REPORT_TASK_REQUESTED = 'REPORT_TASK_REQUESTED'
+const REPORT_TASK_SUCCESS = 'REPORT_TASK_SUCCESS'
+const REPORT_TASK_ERROR = 'REPORT_TASK_ERROR'
+
+const CLAIM_TASK_REQUESTED = 'CLAIM_TASK_REQUESTED'
+const CLAIM_TASK_SUCCESS = 'CLAIM_TASK_SUCCESS'
+const CLAIM_TASK_ERROR = 'CLAIM_TASK_ERROR'
+
 const VALIDATION_ERRORS = {
   'url must be unique': 'actions.task.create.validation.url',
   'Not Found': 'actions.task.create.validation.invalid'
@@ -259,6 +267,22 @@ const syncTaskError = error => {
   return { type: SYNC_TASK_ERROR, completed: true, error: error }
 }
 
+/*
+ * Task Report
+ */
+
+const reportTaskRequested = () => {
+  return { type: REPORT_TASK_REQUESTED, completed: false }
+}
+
+const reportTaskSuccess = () => {
+  return { type: REPORT_TASK_SUCCESS, completed: true }
+}
+
+const reportTaskError = error => {
+  return { type: REPORT_TASK_ERROR, completed: true, error: error }
+}
+
 const createTask = (task, history) => {
   validToken()
   return dispatch => {
@@ -294,12 +318,12 @@ const createTask = (task, history) => {
 }
 
 const updateTask = task => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(updateTaskRequested())
     axios
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
-        if (task.Orders) {
+        if (task.Orders.source_id) {
           dispatch(addNotification('actions.task.payment.notification.success'))
           dispatch(changeTaskTab(1))
           dispatch(syncTask(task.id))
@@ -313,17 +337,17 @@ const updateTask = task => {
           dispatch(updateTaskSuccess())
         }
         else {
-          dispatch(addNotification('actions.task.update.notification.success'))
+          dispatch(addNotification('actions.task.update.notification.error'))
           dispatch(updateTaskSuccess())
         }
         return dispatch(fetchTask(task.id))
       })
       .catch(error => {
-        // eslint-disable-next-line no-console
-        if (error.response.data.type === 'StripeCardError') {
-          dispatch(addNotification('actions.task.payment.notification.error'))
+        const errorResponse = error.response.data
+        if (errorResponse.type === 'StripeCardError') {
+          dispatch(addNotification('actions.task.payment.notification.error', `. ${errorResponse.message}`))
           dispatch(changeTaskTab(1))
-          return dispatch(updateTaskError(error.response.data))
+          return dispatch(updateTaskError(errorResponse))
         }
         dispatch(addNotification('actions.task.update.notification.error'))
         return dispatch(fetchTask(task.id))
@@ -354,12 +378,14 @@ const deleteTask = task => {
   }
 }
 
-const listTasks = () => {
+const listTasks = ({ organizationId, projectId, userId, status }) => {
   validToken()
   return (dispatch) => {
     dispatch(listTaskRequested())
     return axios
-      .get(api.API_URL + '/tasks/list')
+      .get(api.API_URL + '/tasks/list', {
+        params: { organizationId, projectId, userId, status }
+      })
       .then(response => {
         return dispatch(listTaskSuccess(response))
       })
@@ -589,6 +615,103 @@ const syncTask = taskId => {
   }
 }
 
+const reportTask = (task, reason) => {
+  return dispatch => {
+    dispatch(reportTaskRequested())
+    return axios
+      .post(api.API_URL + `/tasks/${task.id}/report`, {
+        task, reason, baseUrl: api.API_URL
+      })
+      .then(task => {
+        if (task.status === 200) {
+          dispatch(addNotification('actions.task.report.success'))
+          return dispatch(reportTaskSuccess())
+        }
+        dispatch(addNotification('actions.task.report.error'))
+        return dispatch(
+          reportTaskError({
+            error: {
+              type: 'task_report_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.report.error')
+        )
+        dispatch(reportTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible to send report')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
+/*
+ * Task Claim
+ */
+
+const requestClaimTaskRequested = () => {
+  return { type: CLAIM_TASK_REQUESTED, completed: false }
+}
+
+const requestClaimTaskSuccess = () => {
+  return { type: CLAIM_TASK_SUCCESS, completed: true }
+}
+
+const requestClaimTaskError = error => {
+  return { type: CLAIM_TASK_ERROR, completed: true, error: error }
+}
+
+const requestClaimTask = (taskId, userId, comments, isApproved, token, history) => {
+  return dispatch => {
+    dispatch(requestClaimTaskRequested())
+    return axios
+      .post(api.API_URL + `/tasks/${taskId}/claim`, {
+        taskId, userId, comments, isApproved, token: token, baseUrl: api.API_URL
+      })
+      .then(task => {
+        if (task.status === 200 && !task.data && !task.data.error) {
+          dispatch(addNotification('actions.task.claim.success'))
+          if (isApproved) {
+            history.push(`/task/${taskId}`)
+            return dispatch(fetchTask(taskId))
+          }
+          return dispatch(requestClaimTaskSuccess())
+        }
+
+        if (task.data.error === 'user_is_not_the_owner') {
+          dispatch(addNotification('actions.task.claim.error.user_is_not_the_owner'))
+        }
+        else if (task.data.error === 'invalid_provider') {
+          dispatch(addNotification('actions.task.claim.error.invalid_provider'))
+        }
+        else {
+          dispatch(addNotification('actions.task.claim.error'))
+        }
+        return dispatch(
+          requestClaimTaskError({
+            error: {
+              type: 'task_claim_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.claim.error')
+        )
+        dispatch(requestClaimTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible request claim')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
 export {
   CREATE_TASK_REQUESTED,
   CREATE_TASK_SUCCESS,
@@ -625,10 +748,17 @@ export {
   SYNC_TASK_SUCCESS,
   SYNC_TASK_ERROR,
   CHANGE_TASK_TAB,
+  REPORT_TASK_REQUESTED,
+  REPORT_TASK_SUCCESS,
+  REPORT_TASK_ERROR,
+  CLAIM_TASK_REQUESTED,
+  CLAIM_TASK_SUCCESS,
+  CLAIM_TASK_ERROR,
   addNotification,
   createTask,
   fetchTask,
   listTasks,
+  listTaskSuccess,
   filterTasks,
   filterTaskOrders,
   updateTask,
@@ -641,5 +771,7 @@ export {
   messageAuthorError,
   messageAuthor,
   fundingInviteTask,
-  changeTaskTab
+  changeTaskTab,
+  reportTask,
+  requestClaimTask
 }

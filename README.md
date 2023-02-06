@@ -13,7 +13,7 @@ https://gitpitch.com/worknenjoy/gitpay
 
 We have a slack channel to collaborate with solutions and to help you, and to be fun
 
-[Join us on slack](https://join.slack.com/t/gitpay/shared_invite/enQtNDg4NzM2NDI5NDg4LTk1ZTlhMGJhOGJlOGJhNjgzNTJjM2QxMmNjM2M4Njk0YjllZDBiZDFjZTVlMzBiMzU0NTI3NjE2YWNhNjllOTQ) 
+[Join us on slack](https://join.slack.com/t/gitpay-workspace/shared_invite/zt-1j8yyotnp-EbA3OSuL7cJkZL_CgBW37g)
 
 ## What is Gitpay?
 
@@ -23,7 +23,8 @@ We offer a marketplace for contributors and projects that use git for on demand 
 * Companies can receive reports, fixes and enhancements about the project by developers and offer bounties to complete required tasks
 
 ## Who is contributing
-[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/0)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/0)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/1)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/1)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/2)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/2)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/3)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/3)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/4)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/4)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/5)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/5)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/6)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/6)[![](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/images/7)](https://sourcerer.io/fame/alexanmtz/worknenjoy/gitpay/links/7)
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/worknenjoy/gitpay/graphs/contributors"><img src="https://opencollective.com/gitpay/contributors.svg?width=890&button=false" /></a>
 
 ### Join the team
 
@@ -52,15 +53,30 @@ You can do this with: `cp .env.example .env`
 
 #### You need to run create the .env in order to run the project: `cp .env.example .env`
 
+### Important
+- Make sure to use Node v12 (you can use <a href="https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/"> Node Version Manager (NVM)</a> to manage and switch different Node versions)
+- Don't forget to run `npm install` on the root and front-end folders
+
 ### Database
 
-#### Install postgres
-1. install: `brew install postgres` (mac)
+#### Install postgres (mac)
+1. install: `brew install postgres`
 2. start the service: `brew services start postgresql`
 3. create postgres user: `createuser postgres -s`
 4. Login into postgres cli: `psql -U postgres`
 5. Create test database: `create database gitpay_test;`
 6. Create a dev database: `create database gitpay_dev;`
+7. Exit: `\q`
+
+#### Install PostgreSQL (Linux - Ubuntu)
+1. install: `sudo apt install postgresql`
+2. start the service: `sudo service postgresql start`
+3. create postgres user: `createuser postgres -s`
+4. Login into postgres: `sudo -i -u postgres`
+5. Access the postgres prompt: `psql`
+6. Make sure postgres user has the correct password: `ALTER USER postgres WITH PASSWORD 'postgres';`
+5. Create test database: `CREATE DATABASE gitpay_test;`
+6. Create a dev database: `CREATE DATABASE gitpay_dev;`
 7. Exit: `\q`
 
 ## Run migration
@@ -72,6 +88,14 @@ To run the migrations
 To create a new migration
 
 `sequelize migration:create --name modelname`
+
+How to create new models
+- For Many to Many
+    1. Create migration for first model (table `organizations`)
+    2. Create migration for second model (table `projects`)
+    3. Create migration for joint model (table `organizations_projects`)
+    4. Change in the model to `Project.belongsTo(models.Organization)`
+    5. Change in the second model to `Organization.hasMany(models.Project)`
 
 ## Database seeding
 
@@ -97,6 +121,15 @@ For exhaustive list of options available, refer `migration.js` in root directory
 `npm run start:dev`
 
 Then you can access at http://localhost:8082
+
+## Translation
+
+Please don't change the translation files directly, they will be managed on Crowdin.
+The only thing you need to do is run
+
+`npm run translate`
+
+on front-end and use the React Intl (https://formatjs.io/docs/react-intl/) library to give id and default text to your strings.
 
 ## Docker
 
@@ -128,27 +161,23 @@ Then you can access at http://localhost:8082
 Here you can start to learn how to create your first pull request and start to be a contributor:
 [https://github.com/worknenjoy/gitpay/issues/247](https://github.com/worknenjoy/gitpay/issues/247)
 - [Unnatii](https://github.com/unnatii )
-- [Prerna Verma]( https://github.com/PrernaVerma ) 
-- [I Gede Wicaksana]( https://github.com/wicaker ) 
+- [Prerna Verma]( https://github.com/PrernaVerma )
+- [I Gede Wicaksana]( https://github.com/wicaker )
 - [Luísa Barros]( https://github.com/luisabfs )
 - [Caio Reis]( https://github.com/caioreis123 )
 - [Shivam Latawa]( https://github.com/ShivamLatawa )
 - [Md. Al Amin]( https://github.com/Alamin02 )
-- [Siso]( https://github.com/sisohs ) 
+- [Siso]( https://github.com/sisohs )
 - [Amrut]( https://github.com/amrut07 )
 - [Usman Sakirat Kehinde]( https://github.com/oyinkan )
 - [Qiwei]( https://github.com/qiweiii )
-- [Adam Ash](https://github.com/adamash99) 
+- [Adam Ash](https://github.com/adamash99)
 - [Shawn Noruzi]( https://github.com/shawn-noruzi )
 - [Ssentongo Alex]( https://github.com/aleku399 )
 - [Tushar Kudal]( https://github.com/tusharkudal )
-
-## Contributors
-
-### Code Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="https://github.com/worknenjoy/gitpay/graphs/contributors"><img src="https://opencollective.com/gitpay/contributors.svg?width=890&button=false" /></a>
+- [Onamade Okikioluwa]( https://github.com/khoded)
+- [Basukinath Tiwari](https://github.com/basuki57)
+- [Paulo Henrique](https://github.com/henriques4nti4go)
 
 ### Financial Contributors
 

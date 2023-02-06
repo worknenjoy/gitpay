@@ -21,8 +21,6 @@ const Report = {
     },
     include: [ models.User ]
     })
-    // eslint-disable-next-line no-console
-    // console.log('tasks from cron job weekly bounties', tasks)
     if (tasks[0]) {
       const taskSort = tasks.sort((ta, tb) => {
         return Math.abs(new Date(ta.created_at) - new Date(tb.created_at))
@@ -39,8 +37,6 @@ const Report = {
         total += parseInt(t.value)
       })
       currentObj.total = total
-      // eslint-disable-next-line no-console
-      console.log('tasks', currentObj)
     }
     return new Error('no issues found')
   },

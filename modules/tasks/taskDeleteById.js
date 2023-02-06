@@ -9,16 +9,15 @@ module.exports = Promise.method(function taskDeleteById (taskParameters) {
     models.Offer.destroy({ where: { taskId: taskParameters.id } }),
     models.Member.destroy({ where: { taskId: taskParameters.id } }),
   ]).then(result => {
-    // eslint-disable-next-line no-console
-    console.log('result from delete dependencies', result)
+    let conditions = {
+      id: taskParameters.id
+    }
+    if (taskParameters.userId) {
+      conditions = { ...conditions, userId: taskParameters.userId }
+    }
     return models.Task.destroy({
-      where: {
-        id: taskParameters.id,
-        userId: taskParameters.userId
-      }
+      where: conditions
     }).then(task => {
-      // eslint-disable-next-line no-console
-      console.log('destroy', task)
       return task
     })
   })

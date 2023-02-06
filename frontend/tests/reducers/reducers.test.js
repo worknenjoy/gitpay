@@ -2,6 +2,7 @@ jest.unmock('react-intl')
 import { preferences } from '../../src/reducers/preferencesReducer'
 import { organizations } from '../../src/reducers/organizationsReducer'
 import { task } from '../../src/reducers/taskReducer'
+import { contact } from '../../src/reducers/contactReducer'
 
 describe('task reducer', () => {
   it('should return the initial state', () => {
@@ -37,6 +38,14 @@ describe('organizations reducer', () => {
         'organizations': [],
         'error': {}
       }
+    )
+  })
+})
+
+describe('contact reducer', () => {
+  it('should return the initial state', () => {
+    expect(contact(undefined, {})).toEqual(
+      { 'completed': true }
     )
   })
 })

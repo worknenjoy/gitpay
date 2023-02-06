@@ -6,12 +6,14 @@ import { createTask } from '../actions/taskActions'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { updateUser } from '../actions/userActions'
 import { info } from '../actions/infoActions'
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn.logged,
     dialog: state.dialog,
-    user: state.loggedIn.user,
+    roles: state.roles,
+    user: getUser(state),
     completed: state.loggedIn.completed,
     task: state.task,
     preferences: state.preferences,

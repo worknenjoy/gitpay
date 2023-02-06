@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         Plan.belongsTo(models.Order, { foreignKey: 'OrderId' })
       },
-      calFinalPrice: (price, plan) => {
+      calcFinalPrice: (price, plan) => {
         const percentages = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
-        return Number((price * (percentages[plan])).toFixed(2))
+        return Math.round(Number((price * (percentages[plan])).toFixed(2)))
       }
     },
     instanceMethods: {

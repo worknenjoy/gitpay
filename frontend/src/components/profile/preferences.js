@@ -8,14 +8,7 @@ import {
   Grid,
   Typography,
   Checkbox,
-  Switch,
-  Menu,
-  MenuItem,
-  Button
 } from '@material-ui/core'
-import LanguageIcon from '@material-ui/icons/Language'
-
-import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import Skill from './skill'
@@ -25,11 +18,11 @@ const skills = [
   'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation', 'React', 'React Native', 'Angular', 'Vue.js', 'Blogging', 'Wordpress', 'PHP', 'Testing', 'Git', 'Continuous Integration'
 ]
 
-const logoLangEn = require('../../images/united-states-of-america.png')
-const logoLangBr = require('../../images/brazil.png')
-
 const styles = theme => ({
-
+  title: {
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+  }
 })
 
 class Preferences extends Component {
@@ -140,30 +133,27 @@ class Preferences extends Component {
     })
   }
 
-  handleSave = (fetchPreferences = false) => {
+  handleSave = async (fetchPreferences = false) => {
     // prevent blink
     this.props.preferences.skills = this.state.selectedSkills.join(',')
     this.props.preferences.os = this.state.selectedOS.join(',')
     this.props.preferences.receiveNotifications = this.state.receiveNotifications
     this.props.preferences.openForJobs = this.state.openForJobs
 
-    this.props.updateUser(this.props.user.id, {
+    await this.props.updateUser(this.props.user.id, {
       skills: this.state.selectedSkills.join(','),
       os: this.state.selectedOS.join(','),
       language: this.state.selectedLanguage,
       receiveNotifications: this.state.receiveNotifications,
       openForJobs: this.state.openForJobs
-    }).then(() => {
-      fetchPreferences && this.props.fetchPreferences(this.props.user.id)
     })
+    fetchPreferences && await this.props.fetchPreferences(this.props.user.id)
   }
 
   render () {
     const { classes } = this.props
 
     let instance = this
-    const anchorEl = this.state.anchorEl
-    const language = this.state.selectedLanguage
 
     let listSkills = skills.map(function (item) {
       return (
@@ -180,64 +170,13 @@ class Preferences extends Component {
     return (
       <Paper elevation={ 0 }>
         <Grid container alignItems='center' spacing={ 1 }>
-          <Grid item xs={ 5 } style={ { marginBottom: 20 } }>
-            <Typography color='primary' variant='title' gutterBottom>
-              <FormattedMessage id='preferences.actions.language.title' defaultMessage='Language' />
+          <Grid item xs={ 12 }>
+            <Typography variant='h4' className={ classes.title }>
+              <FormattedMessage id='preferences.title' defaultMessage='Skills' />
             </Typography>
-            <Button
-              id='chooseLanguageButton'
-              onClick={ this.handleMenu }
-              variant='contained'
-              size='medium'
-              color='primary'
-            >
-              { language ? (
-                <div style={ { display: 'flex', alignItems: 'center' } }>
-                  <StyledAvatarIconOnly
-                    alt={ `${language}` }
-                    src={ language === 'en' ? logoLangEn : logoLangBr }
-                    style={ { marginLeft: 0 } }
-                  />
-                  <strong style={ { marginLeft: 10 } }>
-                    { language === 'en' ? 'English' : 'Português' }
-                  </strong>
-                </div>
-              ) : (
-                <div>
-                  <LanguageIcon />
-                  <LabelButton>
-                    <FormattedMessage id='preferences.actions.choose.language' defaultMessage='Choose language' />
-                  </LabelButton>
-                </div>
-              ) }
-            </Button>
-
-            <Menu
-              id='menu-appbar'
-              anchorEl={ anchorEl }
-              anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-              transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-              open={ anchorEl && anchorEl.id === 'chooseLanguageButton' }
-              onClose={ this.handleClose }
-            >
-              <MenuItem onClick={ (e) => this.handleLanguageClick('en') }>
-                <StyledAvatarIconOnly
-                  alt='English'
-                  src={ logoLangEn }
-                />
-                <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
-              </MenuItem>
-              <MenuItem onClick={ (e) => this.handleLanguageClick('br') } >
-                <StyledAvatarIconOnly
-                  alt='Português'
-                  src={ logoLangBr }
-                />
-                <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
-              </MenuItem>
-            </Menu>
           </Grid>
           <Grid item xs={ 7 } >
-            <Typography color='primary' variant='title'>
+            <Typography color='primary' variant='h5'>
               <FormattedMessage id='preferences.os' defaultMessage='OS' />
             </Typography>
             <Checkbox id='checkbox_windows' checked={ this.isOSSelected('Windows') } onClick={ () => this.handleOSClick('Windows') } />
@@ -260,7 +199,7 @@ class Preferences extends Component {
             </label>
           </Grid>
           <Grid item xs={ 12 }>
-            <Typography color='primary' variant='title'>
+            <Typography color='primary' variant='h5'>
               <FormattedMessage id='prefences.skills' defaultMessage='Skills' />
             </Typography>
           </Grid>
@@ -271,7 +210,7 @@ class Preferences extends Component {
           </Grid>
           <div style={ { 'width': '100%', 'flex': 'auto', 'display': 'flex', marginTop: 20 } }>
             <Grid item xs={ 12 }>
-              <Typography color='primary' variant='title'>
+              <Typography color='primary' variant='h5'>
                 <FormattedMessage id='prefences.my.skills' defaultMessage='My Skills' />
               </Typography>
               <Grid container xs={ 12 } style={ { padding: 10 } }>
@@ -288,25 +227,7 @@ class Preferences extends Component {
             </Grid>
           </div>
           <Grid item xs={ 12 } style={ { marginTop: 20, marginBottom: 20 } }>
-            <Typography color='primary' variant='title'>
-              <FormattedMessage id='prefences.my.notifications' defaultMessage='Notifications' />
-            </Typography>
-            <Switch
-              id='switch_receive_notifications'
-              checked={ this.state.receiveNotifications }
-              onChange={ this.handleHiddenChange }
-              value='hidden'
-              color='primary'
-            />
-            &nbsp;
-            <label htmlFor='switch_receive_notifications'>
-              <Typography component='span' style={ { display: 'inline-block' } } color='default' variant='body2'>
-                <FormattedMessage id='preferences.notifications.checkbox' defaultMessage="I want to receive notifications about all the tasks, not just the ones I'm interested" />
-              </Typography>
-            </label>
-          </Grid>
-          <Grid item xs={ 12 } style={ { marginTop: 20, marginBottom: 20 } }>
-            <Typography color='primary' variant='title'>
+            <Typography color='primary' variant='h5'>
               <FormattedMessage id='prefences.my.openforjobs' defaultMessage='Open For Jobs' />
             </Typography>
             <Checkbox
