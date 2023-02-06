@@ -11,6 +11,7 @@
     "no-mixed-operators": 0,
     "import/first": 0,
     "prefer-promise-reject-errors": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "react/jsx-no-bind": 0
   }
 }
