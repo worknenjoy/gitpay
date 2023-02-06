@@ -93,7 +93,7 @@ export default function UserOrganizationTree ({ createOrganizations, updateOrgan
   return (
     <div>
       <Typography variant='h5' style={ { marginTop: 20, marginBottom: 20 } }>
-          Organizations you own on Gitpay
+        Organizations you own on Gitpay
       </Typography>
       <TreeView
         className={ classes.root }
@@ -106,10 +106,12 @@ export default function UserOrganizationTree ({ createOrganizations, updateOrgan
           <React.Fragment>
             <span>{ o.name }</span>
             { !o.provider
-              ? (<OrganizationUpdate
-                updateOrganization={ updateOrganization }
-                organization={ o }
-              />) : (
+              ? (
+                <OrganizationUpdate
+                  updateOrganization={ updateOrganization }
+                  organization={ o }
+                />
+              ) : (
                 o.provider === 'github'
                   ? <span style={ { display: 'inline-block' } }>
                     <Avatar style={ { marginLeft: 10, width: 16, height: 16, backgroundColor: 'black' } }>
