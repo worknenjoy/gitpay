@@ -131,7 +131,7 @@ const styles = {
 }
 
 class TopBar extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -151,7 +151,7 @@ class TopBar extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     /* eslint-disable no-undef */
     const currentStoredLang = localStorage.getItem('userLanguage')
     this.props.fetchPreferences(this.props.user.id).then(() => {
@@ -319,7 +319,7 @@ class TopBar extends Component {
     }))
   }
 
-  render () {
+  render() {
     const { completed, user, preferences, dialog } = this.props
     const { mode } = this.state
     const isLoggedIn = this.props.logged
@@ -329,15 +329,15 @@ class TopBar extends Component {
     return (
       <Bar>
         <Container>
-          <LeftSide isActive={ this.state.isActive }>
+          <LeftSide isActive={this.state.isActive}>
             <div>
               <StyledButton href='/'>
-                <Logo src={ logo } />
+                <Logo src={logo} />
               </StyledButton>
             </div>
-            <div style={ { marginTop: 12, marginLeft: 20 } }>
+            <div style={{ marginTop: 12, marginLeft: 20 }}>
               <LinkButton
-                onClick={ this.handleHowItWorks }
+                onClick={this.handleHowItWorks}
                 variant='text'
                 size='small'
                 color='primary'
@@ -350,7 +350,7 @@ class TopBar extends Component {
               </LinkButton>
 
               <LinkButton
-                onClick={ this.handlePricing }
+                onClick={this.handlePricing}
                 variant='text'
                 size='small'
                 color='primary'
@@ -363,7 +363,7 @@ class TopBar extends Component {
               </LinkButton>
 
               <LinkButton
-                onClick={ this.handleTeamLink }
+                onClick={this.handleTeamLink}
                 variant='text'
                 size='small'
                 color='primary'
@@ -376,7 +376,7 @@ class TopBar extends Component {
               </LinkButton>
 
               <LinkButton
-                onClick={ this.handleDocsLink }
+                onClick={this.handleDocsLink}
                 variant='text'
                 size='small'
                 color='primary'
@@ -389,7 +389,7 @@ class TopBar extends Component {
               </LinkButton>
 
               <LinkButton
-                onClick={ this.handleViewTasks }
+                onClick={this.handleViewTasks}
                 variant='text'
                 size='small'
                 color='primary'
@@ -403,20 +403,20 @@ class TopBar extends Component {
             </div>
 
             <MenuMobile
-              onClick={ this.handleClickMenuMobile }
+              onClick={this.handleClickMenuMobile}
               variant='text'
               size='small'
             >
-              <IconHamburger isActive={ this.state.isActive } />
+              <IconHamburger isActive={this.state.isActive} />
             </MenuMobile>
           </LeftSide>
-          <RightSide isActive={ this.state.isActive }>
-            { !isLoggedIn
+          <RightSide isActive={this.state.isActive}>
+            {!isLoggedIn
               ? (
                 <React.Fragment>
-                  <div style={ { display: 'flex', justifyContent: 'space-around', marginRight: 20 } }>
+                  <div style={{ display: 'flex', justifyContent: 'space-around', marginRight: 20 }}>
                     <LinkButton
-                      onClick={ (e) => this.handleClickDialogSignUser(e, 'signup') }
+                      onClick={(e) => this.handleClickDialogSignUser(e, 'signup')}
                       variant='text'
                       size='small'
                       color='primary'
@@ -429,7 +429,7 @@ class TopBar extends Component {
                     </LinkButton>
 
                     <LinkButton
-                      onClick={ (e) => this.handleClickDialogSignUser(e, 'signin') }
+                      onClick={(e) => this.handleClickDialogSignUser(e, 'signin')}
                       variant='text'
                       size='small'
                       color='primary'
@@ -441,50 +441,50 @@ class TopBar extends Component {
                       </LabelButton>
                     </LinkButton>
                     <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
-                      { (msg) => (
-                        <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-                          <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
-                            { completed ? (
+                      {(msg) => (
+                        <Tooltip id='tooltip-lang' title={msg} placement='bottom'>
+                          <Button style={{ padding: 0 }} id='language-menu' onClick={this.handleMenu}>
+                            {completed ? (
                               <StyledAvatarIconOnly
-                                alt={ user.username || '' }
-                                src={ logoLang(userCurrentLanguage) }
+                                alt={user.username || ''}
+                                src={logoLang(userCurrentLanguage)}
                               />
                             ) : (
                               <Avatar>
                                 <CircularProgress />
                               </Avatar>
-                            ) }
+                            )}
                           </Button>
                         </Tooltip>
-                      ) }
+                      )}
                     </FormattedMessage>
                     <Menu
                       id='menu-appbar'
-                      anchorEl={ anchorEl }
-                      anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
-                      transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-                      open={ anchorEl && anchorEl.id === 'language-menu' }
-                      onClose={ this.handleClose }
+                      anchorEl={anchorEl}
+                      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                      open={anchorEl && anchorEl.id === 'language-menu'}
+                      onClose={this.handleClose}
                     >
-                      <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
+                      <MenuItem selected={userCurrentLanguage === 'en'} onClick={(e) => this.switchLang('en')}>
                         <StyledAvatarIconOnly
                           alt='English'
-                          src={ logoLangEn }
+                          src={logoLangEn}
                         />
-                        <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
+                        <strong style={{ display: 'inline-block', margin: 10 }}>English</strong>
                       </MenuItem>
-                      <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') }>
+                      <MenuItem selected={userCurrentLanguage === 'br'} onClick={(e) => this.switchLang('br')}>
                         <StyledAvatarIconOnly
                           alt='Português'
-                          src={ logoLangBr }
+                          src={logoLangBr}
                         />
-                        <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
+                        <strong style={{ display: 'inline-block', margin: 10 }}>Português</strong>
                       </MenuItem>
                     </Menu>
                   </div>
                   <Dialog
-                    open={ dialog.open && dialog.target === 'SignupUser' }
-                    onClose={ this.handleSignUserDialogClose }
+                    open={dialog.open && dialog.target === 'SignupUser'}
+                    onClose={this.handleSignUserDialogClose}
                     aria-labelledby='form-dialog-title'
                   >
                     <DialogTitle id='form-dialog-title'>
@@ -492,11 +492,11 @@ class TopBar extends Component {
                     </DialogTitle>
                     <DialogContent>
                       <LoginButton
-                        referer={ this.props.location }
+                        referer={this.props.location}
                         size='medium'
                         includeForm
-                        mode={ mode }
-                        onClose={ this.handleSignUserDialogClose }
+                        mode={mode}
+                        onClose={this.handleSignUserDialogClose}
                       />
                     </DialogContent>
                   </Dialog>
@@ -504,35 +504,35 @@ class TopBar extends Component {
               ) : (
                 <React.Fragment>
                   <StyledButton
-                    onClick={ this.handleMenu }
+                    onClick={this.handleMenu}
                     variant='text'
                     size='small'
                     color='primary'
                     id='account-menu'
                   >
                     <Chip
-                      avatar={ user.picture_url
+                      avatar={user.picture_url
                         ? <StyledAvatar
-                          alt={ user.username || '' }
-                          src={ user.picture_url }
+                          alt={user.username || ''}
+                          src={user.picture_url}
                         />
-                        : <StyledAvatar alt={ user.username || '' } src=''>
-                          { user.username ? nameInitials(user.username) : <Person /> }
+                        : <StyledAvatar alt={user.username || ''} src=''>
+                          {user.username ? nameInitials(user.username) : <Person />}
                         </StyledAvatar>
                       }
                       color='secondary'
                       label='Account'
-                      onClick={ this.handleMenu }
+                      onClick={this.handleMenu}
                     />
                   </StyledButton>
                 </React.Fragment>
               )
             }
-            { isLoggedIn ? (
-              <form onSubmit={ this.handleCreateTask } action='POST'>
+            {isLoggedIn ? (
+              <form onSubmit={this.handleCreateTask} action='POST'>
                 <Dialog
-                  open={ this.state.createTaskDialog }
-                  onClose={ this.handleClickDialogCreateTaskClose }
+                  open={this.state.createTaskDialog}
+                  onClose={this.handleClickDialogCreateTaskClose}
                   aria-label='form-dialog-title'
                 >
                   <DialogTitle id='form-dialog-title'>
@@ -547,9 +547,9 @@ class TopBar extends Component {
                           defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
                       </Typography>
                     </DialogContentText>
-                    <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
-                      <TextField error={ this.state.task.url.error }
-                        onChange={ this.onChange }
+                    <FormControl style={styles.formControl} error={this.state.task.url.error}>
+                      <TextField error={this.state.task.url.error}
+                        onChange={this.onChange}
                         autoFocus
                         margin='dense'
                         id='url'
@@ -558,43 +558,43 @@ class TopBar extends Component {
                         type='url'
                         fullWidth
                       />
-                      { this.state.provider === 'github' &&
+                      {this.state.provider === 'github' &&
                         <FormControl component='fieldset'>
-                          <FormGroup aria-label='position' name='position' value={ 'private' } onChange={ this.handlePrivate } row>
+                          <FormGroup aria-label='position' name='position' value={'private'} onChange={this.handlePrivate} row>
                             <FormControlLabel
                               value='private'
-                              control={ <Checkbox color='primary' /> }
+                              control={<Checkbox color='primary' />}
                               label='private'
                               labelPlacement='right'
                             />
                           </FormGroup>
                         </FormControl>
                       }
-                      <div style={ { marginTop: 10, marginBottom: 10 } }>
+                      <div style={{ marginTop: 10, marginBottom: 10 }}>
                         <Button
-                          style={ { marginRight: 10 } }
+                          style={{ marginRight: 10 }}
                           color='primary'
-                          variant={ this.state.provider === 'github' ? 'contained' : 'outlined' }
+                          variant={this.state.provider === 'github' ? 'contained' : 'outlined'}
                           id='github'
-                          onClick={ (e) => this.handleProvider(e, 'github') }
+                          onClick={(e) => this.handleProvider(e, 'github')}
                         >
-                          <img width='16' src={ logoGithub } />
-                          <span style={ { marginLeft: 10 } }>Github</span>
+                          <img width='16' src={logoGithub} />
+                          <span style={{ marginLeft: 10 }}>Github</span>
                         </Button>
 
                         <Button
                           color='primary'
-                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outlined' }
+                          variant={this.state.provider === 'bitbucket' ? 'contained' : 'outlined'}
                           id='bitbucket'
-                          onClick={ (e) => this.handleProvider(e, 'bitbucket') }
+                          onClick={(e) => this.handleProvider(e, 'bitbucket')}
                         >
-                          <img width='16' src={ logoBitbucket } />
-                          <span style={ { marginLeft: 10 } }>Bitbucket</span>
+                          <img width='16' src={logoBitbucket} />
+                          <span style={{ marginLeft: 10 }}>Bitbucket</span>
                         </Button>
                       </div>
 
-                      { this.state.task.url.error &&
-                        <FormHelperText error={ this.state.task.url.error }>
+                      {this.state.task.url.error &&
+                        <FormHelperText error={this.state.task.url.error}>
                           <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
                         </FormHelperText>
                       }
@@ -602,10 +602,10 @@ class TopBar extends Component {
                   </DialogContent>
 
                   <DialogActions>
-                    <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
+                    <Button onClick={this.handleClickDialogCreateTaskClose} color='primary'>
                       <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
                     </Button>
-                    <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='contained' color='secondary' >
+                    <Button disabled={!completed} onClick={this.handleCreateTask} variant='contained' color='secondary' >
                       <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
                     </Button>
                   </DialogActions>
@@ -613,39 +613,39 @@ class TopBar extends Component {
               </form>
             ) : (
               <Dialog
-                open={ this.state.createTaskDialog }
-                onClose={ this.handleClickDialogCreateTaskClose }
+                open={this.state.createTaskDialog}
+                onClose={this.handleClickDialogCreateTaskClose}
                 aria-labelledby='form-dialog-title'
               >
                 <DialogTitle id='form-dialog-title'>
                   <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
                 </DialogTitle>
                 <DialogContent>
-                  <LoginButton referer={ this.props.location } size='medium' includeForm />
+                  <LoginButton referer={this.props.location} size='medium' includeForm />
                 </DialogContent>
               </Dialog>
-            ) }
+            )}
             <OnlyDesktop>
-              <Drawer id='menu-appbar-language' open={ anchorEl && anchorEl.id === 'account-menu' } onClose={ this.handleClose } anchor={ 'right' }>
+              <Drawer id='menu-appbar-language' open={anchorEl && anchorEl.id === 'account-menu'} onClose={this.handleClose} anchor={'right'}>
                 <List>
                   <ListItem>
                     <ListItemText>
                       <Chip
-                        avatar={ user.picture_url
+                        avatar={user.picture_url
                           ? <StyledAvatar
-                            alt={ user.username || '' }
-                            src={ user.picture_url }
+                            alt={user.username || ''}
+                            src={user.picture_url}
                           />
-                          : <StyledAvatar alt={ user.username || '' } src=''>
-                            { user.username ? nameInitials(user.username) : <Person /> }
+                          : <StyledAvatar alt={user.username || ''} src=''>
+                            {user.username ? nameInitials(user.username) : <Person />}
                           </StyledAvatar>
                         }
                         color='secondary'
-                        label={ `${user.name || user.username} (${user.email})` }
+                        label={`${user.name || user.username} (${user.email})`}
                       />
                     </ListItemText>
                   </ListItem>
-                  <ListItem button onClick={ this.handleHome }>
+                  <ListItem button onClick={this.handleHome}>
                     <ListItemIcon>
                       <Home />
                     </ListItemIcon>
@@ -653,7 +653,7 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.profile.dashboard' defaultMessage='Dashboard' />
                     </ListItemText>
                   </ListItem>
-                  <ListItem button onClick={ (e) => this.handleProfile(e, user.id, user.username) }>
+                  <ListItem button onClick={(e) => this.handleProfile(e, user.id, user.username)}>
                     <ListItemIcon>
                       <Web />
                     </ListItemIcon>
@@ -661,11 +661,11 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.profile.page' defaultMessage='Profile page' />
                     </ListItemText>
                   </ListItem>
-                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                    <ListItem button onClick={ () => {
+                  {user.Types && user.Types.map(t => t.name).includes('contributor') &&
+                    <ListItem button onClick={() => {
                       window.location.assign('/#/profile/account-details')
                       this.setState({ anchorEl: null })
-                    } }>
+                    }}>
                       <ListItemIcon>
                         <AccountIcon />
                       </ListItemIcon>
@@ -674,11 +674,11 @@ class TopBar extends Component {
                       </ListItemText>
                     </ListItem>
                   }
-                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                    <ListItem button onClick={ () => {
+                  {user.Types && user.Types.map(t => t.name).includes('contributor') &&
+                    <ListItem button onClick={() => {
                       window.location.assign('/#/profile/payment-options')
                       this.setState({ anchorEl: null })
-                    } }>
+                    }}>
                       <ListItemIcon>
                         <AccountBalance />
                       </ListItemIcon>
@@ -687,11 +687,11 @@ class TopBar extends Component {
                       </ListItemText>
                     </ListItem>
                   }
-                  { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-                    <ListItem button onClick={ () => {
+                  {user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+                    <ListItem button onClick={() => {
                       window.location.assign('/#/profile/tasks')
                       this.setState({ anchorEl: null })
-                    } }>
+                    }}>
                       <ListItemIcon>
                         <LibraryBooks />
                       </ListItemIcon>
@@ -700,11 +700,11 @@ class TopBar extends Component {
                       </ListItemText>
                     </ListItem>
                   }
-                  { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-                    <ListItem button onClick={ () => {
+                  {user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+                    <ListItem button onClick={() => {
                       window.location.assign('/#/profile/user/orgs')
                       this.setState({ anchorEl: null })
-                    } }>
+                    }}>
                       <ListItemIcon>
                         <Business />
                       </ListItemIcon>
@@ -713,11 +713,11 @@ class TopBar extends Component {
                       </ListItemText>
                     </ListItem>
                   }
-                  { user.Types && (user.Types.map(t => t.name).includes('funding') || user.Types.map(t => t.name).includes('maintainer')) &&
-                    <ListItem button onClick={ () => {
+                  {user.Types && (user.Types.map(t => t.name).includes('funding') || user.Types.map(t => t.name).includes('maintainer')) &&
+                    <ListItem button onClick={() => {
                       window.location.assign('/#/profile/payments')
                       this.setState({ anchorEl: null })
-                    } }>
+                    }}>
                       <ListItemIcon>
                         <PaymentIcon />
                       </ListItemIcon>
@@ -726,11 +726,11 @@ class TopBar extends Component {
                       </ListItemText>
                     </ListItem>
                   }
-                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                    <ListItem button onClick={ () => {
+                  {user.Types && user.Types.map(t => t.name).includes('contributor') &&
+                    <ListItem button onClick={() => {
                       window.location.assign('/#/profile/preferences')
                       this.setState({ anchorEl: null })
-                    } }>
+                    }}>
                       <ListItemIcon>
                         <Tune />
                       </ListItemIcon>
@@ -739,10 +739,10 @@ class TopBar extends Component {
                       </ListItemText>
                     </ListItem>
                   }
-                  <ListItem button onClick={ () => {
+                  <ListItem button onClick={() => {
                     window.location.assign('/#/profile/settings')
                     this.setState({ anchorEl: null })
-                  } }>
+                  }}>
                     <ListItemIcon>
                       <Settings />
                     </ListItemIcon>
@@ -750,10 +750,10 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.settings' defaultMessage='Settings' />
                     </ListItemText>
                   </ListItem>
-                  <ListItem button onClick={ () => {
+                  <ListItem button onClick={() => {
                     window.location.assign('/#/profile/roles')
                     this.setState({ anchorEl: null })
-                  } }>
+                  }}>
                     <ListItemIcon>
                       <FaceSharp />
                     </ListItemIcon>
@@ -761,7 +761,7 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.roles' defaultMessage='Roles' />
                     </ListItemText>
                   </ListItem>
-                  <ListItem button onClick={ this.handleSignOut }>
+                  <ListItem button onClick={this.handleSignOut}>
                     <ListItemIcon>
                       <ExitToApp />
                     </ListItemIcon>
@@ -772,7 +772,7 @@ class TopBar extends Component {
                 </List>
               </Drawer>
             </OnlyDesktop>
-            <ImportIssueButton onAddIssueClick={ (e) => this.handleClickDialogCreateTask(e) } />
+            <ImportIssueButton onAddIssueClick={(e) => this.handleClickDialogCreateTask(e)} />
           </RightSide>
         </Container>
       </Bar>
