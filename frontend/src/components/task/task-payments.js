@@ -35,12 +35,13 @@ export default function TaskPayments ({ orders }) {
             <ListItemAvatar style={ { minWidth: 34 } }>
               { order.User
                 ? <Avatar
-                  className={ classes.small }
-                  alt={
+                    className={ classes.small }
+                    alt={
                     `${order.User && (order.User.name || order.User.username) || 'Anonymous'}`
                   }
-                  src={ order.User && order.User.profile_url }
-                /> : <Avatar className={ classes.small } />
+                    src={ order.User && order.User.profile_url }
+                />
+                : <Avatar className={ classes.small } />
               }
             </ListItemAvatar>
             <ListItemText primary={

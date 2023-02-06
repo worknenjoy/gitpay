@@ -167,7 +167,7 @@ class TaskHeader extends React.Component {
                       </Typography>
                     </Link>
                     <Typography variant='subtitle2'>
-                        ...
+                      ...
                     </Typography>
                   </Breadcrumbs>
                 ) }
@@ -199,7 +199,7 @@ class TaskHeader extends React.Component {
                   >
                     { task.data.provider } <img width='12' src={ task.data.provider === 'github' ? logoGithub : logoBitbucket } style={ { marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' } } />
                   </a>
-                    by { ' ' }
+                  by { ' ' }
                   <a
                     href={ task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : '' }
                   >
