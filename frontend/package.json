@@ -45,7 +45,7 @@
     "enzyme-adapter-react-16": "^1.2.0",
     "enzyme-react-intl": "^2.0.2",
     "extract-react-intl": "^0.6.0",
-    "extract-react-intl-messages": "^4.1.1",
+    "extract-react-intl-messages": "^0.10.0",
     "fetch-mock": "^7.0.5",
     "jest": "^23.5.0",
     "jest-cli": "^23.6.0",
