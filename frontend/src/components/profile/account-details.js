@@ -285,15 +285,16 @@ const AccountDetails = ({
                 </Grid>
                 <Grid item xs={ 12 } sm={ 12 } md={ 4 }>
                   <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
-                    { (msg) => (
-                      <Field
-                        name='individual[phone]'
-                        label={ msg }
-                        defaultValue={ accountData['individual[phone]'] || account.data.individual && account.data.individual.phone }
-                        help
-                        inputComponent={ TextMaskCustom }
-                      />
-                    ) }
+                    {
+                      (msg) => (
+                        <Field
+                          name='individual[phone]'
+                          label={ msg }
+                          defaultValue={ accountData['individual[phone]'] || account.data.individual && account.data.individual.phone }
+                          help
+                          inputComponent={ TextMaskCustom }
+                        />
+                      ) }
                   </FormattedMessage>
                 </Grid>
                 <Grid item xs={ 12 } sm={ 12 } md={ 4 }>

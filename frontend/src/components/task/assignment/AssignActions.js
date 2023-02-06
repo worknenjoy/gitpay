@@ -159,7 +159,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
         >
           { task && task.Offers && task.Offers.map((option) => (
             <MenuItem key={ option.id } value={ option.value }>
-                      ${ option.value } - { option.comment }
+              ${ option.value } - { option.comment }
             </MenuItem>
           )) }
         </TextField>
