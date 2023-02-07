@@ -65,7 +65,7 @@ module.exports = {
       test: /.js[x]?$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
-      query: {
+      options: {
         presets: [['es2015', { 'modules': false }], 'react'],
         plugins: ['transform-object-rest-spread', 'transform-class-properties']
       }

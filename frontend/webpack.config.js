@@ -12,18 +12,22 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
+    publicPath: '',
     path: `${__dirname}/public`,
     filename: './app.js'
   },
   devServer: {
     port: 8082,
-    contentBase: './public'
+    static: './public'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`
+    },
+    fallback: {
+      stream: false
     }
   },
   plugins: [
@@ -49,9 +53,9 @@ module.exports = {
       test: /.js[x]?$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
-      query: {
-        presets: ['es2015', 'react'],
-        plugins: ['transform-object-rest-spread', 'transform-class-properties']
+      options: {
+        presets: ['@babel/preset-env', '@babel/preset-react'],
+        plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
       }
     }, {
       test: /\.css$/,
@@ -60,7 +64,7 @@ module.exports = {
       test: /\.(woff|woff2|ttf|eot|svg)$/,
       loader: 'file-loader'
     },
-    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+    { test: /\.(png|jpg)$/, loader: 'url-loader', options: { limit: 8192 } }
     ]
   }
 }

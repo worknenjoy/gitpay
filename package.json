@@ -99,7 +99,6 @@
   "devDependencies": {
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
-    "babel-loader": "^7.1.2",
     "chai": "^3.5.0",
     "chai-spies": "^1.0.0",
     "compression": "^1.7.4",

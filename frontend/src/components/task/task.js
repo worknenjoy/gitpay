@@ -15,7 +15,7 @@ import TaskHeader from './task-header'
 import AuthorList from './task-author-list'
 import queryString from 'query-string'
 import renderHTML from 'react-render-html'
-import marked from 'marked'
+import { marked } from 'marked'
 
 import {
   Container,

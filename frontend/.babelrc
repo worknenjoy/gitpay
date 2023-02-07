@@ -1,7 +1,7 @@
 {
   "presets": [
-    "es2015",
-    "react"
+    "@babel/preset-env",
+    "@babel/preset-react"
   ],
   "plugins": [
     ["transform-imports", {
@@ -12,8 +12,8 @@
     }
     ],
     "add-react-displayname",
-    "transform-object-rest-spread",
-    "transform-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties",
     ["react-intl", {
         "messagesDir": "./build/messages/",
         "removeDefaultMessage": true,
