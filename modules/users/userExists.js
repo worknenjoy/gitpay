@@ -1,7 +1,7 @@
 const models = require('../../models')
-const Promise = require('bluebird')
+//const Promise = require('bluebird')
 
-module.exports = Promise.method(function userExists (userAttributes) {
+module.exports = function userExists (userAttributes) {
   return models.User
     .findOne({
       where: {
@@ -39,10 +39,7 @@ module.exports = Promise.method(function userExists (userAttributes) {
         createdAt: user.dataValues.createdAt,
         updatedAt: user.dataValues.updatedAt
       } */
+      console.log(' --------- user -------', user)
       return user
-    }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('error on user exists', error)
-      throw error
     })
-})
+}

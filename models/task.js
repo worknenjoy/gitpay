@@ -42,27 +42,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     }
   }, {
-    classMethods: {
-      associate: (models) => {
-        Task.belongsTo(models.Project)
-        Task.belongsTo(models.User, { foreignKey: 'userId' })
-        Task.hasMany(models.History, { foreignKey: 'TaskId' })
-        Task.hasMany(models.Order, { foreignKey: 'TaskId' })
-        Task.hasMany(models.Assign, { foreignKey: 'TaskId' })
-        Task.hasMany(models.Offer, { foreignKey: 'taskId' })
-        Task.hasMany(models.Member, { foreignKey: 'taskId' })
-        Task.belongsToMany(models.Label, { foreignKey: 'taskId',
-          otherKey: 'labelId',
-          through: 'TaskLabels',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE' }
-        )
-        Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
-      }
-    },
-    instanceMethods: {
-
-    },
     hooks: {
       afterCreate: async (instance, options) => {
         try {
@@ -106,6 +85,23 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   })
+
+  Task.associate = (models) => {
+    Task.belongsTo(models.Project)
+    Task.belongsTo(models.User, { foreignKey: 'userId' })
+    Task.hasMany(models.History, { foreignKey: 'TaskId' })
+    Task.hasMany(models.Order, { foreignKey: 'TaskId' })
+    Task.hasMany(models.Assign, { foreignKey: 'TaskId' })
+    Task.hasMany(models.Offer, { foreignKey: 'taskId' })
+    Task.hasMany(models.Member, { foreignKey: 'taskId' })
+    Task.belongsToMany(models.Label, { foreignKey: 'taskId',
+      otherKey: 'labelId',
+      through: 'TaskLabels',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE' }
+    )
+    Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
+  }
 
   return Task
 }

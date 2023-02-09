@@ -15,12 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     times: {
       type: DataTypes.INTEGER
     },
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Coupon.hasMany(models.Order, { foreignKey: 'couponId' })
-      }
-    }
   })
+
+  Coupon.associate = (models) => {
+    Coupon.hasMany(models.Order, { foreignKey: 'couponId' })
+  }
+
   return Coupon
 }

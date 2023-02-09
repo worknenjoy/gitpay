@@ -14,6 +14,7 @@
     "add-react-displayname",
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-class-properties",
+    "babel-plugin-styled-components",
     ["react-intl", {
         "messagesDir": "./build/messages/",
         "removeDefaultMessage": true,

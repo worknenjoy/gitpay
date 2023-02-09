@@ -388,32 +388,26 @@ passport.use(
 
 passport.use(
   new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password'
-    },
-    (email, password, done) => {
-      process.nextTick(_ => {
-        const userAttributes = {
-          email: email
+    async function verify(email, password, done) {
+      const userAttributes = {
+        email: email
+      }
+      try {
+        const user = await userExist(userAttributes);
+        if (!user) done(null, 'no user found')
+        if (user.verifyPassword(password, user.password)) {
+          const token = jwt.sign(
+            { email: user.email },
+            process.env.SECRET_PHRASE
+          )
+          user.token = token
+          return done(null, user)
         }
-        userExist(userAttributes)
-          .then(user => {
-            if (!user) return done(null, false)
-            if (user.verifyPassword(password, user.password)) {
-              const token = jwt.sign(
-                { email: user.email },
-                process.env.SECRET_PHRASE
-              )
-              user.token = token
-              return done(null, user)
-            }
-            return done(null, false)
-          })
-          .catch(error => {
-            return done(error)
-          })
-      })
+        return done('error', 'verifyPassword error')
+      } catch (error) {
+        return done(error)
+      }
+      return done('done', null)
     }
   )
 )

@@ -37,30 +37,18 @@ router.get('/callback/bitbucket',
     res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
   })
 
-router.post('/authorize/local', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      res.status(401)
-      res.send({ 'reason': 'Invalid credentials' })
-    }
-    if (!user) {
-      // res.status(401)
-      // res.send({ 'reason': 'Invalid credentials' })
-      res.redirect(`${process.env.FRONTEND_HOST}/#/signin/invalid`)
-    }
-    else {
-      req.logIn(user, { session: false }, (err) => {
-        if (err) {
-          res.status(500)
-          res.send({ 'error': 'Server error' })
-        }
-        // set authorization header for tests
-        res.set('Authorization', 'Bearer ' + user.token)
-        res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
-      })
-    }
-  })(req, res, next)
-})
+router.post('/authorize/local',
+  passport.authenticate('local', {
+    session: false,
+    failureMessage: true,
+    failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`
+  }),
+  function(req, res)  {
+    console.log('req', req, res)
+    res?.set('Authorization', 'Bearer ' + req?.user?.token)
+    res?.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
+  }
+);
 
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 

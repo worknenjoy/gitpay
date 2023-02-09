@@ -15,6 +15,8 @@ const i18n = require('i18n')
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
+} else {
+  app.use(sslRedirect())
 }
 
 app.use(bodyParser.json())
@@ -41,7 +43,6 @@ app.use(i18n.init)
 
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(sslRedirect())
 
 app.set('port', (process.env.PORT || 3000))
 

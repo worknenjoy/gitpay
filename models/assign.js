@@ -7,16 +7,12 @@ module.exports = (sequelize, DataTypes) => {
     message: {
       type: DataTypes.STRING,
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Assign.belongsTo(models.User, { foreignKey: 'userId' })
-        Assign.belongsTo(models.Task, { foreignKey: 'TaskId' })
-      }
-    },
-    instanceMethods: {
-
-    }
   })
+
+  Assign.associate = (models) => {
+    Assign.belongsTo(models.User, { foreignKey: 'userId' })
+    Assign.belongsTo(models.Task, { foreignKey: 'TaskId' })
+  }
+
   return Assign
 }

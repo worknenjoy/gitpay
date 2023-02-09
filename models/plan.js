@@ -9,19 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     }
   }, {
-    classMethods: {
-      associate: (models) => {
-        Plan.belongsTo(models.Order, { foreignKey: 'OrderId' })
-      },
-      calcFinalPrice: (price, plan) => {
-        const percentages = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
-        return Math.round(Number((price * (percentages[plan])).toFixed(2)))
-      }
-    },
-    instanceMethods: {
-      finalPrice: () => this.price + this.fee
-
-    },
     hook: {
       beforeCreate: async (instance, options) => {
         try {
@@ -36,6 +23,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   })
+
+  Plan.associate = (models) => {
+    Plan.belongsTo(models.Order, { foreignKey: 'OrderId' })
+  }
+
+  Plan.calcFinalPrice = (price, plan) => {
+    const percentages = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
+    return Math.round(Number((price * (percentages[plan])).toFixed(2)))
+  }
+
+  Plan.prototype.finalPrice = () => this.price + this.fee
 
   return Plan
 }
