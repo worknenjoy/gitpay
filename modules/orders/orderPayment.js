@@ -5,7 +5,7 @@ const TransferMail = require('../mail/transfer')
 
 module.exports = Promise.method(function orderPayment (orderParameters) {
   return models.Order
-    .findById(orderParameters.id)
+    .findByPk(orderParameters.id)
     .then((order) => {
       if (order.provider === 'paypal') {
         return requestPromise({
@@ -49,8 +49,8 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
                 throw new Error('update_order_error')
               }
               const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
-              return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
-                return models.Assign.findById(task.dataValues.assigned, {
+              return Promise.all([models.User.findByPk(orderData.userId), models.Task.findByPk(orderData.TaskId)]).spread((user, task) => {
+                return models.Assign.findByPk(task.dataValues.assigned, {
                   include: [models.User]
                 }).then(assign => {
                   TransferMail.notifyOwner(user.dataValues, task.dataValues, orderData.amount)

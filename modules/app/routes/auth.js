@@ -41,14 +41,15 @@ router.post('/authorize/local',
   passport.authenticate('local', {
     session: false,
     failureMessage: true,
-    failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`
-  }),
-  function(req, res)  {
-    console.log('req', req, res)
-    res?.set('Authorization', 'Bearer ' + req?.user?.token)
-    res?.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
-  }
-);
+    failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`,
+    successRedirect: `${process.env.FRONTEND_HOST}/#/token/`
+  },
+  (req, res) =>  {
+    console.log('authorization', req, res)
+    //res.set('Authorization', 'Bearer ' + req?.user?.token)
+    //res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
+  })
+)
 
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 

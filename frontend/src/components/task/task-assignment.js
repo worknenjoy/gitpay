@@ -40,8 +40,8 @@ import {
 import LoginButton from '../session/login-button'
 import SendSolutionDialog from '../../containers/send-solution-dialog'
 
-const logoGithub = require('../../images/github-logo-black.png')
-const logoBitbucket = require('../../images/bitbucket-logo-blue.png')
+import logoGithub from '../../images/github-logo-black.png'
+import logoBitbucket from '../../images/bitbucket-logo-blue.png'
 
 const TaskAssignment = (props) => {
   const { classes, task } = props

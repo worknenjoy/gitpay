@@ -15,10 +15,10 @@ const i18n = require('i18n')
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors())
-} else {
+}
+else {
   app.use(sslRedirect())
 }
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({

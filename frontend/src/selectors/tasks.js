@@ -45,15 +45,15 @@ export const getFilteredTasks = createSelector(
       case 'Assigns':
         return {
           ...tasks,
-          data: tasks.data.filter(item => {
+          data: tasks.data.length ? tasks.data.filter(item => {
             const interested = item.Assigns.filter(assign => assign.userId === user.id)
             return interested.length
-          })
+          }) : []
         }
       case 'status':
         return {
           ...tasks,
-          data: tasks.data.filter(item => {
+          data: tasks.data.length ? tasks.data.filter(item => {
             const additionalFilter = tasks.filterAdditional
 
             if (tasks.filterValue === 'all') {
@@ -63,25 +63,25 @@ export const getFilteredTasks = createSelector(
               const filteredByPrincipal = item.status === tasks.filterValue
               return filterByAdditional(item, additionalFilter, filteredByPrincipal)
             }
-          })
+          }) : []
         }
       case 'assigned':
         return {
           ...tasks,
-          data: tasks.data.filter(item => {
+          data: tasks.data.length ? tasks.data.filter(item => {
             const interested = item.Assigns.filter(assign => assign.userId === user.id)
             if (interested.length) {
               return item.assigned === interested[0].id
             }
-          })
+          }) : []
         }
       case 'issuesWithBounties':
-        return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) }
+        return { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) : [] }
       case 'contribution':
-        return { ...tasks, data: tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) }
+        return { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) : [] }
       case 'supported':
         return { ...tasks,
-          data: tasks.data.filter(item => getTaskWithAnyOrder(item)) }
+          data: tasks.data.length ? tasks.data.filter(item => getTaskWithAnyOrder(item)) : [] }
       default:
         return tasks
     }

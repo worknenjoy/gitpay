@@ -8,8 +8,8 @@ import TreeView from '@material-ui/lab/TreeView'
 import TreeItem from '@material-ui/lab/TreeItem'
 import Collapse from '@material-ui/core/Collapse'
 import Avatar from '@material-ui/core/Avatar'
-const logoGithub = require('../../images/github-logo-alternative.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
+import logoGithub from '../../images/github-logo-alternative.png'
+import logoBitbucket from'../../images/bitbucket-logo.png'
 
 import {
   Lock,

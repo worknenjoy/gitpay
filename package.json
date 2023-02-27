@@ -24,8 +24,7 @@
     "lint-fix": "eslint . --fix",
     "prepush": "npm run lint-fix",
     "postbuild": "cd frontend && npm run test",
-    "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate",
-    "pretest": "npm run lint-fix"
+    "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate"
   },
   "husky": {
     "hooks": {
@@ -39,7 +38,7 @@
     "bitbucket-api-v2": "^0.6.2",
     "bitbucket-v2": "^0.4.3",
     "bluebird": "^3.5.3",
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.20.2",
     "bootstrap": "^3.4.1",
     "color": "^3.1.2",
     "core-js": "^2.4.1",
@@ -78,8 +77,8 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
     "passport-stub": "^1.1.1",
-    "pg": "^6.4.2",
-    "pg-hstore": "^2.3.2",
+    "pg": "^8.9.0",
+    "pg-hstore": "^2.3.4",
     "query-string": "^5.1.0",
     "request-promise": "^4.2.0",
     "rxjs": "^5.1.0",
@@ -103,7 +102,7 @@
     "compression": "^1.7.4",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "husky": "^0.14.3",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",

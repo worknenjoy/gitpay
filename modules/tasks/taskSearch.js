@@ -1,8 +1,9 @@
 const Promise = require('bluebird')
 const models = require('../../models')
+const { Op} = require('sequelize')
 
 module.exports = Promise.method(function taskSearch (searchParams) {
-  let query = { $or: [
+  let query = { [Op.or]: [
     { private: null },
     { private: false }
   ] }

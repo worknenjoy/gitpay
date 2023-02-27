@@ -20,7 +20,7 @@ module.exports = Promise.method(function orderUpdateAfterStripe (order, charge, 
     PaymentMail.success(user, task, order.amount)
     if (task.dataValues.assigned) {
       const assignedId = task.dataValues.assigned
-      return models.Assign.findById(assignedId, {
+      return models.Assign.findByPk(assignedId, {
         include: [models.User]
       }).then(assign => {
         PaymentMail.assigned(assign.dataValues.User.dataValues.email, task, order.amount)

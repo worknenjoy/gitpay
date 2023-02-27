@@ -117,7 +117,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
       if (!data) {
         return new Error('task_updated_failed')
       }
-      return models.Task.findById(taskParameters.id, { include: [models.User, models.Order, models.Assign, models.Member] })
+      return models.Task.findByPk(taskParameters.id, { include: [models.User, models.Order, models.Assign, models.Member] })
         .then((task) => {
           if (!task) {
             return new Error('task_find_failed')
@@ -126,7 +126,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
             return task.createOrder(taskParameters.Orders).then((order) => {
               const orderParameters = taskParameters.Orders
               if (order.userId) {
-                return models.User.findById(order.userId).then((user) => {
+                return models.User.findByPk(order.userId).then((user) => {
                   if (user && user.dataValues.customer_id) {
                     return stripe.customers.retrieve(user.customer_id).then((customer) => {
                       return createSourceAndCharge(customer, orderParameters, order, task, user.dataValues, couponValidation)

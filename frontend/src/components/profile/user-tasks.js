@@ -23,10 +23,10 @@ import {
 
 import CustomPaginationActionsTable from '../task/task-table'
 
-const logoGithub = require('../../images/github-logo.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
+import logoGithub from '../../images/github-logo.png'
+import logoBitbucket from '../../images/bitbucket-logo.png'
 
-const imageGettingStarted = require('../../images/octodex.png')
+import imageGettingStarted from '../../images/octodex.png'
 
 import api from '../../consts'
 

@@ -20,10 +20,10 @@ module.exports = Promise.method(function ({ id, userId }, { message }) {
       if (!assignedId) throw new Error('The Task doesn\'t have an assigned user.')
 
       const assignedPromise = await models.Assign
-        .findById(assignedId, { include: [ models.User ] })
+        .findByPk(assignedId, { include: [ models.User ] })
 
       const author = await models.User
-        .findById(task.userId)
+        .findByPk(task.userId)
 
       // Unset assigned value,
       const saveTaskPromise = task.set('assigned', null).save()

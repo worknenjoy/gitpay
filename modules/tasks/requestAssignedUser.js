@@ -40,7 +40,7 @@ const sendConfirmationEmail = (task, assign) => {
 }
 
 const invite = Promise.method(async ({ taskId, assignId }) => {
-  const task = await models.Task.findById(taskId)
+  const task = await models.Task.findByPk(taskId)
   const assign = await models.Assign.findOne({
     where: {
       id: assignId

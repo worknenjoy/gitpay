@@ -30,7 +30,7 @@ module.exports = {
       app: `${__dirname}/src`
     },
     fallback: {
-      stream: "stream-browserify"
+      stream: 'stream-browserify'
     }
   },
   plugins: [
@@ -73,7 +73,7 @@ module.exports = {
       },
       { test: /\.(png|jpg)$/, loader: 'url-loader', options: { limit: 8192 } },
       {
-        compiler: "html-webpack-plugin",
+        compiler: 'html-webpack-plugin',
         resolve: {
           /* ... */
           // This will merge with the current resolve options
