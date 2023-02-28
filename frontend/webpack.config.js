@@ -15,7 +15,7 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
-    //publicPath: '',
+    publicPath: '',
     path: `${__dirname}/public`,
     filename: './app.js'
   },
