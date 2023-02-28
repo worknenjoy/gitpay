@@ -28,6 +28,7 @@ module.exports = {
   */
   entry: './src/index.js',
   output: {
+    publicPath: '',
     path: `${__dirname}/public`,
     filename: '[name].[hash].js'
   },
