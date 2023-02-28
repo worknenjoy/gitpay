@@ -42,9 +42,9 @@ router.post('/authorize/local',
     session: false,
     failureMessage: true,
     failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`,
-    //successRedirect: `${process.env.FRONTEND_HOST}/#/token/${req?.user?.token}`
+    // successRedirect: `${process.env.FRONTEND_HOST}/#/token/${req?.user?.token}`
   }),
-  (req, res, next) =>  {
+  (req, res, next) => {
     res.set('Authorization', 'Bearer ' + req.user.token)
     res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
   }
