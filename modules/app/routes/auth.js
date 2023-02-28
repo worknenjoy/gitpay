@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const { returns } = require('chai-spies')
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')

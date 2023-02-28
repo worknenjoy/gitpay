@@ -76,8 +76,8 @@
     "passport-github2": "^0.1.10",
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
-    "passport-stub": "^1.1.1",
     "passport-local": "^1.0.0",
+    "passport-stub": "^1.1.1",
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
     "query-string": "^5.1.0",
@@ -93,6 +93,7 @@
     "url-search-params": "^1.0.2",
     "webpack": "^4.42.1",
     "webpack-dev-server": "^3.10.3",
+    "x-frame-options": "^1.0.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

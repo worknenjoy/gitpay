@@ -47,7 +47,8 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development'),
         'API_HOST': JSON.stringify('http://localhost:3000'),
         'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY),
-        'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK)
+        'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK),
+        'GOOGLE_RECAPTCHA_SITE_KEY': JSON.stringify(process.env.GOOGLE_RECAPTCHA_SITE_KEY),
       }
     }),
     new webpack.ProvidePlugin({

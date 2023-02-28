@@ -19,7 +19,7 @@ const styles = theme => ({
   card: {
     width: '50%',
     marginTop: 50,
-    opacity: 0.7
+    opacity: 0.8
   },
   cardContent: {
     textAlign: 'center'

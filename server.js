@@ -10,6 +10,7 @@ const passport = require('passport')
 require('./config/passport')
 const load = require('./modules/app')
 const i18n = require('i18n')
+const xFrameOptions = require('x-frame-options')
 
 // const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid } = require('./cron')
 
@@ -19,6 +20,8 @@ if (process.env.NODE_ENV !== 'production') {
 else {
   app.use(sslRedirect())
 }
+
+app.use(xFrameOptions())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
