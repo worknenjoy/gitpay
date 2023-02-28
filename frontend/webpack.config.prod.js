@@ -67,8 +67,8 @@ module.exports = {
       loader: 'babel-loader',
       exclude: /node_modules/,
       options: {
-        presets: [['es2015', { 'modules': false }], 'react'],
-        plugins: ['transform-object-rest-spread', 'transform-class-properties']
+        presets: ['@babel/preset-env', '@babel/preset-react'],
+        plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
       }
     }, {
       test: /\.css$/,
