@@ -36,6 +36,9 @@ module.exports = {
     alias: {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`
+    },
+    fallback: {
+      stream: 'stream-browserify'
     }
   },
   plugins: [
