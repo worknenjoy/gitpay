@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const { returns } = require('chai-spies')
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
@@ -42,13 +43,12 @@ router.post('/authorize/local',
     session: false,
     failureMessage: true,
     failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`,
-    successRedirect: `${process.env.FRONTEND_HOST}/#/token/`
-  },
-  (req, res) =>  {
-    console.log('authorization', req, res)
-    //res.set('Authorization', 'Bearer ' + req?.user?.token)
-    //res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
-  })
+    //successRedirect: `${process.env.FRONTEND_HOST}/#/token/${req?.user?.token}`
+  }),
+  (req, res, next) =>  {
+    res.set('Authorization', 'Bearer ' + req?.user?.token)
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
+  }
 )
 
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)

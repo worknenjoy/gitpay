@@ -50,7 +50,7 @@ class LoginForm extends Component {
     this.state = {
       type: 'signup',
       action: `${api.API_URL}/authorize/local`,
-      name: '',
+      username: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -133,7 +133,7 @@ class LoginForm extends Component {
 
   handleSubmit = event => {
     const currentErrors = this.state.error
-    const { email, password, confirmPassword } = this.state
+    const { username, password, confirmPassword } = this.state
     if (this.state.type === 'signup') {
       event && event.preventDefault()
       const validPassword = this.validatePassword(password, currentErrors)
@@ -142,7 +142,7 @@ class LoginForm extends Component {
       validPassword && validPasswordConfirm && validEmail &&
       this.props.registerUser({
         name: this.state.name,
-        email: this.state.email,
+        email: this.state.username,
         password: this.state.password
       }).then((response) => {
         const errorType = response.error.response.data.message
@@ -202,7 +202,7 @@ class LoginForm extends Component {
         ) }
         <div className={ classes.margins }>
           <TextField
-            name='email'
+            name='username'
             onChange={ this.handleChange('email') }
             onBlur={ this.handleBlur }
             fullWidth

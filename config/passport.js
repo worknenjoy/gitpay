@@ -388,9 +388,9 @@ passport.use(
 
 passport.use(
   new LocalStrategy(
-    async function verify (email, password, done) {
+    async function verify (username, password, done) {
       const userAttributes = {
-        email: email
+        email: username
       }
       try {
         const user = await userExist(userAttributes)
