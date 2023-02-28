@@ -23,7 +23,7 @@ import TaskStatusIcons from './task-status-icons'
 import TaskLabels from './task-labels'
 
 import logoGithub from '../../images/github-logo.png'
-import logoBitbucket  from '../../images/bitbucket-logo.png'
+import logoBitbucket from '../../images/bitbucket-logo.png'
 
 const TaskHeaderContainer = styled.div`
   box-sizing: border-box;

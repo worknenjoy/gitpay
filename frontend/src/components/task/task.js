@@ -980,7 +980,7 @@ class Task extends Component {
                         </Button>
                       }
                     >
-                     { renderHTML(marked(task.data.description)) }
+                      { renderHTML(marked(task.data.description)) }
                     </ShowMoreText>
 
                   </Typography>

@@ -9,7 +9,7 @@ import {
   Typography
 } from '@material-ui/core'
 import purple from '@material-ui/core/colors/purple'
-import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from 'react-google-recaptcha'
 
 import api from '../../consts'
 
@@ -93,7 +93,8 @@ class LoginForm extends Component {
         }
       })
       return false
-    } else {
+    }
+    else {
       if (email && !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
         this.setState({
           error: {
@@ -135,10 +136,10 @@ class LoginForm extends Component {
 
   handleSubmit = event => {
     const currentErrors = this.state.error
-    if(!this.state.captchaChecked) {
-      this.setState({error: {...currentErrors, captcha: 'Please check the captcha'}});
+    if (!this.state.captchaChecked) {
+      this.setState({ error: { ...currentErrors, captcha: 'Please check the captcha' } })
       event && event.preventDefault()
-      return false;
+      return false
     }
     const { name, username, password, confirmPassword } = this.state
     if (this.state.type === 'signup') {
@@ -290,21 +291,21 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        <div style={{display: 'flex', justifyContent: 'center', width: '100%', height: 100, marginTop: 20, marginBottom: 20}}>
+        <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 100, marginTop: 20, marginBottom: 20 } }>
           <ReCAPTCHA
             sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
-            onChange={captchaChecked => this.setState({ captchaChecked })}
+            onChange={ captchaChecked => this.setState({ captchaChecked }) }
           />
         </div>
-        {error.captcha &&
-          <div style={{
+        { error.captcha &&
+          <div style={ {
             color: 'red',
             fontSize: 10,
             display: 'flex',
             justifyContent: 'center',
-          }}>
+          } }>
             <Typography type='body1' component='span'>
-              {error.captcha}
+              { error.captcha }
             </Typography>
           </div>
         }

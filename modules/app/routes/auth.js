@@ -45,7 +45,7 @@ router.post('/authorize/local',
     //successRedirect: `${process.env.FRONTEND_HOST}/#/token/${req?.user?.token}`
   }),
   (req, res, next) =>  {
-    res.set('Authorization', 'Bearer ' + req?.user?.token)
+    res.set('Authorization', 'Bearer ' + req.user.token)
     res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
   }
 )
