@@ -74,7 +74,6 @@
     "@mui/styled-engine-sc": "^5.11.0",
     "@sindresorhus/slugify": "^2.2.0",
     "axios": "^0.21.4",
-    "babel-core": "^6.26.3",
     "babel-loader": "^9.1.2",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-add-react-displayname": "0.0.5",
