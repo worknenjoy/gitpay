@@ -29,7 +29,7 @@ module.exports = Promise.method(function orderRefund (orderParams) {
                 plain: true
               }).then(orderUpdate => {
                 const orderData = orderUpdate[1].dataValues
-                return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
+                return Promise.all([models.User.findByPk(orderData.userId), models.Task.findByPk(orderData.TaskId)]).spread((user, task) => {
                   if (orderData.amount) {
                     PaymentMail.refund(user, task, orderData)
                   }
@@ -80,7 +80,7 @@ module.exports = Promise.method(function orderRefund (orderParams) {
                   throw new Error('update_order_error')
                 }
                 const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
-                return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
+                return Promise.all([models.User.findByPk(orderData.userId), models.Task.findByPk(orderData.TaskId)]).spread((user, task) => {
                   PaymentMail.refund(user, task.dataValues, orderData)
                   return orderData
                 })

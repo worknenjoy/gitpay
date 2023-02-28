@@ -7,15 +7,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Offer.belongsTo(models.User, { foreignKey: 'userId' })
-        Offer.belongsTo(models.Task, { foreignKey: 'taskId' })
-      }
-    },
-    instanceMethods: {
-    }
   })
+
+  Offer.associate = (models) => {
+    Offer.belongsTo(models.User, { foreignKey: 'userId' })
+    Offer.belongsTo(models.Task, { foreignKey: 'taskId' })
+  }
+
   return Offer
 }

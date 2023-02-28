@@ -19,8 +19,8 @@ import {
 } from '@material-ui/icons'
 import { blue } from '@material-ui/core/colors'
 
-const logoGithub = require('../../images/github-logo.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
+import logoGithub from '../../images/github-logo.png'
+import logoBitbucket from '../../images/bitbucket-logo.png'
 
 const statuses = ['open', 'in_progress', 'closed']
 const providerStatus = {

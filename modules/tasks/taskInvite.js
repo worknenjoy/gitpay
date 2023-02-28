@@ -6,7 +6,7 @@ const i18n = require('i18n')
 
 module.exports = Promise.method(function ({ id }, { message, email, name }) {
   return models.Task
-    .findById(id, { include: [ models.User, models.Order, models.Assign ] })
+    .findByPk(id, { include: [ models.User, models.Order, models.Assign ] })
     .then(task => {
       const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
       const user = task.User.dataValues

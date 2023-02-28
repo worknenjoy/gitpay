@@ -24,13 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
       type: DataTypes.BOOLEAN
     },
-  }, {
-    classMethods: {
-      associate: (models) => {
-        TaskSolution.belongsTo(models.User, { foreignKey: 'userId' })
-      }
-    }
   })
+
+  TaskSolution.associate = (models) => {
+    TaskSolution.belongsTo(models.Task, { foreignKey: 'taskId' })
+  }
 
   return TaskSolution
 }

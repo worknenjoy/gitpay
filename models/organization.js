@@ -15,16 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     customer_id: DataTypes.STRING,
     account_id: DataTypes.STRING,
     paypal_id: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Organization.belongsTo(models.User)
-        Organization.hasMany(models.Project)
-      }
-    },
-    instanceMethods: {
-
-    }
   })
+
+  Organization.associate = (models) => {
+    Organization.belongsTo(models.User)
+    Organization.hasMany(models.Project)
+  }
+
   return Organization
 }

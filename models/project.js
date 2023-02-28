@@ -12,16 +12,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: true,
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Project.hasMany(models.Task)
-        Project.belongsTo(models.Organization)
-      }
-    },
-    instanceMethods: {
-
-    }
   })
+
+  Project.associate = (models) => {
+    Project.hasMany(models.Task)
+    Project.belongsTo(models.Organization)
+  }
+
   return Project
 }

@@ -11,7 +11,7 @@ const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy
 const bitbucketStrategy = require('passport-bitbucket-oauth20').Strategy
 const facebookStrategy = require('passport-facebook').Strategy
-const LocalStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local')
 const requestPromise = require('request-promise')
 const passportJWT = require('passport-jwt')
 const ExtractJWT = passportJWT.ExtractJwt
@@ -388,34 +388,28 @@ passport.use(
 
 passport.use(
   new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password'
-    },
-    (email, password, done) => {
-      process.nextTick(_ => {
-        const userAttributes = {
-          email: email
+    async function verify (username, password, done) {
+      const userAttributes = {
+        email: username
+      }
+      try {
+        const user = await userExist(userAttributes)
+        if (!user) done(null, false)
+        if (user.verifyPassword(password, user.password)) {
+          const token = jwt.sign(
+            { email: user.email },
+            process.env.SECRET_PHRASE
+          )
+          user.token = token
+          return done(null, user)
         }
-        userExist(userAttributes)
-          .then(user => {
-            if (!user) return done(null, false)
-            if (user.verifyPassword(password, user.password)) {
-              const token = jwt.sign(
-                { email: user.email },
-                process.env.SECRET_PHRASE
-              )
-              user.token = token
-              return done(null, user)
-            }
-            return done(null, false)
-          })
-          .catch(error => {
-            return done(error)
-          })
-      })
-    }
-  )
+        return done(null, false)
+      }
+      catch (err) {
+        console.log('err', err)
+        return done(err)
+      };
+    })
 )
 
 passport.use(new JWTStrategy({

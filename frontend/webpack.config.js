@@ -9,21 +9,28 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  node: {
+    global: true,
+  },
   mode: 'development',
   entry: './src/index.js',
   output: {
+    publicPath: '',
     path: `${__dirname}/public`,
     filename: './app.js'
   },
   devServer: {
     port: 8082,
-    contentBase: './public'
+    static: './public'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`
+    },
+    fallback: {
+      stream: 'stream-browserify'
     }
   },
   plugins: [
@@ -40,27 +47,42 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development'),
         'API_HOST': JSON.stringify('http://localhost:3000'),
         'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY),
-        'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK)
+        'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK),
+        'GOOGLE_RECAPTCHA_SITE_KEY': JSON.stringify(process.env.GOOGLE_RECAPTCHA_SITE_KEY),
       }
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
     })
   ],
   module: {
-    rules: [{
-      test: /.js[x]?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      query: {
-        presets: ['es2015', 'react'],
-        plugins: ['transform-object-rest-spread', 'transform-class-properties']
+    rules: [
+      {
+        test: /.js[x]?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
+        }
+      }, {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }, {
+        test: /\.(woff|woff2|ttf|eot|svg)$/,
+        loader: 'file-loader'
+      },
+      { test: /\.(png|jpg)$/, loader: 'url-loader', options: { limit: 8192 } },
+      {
+        compiler: 'html-webpack-plugin',
+        resolve: {
+          /* ... */
+          // This will merge with the current resolve options
+          // Arrays will be overriden, but they can use `"..."` to reference to previous items
+          // It's not possible to reference previous items except some of them
+          // This might be a limitation and we might need to add something to support that
+        }
       }
-    }, {
-      test: /\.css$/,
-      use: [MiniCssExtractPlugin.loader, 'css-loader']
-    }, {
-      test: /\.(woff|woff2|ttf|eot|svg)$/,
-      loader: 'file-loader'
-    },
-    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
   }
 }

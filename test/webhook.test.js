@@ -91,7 +91,7 @@ describe('webhooks', () => {
                       expect(res.body.id).to.equal(
                         'evt_1CcecMBrSjgsps2DMFZw5Tyx'
                       )
-                      models.Order.findById(order.dataValues.id).then(o => {
+                      models.Order.findByPk(order.dataValues.id).then(o => {
                         expect(o.dataValues.source).to.equal(
                           'ch_1CcdmsBrSjgsps2DNZiZAyvG'
                         )
@@ -136,7 +136,7 @@ describe('webhooks', () => {
                       expect(res.body.id).to.equal(
                         'ch_1FTTdqBrSjgsps2DQjHwwqr4'
                       )
-                      models.Order.findById(order.dataValues.id).then(o => {
+                      models.Order.findByPk(order.dataValues.id).then(o => {
                         expect(o.dataValues.source).to.equal(
                           'ch_1CcdmsBrSjgsps2DNZiZAyvG'
                         )
@@ -181,7 +181,7 @@ describe('webhooks', () => {
                       expect(res.body.id).to.equal(
                         'evt_1CeLZlBrSjgsps2DYpOlFCuW'
                       )
-                      models.Order.findById(order.dataValues.id).then(o => {
+                      models.Order.findByPk(order.dataValues.id).then(o => {
                         expect(o.dataValues.source).to.equal(
                           'ch_1CeLZkBrSjgsps2DCNBQmnLA'
                         )
@@ -218,7 +218,7 @@ describe('webhooks', () => {
                   expect(res.body.id).to.equal(
                     'evt_1CeLZlBrSjgsps2DYpOlFCuW'
                   )
-                  models.Order.findById(chargeData.success.data.object.metadata.order_id).then(o => {
+                  models.Order.findByPk(chargeData.success.data.object.metadata.order_id).then(o => {
                     expect(o.dataValues.source).to.equal(
                       'ch_1CeLZkBrSjgsps2DCNBQmnLA'
                     )
@@ -262,7 +262,7 @@ describe('webhooks', () => {
                       expect(res.body.id).to.equal(
                         'evt_1D8FHCBrSjgsps2DKkdcPqfg'
                       )
-                      models.Order.findById(order.dataValues.id).then(o => {
+                      models.Order.findByPk(order.dataValues.id).then(o => {
                         expect(o.dataValues.source).to.equal(
                           'ch_1D8FHBBrSjgsps2DJawS1hYk'
                         )

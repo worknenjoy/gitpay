@@ -45,7 +45,7 @@ describe("tasks", () => {
     }, function(err){
       console.log(err);
     });
-    nock.cleanAll() 
+    nock.cleanAll()
   })
 
   describe('list tasks', () => {
@@ -154,7 +154,7 @@ describe("tasks", () => {
       register(agent).then(user => {
         login(agent).then(res => {
           console.log('user data', res.headers.authorization, res.body.id)
-          
+
           agent
             .post('/tasks/create/')
             .send({url: 'https://github.com/worknenjoy/truppie/issues/99', provider: 'github', userId: user.body.id})
@@ -604,7 +604,7 @@ describe("tasks", () => {
             .expect(200)
             .then(async () => {
               expect(
-                await models.Task.findById(task.id).catch(done)
+                await models.Task.findByPk(task.id).catch(done)
               ).to.be.null
               done()
             }).catch(done)
@@ -622,7 +622,7 @@ describe("tasks", () => {
           .end((err, deleted) => {
             expect(deleted.text).to.equal('1')
             done(err)
-          }) 
+          })
         }).catch(done)
       })
     })
@@ -630,7 +630,7 @@ describe("tasks", () => {
     xit('should send message to the author', async (done) => {
       chai.use(spies);
       const mailSpySuccess = chai.spy.on(TaskMail, 'messageAuthor')
-      const firstUser = await register(agent, {email: 'owntask@gitpay.me', password: '1234'}) 
+      const firstUser = await register(agent, {email: 'owntask@gitpay.me', password: '1234'})
       const task = await buildTask({ userId: firstUser.body.id })
       const res = await registerAndLogin(agent)
       await agent
@@ -712,7 +712,7 @@ describe("tasks", () => {
               models.Assign.findAll({where: {TaskId: res.id}}).then(res => {
               const assignId  = res[0].dataValues.id
 
-              // assign user to a task 
+              // assign user to a task
               agent
                 .post('/tasks/assignment/request/')
                 .set('Authorization', logged.headers.authorization)
@@ -782,7 +782,7 @@ describe("tasks", () => {
               models.Assign.findAll({where: {TaskId: res.id}}).then(res => {
               const assignId  = res[0].dataValues.id
 
-              // assign user to a task 
+              // assign user to a task
               agent
                 .post('/tasks/assignment/request/')
                 .set('Authorization', logged.headers.authorization)

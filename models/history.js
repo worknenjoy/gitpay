@@ -18,13 +18,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        History.belongsTo(models.Task)
-      }
-    }
   })
+
+  History.associate = (models) => {
+    History.belongsTo(models.Task)
+  }
 
   return History
 }

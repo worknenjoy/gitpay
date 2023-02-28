@@ -15,7 +15,7 @@ import TaskHeader from './task-header'
 import AuthorList from './task-author-list'
 import queryString from 'query-string'
 import renderHTML from 'react-render-html'
-import marked from 'marked'
+import { marked } from 'marked'
 
 import {
   Container,
@@ -953,7 +953,7 @@ class Task extends Component {
                     </div>
                   </Collapse>
                 ) }
-                { task.data &&
+                { task.data.description &&
                 <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
                   <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
                     <FormattedMessage id='task.info.description' defaultMessage='Description' />
@@ -980,7 +980,7 @@ class Task extends Component {
                         </Button>
                       }
                     >
-                      { task.data.description ? renderHTML(marked(task.data.description)) : renderHTML(marked(task.data.metadata ? task.data.metadata.issue.body : 'not available')) }
+                     { renderHTML(marked(task.data.description)) }
                     </ShowMoreText>
 
                   </Typography>

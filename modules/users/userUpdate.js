@@ -26,13 +26,13 @@ module.exports = Promise.method(function userUpdate (userParameters) {
       if (userParameters.Types) {
         await currentUser.setTypes([])
         const types = userParameters.Types.map(async t => {
-          const type = await models.Type.findById(t.id)
+          const type = await models.Type.findByPk(t.id)
           await currentUser.addType(type)
           return t
         })
         return { ...currentUser.dataValues, Types: await Promise.all(types) }
       }
-      const updatedUser = models.User.findById(currentUser.dataValues.id, {
+      const updatedUser = models.User.findByPk(currentUser.dataValues.id, {
         include: [models.Type]
       })
       return updatedUser

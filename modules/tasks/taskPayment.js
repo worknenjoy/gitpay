@@ -59,7 +59,7 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
                 TransferMail.error(user, task, task.value)
                 throw new Error('update_task_reject')
               }
-              return models.User.findById(task.userId).then(taskOwner => {
+              return models.User.findByPk(task.userId).then(taskOwner => {
                 TransferMail.notifyOwner(taskOwner.dataValues, task, task.value)
                 TransferMail.success(user, task, task.value)
                 return transfer

@@ -30,25 +30,21 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     }
   }, {
-    classMethods: {
-      associate: (models) => {
-        Order.belongsTo(models.User, { foreignKey: 'userId' })
-        Order.belongsTo(models.Task, { foreignKey: 'TaskId' })
-        Order.hasOne(models.Plan, { foreignKey: 'OrderId' })
-      }
-    },
-    instanceMethods: {
-
-    },
     hooks: {
       afterUpdate: async (instance, options) => {
         if (instance.paid) {
-          const task = await sequelize.models.Task.findById(instance.TaskId)
+          const task = await sequelize.models.Task.findByPk(instance.TaskId)
           await comment(instance, task)
         }
       }
     }
   })
+
+  Order.associate = (models) => {
+    Order.belongsTo(models.User, { foreignKey: 'userId' })
+    Order.belongsTo(models.Task, { foreignKey: 'TaskId' })
+    Order.hasOne(models.Plan, { foreignKey: 'OrderId' })
+  }
 
   return Order
 }

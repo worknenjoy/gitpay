@@ -21,7 +21,6 @@ function isNotAuthOrRedirect (req, res, next) {
 
 function isAuth (req, res, next) {
   // if (req.isAuthenticated()) return res.send({ 'authenticated': true });
-
   const token = req.headers.authorization.split(' ')[1]
 
   if (token) {
@@ -42,7 +41,7 @@ function isAuth (req, res, next) {
         })
       }).catch(e => {
         // eslint-disable-next-line no-console
-        console.log('error to sign user')
+        console.log('error to sign user', e)
         return res.status(401).end()
       })
     })

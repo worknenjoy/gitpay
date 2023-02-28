@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -32,22 +32,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        User.hasMany(models.Organization)
-        User.belongsToMany(models.Type, { through: 'User_Types' })
-      },
-      generateHash: (password) => {
-        /* eslint-disable no-sync */
-        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-      }
-    },
-    instanceMethods: {
-      verifyPassword: (password, databasePassword) => {
-        return bcrypt.compareSync(password, databasePassword)
-      }
-    }
   })
+
+  User.associate = (models) => {
+    User.hasMany(models.Organization)
+    User.belongsToMany(models.Type, { through: 'User_Types' })
+  }
+
+  User.generateHash = (password) => {
+    /* eslint-disable no-sync */
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+  }
+
+  User.prototype.verifyPassword = (password, databasePassword) => {
+    return bcrypt.compareSync(password, databasePassword)
+  }
+
   return User
 }

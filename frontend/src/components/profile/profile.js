@@ -57,8 +57,8 @@ import PreferencesBar from './preferences-bar'
 import UserOganizationTree from '../../containers/user-organization-tree'
 import AccountDetails from '../../containers/account-details'
 
-const logoGithub = require('../../images/github-logo.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
+import logoGithub from '../../images/github-logo.png'
+import logoBitbucket from '../../images/bitbucket-logo.png'
 
 const styles = theme => ({
   root: {

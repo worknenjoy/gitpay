@@ -33,7 +33,7 @@ module.exports = Promise.method(function userTasks (id) {
             throw error
           })
       })
-    }).all().then(res => {
+    }).then(res => {
       const filteredRes = res.filter(r => r !== undefined)
       let bounties = 0
       // If the task is paid adds the value to "bounties"

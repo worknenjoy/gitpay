@@ -77,12 +77,12 @@ import messagesEnLocal from '../../translations/generated/en.json'
 import LoginButton from '../session/login-button'
 import ImportIssueButton from './import-issue'
 
-const logo = require('../../images/gitpay-logo.png')
-const logoGithub = require('../../images/github-logo-alternative.png')
-const logoBitbucket = require('../../images/bitbucket-logo.png')
+import logo from '../../images/gitpay-logo.png'
+import logoGithub from '../../images/github-logo-alternative.png'
+import logoBitbucket from '../../images/bitbucket-logo.png'
 
-const logoLangEn = require('../../images/united-states-of-america.png')
-const logoLangBr = require('../../images/brazil.png')
+import logoLangEn from '../../images/united-states-of-america.png'
+import logoLangBr from '../../images/brazil.png'
 
 const languagesIcons = {
   en: logoLangEn,

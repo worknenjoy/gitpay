@@ -3,7 +3,7 @@ const models = require('../../models')
 
 module.exports = Promise.method(function taskSync (taskParameters) {
   // eslint-disable-next-line no-console
-  return models.Task.findById(taskParameters.id, {
+  return models.Task.findByPk(taskParameters.id, {
     include: [ models.Order ]
   }).then(task => {
     let finalValue = {
@@ -44,7 +44,7 @@ module.exports = Promise.method(function taskSync (taskParameters) {
       taskAttributes.status = 'closed'
     }
 
-    return task.updateAttributes(taskAttributes).then(updatedTask => {
+    return task.set(taskAttributes).save().then(updatedTask => {
       if (updatedTask) {
         return {
           value: finalValue

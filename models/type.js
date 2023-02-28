@@ -3,16 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     label: DataTypes.STRING,
     description: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Type.belongsToMany(models.User, { through: 'User_Types' })
-      }
-    },
-    instanceMethods: {
-
-    }
   })
+
+  Type.associate = (models) => {
+    Type.belongsToMany(models.User, { through: 'User_Types' })
+  }
 
   return Type
 }

@@ -9,6 +9,7 @@ import {
   Typography
 } from '@material-ui/core'
 import purple from '@material-ui/core/colors/purple'
+import ReCAPTCHA from "react-google-recaptcha";
 
 import api from '../../consts'
 
@@ -50,12 +51,12 @@ class LoginForm extends Component {
     this.state = {
       type: 'signup',
       action: `${api.API_URL}/authorize/local`,
-      name: '',
-      email: '',
+      username: '',
       password: '',
       confirmPassword: '',
       validating: false,
-      error: {}
+      error: {},
+      captchaChecked: false
     }
   }
 
@@ -88,19 +89,20 @@ class LoginForm extends Component {
       this.setState({
         error: {
           ...currentErrors,
-          email: 'Email cannot be empty'
+          username: 'Email cannot be empty'
         }
       })
       return false
-    }
-    if (!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-      this.setState({
-        error: {
-          ...currentErrors,
-          email: 'Invalid email'
-        }
-      })
-      return false
+    } else {
+      if (email && !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        this.setState({
+          error: {
+            ...currentErrors,
+            username: 'Invalid email'
+          }
+        })
+        return false
+      }
     }
     return true
   }
@@ -133,24 +135,30 @@ class LoginForm extends Component {
 
   handleSubmit = event => {
     const currentErrors = this.state.error
-    const { email, password, confirmPassword } = this.state
+    if(!this.state.captchaChecked) {
+      this.setState({error: {...currentErrors, captcha: 'Please check the captcha'}});
+      event && event.preventDefault()
+      return false;
+    }
+    const { name, username, password, confirmPassword } = this.state
     if (this.state.type === 'signup') {
       event && event.preventDefault()
       const validPassword = this.validatePassword(password, currentErrors)
       const validPasswordConfirm = this.validatePasswordDontMatch(password, confirmPassword, currentErrors)
-      const validEmail = this.validateEmail(email, currentErrors)
+      const validEmail = this.validateEmail(username, currentErrors)
       validPassword && validPasswordConfirm && validEmail &&
       this.props.registerUser({
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password
+        name,
+        email: username,
+        password: password
       }).then((response) => {
-        const errorType = response.error.response.data.message
+        const errorType = response.error && response.error.response.data.message
         if (errorType === 'user.exist') {
           window.location.reload('/#/signin')
         }
         else {
-          this.props.history.push('/signup')
+          this.props.history.push('/signin')
+          return false
         }
       }).catch((error) => {
         this.setState({
@@ -164,7 +172,7 @@ class LoginForm extends Component {
       })
     }
     else {
-      this.validateEmail(email, currentErrors)
+      this.validateEmail(username, currentErrors)
       this.validatePassword(password, currentErrors)
     }
   }
@@ -202,8 +210,8 @@ class LoginForm extends Component {
         ) }
         <div className={ classes.margins }>
           <TextField
-            name='email'
-            onChange={ this.handleChange('email') }
+            name='username'
+            onChange={ this.handleChange('username') }
             onBlur={ this.handleBlur }
             fullWidth
             InputLabelProps={ {
@@ -221,9 +229,9 @@ class LoginForm extends Component {
             } }
             label='E-mail'
             variant='outlined'
-            id='email'
-            error={ error.email }
-            helperText={ error.email }
+            id='username'
+            error={ error.username }
+            helperText={ error.username }
           />
         </div>
         <div className={ classes.margins }>
@@ -282,6 +290,24 @@ class LoginForm extends Component {
             />
           </div>
         ) }
+        <div style={{display: 'flex', justifyContent: 'center', width: '100%', height: 100, marginTop: 20, marginBottom: 20}}>
+          <ReCAPTCHA
+            sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
+            onChange={captchaChecked => this.setState({ captchaChecked })}
+          />
+        </div>
+        {error.captcha &&
+          <div style={{
+            color: 'red',
+            fontSize: 10,
+            display: 'flex',
+            justifyContent: 'center',
+          }}>
+            <Typography type='body1' component='span'>
+              {error.captcha}
+            </Typography>
+          </div>
+        }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>

@@ -2,7 +2,7 @@ const models = require('../models')
 
 const project = async (userOrCompany, projectName, userId, provider) => {
   try {
-    const organizationExist = await models.Organization.find(
+    const organizationExist = await models.Organization.findOne(
       {
         where: {
           name: userOrCompany
@@ -11,7 +11,7 @@ const project = async (userOrCompany, projectName, userId, provider) => {
       }
     )
     if (organizationExist) {
-      const projectFromOrg = await models.Project.find(
+      const projectFromOrg = await models.Project.findOne(
         {
           where: {
             name: projectName,

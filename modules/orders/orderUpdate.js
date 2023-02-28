@@ -47,7 +47,7 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
           const orderData = order[1].dataValues
           // eslint-disable-next-line no-console
           console.log('orderData', orderData)
-          return Promise.all([models.User.findById(orderData.userId), models.Task.findById(orderData.TaskId)]).spread((user, task) => {
+          return Promise.all([models.User.findByPk(orderData.userId), models.Task.findByPk(orderData.TaskId)]).spread((user, task) => {
             // eslint-disable-next-line no-console
             console.log('send email task', task)
             if (orderData.paid) {
@@ -59,7 +59,7 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
             }
             if (task.dataValues.assigned) {
               const assignedId = task.dataValues.assigned
-              return models.Assign.findById(assignedId, {
+              return models.Assign.findByPk(assignedId, {
                 include: [models.User]
               }).then(assign => {
                 PaymentMail.assigned(assign.dataValues.User.dataValues, task, orderData.amount)

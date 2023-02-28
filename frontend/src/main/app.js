@@ -9,7 +9,7 @@ import 'fontsource-roboto'
 
 import {
   MuiThemeProvider,
-  createMuiTheme
+  createTheme
 } from '@material-ui/core'
 import Palette from '../components/styles/palette'
 import './app.css'
@@ -70,7 +70,7 @@ store.dispatch(updateIntl({
   messages: messages[currentLang],
 }))
 
-const theme = createMuiTheme(Palette)
+const theme = createTheme(Palette)
 
 function App () {
   const [isLoading, setIsLoading] = useState(true)
