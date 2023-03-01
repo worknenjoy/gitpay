@@ -1,5 +1,4 @@
 const express = require('express')
-const cors = require('cors')
 const sslRedirect = require('heroku-ssl-redirect')
 const app = express()
 const session = require('express-session')
@@ -15,6 +14,7 @@ const xFrameOptions = require('x-frame-options')
 // const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid } = require('./cron')
 
 if (process.env.NODE_ENV !== 'production') {
+  const cors = require('cors')
   app.use(cors())
 }
 else {
