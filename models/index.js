@@ -26,7 +26,8 @@ if (env === 'production') {
     host: host,
     logging: true,
     dialectOptions: {
-      ssl: true
+      ssl: true,
+      rejectUnauthorized: false
     }
   })
   // eslint-disable-next-line no-console
