@@ -10,5 +10,5 @@ before_script:
   - psql -c 'create database gitpay_test;' -U postgres
   - npm run migrate-test
 node_js:
-  - "8.6.0"
+  - "17.3.0"
 

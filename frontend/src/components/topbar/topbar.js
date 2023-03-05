@@ -512,10 +512,7 @@ class TopBar extends Component {
                   >
                     <Chip
                       avatar={ user.picture_url
-                        ? <StyledAvatar
-                          alt={ user.username || '' }
-                          src={ user.picture_url }
-                        />
+                        ? <StyledAvatar alt={ user.username || '' } src={ user.picture_url } />
                         : <StyledAvatar alt={ user.username || '' } src=''>
                           { user.username ? nameInitials(user.username) : <Person /> }
                         </StyledAvatar>
@@ -632,10 +629,7 @@ class TopBar extends Component {
                     <ListItemText>
                       <Chip
                         avatar={ user.picture_url
-                          ? <StyledAvatar
-                            alt={ user.username || '' }
-                            src={ user.picture_url }
-                          />
+                          ? <StyledAvatar alt={ user.username || '' } src={ user.picture_url } />
                           : <StyledAvatar alt={ user.username || '' } src=''>
                             { user.username ? nameInitials(user.username) : <Person /> }
                           </StyledAvatar>
