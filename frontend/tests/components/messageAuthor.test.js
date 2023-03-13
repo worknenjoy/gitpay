@@ -4,10 +4,7 @@
 
 import React from 'react'
 import MessageAuthor from '../../src/components/task/task-message-author'
-import { mount, configure } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-configure({ adapter: new Adapter() })
+import { mount } from 'enzyme'
 
 xdescribe('components', () => {
   describe('message author component', () => {

@@ -41,7 +41,7 @@
   "license": "ISC",
   "devDependencies": {
     "enzyme": "^3.6.0",
-    "enzyme-adapter-react-16": "^1.2.0",
+    "enzyme-adapter-react-16": "^1.15.7",
     "enzyme-react-intl": "^2.0.2",
     "extract-react-intl": "^0.6.0",
     "extract-react-intl-messages": "^0.10.0",

@@ -4,10 +4,7 @@
 
 import React from 'react'
 import TeamCard from '../../src/components/Cards/TeamCard'
-import { mount, configure } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-configure({ adapter: new Adapter() })
+import { mount } from 'enzyme'
 
 xdescribe('components', () => {
   describe('Card component', () => {
