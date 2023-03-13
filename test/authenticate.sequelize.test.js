@@ -1,6 +1,6 @@
 const models = require('../models')
 
-xdescribe('authenticate', () => {
+describe('authenticate', () => {
   it('should authenticate sequelize', (done) => {
     models.sequelize
       .authenticate()
