@@ -25,22 +25,22 @@ xdescribe('webhooks', () => {
       function (rowDeleted) {
         // rowDeleted will return number of rows deleted
         if (rowDeleted === 1) {
-          //console.log('Deleted successfully')
+          console.log('Deleted successfully')
         }
       },
       function (err) {
-        //console.log(err)
+        console.log(err)
       }
     )
     models.User.destroy({ where: {}, truncate: true, cascade: true }).then(
       function (rowDeleted) {
         // rowDeleted will return number of rows deleted
         if (rowDeleted === 1) {
-          //console.log('Deleted successfully')
+          console.log('Deleted successfully')
         }
       },
       function (err) {
-        //console.log(err)
+        console.log(err)
       }
     )
   })
@@ -428,7 +428,6 @@ xdescribe('webhooks', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .then((user) => {
-        //if(!user) //console.log('error to register user')
         const userId = user.body.id;
         const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
         models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
@@ -465,7 +464,7 @@ xdescribe('webhooks', () => {
                     }).catch(e => done(e))
                   })
                 })
-              }).catch(e => //console.log('cant create order', e))
+              }).catch(e => console.log('cant create order', e))
             })
           })
         })
@@ -477,7 +476,7 @@ xdescribe('webhooks', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .then((user) => {
-        if(!user) //console.log('error to register user')
+        if(!user) console.log('error to register user')
         const userId = user.body.id;
         const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
         models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
@@ -515,7 +514,7 @@ xdescribe('webhooks', () => {
                     }).catch(e => done(e))
                   })
                 })
-              }).catch(e => //console.log('cant create order', e))
+              }).catch(e => console.log('cant create order', e))
             })
           })
         })
@@ -527,7 +526,7 @@ xdescribe('webhooks', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .then((user) => {
-        if(!user) //console.log('error to register user')
+        if(!user) console.log('error to register user')
         const userId = user.body.id;
         const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
         models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
@@ -580,7 +579,7 @@ xdescribe('webhooks', () => {
                     })
                   })
                 })
-              }).catch(e => //console.log('cant create order', e))
+              }).catch(e => console.log('cant create order', e))
             })
           })
         })
@@ -615,7 +614,7 @@ xdescribe('webhooks', () => {
             .expect('Content-Type', /json/)
             .expect(200)
             .end(async (err, res) => {
-              if (err) //console.log(err)
+              if (err) console.log(err)
               else {
                 expect(res.body).to.exist
                 expect(res.body.task.status).to.equal('open')
