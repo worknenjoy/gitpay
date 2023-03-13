@@ -33,17 +33,17 @@ xdescribe("tasks", () => {
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        console.log('Deleted successfully');
+        //console.log('Deleted successfully');
       }
     }, function(err){
-      console.log(err);
+      //console.log(err);
     });
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        console.log('Deleted successfully');
+        //console.log('Deleted successfully');
       }
     }, function(err){
-      console.log(err);
+      //console.log(err);
     });
     nock.cleanAll()
   })
@@ -153,7 +153,7 @@ xdescribe("tasks", () => {
     it('should create a new task with one member', (done) => {
       register(agent).then(user => {
         login(agent).then(res => {
-          console.log('user data', res.headers.authorization, res.body.id)
+          //console.log('user data', res.headers.authorization, res.body.id)
 
           agent
             .post('/tasks/create/')

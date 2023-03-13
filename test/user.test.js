@@ -19,10 +19,10 @@ xdescribe("Users", () => {
 
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        console.log('Deleted successfully');
+        //console.log('Deleted successfully');
       }
     }, function(err){
-      console.log(err);
+      //console.log(err);
     });
   })
 

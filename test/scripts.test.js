@@ -14,17 +14,17 @@ xdescribe('Scripts', () => {
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        console.log('Deleted successfully');
+        //console.log('Deleted successfully');
       }
     }, function(err){
-      console.log(err);
+      //console.log(err);
     });
     models.Order.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        console.log('Deleted successfully');
+        //console.log('Deleted successfully');
       }
     }, function(err){
-      console.log(err);
+      //console.log(err);
     });
     nock.cleanAll()
   })

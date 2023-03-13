@@ -16,18 +16,18 @@ xdescribe('orders', () => {
     models.Order.destroy({ where: {}, truncate: true, cascade: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
       if (rowDeleted === 1) {
         // eslint-disable-next-line no-console
-        console.log('Deleted successfully')
+        //console.log('Deleted successfully')
       }
     }, function (err) {
       // eslint-disable-next-line no-console
-      console.log(err)
+      //console.log(err)
     })
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        console.log('Deleted successfully');
+        //console.log('Deleted successfully');
       }
     }, function(err){
-      console.log(err);
+      //console.log(err);
     });
     nock.cleanAll()
   })
@@ -268,7 +268,7 @@ xdescribe('orders', () => {
           .get('/orders/update/?paymentId=PAY-TEST&token=EC-TEST&PayerID=TESTPAYERID')
           .expect(302)
           .end((err, res) => {
-            console.log(err);
+            //console.log(err);
             expect(res.statusCode).to.equal(302);
             done();
           })
@@ -327,27 +327,27 @@ xdescribe('orders', () => {
                     done();
                   }).catch(e => {
                     // eslint-disable-next-line no-console
-                    console.log('error on catch 1', e)
+                    //console.log('error on catch 1', e)
                     done(e)
                   })
                 }).catch(e => {
                   // eslint-disable-next-line no-console
-                  console.log('error on catch 2', e)
+                  //console.log('error on catch 2', e)
                   done(e)
                 })
             }).catch(e => {
               // eslint-disable-next-line no-console
-              console.log('error on catch 3', e)
+              //console.log('error on catch 3', e)
               done(e)
             })
         }).catch(e => {
           // eslint-disable-next-line no-console
-          console.log('error on catch 4', e)
+          //console.log('error on catch 4', e)
           done(e)
         })
       }).catch(e => {
         // eslint-disable-next-line no-console
-        console.log('error on catch 4', e)
+        //console.log('error on catch 4', e)
         done(e)
       })
     });
