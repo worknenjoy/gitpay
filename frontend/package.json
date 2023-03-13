@@ -85,7 +85,7 @@
     "sendgrid": "^5.2.3",
     "sequelize": "^6.1.0",
     "sequelize-cli": "^6.6.0",
-    "sequelize-heroku": "^1.0.0",
+    "sequelize-heroku": "^2.1.6",
     "stripe": "^5.8.0",
     "umzug": "^1.12.0",
     "url": "^0.11.0",
