@@ -27,7 +27,7 @@ jobs:
         POSTGRES_USER: postgres
         PG_PASSWD: postgres
         NODE_ENV: test
-    - image: circleci/postgres:9.5
+    - image: cimg/postgres:9.6
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
