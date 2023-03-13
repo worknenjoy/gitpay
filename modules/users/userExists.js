@@ -42,7 +42,6 @@ const userExists = async userAttributes => {
     return user
   }
   catch (error) {
-    // eslint-disable-next-line no-console
     console.log('userExists error', error)
   }
 }

@@ -406,10 +406,9 @@ passport.use(
         return done(null, false)
       }
       catch (err) {
-        // eslint-disable-next-line no-console
         console.log('err', err)
         return done(err)
-      }
+      };
     })
 )
 

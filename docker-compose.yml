@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   frontend:
-    image: node:17.3
+    image: node:8.6
     command: sh -c "npm install && npm run dev"
     working_dir: /gitpay/frontend
     volumes: 
@@ -15,7 +15,7 @@ services:
   backend:
     env_file:
       - .env
-    image: node:17.3
+    image: node:8.6
     command: sh -c "npm install && npm run migrate && npm run start"
     working_dir: /gitpay
     volumes: 

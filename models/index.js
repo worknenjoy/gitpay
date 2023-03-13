@@ -16,15 +16,15 @@ let sequelize = {}
 
 if (env === 'production') {
   const databaseUrl = process.env.DATABASE_URL
-  // const databaseSettings = databaseUrl.split(':')
-  // const port = databaseSettings[4]
-  // const host = databaseSettings[3]
+  const databaseSettings = databaseUrl.split(':')
+  const port = databaseSettings[4]
+  const host = databaseSettings[3]
   sequelize = new Sequelize(databaseUrl, {
-    // dialect: 'postgres',
-    // protocol: 'postgres',
-    // port: port,
-    // host: host,
-    // logging: true,
+    //dialect: 'postgres',
+    //protocol: 'postgres',
+    //port: port,
+    //host: host,
+    //logging: true,
     dialectOptions: {
       ssl: {
         require: true,
