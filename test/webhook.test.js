@@ -428,7 +428,7 @@ xdescribe('webhooks', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .then((user) => {
-        if(!user) //console.log('error to register user')
+        //if(!user) //console.log('error to register user')
         const userId = user.body.id;
         const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
         models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
