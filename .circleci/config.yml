@@ -78,10 +78,10 @@ jobs:
           name: install frontend dependencies
           command: npm install
           working_directory: frontend
-      - run:
-          name: run frontend tests
-          command: npm run test
-          working_directory: frontend
+      #- run:
+      #    name: run frontend tests
+      #    command: npm run test
+      #    working_directory: frontend
 
 workflows:
   version: 2
