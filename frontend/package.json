@@ -41,7 +41,6 @@
   "license": "ISC",
   "devDependencies": {
     "enzyme": "^3.6.0",
-    "enzyme-react-intl": "^2.0.2",
     "extract-react-intl": "^0.6.0",
     "extract-react-intl-messages": "^0.10.0",
     "fetch-mock": "^7.0.5",
