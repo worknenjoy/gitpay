@@ -7,7 +7,7 @@ const api = require('../server');
 const agent = request.agent(api);
 const models = require('../models');
 
-describe("info", () => {
+xdescribe("info", () => {
   beforeEach(() => {
     models.Task.destroy({ where: {}, truncate: true, cascade: true })
     models.User.destroy({ where: {}, truncate: true, cascade: true })

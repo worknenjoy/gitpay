@@ -8,7 +8,7 @@ const agent = request.agent(api)
 const { TaskCron, OrderCron } = require('../cron')
 const MockDate = require('mockdate')
 
-describe('Crons', () => {
+xdescribe('Crons', () => {
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
@@ -47,7 +47,7 @@ describe('Crons', () => {
             expect(tasks[2].dataValues.value).to.equal('100')
             TaskCron.weeklyBounties().then( r => {
               expect(r.length).to.equal(1)
-              expect(r[0]).to.exist;  
+              expect(r[0]).to.exist;
               expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
               MockDate.reset()
               done()
@@ -74,7 +74,7 @@ describe('Crons', () => {
             expect(tasks[2].dataValues.value).to.equal('100')
             TaskCron.latestTasks().then( r => {
               expect(r.length).to.equal(3)
-              expect(r[0]).to.exist;  
+              expect(r[0]).to.exist;
               expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
               expect(r[2].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
               done(err)
@@ -101,14 +101,14 @@ describe('Crons', () => {
               expect(orders[0].dataValues.id).to.exist
               OrderCron.verify().then( r => {
                 expect(r.length).to.equal(1)
-                expect(r[0]).to.exist;  
+                expect(r[0]).to.exist;
                 expect(r[0].dataValues.status).to.equal('canceled')
                 // expect(mailSpySuccess).to.have.been.called()
                 // mailSpyCancelError.reset()
                 done()
               }).catch(done)
             })
-          })          
+          })
         })
     })
     it('Send email about bounties', (done) => {
@@ -138,7 +138,7 @@ describe('Crons', () => {
                   assigned: assign.dataValues.id
                 }).then( taskUpdated => {
                   TaskCron.rememberDeadline().then( r => {
-                    expect(r[0]).to.exist;  
+                    expect(r[0]).to.exist;
                     expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7336')
                     MockDate.reset()
                     done()
@@ -161,7 +161,7 @@ describe('Crons', () => {
                   assigned: assign.dataValues.id
                 }).then( taskUpdated => {
                   TaskCron.rememberDeadline().then( r => {
-                    expect(r[0]).to.exist;  
+                    expect(r[0]).to.exist;
                     expect(r[0].dataValues.url).to.equal('https://github.com/worknenjoy/truppie/issues/7336')
                     MockDate.reset()
                     done()

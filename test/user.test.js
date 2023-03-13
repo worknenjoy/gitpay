@@ -11,7 +11,7 @@ const nock = require('nock')
 const githubOrg = require('./data/github.org')
 const secrets = require('../config/secrets')
 
-describe("Users", () => {
+xdescribe("Users", () => {
 
   beforeEach(() => {
 

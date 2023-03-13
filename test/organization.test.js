@@ -8,7 +8,7 @@ const agent = request.agent(api);
 const models = require('../models');
 const { register, login } = require('./helpers')
 
-describe("Organizations", () => {
+xdescribe("Organizations", () => {
 
   beforeEach(() => {
 

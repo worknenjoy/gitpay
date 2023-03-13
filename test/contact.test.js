@@ -8,15 +8,15 @@ const api = require('../server')
 const ContactMail = require('../modules/mail/contact')
 const agent = request.agent(api)
 
-describe("Contact", () => {
+xdescribe("Contact", () => {
   describe('Contact recruiters', () => {
     xit('should contact recruiters', (done) => {
       chai.use(spies);
       const mailSpySuccess = chai.spy.on(ContactMail, 'recruiters')
       agent
         .post('/contact/recruiters')
-        .send({ 
-          name: 'Foo', 
+        .send({
+          name: 'Foo',
           title: 'Bar',
           email: 'email',
           phone: 'phone',

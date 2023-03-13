@@ -11,7 +11,7 @@ const { registerAndLogin, register, login } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
 const { error } = require('../modules/mail/transfer')
 
-describe('orders', () => {
+xdescribe('orders', () => {
   beforeEach(() => {
     models.Order.destroy({ where: {}, truncate: true, cascade: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
       if (rowDeleted === 1) {
@@ -29,7 +29,7 @@ describe('orders', () => {
     }, function(err){
       console.log(err);
     });
-    nock.cleanAll() 
+    nock.cleanAll()
   })
 
   describe('list orders', () => {

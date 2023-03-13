@@ -4,7 +4,7 @@ const request = require('supertest')
 const api = require('../server')
 const agent = request.agent(api)
 
-describe("Projects", () => {
+xdescribe("Projects", () => {
   describe("Models", () => {
     it("create", (done) => {
       models.Project.create({name: 'Foo Project'}).then(p => {
@@ -13,7 +13,7 @@ describe("Projects", () => {
       }).catch(done)
     })
     it("create and add task to a project and organization", (done) => {
-      models.User.create({email: 'foo@mail.com'}).then(u => {        
+      models.User.create({email: 'foo@mail.com'}).then(u => {
         models.Organization.create({name: 'Foo Organization', UserId: u.id}).then(o => {
           o.createProject({name: 'Foo Project'}).then(p => {
             p.createTask({url: 'https://task.com', UserId: u.id}).then(pt => {

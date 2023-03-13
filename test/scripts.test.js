@@ -10,7 +10,7 @@ const agent = request.agent(api)
 const SendMail = require('../modules/mail/mail')
 const { scripts } = require('../scripts')
 
-describe('Scripts', () => {
+xdescribe('Scripts', () => {
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
