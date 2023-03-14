@@ -2,7 +2,20 @@ import { indigo, teal, grey, green } from '@material-ui/core/colors'
 
 const Palette = {
   typography: {
-    fontFamily: ['Inter', 'Helvetica', 'Roboto']
+    fontFamily: ['Inter', 'Helvetica', 'Roboto'],
+    h3: {
+      fontWeight: 200,
+      fontSize: 48,
+      lineHeight: '52px',
+      color: '#353A42'
+
+    },
+    h5: {
+      fontWeight: 600,
+      fontSize: 18,
+      lineHeight: '24px',
+      color: '#353A42'
+    }
   },
   palette: {
     primary: {
@@ -36,6 +49,21 @@ const Palette = {
         color: '#000'
       }
     }, */
+    MuiButton: {
+      root: {
+        borderRadius: '18px',
+        //textTransform: 'none',
+        fontSize: 14,
+        color: '#353A42',
+        '&:hover': {
+          backgroundColor: '#E2E5EA'
+        }
+      },
+      primary: {
+        color: '#fff',
+        backgroundColor: '#4D7E6F',
+      }
+    },
     MuiInput: {
       root: {
         margin: '2px 0'

@@ -20,11 +20,11 @@ if (env === 'production') {
   const port = databaseSettings[4]
   const host = databaseSettings[3]
   sequelize = new Sequelize(databaseUrl, {
-    //dialect: 'postgres',
-    //protocol: 'postgres',
-    //port: port,
-    //host: host,
-    //logging: true,
+    // dialect: 'postgres',
+    // protocol: 'postgres',
+    // port: port,
+    // host: host,
+    // logging: true,
     dialectOptions: {
       ssl: {
         require: true,
