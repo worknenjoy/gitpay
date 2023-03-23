@@ -33,7 +33,7 @@ module.exports = {
     filename: '[name].[hash].js'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
     alias: {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`
