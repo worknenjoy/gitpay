@@ -18,7 +18,7 @@ export const Container = styled.div`
 `
 
 export const BaseFooter = styled.div`
-  padding-top: 20px;
+  padding-top: 0;
 `
 
 export const SubscribeFromWrapper = styled.div`

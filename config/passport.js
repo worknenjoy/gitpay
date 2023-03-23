@@ -394,7 +394,7 @@ passport.use(
       }
       try {
         const user = await userExist(userAttributes)
-        if (!user) done(null, false)
+        if (!user) return done(null, false)
         if (user.verifyPassword(password, user.password)) {
           const token = jwt.sign(
             { email: user.email },

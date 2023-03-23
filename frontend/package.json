@@ -11,7 +11,9 @@
     "production": "webpack --progress --config webpack.config.prod.js",
     "translate": "NODE_ENV=development extract-messages --flat true -l=en,br -o src/translations/generated 'src/**/*.js'",
     "output-translation": "node translation.js",
-    "sitemap": "node sitemap-builder.js"
+    "sitemap": "node sitemap-builder.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "jest": {
     "setupFiles": [
@@ -40,6 +42,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.2.0",
     "enzyme-react-intl": "^2.0.2",
@@ -51,6 +61,8 @@
     "jest-webpack": "^0.5.1",
     "moxios": "^0.4.0",
     "react-test-renderer": "^16.6.3",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.2",
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
@@ -68,6 +80,7 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
+    "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.8",
     "@mui/styled-engine-sc": "^5.11.0",
     "@sindresorhus/slugify": "^2.2.0",

@@ -45,7 +45,7 @@ import {
 const styles = theme => mainStyles(theme)
 
 class Welcome extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -53,24 +53,24 @@ class Welcome extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
 
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
 
   }
 
-  render() {
+  render () {
     const { classes } = this.props
 
     return (
-      <div className={classes.root}>
+      <div className={ classes.root }>
         <TopBarContainer ref='intro' hide />
         <Container>
           <Section ref='contrib'>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+            <Grid container spacing={ 3 }>
+              <Grid item xs={ 12 } sm={ 6 }>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -81,66 +81,66 @@ class Welcome extends Component {
                 </MainTitle>
                 <MainList>
                   <List>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <Apps />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeFreelancersItemOnePrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeFreelancersItemOneSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
 
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <Work />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeFreelancersItemTwoPrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeFreelancersItemTwoSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
 
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <AccountBalanceWallet />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeFreelancersItemThreePrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeFreelancersItemThreeSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <ResponsiveImage width='600' src={freelancerImage} />
+              <Grid item xs={ 12 } sm={ 6 }>
+                <ResponsiveImage width='600' src={ freelancerImage } />
               </Grid>
             </Grid>
           </Section>
         </Container>
-        <Section ref='companies' alternative className={classes.bgContrast}>
+        <Section ref='companies' alternative className={ classes.bgContrast }>
           <Container>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+            <Grid container spacing={ 3 }>
+              <Grid item xs={ 12 } sm={ 6 }>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -151,64 +151,64 @@ class Welcome extends Component {
                 </MainTitle>
                 <MainList>
                   <List>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <Assignment />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeCompaniesItemOnePrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeCompaniesItemOneSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <GroupWork />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeCompaniesItemTwoPrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeCompaniesItemTwoSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <AccountBalanceWallet />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeCompaniesItemThreePrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeCompaniesItemThreeSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <ResponsiveImage width='500' src={companiesImage} />
+              <Grid item xs={ 12 } sm={ 6 }>
+                <ResponsiveImage width='500' src={ companiesImage } />
               </Grid>
             </Grid>
           </Container>
         </Section>
         <Container>
           <Section ref='collab'>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+            <Grid container spacing={ 3 }>
+              <Grid item xs={ 12 } sm={ 6 }>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -219,56 +219,56 @@ class Welcome extends Component {
                 </MainTitle>
                 <MainList>
                   <List>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <Apps />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeCollabItemOnePrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeCollabItemOneSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <Work />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeCollabItemTwoPrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeCollabItemTwoSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItem className={ classes.listIconTop }>
                       <ListItemIcon>
-                        <Avatar className={classes.iconFill}>
+                        <Avatar className={ classes.iconFill }>
                           <AccountBalanceWallet />
                         </Avatar>
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.intl.formatMessage(
+                        primary={ this.props.intl.formatMessage(
                           messages.welcomeCollabItemThreePrimary
-                        )}
-                        secondary={this.props.intl.formatMessage(
+                        ) }
+                        secondary={ this.props.intl.formatMessage(
                           messages.welcomeCollabItemThreeSecondary
-                        )}
+                        ) }
                       />
                     </ListItem>
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <ResponsiveImage width='600' src={teamImage} />
+              <Grid item xs={ 12 } sm={ 6 }>
+                <ResponsiveImage width='600' src={ teamImage } />
               </Grid>
             </Grid>
           </Section>

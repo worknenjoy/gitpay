@@ -13,6 +13,7 @@ const Content = styled.span`
   padding-bottom: 10px;
   color: white;
   text-align: left;
+  display: inline-block;
 `
 
 class Info extends React.Component {

@@ -7,7 +7,6 @@ import {
   Typography,
   Divider,
   List,
-  Button,
   withStyles,
 } from '@material-ui/core'
 
@@ -21,6 +20,8 @@ import HowItWorksCompany from '../welcome/how-it-works-company'
 import WhichCompanies from '../welcome/which-companies'
 import Consulting from '../welcome/consulting'
 import InfoContainer from '../../containers/info'
+import SlackCard from './SlackCard'
+import GithubCard from './GithubCard'
 
 import mainStyles from '../styles/style'
 
@@ -72,20 +73,8 @@ class Bottom extends Component {
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 2 }>
-              <Typography component='div'>
-                <strong>
-                  <FormattedMessage
-                    id='bottom.subheading3'
-                    defaultMessage='Partners'
-                  />
-                </strong>
-              </Typography>
-              <Button
-                label='Jooble'
-                href='https://br.jooble.org/vagas-de-emprego-desenvolvedor'
-              >
-                Jooble
-              </Button>
+              <SlackCard />
+              <GithubCard />
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
               <Typography component='div'>
@@ -97,37 +86,41 @@ class Bottom extends Component {
               <SubscribeFromWrapper className='subscribe-form'>
                 <SubscribeForm render />
               </SubscribeFromWrapper>
-              <Typography component='div'>
+              <div style={{float: 'right'}}>
+            <BaseFooter
+              style={ { display: 'flex', alignItems: 'center' } }
+            >
+              <div>
+                <img className={ classes.img } src={ logoCompleteGray } width='100' />
+              </div>
+              <Typography
+                component='span'
+                style={ {
+                  marginLeft: 10,
+                  marginRight: 10,
+                  display: 'inline-block',
+                } }
+              >
+                <FormattedMessage
+                  id='bottom.company.org'
+                  defaultMessage='is part of'
+                />
+              </Typography>
+              <a href='http://worknenjoy.com' target='_blank'>
+                <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
+              </a>
+            </BaseFooter>
+            <div style={{textAlign: 'right'}}>
+              <Typography variant={'caption'} component='span'>
                 <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
                 2035 Sunset Lake Road, Suite B-2 <br />
                 Newark, DE 19709 - US
               </Typography>
+            </div>
+          </div>
             </Grid>
           </Grid>
           <Divider className={ classes.spacedTop } />
-          <BaseFooter
-            style={ { float: 'right', display: 'flex', alignItems: 'center' } }
-          >
-            <div>
-              <img className={ classes.img } src={ logoCompleteGray } width='100' />
-            </div>
-            <Typography
-              component='span'
-              style={ {
-                marginLeft: 10,
-                marginRight: 10,
-                display: 'inline-block',
-              } }
-            >
-              <FormattedMessage
-                id='bottom.company.org'
-                defaultMessage='is part of'
-              />
-            </Typography>
-            <a href='http://worknenjoy.com' target='_blank'>
-              <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
-            </a>
-          </BaseFooter>
           <InfoContainer />
         </Container>
       </div>

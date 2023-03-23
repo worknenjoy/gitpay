@@ -24,7 +24,7 @@ module.exports = {
     static: './public'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
     alias: {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`
@@ -58,6 +58,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /.js[x]?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
@@ -65,14 +70,20 @@ module.exports = {
           presets: ['@babel/preset-env', '@babel/preset-react'],
           plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
         }
-      }, {
+      },
+      {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
-      }, {
+      },
+      {
         test: /\.(woff|woff2|ttf|eot|svg)$/,
         loader: 'file-loader'
       },
-      { test: /\.(png|jpg)$/, loader: 'url-loader', options: { limit: 8192 } },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader',
+        options: { limit: 8192 }
+      },
       {
         compiler: 'html-webpack-plugin',
         resolve: {

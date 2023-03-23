@@ -51,7 +51,7 @@ class LoginPage extends Component {
       <div className={ classes.container }>
         <Card className={ classes.card }>
           <CardContent className={ classes.cardContent }>
-            <Link to='/'>
+            <Link to='/#'>
               <img src={ logo } width={ 280 } />
             </Link>
             <Content>

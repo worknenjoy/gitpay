@@ -69,7 +69,13 @@ module.exports = {
     })
   ],
   module: {
-    rules: [{
+    rules: [
+    {
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/,
+    },
+    {
       test: /.js[x]?$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
@@ -77,7 +83,8 @@ module.exports = {
         presets: ['@babel/preset-env', '@babel/preset-react'],
         plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
       }
-    }, {
+    },
+    {
       test: /\.css$/,
       use: [MiniCssExtractPlugin.loader, 'css-loader']
     }, {
