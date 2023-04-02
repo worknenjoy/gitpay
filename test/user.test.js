@@ -11,7 +11,7 @@ const nock = require('nock')
 const githubOrg = require('./data/github.org')
 const secrets = require('../config/secrets')
 
-xdescribe("Users", () => {
+describe("Users", () => {
 
   beforeEach(() => {
 
@@ -27,7 +27,7 @@ xdescribe("Users", () => {
   })
 
   describe('findAll User', () => {
-    xit('should find user', (done) => {
+    it('should find user', (done) => {
       agent
         .get('/users')
         .expect('Content-Type', /json/)
@@ -343,7 +343,7 @@ xdescribe("Users", () => {
           }).catch(done)
         }).catch(done)
     });
-    it('should create account for user in US', (done) => {
+    xit('should create account for user in US', (done) => {
       nock('https://api.stripe.com')
             .post('/v1/accounts')
             .replyWithFile(200, __dirname + '/data/account.json', {
@@ -353,7 +353,7 @@ xdescribe("Users", () => {
         email: 'test_user_account_create@gmail.com',
         password: 'test'
       }).then(user => {
-          const userId = user.body.id
+          const userId = user.id
           login(agent, {
             email: 'test_user_account_create@gmail.com',
             password: 'test'

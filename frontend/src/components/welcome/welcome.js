@@ -27,12 +27,11 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../../components/bottom/bottom'
-import Clientlist from './clientlist'
 import messages from './messages'
 import mainStyles from '../styles/style'
 
-const freelancerImage = require('../../images/welcome-freelancer.png')
-const companiesImage = require('../../images/welcome-companies.png')
+const freelancerImage = require('../../images/collections/collection-flat-community.svg')
+const companiesImage = require('../../images/collections/collection-flat-companies.svg')
 const teamImage = require('../../images/welcome-teamwork.png')
 
 import {
@@ -132,7 +131,7 @@ class Welcome extends Component {
                 </MainList>
               </Grid>
               <Grid item xs={ 12 } sm={ 6 }>
-                <ResponsiveImage width='600' src={ freelancerImage } />
+                <ResponsiveImage width='800' src={ freelancerImage } />
               </Grid>
             </Grid>
           </Section>
@@ -200,7 +199,7 @@ class Welcome extends Component {
                 </MainList>
               </Grid>
               <Grid item xs={ 12 } sm={ 6 }>
-                <ResponsiveImage width='500' src={ companiesImage } />
+                <ResponsiveImage width='600' src={ companiesImage } />
               </Grid>
             </Grid>
           </Container>
