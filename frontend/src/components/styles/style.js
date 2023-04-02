@@ -75,6 +75,9 @@ const styles = theme => ({
   tagline: {
     fontSize: 18,
     color: 'white'
+  },
+  svgs: {
+
   }
 })
 

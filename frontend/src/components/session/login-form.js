@@ -330,26 +330,37 @@ class LoginForm extends Component {
                 </Typography>
               </div>
             </div>
-          ) : (<div>
-            <Button onClick={ onClose } variant='text' color='primary' className={ classes.button }>
-              <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
-            </Button>
-            <Button type='submit' variant='contained' color='primary' className={ classes.button }>
-              <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
-            </Button>
-            <div style={ { marginTop: 40 } }>
-              <Typography type='body1' component='span'>
-                <FormattedMessage id='account.login.label.or' defaultMessage='or' />
-              </Typography>
-              <Button onClick={ () => this.handleType('signin') } variant='text' color='primary'>
-                <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+          ) : (
+            <div>
+              <Button onClick={ onClose } variant='text' color='primary' className={ classes.button }>
+                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
               </Button>
-              <Typography type='body1' component='span'>
-                <FormattedMessage id='account.login.label.instead' defaultMessage='instead' />
-              </Typography>
+              <Button type='submit' variant='contained' color='primary' className={ classes.button }>
+                <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+              </Button>
+              <div style={ { marginTop: 40 } }>
+                <Typography type='body1' component='span'>
+                  <FormattedMessage id='account.login.label.or' defaultMessage='or' />
+                </Typography>
+                <Button onClick={ () => this.handleType('signin') } variant='text' color='primary'>
+                  <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+                </Button>
+                <Typography type='body1' component='span'>
+                  <FormattedMessage id='account.login.label.instead' defaultMessage='instead' />
+                </Typography>
+              </div>
             </div>
-          </div>
-          ) }
+          )
+        }
+
+        </div>
+        <div style={{display: 'none' /* it should be flex */, justifyContent: 'center', alignItems: 'baseline', margin: '10px 0'}}>
+          <Typography type='body1' component='span'>
+            <FormattedMessage id='account.login.password.forgot.title' defaultMessage='Have you forgotten your password?' />
+          </Typography>
+          <Button type='submit' variant='text' color='primary' className={ classes.button }>
+            <FormattedMessage id='account.login.password.forgot.action' defaultMessage='Recover now!' />
+          </Button>
         </div>
       </form>
     )

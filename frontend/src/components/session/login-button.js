@@ -18,7 +18,6 @@ import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
 
 import api from '../../consts'
-// import { IncomingMessage } from 'http'
 
 const styles = theme => ({
   gutterLeft: {

@@ -52,8 +52,8 @@ const Palette = {
     MuiButton: {
       root: {
         borderRadius: '18px',
-        // textTransform: 'none',
-        fontSize: 14,
+        textTransform: 'none',
+        fontSize: 16,
         color: '#353A42',
         '&:hover': {
           backgroundColor: '#E2E5EA'

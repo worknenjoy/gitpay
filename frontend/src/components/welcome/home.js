@@ -10,7 +10,8 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Button
+  Button,
+  Container
 } from '@material-ui/core'
 
 import {
@@ -29,9 +30,9 @@ import Bottom from '../../components/bottom/bottom'
 import messages from './messages'
 import mainStyles from '../styles/style'
 
-const freelancerImage = require('../../images/welcome-freelancer.png')
-const citySoftware = require('../../images/city-software.png')
-const deal = require('../../images/deal.png')
+const freelancerImage = require('../../images/collections/collection-flat-build.svg')
+const citySoftware = require('../../images/collections/collection-flat-background.svg')
+const deal = require('../../images/collections/collection-flat-works.svg')
 
 import {
   MainTitle,
@@ -62,9 +63,9 @@ class Home extends Component {
         <TopBarContainer ref='intro' hide />
         <Section ref='hero'>
           <HeroSection>
-            <Grid container spacing={ 3 }>
+            <Grid container spacing={ 3 } alignContent={'flex-end'}>
               <Grid item xs={ 12 } sm={ 5 }>
-                <ResponsiveImage width='480' src={ freelancerImage } />
+                <ResponsiveImage width={580} src={ freelancerImage } className={classes.svg} />
               </Grid>
               <Grid item xs={ 12 } sm={ 7 }>
                 <HeroTitle>
@@ -124,7 +125,9 @@ class Home extends Component {
           </MainTitle>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
-              <ResponsiveImage width='400' src={ deal } />
+              <div style={{marginLeft: 400}}>
+                <ResponsiveImage width='400' src={ deal } />
+              </div>
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
               <div className={ classes.seclist }>
@@ -192,9 +195,9 @@ class Home extends Component {
         <Section
           ref='get-started'
           style={ {
-            background: `url(${citySoftware}) no-repeat`,
-            backgroundSize: 'cover',
-            height: 300,
+            //background: `url(${citySoftware}) 50% 5px no-repeat`,
+            //backgroundSize: 'cover',
+            height: 350,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -209,7 +212,7 @@ class Home extends Component {
           </Typography>
           <Button
             component='a'
-            href='https://gitpay.me/#/login'
+            href='/#/signup'
             size='large'
             variant='contained'
             color='primary'
