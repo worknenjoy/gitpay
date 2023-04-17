@@ -11,11 +11,6 @@ import {
   Tab,
   withStyles
 } from '@material-ui/core'
-import {
-  Redeem as RedeemIcon,
-  MonetizationOn as MoneyIcon,
-  SupervisedUserCircle as ContributionIcon
-} from '@material-ui/icons'
 
 import CustomPaginationActionsTable from './task-table'
 import ProjectListSimple from '../project/project-list-simple'
@@ -34,7 +29,6 @@ const styles = theme => ({
   rootTabs: {
     marginRight: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    backgroundColor: 'white'
   }
 })
 
@@ -214,7 +208,7 @@ const TaskList = (props) => {
           />
         </Typography>
         <div className={ classes.rootTabs }>
-          <AppBar position='static' color='default'elevation={ 0 }>
+          <AppBar position='static' color='default' elevation={ 0 }>
             <Tabs
               value={ taskListState.tab }
               onChange={ handleTabChange }
@@ -222,21 +216,21 @@ const TaskList = (props) => {
               scrollButtons='on'
               indicatorColor='primary'
               textColor='primary'
+              style={{
+                background: 'white'
+              }}
             >
               <Tab
                 value={ 0 }
                 label={ props.intl.formatMessage(messages.allTasks) }
-                icon={ <RedeemIcon /> }
               />
               <Tab
                 value={ 1 }
                 label={ props.intl.formatMessage(messages.allPublicTasksWithBounties) }
-                icon={ <MoneyIcon /> }
               />
               <Tab
                 value={ 2 }
                 label={ props.intl.formatMessage(messages.allPublicTasksNoBounties) }
-                icon={ <ContributionIcon /> }
               />
             </Tabs>
           </AppBar>

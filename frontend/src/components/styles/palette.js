@@ -34,7 +34,6 @@ const Palette = {
     },
   },
   overrides: {
-    /*
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: '#4D7E6F',
@@ -45,10 +44,10 @@ const Palette = {
     },
     MuiTabs: {
       root: {
-        backgroundColor: 'transparent',
-        color: '#000'
+        background: 'none',
+        //color: '#000'
       }
-    }, */
+    },
     MuiButton: {
       root: {
         borderRadius: '18px',
