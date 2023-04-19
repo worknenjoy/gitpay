@@ -216,12 +216,18 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 Offers: data.dataValues.Offers
               }
 
+              /* 
+              dont try to sync here too
+
               if (!data.title && data.title !== issueDataJsonBitbucket.title) {
-                /* eslint-disable no-unused-vars */
+                // eslint-disable no-unused-vars 
                 data
                   .updateAttributes({ title: issueDataJsonBitbucket.title })
                   .then(task => responseBitbucket)
               }
+
+              */
+
               return responseBitbucket
             })
             .catch(e => {
