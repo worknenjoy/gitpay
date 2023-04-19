@@ -24,7 +24,14 @@ if (env === 'production') {
     protocol: 'postgres',
     port:     port,
     host:     host,
-    logging:  false
+    logging:  false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+    
   });
   console.log('running production migration');
 

@@ -63,6 +63,7 @@ class LoginForm extends Component {
   componentDidMount () {
     const modeByPath = this.props.location.pathname.split('/')[1]
     this.handleType(this.props.mode || modeByPath)
+    process.env.NODE_ENV === 'development' && this.setState({captchaChecked: true})
   }
 
   handleBlur = (event) => {
@@ -291,12 +292,14 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 100, marginTop: 20, marginBottom: 20 } }>
-          <ReCAPTCHA
-            sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
-            onChange={ captchaChecked => this.setState({ captchaChecked }) }
-          />
-        </div>
+        {process.env.NODE_ENV === 'production' && (
+          <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 100, marginTop: 20, marginBottom: 20 } }>
+            <ReCAPTCHA
+              sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
+              onChange={ captchaChecked => this.setState({ captchaChecked }) }
+            />
+          </div>
+        )}
         { error.captcha &&
           <div style={ {
             color: 'red',
