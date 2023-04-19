@@ -13,7 +13,11 @@ module.exports = Promise.method(function orderUpdateAfterStripe (order, charge, 
     status: charge.status
   }
 
-  return order.updateAttributes(orderPayload).then(updatedUser => {
+  return models.Order.update(orderPayload, {
+    where: {
+      id: order.dataValues.id
+    }
+  }).then(updatedUser => {
     if (orderParameters.plan === 'full') {
       PaymentMail.support(user, task, order)
     }
