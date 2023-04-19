@@ -144,19 +144,25 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 Project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
               }
 
+              /*
+
+              TODO: we need to find a better way to sync the task with github
+
               if (!data.title && data.title !== issueDataJsonGithub.title) {
-                /* eslint-disable no-unused-vars */
+                // eslint-disable no-unused-vars
                 data
                   .updateAttributes({ title: issueDataJsonGithub.title })
                   .then(task => responseGithub)
               }
 
               if (data.status !== issueDataJsonGithub.state) {
-                /* eslint-disable no-unused-vars */
+                // eslint-disable no-unused-vars
                 data
                   .updateAttributes({ status: issueDataJsonGithub.state })
                   .then(task => responseGithub)
               }
+
+              */
 
               return responseGithub
             })
