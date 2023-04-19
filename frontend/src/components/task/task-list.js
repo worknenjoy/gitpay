@@ -216,9 +216,9 @@ const TaskList = (props) => {
               scrollButtons='on'
               indicatorColor='primary'
               textColor='primary'
-              style={{
+              style={ {
                 background: 'white'
-              }}
+              } }
             >
               <Tab
                 value={ 0 }

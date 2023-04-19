@@ -63,9 +63,9 @@ class Home extends Component {
         <TopBarContainer ref='intro' hide />
         <Section ref='hero'>
           <HeroSection>
-            <Grid container spacing={ 3 } alignContent={'flex-end'}>
+            <Grid container spacing={ 3 } alignContent={ 'flex-end' }>
               <Grid item xs={ 12 } sm={ 5 }>
-                <ResponsiveImage width={580} src={ freelancerImage } className={classes.svg} />
+                <ResponsiveImage width={ 580 } src={ freelancerImage } className={ classes.svg } />
               </Grid>
               <Grid item xs={ 12 } sm={ 7 }>
                 <HeroTitle>
@@ -125,7 +125,7 @@ class Home extends Component {
           </MainTitle>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
-              <div style={{marginLeft: 400}}>
+              <div style={ { marginLeft: 400 } }>
                 <ResponsiveImage width='400' src={ deal } />
               </div>
             </Grid>
@@ -195,8 +195,8 @@ class Home extends Component {
         <Section
           ref='get-started'
           style={ {
-            //background: `url(${citySoftware}) 50% 5px no-repeat`,
-            //backgroundSize: 'cover',
+            // background: `url(${citySoftware}) 50% 5px no-repeat`,
+            // backgroundSize: 'cover',
             height: 350,
             display: 'flex',
             flexDirection: 'column',

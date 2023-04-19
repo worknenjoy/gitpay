@@ -63,7 +63,7 @@ class LoginForm extends Component {
   componentDidMount () {
     const modeByPath = this.props.location.pathname.split('/')[1]
     this.handleType(this.props.mode || modeByPath)
-    process.env.NODE_ENV === 'development' && this.setState({captchaChecked: true})
+    process.env.NODE_ENV === 'development' && this.setState({ captchaChecked: true })
   }
 
   handleBlur = (event) => {
@@ -292,14 +292,14 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        {process.env.NODE_ENV === 'production' && (
+        { process.env.NODE_ENV === 'production' && (
           <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 100, marginTop: 20, marginBottom: 20 } }>
             <ReCAPTCHA
               sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
               onChange={ captchaChecked => this.setState({ captchaChecked }) }
             />
           </div>
-        )}
+        ) }
         { error.captcha &&
           <div style={ {
             color: 'red',
@@ -354,10 +354,10 @@ class LoginForm extends Component {
               </div>
             </div>
           )
-        }
+          }
 
         </div>
-        <div style={{display: 'none' /* it should be flex */, justifyContent: 'center', alignItems: 'baseline', margin: '10px 0'}}>
+        <div style={ { display: 'none' /* it should be flex */, justifyContent: 'center', alignItems: 'baseline', margin: '10px 0' } }>
           <Typography type='body1' component='span'>
             <FormattedMessage id='account.login.password.forgot.title' defaultMessage='Have you forgotten your password?' />
           </Typography>

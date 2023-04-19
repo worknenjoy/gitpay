@@ -70,28 +70,28 @@ module.exports = {
   ],
   module: {
     rules: [
-    {
-      test: /\.tsx?$/,
-      use: 'ts-loader',
-      exclude: /node_modules/,
-    },
-    {
-      test: /.js[x]?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      options: {
-        presets: ['@babel/preset-env', '@babel/preset-react'],
-        plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
-      }
-    },
-    {
-      test: /\.css$/,
-      use: [MiniCssExtractPlugin.loader, 'css-loader']
-    }, {
-      test: /\.(woff|woff2|ttf|eot|svg)$/,
-      loader: 'file-loader'
-    },
-    { test: /\.(png|jpg)$/, loader: 'url-loader', options: { limit: 8192 } }
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /.js[x]?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }, {
+        test: /\.(woff|woff2|ttf|eot|svg)$/,
+        loader: 'file-loader'
+      },
+      { test: /\.(png|jpg)$/, loader: 'url-loader', options: { limit: 8192 } }
     ]
   }
 }

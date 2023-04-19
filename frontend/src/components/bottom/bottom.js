@@ -86,38 +86,38 @@ class Bottom extends Component {
               <SubscribeFromWrapper className='subscribe-form'>
                 <SubscribeForm render />
               </SubscribeFromWrapper>
-              <div style={{float: 'right'}}>
-            <BaseFooter
-              style={ { display: 'flex', alignItems: 'center' } }
-            >
-              <div>
-                <img className={ classes.img } src={ logoCompleteGray } width='100' />
+              <div style={ { float: 'right' } }>
+                <BaseFooter
+                  style={ { display: 'flex', alignItems: 'center' } }
+                >
+                  <div>
+                    <img className={ classes.img } src={ logoCompleteGray } width='100' />
+                  </div>
+                  <Typography
+                    component='span'
+                    style={ {
+                      marginLeft: 10,
+                      marginRight: 10,
+                      display: 'inline-block',
+                    } }
+                  >
+                    <FormattedMessage
+                      id='bottom.company.org'
+                      defaultMessage='is part of'
+                    />
+                  </Typography>
+                  <a href='http://worknenjoy.com' target='_blank'>
+                    <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
+                  </a>
+                </BaseFooter>
+                <div style={ { textAlign: 'right' } }>
+                  <Typography variant={ 'caption' } component='span'>
+                    <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
+                    2035 Sunset Lake Road, Suite B-2 <br />
+                    Newark, DE 19709 - US
+                  </Typography>
+                </div>
               </div>
-              <Typography
-                component='span'
-                style={ {
-                  marginLeft: 10,
-                  marginRight: 10,
-                  display: 'inline-block',
-                } }
-              >
-                <FormattedMessage
-                  id='bottom.company.org'
-                  defaultMessage='is part of'
-                />
-              </Typography>
-              <a href='http://worknenjoy.com' target='_blank'>
-                <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
-              </a>
-            </BaseFooter>
-            <div style={{textAlign: 'right'}}>
-              <Typography variant={'caption'} component='span'>
-                <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
-                2035 Sunset Lake Road, Suite B-2 <br />
-                Newark, DE 19709 - US
-              </Typography>
-            </div>
-          </div>
             </Grid>
           </Grid>
           <Divider className={ classes.spacedTop } />
