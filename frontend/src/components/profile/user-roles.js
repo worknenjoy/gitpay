@@ -241,7 +241,7 @@ class Roles extends Component {
         <Grid container className={ classes.row } direction='row' alignItems='strech'>
           { roles.data && roles.data.map(r => {
             return (
-              <Grid item xs={ 1 } className={ classes.rowList }>
+              <Grid item xs={ 3 } spacing={ 2 } className={ classes.rowList }>
                 <Paper>
                   <Card className={ classes.rowContent } variant='outlined'>
                     <CardMedia>
