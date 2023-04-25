@@ -15,6 +15,9 @@ const Palette = {
       fontSize: 18,
       lineHeight: '24px',
       color: '#353A42'
+    },
+    body1: {
+      fontSize: 14
     }
   },
   palette: {
@@ -60,13 +63,18 @@ const Palette = {
         '&:hover': {
           backgroundColor: '#E2E5EA',
           borderRadius: 8,
-          //color: 'white'
+          // color: 'white'
         },
         '&:focus': {
           backgroundColor: '#E2E5EA',
           borderRadius: 8,
-          //color: 'white'
+          // color: 'white'
         }
+      }
+    },
+    MuiListItemIcon: {
+      root: {
+        minWidth: 32
       }
     },
     MuiButton: {

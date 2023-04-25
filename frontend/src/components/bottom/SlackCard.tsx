@@ -31,7 +31,6 @@ export default function SlackCard(): JSX.Element {
         }}>
           <CardMedia
             component="img"
-            sx={{ width: 120 }}
             image={SlackLogo}
             alt="Join our slack"
           />

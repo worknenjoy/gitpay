@@ -4,12 +4,18 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import {
+  Avatar,
   Typography,
   Button,
   CardActions,
   CardContent,
-  withStyles
+  withStyles,
+  Chip,
 } from '@material-ui/core'
+
+import {
+ Person
+} from '@material-ui/icons'
 
 import { Card, CardList, CardMedia } from './ProfileStyles'
 import WelcomeUser from '../session/welcome-user'
@@ -42,19 +48,52 @@ class ProfileOptions extends Component {
           <WelcomeUser />
         ) }
         <div>
-          <div>
-            <Typography style={ { marginTop: 10 } } variant='h5' component='h3'>
-              <FormattedMessage
-                id='account.profile.welcome.headline'
-                defaultMessage='Welcome to Gitpay!'
-              />
-            </Typography>
-            <Typography component='p'>
-              <FormattedMessage
-                id='account.profile.welcome.description'
-                defaultMessage='This is the first steps to start to work with Gitpay'
-              />
-            </Typography>
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: 20}}>
+            <div>
+              <Typography style={ { marginTop: 10 } } variant='h5' component='h3'>
+                <FormattedMessage
+                  id='account.profile.welcome.headline'
+                  defaultMessage='Welcome to Gitpay!'
+                />
+              </Typography>
+              <Typography component='p'>
+                <FormattedMessage
+                  id='account.profile.welcome.description'
+                  defaultMessage='This is the first steps to start to work with Gitpay'
+                />
+              </Typography>
+            </div>
+            <div>
+              <Button
+                onClick={ this.handleMenu }
+                variant='text'
+                size='small'
+                color='primary'
+                id='account-menu'
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}
+              >
+                {user.picture_url
+                  ? <Avatar
+                    alt={ user.username || '' }
+                    src={ user.picture_url }
+                  />
+                  : <Avatar alt={ user.username || '' } src=''>
+                    { user.username ? nameInitials(user.username) : <Person /> }
+                  </Avatar>
+                }
+                <div style={{textAlign: 'left', marginLeft: 10, color: "#1c1c1f"}}>
+                  <Typography variant='body2' color='text'>
+                    { user.username }
+                  </Typography>
+                  <Typography variant='body4' style={{fontSize: 10, color: '#666'}}>
+                    { user.email }
+                  </Typography>
+                </div>
+              </Button>
+            </div>
           </div>
 
           <CardList>
