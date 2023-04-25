@@ -3,6 +3,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch, HashRouter } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
+import logo from '../../images/gitpay-logo.png'
+
+import {
+  Logo,
+  StyledButton
+} from '../topbar/TopbarStyles'
 
 import {
   Grid,
@@ -32,6 +38,7 @@ import {
   Business,
   AccountBalance,
   AccountBox,
+  ExitToApp,
   Payment as PaymentIcon
 } from '@material-ui/icons'
 
@@ -77,7 +84,6 @@ const styles = theme => ({
   row: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 10
   },
   rowList: {
     marginTop: 10,
@@ -131,10 +137,8 @@ const styles = theme => ({
     width: '100%'
   },
   paper: {
-    padding: '10px 0 30px 0',
-    marginLeft: 10,
     // backgroundColor: '#0b0d21',
-    backgroundColor: '#E2E5EA',
+    backgroundColor: '#F9F9F9',
   },
   profile: {
     '& .profile-image': {
@@ -275,6 +279,12 @@ class Profile extends Component {
   handleBackToTaskList = () => {
     window.history.back()
   }
+
+  handleSignOut = () => {
+    this.props.history.replace({ pathname: '/' })
+    this.props.signOut()
+  }
+
   render () {
     const { classes, user, preferences, roles } = this.props
     const userTypes = user.Types && user.Types.map(t => t.name)
@@ -283,7 +293,7 @@ class Profile extends Component {
 
     return (
       <Page>
-        <TopBarContainer />
+
         <AppBar
           component='div'
           classes={ { colorPrimary: classes.secondaryBar } }
@@ -294,126 +304,24 @@ class Profile extends Component {
           <PreferencesBar classes={ classes } />
         }
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 2 }>
-            <Grid item xs={ 12 } md={ 3 } spacing={ 2 }>
-              <div className={ classes.bigRow }>
-                <Paper className={ classes.paper }>
+          <Grid container className={ classes.root } spacing={ 0 }>
+            <Grid item xs={ 12 } md={ 2 } spacing={ 0 } style={ { backgroundColor: '#F9F9F9' } }>
+              <div>
+                <div className={ classes.paper }>
                   <div className={ classes.profile }>
+                    <div style={ { display: 'flex', justifyContent: 'center', padding: 20 } }>
+                      <StyledButton href='/'>
+                        <Logo src={ logo } />
+                      </StyledButton>
+                    </div>
                     <div className={ classes.row }>
-                      { user.picture_url ? (
-                        <Avatar
-                          alt={ user.username }
-                          src={ user.picture_url }
-                          className={ classNames(
-                            classes.avatar,
-                            classes.bigAvatar,
-                            'profile-image'
-                          ) }
-                        />
-                      ) : (
-                        <Avatar
-                          alt={ user.username }
-                          src=''
-                          className={ classNames(
-                            classes.avatar,
-                            classes.bigAvatar,
-                            'profile-image'
-                          ) }
-                        >
-                          { user.name ? (
-                            nameInitials(user.name)
-                          ) : user.username ? (
-                            nameInitials(user.username)
-                          ) : (
-                            <Person />
-                          ) }
-                        </Avatar>
-                      ) }
-                    </div>
-                    <div className={ classes.infoItem }>
-                      <Typography className='name'>{ user.name }</Typography>
-                    </div>
-                    <div className={ classes.infoItem }>
-                      <Typography className='website'>
-                        <a href={ user.website } target='__blank'>
-                          { user.website &&
-                            user.website.replace(/^https?:\/\//, '') }
-                        </a>
-                      </Typography>
-                    </div>
-                    <div className={ classes.infoItem }>
-                      <Web />
-                      <Typography className='website'>
-                        <a href={ user.username ? `/#/users/${user.id}-${user.username}` : `/#/users/${user.id}` } target='__blank'>
-                          <FormattedMessage
-                            id='account.profile.public.link.label'
-                            defaultMessage='Profile page'
-                          />
-                        </a>
-                      </Typography>
-                    </div>
-                    <div style={ { marginTop: 20, display: 'flex', justifyContent: 'center' } }>
-                      { user && user.Types && user.Types.map(r => {
-                        return (
-                          <Chip
-                            style={ { marginRight: 10 } }
-                            label={ r.name }
-                          />
-                        )
-                      }) }
-                    </div>
-                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                      <div className={ classes.rowList }>
-                        <Grid
-                          container
-                          direction='row'
-                          justify='center'
-                          alignItems='center'
-                        >
-                          <Grid item xs={ 4 }>
-                            { user && (
-                              <div className={ classes.infoItem }>
-                                <Typography className='details'>
-                                  <span className='num'>
-                                    { user.tasks ? user.tasks : 0 }
-                                  </span>
-                                  <br />
-                                  Issues
-                                </Typography>
-                              </div>
-                            ) }
-                          </Grid>
-                          <Grid item xs={ 4 }>
-                            { user && (
-                              <div className={ classes.infoItem }>
-                                <Typography className='details-mid'>
-                                  <span className='num'>
-                                    ${ user.bounties ? user.bounties : 0 }
-                                  </span>
-                                  <br />
-                                  Bounties
-                                </Typography>
-                              </div>
-                            ) }
-                          </Grid>
-                          <Grid item xs={ 4 }>
-                            { user && (
-                              <div className={ classes.infoItem }>
-                                <Typography className='details'>
-                                  <span className='num'>
-                                    { user.repos ? user.repos : 0 }
-                                  </span>
-                                  <br />
-                                  Repositories
-                                </Typography>
-                              </div>
-                            ) }
-                          </Grid>
-                        </Grid>
-                      </div>
-                    }
-                    <div className={ classes.row }>
-                      <Paper className={ classes.menuContainer } style={ { marginTop: 40, marginBottom: 20 } }>
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flex: 1,
+                        padding: 20,
+                        height: '100vh'
+                      }}>
                         <MenuList>
                           <MenuItem
                             onClick={ () =>
@@ -437,6 +345,76 @@ class Profile extends Component {
                               }
                             />
                           </MenuItem>
+                          { userTypes && (userTypes.includes('contributor') || userTypes.includes('maintainer')) &&
+                            <MenuItem
+                              onClick={ (e) => this.props.history.push('/profile/tasks') }
+                              className={ classes.menuItem }
+                              selected={ this.state.selected === 4 }
+                            >
+                              <ListItemIcon className={ classes.icon }>
+                                <LibraryBooks />
+                              </ListItemIcon>
+                              <ListItemText
+                                classes={ { primary: classes.primary } }
+                                primary={
+                                  <span>
+                                    <FormattedMessage
+                                      id='account.profile.issues.setup'
+                                      defaultMessage='Issues'
+                                    />
+                                  </span>
+                                }
+                              />
+                            </MenuItem>
+                          }
+                          { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
+                            <MenuItem
+                              onClick={ () =>
+                                this.props.history.push('/profile/user/orgs')
+                              }
+                              className={ classes.menuItem }
+                              selected={ this.state.selected === 3 }
+                            >
+                              <ListItemIcon className={ classes.icon }>
+                                <Business />
+                              </ListItemIcon>
+                              <ListItemText
+                                classes={ { primary: classes.primary } }
+                                primary={
+                                  <span>
+                                    <FormattedMessage
+                                      id='account.profile.organization.maintainer'
+                                      defaultMessage='Organizations'
+                                    />
+                                  </span>
+                                }
+                              />
+                            </MenuItem>
+                          } 
+                          { this.props.user.Types && (this.props.user.Types.map(t => t.name).includes('funding') || this.props.user.Types.map(t => t.name).includes('maintainer')) &&
+                            <MenuItem
+                              onClick={ () =>
+                                this.props.history.push('/profile/payments')
+                              }
+                              className={ classes.menuItem }
+                              selected={ this.state.selected === 5 }
+                            >
+                              <ListItemIcon className={ classes.icon }>
+                                <PaymentIcon />
+                              </ListItemIcon>
+                              <ListItemText
+                                classes={ { primary: classes.primary } }
+                                primary={
+                                  <span>
+                                    <FormattedMessage
+                                      id='account.profile.payments.list'
+                                      defaultMessage='Payments'
+                                    />
+                                  </span>
+                                }
+                              />
+                            </MenuItem>
+                          }
                           <MenuItem
                             onClick={ () =>
                               this.props.history.push('/profile/account-details')
@@ -477,76 +455,6 @@ class Profile extends Component {
                                     <FormattedMessage
                                       id='account.profile.bank.setup'
                                       defaultMessage='Bank account'
-                                    />
-                                  </span>
-                                }
-                              />
-                            </MenuItem>
-                          }
-                          { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
-                            <MenuItem
-                              onClick={ () =>
-                                this.props.history.push('/profile/user/orgs')
-                              }
-                              className={ classes.menuItem }
-                              selected={ this.state.selected === 3 }
-                            >
-                              <ListItemIcon className={ classes.icon }>
-                                <Business />
-                              </ListItemIcon>
-                              <ListItemText
-                                classes={ { primary: classes.primary } }
-                                primary={
-                                  <span>
-                                    <FormattedMessage
-                                      id='account.profile.organization.maintainer'
-                                      defaultMessage='Organizations'
-                                    />
-                                  </span>
-                                }
-                              />
-                            </MenuItem>
-                          }
-                          { userTypes && (userTypes.includes('contributor') || userTypes.includes('maintainer')) &&
-                            <MenuItem
-                              onClick={ (e) => this.props.history.push('/profile/tasks') }
-                              className={ classes.menuItem }
-                              selected={ this.state.selected === 4 }
-                            >
-                              <ListItemIcon className={ classes.icon }>
-                                <LibraryBooks />
-                              </ListItemIcon>
-                              <ListItemText
-                                classes={ { primary: classes.primary } }
-                                primary={
-                                  <span>
-                                    <FormattedMessage
-                                      id='account.profile.issues.setup'
-                                      defaultMessage='Issues'
-                                    />
-                                  </span>
-                                }
-                              />
-                            </MenuItem>
-                          }
-                          { this.props.user.Types && (this.props.user.Types.map(t => t.name).includes('funding') || this.props.user.Types.map(t => t.name).includes('maintainer')) &&
-                            <MenuItem
-                              onClick={ () =>
-                                this.props.history.push('/profile/payments')
-                              }
-                              className={ classes.menuItem }
-                              selected={ this.state.selected === 5 }
-                            >
-                              <ListItemIcon className={ classes.icon }>
-                                <PaymentIcon />
-                              </ListItemIcon>
-                              <ListItemText
-                                classes={ { primary: classes.primary } }
-                                primary={
-                                  <span>
-                                    <FormattedMessage
-                                      id='account.profile.payments.list'
-                                      defaultMessage='Payments'
                                     />
                                   </span>
                                 }
@@ -616,58 +524,68 @@ class Profile extends Component {
                             />
                           </MenuItem>
                         </MenuList>
-                      </Paper>
+                        <MenuList style={{marginTop: 'auto'}}>
+                          <MenuItem button onClick={ this.handleSignOut }>
+                            <ListItemIcon>
+                              <ExitToApp />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
+                            </ListItemText>
+                          </MenuItem>
+                        </MenuList>
+                      </div>
                     </div>
                     { false &&
-                    <Grid
-                      container
-                      direction='column'
-                      justify='center'
-                      alignItems='center'
-                      className={ classes.rowList }
-                    >
-                      <Grid item className={ classNames(classes.rowContent) }>
-                        <Button
-                          disabled={ user.provider === 'github' }
-                          href={ `${api.API_URL}/authorize/github` }
-                          variant='outlined'
-                          size='medium'
-                          className={
-                            user.provider === 'github'
-                              ? 'buttons-disabled'
-                              : 'buttons'
-                          }
-                        >
-                          Connect to Github
-                          <img width='16' src={ logoGithub } className='icon' />
-                        </Button>
-                      </Grid>
-                      <Grid item className={ classNames(classes.rowContent) }>
-                        <Button
-                          disabled={ user.provider === 'bitbucket' }
-                          href={ `${api.API_URL}/authorize/bitbucket` }
-                          variant='contained'
-                          size='medium'
-                          className={
-                            user.provider === 'bitbucket'
-                              ? 'buttons-disabled'
-                              : 'buttons'
-                          }
-                        >
-                          Connect to Bitbucket
-                          <img
-                            width='16'
-                            src={ logoBitbucket }
-                            className='icon'
-                          />
-                        </Button>
-                      </Grid>
-                    </Grid> }
+                      <Grid
+                        container
+                        direction='column'
+                        justify='center'
+                        alignItems='center'
+                        className={ classes.rowList }
+                      >
+                        <Grid item className={ classNames(classes.rowContent) }>
+                          <Button
+                            disabled={ user.provider === 'github' }
+                            href={ `${api.API_URL}/authorize/github` }
+                            variant='outlined'
+                            size='medium'
+                            className={
+                              user.provider === 'github'
+                                ? 'buttons-disabled'
+                                : 'buttons'
+                            }
+                          >
+                            Connect to Github
+                            <img width='16' src={ logoGithub } className='icon' />
+                          </Button>
+                        </Grid>
+                        <Grid item className={ classNames(classes.rowContent) }>
+                          <Button
+                            disabled={ user.provider === 'bitbucket' }
+                            href={ `${api.API_URL}/authorize/bitbucket` }
+                            variant='contained'
+                            size='medium'
+                            className={
+                              user.provider === 'bitbucket'
+                                ? 'buttons-disabled'
+                                : 'buttons'
+                            }
+                          >
+                            Connect to Bitbucket
+                            <img
+                              width='16'
+                              src={ logoBitbucket }
+                              className='icon'
+                            />
+                          </Button>
+                        </Grid>
+                      </Grid> }
                   </div>
-                </Paper>
+                </div>
               </div>
             </Grid>
-            <Grid item xs={ 12 } md={ 9 }>
+            <Grid item xs={ 12 } md={ 10 }>
               <Container maxWidth='lg'>
                 <HashRouter>
                   <Switch>

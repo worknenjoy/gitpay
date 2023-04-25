@@ -125,7 +125,7 @@ class Home extends Component {
           </MainTitle>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 6 }>
-              <div style={ { marginLeft: 400 } }>
+              <div style={ { marginLeft: 20 } }>
                 <ResponsiveImage width='400' src={ deal } />
               </div>
             </Grid>

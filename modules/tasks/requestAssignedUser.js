@@ -30,7 +30,13 @@ const sendConfirmationEmail = (task, assign) => {
 }
       `
 
-  return assign.updateAttributes({ status: 'pending-confirmation' }).then(res => {
+  return models.Assign.update({ 
+    status: 'pending-confirmation'
+  }, {
+    where: {
+      id: assign.id
+    }
+  }).then(res => {
     return SendMail.success(
       { email: user.email, language },
       i18n.__('mail.assigned.request.subject'),
@@ -53,7 +59,7 @@ const invite = Promise.method(async ({ taskId, assignId }) => {
   }
 
   if (assign.status === 'rejected') {
-    await assign.updateAttributes({ status: 'pending' })
+    await models.Assign.update({ status: 'pending' }, { where: { id: assignId } })
   }
 
   return sendConfirmationEmail(task, assign)
@@ -79,12 +85,12 @@ const actionAssign = async (data) => {
 
   // Accept Task
   if (data.confirm) {
-    await assign.updateAttributes({ status: 'accepted' })
+    await assign.update({ status: 'accepted' }, { where: { id: assignId } })
     return taskUpdate({ id: taskId, assigned: assignId, })
   }
   // Reject Task
   else {
-    await assign.updateAttributes({ status: 'rejected', message })
+    await models.Assign.update({ status: 'rejected', message }, { where: { id: assignId } })
     const task = await models.Task.findOne({
       where: {
         id: taskId

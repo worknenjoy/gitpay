@@ -15,9 +15,19 @@ const Palette = {
       fontSize: 18,
       lineHeight: '24px',
       color: '#353A42'
+    },
+    body1: {
+      fontSize: 14
     }
   },
   palette: {
+    /*
+    action: {
+      selected: '#E7A615',
+      hover: '#FFD371',
+      disabled: '#9B9B9B'
+    },
+    */
     primary: {
       light: '#E2E5EA',
       main: teal[500],
@@ -46,6 +56,25 @@ const Palette = {
       root: {
         background: 'none',
         // color: '#000'
+      }
+    },
+    MuiMenuItem: {
+      root: {
+        '&:hover': {
+          backgroundColor: '#E2E5EA',
+          borderRadius: 8,
+          // color: 'white'
+        },
+        '&:focus': {
+          backgroundColor: '#E2E5EA',
+          borderRadius: 8,
+          // color: 'white'
+        }
+      }
+    },
+    MuiListItemIcon: {
+      root: {
+        minWidth: 32
       }
     },
     MuiButton: {

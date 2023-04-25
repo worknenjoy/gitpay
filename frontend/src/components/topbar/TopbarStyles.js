@@ -143,7 +143,7 @@ export const RightSide = styled(Side)`
 `
 
 export const Logo = styled.img`
-  width: 140px;
+  width: 120px;
 
   ${media.phone`width: 100px !important;`}
 `
