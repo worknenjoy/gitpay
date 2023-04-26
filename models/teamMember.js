@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         AllowNull: false
     },
+    name: DataTypes.STRING,
     team_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
