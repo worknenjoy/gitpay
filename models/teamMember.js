@@ -2,7 +2,7 @@ const Team = require('./team');
 const User = require('./user');
 
 module.exports = function (sequelize, DataTypes) {
-  const TeamMember = sequelize.define('TeamMembr', {
+  const TeamMember = sequelize.define('TeamMember', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
