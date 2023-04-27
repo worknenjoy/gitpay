@@ -49,23 +49,26 @@ class LoginButton extends Component {
   }
 
   render () {
-    const { classes, contrast, size, includeForm, hideExtra, mode, onClose } = this.props
+    const { classes, contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton } = this.props
 
     return (
       <Wrapper contrast={ contrast }>
         <Content>
           { includeForm && (
-            <div>
-              <Typography type='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+            <div style={{marginTop: 20}}>
+              <Typography variant='h5' style={{fontWeight: 'bold'}} color={ contrast ? 'inherit' : 'default' } gutterBottom>
+                <FormattedMessage id='account.login.title.welcome' defaultMessage='Welcome to Gitpay!' />
+              </Typography>
+              <Typography style={{marginBottom: 20}} variant='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
-              <LoginFormContainer mode={ mode } onClose={ onClose } />
+              <LoginFormContainer mode={ mode } onClose={ onClose } noCancelButton={noCancelButton} />
             </div>
           ) }
           <div style={ { display: hideExtra ? 'none' : 'block' } }>
             <div style={ { textAlign: 'center' } }>
-              <Typography type='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom>
-                <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with your existing account from other services' />
+              <Typography variant='caption' color={ contrast ? 'inherit' : 'default' } gutterBottom>
+                <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with ' />
               </Typography>
             </div>
             <div style={ { display: 'flex', justifyContent: 'center', marginTop: 10 } }>

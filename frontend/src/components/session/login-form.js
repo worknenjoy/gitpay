@@ -12,6 +12,7 @@ import purple from '@material-ui/core/colors/purple'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import api from '../../consts'
+import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons'
 
 const styles = theme => ({
   cssLabel: {
@@ -36,7 +37,7 @@ const styles = theme => ({
     marginBottom: 10
   },
   button: {
-    marginRight: 20
+    marginRight: 20,
   },
   center: {
     display: 'flex',
@@ -56,7 +57,8 @@ class LoginForm extends Component {
       confirmPassword: '',
       validating: false,
       error: {},
-      captchaChecked: false
+      captchaChecked: false,
+      rememberMe: false
     }
   }
 
@@ -179,8 +181,12 @@ class LoginForm extends Component {
     }
   }
 
+  handleRememberMe = (e) => {
+    this.setState({ rememberMe: !this.state.rememberMe })
+  }
+
   render () {
-    const { classes, onClose } = this.props
+    const { classes, onClose, noCancelButton } = this.props
     const { action, type } = this.state
     const { validating, password, confirmPassword, error } = this.state
     return (
@@ -312,58 +318,63 @@ class LoginForm extends Component {
             </Typography>
           </div>
         }
+        { type === 'signin' && (
+        <div style={{display: 'flex', justifyContent: 'space-between', display: 'none'}}>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            { this.state.rememberMe ? 
+              <CheckBox checked={ this.state.rememberMe } onClick={ this.handleRememberMe } /> :
+              <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleRememberMe } />
+            }
+            <Typography variant='caption' style={{marginLeft: 10}}>
+              <FormattedMessage id='account.login.label.remember' defaultMessage='Remember me' />
+            </Typography>
+          </div>
+          <Button variant='text' style={{margin: 0, padding: 0}} onClick={ () => this.handleType('forgot') } component='a' size='small' color='primary'>
+            <FormattedMessage variant='caption' id='account.login.label.forgot' defaultMessage='Forgot password?' />
+          </Button>
+        </div>
+        )}
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
-              <Button onClick={ onClose } variant='text' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
-              </Button>
-              <Button type='submit' variant='contained' color='primary' className={ classes.button }>
+              <Button fullWidth type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
               </Button>
+              { noCancelButton ? null : (
+              <Button onClick={ onClose } fullWidth size='large' variant='text' color='primary' className={ classes.button } style={{marginTop: 10}}>
+                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+              </Button>
+              ) }
               <div style={ { marginTop: 40 } }>
-                <Typography type='body1' component='span'>
-                  <FormattedMessage id='account.login.label.or' defaultMessage='or' />
+                <Typography type='body1' component='span' style={{display: 'inline-block', verticalAlign: 'middle'}}>
+                  <FormattedMessage id='account.login.label.or.signing' defaultMessage='Dont have an account?' />
                 </Typography>
-                <Button onClick={ () => this.handleType('signup') } variant='text' color='primary'>
+                <Button onClick={ () => this.handleType('signup') } variant='text' color='primary' size='large'>
                   <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
                 </Button>
-                <Typography type='body1' component='span'>
-                  <FormattedMessage id='account.login.label.instead' defaultMessage='instead' />
-                </Typography>
               </div>
             </div>
           ) : (
             <div>
-              <Button onClick={ onClose } variant='text' color='primary' className={ classes.button }>
+              { noCancelButton ? null : (
+              <Button onClick={ onClose } size='large' variant='text' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
               </Button>
-              <Button type='submit' variant='contained' color='primary' className={ classes.button }>
+              ) }
+              <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
               </Button>
-              <div style={ { marginTop: 40 } }>
+              <div style={ { marginTop: 40, display: 'flex', alignItems: 'baseline' } }>
                 <Typography type='body1' component='span'>
-                  <FormattedMessage id='account.login.label.or' defaultMessage='or' />
+                  <FormattedMessage id='account.login.label.or.signup' defaultMessage='Have an account?' />
                 </Typography>
-                <Button onClick={ () => this.handleType('signin') } variant='text' color='primary'>
+                <Button onClick={ () => this.handleType('signin') } variant='text' size='large' color='primary'>
                   <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
                 </Button>
-                <Typography type='body1' component='span'>
-                  <FormattedMessage id='account.login.label.instead' defaultMessage='instead' />
-                </Typography>
               </div>
             </div>
           )
           }
-
-        </div>
-        <div style={ { display: 'none' /* it should be flex */, justifyContent: 'center', alignItems: 'baseline', margin: '10px 0' } }>
-          <Typography type='body1' component='span'>
-            <FormattedMessage id='account.login.password.forgot.title' defaultMessage='Have you forgotten your password?' />
-          </Typography>
-          <Button type='submit' variant='text' color='primary' className={ classes.button }>
-            <FormattedMessage id='account.login.password.forgot.action' defaultMessage='Recover now!' />
-          </Button>
         </div>
       </form>
     )

@@ -18,6 +18,10 @@ const Palette = {
     },
     body1: {
       fontSize: 14
+    },
+    caption: {
+      fontSize: 12,
+      color: '#9B9B9B'
     }
   },
   palette: {
