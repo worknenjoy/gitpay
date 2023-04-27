@@ -18,7 +18,7 @@ const styles = theme => ({
     backgroundRepeat: 'no-repeat',
   },
   card: {
-    height: 600,
+    height: 'auto',
     marginTop: 50,
     opacity: 0.8
   },
