@@ -22,11 +22,12 @@ const styles = theme => ({
   },
   card: {
     height: 'auto',
-    marginTop: 50,
+    marginTop: 20,
     opacity: 0.8
   },
   cardContent: {
-    textAlign: 'center'
+    textAlign: 'center',
+    overflow: 'hidden'
   },
   title: {
     fontSize: 12

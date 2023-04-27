@@ -14,11 +14,6 @@ import { withRouter } from 'react-router-dom'
 
 import LoginFormContainer from '../../containers/login-form'
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
-
-import api from '../../consts'
-
 const styles = theme => ({
   gutterLeft: {
     marginLeft: 10
@@ -32,7 +27,7 @@ const Wrapper = styled.div`
 `
 
 const Content = styled.div`
-  margin-top: 10px;
+  margin-top: 0;
 `
 
 class LoginButton extends Component {
@@ -65,36 +60,6 @@ class LoginButton extends Component {
               <LoginFormContainer mode={ mode } onClose={ onClose } noCancelButton={ noCancelButton } />
             </div>
           ) }
-          <div style={ { display: hideExtra ? 'none' : 'block' } }>
-            <div style={ { textAlign: 'center' } }>
-              <Typography variant='caption' color={ contrast ? 'inherit' : 'default' } gutterBottom>
-                <FormattedMessage id='account.login.connect.provider' defaultMessage='You can also connect or signup with ' />
-              </Typography>
-            </div>
-            <div style={ { display: 'flex', justifyContent: 'center', marginTop: 10 } }>
-              <div>
-                <Button
-                  style={ { marginRight: 10 } }
-                  href={ `${api.API_URL}/authorize/github` }
-                  variant='contained'
-                  size={ size }
-                  color='secondary'
-                >
-                  <img width='16' src={ logoGithub } />
-                  <span className={ classes.gutterLeft }>Github</span>
-                </Button>
-                <Button
-                  href={ `${api.API_URL}/authorize/bitbucket` }
-                  variant='contained'
-                  size={ size }
-                  color='secondary'
-                >
-                  <img width='16' src={ logoBitbucket } />
-                  <span className={ classes.gutterLeft }>Bitbucket</span>
-                </Button>
-              </div>
-            </div>
-          </div>
         </Content>
       </Wrapper>
     )

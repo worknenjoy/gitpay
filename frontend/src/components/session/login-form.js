@@ -14,6 +14,8 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import api from '../../consts'
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons'
 
+import ProviderLoginButtons from './provider-login-buttons'
+
 const styles = theme => ({
   cssLabel: {
     '&$cssFocused': {
@@ -298,8 +300,8 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        { process.env.NODE_ENV === 'production' && (
-          <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 100, marginTop: 20, marginBottom: 20 } }>
+        { true /*process.env.NODE_ENV === 'production'*/ && (
+          <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 } }>
             <ReCAPTCHA
               sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
               onChange={ captchaChecked => this.setState({ captchaChecked }) }
@@ -334,7 +336,7 @@ class LoginForm extends Component {
             </Button>
           </div>
         ) }
-        <div className={ classes.center } style={ { marginTop: 30 } }>
+        <div className={ classes.center } style={ { marginTop: 20 } }>
           { type === 'signin' ? (
             <div>
               <Button fullWidth type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
@@ -345,7 +347,12 @@ class LoginForm extends Component {
                   <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
                 </Button>
               ) }
-              <div style={ { marginTop: 40 } }>
+              { type === 'signin' && (
+                <div style={ { marginTop: 20 } }>
+                  <ProviderLoginButtons />
+                </div>
+              ) }
+              <div style={ { marginTop: 20 } }>
                 <Typography type='body1' component='span' style={ { display: 'inline-block', verticalAlign: 'middle' } }>
                   <FormattedMessage id='account.login.label.or.signing' defaultMessage='Dont have an account?' />
                 </Typography>
@@ -364,7 +371,7 @@ class LoginForm extends Component {
               <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
               </Button>
-              <div style={ { marginTop: 40, display: 'flex', alignItems: 'baseline' } }>
+              <div style={ { marginTop: 20, display: 'flex', alignItems: 'baseline' } }>
                 <Typography type='body1' component='span'>
                   <FormattedMessage id='account.login.label.or.signup' defaultMessage='Have an account?' />
                 </Typography>
