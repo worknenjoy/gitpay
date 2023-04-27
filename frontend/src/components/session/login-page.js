@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { withRouter, Link } from 'react-router-dom'
 import LoginButton from './login-button'
-import { withStyles, Card, CardContent } from '@material-ui/core'
+import { FormattedMessage } from 'react-intl'
+import { withStyles, Card, CardContent, Typography } from '@material-ui/core'
 
 import Background from '../../images/login_bg.png'
 const styles = theme => ({
@@ -17,7 +18,7 @@ const styles = theme => ({
     backgroundRepeat: 'no-repeat',
   },
   card: {
-    width: '50%',
+    height: 600,
     marginTop: 50,
     opacity: 0.8
   },
@@ -25,10 +26,10 @@ const styles = theme => ({
     textAlign: 'center'
   },
   title: {
-    fontSize: 14
+    fontSize: 12
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 10
   }
 })
 
@@ -49,16 +50,23 @@ class LoginPage extends Component {
     const { classes, match } = this.props
     return (
       <div className={ classes.container }>
-        <Card className={ classes.card }>
-          <CardContent className={ classes.cardContent }>
-            <Link to='/#'>
-              <img src={ logo } width={ 280 } />
-            </Link>
-            <Content>
-              <LoginButton includeForm mode={ match.params.mode } />
-            </Content>
-          </CardContent>
-        </Card>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          <Card className={ classes.card }>
+            <CardContent className={ classes.cardContent }>
+              <Link to='/#'>
+                <img src={ logo } width={ 210 } />
+              </Link>
+              <Content>
+                <LoginButton includeForm mode={ match.params.mode } noCancelButton />
+              </Content>
+            </CardContent>
+          </Card>
+          <div style={{marginTop: 10, textAlign: 'center'}}>
+            <Typography variant='caption' color='default' gutterBottom noWrap>
+              <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay® - All rights reserved' />
+            </Typography>
+          </div>
+        </div>
       </div>
     )
   }
