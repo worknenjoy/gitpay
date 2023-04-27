@@ -10,6 +10,7 @@ const styles = theme => ({
   container: {
     width: '100%',
     height: '100%',
+    overflow: 'visible',
     flex: 1,
     margin: 0,
     padding: 0,
@@ -21,13 +22,12 @@ const styles = theme => ({
     backgroundRepeat: 'no-repeat',
   },
   card: {
-    height: 'auto',
-    marginTop: 20,
-    opacity: 0.8
+    marginTop: 40,
+    opacity: 0.8,
+    overflow: 'visible',
   },
   cardContent: {
-    textAlign: 'center',
-    overflow: 'hidden'
+    textAlign: 'center'
   },
   title: {
     fontSize: 12
