@@ -9,7 +9,10 @@ import Background from '../../images/login_bg.png'
 const styles = theme => ({
   container: {
     width: '100%',
-    height: '100vh',
+    height: '100%',
+    flex: 1,
+    margin: 0,
+    padding: 0,
     display: 'flex',
     justifyContent: 'center',
     backgroundImage: `url(${Background})`,
