@@ -300,7 +300,7 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        { true /*process.env.NODE_ENV === 'production'*/ && (
+        { process.env.NODE_ENV === 'production' && (
           <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 } }>
             <ReCAPTCHA
               sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
