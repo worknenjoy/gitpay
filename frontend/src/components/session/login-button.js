@@ -55,14 +55,14 @@ class LoginButton extends Component {
       <Wrapper contrast={ contrast }>
         <Content>
           { includeForm && (
-            <div style={{marginTop: 20}}>
-              <Typography variant='h5' style={{fontWeight: 'bold'}} color={ contrast ? 'inherit' : 'default' } gutterBottom>
+            <div style={ { marginTop: 20 } }>
+              <Typography variant='h5' style={ { fontWeight: 'bold' } } color={ contrast ? 'inherit' : 'default' } gutterBottom>
                 <FormattedMessage id='account.login.title.welcome' defaultMessage='Welcome to Gitpay!' />
               </Typography>
-              <Typography style={{marginBottom: 20}} variant='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+              <Typography style={ { marginBottom: 20 } } variant='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
                 <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
               </Typography>
-              <LoginFormContainer mode={ mode } onClose={ onClose } noCancelButton={noCancelButton} />
+              <LoginFormContainer mode={ mode } onClose={ onClose } noCancelButton={ noCancelButton } />
             </div>
           ) }
           <div style={ { display: hideExtra ? 'none' : 'block' } }>

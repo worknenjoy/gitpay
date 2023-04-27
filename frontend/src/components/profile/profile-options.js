@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 
 import {
- Person
+  Person
 } from '@material-ui/icons'
 
 import { Card, CardList, CardMedia } from './ProfileStyles'
@@ -48,7 +48,7 @@ class ProfileOptions extends Component {
           <WelcomeUser />
         ) }
         <div>
-          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: 20}}>
+          <div style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: 20 } }>
             <div>
               <Typography style={ { marginTop: 10 } } variant='h5' component='h3'>
                 <FormattedMessage
@@ -70,12 +70,12 @@ class ProfileOptions extends Component {
                 size='small'
                 color='primary'
                 id='account-menu'
-                style={{
+                style={ {
                   display: 'flex',
                   justifyContent: 'space-between',
-                }}
+                } }
               >
-                {user.picture_url
+                { user.picture_url
                   ? <Avatar
                     alt={ user.username || '' }
                     src={ user.picture_url }
@@ -84,11 +84,11 @@ class ProfileOptions extends Component {
                     { user.username ? nameInitials(user.username) : <Person /> }
                   </Avatar>
                 }
-                <div style={{textAlign: 'left', marginLeft: 10, color: "#1c1c1f"}}>
+                <div style={ { textAlign: 'left', marginLeft: 10, color: '#1c1c1f' } }>
                   <Typography variant='body2' color='text'>
                     { user.username }
                   </Typography>
-                  <Typography variant='body4' style={{fontSize: 10, color: '#666'}}>
+                  <Typography variant='body4' style={ { fontSize: 10, color: '#666' } }>
                     { user.email }
                   </Typography>
                 </div>

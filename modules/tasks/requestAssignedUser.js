@@ -30,7 +30,7 @@ const sendConfirmationEmail = (task, assign) => {
 }
       `
 
-  return models.Assign.update({ 
+  return models.Assign.update({
     status: 'pending-confirmation'
   }, {
     where: {

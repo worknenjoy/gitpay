@@ -315,13 +315,13 @@ class Profile extends Component {
                       </StyledButton>
                     </div>
                     <div className={ classes.row }>
-                      <div style={{
+                      <div style={ {
                         display: 'flex',
                         flexDirection: 'column',
                         flex: 1,
                         padding: 20,
                         height: '100vh'
-                      }}>
+                      } }>
                         <MenuList>
                           <MenuItem
                             onClick={ () =>
@@ -390,7 +390,7 @@ class Profile extends Component {
                                 }
                               />
                             </MenuItem>
-                          } 
+                          }
                           { this.props.user.Types && (this.props.user.Types.map(t => t.name).includes('funding') || this.props.user.Types.map(t => t.name).includes('maintainer')) &&
                             <MenuItem
                               onClick={ () =>
@@ -524,7 +524,7 @@ class Profile extends Component {
                             />
                           </MenuItem>
                         </MenuList>
-                        <MenuList style={{marginTop: 'auto'}}>
+                        <MenuList style={ { marginTop: 'auto' } }>
                           <MenuItem button onClick={ this.handleSignOut }>
                             <ListItemIcon>
                               <ExitToApp />

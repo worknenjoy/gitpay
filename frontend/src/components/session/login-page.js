@@ -53,7 +53,7 @@ class LoginPage extends Component {
     const { classes, match } = this.props
     return (
       <div className={ classes.container }>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={ { display: 'flex', flexDirection: 'column' } }>
           <Card className={ classes.card }>
             <CardContent className={ classes.cardContent }>
               <Link to='/#'>
@@ -64,7 +64,7 @@ class LoginPage extends Component {
               </Content>
             </CardContent>
           </Card>
-          <div style={{marginTop: 10, textAlign: 'center'}}>
+          <div style={ { marginTop: 10, textAlign: 'center' } }>
             <Typography variant='caption' color='default' gutterBottom noWrap>
               <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay® - All rights reserved' />
             </Typography>

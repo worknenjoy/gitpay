@@ -319,21 +319,21 @@ class LoginForm extends Component {
           </div>
         }
         { type === 'signin' && (
-        <div style={{display: 'flex', justifyContent: 'space-between', display: 'none'}}>
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            { this.state.rememberMe ? 
-              <CheckBox checked={ this.state.rememberMe } onClick={ this.handleRememberMe } /> :
-              <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleRememberMe } />
-            }
-            <Typography variant='caption' style={{marginLeft: 10}}>
-              <FormattedMessage id='account.login.label.remember' defaultMessage='Remember me' />
-            </Typography>
+          <div style={ { display: 'flex', justifyContent: 'space-between', display: 'none' } }>
+            <div style={ { display: 'flex', alignItems: 'center' } }>
+              { this.state.rememberMe
+                ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleRememberMe } />
+                : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleRememberMe } />
+              }
+              <Typography variant='caption' style={ { marginLeft: 10 } }>
+                <FormattedMessage id='account.login.label.remember' defaultMessage='Remember me' />
+              </Typography>
+            </div>
+            <Button variant='text' style={ { margin: 0, padding: 0 } } onClick={ () => this.handleType('forgot') } component='a' size='small' color='primary'>
+              <FormattedMessage variant='caption' id='account.login.label.forgot' defaultMessage='Forgot password?' />
+            </Button>
           </div>
-          <Button variant='text' style={{margin: 0, padding: 0}} onClick={ () => this.handleType('forgot') } component='a' size='small' color='primary'>
-            <FormattedMessage variant='caption' id='account.login.label.forgot' defaultMessage='Forgot password?' />
-          </Button>
-        </div>
-        )}
+        ) }
         <div className={ classes.center } style={ { marginTop: 30 } }>
           { type === 'signin' ? (
             <div>
@@ -341,12 +341,12 @@ class LoginForm extends Component {
                 <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
               </Button>
               { noCancelButton ? null : (
-              <Button onClick={ onClose } fullWidth size='large' variant='text' color='primary' className={ classes.button } style={{marginTop: 10}}>
-                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
-              </Button>
+                <Button onClick={ onClose } fullWidth size='large' variant='text' color='primary' className={ classes.button } style={ { marginTop: 10 } }>
+                  <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+                </Button>
               ) }
               <div style={ { marginTop: 40 } }>
-                <Typography type='body1' component='span' style={{display: 'inline-block', verticalAlign: 'middle'}}>
+                <Typography type='body1' component='span' style={ { display: 'inline-block', verticalAlign: 'middle' } }>
                   <FormattedMessage id='account.login.label.or.signing' defaultMessage='Dont have an account?' />
                 </Typography>
                 <Button onClick={ () => this.handleType('signup') } variant='text' color='primary' size='large'>
@@ -357,9 +357,9 @@ class LoginForm extends Component {
           ) : (
             <div>
               { noCancelButton ? null : (
-              <Button onClick={ onClose } size='large' variant='text' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
-              </Button>
+                <Button onClick={ onClose } size='large' variant='text' color='primary' className={ classes.button }>
+                  <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+                </Button>
               ) }
               <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
