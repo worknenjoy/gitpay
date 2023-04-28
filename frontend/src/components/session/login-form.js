@@ -86,6 +86,10 @@ class LoginForm extends Component {
     if (type === 'signup') {
       this.setState({ type: type, action: `${api.API_URL}/auth/register` })
     }
+
+    if(type === 'forgot') {
+      this.setState({ type: type, action: `${api.API_URL}/auth/forgot` })
+    }
     return false
   }
 
@@ -244,6 +248,7 @@ class LoginForm extends Component {
             helperText={ error.username }
           />
         </div>
+        { type !== 'forgot' && (
         <div className={ classes.margins }>
           <TextField
             name='password'
@@ -270,7 +275,7 @@ class LoginForm extends Component {
             error={ error.password }
             helperText={ error.password }
           />
-        </div>
+        </div>) }
         { type === 'signup' && (
           <div className={ classes.margins }>
             <TextField
@@ -321,7 +326,7 @@ class LoginForm extends Component {
           </div>
         }
         { type === 'signin' && (
-          <div style={ { display: 'flex', justifyContent: 'space-between', display: 'none' } }>
+          <div style={ { display: 'flex', justifyContent: 'space-between' } }>
             <div style={ { display: 'flex', alignItems: 'center' } }>
               { this.state.rememberMe
                 ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleRememberMe } />
@@ -368,9 +373,16 @@ class LoginForm extends Component {
                   <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
                 </Button>
               ) }
-              <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
-              </Button>
+              { type === 'signup' && (
+                <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
+                  <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+                </Button>
+              ) }
+              { type === 'forgot' && (
+                <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
+                  <FormattedMessage id='account.login.label.password' defaultMessage='Recover password' />
+                </Button>
+              ) }
               <div style={ { marginTop: 20, display: 'flex', alignItems: 'baseline' } }>
                 <Typography type='body1' component='span'>
                   <FormattedMessage id='account.login.label.or.signup' defaultMessage='Have an account?' />

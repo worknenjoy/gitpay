@@ -22,6 +22,7 @@ const styles = theme => ({
     backgroundRepeat: 'no-repeat',
   },
   card: {
+    minWidth: 400,
     marginTop: 40,
     opacity: 0.8,
     overflow: 'visible',
@@ -57,7 +58,7 @@ class LoginPage extends Component {
         <div style={ { display: 'flex', flexDirection: 'column' } }>
           <Card className={ classes.card }>
             <CardContent className={ classes.cardContent }>
-              <Link to='/#'>
+              <Link to='/'>
                 <img src={ logo } width={ 210 } />
               </Link>
               <Content>

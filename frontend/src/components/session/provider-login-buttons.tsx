@@ -12,7 +12,7 @@ const ProviderLoginButtons = ({ classes, contrast, hideExtra, size }) => (
   <>
     <div style={ { display: hideExtra ? 'none' : 'block' } }>
       <div style={ { textAlign: 'center', marginBottom: 10 } }>
-        <Typography variant='caption' color={ contrast ? 'inherit' : 'primary' } gutterBottom>
+        <Typography variant='caption' color={ contrast ? 'inherit' : 'textSecondary' } gutterBottom>
           <FormattedMessage id='account.login.connect.provider.label' defaultMessage='You can also connect or signup with ' />
         </Typography>
       </div>
@@ -27,7 +27,7 @@ const ProviderLoginButtons = ({ classes, contrast, hideExtra, size }) => (
           color='secondary'
         >
           <img width='16' src={GithubLogo} />
-          <span className={classes?.gutterLeft}>Github</span>
+          <span style={{marginLeft: 10}}>Github</span>
         </Button>
         <Button
           href={`${api.API_URL}/authorize/bitbucket`}
@@ -36,7 +36,7 @@ const ProviderLoginButtons = ({ classes, contrast, hideExtra, size }) => (
           color='secondary'
         >
           <img width='16' src={BitbucketLogo} />
-          <span className={classes?.gutterLeft}>Bitbucket</span>
+          <span style={{marginLeft: 10}}>Bitbucket</span>
         </Button>
       </div>
     </div>
