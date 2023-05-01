@@ -62,11 +62,13 @@ class LoginForm extends Component {
       captchaChecked: false,
       rememberMe: false
     }
+    this.userField = React.createRef()
   }
 
   componentDidMount () {
     const modeByPath = this.props.location.pathname.split('/')[1]
     this.handleType(this.props.mode || modeByPath)
+    this.setState({username: this.userField})
     process.env.NODE_ENV === 'development' && this.setState({ captchaChecked: true })
   }
 
@@ -88,7 +90,7 @@ class LoginForm extends Component {
     }
 
     if(type === 'forgot') {
-      this.setState({ type: type, action: `${api.API_URL}/auth/forgot` })
+      this.setState({ type: type, action: `${api.API_URL}/auth/forgot-password` })
     }
     return false
   }
@@ -187,6 +189,17 @@ class LoginForm extends Component {
     }
   }
 
+  handleForgotSubmit = async event => {
+    event.preventDefault();
+    console.log('forgot password')
+    try {
+      await this.props.forgotPassword({email: this.state.username})
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
+
   handleRememberMe = (e) => {
     this.setState({ rememberMe: !this.state.rememberMe })
   }
@@ -196,7 +209,7 @@ class LoginForm extends Component {
     const { action, type } = this.state
     const { validating, password, confirmPassword, error } = this.state
     return (
-      <form onSubmit={ this.handleSubmit } action={ action } method='POST' autoComplete='off'>
+      <form onSubmit={ type === 'forgot' ? this.handleForgotSubmit : this.handleSubmit} action={ action } method='POST' autoComplete='off'>
         { type === 'signup' && (
           <div className={ classes.margins }>
             <TextField
@@ -244,6 +257,7 @@ class LoginForm extends Component {
             label='E-mail'
             variant='outlined'
             id='username'
+            ref='userField'
             error={ error.username }
             helperText={ error.username }
           />

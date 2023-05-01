@@ -2,6 +2,7 @@ const requestPromise = require('request-promise')
 const secrets = require('../../../config/secrets')
 const user = require('../../users')
 const task = require('../../tasks')
+const Sendmail = require('../../mail/mail')
 
 exports.register = (req, res) => {
   user.userExists({ email: req.body.email }).then(userData => {
@@ -19,6 +20,32 @@ exports.register = (req, res) => {
       })
   })
 }
+
+exports.forgotPasswordNotification = (req, res) => {
+  user.userExists({ email: req.body.email })
+    .then(data => {
+      if (data.dataValues && data.dataValues.email) {
+        const email = data.dataValues.email
+        const name = data.dataValues.name
+        const token = data.dataValues.token
+        const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`
+        const html = `<p>Hi ${name},</p><p>Click <a href="${url}">here</a> to reset your password.</p>`
+        const subject = 'Reset Password'
+        const message = {
+          to: email,
+          subject,
+          html
+        }
+        Sendmail.success(message.to, message.subject, message.html)
+      } else {
+        res.status(403).send({ message: 'user.not.exist' })
+      }
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+};
 
 exports.searchAll = (req, res) => {
   user.userSearch()

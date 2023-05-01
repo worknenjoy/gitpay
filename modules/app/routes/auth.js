@@ -50,6 +50,19 @@ router.post('/authorize/local',
   }
 )
 
+router.post('/auth/change-password', async function(req, res) {
+  const user = await models.User.find({ where: { email: req.body.email } })
+  user.changePassword(req.body.oldPassword, req.body.changePassword, (err) => {
+    if(err) { 
+      res.send(err) 
+    } else {
+      res.send('successfully change password')
+    }
+  })
+})
+
+router.post('/auth/forgot-password', controllers.forgotPasswordNotification)
+
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 
 router.post('/auth/register', controllers.register)

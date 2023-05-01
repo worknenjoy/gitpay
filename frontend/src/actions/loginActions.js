@@ -137,3 +137,20 @@ export const logOut = () => {
     dispatch(loggedOutCompleted())
   }
 }
+
+export const forgotPassword = data => {
+  return dispatch => {
+    return axios
+      .post(api.API_URL + '/auth/forgot-password', data)
+      .then(response => {
+        if(response) {
+          dispatch(addNotification('user.forgot-password.successfull'))
+        } else {
+          dispatch(addNotification('user.forgot-password.error'))  
+        }
+      })
+      .catch(error => {
+        dispatch(addNotification('user.forgot-password.error'))
+      })
+  }
+}
