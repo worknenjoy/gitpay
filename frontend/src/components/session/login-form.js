@@ -196,20 +196,22 @@ class LoginForm extends Component {
 
   handleForgotSubmit = async event => {
     event.preventDefault();
-    console.log('forgot password')
     try {
       await this.props.forgotPassword({email: this.state.username})
+      this.props.history.push('/signin')
     } catch (error) {
       console.log(error)
-
     }
   }
 
   handleResetSubmit = async event => {
     event.preventDefault();
-    console.log('reset password')
+    const { password, confirmPassword, error } = this.state
+    const validPasswordConfirm = this.validatePasswordDontMatch(password, confirmPassword, error)
     try {
-      await this.props.resetPassword({password: this.state.password, token: this.props.match.params.token})
+      validPasswordConfirm 
+        && await this.props.resetPassword({password, token: this.props.match.params.token})
+        && this.props.history.push('/signin')
     } catch (error) {
       console.log(error)
     }
@@ -224,7 +226,7 @@ class LoginForm extends Component {
     const { action, type } = this.state
     const { validating, password, confirmPassword, error } = this.state
     return (
-      <form onSubmit={ type === 'forgot' ? this.handleForgotSubmit : this.handleSubmit} action={ action } method='POST' autoComplete='off'>
+      <form onSubmit={ type === 'forgot' ? this.handleForgotSubmit : (type === 'reset' && this.handleResetSubmit) } action={ action } method='POST' autoComplete='off'>
         { type === 'signup' && (
           <div className={ classes.margins }>
             <TextField
@@ -250,33 +252,35 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        <div className={ classes.margins }>
-          <TextField
-            name='username'
-            onChange={ this.handleChange('username') }
-            onBlur={ this.handleBlur }
-            fullWidth
-            InputLabelProps={ {
-              classes: {
-                root: classes.cssLabel,
-                focused: classes.cssFocused,
-              },
-            } }
-            InputProps={ {
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              },
-            } }
-            label='E-mail'
-            variant='outlined'
-            id='username'
-            ref='userField'
-            error={ error.username }
-            helperText={ error.username }
-          />
-        </div>
+        { type !== 'reset' && (
+          <div className={ classes.margins }>
+            <TextField
+              name='username'
+              onChange={ this.handleChange('username') }
+              onBlur={ this.handleBlur }
+              fullWidth
+              InputLabelProps={ {
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              } }
+              InputProps={ {
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                },
+              } }
+              label='E-mail'
+              variant='outlined'
+              id='username'
+              ref='userField'
+              error={ error.username }
+              helperText={ error.username }
+            />
+          </div>
+        ) }
         { type !== 'forgot' && (
         <div className={ classes.margins }>
           <TextField
@@ -305,7 +309,7 @@ class LoginForm extends Component {
             helperText={ error.password }
           />
         </div>) }
-        { type === 'signup' && (
+        { type === 'signup' || type === 'reset' && (
           <div className={ classes.margins }>
             <TextField
               error={ validating && password !== confirmPassword }

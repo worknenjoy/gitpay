@@ -41,6 +41,7 @@ export default props => (
       <Route exact path='/tasks/:filter' component={ TaskExplorer } />
       <Route exact path='/team' component={ TeamContainer } />
       <Route exact path='/signin' component={ LoginPage } />
+      <Route exact path='/signin/:status' component={ LoginPageContainer } />
       <Route exact path='/signup' component={ LoginPage } />
       <Route exact path='/reset-password/:token' component={ RecoverPasswordContainer } />
       <Route exact path='/signup/:status' component={ LoginPageContainer } />

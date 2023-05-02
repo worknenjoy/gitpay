@@ -40,6 +40,7 @@ exports.forgotPasswordNotification = async (req, res) => {
         html
       }
       Sendmail.success(message.to, message.subject, message.html)
+      res.send(true)
     } else {
       res.status(403).send({ message: 'user.not.exist' })
     }
@@ -49,6 +50,24 @@ exports.forgotPasswordNotification = async (req, res) => {
       res.send(false)
   }
 };
+
+exports.changePassword = async (req, res) => {
+  try {
+    const foundUser = await models.User.findOne({ where: { recover_password_token: req.body.token } })
+    if(!foundUser) res.status(401)
+    const passwordHash = models.User.generateHash(req.body.password)
+    if(passwordHash) { 
+      await models.User.update({ password: passwordHash, recover_password_token: null }, { where: { id: foundUser.dataValues.id } })
+      res.send('successfully change password')
+    } else {
+      res.status(401).send({ message: 'user.no.password.reset' })
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.send(false)
+  }
+}
 
 exports.searchAll = (req, res) => {
   user.userSearch(req.query)

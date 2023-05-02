@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, Link, Redirect } from 'react-router-dom'
 import LoginButton from './login-button'
 import { FormattedMessage } from 'react-intl'
 import { withStyles, Card, CardContent, Typography } from '@material-ui/core'
@@ -61,7 +61,11 @@ class LoginPage extends Component {
 
   render () {
     const { classes, match } = this.props
+
+    
+
     return (
+      this.state.mode === 'reset' && !this.props.user.id ? <Redirect to='/signin' /> :
       <div className={ classes.container }>
         <div style={ { display: 'flex', flexDirection: 'column' } }>
           <Card className={ classes.card }>

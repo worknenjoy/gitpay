@@ -479,6 +479,7 @@
   "user.login.successfull": "You successfully logged in",
   "user.login.error": "We could not log to your account",
   "user.register.successfull": "You're now registered on our platform, now you can log in with your credentials",
+  "user.forgot.password.successfull": "We sent you an e-mail with instructions to reset your password",
   "user.register.error": "There's was an error to create user",
   "notifications.account.update.error": "We could not create your account",
   "notifications.bank.get.success": "We could not obtain your bank account data",

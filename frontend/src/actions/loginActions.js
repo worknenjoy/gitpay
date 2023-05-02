@@ -148,13 +148,30 @@ export const forgotPassword = data => {
       .post(api.API_URL + '/auth/forgot-password', data)
       .then(response => {
         if(response) {
-          dispatch(addNotification('user.forgot-password.successfull'))
+          dispatch(addNotification('user.forgot.password.successfull'))
         } else {
-          dispatch(addNotification('user.forgot-password.error'))  
+          dispatch(addNotification('user.forgot.password.error'))  
         }
       })
       .catch(error => {
-        dispatch(addNotification('user.forgot-password.error'))
+        dispatch(addNotification('user.forgot.password.error'))
+      })
+  }
+}
+
+export const resetPassword = data => {
+  return dispatch => {
+    return axios
+      .put(api.API_URL + '/auth/change-password', data)
+      .then(response => {
+        if(response) {
+          dispatch(addNotification('user.reset.password.successfull'))
+        } else {
+          dispatch(addNotification('user.reset.password.error'))
+        }
+      })
+      .catch(error => {
+        dispatch(addNotification('user.reset.password.error'))
       })
   }
 }
@@ -180,7 +197,6 @@ export const searchUser = data => {
       })
       .then(response => {
         if(response?.data) {
-          console.log('response data', response.data[0])
           dispatch(searchUserSuccess(response.data[0]))
         } else {
           dispatch(addNotification('user.search.error'))  
