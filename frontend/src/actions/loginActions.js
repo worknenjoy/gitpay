@@ -14,6 +14,10 @@ export const REGISTER_USER_REQUESTED = 'REGISTER_USER_REQUESTED'
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
 export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR'
 
+export const SEARCH_USER_REQUESTED = 'SEARCH_USER_REQUESTED'
+export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
+export const SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
+
 /*
  *
  * Login
@@ -151,6 +155,41 @@ export const forgotPassword = data => {
       })
       .catch(error => {
         dispatch(addNotification('user.forgot-password.error'))
+      })
+  }
+}
+
+const searchUserRequested = () => {
+  return { type: SEARCH_USER_REQUESTED, logged: false, completed: false }
+}
+
+const searchUserSuccess = user => {
+  return { type: SEARCH_USER_SUCCESS, logged: false, completed: true, user: user }
+}
+
+const searchUserError = error => {
+  return { type: SEARCH_USER_ERROR, logged: false, completed: true, error: error }
+}
+
+export const searchUser = data => {
+  return dispatch => {
+    dispatch(searchUserRequested())
+    return axios
+      .get(api.API_URL + '/users', {
+        params: data
+      })
+      .then(response => {
+        if(response?.data) {
+          console.log('response data', response.data[0])
+          dispatch(searchUserSuccess(response.data[0]))
+        } else {
+          dispatch(addNotification('user.search.error'))  
+        }
+      })
+      .catch(error => {
+        console.log('error', error)
+        dispatch(addNotification('user.search.error'))
+        dispatch(searchUserError(error))
       })
   }
 }

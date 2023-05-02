@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     os: DataTypes.STRING,
     skills: DataTypes.STRING,
     languages: DataTypes.STRING,
+    recover_password_token: DataTypes.STRING,
     receiveNotifications: {
       type: DataTypes.BOOLEAN,
       defaultValue: true

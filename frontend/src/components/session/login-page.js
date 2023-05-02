@@ -45,10 +45,18 @@ const Content = styled.div`
 const logo = require('../../images/logo-complete.png')
 
 class LoginPage extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      mode: props.match.params.mode ? 'signin' : (props.match.params.token ? 'reset' : 'signin')
+    }
+  }
   componentDidMount () {
     if (this.props.match && this.props.match.params.status === 'invalid') {
       this.props.addNotification && this.props.addNotification('user.invalid')
     }
+
+    this.props.searchUser && this.props.searchUser({recover_password_token: this.props.match.params.token})
   }
 
   render () {
@@ -62,7 +70,7 @@ class LoginPage extends Component {
                 <img src={ logo } width={ 210 } />
               </Link>
               <Content>
-                <LoginButton includeForm mode={ match.params.mode } noCancelButton />
+                <LoginButton includeForm mode={ this.state.mode } noCancelButton user={this.props?.user} />
               </Content>
             </CardContent>
           </Card>

@@ -13,6 +13,7 @@ import TaskExplorer from '../containers/task-explorer'
 import TeamContainer from '../containers/team.js'
 import LoginPage from '../components/session/login-page'
 import LoginPageContainer from '../containers/login-page'
+import RecoverPasswordContainer from '../containers/recover-password'
 import FourOFour from '../components/FourOFour.js'
 import LandingPage from '../components/welcome/landing-page'
 import Stats from '../components/Stats/Stats-main-page'
@@ -41,7 +42,7 @@ export default props => (
       <Route exact path='/team' component={ TeamContainer } />
       <Route exact path='/signin' component={ LoginPage } />
       <Route exact path='/signup' component={ LoginPage } />
-      <Route exact path='/signin/:status' component={ LoginPageContainer } />
+      <Route exact path='/reset-password/:token' component={ RecoverPasswordContainer } />
       <Route exact path='/signup/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
       <Route exact path='/task/:id' component={ TaskContainer } />

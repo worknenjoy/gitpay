@@ -4,6 +4,7 @@ import {
   LOGGED_IN_ERROR,
   LOGOUT_REQUESTED,
   LOGOUT_COMPLETED,
+  SEARCH_USER_SUCCESS
 } from '../actions/loginActions'
 
 import {
@@ -29,6 +30,8 @@ export const loggedIn = (state = { logged: false, user: {}, completed: true, err
     case LOGOUT_REQUESTED:
     case LOGOUT_COMPLETED:
       return { ...state, logged: action.logged, completed: action.completed }
+    case SEARCH_USER_SUCCESS:
+      return { ...state, user: action.user }
     default:
       return state
   }

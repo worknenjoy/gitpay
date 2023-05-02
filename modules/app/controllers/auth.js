@@ -1,6 +1,8 @@
+var crypto = require('crypto');
 const requestPromise = require('request-promise')
 const secrets = require('../../../config/secrets')
 const user = require('../../users')
+const models = require('../../../models')
 const task = require('../../tasks')
 const Sendmail = require('../../mail/mail')
 
@@ -21,34 +23,35 @@ exports.register = (req, res) => {
   })
 }
 
-exports.forgotPasswordNotification = (req, res) => {
-  user.userExists({ email: req.body.email })
-    .then(data => {
-      if (data.dataValues && data.dataValues.email) {
-        const email = data.dataValues.email
-        const name = data.dataValues.name
-        const token = data.dataValues.token
-        const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`
-        const html = `<p>Hi ${name},</p><p>Click <a href="${url}">here</a> to reset your password.</p>`
-        const subject = 'Reset Password'
-        const message = {
-          to: email,
-          subject,
-          html
-        }
-        Sendmail.success(message.to, message.subject, message.html)
-      } else {
-        res.status(403).send({ message: 'user.not.exist' })
+exports.forgotPasswordNotification = async (req, res) => {
+  try {
+    const foundUser = await user.userExists({ email: req.body.email })
+    if (foundUser?.dataValues && foundUser?.dataValues?.email) {
+      const email = foundUser.dataValues.email
+      const name = foundUser.dataValues.name
+      const token = crypto.randomBytes(64).toString('hex')
+      await models.User.update({ recover_password_token: token }, { where: { email } })
+      const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`
+      const html = `<p>Hi ${name},</p><p>Click <a href="${url}">here</a> to reset your password.</p>`
+      const subject = 'Reset Password'
+      const message = {
+        to: email,
+        subject,
+        html
       }
-    }).catch(error => {
+      Sendmail.success(message.to, message.subject, message.html)
+    } else {
+      res.status(403).send({ message: 'user.not.exist' })
+    }
+  } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error)
       res.send(false)
-    })
+  }
 };
 
 exports.searchAll = (req, res) => {
-  user.userSearch()
+  user.userSearch(req.query)
     .then(data => {
       res.send(data)
     }).catch(error => {

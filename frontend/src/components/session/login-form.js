@@ -92,6 +92,11 @@ class LoginForm extends Component {
     if(type === 'forgot') {
       this.setState({ type: type, action: `${api.API_URL}/auth/forgot-password` })
     }
+
+    if(type === 'reset') {
+      this.setState({ type: type, action: `${api.API_URL}/auth/reset-password` })
+    }
+
     return false
   }
 
@@ -197,6 +202,16 @@ class LoginForm extends Component {
     } catch (error) {
       console.log(error)
 
+    }
+  }
+
+  handleResetSubmit = async event => {
+    event.preventDefault();
+    console.log('reset password')
+    try {
+      await this.props.resetPassword({password: this.state.password, token: this.props.match.params.token})
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -394,7 +409,12 @@ class LoginForm extends Component {
               ) }
               { type === 'forgot' && (
                 <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
-                  <FormattedMessage id='account.login.label.password' defaultMessage='Recover password' />
+                  <FormattedMessage id='account.login.label.password.recover' defaultMessage='Recover password' />
+                </Button>
+              ) }
+              { type === 'reset' && (
+                <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
+                  <FormattedMessage id='account.login.label.password.reset' defaultMessage='Reset password' />
                 </Button>
               ) }
               <div style={ { marginTop: 20, display: 'flex', alignItems: 'baseline' } }>
