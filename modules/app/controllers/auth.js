@@ -28,7 +28,7 @@ exports.forgotPasswordNotification = async (req, res) => {
     const foundUser = await user.userExists({ email: req.body.email })
     if (foundUser?.dataValues && foundUser?.dataValues?.email) {
       const email = foundUser.dataValues.email
-      const name = foundUser.dataValues.name
+      const name = foundUser.dataValues.name || "Gitpay user"
       const token = crypto.randomBytes(64).toString('hex')
       await models.User.update({ recover_password_token: token }, { where: { email } })
       const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`

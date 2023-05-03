@@ -28,7 +28,8 @@ const styles = theme => ({
     overflow: 'visible',
   },
   cardContent: {
-    textAlign: 'center'
+    textAlign: 'center',
+    position: 'relative'
   },
   title: {
     fontSize: 12

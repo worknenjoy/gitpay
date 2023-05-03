@@ -15,6 +15,8 @@ import api from '../../consts'
 import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons'
 
 import ProviderLoginButtons from './provider-login-buttons'
+import TermsOfService from './terms-of-service'
+import PrivacyPolicy from './privacy-policy'
 
 const styles = theme => ({
   cssLabel: {
@@ -52,7 +54,7 @@ class LoginForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      type: 'signup',
+      formType: 'signup',
       action: `${api.API_URL}/authorize/local`,
       username: '',
       password: '',
@@ -60,7 +62,12 @@ class LoginForm extends Component {
       validating: false,
       error: {},
       captchaChecked: false,
-      rememberMe: false
+      rememberMe: false,
+      termsOfServiceOpen: false,
+      privacyPolicyOpen: false,
+      agreeTermsCheck: false,
+      agreeTermsCheckError: false
+
     }
     this.userField = React.createRef()
   }
@@ -80,21 +87,21 @@ class LoginForm extends Component {
     this.setState({ [name]: event.target.value })
   }
 
-  handleType = type => {
-    if (type === 'signin') {
-      this.setState({ type: type, action: `${api.API_URL}/authorize/local` })
+  handleType = formType => {
+    if (formType === 'signin') {
+      this.setState({ formType, action: `${api.API_URL}/authorize/local` })
     }
 
-    if (type === 'signup') {
-      this.setState({ type: type, action: `${api.API_URL}/auth/register` })
+    if (formType === 'signup') {
+      this.setState({ formType, action: `${api.API_URL}/auth/register` })
     }
 
-    if(type === 'forgot') {
-      this.setState({ type: type, action: `${api.API_URL}/auth/forgot-password` })
+    if(formType === 'forgot') {
+      this.setState({ formType, action: `${api.API_URL}/auth/forgot-password` })
     }
 
-    if(type === 'reset') {
-      this.setState({ type: type, action: `${api.API_URL}/auth/reset-password` })
+    if(formType === 'reset') {
+      this.setState({ formType, action: `${api.API_URL}/auth/reset-password` })
     }
 
     return false
@@ -138,7 +145,8 @@ class LoginForm extends Component {
   }
 
   validatePasswordDontMatch = (password, confirmPassword, currentErrors) => {
-    if (password !== confirmPassword) {
+    const { formType } = this.state
+    if ( formType === 'signup' && password !== confirmPassword) {
       this.setState({
         error: {
           ...currentErrors,
@@ -151,19 +159,20 @@ class LoginForm extends Component {
   }
 
   handleSubmit = event => {
-    const currentErrors = this.state.error
-    if (!this.state.captchaChecked) {
+    const { name, username, password, captchaChecked, confirmPassword, agreeTermsCheck, formType, error } = this.state
+    const currentErrors = error
+    if (!captchaChecked) {
       this.setState({ error: { ...currentErrors, captcha: 'Please check the captcha' } })
       event && event.preventDefault()
       return false
     }
-    const { name, username, password, confirmPassword } = this.state
-    if (this.state.type === 'signup') {
+    if (formType === 'signup') {
       event && event.preventDefault()
       const validPassword = this.validatePassword(password, currentErrors)
       const validPasswordConfirm = this.validatePasswordDontMatch(password, confirmPassword, currentErrors)
       const validEmail = this.validateEmail(username, currentErrors)
-      validPassword && validPasswordConfirm && validEmail &&
+      if(!agreeTermsCheck) this.setState({ agreeTermsCheckError: true })
+      validPassword && validPasswordConfirm && validEmail && agreeTermsCheck &&
       this.props.registerUser({
         name,
         email: username,
@@ -221,13 +230,92 @@ class LoginForm extends Component {
     this.setState({ rememberMe: !this.state.rememberMe })
   }
 
+  handleAgreeTerms = (e) => {
+    this.setState({ agreeTermsCheck: !this.state.agreeTermsCheck })
+  }
+
+  handleOpenTermsOfService = (e) => {
+    e.preventDefault()
+    this.setState({ termsOfServiceOpen: true })
+  }
+
+  handleOpenPrivacyPolicy = (e) => {
+    e.preventDefault()
+    this.setState({ privacyPolicyOpen: true })
+  }
+
+  submitByFormType = (e) => {
+    //e.preventDefault()
+    const { formType } = this.state
+    switch(formType) {
+      case 'signin':
+        this.handleSubmit(e)
+        break;
+      case 'signup':
+        this.handleSubmit(e)
+        break;
+      case 'forgot':
+        this.handleForgotSubmit(e)
+        break;
+      case 'reset':
+        this.handleResetSubmit(e)
+        break;
+      default:
+        this.handleSubmit(e)
+        break;
+    }
+  }
+
   render () {
     const { classes, onClose, noCancelButton } = this.props
-    const { action, type } = this.state
+    const { action, formType, termsOfServiceOpen, privacyPolicyOpen, agreeTermsCheckError } = this.state
     const { validating, password, confirmPassword, error } = this.state
+
+    if(termsOfServiceOpen) { 
+      return (
+        <div style={{height: 'calc(100vh - 20px)', width: 500}}>
+          <TermsOfService 
+            onArrowBack={
+              (e) => {
+                e.preventDefault()
+                this.setState({termsOfServiceOpen: false})
+              }
+            }
+            onAgreeTerms={
+              (e) => {
+                e.preventDefault()
+                this.setState({termsOfServiceOpen: false, agreeTermsCheck: true})
+              }
+            }
+          />
+        </div>
+      )
+    }
+
+    if(privacyPolicyOpen) { 
+      return (
+        <div style={{height: 'calc(100vh - 20px)', width: 500}}>
+          <PrivacyPolicy 
+            onArrowBack={
+              (e) => {
+                e.preventDefault()
+                this.setState({privacyPolicyOpen: false})
+              }
+            }
+            onAgreeTerms={
+              (e) => {
+                e.preventDefault()
+                this.setState({privacyPolicyOpen: false, agreeTermsCheck: true})
+              }
+            }
+          />
+        </div>
+      )
+    }
+
     return (
-      <form onSubmit={ type === 'forgot' ? this.handleForgotSubmit : (type === 'reset' && this.handleResetSubmit) } action={ action } method='POST' autoComplete='off'>
-        { type === 'signup' && (
+      <form onSubmit={ this.submitByFormType } action={ action } method='POST' autoComplete='off'>
+        { formType === 'signup' && (
           <div className={ classes.margins }>
             <TextField
               name='name'
@@ -249,10 +337,11 @@ class LoginForm extends Component {
               label='Name'
               variant='outlined'
               id='name'
+              defaultValue={ this.state.name }
             />
           </div>
         ) }
-        { type !== 'reset' && (
+        { formType !== 'reset' && (
           <div className={ classes.margins }>
             <TextField
               name='username'
@@ -278,10 +367,11 @@ class LoginForm extends Component {
               ref='userField'
               error={ error.username }
               helperText={ error.username }
+              defaultValue={ this.state.username }
             />
           </div>
         ) }
-        { type !== 'forgot' && (
+        { formType !== 'forgot' && (
         <div className={ classes.margins }>
           <TextField
             name='password'
@@ -307,9 +397,10 @@ class LoginForm extends Component {
             id='password'
             error={ error.password }
             helperText={ error.password }
+            defaultValue={ this.state.password }
           />
         </div>) }
-        { type === 'signup' || type === 'reset' && (
+        { (formType === 'signup' || formType === 'reset') && (
           <div className={ classes.margins }>
             <TextField
               error={ validating && password !== confirmPassword }
@@ -335,6 +426,7 @@ class LoginForm extends Component {
               label='Confirm Password'
               variant='outlined'
               id='confirmPassword'
+              defaultValue={ this.state.confirmPassword }
             />
           </div>
         ) }
@@ -358,7 +450,7 @@ class LoginForm extends Component {
             </Typography>
           </div>
         }
-        { type === 'signin' && (
+        { formType === 'signin' && (
           <div style={ { display: 'flex', justifyContent: 'space-between' } }>
             <div style={ { display: 'flex', alignItems: 'center' } }>
               { this.state.rememberMe
@@ -374,8 +466,42 @@ class LoginForm extends Component {
             </Button>
           </div>
         ) }
+        { formType === 'signup' && (
+          <>
+          <div style={ { display: 'flex', justifyContent: 'flex-start' } }>
+            <div style={ { display: 'flex', alignItems: 'center' } }>
+              { this.state.agreeTermsCheck
+                ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } />
+                : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } />
+              }
+              <Typography variant='body1' style={ { marginLeft: 10 } }>
+                <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the' />
+                <a onClick={this.handleOpenTermsOfService} href='/#/terms' target='_blank' style={ { marginLeft: 5 } }>
+                  <FormattedMessage id='account.login.label.terms' defaultMessage='Terms of Service' />
+                </a> 
+                 <FormattedMessage id='account.login.label.terms.and' defaultMessage=' and' /> 
+                <a href='/#/privacy-policy' onClick={this.handleOpenPrivacyPolicy} target='_blank' style={ { marginLeft: 5 } }>
+                  <FormattedMessage id='account.login.label.privacy' defaultMessage='Privacy Policy' />
+                </a>
+              </Typography>
+            </div>
+          </div>
+           { agreeTermsCheckError &&
+            <div style={ {
+              color: 'red',
+              fontSize: 10,
+              display: 'flex',
+              justifyContent: 'center',
+            } }>
+              <Typography type='body1' component='span'>
+                <FormattedMessage id='account.login.label.terms.agree.error' defaultMessage='You must agree with the Terms of Service and Privacy Policy' />
+              </Typography>
+            </div>
+          }</>
+        ) }
+        
         <div className={ classes.center } style={ { marginTop: 20 } }>
-          { type === 'signin' ? (
+          { formType === 'signin' ? (
             <div>
               <Button fullWidth type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                 <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
@@ -385,7 +511,7 @@ class LoginForm extends Component {
                   <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
                 </Button>
               ) }
-              { type === 'signin' && (
+              { formType === 'signin' && (
                 <div style={ { marginTop: 20 } }>
                   <ProviderLoginButtons />
                 </div>
@@ -406,17 +532,17 @@ class LoginForm extends Component {
                   <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
                 </Button>
               ) }
-              { type === 'signup' && (
+              { formType === 'signup' && (
                 <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                   <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
                 </Button>
               ) }
-              { type === 'forgot' && (
+              { formType === 'forgot' && (
                 <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                   <FormattedMessage id='account.login.label.password.recover' defaultMessage='Recover password' />
                 </Button>
               ) }
-              { type === 'reset' && (
+              { formType === 'reset' && (
                 <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                   <FormattedMessage id='account.login.label.password.reset' defaultMessage='Reset password' />
                 </Button>
