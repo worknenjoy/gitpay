@@ -50,7 +50,7 @@ class LoginButton extends Component {
       <Wrapper contrast={ contrast }>
         <Content>
           { includeForm && (
-            <div style={ { marginTop: 20 } }>
+            <div>
               { mode !== 'reset' ? (  
                 <>
                   <Typography variant='h5' style={ { fontWeight: 'bold' } } color={ contrast ? 'inherit' : 'default' } gutterBottom>

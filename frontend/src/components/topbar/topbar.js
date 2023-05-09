@@ -487,9 +487,6 @@ class TopBar extends Component {
                     onClose={ this.handleSignUserDialogClose }
                     aria-labelledby='form-dialog-title'
                   >
-                    <DialogTitle id='form-dialog-title'>
-                      <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
-                    </DialogTitle>
                     <DialogContent>
                       <div style={ { display: 'flex', justifyContent: 'center', position: 'relative' } }>
                         <LoginButton

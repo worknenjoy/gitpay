@@ -430,26 +430,7 @@ class LoginForm extends Component {
             />
           </div>
         ) }
-        { process.env.NODE_ENV === 'production' && (
-          <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 } }>
-            <ReCAPTCHA
-              sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
-              onChange={ captchaChecked => this.setState({ captchaChecked }) }
-            />
-          </div>
-        ) }
-        { error.captcha &&
-          <div style={ {
-            color: 'red',
-            fontSize: 10,
-            display: 'flex',
-            justifyContent: 'center',
-          } }>
-            <Typography type='body1' component='span'>
-              { error.captcha }
-            </Typography>
-          </div>
-        }
+        
         { formType === 'signin' && (
           <div style={ { display: 'flex', justifyContent: 'space-between' } }>
             <div style={ { display: 'flex', alignItems: 'center' } }>
@@ -497,10 +478,32 @@ class LoginForm extends Component {
                 <FormattedMessage id='account.login.label.terms.agree.error' defaultMessage='You must agree with the Terms of Service and Privacy Policy' />
               </Typography>
             </div>
-          }</>
+          }
+          
+          </>
         ) }
-        
+        { process.env.NODE_ENV === 'production' && (
+          <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 } }>
+            <ReCAPTCHA
+              sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
+              onChange={ captchaChecked => this.setState({ captchaChecked }) }
+            />
+          </div>
+        ) }
+        { error.captcha &&
+          <div style={ {
+            color: 'red',
+            fontSize: 10,
+            display: 'flex',
+            justifyContent: 'center',
+          } }>
+            <Typography type='body1' component='span'>
+              { error.captcha }
+            </Typography>
+          </div>
+        }
         <div className={ classes.center } style={ { marginTop: 20 } }>
+
           { formType === 'signin' ? (
             <div>
               <Button fullWidth type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
@@ -512,11 +515,11 @@ class LoginForm extends Component {
                 </Button>
               ) }
               { formType === 'signin' && (
-                <div style={ { marginTop: 20 } }>
+                <div style={ { marginTop: 10 } }>
                   <ProviderLoginButtons />
                 </div>
               ) }
-              <div style={ { marginTop: 20 } }>
+              <div style={ { marginTop: 10 } }>
                 <Typography type='body1' component='span' style={ { display: 'inline-block', verticalAlign: 'middle' } }>
                   <FormattedMessage id='account.login.label.or.signing' defaultMessage='Dont have an account?' />
                 </Typography>
