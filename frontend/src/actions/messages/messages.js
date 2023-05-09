@@ -28,7 +28,26 @@ const messages = defineMessages({
   notifactionAssignTaskSucess: {
     id: 'actions.assign.task.sucess',
     defaultMessage: 'This task was updated successfully!'
-
+  },
+  userForgotPasswordSuccessfull: {
+    id: 'user.forgot.password.successfull',
+    defaultMessage: 'We have sent you an email with instructions to reset your password'
+  },
+  userForgotPasswordError: {
+    id: 'user.forgot.password.error',
+    defaultMessage: 'We could not send you an email to reset your password'
+  },
+  userResetPasswordSuccessfull: {
+    id: 'user.reset.password.successfull',
+    defaultMessage: 'Your password was changed successfully'
+  },
+  userResetPasswordError: {
+    id: 'user.reset.password.error',
+    defaultMessage: 'We could not change your password'
+  },
+  userSearchError: {
+    id: 'user.search.error',
+    defaultMessage: 'We had an error to find this user'
   },
   notificationAssignTaskError: {
     id: 'actions.assign.task.error',

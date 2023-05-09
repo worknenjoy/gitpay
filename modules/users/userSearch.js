@@ -1,19 +1,19 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function userSearch () {
+module.exports = Promise.method(function userSearch (params) {
   return models.User
     .findAll(
-      {}
+      {
+        where: params || {},
+      }
     )
-    .then(user => {
-      if (!user) return false
+    .then(users => {
+      if (!users) return false
 
-      if (user && !user.dataValues) return false
+      if (users.length <= 0) return false
 
-      if (user.length <= 0) return false
-
-      return {
+      return users.map(user => ({
         id: user.dataValues.id,
         website: user.dataValues.website,
         profile_url: user.dataValues.profile_url,
@@ -27,7 +27,7 @@ module.exports = Promise.method(function userSearch () {
         repos: user.dataValues.repos,
         createdAt: user.dataValues.createdAt,
         updatedAt: user.dataValues.updatedAt
-      }
+      }))
     }).catch(error => {
       // eslint-disable-next-line no-console
       console.log(error)

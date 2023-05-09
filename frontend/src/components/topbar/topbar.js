@@ -491,13 +491,15 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
                     </DialogTitle>
                     <DialogContent>
-                      <LoginButton
-                        referer={ this.props.location }
-                        size='medium'
-                        includeForm
-                        mode={ mode }
-                        onClose={ this.handleSignUserDialogClose }
-                      />
+                      <div style={ { display: 'flex', justifyContent: 'center', position: 'relative' } }>
+                        <LoginButton
+                          referer={ this.props.location }
+                          size='medium'
+                          includeForm
+                          mode={ mode }
+                          onClose={ this.handleSignUserDialogClose }
+                        />
+                      </div>
                     </DialogContent>
                   </Dialog>
                 </React.Fragment>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, Link, Redirect } from 'react-router-dom'
 import LoginButton from './login-button'
 import { FormattedMessage } from 'react-intl'
 import { withStyles, Card, CardContent, Typography } from '@material-ui/core'
@@ -22,12 +22,14 @@ const styles = theme => ({
     backgroundRepeat: 'no-repeat',
   },
   card: {
+    minWidth: 400,
     marginTop: 40,
     opacity: 0.8,
     overflow: 'visible',
   },
   cardContent: {
-    textAlign: 'center'
+    textAlign: 'center',
+    position: 'relative'
   },
   title: {
     fontSize: 12
@@ -44,24 +46,36 @@ const Content = styled.div`
 const logo = require('../../images/logo-complete.png')
 
 class LoginPage extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      mode: props.match.params.mode ? 'signin' : (props.match.params.token ? 'reset' : 'signin')
+    }
+  }
   componentDidMount () {
     if (this.props.match && this.props.match.params.status === 'invalid') {
       this.props.addNotification && this.props.addNotification('user.invalid')
     }
+
+    this.props.searchUser && this.props.searchUser({recover_password_token: this.props.match.params.token})
   }
 
   render () {
     const { classes, match } = this.props
+
+    
+
     return (
+      this.state.mode === 'reset' && !this.props.user.id ? <Redirect to='/signin' /> :
       <div className={ classes.container }>
         <div style={ { display: 'flex', flexDirection: 'column' } }>
           <Card className={ classes.card }>
             <CardContent className={ classes.cardContent }>
-              <Link to='/#'>
+              <Link to='/'>
                 <img src={ logo } width={ 210 } />
               </Link>
               <Content>
-                <LoginButton includeForm mode={ match.params.mode } noCancelButton />
+                <LoginButton includeForm mode={ this.state.mode } noCancelButton user={this.props?.user} />
               </Content>
             </CardContent>
           </Card>

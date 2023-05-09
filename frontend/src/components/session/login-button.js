@@ -44,19 +44,38 @@ class LoginButton extends Component {
   }
 
   render () {
-    const { classes, contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton } = this.props
+    const { classes, contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton, user } = this.props
 
     return (
       <Wrapper contrast={ contrast }>
         <Content>
           { includeForm && (
             <div style={ { marginTop: 20 } }>
-              <Typography variant='h5' style={ { fontWeight: 'bold' } } color={ contrast ? 'inherit' : 'default' } gutterBottom>
-                <FormattedMessage id='account.login.title.welcome' defaultMessage='Welcome to Gitpay!' />
-              </Typography>
-              <Typography style={ { marginBottom: 20 } } variant='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
-                <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
-              </Typography>
+              { mode !== 'reset' ? (  
+                <>
+                  <Typography variant='h5' style={ { fontWeight: 'bold' } } color={ contrast ? 'inherit' : 'default' } gutterBottom>
+                    <FormattedMessage id='account.login.title.welcome' defaultMessage='Welcome to Gitpay!' />
+                  </Typography>
+                  <Typography style={ { marginBottom: 20 } } variant='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+                    <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography variant='caption' style={ { fontWeight: 'bold' } } color={ contrast ? 'inherit' : 'default' } gutterBottom>
+                    <FormattedMessage id='account.login.title.welcome.recover' defaultMessage='Welcome back to Gitpay!' />
+                  </Typography>
+                  <Typography style={ { marginBottom: 20 } } variant='h5' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+                    {this.props?.user?.email}
+                  </Typography>
+                  <Typography variant='h6' style={ { fontWeight: 'bold' } } color={ contrast ? 'inherit' : 'default' } gutterBottom>
+                    <FormattedMessage id='account.login.title' defaultMessage='Recover your password' />
+                  </Typography>
+                  <Typography style={ { marginBottom: 20 } } variant='body1' color={ contrast ? 'inherit' : 'default' } gutterBottom noWrap>
+                    <FormattedMessage id='account.login.connect.form.reset' defaultMessage='To reset your password, type the new password and confirm' />
+                  </Typography>
+                </>
+              )}
               <LoginFormContainer mode={ mode } onClose={ onClose } noCancelButton={ noCancelButton } />
             </div>
           ) }
