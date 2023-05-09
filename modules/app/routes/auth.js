@@ -50,6 +50,10 @@ router.post('/authorize/local',
   }
 )
 
+router.put('/auth/change-password', controllers.changePassword)
+
+router.post('/auth/forgot-password', controllers.forgotPasswordNotification)
+
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 
 router.post('/auth/register', controllers.register)
