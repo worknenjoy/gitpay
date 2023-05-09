@@ -7,6 +7,13 @@ const { copyEmail, notificationEmail, fromEmail } = require('./constants')
 
 module.exports = (to, subject, content, replyEmail) => {
   // eslint-disable-next-line no-console
+  console.log(' ----- email / subject ---- ')
+  // eslint-disable-next-line no-console
+  console.log(to)
+  console.log(subject)
+  // eslint-disable-next-line no-console
+  console.log(' ----- end email ---- ')
+  // eslint-disable-next-line no-console
   console.log(' ----- email content ---- ')
   // eslint-disable-next-line no-console
   console.log(content)
