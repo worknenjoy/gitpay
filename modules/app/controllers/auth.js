@@ -24,18 +24,17 @@ exports.register = (req, res) => {
 }
 
 exports.forgotPasswordNotification = async (req, res) => {
+  const { email } = req.body 
   try {
-    const foundUser = await user.userExists({ email: req.body.email })
-    if (foundUser?.dataValues && foundUser?.dataValues?.email) {
-      const email = foundUser.dataValues.email
-      const name = foundUser.dataValues.name || "Gitpay user"
+    const foundUser = await user.userExists({ email })
+    if (foundUser.dataValues && foundUser.dataValues.email) {
       const token = crypto.randomBytes(64).toString('hex')
       await models.User.update({ recover_password_token: token }, { where: { email } })
       const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`
-      const html = `<p>Hi ${name},</p><p>Click <a href="${url}">here</a> to reset your password.</p>`
+      const html = `<p>Hi ${foundUser.dataValues.name || 'Gitpay user'},</p><p>Click <a href="${url}">here</a> to reset your password.</p>`
       const subject = 'Reset Password'
       const message = {
-        to: email,
+        to: foundUser.dataValues,
         subject,
         html
       }

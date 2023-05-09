@@ -69,14 +69,12 @@ class LoginForm extends Component {
       agreeTermsCheckError: false
 
     }
-    this.userField = React.createRef()
   }
 
   componentDidMount () {
     const modeByPath = this.props.location.pathname.split('/')[1]
     this.handleType(this.props.mode || modeByPath)
-    this.setState({username: this.userField})
-    //process.env.NODE_ENV === 'development' && this.setState({ captchaChecked: true })
+    process.env.NODE_ENV === 'development' && this.setState({ captchaChecked: true })
   }
 
   handleBlur = (event) => {
@@ -204,14 +202,14 @@ class LoginForm extends Component {
   }
 
   handleForgotSubmit = async event => {
-    const { captchaChecked, error } = this.state;
+    const { captchaChecked, error, username } = this.state;
     event.preventDefault();
     if (!captchaChecked) {
       this.setState({ error: { ...error, captcha: 'Please check the captcha' } })
       return false
     }
     try {
-      await this.props.forgotPassword({email: this.state.username})
+      await this.props.forgotPassword({email: username})
       this.props.history.push('/signin')
     } catch (error) {
       console.log(error)
@@ -373,7 +371,6 @@ class LoginForm extends Component {
               label='E-mail'
               variant='outlined'
               id='username'
-              ref='userField'
               error={ error.username }
               helperText={ error.username }
               defaultValue={ this.state.username }
@@ -491,7 +488,7 @@ class LoginForm extends Component {
           
           </>
         ) }
-        { /* process.env.NODE_ENV === 'production' */ true && (
+        { process.env.NODE_ENV === 'production' && (
           <div style={ { display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 } }>
             <ReCAPTCHA
               sitekey={ process.env.GOOGLE_RECAPTCHA_SITE_KEY }
