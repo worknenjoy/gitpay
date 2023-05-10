@@ -4,7 +4,7 @@ module.exports = {
   copyEmail: 'contact@gitpay.me',
   recruitersEmail: 'hiringt@gitpay.me',
   reportEmail: 'alexandre@gitpay.me',
-  fromEmail: 'no-reply@gitpay.me',
+  fromEmail: 'contact@gitpay.me',
   joinTeamEmail: 'team@gitpay.me',
   canSendEmail: process.env.NODE_ENV !== 'test',
   dateFormat: 'fullDate',
