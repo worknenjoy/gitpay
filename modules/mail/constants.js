@@ -1,7 +1,7 @@
 
 module.exports = {
   notificationEmail: 'issues@gitpay.me',
-  copyEmail: 'issues@gitpay.me',
+  copyEmail: 'contact@gitpay.me',
   recruitersEmail: 'hiringt@gitpay.me',
   reportEmail: 'alexandre@gitpay.me',
   fromEmail: 'no-reply@gitpay.me',
