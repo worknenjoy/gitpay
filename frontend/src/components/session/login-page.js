@@ -61,12 +61,10 @@ class LoginPage extends Component {
   }
 
   render () {
-    const { classes, match } = this.props
-
-    
+    const { classes, match, user } = this.props
 
     return (
-      this.state.mode === 'reset' && !this.props.user.id ? <Redirect to='/signin' /> :
+      this.state.mode === 'reset' && 
       <div className={ classes.container }>
         <div style={ { display: 'flex', flexDirection: 'column' } }>
           <Card className={ classes.card }>
