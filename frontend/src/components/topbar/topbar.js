@@ -50,7 +50,7 @@ import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'
 
 import nameInitials from 'name-initials'
-import isGithubUrl from 'is-github-url'
+
 
 import {
   Bar,
@@ -78,11 +78,10 @@ import LoginButton from '../session/login-button'
 import ImportIssueButton from './import-issue'
 
 import logo from '../../images/gitpay-logo.png'
-import logoGithub from '../../images/github-logo-alternative.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
 
 import logoLangEn from '../../images/united-states-of-america.png'
 import logoLangBr from '../../images/brazil.png'
+import ImportIssueDialog from './import-issue-dialog'
 
 const languagesIcons = {
   en: logoLangEn,
@@ -120,30 +119,12 @@ const currentUserLanguage = (preferences) => {
   return preferences.language || localStorageLang() || browserLanguage()
 }
 
-const isBitbucketUrl = (url) => {
-  return url.indexOf('bitbucket') > -1
-}
-
-const styles = {
-  formControl: {
-    width: '100%'
-  }
-}
-
 class TopBar extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
       anchorEl: null,
-      task: {
-        url: {
-          error: false,
-          value: null
-        }
-      },
-      private: false,
-      provider: 'github',
       createTaskDialog: false,
       joinSlackDialog: false,
       isActive: false.value,
@@ -197,14 +178,6 @@ class TopBar extends Component {
     this.setState({ mode })
   }
 
-  handleClickDialogJoinSlack = (e) => {
-    this.setState(({ joinSlackDialog: true }))
-  }
-
-  handleGithubLink = () => {
-    window.open('https://github.com/worknenjoy/gitpay', '_blank')
-  }
-
   handleTeamLink = () => {
     window.location.assign('/#/team')
   }
@@ -218,53 +191,9 @@ class TopBar extends Component {
     this.setState({ provider: option })
   }
 
-  onChange = (e) => {
-    // Because we named the inputs to match their corresponding values in state, it's
-    // super easy to update the state
-    const task = this.state.task
-    task[e.target.name].value = e.target.value
-    task[e.target.name].error = false
-    this.setState(task)
-  }
-
-  validURL = (url) => {
-    return isGithubUrl(url) || isBitbucketUrl(url)
-  }
-
   handleClickMenuMobile = () => {
     const isActive = this.state.isActive
     this.setState({ isActive: !isActive })
-  }
-
-  handleCreateTask = (e) => {
-    const url = this.state.task.url.value
-    if (this.validURL(url)) {
-      if (this.state.private) {
-        window.location = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${this.props.user.id}`
-        return
-      }
-      this.props.createTask({
-        private: !!this.state.private,
-        url: this.state.task.url.value,
-        provider: this.state.provider,
-        userId: this.props.user ? this.props.user.id : null
-      }, this.props.history)
-      this.setState({ createTaskDialog: false })
-    }
-    else {
-      this.setState({
-        task: {
-          url: {
-            error: true
-          }
-        }
-      })
-    }
-  }
-
-  handlePrivate = (e) => {
-    // this.setState({private: !this.state.private}, () => console.log(this.state.private))
-    this.setState({ private: !this.state.private })
   }
 
   handleSignUserDialogClose = () => {
@@ -528,88 +457,16 @@ class TopBar extends Component {
               )
             }
             { isLoggedIn ? (
-              <form onSubmit={ this.handleCreateTask } action='POST'>
-                <Dialog
-                  open={ this.state.createTaskDialog }
-                  onClose={ this.handleClickDialogCreateTaskClose }
-                  aria-label='form-dialog-title'
-                >
-                  <DialogTitle id='form-dialog-title'>
-                    <FormattedMessage id='task.actions.insert.new' defaultMessage='Insert a new task' />
-                  </DialogTitle>
-
-                  <DialogContent>
-                    <DialogContentText>
-                      <Typography type='subheading' gutterBottom>
-                        <FormattedHTMLMessage
-                          id='task.actions.insert.subheading'
-                          defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
-                      </Typography>
-                    </DialogContentText>
-                    <FormControl style={ styles.formControl } error={ this.state.task.url.error }>
-                      <TextField error={ this.state.task.url.error }
-                        onChange={ this.onChange }
-                        autoFocus
-                        margin='dense'
-                        id='url'
-                        name='url'
-                        label='URL'
-                        type='url'
-                        fullWidth
-                      />
-                      { this.state.provider === 'github' &&
-                        <FormControl component='fieldset'>
-                          <FormGroup aria-label='position' name='position' value={ 'private' } onChange={ this.handlePrivate } row>
-                            <FormControlLabel
-                              value='private'
-                              control={ <Checkbox color='primary' /> }
-                              label='private'
-                              labelPlacement='right'
-                            />
-                          </FormGroup>
-                        </FormControl>
-                      }
-                      <div style={ { marginTop: 10, marginBottom: 10 } }>
-                        <Button
-                          style={ { marginRight: 10 } }
-                          color='primary'
-                          variant={ this.state.provider === 'github' ? 'contained' : 'outlined' }
-                          id='github'
-                          onClick={ (e) => this.handleProvider(e, 'github') }
-                        >
-                          <img width='16' src={ logoGithub } />
-                          <span style={ { marginLeft: 10 } }>Github</span>
-                        </Button>
-
-                        <Button
-                          color='primary'
-                          variant={ this.state.provider === 'bitbucket' ? 'contained' : 'outlined' }
-                          id='bitbucket'
-                          onClick={ (e) => this.handleProvider(e, 'bitbucket') }
-                        >
-                          <img width='16' src={ logoBitbucket } />
-                          <span style={ { marginLeft: 10 } }>Bitbucket</span>
-                        </Button>
-                      </div>
-
-                      { this.state.task.url.error &&
-                        <FormHelperText error={ this.state.task.url.error }>
-                          <FormattedMessage id='task.actions.insert.novalid' defaultMessage='This is not a valid URL' />
-                        </FormHelperText>
-                      }
-                    </FormControl>
-                  </DialogContent>
-
-                  <DialogActions>
-                    <Button onClick={ this.handleClickDialogCreateTaskClose } color='primary'>
-                      <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-                    </Button>
-                    <Button disabled={ !completed } onClick={ this.handleCreateTask } variant='contained' color='secondary' >
-                      <FormattedMessage id='task.actions.insert.label' defaultMessage='Insert' />
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </form>
+              <ImportIssueDialog 
+                open={this.state.createTaskDialog} 
+                onClose={this.handleClickDialogCreateTaskClose}
+                onCreate={(props) => {
+                  this.props.createTask(props)
+                  this.handleClickDialogCreateTaskClose()
+                }}
+                user={user}
+                history={this.props.history}
+              />
             ) : (
               <Dialog
                 open={ this.state.createTaskDialog }
@@ -792,7 +649,7 @@ TopBar.propTypes = {
   completed: PropTypes.bool
 }
 
-export default withRouter(withStyles(styles)(TopBar))
+export default withRouter(TopBar)
 
 /* notification badge
 

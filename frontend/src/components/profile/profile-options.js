@@ -19,6 +19,8 @@ import {
 
 import { Card, CardList, CardMedia } from './ProfileStyles'
 import WelcomeUser from '../session/welcome-user'
+import ImportIssueButton from '../topbar/import-issue';
+import ImportIssueDialog from '../topbar/import-issue-dialog';
 
 const organizationIcon = require('../../images/icons/noun_project management_3063542.svg')
 const toolsIcon = require('../../images/icons/noun_project management_3063515.svg')
@@ -40,8 +42,25 @@ class ProfileOptions extends Component {
     classes: PropTypes.object.isRequired
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      openAddIssue: false
+    }
+  }
+
+  handleAddIssueClick = () => {
+    this.setState({ openAddIssue: true })
+  }
+
+  onHandleCreateTask = (props) => {
+    this.props.onCreateTask(props)
+    this.setState({ openAddIssue: false })
+  }
+
+
   render () {
-    const { classes, user } = this.props
+    const { classes, user, history } = this.props
     return (
       <Fragment>
         { window.localStorage.getItem('firstLogin') === 'true' && (
@@ -63,36 +82,59 @@ class ProfileOptions extends Component {
                 />
               </Typography>
             </div>
-            <div>
-              <Button
-                onClick={ this.handleMenu }
-                variant='text'
-                size='small'
-                color='primary'
-                id='account-menu'
-                style={ {
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                } }
-              >
-                { user.picture_url
-                  ? <Avatar
-                    alt={ user.username || '' }
-                    src={ user.picture_url }
-                  />
-                  : <Avatar alt={ user.username || '' } src=''>
-                    { user.username ? nameInitials(user.username) : <Person /> }
-                  </Avatar>
-                }
-                <div style={ { textAlign: 'left', marginLeft: 10, color: '#1c1c1f' } }>
-                  <Typography variant='body2' color='text'>
-                    { user.username }
-                  </Typography>
-                  <Typography variant='body4' style={ { fontSize: 10, color: '#666' } }>
-                    { user.email }
-                  </Typography>
-                </div>
-              </Button>
+            <div style={{ 
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+              <div style={{
+                marginRight: 10,
+                paddingRight: 15,
+                borderRight: '1px solid #ccc',
+              }}>
+                <ImportIssueButton
+                  onAddIssueClick={ this.handleAddIssueClick}
+                />
+                <ImportIssueDialog
+                  open={ this.state.openAddIssue }
+                  onClose={ () => this.setState({ openAddIssue: false }) }
+                  styles={classes}
+                  onCreate={this.onHandleCreateTask}
+                  user={user}
+                  history={history}
+                />
+              </div>
+              <div>
+                <Button
+                  onClick={ this.handleMenu }
+                  variant='text'
+                  size='small'
+                  color='primary'
+                  id='account-menu'
+                  style={ {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  } }
+                >
+                  { user.picture_url
+                    ? <Avatar
+                      alt={ user.username || '' }
+                      src={ user.picture_url }
+                    />
+                    : <Avatar alt={ user.username || '' } src=''>
+                      { user.username ? nameInitials(user.username) : <Person /> }
+                    </Avatar>
+                  }
+                  <div style={ { textAlign: 'left', marginLeft: 10, color: '#1c1c1f' } }>
+                    <Typography variant='body2' color='text'>
+                      { user.username }
+                    </Typography>
+                    <Typography variant='body4' style={ { fontSize: 10, color: '#666' } }>
+                      { user.email }
+                    </Typography>
+                  </div>
+                </Button>
+              </div>
             </div>
           </div>
 

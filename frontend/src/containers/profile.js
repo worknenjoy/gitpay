@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Profile from '../components/profile/profile'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { logOut } from '../actions/loginActions'
-import { listTasks, filterTasks } from '../actions/taskActions'
+import { listTasks, filterTasks, createTask } from '../actions/taskActions'
 import { fetchRoles, createRoles, deleteRoles } from '../actions/userRoleActions'
 import { updateUser, deleteUser } from '../actions/userActions'
 import { fetchOrganizations, createOrganizations, updateOrganization } from '../actions/organizationsActions'
@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     deleteUser: (user) => dispatch(deleteUser(user)),
     addNotification: (message) => dispatch(addNotification(message)),
     closeNotification: (message) => dispatch(closeNotification(message)),
+    createTask: (task, history) => dispatch(createTask(task, history)),
     listTasks: ({ projectId, userId, status }) => dispatch(listTasks({ projectId, userId, status })),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
     signOut: () => dispatch(logOut())
