@@ -19,8 +19,8 @@ import {
 
 import { Card, CardList, CardMedia } from './ProfileStyles'
 import WelcomeUser from '../session/welcome-user'
-import ImportIssueButton from '../topbar/import-issue';
-import ImportIssueDialog from '../topbar/import-issue-dialog';
+import ImportIssueButton from '../topbar/import-issue'
+import ImportIssueDialog from '../topbar/import-issue-dialog'
 
 const organizationIcon = require('../../images/icons/noun_project management_3063542.svg')
 const toolsIcon = require('../../images/icons/noun_project management_3063515.svg')
@@ -58,7 +58,6 @@ class ProfileOptions extends Component {
     this.setState({ openAddIssue: false })
   }
 
-
   render () {
     const { classes, user, history } = this.props
     return (
@@ -82,26 +81,26 @@ class ProfileOptions extends Component {
                 />
               </Typography>
             </div>
-            <div style={{ 
+            <div style={ {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
-              <div style={{
+            } }>
+              <div style={ {
                 marginRight: 10,
                 paddingRight: 15,
                 borderRight: '1px solid #ccc',
-              }}>
+              } }>
                 <ImportIssueButton
-                  onAddIssueClick={ this.handleAddIssueClick}
+                  onAddIssueClick={ this.handleAddIssueClick }
                 />
                 <ImportIssueDialog
                   open={ this.state.openAddIssue }
                   onClose={ () => this.setState({ openAddIssue: false }) }
-                  styles={classes}
-                  onCreate={this.onHandleCreateTask}
-                  user={user}
-                  history={history}
+                  styles={ classes }
+                  onCreate={ this.onHandleCreateTask }
+                  user={ user }
+                  history={ history }
                 />
               </div>
               <div>

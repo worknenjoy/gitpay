@@ -51,7 +51,6 @@ import { updateIntl } from 'react-intl-redux'
 
 import nameInitials from 'name-initials'
 
-
 import {
   Bar,
   Container,
@@ -457,15 +456,15 @@ class TopBar extends Component {
               )
             }
             { isLoggedIn ? (
-              <ImportIssueDialog 
-                open={this.state.createTaskDialog} 
-                onClose={this.handleClickDialogCreateTaskClose}
-                onCreate={(props) => {
+              <ImportIssueDialog
+                open={ this.state.createTaskDialog }
+                onClose={ this.handleClickDialogCreateTaskClose }
+                onCreate={ (props) => {
                   this.props.createTask(props)
                   this.handleClickDialogCreateTaskClose()
-                }}
-                user={user}
-                history={this.props.history}
+                } }
+                user={ user }
+                history={ this.props.history }
               />
             ) : (
               <Dialog

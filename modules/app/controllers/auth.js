@@ -1,4 +1,4 @@
-var crypto = require('crypto');
+let crypto = require('crypto')
 const requestPromise = require('request-promise')
 const secrets = require('../../../config/secrets')
 const user = require('../../users')
@@ -24,7 +24,7 @@ exports.register = (req, res) => {
 }
 
 exports.forgotPasswordNotification = async (req, res) => {
-  const { email } = req.body 
+  const { email } = req.body
   try {
     const foundUser = await user.userExists({ email })
     if (foundUser.dataValues && foundUser.dataValues.email) {
@@ -40,28 +40,32 @@ exports.forgotPasswordNotification = async (req, res) => {
       }
       Sendmail.success(message.to, message.subject, message.html)
       res.send(true)
-    } else {
+    }
+    else {
       res.status(403).send({ message: 'user.not.exist' })
     }
-  } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(false)
   }
-};
+  catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.send(false)
+  }
+}
 
 exports.changePassword = async (req, res) => {
   try {
     const foundUser = await models.User.findOne({ where: { recover_password_token: req.body.token } })
-    if(!foundUser) res.status(401)
+    if (!foundUser) res.status(401)
     const passwordHash = models.User.generateHash(req.body.password)
-    if(passwordHash) { 
+    if (passwordHash) {
       await models.User.update({ password: passwordHash, recover_password_token: null }, { where: { id: foundUser.dataValues.id } })
       res.send('successfully change password')
-    } else {
+    }
+    else {
       res.status(401).send({ message: 'user.no.password.reset' })
     }
-  } catch (error) {
+  }
+  catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
     res.send(false)
