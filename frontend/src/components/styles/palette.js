@@ -93,7 +93,12 @@ const Palette = {
       },
       primary: {
         color: '#fff',
-        backgroundColor: '#4D7E6F',
+        backgroundColor: '#4D7E6F'
+      }
+    },
+    MuiButtonGroup: {
+      contained: {
+        boxShadow: 'none'
       }
     },
     MuiInput: {

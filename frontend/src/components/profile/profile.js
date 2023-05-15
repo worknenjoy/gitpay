@@ -589,7 +589,7 @@ class Profile extends Component {
               <Container maxWidth='lg'>
                 <HashRouter>
                   <Switch>
-                    <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } /> } />
+                    <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } onCreateTask={this.props.createTask}  /> } />
                     <Route exact path='/profile/account-details' component={ (props) => <AccountDetails { ...props } user={ this.props.user } /> } />
                     { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                       <Route
