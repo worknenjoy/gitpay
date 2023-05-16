@@ -91,6 +91,9 @@ const Palette = {
           backgroundColor: '#E2E5EA'
         }
       },
+      contained: {
+        boxShadow: 'none'
+      },
       primary: {
         color: '#fff',
         backgroundColor: '#4D7E6F'

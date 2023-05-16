@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
+import { FormattedMessage } from 'react-intl'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
 import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
+import { getCookieConsentValue } from "react-cookie-consent";
+
 import 'fontsource-roboto'
 
 import {
@@ -32,9 +35,14 @@ import localeEn from 'react-intl/locale-data/en'
 import localeBr from 'react-intl/locale-data/br'
 import Loader from '../components/loader/loader'
 
+import { GITPAY_COOKIE_CONSENT } from './cookie-consent-bar'
+import CookieConsentBar from './cookie-consent-bar'
+
 addLocaleData([...localeEn, ...localeBr])
 
-if (process.env.NODE_ENV === 'production') {
+const cookieConsent = getCookieConsentValue(GITPAY_COOKIE_CONSENT)
+
+if (process.env.NODE_ENV === 'production' && cookieConsent) {
   ReactGA.initialize('UA-114655639-1')
   ReactGA.pageview(window.location.pathname + window.location.search)
   LogRocket.init('ie8a2g/gitpay')
@@ -47,7 +55,7 @@ const messages = {
 }
 
 const composeEnhancers =
-  typeof window === 'object' &&
+  typeof window === 'object' && process.env.NODE_ENV === 'development' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
     }) : compose
@@ -76,7 +84,7 @@ function App () {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     setIsLoading(false)
-  }, [isLoading])
+  }, [isLoading, getCookieConsentValue])
   if (!isLoading) {
     return (
       <MuiThemeProvider theme={ theme }>
@@ -85,6 +93,7 @@ function App () {
             <div>
               <NotificationContainer />
               <Routes />
+              <CookieConsentBar />
             </div>
           </IntlProvider>
         </Provider>
