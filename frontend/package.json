@@ -119,6 +119,7 @@
     "prop-types": "^15.6.2",
     "query-string": "^5.1.0",
     "react": "^17.0.0",
+    "react-cookie-consent": "^8.0.1",
     "react-country-region-selector": "^2.1.0",
     "react-country-region-selector-material-ui-new": "^1.5.2",
     "react-dom": "^17.0.0",
