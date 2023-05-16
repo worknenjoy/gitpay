@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, addLocaleData } from 'react-intl'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
 import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
-import { getCookieConsentValue } from "react-cookie-consent";
+import { getCookieConsentValue } from 'react-cookie-consent'
 
 import 'fontsource-roboto'
 
@@ -23,8 +23,6 @@ import NotificationContainer from '../containers/notification'
 
 import reducers from '../reducers/reducers'
 
-import { addLocaleData } from 'react-intl'
-
 import messagesBr from '../translations/result/br.json'
 import messagesEn from '../translations/result/en.json'
 
@@ -35,8 +33,7 @@ import localeEn from 'react-intl/locale-data/en'
 import localeBr from 'react-intl/locale-data/br'
 import Loader from '../components/loader/loader'
 
-import { GITPAY_COOKIE_CONSENT } from './cookie-consent-bar'
-import CookieConsentBar from './cookie-consent-bar'
+import CookieConsentBar, { GITPAY_COOKIE_CONSENT } from './cookie-consent-bar'
 
 addLocaleData([...localeEn, ...localeBr])
 
