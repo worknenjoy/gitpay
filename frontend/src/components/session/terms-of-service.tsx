@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Paper } from "@material-ui/core";
 
 
-const TermsOfService = ({ onArrowBack, onAgreeTerms }) => {
+const TermsOfService = ({ onArrowBack, onAgreeTerms, extrasStyles }) => {
 
   const content = `
   {br}
@@ -44,11 +44,13 @@ By using our platform, you agree to these terms and conditions. If you do not ag
   
   return (
     <>
-      <div style={{padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, background: 'white', width: '100%'}}>
+      <div style={extrasStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, background: 'white', width: '100%'} : {}}>
         <div style={{marginBottom: 10}}>
-          <a onClick={onArrowBack} href='#'>
-            <ArrowBack />
-          </a>
+          { onArrowBack && (
+            <a onClick={onArrowBack} href='#'>
+              <ArrowBack />
+            </a>
+          )}
           <Typography variant="h4" gutterBottom>
             <FormattedMessage id="terms-of-service.title" defaultMessage="Terms of service" />
           </Typography>
@@ -64,11 +66,13 @@ By using our platform, you agree to these terms and conditions. If you do not ag
             <FormattedMessage id="terms-of-service.content" defaultMessage={content} values={{br: <br/>}} />
           </Typography>
         </div>
-        <Paper style={{position: 'absolute', bottom: 20, left: 0, height: 80, width: '100%', background: 'white'}}>
-          <Button onClick={onAgreeTerms} variant="contained" color="primary" size="large" style={{float: 'right', marginRight: 20, marginTop: 20}}>
-            <FormattedMessage id="terms-of-service.accept" defaultMessage="I agree" />
-          </Button>
-        </Paper>
+        { onAgreeTerms && (
+          <Paper style={{position: 'absolute', bottom: 20, left: 0, height: 80, width: '100%', background: 'white'}}>
+            <Button onClick={onAgreeTerms} variant="contained" color="primary" size="large" style={{float: 'right', marginRight: 20, marginTop: 20}}>
+              <FormattedMessage id="terms-of-service.accept" defaultMessage="I agree" />
+            </Button>
+          </Paper>
+        )}
       </div>
     </>
   )

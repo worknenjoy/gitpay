@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Paper } from "@material-ui/core";
 
 
-const PrivacyPolicy = ({ onArrowBack, onAgreeTerms }) => {
+const PrivacyPolicy = ({ onArrowBack, onAgreeTerms, noHeader, extraStyles = true }) => {
 
   const content = `
   {br}
@@ -40,31 +40,39 @@ If you have any questions or concerns about our privacy policy, please contact u
   
   return (
     <>
-      <div style={{padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, background: 'white', width: '100%'}}>
-        <div style={{marginBottom: 10}}>
-          <a onClick={onArrowBack} href='#'>
-            <ArrowBack />
-          </a>
-          <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="terms-of-service.title" defaultMessage="Privacy Policy" />
-          </Typography>
-          <Typography variant="caption" gutterBottom>
-            <FormattedMessage id="terms-of-service.subtitle" defaultMessage="Updated 5 May, 2023" />
-          </Typography>
-        </div>
-        <Typography variant="body1" gutterBottom>
-          <FormattedMessage id="terms-of-service.subtitle" defaultMessage="About our privacy policy" />
-        </Typography>
+      <div style={ extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, width: '100%'} : {}}>
+        { noHeader ? null : (
+          <>
+            <div style={{marginBottom: 10}}>
+              { onArrowBack && (
+                <a onClick={onArrowBack} href='#'>
+                  <ArrowBack />
+                </a>
+              )}
+              <Typography variant="h4" gutterBottom>
+                <FormattedMessage id="terms-of-service.title" defaultMessage="Privacy Policy" />
+              </Typography>
+              <Typography variant="caption" gutterBottom>
+                <FormattedMessage id="terms-of-service.subtitle" defaultMessage="Updated 5 May, 2023" />
+              </Typography>
+            </div>
+            <Typography variant="body1" gutterBottom>
+              <FormattedMessage id="terms-of-service.subtitle" defaultMessage="About our privacy policy" />
+            </Typography>
+          </>
+        )}
         <div style={{overflow: 'scroll', height: 'calc(100vh - 200px)'}}>
           <Typography variant="body1" gutterBottom>
             <FormattedMessage id="terms-of-service.content" defaultMessage={content} values={{br: <br/>}} />
           </Typography>
         </div>
+        { onAgreeTerms && (
         <Paper style={{position: 'absolute', bottom: 20, left: 0, height: 80, width: '100%', background: 'white'}}>
           <Button onClick={onAgreeTerms} variant="contained" color="primary" size="large" style={{float: 'right', marginRight: 20, marginTop: 20}}>
             <FormattedMessage id="terms-of-service.accept" defaultMessage="I agree" />
           </Button>
         </Paper>
+        )}
       </div>
     </>
   )

@@ -272,8 +272,8 @@ class TopBar extends Component {
               >
                 <LabelButton>
                   <FormattedMessage
-                    id='topbar.link.howitworks'
-                    defaultMessage='How it works' />
+                    id='topbar.link.about'
+                    defaultMessage='About' />
                 </LabelButton>
               </LinkButton>
 
