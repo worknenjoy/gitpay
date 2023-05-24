@@ -4,6 +4,11 @@ import { withRouter, Link, Redirect } from 'react-router-dom'
 import LoginButton from './login-button'
 import { FormattedMessage } from 'react-intl'
 import { withStyles, Card, CardContent, Typography } from '@material-ui/core'
+import Dialog from '@material-ui/core/Dialog'
+import TermsOfService from './terms-of-service'
+import PrivacyPolicy from './privacy-policy'
+import CookiePolicy from './cookie-policy'
+
 
 import Background from '../../images/login_bg.png'
 const styles = theme => ({
@@ -49,7 +54,11 @@ class LoginPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      mode: props.match.params.mode ? 'signin' : (props.match.params.token ? 'reset' : 'signin')
+      mode: props.match.params.mode ? 'signin' : (props.match.params.token ? 'reset' : 'signin'),
+      openDialog: false,
+      cookie: false,
+      privacy: false,
+      terms: false
     }
   }
   componentDidMount () {
@@ -60,8 +69,31 @@ class LoginPage extends Component {
     this.props.searchUser && this.props.searchUser({recover_password_token: this.props.match.params.token})
   }
 
+  openDialog(e, type) {
+    e.preventDefault()
+    this.setState({ [type]: true, openDialog: true })
+  }
+
+  closeDialog() {
+    this.setState({ openDialog: false, cookie: false, privacy: false, terms: false })
+  }
+
+  renderDialog() {
+    const { cookie, privacy, terms } = this.state
+    if(cookie) {
+      return <CookiePolicy />
+    }
+    if(privacy) {
+      return <PrivacyPolicy extraStyles={false} />
+    }
+    if(terms) {
+      return <TermsOfService />
+    }
+  }
+
   render () {
     const { classes, match, user } = this.props
+    const { openDialog } = this.state
 
     return (
       this.state.mode === 'reset' && !match.params.token && !user.id ? <Redirect to='/signin' /> :
@@ -78,9 +110,31 @@ class LoginPage extends Component {
             </CardContent>
           </Card>
           <div style={ { marginTop: 10, textAlign: 'center' } }>
-            <Typography variant='caption' color='default' gutterBottom noWrap>
-              <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay® - All rights reserved' />
+            <Typography variant='caption' color='default' gutterBottom noWrap component='span'>
+              <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay - All rights reserved' />
+              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'cookie') } style={{display: 'inline-block', margin: '0 5px'}}>
+               
+                  <FormattedMessage id='legal.cookie.label' defaultMessage='Cookie Preferences' />
+                
+              </Link>
+              |
+              <Link to='#' color='inherit' onClick={(e) => this.openDialog(e, 'privacy') } style={{display: 'inline-block', margin: '0 5px'}} >
+              
+                  <FormattedMessage id='legal.prviacy.label' defaultMessage='Privacy' />
+                
+              </Link>
+              |
+              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'terms') } style={{display: 'inline-block', margin: '0 5px'}}>
+              
+                  <FormattedMessage id='legal.terms.label' defaultMessage='Terms' />
+                
+              </Link>
             </Typography>
+            <Dialog onClose={() => this.closeDialog()} open={openDialog}>
+              <div style={{padding: '10px 20px'}}>
+                {this.renderDialog()}
+              </div>
+            </Dialog>
           </div>
         </div>
       </div>

@@ -40,7 +40,7 @@ If you have any questions or concerns about our privacy policy, please contact u
   
   return (
     <>
-      <div style={ extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, width: '100%'} : {}}>
+      <div style={ extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, width: '100%', background: 'white'} : {}}>
         { noHeader ? null : (
           <>
             <div style={{marginBottom: 10}}>
