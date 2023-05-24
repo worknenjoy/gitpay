@@ -273,7 +273,7 @@ class TopBar extends Component {
                 <LabelButton>
                   <FormattedMessage
                     id='topbar.link.about'
-                    defaultMessage='About' />
+                    defaultMessage='About us' />
                 </LabelButton>
               </LinkButton>
 

@@ -58,16 +58,67 @@ class Bottom extends Component {
                     variant='subtitle1'
                     component='div'
                     style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/welcome') }
                   >
                     <FormattedMessage
-                      id='welcome.how.title'
+                      id='welcome.about.title'
                       defaultMessage='About us'
                     />
                   </Typography>
                 </ListItem>
-                <WhoSubscribes classes={ classes } />
-                <Workflow classes={ classes } />
-                <TermsOfServicePeople classes={ classes } />
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/pricing') }
+                  >
+                    <FormattedMessage
+                      id='welcome.pricing.title'
+                      defaultMessage='Pricing'
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/team') }
+                  >
+                    <FormattedMessage
+                      id='welcome.team.title'
+                      defaultMessage='Team'
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.open('https://docs.gitpay.me/en') }
+                  >
+                    <FormattedMessage
+                      id='welcome.docs.title'
+                      defaultMessage='Documentation'
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/tasks/open') }
+                  >
+                    <FormattedMessage
+                      id='welcome.explore.title'
+                      defaultMessage='Explore'
+                    />
+                  </Typography>
+                </ListItem>
+                
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 3 }>
