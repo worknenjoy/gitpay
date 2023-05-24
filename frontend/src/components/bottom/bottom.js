@@ -22,7 +22,6 @@ import InfoContainer from '../../containers/info'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 
-
 import mainStyles from '../styles/style'
 import { Container, BaseFooter, SubscribeFromWrapper } from './FooterStyles'
 
@@ -87,7 +86,7 @@ class Bottom extends Component {
                   header='Privacy policy'
                   subtitle={ 'Privacy Policy' }
                   content={
-                    <PrivacyPolicy extraStyles={false} />
+                    <PrivacyPolicy extraStyles={ false } />
                   }
                 />
                 <BottomSectionDialog
@@ -96,7 +95,7 @@ class Bottom extends Component {
                   header='Termos of Service'
                   subtitle={ 'Terms of Service' }
                   content={
-                    <TermsOfService extraStyles={false} />
+                    <TermsOfService extraStyles={ false } />
                   }
                 />
                 <BottomSectionDialog
@@ -105,7 +104,7 @@ class Bottom extends Component {
                   header='Cookie Policy'
                   subtitle={ 'Cookie Policy' }
                   content={
-                    <CookiePolicy extraStyles={false} />
+                    <CookiePolicy extraStyles={ false } />
                   }
                 />
               </List>
