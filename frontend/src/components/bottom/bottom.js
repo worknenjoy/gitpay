@@ -8,15 +8,14 @@ import {
   Divider,
   List,
   withStyles,
+  ListItem,
 } from '@material-ui/core'
 
 import SubscribeForm from '../form/subscribe-form'
-import HowItWorksPeople from '../welcome/how-it-works-people'
 import WhoSubscribes from '../welcome/who-subscribes'
 import Workflow from '../welcome/workflow'
 import TermsOfServicePeople from '../welcome/terms-of-service-people'
 import TermsOfServiceCompany from '../welcome/terms-of-service-company'
-import HowItWorksCompany from '../welcome/how-it-works-company'
 import WhichCompanies from '../welcome/which-companies'
 import Consulting from '../welcome/consulting'
 import InfoContainer from '../../containers/info'
@@ -24,8 +23,12 @@ import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 
 import mainStyles from '../styles/style'
-
 import { Container, BaseFooter, SubscribeFromWrapper } from './FooterStyles'
+
+import BottomSectionDialog from '../welcome/components/BottomSectionDialog'
+import PrivacyPolicy from '../session/privacy-policy'
+import TermsOfService from '../session/terms-of-service'
+import CookiePolicy from '../session/cookie-policy'
 
 const logoCompleteGray = require('../../images/logo-complete-gray.png')
 const logoWorknEnjoy = require('../../images/worknenjoy-logo.png')
@@ -44,32 +47,117 @@ class Bottom extends Component {
               <Typography component='div'>
                 <strong>
                   <FormattedMessage
-                    id='bottom.header.subheading1'
-                    defaultMessage='For contributors and freelancers'
+                    id='bottom.header.subheading.primary'
+                    defaultMessage='Main menu'
                   />
                 </strong>
               </Typography>
               <List component='nav'>
-                <HowItWorksPeople classes={ classes } />
-                <WhoSubscribes classes={ classes } />
-                <Workflow classes={ classes } />
-                <TermsOfServicePeople classes={ classes } />
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/welcome') }
+                  >
+                    <FormattedMessage
+                      id='welcome.about.title'
+                      defaultMessage='About us'
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/pricing') }
+                  >
+                    <FormattedMessage
+                      id='welcome.pricing.title'
+                      defaultMessage='Pricing'
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/team') }
+                  >
+                    <FormattedMessage
+                      id='welcome.team.title'
+                      defaultMessage='Team'
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.open('https://docs.gitpay.me/en') }
+                  >
+                    <FormattedMessage
+                      id='welcome.docs.title'
+                      defaultMessage='Documentation'
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem button component='a'>
+                  <Typography
+                    variant='subtitle1'
+                    component='div'
+                    style={ { display: 'block', width: '100%' } }
+                    onClick={ () => window.location.assign('/#/tasks/open') }
+                  >
+                    <FormattedMessage
+                      id='welcome.explore.title'
+                      defaultMessage='Explore'
+                    />
+                  </Typography>
+                </ListItem>
+
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 3 }>
               <Typography component='div'>
                 <strong>
                   <FormattedMessage
-                    id='bottom.header.subheading2'
-                    defaultMessage='For maintainers and organizations'
+                    id='bottom.header.subheading.secondary'
+                    defaultMessage='Legal'
                   />
                 </strong>
               </Typography>
               <List component='nav'>
-                <HowItWorksCompany classes={ classes } />
-                <WhichCompanies classes={ classes } />
-                <Consulting classes={ classes } />
-                <TermsOfServiceCompany classes={ classes } />
+                <BottomSectionDialog
+                  classes={ classes }
+                  title='Legal'
+                  header='Privacy policy'
+                  subtitle={ 'Privacy Policy' }
+                  content={
+                    <PrivacyPolicy extraStyles={ false } />
+                  }
+                />
+                <BottomSectionDialog
+                  classes={ classes }
+                  title='Legal'
+                  header='Termos of Service'
+                  subtitle={ 'Terms of Service' }
+                  content={
+                    <TermsOfService extraStyles={ false } />
+                  }
+                />
+                <BottomSectionDialog
+                  classes={ classes }
+                  title='Legal'
+                  header='Cookie Policy'
+                  subtitle={ 'Cookie Policy' }
+                  content={
+                    <CookiePolicy extraStyles={ false } />
+                  }
+                />
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 2 }>

@@ -92,8 +92,8 @@ class Home extends Component {
                     onClick={ () => this.props.history.push('/tasks/open') }
                   >
                     <FormattedMessage
-                      id='home.hero.headline.button'
-                      defaultMessage='Check out bounties'
+                      id='home.hero.headline.button.primary'
+                      defaultMessage='Work on an issue'
                     />
                   </Button>
                   <Button

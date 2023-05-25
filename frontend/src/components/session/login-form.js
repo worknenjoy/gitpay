@@ -462,12 +462,12 @@ class LoginForm extends Component {
                 : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } />
               }
               <Typography variant='body1' style={ { marginLeft: 10 } }>
-                <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the' />
-                <a onClick={this.handleOpenTermsOfService} href='/#/terms' target='_blank' style={ { marginLeft: 5 } }>
+                <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the ' /> 
+                <a onClick={this.handleOpenTermsOfService} href='/#/terms' target='_blank' style={ { display: 'inline-block', marginRight: 5, marginLeft: 5 } }>
                   <FormattedMessage id='account.login.label.terms' defaultMessage='Terms of Service' />
                 </a> 
                  <FormattedMessage id='account.login.label.terms.and' defaultMessage=' and' /> 
-                <a href='/#/privacy-policy' onClick={this.handleOpenPrivacyPolicy} target='_blank' style={ { marginLeft: 5 } }>
+                <a href='/#/privacy-policy' onClick={this.handleOpenPrivacyPolicy} target='_blank' style={ { display: 'inline-block', marginLeft: 5 } }>
                   <FormattedMessage id='account.login.label.privacy' defaultMessage='Privacy Policy' />
                 </a>
               </Typography>
