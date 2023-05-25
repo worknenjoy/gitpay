@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 
 
-const CookiePolicy = ({ extrasStyles }) => {
+const CookiePolicy = ({ extrasStyles = true }) => {
 
   const content = `
   {br}
