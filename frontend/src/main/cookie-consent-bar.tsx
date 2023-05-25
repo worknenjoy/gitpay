@@ -44,7 +44,7 @@ const CookieConsentBar = () => {
       </span>
       <Dialog open={openCookiePolicy} onClose={() => setOpenCookiePolicy(false)}>
         <DialogContent>
-          <CookiePolicy extrasStyles={false} />
+          <CookiePolicy extraStyles={false} />
         </DialogContent>
       </Dialog>
     </CookieConsent>

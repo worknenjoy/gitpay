@@ -3,7 +3,7 @@ import { Typography } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";
 
 
-const CookiePolicy = ({ extrasStyles = true }) => {
+const CookiePolicy = ({ extraStyles = true }) => {
 
   const content = `
   {br}
@@ -56,7 +56,7 @@ Please note that this Cookie Policy should be read in conjunction with our Priva
 
   return (
     <>
-      <div style={extrasStyles ? { padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, background: 'white', width: '100%' } : {}}>
+      <div style={extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, width: '100%', background: 'white'} : {}}>
         <div style={{ marginBottom: 10 }}>
           <Typography variant="h4" gutterBottom>
             <FormattedMessage id="cookie.policy.title" defaultMessage="Cookie Policy" />
@@ -66,7 +66,7 @@ Please note that this Cookie Policy should be read in conjunction with our Priva
           </Typography>
         </div>
         <Typography variant="body1" gutterBottom>
-          <FormattedMessage id="cookie.policy.subtitle.secondary" defaultMessage="Cookie Policy" />
+          <FormattedMessage id="cookie.policy.subtitle.secondary" defaultMessage="About our Cookie Policy" />
         </Typography>
         <div style={{ overflow: 'scroll', height: 'calc(100vh - 200px)' }}>
           <Typography variant="body1" gutterBottom>

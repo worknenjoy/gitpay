@@ -12,12 +12,6 @@ import {
 } from '@material-ui/core'
 
 import SubscribeForm from '../form/subscribe-form'
-import WhoSubscribes from '../welcome/who-subscribes'
-import Workflow from '../welcome/workflow'
-import TermsOfServicePeople from '../welcome/terms-of-service-people'
-import TermsOfServiceCompany from '../welcome/terms-of-service-company'
-import WhichCompanies from '../welcome/which-companies'
-import Consulting from '../welcome/consulting'
 import InfoContainer from '../../containers/info'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'

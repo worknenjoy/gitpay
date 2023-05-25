@@ -81,7 +81,7 @@ class LoginPage extends Component {
   renderDialog() {
     const { cookie, privacy, terms } = this.state
     if(cookie) {
-      return <CookiePolicy />
+      return <CookiePolicy extraStyles={false} />
     }
     if(privacy) {
       return <PrivacyPolicy extraStyles={false} />
