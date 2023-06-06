@@ -1,6 +1,3 @@
-const Team = require('./team')
-const User = require('./user')
-
 module.exports = function (sequelize, DataTypes) {
   const TeamMember = sequelize.define('TeamMember', {
     id: {
@@ -29,7 +26,10 @@ module.exports = function (sequelize, DataTypes) {
   TeamMember.associate = (model) => {
     TeamMember.belongsTo(model.Team,{
       foreignKey: 'team_id',
-    })
+    });
+    TeamMember.belongsTo(model.User,{
+      foreignKey: 'user_id',
+    });
   }
   return TeamMember;
 }
