@@ -307,6 +307,7 @@ const createTask = (task, history) => {
       })
       .catch(error => {
         // eslint-disable-next-line no-console
+        console.log(error)
         if (error.response && error.response.status === 403) {
           dispatch(addNotification('actions.task.create.auth.error'))
           return dispatch(createTaskError(error))

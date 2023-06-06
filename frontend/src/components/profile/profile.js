@@ -12,27 +12,19 @@ import {
 
 import {
   Grid,
-  Chip,
   Container,
-  Avatar,
-  Typography,
   Button,
-  Paper,
   ListItemIcon,
   ListItemText,
   MenuList,
   MenuItem,
   withStyles,
-  Toolbar,
   AppBar,
 } from '@material-ui/core'
 import {
   LibraryBooks,
   Home,
   Tune,
-  Person,
-  Web,
-  ArrowBack,
   Settings,
   FaceSharp,
   Business,
@@ -43,11 +35,9 @@ import {
 } from '@material-ui/icons'
 
 import classNames from 'classnames'
-import nameInitials from 'name-initials'
 
 import api from '../../consts'
 
-import TopBarContainer from '../../containers/topbar'
 import PaymentsContainer from '../../containers/payments'
 import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
@@ -63,6 +53,7 @@ import { Page, PageContent } from 'app/styleguide/components/Page'
 import PreferencesBar from './preferences-bar'
 import UserOganizationTree from '../../containers/user-organization-tree'
 import AccountDetails from '../../containers/account-details'
+import AccountHeader from './components/account-header'
 
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
@@ -540,7 +531,7 @@ class Profile extends Component {
                       <Grid
                         container
                         direction='column'
-                        justify='center'
+                        justifyContent='center'
                         alignItems='center'
                         className={ classes.rowList }
                       >
@@ -587,6 +578,13 @@ class Profile extends Component {
             </Grid>
             <Grid item xs={ 12 } md={ 10 }>
               <Container maxWidth='lg'>
+                <AccountHeader
+                  classes={ classes }
+                  user={ user } 
+                  onCreateTask={ this.props.createTask } 
+                  history={ this.props.history }
+                  onLogout={ this.handleSignOut }  
+                />
                 <HashRouter>
                   <Switch>
                     <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } onCreateTask={ this.props.createTask } /> } />

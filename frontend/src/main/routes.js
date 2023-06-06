@@ -29,7 +29,6 @@ export default props => (
       <Route exact path='/welcome' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Route path='/pricing' component={ Pricing } />
-      <PrivateRoute path='/profile/account-details' component={ ProfileContainer } />
       <Route exact path='/projects' component={ TaskExplorer } />
       <Route exact path='/organizations' component={ TaskExplorer } />
       <Route exact path='/organizations/:organization_id' component={ TaskExplorer } />

@@ -1,35 +1,24 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import api from '../../consts'
+import { FormattedMessage } from 'react-intl'
 import { store } from '../../main/app'
 
 import {
-  Checkbox,
   Chip,
   Drawer,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  FormControlLabel,
-  FormGroup,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Tooltip,
-  FormControl,
-  FormHelperText,
   Avatar,
-  TextField,
-  Typography,
   CircularProgress,
   Menu,
   MenuItem,
-  Button,
-  withStyles,
+  Button
 } from '@material-ui/core'
 import {
   LibraryBooks,
