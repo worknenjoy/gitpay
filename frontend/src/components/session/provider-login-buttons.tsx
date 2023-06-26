@@ -7,24 +7,45 @@ import GithubLogo from '../../images/github-logo.png'
 import BitbucketLogo from '../../images/bitbucket-logo.png'
 import api from '../../consts'
 
+const ProviderLoginButtons = ({ 
+  classes = {},
+  contrast = false,
+  hideExtra = false,
+  provider = undefined,
+  position = 'center',
+  textPosition = 'center'
+}) => {
+  const styles = { 
+    textAlign: textPosition,
+    marginBottom: 10 
+  } as React.CSSProperties;
 
-const ProviderLoginButtons = ({ classes, contrast, hideExtra, size }) => (
+return (
   <>
-    <div style={ { display: hideExtra ? 'none' : 'block' } }>
-      <div style={ { textAlign: 'center', marginBottom: 10 } }>
+    { provider ?
+      <div style={ styles }>
         <Typography variant='caption' color={ contrast ? 'inherit' : 'textSecondary' } gutterBottom>
-          <FormattedMessage id='account.login.connect.provider.label' defaultMessage='You can also connect or signup with ' />
+          <FormattedMessage id='account.login.connect.provider.connected' defaultMessage='You are already connected on {value}' values={
+            { value: provider }
+          } />
         </Typography>
+      </div> : 
+      <div style={ { display: hideExtra ? 'none' : 'block' } }>
+        <div style={ styles }>
+          <Typography variant='caption' color={ contrast ? 'inherit' : 'textSecondary' } gutterBottom>
+            <FormattedMessage id='account.login.connect.provider.label' defaultMessage='You can also connect or signup with ' />
+          </Typography>
+        </div>
       </div>
-    </div>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      }
+    <div style={{ display: 'flex', justifyContent: position }}>
       <div>
         <Button
           style={{ marginRight: 10 }}
           href={`${api.API_URL}/authorize/github`}
           variant='contained'
-          size={size}
           color='secondary'
+          disabled={provider === 'github'}
         >
           <img width='16' src={GithubLogo} />
           <span style={{marginLeft: 10}}>Github</span>
@@ -32,8 +53,8 @@ const ProviderLoginButtons = ({ classes, contrast, hideExtra, size }) => (
         <Button
           href={`${api.API_URL}/authorize/bitbucket`}
           variant='contained'
-          size={size}
           color='secondary'
+          disabled={provider === 'bitbucket'}
         >
           <img width='16' src={BitbucketLogo} />
           <span style={{marginLeft: 10}}>Bitbucket</span>
@@ -41,6 +62,6 @@ const ProviderLoginButtons = ({ classes, contrast, hideExtra, size }) => (
       </div>
     </div>
   </>
-)
+)}
 
 export default ProviderLoginButtons

@@ -47,6 +47,7 @@ import Preferences from './preferences'
 import Roles from './user-roles'
 import SettingsComponent from './settings'
 import UpdateRole from './update-role'
+import { UserAccount } from './pages/user-account'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
@@ -580,14 +581,15 @@ class Profile extends Component {
               <Container maxWidth='lg'>
                 <AccountHeader
                   classes={ classes }
-                  user={ user } 
-                  onCreateTask={ this.props.createTask } 
+                  user={ user }
+                  onCreateTask={ this.props.createTask }
                   history={ this.props.history }
-                  onLogout={ this.handleSignOut }  
+                  onLogout={ this.handleSignOut }
                 />
                 <HashRouter>
                   <Switch>
                     <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } onCreateTask={ this.props.createTask } /> } />
+                    <Route exact path='/profile/user-account' component={ (props) => <UserAccount user={ this.props.user } updateUser={ this.props.updateUser } addNotification={ this.props.addNotification } { ...props } /> } />
                     <Route exact path='/profile/account-details' component={ (props) => <AccountDetails { ...props } user={ this.props.user } /> } />
                     { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                       <Route
