@@ -81,6 +81,11 @@ const Palette = {
         minWidth: 32
       }
     },
+    MuiButtonBase: {
+      root: {
+        textTransform: 'none',
+      }
+    },
     MuiButton: {
       root: {
         borderRadius: '18px',
@@ -92,7 +97,8 @@ const Palette = {
         }
       },
       contained: {
-        boxShadow: 'none'
+        boxShadow: 'none',
+        textTransform: 'none',
       },
       primary: {
         color: '#fff',

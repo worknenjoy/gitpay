@@ -34,6 +34,53 @@ const styles = (theme) => ({
   }
 })
 
+type FieldProps = {
+  name: string,
+  label: string,
+  type?: string,
+  required?: boolean,
+  defaultValue?: string,
+  value?: string,
+  placeholder?: string,
+  disabled?: boolean,
+  help?: boolean,
+  inputComponent?: any
+  ref?: React.Ref<HTMLElement> | null
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export const Field = ({ ref, name, value, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent, onChange }:FieldProps) => {
+  return (
+    <FormControl style={ { width: '100%' } }>
+      <InputLabel
+        htmlFor={ name }
+      >
+        { label }
+      </InputLabel>
+      <Input
+        ref={ ref }
+        id={ name }
+        name={ name }
+        type={ type }
+        required={ required }
+        defaultValue={ defaultValue }
+        value={value}
+        fullWidth
+        style={ { width: '100%' } }
+        placeholder={ placeholder }
+        disabled={ disabled }
+        inputComponent={ inputComponent }
+        onChange={onChange}
+      />
+      { help &&
+        <FormHelperText id='component-helper-text'>
+          <FormattedMessage id='validation-message' defaultMessage='+Country code and Number' />
+        </FormHelperText>
+      }
+    </FormControl>
+  )
+}
+
 const AccountDetails = ({
   intl,
   account,
@@ -50,7 +97,7 @@ const AccountDetails = ({
   classes
 }) => {
   const [ accountData, setAccountData ] = useState({})
-  const [ displayCurrentCountry, setDisplayCurrentCountry ] = useState({})
+  const [ displayCurrentCountry, setDisplayCurrentCountry ] = useState({ country: '', code: ''})
   const [ userId ] = useState('')
   const [ openCountryPicker, setOpenCountryPicker ] = useState(false)
   const [ deleteUserDialog, setDeleteUserDialog ] = useState(false)
@@ -107,35 +154,6 @@ const AccountDetails = ({
         placeholderChar={ '\u2000' }
         showMask
       />
-    )
-  }
-
-  const Field = ({ name, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent }) => {
-    return (
-      <FormControl style={ { width: '100%' } }>
-        <InputLabel
-          htmlFor={ name }
-        >
-          { label }
-        </InputLabel>
-        <Input
-          id={ name }
-          name={ name }
-          type={ type }
-          required={ required }
-          defaultValue={ defaultValue }
-          fullWidth
-          style={ { width: '100%' } }
-          placeholder={ placeholder }
-          disabled={ disabled }
-          inputComponent={ inputComponent }
-        />
-        { help &&
-          <FormHelperText id='component-helper-text'>
-            <FormattedMessage id='validation-message' defaultMessage='+Country code and Number' />
-          </FormHelperText>
-        }
-      </FormControl>
     )
   }
 
@@ -224,7 +242,7 @@ const AccountDetails = ({
                   <Grid item xs={ 12 } md={ 12 }>
                     <Button variant='text' onClick={ () => {
                       displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
-                      setDisplayCurrentCountry({})
+                      setDisplayCurrentCountry({ country: '', code: '' })
                     } } style={ { margin: 20 } }>
                       <FormattedMessage id='account-details-country-information-save' defaultMessage='Save Country and continue' />
                     </Button>
@@ -371,7 +389,7 @@ const AccountDetails = ({
             <Grid item xs={ 12 }>
               <div style={ { float: 'left' } }>
                 <Button onClick={ () => setDeleteUserDialog(true) }
-                  variant='link'
+                  variant='outlined'
                   style={ { color: '#353A42' } }
                 >
                   <FormattedMessage id='account.profile.settings.delete.user.button' defaultMessage='Delete my account' />

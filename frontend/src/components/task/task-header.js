@@ -173,7 +173,6 @@ class TaskHeader extends React.Component {
                 ) }
               </div>
             </ReactPlaceholder>
-
             <ReactPlaceholder ready={ task.completed && task.data.status }>
               <Chip
                 label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
@@ -184,7 +183,8 @@ class TaskHeader extends React.Component {
               />
             </ReactPlaceholder>
             <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
-              ready={ task.completed }>
+              ready={ task.completed }
+            >
               <Typography variant='h4' align='left' gutterBottom>
                 { task.data.title }
                 <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />

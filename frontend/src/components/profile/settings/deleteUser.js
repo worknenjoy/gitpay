@@ -35,7 +35,7 @@ class DeleteUser extends Component {
     this.state = { open: false }
   }
 
-  static defaultProps = { visible: true }
+  static defaultProps = { visible: true, user: {}, onClose: () => {}, deleteUser: () => {}, onOpen: () => {} }
 
   static propTypes = {
     visible: PropTypes.bool,
