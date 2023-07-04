@@ -79,6 +79,15 @@ You can do this with: `cp .env.example .env`
 6. Create a dev database: `CREATE DATABASE gitpay_dev;`
 7. Exit: `\q`
 
+#### Install PostgreSQL (Windows)
+1. Download: access `https://www.enterprisedb.com/downloads/postgres-postgresql-downloads` and download the exe file for windows;
+2. Install: proceed the installation with the postgreSQL setup wizard; once it is requested to provide a password for the database superuser, type `postgres`.
+3. Login into postgres: `psql -U postgres`
+4. Make sure postgres user has the correct password: `ALTER USER postgres WITH PASSWORD 'postgres';`
+5. Create test database: `CREATE DATABASE gitpay_test;`
+6. Create a dev database: `CREATE DATABASE gitpay_dev;`
+7. Exit: `\q`
+
 ## Run migration
 
 To run the migrations
@@ -110,6 +119,14 @@ For test environment
 `npm run seed-test`
 
 For exhaustive list of options available, refer `migration.js` in root directory
+
+### For windows users:
+
+- Go to line 42 in the `migrate.js` file and hardcode "seed" into the env var below:
+`const migrationType = process.env.TYPE`
+- So it will be: 
+`const migrationType = "seed"`
+- Then run the commands above
 
 ## Run project
 
