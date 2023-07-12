@@ -20,6 +20,10 @@ import {
   MenuItem,
   withStyles,
   AppBar,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText
 } from '@material-ui/core'
 import {
   LibraryBooks,
@@ -206,7 +210,8 @@ class Profile extends Component {
     this.state = {
       selected: null,
       orgsLoaded: false,
-      openUpdateProfileDialog: false
+      openUpdateProfileDialog: false,
+      emailNotVerifiedDialog: false
     }
   }
 
@@ -214,6 +219,7 @@ class Profile extends Component {
     await this.props.fetchOrganizations()
     this.setState({ orgsLoaded: true })
     if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
+    if (!this.props.user.email_verified) this.setState({ emailNotVerifiedDialog: true })
   }
 
   setActive (path) {
@@ -279,13 +285,29 @@ class Profile extends Component {
 
   render () {
     const { classes, user, preferences, roles } = this.props
+    const { emailNotVerifiedDialog } = this.state
     const userTypes = user.Types && user.Types.map(t => t.name)
 
     let titleNavigation = this.getTitleNavigation()
 
     return (
-      <Page>
-
+      <Page> 
+        <Dialog open={emailNotVerifiedDialog}>
+          <DialogTitle>
+            <FormattedMessage
+              id='account.profile.email.verification'
+              defaultMessage='Please check your e-mail'
+            />
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <FormattedMessage
+                id='account.profile.email.verification.message'
+                defaultMessage='Please check your email inbox to validate your account to proceed'
+              />
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
         <AppBar
           component='div'
           classes={ { colorPrimary: classes.secondaryBar } }

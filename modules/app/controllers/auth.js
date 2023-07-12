@@ -123,6 +123,21 @@ exports.createPrivateTask = (req, res) => {
   })
 }
 
+exports.activate_user = async (req, res) => {
+  const { token, userId } = req.query
+  try {
+    const foundUser = await models.User.findOne({ where: { activation_token: token, id: userId } })
+    if (!foundUser) res.status(401)
+    await models.User.update({ activation_token: null, email_verified: true }, { where: { id: foundUser.dataValues.id } })
+    res.redirect(`${process.env.FRONTEND_HOST}/#/signin`)
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(401).send(error)
+  }
+}
+
+
 exports.authorizeGithubPrivateIssue = (req, res) => {
   const params = req.query
   const uri = encodeURIComponent(`${process.env.API_HOST}/callback/github/private?userId=${params.userId}&url=${params.url}`)

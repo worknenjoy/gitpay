@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function userBuilds (organizationParameters) {
+module.exports = Promise.method(function organizationBuilds (organizationParameters) {
   return models.Organization.build(
     organizationParameters
   )

@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     provider: DataTypes.STRING,
     provider_username: DataTypes.STRING,
     email: DataTypes.STRING,
+    email_verified: DataTypes.BOOLEAN,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
     username: DataTypes.STRING,
@@ -21,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     skills: DataTypes.STRING,
     languages: DataTypes.STRING,
     recover_password_token: DataTypes.STRING,
+    activation_token: DataTypes.STRING,
     receiveNotifications: {
       type: DataTypes.BOOLEAN,
       defaultValue: true

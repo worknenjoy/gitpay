@@ -41,7 +41,7 @@ describe("Users", () => {
   })
 
   describe('register User', () => {
-    it('should register', (done) => {
+    it('should register and generate token', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'teste@gmail.com', password: 'teste'})
@@ -50,7 +50,26 @@ describe("Users", () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.exist;
+          expect(res.body.activation_token).to.exist
+          expect(res.body.email_verified).to.equal(false)
           done(err);
+        })
+    })
+    it('should validate user activation token', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste22222@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          agent
+            .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
+            .expect(302)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(302);
+              expect(res.header.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin`);
+              done(err);
+            })
         })
     })
     xit('dont allow register with the same user', (done) => {
