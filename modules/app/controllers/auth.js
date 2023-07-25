@@ -132,7 +132,8 @@ exports.activate_user = async (req, res) => {
     if (!foundUser) res.status(401).send({ message: 'user.not.exist' })
     const userUpdate = await models.User.update({ activation_token: null, email_verified: true }, { where: { id: foundUser.dataValues.id }, returning: true, plain: true })
     res.send(userUpdate[1])
-  } catch (error) {
+  }
+  catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
     res.status(401).send(error)
@@ -147,17 +148,16 @@ exports.resend_activation_email = async (req, res) => {
     const { id, name } = foundUser.dataValues
     const token = models.User.generateToken()
     const userUpdate = token && await models.User.update({ activation_token: token, email_verified: false }, { where: { id: foundUser.dataValues.id }, returning: true, plain: true })
-    if(userUpdate[1].dataValues.id) {
+    if (userUpdate[1].dataValues.id) {
       Sendmail.success(userUpdate[1].dataValues, 'Activate your account', `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${token}">here</a> to activate your account.</p>`)
     }
     res.send(userUpdate[1])
-  } catch (error) {
+  }
+  catch (error) {
     // eslint-disable-next-line no-console
     console.log(error)
   }
 }
-
-
 
 exports.authorizeGithubPrivateIssue = (req, res) => {
   const params = req.query

@@ -297,8 +297,8 @@ class Profile extends Component {
     let titleNavigation = this.getTitleNavigation()
 
     return (
-      <Page> 
-        <Dialog open={emailNotVerifiedDialog}>
+      <Page>
+        <Dialog open={ emailNotVerifiedDialog }>
           <DialogTitle>
             <FormattedMessage
               id='account.profile.email.verification'
@@ -320,9 +320,9 @@ class Profile extends Component {
             </DialogContentText>
             <DialogContentText>
               <FormattedMessage
-                  id='account.profile.email.verification.message3'
-                  defaultMessage='If you have not received the email, please click here to resend'
-                />
+                id='account.profile.email.verification.message3'
+                defaultMessage='If you have not received the email, please click here to resend'
+              />
             </DialogContentText>
             <DialogActions>
               <Button onClick={ (e) => this.handlingResendActivationEmail(e, user.id) } color='primary'>
