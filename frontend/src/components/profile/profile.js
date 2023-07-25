@@ -220,7 +220,7 @@ class Profile extends Component {
     await this.props.fetchOrganizations()
     this.setState({ orgsLoaded: true })
     if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
-    if (!this.props.user.email_verified) this.setState({ emailNotVerifiedDialog: true })
+    if (!this.props.user.provider && !this.props.user.email_verified) this.setState({ emailNotVerifiedDialog: true })
   }
 
   setActive (path) {
