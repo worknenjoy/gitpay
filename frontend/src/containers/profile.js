@@ -4,7 +4,7 @@ import { fetchPreferences } from '../actions/preferencesActions'
 import { logOut } from '../actions/loginActions'
 import { listTasks, filterTasks, createTask } from '../actions/taskActions'
 import { fetchRoles, createRoles, deleteRoles } from '../actions/userRoleActions'
-import { updateUser, deleteUser } from '../actions/userActions'
+import { updateUser, deleteUser, resendActivationEmail } from '../actions/userActions'
 import { fetchOrganizations, createOrganizations, updateOrganization } from '../actions/organizationsActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
 import { getFilteredTasks } from '../selectors/tasks'
@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     createOrganizations: (org) => dispatch(createOrganizations(org)),
     updateOrganization: (org) => dispatch(updateOrganization(org)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
+    resendActivationEmail: (userId) => dispatch(resendActivationEmail(userId)),
     deleteUser: (user) => dispatch(deleteUser(user)),
     addNotification: (message) => dispatch(addNotification(message)),
     closeNotification: (message) => dispatch(closeNotification(message)),

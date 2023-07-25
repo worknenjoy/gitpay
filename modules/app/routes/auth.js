@@ -57,6 +57,8 @@ router.post('/auth/forgot-password', controllers.forgotPasswordNotification)
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 
 router.post('/auth/register', controllers.register)
+router.get('/auth/activate', controllers.activate_user)
+router.get('/auth/resend-activation-email', controllers.resend_activation_email)
 router.get('/users', controllers.searchAll)
 router.get('/callback/github/private', controllers.createPrivateTask)
 

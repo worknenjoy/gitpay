@@ -7,6 +7,7 @@ import WelcomeContainer from '../containers/welcome'
 import HomeContainer from '../containers/home'
 import Session from '../components/session/session'
 import ProfileContainer from '../containers/profile'
+import AccountActivation from '../containers/account-activation'
 import TaskContainer from '../containers/task'
 import TaskOrdersContainer from '../containers/task-orders'
 import TaskExplorer from '../containers/task-explorer'
@@ -43,6 +44,7 @@ export default props => (
       <Route exact path='/signin/:status' component={ LoginPageContainer } />
       <Route exact path='/signup' component={ LoginPage } />
       <Route exact path='/reset-password/:token' component={ RecoverPasswordContainer } />
+      <Route exact path='/activate/user/:userId/token/:token' component={ AccountActivation } />
       <Route exact path='/signup/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
       <Route exact path='/task/:id' component={ TaskContainer } />

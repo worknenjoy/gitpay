@@ -1,4 +1,5 @@
 let crypto = require('crypto')
+
 const requestPromise = require('request-promise')
 const secrets = require('../../../config/secrets')
 const user = require('../../users')
@@ -7,7 +8,8 @@ const task = require('../../tasks')
 const Sendmail = require('../../mail/mail')
 
 exports.register = (req, res) => {
-  user.userExists({ email: req.body.email }).then(userData => {
+  const { email } = req.body
+  user.userExists({ email }).then(userData => {
     if (userData.dataValues && userData.dataValues.email) {
       res.status(403).send({ message: 'user.exist' })
       return
@@ -28,7 +30,7 @@ exports.forgotPasswordNotification = async (req, res) => {
   try {
     const foundUser = await user.userExists({ email })
     if (foundUser.dataValues && foundUser.dataValues.email) {
-      const token = crypto.randomBytes(64).toString('hex')
+      const token = models.User.generateToken()
       await models.User.update({ recover_password_token: token }, { where: { email } })
       const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`
       const html = `<p>Hi ${foundUser.dataValues.name || 'Gitpay user'},</p><p>Click <a href="${url}">here</a> to reset your password.</p>`
@@ -122,6 +124,40 @@ exports.createPrivateTask = (req, res) => {
     return res.status(401).send(e)
   })
 }
+
+exports.activate_user = async (req, res) => {
+  const { token, userId } = req.query
+  try {
+    const foundUser = await models.User.findOne({ where: { activation_token: token, id: userId } })
+    if (!foundUser) res.status(401).send({ message: 'user.not.exist' })
+    const userUpdate = await models.User.update({ activation_token: null, email_verified: true }, { where: { id: foundUser.dataValues.id }, returning: true, plain: true })
+    res.send(userUpdate[1])
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(401).send(error)
+  }
+}
+
+exports.resend_activation_email = async (req, res) => {
+  const { userId } = req.query
+  try {
+    const foundUser = await models.User.findOne({ where: { id: userId } })
+    if (!foundUser) res.status(401)
+    const { id, name } = foundUser.dataValues
+    const token = models.User.generateToken()
+    const userUpdate = token && await models.User.update({ activation_token: token, email_verified: false }, { where: { id: foundUser.dataValues.id }, returning: true, plain: true })
+    if(userUpdate[1].dataValues.id) {
+      Sendmail.success(userUpdate[1].dataValues, 'Activate your account', `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${token}">here</a> to activate your account.</p>`)
+    }
+    res.send(userUpdate[1])
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+  }
+}
+
+
 
 exports.authorizeGithubPrivateIssue = (req, res) => {
   const params = req.query

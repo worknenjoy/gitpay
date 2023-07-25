@@ -1,10 +1,12 @@
 const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     provider: DataTypes.STRING,
     provider_username: DataTypes.STRING,
     email: DataTypes.STRING,
+    email_verified: DataTypes.BOOLEAN,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
     username: DataTypes.STRING,
@@ -21,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     skills: DataTypes.STRING,
     languages: DataTypes.STRING,
     recover_password_token: DataTypes.STRING,
+    activation_token: DataTypes.STRING,
     receiveNotifications: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
@@ -43,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
   User.generateHash = (password) => {
     /* eslint-disable no-sync */
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+  }
+
+  User.generateToken = () => {
+    return crypto.randomBytes(64).toString('hex')
   }
 
   User.prototype.verifyPassword = (password, databasePassword) => {

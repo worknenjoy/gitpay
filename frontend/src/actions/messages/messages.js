@@ -238,13 +238,25 @@ const messages = defineMessages({
     id: 'notifications.account.update',
     defaultMessage: 'Your user was updated sucessfully'
   },
+  notificationAccountActivateSuccess: {
+    id: 'notifications.account.activate',
+    defaultMessage: 'Your account was activated sucessfully'
+  },
+  notificationAccountActivateError: {
+    id: 'notifications.account.activate.error',
+    defaultMessage: 'We could not activate your account'
+  },
   notificationAccountUpdateError: {
     id: 'notifications.account.update.error',
     defaultMessage: 'We could not create your account'
   },
-  notificationProfileSettingsDeleteUserNotification: {
-    id: 'account.profile.settings.delete.user.notification',
-    defaultMessage: 'The account was successfully deleted'
+  notificationAccountResendActivation: {
+    id: 'notifications.account.resend_activation_email.success',
+    defaultMessage: 'We sent you an email with instructions to activate your account'
+  },
+  notificationAccountResendActivationError: {
+    id: 'notifications.account.resend_activation_email.error',
+    defaultMessage: 'We could not send you an email to activate your account'
   },
   notificationProfileSettingsDeleteUserNotificationError: {
     id: 'account.profile.settings.delete.user.notification.error',
