@@ -20,6 +20,15 @@ const UPDATE_USER_REQUESTED = 'UPDATE_USER_REQUESTED'
 const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
 const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR'
 
+const ACTIVATE_USER_REQUESTED = 'ACTIVATE_USER_REQUESTED'
+const ACTIVATE_USER_SUCCESS = 'ACTIVATE_USER_SUCCESS'
+const ACTIVATE_USER_ERROR = 'ACTIVATE_USER_ERROR'
+
+const RESEND_ACTIVATION_EMAIL_REQUESTED = 'RESEND_ACTIVATION_EMAIL_REQUESTED'
+const RESEND_ACTIVATION_EMAIL_SUCCESS = 'RESEND_ACTIVATION_EMAIL_SUCCESS'
+const RESEND_ACTIVATION_EMAIL_ERROR = 'RESEND_ACTIVATION_EMAIL_ERROR'
+
+
 const CREATE_BANKACCOUNT_REQUESTED = 'CREATE_BANKACCOUNT_REQUESTED'
 const CREATE_BANKACCOUNT_SUCCESS = 'CREATE_BANKACCOUNT_SUCCESS'
 const CREATE_BANKACCOUNT_ERROR = 'CREATE_BANKACCOUNT_ERROR'
@@ -107,6 +116,47 @@ const updateUserSuccess = user => {
 const updateUserError = error => {
   return { type: UPDATE_USER_ERROR, completed: true, error: error }
 }
+
+/*
+  * User activate
+*/
+
+const activateUserRequested = () => {
+  return { type: ACTIVATE_USER_REQUESTED, completed: false }
+}
+
+const activateUserSuccess = user => {
+  return {
+    type: ACTIVATE_USER_SUCCESS,
+    completed: true,
+    data: user.data
+  }
+}
+
+const activateUserError = error => {
+  return { type: ACTIVATE_USER_ERROR, completed: true, error: error }
+}
+
+/*
+  * User resend activation
+*/
+
+const resendActivationEmailRequested = () => {
+  return { type: RESEND_ACTIVATION_EMAIL_REQUESTED, completed: false }
+}
+
+const resendActivationEmailSuccess = user => {
+  return {
+    type: RESEND_ACTIVATION_EMAIL_SUCCESS,
+    completed: true,
+    data: user.data
+  }
+}
+
+const resendActivationEmailError = error => {
+  return { type: RESEND_ACTIVATION_EMAIL_ERROR, completed: true, error: error }
+}
+
 
 /*
  * Account bank get
@@ -235,6 +285,48 @@ const updateUser = (_, userData) => {
   }
 }
 
+const activateUser = (userId, token) => {
+  return (dispatch) => {
+    dispatch(activateUserRequested())
+    return axios
+      .get(api.API_URL + `/auth/activate?token=${token}&userId=${userId}`, { userId, token })
+      .then(user => {
+        dispatch(addNotification('notifications.account.activate'))
+        // dispatch(fetchAccount());
+        return dispatch(activateUserSuccess(user))
+      })
+      .catch(error => {
+        dispatch(
+          addNotification('notifications.account.activate.error')
+        )
+        // eslint-disable-next-line no-console
+        console.log('error on activate user', error)
+        return dispatch(activateUserError(error))
+      })
+  }
+}
+
+const resendActivationEmail = (userId) => {
+  return (dispatch) => {
+    dispatch(resendActivationEmailRequested())
+    return axios
+      .get(api.API_URL + `/auth/resend-activation-email?userId=${userId}`, { userId })
+      .then(user => {
+        dispatch(addNotification('notifications.account.resend_activation_email.success'))
+        // dispatch(fetchAccount());
+        return dispatch(resendActivationEmailSuccess(user))
+      })
+      .catch(error => {
+        dispatch(
+          addNotification('notifications.account.resend_activation_email.error')
+        )
+        // eslint-disable-next-line no-console
+        console.log('error on resend activation email', error)
+        return dispatch(resendActivationEmailError(error))
+      })
+  }
+}
+
 const deleteUser = (user) => {
   validToken()
   return (dispatch) => {
@@ -320,6 +412,12 @@ export {
   UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  ACTIVATE_USER_REQUESTED,
+  ACTIVATE_USER_SUCCESS,
+  ACTIVATE_USER_ERROR,
+  RESEND_ACTIVATION_EMAIL_REQUESTED,
+  RESEND_ACTIVATION_EMAIL_SUCCESS,
+  RESEND_ACTIVATION_EMAIL_ERROR,
   GET_BANKACCOUNT_REQUESTED,
   GET_BANKACCOUNT_SUCCESS,
   GET_BANKACCOUNT_ERROR,
@@ -330,6 +428,8 @@ export {
   createAccount,
   updateAccount,
   updateUser,
+  activateUser,
+  resendActivationEmail,
   createBankAccount,
   getBankAccount,
   deleteUser,

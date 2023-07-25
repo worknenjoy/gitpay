@@ -23,7 +23,8 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText
+  DialogContentText,
+  DialogActions
 } from '@material-ui/core'
 import {
   LibraryBooks,
@@ -283,6 +284,11 @@ class Profile extends Component {
     this.props.signOut()
   }
 
+  handlingResendActivationEmail = (e, userId) => {
+    e.preventDefault()
+    this.props.resendActivationEmail(userId)
+  }
+
   render () {
     const { classes, user, preferences, roles } = this.props
     const { emailNotVerifiedDialog } = this.state
@@ -306,6 +312,23 @@ class Profile extends Component {
                 defaultMessage='Please check your email inbox to validate your account to proceed'
               />
             </DialogContentText>
+            <DialogContentText>
+              <FormattedMessage
+                id='account.profile.email.verification.message2'
+                defaultMessage='If you have not received the email, please check your spam folder'
+              />
+            </DialogContentText>
+            <DialogContentText>
+              <FormattedMessage
+                  id='account.profile.email.verification.message3'
+                  defaultMessage='If you have not received the email, please click here to resend'
+                />
+            </DialogContentText>
+            <DialogActions>
+              <Button onClick={ (e) => this.handlingResendActivationEmail(e, user.id) } color='primary'>
+                <FormattedMessage id='user.email.resend.link.label' defaultMessage='Resend verification link to your email' />
+              </Button>
+            </DialogActions>
           </DialogContent>
         </Dialog>
         <AppBar

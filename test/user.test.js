@@ -64,15 +64,50 @@ describe("Users", () => {
         .end((err, res) => {
           agent
             .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
-            .expect(302)
+            .expect(200)
             .end((err, res) => {
-              expect(res.statusCode).to.equal(302);
-              expect(res.header.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin`);
+              expect(res.statusCode).to.equal(200);
+              expect(res.body['email_verified']).to.equal(true);
               done(err);
             })
         })
     })
-    xit('dont allow register with the same user', (done) => {
+    it('should resend activation token with no existing one', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste22222@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          agent
+            .get(`/auth/resend-activation-email?userId=${res.body.id}`)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200);
+              expect(res.body['email_verified']).to.equal(false);
+              expect(res.body['activation_token']).to.exist
+              done(err);
+            })
+        })
+    })
+    it('should resend user activation token', (done) => {
+      agent
+        .post('/auth/register')
+        .send({email: 'teste22222@gmail.com', password: 'teste'})
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          agent
+            .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200);
+              expect(res.body['email_verified']).to.equal(true);
+              done(err);
+            })
+        })
+    })
+    it('dont allow register with the same user', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'teste43434343@gmail.com', password: 'teste'})
@@ -87,7 +122,7 @@ describe("Users", () => {
             .expect(403)
             .end((err, res) => {
               expect(res.statusCode).to.equal(403);
-              expect(res.body.error).to.equal('user.exist');
+              expect(res.body.message).to.equal('user.exist');
               done(err);
             })
         })
