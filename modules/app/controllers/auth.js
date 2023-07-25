@@ -129,9 +129,12 @@ exports.activate_user = async (req, res) => {
   const { token, userId } = req.query
   try {
     const foundUser = await models.User.findOne({ where: { activation_token: token, id: userId } })
-    if (!foundUser) res.status(401).send({ message: 'user.not.exist' })
-    const userUpdate = await models.User.update({ activation_token: null, email_verified: true }, { where: { id: foundUser.dataValues.id }, returning: true, plain: true })
-    res.send(userUpdate[1])
+    if (!foundUser) {
+      res.status(401).send({ message: 'user.not.exist' })
+    } else {
+      const userUpdate = await models.User.update({ activation_token: null, email_verified: true }, { where: { id: foundUser.dataValues.id }, returning: true, plain: true })
+      res.send(userUpdate[1])
+    }
   }
   catch (error) {
     // eslint-disable-next-line no-console
