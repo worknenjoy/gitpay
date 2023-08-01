@@ -7,7 +7,9 @@ import AccountTabs from '../components/account-tabs';
 export const UserAccount = ({ 
   user,
   updateUser,
-  addNotification
+  addNotification,
+  history,
+  deleteUser
 }) => {
   return (
     <Grid container spacing={2}>
@@ -17,7 +19,13 @@ export const UserAccount = ({
           </Typography>
         </Grid>
         <Grid item xs={ 12 } md={ 12 }>
-          <AccountTabs user={user} updateUser={updateUser} addNotification={addNotification} />
+          <AccountTabs 
+            user={user}
+            updateUser={updateUser}
+            addNotification={addNotification}
+            history={history}
+            deleteUser={deleteUser}
+          />
         </Grid>
     </Grid>
   )

@@ -3,6 +3,7 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl } from 'react-intl'
 import funder from '../../images/bounty.png'
 import contributor from '../../images/sharing.png'
 import maintainer from '../../images/notifications.png'
@@ -293,4 +294,4 @@ Roles.PropTypes = {
   addNotification: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(Roles)
+export default injectIntl(withStyles(styles)(Roles))

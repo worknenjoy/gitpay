@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
+import AccountDetails from '../../../containers/account-details';
+import UserRoles from '../../../containers/user-roles';
+import PaymentOptions from '../../payment/payment-options';
+
 import AccountTabMain from './account-tab-main';
+
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,7 +47,9 @@ function a11yProps(index: number) {
 export default function AccountTabs({
     user,
     updateUser,
-    addNotification
+    deleteUser,
+    addNotification,
+    history
 }) {
   const [value, setValue] = React.useState(0);
 
@@ -49,25 +57,47 @@ export default function AccountTabs({
     setValue(newValue);
   };
 
+  useEffect(() => {
+    console.log('history', history)
+    if (history.location.hash === '#main') {
+      setValue(0);
+    } else if (history.location.hash === '#details') {
+      setValue(1);
+    } else if (history.location.hash === '#bank') {
+      setValue(2);
+    } else if (history.location.hash === '#roles') {
+      setValue(3);
+    }
+  }, []);
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Login and account details" {...a11yProps(0)} />
-          {/*  <Tab label="Personal details and address" {...a11yProps(1)} /> */}
-          {/*  <Tab label="Roles" {...a11yProps(2)} /> */}
+          <Tab label="Personal details and address" {...a11yProps(1)} />
+          <Tab label="Bank account" {...a11yProps(2)} />
+          <Tab label="Roles" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <AccountTabMain user={user} updateUser={updateUser} addNotification={addNotification} />
+        <AccountTabMain 
+          user={user}
+          updateUser={updateUser}
+          addNotification={addNotification}
+          deleteUser={deleteUser}
+          history={history}
+        />
       </TabPanel>
-      {/* add later */}
-      {/* <TabPanel value={value} index={1}> */}
-      {/*  Item Two */}
-      {/* </TabPanel> */}
-      {/* <TabPanel value={value} index={2}>*/}
-      {/*  Item Three */}
-      {/* </TabPanel> */}
+      <TabPanel value={value} index={1}>
+        <AccountDetails />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <PaymentOptions />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <UserRoles />
+      </TabPanel>
     </Box>
   );
 }

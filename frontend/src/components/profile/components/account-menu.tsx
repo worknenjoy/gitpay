@@ -5,18 +5,19 @@ import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import MoreVert from '@mui/icons-material/MoreVert';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 import {
   Web,
   AccountBox as AccountIcon,
 } from '@material-ui/icons'
 import { nameInitials } from 'name-initials';
+
 
 
 export default function AccountMenu({
@@ -39,8 +40,6 @@ export default function AccountMenu({
           <Button
             onClick={handleClick}
             size="small"
-            
-            
           >
             { user.picture_url
               ? <Avatar
@@ -55,10 +54,11 @@ export default function AccountMenu({
               <Typography variant='body1' color='text'>
                 { user.username }
               </Typography>
-              <Typography variant='body2' style={ { fontSize: 10, color: '#666' } }>
+              <Typography variant='body2' style={ { fontSize: 8, color: '#666' } }>
                 { user.email }
               </Typography>
             </div>
+            <MoreVert style={{marginLeft: 5}} />
           </Button>
         </Tooltip>
       </Box>

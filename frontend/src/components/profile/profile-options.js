@@ -182,7 +182,7 @@ class ProfileOptions extends Component {
               </CardContent>
               <CardActions className={ classes.cardActions }>
                 <Button size='small' color='primary'>
-                  <Link to={ '/profile/payment-options' }>
+                  <Link to={ '/profile/user-account#bank' }>
                     <FormattedMessage
                       id='account.profile.tasks.account.setup'
                       defaultMessage='Setup bank account'
@@ -239,7 +239,7 @@ class ProfileOptions extends Component {
               </CardContent>
               <CardActions className={ classes.cardActions }>
                 <Button size='small' color='primary'>
-                  <Link to='/profile/roles'>
+                  <Link to='/profile/user-account#roles'>
                     <FormattedMessage
                       id='account.profile.roles.link'
                       defaultMessage='Setup your roles on Gitpay'
