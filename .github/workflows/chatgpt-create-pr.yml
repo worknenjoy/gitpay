@@ -1,2 +1,0 @@
-- name: ChatGPT Code Generation
-  uses: matsubo/write-code-and-create-pr-from-issue-by-chatgpt@v0.0.2
