@@ -226,9 +226,6 @@ class Profile extends Component {
       case '/profile':
         this.setState({ selected: 0 })
         break
-      case '/profile/payment-options':
-        this.setState({ selected: 2 })
-        break
       case '/profile/user/orgs':
         this.setState({ selected: 3 })
         break
@@ -240,9 +237,6 @@ class Profile extends Component {
         break
       case '/profile/settings':
         this.setState({ selected: 6 })
-        break
-      case '/profile/roles':
-        this.setState({ selected: 7 })
         break
       case '/profile/payments':
         this.setState({ selected: 8 })

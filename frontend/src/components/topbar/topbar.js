@@ -505,19 +505,17 @@ class TopBar extends Component {
                       <FormattedMessage id='task.actions.account.profile.page' defaultMessage='Profile page' />
                     </ListItemText>
                   </ListItem>
-                  { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-                    <ListItem button onClick={ () => {
-                      window.location.assign('/#/profile/account-details')
-                      this.setState({ anchorEl: null })
-                    } }>
-                      <ListItemIcon>
-                        <AccountIcon />
-                      </ListItemIcon>
-                      <ListItemText>
-                        <FormattedMessage id='task.actions.account.profile.accountDetails' defaultMessage='Account details' />
-                      </ListItemText>
-                    </ListItem>
-                  }
+                  <ListItem button onClick={ () => {
+                    window.location.assign('/#/profile/user-account')
+                    this.setState({ anchorEl: null })
+                  } }>
+                    <ListItemIcon>
+                      <AccountIcon />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <FormattedMessage id='task.actions.menu.user.account' defaultMessage='Account' />
+                    </ListItemText>
+                  </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
                     <ListItem button onClick={ () => {
                       window.location.assign('/#/profile/payment-options')
@@ -592,17 +590,6 @@ class TopBar extends Component {
                     </ListItemIcon>
                     <ListItemText>
                       <FormattedMessage id='task.actions.account.settings' defaultMessage='Settings' />
-                    </ListItemText>
-                  </ListItem>
-                  <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/roles')
-                    this.setState({ anchorEl: null })
-                  } }>
-                    <ListItemIcon>
-                      <FaceSharp />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <FormattedMessage id='task.actions.account.roles' defaultMessage='Roles' />
                     </ListItemText>
                   </ListItem>
                   <ListItem button onClick={ this.handleSignOut }>
