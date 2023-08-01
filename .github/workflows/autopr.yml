@@ -32,3 +32,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         model: gpt-3.5-turbo
+        base_branch: master
