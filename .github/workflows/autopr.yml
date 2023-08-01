@@ -1,6 +1,6 @@
 on:
   issues:
-    types: [autopr]
+    types: [AutoPR]
   issue_comment:
     types: [created]
 
