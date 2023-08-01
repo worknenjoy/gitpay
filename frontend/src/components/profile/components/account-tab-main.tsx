@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { Field } from '../account-details';
 import ProviderLoginButtons from '../../session/provider-login-buttons';
+import DeleteAccountButton from './delete-account-button';
 
 const styles = (theme) => ({
   legend: {
@@ -25,7 +26,9 @@ const AccountTabMain = ({
   classes,
   user,
   updateUser,
-  addNotification
+  addNotification,
+  history,
+  deleteUser
 }) => {
   const { provider, name, password } = user;
   const [ fieldName, setFieldName ] = useState<string>(name);
@@ -167,6 +170,11 @@ const AccountTabMain = ({
                 </Grid>
               </Grid>
             </fieldset>
+            <DeleteAccountButton
+              user={ user }
+              history={ history }
+              deleteUser={ deleteUser }
+            />
         </Grid>
         <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
           

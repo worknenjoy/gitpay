@@ -47,7 +47,6 @@ import PaymentsContainer from '../../containers/payments'
 import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import UserTasksContainer from '../../containers/user-tasks'
-import PaymentOptions from '../payment/payment-options'
 import Preferences from './preferences'
 import Roles from './user-roles'
 import SettingsComponent from './settings'
@@ -58,7 +57,6 @@ import { Page, PageContent } from 'app/styleguide/components/Page'
 
 import PreferencesBar from './preferences-bar'
 import UserOganizationTree from '../../containers/user-organization-tree'
-import AccountDetails from '../../containers/account-details'
 import AccountHeader from './components/account-header'
 
 import logoGithub from '../../images/github-logo.png'
@@ -227,9 +225,6 @@ class Profile extends Component {
     switch (path) {
       case '/profile':
         this.setState({ selected: 0 })
-        break
-      case '/profile/account-details':
-        this.setState({ selected: 1 })
         break
       case '/profile/payment-options':
         this.setState({ selected: 2 })
@@ -452,52 +447,6 @@ class Profile extends Component {
                               />
                             </MenuItem>
                           }
-                          <MenuItem
-                            onClick={ () =>
-                              this.props.history.push('/profile/account-details')
-                            }
-                            className={ classes.menuItem }
-                            selected={ this.state.selected === 1 }
-                          >
-                            <ListItemIcon className={ classes.icon }>
-                              <AccountBox />
-                            </ListItemIcon>
-                            <ListItemText
-                              classes={ { primary: classes.primary } }
-                              primary={
-                                <span>
-                                  <FormattedMessage
-                                    id='account.profile.account.link.label'
-                                    defaultMessage='Account'
-                                  />
-                                </span>
-                              }
-                            />
-                          </MenuItem>
-                          { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                            <MenuItem
-                              onClick={ () =>
-                                this.props.history.push('/profile/payment-options')
-                              }
-                              className={ classes.menuItem }
-                              selected={ this.state.selected === 2 }
-                            >
-                              <ListItemIcon className={ classes.icon }>
-                                <AccountBalance />
-                              </ListItemIcon>
-                              <ListItemText
-                                classes={ { primary: classes.primary } }
-                                primary={
-                                  <span>
-                                    <FormattedMessage
-                                      id='account.profile.bank.setup'
-                                      defaultMessage='Bank account'
-                                    />
-                                  </span>
-                                }
-                              />
-                            </MenuItem>
-                          }
 
                           <MenuItem
                             onClick={ () =>
@@ -539,23 +488,6 @@ class Profile extends Component {
                                     id='account.profile.settings'
                                     defaultMessage='Settings'
                                   />
-                                </span>
-                              }
-                            />
-                          </MenuItem>
-                          <MenuItem
-                            onClick={ () => this.props.history.push('/profile/roles') }
-                            className={ classes.menuItem }
-                            selected={ this.state.selected === 8 }
-                          >
-                            <ListItemIcon className={ classes.icon }>
-                              <FaceSharp />
-                            </ListItemIcon>
-                            <ListItemText
-                              classes={ { primary: classes.primary } }
-                              primary={
-                                <span>
-                                  <FormattedMessage id='account.profile.roles' defaultMessage='Roles' />
                                 </span>
                               }
                             />
@@ -634,8 +566,18 @@ class Profile extends Component {
                 <HashRouter>
                   <Switch>
                     <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } onCreateTask={ this.props.createTask } /> } />
-                    <Route exact path='/profile/user-account' component={ (props) => <UserAccount user={ this.props.user } updateUser={ this.props.updateUser } addNotification={ this.props.addNotification } { ...props } /> } />
-                    <Route exact path='/profile/account-details' component={ (props) => <AccountDetails { ...props } user={ this.props.user } /> } />
+                    <Route exact path='/profile/user-account' component={ 
+                      (props) => 
+                        <UserAccount 
+                          user={ this.props.user }
+                          updateUser={ this.props.updateUser }
+                          addNotification={ this.props.addNotification }
+                          history={ this.props.history }
+                          deleteUser={ this.props.deleteUser }
+                          { ...props } 
+                        /> 
+                      }
+                    />
                     { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                       <Route
                         exact
@@ -677,13 +619,6 @@ class Profile extends Component {
                     { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
                       <Route
                         exact
-                        path='/profile/payment-options'
-                        component={ () => <PaymentOptions user={ user } /> }
-                      />
-                    }
-                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                      <Route
-                        exact
                         path='/profile/preferences'
                         component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
                       />
@@ -692,11 +627,6 @@ class Profile extends Component {
                       exact
                       path='/profile/settings'
                       component={ () => <SettingsComponent updateUser={ this.props.updateUser } classes={ classes } user={ this.props.user } /> }
-                    />
-                    <Route
-                      exact
-                      path='/profile/roles'
-                      component={ () => <Roles intl={ this.props.intl } updateUser={ this.props.updateUser } user={ user } roles={ roles } updateRoles={ this.props.updateRoles } fetchRoles={ this.props.fetchRoles } createRoles={ this.props.createRoles } deleteRoles={ this.props.deleteRoles } addNotification={ this.props.addNotification } /> }
                     />
                   </Switch>
                 </HashRouter>

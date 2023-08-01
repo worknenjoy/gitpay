@@ -18,7 +18,6 @@ import 'react-phone-number-input/style.css'
 import MaskedInput from 'react-text-mask'
 
 import CountryPicker, { countryCodes } from './country-picker'
-import DeleteUser from './settings/deleteUser'
 
 import messages from './messages'
 
@@ -100,7 +99,6 @@ const AccountDetails = ({
   const [ displayCurrentCountry, setDisplayCurrentCountry ] = useState({ country: '', code: ''})
   const [ userId ] = useState('')
   const [ openCountryPicker, setOpenCountryPicker ] = useState(false)
-  const [ deleteUserDialog, setDeleteUserDialog ] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -155,15 +153,6 @@ const AccountDetails = ({
         showMask
       />
     )
-  }
-
-  const onDeleteUser = (user) => {
-    deleteUser(user).then(response => {
-      history.push('/')
-    }).catch(e => {
-      // eslint-disable-next-line no-console
-      console.log(e)
-    })
   }
 
   useEffect(() => {
@@ -387,22 +376,7 @@ const AccountDetails = ({
               </Grid>
             </fieldset>
             <Grid item xs={ 12 }>
-              <div style={ { float: 'left' } }>
-                <Button onClick={ () => setDeleteUserDialog(true) }
-                  variant='outlined'
-                  style={ { color: '#353A42' } }
-                >
-                  <FormattedMessage id='account.profile.settings.delete.user.button' defaultMessage='Delete my account' />
-                </Button>
-              </div>
               <div style={ { float: 'right' } }>
-                <DeleteUser
-                  deleteUser={ () => user && onDeleteUser(user.user) }
-                  user={ user }
-                  visible={ deleteUserDialog }
-                  onClose={ () => setDeleteUserDialog(false) }
-                  onOpen={ () => setDeleteUserDialog(true) }
-                />
                 <Button
                   color='primary'
                   // onClick={closeUpdateModal}
