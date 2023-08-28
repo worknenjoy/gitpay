@@ -25,7 +25,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
-    fetchRoles: dispatch(fetchRoles()),
+    fetchRoles: () => dispatch(fetchRoles()),
     createRoles: (rolesData) => dispatch(createRoles(rolesData)),
     deleteRoles: (rolesData) => dispatch(deleteRoles(rolesData)),
     fetchOrganizations: (userId) => dispatch(fetchOrganizations(userId)),

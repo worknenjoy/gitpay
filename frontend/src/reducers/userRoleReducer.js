@@ -4,7 +4,7 @@ import {
   FETCH_ROLES_ERROR
 } from '../actions/userRoleActions'
 
-export const roles = (state = { data: [] }, action) => {
+export const roles = (state = { data: [], completed: false }, action) => {
   switch (action.type) {
     case FETCH_ROLES_REQUESTED:
       return { ...state, completed: action.completed }

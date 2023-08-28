@@ -182,11 +182,18 @@ class Roles extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedRoles: []
+      selectedRoles: this.props.user.Types
     }
   }
-  componentDidMount () {
-    this.setState({ selectedRoles: this.props.user.Types })
+  async componentDidMount () {
+    try {
+      if(this.props.roles.data.length === 0) {
+        await this.props.fetchRoles()
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
   }
 
   handleRoleClick = (event, item) => {
