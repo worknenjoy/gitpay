@@ -18,13 +18,5 @@
   {
     "id": "prefences.my.skills.zero",
     "defaultMessage": "No skills selected"
-  },
-  {
-    "id": "prefences.my.openforjobs",
-    "defaultMessage": "Open For Jobs"
-  },
-  {
-    "id": "preferences.jobs.checkbox",
-    "defaultMessage": "Are you open for job opportunities?"
   }
 ]

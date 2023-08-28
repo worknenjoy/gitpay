@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 
 import AccountDetails from '../../../containers/account-details';
 import UserRoles from '../../../containers/user-roles';
 import PaymentOptions from '../../payment/payment-options';
+import SettingsComponent from '../settings';
+import Preferences from '../preferences';
+
 
 import AccountTabMain from './account-tab-main';
-
-
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,66 +39,120 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 export default function AccountTabs({
     user,
     updateUser,
     deleteUser,
     addNotification,
-    history
+    history,
 }) {
   const [value, setValue] = React.useState(0);
+  const [index, setIndex] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    switch (newValue) {
+      case 0:
+        history.push('/profile/user-account');
+        break;
+      case 1:
+        history.push('/profile/user-account/details');
+        break;
+      case 2:
+        history.push('/profile/user-account/bank');
+        break;
+      case 3:
+        history.push('/profile/user-account/roles');
+        break;
+      case 4:
+        history.push('/profile/user-account/skills');
+        break;
+      case 5:
+        history.push('/profile/user-account/settings');
+        break;
+      default:
+        history.push('/profile/user-account');
+        break;
+    }
   };
 
   useEffect(() => {
-    console.log('history', history)
-    if (history.location.hash === '#main') {
-      setValue(0);
-    } else if (history.location.hash === '#details') {
-      setValue(1);
-    } else if (history.location.hash === '#bank') {
-      setValue(2);
-    } else if (history.location.hash === '#roles') {
-      setValue(3);
+    if (history.location.pathname === '/profile/user-account') {
+      setValue(0)
+      setIndex(0);
+    } else if (history.location.pathname === '/profile/user-account/details') {
+      setValue(1)
+      setIndex(1);
+    } else if (history.location.pathname === '/profile/user-account/bank') {
+      setValue(2)
+      setIndex(2);
+    } else if (history.location.pathname === '/profile/user-account/roles') {
+      setValue(3)
+      setIndex(3);
+    } else if (history.location.pathname === '/profile/user-account/skills') {
+      setValue(4)
+      setIndex(4);
+    } else if (history.location.pathname === '/profile/user-account/settings') {
+      setValue(5)
+      setIndex(5);
     }
-  }, []);
+  }, [history.location.pathname]);
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Login and account details" {...a11yProps(0)} />
-          <Tab label="Personal details and address" {...a11yProps(1)} />
-          <Tab label="Bank account" {...a11yProps(2)} />
-          <Tab label="Roles" {...a11yProps(3)} />
+        <Tabs value={value} aria-label="basic tabs example" onChange={handleChange}>
+          <Tab label="Login and account details"   />
+          <Tab label="Personal details and address"   />
+          <Tab label="Bank account"  />
+          <Tab label="Roles" />
+          <Tab label="Skills" />
+          <Tab label="Settings" />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <AccountTabMain 
-          user={user}
-          updateUser={updateUser}
-          addNotification={addNotification}
-          deleteUser={deleteUser}
-          history={history}
-        />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <AccountDetails />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <PaymentOptions />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <UserRoles />
+      <TabPanel value={value} index={index}>
+        <HashRouter>
+          <Switch>
+            <Route exact path="/profile/user-account" component={
+              (props) => (
+                  <AccountTabMain
+                    user={user}
+                    updateUser={updateUser}
+                    addNotification={addNotification}
+                    deleteUser={deleteUser}
+                    history={history}
+                  />
+              )} 
+            />
+            <Route exact path="/profile/user-account/details" component={AccountDetails} />
+            <Route exact path="/profile/user-account/bank" component={
+              (props) => (  
+                  <PaymentOptions />
+              )
+            } />
+            <Route exact path="/profile/user-account/roles" component={
+              (props) => (
+                  <UserRoles />
+              ) 
+            } />
+            <Route exact path="/profile/user-account/skills" component={
+              (props) => (
+                  <Preferences 
+                    user={user}
+                    preferences={user}
+                    updateUser={updateUser}
+                  />
+              )
+            } />
+            <Route exact path="/profile/user-account/settings" component={
+              (props) => (
+                  <SettingsComponent
+                    updateUser={updateUser}
+                    user={user}
+                  />
+              )
+            } />
+          </Switch>
+        </HashRouter>
       </TabPanel>
     </Box>
   );

@@ -29,12 +29,7 @@ import {
 import {
   LibraryBooks,
   Home,
-  Tune,
-  Settings,
-  FaceSharp,
   Business,
-  AccountBalance,
-  AccountBox,
   ExitToApp,
   Payment as PaymentIcon
 } from '@material-ui/icons'
@@ -47,9 +42,6 @@ import PaymentsContainer from '../../containers/payments'
 import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import UserTasksContainer from '../../containers/user-tasks'
-import Preferences from './preferences'
-import Roles from './user-roles'
-import SettingsComponent from './settings'
 import UpdateRole from './update-role'
 import { UserAccount } from './pages/user-account'
 
@@ -279,7 +271,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, preferences, roles } = this.props
+    const { classes, user, roles } = this.props
     const { emailNotVerifiedDialog } = this.state
     const userTypes = user.Types && user.Types.map(t => t.name)
 
@@ -441,51 +433,6 @@ class Profile extends Component {
                               />
                             </MenuItem>
                           }
-
-                          <MenuItem
-                            onClick={ () =>
-                              this.props.history.push('/profile/preferences')
-                            }
-                            className={ classes.menuItem }
-                            selected={ this.state.selected === 6 }
-                          >
-                            <ListItemIcon className={ classes.icon }>
-                              <Tune />
-                            </ListItemIcon>
-                            <ListItemText
-                              classes={ { primary: classes.primary } }
-                              primary={
-                                <span>
-                                  <FormattedMessage
-                                    id='account.profile.skills'
-                                    defaultMessage='Skills'
-                                  />
-                                </span>
-                              }
-                            />
-                          </MenuItem>
-                          <MenuItem
-                            onClick={ () =>
-                              this.props.history.push('/profile/settings')
-                            }
-                            className={ classes.menuItem }
-                            selected={ this.state.selected === 7 }
-                          >
-                            <ListItemIcon className={ classes.icon }>
-                              <Settings />
-                            </ListItemIcon>
-                            <ListItemText
-                              classes={ { primary: classes.primary } }
-                              primary={
-                                <span>
-                                  <FormattedMessage
-                                    id='account.profile.settings'
-                                    defaultMessage='Settings'
-                                  />
-                                </span>
-                              }
-                            />
-                          </MenuItem>
                         </MenuList>
                         <MenuList style={ { marginTop: 'auto' } }>
                           <MenuItem button onClick={ this.handleSignOut }>
@@ -560,7 +507,7 @@ class Profile extends Component {
                 <HashRouter>
                   <Switch>
                     <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } onCreateTask={ this.props.createTask } /> } />
-                    <Route exact path='/profile/user-account' component={ 
+                    <Route path='/profile/user-account' component={ 
                       (props) => 
                         <UserAccount 
                           user={ this.props.user }
@@ -568,7 +515,6 @@ class Profile extends Component {
                           addNotification={ this.props.addNotification }
                           history={ this.props.history }
                           deleteUser={ this.props.deleteUser }
-                          { ...props } 
                         /> 
                       }
                     />
@@ -610,18 +556,6 @@ class Profile extends Component {
                       />
 
                     }
-                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
-                      <Route
-                        exact
-                        path='/profile/preferences'
-                        component={ () => <Preferences user={ user } preferences={ preferences } classes={ classes } updateUser={ this.props.updateUser } fetchPreferences={ this.props.fetchPreferences } /> }
-                      />
-                    }
-                    <Route
-                      exact
-                      path='/profile/settings'
-                      component={ () => <SettingsComponent updateUser={ this.props.updateUser } classes={ classes } user={ this.props.user } /> }
-                    />
                   </Switch>
                 </HashRouter>
                 <UpdateRole

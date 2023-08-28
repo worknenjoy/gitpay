@@ -33,8 +33,7 @@ class Preferences extends Component {
       selectedSkills: this.props.preferences.skills != null && this.props.preferences.skills.length > 0 ? this.props.preferences.skills.split(',') : [],
       selectedOS: this.props.preferences.os ? this.props.preferences.os.split(',') : [],
       selectedLanguage: this.props.preferences.language ? this.props.preferences.language : null,
-      receiveNotifications: this.props.preferences.receiveNotifications != null ? this.props.preferences.receiveNotifications : false,
-      openForJobs: this.props.preferences.openForJobs != null ? this.props.preferences.openForJobs : false,
+      receiveNotifications: this.props.preferences.receiveNotifications != null ? this.props.preferences.receiveNotifications : false
     }
   }
 
@@ -42,8 +41,7 @@ class Preferences extends Component {
     if (
       prevProps.preferences.skills !== prevState.selectedSkills.toString() ||
       prevProps.preferences.os !== prevState.selectedOS.toString() ||
-      prevProps.preferences.receiveNotifications !== this.state.receiveNotifications ||
-      prevProps.preferences.openForJobs !== this.state.openForJobs
+      prevProps.preferences.receiveNotifications !== this.state.receiveNotifications
     ) {
       this.handleSave()
     }
@@ -67,11 +65,7 @@ class Preferences extends Component {
       'receiveNotifications': !this.state.receiveNotifications,
     }))
   }
-  handleJobsCheck = (event, hidden) => {
-    this.setState(state => ({
-      'openForJobs': !this.state.openForJobs,
-    }))
-  }
+
   handleSkillClick = (item) => {
     let data = this.state.selectedSkills
 
@@ -138,16 +132,13 @@ class Preferences extends Component {
     this.props.preferences.skills = this.state.selectedSkills.join(',')
     this.props.preferences.os = this.state.selectedOS.join(',')
     this.props.preferences.receiveNotifications = this.state.receiveNotifications
-    this.props.preferences.openForJobs = this.state.openForJobs
 
     await this.props.updateUser(this.props.user.id, {
       skills: this.state.selectedSkills.join(','),
       os: this.state.selectedOS.join(','),
       language: this.state.selectedLanguage,
-      receiveNotifications: this.state.receiveNotifications,
-      openForJobs: this.state.openForJobs
+      receiveNotifications: this.state.receiveNotifications
     })
-    fetchPreferences && await this.props.fetchPreferences(this.props.user.id)
   }
 
   render () {
@@ -226,20 +217,6 @@ class Preferences extends Component {
               </Grid>
             </Grid>
           </div>
-          <Grid item xs={ 12 } style={ { marginTop: 20, marginBottom: 20 } }>
-            <Typography color='primary' variant='h5'>
-              <FormattedMessage id='prefences.my.openforjobs' defaultMessage='Open For Jobs' />
-            </Typography>
-            <Checkbox
-              onClick={ this.handleJobsCheck }
-              checked={ this.state.openForJobs ? 'checked' : '' } />
-            &nbsp;
-            <label htmlFor='check_open_for_jobs'>
-              <Typography component='span' style={ { display: 'inline-block' } } color='default' variant='body2'>
-                <FormattedMessage id='preferences.jobs.checkbox' defaultMessage='Are you open for job opportunities?' />
-              </Typography>
-            </label>
-          </Grid>
         </Grid>
       </Paper>
     )

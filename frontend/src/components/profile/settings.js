@@ -9,7 +9,8 @@ import {
   Menu,
   MenuItem,
   Button,
-  Switch
+  Switch,
+  Checkbox
 } from '@material-ui/core'
 import LanguageIcon from '@material-ui/icons/Language'
 
@@ -41,7 +42,8 @@ class Settings extends Component {
     this.state = {
       anchorEl: null,
       selectedLanguage: null,
-      receiveNotifications: props.user.receiveNotifications
+      receiveNotifications: props.user.receiveNotifications,
+      openForJobs: props.user.openForJobs
     }
   }
 
@@ -70,6 +72,21 @@ class Settings extends Component {
     try {
       await this.props.updateUser(this.props.user.id, {
         receiveNotifications: event.currentTarget.checked
+      })
+    }
+    catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('error', e)
+    }
+  }
+
+  handleJobsCheck = async (event, hidden) => {
+    this.setState(state => ({
+      'openForJobs': !this.state.openForJobs,
+    }))
+    try {
+      await this.props.updateUser(this.props.user.id, {
+        openForJobs: !this.state.openForJobs
       })
     }
     catch (e) {
@@ -162,6 +179,20 @@ class Settings extends Component {
             <label htmlFor='switch_receive_notifications'>
               <Typography component='span' style={ { display: 'inline-block' } } color='default' variant='body2'>
                 <FormattedMessage id='preferences.notifications.checkbox' defaultMessage="I want to receive notifications about all the tasks, not just the ones I'm interested" />
+              </Typography>
+            </label>
+          </Grid>
+          <Grid item xs={ 12 } style={ { marginTop: 20, marginBottom: 20 } }>
+            <Typography color='primary' variant='h5'>
+              <FormattedMessage id='prefences.my.openforjobs' defaultMessage='Open For Jobs' />
+            </Typography>
+            <Checkbox
+              onClick={ this.handleJobsCheck }
+              checked={ this.state.openForJobs ? 'checked' : '' } />
+            &nbsp;
+            <label htmlFor='check_open_for_jobs'>
+              <Typography component='span' style={ { display: 'inline-block' } } color='default' variant='body2'>
+                <FormattedMessage id='preferences.jobs.checkbox' defaultMessage='Are you open for job opportunities?' />
               </Typography>
             </label>
           </Grid>
