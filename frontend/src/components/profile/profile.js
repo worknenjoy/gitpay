@@ -271,7 +271,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, preferences, roles } = this.props
+    const { classes, user, roles } = this.props
     const { emailNotVerifiedDialog } = this.state
     const userTypes = user.Types && user.Types.map(t => t.name)
 
@@ -515,7 +515,6 @@ class Profile extends Component {
                           addNotification={ this.props.addNotification }
                           history={ this.props.history }
                           deleteUser={ this.props.deleteUser }
-                          { ...props } 
                         /> 
                       }
                     />

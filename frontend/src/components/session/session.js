@@ -6,6 +6,7 @@ class Session extends Component {
   componentWillMount () {
     const token = this.props.match.params.token
     const referer = Auth.getReferer()
+    console.log('session loaded')
 
     Auth.authenticateUser(token)
     if (referer && referer !== '/') {
