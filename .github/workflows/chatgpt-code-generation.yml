@@ -19,4 +19,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: ChatGPT Code Generation
-      uses: matsubo/write-code-and-create-pr-from-issue-by-chatgpt@v0.0.2
+      uses: alexanmtz/write-code-and-create-pr-from-issue-by-chatgpt@main
