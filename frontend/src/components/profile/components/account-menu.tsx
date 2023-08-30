@@ -101,13 +101,17 @@ export default function AccountMenu({
           <Avatar>
             <Web /> 
           </Avatar>
-           <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />
+          <Typography variant='body1' color='text'>
+            <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />
+           </Typography>
         </MenuItem>
         <MenuItem onClick={(e) => history.push('/profile/user-account')}>
           <Avatar>
             <AccountIcon />
           </Avatar>
-           <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
+          <Typography variant='body1' color='text'>
+            <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
+           </Typography>
         </MenuItem>
         <Divider />
         {/* add later */}
