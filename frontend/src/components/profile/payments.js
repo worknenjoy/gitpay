@@ -291,39 +291,30 @@ class Payments extends React.Component {
 
     return (
       <div style={ { marginTop: 20 } }>
-        <AppBar position='static' color='default'>
-          <Tabs
-            value={ 0 }
-            onChange={ this.props.handleTabChange }
-            scrollable
-            scrollButtons='on'
-            indicatorColor='primary'
-            textColor='primary'
-          >
-            <Tab label={ this.props.intl.formatMessage(messages.taskLabel) } icon={ <RedeemIcon /> } />
-          </Tabs>
-        </AppBar>
+        <Tabs
+          value={ 0 }
+          onChange={ this.props.handleTabChange }
+          scrollable
+          scrollButtons='on'
+          indicatorColor='primary'
+          textColor='primary'
+        >
+          <Tab label={ this.props.intl.formatMessage(messages.taskLabel) } icon={ <RedeemIcon /> } />
+        </Tabs>
         <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-          <RegularCard
-            headerColor='green'
-            cardTitle={ this.props.intl.formatMessage(messages.cardTitle) }
-            cardSubtitle={ this.props.intl.formatMessage(messages.cardSubtitle) }
-            content={
-              <Table
-                tableHeaderColor='warning'
-                tableHead={ [
-                  this.props.intl.formatMessage(messages.cardTableHeaderPaid),
-                  this.props.intl.formatMessage(messages.cardTableHeaderStatus),
-                  this.props.intl.formatMessage(messages.cardTableHeaderValue),
-                  this.props.intl.formatMessage(messages.cardTableHeaderPayment),
-                  this.props.intl.formatMessage(messages.cardTableHeaderIssue),
-                  this.props.intl.formatMessage(messages.cardTableHeaderCreated),
-                  this.props.intl.formatMessage(messages.cardTableHeaderActions)
-                ] }
-                tableData={ orders && orders.data && orders.data.length ? displayOrders(orders.data) : [] }
-              />
-            }
-          />
+          <Table
+            tableHeaderColor='warning'
+            tableHead={ [
+              this.props.intl.formatMessage(messages.cardTableHeaderPaid),
+              this.props.intl.formatMessage(messages.cardTableHeaderStatus),
+              this.props.intl.formatMessage(messages.cardTableHeaderValue),
+              this.props.intl.formatMessage(messages.cardTableHeaderPayment),
+              this.props.intl.formatMessage(messages.cardTableHeaderIssue),
+              this.props.intl.formatMessage(messages.cardTableHeaderCreated),
+              this.props.intl.formatMessage(messages.cardTableHeaderActions)
+            ] }
+            tableData={ orders && orders.data && orders.data.length ? displayOrders(orders.data) : [] }
+          /> 
         </div>
         <TaskPaymentCancel
           cancelPaypalConfirmDialog={ this.state.cancelPaypalConfirmDialog }

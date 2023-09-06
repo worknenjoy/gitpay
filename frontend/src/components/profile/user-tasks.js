@@ -6,7 +6,6 @@ import {
   Button,
   Paper,
   Typography,
-  AppBar,
   Card,
   CardActions,
   CardContent,
@@ -15,11 +14,6 @@ import {
   Tab,
   withStyles
 } from '@material-ui/core'
-import {
-  AccountCircle as CreatedByMeIcon,
-  Assignment as AssignIcon,
-  AssignmentInd as ActionIcon
-} from '@material-ui/icons'
 
 import CustomPaginationActionsTable from '../task/task-table'
 
@@ -40,9 +34,6 @@ const styles = theme => ({
   },
   media: {
     width: 600
-  },
-  rootTabs: {
-    backgroundColor: theme.palette.primary.light
   }
 })
 
@@ -71,7 +62,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
   useEffect(() => {
     listTasks({}).then(() => {
       if (history.location.pathname === '/profile/tasks') {
-        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'interested')
+        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'assigned')
         user.Types && user.Types.map(t => t.name).includes('maintainer') && handleTabChange({}, 'createdbyme')
       }
       if (history.location.pathname === '/profile/tasks/createdbyme') {
@@ -106,42 +97,36 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
 
   return (
     <Paper elevation={ 0 }>
-      <div className={ classes.rootTabs } style={ { marginTop: 40 } }>
-        <AppBar position='static' color='default'>
-          <Tabs
-            value={ currentTab }
-            onChange={ handleTabChange }
-            scrollable
-            scrollButtons='on'
-            indicatorColor='primary'
-            textColor='primary'
-          >
-            { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+      <div style={ { marginTop: 40 } }>
+        <Tabs
+          value={ currentTab }
+          onChange={ handleTabChange }
+          scrollable
+          scrollButtons='on'
+          indicatorColor='primary'
+          textColor='primary'
+        >
+          { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+          <Tab
+            value={ 'createdbyme' }
+            label={ intl.formatMessage(messages.createdByMeTasks) }
+          />
+          }
+          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Tab
-              value={ 'createdbyme' }
-              label={ intl.formatMessage(messages.createdByMeTasks) }
-              icon={ <CreatedByMeIcon /> }
+              value={ 'assigned' }
+              label={ intl.formatMessage(
+                messages.assignedToMeTasks
+              ) }
             />
-            }
-            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-
-              <Tab
-                value={ 'interested' }
-                label={ intl.formatMessage(messages.interestedTasks) }
-                icon={ <AssignIcon /> }
-              />
-            }
-            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-              <Tab
-                value={ 'assigned' }
-                label={ intl.formatMessage(
-                  messages.assignedToMeTasks
-                ) }
-                icon={ <ActionIcon /> }
-              />
-            }
-          </Tabs>
-        </AppBar>
+          }
+          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+            <Tab
+              value={ 'interested' }
+              label={ intl.formatMessage(messages.interestedTasks) }
+            />
+          }
+        </Tabs>
         <div style={ { padding: 8 * 3 } }>
           { !user.id ? (
             <Card className={ classes.card }>
