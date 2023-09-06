@@ -14,6 +14,10 @@ import {
 } from '@material-ui/core'
 
 import {
+  Alert, AlertTitle
+} from '@material-ui/lab'
+
+import {
   Person
 } from '@material-ui/icons'
 
@@ -48,12 +52,36 @@ class ProfileOptions extends Component {
   }
 
   render () {
-    const { classes, user, history } = this.props
+    const { classes, user, history, visible } = this.props
     return (
       <Fragment>
         { window.localStorage.getItem('firstLogin') === 'true' && (
           <WelcomeUser />
         ) }
+        { visible && 
+          <div style={{marginTop: 20}}>
+            <Alert 
+              severity="warning"
+              action={
+                <Button
+                    size='small'
+                    onClick={() => {
+                      history.push('/profile/user-account/roles')
+                    }}
+                    variant='contained'
+                    color='secondary'
+                  >
+                  <FormattedMessage id='account.profile.alert.button' defaultMessage='Update your role' />
+              </Button>
+              } 
+            >
+              <AlertTitle>
+                <FormattedMessage id='account.profile.alert.title' defaultMessage='Update your role' />
+              </AlertTitle>
+              <FormattedMessage id='account.profile.alert.description' defaultMessage='You need to update your role to define your user type. Click on the button to update your role' />
+            </Alert>
+          </div>
+        }
         <div>
           <CardList>
             { user.Types && user.Types.map(t => t.name).includes('contributor') &&

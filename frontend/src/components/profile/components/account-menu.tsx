@@ -97,19 +97,19 @@ export default function AccountMenu({
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={(e) => history.push(`/users/${user.id}`)}>
+        <MenuItem onClick={(e) => history.push(`/users/${user.id}`)} style={{margin: 5}}>
           <Avatar>
-            <Web /> 
+            <Web width={12} /> 
           </Avatar>
-          <Typography variant='body1' color='text'>
+          <Typography variant='body2' color='text'>
             <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />
            </Typography>
         </MenuItem>
-        <MenuItem onClick={(e) => history.push('/profile/user-account')}>
+        <MenuItem onClick={(e) => history.push('/profile/user-account')} style={{margin: 5}}>
           <Avatar>
-            <AccountIcon />
+            <AccountIcon width={12} />
           </Avatar>
-          <Typography variant='body1' color='text'>
+          <Typography variant='body2' color='text'>
             <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
            </Typography>
         </MenuItem>

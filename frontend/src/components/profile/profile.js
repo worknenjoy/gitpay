@@ -506,7 +506,24 @@ class Profile extends Component {
                 />
                 <HashRouter>
                   <Switch>
-                    <Route exact path='/profile' component={ (props) => <ProfileOptions { ...props } user={ this.props.user } onCreateTask={ this.props.createTask } /> } />
+                    <Route exact path='/profile' component={ 
+                      (props) => 
+                        <ProfileOptions 
+                          { ...props }
+                          user={ this.props.user }
+                          onCreateTask={ this.props.createTask } 
+                          intl={ this.props.intl }
+                          updateUser={ this.props.updateUser }
+                          roles={ roles }
+                          updateRoles={ this.props.updateRoles }
+                          fetchRoles={ this.props.fetchRoles }
+                          createRoles={ this.props.createRoles }
+                          deleteRoles={ this.props.deleteRoles }
+                          addNotification={ this.props.addNotification }
+                          visible={ this.state.openUpdateProfileDialog }
+                          onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
+                        />
+                    } />
                     <Route path='/profile/user-account' component={ 
                       (props) => 
                         <UserAccount 
@@ -558,19 +575,6 @@ class Profile extends Component {
                     }
                   </Switch>
                 </HashRouter>
-                <UpdateRole
-                  intl={ this.props.intl }
-                  updateUser={ this.props.updateUser }
-                  user={ user }
-                  roles={ roles }
-                  updateRoles={ this.props.updateRoles }
-                  fetchRoles={ this.props.fetchRoles }
-                  createRoles={ this.props.createRoles }
-                  deleteRoles={ this.props.deleteRoles }
-                  addNotification={ this.props.addNotification }
-                  visible={ this.state.openUpdateProfileDialog }
-                  onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
-                />
               </Container>
             </Grid>
           </Grid>
