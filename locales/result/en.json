@@ -94,7 +94,7 @@
   "mail.transfer.missing.subject": "Activate your account to receive transfers for your concluded tasks",
   "mail.transfer.missing.message": "You received a transfer from Gitpay, but you didn't activate your account yet, please activate your account at <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a> to receive your bounties.",
   "mail.transfer.bounty.subject": "You transferred a bounty to another task on Gitpay",
-  "mail.transfer.invalid.message": "To receive a payment for your task, you need to activate your account in <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a>",
+  "mail.transfer.invalid.message": "To receive a payment for your task, you need to complete your account details and bank account in <a href=\"https://gitpay.me/#/profile/user-account/details\">Account details</a>",
   "mail.transfer.bounty.message": "You transfered a bounty of ${{amount}} from <a href='{{taskFromUrl}}'>{{taskFromTitle}}</a> to <a href='{{taskToUrl}}'>{{taskToTitle}}</a>",
   "mail.assign.remove.subject": "You were unassigned to a task",
   "mail.assign.remove.message": "<p>You were unassigned from an issue <a href=\"{{url}}\">{{title}}</a> on Gitpay</p><p>Reason:</p><p>{{message}}</p>",
