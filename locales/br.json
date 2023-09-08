@@ -55,7 +55,7 @@
   "mail.transfer.error.message": "Tivemos um problema com a transferência de $ {{value}} para a tarefa <a href=\"{{url}}\">{{url}}</a>",
   "mail.transfer.missing.subject": "Ative sua conta para receber o pagamento",
   "mail.transfer.missing.message": "Você recebeu um pagamento pelo Gitpay, mas sua conta ainda não foi configurada. Por favor, ative sua conta em <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a> para receber os valores",
-  "mail.transfer.invalid.message": "Para receber o pagamento de uma tarefa, você precisa ativar sua conta em <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a>",
+  "mail.transfer.invalid.message": "Para receber o pagamento de uma tarefa, você precisa completar sua conta em <a href=\"https://gitpay.me/#/profile/user-account/details\">Configurações da sua conta</a>",
   "mail.assign.remove.subject": "Você foi removido de uma tarefa no Gitpay",
   "mail.assign.remove.message": "<p>Você foi removido da tarefa <a href=\"{{url}}\"</a> no Gitpay</p><p>O dono da tarefa deixou a seguinte mensagem para você:</p><p>{{message}}</p>",
   "mail.invite.send.action": "Você recebeu um convite de {{name}} para trabalhar em uma tarefa do Gitpay :-)",

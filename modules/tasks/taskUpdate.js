@@ -86,9 +86,6 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
       if (!usermail) {
         AssignMail.error('mail.assign.register.error' + task.dataValues)
       }
-      if (!user.account_id) {
-        TransferMail.futurePaymentForInvalidAccount(user)
-      }
       AssignMail.interested(user.dataValues, task.dataValues)
       if (task.dataValues.User) {
         const ownerUser = task.dataValues.User.dataValues
