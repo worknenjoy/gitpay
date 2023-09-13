@@ -313,7 +313,7 @@ class Payments extends React.Component {
               this.props.intl.formatMessage(messages.cardTableHeaderActions)
             ] }
             tableData={ orders && orders.data && orders.data.length ? displayOrders(orders.data) : [] }
-          /> 
+          />
         </div>
         <TaskPaymentCancel
           cancelPaypalConfirmDialog={ this.state.cancelPaypalConfirmDialog }

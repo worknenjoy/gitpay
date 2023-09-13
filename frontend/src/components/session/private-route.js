@@ -8,7 +8,7 @@ import {
 import Auth from '../../modules/auth'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  return <Route
+  return (<Route
     { ...rest }
     render={ props =>
       Auth.isUserAuthenticated() ? (
@@ -22,8 +22,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         />
       )
     }
-  />
-  }
+  />)
+}
 
 PrivateRoute.propTypes = {
   component: PropTypes.any,

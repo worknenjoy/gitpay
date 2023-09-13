@@ -58,22 +58,22 @@ class ProfileOptions extends Component {
         { window.localStorage.getItem('firstLogin') === 'true' && (
           <WelcomeUser />
         ) }
-        { visible && 
-          <div style={{marginTop: 20}}>
-            <Alert 
-              severity="warning"
+        { visible &&
+          <div style={ { marginTop: 20 } }>
+            <Alert
+              severity='warning'
               action={
                 <Button
-                    size='small'
-                    onClick={() => {
-                      history.push('/profile/user-account/roles')
-                    }}
-                    variant='contained'
-                    color='secondary'
-                  >
+                  size='small'
+                  onClick={ () => {
+                    history.push('/profile/user-account/roles')
+                  } }
+                  variant='contained'
+                  color='secondary'
+                >
                   <FormattedMessage id='account.profile.alert.button' defaultMessage='Update your role' />
-              </Button>
-              } 
+                </Button>
+              }
             >
               <AlertTitle>
                 <FormattedMessage id='account.profile.alert.title' defaultMessage='Update your role' />

@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage, defineMessages } from 'react-intl'
 import funder from '../../images/bounty.png'
 import contributor from '../../images/sharing.png'
 import maintainer from '../../images/notifications.png'
@@ -19,7 +19,6 @@ import {
   CardContent,
   CardActions
 } from '@material-ui/core'
-import { FormattedMessage, defineMessages } from 'react-intl'
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 
@@ -187,7 +186,7 @@ class Roles extends Component {
   }
   async componentDidMount () {
     try {
-      if(this.props.roles.data.length === 0) {
+      if (this.props.roles.data.length === 0) {
         await this.props.fetchRoles()
       }
     }

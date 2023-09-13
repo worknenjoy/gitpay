@@ -506,12 +506,12 @@ class Profile extends Component {
                 />
                 <HashRouter>
                   <Switch>
-                    <Route exact path='/profile' component={ 
-                      (props) => 
-                        <ProfileOptions 
+                    <Route exact path='/profile' component={
+                      (props) =>
+                        (<ProfileOptions
                           { ...props }
                           user={ this.props.user }
-                          onCreateTask={ this.props.createTask } 
+                          onCreateTask={ this.props.createTask }
                           intl={ this.props.intl }
                           updateUser={ this.props.updateUser }
                           roles={ roles }
@@ -522,18 +522,18 @@ class Profile extends Component {
                           addNotification={ this.props.addNotification }
                           visible={ this.state.openUpdateProfileDialog }
                           onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
-                        />
+                        />)
                     } />
-                    <Route path='/profile/user-account' component={ 
-                      (props) => 
-                        <UserAccount 
+                    <Route path='/profile/user-account' component={
+                      (props) =>
+                        (<UserAccount
                           user={ this.props.user }
                           updateUser={ this.props.updateUser }
                           addNotification={ this.props.addNotification }
                           history={ this.props.history }
                           deleteUser={ this.props.deleteUser }
-                        /> 
-                      }
+                        />)
+                    }
                     />
                     { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                       <Route
