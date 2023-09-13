@@ -191,32 +191,29 @@ class CustomPaginationActionsTable extends React.Component {
 
     return (
       <Paper className={ classes.root }>
-        { tasks.data.length
+        { tasks.completed && tasks.data.length
           ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ tasks.completed }>
             <div className={ classes.tableWrapper }>
               <Table className={ classes.table }>
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.author' defaultMessage='Author' />
-                    </TableCell>
-                    <TableCell>
                       <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
+                      <FormattedMessage id='task.table.head.assignedTo' defaultMessage='Assigned to' />
                     </TableCell>
                     <TableCell>
                       <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
                     </TableCell>
                     <TableCell>
+                      <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
+                    </TableCell>
+                    <TableCell>
                       <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.deadline' defaultMessage='Deadline' />
-                    </TableCell>
-                    <TableCell>
-                      <FormattedMessage id='task.table.head.assignedTo' defaultMessage='Assigned to' />
+                      <FormattedMessage id='task.table.head.createdAt' defaultMessage='Created' />
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -226,38 +223,6 @@ class CustomPaginationActionsTable extends React.Component {
                     const assignedUser = assigned && assigned.User
                     return (
                       <TableRow key={ n.id }>
-                        <TableCell component='th' scope='row' style={ { padding: 5 } }>
-                          { n.User
-                            ? (
-                              <div>
-                                { n.User.profile_url
-                                  ? (
-                                    <a style={ { display: 'flex', alignItems: 'center' } } target='_blank'
-                                      href={ n.User.profile_url }>
-                                      <Avatar
-                                        src={ n.User.picture_url }
-                                      />
-                                      <span style={ { marginLeft: 10 } }>
-                                        { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
-                                      </span>
-                                    </a>
-                                  ) : (
-                                    <div style={ { display: 'flex', alignItems: 'center', height: 20 } }>
-                                      <Avatar />
-                                      <span style={ { marginLeft: 10 } }>
-                                        { TextEllipsis(n.User.username || n.User.name || ' - ', 10) }
-                                      </span>
-                                    </div>
-                                  )
-                                }
-                              </div>
-                            ) : (
-                              <div>
-                                <FormattedMessage id='task.table.body.author.none' defaultMessage='No author' />
-                              </div>
-                            )
-                          }
-                        </TableCell>
                         <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
                           <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
                             <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n) }>
@@ -268,26 +233,6 @@ class CustomPaginationActionsTable extends React.Component {
                                 <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
                               </Tooltip>
                             </a>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div>
-                            <Chip label={ n.Project ? n.Project.name : 'no project' } onClick={ (e) => this.goToProject(e, n.Project.id, n.Project.OrganizationId) } />
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div style={ { width: 80 } }>
-                            <Chip label={ this.props.intl.formatMessage(Constants.STATUSES[n.status]) } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
-                          </div>
-                        </TableCell>
-                        <TableCell numeric style={ { padding: 5 } }>
-                          <div style={ { width: 70, textAlign: 'center' } }>
-                            { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
-                          </div>
-                        </TableCell>
-                        <TableCell numeric>
-                          <div style={ { width: 80 } }>
-                            { n.deadline ? MomentComponent(n.deadline).fromNow() : this.props.intl.formatMessage(messages.noDefined) }
                           </div>
                         </TableCell>
                         <TableCell component='th' scope='row' style={ { padding: 5 } }>
@@ -321,6 +266,26 @@ class CustomPaginationActionsTable extends React.Component {
                               </div>
                             )
                           }
+                        </TableCell>
+                        <TableCell>
+                          <div style={ { width: 80 } }>
+                            <Chip label={ this.props.intl.formatMessage(Constants.STATUSES[n.status]) } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div>
+                            <Chip label={ n.Project ? n.Project.name : 'no project' } onClick={ (e) => this.goToProject(e, n.Project.id, n.Project.OrganizationId) } />
+                          </div>
+                        </TableCell>
+                        <TableCell numeric style={ { padding: 5 } }>
+                          <div style={ { width: 70, textAlign: 'center' } }>
+                            { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div style={ { width: 120 } }>
+                            { n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined) }
+                          </div>
                         </TableCell>
                       </TableRow>
                     )

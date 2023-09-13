@@ -3,18 +3,17 @@ import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../task/messages/task-messages'
-import RegularCard from '../Cards/RegularCard'
 import Table from '../Table/Table'
 import MomentComponent from 'moment'
 import PaymentTypeIcon from '../payment/payment-type-icon'
 
 import {
-  AppBar,
   Tabs,
   Tab,
   withStyles,
   Button,
-  Link
+  Link,
+  Typography
 } from '@material-ui/core'
 
 import {
@@ -275,10 +274,10 @@ class Payments extends React.Component {
         <div style={ { display: 'inline-block' } }>
           <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
         </div>,
+        issueRow(item.Task),
         `$ ${item.amount}`,
         <PaymentTypeIcon type={ item.provider } />,
-        issueRow(item.Task),
-        MomentComponent(item.updatedAt).fromNow(),
+        <Typography variant='caption'>{ MomentComponent(item.createdAt).fromNow() }</Typography>,
         <div style={ { display: 'inline-block' } }>
           { detailsOrderButton(item, userId) }
           { retryOrCancelButton(item, userId) }
@@ -307,9 +306,9 @@ class Payments extends React.Component {
             tableHead={ [
               this.props.intl.formatMessage(messages.cardTableHeaderPaid),
               this.props.intl.formatMessage(messages.cardTableHeaderStatus),
+              this.props.intl.formatMessage(messages.cardTableHeaderIssue),
               this.props.intl.formatMessage(messages.cardTableHeaderValue),
               this.props.intl.formatMessage(messages.cardTableHeaderPayment),
-              this.props.intl.formatMessage(messages.cardTableHeaderIssue),
               this.props.intl.formatMessage(messages.cardTableHeaderCreated),
               this.props.intl.formatMessage(messages.cardTableHeaderActions)
             ] }

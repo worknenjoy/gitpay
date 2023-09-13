@@ -323,7 +323,7 @@ class Profile extends Component {
         }
         <PageContent>
           <Grid container className={ classes.root } spacing={ 0 }>
-            <Grid item xs={ 12 } md={ 2 } spacing={ 0 } style={ { backgroundColor: '#F9F9F9' } }>
+            <Grid item xs={ 12 } md={ 2 } spacing={ 0 }>
               <div>
                 <div className={ classes.paper }>
                   <div className={ classes.profile }>

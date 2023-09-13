@@ -9,8 +9,8 @@ const PaymentTypeIcon = props => {
   return (
     <div>
       { props.type === 'paypal'
-        ? (<div style={ { textAlign: 'left' } }><img src={ logoPaypal } width={ 48 } /></div>)
-        : (<div style={ { textAlign: 'left', color: '#12789a', fontSize: 10 } }><img src={ creditCardIcon } width={ 48 } /> <br />
+        ? (<div style={ { textAlign: 'left' } }><img src={ logoPaypal } width={ 24 } /></div>)
+        : (<div style={ { textAlign: 'left', color: '#12789a', fontSize: 8 } }><img src={ creditCardIcon } width={ 24 } /> <br />
           { !props.notext &&
             <span>
               <FormattedMessage id='payment.creditcard' defaultMessage='Credit Card' />

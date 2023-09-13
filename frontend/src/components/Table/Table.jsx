@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  withStyles,
   Table,
   TableHead,
   TableRow,
@@ -10,20 +9,17 @@ import {
 
 import PropTypes from 'prop-types'
 
-import tableStyle from '../styles/material-dashboard-react/tableStyle'
-
 function CustomTable({ ...props }) {
-  const { classes, tableHead, tableData, tableHeaderColor } = props
+  const { tableHead, tableData } = props
   return (
-    <div className={classes.tableResponsive}>
-      <Table className={classes.table}>
+    <div>
+      <Table>
         {tableHead !== undefined ? (
-          <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
+          <TableHead>
             <TableRow>
               {tableHead.map((prop, key) => {
                 return (
                   <TableCell
-                    className={classes.tableCell + ' ' + classes.tableHeadCell}
                     key={key}
                   >
                     {prop}
@@ -39,7 +35,7 @@ function CustomTable({ ...props }) {
               <TableRow key={key}>
                 {prop.map((prop, key) => {
                   return (
-                    <TableCell className={classes.tableCell} key={key}>
+                    <TableCell key={key}>
                       {prop}
                     </TableCell>
                   )
@@ -58,7 +54,6 @@ CustomTable.defaultProps = {
 }
 
 CustomTable.propTypes = {
-  classes: PropTypes.object.isRequired,
   tableHeaderColor: PropTypes.oneOf([
     'warning',
     'primary',
@@ -80,4 +75,4 @@ CustomTable.propTypes = {
   )
 }
 
-export default withStyles(tableStyle)(CustomTable)
+export default CustomTable
