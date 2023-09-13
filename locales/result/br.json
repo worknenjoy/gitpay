@@ -94,7 +94,7 @@
   "mail.transfer.missing.subject": "Ative sua conta para receber o pagamento",
   "mail.transfer.missing.message": "Você recebeu um pagamento pelo Gitpay, mas sua conta ainda não foi configurada. Por favor, ative sua conta em <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a> para receber as recompensas.",
   "mail.transfer.bounty.subject": "Você transferiu uma recompensa para outra tarefa no Gitpay",
-  "mail.transfer.invalid.message": "Para receber o pagamento por uma tarefa, você precisa ativar sua conta em <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a>",
+  "mail.transfer.invalid.message": "To receive a payment for your task, you need to complete your account details and bank account in <a href=\"https://gitpay.me/#/profile/user-account/details\">Account details</a>",
   "mail.transfer.bounty.message": "Você transferiu uma recompensa de ${{amount}} de <a href='{{taskFromUrl}}'>{{taskFromTitle}}</a> para <a href='{{taskToUrl}}'>{{taskToTitle}}</a>",
   "mail.assign.remove.subject": "Você foi removido de uma tarefa no Gitpay",
   "mail.assign.remove.message": "<p>Você foi removido da tarefa <a href=\"{{url}}\">{{title}}</a> no Gitpay</p><p>O responsável pela tarefa enviou a seguinte mensagem:</p><p>{{message}}</p>",
