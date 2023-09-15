@@ -285,7 +285,7 @@ class TaskPayment extends Component {
                             style={ { float: 'right', margin: 10 } }
                             variant='contained'
                             color='primary'
-                            disabled={ !this.props.assigned }
+                            disabled={ !this.props.assigned || order.transfer_id }
                           >
                             <RedeemIcon style={ { marginRight: 10 } } />
                             <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
