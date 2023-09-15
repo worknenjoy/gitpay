@@ -219,7 +219,7 @@ class TaskPayment extends Component {
               </Tabs>
             </AppBar>
             <TabContainer>
-              { this.props.transferId && (
+              { this.props.transferId ? (
                 <div>
                   <Typography type='subheading' color='primary' gutterBottom noWrap>
                     <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded with your credit card and the transaction id is: ' />
@@ -228,7 +228,7 @@ class TaskPayment extends Component {
                     { `${this.props.transferId}` }
                   </Typography>
                 </div>
-              ) }
+              ) :
               <List>
                 { orders && orders.map((order, index) => (
                   <div>
@@ -285,7 +285,7 @@ class TaskPayment extends Component {
                             style={ { float: 'right', margin: 10 } }
                             variant='contained'
                             color='primary'
-                            disabled={ !this.props.assigned && order.transfer_id }
+                            disabled={ !this.props.assigned }
                           >
                             <RedeemIcon style={ { marginRight: 10 } } />
                             <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
@@ -297,7 +297,7 @@ class TaskPayment extends Component {
                     }
                   </div>
                 )) }
-              </List>
+              </List>}
             </TabContainer>
           </div>
           <DialogContentText>
