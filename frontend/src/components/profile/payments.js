@@ -207,7 +207,7 @@ class Payments extends React.Component {
 
     const transferButton = (item, userId) => {
       if (item.User && item.provider === 'stripe' && userId === item.User.id) {
-        if (item.status === 'succeeded') {
+        if (item.status === 'succeeded' && item.Task && item.Task.status === 'open' && item.Task.paid === false && !item.Task.transfer_id) {
           return (
             <React.Fragment>
               <Button
@@ -233,7 +233,7 @@ class Payments extends React.Component {
 
     const refundButton = (item, userId) => {
       if (item.User && userId === item.User.id) {
-        if (item.status === 'succeeded') {
+        if (item.status === 'succeeded' && item.provider === 'stripe' && item.Task && item.Task.status === 'open' && item.Task.paid === false && !item.Task.transfer_id) {
           return (
             <React.Fragment>
               <Button
