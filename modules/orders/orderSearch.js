@@ -2,10 +2,11 @@ const Promise = require('bluebird')
 const models = require('../../models')
 
 module.exports = Promise.method(function orderSearch (orderParams) {
-  // eslint-disable-next-line no-console
-  console.log('orderParams', orderParams)
   let findOrderParams = {
-    include: [models.User, models.Task]
+    include: [models.User, models.Task],
+    order: [
+      ['id', 'DESC']
+    ]
   }
   if (orderParams && orderParams.id) {
     findOrderParams = { ...findOrderParams,
