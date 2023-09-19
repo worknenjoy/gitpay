@@ -68,10 +68,13 @@ module.exports = Promise.method(function orderRefund (orderParams) {
               }
             }).then(payment => {
               const paymentData = JSON.parse(payment)
-              return order.updateAttributes({
+              return order.update({
                 status: 'refunded',
                 refund_id: paymentData.id
               }, {
+                where: {
+                  id: order.id
+                },
                 include: [models.Task, models.User],
                 returning: true,
                 plain: true

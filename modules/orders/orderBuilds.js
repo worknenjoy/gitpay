@@ -53,9 +53,15 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               'order_id': order.dataValues.id
             }
           }).then(invoice => {
-            return order.updateAttributes({
-              source_id: invoice.id
-            }).then(orderUpdated => {
+            return order.update(
+              {
+                source_id: invoice.id
+              },
+              {
+                where: {
+                  id: order.dataValues.id
+                }
+              }).then(orderUpdated => {
               return orderUpdated
             })
           })
@@ -111,11 +117,15 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
             const paymentUrl = paymentData.links[1].href
             const resultUrl = URL.parse(paymentUrl)
             const searchParams = new URLSearchParams(resultUrl.search)
-            return order.updateAttributes({
+            return order.update({
               source_id: paymentData.id,
               authorization_id: paymentData.purchase_units && paymentData.purchase_units[0] && paymentData.purchase_units[0].payments && paymentData.purchase_units[0].payments.authorizations[0].id,
               payment_url: paymentUrl,
               token: searchParams.get('token')
+            }, {
+              where: {
+                id: order.dataValues.id
+              }
             }).then(orderUpdated => {
               return orderUpdated
             })

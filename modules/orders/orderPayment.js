@@ -36,9 +36,12 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
             const paymentData = JSON.parse(payment)
             // eslint-disable-next-line no-console
             console.log('payment execute result', payment, paymentData)
-            return order.updateAttributes({
+            return order.update({
               transfer_id: paymentData.id
             }, {
+              where: {
+                id: order.id
+              },
               include: [models.Task, models.User],
               returning: true,
               plain: true

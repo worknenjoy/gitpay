@@ -44,9 +44,13 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
           }).then(payment => {
             // eslint-disable-next-line no-console
             console.log('payment response for cancel', payment)
-            return order.updateAttributes({
+            return order.update({
               status: 'canceled',
               paid: 'false'
+            }, {
+              where: {
+                id: order.dataValues.id
+              }
             }).then(orderUpdated => {
               // eslint-disable-next-line no-console
               console.log('orderUpdated', orderUpdated)
@@ -59,9 +63,13 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
         }).catch(e => {
           // eslint-disable-next-line no-console
           console.log('couldnt find payment source cancel anyway, reason:', e)
-          return order.updateAttributes({
+          return order.update({
             status: 'canceled',
             paid: 'false'
+          }, {
+            where: {
+              id: order.dataValues.id
+            }
           }).then(orderUpdated => {
             // eslint-disable-next-line no-console
             console.log('orderUpdated', orderUpdated)
