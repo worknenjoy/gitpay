@@ -955,7 +955,7 @@ class Account extends Component {
                                 <FormattedMessage id='account.register.country.label' defaultMessage='The country you chose to create your account' />
                               </Typography>
                               <Chip
-                                avatar={ <Avatar><img width={ 72 } src={ require(`../../images/countries/${this.state.countryImage}.png`) } /></Avatar> }
+                                avatar={ <Avatar><img width={ 72 } src={ require(`../../images/countries/${this.state.countryImage}.png`).default } /></Avatar> }
                                 label={ this.state.countryLabel }
                                 className={ classes.chip }
                               />

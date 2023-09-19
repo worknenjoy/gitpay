@@ -74,7 +74,7 @@ export default class CurrentMonthStats extends Component {
             <Percent>-05%</Percent>
             <Money>$213,314.52</Money>
           </InfoPart>
-          <img src={ require('./Asstes/graph.png') } alt='graph' width='120px' />
+          <img src={ require('./Asstes/graph.png').default } alt='graph' width='120px' />
         </Body>
       </Wrapper>
     )

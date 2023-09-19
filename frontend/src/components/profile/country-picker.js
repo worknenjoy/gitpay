@@ -115,7 +115,7 @@ class CountryPicker extends Component {
               { countryCodes.map((item) => {
                 return (
                   <Button variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
-                    <img width='48' src={ require(`../../images/countries/${item.image}.png`) } />
+                    <img width='48' src={ require(`../../images/countries/${item.image}.png`).default } />
                     <Typography component='span'>
                       { item.country }
                     </Typography>
