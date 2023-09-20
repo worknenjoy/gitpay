@@ -113,7 +113,7 @@ export default function Team (props) {
       <Section>
         <Grid container spacing={ 3 } style={ { backgroundColor: 'black' } } justify={ 'center' } alignItems={ 'center' } >
           <Grid item lg={ 4 } md={ 4 } sm={ 6 } sx={ 12 }>
-            <img src={ require('../../images/core-team-page-asset.png') } alt='assets' />
+            <img src={ require('../../images/core-team-page-asset.png').default } alt='assets' />
           </Grid>
           <Grid item lg={ 4 } md={ 5 } sm={ 6 } sx={ 12 } >
             <form onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>

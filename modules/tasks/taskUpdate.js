@@ -24,7 +24,7 @@ const createSourceAndCharge = Promise.method((customer, orderParameters, order, 
         return task
       }
 
-      await order.updateAttributes({ couponId: couponValidation.id })
+      await order.update({ couponId: couponValidation.id }, { where: { id: order.id } })
 
       // This means that the amount of discount provided by coupon is 100%
       if (couponValidation.orderPrice <= 0.5) {

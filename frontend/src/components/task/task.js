@@ -1298,9 +1298,9 @@ class Task extends Component {
                   this.setState({ deadlineForm: false })
                 } } />
               </div>
-              { task.data && task.data.Orders &&
+              { task.data && task.data.orders &&
                 <div>
-                  <TaskPayments orders={ task.data.Orders.filter(o => o.paid && o.status === 'succeeded') } />
+                  <TaskPayments orders={ task.data.orders.filter(o => o.paid && o.status === 'succeeded') } />
                 </div>
               }
               { this.taskOwner()

@@ -13,32 +13,6 @@ import Preferences from '../preferences';
 
 import AccountTabMain from './account-tab-main';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
-
 export default function AccountTabs({
     user,
     updateUser,
@@ -46,27 +20,26 @@ export default function AccountTabs({
     addNotification,
     history,
 }) {
-  const [value, setValue] = React.useState(0);
-  const [index, setIndex] = React.useState(0);
+  const [value, setValue] = React.useState('account');
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     switch (newValue) {
-      case 0:
+      case 'account':
         history.push('/profile/user-account');
         break;
-      case 1:
+      case 'details':
         history.push('/profile/user-account/details');
         break;
-      case 2:
+      case 'bank':
         history.push('/profile/user-account/bank');
         break;
-      case 3:
+      case 'roles':
         history.push('/profile/user-account/roles');
         break;
-      case 4:
+      case 'skills':
         history.push('/profile/user-account/skills');
         break;
-      case 5:
+      case 'settings':
         history.push('/profile/user-account/settings');
         break;
       default:
@@ -77,23 +50,17 @@ export default function AccountTabs({
 
   useEffect(() => {
     if (history.location.pathname === '/profile/user-account') {
-      setValue(0)
-      setIndex(0);
+      setValue('account')
     } else if (history.location.pathname === '/profile/user-account/details') {
-      setValue(1)
-      setIndex(1);
+      setValue('details')
     } else if (history.location.pathname === '/profile/user-account/bank') {
-      setValue(2)
-      setIndex(2);
+      setValue('bank')
     } else if (history.location.pathname === '/profile/user-account/roles') {
-      setValue(3)
-      setIndex(3);
+      setValue('roles')
     } else if (history.location.pathname === '/profile/user-account/skills') {
-      setValue(4)
-      setIndex(4);
+      setValue('skills')
     } else if (history.location.pathname === '/profile/user-account/settings') {
-      setValue(5)
-      setIndex(5);
+      setValue('settings')
     }
   }, [history.location.pathname]);
 
@@ -101,15 +68,17 @@ export default function AccountTabs({
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} aria-label="basic tabs example" onChange={handleChange}>
-          <Tab label="Login and account details"   />
-          <Tab label="Personal details and address"   />
-          <Tab label="Bank account"  />
-          <Tab label="Roles" />
-          <Tab label="Skills" />
-          <Tab label="Settings" />
+          <Tab label="Login and account details" value={'account'}   />
+          <Tab label="Personal details and address" value={'details'}  />
+          { user?.Types?.map(u => u.name)?.includes('contributor') && 
+            <Tab label="Bank account" value={'bank'}  />
+          }
+          <Tab label="Roles" value='roles' />
+          <Tab label="Skills" value='skills' />
+          <Tab label="Settings" value='settings' />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={index}>
+      <Box sx={{ p: 3 }}>
         <HashRouter>
           <Switch>
             <Route exact path="/profile/user-account" component={
@@ -153,7 +122,7 @@ export default function AccountTabs({
             } />
           </Switch>
         </HashRouter>
-      </TabPanel>
+      </Box>
     </Box>
   );
 }

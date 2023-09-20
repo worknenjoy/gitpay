@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
-const logoPaypal = require('../../images/paypal-icon.png')
+const logoPaypal = require('../../images/paypal-icon.png').default
 const creditCardIcon = require('../../images/credit-card-icon.svg')
 
 const PaymentTypeIcon = props => {
   return (
     <div>
       { props.type === 'paypal'
-        ? (<div style={ { textAlign: 'left' } }><img src={ logoPaypal } width={ 24 } /></div>)
-        : (<div style={ { textAlign: 'left', color: '#12789a', fontSize: 8 } }><img src={ creditCardIcon } width={ 24 } /> <br />
+        ? (<div style={ { textAlign: 'left' } }><img src={ logoPaypal } width={ 32 } /></div>)
+        : (<div style={ { textAlign: 'left', color: '#12789a', fontSize: 8 } }><img src={ creditCardIcon } width={ 32 } /> <br />
           { !props.notext &&
             <span>
               <FormattedMessage id='payment.creditcard' defaultMessage='Credit Card' />
