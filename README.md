@@ -7,6 +7,12 @@
 
 Gitpay is an open-source platform that empowers collaboration and rewards contributions to open-source projects.
 
+### Slack channel
+
+We have a slack channel to collaborate with solutions and to help you, and to be fun
+
+[Join us on slack](https://join.slack.com/t/gitpay-workspace/shared_invite/zt-1ru4j0duc-mOPFRxkhRyMgavlGdlghmw)
+
 ## What is Gitpay?
 
 We offer a marketplace for contributors and projects that use git for on demand project needs, using the Git Workflow as contract to solve issues and reward contributors.
