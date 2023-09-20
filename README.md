@@ -26,7 +26,7 @@ This project exists thanks to all the people who contribute. [[Contribute](CONTR
 
 ### Join the team
 
-Join the Github team to be assigned to tasks and to be part of the core.
+Join the GitHub team to be assigned to tasks and to be part of the core.
 
 [Join the Gitpay team on GitHub](https://github.com/worknenjoy/gitpay/)
 
