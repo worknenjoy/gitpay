@@ -69,9 +69,11 @@ export default function AccountTabs({
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} aria-label="basic tabs example" onChange={handleChange}>
           <Tab label="Login and account details" value={'account'}   />
-          <Tab label="Personal details and address" value={'details'}  />
           { user?.Types?.map(u => u.name)?.includes('contributor') && 
-            <Tab label="Bank account" value={'bank'}  />
+            <Tab label="Personal details and address" value={'details'}  />
+          }
+          { user?.Types?.map(u => u.name)?.includes('contributor') &&
+            <Tab label="Bank details" value={'bank'} />
           }
           <Tab label="Roles" value='roles' />
           <Tab label="Skills" value='skills' />
