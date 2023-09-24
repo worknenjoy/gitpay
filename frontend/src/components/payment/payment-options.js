@@ -33,8 +33,8 @@ class PaymentOptions extends Component {
         <Typography variant='h5' component='h3' style={ { marginBottom: 10, marginTop: 20 } }>
           <FormattedMessage id='payment.headline' defaultMessage='Bank account' />
         </Typography>
-        <Typography component='p' color='textSecondary' style={ { marginBottom: 10 } }>
-          <FormattedMessage id='payment.options.description' defaultMessage='Setup your bank account to receive the payments of your tasks concluded' />
+        <Typography component='p' color='textSecondary' style={ { marginBottom: 5 } }>
+          <FormattedMessage id='payment.options.description.title' defaultMessage='Setup payouts for your issues completed' />
         </Typography>
         <AccountContainer />
       </Paper>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import {
   withStyles,
@@ -16,6 +16,9 @@ import {
 import MuiAlert from '@material-ui/lab/Alert'
 import 'react-phone-number-input/style.css'
 import MaskedInput from 'react-text-mask'
+import Moment from 'moment'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 
 import CountryPicker, { countryCodes } from './country-picker'
 
@@ -83,15 +86,9 @@ export const Field = ({ ref, name, value, label, type = 'text', required = false
 const AccountDetails = ({
   intl,
   account,
-  history,
   updateAccount,
   user,
-  updateUser,
-  deleteUser,
   createAccount,
-  createBankAccount,
-  getBankAccount,
-  bankAccount,
   fetchAccount,
   classes
 }) => {
@@ -99,6 +96,7 @@ const AccountDetails = ({
   const [ displayCurrentCountry, setDisplayCurrentCountry ] = useState({ country: '', code: ''})
   const [ userId ] = useState('')
   const [ openCountryPicker, setOpenCountryPicker ] = useState(false)
+  const [ terms, setTerms ] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -122,6 +120,10 @@ const AccountDetails = ({
       'individual[dob][day]': e.target['individual[dob][day]'].value,
       'individual[dob][month]': e.target['individual[dob][month]'].value,
       'individual[dob][year]': e.target['individual[dob][year]'].value
+    }
+
+    if(terms) {
+      formData['tos_acceptance[date]'] = Math.round(+new Date() / 1000)
     }
 
     if (e.target['individual[id_number]'].value) {
@@ -372,6 +374,63 @@ const AccountDetails = ({
                 </Grid>
                 <Grid item xs={ 12 } md={ 4 }>
                   <Field name='individual[address][postal_code]' label='Postal code' defaultValue={ accountData['individual[address][postal_code]'] || account.data.individual && account.data.individual.address.postal_code } />
+                </Grid>
+              </Grid>
+            </fieldset>
+            <fieldset className={ classes.fieldset }>
+              <legend className={ classes.legend }>
+                <Typography>
+                  <FormattedMessage id='account.details.terms' defaultMessage='Accept terms' />
+                </Typography>
+              </legend>
+              <Grid container spacing={ 2 }>
+                <Grid item xs={ 12 } md={ 12 }>
+                { !account.data.tos_acceptance.date ? (
+                  <>
+                    <FormControl>
+                      <FormattedMessage 
+                        id='account.details.terms.read'
+                        defaultMessage='I read and I accept the Stripe terms to receive transfers about payments directly on my account'  
+                      >
+                        {(msg) => (
+                          <FormControlLabel
+                            control={
+                              <Switch
+                                name='tos_acceptance'
+                                checked={terms}
+                                onChange={() => setTerms(!terms)}
+                                value={terms}
+                                color='primary'
+                              />
+                            }
+                            label={msg}
+                          />
+                        )}
+                      </FormattedMessage>
+                    </FormControl>
+                    <FormControl>
+                      <Typography color='primary' style={{ marginTop: 8 }}>
+                        <a
+                          target='_blank'
+                          href={`https://stripe.com/${user.user.country}/connect-account/legal`}
+                        >
+                          {' '}
+                          <FormattedMessage id='account.details.terms.access' defaultMessage='see stripe terms' />{' '}
+                        </a>
+                      </Typography>
+                    </FormControl>
+                  </>
+                ) : (
+                  <FormControl style={{display: 'block'}}>
+                    <Typography color='primary' style={{display: 'block'}}>
+                      <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
+                        {' '}
+                      <FormattedDate value={ Moment.unix(
+                        account.data.tos_acceptance.date
+                      ) } />
+                    </Typography>
+                  </FormControl>
+                )}
                 </Grid>
               </Grid>
             </fieldset>

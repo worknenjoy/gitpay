@@ -31,10 +31,14 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
       }).then(account => {
         // eslint-disable-next-line no-console
         console.log('account created', account)
-        return user.updateAttributes({
+        return user.update({
           account_id: account.id,
           country: userParameters.country
-        }).then(userUpdated => {
+        },
+        {
+          where: { id: userParameters.id }
+        }
+        ).then(userUpdated => {
           return account
         })
       })
