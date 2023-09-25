@@ -27,7 +27,6 @@ const styles = theme => ({
     width: '100%',
     [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
-      width: '50%',
       margin: 'auto'
     },
     [theme.breakpoints.up('lg')]: {
@@ -248,7 +247,7 @@ class Roles extends Component {
         <Grid container className={ classes.row } direction='row' alignItems='strech'>
           { roles.data && roles.data.map(r => {
             return (
-              <Grid item xs={ 3 } spacing={ 2 } className={ classes.rowList }>
+              <Grid item xs={ 12 } md={3} spacing={ 2 } className={ classes.rowList }>
                 <Paper>
                   <Card className={ classes.rowContent } variant='outlined'>
                     <CardMedia>
@@ -260,7 +259,7 @@ class Roles extends Component {
                       </Typography>
                     </CardContent>
                     <CardActions className={ classes.action }>
-                      <Typography variant='body2' color='textSecondary' component='p' noWrap>
+                      <Typography variant='body2' color='textSecondary' component='p'>
                         { r.description }
                       </Typography>
                       <Checkbox
