@@ -1,19 +1,19 @@
 [
   {
-    "id": "preferences.title",
-    "defaultMessage": "Skills"
+    "id": "preferences.title.main",
+    "defaultMessage": "Preferences"
   },
   {
     "id": "preferences.os",
     "defaultMessage": "OS"
   },
   {
-    "id": "prefences.skills",
-    "defaultMessage": "Skills"
+    "id": "prefences.header.title",
+    "defaultMessage": "Preferences"
   },
   {
-    "id": "prefences.my.skills",
-    "defaultMessage": "My Skills"
+    "id": "prefences.header.sub",
+    "defaultMessage": "My language preferences"
   },
   {
     "id": "prefences.my.skills.zero",

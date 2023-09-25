@@ -76,7 +76,9 @@ export default function AccountTabs({
             <Tab label="Bank details" value={'bank'} />
           }
           <Tab label="Roles" value='roles' />
-          <Tab label="Skills" value='skills' />
+          { user?.Types?.map(u => u.name)?.includes('contributor') && 
+            <Tab label="Preferences" value='skills' />
+          }
           <Tab label="Settings" value='settings' />
         </Tabs>
       </Box>

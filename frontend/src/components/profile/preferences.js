@@ -163,7 +163,7 @@ class Preferences extends Component {
         <Grid container alignItems='center' spacing={ 1 }>
           <Grid item xs={ 12 }>
             <Typography variant='h4' className={ classes.title }>
-              <FormattedMessage id='preferences.title' defaultMessage='Skills' />
+              <FormattedMessage id='preferences.title.main' defaultMessage='Preferences' />
             </Typography>
           </Grid>
           <Grid item xs={ 7 } >
@@ -191,7 +191,7 @@ class Preferences extends Component {
           </Grid>
           <Grid item xs={ 12 }>
             <Typography color='primary' variant='h5'>
-              <FormattedMessage id='prefences.skills' defaultMessage='Skills' />
+              <FormattedMessage id='prefences.header.title' defaultMessage='Preferences' />
             </Typography>
           </Grid>
           <Grid item xs={ 12 } style={ { marginBottom: 10 } }>
@@ -202,7 +202,7 @@ class Preferences extends Component {
           <div style={ { 'width': '100%', 'flex': 'auto', 'display': 'flex', marginTop: 20 } }>
             <Grid item xs={ 12 }>
               <Typography color='primary' variant='h5'>
-                <FormattedMessage id='prefences.my.skills' defaultMessage='My Skills' />
+                <FormattedMessage id='prefences.header.sub' defaultMessage='My language preferences' />
               </Typography>
               <Grid container xs={ 12 } style={ { padding: 10 } }>
                 <div className={ classes.chipContainer }>

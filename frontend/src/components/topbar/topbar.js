@@ -570,14 +570,14 @@ class TopBar extends Component {
                   }
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
                     <ListItem button onClick={ () => {
-                      window.location.assign('/#/profile/preferences')
+                      window.location.assign('/#/profile/user-account/skills')
                       this.setState({ anchorEl: null })
                     } }>
                       <ListItemIcon>
                         <Tune />
                       </ListItemIcon>
                       <ListItemText>
-                        <FormattedMessage id='task.actions.account.profile.skills' defaultMessage='Set skills' />
+                        <FormattedMessage id='task.actions.account.profile.preferences' defaultMessage='Preferences' />
                       </ListItemText>
                     </ListItem>
                   }

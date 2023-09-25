@@ -226,23 +226,23 @@ class ProfileOptions extends Component {
               <CardContent>
                 <Typography variant='h6'>
                   <FormattedMessage
-                    id='account.profile.skills.headline'
-                    defaultMessage='Skills'
+                    id='account.profile.preferences.headline'
+                    defaultMessage='Preferences'
                   />
                 </Typography>
                 <Typography variant='body2'>
                   <FormattedMessage
-                    id='account.profile.skill.preferences.description'
-                    defaultMessage='Setup your skill to receive matching offers'
+                    id='account.profile.preferences.description'
+                    defaultMessage='Setup your preferences to receive matching offers'
                   />
                 </Typography>
               </CardContent>
               <CardActions className={ classes.cardActions }>
                 <Button size='small' color='primary'>
-                  <Link to='/profile/preferences'>
+                  <Link to='/profile/user-account/skills'>
                     <FormattedMessage
-                      id='account.profile.skills.link'
-                      defaultMessage='Setup skills preferences'
+                      id='account.profile.preferences.link'
+                      defaultMessage='Setup preferences'
                     />
                   </Link>
                 </Button>

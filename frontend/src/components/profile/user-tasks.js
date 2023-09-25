@@ -43,8 +43,8 @@ const messages = defineMessages({
     defaultMessage: 'All issues'
   },
   createdByMeTasks: {
-    id: 'task.status.createdByMe',
-    defaultMessage: 'Created by me'
+    id: 'task.status.myissues',
+    defaultMessage: 'My issues'
   },
   interestedTasks: {
     id: 'tasks.status.interested',
