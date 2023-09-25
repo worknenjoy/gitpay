@@ -39,8 +39,8 @@ const styles = theme => ({
 
 const messages = defineMessages({
   allTasks: {
-    id: 'task.list.lable.allTasks',
-    defaultMessage: 'All tasks'
+    id: 'task.list.lable.issues.all',
+    defaultMessage: 'All issues'
   },
   createdByMeTasks: {
     id: 'task.status.createdByMe',
@@ -61,8 +61,11 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
 
   useEffect(() => {
     listTasks({}).then(() => {
+      if (history.location.pathname === '/profile/tasks/all') {
+        handleTabChange({}, 'all')
+      }
       if (history.location.pathname === '/profile/tasks') {
-        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'assigned')
+        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'all')
         user.Types && user.Types.map(t => t.name).includes('maintainer') && handleTabChange({}, 'createdbyme')
       }
       if (history.location.pathname === '/profile/tasks/createdbyme') {
@@ -82,6 +85,9 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
     setCurrentTab(value)
     history.push(baseUrl + value)
     switch (value) {
+      case 'all':
+        filterTasks()
+      break
       case 'createdbyme':
         filterTasks('userId')
         break
@@ -106,6 +112,12 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
           indicatorColor='primary'
           textColor='primary'
         >
+           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+          <Tab
+            value={ 'all' }
+            label={ intl.formatMessage(messages.allTasks) }
+          />
+          }
           { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
           <Tab
             value={ 'createdbyme' }
