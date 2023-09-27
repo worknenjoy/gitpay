@@ -178,7 +178,7 @@ class Settings extends Component {
             &nbsp;
             <label htmlFor='switch_receive_notifications'>
               <Typography component='span' style={ { display: 'inline-block' } } color='default' variant='body2'>
-                <FormattedMessage id='preferences.notifications.receiveNotifications' defaultMessage="I want to receive relevant notifications from Gitpay" />
+                <FormattedMessage id='preferences.notifications.receiveNotifications' defaultMessage='I want to receive relevant notifications from Gitpay' />
               </Typography>
             </label>
           </Grid>

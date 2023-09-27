@@ -228,76 +228,76 @@ class TaskPayment extends Component {
                     { `${this.props.transferId}` }
                   </Typography>
                 </div>
-              ) :
-              <List>
-                { orders && orders.map((order, index) => (
-                  <div>
-                    { order.provider === 'paypal'
-                      ? (
-                        <ListItem key={ order.id }>
-                          <ListItemAvatar>
-                            <Avatar className={ classes.avatar }>
-                              <FilterListIcon />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={ `$ ${order.amount}` }
-                            secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.undefinedLabel)}` }
-                          />
-                          { !order.transfer_id
-                            ? (
-                              <Button
-                                onClick={ (e) => this.payOrder(e, order.id) }
-                                style={ { float: 'right', margin: 10 } }
-                                variant='contained'
-                                color='primary'
-                                disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
-                              >
-                                <RedeemIcon style={ { marginRight: 10 } } />
-                                <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
-                                  value: order.amount
-                                } } />
-                              </Button>
-                            ) : (
-                              <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Pay with PayPal (id: {transfer}' values={ {
-                                transfer: order.transfer_id
-                              } } >
-                                { (msg) => (
-                                  <Chip label={ msg } />
-                                ) }
-                              </FormattedMessage>
-                            )
-                          }
-                        </ListItem>
-                      ) : (
-                        <ListItem key={ order.id }>
-                          <ListItemAvatar>
-                            <Avatar className={ classes.avatar }>
-                              <FilterListIcon />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={ `$ ${order.amount}` }
-                            secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.labelCreditCard)}` }
-                          />
-                          <Button
-                            onClick={ this.payTask }
-                            style={ { float: 'right', margin: 10 } }
-                            variant='contained'
-                            color='primary'
-                            disabled={ !this.props.assigned }
-                          >
-                            <RedeemIcon style={ { marginRight: 10 } } />
-                            <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
-                              value: order.amount
-                            } } />
-                          </Button>
-                        </ListItem>
-                      )
-                    }
-                  </div>
-                )) }
-              </List>}
+              )
+                : <List>
+                  { orders && orders.map((order, index) => (
+                    <div>
+                      { order.provider === 'paypal'
+                        ? (
+                          <ListItem key={ order.id }>
+                            <ListItemAvatar>
+                              <Avatar className={ classes.avatar }>
+                                <FilterListIcon />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={ `$ ${order.amount}` }
+                              secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.undefinedLabel)}` }
+                            />
+                            { !order.transfer_id
+                              ? (
+                                <Button
+                                  onClick={ (e) => this.payOrder(e, order.id) }
+                                  style={ { float: 'right', margin: 10 } }
+                                  variant='contained'
+                                  color='primary'
+                                  disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
+                                >
+                                  <RedeemIcon style={ { marginRight: 10 } } />
+                                  <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
+                                    value: order.amount
+                                  } } />
+                                </Button>
+                              ) : (
+                                <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Pay with PayPal (id: {transfer}' values={ {
+                                  transfer: order.transfer_id
+                                } } >
+                                  { (msg) => (
+                                    <Chip label={ msg } />
+                                  ) }
+                                </FormattedMessage>
+                              )
+                            }
+                          </ListItem>
+                        ) : (
+                          <ListItem key={ order.id }>
+                            <ListItemAvatar>
+                              <Avatar className={ classes.avatar }>
+                                <FilterListIcon />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={ `$ ${order.amount}` }
+                              secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.labelCreditCard)}` }
+                            />
+                            <Button
+                              onClick={ this.payTask }
+                              style={ { float: 'right', margin: 10 } }
+                              variant='contained'
+                              color='primary'
+                              disabled={ !this.props.assigned }
+                            >
+                              <RedeemIcon style={ { marginRight: 10 } } />
+                              <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
+                                value: order.amount
+                              } } />
+                            </Button>
+                          </ListItem>
+                        )
+                      }
+                    </div>
+                  )) }
+                </List> }
             </TabContainer>
           </div>
           <DialogContentText>

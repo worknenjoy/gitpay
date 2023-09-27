@@ -95,7 +95,7 @@ class Account extends Component {
     history: PropTypes.object,
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       accountUpdateModal: false,
@@ -122,7 +122,7 @@ class Account extends Component {
     this.handlePaypalAccount = this.handlePaypalAccount.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.user.logged) {
       const userId = this.props.user.user.id
       this.props.fetchAccount(userId)
@@ -131,15 +131,15 @@ class Account extends Component {
     }
   }
 
-  openUpdateModal() {
+  openUpdateModal () {
     this.setState({ accountUpdateModal: true })
   }
 
-  closeUpdateModal() {
+  closeUpdateModal () {
     this.setState({ accountUpdateModal: false })
   }
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault()
     let formData = {
       'business_profile[url]': e.target['business_profile[url]'].value,
@@ -188,7 +188,7 @@ class Account extends Component {
     })
   }
 
-  handleBankAccount(e) {
+  handleBankAccount (e) {
     const { userId } = this.state
     e.preventDefault()
     const userCountry = this.props.user.user.country
@@ -235,22 +235,22 @@ class Account extends Component {
     }
   }
 
-  handlePaypalAccount(e) {
+  handlePaypalAccount (e) {
     e.preventDefault()
     this.props.updateUser(this.state.userId, {
       paypal_id: e.target.paypal_email.value
     })
   }
 
-  handleTabChange(e, value) {
+  handleTabChange (e, value) {
     this.setState({ currentTab: value })
   }
 
-  handleBankNumberSelect(e) {
+  handleBankNumberSelect (e) {
     this.setState({ selectedBank: e.target.value, bankNumberError: false })
   }
 
-  handleStepTab(index) {
+  handleStepTab (index) {
     this.setState({ currentStep: index })
   }
 
@@ -259,14 +259,14 @@ class Account extends Component {
     this.setState({ ibanMode: e.target.checked })
   }
 
-  onChange(e) {
+  onChange (e) {
     e.preventDefault()
     let formData = {}
     formData[e.target.name] = e.target.value
     this.setState(formData)
   }
 
-  render() {
+  render () {
     const { classes, account, bankAccount, user } = this.props
 
     const getSteps = () => {
@@ -282,190 +282,189 @@ class Account extends Component {
         <ReactPlaceholder
           showLoadingAnimation
           type='media'
-          rows={5}
-          ready={account.completed && !account.error.error}
+          rows={ 5 }
+          ready={ account.completed && !account.error.error }
         >
           <div>
             <Tabs
-              value={this.state.currentTab}
-              onChange={this.handleTabChange}
+              value={ this.state.currentTab }
+              onChange={ this.handleTabChange }
               scrollable
               scrollButtons='on'
               indicatorColor='primary'
               textColor='primary'
             >
-              <Tab style={{ margin: 10 }} value={0} label={this.props.intl.formatMessage(messages.cardTab)} />
-              <Tab style={{ margin: 10 }} value={1} label={this.props.intl.formatMessage(messages.paypalTab)} />
+              <Tab style={ { margin: 10 } } value={ 0 } label={ this.props.intl.formatMessage(messages.cardTab) } />
+              <Tab style={ { margin: 10 } } value={ 1 } label={ this.props.intl.formatMessage(messages.paypalTab) } />
             </Tabs>
-            {this.state.currentTab === 0 &&
+            { this.state.currentTab === 0 &&
               <TabContainer>
-                {account.data.id ? (
+                { account.data.id ? (
                   <div>
 
                     <form
-                      onSubmit={this.handleBankAccount}
-                      style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
+                      onSubmit={ this.handleBankAccount }
+                      style={ { marginTop: 20, marginBottom: 20, width: '100%' } }
                     >
-                      <Card className={classes.card}>
+                      <Card className={ classes.card }>
                         <CardContent>
                           <Typography variant='h6'>
                             <FormattedMessage id='account.register.bank.title' defaultMessage='Activate bank account:' />
                           </Typography>
-                          <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                              {bankAccount.data.routing_number ? (
+                          <Grid container spacing={ 3 }>
+                            <Grid item xs={ 12 }>
+                              { bankAccount.data.routing_number ? (
                                 <Typography color='primary'>
                                   <FormattedMessage id='account.active.statement' defaultMessage='Your bank account is active' />
                                 </Typography>
                               ) : (
                                 <FormControl
-                                  className={classes.formControl}
-                                  error={this.state.bankNumberError}
+                                  className={ classes.formControl }
+                                  error={ this.state.bankNumberError }
                                 >
-                                  {user.user.country === 'BR' && (
+                                  { user.user.country === 'BR' && (
                                     <Select
-                                      value={this.state.selectedBank}
+                                      value={ this.state.selectedBank }
                                       displayEmpty
                                       name='bank_number'
-                                      onChange={this.handleBankNumberSelect}
+                                      onChange={ this.handleBankNumberSelect }
                                     >
                                       <MenuItem value='' disabled>
                                         <em>
                                           <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
                                         </em>
                                       </MenuItem>
-                                      {Object.keys(Const.BANK_NUMBERS).map(
+                                      { Object.keys(Const.BANK_NUMBERS).map(
                                         (item, i) => {
                                           return (
-                                            <MenuItem key={i} value={item}>{`${Const.BANK_NUMBERS[item]
-                                              }`}
+                                            <MenuItem key={ i } value={ item }>{ `${Const.BANK_NUMBERS[item]
+                                            }` }
                                             </MenuItem>
                                           )
                                         }
-                                      )}
+                                      ) }
                                     </Select>
-                                  )}
-                                  {this.state.bankNumberError && (
+                                  ) }
+                                  { this.state.bankNumberError && (
                                     <FormHelperText>
-                                      {' '}
+                                      { ' ' }
                                       <FormattedMessage id='account.bank.select' defaultMessage='Please select your bank' />
                                     </FormHelperText>
-                                  )}
+                                  ) }
                                 </FormControl>
-                              )}
+                              ) }
                             </Grid>
                           </Grid>
-                          <Grid container spacing={3}>
-                            {this.state.ibanMode ? (
-                              <Grid item xs={12}>
+                          <Grid container spacing={ 3 }>
+                            { this.state.ibanMode ? (
+                              <Grid item xs={ 12 }>
                                 <FormControl
-                                  error={this.state.AccountNumberError}
+                                  error={ this.state.AccountNumberError }
                                 >
                                   <FormattedMessage id='account.details.iban' defaultMessage='IBAN'>
-                                    {(msg) => (
+                                    { (msg) => (
                                       <Input
                                         id='bank-account-number'
                                         name='account_number'
-                                        placeholder={msg}
-                                        disabled={!!bankAccount.data.routing_number}
+                                        placeholder={ msg }
+                                        disabled={ !!bankAccount.data.routing_number }
                                         defaultValue={
                                           bankAccount.data.last4
                                             ? `*****${bankAccount.data.last4}`
                                             : ''
                                         }
                                       />
-                                    )}
+                                    ) }
                                   </FormattedMessage>
-                                  {this.state.AccountNumberError && (
+                                  { this.state.AccountNumberError && (
                                     <FormHelperText>
-                                      {' '}
+                                      { ' ' }
                                       <FormattedMessage id='account.details.numbersOnly' defaultMessage='Just numbers only' />
                                     </FormHelperText>
-                                  )}
+                                  ) }
                                 </FormControl>
-                            </Grid>
+                              </Grid>
                             ) : (
-                            <Grid item xs={12}>
-                              {(user.user.country !== 'DK' || user.user.country !== 'BE') && (
-                                <FormControl>
-                                  <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
-                                    {(msg) => (
+                              <Grid item xs={ 12 }>
+                                { (user.user.country !== 'DK' || user.user.country !== 'BE') && (
+                                  <FormControl>
+                                    <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
+                                      { (msg) => (
+                                        <Input
+                                          id='bank-routing-number'
+                                          name='routing_number'
+                                          placeholder={ msg }
+                                          style={ { marginRight: 20 } }
+                                          disabled={ !!bankAccount.data.routing_number }
+                                          defaultValue={ bankAccount.data.routing_number }
+                                        />
+                                      ) }
+                                    </FormattedMessage>
+                                  </FormControl>
+                                ) }
+                                <FormControl
+                                  error={ this.state.AccountNumberError }
+                                >
+                                  <FormattedMessage id='account.details.accountNumber' defaultMessage='Account number'>
+                                    { (msg) => (
                                       <Input
-                                        id='bank-routing-number'
-                                        name='routing_number'
-                                        placeholder={msg}
-                                        style={{ marginRight: 20 }}
-                                        disabled={!!bankAccount.data.routing_number}
-                                        defaultValue={bankAccount.data.routing_number}
+                                        id='bank-account-number'
+                                        name='account_number'
+                                        placeholder={ msg }
+                                        disabled={ !!bankAccount.data.routing_number }
+                                        defaultValue={
+                                          bankAccount.data.last4
+                                            ? `*****${bankAccount.data.last4}`
+                                            : ''
+                                        }
                                       />
-                                    )}
+                                    ) }
                                   </FormattedMessage>
+                                  { this.state.AccountNumberError && (
+                                    <FormHelperText>
+                                      { ' ' }
+                                      <FormattedMessage id='account.details.numbersOnly' defaultMessage='Just numbers only' />
+                                    </FormHelperText>
+                                  ) }
                                 </FormControl>
-                              )}
-                              <FormControl
-                                error={this.state.AccountNumberError}
-                              >
-                                <FormattedMessage id='account.details.accountNumber' defaultMessage='Account number'>
-                                  {(msg) => (
-                                    <Input
-                                      id='bank-account-number'
-                                      name='account_number'
-                                      placeholder={msg}
-                                      disabled={!!bankAccount.data.routing_number}
-                                      defaultValue={
-                                        bankAccount.data.last4
-                                          ? `*****${bankAccount.data.last4}`
-                                          : ''
-                                      }
-                                    />
-                                  )}
-                                </FormattedMessage>
-                                {this.state.AccountNumberError && (
-                                  <FormHelperText>
-                                    {' '}
-                                    <FormattedMessage id='account.details.numbersOnly' defaultMessage='Just numbers only' />
-                                  </FormHelperText>
-                                )}
-                              </FormControl>
-                             
-                              
+
                               </Grid>
                             ) }
-                            <Grid item xs={12}>
-                              {user.user.country !== 'BR' && !bankAccount.data.routing_number && (
+                            <Grid item xs={ 12 }>
+                              { user.user.country !== 'BR' && !bankAccount.data.routing_number && (
                                 <FormControl>
-                                  <FormattedMessage 
+                                  <FormattedMessage
                                     id='account.details.bank.mode.iban'
-                                    defaultMessage='I want to provide my IBAN number instead' 
+                                    defaultMessage='I want to provide my IBAN number instead'
                                   >
-                                    {(msg) => (
+                                    { (msg) => (
                                       <FormControlLabel
                                         control={
                                           <Switch
                                             name='iban'
-                                            checked={this.state.ibanMode}
-                                            onChange={this.handleIbanModeChange}
+                                            checked={ this.state.ibanMode }
+                                            onChange={ this.handleIbanModeChange }
                                             value='iban'
                                             color='primary'
                                           />
                                         }
-                                        label={msg}
+                                        label={ msg }
                                       />
-                                    )}
+                                    ) }
                                   </FormattedMessage>
                                 </FormControl>
-                              )}
+                              ) }
                             </Grid>
                           </Grid>
                         </CardContent>
-                        <CardActions style={{justifyContent: 'flex-end'}}>
+                        <CardActions style={ { justifyContent: 'flex-end' } }>
                           <Button
-                            style={{ color: 'white'}}
+                            style={ { color: 'white' } }
                             size='large'
                             variant='contained'
                             color='primary'
                             type='submit'
-                            disabled={bankAccount.data.routing_number}
+                            disabled={ bankAccount.data.routing_number }
                           >
                             <FormattedMessage id='account.details.activate.action' defaultMessage='Activate bank account' />
                           </Button>
@@ -475,96 +474,96 @@ class Account extends Component {
                   </div>
                 ) : (
                   <div>
-                    {!account.data.id &&
-                      <Card className={classes.cardEmpty}>
+                    { !account.data.id &&
+                      <Card className={ classes.cardEmpty }>
                         <CardContent>
-                          <Typography className={classes.title} color='textSecondary'>
+                          <Typography className={ classes.title } color='textSecondary'>
                             <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
                           </Typography>
-                          {this.state.countryCode && (
+                          { this.state.countryCode && (
                             <div>
                               <Typography component='p' color='textSecondary'>
                                 <FormattedMessage id='account.register.country.label' defaultMessage='The country you chose to create your account' />
                               </Typography>
                               <Chip
-                                avatar={<Avatar><img width={72} src={require(`../../images/countries/${this.state.countryImage}.png`).default} /></Avatar>}
-                                label={this.state.countryLabel}
-                                className={classes.chip}
+                                avatar={ <Avatar><img width={ 72 } src={ require(`../../images/countries/${this.state.countryImage}.png`).default } /></Avatar> }
+                                label={ this.state.countryLabel }
+                                className={ classes.chip }
                               />
                             </div>
-                          )}
+                          ) }
                         </CardContent>
-                        <CardActions className={classes.cardEmptyActionsAlt}>
+                        <CardActions className={ classes.cardEmptyActionsAlt }>
                           <Button
-                            style={{ color: 'white' }}
+                            style={ { color: 'white' } }
                             size='large'
                             variant='contained'
                             color='primary'
-                            onClick={this.handleCountry}
+                            onClick={ this.handleCountry }
                           >
                             <FormattedMessage id='account.register.create.country' defaultMessage='Choose your country to start' />
-                            <PublicIcon style={{ marginLeft: 10 }} />
+                            <PublicIcon style={ { marginLeft: 10 } } />
                           </Button>
                         </CardActions>
-                        <CardActions className={classes.cardEmptyActions}>
+                        <CardActions className={ classes.cardEmptyActions }>
                           <Button
-                            style={{ color: 'white' }}
+                            style={ { color: 'white' } }
                             size='large'
                             variant='contained'
                             color='primary'
-                            disabled={!this.state.canCreateAccount}
-                            onClick={this.handleCreateAccount}
+                            disabled={ !this.state.canCreateAccount }
+                            onClick={ this.handleCreateAccount }
                           >
                             <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
-                            <PersonIcon style={{ marginLeft: 10 }} />
+                            <PersonIcon style={ { marginLeft: 10 } } />
                           </Button>
                         </CardActions>
-                      </Card>}
-                    <CountryPicker open={this.state.countryPickerModal} onClose={this.handleCountryClose} />
+                      </Card> }
+                    <CountryPicker open={ this.state.countryPickerModal } onClose={ this.handleCountryClose } />
                   </div>)
                 }
-              </TabContainer>}
-            {this.state.currentTab === 1 &&
+              </TabContainer> }
+            { this.state.currentTab === 1 &&
               <TabContainer>
                 <form
-                  onSubmit={this.handlePaypalAccount}
-                  style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
+                  onSubmit={ this.handlePaypalAccount }
+                  style={ { marginTop: 20, marginBottom: 20, width: '100%' } }
                 >
-                  <Card className={classes.card}>
+                  <Card className={ classes.card }>
                     <CardContent>
-                      <div className={classes.title}>
-                        <Typography className={classes.pos} color='textSecondary'>
+                      <div className={ classes.title }>
+                        <Typography className={ classes.pos } color='textSecondary'>
                           <FormattedMessage id='account.register.paypal.title' defaultMessage='Activate PayPal account:' />
                         </Typography>
-                        <Typography component='p' color='textSecondary' style={{ marginBottom: 20, marginTop: 20 }}>
+                        <Typography component='p' color='textSecondary' style={ { marginBottom: 20, marginTop: 20 } }>
                           <FormattedMessage id='account.register.paypal.description' defaultMessage='When you activate your account with PayPal, you will receive the bounties in the account that you will provide here. The Paypal taxes will be applied' />
                         </Typography>
-                        {!user.user.paypal_id ? (
+                        { !user.user.paypal_id ? (
                           <FormattedMessage id='account.register.paypal.status' defaultMessage='This account is not associated with PayPal'>
-                            {(msg) => (
+                            { (msg) => (
                               <Chip
-                                label={msg}
-                                style={{ marginRight: 20, backgroundColor: 'orange' }}
+                                label={ msg }
+                                style={ { marginRight: 20, backgroundColor: 'orange' } }
                               />
-                            )}
+                            ) }
                           </FormattedMessage>
                         ) : (
                           <div>
-                            <Typography className={classes.pos} color='textSecondary'>
+                            <Typography className={ classes.pos } color='textSecondary'>
                               <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
                             </Typography>
                             <Chip
-                              label={this.props.intl.formatMessage(messages.activeStatus)}
-                              style={{
+                              label={ this.props.intl.formatMessage(messages.activeStatus) }
+                              style={ {
                                 color: 'white',
                                 marginRight: 20,
                                 backgroundColor: 'green'
-                              }}
+                              } }
                             />
                           </div>
-                        )}
+                        ) }
                       </div>
-                      <Grid item xs={12}>
+                      <Grid item xs={ 12 }>
                         <FormControl>
                           <InputLabel htmlFor='adornment-password'>
                             <FormattedMessage id='account.register.paypay.email' defaultMessage='PayPal registered email' />
@@ -573,7 +572,7 @@ class Account extends Component {
                             name='paypal_email'
                             type='email'
                             id='email'
-                            style={{ marginRight: 20 }}
+                            style={ { marginRight: 20 } }
                             defaultValue={
                               user.user.paypal_id ? `${user.user.paypal_id}` : `${user.user.email}`
                             }
@@ -581,15 +580,15 @@ class Account extends Component {
                         </FormControl>
                       </Grid>
                     </CardContent>
-                    <CardActions style={{ justifyContent: 'end'}}>
+                    <CardActions style={ { justifyContent: 'end' } }>
                       <Button
-                        style={{ color: 'white' }}
+                        style={ { color: 'white' } }
                         size='large'
                         variant='contained'
                         color='primary'
                         type='submit'
                       >
-                        {!user.paypal_id
+                        { !user.paypal_id
                           ? <FormattedMessage id='account.register.paypay.activate' defaultMessage='Activate account' />
                           : <FormattedMessage id='account.register.paypay.update' defaultMessage='Update account' />
                         }
