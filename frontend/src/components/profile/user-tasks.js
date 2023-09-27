@@ -15,7 +15,8 @@ import {
   withStyles
 } from '@material-ui/core'
 
-import CustomPaginationActionsTable from '../task/task-table'
+import TaskFilter from '../task/task-filters'
+import CustomPaginationActionsTable from '../task/task-table';
 
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
@@ -59,8 +60,10 @@ const messages = defineMessages({
 const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user }) => {
   const [currentTab, setCurrentTab] = useState('')
 
+  const baseUrl = '/profile/tasks/'
+
   useEffect(() => {
-    listTasks({}).then(() => {
+    listTasks({}).then((t) => {
       if (history.location.pathname === '/profile/tasks/all') {
         handleTabChange({}, 'all')
       }
@@ -81,7 +84,6 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
   }, [])
 
   const handleTabChange = async (event, value) => {
-    const baseUrl = '/profile/tasks/'
     setCurrentTab(value)
     history.push(baseUrl + value)
     switch (value) {
@@ -186,7 +188,14 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
               </CardActions>
             </Card>
           ) : (
-            <CustomPaginationActionsTable tasks={ tasks } />
+            <>
+              { currentTab === 'all' &&
+              <TaskFilter
+                filterTasks={ filterTasks }
+                baseUrl={ baseUrl }
+              />}
+              <CustomPaginationActionsTable tasks={ tasks } />
+            </>
           ) }
         </div>
       </div>

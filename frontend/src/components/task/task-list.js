@@ -6,11 +6,10 @@ import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import {
   Paper,
   Typography,
-  AppBar,
-  Tabs,
-  Tab,
   withStyles
 } from '@material-ui/core'
+
+import TaskFilter from './task-filters'
 
 import CustomPaginationActionsTable from './task-table'
 import ProjectListSimple from '../project/project-list-simple'
@@ -29,6 +28,13 @@ const styles = theme => ({
   rootTabs: {
     marginRight: theme.spacing(3),
     marginBottom: theme.spacing(3),
+  },
+  button: {
+    backgroundColor: theme.palette.primary.light
+  },
+  buttonActive: {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText
   }
 })
 
@@ -165,6 +171,8 @@ const TaskList = (props) => {
     )
   }
 
+  const baseUrl = projectState && projectState.organization_id && projectState.project_id ? '/organizations/' + projectState.organization_id + '/projects/' + projectState.project_id + '/' : '/tasks/'
+
   return (
     <React.Fragment>
       <Paper elevation={ 0 }>
@@ -208,32 +216,10 @@ const TaskList = (props) => {
           />
         </Typography>
         <div className={ classes.rootTabs }>
-          <AppBar position='static' color='default' elevation={ 0 }>
-            <Tabs
-              value={ taskListState.tab }
-              onChange={ handleTabChange }
-              scrollable
-              scrollButtons='on'
-              indicatorColor='primary'
-              textColor='primary'
-              style={ {
-                background: 'white'
-              } }
-            >
-              <Tab
-                value={ 0 }
-                label={ props.intl.formatMessage(messages.allTasks) }
-              />
-              <Tab
-                value={ 1 }
-                label={ props.intl.formatMessage(messages.allPublicTasksWithBounties) }
-              />
-              <Tab
-                value={ 2 }
-                label={ props.intl.formatMessage(messages.allPublicTasksNoBounties) }
-              />
-            </Tabs>
-          </AppBar>
+          <TaskFilter
+            filterTasks={ props.filterTasks }
+            baseUrl={ baseUrl }
+          />
           <TabContainer>
             <CustomPaginationActionsTable tasks={ props.tasks } />
           </TabContainer>
