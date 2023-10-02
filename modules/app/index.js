@@ -12,6 +12,7 @@ const routerContact = require('./routes/contact')
 const routerTypes = require('./routes/types')
 const routerTaskSolution = require('./routes/taskSolutions')
 const routerCoupon = require('./routes/coupon')
+const routerLabel = require('./routes/label')
 
 exports.init = (app) => {
   app.use('/', routerAuth)
@@ -26,4 +27,5 @@ exports.init = (app) => {
   app.use('/contact', routerContact)
   app.use('/tasksolutions', routerTaskSolution)
   app.use('/coupon', routerCoupon)
+  app.use('/labels', routerLabel)
 }

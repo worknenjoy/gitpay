@@ -192,6 +192,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
               { currentTab === 'all' &&
               <TaskFilter
                 filterTasks={ filterTasks }
+                
                 baseUrl={ baseUrl }
               />}
               <CustomPaginationActionsTable tasks={ tasks } />

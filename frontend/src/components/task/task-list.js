@@ -216,7 +216,7 @@ const TaskList = (props) => {
           />
         </Typography>
         <div className={ classes.rootTabs }>
-          <TaskFilter
+          <TaskFilter           
             filterTasks={ props.filterTasks }
             baseUrl={ baseUrl }
           />

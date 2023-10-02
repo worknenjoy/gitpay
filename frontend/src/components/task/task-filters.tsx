@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { AppBar, Button, ButtonGroup } from '@material-ui/core';
+import { AppBar, Toolbar, Button, ButtonGroup } from '@material-ui/core';
 import { injectIntl, defineMessages } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import Labels from '../../containers/label';
 
 const styles = theme => ({
   button: {
@@ -63,34 +64,41 @@ const TaskFilters = ({
 
   return(
     <AppBar position='static' color='transparent' elevation={ 0 }>
-      <ButtonGroup
-        disableElevation
-        variant="contained"
-        aria-label="Disabled elevation buttons"
-        size='small'
-      >
-        <Button
-          value={taskListState.tab}
-          onClick={ (e) => handleTabChange(e, 0) }
-          className={ taskListState.tab === 0 ? classes.buttonActive : classes.button }
-        >
-          { intl.formatMessage(messages.allTasks) }
-        </Button>
-        <Button
-          value={taskListState.tab}
-          onClick={ (e) => handleTabChange(e, 1) }
-          className={ taskListState.tab === 1 ? classes.buttonActive : classes.button }
-        >
-          { intl.formatMessage(messages.allPublicTasksWithBounties) }
-        </Button>
-        <Button
-          value={taskListState.tab}
-          onClick={ (e) => handleTabChange(e, 2) }
-          className={ taskListState.tab === 2 ? classes.buttonActive : classes.button }
-        >
-          { intl.formatMessage(messages.allPublicTasksNoBounties) }
-        </Button>
-      </ButtonGroup>
+      <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div>
+          <ButtonGroup
+            disableElevation
+            variant="contained"
+            aria-label="Disabled elevation buttons"
+            size='small'
+          >
+            <Button
+              value={taskListState.tab}
+              onClick={ (e) => handleTabChange(e, 0) }
+              className={ taskListState.tab === 0 ? classes.buttonActive : classes.button }
+            >
+              { intl.formatMessage(messages.allTasks) }
+            </Button>
+            <Button
+              value={taskListState.tab}
+              onClick={ (e) => handleTabChange(e, 1) }
+              className={ taskListState.tab === 1 ? classes.buttonActive : classes.button }
+            >
+              { intl.formatMessage(messages.allPublicTasksWithBounties) }
+            </Button>
+            <Button
+              value={taskListState.tab}
+              onClick={ (e) => handleTabChange(e, 2) }
+              className={ taskListState.tab === 2 ? classes.buttonActive : classes.button }
+            >
+              { intl.formatMessage(messages.allPublicTasksNoBounties) }
+            </Button>
+          </ButtonGroup>
+        </div>
+        <div style={{marginLeft: 10}}>
+          <Labels />
+        </div>
+      </Toolbar>
     </AppBar>
   )
 }
