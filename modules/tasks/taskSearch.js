@@ -7,10 +7,7 @@ module.exports = Promise.method(function taskSearch (searchParams) {
     [Op.or]: [
       { private: null },
       { private: false }
-    ],
-    status: { 
-      [Op.eq]: 'open' 
-    } 
+    ]
   }
 
   if (searchParams.projectId) query.ProjectId = { [Op.eq]: parseInt(searchParams.projectId) }
