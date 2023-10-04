@@ -16,6 +16,7 @@ import { contact } from './contactReducer'
 import taskSolution from './taskSolutionReducer'
 import couponReducer from './couponReducer'
 import { profileReducer } from './profileReducer'
+import { labels } from './labelReducer'
 
 const reducers = combineReducers({
   notification,
@@ -33,6 +34,7 @@ const reducers = combineReducers({
   info,
   preferences,
   roles,
+  labels,
   organizations,
   organization,
   contact,
