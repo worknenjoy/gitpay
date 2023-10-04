@@ -169,26 +169,26 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   })
                   .then(task => responseGithub)
               }
-              if(data.Labels.length !== issueDataJsonGithub.labels.length) {
+              if (data.Labels.length !== issueDataJsonGithub.labels.length) {
                 // eslint-disable no-unused-vars
                 try {
                   const githubLabels = issueDataJsonGithub.labels
                   const taskLabels = data.Labels
                   githubLabels.forEach(async l => {
-                    if(!taskLabels.includes(l['name'])) {
-                      const label = await models.Label.findOrCreate({ 
+                    if (!taskLabels.includes(l['name'])) {
+                      const label = await models.Label.findOrCreate({
                         where: {
-                          name: l['name'] 
+                          name: l['name']
                         },
                         include: [models.Task],
                       })
                       data.addLabel(label[0])
-                    } 
+                    }
                   })
-                } catch(e) {
+                }
+                catch (e) {
                   console.log('error', e)
                 }
-
               }
 
               return responseGithub
