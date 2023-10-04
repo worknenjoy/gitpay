@@ -3,10 +3,15 @@ const models = require('../../models')
 const { Op, Sequelize } = require('sequelize')
 
 module.exports = Promise.method(function taskSearch (searchParams) {
-  let query = { [Op.or]: [
-    { private: null },
-    { private: false }
-  ] }
+  let query = { 
+    [Op.or]: [
+      { private: null },
+      { private: false }
+    ],
+    status: { 
+      [Op.eq]: 'open' 
+    } 
+  }
 
   if (searchParams.projectId) query.ProjectId = { [Op.eq]: parseInt(searchParams.projectId) }
   if (searchParams.userId) query.userId = searchParams.userId
