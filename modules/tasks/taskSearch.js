@@ -8,17 +8,16 @@ module.exports = Promise.method(function taskSearch (searchParams) {
     { private: false }
   ] }
 
-  query = searchParams.projectId ? { ...query, ProjectId: searchParams.projectId } : query
-  query = searchParams.userId ? { ...query, userId: searchParams.userId } : query
-  query = searchParams.status ? { ...query, status: searchParams.status } : query
-  query = searchParams.organizationId ? { ...query, OrganizationId: searchParams.organizationId } : query
-  //query = searchParams.labelIds ? { ...query, LabelId: searchParams.labelIds } : query
+  if(searchParams.projectId) query.ProjectId = { [Op.eq]: parseInt(searchParams.projectId) }
+  if(searchParams.userId) query.userId = searchParams.userId
+  if(searchParams.status) query.status = searchParams.status
+  
   const labelWhere = searchParams.labelIds ? { 
     model: models.Label,
     where: { id: { [Op.in]: searchParams.labelIds } },
-    attributes: [],
+    attributes: ['name'],
     through: {
-      attributes: [], // Isso irá evitar que os campos da tabela de relação sejam retornados
+      attributes: []
     },
     group: ['tasks.id'],  // Adjust according to your SQL dialect, e.g., "tasks.id" for Postgres
     having: Sequelize.literal(`COUNT(DISTINCT "Label"."id") = ${searchParams.labelIds.length}`)
@@ -29,7 +28,7 @@ module.exports = Promise.method(function taskSearch (searchParams) {
     return models.Project
       .findAll(
         {
-          where: { OrganizationId: parseInt(searchParams.organizationId), ...query },
+          where: { OrganizationId: parseInt(searchParams.organizationId) },
           include: [ {
             model: models.Task,
             include: [ models.User, models.Order, models.Assign, models.Project, labelWhere ]
@@ -57,8 +56,8 @@ module.exports = Promise.method(function taskSearch (searchParams) {
             { 
               model: models.Assign, include: [models.User] 
             },
-            labelWhere, 
-            models.Project 
+            models.Project,
+            labelWhere
           ],
           order: [
             ['status', 'DESC'],

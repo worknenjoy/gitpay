@@ -1,7 +1,6 @@
 const labelSearch = require('../../label').labelSearch
 
 exports.labelSearchController = (req, res) => {
-  console.log('res.body', req.body)
   labelSearch(req.body)
     .then(data => {
       res.status(200).send(data)

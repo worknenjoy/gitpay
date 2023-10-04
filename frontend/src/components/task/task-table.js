@@ -7,7 +7,6 @@ import TextEllipsis from 'text-ellipsis'
 import ReactPlaceholder from 'react-placeholder'
 
 import {
-  Avatar,
   Table,
   TableHead,
   TableBody,
@@ -201,9 +200,6 @@ class CustomPaginationActionsTable extends React.Component {
                       <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.assignedTo' defaultMessage='Assigned to' />
-                    </TableCell>
-                    <TableCell>
                       <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
                     </TableCell>
                     <TableCell>
@@ -211,6 +207,9 @@ class CustomPaginationActionsTable extends React.Component {
                     </TableCell>
                     <TableCell>
                       <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id='task.table.head.labels' defaultMessage='Labels' />
                     </TableCell>
                     <TableCell>
                       <FormattedMessage id='task.table.head.createdAt' defaultMessage='Created' />
@@ -224,9 +223,9 @@ class CustomPaginationActionsTable extends React.Component {
                     return (
                       <TableRow key={ n.id }>
                         <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
-                          <div style={ { width: 250, display: 'flex', alignItems: 'center' } }>
+                          <div style={ { width: 350, display: 'flex', alignItems: 'center' } }>
                             <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n) }>
-                              { TextEllipsis(`${n.title || 'no title'}`, 30) }
+                              { TextEllipsis(`${n.title || 'no title'}`, 42) }
                             </a>
                             <a target='_blank' href={ n.url }>
                               <Tooltip id='tooltip-fab' title={ `${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` } placement='top'>
@@ -234,38 +233,6 @@ class CustomPaginationActionsTable extends React.Component {
                               </Tooltip>
                             </a>
                           </div>
-                        </TableCell>
-                        <TableCell component='th' scope='row' style={ { padding: 5 } }>
-                          { assignedUser
-                            ? (
-                              <div>
-                                { assignedUser.profile_url
-                                  ? (
-                                    <a style={ { display: 'flex', alignItems: 'center' } } target='_blank'
-                                      href={ assignedUser.profile_url }>
-                                      <Avatar
-                                        src={ assignedUser.picture_url }
-                                      />
-                                      <span style={ { marginLeft: 10 } }>
-                                        { TextEllipsis(assignedUser.username || assignedUser.name || ' - ', 10) }
-                                      </span>
-                                    </a>
-                                  ) : (
-                                    <div style={ { display: 'flex', alignItems: 'center', height: 20 } }>
-                                      <Avatar />
-                                      <span style={ { marginLeft: 10 } }>
-                                        { TextEllipsis(assignedUser.username || assignedUser.name || ' - ', 10) }
-                                      </span>
-                                    </div>
-                                  )
-                                }
-                              </div>
-                            ) : (
-                              <div>
-                                <FormattedMessage id='task.table.body.assigned.none' defaultMessage='No one assigned' />
-                              </div>
-                            )
-                          }
                         </TableCell>
                         <TableCell>
                           <div style={ { width: 80 } }>
@@ -281,6 +248,24 @@ class CustomPaginationActionsTable extends React.Component {
                           <div style={ { width: 70, textAlign: 'center' } }>
                             { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
                           </div>
+                        </TableCell>
+                        <TableCell>
+                          { n?.Labels?.length ? 
+                          <div style={{width: 120}}>
+                            {n?.Labels?.slice(0,3).map(
+                              (label, index) => 
+                                (
+                                  <Chip 
+                                    style={{marginRight: 5, marginBottom: 5}}
+                                    size='small'
+                                    label={
+                                      TextEllipsis(`${label.name || ''}`, 20)
+                                    } 
+                                  />
+                                )
+                              )
+                            } ...
+                          </div> : <>-</>}  
                         </TableCell>
                         <TableCell>
                           <div style={ { width: 120 } }>

@@ -8,12 +8,11 @@ module.exports = Promise.method(function labelSearch (searchParams) {
       {
         where: searchParams || {},
         order: [
-          ['id', 'DESC']
+          ['name', 'ASC']
         ]
       }
     )
     .then(data => {
-      console.log('data', data)
       return data
     })
 })
