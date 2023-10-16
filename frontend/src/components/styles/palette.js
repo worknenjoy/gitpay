@@ -5,13 +5,20 @@ const Palette = {
     fontFamily: ['Inter', 'Helvetica', 'Roboto'],
     h3: {
       fontWeight: 200,
-      fontSize: 48,
+      fontSize: 42,
       lineHeight: '52px',
       color: '#353A42'
 
     },
+    h4: {
+      fontWeight: 200,
+      fontSize: 28,
+      lineHeight: '24px',
+      color: '#353A42'
+
+    },
     h5: {
-      fontWeight: 600,
+      fontWeight: 500,
       fontSize: 18,
       lineHeight: '24px',
       color: '#353A42'
@@ -22,6 +29,12 @@ const Palette = {
     caption: {
       fontSize: 12,
       color: '#9B9B9B'
+    },
+    subtitle1: {
+      fontWeight: 500,
+    },
+    subtitle2: {
+      fontWeight: 400,
     }
   },
   palette: {

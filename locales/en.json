@@ -92,7 +92,7 @@
   "mail.transfer.error.subject": "We had a issue sending a transfer for a task on Gitpay",
   "mail.transfer.error.message": "We had a issue with a transfer of $ {{value}} for this task: <a href=\"{{url}}\">{{title}}</a>",
   "mail.transfer.missing.subject": "Activate your account to receive transfers for your concluded tasks",
-  "mail.transfer.missing.message": "You received a transfer from Gitpay, but you didn't activate your account yet, please activate your account at <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a> to receive your bounties",
+  "mail.transfer.missing.message": "You received a transfer from Gitpay, but you didn't activate your account yet, please activate your account at <a href=\"https://gitpay.me/#/profile/user-account/bank\">https://gitpay.me/#/profile/user-account/bank</a> to receive your bounties",
   "mail.transfer.bounty.subject": "You transfered a bounty to another task on Gitpay",
   "mail.transfer.invalid.message": "To receive a payment for your task, you need to complete your account details and bank account in <a href=\"https://gitpay.me/#/profile/user-account/details\">Account details</a>",
   "mail.transfer.bounty.message": "You transfered a bounty of ${{amount}} from <a href='{{taskFromUrl}}'>{{taskFromTitle}}</a> to <a href='{{taskToUrl}}'>{{taskToTitle}}</a>",

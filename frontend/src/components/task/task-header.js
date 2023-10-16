@@ -21,6 +21,7 @@ import media from 'app/styleguide/media'
 import Constants from '../../consts'
 import TaskStatusIcons from './task-status-icons'
 import TaskLabels from './task-labels'
+import TaskStatusDropdown from './task-status-dropdown'
 
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
@@ -95,7 +96,7 @@ class TaskHeader extends React.Component {
   }
 
   render () {
-    const { classes, task, user, history } = this.props
+    const { classes, task, user, history, updateTask, taskOwner } = this.props
 
     const headerPlaceholder = (
       <div className='line-holder'>
@@ -108,9 +109,7 @@ class TaskHeader extends React.Component {
 
     return (
       <TaskHeaderContainer>
-        <Grid container>
-          <Grid item xs={ 12 } sm={ 12 } md={ 8 }>
-
+          <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
             <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 }
               ready={ task.completed }>
               <div className={ classes.breadcrumbRoot }>
@@ -157,7 +156,7 @@ class TaskHeader extends React.Component {
                       </Typography>
                     </Link>
                     <Link href='/' color='inherit' onClick={ (e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl) }>
-                      <Typography variant='subtitle2' className={ classes.breadcrumbLink }>
+                      <Typography variant='h4' className={ classes.breadcrumbLink }>
                         { task.data.metadata.company }
                       </Typography>
                     </Link>
@@ -173,21 +172,26 @@ class TaskHeader extends React.Component {
                 ) }
               </div>
             </ReactPlaceholder>
-            <ReactPlaceholder ready={ task.completed && task.data.status }>
-              <Chip
-                label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                avatar={ <Avatar className={ task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
-                className={ task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
-                onDelete={ this.handleStatusDialog }
-                onClick={ this.handleStatusDialog }
-              />
-            </ReactPlaceholder>
             <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
               ready={ task.completed }
             >
-              <Typography variant='h4' align='left' gutterBottom>
-                { task.data.title }
+              <Typography variant='h5' gutterBottom>
+                <strong>{ task.data.title }</strong>
                 <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
+                <div style={{float: 'right', verticalAlign: 'unset'}}>
+                  { user && user.id && taskOwner && task.data.status && task.data && task.data.id ?
+                      <TaskStatusDropdown 
+                        onSelect={ (status) => updateTask({id: task.data.id, status: status}) }
+                        status={ task.data.status }
+                      />
+                  :  
+                    <Chip
+                      label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                      avatar={ <Avatar className={ task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
+                      className={ task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
+                    />
+                  }
+                </div>
               </Typography>
             </ReactPlaceholder>
             <Typography variant='caption' style={ { display: 'inline-block', marginBottom: 20 } }>
@@ -218,8 +222,6 @@ class TaskHeader extends React.Component {
               </ReactPlaceholder>
             }
           </Grid>
-        </Grid>
-
       </TaskHeaderContainer>
     )
   }

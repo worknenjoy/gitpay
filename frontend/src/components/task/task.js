@@ -8,9 +8,7 @@ import ShowMoreText from 'react-show-more-text'
 import AssignActions from './assignment/AssignActions'
 
 import { messages } from './messages/task-messages'
-import RegularCard from '../Cards/RegularCard'
 import TaskInviteCard from './task-invite-card'
-import Table from '../Table/Table'
 import TaskHeader from './task-header'
 import AuthorList from './task-author-list'
 import queryString from 'query-string'
@@ -53,15 +51,12 @@ import {
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
-
-import { PageContent } from 'app/styleguide/components/Page'
 import TaskReport from './task-report'
 import TaskPayment from './task-payment'
 import LoginButton from '../session/login-button'
 import TaskAssignment from './task-assignment'
+import TaskSolve from './task-solve'
 import TaskPaymentForm from './task-payment-form'
-import TaskInterested from './task-interested'
-import TaskAssigned from './task-assigned'
 import TaskPayments from './task-payments'
 import TaskLevelSplitButton from './task-level-split-button'
 import TaskDeadlineForm from './task-deadline-form'
@@ -296,8 +291,10 @@ const styles = theme => ({
     }
   },
   taskCoverImg: {
+    display: 'flex',
+    textAlign: 'center',
     alignSelf: 'center',
-    marginTop: 50,
+    width: 250,
     [theme.breakpoints.down('sm')]: {
       width: '100%'
     }
@@ -377,6 +374,7 @@ class Task extends Component {
       taskPaymentDialog: false,
       taskInviteDialog: false,
       taskFundingDialog: false,
+      taskSolveDialog: false,
       taskMessageAuthorDialog: false,
       assignIssueDialog: false,
       reportIssueDialog: false,
@@ -519,6 +517,14 @@ class Task extends Component {
 
   handleTaskFundingDialogOpen = () => {
     this.setState({ interestedSuggestedDate: null, showSuggestAnotherDateField: false, currentPrice: 0, interestedLearn: false, interestedComment: '', taskFundingDialog: true })
+  }
+
+  handleTaskSolveDialogOpen = () => {
+    this.setState({ taskSolveDialog: true })
+  }
+
+  handleTaskSolveDialogClose = () => {
+    this.setState({ taskSolveDialog: false })
   }
 
   handleStatusDialog = () => {
@@ -801,6 +807,7 @@ class Task extends Component {
 
   render () {
     const { classes, task, project, order } = this.props
+    const { taskSolveDialog } = this.state
 
     const assignActions = assign => {
       const task = this.props.task.data
@@ -925,11 +932,19 @@ class Task extends Component {
           />
         </Dialog>
         <TopBarContainer />
-        <PageContent>
           <Grid container style={ { marginBottom: 4 } }>
-            <Grid item xs={ 12 } sm={ 8 } style={ { marginBottom: 40, paddingRight: 40 } }>
+            <Grid item xs={ 12 } sm={ 12 } md={8} style={ { marginBottom: 40, paddingRight: 40 } }>
               <Container fixed maxWidth='lg'>
-                <TaskHeader taskPaymentDialog={ this.taskPaymentDialog } task={ task } user={ this.props.user } history={ this.props.history } project={ project } />
+                <TaskHeader 
+                  taskPaymentDialog={ this.taskPaymentDialog }
+                  task={ task }
+                  user={ this.props.user }
+                  history={ this.props.history }
+                  project={ project }
+                  updateTask={ this.props.updateTask }
+                  fetchTask={ this.props.fetchTask }
+                  taskOwner={ this.taskOwner() }
+                />
                 { (task.completed && this.props.logged && task.data) ? (
                   <TaskPaymentForm
                     classes={ classes }
@@ -955,10 +970,10 @@ class Task extends Component {
                 ) }
                 { task.data.description &&
                 <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
-                  <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
+                  <Typography variant='subtitle1' style={ { marginBottom: 10, marginTop: 20 } }>
                     <FormattedMessage id='task.info.description' defaultMessage='Description' />
                   </Typography>
-                  <Typography variant='body2' style={ { marginBottom: 40 } }>
+                  <Typography variant='body1' style={ { marginBottom: 40 } }>
                     <ShowMoreText
                       lines={ 8 }
                       more={
@@ -988,7 +1003,7 @@ class Task extends Component {
                 }
                 { task.data.User &&
                 <React.Fragment>
-                  <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
+                  <Typography variant='subtitle1' style={ { marginBottom: 10, marginTop: 20 } }>
                     <FormattedMessage id='task.info.authors' defaultMessage='Imported by' />
                   </Typography>
                   <AuthorList
@@ -1008,131 +1023,6 @@ class Task extends Component {
                     } />
                 </React.Fragment>
                 }
-                { task.data && task.data.Assigns && task.data.Assigns.length > 0 &&
-                  <div style={ { marginBottom: 20 } }>
-                    <Typography variant='h5' style={ { display: 'inline-block', marginBottom: 10, marginTop: 20 } }>
-                      <FormattedMessage id='task.info.interested' defaultMessage='Candidate(s)' />
-                    </Typography>
-                    { this.taskOwner() &&
-                    <Button
-                      style={ { display: 'inline-block', marginBottom: 2 } }
-                      onClick={ this.handleAssignDialog }
-                      size='small'
-                      color='primary'
-                      variant='text'
-                    >
-                      <FormattedMessage id='task.assignment.action.assign' defaultMessage='Assign issue' />
-                      <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
-                    </Button> }
-                    { this.taskOwner() &&
-                      <Button
-                        style={ { display: 'inline-block', marginBottom: 2 } }
-                        onClick={ this.handleAssignDialog }
-                        size='small'
-                        color='primary'
-                        variant='text'
-                      >
-
-                        <FormattedMessage id='task.assign.action.review' defaultMessage='Review assignment' />
-                        <AssignmentIcon style={ { marginLeft: 10, verticalAlign: 'bottom' } } />
-                      </Button>
-                    }
-                    <TaskInterested assigns={ task.data && task.data.Assigns } />
-                    <Dialog open={ this.state.assignIssueDialog } onClose={ () => this.setState({ assignIssueDialog: false }) }>
-                      <DialogContent>
-                        <RegularCard
-                          headerColor='green'
-                          cardTitle={ this.props.intl.formatMessage(messages.interestedCardTitle) }
-                          cardSubtitle={ this.props.intl.formatMessage(messages.interestedCardSubTitle) }
-                          content={
-                            <Table
-                              tableHeaderColor='warning'
-                              tableHead={ [
-                                this.props.intl.formatMessage(messages.interestedTableLabelUser),
-                                this.props.intl.formatMessage(messages.interestedTableLabelWhen),
-                                this.props.intl.formatMessage(messages.interestedTableLabelActions)
-                              ] }
-                              tableData={ task && task.data.Assigns && task.data.Assigns.length > 0 ? displayAssigns(task.data.Assigns) : [] }
-                            />
-                          }
-                        />
-
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          style={ { display: 'inline-block', marginBottom: 2 } }
-                          onClick={ () => this.setState({ assignIssueDialog: false }) }
-                          size='small'
-                          color='secondary'
-                          variant='text'
-                        >
-                          <FormattedMessage id='task.assgin.action.close' defaultMessage='Close' />
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </div>
-                }
-                { task.data && task.data.assigned &&
-                  <div style={ { marginBottom: 80 } }>
-                    <Typography variant='h5' style={ { marginBottom: 10, marginTop: 20 } }>
-                      <FormattedMessage id='task.info.assigns' defaultMessage='Assigned' />
-                    </Typography>
-                    <TaskAssigned
-                      task={ task.data }
-                      isOwner={ isAssignOwner() }
-                      status={ Constants.STATUSES[task.data.status] ? this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) : 'no status' }
-                      classes={ classes }
-                      user={ task.data.assignedUser || {} }
-                      loggedUser={ this.state.logged && this.state.logged.user }
-                      removeAssignment={ this.props.removeAssignment }
-                      assignTask={ this.props.assignTask }
-                      assign={ { id: task.data.assigned } }
-                      messageTask={ this.props.messageTask }
-                      createOrder={ this.props.createOrder }
-                    />
-                  </div>
-                }
-                { /*
-                <Typography variant='subtitle2' style={ { marginTop: 10, marginBottom: 10 } }>
-                  <FormattedMessage id='task.claim.title' defaultMessage='Are you the original author of this issue?' />
-                </Typography>
-                <Typography variant='body2' style={ { marginBottom: 10 } }>
-                  <FormattedMessage id='task.claim.subtitle' defaultMessage="If you're the original author of this issue, you can claim this issue so you will be admin and transfer the property to manage the issue on Gitpay." />
-                </Typography>
-                <div>
-                  <Button
-                    onClick={ this.handleClaimDialog }
-                    size='small'
-                    color='primary'
-                  >
-                    <span>
-                      <FormattedMessage id='task.actions.claim' defaultMessage='Claim this issue' />
-                    </span>
-                  </Button>
-                  { !this.props.logged ? (
-                    <Dialog open={ taskClaimDialog } onClose={ () => this.setState({ taskClaimDialog: false }) }>
-                      <DialogTitle id='form-dialog-title'>
-                        <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                      </DialogTitle>
-                      <DialogContent>
-                        <div className={ classes.mainBlock }>
-                          <LoginButton referer={ this.props.location } includeForm />
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  ) : (
-                    <TaskClaim
-                      taskData={ task.data }
-                      requestClaimTask={ this.props.requestClaimTask }
-                      user={ this.props.user }
-                      open={ this.state.taskClaimDialog }
-                      onClose={ () => this.setState({ taskClaimDialog: false }) }
-                      onOpen={ () => this.setState({ taskClaimDialog: true }) }
-                    />
-                  ) }
-                </div>
-                */ }
-
                 <div style={ { marginBottom: 80 } }>
                   <Button
                     style={ { display: 'inline-block', marginTop: 40 } }
@@ -1209,7 +1099,7 @@ class Task extends Component {
                 }
               </Container>
             </Grid>
-            <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 4 }>
+            <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 12 } md={4}>
               <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
                 { task.data.level && !this.taskOwner() &&
                   <div style={ { textAlign: 'center' } }>
@@ -1310,6 +1200,7 @@ class Task extends Component {
                     <div style={ { marginTop: 30, marginBottom: 30 } }>
                       <Button
                         onClick={ this.handleTaskPaymentDialog }
+                        disabled={!task.data.assigned}
                         color='primary'
                         fullWidth
                         size='large'
@@ -1347,7 +1238,7 @@ class Task extends Component {
                 ) : (
                   <div style={ { marginTop: 30, marginBottom: 10 } }>
                     <Button
-                      onClick={ this.handleAssignDialogOpen }
+                      onClick={ this.handleTaskSolveDialogOpen }
                       color='primary'
                       fullWidth
                       size='large'
@@ -1362,7 +1253,7 @@ class Task extends Component {
                     >
                       <CheckIcon style={ { marginRight: 'auto' } } />
                       <span style={ { marginRight: 'auto' } } className={ classes.spaceRight }>
-                        <FormattedMessage id='task.interested.action' defaultMessage="I'm interested" />
+                        <FormattedMessage id='task.interested.button.label' defaultMessage="Solve issue" />
                       </span>{ ' ' }
                     </Button>
                   </div>
@@ -1416,9 +1307,21 @@ class Task extends Component {
                 taskCover={ taskCover }
                 location={ this.props.location }
               />
+              <TaskSolve
+                open={taskSolveDialog}
+                onClose={this.handleTaskSolveDialogClose}
+                handleAssignFundingDialogClose={ this.handleAssignFundingDialogClose }
+                renderIssueAuthorLink={ this.renderIssueAuthorLink }
+                timePlaceholder={ timePlaceholder }
+                logged={ this.props.logged }
+                task={ task }
+                classes={ classes }
+                inviteCover={ inviteCover }
+                taskCover={ taskCover }
+                location={ this.props.location }
+              />
             </Grid>
           </Grid>
-        </PageContent>
         <Bottom />
       </div>
     )

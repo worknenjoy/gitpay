@@ -92,7 +92,7 @@
   "mail.transfer.error.subject": "Erro na transferência por uma tarefa no Gitpay",
   "mail.transfer.error.message": "Olá, tivemos um problema com o pagamento de $ {{value}} para a tarefa <a href=\"{{url}}\">{{title}}</a>",
   "mail.transfer.missing.subject": "Ative sua conta para receber o pagamento",
-  "mail.transfer.missing.message": "Você recebeu um pagamento pelo Gitpay, mas sua conta ainda não foi configurada. Por favor, ative sua conta em <a href=\"https://gitpay.me/#/profile/payment-options\">https://gitpay.me/#/profile/payment-options</a> para receber as recompensas.",
+  "mail.transfer.missing.message": "Você recebeu um pagamento pelo Gitpay, mas sua conta ainda não foi configurada. Por favor, ative sua conta em <a href=\"https://gitpay.me/#/profile/user-account/bank\">https://gitpay.me/#/profile/user-account/bank</a> para receber as recompensas.",
   "mail.transfer.bounty.subject": "Você transferiu uma recompensa para outra tarefa no Gitpay",
   "mail.transfer.invalid.message": "To receive a payment for your task, you need to complete your account details and bank account in <a href=\"https://gitpay.me/#/profile/user-account/details\">Account details</a>",
   "mail.transfer.bounty.message": "Você transferiu uma recompensa de ${{amount}} de <a href='{{taskFromUrl}}'>{{taskFromTitle}}</a> para <a href='{{taskToUrl}}'>{{taskToTitle}}</a>",

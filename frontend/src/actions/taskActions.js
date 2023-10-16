@@ -324,7 +324,8 @@ const updateTask = task => {
     axios
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
-        if (task.Orders.source_id) {
+        const task = response.data
+        if (task?.Orders?.source_id) {
           dispatch(addNotification('actions.task.payment.notification.success'))
           dispatch(changeTaskTab(1))
           dispatch(syncTask(task.id))
@@ -338,13 +339,14 @@ const updateTask = task => {
           dispatch(updateTaskSuccess())
         }
         else {
-          dispatch(addNotification('actions.task.update.notification.error'))
+          dispatch(addNotification('actions.task.update.notification.success'))
           dispatch(updateTaskSuccess())
         }
         return dispatch(fetchTask(task.id))
       })
       .catch(error => {
-        const errorResponse = error.response.data
+        console.log('error', error)
+        const errorResponse = error?.response?.data
         if (errorResponse.type === 'StripeCardError') {
           dispatch(addNotification('actions.task.payment.notification.error', `. ${errorResponse.message}`))
           dispatch(changeTaskTab(1))
