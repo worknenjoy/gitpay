@@ -25,10 +25,10 @@ const TaskStatusIcons = ({ status }) => {
         <React.Fragment>
           { (status === 'private')
             ? (
-              <Chip style={styles.chipStyle} label='Private' icon={<PrivateIcon style={ styles.IconStyle } fontSize='small' />} />
+              <Chip style={ styles.chipStyle } label='Private' icon={ <PrivateIcon style={ styles.IconStyle } fontSize='small' /> } />
             )
             : (
-              <Chip style={styles.chipStyle} label='Public' icon={<PublicIcon style={ styles.IconStyle } fontSize='small' />} />
+              <Chip style={ styles.chipStyle } label='Public' icon={ <PublicIcon style={ styles.IconStyle } fontSize='small' /> } />
             )
           }
         </React.Fragment>
