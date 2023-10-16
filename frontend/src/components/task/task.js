@@ -40,13 +40,13 @@ import {
   ExpandMore,
   BugReport as BugReportIcon,
   AttachMoney as MoneyIcon,
-  CheckCircleOutline as CheckIcon,
-  OfflineBolt as BountyIcon,
+  HowToReg as HowToRegIcon,
+  CreditCard as BountyIcon,
   Gavel as OfferIcon,
   Redeem as RedeemIcon,
   Delete as DeleteIcon,
   AssignmentInd as AssignmentIcon,
-  EmojiFoodBeverage as CoffeeIcon
+  EmojiFoodBeverage as CoffeeIcon,
 } from '@material-ui/icons'
 
 import TopBarContainer from '../../containers/topbar'
@@ -311,7 +311,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  checkIcon: {
+  HowToRegIcon: {
     paddingRight: theme.spacing(1),
     fontSize: 20
   },
@@ -771,12 +771,13 @@ class Task extends Component {
           color='secondary'
           variant='contained'
           disabled={ this.props.task.data.paid || this.props.task.data.status === 'closed' }
-          style={ { flexGrow: 1, display: 'flex', justifyContent: 'center' } }
+          fullWidth
+          style={{marginRight: 5}}
         >
-          <BountyIcon style={ { marginRight: 'auto' } } />
-          <span style={ { marginRight: 'auto' } }>
+          <span>
             <FormattedMessage id='task.bounties.payment.add' defaultMessage='Make a payment' />
-          </span>{ ' ' }
+          </span>
+          <BountyIcon style={ { marginLeft: 10 } } />
         </Button>
 
         { !isOwner &&
@@ -786,12 +787,13 @@ class Task extends Component {
             size='small'
             color='secondary'
             variant='contained'
-            style={ { flexGrow: 1, marginLeft: 10, display: 'flex', justifyContent: 'center' } }
+            fullWidth
+            style={{marginLeft: 5}}
           >
-            <OfferIcon style={ { marginRight: 'auto' } } />
-            <span style={ { marginRight: 'auto' } } className={ this.props.classes.spaceRight }>
+            <span>
               <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
-            </span>{ ' ' }
+            </span>
+            <OfferIcon style={ { marginLeft: 10 } } />
           </Button>
         }
       </div>
@@ -1243,18 +1245,10 @@ class Task extends Component {
                     fullWidth
                     size='large'
                     variant='contained'
-                    disabled={ task.data.paid }
-                    style={ {
-                      marginRight: 10,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    } }
+                    disabled={ task.data.paid || task.data.status !== 'open' }
                   >
-                    <CheckIcon style={ { marginRight: 'auto' } } />
-                    <span style={ { marginRight: 'auto' } } className={ classes.spaceRight }>
-                      <FormattedMessage id='task.interested.button.label' defaultMessage='Solve issue' />
-                    </span>{ ' ' }
+                    <FormattedMessage id='task.interested.button.label' defaultMessage='Solve issue' />
+                    <HowToRegIcon style={{marginLeft: 10}} />
                   </Button>
                 </div>
               )
