@@ -176,7 +176,7 @@ class TaskHeader extends React.Component {
           <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
             ready={ task.completed }
           >
-            <Typography variant='h5' gutterBottom>
+            <Typography variant='h5' gutterBottom title={task.data.title}>
               <strong>
                 { TextEllipsis(`${task.data.title || 'no title'}`, 72) }
               </strong>
