@@ -5,6 +5,7 @@ import Link from '@material-ui/core/Link'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
+import TextEllipsis from 'text-ellipsis'
 import {
   Avatar,
   Typography,
@@ -176,7 +177,9 @@ class TaskHeader extends React.Component {
             ready={ task.completed }
           >
             <Typography variant='h5' gutterBottom>
-              <strong>{ task.data.title }</strong>
+              <strong>
+                { TextEllipsis(`${task.data.title || 'no title'}`, 72) }
+              </strong>
               <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
               <div style={ { float: 'right', verticalAlign: 'unset' } }>
                 { user && user.id && taskOwner && task.data.status && task.data && task.data.id
