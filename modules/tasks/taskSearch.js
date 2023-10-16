@@ -3,7 +3,7 @@ const models = require('../../models')
 const { Op, Sequelize } = require('sequelize')
 
 module.exports = Promise.method(function taskSearch (searchParams) {
-  let query = { 
+  let query = {
     [Op.or]: [
       { private: null },
       { private: false }

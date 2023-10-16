@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Chip } from '@material-ui/core'
 import {
   Lock as PrivateIcon,
   LockOpen as PublicIcon
@@ -7,19 +8,28 @@ import {
 
 const styles = {
   IconStyle: {
-    fontSize: 24,
-    marginLeft: 12
+    fontSize: 14,
+    verticalAlign: 'middle'
+  },
+  chipStyle: {
+    marginLeft: 12,
+    marginRight: 12,
+    verticalAlign: 'middle',
   }
 }
 
-const TaskStatusIcons = ({ status, bounty }) => {
+const TaskStatusIcons = ({ status }) => {
   const Status = () => {
     if (status) {
       return (
         <React.Fragment>
           { (status === 'private')
-            ? (<PrivateIcon style={ styles.IconStyle } />)
-            : (<PublicIcon style={ styles.IconStyle } />)
+            ? (
+              <Chip style={ styles.chipStyle } label='Private' icon={ <PrivateIcon style={ styles.IconStyle } fontSize='small' /> } />
+            )
+            : (
+              <Chip style={ styles.chipStyle } label='Public' icon={ <PublicIcon style={ styles.IconStyle } fontSize='small' /> } />
+            )
           }
         </React.Fragment>
       )

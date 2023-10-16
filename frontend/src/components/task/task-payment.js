@@ -52,6 +52,10 @@ const messages = defineMessages({
     id: 'task.status.label.canceled',
     defaultMessage: 'Payment failed'
   },
+  statusRefunded: {
+    id: 'task.status.label.refunded',
+    defaultMessage: 'Refunded'
+  },
   labelCreditCard: {
     id: 'task.status.label.creditcard',
     defaultMessage: 'Credit Card'
@@ -131,7 +135,8 @@ class TaskPayment extends Component {
       open: this.props.intl.formatMessage(messages.statusOpen),
       succeeded: this.props.intl.formatMessage(messages.statusSucceeded),
       fail: this.props.intl.formatMessage(messages.statusFail),
-      canceled: this.props.intl.formatMessage(messages.statusCanceled)
+      canceled: this.props.intl.formatMessage(messages.statusCanceled),
+      refunded: this.props.intl.formatMessage(messages.statusRefunded)
     }
     return possibles[status]
   }
@@ -259,7 +264,7 @@ class TaskPayment extends Component {
                                   } } />
                                 </Button>
                               ) : (
-                                <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Pay with PayPal (id: {transfer}' values={ {
+                                <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Paid with PayPal (id: {transfer}' values={ {
                                   transfer: order.transfer_id
                                 } } >
                                   { (msg) => (

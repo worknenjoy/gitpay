@@ -271,8 +271,8 @@ const TaskAssignment = (props) => {
         <React.Fragment>
           <div style={ { display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column' } }>
             <DialogTitle id='form-dialog-title' style={ { padding: 0, marginTop: 10 } }>
-              <Typography type='headline' variant='h5' style={ { color: 'black' } }>
-                <FormattedMessage id='task.bounties.interested.question' defaultMessage='Are you interested to solve this task?' />
+              <Typography type='headline' variant='h5'>
+                <FormattedMessage id='task.solve.title' defaultMessage='Are you interested to solve this issue and earn bounties?' />
               </Typography>
             </DialogTitle>
           </div>
@@ -383,21 +383,8 @@ const TaskAssignment = (props) => {
     >
       { closeDialogButton() }
       <DialogTitle id='form-dialog-title'>
-        <FormattedMessage id='task.interested.dialog.title' defaultMessage='Solve Issue' />
+        <FormattedMessage id='task.suggest.dialog.title' defaultMessage='Suggest Bounty' />
       </DialogTitle>
-      <AppBar position='static' color='default' style={ { boxShadow: 'none', background: 'transparent' } }>
-        <Tabs
-          value={ currentTab }
-          onChange={ handleTabChange }
-          scrollable
-          scrollButtons='on'
-          indicatorColor='primary'
-          textColor='primary'
-        >
-          <Tab value={ 0 } label='Apply to solve this issue' />
-          <Tab value={ 1 } label='Send the solution' />
-        </Tabs>
-      </AppBar>
       { currentTab === 0 && (
         <React.Fragment>
           { imageCover() }
@@ -408,10 +395,9 @@ const TaskAssignment = (props) => {
               { dialogCoverInvite() }
               <form onSubmit={ props.assignDialog ? props.handleOfferTask : props.sendFundingInvite }>
                 <DialogContent>
-
                   { emailInviteInput() }
                   { task.data.metadata &&
-                    <Card style={ { marginTop: 10 } }>
+                    <Card>
                       <CardHeader
                         className={ classes.cardHeader }
                         classes={ { avatar: classes.cardAvatar } }
@@ -627,11 +613,8 @@ const TaskAssignment = (props) => {
           }
         </React.Fragment>
       ) }
-      { currentTab === 1 && (<React.Fragment>
-        { !props.logged ? ((loginForm())) : (<SendSolutionDialog task={ task.data } assignDialog={ props.assignDialog } handleAssignFundingDialogClose={ props.handleAssignFundingDialogClose } />) }
-      </React.Fragment>) }
     </Dialog>
   )
 }
 
-export default injectIntl((TaskAssignment))
+export default injectIntl(TaskAssignment)
