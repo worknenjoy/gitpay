@@ -316,8 +316,8 @@ const styles = theme => ({
     fontSize: 20
   },
   planIcon: {
-    fontSize: 64,
-    padding: 20
+    fontSize: 32,
+    padding: 10
   },
   planFinalPrice: {
     paddingTop: theme.spacing(1),
@@ -329,9 +329,9 @@ const styles = theme => ({
     margin: 10
   },
   planGridContent: {
-    minHeight: theme.spacing(10),
+    minHeight: theme.spacing(5),
     margin: 0,
-    padding: 20
+    padding: 10
   },
   planBullets: {
     paddingLeft: theme.spacing(1),
@@ -956,6 +956,7 @@ class Task extends Component {
                   plan={ task.data.private ? 'private' : 'open source' }
                   order={ this.props.order }
                   open={ this.state.paymentForm }
+                  onClose={ () => this.setState({ paymentForm: false }) }
                   user={ this.props.user }
                   openDialog={ this.props.openDialog }
                   closeDialog={ this.props.closeDialog }

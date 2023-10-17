@@ -23,6 +23,12 @@ const Palette = {
       lineHeight: '24px',
       color: '#353A42'
     },
+    h6: {
+      fontWeight: 500,
+      fontSize: 16,
+      lineHeight: '20px',
+      color: '#353A42'
+    },
     body1: {
       fontSize: 14
     },
