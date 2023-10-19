@@ -355,7 +355,6 @@ class Task extends Component {
     super(props)
 
     this.state = {
-      logged: null,
       deadline: null,
       assigned: null,
       finalPrice: 0,
@@ -395,21 +394,12 @@ class Task extends Component {
     }
   }
 
-  async componentWillMount () {
+  async componentDidMount () {
     const id = this.props.match.params.id
     const status = this.props.match.params.status
     const orderId = this.props.match.params.order_id
     const slug = this.props.match.params.slug
-
-    let logged = false
-    try {
-      logged = await this.props.isLogged()
-      this.setState({ logged })
-    }
-    catch (e) {
-      logged = false
-      this.setState({ logged })
-    }
+    const { logged } = this.props
 
     try {
       await this.props.syncTask(id)
@@ -426,43 +416,6 @@ class Task extends Component {
       else {
         this.props.addNotification('actions.task.status.forbidden')
         this.props.history.push(`/task/${id}`)
-      }
-    }
-
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
-      this.props.changeTab(1)
-    }
-    if (this.props.history && orderId && this.props.history.location.pathname === `/task/${id}/orders/${orderId}`) {
-      this.props.changeTab(1)
-    }
-    if (
-      this.props.history && (
-        this.props.history.location.pathname === `/task/${id}/interested` || this.props.history.location.pathname === `/task/${id}/${slug}/interested`
-      )
-    ) {
-      this.setState({ assignIssueDialog: true })
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
-      this.props.changeTab(3)
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/offers`) {
-      this.props.changeTab(4)
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/history`) {
-      this.props.changeTab(5)
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/status`) {
-      if (logged) {
-        if (this.props.task.data && this.props.task.data.user && (logged.user.id === this.props.task.data.user.id)) {
-          this.handleStatusDialog()
-        }
-        else {
-          this.props.addNotification('actions.task.status.forbidden')
-          this.props.history.push(`/task/${id}`)
-        }
-      }
-      else {
-        this.props.history.push({ pathname: '/login', state: { from: { pathname: `/task/${id}/status` } } })
       }
     }
 
@@ -488,17 +441,6 @@ class Task extends Component {
         localStorage.setItem('hadFirstTask', true)
       }
     }
-  }
-
-  handleTabChange = (event, tab) => {
-    const id = this.props.match.params.id
-    if (tab === 0) this.props.history.push(`/task/${id}`)
-    if (tab === 1) this.props.history.push(`/task/${id}/orders`)
-    if (tab === 2) this.props.history.push(`/task/${id}/interested`)
-    if (tab === 3) this.props.history.push(`/task/${id}/members`)
-    if (tab === 4) this.props.history.push(`/task/${id}/offers`)
-    if (tab === 5) this.props.history.push(`/task/${id}/history`)
-    this.props.changeTab(tab)
   }
 
   handleAssignFundingDialogClose = () => {
@@ -808,7 +750,7 @@ class Task extends Component {
   }
 
   render () {
-    const { classes, task, project, order } = this.props
+    const { classes, task, project, order, noTopBar, noBottomBar } = this.props
     const { taskSolveDialog } = this.state
 
     const assignActions = assign => {
@@ -840,39 +782,6 @@ class Task extends Component {
 
     const isCurrentUserAssigned = () => {
       return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
-    }
-
-    const displayAssigns = assign => {
-      if (!assign.length) {
-        return []
-      }
-
-      const items = assign.map((item, i) => {
-        const userField = () => (
-          <span>
-            { item.User && item.User.profile_url
-              ? (
-                <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
-                  { (msg) => (
-                    <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                      <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                        <span>{ item.User.username || item.User.name || ' - ' }</span>
-                        <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
-                      </a>
-                    </Tooltip>
-                  ) }
-                </FormattedMessage>
-              ) : (
-                `${item.User.username || item.User.name || ' - '}`
-              )
-            }
-          </span>
-        )
-
-        return [userField(), MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
-      })
-
-      return items
     }
 
     return (
@@ -933,7 +842,9 @@ class Task extends Component {
             }
           />
         </Dialog>
-        <TopBarContainer />
+        { noTopBar ? null : (
+          <TopBarContainer />
+        ) }
         <Grid container style={ { marginBottom: 4 } }>
           <Grid item xs={ 12 } sm={ 12 } md={ 8 } style={ { marginBottom: 40, paddingRight: 40 } }>
             <Container fixed maxWidth='lg'>
@@ -1317,7 +1228,9 @@ class Task extends Component {
             />
           </Grid>
         </Grid>
-        <Bottom />
+        { noBottomBar ? null : (
+          <Bottom />
+        )}
       </div>
     )
   }
