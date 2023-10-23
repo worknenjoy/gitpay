@@ -33,10 +33,7 @@ import TaskContainer from '../../containers/task'
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    flexFlow: 'wrap',
-    justifyContent: 'center',
-    width: 'calc(100%)'
+    backgroundColor: '#F7F7F7',
   },
   altButton: {
     marginRight: 10
@@ -78,9 +75,12 @@ const styles = theme => ({
       }
     }
   },
-  primary: {},
+  primary: {
+    color: theme.palette.primary.contrastText
+  },
   icon: {
-    marginRight: 5
+    marginRight: 5,
+    color: theme.palette.primary.contrastText
   },
   secondaryBar: {
     backgroundColor: theme.palette.primary.light
@@ -100,9 +100,8 @@ const styles = theme => ({
     marginBottom: 12,
     width: '100%'
   },
-  paper: {
-    // backgroundColor: '#0b0d21',
-    backgroundColor: '#F9F9F9',
+  sidePaper: {
+    backgroundColor: '#2c5c46'
   },
   profile: {
     '& .profile-image': {
@@ -308,16 +307,15 @@ class Profile extends Component {
                 history={ this.props.history }
               />
             }
-
             <Grid item xs={ 12 } md={ 10 }>
+              <AccountHeader
+                classes={ classes }
+                user={ user }
+                onCreateTask={ this.props.createTask }
+                history={ this.props.history }
+                onLogout={ this.handleSignOut }
+              />
               <Container maxWidth='lg'>
-                <AccountHeader
-                  classes={ classes }
-                  user={ user }
-                  onCreateTask={ this.props.createTask }
-                  history={ this.props.history }
-                  onLogout={ this.handleSignOut }
-                />
                 <HashRouter>
                   <Switch>
                     <Route exact path='/profile' component={
