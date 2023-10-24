@@ -93,6 +93,8 @@ const TaskSolve = ({
     )
   }
 
+  if(!logged) return loginForm()
+
   return (
     <Dialog
       open={ open }
@@ -105,24 +107,20 @@ const TaskSolve = ({
       <DialogTitle id='form-dialog-title'>
         <FormattedMessage id='task.solve.dialog.title' defaultMessage='How to solve this issue and earn bounties?' />
       </DialogTitle>
-      <AppBar position='static' color='default' style={ { boxShadow: 'none', background: 'transparent' } }>
-        <Tabs
-          value={ currentTab }
-          onChange={ handleTabChange }
-          scrollable
-          scrollButtons='on'
-          indicatorColor='primary'
-          textColor='primary'
-        >
-          <Tab value={ 0 } label='Solve issue' />
-          <Tab value={ 1 } label='Send the solution' />
-        </Tabs>
-      </AppBar>
-      { currentTab === 0 && (
-        <DialogContent>
-          { !logged ? (
-            loginForm()
-          ) : ( 
+      <DialogContent>
+      <Tabs
+        value={ currentTab }
+        onChange={ handleTabChange }
+        scrollable
+        scrollButtons='on'
+        indicatorColor='secondary'
+        textColor='secondary'
+        style={{marginBottom: 20}}
+      >
+        <Tab value={ 0 } label='Solve issue' />
+        <Tab value={ 1 } label='Send the solution' />
+      </Tabs>
+      { currentTab === 0 &&
             <>
               { task.data &&
                 <>
@@ -228,13 +226,13 @@ const TaskSolve = ({
                   </ol>
                 </>
               }
-            </>)
+            </>
           }
-        </DialogContent>
-      ) }
-      { currentTab === 1 && (<React.Fragment>
-        { !logged ? ((loginForm())) : (<SendSolutionDialog task={ task.data } assignDialog={ open } handleAssignFundingDialogClose={ onClose } />) }
-      </React.Fragment>) }
+          { currentTab === 1 && (<React.Fragment>
+            { !logged ? ((loginForm())) : (<SendSolutionDialog task={ task.data } assignDialog={ open } handleAssignFundingDialogClose={ onClose } />) }
+          </React.Fragment>) }
+      </DialogContent>
+      
     </Dialog>
   )
 }

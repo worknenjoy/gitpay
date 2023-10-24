@@ -180,7 +180,7 @@ class TopBar extends Component {
   }
 
   handleClickMenuMobile = () => {
-    const isActive = this.state.isActive
+    const { isActive } = this.state
     this.setState({ isActive: !isActive })
   }
 
@@ -238,7 +238,7 @@ class TopBar extends Component {
 
   render () {
     const { completed, user, preferences, dialog } = this.props
-    const { mode } = this.state
+    const { mode, isActive } = this.state
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
     const userCurrentLanguage = currentUserLanguage(preferences)
@@ -246,7 +246,7 @@ class TopBar extends Component {
     return (
       <Bar>
         <Container>
-          <LeftSide isActive={ this.state.isActive }>
+          <LeftSide isActive={ isActive }>
             <div>
               <StyledButton href='/'>
                 <Logo src={ logo } />
@@ -324,10 +324,10 @@ class TopBar extends Component {
               variant='text'
               size='small'
             >
-              <IconHamburger isActive={ this.state.isActive } />
+              <IconHamburger isActive={ isActive } />
             </MenuMobile>
           </LeftSide>
-          <RightSide isActive={ this.state.isActive }>
+          <RightSide isActive={ isActive }>
             { !isLoggedIn
               ? (
                 <React.Fragment>

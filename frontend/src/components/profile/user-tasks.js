@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
+  Container,
   Button,
   Paper,
   Typography,
@@ -104,15 +105,19 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
   }
 
   return (
-    <Paper elevation={ 0 }>
-      <div style={ { marginTop: 40 } }>
+    <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
+      <Container>
+        <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
+          <FormattedMessage id='issues.title' defaultMessage='Issues' />
+        </Typography>
         <Tabs
           value={ currentTab }
           onChange={ handleTabChange }
           scrollable
           scrollButtons='on'
-          indicatorColor='primary'
-          textColor='primary'
+          indicatorColor='secondary'
+          textColor='secondary'
+          style={{marginTop: 20, marginBottom: 20}}
         >
            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
           <Tab
@@ -141,7 +146,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
             />
           }
         </Tabs>
-        <div style={ { padding: 8 * 3 } }>
+        <div style={{marginBottom: 20}}>
           { !user.id ? (
             <Card className={ classes.card }>
               <CardMedia
@@ -199,7 +204,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
             </>
           ) }
         </div>
-      </div>
+      </Container>
     </Paper>
   )
 }

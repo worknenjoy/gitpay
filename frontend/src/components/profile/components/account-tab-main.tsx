@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 
 import { Field } from '../account-details';
@@ -65,122 +65,124 @@ const AccountTabMain = ({
   }
 
   return (
-    <form>
-      <Grid container spacing={2}>
-        <Grid item xs={ 12 } md={ 12 }>
-            <fieldset className={ classes.fieldset }>
-              <legend className={ classes.legend }>
-                <Typography>
-                  <FormattedMessage id='account.provider' defaultMessage='Provider' />
-                </Typography>
-              </legend>
-              <Grid container spacing={2}>
-                <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
-                  <ProviderLoginButtons provider={provider} position='flex-start' textPosition='left' />
+    <Paper elevation={ 1 } style={{padding: 20}}>
+      <form>
+        <Grid container spacing={2}>
+          <Grid item xs={ 12 } md={ 12 }>
+              <fieldset className={ classes.fieldset }>
+                <legend className={ classes.legend }>
+                  <Typography>
+                    <FormattedMessage id='account.provider' defaultMessage='Provider' />
+                  </Typography>
+                </legend>
+                <Grid container spacing={2}>
+                  <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
+                    <ProviderLoginButtons provider={provider} position='flex-start' textPosition='left' />
+                  </Grid>
                 </Grid>
-              </Grid>
-            </fieldset>
-            <fieldset className={ classes.fieldset }>
-              <legend className={ classes.legend }>
-                <Typography>
-                  <FormattedMessage id='account.account' defaultMessage='Account' />
-                </Typography>
-              </legend>
-              <Grid container spacing={2}>
-                <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                  <FormattedMessage id='account.basic.name' defaultMessage='name'>
-                    { (msg) => (
-                      <Field
-                        onChange={ (e) => setFieldName(e.target.value) }
-                        name='name'
-                        label={ msg }
-                        value={ fieldName }
-                      />
-                    ) }
-                  </FormattedMessage>
+              </fieldset>
+              <fieldset className={ classes.fieldset }>
+                <legend className={ classes.legend }>
+                  <Typography>
+                    <FormattedMessage id='account.account' defaultMessage='Account' />
+                  </Typography>
+                </legend>
+                <Grid container spacing={2}>
+                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                    <FormattedMessage id='account.basic.name' defaultMessage='name'>
+                      { (msg) => (
+                        <Field
+                          onChange={ (e) => setFieldName(e.target.value) }
+                          name='name'
+                          label={ msg }
+                          value={ fieldName }
+                        />
+                      ) }
+                    </FormattedMessage>
+                  </Grid>
+                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                    <div style={{float: 'right'}}>
+                      <Button
+                        type='submit'
+                        variant='contained'
+                        color='secondary'
+                        onClick={ handleUpdateAccount }
+                      >
+                        <FormattedMessage id='account.user.actions.update' defaultMessage='Update Account' />
+                      </Button>
+                    </div>
+                  </Grid>
                 </Grid>
-                <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                  <div style={{float: 'right'}}>
-                    <Button
-                      type='submit'
-                      variant='contained'
-                      color='secondary'
-                      onClick={ handleUpdateAccount }
-                    >
-                      <FormattedMessage id='account.user.actions.update' defaultMessage='Update Account' />
-                    </Button>
-                  </div>
-                </Grid>
-              </Grid>
-            </fieldset>
-            <fieldset className={ classes.fieldset }>
-              <legend className={ classes.legend }>
-                <Typography>
-                  <FormattedMessage id='account.password.change.title' defaultMessage='Change password' />
-                </Typography>
-              </legend>
-              <Grid container spacing={2}>
-                <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                  <FormattedMessage id='account.basic.password.old' defaultMessage='Current password'>
-                    { (msg) => (
-                      <Field
-                        name='currentPassword'
-                        label={ msg }
+              </fieldset>
+              <fieldset className={ classes.fieldset }>
+                <legend className={ classes.legend }>
+                  <Typography>
+                    <FormattedMessage id='account.password.change.title' defaultMessage='Change password' />
+                  </Typography>
+                </legend>
+                <Grid container spacing={2}>
+                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                    <FormattedMessage id='account.basic.password.old' defaultMessage='Current password'>
+                      { (msg) => (
+                        <Field
+                          name='currentPassword'
+                          label={ msg }
+                          disabled={provider}
+                          onChange={ (e) => setCurrentPassword(e.target.value) }
+                          type='password'
+                        />
+                      ) }
+                    </FormattedMessage>
+                    <FormattedMessage id='account.basic.password.old' defaultMessage='New password'>
+                      { (msg) => (
+                        <Field
+                          name='newPassword'
+                          label={ msg }
+                          disabled={provider}
+                          onChange={ (e) => setNewPassword(e.target.value) }
+                          type='password'
+                        />
+                      ) }
+                    </FormattedMessage>
+                    <FormattedMessage id='account.basic.password.old' defaultMessage='Confirm new password'>
+                      { (msg) => (
+                        <Field
+                          name='confirmNewPassword'
+                          label={ msg }
+                          disabled={provider}
+                          onChange={ (e) => setConfirmNewPassword(e.target.value) }
+                          type='password'
+                        />
+                      ) }
+                    </FormattedMessage>
+                  </Grid>
+                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                    <div style={{float: 'right'}}>
+                      <Button
+                        type='submit'
+                        variant='contained'
+                        color='secondary'
                         disabled={provider}
-                        onChange={ (e) => setCurrentPassword(e.target.value) }
-                        type='password'
-                      />
-                    ) }
-                  </FormattedMessage>
-                  <FormattedMessage id='account.basic.password.old' defaultMessage='New password'>
-                    { (msg) => (
-                      <Field
-                        name='newPassword'
-                        label={ msg }
-                        disabled={provider}
-                        onChange={ (e) => setNewPassword(e.target.value) }
-                        type='password'
-                      />
-                    ) }
-                  </FormattedMessage>
-                  <FormattedMessage id='account.basic.password.old' defaultMessage='Confirm new password'>
-                    { (msg) => (
-                      <Field
-                        name='confirmNewPassword'
-                        label={ msg }
-                        disabled={provider}
-                        onChange={ (e) => setConfirmNewPassword(e.target.value) }
-                        type='password'
-                      />
-                    ) }
-                  </FormattedMessage>
+                        onClick={onChangePassword}
+                      >
+                        <FormattedMessage id='account.user.actions.update' defaultMessage='Change password' />
+                      </Button>
+                    </div>
+                  </Grid>
                 </Grid>
-                <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                  <div style={{float: 'right'}}>
-                    <Button
-                      type='submit'
-                      variant='contained'
-                      color='secondary'
-                      disabled={provider}
-                      onClick={onChangePassword}
-                    >
-                      <FormattedMessage id='account.user.actions.update' defaultMessage='Change password' />
-                    </Button>
-                  </div>
-                </Grid>
-              </Grid>
-            </fieldset>
-            <DeleteAccountButton
-              user={ user }
-              history={ history }
-              deleteUser={ deleteUser }
-            />
+              </fieldset>
+              <DeleteAccountButton
+                user={ user }
+                history={ history }
+                deleteUser={ deleteUser }
+              />
+          </Grid>
+          <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
+            
+          </Grid>
         </Grid>
-        <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
-          
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </Paper>
   );
 }
 

@@ -5,7 +5,6 @@ import MomentComponent from 'moment'
 import ReactPlaceholder from 'react-placeholder'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import ShowMoreText from 'react-show-more-text'
-import AssignActions from './assignment/AssignActions'
 
 import { messages } from './messages/task-messages'
 import TaskInviteCard from './task-invite-card'
@@ -16,6 +15,7 @@ import renderHTML from 'react-render-html'
 import { marked } from 'marked'
 
 import {
+  Avatar,
   Container,
   Chip,
   Dialog,
@@ -30,8 +30,7 @@ import {
   DialogContentText,
   MobileStepper,
   Fab,
-  Collapse,
-  Tooltip
+  Collapse
 } from '@material-ui/core'
 
 import {
@@ -60,6 +59,9 @@ import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'
 import TaskLevelSplitButton from './task-level-split-button'
 import TaskDeadlineForm from './task-deadline-form'
+
+import TaskStatusIcons from './task-status-icons'
+import TaskStatusDropdown from './task-status-dropdown'
 
 import Constants from '../../consts'
 
@@ -153,6 +155,28 @@ const styles = theme => ({
   smallAvatar: {
     width: 32,
     height: 32
+  },
+  chipStatusSuccess: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.success
+  },
+  chipStatusClosed: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.error.main
+  },
+  avatarStatusSuccess: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.primary.success,
+  },
+  avatarStatusClosed: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.error.main,
   },
   parentCard: {
     marginTop: 40,
@@ -355,7 +379,6 @@ class Task extends Component {
     super(props)
 
     this.state = {
-      logged: null,
       deadline: null,
       assigned: null,
       finalPrice: 0,
@@ -395,21 +418,12 @@ class Task extends Component {
     }
   }
 
-  async componentWillMount () {
+  async componentDidMount () {
     const id = this.props.match.params.id
     const status = this.props.match.params.status
     const orderId = this.props.match.params.order_id
     const slug = this.props.match.params.slug
-
-    let logged = false
-    try {
-      logged = await this.props.isLogged()
-      this.setState({ logged })
-    }
-    catch (e) {
-      logged = false
-      this.setState({ logged })
-    }
+    const { logged } = this.props
 
     try {
       await this.props.syncTask(id)
@@ -426,43 +440,6 @@ class Task extends Component {
       else {
         this.props.addNotification('actions.task.status.forbidden')
         this.props.history.push(`/task/${id}`)
-      }
-    }
-
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/orders`) {
-      this.props.changeTab(1)
-    }
-    if (this.props.history && orderId && this.props.history.location.pathname === `/task/${id}/orders/${orderId}`) {
-      this.props.changeTab(1)
-    }
-    if (
-      this.props.history && (
-        this.props.history.location.pathname === `/task/${id}/interested` || this.props.history.location.pathname === `/task/${id}/${slug}/interested`
-      )
-    ) {
-      this.setState({ assignIssueDialog: true })
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/members`) {
-      this.props.changeTab(3)
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/offers`) {
-      this.props.changeTab(4)
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/history`) {
-      this.props.changeTab(5)
-    }
-    if (this.props.history && this.props.history.location.pathname === `/task/${id}/status`) {
-      if (logged) {
-        if (this.props.task.data && this.props.task.data.user && (logged.user.id === this.props.task.data.user.id)) {
-          this.handleStatusDialog()
-        }
-        else {
-          this.props.addNotification('actions.task.status.forbidden')
-          this.props.history.push(`/task/${id}`)
-        }
-      }
-      else {
-        this.props.history.push({ pathname: '/login', state: { from: { pathname: `/task/${id}/status` } } })
       }
     }
 
@@ -488,17 +465,6 @@ class Task extends Component {
         localStorage.setItem('hadFirstTask', true)
       }
     }
-  }
-
-  handleTabChange = (event, tab) => {
-    const id = this.props.match.params.id
-    if (tab === 0) this.props.history.push(`/task/${id}`)
-    if (tab === 1) this.props.history.push(`/task/${id}/orders`)
-    if (tab === 2) this.props.history.push(`/task/${id}/interested`)
-    if (tab === 3) this.props.history.push(`/task/${id}/members`)
-    if (tab === 4) this.props.history.push(`/task/${id}/offers`)
-    if (tab === 5) this.props.history.push(`/task/${id}/history`)
-    this.props.changeTab(tab)
   }
 
   handleAssignFundingDialogClose = () => {
@@ -772,7 +738,7 @@ class Task extends Component {
           variant='contained'
           disabled={ this.props.task.data.paid || this.props.task.data.status === 'closed' }
           fullWidth
-          style={{marginRight: 5}}
+          style={ { marginRight: 5 } }
         >
           <span>
             <FormattedMessage id='task.bounties.payment.add' defaultMessage='Make a payment' />
@@ -788,7 +754,7 @@ class Task extends Component {
             color='secondary'
             variant='contained'
             fullWidth
-            style={{marginLeft: 5}}
+            style={ { marginLeft: 5 } }
           >
             <span>
               <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
@@ -808,13 +774,8 @@ class Task extends Component {
   }
 
   render () {
-    const { classes, task, project, order } = this.props
+    const { classes, task, project, order, noTopBar, noBottomBar } = this.props
     const { taskSolveDialog } = this.state
-
-    const assignActions = assign => {
-      const task = this.props.task.data
-      return <AssignActions hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } createOrder={ this.props.createOrder } />
-    }
 
     // Error handling when task does not exist
     if (task.completed && !task.values) {
@@ -833,47 +794,6 @@ class Task extends Component {
     const deadline = task.data.deadline !== null ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days') : false
 
     const firstStepsContent = this.handleFirstTaskContent()
-
-    const isAssignOwner = () => {
-      return this.taskOwner() || isCurrentUserAssigned()
-    }
-
-    const isCurrentUserAssigned = () => {
-      return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
-    }
-
-    const displayAssigns = assign => {
-      if (!assign.length) {
-        return []
-      }
-
-      const items = assign.map((item, i) => {
-        const userField = () => (
-          <span>
-            { item.User && item.User.profile_url
-              ? (
-                <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
-                  { (msg) => (
-                    <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                      <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
-                        <span>{ item.User.username || item.User.name || ' - ' }</span>
-                        <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
-                      </a>
-                    </Tooltip>
-                  ) }
-                </FormattedMessage>
-              ) : (
-                `${item.User.username || item.User.name || ' - '}`
-              )
-            }
-          </span>
-        )
-
-        return [userField(), MomentComponent(item.updatedAt).fromNow(), assignActions(item)]
-      })
-
-      return items
-    }
 
     return (
       <div>
@@ -933,7 +853,9 @@ class Task extends Component {
             }
           />
         </Dialog>
-        <TopBarContainer />
+        { noTopBar ? null : (
+          <TopBarContainer />
+        ) }
         <Grid container style={ { marginBottom: 4 } }>
           <Grid item xs={ 12 } sm={ 12 } md={ 8 } style={ { marginBottom: 40, paddingRight: 40 } }>
             <Container fixed maxWidth='lg'>
@@ -1104,6 +1026,38 @@ class Task extends Component {
           </Grid>
           <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 12 } md={ 4 }>
             <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
+
+              <div style={ { textAlign: 'center' } }>
+                <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                  <FormattedMessage id='task.publicy.label' defaultMessage='Publicy' />
+                </Typography>
+                <div>
+                  <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
+                </div>
+              </div>
+              { task.data.status &&
+              <div style={ { textAlign: 'center' } }>
+                <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                  <FormattedMessage id='task.status.label' defaultMessage='Status' />
+                </Typography>
+                <div>
+                  { this.props.user && this.props.user.id && this.taskOwner() && task.data.status && task.data && task.data.id
+                    ? <TaskStatusDropdown
+                        onSelect={ (status) => this.props.updateTask({ id: task.data.id, status: status }) }
+                        status={ task.data.status }
+                    />
+                    : <Chip
+                        label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                        avatar={ <Avatar className={ task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
+                        className={ task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
+                    />
+                  }
+                </div>
+              </div>
+              }
+
+            </div>
+            <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
               { task.data.level && !this.taskOwner() &&
               <div style={ { textAlign: 'center' } }>
                 <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
@@ -1249,7 +1203,7 @@ class Task extends Component {
                     disabled={ task.data.paid || task.data.status !== 'open' }
                   >
                     <FormattedMessage id='task.interested.button.label' defaultMessage='Solve issue' />
-                    <HowToRegIcon style={{marginLeft: 10}} />
+                    <HowToRegIcon style={ { marginLeft: 10 } } />
                   </Button>
                 </div>
               )
@@ -1317,7 +1271,9 @@ class Task extends Component {
             />
           </Grid>
         </Grid>
-        <Bottom />
+        { noBottomBar ? null : (
+          <Bottom />
+        ) }
       </div>
     )
   }

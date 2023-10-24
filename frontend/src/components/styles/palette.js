@@ -19,7 +19,7 @@ const Palette = {
     },
     h5: {
       fontWeight: 500,
-      fontSize: 18,
+      fontSize: 21,
       lineHeight: '24px',
       color: '#353A42'
     },
@@ -53,15 +53,15 @@ const Palette = {
     */
     primary: {
       light: '#E2E5EA',
-      main: teal[500],
+      main: '#2c5c46',
       dark: '#353A42',
       contrastText: grey[100],
       success: green[400],
       error: '#FF0000'
     },
     secondary: {
-      light: indigo[100],
-      main: '#000',
+      light: '#d0722a',
+      main: '#d0722a',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#fff',
     },
@@ -77,14 +77,22 @@ const Palette = {
     },
     MuiTabs: {
       root: {
-        background: 'none',
+        background: 'transparent'
         // color: '#000'
+      }
+    },
+    MuiTab: {
+      root: {
+        textTransform: 'none',
+        minWidth: '72px !important',
+        padding: 0,
+        margin: '0 24px 0 0',
       }
     },
     MuiMenuItem: {
       root: {
         '&:hover': {
-          backgroundColor: '#E2E5EA',
+
           borderRadius: 8,
           // color: 'white'
         },

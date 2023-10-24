@@ -26,7 +26,15 @@ export default function AccountHeader({
   }
 
   return (
-    <div style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginTop: 20 } }>
+    <div 
+      style={ { 
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'end',
+        backgroundColor: '#fff',
+        padding: '10px 20px',
+      } }
+    >
       <div></div>
       <div style={ {
         display: 'flex',
