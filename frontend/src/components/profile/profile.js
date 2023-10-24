@@ -249,7 +249,6 @@ class Profile extends Component {
   render () {
     const { classes, user, roles } = this.props
     const { emailNotVerifiedDialog } = this.state
-    
 
     let titleNavigation = this.getTitleNavigation()
 
@@ -299,7 +298,7 @@ class Profile extends Component {
         }
         <PageContent>
           <Grid container className={ classes.root } spacing={ 0 }>
-            { user && 
+            { user &&
               <ProfileSideBar
                 classes={ classes }
                 user={ user }
@@ -384,15 +383,15 @@ class Profile extends Component {
                         component={ PaymentsContainer }
                       />
                     }
-                    <Route 
+                    <Route
                       exact
                       path='/profile/task/:id'
-                      component={ (props) => <TaskContainer noTopBar noBottomBar {...props} /> } 
+                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
-                    <Route 
+                    <Route
                       exact
                       path='/profile/task/:id/:slug'
-                      component={ (props) => <TaskContainer noTopBar noBottomBar {...props} /> } 
+                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
                   </Switch>
                 </HashRouter>

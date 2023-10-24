@@ -738,7 +738,7 @@ class Task extends Component {
           variant='contained'
           disabled={ this.props.task.data.paid || this.props.task.data.status === 'closed' }
           fullWidth
-          style={{marginRight: 5}}
+          style={ { marginRight: 5 } }
         >
           <span>
             <FormattedMessage id='task.bounties.payment.add' defaultMessage='Make a payment' />
@@ -754,7 +754,7 @@ class Task extends Component {
             color='secondary'
             variant='contained'
             fullWidth
-            style={{marginLeft: 5}}
+            style={ { marginLeft: 5 } }
           >
             <span>
               <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
@@ -1025,8 +1025,8 @@ class Task extends Component {
             </Container>
           </Grid>
           <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 12 } md={ 4 }>
-          <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
-              
+            <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
+
               <div style={ { textAlign: 'center' } }>
                 <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
                   <FormattedMessage id='task.publicy.label' defaultMessage='Publicy' />
@@ -1055,7 +1055,7 @@ class Task extends Component {
                 </div>
               </div>
               }
-              
+
             </div>
             <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
               { task.data.level && !this.taskOwner() &&
@@ -1203,7 +1203,7 @@ class Task extends Component {
                     disabled={ task.data.paid || task.data.status !== 'open' }
                   >
                     <FormattedMessage id='task.interested.button.label' defaultMessage='Solve issue' />
-                    <HowToRegIcon style={{marginLeft: 10}} />
+                    <HowToRegIcon style={ { marginLeft: 10 } } />
                   </Button>
                 </div>
               )
@@ -1273,7 +1273,7 @@ class Task extends Component {
         </Grid>
         { noBottomBar ? null : (
           <Bottom />
-        )}
+        ) }
       </div>
     )
   }

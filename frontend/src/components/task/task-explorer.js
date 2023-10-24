@@ -154,14 +154,14 @@ const TaskExplorer = (props) => {
       <PageContent>
         { state.showNavigation &&
           <Container maxWidth='lg'>
-            <Typography variant='h5' gutterBottom style={{ marginTop: 40 }}>
+            <Typography variant='h5' gutterBottom style={ { marginTop: 40 } }>
               { props.intl.formatMessage(messages.issuesTitle) }
             </Typography>
             <Tabs
               variant='scrollable'
               value={ state.value ? state.value : 0 }
               onChange={ handleSectionTab }
-              style={{ marginTop: 20, marginBottom: 20 }}
+              style={ { marginTop: 20, marginBottom: 20 } }
               textColor='secondary'
               indicatorColor='secondary'
             >
@@ -181,7 +181,7 @@ const TaskExplorer = (props) => {
                 label={ props.intl.formatMessage(messages.organizationsLabel) }
               />
             </Tabs>
-          </Container> 
+          </Container>
         }
         <Container fixed maxWidth='lg'>
           <Grid container className={ classes.root }>

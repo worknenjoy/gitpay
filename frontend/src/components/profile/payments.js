@@ -296,7 +296,7 @@ class Payments extends React.Component {
             <FormattedMessage id='general.payments' defaultMessage='Payments' />
           </Typography>
           <div style={ { marginTop: 40, marginBottom: 30 } }>
-            <CustomPaginationActionsTable 
+            <CustomPaginationActionsTable
               tableHead={ [
                 this.props.intl.formatMessage(messages.cardTableHeaderPaid),
                 this.props.intl.formatMessage(messages.cardTableHeaderStatus),
@@ -307,8 +307,8 @@ class Payments extends React.Component {
                 this.props.intl.formatMessage(messages.cardTableHeaderActions)
               ] }
               payments={
-                orders && orders.data && orders.data.length ? 
-                  {...orders, data: displayOrders(orders.data)} : []
+                orders && orders.data && orders.data.length
+                  ? { ...orders, data: displayOrders(orders.data) } : []
               }
             />
           </div>

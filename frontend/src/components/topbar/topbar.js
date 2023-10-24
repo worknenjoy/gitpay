@@ -318,7 +318,7 @@ class TopBar extends Component {
                 </LabelButton>
               </LinkButton>
             </div>
-            
+
             <MenuMobile
               onClick={ this.handleClickMenuMobile }
               variant='text'

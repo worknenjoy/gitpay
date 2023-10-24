@@ -176,9 +176,9 @@ class TaskHeader extends React.Component {
           <ReactPlaceholder customPlaceholder={ headerPlaceholder } showLoadingAnimation
             ready={ task.completed }
           >
-            <Typography variant='h5' gutterBottom title={task.data.title}>
+            <Typography variant='h5' gutterBottom title={ task.data.title }>
               <strong>
-                {task.data.title || 'no title'}
+                { task.data.title || 'no title' }
               </strong>
             </Typography>
           </ReactPlaceholder>

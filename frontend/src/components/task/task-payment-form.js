@@ -84,8 +84,8 @@ class TaskPaymentForm extends Component {
 
     return (
       <div>
-        <Dialog 
-          open={ this.props.open } onClose={this.props.onClose}
+        <Dialog
+          open={ this.props.open } onClose={ this.props.onClose }
           aria-labelledby='form-dialog-title'
           maxWidth='md'
         >

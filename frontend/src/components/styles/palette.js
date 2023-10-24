@@ -92,7 +92,7 @@ const Palette = {
     MuiMenuItem: {
       root: {
         '&:hover': {
-         
+
           borderRadius: 8,
           // color: 'white'
         },

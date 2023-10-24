@@ -159,7 +159,7 @@ class Preferences extends Component {
     })
 
     return (
-      <Paper elevation={ 1 } style={{padding: 20}}>
+      <Paper elevation={ 1 } style={ { padding: 20 } }>
         <Grid container alignItems='center' spacing={ 1 }>
           <Grid item xs={ 12 }>
             <Typography variant='h5' className={ classes.title } gutterBottom>
