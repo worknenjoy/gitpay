@@ -178,22 +178,8 @@ class TaskHeader extends React.Component {
           >
             <Typography variant='h5' gutterBottom title={task.data.title}>
               <strong>
-                { TextEllipsis(`${task.data.title || 'no title'}`, 72) }
+                {task.data.title || 'no title'}
               </strong>
-              <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
-              <div style={ { float: 'right', verticalAlign: 'unset' } }>
-                { user && user.id && taskOwner && task.data.status && task.data && task.data.id
-                  ? <TaskStatusDropdown
-                      onSelect={ (status) => updateTask({ id: task.data.id, status: status }) }
-                      status={ task.data.status }
-                  />
-                  : <Chip
-                      label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
-                      avatar={ <Avatar className={ task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
-                      className={ task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
-                  />
-                }
-              </div>
             </Typography>
           </ReactPlaceholder>
           <Typography variant='caption' style={ { display: 'inline-block', marginBottom: 20 } }>

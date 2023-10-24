@@ -5,7 +5,6 @@ import MomentComponent from 'moment'
 import ReactPlaceholder from 'react-placeholder'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import ShowMoreText from 'react-show-more-text'
-import AssignActions from './assignment/AssignActions'
 
 import { messages } from './messages/task-messages'
 import TaskInviteCard from './task-invite-card'
@@ -16,6 +15,7 @@ import renderHTML from 'react-render-html'
 import { marked } from 'marked'
 
 import {
+  Avatar,
   Container,
   Chip,
   Dialog,
@@ -30,8 +30,7 @@ import {
   DialogContentText,
   MobileStepper,
   Fab,
-  Collapse,
-  Tooltip
+  Collapse
 } from '@material-ui/core'
 
 import {
@@ -60,6 +59,9 @@ import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'
 import TaskLevelSplitButton from './task-level-split-button'
 import TaskDeadlineForm from './task-deadline-form'
+
+import TaskStatusIcons from './task-status-icons'
+import TaskStatusDropdown from './task-status-dropdown'
 
 import Constants from '../../consts'
 
@@ -153,6 +155,28 @@ const styles = theme => ({
   smallAvatar: {
     width: 32,
     height: 32
+  },
+  chipStatusSuccess: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.success
+  },
+  chipStatusClosed: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.error.main
+  },
+  avatarStatusSuccess: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.primary.success,
+  },
+  avatarStatusClosed: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.error.main,
   },
   parentCard: {
     marginTop: 40,
@@ -753,11 +777,6 @@ class Task extends Component {
     const { classes, task, project, order, noTopBar, noBottomBar } = this.props
     const { taskSolveDialog } = this.state
 
-    const assignActions = assign => {
-      const task = this.props.task.data
-      return <AssignActions hash={ this.props.hash } actionAssign={ this.props.actionAssign } loggedUser={ this.props.user } isOwner={ isAssignOwner() } assign={ assign } task={ task } removeAssignment={ this.props.removeAssignment } assignTask={ this.props.assignTask } messageTask={ this.props.messageTask } createOrder={ this.props.createOrder } />
-    }
-
     // Error handling when task does not exist
     if (task.completed && !task.values) {
       this.props.history.push('/404')
@@ -775,14 +794,6 @@ class Task extends Component {
     const deadline = task.data.deadline !== null ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days') : false
 
     const firstStepsContent = this.handleFirstTaskContent()
-
-    const isAssignOwner = () => {
-      return this.taskOwner() || isCurrentUserAssigned()
-    }
-
-    const isCurrentUserAssigned = () => {
-      return task.data && task.data.assignedUser && task.data.assignedUser.id === this.props.user.id
-    }
 
     return (
       <div>
@@ -1014,6 +1025,38 @@ class Task extends Component {
             </Container>
           </Grid>
           <Grid style={ { backgroundColor: '#eee', padding: 25 } } item xs={ 12 } sm={ 12 } md={ 4 }>
+          <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
+              
+              <div style={ { textAlign: 'center' } }>
+                <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                  <FormattedMessage id='task.publicy.label' defaultMessage='Publicy' />
+                </Typography>
+                <div>
+                  <TaskStatusIcons status={ task.data.private ? 'private' : 'public' } bounty />
+                </div>
+              </div>
+              { task.data.status &&
+              <div style={ { textAlign: 'center' } }>
+                <Typography variant='caption' style={ { textTransform: 'uppercase' } }>
+                  <FormattedMessage id='task.status.label' defaultMessage='Status' />
+                </Typography>
+                <div>
+                  { this.props.user && this.props.user.id && this.taskOwner() && task.data.status && task.data && task.data.id
+                    ? <TaskStatusDropdown
+                        onSelect={ (status) => this.props.updateTask({ id: task.data.id, status: status }) }
+                        status={ task.data.status }
+                    />
+                    : <Chip
+                        label={ this.props.intl.formatMessage(Constants.STATUSES[task.data.status]) }
+                        avatar={ <Avatar className={ task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
+                        className={ task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
+                    />
+                  }
+                </div>
+              </div>
+              }
+              
+            </div>
             <div style={ { display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' } }>
               { task.data.level && !this.taskOwner() &&
               <div style={ { textAlign: 'center' } }>

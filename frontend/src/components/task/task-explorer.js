@@ -4,7 +4,7 @@ import { defineMessages, injectIntl } from 'react-intl'
 
 import {
   Container,
-  AppBar,
+  Typography,
   Tabs,
   Tab,
   Grid,
@@ -71,6 +71,10 @@ const styles = theme => ({
 })
 
 const messages = defineMessages({
+  issuesTitle: {
+    id: 'task.list.issue.title',
+    defaultMessage: 'Explore issues, projects and organizations'
+  },
   issuesLabel: {
     id: 'task.list.issue.label',
     defaultMessage: 'Issues'
@@ -149,31 +153,33 @@ const TaskExplorer = (props) => {
       <TopBarContainer />
       <PageContent>
         { state.showNavigation &&
-          <AppBar position='sticky' elevation={ 0 }>
-            <Container maxWidth='lg'>
-              <Tabs
-                variant='scrollable'
-                value={ state.value ? state.value : 0 }
-                onChange={ handleSectionTab }
-              >
-                <Tab
-                  id='issues'
-                  value={ 0 }
-                  label={ props.intl.formatMessage(messages.issuesLabel) }
-                />
-                <Tab
-                  id='projects'
-                  value={ 1 }
-                  label={ props.intl.formatMessage(messages.projectsLabel) }
-                />
-                <Tab
-                  id='organizations'
-                  value={ 2 }
-                  label={ props.intl.formatMessage(messages.organizationsLabel) }
-                />
-              </Tabs>
-            </Container>
-          </AppBar>
+          <Container maxWidth='lg'>
+            <Typography variant='h5' gutterBottom style={{ marginTop: 40 }}>
+              { props.intl.formatMessage(messages.issuesTitle) }
+            </Typography>
+            <Tabs
+              variant='scrollable'
+              value={ state.value ? state.value : 0 }
+              onChange={ handleSectionTab }
+              style={{ marginTop: 20, marginBottom: 20 }}
+            >
+              <Tab
+                id='issues'
+                value={ 0 }
+                label={ props.intl.formatMessage(messages.issuesLabel) }
+              />
+              <Tab
+                id='projects'
+                value={ 1 }
+                label={ props.intl.formatMessage(messages.projectsLabel) }
+              />
+              <Tab
+                id='organizations'
+                value={ 2 }
+                label={ props.intl.formatMessage(messages.organizationsLabel) }
+              />
+            </Tabs>
+          </Container> 
         }
         <Container fixed maxWidth='lg'>
           <Grid container className={ classes.root }>

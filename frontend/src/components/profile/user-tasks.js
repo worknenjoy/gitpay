@@ -108,7 +108,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
     <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
       <Container>
         <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
-          <FormattedMessage id='task.user.account.tasks' defaultMessage='Issues' />
+          <FormattedMessage id='issues.title' defaultMessage='Issues' />
         </Typography>
         <Tabs
           value={ currentTab }
@@ -117,7 +117,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
           scrollButtons='on'
           indicatorColor='secondary'
           textColor='secondary'
-          style={{marginTop: 20}}
+          style={{marginTop: 20, marginBottom: 20}}
         >
            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
           <Tab
@@ -146,7 +146,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
             />
           }
         </Tabs>
-        <div style={ { padding: '24px 0' } }>
+        <div style={{marginBottom: 20}}>
           { !user.id ? (
             <Card className={ classes.card }>
               <CardMedia

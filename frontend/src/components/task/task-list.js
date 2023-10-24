@@ -15,9 +15,6 @@ import CustomPaginationActionsTable from './task-table'
 import ProjectListSimple from '../project/project-list-simple'
 
 const styles = theme => ({
-  icon: {
-    backgroundColor: 'black'
-  },
   card: {},
   gutterLeft: {
     marginLeft: 10
@@ -30,11 +27,10 @@ const styles = theme => ({
     marginBottom: theme.spacing(3),
   },
   button: {
-    backgroundColor: theme.palette.primary.light
+    
   },
   buttonActive: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.contrastText
+    
   }
 })
 
@@ -165,9 +161,9 @@ const TaskList = (props) => {
   const { classes } = props
   const TabContainer = props => {
     return (
-      <Typography component='div' style={ { padding: 8 * 3 } }>
+      <div>
         { props.children }
-      </Typography>
+      </div>
     )
   }
 
@@ -209,12 +205,6 @@ const TaskList = (props) => {
             </Typography>
           </React.Fragment>
         }
-        <Typography component='p' style={ { marginBottom: 20, marginTop: 20 } }>
-          <FormattedMessage
-            id='task.list.description'
-            defaultMessage='Available issues'
-          />
-        </Typography>
         <div className={ classes.rootTabs }>
           <TaskFilter
             filterTasks={ props.filterTasks }
