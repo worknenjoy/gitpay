@@ -29,8 +29,8 @@ class PaymentOptions extends Component {
 
   render () {
     return (
-      <Paper elevation={ 0 }>
-        <Typography variant='h5' component='h3' style={ { marginBottom: 10, marginTop: 20 } }>
+      <Paper elevation={ 1 } style={{padding: 20 }}>
+        <Typography variant='h5' component='h3' gutterBottom>
           <FormattedMessage id='payment.headline' defaultMessage='Bank account' />
         </Typography>
         <Typography component='p' color='textSecondary' style={ { marginBottom: 5 } }>

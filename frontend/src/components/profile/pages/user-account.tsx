@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Container } from '@material-ui/core';
 import AccountTabs from '../components/account-tabs';
 
 
@@ -12,9 +12,10 @@ export const UserAccount = ({
   deleteUser
 }) => {
   return (
+    <Container>
     <Grid container spacing={2}>
-      <Grid item xs={ 12 } md={ 12 }>
-          <Typography variant='h6' gutterBottom>
+        <Grid item xs={ 12 } md={ 12 }>
+          <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
             <FormattedMessage id='user.account.page.title' defaultMessage='Account' />
           </Typography>
         </Grid>
@@ -28,6 +29,7 @@ export const UserAccount = ({
           />
         </Grid>
     </Grid>
+    </Container>
   )
 }
 

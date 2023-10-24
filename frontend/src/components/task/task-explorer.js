@@ -162,6 +162,8 @@ const TaskExplorer = (props) => {
               value={ state.value ? state.value : 0 }
               onChange={ handleSectionTab }
               style={{ marginTop: 20, marginBottom: 20 }}
+              textColor='secondary'
+              indicatorColor='secondary'
             >
               <Tab
                 id='issues'

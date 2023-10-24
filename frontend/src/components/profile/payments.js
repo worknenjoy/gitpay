@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../task/messages/task-messages'
-import Table from '../Table/Table'
 import MomentComponent from 'moment'
 import PaymentTypeIcon from '../payment/payment-type-icon'
 
 import {
+  Container,
   Tabs,
   Tab,
   withStyles,
@@ -30,6 +30,7 @@ import TaskPaymentCancel from '../task/task-payment-cancel'
 import TaskOrderDetails from '../task/order/task-order-details'
 import TaskOrderTransfer from '../task/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
+import CustomPaginationActionsTable from './payments-table'
 
 const styles = theme => ({
   paper: {
@@ -289,32 +290,29 @@ class Payments extends React.Component {
     }
 
     return (
-      <div style={ { marginTop: 20 } }>
-        <Tabs
-          value={ 0 }
-          onChange={ this.props.handleTabChange }
-          scrollable
-          scrollButtons='on'
-          indicatorColor='primary'
-          textColor='primary'
-        >
-          <Tab label={ this.props.intl.formatMessage(messages.taskLabel) } icon={ <RedeemIcon /> } />
-        </Tabs>
-        <div style={ { marginTop: 20, marginBottom: 30, marginRight: 20, marginLeft: 20 } }>
-          <Table
-            tableHeaderColor='warning'
-            tableHead={ [
-              this.props.intl.formatMessage(messages.cardTableHeaderPaid),
-              this.props.intl.formatMessage(messages.cardTableHeaderStatus),
-              this.props.intl.formatMessage(messages.cardTableHeaderIssue),
-              this.props.intl.formatMessage(messages.cardTableHeaderValue),
-              this.props.intl.formatMessage(messages.cardTableHeaderPayment),
-              this.props.intl.formatMessage(messages.cardTableHeaderCreated),
-              this.props.intl.formatMessage(messages.cardTableHeaderActions)
-            ] }
-            tableData={ orders && orders.data && orders.data.length ? displayOrders(orders.data) : [] }
-          />
-        </div>
+      <div style={ { marginTop: 40 } }>
+        <Container>
+          <Typography variant='h5' gutterBottom>
+            <FormattedMessage id='general.payments' defaultMessage='Payments' />
+          </Typography>
+          <div style={ { marginTop: 40, marginBottom: 30 } }>
+            <CustomPaginationActionsTable 
+              tableHead={ [
+                this.props.intl.formatMessage(messages.cardTableHeaderPaid),
+                this.props.intl.formatMessage(messages.cardTableHeaderStatus),
+                this.props.intl.formatMessage(messages.cardTableHeaderIssue),
+                this.props.intl.formatMessage(messages.cardTableHeaderValue),
+                this.props.intl.formatMessage(messages.cardTableHeaderPayment),
+                this.props.intl.formatMessage(messages.cardTableHeaderCreated),
+                this.props.intl.formatMessage(messages.cardTableHeaderActions)
+              ] }
+              payments={
+                orders && orders.data && orders.data.length ? 
+                  {...orders, data: displayOrders(orders.data)} : []
+              }
+            />
+          </div>
+        </Container>
         <TaskPaymentCancel
           cancelPaypalConfirmDialog={ this.state.cancelPaypalConfirmDialog }
           handlePayPalDialogClose={ this.handlePayPalDialogClose }

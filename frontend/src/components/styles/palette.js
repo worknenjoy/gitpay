@@ -60,7 +60,7 @@ const Palette = {
       error: '#FF0000'
     },
     secondary: {
-      light: indigo[100],
+      light: '#d0722a',
       main: '#d0722a',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#fff',
