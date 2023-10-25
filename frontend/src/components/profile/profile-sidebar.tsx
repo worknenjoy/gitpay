@@ -132,6 +132,7 @@ const ProfileSidebar = ({
                     </MenuItem>
                   }
                 </MenuList>
+                { /* 
                 <MenuList style={ { marginTop: 'auto' } }>
                   <MenuItem button onClick={ handleSignOut } className={classes.menuItem}>
                     <ListItemIcon className={classes.icon}>
@@ -142,6 +143,7 @@ const ProfileSidebar = ({
                     </ListItemText>
                   </MenuItem>
                 </MenuList>
+                */}
               </div>
             </div>
             { false &&
