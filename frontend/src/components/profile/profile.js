@@ -68,12 +68,15 @@ const styles = theme => ({
     width: '100%'
   },
   menuItem: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+    /*
+    '&:hover': {
+      backgroundColor: theme.palette.primary.light,
+      color: theme.palette.primary.contrastText,
       '& $primary, & $icon': {
-        color: theme.palette.common.white
+        color: theme.palette.primary.main
       }
     }
+    */
   },
   primary: {
     color: theme.palette.primary.contrastText

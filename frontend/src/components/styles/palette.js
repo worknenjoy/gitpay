@@ -91,16 +91,16 @@ const Palette = {
     },
     MuiMenuItem: {
       root: {
+        /*
         '&:hover': {
-
           borderRadius: 8,
-          // color: 'white'
         },
         '&:focus': {
           backgroundColor: '#E2E5EA',
           borderRadius: 8,
           // color: 'white'
         }
+        */
       }
     },
     MuiListItemIcon: {

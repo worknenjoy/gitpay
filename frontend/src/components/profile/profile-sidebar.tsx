@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Button, MenuList, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Home, Business, LibraryBooks, ExitToApp, Payment as PaymentIcon } from '@material-ui/icons'
+import { Home, Business, LibraryBooks, Payment as PaymentIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 import logo from '../../images/gitpay-logo.png'
 import {
@@ -16,11 +16,24 @@ import api from '../../consts'
 const ProfileSidebar = ({
   classes,
   user,
-  history,
-  handleSignOut
+  history
 }) => {
   const [selected, setSelected] = useState(0)
   const userTypes = user.Types && user.Types.map(t => t.name)
+
+  useEffect(() => {
+    const path = history.location.pathname
+    if (path.includes('/profile/tasks')) {
+      setSelected(4)
+    } else if (path.includes('/profile/user/orgs')) {
+      setSelected(3)
+    } else if (path.includes('/profile/payments')) {
+      setSelected(5)
+    } else {
+      setSelected(0)
+    }
+  }, [history.location.pathname])
+
   return (
     <Grid item xs={ 12 } md={ 2 } spacing={ 0 } className={ classes.sidePaper }>
       <div>
@@ -40,11 +53,10 @@ const ProfileSidebar = ({
               } }>
                 <MenuList>
                   <MenuItem
-                    onClick={ () =>
-                      history.push('/profile')
-                    }
+                    onClick={ (e) => history.push('/profile')}
                     className={ classes.menuItem }
                     selected={ selected === 0 }
+                    
                   >
                     <ListItemIcon className={ classes.icon }>
                       <Home />
@@ -63,7 +75,7 @@ const ProfileSidebar = ({
                   </MenuItem>
                   { userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')) &&
                     <MenuItem
-                      onClick={ (e) => history.push('/profile/tasks') }
+                      onClick={ (e) => history.push('/profile/tasks')}
                       className={ classes.menuItem }
                       selected={ selected === 4 }
                     >
@@ -132,18 +144,6 @@ const ProfileSidebar = ({
                     </MenuItem>
                   }
                 </MenuList>
-                { /* 
-                <MenuList style={ { marginTop: 'auto' } }>
-                  <MenuItem button onClick={ handleSignOut } className={classes.menuItem}>
-                    <ListItemIcon className={classes.icon}>
-                      <ExitToApp />
-                    </ListItemIcon>
-                    <ListItemText classes={ { primary: classes.primary } }>
-                      <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
-                    </ListItemText>
-                  </MenuItem>
-                </MenuList>
-                */}
               </div>
             </div>
             { false &&

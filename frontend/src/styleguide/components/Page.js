@@ -10,6 +10,5 @@ export const PageContent = styled.div`
 `
 
 export const Page = styled.div`
-  outline: 1px solid red;
   overflow-x: hidden;
 `
