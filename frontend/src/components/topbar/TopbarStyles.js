@@ -28,6 +28,7 @@ export const Side = styled.div`
   display: flex;
 `
 export const MenuMobile = styled(Button)`
+    margin: 10px 0;
     @media (min-width: 37.5em) {
       display: none;
       visibility: hidden;
@@ -123,7 +124,7 @@ export const RightSide = styled(Side)`
     justify-content: center;
     align-items: center;
     transform: translateY(-100%);
-    transition: all  ease-in-out 400ms;
+    transition: all ease-in-out 400ms;
     z-index: 1200;
 
   ${({ isActive }) => isActive && css`
@@ -133,10 +134,10 @@ export const RightSide = styled(Side)`
 
     ${({ isActive }) => {
     if (isActive) {
-      document.body.style.overflowY = 'hidden'
+      //document.body.style.overflowY = 'hidden'
     }
     else {
-      document.body.style.overflowY = 'auto'
+      //document.body.style.overflowY = 'auto'
     }
   }}
   }
@@ -218,5 +219,16 @@ export const StyledAvatarIconOnly = styled(Avatar)`
 `
 
 export const OnlyDesktop = styled.div`
-  ${media.phone`display: none;`}
+  @media(max-width: 37.5em){
+    display: none;
+  }
+`
+
+export const OnlyMobile = styled.div`
+  display: none;
+  justify-ontent: space-around;
+  flex-direction: column;
+  @media (max-width: 37.5em) {
+    display: flex;
+  }
 `

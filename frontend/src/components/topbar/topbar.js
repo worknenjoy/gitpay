@@ -52,6 +52,7 @@ import {
   StyledAvatar,
   StyledAvatarIconOnly,
   OnlyDesktop,
+  OnlyMobile,
   MenuMobile,
   IconHamburger
 } from './TopbarStyles'
@@ -70,6 +71,7 @@ import logo from '../../images/gitpay-logo.png'
 import logoLangEn from '../../images/united-states-of-america.png'
 import logoLangBr from '../../images/brazil.png'
 import ImportIssueDialog from './import-issue-dialog'
+import TopbarMenu from './topbar-menu'
 
 const languagesIcons = {
   en: logoLangEn,
@@ -166,14 +168,6 @@ class TopBar extends Component {
     this.setState({ mode })
   }
 
-  handleTeamLink = () => {
-    window.location.assign('/#/team')
-  }
-
-  handleDocsLink = () => {
-    window.open('https://docs.gitpay.me/en')
-  }
-
   handleProvider = (e, option) => {
     e.preventDefault()
     this.setState({ provider: option })
@@ -197,22 +191,9 @@ class TopBar extends Component {
     this.setState({ anchorEl: null })
   }
 
-  handleHowItWorks = () => {
-    window.location.assign('/#/welcome')
-    this.setState({ anchorEl: null })
-  }
-
   handleProfile = (e, id, username) => {
     username ? window.location.assign(`/#/users/${id}-${username}/`) : window.location.assign(`/#/users/${id}`)
     this.setState({ anchorEl: null })
-  }
-
-  handleViewTasks = () => {
-    this.props.history.push('/tasks/open')
-  }
-
-  handlePricing = () => {
-    this.props.history.push('/pricing')
   }
 
   handleSignOut = () => {
@@ -252,72 +233,9 @@ class TopBar extends Component {
                 <Logo src={ logo } />
               </StyledButton>
             </div>
-            <div style={ { marginTop: 12, marginLeft: 20 } }>
-              <LinkButton
-                onClick={ this.handleHowItWorks }
-                variant='text'
-                size='small'
-                color='primary'
-              >
-                <LabelButton>
-                  <FormattedMessage
-                    id='topbar.link.about'
-                    defaultMessage='About us' />
-                </LabelButton>
-              </LinkButton>
-
-              <LinkButton
-                onClick={ this.handlePricing }
-                variant='text'
-                size='small'
-                color='primary'
-              >
-                <LabelButton>
-                  <FormattedMessage
-                    id='topbar.link.prices'
-                    defaultMessage='Prices' />
-                </LabelButton>
-              </LinkButton>
-
-              <LinkButton
-                onClick={ this.handleTeamLink }
-                variant='text'
-                size='small'
-                color='primary'
-              >
-                <LabelButton>
-                  <FormattedMessage
-                    id='task.actions.team'
-                    defaultMessage='Team' />
-                </LabelButton>
-              </LinkButton>
-
-              <LinkButton
-                onClick={ this.handleDocsLink }
-                variant='text'
-                size='small'
-                color='primary'
-              >
-                <LabelButton>
-                  <FormattedMessage
-                    id='task.actions.docs'
-                    defaultMessage='Documentation' />
-                </LabelButton>
-              </LinkButton>
-
-              <LinkButton
-                onClick={ this.handleViewTasks }
-                variant='text'
-                size='small'
-                color='primary'
-              >
-                <LabelButton>
-                  <FormattedMessage
-                    id='topbar.link.explore'
-                    defaultMessage='Explore' />
-                </LabelButton>
-              </LinkButton>
-            </div>
+            <OnlyDesktop style={ { marginTop: 12, marginLeft: 20 } }>
+              <TopbarMenu />
+            </OnlyDesktop>
 
             <MenuMobile
               onClick={ this.handleClickMenuMobile }
@@ -328,6 +246,9 @@ class TopBar extends Component {
             </MenuMobile>
           </LeftSide>
           <RightSide isActive={ isActive }>
+            <OnlyMobile>
+              <TopbarMenu />
+            </OnlyMobile>
             { !isLoggedIn
               ? (
                 <React.Fragment>
