@@ -60,7 +60,7 @@ export default function AccountHeader({
                   style={{ whiteSpace: 'nowrap', marginRight: 10 }}
 
                 >
-                  <FormattedMessage id="profile.tasks.all" defaultMessage='Work on an issue' />
+                  <FormattedMessage id="profile.header.action.secondary" defaultMessage='Work on an issue' />
                 </Button>
               </Grid>
             </Grid>

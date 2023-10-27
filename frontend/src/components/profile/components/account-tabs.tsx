@@ -4,6 +4,7 @@ import {
   Tab,
   Box
 } from '@material-ui/core';
+import { FormattedMessage } from 'react-intl';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
 import AccountDetails from '../../../containers/account-details';
@@ -76,18 +77,48 @@ export default function AccountTabs({
           textColor='secondary'
           indicatorColor='secondary'
         >
-          <Tab label="Login and account details" value={'account'} />
+          <Tab 
+            label={
+              <FormattedMessage id="profile.account.tab.login" defaultMessage='Login and account details' />
+            }
+            value={'account'} 
+          />
           { user?.Types?.map(u => u.name)?.includes('contributor') && 
-            <Tab label="Personal details and address" value={'details'}  />
+            <Tab 
+              label={
+                <FormattedMessage id="profile.account.tab.details" defaultMessage='Personal details and address' />
+              }
+              value={'details'}  
+            />
           }
           { user?.Types?.map(u => u.name)?.includes('contributor') &&
-            <Tab label="Bank details" value={'bank'} />
+            <Tab
+              label={
+                <FormattedMessage id="profile.account.tab.bank" defaultMessage='Bank details' />
+              }
+              value={'bank'} 
+            />
           }
-          <Tab label="Roles" value='roles' />
+          <Tab
+            label={
+              <FormattedMessage id="profile.account.tab.roles" defaultMessage='Roles' />
+            }
+            value='roles'
+          />
           { user?.Types?.map(u => u.name)?.includes('contributor') && 
-            <Tab label="Preferences" value='skills' />
+            <Tab
+              label={
+                <FormattedMessage id="profile.account.tab.skills" defaultMessage='Skills' />
+              }
+              value='skills'
+            />
           }
-          <Tab label="Settings" value='settings' />
+          <Tab
+            label={
+              <FormattedMessage id="profile.account.tab.settings" defaultMessage='Settings' />
+            }
+            value='settings'
+          />
         </Tabs>
       </Box>
       <Box sx={{ p: 2, pl: 0}}>
