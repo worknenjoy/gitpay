@@ -229,7 +229,7 @@
   "home.hero.headline.description": "Gitpay é uma plataforma que lhe permite colaborar com outros desenvolvedores e ganhar recompensas para resolver tarefas de projetos. Você também pode criar seus próprios projetos e convidar outros desenvolvedores para colaborar com você.",
   "home.hero.headline.title": "Colaborare e ganhe recompensas para resolver tarefas de diferentes projetos",
   "info.stack.subheading": "Nossas tecnologias",
-  "info.status.message": "Pagamos {bounties} Usd em recompensas para {tasks} tarefas da nossa comunidade de {users} usuários",
+  "info.status.message": "Pagamos {bounties} dólares em recompensas para {tasks} da nossa comunidade de {users}",
   "info.status.tasks": "Tarefas {tasks}",
   "info.status.users": "{users} Users",
   "issues.title": "Tarefas",
