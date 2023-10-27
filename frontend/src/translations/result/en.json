@@ -229,7 +229,7 @@
   "home.hero.headline.description": "Gitpay is a platform that allows you to collaborate with other developers and earn bounties for solving issues from projects. You can also create your own projects and invite other developers to collaborate with you.",
   "home.hero.headline.title": "Collaborate and earn bounties for solving issues from projects",
   "info.stack.subheading": "Our stack",
-  "info.status.message": "We paid {bounties} in bounties and freelancer work for {tasks} to our community of {users} users",
+  "info.status.message": "We paid {bounties} in bounties and freelancer work for {tasks} to our community of {users}",
   "info.status.tasks": "{tasks} tasks",
   "info.status.users": "{users} users",
   "issues.title": "Issues",
