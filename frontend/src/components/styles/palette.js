@@ -111,6 +111,7 @@ const Palette = {
     MuiButtonBase: {
       root: {
         textTransform: 'none',
+        whiteSpace: 'nowrap',
       }
     },
     MuiButton: {
