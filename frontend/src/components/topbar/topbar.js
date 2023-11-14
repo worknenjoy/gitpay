@@ -218,7 +218,7 @@ class TopBar extends Component {
   }
 
   render () {
-    const { completed, user, preferences, dialog } = this.props
+    const { completed, user, preferences, dialog, history } = this.props
     const { mode, isActive } = this.state
     const isLoggedIn = this.props.logged
     const anchorEl = this.state.anchorEl
@@ -234,7 +234,7 @@ class TopBar extends Component {
               </StyledButton>
             </div>
             <OnlyDesktop style={ { marginTop: 12, marginLeft: 20 } }>
-              <TopbarMenu />
+              <TopbarMenu history={history} />
             </OnlyDesktop>
 
             <MenuMobile
