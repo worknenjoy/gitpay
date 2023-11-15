@@ -66,7 +66,7 @@ export default function TeamCard (props) {
                   <Typography gutterBottom variant='h5' component='h2'>
                     { member.name }
                   </Typography>
-                  <Typography variant='body2' color='textSecondary' component='p'>
+                  <Typography variant='body2' color='textSecondary' style={{whiteSpace: 'initial'}}>
                     { member.description }
                   </Typography>
                 </CardContent>
