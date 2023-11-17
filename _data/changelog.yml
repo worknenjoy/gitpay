@@ -1,4 +1,22 @@
 # Changelog page source
+- title: Version v2.0
+  label: IN PROGRESS
+  date: 01 Jan, 2024
+  list:
+   - Fully Redesign
+   - User journey based on user type
+   - Responsive design
+   - The platform is working for bounties from Gitpay
+- title: Version v1.7
+  label: IN PRODUCTION
+  date: 17 November, 2023
+  list:
+   - Bank account activation
+   - User login redesign
+   - GDPR
+   - Stable
+   - Many bug fixes and refactoring
+   - Partial redesign
 - title: Version v1.6
   label: IN PROGRESS
   date: 17 November, 2018
