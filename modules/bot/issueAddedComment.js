@@ -18,7 +18,7 @@ module.exports = Promise.method(async function issueAddedComment (task) {
     headers: {
       'User-Agent': 'Gitpay',
       'Content-Type': 'application/json',
-      'Authorization': 'token ' + process.env.GITHUB_BOT_ACCESS_TOKEN
+      'Authorization': 'Bearer ' + process.env.GITHUB_BOT_ACCESS_TOKEN
     },
     json: true,
     body: {
