@@ -56,6 +56,7 @@ class LoginForm extends Component {
     this.state = {
       formType: 'signup',
       action: `${api.API_URL}/authorize/local`,
+      name: '',
       username: '',
       password: '',
       confirmPassword: '',
@@ -69,20 +70,6 @@ class LoginForm extends Component {
       agreeTermsCheckError: false
 
     }
-  }
-
-  componentDidMount () {
-    const modeByPath = this.props.location.pathname.split('/')[1]
-    this.handleType(this.props.mode || modeByPath)
-    process.env.NODE_ENV === 'development' && this.setState({ captchaChecked: true })
-  }
-
-  handleBlur = (event) => {
-    this.setState({ validating: true, error: {} })
-  }
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value })
   }
 
   handleType = formType => {
@@ -105,12 +92,78 @@ class LoginForm extends Component {
     return false
   }
 
+  componentDidMount () {
+    const modeByPath = this.props.location?.pathname.split('/')[1]
+    this.handleType(this.props.mode || modeByPath)
+    process.env.NODE_ENV === 'development' && this.setState({ captchaChecked: true })
+    process.env.NODE_ENV === 'test' && this.setState({ captchaChecked: true })
+  }
+
+  componentWillUnmount () {
+    this.setState({ error: {} })
+  }
+
+  handleBlur = (event) => {
+    this.setState({ validating: true, error: {} })
+  }
+
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value })
+  }
+
+  containUrl = (string) => {
+    // Regular expression to match a basic URL structure
+    const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    
+    // Test if the string matches the URL pattern
+    return urlPattern.test(string);
+  }
+
+  validateName = (name, currentErrors) => {
+    if (name.length > 0 && name.length < 3) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          name: 'Name cannot be too short'
+        }
+      })
+      return false
+    } else if(name.length > 72) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          name: 'Name cannot be longer than 72 characters'
+        }
+      })
+      return false
+    } else if(this.containUrl(name)) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          name: 'Name should not include URL'
+        }
+      })
+      return false
+    }
+    else {
+      return true;
+    }
+  } 
+
   validateEmail = (email, currentErrors) => {
     if (email.length < 3) {
       this.setState({
         error: {
           ...currentErrors,
           username: 'Email cannot be empty'
+        }
+      })
+      return false
+    } else if(email.length > 72) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          username: 'Email cannot be longer than 72 characters'
         }
       })
       return false
@@ -138,8 +191,17 @@ class LoginForm extends Component {
         }
       })
       return false
+    } else if(password.length > 72) {
+      this.setState({
+        error: {
+          ...currentErrors,
+          password: 'Password cannot be longer than 72 characters'
+        }
+      })
+      return false
+    } else {
+      return true;
     }
-    return true
   }
 
   validatePasswordDontMatch = (password, confirmPassword, currentErrors) => {
@@ -157,6 +219,7 @@ class LoginForm extends Component {
   }
 
   handleSubmit = event => {
+    if(!this.state.agreeTermsCheck) this.setState({ agreeTermsCheckError: true })
     const { name, username, password, captchaChecked, confirmPassword, agreeTermsCheck, formType, error } = this.state
     const currentErrors = error
     if (!captchaChecked) {
@@ -166,11 +229,11 @@ class LoginForm extends Component {
     }
     if (formType === 'signup') {
       event && event.preventDefault()
+      const validName = this.validateName(name, currentErrors)
       const validPassword = this.validatePassword(password, currentErrors)
       const validPasswordConfirm = this.validatePasswordDontMatch(password, confirmPassword, currentErrors)
       const validEmail = this.validateEmail(username, currentErrors)
-      if(!agreeTermsCheck) this.setState({ agreeTermsCheckError: true })
-      validPassword && validPasswordConfirm && validEmail && agreeTermsCheck &&
+      validPassword && validPasswordConfirm && validEmail && agreeTermsCheck && validName &&
       this.props.registerUser({
         name,
         email: username,
@@ -181,6 +244,7 @@ class LoginForm extends Component {
           window.location.reload('/#/signin')
         }
         else {
+          console.log('register user')
           this.props.history.push('/signin')
           return false
         }
@@ -238,6 +302,7 @@ class LoginForm extends Component {
   }
 
   handleAgreeTerms = (e) => {
+    e.preventDefault()
     this.setState({ agreeTermsCheck: !this.state.agreeTermsCheck })
   }
 
@@ -344,6 +409,8 @@ class LoginForm extends Component {
               label='Name'
               variant='outlined'
               id='name'
+              error={ error.name }
+              helperText={ error.name }
               defaultValue={ this.state.name }
             />
           </div>
@@ -458,8 +525,8 @@ class LoginForm extends Component {
           <div style={ { display: 'flex', justifyContent: 'flex-start' } }>
             <div style={ { display: 'flex', alignItems: 'center' } }>
               { this.state.agreeTermsCheck
-                ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } />
-                : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } />
+                ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid='agree-terms-checkbox-checked' />
+                : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid='agree-terms-checkbox' />
               }
               <Typography variant='body1' style={ { marginLeft: 10 } }>
                 <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the ' /> 
@@ -542,7 +609,7 @@ class LoginForm extends Component {
                 </Button>
               ) }
               { formType === 'signup' && (
-                <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
+                <Button data-testid='signup-button' type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
                   <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
                 </Button>
               ) }
