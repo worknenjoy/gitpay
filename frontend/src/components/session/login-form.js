@@ -124,15 +124,15 @@ class LoginForm extends Component {
       this.setState({
         error: {
           ...currentErrors,
-          username: 'Name cannot be too short'
+          name: 'Name cannot be too short'
         }
       })
       return false
-    } else if(name?.length > 72) {
+    } else if(name.length > 72) {
       this.setState({
         error: {
           ...currentErrors,
-          username: 'Name cannot be longer than 72 characters'
+          name: 'Name cannot be longer than 72 characters'
         }
       })
       return false
@@ -140,7 +140,7 @@ class LoginForm extends Component {
       this.setState({
         error: {
           ...currentErrors,
-          username: 'Name should not include URL'
+          name: 'Name should not include URL'
         }
       })
       return false
@@ -409,6 +409,8 @@ class LoginForm extends Component {
               label='Name'
               variant='outlined'
               id='name'
+              error={ error.name }
+              helperText={ error.name }
               defaultValue={ this.state.name }
             />
           </div>
