@@ -1,6 +1,6 @@
-const testEmail = 'teste@gmail.com'
-const testPassword = 'teste'
-const testName = 'Tester'
+const testEmail = 'teste@gmail.com' + Math.random()
+const testPassword = 'teste' + Math.random()
+const testName = 'Tester' + Math.random()
 
 const register = (agent, params = {}) => {
   params.email = params.email || testEmail
@@ -19,12 +19,37 @@ const login = (agent, params = {}) => {
     .send(params)
 }
 
-const registerAndLogin = (agent, registerParams = {}, loginParams = {}) => {
+const activate = (agent, res) => {
+  return agent
+    .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
+}
+
+const registerAndLogin = (agent, registerParams = {
+  email: testEmail,
+  password: testPassword
+}, loginParams = {
+  email: testEmail,
+  password: testPassword
+}) => {
   return register(agent, registerParams)
     .then((a) => {
-      return login(agent, loginParams)
+      return activate(agent, a).then((active) => {
+        console.log('user activated', active.body)
+        return login(agent, loginParams).then(
+          (res) => {
+            console.log('login response', res.text)
+            return res
+          }
+        ).catch((e) => {
+          console.log('error on login', e)
+        })
+      }).catch((e) => {
+        console.log('error on activate', e)
+      })
+    }).catch((e) => {
+      console.log('error on register', e)
     })
-  }
+}
 module.exports = {
   register,
   login,

@@ -179,20 +179,31 @@ describe("Users", () => {
   })
 
   describe('login User Local', () => {
-    xit('should user local', (done) => {
+    it('should user local', (done) => {
       agent
-        .post('/authorize/local')
+        .post('/auth/register')
         .send({email: 'teste@gmail.com', password: 'teste'})
-        .expect(302)
+        .type('form')
+        .expect('Content-Type', /json/)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(302);
-          done(err);
-        })
+          console.log('res.body', res.body, err)
+          agent
+            .post('/authorize/local')
+            .send({email: 'teste@gmail.com', password: 'teste'})
+            .type('form')
+            .expect(302)
+            .end((err, res) => {
+              console.log('res.headers.location', res.headers.location)
+              expect(res.statusCode).to.equal(302);
+              done(err);
+            })
+        }
+      )
     })
   })
 
   describe('login User social networks', () => {
-    it('should user authenticated', (done) => {
+    it('should user wrong authentication', (done) => {
       agent
         .get('/authenticated')
         .set('authorization', 'Bearer token-123') // 1) using the authorization header
