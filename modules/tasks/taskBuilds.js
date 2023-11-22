@@ -81,11 +81,7 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
                 })
                 */
               Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.id} from ${userData.email} was created just now`)
-              try {
-                await issueAddedComment(task)
-              } catch (e) {
-                console.log('error on commentAdded', e)
-              }
+              issueAddedComment(task)
               return { ...taskData, ProjectId: taskData.ProjectId }
             })
         })
