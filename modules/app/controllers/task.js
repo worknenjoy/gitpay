@@ -77,6 +77,7 @@ exports.deleteTaskById = (req, res) => {
     .then((deleted) => {
       res.status(200).send(`${deleted}`)
     }).catch(error => {
+      console.log('error', error)
       res.status(400).send(error)
     })
 }

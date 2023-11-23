@@ -4,11 +4,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   Label.associate = function (models) {
     Label.belongsToMany(models.Task, {
+      alloqNull: false,
       foreignKey: 'labelId',
       otherKey: 'taskId',
       through: 'TaskLabels',
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+      hooks: true
     })
   }
 

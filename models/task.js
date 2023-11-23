@@ -95,10 +95,13 @@ module.exports = (sequelize, DataTypes) => {
     Task.hasMany(models.Offer, { foreignKey: 'taskId' })
     Task.hasMany(models.Member, { foreignKey: 'taskId' })
     Task.belongsToMany(models.Label, { foreignKey: 'taskId',
+      allowNull: false,
       otherKey: 'labelId',
       through: 'TaskLabels',
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE' }
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
+      hooks: true 
+    }
     )
     Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
   }
