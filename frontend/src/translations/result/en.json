@@ -554,7 +554,7 @@
   "task.tab.members": "Members",
   "task.tab.offers": "Offers",
   "task.tab.order": "Orders",
-  "task.table.body.noTasks": "No tasks",
+  "task.table.body.noTasks": "No issues",
   "task.table.date.none": "Not yet defined",
   "task.table.head.createdAt": "Created",
   "task.table.head.labels": "Labels",
