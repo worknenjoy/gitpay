@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="722" height="421" viewBox="0 0 722 421">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1091" height="600" viewBox="0 0 722 421">
   <defs>
     <clipPath id="clip-path">
       <rect x="359" y="105" width="722" height="421" fill="none"/>
@@ -19,10 +19,12 @@
       <rect id="Rectangle_49" data-name="Rectangle 49" width="1115" height="602"/>
     </clipPath>
   </defs>
+  <!-- 
   <filter id="colortransform">
     <feColorMatrix type="hueRotate" in="SourceGraphic" values="280"/>
     <feColorMatrix type="saturate" in="FillPain" values="0.8"/>
   </filter>
+  -->
   <g id="Scroll_Group_1" data-name="Scroll Group 1" transform="translate(-359 -105)" clip-path="url(#clip-path)" style="isolation: isolate" filter="url(#colortransform)">
     <g id="Scroll_Group_2" data-name="Scroll Group 2" clip-path="url(#clip-path-2)" style="isolation: isolate">
       <g id="Scroll_Group_3" data-name="Scroll Group 3" opacity="0.998" clip-path="url(#clip-path-3)" style="isolation: isolate">
