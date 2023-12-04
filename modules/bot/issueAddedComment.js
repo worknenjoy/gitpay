@@ -66,7 +66,8 @@ module.exports = Promise.method(async function issueAddedComment (task) {
     })
     console.log('req response from github issue comment', req)
     return req
-  } catch (e) {
+  }
+  catch (e) {
     console.log('error on comment to Github', e)
   }
 })

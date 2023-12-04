@@ -100,7 +100,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'TaskLabels',
       onUpdate: 'cascade',
       onDelete: 'cascade',
-      hooks: true 
+      hooks: true
     }
     )
     Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })

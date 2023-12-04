@@ -4,10 +4,12 @@
       <rect x="-10" y="-14" width="1550.002" height="382.85" fill="none"/>
     </clipPath>
   </defs>
+  <!-- 
   <filter id="colortransform">
     <feColorMatrix type="hueRotate" in="SourceGraphic" values="280"/>
     <feColorMatrix type="saturate" in="FillPain" values="0.8"/>
   </filter>
+  -->
   <g id="Scroll_Group_5" data-name="Scroll Group 5" transform="translate(10 14)" clip-path="url(#clip-path)" style="isolation: isolate" filter="url(#colortransform)">
     <g id="Group_505" data-name="Group 505" transform="translate(1387.102 301.95)">
       <g id="Group_501" data-name="Group 501" transform="translate(87.4 6.9)">

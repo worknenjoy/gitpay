@@ -7,10 +7,12 @@
       <rect id="Rectangle_156" data-name="Rectangle 156" width="1019" height="600"/>
     </clipPath>
   </defs>
+  <!-- 
   <filter id="colortransform">
     <feColorMatrix type="hueRotate" in="SourceGraphic" values="280"/>
     <feColorMatrix type="saturate" in="FillPain" values="0.8"/>
   </filter>
+  -->
   <g id="Scroll_Group_4" data-name="Scroll Group 4" transform="translate(-429 -111)" clip-path="url(#clip-path)" style="isolation: isolate" filter="url(#colortransform)">
     <g id="_3" data-name="3" transform="translate(-100)">
       <g id="Group_466" data-name="Group 466" transform="translate(100)" clip-path="url(#clip-path-2)">

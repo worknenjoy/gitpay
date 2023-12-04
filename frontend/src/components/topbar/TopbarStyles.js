@@ -134,10 +134,10 @@ export const RightSide = styled(Side)`
 
     ${({ isActive }) => {
     if (isActive) {
-      //document.body.style.overflowY = 'hidden'
+      // document.body.style.overflowY = 'hidden'
     }
     else {
-      //document.body.style.overflowY = 'auto'
+      // document.body.style.overflowY = 'auto'
     }
   }}
   }
