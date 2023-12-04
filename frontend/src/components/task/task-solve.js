@@ -93,8 +93,6 @@ const TaskSolve = ({
     )
   }
 
-  if(!logged) return loginForm()
-
   return (
     <Dialog
       open={ open }
