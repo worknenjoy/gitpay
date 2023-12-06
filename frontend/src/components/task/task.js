@@ -746,7 +746,7 @@ class Task extends Component {
           <BountyIcon style={{ marginLeft: 10 }} />
         </Button>
 
-        {!isOwner &&
+        
           <Button
             disabled={this.props.task.data.paid || this.props.task.data.status === 'closed'}
             onClick={this.handleAssignDialogOpen}
@@ -761,7 +761,7 @@ class Task extends Component {
             </span>
             <OfferIcon style={{ marginLeft: 10 }} />
           </Button>
-        }
+        
       </div>
     )
   }
@@ -1145,18 +1145,16 @@ class Task extends Component {
                 this.setState({ deadlineForm: false })
               }} />
             </div>
-            {task.data && task.data.orders &&
+            {task?.data && (task?.data?.orders?.length || task?.data?.Orders?.length) ?
               <div>
-                <TaskPayments orders={task.data.orders.filter(o => o.paid && o.status === 'succeeded')} />
-              </div>
+                <TaskPayments orders={(task?.data?.orders || task?.data?.Orders)?.filter(o => o.paid && o.status === 'succeeded')} />
+              </div> : null
             }
-
             <React.Fragment>
-
               <div style={{ marginTop: 30, marginBottom: 30 }}>
                 <Button
                   onClick={this.handleTaskPaymentDialog}
-                  disabled={!task.data.orders.length || task.data.paid || task.data.status !== 'open'}
+                  disabled={task?.data?.transfer_id || (!task?.data?.orders || !task?.data?.Orders)?.length || task.data.status !== 'open'}
                   color='primary'
                   fullWidth
                   size='large'
@@ -1182,6 +1180,7 @@ class Task extends Component {
                   assigns={task.data.Assigns}
                   orders={task.data.orders || task.data.Orders}
                   order={order.data}
+                  offers={task.data.Offers}
                   open={this.state.taskPaymentDialog}
                   onClose={this.handleTaskPaymentDialogClose}
                   onPayTask={this.props.paymentTask}

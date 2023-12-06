@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import MomentComponent from 'moment'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-
+import Alert from '@material-ui/lab/Alert'
 import {
   withStyles,
   Button,
@@ -22,11 +23,12 @@ import {
   Chip,
 } from '@material-ui/core'
 import {
-  FilterList as FilterListIcon,
+  PaymentOutlined as FilterListIcon,
   Redeem as RedeemIcon
 } from '@material-ui/icons'
 import blue from '@material-ui/core/colors/blue'
 import PaymentTypeIcon from '../payment/payment-type-icon'
+import InterestedUsers from './components/interested-users'
 
 const styles = {
   avatar: {
@@ -99,6 +101,19 @@ const messages = defineMessages({
 
 })
 
+const StyledTab = withStyles({
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'inherit',
+  },
+  svgIcon: { 
+    root: {
+      width: 16,
+      height: 16,
+    },
+  }  
+})(Tab);
+
 class TaskPayment extends Component {
   constructor (props) {
     super(props)
@@ -142,7 +157,7 @@ class TaskPayment extends Component {
   }
 
   render () {
-    const { classes, orders, ...other } = this.props
+    const { classes, orders, offers, ...other } = this.props
 
     const TabContainer = props => {
       return (
@@ -194,32 +209,31 @@ class TaskPayment extends Component {
             </Typography>
           ) }
           <div>
-            <AppBar position='static' color='default' style={ { marginTop: 20, boxShadow: 'none', background: 'transparent' } }>
+            <AppBar position='static' color='default' style={ { boxShadow: 'none', background: 'transparent' } }>
               <Tabs
                 value={ this.state.currentTab }
                 onChange={ this.onTabChange }
                 scrollable
                 scrollButtons='on'
-                indicatorColor='primary'
-                textColor='primary'
+                indicatorColor='secondary'
+                textColor='secondary'
               >
-                <Tab
-                  style={ { margin: 10 } }
+                <StyledTab
                   value={ 0 }
-                  label={ this.props.intl.formatMessage(messages.allPayments) }
-                  icon={ <RedeemIcon /> }
+                  label={this.props.intl.formatMessage(messages.allPayments)}
+                  icon={<RedeemIcon style={{marginRight: 10}} />}
                 />
-                <Tab
-                  style={ { margin: 10 } }
+                <StyledTab
+                  
                   value={ 1 }
                   label={ this.props.intl.formatMessage(messages.creditCardPayment) }
-                  icon={ <PaymentTypeIcon type='card' notext /> }
+                  icon={ <PaymentTypeIcon type='card' notext style={{marginRight: 10}} /> }
                 />
-                <Tab
-                  style={ { margin: 10 } }
+                <StyledTab
+                  
                   value={ 2 }
                   label={ this.props.intl.formatMessage(messages.payPalPayment) }
-                  icon={ <PaymentTypeIcon type='paypal' /> }
+                  icon={ <PaymentTypeIcon type='paypal' style={{marginRight: 10}} /> }
                 />
               </Tabs>
             </AppBar>
@@ -235,7 +249,7 @@ class TaskPayment extends Component {
                 </div>
               )
                 : <List>
-                  { orders && orders.map((order, index) => (
+                  { orders.length > 0 ? orders.map((order, index) => (
                     <div>
                       { order.provider === 'paypal'
                         ? (
@@ -246,7 +260,7 @@ class TaskPayment extends Component {
                               </Avatar>
                             </ListItemAvatar>
                             <ListItemText
-                              primary={ `$ ${order.amount}` }
+                              primary={ `$ ${order.amount} by ${order?.User?.name || 'unknown'}` }
                               secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.undefinedLabel)}` }
                             />
                             { !order.transfer_id
@@ -282,8 +296,16 @@ class TaskPayment extends Component {
                               </Avatar>
                             </ListItemAvatar>
                             <ListItemText
-                              primary={ `$ ${order.amount}` }
-                              secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.labelCreditCard)}` }
+                              primary={ 
+                              <div style={{display: 'flex', verticalAlign: 'center'}}>
+                                <Typography variant='subtitle1' gutterBottom style={{marginRight: 10}}>
+                                  {`$ ${order.amount}`}
+                                </Typography>
+                                <Typography variant='caption' style={{marginTop: 3}}>
+                                  {order?.User ? 'by ' + order?.User?.name : ''} 
+                                </Typography>
+                              </div>}
+                              secondary={ `${this.statuses(order.status) + ' ' + MomentComponent(order.createdAt).fromNow() || this.props.intl.formatMessage(messages.labelCreditCard)}` }
                             />
                             <Button
                               onClick={ this.payTask }
@@ -301,7 +323,13 @@ class TaskPayment extends Component {
                         )
                       }
                     </div>
-                  )) }
+                  )) : (
+                    <div>
+                      <Alert severity='info'>
+                        <FormattedMessage id='task.payment.noTransfers' defaultMessage='No bounties for this issue' />
+                      </Alert>
+                    </div>
+                  ) }
                 </List> }
             </TabContainer>
           </div>
@@ -314,7 +342,17 @@ class TaskPayment extends Component {
                       to: sendTo(this.props.assigned).username,
                       payments: paymentSupport(sendTo(this.props.assigned))
                     })
-                    : this.props.intl.formatMessage(messages.taskNoAssigned)
+                    : <Alert severity='warning'>
+                        {this.props.intl.formatMessage(messages.taskNoAssigned)}
+                      </Alert>
+                  }
+                  { offers?.length ? 
+                    <div style={{marginTop: 20}}>
+                      <Typography variant='h5' gutterBottom noWrap>
+                        <FormattedMessage id='task.payment.interested' defaultMessage='Interested users' />
+                      </Typography>
+                      <InterestedUsers offers={offers} />
+                    </div> : null
                   }
                 </div>
               ) : (
@@ -344,17 +382,7 @@ class TaskPayment extends Component {
                 </Button>
               ) }
             </div>
-          ) : (
-            <FormattedMessage id='task.payment.types.notype' defaultMessage='No payment for this payment type'>
-              { (msg) => (
-                <ListItemText
-                  variant='contained'
-                  disabled
-                  primary={ msg }
-                />
-              ) }
-            </FormattedMessage>
-          ) }
+          ) : null }
           { !this.props.paid ? (
             <Button
               onClick={ this.props.onClose }
