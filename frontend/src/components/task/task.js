@@ -1186,6 +1186,8 @@ class Task extends Component {
                   onPayTask={this.props.paymentTask}
                   filterTaskOrders={this.props.filterTaskOrders}
                   onPayOrder={this.props.paymentOrder}
+                  messageTask={this.props.messageTask}
+                  messageOffer={this.props.messageOffer}
                 />
               </div>
 

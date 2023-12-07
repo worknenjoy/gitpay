@@ -110,6 +110,48 @@ const messageTask = (taskId, assignId, message) => {
   }
 }
 
+/** Message Offer actions */
+
+const MESSAGE_OFFER_REQUESTED = 'MESSAGE_OFFER_REQUESTED'
+const MESSAGE_OFFER_SUCCESS = 'MESSAGE_OFFER_SUCCESS'
+const MESSAGE_OFFER_ERROR = 'MESSAGE_OFFER_ERROR'
+
+const messageOfferRequested = () => {
+  return { type: MESSAGE_OFFER_REQUESTED, completed: false }
+}
+
+const messageOfferSuccess = tab => {
+  return { type: MESSAGE_OFFER_SUCCESS, completed: true, tab: tab }
+}
+
+const messageOfferError = error => {
+  return { type: MESSAGE_OFFER_ERROR, completed: true, error: error }
+}
+
+const messageOffer = (taskId, offerId, message) => {
+  return dispatch => {
+    dispatch(messageOfferRequested())
+    axios
+      .post(`${api.API_URL}/tasks/${taskId}/offer/${offerId}/message`, {
+        message,
+        offerId: offerId
+      })
+      .then(response => {
+        if (!response && !response.data) {
+          dispatch(addNotification('actions.message.task.error'))
+          return dispatch(messageOfferError('actions.message.task.error'))
+        }
+        dispatch(addNotification('actions.message.task.sucess'))
+        dispatch(messageOfferSuccess(2))
+        return dispatch(fetchTask(taskId))
+      })
+      .catch(error => {
+        dispatch(addNotification('actions.message.task.error'))
+        return dispatch(messageOfferError(error))
+      })
+  }
+}
+
 /**
  * Remove assignment actions.
  */
@@ -152,10 +194,14 @@ export {
   MESSAGE_TASK_REQUESTED,
   MESSAGE_TASK_SUCCESS,
   MESSAGE_TASK_ERROR,
+  MESSAGE_OFFER_REQUESTED,
+  MESSAGE_OFFER_SUCCESS,
+  MESSAGE_OFFER_ERROR,
   REMOVE_ASSIGNMENT_REQUESTED,
   REMOVE_ASSIGNMENT_SUCCESS,
   REMOVE_ASSIGNMENT_ERROR,
   assignTask,
   messageTask,
+  messageOffer,
   actionAssign
 }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
-import { assignTask, removeAssignment, messageTask, actionAssign } from '../actions/assignActions'
+import { assignTask, removeAssignment, messageTask, messageOffer, actionAssign } from '../actions/assignActions'
 import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask } from '../actions/taskActions'
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
@@ -33,6 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
     actionAssign: (taskId, assignId, action, message) => dispatch(actionAssign(taskId, assignId, action, message)),
     messageTask: (taskId, assignId, message) => dispatch(messageTask(taskId, assignId, message)),
+    messageOffer: (taskId, offerId, message) => dispatch(messageOffer(taskId, offerId, message)),
     removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
     inviteTask: (id, email, message, user) => dispatch(inviteTask(id, email, message, user)),
     messageAuthor: (userId, taskId, message) => dispatch(messageAuthor(userId, taskId, message)),

@@ -29,6 +29,8 @@ import {
 import blue from '@material-ui/core/colors/blue'
 import PaymentTypeIcon from '../payment/payment-type-icon'
 import InterestedUsers from './components/interested-users'
+import InterestedOffers from './components/interested-offers'
+import MessageAssignment from './assignment/messageAssignment'
 
 const styles = {
   avatar: {
@@ -118,7 +120,10 @@ class TaskPayment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      messageDialog: false,
+      interested: null,
+      messageType: 'assign'
     }
   }
 
@@ -189,6 +194,14 @@ class TaskPayment extends Component {
         return item.id === id
       })
       return chosen && chosen.length && chosen[0].User || {}
+    }
+
+    const openMessageDialog = (id, messageType = 'assign') => {
+      this.setState({ messageDialog: true, interested: id, messageType })
+    }
+
+    const closeMessageDialog = () => {
+      this.setState({ messageDialog: false })
     }
 
     return (
@@ -346,14 +359,29 @@ class TaskPayment extends Component {
                         {this.props.intl.formatMessage(messages.taskNoAssigned)}
                       </Alert>
                   }
-                  { offers?.length ? 
+                  { this.props?.assigns?.length > 0 ? 
                     <div style={{marginTop: 20}}>
                       <Typography variant='h5' gutterBottom noWrap>
                         <FormattedMessage id='task.payment.interested' defaultMessage='Interested users' />
                       </Typography>
-                      <InterestedUsers offers={offers} />
+                      <InterestedUsers users={this.props.assigns} onMessage={openMessageDialog} />
                     </div> : null
                   }
+                  { offers?.length ? 
+                    <div style={{marginTop: 20}}>
+                      <Typography variant='h5' gutterBottom noWrap>
+                        <FormattedMessage id='task.payment.offers' defaultMessage='Offers' />
+                      </Typography>
+                      <InterestedOffers offers={offers} onMessage={(id) => openMessageDialog(id, 'offers') } />
+                    </div> : null
+                  }
+                  <MessageAssignment
+                    visible={ this.state.messageDialog }
+                    onClose={ closeMessageDialog }
+                    id={ this.props.id }
+                    to={ this.state.interested }
+                    messageAction={ this.state.messageType === 'assign' ? this.props.messageTask : this.props.messageOffer }
+                  />
                 </div>
               ) : (
                 <div>

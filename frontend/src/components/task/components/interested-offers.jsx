@@ -7,50 +7,37 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Divider,
-  Chip
+  Divider
 } from '@material-ui/core';
 import MessageIcon from '@mui/icons-material/Message';
 
-export default function InterestedUsers({ users, onMessage }) {
+
+export default function InterestedOffers({ offers, onMessage }) {
   const onSendMessage = (id) => {
     onMessage(id);
   }
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      {users?.map((user) => (
+      {offers?.map((offer) => (
         <>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt={ user?.User?.username } src={ user?.User.picture_url} />
+              <Avatar alt={ offer?.User?.username } src={ offer?.User?.picture_url} />
             </ListItemAvatar>
             <ListItemText
-              primary={ <>
-                {user?.User?.username}
-                <Chip
-                  label={user?.status}
-                  color='secondary'
-                  variant="contained"
-                  size='small'
-                  style={{marginLeft: 10, display: 'inline-block'}}
-                />
-              </> }
+              primary={ offer?.User?.username }
               secondary={
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                   <div>
                     <Typography
-                      sx={{ display: 'inline-block', marginRight: 10 }}
+                      sx={{ display: 'inline-block' }}
                       variant="subtitle1"
                       color="text.primary"
                     >
-                      { user?.User?.name }
+                      { offer?.User?.name }
                     </Typography>
-                    <Typography
-                      sx={{ display: 'inline-block', marginRight: 10 }}
-                      variant="caption"
-                      color="text.primary"
-                    >
-                      { user?.User?.website }
+                    <Typography variant="subtitle2" color="text.secondary">
+                      $ {offer?.value}
                     </Typography>
                   </div>
                   <div>
@@ -60,7 +47,7 @@ export default function InterestedUsers({ users, onMessage }) {
                     <Button variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
                       Accept
                     </Button>
-                    <Button onClick={() => onSendMessage(user.id)} variant="outlined" color="secondary" size={'small'}>
+                    <Button onClick={(e) => onSendMessage(offer.id)} variant="outlined" color="secondary" size={'small'}>
                       <MessageIcon size='small' />
                     </Button>
                   </div>
