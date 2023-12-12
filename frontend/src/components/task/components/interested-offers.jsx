@@ -12,7 +12,7 @@ import {
 import MessageIcon from '@mui/icons-material/Message';
 
 
-export default function InterestedOffers({ offers, onMessage }) {
+export default function InterestedOffers({ offers, onMessage, assigned }) {
   const onSendMessage = (id) => {
     onMessage(id);
   }
@@ -41,10 +41,10 @@ export default function InterestedOffers({ offers, onMessage }) {
                     </Typography>
                   </div>
                   <div>
-                    <Button variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
+                    <Button disabled={assigned} variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
                       Reject
                     </Button>
-                    <Button variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
+                    <Button disabled={assigned} variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
                       Accept
                     </Button>
                     <Button onClick={(e) => onSendMessage(offer.id)} variant="outlined" color="secondary" size={'small'}>

@@ -7,7 +7,7 @@ const Signatures = require('../mail/content')
 
 const sendConfirmationEmail = (task, assign) => {
   const user = assign.User
-  const URL = reason => `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested#${reason}`
+  const URL = reason => `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/${assign.id}#${reason}`
   const language = user.language || 'en'
   i18n.setLocale(language)
 
@@ -71,7 +71,7 @@ const actionAssign = async (data) => {
     return new Error('Bad Token')
   }
 
-  const { taskId, assignId, message } = data
+  const { taskId, assignId, confirm, message } = data
   const assign = await models.Assign.findOne({
     where: {
       id: assignId
@@ -84,7 +84,7 @@ const actionAssign = async (data) => {
   }
 
   // Accept Task
-  if (data.confirm) {
+  if (confirm) {
     await assign.update({ status: 'accepted' }, { where: { id: assignId } })
     return taskUpdate({ id: taskId, assigned: assignId, })
   }

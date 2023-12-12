@@ -430,7 +430,7 @@ class Task extends Component {
       await this.props.fetchTask(id)
     }
     catch (e) {
-
+      console.log('error to sync', e)
     }
 
     if (status) {
@@ -447,6 +447,22 @@ class Task extends Component {
       if (logged) {
         let params = queryString.parse(this.props.location.search)
         this.props.requestClaimTask(id, this.props.user.id, params.comments, true, params.token, this.props.history)
+      }
+    }
+    const assign_id = this.props.match.params.interested_id
+    const hash = this.props.history.location.hash
+    if(hash === '#accept' || hash === '#reject') {
+      this.setState({ taskPaymentDialog: true })
+      
+      if(assign_id)  {
+        if(hash === '#accept') {
+          await this.props.actionAssign(id, assign_id, true)
+          this.props.addNotification('actions.task.status.accept')
+        }
+        if(hash === '#reject') {
+          await this.props.actionAssign(id, assign_id, false)
+          this.props.addNotification('actions.task.status.reject')
+        } 
       }
     }
   }
@@ -1150,49 +1166,54 @@ class Task extends Component {
                 <TaskPayments orders={(task?.data?.orders || task?.data?.Orders)?.filter(o => o.paid && o.status === 'succeeded')} />
               </div> : null
             }
-            <React.Fragment>
-              <div style={{ marginTop: 30, marginBottom: 30 }}>
-                <Button
-                  onClick={this.handleTaskPaymentDialog}
-                  disabled={task?.data?.transfer_id || (!task?.data?.orders || !task?.data?.Orders)?.length || task.data.status !== 'open'}
-                  color='primary'
-                  fullWidth
-                  size='large'
-                  variant='contained'
-                  style={{
-                    marginRight: 10,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <RedeemIcon style={{ marginRight: 'auto' }} />
-                  <span style={{ marginRight: 'auto' }} className={classes.spaceRight}>
-                    <FormattedMessage id='task.bounties.payment.label' defaultMessage='Pay contributor' />
-                  </span>{' '}
-                </Button>
-                <TaskPayment
-                  id={task.data.id}
-                  values={task.values}
-                  paid={task.data.paid}
-                  transferId={task.data.transfer_id}
-                  assigned={task.data.assigned}
-                  assigns={task.data.Assigns}
-                  orders={task.data.orders || task.data.Orders}
-                  order={order.data}
-                  offers={task.data.Offers}
-                  open={this.state.taskPaymentDialog}
-                  onClose={this.handleTaskPaymentDialogClose}
-                  onPayTask={this.props.paymentTask}
-                  filterTaskOrders={this.props.filterTaskOrders}
-                  onPayOrder={this.props.paymentOrder}
-                  messageTask={this.props.messageTask}
-                  messageOffer={this.props.messageOffer}
-                />
-              </div>
-
-            </React.Fragment>
-
+            { this.taskOwner() &&
+              <React.Fragment>
+                <div style={{ marginTop: 30, marginBottom: 30 }}> 
+                  <Button
+                    onClick={this.handleTaskPaymentDialog}
+                    disabled={task?.data?.transfer_id || (!task?.data?.orders || !task?.data?.Orders)?.length || task.data.status !== 'open'}
+                    color='primary'
+                    fullWidth
+                    size='large'
+                    variant='contained'
+                    style={{
+                      marginRight: 10,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <RedeemIcon style={{ marginRight: 'auto' }} />
+                    <span style={{ marginRight: 'auto' }} className={classes.spaceRight}>
+                      <FormattedMessage id='task.bounties.payment.label' defaultMessage='Pay contributor' />
+                    </span>{' '}
+                  </Button>
+                  <TaskPayment
+                    id={task.data.id}
+                    values={task.values}
+                    paid={task.data.paid}
+                    transferId={task.data.transfer_id}
+                    assigned={task.data.assigned}
+                    assigns={task.data.Assigns}
+                    orders={task.data.orders || task.data.Orders}
+                    order={order.data}
+                    offers={task.data.Offers}
+                    open={this.state.taskPaymentDialog}
+                    onClose={this.handleTaskPaymentDialogClose}
+                    onPayTask={this.props.paymentTask}
+                    filterTaskOrders={this.props.filterTaskOrders}
+                    onPayOrder={this.props.paymentOrder}
+                    messageTask={this.props.messageTask}
+                    messageOffer={this.props.messageOffer}
+                    assignTask={this.props.assignTask}
+                    actionAssign={this.props.actionAssign}
+                    removeAssignment={this.props.removeAssignment}
+                    isOwner={this.taskOwner()}
+                    updateTask={this.props.updateTask}
+                  />
+                </div>
+              </React.Fragment>
+            }
             <div style={{ marginTop: 30, marginBottom: 10 }}>
               <Button
                 onClick={this.handleTaskSolveDialogOpen}

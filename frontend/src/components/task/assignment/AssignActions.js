@@ -254,7 +254,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
           }
         })()
       }
-      { isOwner && task.id && loggedUser.id && !hasAssignedUser && createOrderActionButtons() }
+      { isOwner && task?.id && loggedUser?.id && !hasAssignedUser && createOrderActionButtons() }
     </div>
   )
 }

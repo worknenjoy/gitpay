@@ -12,10 +12,11 @@ import {
 } from '@material-ui/core';
 import MessageIcon from '@mui/icons-material/Message';
 
-export default function InterestedUsers({ users, onMessage }) {
+export default function InterestedUsers({ users, onMessage, onAccept, onReject, assigned }) {
   const onSendMessage = (id) => {
     onMessage(id);
   }
+
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {users?.map((user) => (
@@ -26,7 +27,7 @@ export default function InterestedUsers({ users, onMessage }) {
             </ListItemAvatar>
             <ListItemText
               primary={ <>
-                {user?.User?.username}
+                {user?.User?.username || user?.User?.name}
                 <Chip
                   label={user?.status}
                   color='secondary'
@@ -54,10 +55,10 @@ export default function InterestedUsers({ users, onMessage }) {
                     </Typography>
                   </div>
                   <div>
-                    <Button variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
+                    <Button disabled={user?.status === 'rejected' || user?.status === 'accepted' || assigned} onClick={(id) => onReject(user.id)} variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
                       Reject
                     </Button>
-                    <Button variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
+                    <Button disabled={user?.status === 'accepted' || assigned} onClick={(id) => onAccept(user.id)} variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
                       Accept
                     </Button>
                     <Button onClick={() => onSendMessage(user.id)} variant="outlined" color="secondary" size={'small'}>

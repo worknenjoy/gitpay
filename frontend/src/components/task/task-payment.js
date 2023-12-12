@@ -31,6 +31,7 @@ import PaymentTypeIcon from '../payment/payment-type-icon'
 import InterestedUsers from './components/interested-users'
 import InterestedOffers from './components/interested-offers'
 import MessageAssignment from './assignment/messageAssignment'
+import TaskAssigned from './task-assigned'
 
 const styles = {
   avatar: {
@@ -359,12 +360,29 @@ class TaskPayment extends Component {
                         {this.props.intl.formatMessage(messages.taskNoAssigned)}
                       </Alert>
                   }
+                  { this.props.assigned ? 
+                      <TaskAssigned
+                        task={ { id: this.props.id, assigned: this.props.assigned } }
+                        assign={ {id: this.props.assigned } }
+                        isOwner={ this.props.isOwner }
+                        user={ sendTo(this.props.assigned) }
+                        loggedUser={ this.props.loggedUser }
+                        removeAssignment={ this.props.removeAssignment }
+                        assignTask={ this.props.assignTask }
+                      /> : null
+                  }
                   { this.props?.assigns?.length > 0 ? 
                     <div style={{marginTop: 20}}>
                       <Typography variant='h5' gutterBottom noWrap>
                         <FormattedMessage id='task.payment.interested' defaultMessage='Interested users' />
                       </Typography>
-                      <InterestedUsers users={this.props.assigns} onMessage={openMessageDialog} />
+                      <InterestedUsers 
+                        assigned={this.props.assigned}
+                        users={this.props.assigns}
+                        onMessage={openMessageDialog}
+                        onAccept={async (id) => await this.props.assignTask(this.props.id, id)}
+                        onReject={async (id) => await this.props.actionAssign(this.props.id, id, false)}
+                      />
                     </div> : null
                   }
                   { offers?.length ? 
@@ -372,7 +390,7 @@ class TaskPayment extends Component {
                       <Typography variant='h5' gutterBottom noWrap>
                         <FormattedMessage id='task.payment.offers' defaultMessage='Offers' />
                       </Typography>
-                      <InterestedOffers offers={offers} onMessage={(id) => openMessageDialog(id, 'offers') } />
+                      <InterestedOffers offers={offers} assigned={this.props.assigned} onMessage={(id) => openMessageDialog(id, 'offers') } />
                     </div> : null
                   }
                   <MessageAssignment
