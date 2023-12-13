@@ -55,10 +55,10 @@ export default function InterestedUsers({ users, onMessage, onAccept, onReject, 
                     </Typography>
                   </div>
                   <div>
-                    <Button disabled={user?.status === 'rejected' || user?.status === 'accepted' || assigned} onClick={(id) => onReject(user.id)} variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
+                    <Button disabled={ user?.status === 'rejected' || user?.status === 'accepted' || assigned} onClick={(id) => onReject(user.id)} variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
                       Reject
                     </Button>
-                    <Button disabled={user?.status === 'accepted' || assigned} onClick={(id) => onAccept(user.id)} variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
+                    <Button disabled={user?.status === 'pending-confirmation' || user?.status === 'accepted' || assigned} onClick={(id) => onAccept(user.id)} variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
                       Accept
                     </Button>
                     <Button onClick={() => onSendMessage(user.id)} variant="outlined" color="secondary" size={'small'}>

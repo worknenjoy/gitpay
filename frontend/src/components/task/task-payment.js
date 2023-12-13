@@ -94,8 +94,8 @@ const messages = defineMessages({
     defaultMessage: 'Undefined status'
   },
   transferMessage: {
-    id: 'task.payment.transfer.message',
-    defaultMessage: 'You will send the payment for this task to {to} that receive payments in {payments}'
+    id: 'task.payment.transfer.notRegistered',
+    defaultMessage: 'The user {to} who will receive the payment, it has no {payments} registered. We will help him to register and send the payment to his registered account'
   },
   taskNoAssigned: {
     id: 'task.payment.noAssigned',
@@ -177,6 +177,35 @@ class TaskPayment extends Component {
       return this.props.orders && !!this.props.orders.length
     }
 
+    const assignTaskAndCreateOrder = async (event, offer) => {
+      const { task, loggedUser, createOrder, assignTask, assigns } = this.props
+      event.preventDefault()
+      
+      const assign = this.props.assigns.filter(item => item.userId === offer.userId)[0]
+
+      await task.id && loggedUser.logged && await createOrder({
+        provider: 'stripe',
+        amount: offer.value,
+        userId: loggedUser?.user?.id,
+        email: loggedUser?.user?.email,
+        taskId: task.id,
+        currency: 'usd',
+        status: 'open',
+        source_type: 'invoice-item',
+        customer_id: loggedUser?.user?.customer_id,
+        metadata: {
+          offer_id: offer.id,
+        }
+      })
+      await assignTask(task.id, assign.id)
+      await this.props.offerUpdate(task.id, offer.id, { status: 'accepted' })
+    }
+
+    const onReject = async (event, offer) => {
+      event.preventDefault()
+      this.props.offerUpdate(this.props.task.id, offer.id, { status: 'rejected' })
+    }
+
     const paymentSupport = user => {
       let supportedTypes = []
       if (user.account_id) {
@@ -251,7 +280,7 @@ class TaskPayment extends Component {
                 />
               </Tabs>
             </AppBar>
-            <TabContainer>
+            <TabContainer style={{paddingBottom: 0}}>
               { this.props.transferId ? (
                 <div>
                   <Typography type='subheading' color='primary' gutterBottom noWrap>
@@ -351,15 +380,16 @@ class TaskPayment extends Component {
             <span style={ { display: 'inline-block', margin: 20 } }>
               { !this.props.paid ? (
                 <div>
+                  <Alert severity='warning'>
                   { this.props.assigned
                     ? this.props.intl.formatMessage(messages.transferMessage, {
-                      to: sendTo(this.props.assigned).username,
+                      to: sendTo(this.props.assigned).username || 'unknown',
                       payments: paymentSupport(sendTo(this.props.assigned))
                     })
-                    : <Alert severity='warning'>
-                        {this.props.intl.formatMessage(messages.taskNoAssigned)}
-                      </Alert>
+                    : 
+                      this.props.intl.formatMessage(messages.taskNoAssigned)
                   }
+                  </Alert>
                   { this.props.assigned ? 
                       <TaskAssigned
                         task={ { id: this.props.id, assigned: this.props.assigned } }
@@ -390,7 +420,13 @@ class TaskPayment extends Component {
                       <Typography variant='h5' gutterBottom noWrap>
                         <FormattedMessage id='task.payment.offers' defaultMessage='Offers' />
                       </Typography>
-                      <InterestedOffers offers={offers} assigned={this.props.assigned} onMessage={(id) => openMessageDialog(id, 'offers') } />
+                      <InterestedOffers 
+                        offers={offers}
+                        assigned={this.props.assigned}
+                        onMessage={(id) => openMessageDialog(id, 'offers') } 
+                        onAccept={(event, offer) => assignTaskAndCreateOrder(event, offer)}
+                        onReject={(event, offer) => onReject(event, offer)}
+                      />
                     </div> : null
                   }
                   <MessageAssignment

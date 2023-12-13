@@ -1190,6 +1190,7 @@ class Task extends Component {
                   </Button>
                   <TaskPayment
                     id={task.data.id}
+                    task={task.data}
                     values={task.values}
                     paid={task.data.paid}
                     transferId={task.data.transfer_id}
@@ -1210,6 +1211,9 @@ class Task extends Component {
                     removeAssignment={this.props.removeAssignment}
                     isOwner={this.taskOwner()}
                     updateTask={this.props.updateTask}
+                    loggedUser={this.props.logged}
+                    offerUpdate={this.props.offerUpdate}
+                    createOrder={this.props.createOrder}
                   />
                 </div>
               </React.Fragment>

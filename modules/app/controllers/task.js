@@ -132,6 +132,16 @@ exports.messageOffer = ({ params, body, user }, res) => Offers
     res.send({ error: error.message })
   })
 
+// update offer
+exports.updateOffer = ({ params, body }, res) => Offers
+  .updateOffer(params, body)
+  .then(data => res.send(data))
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.log('error on task controller update offer', error)
+    res.send({ error: error.message })
+  })
+
 // Assigns functions.
 exports.removeAssignedUser = (req, res) => {
   const params = { id: req.params.id, userId: req.user.id }

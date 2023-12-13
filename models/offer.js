@@ -6,7 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     learn: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    }
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'pending'
+    },
   })
 
   Offer.associate = (models) => {

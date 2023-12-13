@@ -53,7 +53,6 @@ const messages = defineMessages({
     id: 'actions.assign.task.error',
     defaultMessage: 'We could not update this task.'
   },
-
   notificationMessageTaskError: {
     id: 'actions.message.task.error',
     defaultMessage: 'We have an issue to send your message. Please try again later'

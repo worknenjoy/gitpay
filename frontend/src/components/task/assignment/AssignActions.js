@@ -105,7 +105,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
   const assignTaskAndCreateOrder = async (event) => {
     event.preventDefault()
     assignTask(task.id, assign.id)
-    checked && task.id && loggedUser.id && await createOrder({
+    task.id && loggedUser.id && await createOrder({
       provider: 'stripe',
       amount: offer,
       userId: loggedUser.id,
@@ -132,7 +132,7 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
           ? <FormattedMessage id='task.actions.choose.rejected' defaultMessage='Re-send Invite' />
           : <FormattedMessage id='task.actions.choose' defaultMessage='choose' />
         }
-        <GroupWorkIcon style={ { marginLeft: 5, marginBottom: 5 } } />
+        <GroupWorkIcon style={ { marginLeft: 5 } } />
       </Button>
     )
   }

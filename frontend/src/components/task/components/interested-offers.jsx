@@ -1,6 +1,7 @@
 import React from 'react';
 import { 
   Button,
+  Chip,
   Typography,
   List,
   ListItem,
@@ -12,10 +13,11 @@ import {
 import MessageIcon from '@mui/icons-material/Message';
 
 
-export default function InterestedOffers({ offers, onMessage, assigned }) {
+export default function InterestedOffers({ offers, onMessage, assigned, onAccept, onReject }) {
   const onSendMessage = (id) => {
     onMessage(id);
   }
+  
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {offers?.map((offer) => (
@@ -25,7 +27,18 @@ export default function InterestedOffers({ offers, onMessage, assigned }) {
               <Avatar alt={ offer?.User?.username } src={ offer?.User?.picture_url} />
             </ListItemAvatar>
             <ListItemText
-              primary={ offer?.User?.username }
+              primary={ 
+                <>
+                  {offer?.User?.username || offer?.User?.name}
+                  <Chip
+                    label={offer?.status || 'pending'}
+                    color='secondary'
+                    variant="contained"
+                    size='small'
+                    style={{marginLeft: 10, display: 'inline-block'}}
+                  />
+                </>
+              }
               secondary={
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                   <div>
@@ -41,10 +54,10 @@ export default function InterestedOffers({ offers, onMessage, assigned }) {
                     </Typography>
                   </div>
                   <div>
-                    <Button disabled={assigned} variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
+                    <Button onClick={ (event) => onReject(event, offer) } disabled={assigned || offer.status === 'rejected' || offer.status === 'accepted'} variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>
                       Reject
                     </Button>
-                    <Button disabled={assigned} variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
+                    <Button onClick={(event) => onAccept(event, offer)} disabled={assigned || offer.status === 'accepted'} variant="contained" color="primary" size={'small'} style={{marginRight: 20}}>
                       Accept
                     </Button>
                     <Button onClick={(e) => onSendMessage(offer.id)} variant="outlined" color="secondary" size={'small'}>
