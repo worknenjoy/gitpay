@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     actionAssign: (taskId, assignId, action, message) => dispatch(actionAssign(taskId, assignId, action, message)),
     messageTask: (taskId, assignId, message) => dispatch(messageTask(taskId, assignId, message)),
     messageOffer: (taskId, offerId, message) => dispatch(messageOffer(taskId, offerId, message)),
-    offerUpdate: (taskId, offerId, { status }) => dispatch(offerUpdate(taskId, offerId,{ status })),
+    offerUpdate: (taskId, offerId, { status }) => dispatch(offerUpdate(taskId, offerId, { status })),
     removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
     inviteTask: (id, email, message, user) => dispatch(inviteTask(id, email, message, user)),
     messageAuthor: (userId, taskId, message) => dispatch(messageAuthor(userId, taskId, message)),

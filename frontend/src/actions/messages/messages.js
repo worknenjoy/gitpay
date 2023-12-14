@@ -325,7 +325,7 @@ const messages = defineMessages({
     id: 'actions.offer.update.sucess',
     defaultMessage: 'Offer updated successfully'
   },
-  
+
 })
 
 export default messages

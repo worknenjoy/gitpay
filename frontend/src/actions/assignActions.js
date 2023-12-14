@@ -195,7 +195,6 @@ const offerUpdate = (taskId, offerId, { status }) => {
   }
 }
 
-
 /**
  * Remove assignment actions.
  */

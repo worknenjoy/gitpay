@@ -60,9 +60,9 @@ class TaskAssigned extends Component {
     const hasAssignedUser = assign.id === task.assigned
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
     const timePlaceholder = (
-        <Typography type='subheading'>
-          { updatedAtTimeString }
-        </Typography>
+      <Typography type='subheading'>
+        { updatedAtTimeString }
+      </Typography>
     )
 
     return (
@@ -106,11 +106,11 @@ class TaskAssigned extends Component {
                 <FormattedMessage id='task.assigned.status.name.create' defaultMessage='Assigned to {name}' values={ {
                   name: user.name || user.username
                 } } />
-                {timePlaceholder}
+                { timePlaceholder }
               </div>
             }
-            action={  isOwner && 
-              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+            action={ isOwner &&
+              <div style={ { display: 'flex', flexDirection: 'row', alignItems: 'center' } }>
                 <AssignActions user={ user } messageTask={ messageTask } loggedUser={ loggedUser } isOwner={ isOwner } assign={ assign } task={ task } removeAssignment={ removeAssignment } assignTask={ assignTask } createOrder={ createOrder } />
                 <RemoveAssignment
                   task={ task }
@@ -118,7 +118,7 @@ class TaskAssigned extends Component {
                   visible={ hasAssignedUser && isOwner }
                 />
               </div>
-            } 
+            }
           />
         </Card>
 
