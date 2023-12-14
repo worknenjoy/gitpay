@@ -59,7 +59,7 @@ class RemoveAssignment extends Component {
     const { open, message } = this.state
 
     return (
-      <Container>
+      <>
         { visible &&
           <Button
             size='small'
@@ -101,7 +101,7 @@ class RemoveAssignment extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </Container>
+      </>
     )
   }
 }

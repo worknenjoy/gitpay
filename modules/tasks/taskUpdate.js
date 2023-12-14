@@ -217,7 +217,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
               },
               include: [models.User]
             }).then((assigned) => {
-              return task.updateAttributes({ status: 'in_progress' }).then(() => {
+              return task.update({ status: 'in_progress' }).then(() => {
                 const assignedUser = assigned.User.dataValues
                 const ownerUser = task.dataValues.User.dataValues
                 const interestedUsersId = task.Assigns.map(user => user.userId).filter(user => user !== assignedUser.id)
