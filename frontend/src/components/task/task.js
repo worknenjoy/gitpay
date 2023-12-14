@@ -1171,7 +1171,6 @@ class Task extends Component {
                 <div style={{ marginTop: 30, marginBottom: 30 }}> 
                   <Button
                     onClick={this.handleTaskPaymentDialog}
-                    disabled={task?.data?.transfer_id || (!task?.data?.orders || !task?.data?.Orders)?.length || task.data.status !== 'open'}
                     color='primary'
                     fullWidth
                     size='large'
