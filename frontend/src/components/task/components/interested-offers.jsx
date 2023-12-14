@@ -11,6 +11,7 @@ import {
   Divider
 } from '@material-ui/core';
 import MessageIcon from '@mui/icons-material/Message';
+import MomentComponent from 'moment';
 
 
 export default function InterestedOffers({ offers, onMessage, assigned, onAccept, onReject }) {
@@ -49,9 +50,30 @@ export default function InterestedOffers({ offers, onMessage, assigned, onAccept
                     >
                       { offer?.User?.name }
                     </Typography>
-                    <Typography variant="subtitle2" color="text.secondary">
+                    <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                       $ {offer?.value}
                     </Typography>
+                    { offer?.suggestedDate &&
+                    <Typography variant="caption" color="text.secondary" gutterBottom>
+                      Finish {MomentComponent(offer?.suggestedDate).fromNow()}
+                    </Typography>
+                    }
+                    { offer?.comment &&
+                    <Typography variant="body" color="text.secondary" component='div' gutterBottom>
+                      Comment:<br />
+                      {offer?.comment}
+                    </Typography>
+                    }
+                    { offer?.learn &&
+                      <Typography variant="body" color="text.secondary" gutterBottom>
+                        <FormattedMessage id='task.learn' defaultMessage={'For learning purposes'} />
+                      </Typography>
+                    }
+                    { offer?.createdAt &&
+                      <Typography variant="caption" color="text.secondary" gutterBottom>
+                        { MomentComponent(offer?.createdAt).fromNow() }
+                      </Typography>
+                    }
                   </div>
                   <div>
                     <Button onClick={ (event) => onReject(event, offer) } disabled={assigned || offer.status === 'rejected' || offer.status === 'accepted'} variant="outlined" color="error" size={'small'} style={{marginRight: 20}}>

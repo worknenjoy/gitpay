@@ -11,6 +11,7 @@ import {
   Chip
 } from '@material-ui/core';
 import MessageIcon from '@mui/icons-material/Message';
+import MomentComponent from 'moment';
 
 export default function InterestedUsers({ users, onMessage, onAccept, onReject, assigned }) {
   const onSendMessage = (id) => {
@@ -48,10 +49,24 @@ export default function InterestedUsers({ users, onMessage, onAccept, onReject, 
                     </Typography>
                     <Typography
                       sx={{ display: 'inline-block', marginRight: 10 }}
-                      variant="caption"
+                      variant="subtitle2"
                       color="text.primary"
                     >
                       { user?.User?.website }
+                    </Typography>
+                    <Typography
+                      sx={{ display: 'inline-block', marginRight: 10 }}
+                      variant="caption"
+                      color="text.primary"
+                    >
+                      { user?.User?.message }
+                    </Typography>
+                    <Typography
+                      sx={{ display: 'inline-block', marginRight: 10 }}
+                      variant="caption"
+                      color="text.primary"
+                    >
+                      { MomentComponent(user?.User?.createdAt).fromNow() }
                     </Typography>
                   </div>
                   <div>

@@ -317,6 +317,15 @@ const messages = defineMessages({
     id: 'actions.task.claim.error.user_is_not_the_owner',
     defaultMessage: 'You cannot claim this issue because you\'re not the Owner.'
   },
+  notificationActionOfferUpdateError: {
+    id: 'actions.offer.update.error',
+    defaultMessage: 'We could not update this offer'
+  },
+  notificationActionOfferUpdateSucess: {
+    id: 'actions.offer.update.sucess',
+    defaultMessage: 'Offer updated successfully'
+  },
+  
 })
 
 export default messages
