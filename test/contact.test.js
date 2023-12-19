@@ -8,7 +8,7 @@ const api = require('../server')
 const ContactMail = require('../modules/mail/contact')
 const agent = request.agent(api)
 
-xdescribe("Contact", () => {
+describe("Contact", () => {
   describe('Contact recruiters', () => {
     xit('should contact recruiters', (done) => {
       chai.use(spies);

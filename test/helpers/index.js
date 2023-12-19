@@ -1,10 +1,11 @@
-const testEmail = 'teste@gmail.com' + Math.random()
-const testPassword = 'teste' + Math.random()
-const testName = 'Tester' + Math.random()
+const testEmail = `teste+${Math.random()*100}@gmail.com`
+const testPassword = 'test'
+const testName = 'Test'
 
 const register = (agent, params = {}) => {
   params.email = params.email || testEmail
   params.password = params.password || testPassword
+  params.confirmPassword = params.password || testPassword
   params.name = params.name || testName
   return agent
     .post('/auth/register')
@@ -12,11 +13,12 @@ const register = (agent, params = {}) => {
 }
 
 const login = (agent, params = {}) => {
-  params.email = params.email || testEmail
+  params.username = params.email || testEmail
   params.password = params.password || testPassword
   return agent
     .post('/authorize/local')
     .send(params)
+    .type('form')
 }
 
 const activate = (agent, res) => {
@@ -24,20 +26,12 @@ const activate = (agent, res) => {
     .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
 }
 
-const registerAndLogin = (agent, registerParams = {
-  email: testEmail,
-  password: testPassword
-}, loginParams = {
-  email: testEmail,
-  password: testPassword
-}) => {
-  return register(agent, registerParams)
+const registerAndLogin = (agent) => {
+  return register(agent)
     .then((a) => {
       return activate(agent, a).then((active) => {
-        console.log('user activated', active.body)
-        return login(agent, loginParams).then(
+        return login(agent).then(
           (res) => {
-            console.log('login response', res.text)
             return res
           }
         ).catch((e) => {
@@ -50,6 +44,17 @@ const registerAndLogin = (agent, registerParams = {
       console.log('error on register', e)
     })
 }
+
+const createTask = (agent, params = {}) => {
+  params.provider = params.provider || 'github'
+  params.url = params.url || 'https://github.com/worknenjoy/truppie/issues/120'
+  registerAndLogin(agent).then((res) => {
+    return agent
+      .post('/tasks')
+      .send(params)
+  })
+}
+
 module.exports = {
   register,
   login,

@@ -186,15 +186,14 @@ describe("Users", () => {
         .type('form')
         .expect('Content-Type', /json/)
         .end((err, res) => {
-          console.log('res.body', res.body, err)
           agent
             .post('/authorize/local')
-            .send({email: 'teste@gmail.com', password: 'teste'})
+            .send({username: 'teste@gmail.com', password: 'teste'})
             .type('form')
             .expect(302)
             .end((err, res) => {
-              console.log('res.headers.location', res.headers.location)
               expect(res.statusCode).to.equal(302);
+              expect(res.text).to.include('token')
               done(err);
             })
         }

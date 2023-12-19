@@ -53,8 +53,6 @@ module.exports = (sequelize, DataTypes) => {
             oldValues: Object.values(instance.previous()),
             newValues: changed.map(v => instance.dataValues[v])
           })
-          // eslint-disable-next-line no-console
-          console.log('Task History create', taskHistory)
         }
         catch (e) {
           // eslint-disable-next-line no-console

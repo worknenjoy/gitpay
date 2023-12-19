@@ -352,10 +352,10 @@ class TaskPayment extends Component {
                             />
                             <Button
                               onClick={ this.payTask }
-                              style={ { float: 'right', margin: 10 } }
+                              style={ { float: 'right' } }
                               variant='contained'
                               color='primary'
-                              disabled={ !this.props.assigned }
+                              disabled={ !this.props.assigned || (order.status === 'open' && order.status !== 'succeeded' && !order.paid) }
                             >
                               <RedeemIcon style={ { marginRight: 10 } } />
                               <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
@@ -368,7 +368,7 @@ class TaskPayment extends Component {
                     </div>
                   )) : (
                     <div>
-                      <Alert severity='info'>
+                      <Alert severity='info' gutterBottom>
                         <FormattedMessage id='task.payment.noTransfers' defaultMessage='No bounties for this issue' />
                       </Alert>
                     </div>
@@ -377,10 +377,10 @@ class TaskPayment extends Component {
             </TabContainer>
           </div>
           <DialogContentText>
-            <span style={ { display: 'inline-block', margin: 20 } }>
+            <div>
               { !this.props.paid ? (
                 <div>
-                  <Alert severity='warning'>
+                  <Alert severity='warning' gutterBottom>
                   { this.props.assigned
                     ? this.props.intl.formatMessage(messages.transferMessage, {
                       to: sendTo(this.props.assigned).username || 'unknown',
@@ -444,7 +444,7 @@ class TaskPayment extends Component {
                   } } />
                 </div>
               ) }
-            </span>
+            </div>
           </DialogContentText>
           <Divider />
           { hasOrders() ? (
@@ -455,7 +455,7 @@ class TaskPayment extends Component {
                   style={ { float: 'right', margin: 10 } }
                   variant='contained'
                   color='primary'
-                  disabled={ !this.props.assigned || this.props.transferId || this.state.currentTab === 2 }
+                  disabled={ !this.props.assigned || this.props.transferId}
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
                   <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={ {
