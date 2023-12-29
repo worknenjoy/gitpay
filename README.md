@@ -23,6 +23,8 @@ This project has been made possible thanks to all the amazing people contributin
 
 [Join the Gitpay team on GitHub](https://github.com/worknenjoy/gitpay/)
 
+<a href="https://github.com/worknenjoy/gitpay/graphs/contributors"><img src="https://opencollective.com/gitpay/contributors.svg?width=890&button=false" /></a>
+
 ## Requirements
 
 To contribute to Gitpay, you will need the following:
