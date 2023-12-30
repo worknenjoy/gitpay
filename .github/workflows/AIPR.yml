@@ -23,5 +23,5 @@ jobs:
       with:
         openai_api_key: ${{ secrets.OPENAI_API_KEY }}
         openai_tokens: 2000
-        openai_model: "gpt-4-1106-preview"
+        openai_model: "gpt-4"
         
