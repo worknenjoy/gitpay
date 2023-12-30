@@ -32,7 +32,7 @@ import {
 
 const styles = theme => mainStyles(theme);
 
-const Welcome = () => {
+const Welcome = (props) => {
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
