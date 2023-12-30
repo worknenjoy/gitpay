@@ -23,5 +23,4 @@ jobs:
       with:
         openai_api_key: ${{ secrets.OPENAI_API_KEY }}
         openai_tokens: 2000
-        openai_model: "gpt-3.5-turbo-1106"
         
