@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import "typeface-roboto";
 import {
@@ -33,6 +33,7 @@ import {
 const styles = theme => mainStyles(theme);
 
 const Welcome = (props) => {
+  const ref = useRef(null);
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
@@ -50,9 +51,9 @@ const Welcome = (props) => {
 
   return (
     <div className={classes.root}>
-      <TopBarContainer ref="intro" hide />
+      <TopBarContainer hide />
       <Container>
-        <Section ref="contrib">
+        <Section name="contrib" ref={ref}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <MainTitle left>
@@ -121,7 +122,7 @@ const Welcome = (props) => {
           </Grid>
         </Section>
       </Container>
-      <Section ref="companies" alternative className={classes.bgContrast}>
+      <Section name="companies" ref={ref} alternative className={classes.bgContrast}>
         <Container>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
@@ -190,7 +191,7 @@ const Welcome = (props) => {
         </Container>
       </Section>
       <Container>
-        <Section ref="collab">
+        <Section name="collab" ref={ref}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <MainTitle left>
