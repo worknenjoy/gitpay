@@ -6,15 +6,42 @@ const chai = require('chai')
 const spies = require('chai-spies')
 const api = require('../server')
 const agent = request.agent(api)
-const { registerAndLogin } = require('./helpers')
+const nock = require('nock')
+const { registerAndLogin, createTask } = require('./helpers')
+const { create } = require('core-js/core/object')
 
 describe("Transfer", () => {
   describe("Initial transfer with one credit card and account activated", () => {
-    it("should create a new single transfer", (done) => {
-      registerAndLogin(agent).then((res) => {
-        expect(res.text).to.contain('token')
-        done();
-      });
+    beforeEach(async () => {
+      
+    })
+    afterEach(() => {
+      
+    })
+    it("should not create transfer with no orders", (done) => {
+       createTask(agent).then( task => {
+          const taskData = task.dataValues
+          agent
+            .post('/transfer/create')
+            .send({
+              taskId: taskData.id
+            }).then( res => {
+              
+              expect(res.statusCode).to.equal(200);
+              expect(res.body).to.exist;
+              expect(res.body).to.have.property('error')
+              expect(res.body.error).to.equal('No orders found')
+              done();
+            }).catch( e => {
+              console.log('error on transfer', e)
+              done(e)
+            }
+          )
+       }).catch( e => {
+          console.log('error on createTask', e)
+          done(e)
+        }
+      )
     })
   })
 })

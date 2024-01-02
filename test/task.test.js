@@ -48,7 +48,7 @@ describe("tasks", () => {
     nock.cleanAll()
   })
 
-  xdescribe('list tasks', () => {
+  describe('list tasks', () => {
     it('should list tasks', (done) => {
       agent
         .get('/tasks/list')

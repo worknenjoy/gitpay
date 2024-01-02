@@ -1,3 +1,4 @@
+const models = require('../../models')
 const testEmail = `teste+${Math.random()*100}@gmail.com`
 const testPassword = 'test'
 const testName = 'Test'
@@ -32,7 +33,7 @@ const registerAndLogin = (agent) => {
       return activate(agent, a).then((active) => {
         return login(agent).then(
           (res) => {
-            return res
+            return a
           }
         ).catch((e) => {
           console.log('error on login', e)
@@ -46,12 +47,24 @@ const registerAndLogin = (agent) => {
 }
 
 const createTask = (agent, params = {}) => {
+
   params.provider = params.provider || 'github'
-  params.url = params.url || 'https://github.com/worknenjoy/truppie/issues/120'
-  registerAndLogin(agent).then((res) => {
-    return agent
-      .post('/tasks')
-      .send(params)
+  params.url = params.url || 'https://github.com/worknenjoy/gitpay/issues/221'
+
+  return registerAndLogin(agent).then((res) => {
+    const user = res.body
+    return models.Task.create({
+      provider: params.provider || 'github',
+      url: params.url,
+      userId: user.id
+    }).then(task => {
+      console.log('task created', task)
+      return task
+    }).catch((e) => {
+      console.log('error on createTask', e)
+    })
+  }).catch((e) => {
+    console.log('error on registerAndLogin', e)
   })
 }
 
@@ -59,4 +72,5 @@ module.exports = {
   register,
   login,
   registerAndLogin,
+  createTask
 }
