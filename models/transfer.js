@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Transfer.associate = function (models) {
-    Transfer.belongsTo(models.Task)
+    Transfer.belongsTo(models.Task, {
+      foreignKey: 'taskId',
+      as: 'task'
+    })
   }
+
+  return Transfer
 }

@@ -14,6 +14,7 @@ const routerTaskSolution = require('./routes/taskSolutions')
 const routerCoupon = require('./routes/coupon')
 const routerLabel = require('./routes/label')
 const routerOffer = require('./routes/offer')
+const routerTransfer = require('./routes/transfer')
 
 exports.init = (app) => {
   app.use('/', routerAuth)
@@ -30,4 +31,5 @@ exports.init = (app) => {
   app.use('/coupon', routerCoupon)
   app.use('/labels', routerLabel)
   app.use('/offers', routerOffer)
+  app.use('/transfers', routerTransfer)
 }

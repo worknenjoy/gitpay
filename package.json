@@ -15,6 +15,7 @@
     "migrate-test-rollback": "NODE_ENV=test node migrate.js prev",
     "report": "NODE_ENV=production node report.js",
     "rollback": "node migrate.js prev",
+    "rollback-test": "NODE_ENV=test node migrate.js prev",
     "reset": "node migrate.js reset-hard",
     "start:dev": "nodemon ./server.js --ignore '/frontend/*'",
     "start": "node ./server.js",

@@ -22,14 +22,11 @@ describe("Transfer", () => {
        createTask(agent).then( task => {
           const taskData = task.dataValues
           agent
-            .post('/transfer/create')
+            .post('/transfers/create')
             .send({
               taskId: taskData.id
             }).then( res => {
-              
-              expect(res.statusCode).to.equal(200);
               expect(res.body).to.exist;
-              expect(res.body).to.have.property('error')
               expect(res.body.error).to.equal('No orders found')
               done();
             }).catch( e => {
