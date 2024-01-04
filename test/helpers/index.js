@@ -1,3 +1,4 @@
+const { create } = require('core-js/core/object')
 const models = require('../../models')
 const testEmail = `teste+${Math.random()*100}@gmail.com`
 const testPassword = 'test'
@@ -27,11 +28,11 @@ const activate = (agent, res) => {
     .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
 }
 
-const registerAndLogin = (agent) => {
-  return register(agent)
+const registerAndLogin = (agent, params = {}) => {
+  return register(agent, params = {})
     .then((a) => {
       return activate(agent, a).then((active) => {
-        return login(agent).then(
+        return login(agent, params).then(
           (res) => {
             return a
           }
@@ -68,9 +69,53 @@ const createTask = (agent, params = {}) => {
   })
 }
 
+const createAssign = (agent, params = {}) => {
+  return register(agent,{
+    email: 'anotheruser@example.com',
+    password: '123345',
+    confirmPassword: '123345',
+    name: 'Foo Bar'
+  }).then((res) => {
+    const user = res.body
+    console.log('user created', user)
+    return models.Assign.create({
+      TaskId: params.taskId,
+      userId: user.id
+    }).then((assigned) => {
+      const assignedData = assigned.dataValues
+      models.Task.update({assigned: assignedData.id}, {where: {id: assignedData.TaskId}}).then( task => {
+        console.log('task updated', task)
+      }).catch((e) => {
+        console.log('error on updateTask', e)
+      })
+      return assigned
+    }).catch((e) => {
+      console.log('error on createAssign', e)
+    })
+  }).catch((e) => {
+    console.log('error on registerAndLogin', e)
+  })
+}
+
+const createOrder = (params = {}) => {
+
+  params.source_id = params.source_id || '1234'
+  params.status = params.status || 'open'
+  params.amount = 200
+
+  return models.Order.create(params).then(order => {
+    console.log('order created', order)
+    return order
+  }).catch((e) => {
+    console.log('error on createTask', e)
+  })
+}
+
 module.exports = {
   register,
   login,
   registerAndLogin,
-  createTask
+  createTask,
+  createOrder,
+  createAssign
 }
