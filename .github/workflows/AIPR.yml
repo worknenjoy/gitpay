@@ -22,5 +22,5 @@ jobs:
       uses: alexanmtz/AIPR@main
       with:
         openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-        openai_tokens: 2000
+        openai_tokens: 4000
         
