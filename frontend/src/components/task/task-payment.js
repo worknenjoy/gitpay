@@ -133,7 +133,8 @@ class TaskPayment extends Component {
   }
 
   payTask = e => {
-    this.props.onPayTask(this.props.id, this.props.values.card)
+    //this.props.onPayTask(this.props.id, this.props.values.card)
+    this.props.onTransferTask(this.props.id)
     this.props.onClose()
   }
 
@@ -281,15 +282,38 @@ class TaskPayment extends Component {
               </Tabs>
             </AppBar>
             <TabContainer style={{paddingBottom: 0}}>
-              { this.props.transferId ? (
-                <div>
+              { (this.props.transferId || this.props.task.Transfer) ? (
+                <Alert severity='success'>
                   <Typography type='subheading' color='primary' gutterBottom noWrap>
                     <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded with your credit card and the transaction id is: ' />
                   </Typography>
-                  <Typography type='subheading' color='primary' gutterBottom noWrap>
-                    { `${this.props.transferId}` }
-                  </Typography>
-                </div>
+                  {this.props.transferId ?
+                    <Typography type='subheading' color='primary' gutterBottom noWrap>
+                      { `${this.props.transferId}` }
+                    </Typography>
+                  : 
+                    <div>
+                      <Typography type='heading' color='primary' gutterBottom noWrap>
+                        <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer id: ' />
+                      </Typography>
+                      <Typography type='subheading' color='primary' gutterBottom noWrap>
+                        { `${this.props.task.Transfer.id}` }
+                      </Typography>
+                      <Typography type='heading' color='primary' gutterBottom noWrap>
+                        <FormattedMessage id='task.payment.transfer.value' defaultMessage='Transfer amount: ' />
+                      </Typography>
+                      <Typography type='subheading' color='primary' gutterBottom noWrap>
+                        ${ `${this.props.task.Transfer.value}` }
+                      </Typography>
+                      <Typography type='heading' color='primary' gutterBottom noWrap>
+                        <FormattedMessage id='task.payment.transfer.status' defaultMessage='Transfer status: ' />
+                      </Typography>
+                      <Typography type='subheading' color='primary' gutterBottom noWrap>
+                        <Chip label={ `${this.props.task.Transfer.status}` } variant='outlined' />
+                      </Typography>
+                    </div>
+                  }
+                </Alert>
               )
                 : <List>
                   { orders.length > 0 ? orders.map((order, index) => (
@@ -355,7 +379,7 @@ class TaskPayment extends Component {
                               style={ { float: 'right' } }
                               variant='contained'
                               color='primary'
-                              disabled={ !this.props.assigned || (order.status === 'open' && order.status !== 'succeeded' && !order.paid) }
+                              disabled={ !this.props.assigned || (order.status === 'open' && order.status !== 'succeeded' && !order.paid || this.props.task.Trasnfer) }
                             >
                               <RedeemIcon style={ { marginRight: 10 } } />
                               <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
@@ -378,7 +402,7 @@ class TaskPayment extends Component {
           </div>
           <DialogContentText>
             <div>
-              { !this.props.paid ? (
+              { (!this.props.paid || this.props.task.Transfer.id) ? (
                 <div>
                   <Alert severity='warning' gutterBottom>
                   { this.props.assigned
@@ -455,7 +479,7 @@ class TaskPayment extends Component {
                   style={ { float: 'right', margin: 10 } }
                   variant='contained'
                   color='primary'
-                  disabled={ !this.props.assigned || this.props.transferId}
+                  disabled={ !this.props.assigned || this.props.transferId || this.props.task.Transfer}
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
                   <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={ {
@@ -492,6 +516,7 @@ TaskPayment.propTypes = {
   onPay: PropTypes.func,
   onPayOrder: PropTypes.func,
   onPayTask: PropTypes.func,
+  onTransfer: PropTypes.func,
   selectedValue: PropTypes.string,
   id: PropTypes.number,
   orders: PropTypes.array,

@@ -71,13 +71,12 @@ const createTask = (agent, params = {}) => {
 
 const createAssign = (agent, params = {}) => {
   return register(agent,{
-    email: 'anotheruser@example.com',
+    email: `${Math.random()}anotheruser@example.com`,
     password: '123345',
     confirmPassword: '123345',
     name: 'Foo Bar'
   }).then((res) => {
     const user = res.body
-    console.log('user created', user)
     return models.Assign.create({
       TaskId: params.taskId,
       userId: user.id
@@ -111,11 +110,25 @@ const createOrder = (params = {}) => {
   })
 }
 
+const createTransfer = (params = {}) => {
+
+  params.transfer_id = params.transfer_id || '1234'
+  params.transfer_method = params.transfer_method || 'paypal'
+
+  return models.Transfer.create(params).then(transfer => {
+    console.log('transfer created', transfer)
+    return transfer
+  }).catch((e) => {
+    console.log('error on createTransfer', e)
+  })
+}
+
 module.exports = {
   register,
   login,
   registerAndLogin,
   createTask,
   createOrder,
-  createAssign
+  createAssign,
+  createTransfer
 }

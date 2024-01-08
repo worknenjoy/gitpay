@@ -3,7 +3,7 @@ import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { assignTask, removeAssignment, messageTask, messageOffer, offerUpdate, actionAssign } from '../actions/assignActions'
-import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask } from '../actions/taskActions'
+import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask, transferTask } from '../actions/taskActions'
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
@@ -42,6 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
     syncTask: (taskId) => dispatch(syncTask(taskId)),
     paymentTask: (taskId, value) => dispatch(paymentTask(taskId, value)),
+    transferTask: (taskId) => dispatch(transferTask(taskId)),
     paymentOrder: (order) => dispatch(payOrder(order)),
     changeTab: (tab) => dispatch(changeTaskTab(tab)),
     createOrder: (order) => dispatch(createOrder(order)),

@@ -74,6 +74,7 @@ export const task = (state = {
     orders: [],
     assigns: [],
     assignedUser: {},
+    Transfer: {},
     url: '',
     provider: null,
     metadata: {
