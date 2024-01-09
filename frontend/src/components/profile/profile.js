@@ -391,7 +391,7 @@ class Profile extends Component {
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
                       <Route
                         exact
-                        path='/profile/payments'
+                        path='/profile/transfers'
                         component={ TransfersContainer }
                       />
                     }

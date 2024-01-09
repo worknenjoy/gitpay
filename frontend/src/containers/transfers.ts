@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { searchTransfer } from '../actions/transferActions';
-import { Transfers } from '../components/profile/transfers';
+import Transfers from '../components/profile/transfers';
 
 const mapStateToProps = (state: any) => {
   return {
-    user: state.user
+    transfers: state.transfers
   }
 }
 

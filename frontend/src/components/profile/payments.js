@@ -31,8 +31,6 @@ import TaskOrderTransfer from '../task/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
 import CustomPaginationActionsTable from './payments-table'
 
-
-
 const styles = theme => ({
   paper: {
     padding: 10,
