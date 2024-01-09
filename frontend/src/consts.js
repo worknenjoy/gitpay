@@ -1,7 +1,7 @@
 import { defineMessages } from 'react-intl'
 
-const msgs = defineMessages({
-  externalAccont: {
+let msgs = defineMessages({
+  externalAccount: {
     id: 'consts.external.account',
     defaultMessage: 'Bank account'
   },
@@ -127,10 +127,12 @@ const msgs = defineMessages({
   }
 })
 
+msgs = msgs || {}
+
 const api = {
   API_URL: process.env.API_HOST || 'http://localhost:3000',
   ACCOUNT_FIELDS: {
-    'external_account': msgs.externalAccont,
+    'external_account': msgs.externalAccount,
     'individual.address.city': msgs.city,
     'individual.address.line1': msgs.addressLine1,
     'individual.address.postal_code': msgs.zipcode,

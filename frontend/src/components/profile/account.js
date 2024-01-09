@@ -301,7 +301,6 @@ class Account extends Component {
               <TabContainer>
                 { account.data.id ? (
                   <div>
-
                     <form
                       onSubmit={ this.handleBankAccount }
                       style={ { marginTop: 20, marginBottom: 20, width: '100%' } }

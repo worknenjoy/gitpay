@@ -82,7 +82,7 @@ class ProfileOptions extends Component {
             </Alert>
           </div>
         }
-        <div>
+        <div style={ { marginBottom: 40 } }>
           <CardList>
             { user.Types && user.Types.map(t => t.name).includes('contributor') &&
               <Card>

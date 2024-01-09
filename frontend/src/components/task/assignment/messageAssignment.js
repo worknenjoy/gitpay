@@ -29,16 +29,17 @@ class MessageAssignment extends Component {
 
   static propTypes = {
     visible: PropTypes.bool,
-    task: PropTypes.object,
-    messageAction: PropTypes.func
+    id: PropTypes.object,
+    messageAction: PropTypes.func,
+    to: PropTypes.number,
   }
 
   onChangeMessage = event => this.setState({ message: event.target.value })
 
   messageAssignment = async () => {
-    const { task, messageAction, assign } = this.props
+    const { id, messageAction, to } = this.props
     const { message } = this.state
-    await messageAction(task.id, assign.id, message)
+    await messageAction(id, to, message)
     this.props.onClose()
   }
 

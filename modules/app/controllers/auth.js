@@ -8,7 +8,10 @@ const task = require('../../tasks')
 const Sendmail = require('../../mail/mail')
 
 exports.register = (req, res) => {
-  const { email } = req.body
+  const { email, name, password } = req.body
+  if(name?.length > 72) return res.status(401).send({ message: 'user.name.too.long' })
+  if(email?.length > 72) return res.status(401).send({ message: 'user.email.too.long' })
+  if(password?.length > 72) return res.status(401).send({ message: 'user.password.too.long' })
   user.userExists({ email }).then(userData => {
     if (userData.dataValues && userData.dataValues.email) {
       res.status(403).send({ message: 'user.exist' })

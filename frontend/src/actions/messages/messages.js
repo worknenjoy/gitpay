@@ -53,7 +53,6 @@ const messages = defineMessages({
     id: 'actions.assign.task.error',
     defaultMessage: 'We could not update this task.'
   },
-
   notificationMessageTaskError: {
     id: 'actions.message.task.error',
     defaultMessage: 'We have an issue to send your message. Please try again later'
@@ -318,6 +317,15 @@ const messages = defineMessages({
     id: 'actions.task.claim.error.user_is_not_the_owner',
     defaultMessage: 'You cannot claim this issue because you\'re not the Owner.'
   },
+  notificationActionOfferUpdateError: {
+    id: 'actions.offer.update.error',
+    defaultMessage: 'We could not update this offer'
+  },
+  notificationActionOfferUpdateSucess: {
+    id: 'actions.offer.update.sucess',
+    defaultMessage: 'Offer updated successfully'
+  },
+
 })
 
 export default messages

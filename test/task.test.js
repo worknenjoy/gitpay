@@ -15,7 +15,7 @@ const AssignMail = require('../modules/mail/assign')
 const TaskMail = require('../modules/mail/task')
 const taskUpdate = require('../modules/tasks/taskUpdate')
 
-xdescribe("tasks", () => {
+describe("tasks", () => {
   // API rate limit exceeded
   const createTask = (authorizationHeader, params) => {
     return agent
@@ -33,22 +33,22 @@ xdescribe("tasks", () => {
   beforeEach(() => {
     models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        //console.log('Deleted successfully');
+        console.log('Deleted successfully');
       }
     }, function(err){
-      //console.log(err);
+      console.log(err);
     });
     models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
       if(rowDeleted === 1){
-        //console.log('Deleted successfully');
+        console.log('Deleted successfully');
       }
     }, function(err){
-      //console.log(err);
+      console.log(err);
     });
     nock.cleanAll()
   })
 
-  describe('list tasks', () => {
+  xdescribe('list tasks', () => {
     it('should list tasks', (done) => {
       agent
         .get('/tasks/list')
@@ -62,7 +62,7 @@ xdescribe("tasks", () => {
     })
   })
 
-  describe('task history', () => {
+  xdescribe('task history', () => {
     xit('should create a new task and register on task history', (done) => {
       registerAndLogin(agent).then(res => {
         agent
@@ -117,20 +117,11 @@ xdescribe("tasks", () => {
   })
 
   describe('Task crud', () => {
-    it('should create a new task wiht projects ands organizations', (done) => {
-      register(agent).then(user => {
-        login(agent).then(res => {
-          agent
-            .post('/tasks/create/')
-            .send({url: 'https://github.com/worknenjoy/truppie/issues/99', UserId: user.body.id})
-            .set('Authorization', res.headers.authorization)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end((err, task) => {
-              expect(task.statusCode).to.equal(200);
-              expect(task.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
-              done(err)
-            })
+    xit('should create a new task wiht projects ands organizations', (done) => {
+      registerAndLogin(agent).then(res => {
+        createTask(res.headers.authorization).then(task => {
+          expect(task).to.equal('https://github.com/worknenjoy/truppie/issues/99');
+          done();
         }).catch(done)
       }).catch(done)
     })
@@ -150,7 +141,7 @@ xdescribe("tasks", () => {
       }).catch(done)
     })
 
-    it('should create a new task with one member', (done) => {
+    xit('should create a new task with one member', (done) => {
       register(agent).then(user => {
         login(agent).then(res => {
           //console.log('user data', res.headers.authorization, res.body.id)
@@ -230,7 +221,7 @@ xdescribe("tasks", () => {
       }).catch(done)
     })
 
-    it('should receive code on the platform from github auth to the redirected url for private tasks but invalid code', (done) => {
+    xit('should receive code on the platform from github auth to the redirected url for private tasks but invalid code', (done) => {
       agent
         .get('/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7')
         .expect(401)
@@ -375,7 +366,7 @@ xdescribe("tasks", () => {
         })
     });
 
-    it('should update task with associated user assigned', (done) => {
+    xit('should update task with associated user assigned', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'teste_task_user_assigned@gmail.com', password: 'teste'})
@@ -399,7 +390,7 @@ xdescribe("tasks", () => {
         })
     });
 
-    it('should update task with associated user offer', (done) => {
+    xit('should update task with associated user offer', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'teste_user_assigned_and_offer@gmail.com', password: 'teste'})
@@ -480,7 +471,7 @@ xdescribe("tasks", () => {
         })
     });
 
-    it('should update task with an existent user assigned', (done) => {
+    xit('should update task with an existent user assigned', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
@@ -506,7 +497,7 @@ xdescribe("tasks", () => {
         })
     });
 
-    it('should update status to in_progress when an user is assigned', (done) => {
+    xit('should update status to in_progress when an user is assigned', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testetaskuserassigned@gmail.com', password: 'teste'})
@@ -595,7 +586,7 @@ xdescribe("tasks", () => {
         })
     });
 
-    it('should delete a task by id', (done) => {
+    xit('should delete a task by id', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
           agent
@@ -612,7 +603,7 @@ xdescribe("tasks", () => {
       })
     })
 
-    it('should only delete own task', (done) => {
+    xit('should only delete own task', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
           agent
@@ -644,7 +635,7 @@ xdescribe("tasks", () => {
     })
 });
 
-  describe('sync task', () => {
+  xdescribe('sync task', () => {
     it('should sync with an open order', (done) => {
       models.Task.build({url: 'http://github.com/check/issue/1'}).save().then((task) => {
         task.createOrder({
@@ -691,7 +682,7 @@ xdescribe("tasks", () => {
 
   })
 
-  describe('assigned user to a task', () => {
+  xdescribe('assigned user to a task', () => {
 
     xit('should send email for a user interested to and user accept',(done) => {
       // create user, login and task

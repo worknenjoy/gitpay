@@ -55,6 +55,55 @@ describe("Users", () => {
           done(err);
         })
     })
+    it('shouldnt register with long names', (done) => {
+      agent
+        .post('/auth/register')
+        .send({
+          name: 'a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name',
+          email: 'teste@gmail.com',
+          password: 'teste'
+        })
+        .expect('Content-Type', /json/)
+        .expect(401)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(401);
+          expect(res.body).to.exist;
+          expect(res.body.message).to.equal('user.name.too.long')
+          done(err);
+        })
+    })
+    it('shouldnt register with long email', (done) => {
+      agent
+        .post('/auth/register')
+        .send({
+          email: 'a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name@email.com',
+          password: 'teste'
+        })
+        .expect('Content-Type', /json/)
+        .expect(401)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(401);
+          expect(res.body).to.exist;
+          expect(res.body.message).to.equal('user.email.too.long')
+          done(err);
+        })
+    })
+    it('shouldnt register with long password', (done) => {
+      agent
+        .post('/auth/register')
+        .send({
+          email: 'email@test.com',
+          password: 'a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name@email.com'
+        })
+        .expect('Content-Type', /json/)
+        .expect(401)
+        .end((err, res) => {
+          expect(res.statusCode).to.equal(401);
+          expect(res.body).to.exist;
+          expect(res.body.message).to.equal('user.password.too.long')
+          done(err);
+        })
+    })
     it('should validate user activation token', (done) => {
       agent
         .post('/auth/register')
@@ -130,20 +179,30 @@ describe("Users", () => {
   })
 
   describe('login User Local', () => {
-    xit('should user local', (done) => {
+    it('should user local', (done) => {
       agent
-        .post('/authorize/local')
+        .post('/auth/register')
         .send({email: 'teste@gmail.com', password: 'teste'})
-        .expect(302)
+        .type('form')
+        .expect('Content-Type', /json/)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(302);
-          done(err);
-        })
+          agent
+            .post('/authorize/local')
+            .send({username: 'teste@gmail.com', password: 'teste'})
+            .type('form')
+            .expect(302)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(302);
+              expect(res.text).to.include('token')
+              done(err);
+            })
+        }
+      )
     })
   })
 
   describe('login User social networks', () => {
-    it('should user authenticated', (done) => {
+    it('should user wrong authentication', (done) => {
       agent
         .get('/authenticated')
         .set('authorization', 'Bearer token-123') // 1) using the authorization header

@@ -32,7 +32,7 @@ class Info extends React.Component {
     return (
       <Content>
         <Typography variant='body1' color='primary' gutterBottom>
-          <FormattedMessage id='info.status.message' defaultMessage='We paid {bounties} in bounties and freelancer work for {tasks} to our community of {users} users' values={ {
+          <FormattedMessage id='info.status.message' defaultMessage='We paid {bounties} in bounties and freelancer work for {tasks} to our community of {users}' values={ {
             tasks: <Chip size='small' label={ <FormattedMessage id='info.status.tasks' defaultMessage='{tasks} tasks' values={ {
               tasks: stats.tasks.value
             } } /> } />,

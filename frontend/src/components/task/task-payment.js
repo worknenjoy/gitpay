@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import MomentComponent from 'moment'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-
+import Alert from '@material-ui/lab/Alert'
 import {
   withStyles,
   Button,
@@ -22,11 +23,15 @@ import {
   Chip,
 } from '@material-ui/core'
 import {
-  FilterList as FilterListIcon,
+  PaymentOutlined as FilterListIcon,
   Redeem as RedeemIcon
 } from '@material-ui/icons'
 import blue from '@material-ui/core/colors/blue'
 import PaymentTypeIcon from '../payment/payment-type-icon'
+import InterestedUsers from './components/interested-users'
+import InterestedOffers from './components/interested-offers'
+import MessageAssignment from './assignment/messageAssignment'
+import TaskAssigned from './task-assigned'
 
 const styles = {
   avatar: {
@@ -89,8 +94,8 @@ const messages = defineMessages({
     defaultMessage: 'Undefined status'
   },
   transferMessage: {
-    id: 'task.payment.transfer.message',
-    defaultMessage: 'You will send the payment for this task to {to} that receive payments in {payments}'
+    id: 'task.payment.transfer.notRegistered',
+    defaultMessage: 'The user {to} who will receive the payment, it has no {payments} registered. We will help him to register and send the payment to his registered account'
   },
   taskNoAssigned: {
     id: 'task.payment.noAssigned',
@@ -99,11 +104,27 @@ const messages = defineMessages({
 
 })
 
+const StyledTab = withStyles({
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'inherit',
+  },
+  svgIcon: { 
+    root: {
+      width: 16,
+      height: 16,
+    },
+  }  
+})(Tab);
+
 class TaskPayment extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      messageDialog: false,
+      interested: null,
+      messageType: 'assign'
     }
   }
 
@@ -142,7 +163,7 @@ class TaskPayment extends Component {
   }
 
   render () {
-    const { classes, orders, ...other } = this.props
+    const { classes, orders, offers, ...other } = this.props
 
     const TabContainer = props => {
       return (
@@ -154,6 +175,35 @@ class TaskPayment extends Component {
 
     const hasOrders = () => {
       return this.props.orders && !!this.props.orders.length
+    }
+
+    const assignTaskAndCreateOrder = async (event, offer) => {
+      const { task, loggedUser, createOrder, assignTask, assigns } = this.props
+      event.preventDefault()
+      
+      const assign = this.props.assigns.filter(item => item.userId === offer.userId)[0]
+
+      await task.id && loggedUser.logged && await createOrder({
+        provider: 'stripe',
+        amount: offer.value,
+        userId: loggedUser?.user?.id,
+        email: loggedUser?.user?.email,
+        taskId: task.id,
+        currency: 'usd',
+        status: 'open',
+        source_type: 'invoice-item',
+        customer_id: loggedUser?.user?.customer_id,
+        metadata: {
+          offer_id: offer.id,
+        }
+      })
+      await assignTask(task.id, assign.id)
+      await this.props.offerUpdate(task.id, offer.id, { status: 'accepted' })
+    }
+
+    const onReject = async (event, offer) => {
+      event.preventDefault()
+      this.props.offerUpdate(this.props.task.id, offer.id, { status: 'rejected' })
     }
 
     const paymentSupport = user => {
@@ -176,6 +226,14 @@ class TaskPayment extends Component {
       return chosen && chosen.length && chosen[0].User || {}
     }
 
+    const openMessageDialog = (id, messageType = 'assign') => {
+      this.setState({ messageDialog: true, interested: id, messageType })
+    }
+
+    const closeMessageDialog = () => {
+      this.setState({ messageDialog: false })
+    }
+
     return (
       <Dialog
         onClose={ this.props.onClose }
@@ -194,36 +252,35 @@ class TaskPayment extends Component {
             </Typography>
           ) }
           <div>
-            <AppBar position='static' color='default' style={ { marginTop: 20, boxShadow: 'none', background: 'transparent' } }>
+            <AppBar position='static' color='default' style={ { boxShadow: 'none', background: 'transparent' } }>
               <Tabs
                 value={ this.state.currentTab }
                 onChange={ this.onTabChange }
                 scrollable
                 scrollButtons='on'
-                indicatorColor='primary'
-                textColor='primary'
+                indicatorColor='secondary'
+                textColor='secondary'
               >
-                <Tab
-                  style={ { margin: 10 } }
+                <StyledTab
                   value={ 0 }
-                  label={ this.props.intl.formatMessage(messages.allPayments) }
-                  icon={ <RedeemIcon /> }
+                  label={this.props.intl.formatMessage(messages.allPayments)}
+                  icon={<RedeemIcon style={{marginRight: 10}} />}
                 />
-                <Tab
-                  style={ { margin: 10 } }
+                <StyledTab
+                  
                   value={ 1 }
                   label={ this.props.intl.formatMessage(messages.creditCardPayment) }
-                  icon={ <PaymentTypeIcon type='card' notext /> }
+                  icon={ <PaymentTypeIcon type='card' notext style={{marginRight: 10}} /> }
                 />
-                <Tab
-                  style={ { margin: 10 } }
+                <StyledTab
+                  
                   value={ 2 }
                   label={ this.props.intl.formatMessage(messages.payPalPayment) }
-                  icon={ <PaymentTypeIcon type='paypal' /> }
+                  icon={ <PaymentTypeIcon type='paypal' style={{marginRight: 10}} /> }
                 />
               </Tabs>
             </AppBar>
-            <TabContainer>
+            <TabContainer style={{paddingBottom: 0}}>
               { this.props.transferId ? (
                 <div>
                   <Typography type='subheading' color='primary' gutterBottom noWrap>
@@ -235,7 +292,7 @@ class TaskPayment extends Component {
                 </div>
               )
                 : <List>
-                  { orders && orders.map((order, index) => (
+                  { orders.length > 0 ? orders.map((order, index) => (
                     <div>
                       { order.provider === 'paypal'
                         ? (
@@ -246,7 +303,7 @@ class TaskPayment extends Component {
                               </Avatar>
                             </ListItemAvatar>
                             <ListItemText
-                              primary={ `$ ${order.amount}` }
+                              primary={ `$ ${order.amount} by ${order?.User?.name || 'unknown'}` }
                               secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.undefinedLabel)}` }
                             />
                             { !order.transfer_id
@@ -282,15 +339,23 @@ class TaskPayment extends Component {
                               </Avatar>
                             </ListItemAvatar>
                             <ListItemText
-                              primary={ `$ ${order.amount}` }
-                              secondary={ `${this.statuses(order.status) || this.props.intl.formatMessage(messages.labelCreditCard)}` }
+                              primary={ 
+                              <div style={{display: 'flex', verticalAlign: 'center'}}>
+                                <Typography variant='subtitle1' gutterBottom style={{marginRight: 10}}>
+                                  {`$ ${order.amount}`}
+                                </Typography>
+                                <Typography variant='caption' style={{marginTop: 3}}>
+                                  {order?.User ? 'by ' + order?.User?.name : ''} 
+                                </Typography>
+                              </div>}
+                              secondary={ `${this.statuses(order.status) + ' ' + MomentComponent(order.createdAt).fromNow() || this.props.intl.formatMessage(messages.labelCreditCard)}` }
                             />
                             <Button
                               onClick={ this.payTask }
-                              style={ { float: 'right', margin: 10 } }
+                              style={ { float: 'right' } }
                               variant='contained'
                               color='primary'
-                              disabled={ !this.props.assigned }
+                              disabled={ !this.props.assigned || (order.status === 'open' && order.status !== 'succeeded' && !order.paid) }
                             >
                               <RedeemIcon style={ { marginRight: 10 } } />
                               <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
@@ -301,21 +366,76 @@ class TaskPayment extends Component {
                         )
                       }
                     </div>
-                  )) }
+                  )) : (
+                    <div>
+                      <Alert severity='info' gutterBottom>
+                        <FormattedMessage id='task.payment.noTransfers' defaultMessage='No bounties for this issue' />
+                      </Alert>
+                    </div>
+                  ) }
                 </List> }
             </TabContainer>
           </div>
           <DialogContentText>
-            <span style={ { display: 'inline-block', margin: 20 } }>
+            <div>
               { !this.props.paid ? (
                 <div>
+                  <Alert severity='warning' gutterBottom>
                   { this.props.assigned
                     ? this.props.intl.formatMessage(messages.transferMessage, {
-                      to: sendTo(this.props.assigned).username,
+                      to: sendTo(this.props.assigned).username || 'unknown',
                       payments: paymentSupport(sendTo(this.props.assigned))
                     })
-                    : this.props.intl.formatMessage(messages.taskNoAssigned)
+                    : 
+                      this.props.intl.formatMessage(messages.taskNoAssigned)
                   }
+                  </Alert>
+                  { this.props.assigned ? 
+                      <TaskAssigned
+                        task={ { id: this.props.id, assigned: this.props.assigned } }
+                        assign={ {id: this.props.assigned } }
+                        isOwner={ this.props.isOwner }
+                        user={ sendTo(this.props.assigned) }
+                        loggedUser={ this.props.loggedUser }
+                        removeAssignment={ this.props.removeAssignment }
+                        assignTask={ this.props.assignTask }
+                      /> : null
+                  }
+                  { this.props?.assigns?.length > 0 ? 
+                    <div style={{marginTop: 20}}>
+                      <Typography variant='h5' gutterBottom noWrap>
+                        <FormattedMessage id='task.payment.interested' defaultMessage='Interested users' />
+                      </Typography>
+                      <InterestedUsers 
+                        assigned={this.props.assigned}
+                        users={this.props.assigns}
+                        onMessage={openMessageDialog}
+                        onAccept={async (id) => await this.props.assignTask(this.props.id, id)}
+                        onReject={async (id) => await this.props.actionAssign(this.props.id, id, false)}
+                      />
+                    </div> : null
+                  }
+                  { offers?.length ? 
+                    <div style={{marginTop: 20}}>
+                      <Typography variant='h5' gutterBottom noWrap>
+                        <FormattedMessage id='task.payment.offers' defaultMessage='Offers' />
+                      </Typography>
+                      <InterestedOffers 
+                        offers={offers}
+                        assigned={this.props.assigned}
+                        onMessage={(id) => openMessageDialog(id, 'offers') } 
+                        onAccept={(event, offer) => assignTaskAndCreateOrder(event, offer)}
+                        onReject={(event, offer) => onReject(event, offer)}
+                      />
+                    </div> : null
+                  }
+                  <MessageAssignment
+                    visible={ this.state.messageDialog }
+                    onClose={ closeMessageDialog }
+                    id={ this.props.id }
+                    to={ this.state.interested }
+                    messageAction={ this.state.messageType === 'assign' ? this.props.messageTask : this.props.messageOffer }
+                  />
                 </div>
               ) : (
                 <div>
@@ -324,7 +444,7 @@ class TaskPayment extends Component {
                   } } />
                 </div>
               ) }
-            </span>
+            </div>
           </DialogContentText>
           <Divider />
           { hasOrders() ? (
@@ -335,7 +455,7 @@ class TaskPayment extends Component {
                   style={ { float: 'right', margin: 10 } }
                   variant='contained'
                   color='primary'
-                  disabled={ !this.props.assigned || this.props.transferId || this.state.currentTab === 2 }
+                  disabled={ !this.props.assigned || this.props.transferId}
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
                   <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={ {
@@ -344,17 +464,7 @@ class TaskPayment extends Component {
                 </Button>
               ) }
             </div>
-          ) : (
-            <FormattedMessage id='task.payment.types.notype' defaultMessage='No payment for this payment type'>
-              { (msg) => (
-                <ListItemText
-                  variant='contained'
-                  disabled
-                  primary={ msg }
-                />
-              ) }
-            </FormattedMessage>
-          ) }
+          ) : null }
           { !this.props.paid ? (
             <Button
               onClick={ this.props.onClose }

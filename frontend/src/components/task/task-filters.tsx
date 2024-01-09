@@ -64,7 +64,7 @@ const TaskFilters = ({
 
   return(
     <AppBar position='static' color='transparent' elevation={ 0 }>
-      <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
+      <Toolbar style={{display: 'flex', justifyContent: 'space-between', margin: 0, padding: 0}}>
         <div>
           <ButtonGroup
             disableElevation

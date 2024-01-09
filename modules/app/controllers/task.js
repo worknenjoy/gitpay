@@ -1,4 +1,5 @@
 const Tasks = require('../../tasks')
+const Offers = require('../../offers')
 
 exports.createTask = (req, res) => {
   req.body.userId = req.user.id
@@ -77,6 +78,7 @@ exports.deleteTaskById = (req, res) => {
     .then((deleted) => {
       res.status(200).send(`${deleted}`)
     }).catch(error => {
+      console.log('error', error)
       res.status(400).send(error)
     })
 }
@@ -117,6 +119,26 @@ exports.messageAuthor = ({ params, body, user }, res) => Tasks
   .catch(error => {
     // eslint-disable-next-line no-console
     console.log('error on task controller message to author', error)
+    res.send({ error: error.message })
+  })
+
+// message to offers
+exports.messageOffer = ({ params, body, user }, res) => Offers
+  .offerMessage(params, body, user)
+  .then(data => res.send(data))
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.log('error on task controller message to offer', error)
+    res.send({ error: error.message })
+  })
+
+// update offer
+exports.updateOffer = ({ params, body }, res) => Offers
+  .updateOffer(params, body)
+  .then(data => res.send(data))
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.log('error on task controller update offer', error)
     res.send({ error: error.message })
   })
 

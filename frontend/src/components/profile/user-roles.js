@@ -235,9 +235,9 @@ class Roles extends Component {
     // eslint-disable-next-line no-unused-vars
     const { classes, roles } = this.props
     return (
-      <React.Fragment>
+      <Paper elevation={ 2 } style={ { padding: '10px 20px 20px 20px' } }>
         <div className={ classes.bigRow }>
-          <Typography variant='h4' noWrap>
+          <Typography variant='h5' noWrap>
             <FormattedMessage id='user.type.title' defaultMessage='What type of user are you?' />
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p' noWrap>
@@ -281,7 +281,7 @@ class Roles extends Component {
           <button onClick={ () => this.handleCancelClick() } className={ classes.cButton }>CANCEL</button>
           <button onClick={ (e) => this.handleSaveClick(e) } className={ classes.sButton }>SAVE</button>
         </div>
-      </React.Fragment>
+      </Paper>
     )
   }
 }
