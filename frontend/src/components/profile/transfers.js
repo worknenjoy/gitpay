@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import slugify from '@sindresorhus/slugify'
 import {
   Container,
   Typography,
@@ -22,14 +23,12 @@ const styles = theme => ({
   }
 });
 
-const Transfers = ({searchTransfer, transfers, intl}) => {
+const Transfers = ({searchTransfer, transfers, user, intl}) => {
 
   useEffect(() => {
-    const getTransferData = async () =>  await searchTransfer({})
-    getTransferData().then(t => console.log('transfer', t))
+    const getTransferData = async () =>  await searchTransfer({userId: user.id})
+    getTransferData().then(t => t)
   }, [])
-
-  console.log('transfer', transfers)
 
   return (
     <div style={{margin: '40px 0'}}>
@@ -45,7 +44,18 @@ const Transfers = ({searchTransfer, transfers, intl}) => {
               intl.formatMessage(messages.cardTableHeaderCreated),
               intl.formatMessage(messages.cardTableHeaderActions)
             ]}
-            transfers={transfers && transfers.data && { ...transfers, data: transfers.data.map(t => [t.status, t.value, t.createdAt, ''])} || {}}
+            transfers={
+              transfers && transfers.data && { 
+              ...transfers,
+              data: transfers.data.map(t => [
+                t.status,
+                t.value,
+                t.createdAt,
+                <a href={`/#/task/${t.Task.id}/${slugify(t.Task.title)}`}>
+                  <FormattedMessage id='profile.transfer.view' defaultMessage='View' />
+                </a>
+              ])} || {}
+            }
           />
         </div>
       </Container>

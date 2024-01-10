@@ -2,6 +2,7 @@ const Transfer = require('../../models').Transfer
 const Task = require('../../models').Task
 const Order = require('../../models').Order
 const Promise = require('bluebird')
+const { orderDetails } = require('../orders')
 
 module.exports = Promise.method(async function transferBuilds(params) {
 
@@ -40,6 +41,9 @@ module.exports = Promise.method(async function transferBuilds(params) {
     return { error: 'No user assigned' }
   }
   let finalValue = 0
+  let isStripe = false
+  let isPaypal = false
+  let isMultiple = false
   if(!taskData) {
     return new Error('Task not found')
   }
@@ -47,15 +51,28 @@ module.exports = Promise.method(async function transferBuilds(params) {
     return { error: 'No orders found' }
   } else {
     const orders = taskData.Orders
+    const ordersPaid = orders.find( order => order.paid === true )
+    if(!ordersPaid) {
+      return { error: 'All orders must be paid' }
+    }
     orders.map( order => {
+      if(order.provider === 'stripe') {
+        isStripe = true
+      }
+      if(order.provider === 'paypal') {
+        isPaypal = true
+      }
       finalValue += order.amount
     })
+    if(isStripe && isPaypal) {
+      isMultiple = true
+    }
   }
   const transfer = await Transfer.build({
     status: 'pending',
     value: finalValue,
     transfer_id: params.transfer_id,
-    transfer_method: params.transfer_method,
+    transfer_method: (isMultiple && 'multiple') || (isStripe && 'stripe') || (isPaypal && 'paypal'),
     taskId: params.taskId
   }).save()
   const taskUpdate = await Task.update({ TransferId: transfer.id }, {

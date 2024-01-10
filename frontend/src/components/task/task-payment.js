@@ -26,6 +26,7 @@ import {
   PaymentOutlined as FilterListIcon,
   Redeem as RedeemIcon
 } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 import blue from '@material-ui/core/colors/blue'
 import PaymentTypeIcon from '../payment/payment-type-icon'
 import InterestedUsers from './components/interested-users'
@@ -285,8 +286,13 @@ class TaskPayment extends Component {
               { (this.props.transferId || this.props.task.Transfer) ? (
                 <Alert severity='success'>
                   <Typography type='subheading' color='primary' gutterBottom noWrap>
-                    <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded with your credit card and the transaction id is: ' />
+                    <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded' />
                   </Typography>
+                  <Link to={`/profile/transfers`}>
+                    <Button size='small' variant='outlined' color='primary'>
+                      <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
+                    </Button>
+                  </Link>
                   {this.props.transferId ?
                     <Typography type='subheading' color='primary' gutterBottom noWrap>
                       { `${this.props.transferId}` }

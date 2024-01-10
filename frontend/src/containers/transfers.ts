@@ -4,6 +4,7 @@ import Transfers from '../components/profile/transfers';
 
 const mapStateToProps = (state: any) => {
   return {
+    user: state.loggedIn,
     transfers: state.transfers
   }
 }
