@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import Alert from '@material-ui/lab/Alert'
+import AlertTitle from '@material-ui/lab/AlertTitle'
 import {
   withStyles,
   Button,
@@ -284,15 +285,20 @@ class TaskPayment extends Component {
             </AppBar>
             <TabContainer style={{paddingBottom: 0}}>
               { (this.props.transferId || this.props.task.Transfer) ? (
-                <Alert severity='success'>
-                  <Typography type='subheading' color='primary' gutterBottom noWrap>
-                    <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded' />
-                  </Typography>
-                  <Link to={`/profile/transfers`}>
-                    <Button size='small' variant='outlined' color='primary'>
-                      <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
-                    </Button>
-                  </Link>
+                <Alert 
+                  severity='success'
+                  action={<Link to={`/profile/transfers`}>
+                  <Button size='small' variant='outlined' color='primary'>
+                    <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
+                  </Button>
+                </Link>}
+                >
+                  <AlertTitle>
+                    <Typography type='subheading' color='primary' gutterBottom noWrap>
+                      <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded' />
+                    </Typography>
+                  </AlertTitle>
+                  
                   {this.props.transferId ?
                     <Typography type='subheading' color='primary' gutterBottom noWrap>
                       { `${this.props.transferId}` }
@@ -300,23 +306,12 @@ class TaskPayment extends Component {
                   : 
                     <div>
                       <Typography type='heading' color='primary' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer id: ' />
+                        <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={{
+                          value: this.props.task.Transfer.value
+                        }}
+                       />
                       </Typography>
-                      <Typography type='subheading' color='primary' gutterBottom noWrap>
-                        { `${this.props.task.Transfer.id}` }
-                      </Typography>
-                      <Typography type='heading' color='primary' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.transfer.value' defaultMessage='Transfer amount: ' />
-                      </Typography>
-                      <Typography type='subheading' color='primary' gutterBottom noWrap>
-                        ${ `${this.props.task.Transfer.value}` }
-                      </Typography>
-                      <Typography type='heading' color='primary' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.transfer.status' defaultMessage='Transfer status: ' />
-                      </Typography>
-                      <Typography type='subheading' color='primary' gutterBottom noWrap>
-                        <Chip label={ `${this.props.task.Transfer.status}` } variant='outlined' />
-                      </Typography>
+                      
                     </div>
                   }
                 </Alert>
@@ -338,18 +333,7 @@ class TaskPayment extends Component {
                             />
                             { !order.transfer_id
                               ? (
-                                <Button
-                                  onClick={ (e) => this.payOrder(e, order.id) }
-                                  style={ { float: 'right', margin: 10 } }
-                                  variant='contained'
-                                  color='primary'
-                                  disabled={ !this.props.assigned || !sendTo(this.props.assigned).paypal_id }
-                                >
-                                  <RedeemIcon style={ { marginRight: 10 } } />
-                                  <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
-                                    value: order.amount
-                                  } } />
-                                </Button>
+                                <Chip label={ order.status } />
                               ) : (
                                 <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Paid with PayPal (id: {transfer}' values={ {
                                   transfer: order.transfer_id
@@ -380,18 +364,7 @@ class TaskPayment extends Component {
                               </div>}
                               secondary={ `${this.statuses(order.status) + ' ' + MomentComponent(order.createdAt).fromNow() || this.props.intl.formatMessage(messages.labelCreditCard)}` }
                             />
-                            <Button
-                              onClick={ this.payTask }
-                              style={ { float: 'right' } }
-                              variant='contained'
-                              color='primary'
-                              disabled={ !this.props.assigned || (order.status === 'open' && order.status !== 'succeeded' && !order.paid || this.props.task.Trasnfer) }
-                            >
-                              <RedeemIcon style={ { marginRight: 10 } } />
-                              <FormattedMessage id='task.payment.pay.button.credit' defaultMessage='Pay $ {value}' values={ {
-                                value: order.amount
-                              } } />
-                            </Button>
+                            <Chip label={ order.status } />
                           </ListItem>
                         )
                       }

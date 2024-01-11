@@ -12,6 +12,7 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
+  Typography,
   withStyles,
   Paper,
   IconButton
@@ -230,7 +231,9 @@ class CustomPaginationActionsTable extends React.Component {
             </div>
           </ReactPlaceholder>
           : <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
-            <FormattedMessage id='transfer.table.body.notransfer' defaultMessage='No Transfers' />
+            <Typography variant='h6' color='textSecondary' gutterBottom>  
+              <FormattedMessage id='transfer.table.body.notransfer' defaultMessage='No Transfers' />
+            </Typography>
           </div> }
       </Paper>
     )

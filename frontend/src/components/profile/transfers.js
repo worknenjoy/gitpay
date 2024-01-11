@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import slugify from '@sindresorhus/slugify'
+import moment from 'moment'
 import {
   Container,
   Typography,
-  withStyles
+  withStyles,
+  Chip
 } from '@material-ui/core'
 import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
@@ -24,9 +26,9 @@ const styles = theme => ({
 });
 
 const Transfers = ({searchTransfer, transfers, user, intl}) => {
-
+  console.log('user', user)
   useEffect(() => {
-    const getTransferData = async () =>  await searchTransfer({userId: user.id})
+    const getTransferData = async () =>  await searchTransfer({userId: user.user.id})
     getTransferData().then(t => t)
   }, [])
 
@@ -42,17 +44,17 @@ const Transfers = ({searchTransfer, transfers, user, intl}) => {
               intl.formatMessage(messages.cardTableHeaderStatus),
               intl.formatMessage(messages.cardTableHeaderValue),
               intl.formatMessage(messages.cardTableHeaderCreated),
-              intl.formatMessage(messages.cardTableHeaderActions)
+              intl.formatMessage(messages.cardTableHeaderIssue)
             ]}
             transfers={
               transfers && transfers.data && { 
               ...transfers,
               data: transfers.data.map(t => [
-                t.status,
-                t.value,
-                t.createdAt,
+                <Chip label={t.status} />,
+                `$ ${t.value}`,
+                moment(t.createdAt).format('LLL'),
                 <a href={`/#/task/${t.Task.id}/${slugify(t.Task.title)}`}>
-                  <FormattedMessage id='profile.transfer.view' defaultMessage='View' />
+                  {t.Task.title}
                 </a>
               ])} || {}
             }

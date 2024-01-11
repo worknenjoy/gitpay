@@ -59,7 +59,6 @@ const createTask = (agent, params = {}) => {
       url: params.url,
       userId: user.id
     }).then(task => {
-      console.log('task created', task)
       return task
     }).catch((e) => {
       console.log('error on createTask', e)
@@ -74,7 +73,8 @@ const createAssign = (agent, params = {}) => {
     email: `${Math.random()}anotheruser@example.com`,
     password: '123345',
     confirmPassword: '123345',
-    name: 'Foo Bar'
+    name: 'Foo Bar',
+    account_id: 'acct_1Gqj2tGjYvP2Yx5R'
   }).then((res) => {
     const user = res.body
     return models.Assign.create({
@@ -82,8 +82,8 @@ const createAssign = (agent, params = {}) => {
       userId: user.id
     }).then((assigned) => {
       const assignedData = assigned.dataValues
-      models.Task.update({assigned: assignedData.id}, {where: {id: assignedData.TaskId}}).then( task => {
-        console.log('task updated', task)
+      return models.Task.update({assigned: assignedData.id}, {where: {id: assignedData.TaskId}}).then( task => {
+        return task
       }).catch((e) => {
         console.log('error on updateTask', e)
       })
@@ -103,7 +103,6 @@ const createOrder = (params = {}) => {
   params.amount = 200
 
   return models.Order.create(params).then(order => {
-    console.log('order created', order)
     return order
   }).catch((e) => {
     console.log('error on createTask', e)
@@ -116,11 +115,20 @@ const createTransfer = (params = {}) => {
   params.transfer_method = params.transfer_method || 'paypal'
 
   return models.Transfer.create(params).then(transfer => {
-    console.log('transfer created', transfer)
     return transfer
   }).catch((e) => {
     console.log('error on createTransfer', e)
   })
+}
+
+async function truncateModels(model) {
+  await model.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
+    if(rowDeleted === 1){
+      console.log('Deleted successfully');
+    }
+  }, function(err){
+    console.log(err);
+  });
 }
 
 module.exports = {
@@ -130,5 +138,6 @@ module.exports = {
   createTask,
   createOrder,
   createAssign,
-  createTransfer
+  createTransfer,
+  truncateModels
 }

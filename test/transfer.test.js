@@ -7,56 +7,22 @@ const spies = require('chai-spies')
 const api = require('../server')
 const agent = request.agent(api)
 const nock = require('nock')
-const { registerAndLogin, createTask, createOrder, createAssign, createTransfer } = require('./helpers')
+const { registerAndLogin, createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
 const { create } = require('core-js/core/object')
 const models = require('../models')
+const transfer = require('./data/transfer').transfer
 
 describe("Transfer", () => {
   describe("Initial transfer with one credit card and account activated", () => {
     beforeEach(async () => {
-      
+      await truncateModels(models.Task);
+      await truncateModels(models.User);
+      await truncateModels(models.Assign);
+      await truncateModels(models.Order);
+      await truncateModels(models.Transfer);
     })
     afterEach(async () => {
-      await models.Task.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-        if(rowDeleted === 1){
-          console.log('Deleted successfully');
-        }
-      }, function(err){
-        console.log(err);
-      });
-    
-      await models.User.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-        if(rowDeleted === 1){
-          console.log('Deleted successfully');
-        }
-      }, function(err){
-        console.log(err);
-      });
-      
-      await models.Assign.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-        if(rowDeleted === 1){
-          console.log('Deleted successfully');
-        }
-      }, function(err){
-        console.log(err);
-      });
-      
-      await models.Order.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-        if(rowDeleted === 1){
-          console.log('Deleted successfully');
-        }
-      }, function(err){
-        console.log(err);
-      });
-      
-      await models.Transfer.truncate({where: {}, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-        if(rowDeleted === 1){
-          console.log('Deleted successfully');
-        }
-      }, function(err){
-        console.log(err);
-      });
-      
+      nock.cleanAll()
     })
     it("should not create transfer with no orders", async () => {
       try {
@@ -109,8 +75,12 @@ describe("Transfer", () => {
         throw e;
       }
     })
-    it("should create transfer with a single order with stripe", async () => {
+    it("should create transfer with a single order paid with stripe", async () => {
       try {
+        await nock('https://api.stripe.com')
+          .persist()  
+          .post('/v1/transfers')
+          .reply(200, transfer );
         const task = await createTask(agent);
         const taskData = task.dataValues;
         const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
@@ -124,6 +94,8 @@ describe("Transfer", () => {
         expect(res.body.status).to.equal('pending');
         expect(res.body.value).to.equal('200');
         expect(res.body.transfer_method).to.equal('stripe');
+        expect(res.body.transfer_id).to.exist;
+        expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
       } catch (e) {
         console.log('error on transfer', e);
         throw e;
@@ -139,7 +111,6 @@ describe("Transfer", () => {
         const res = await agent
           .get('/transfers/search')
           .query({});
-        console.log('res body transfer search', res.body);
         expect(res.body).to.exist;
         expect(res.body.length).to.equal(1);
       } catch (e) {

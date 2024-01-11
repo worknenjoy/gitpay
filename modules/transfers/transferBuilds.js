@@ -3,6 +3,10 @@ const Task = require('../../models').Task
 const Order = require('../../models').Order
 const Promise = require('bluebird')
 const { orderDetails } = require('../orders')
+const Stripe = require('stripe')
+const stripe = new Stripe(process.env.STRIPE_KEY)
+const TransferMail = require('../mail/transfer')
+const models = require('../../models')
 
 module.exports = Promise.method(async function transferBuilds(params) {
 
@@ -44,6 +48,10 @@ module.exports = Promise.method(async function transferBuilds(params) {
   let isStripe = false
   let isPaypal = false
   let isMultiple = false
+
+  let allStripe = true
+  let allPaypal = true
+
   if(!taskData) {
     return new Error('Task not found')
   }
@@ -56,10 +64,13 @@ module.exports = Promise.method(async function transferBuilds(params) {
       return { error: 'All orders must be paid' }
     }
     orders.map( order => {
+
       if(order.provider === 'stripe') {
+        allPaypal = false
         isStripe = true
       }
       if(order.provider === 'paypal') {
+        allStripe = false
         isPaypal = true
       }
       finalValue += order.amount
@@ -82,6 +93,53 @@ module.exports = Promise.method(async function transferBuilds(params) {
   })
   if(!taskUpdate[0]) {
     return { error: 'Task not updated' }
+  }
+
+  if(allStripe) {
+    const assign = await models.Assign.findOne({
+      where: {
+        id: taskData.assigned
+      },
+      include: [ models.User ]
+    })
+    const user = assign.dataValues.User.dataValues
+    const dest = user.account_id
+    if (!dest) {
+      TransferMail.paymentForInvalidAccount(user)
+      return transfer
+    }
+    const centavosAmount = finalValue * 100
+    let transferData = {
+      amount: centavosAmount * 0.92, // 8% base fee
+      currency: 'usd',
+      destination: dest,
+      source_type: 'card',
+    }
+
+    const stripeTransfer = await stripe.transfers.create(transferData)
+    if (stripeTransfer) {
+      const updateTask = await models.Task.update({ transfer_id: stripeTransfer.data.object.id }, {
+        where: {
+          id: params.taskId
+        }
+      })
+      const updateTransfer = await models.Transfer.update({ transfer_id: stripeTransfer.data.object.id }, {
+        where: {
+          id: transfer.id
+        },
+        returning: true
+
+      })
+      if (!updateTask || !updateTransfer) {
+        TransferMail.error(user, task, task.value)
+        return { error: 'update_task_reject' }
+      }
+      const taskOwner = await models.User.findByPk(taskData.userId)
+      TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
+      TransferMail.success(user, taskData, taskData.value)
+      console.log('update transfer', updateTransfer)
+      return updateTransfer[1][0].dataValues
+    }
   }
   return transfer
 })

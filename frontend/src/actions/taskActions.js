@@ -478,7 +478,9 @@ const transferTask = (taskId) => {
               addNotification(task.data.error)
             )
           }
-          return dispatch(transferTaskSuccess(transfer))
+          dispatch(addNotification('actions.task.transfer.success'))
+          dispatch(transferTaskSuccess(transfer))
+          return dispatch(fetchTask(taskId))
         }
         return dispatch(
           transferTaskError({ message: 'actions.task.transfer.unavailable' })
