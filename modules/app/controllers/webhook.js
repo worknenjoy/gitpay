@@ -240,7 +240,6 @@ exports.github = async (req, res) => {
           }
         }))
         const allResponse = { ...response, totalLabelResponse }
-        console.log(allResponse, 'response after executing labls')
         return res.json({ ...allResponse })
       }
       catch (e) {
@@ -655,62 +654,48 @@ exports.updateWebhook = (req, res) => {
           })
         break
       case 'payout.paid':
-        const updateTransfer = async () => {
-          console.log(Object.keys(stripe))
-          const balance_transaction = await stripe.balanceTransactions.retrieve(event.data.object.balance_transaction)
-          const transfer = await models.Transfer.findOne({
-            where: {
-              transfer_id: balance_transaction.source
-            }
-          })
-          const updateTransferStatus = await models.Transfer.update(
-            {
+        return stripe.balanceTransactions
+          .retrieve(event.data.object.balance_transaction).then((balance_transaction) => {
+            return models.Transfer.update({
               status: event.data.object.status
-            },
-            {
+            },{
               where: {
-                transfer_id: transfer.id
-              },
-              returning: true
-            }
-          )
-          if(!updateTransferStatus) {
-            return res.status(400).send({ error: 'Error to update transfer status' })
-          }
-          console.log('transfer updated', transfer, updateTransferStatus)
-        }
-        try {
-          const transfer = updateTransfer()
-          console.log('transfer', transfer)
-        } catch (e) {
-          console.log('error to update transfer status', e)
-        }
-        return models.User.findOne({
-          where: {
-            account_id: event.account
-          }
-        })
-          .then(user => {
-            if (user) {
-              const date = new Date(event.data.object.arrival_date * 1000)
-              const language = user.language || 'en'
-              i18n.setLocale(language)
-              SendMail.success(
-                user.dataValues,
-                i18n.__('mail.webhook.payment.transfer.finished.subject'),
-                i18n.__('mail.webhook.payment.transfer.finished.message', {
-                  currency: CURRENCIES[event.data.object.currency],
-                  amount: event.data.object.amount / 100,
-                  date: date
+                transfer_id: balance_transaction.source
+              }
+            }).then(updateTransfer => {
+                return models.User.findOne({
+                  where: {
+                    account_id: event.account
+                  }
                 })
-              )
-              return res.json(req.body)
-            }
-          })
+                  .then(user => {
+                    if (user) {
+                      const date = new Date(event.data.object.arrival_date * 1000)
+                      const language = user.language || 'en'
+                      i18n.setLocale(language)
+                      SendMail.success(
+                        user.dataValues,
+                        i18n.__('mail.webhook.payment.transfer.finished.subject'),
+                        i18n.__('mail.webhook.payment.transfer.finished.message', {
+                          currency: CURRENCIES[event.data.object.currency],
+                          amount: event.data.object.amount / 100,
+                          date: date
+                        })
+                      )
+                      return res.json(req.body)
+                    }
+                  })
+                  .catch(e => {
+                    console.log('error to find user', e)
+                    return res.status(400).send(e)
+                  })
+              })
+            })
           .catch(e => {
+            console.log('error to find balance transaction', e)
             return res.status(400).send(e)
-          })
-        
+          }
+        )
         break
       case 'balance.available':
         SendMail.success(

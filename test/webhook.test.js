@@ -367,15 +367,9 @@ describe('webhooks', () => {
       })
 
       it('should notify the transfer and update transfer when a webhook payout.done is triggered', async () => {
-        
         await nock('https://api.stripe.com')
         .persist()  
-        .get('/v1/payouts')
-        .reply(200, payoutData.done );
-
-        await nock('https://api.stripe.com')
-        .persist()  
-        .get('/v1/balance_transactions')
+        .get('/v1/balance_transactions/txn_1CdprOLlCJ9CeQRe7gBPy9Lo')
         .reply(200, balanceTransactionData.get );
 
         const user = await models.User.build({
