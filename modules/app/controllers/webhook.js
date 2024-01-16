@@ -617,7 +617,7 @@ exports.updateWebhook = (req, res) => {
                 i18n.__('mail.webhook.payment.transfer.intransit.message', {
                   currency: CURRENCIES[event.data.object.currency],
                   amount: event.data.object.amount / 100,
-                  date: date
+                  date: moment(date).format('LLL')
                 })
               )
               return res.json(req.body)
