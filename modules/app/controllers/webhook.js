@@ -658,44 +658,44 @@ exports.updateWebhook = (req, res) => {
           .retrieve(event.data.object.balance_transaction).then((balance_transaction) => {
             return models.Transfer.update({
               status: event.data.object.status
-            },{
+            }, {
               where: {
                 transfer_id: balance_transaction.source
               }
             }).then(updateTransfer => {
-                return models.User.findOne({
-                  where: {
-                    account_id: event.account
+              return models.User.findOne({
+                where: {
+                  account_id: event.account
+                }
+              })
+                .then(user => {
+                  if (user) {
+                    const date = new Date(event.data.object.arrival_date * 1000)
+                    const language = user.language || 'en'
+                    i18n.setLocale(language)
+                    SendMail.success(
+                      user.dataValues,
+                      i18n.__('mail.webhook.payment.transfer.finished.subject'),
+                      i18n.__('mail.webhook.payment.transfer.finished.message', {
+                        currency: CURRENCIES[event.data.object.currency],
+                        amount: event.data.object.amount / 100,
+                        date: date
+                      })
+                    )
+                    return res.json(req.body)
                   }
                 })
-                  .then(user => {
-                    if (user) {
-                      const date = new Date(event.data.object.arrival_date * 1000)
-                      const language = user.language || 'en'
-                      i18n.setLocale(language)
-                      SendMail.success(
-                        user.dataValues,
-                        i18n.__('mail.webhook.payment.transfer.finished.subject'),
-                        i18n.__('mail.webhook.payment.transfer.finished.message', {
-                          currency: CURRENCIES[event.data.object.currency],
-                          amount: event.data.object.amount / 100,
-                          date: date
-                        })
-                      )
-                      return res.json(req.body)
-                    }
-                  })
-                  .catch(e => {
-                    console.log('error to find user', e)
-                    return res.status(400).send(e)
-                  })
-              })
+                .catch(e => {
+                  console.log('error to find user', e)
+                  return res.status(400).send(e)
+                })
             })
+          })
           .catch(e => {
             console.log('error to find balance transaction', e)
             return res.status(400).send(e)
           }
-        )
+          )
         break
       case 'balance.available':
         SendMail.success(

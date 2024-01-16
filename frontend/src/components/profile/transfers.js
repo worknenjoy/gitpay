@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
+import React, { useEffect } from 'react'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
 import {
@@ -36,65 +36,64 @@ const styles = theme => ({
     width: 100,
     font: 10
   }
-});
+})
 
-const Transfers = ({searchTransfer, transfers, user, intl}) => {
-
-  const [value, setValue] = React.useState(0);
+const Transfers = ({ searchTransfer, transfers, user, intl }) => {
+  const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setValue(newValue)
     let getTransfers = () => {}
-    if(newValue === 'to') {
-      getTransfers = async () =>  await searchTransfer({to: user.user.id})
+    if (newValue === 'to') {
+      getTransfers = async () => await searchTransfer({ to: user.user.id })
     }
-    if(newValue === 'from') {
-      getTransfers = async () =>  await searchTransfer({userId: user.user.id})
+    if (newValue === 'from') {
+      getTransfers = async () => await searchTransfer({ userId: user.user.id })
     }
     getTransfers().then(t => console.log('transfers:', t))
-  };
+  }
 
   useEffect(() => {
     setValue('from')
-    const getTranfers = async () =>  await searchTransfer({userId: user.user.id})    
+    const getTranfers = async () => await searchTransfer({ userId: user.user.id })
     getTranfers().then(t => console.log('transfers:', t))
   }, [user])
 
   return (
-    <div style={{margin: '40px 0'}}>
+    <div style={ { margin: '40px 0' } }>
       <Container>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant='h5' gutterBottom>
           <FormattedMessage id='profile.transfer.title' defaultMessage='Transfers' />
         </Typography>
         <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          style={{margin: '20px 0'}}
+          value={ value }
+          onChange={ handleChange }
+          indicatorColor='primary'
+          textColor='primary'
+          style={ { margin: '20px 0' } }
         >
-          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderFrom)} value='from' />
-          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderTo)} value='to' />
+          <Tab label={ intl.formatMessage(transferMessages.cardTableHeaderFrom) } value='from' />
+          <Tab label={ intl.formatMessage(transferMessages.cardTableHeaderTo) } value='to' />
         </Tabs>
         <div>
           <CustomPaginationActionsTable
-            tableHead={[
+            tableHead={ [
               intl.formatMessage(messages.cardTableHeaderStatus),
               intl.formatMessage(messages.cardTableHeaderValue),
               intl.formatMessage(messages.cardTableHeaderCreated),
               intl.formatMessage(messages.cardTableHeaderIssue)
-            ]}
+            ] }
             transfers={
-              transfers && transfers.data && { 
-              ...transfers,
-              data: transfers.data.map(t => [
-                <Chip label={t.status} />,
-                `$ ${t.value}`,
-                moment(t.createdAt).format('LLL'),
-                <a href={`/#/task/${t.Task.id}/${slugify(t.Task.title)}`}>
-                  {t.Task.title}
-                </a>
-              ])} || {}
+              transfers && transfers.data && {
+                ...transfers,
+                data: transfers.data.map(t => [
+                  <Chip label={ t.status } />,
+                  `$ ${t.value}`,
+                  moment(t.createdAt).format('LLL'),
+                  <a href={ `/#/task/${t.Task.id}/${slugify(t.Task.title)}` }>
+                    { t.Task.title }
+                  </a>
+                ]) } || {}
             }
           />
         </div>
@@ -103,4 +102,4 @@ const Transfers = ({searchTransfer, transfers, user, intl}) => {
   )
 }
 
-export default injectIntl(withStyles(styles)(Transfers));
+export default injectIntl(withStyles(styles)(Transfers))

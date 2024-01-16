@@ -8,15 +8,14 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
 
-module.exports = Promise.method(async function transferBuilds(params) {
-
+module.exports = Promise.method(async function transferBuilds (params) {
   const existingTransfer = params.transfer_id && await Transfer.findOne({
     where: {
       transfer_id: params.transfer_id
     }
   })
 
-  if(existingTransfer) {
+  if (existingTransfer) {
     return { error: 'This transfer already exists' }
   }
 
@@ -26,7 +25,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
     }
   })
 
-  if(existingTask) {
+  if (existingTask) {
     return { error: 'Only one transfer for an issue' }
   }
 
@@ -39,9 +38,9 @@ module.exports = Promise.method(async function transferBuilds(params) {
 
   const taskData = task.dataValues
 
-  if(!taskData) return { error: 'No valid task' }
+  if (!taskData) return { error: 'No valid task' }
 
-  if(!taskData.assigned) {
+  if (!taskData.assigned) {
     return { error: 'No user assigned' }
   }
 
@@ -60,30 +59,30 @@ module.exports = Promise.method(async function transferBuilds(params) {
   let allStripe = true
   let allPaypal = true
 
-  if(!taskData) {
+  if (!taskData) {
     return new Error('Task not found')
   }
-  if(taskData.Orders.length === 0) {
+  if (taskData.Orders.length === 0) {
     return { error: 'No orders found' }
-  } else {
+  }
+  else {
     const orders = taskData.Orders
-    const ordersPaid = orders.find( order => order.paid === true )
-    if(!ordersPaid) {
+    const ordersPaid = orders.find(order => order.paid === true)
+    if (!ordersPaid) {
       return { error: 'All orders must be paid' }
     }
-    orders.map( order => {
-
-      if(order.provider === 'stripe') {
+    orders.map(order => {
+      if (order.provider === 'stripe') {
         allPaypal = false
         isStripe = true
       }
-      if(order.provider === 'paypal') {
+      if (order.provider === 'paypal') {
         allStripe = false
         isPaypal = true
       }
       finalValue += order.amount
     })
-    if(isStripe && isPaypal) {
+    if (isStripe && isPaypal) {
       isMultiple = true
     }
   }
@@ -101,11 +100,11 @@ module.exports = Promise.method(async function transferBuilds(params) {
       id: params.taskId
     }
   })
-  if(!taskUpdate[0]) {
+  if (!taskUpdate[0]) {
     return { error: 'Task not updated' }
   }
 
-  if(allStripe) {
+  if (allStripe) {
     const assign = await models.Assign.findOne({
       where: {
         id: taskData.assigned
@@ -128,7 +127,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
 
     const stripeTransfer = await stripe.transfers.create(transferData)
     if (stripeTransfer) {
-      const updateTask = await models.Task.update({ transfer_id: stripeTransfer.id}, {
+      const updateTask = await models.Task.update({ transfer_id: stripeTransfer.id }, {
         where: {
           id: params.taskId
         }

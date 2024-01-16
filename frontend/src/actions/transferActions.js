@@ -29,19 +29,18 @@ const searchTransferFailed = (error) => {
   }
 }
 
-
 const searchTransfer = (params) => (dispatch) => {
   dispatch(searchTransferRequested())
-  return axios.get(api.API_URL + `/transfers/search`, { params }).then(
+  return axios.get(api.API_URL + '/transfers/search', { params }).then(
     transfer => {
-      if(transfer.data) {
+      if (transfer.data) {
         return dispatch(searchTransferSuccess(transfer.data))
-      } 
-      if(transfer.error) {
+      }
+      if (transfer.error) {
         return dispatch(searchTransferFailed(transfer.error))
       }
     }
-  ).catch( e => {
+  ).catch(e => {
     return dispatch(searchTransferFailed(e))
   })
 }
