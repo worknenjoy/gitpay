@@ -1,13 +1,22 @@
 const Promise = require('bluebird')
-const TransferMail = require('../mail/transfer')
+const transfer = require('../../models/transfer')
 const Transfer = require('../../models').Transfer
 const Task = require('../../models').Task
+const User = require('../../models').User
 
 module.exports = Promise.method(async function transferSearch(params = {}) {
-
-  const tasks = await Task.findAll({
-    where: {},
-    include: [Transfer]
-  })
-  return tasks.filter(task => task.dataValues.userId === params.userId ).map(task => task.dataValues.Transfer)
+  let transfers = []
+  if(params.userId) {
+    transfers = await Transfer.findAll({
+      where: { userId: params.userId },
+      include: [ Task, User ]
+    })
+  }
+  if(params.to) {
+    transfers = await Transfer.findAll({
+      where: { to: params.to },
+      include: [ Task, User ]
+    })
+  }
+  return transfers
 })

@@ -14,6 +14,22 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       },
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id'
+      },
+      allowNull: false,
+    },
+    to: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id'
+      },
+      allowNull: false,
     }
   }, {
 
@@ -22,6 +38,9 @@ module.exports = (sequelize, DataTypes) => {
   Transfer.associate = function (models) {
     Transfer.belongsTo(models.Task, {
       foreignKey: 'taskId'
+    })
+    Transfer.belongsTo(models.User, {
+      foreignKey: 'userId'
     })
   }
 

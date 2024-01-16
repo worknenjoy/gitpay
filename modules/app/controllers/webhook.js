@@ -6,7 +6,6 @@ if (process.env.NODE_ENV !== 'production') {
 const i18n = require('i18n')
 const dateFormat = require('dateformat')
 const moment = require('moment')
-
 const models = require('../../../models')
 const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
@@ -260,7 +259,6 @@ exports.github = async (req, res) => {
 
 exports.updateWebhook = (req, res) => {
   // eslint-disable-next-line no-console
-  console.log('webhook body', req.body)
 
   if (req.body.object === 'event') {
     const event = req.body
@@ -657,6 +655,36 @@ exports.updateWebhook = (req, res) => {
           })
         break
       case 'payout.paid':
+        const updateTransfer = async () => {
+          console.log(Object.keys(stripe))
+          const balance_transaction = await stripe.balanceTransactions.retrieve(event.data.object.balance_transaction)
+          const transfer = await models.Transfer.findOne({
+            where: {
+              transfer_id: balance_transaction.source
+            }
+          })
+          const updateTransferStatus = await models.Transfer.update(
+            {
+              status: event.data.object.status
+            },
+            {
+              where: {
+                transfer_id: transfer.id
+              },
+              returning: true
+            }
+          )
+          if(!updateTransferStatus) {
+            return res.status(400).send({ error: 'Error to update transfer status' })
+          }
+          console.log('transfer updated', transfer, updateTransferStatus)
+        }
+        try {
+          const transfer = updateTransfer()
+          console.log('transfer', transfer)
+        } catch (e) {
+          console.log('error to update transfer status', e)
+        }
         return models.User.findOne({
           where: {
             account_id: event.account
@@ -682,7 +710,7 @@ exports.updateWebhook = (req, res) => {
           .catch(e => {
             return res.status(400).send(e)
           })
-
+        
         break
       case 'balance.available':
         SendMail.success(

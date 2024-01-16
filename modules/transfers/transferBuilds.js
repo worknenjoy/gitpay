@@ -34,7 +34,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
     where: {
       id: params.taskId
     },
-    include: [Order]
+    include: [Order, models.User]
   })
 
   const taskData = task.dataValues
@@ -44,6 +44,14 @@ module.exports = Promise.method(async function transferBuilds(params) {
   if(!taskData.assigned) {
     return { error: 'No user assigned' }
   }
+
+  const assign = await models.Assign.findOne({
+    where: {
+      id: taskData.assigned
+    },
+    include: [ models.User ]
+  })
+
   let finalValue = 0
   let isStripe = false
   let isPaypal = false
@@ -84,7 +92,9 @@ module.exports = Promise.method(async function transferBuilds(params) {
     value: finalValue,
     transfer_id: params.transfer_id,
     transfer_method: (isMultiple && 'multiple') || (isStripe && 'stripe') || (isPaypal && 'paypal'),
-    taskId: params.taskId
+    taskId: params.taskId,
+    userId: taskData.User.dataValues.id,
+    to: assign.dataValues.User.id,
   }).save()
   const taskUpdate = await Task.update({ TransferId: transfer.id }, {
     where: {
@@ -118,12 +128,12 @@ module.exports = Promise.method(async function transferBuilds(params) {
 
     const stripeTransfer = await stripe.transfers.create(transferData)
     if (stripeTransfer) {
-      const updateTask = await models.Task.update({ transfer_id: stripeTransfer.data.object.id }, {
+      const updateTask = await models.Task.update({ transfer_id: stripeTransfer.id}, {
         where: {
           id: params.taskId
         }
       })
-      const updateTransfer = await models.Transfer.update({ transfer_id: stripeTransfer.data.object.id }, {
+      const updateTransfer = await models.Transfer.update({ transfer_id: stripeTransfer.id, status: 'in_transit' }, {
         where: {
           id: transfer.id
         },
@@ -137,7 +147,6 @@ module.exports = Promise.method(async function transferBuilds(params) {
       const taskOwner = await models.User.findByPk(taskData.userId)
       TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
       TransferMail.success(user, taskData, taskData.value)
-      console.log('update transfer', updateTransfer)
       return updateTransfer[1][0].dataValues
     }
   }

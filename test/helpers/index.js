@@ -58,6 +58,9 @@ const createTask = (agent, params = {}) => {
       provider: params.provider || 'github',
       url: params.url,
       userId: user.id
+    }, {
+      include: [ models.User ]
+    
     }).then(task => {
       return task
     }).catch((e) => {
@@ -80,14 +83,15 @@ const createAssign = (agent, params = {}) => {
     return models.Assign.create({
       TaskId: params.taskId,
       userId: user.id
+    }, {
+      include: [ models.User ]
     }).then((assigned) => {
       const assignedData = assigned.dataValues
       return models.Task.update({assigned: assignedData.id}, {where: {id: assignedData.TaskId}}).then( task => {
-        return task
+      return assigned
       }).catch((e) => {
         console.log('error on updateTask', e)
       })
-      return assigned
     }).catch((e) => {
       console.log('error on createAssign', e)
     })

@@ -4,11 +4,14 @@ const request = require('supertest')
 const expect = require('chai').expect
 const api = require('../server')
 const agent = request.agent(api)
+const nock = require('nock')
+const { truncateModels, createTask, createAssign, createTransfer, createOrder } = require('./helpers')
 const models = require('../models')
 
 const chargeData = require('./data/charge')
 const transferData = require('./data/transfer')
 const payoutData = require('./data/payout')
+const balanceTransactionData = require('./data/balance.transaction')
 const cardData = require('./data/card')
 const balanceData = require('./data/balance')
 const refundData = require('./data/refund')
@@ -19,30 +22,13 @@ const invoiceUpdated = require('./data/stripe.invoice.update')
 const invoiceCreated = require('./data/stripe.invoice.create')
 const invoicePaid = require('./data/stripe.invoice.paid')
 
-xdescribe('webhooks', () => {
-  beforeEach(() => {
-    models.Task.destroy({ where: {}, truncate: true, cascade: true }).then(
-      function (rowDeleted) {
-        // rowDeleted will return number of rows deleted
-        if (rowDeleted === 1) {
-          console.log('Deleted successfully')
-        }
-      },
-      function (err) {
-        console.log(err)
-      }
-    )
-    models.User.destroy({ where: {}, truncate: true, cascade: true }).then(
-      function (rowDeleted) {
-        // rowDeleted will return number of rows deleted
-        if (rowDeleted === 1) {
-          console.log('Deleted successfully')
-        }
-      },
-      function (err) {
-        console.log(err)
-      }
-    )
+describe('webhooks', () => {
+  beforeEach(async () => {
+    await truncateModels(models.Task);
+    await truncateModels(models.User);
+    await truncateModels(models.Assign);
+    await truncateModels(models.Order);
+    await truncateModels(models.Transfer);
   })
 
   describe('webhooks for charge', () => {
@@ -315,11 +301,11 @@ xdescribe('webhooks', () => {
                   .createAssign({ userId: user.dataValues.id })
                   .then(assign => {
                     task
-                      .updateAttributes({ assigned: assign.dataValues.id })
+                      .update({ assigned: assign.dataValues.id }, { where: { id: task.id } })
                       .then(updatedTask => {
                         agent
                           .post('/webhooks')
-                          .send(transferData.update)
+                          .send(transferData.transfer)
                           .expect('Content-Type', /json/)
                           .expect(200)
                           .end((err, res) => {
@@ -380,26 +366,40 @@ xdescribe('webhooks', () => {
           }).catch(done)
       })
 
-      it('should notify the transfer when a webhook payout.done is triggered', done => {
-        models.User.build({
+      it('should notify the transfer and update transfer when a webhook payout.done is triggered', async () => {
+        
+        await nock('https://api.stripe.com')
+        .persist()  
+        .get('/v1/payouts')
+        .reply(200, payoutData.done );
+
+        await nock('https://api.stripe.com')
+        .persist()  
+        .get('/v1/balance_transactions')
+        .reply(200, balanceTransactionData.get );
+
+        const user = await models.User.build({
           email: 'teste@mail.com',
           password: 'teste',
           account_id: 'acct_1CZ5vkLlCJ9CeQRe'
-        })
-          .save()
-          .then(user => {
-            agent
-              .post('/webhooks')
-              .send(payoutData.done)
-              .expect('Content-Type', /json/)
-              .expect(200)
-              .end((err, res) => {
-                expect(res.statusCode).to.equal(200)
-                expect(res.body).to.exist
-                expect(res.body.id).to.equal('evt_1CeM4PLlCJ9CeQReQrtxB9GJ')
-                done(err)
-              })
-          }).catch(done)
+        }).save()
+
+        const task = await createTask(agent)
+        const taskData = task.dataValues
+        const createOrder = await task.createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe' })
+        const assign = await createAssign(agent, {taskId: taskData.id})
+        const newTransfer = await createTransfer({userId: taskData.userId, taskId: taskData.id, transfer_id: 'tr_1CZ5vkLlCJ9CeQRe', to: assign.dataValues.userId, status: 'pending'})
+        const res = await agent
+          .post('/webhooks')
+          .send(payoutData.done)
+          .expect('Content-Type', /json/)
+          .expect(200)
+        const currentTransfer = await models.Transfer.findOne({where: {id: newTransfer.dataValues.id}})
+        expect(currentTransfer.status).to.equal('paid')
+        expect(res.statusCode).to.equal(200)
+        expect(res.body).to.exist
+        expect(res.body.id).to.equal('evt_1CeM4PLlCJ9CeQReQrtxB9GJ')
+        
       })
     })
   })

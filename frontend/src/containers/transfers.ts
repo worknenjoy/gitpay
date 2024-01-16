@@ -11,7 +11,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    searchTransfer: (transfer: any) => dispatch(searchTransfer(transfer))
+    searchTransfer: (params: any) => dispatch(searchTransfer(params))
   }
 }
 

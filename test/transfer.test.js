@@ -10,7 +10,19 @@ const nock = require('nock')
 const { registerAndLogin, createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
 const { create } = require('core-js/core/object')
 const models = require('../models')
-const transfer = require('./data/transfer').transfer
+const transfer = require('./data/transfer').transfer.data.object
+
+// Common function to create transfer
+const createTransferWithTaskData = async (taskData, userId, transferId) => {
+  const res = await agent
+    .post('/transfers/create')
+    .send({
+      taskId: taskData.id,
+      userId: userId,
+      transfer_id: transferId
+    });
+  return res;
+}
 
 describe("Transfer", () => {
   describe("Initial transfer with one credit card and account activated", () => {
@@ -29,11 +41,8 @@ describe("Transfer", () => {
         const task = await createTask(agent);
         const taskData = task.dataValues;
         const assign = await createAssign(agent, {taskId: taskData.id});
-        const res = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id
-          });
+        const res = await createTransferWithTaskData(taskData, taskData.userId);
+        console.log('assign, assign', assign)
         expect(res.body).to.exist;
         expect(res.body.error).to.equal('No orders found');
       } catch (e) {
@@ -45,11 +54,7 @@ describe("Transfer", () => {
       try {
         const task = await createTask(agent);
         const taskData = task.dataValues;
-        const res = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id
-          });
+        const res = await createTransferWithTaskData(taskData, taskData.userId);
         expect(res.body).to.exist;
         expect(res.body.error).to.equal('No user assigned');
       } catch (e) {
@@ -63,11 +68,7 @@ describe("Transfer", () => {
         const taskData = task.dataValues;
         const order = await createOrder({userId: taskData.userId, TaskId: taskData.id});
         const assign = await createAssign(agent, {taskId: taskData.id});
-        const res = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id
-          });
+        const res = await createTransferWithTaskData(taskData, taskData.userId);
         expect(res.body).to.exist;
         expect(res.body.error).to.equal('All orders must be paid');
       } catch (e) {
@@ -85,13 +86,9 @@ describe("Transfer", () => {
         const taskData = task.dataValues;
         const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
         const assign = await createAssign(agent, {taskId: taskData.id});
-        const res = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id
-          });
+        const res = await createTransferWithTaskData(taskData, taskData.userId);
         expect(res.body).to.exist;
-        expect(res.body.status).to.equal('pending');
+        expect(res.body.status).to.equal('in_transit');
         expect(res.body.value).to.equal('200');
         expect(res.body.transfer_method).to.equal('stripe');
         expect(res.body.transfer_id).to.exist;
@@ -107,10 +104,10 @@ describe("Transfer", () => {
         const taskData = task.dataValues;
         const order = await createOrder({userId: taskData.userId, TaskId: taskData.id});
         const assign = await createAssign(agent, {taskId: taskData.id});
-        const transfer = await createTransfer({taskId: taskData.id});
+        const transfer = await createTransfer({taskId: taskData.id, userId: taskData.userId, to: assign.dataValues.userId});
         const res = await agent
           .get('/transfers/search')
-          .query({});
+          .query({userId: taskData.userId});
         expect(res.body).to.exist;
         expect(res.body.length).to.equal(1);
       } catch (e) {
@@ -124,18 +121,8 @@ describe("Transfer", () => {
         const taskData = task.dataValues;
         const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true});
         const assign = await createAssign(agent, {taskId: taskData.id});
-        const res1 = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id,
-            transfer_id: '123'
-          });
-        const res2 = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id,
-            transfer_id: '123'
-          });
+        const res1 = await createTransferWithTaskData(taskData, taskData.userId, '123');
+        const res2 = await createTransferWithTaskData(taskData, undefined, '123');
         expect(res2.body).to.exist;
         expect(res2.body.error).to.equal('This transfer already exists');
       } catch (e) {
@@ -149,17 +136,8 @@ describe("Transfer", () => {
         const taskData = task.dataValues;
         const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true});
         const assign = await createAssign(agent, {taskId: taskData.id});
-        const res1 = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id
-          });
-        const res2 = await agent
-          .post('/transfers/create')
-          .send({
-            taskId: taskData.id,
-            transfer_id: '12345'
-          });
+        const res1 = await createTransferWithTaskData(taskData, taskData.userId);
+        const res2 = await createTransferWithTaskData(taskData, taskData.userId);
         expect(res2.body).to.exist;
         expect(res2.body.error).to.equal('Only one transfer for an issue');
       } catch (e) {

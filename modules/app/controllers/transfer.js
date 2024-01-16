@@ -9,7 +9,7 @@ exports.createTransfer = (req, res) => {
   }
 
   exports.searchTransfer = (req, res) => {
-    Transfer.transferSearch(req.body)
+    Transfer.transferSearch(req.query)
       .then(data => {
         res.send(data)
       }).catch(error => {

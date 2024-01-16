@@ -1,15 +1,28 @@
 import React, { useEffect } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
 import {
   Container,
   Typography,
   withStyles,
-  Chip
+  Chip,
+  Tabs,
+  Tab
 } from '@material-ui/core'
 import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
+
+const transferMessages = defineMessages({
+  cardTableHeaderFrom: {
+    id: 'card.table.header.from',
+    defaultMessage: 'Transfers sent'
+  },
+  cardTableHeaderTo: {
+    id: 'card.table.header.to',
+    defaultMessage: 'Transfers received'
+  },
+})
 
 const styles = theme => ({
   paper: {
@@ -26,11 +39,26 @@ const styles = theme => ({
 });
 
 const Transfers = ({searchTransfer, transfers, user, intl}) => {
-  console.log('user', user)
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    let getTransfers = () => {}
+    if(newValue === 'to') {
+      getTransfers = async () =>  await searchTransfer({to: user.user.id})
+    }
+    if(newValue === 'from') {
+      getTransfers = async () =>  await searchTransfer({userId: user.user.id})
+    }
+    getTransfers().then(t => console.log('transfers:', t))
+  };
+
   useEffect(() => {
-    const getTransferData = async () =>  await searchTransfer({userId: user.user.id})
-    getTransferData().then(t => t)
-  }, [])
+    setValue('from')
+    const getTranfers = async () =>  await searchTransfer({userId: user.user.id})    
+    getTranfers().then(t => console.log('transfers:', t))
+  }, [user])
 
   return (
     <div style={{margin: '40px 0'}}>
@@ -38,6 +66,16 @@ const Transfers = ({searchTransfer, transfers, user, intl}) => {
         <Typography variant="h5" gutterBottom>
           <FormattedMessage id='profile.transfer.title' defaultMessage='Transfers' />
         </Typography>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          style={{margin: '20px 0'}}
+        >
+          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderFrom)} value='from' />
+          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderTo)} value='to' />
+        </Tabs>
         <div>
           <CustomPaginationActionsTable
             tableHead={[
