@@ -1,4 +1,4 @@
-module.exports.update = {
+module.exports.transfer = {
   "id": "evt_1CcecMBrSjgsps2DMFZw5Tyx",
   "object": "event",
   "api_version": "2018-02-28",

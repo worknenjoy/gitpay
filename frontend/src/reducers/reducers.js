@@ -17,6 +17,7 @@ import taskSolution from './taskSolutionReducer'
 import couponReducer from './couponReducer'
 import { profileReducer } from './profileReducer'
 import { labels } from './labelReducer'
+import { transfers } from './transfersReducer'
 
 const reducers = combineReducers({
   notification,
@@ -41,7 +42,8 @@ const reducers = combineReducers({
   taskSolutionReducer: taskSolution,
   couponReducer: couponReducer,
   profileReducer: profileReducer,
-  intl: intlReducer
+  intl: intlReducer,
+  transfers
 })
 
 export default reducers

@@ -1201,6 +1201,7 @@ class Task extends Component {
                     open={this.state.taskPaymentDialog}
                     onClose={this.handleTaskPaymentDialogClose}
                     onPayTask={this.props.paymentTask}
+                    onTransferTask={this.props.transferTask}
                     filterTaskOrders={this.props.filterTaskOrders}
                     onPayOrder={this.props.paymentOrder}
                     messageTask={this.props.messageTask}

@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: true,
     },
+    TransferId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Transfers',
+        key: 'id'
+      },
+      allowNull: true,
+    },
     ProjectId: {
       type: DataTypes.INTEGER,
       references: {
@@ -102,6 +110,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     )
     Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
+    Task.hasOne(models.Transfer, { foreignKey: 'taskId' })
   }
 
   return Task

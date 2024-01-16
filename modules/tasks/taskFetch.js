@@ -39,6 +39,9 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       },
       {
         model: models.Label
+      },
+      {
+        model: models.Transfer
       }
 
     ]
@@ -141,6 +144,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   issue: issueDataJsonGithub
                 },
                 orders: data.dataValues.Orders,
+                Transfer: data.dataValues.Transfer,
                 Assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
                 Offers: data.dataValues.Offers,
@@ -238,6 +242,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   }
                 },
                 orders: data.dataValues.Orders,
+                Transfer: data.dataValues.Transfer,
                 assigns: data.dataValues.Assigns,
                 members: data.dataValues.Members,
                 Offers: data.dataValues.Offers

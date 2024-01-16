@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Button, MenuList, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Home, Business, LibraryBooks, Payment as PaymentIcon } from '@material-ui/icons'
+import { Home, Business, LibraryBooks, Payment as PaymentIcon, AccountBalance as TransferIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 import logo from '../../images/gitpay-logo.png'
 import {
@@ -137,6 +137,30 @@ const ProfileSidebar = ({
                             <FormattedMessage
                               id='account.profile.payments.list'
                               defaultMessage='Payments'
+                            />
+                          </span>
+                        }
+                      />
+                    </MenuItem>
+                  }
+                  { userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')) &&
+                    <MenuItem
+                      onClick={ () =>
+                        history.push('/profile/transfers')
+                      }
+                      className={ classes.menuItem }
+                      selected={ selected === 6 }
+                    >
+                      <ListItemIcon className={ classes.icon }>
+                        <TransferIcon />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={ { primary: classes.primary } }
+                        primary={
+                          <span>
+                            <FormattedMessage
+                              id='account.profile.transfer.list'
+                              defaultMessage='Transfers'
                             />
                           </span>
                         }

@@ -67,7 +67,7 @@ const Welcome = (props) => {
               <MainList>
                 <List>
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <Apps />
                       </Avatar>
@@ -83,7 +83,7 @@ const Welcome = (props) => {
                   </ListItem>
 
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <Work />
                       </Avatar>
@@ -99,7 +99,7 @@ const Welcome = (props) => {
                   </ListItem>
 
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <AccountBalanceWallet />
                       </Avatar>
@@ -137,7 +137,7 @@ const Welcome = (props) => {
               <MainList>
                 <List>
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <Assignment />
                       </Avatar>
@@ -152,7 +152,7 @@ const Welcome = (props) => {
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <GroupWork />
                       </Avatar>
@@ -167,7 +167,7 @@ const Welcome = (props) => {
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <AccountBalanceWallet />
                       </Avatar>
@@ -205,7 +205,7 @@ const Welcome = (props) => {
               <MainList>
                 <List>
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <Apps />
                       </Avatar>
@@ -220,7 +220,7 @@ const Welcome = (props) => {
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <Work />
                       </Avatar>
@@ -235,7 +235,7 @@ const Welcome = (props) => {
                     />
                   </ListItem>
                   <ListItem className={ classes.listIconTop }>
-                    <ListItemIcon style={{marginRight: 12}}>
+                    <ListItemIcon style={ { marginRight: 12 } }>
                       <Avatar className={ classes.iconFill }>
                         <AccountBalanceWallet />
                       </Avatar>

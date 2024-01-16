@@ -59,6 +59,10 @@ const CLAIM_TASK_REQUESTED = 'CLAIM_TASK_REQUESTED'
 const CLAIM_TASK_SUCCESS = 'CLAIM_TASK_SUCCESS'
 const CLAIM_TASK_ERROR = 'CLAIM_TASK_ERROR'
 
+const TRANSFER_TASK_REQUESTED = 'TRANSFER_TASK_REQUESTED'
+const TRANSFER_TASK_SUCCESS = 'TRANSFER_TASK_SUCCESS'
+const TRANSFER_TASK_ERROR = 'TRANSFER_TASK_ERROR'
+
 const VALIDATION_ERRORS = {
   'url must be unique': 'actions.task.create.validation.url',
   'Not Found': 'actions.task.create.validation.invalid'
@@ -446,6 +450,55 @@ const fetchTask = taskId => {
   }
 }
 
+/* Transfer Task */
+
+const transferTaskRequested = () => {
+  return { type: TRANSFER_TASK_REQUESTED, completed: false }
+}
+
+const transferTaskSuccess = task => {
+  return { type: TRANSFER_TASK_SUCCESS, completed: true, data: task.data }
+}
+
+const transferTaskError = error => {
+  return { type: TRANSFER_TASK_ERROR, completed: true, error: error }
+}
+
+const transferTask = (taskId) => {
+  return dispatch => {
+    dispatch(transferTaskRequested())
+    axios
+      .post(api.API_URL + `/transfers/create`, {
+        taskId
+      })
+      .then(transfer => {
+        if (transfer.data) {
+          if(transfer.data.error) {
+            return dispatch(
+              addNotification(task.data.error)
+            )
+          }
+          dispatch(addNotification('actions.task.transfer.success'))
+          dispatch(transferTaskSuccess(transfer))
+          return dispatch(fetchTask(taskId))
+        }
+        return dispatch(
+          transferTaskError({ message: 'actions.task.transfer.unavailable' })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification('actions.task.transfer.other.error')
+        )
+        dispatch(transferTaskError(e))
+        // eslint-disable-next-line no-console
+        console.log('not possible to transfer issue')
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }
+}
+
 const paymentTask = (taskId, value) => {
   return (dispatch, getState) => {
     dispatch(paymentTaskRequested())
@@ -776,5 +829,6 @@ export {
   fundingInviteTask,
   changeTaskTab,
   reportTask,
-  requestClaimTask
+  requestClaimTask,
+  transferTask
 }
