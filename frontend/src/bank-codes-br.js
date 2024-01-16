@@ -1,4 +1,4 @@
-export default BANK_CODES: {
+export default BANK_CODES = {
     '110': 'BANCO PARA TESTE STRIPE',
     '260': 'NUBANK',
     '001': 'BANCO DO BRASIL S.A. (Banco do Brasil)',
@@ -42,4 +42,3 @@ export default BANK_CODES: {
     '212': 'BANCO ORIGINAL',
     '085': 'CECRED-COOPERATIVA CENTRAL DE CREDITO URBANO'
   }
-}
