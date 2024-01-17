@@ -1,5 +1,7 @@
 # Pull Request Template
 
+> Closes #00
+
 ## Description
 Provide a brief description of the changes made in this pull request.
 
