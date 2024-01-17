@@ -74,14 +74,14 @@ jobs:
           name: run node tests
           command: npm run test
           no_output_timeout: 60m
-      #- run:
-      #    name: install frontend dependencies
-      #    command: npm install
-      #    working_directory: frontend
-      #- run:
-      #    name: run frontend tests
-      #    command: npm run test
-      #    working_directory: frontend
+      - run:
+          name: install frontend dependencies
+          command: npm install
+          working_directory: frontend
+      - run:
+          name: run frontend tests
+          command: npm run test
+          working_directory: frontend
 
 workflows:
   version: 2
