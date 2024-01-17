@@ -372,7 +372,7 @@ describe('webhooks', () => {
         .get('/v1/balance_transactions/txn_1CdprOLlCJ9CeQRe7gBPy9Lo')
         .reply(200, balanceTransactionData.get );
 
-        const user = await models.User.build({
+        await models.User.build({
           email: 'teste@mail.com',
           password: 'teste',
           account_id: 'acct_1CZ5vkLlCJ9CeQRe'
@@ -380,7 +380,7 @@ describe('webhooks', () => {
 
         const task = await createTask(agent)
         const taskData = task.dataValues
-        const createOrder = await task.createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe' })
+        await task.createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe' })
         const assign = await createAssign(agent, {taskId: taskData.id})
         const newTransfer = await createTransfer({userId: taskData.userId, taskId: taskData.id, transfer_id: 'tr_1CZ5vkLlCJ9CeQRe', to: assign.dataValues.userId, status: 'pending'})
         const res = await agent
