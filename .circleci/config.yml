@@ -76,7 +76,7 @@ jobs:
           no_output_timeout: 60m
       - run:
           name: install frontend dependencies
-          command: npm install
+          command: npm install --legacy-peer-deps
           working_directory: frontend
       - run:
           name: run frontend tests
