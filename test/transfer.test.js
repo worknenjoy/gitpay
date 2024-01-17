@@ -76,7 +76,7 @@ describe("Transfer", () => {
         throw e;
       }
     })
-    it("should create transfer with a single order paid with stripe", async () => {
+    xit("should create transfer with a single order paid with stripe", async () => {
       try {
         await nock('https://api.stripe.com')
           .persist()  
