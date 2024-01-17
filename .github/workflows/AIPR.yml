@@ -23,5 +23,5 @@ jobs:
       with:
         openai_api_key: ${{ secrets.OPENAI_API_KEY }}
         openai_tokens: 1000
-        file_chunks: 0
+        file_chunks: 10000
         
