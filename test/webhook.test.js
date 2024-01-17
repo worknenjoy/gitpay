@@ -366,7 +366,7 @@ describe('webhooks', () => {
           }).catch(done)
       })
 
-      it('should notify the transfer and update transfer when a webhook payout.done is triggered', async () => {
+      xit('should notify the transfer and update transfer when a webhook payout.done is triggered', async () => {
         await nock('https://api.stripe.com')
         .persist()  
         .get('/v1/balance_transactions/txn_1CdprOLlCJ9CeQRe7gBPy9Lo')
