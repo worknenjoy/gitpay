@@ -76,7 +76,7 @@ describe("Transfer", () => {
         throw e;
       }
     })
-    xit("should create transfer with a single order paid with stripe", async () => {
+    it("should create transfer with a single order paid with stripe", async () => {
       try {
         await nock('https://api.stripe.com')
           .persist()  
@@ -97,6 +97,72 @@ describe("Transfer", () => {
         console.log('error on transfer', e);
         throw e;
       }
+    })
+    it("should create transfer with two orders paid with stripe", async () => {
+      try {
+        await nock('https://api.stripe.com')
+          .persist()  
+          .post('/v1/transfers')
+          .reply(200, transfer );
+        const task = await createTask(agent);
+        const taskData = task.dataValues;
+        const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
+        const anotherOrder = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
+        const assign = await createAssign(agent, {taskId: taskData.id});
+        const res = await createTransferWithTaskData(taskData, taskData.userId);
+        expect(res.body).to.exist;
+        expect(res.body.status).to.equal('in_transit');
+        expect(res.body.value).to.equal('400');
+        expect(res.body.transfer_method).to.equal('stripe');
+        expect(res.body.transfer_id).to.exist;
+        expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
+      } catch (e) {
+        console.log('error on transfer', e);
+        throw e;
+      }
+    })
+    it("should create transfer with three mulltiple orders paid with stripe", async () => {
+      try {
+        await nock('https://api.stripe.com')
+          .persist()  
+          .post('/v1/transfers')
+          .reply(200, transfer );
+        const task = await createTask(agent);
+        const taskData = task.dataValues;
+        const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
+        const anotherOrder = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: false, provider: 'stripe'});
+        const oneMoreOrder = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
+        const assign = await createAssign(agent, {taskId: taskData.id});
+        const res = await createTransferWithTaskData(taskData, taskData.userId);
+        expect(res.body).to.exist;
+        expect(res.body.status).to.equal('in_transit');
+        expect(res.body.value).to.equal('400');
+        expect(res.body.transfer_method).to.equal('stripe');
+        expect(res.body.transfer_id).to.exist;
+        expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
+      } catch (e) {
+        console.log('error on transfer', e);
+        throw e;
+      }
+    })
+    it("should create transfer with three mulltiple orders paid with stripe and paypal", async () => {
+      await nock('https://api.stripe.com')
+        .persist()  
+        .post('/v1/transfers')
+        .reply(200, transfer );
+      const task = await createTask(agent);
+      const taskData = task.dataValues;
+      const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
+      const anotherOrder = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
+      const oneMoreOrder = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: false, provider: 'paypal'});
+      const assign = await createAssign(agent, {taskId: taskData.id});
+      const res = await createTransferWithTaskData(taskData, taskData.userId);
+      expect(res.body).to.exist;
+      expect(res.body.status).to.equal('in_transit');
+      expect(res.body.value).to.equal('400');
+      expect(res.body.transfer_method).to.equal('multiple');
+      expect(res.body.transfer_id).to.exist;
+      expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
     })
     it("should search transfers", async () => {
       try {

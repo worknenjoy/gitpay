@@ -109,14 +109,14 @@ const createOrder = (params = {}) => {
   return models.Order.create(params).then(order => {
     return order
   }).catch((e) => {
-    console.log('error on createTask', e)
+    console.log('error on create order', e)
   })
 }
 
 const createTransfer = (params = {}) => {
 
   params.transfer_id = params.transfer_id || '1234'
-  params.transfer_method = params.transfer_method || 'paypal'
+  params.transfer_method = params.transfer_method || 'stripe'
 
   return models.Transfer.create(params).then(transfer => {
     return transfer

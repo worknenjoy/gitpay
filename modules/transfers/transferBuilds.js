@@ -59,6 +59,9 @@ module.exports = Promise.method(async function transferBuilds (params) {
   let allStripe = true
   let allPaypal = true
 
+  let stripeTotal = 0
+  let paypalTotal = 0
+
   if (!taskData) {
     return new Error('Task not found')
   }
@@ -75,12 +78,14 @@ module.exports = Promise.method(async function transferBuilds (params) {
       if (order.provider === 'stripe') {
         allPaypal = false
         isStripe = true
+        if(order.paid) stripeTotal += parseFloat(order.amount)
       }
       if (order.provider === 'paypal') {
         allStripe = false
         isPaypal = true
+        if(order.paid) paypalTotal += parseFloat(order.amount)
       }
-      finalValue += order.amount
+      if(order.paid) finalValue += parseFloat(order.amount)
     })
     if (isStripe && isPaypal) {
       isMultiple = true
@@ -104,7 +109,7 @@ module.exports = Promise.method(async function transferBuilds (params) {
     return { error: 'Task not updated' }
   }
 
-  if (allStripe) {
+  if (stripeTotal > 0) {
     const assign = await models.Assign.findOne({
       where: {
         id: taskData.assigned
@@ -123,6 +128,7 @@ module.exports = Promise.method(async function transferBuilds (params) {
       currency: 'usd',
       destination: dest,
       source_type: 'card',
+      transfer_group: `task_${taskData.id}`
     }
 
     const stripeTransfer = await stripe.transfers.create(transferData)
