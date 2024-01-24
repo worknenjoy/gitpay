@@ -395,7 +395,7 @@ class TaskPayment extends Component {
                   </Alert>
                   { this.props.assigned ? 
                       <TaskAssigned
-                        task={ { id: this.props.id, assigned: this.props.assigned } }
+                        task={ { id: this.props.id, assigned: this.props.assigned, Transfer: this.props.task.Transfer } }
                         assign={ {id: this.props.assigned } }
                         isOwner={ this.props.isOwner }
                         user={ sendTo(this.props.assigned) }

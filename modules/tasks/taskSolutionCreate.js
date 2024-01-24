@@ -3,6 +3,8 @@ const models = require('../../models')
 const taskSolutionFetchData = require('./taskSolutionFetchData')
 const taskPayment = require('./taskPayment')
 const assignExist = require('../assigns').assignExists
+const transferBuilds = require('../transfers/transferBuilds')
+const taskUpdate = require('../tasks/taskUpdate')
 
 module.exports = Promise.method(async function taskSolutionCreate (taskSolutionParams) {
   const pullRequestURLSplitted = taskSolutionParams.pullRequestURL.split('/')
@@ -24,13 +26,22 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
       const existingAssignment = await assignExist({ userId: taskSolutionParams.userId, taskId: taskSolutionParams.taskId })
 
       if (!existingAssignment) {
-        await task.createAssign({ userId: taskSolutionParams.userId })
+        const assign = await task.createAssign({ userId: taskSolutionParams.userId })
+        if(!assign) {
+          throw new Error('COULD_NOT_CREATE_ASSIGN')
+        }
+        const taskUpdateAssign = await taskUpdate({ id: taskSolutionParams.taskId, assigned: assign.dataValues.id })
+        if(!taskUpdateAssign) {
+          throw new Error('COULD_NOT_UPDATE_TASK')
+        }
       }
-
-      taskPayment({ taskId: task.dataValues.id, value: task.dataValues.value })
     }
 
-    return models.TaskSolution.create(taskSolutionParams).then(data => {
+    return models.TaskSolution.create(taskSolutionParams).then(async data => {
+      const transferSend = await transferBuilds({ taskId: task.dataValues.id, userId: task.dataValues.userId })
+      if(transferSend.error) {
+        throw new Error('transferSend.error')
+      }
       return data.dataValues
     }).catch(err => {
       // eslint-disable-next-line no-console

@@ -46,12 +46,12 @@ const SendSolutionDialog = props => {
   }
 
   const submitTaskSolution = () => {
-    console.log('submitTaskSolution', props)
     if (editMode) {
       const payload = { pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id, taskSolutionId: taskSolution.id }
-      props.updateTaskSolution(payload)
+      props.updateTaskSolution(payload).then((solution) => {
+        console.log('solution', solution)
+      })
       setEditMode(false)
-
       // eslint-disable-next-line no-useless-return
       return
     }

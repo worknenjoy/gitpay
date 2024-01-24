@@ -15,13 +15,13 @@ const TaskSolution = props => {
 
   const issueClosedChip = () => {
     return (
-      <Chip avatar={ <Avatar><DoneIcon /></Avatar> } label='Issue Closed' />
+      <Chip size='small' avatar={ <Avatar size='small'><DoneIcon size='small' /></Avatar> } label='Issue Closed' style={{marginLeft: 10}} />
     )
   }
 
   const pullRequestMergedChip = () => {
     return (
-      <Chip avatar={ <Avatar><DoneIcon /></Avatar> } label='Merged' />
+      <Chip size='small' avatar={ <Avatar size='small'><DoneIcon size='small' /></Avatar> } label='Merged' />
     )
   }
 

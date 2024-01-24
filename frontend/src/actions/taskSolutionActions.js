@@ -108,7 +108,8 @@ const createTaskSolution = (taskSolution) => {
   return dispatch => {
     dispatch(createTaskSolutionRequested())
     axios.post(`${api.API_URL}/tasksolutions/create`, taskSolution).then(response => {
-      dispatch(createTaskSolutionSuccess(response.data))
+      dispatch(addNotification('task.solution.dialog.create.success'))
+      return dispatch(createTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))

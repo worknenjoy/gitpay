@@ -115,7 +115,7 @@ class TaskAssigned extends Component {
                 <RemoveAssignment
                   task={ task }
                   remove={ removeAssignment }
-                  visible={ hasAssignedUser && isOwner }
+                  visible={ hasAssignedUser && isOwner && !task.Transfer }
                 />
               </div>
             }

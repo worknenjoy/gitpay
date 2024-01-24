@@ -752,7 +752,7 @@ class Task extends Component {
           size='small'
           color='secondary'
           variant='contained'
-          disabled={this.props.task.data.paid || this.props.task.data.transfer_id }
+          disabled={this.props.task.data.paid || this.props.task.data.transfer_id || this.props.task.data.Transfer }
           fullWidth
           style={{ marginRight: 5 }}
         >
