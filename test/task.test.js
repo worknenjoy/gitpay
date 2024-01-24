@@ -6,7 +6,7 @@ const chai = require('chai')
 const api = require('../server')
 const agent = request.agent(api)
 const models = require('../models')
-const { registerAndLogin, register, login } = require('./helpers')
+const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const nock = require('nock')
 const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
@@ -30,21 +30,12 @@ describe("tasks", () => {
     return models.Task.create({ userId: params.userId, url: github_url, provider: 'github', title: params.title || "Issue 76!" })
   }
 
-  beforeEach(() => {
-    models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        console.log('Deleted successfully');
-      }
-    }, function(err){
-      console.log(err);
-    });
-    models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        console.log('Deleted successfully');
-      }
-    }, function(err){
-      console.log(err);
-    });
+  beforeEach(async () => {
+    await truncateModels(models.Task);
+    await truncateModels(models.User);
+    await truncateModels(models.Assign);
+    await truncateModels(models.Order);
+    await truncateModels(models.Transfer);
     nock.cleanAll()
   })
 
@@ -62,8 +53,8 @@ describe("tasks", () => {
     })
   })
 
-  xdescribe('task history', () => {
-    xit('should create a new task and register on task history', (done) => {
+  describe('task history', () => {
+    it('should create a new task and register on task history', (done) => {
       registerAndLogin(agent).then(res => {
         agent
           .post('/tasks/create/')
@@ -85,7 +76,7 @@ describe("tasks", () => {
           })
       }).catch(done)
     })
-    xit('should sync with a succeeded order and track history', (done) => {
+    it('should sync with a succeeded order and track history', (done) => {
       models.Task.build({url: 'http://github.com/check/issue/1'}).save().then((task) => {
         task.createOrder({
           source_id: '12345',
@@ -117,16 +108,16 @@ describe("tasks", () => {
   })
 
   describe('Task crud', () => {
-    xit('should create a new task wiht projects ands organizations', (done) => {
+    it('should create a new task wiht projects ands organizations', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
-          expect(task).to.equal('https://github.com/worknenjoy/truppie/issues/99');
+          expect(task.url).to.equal('https://github.com/worknenjoy/truppie/issues/99');
           done();
         }).catch(done)
       }).catch(done)
     })
 
-    xit('should try to create an invalid task', (done) => {
+    it('should try to create an invalid task', (done) => {
       registerAndLogin(agent).then(res => {
         agent
           .post('/tasks/create/')
@@ -141,7 +132,7 @@ describe("tasks", () => {
       }).catch(done)
     })
 
-    xit('should create a new task with one member', (done) => {
+    it('should create a new task with one member', (done) => {
       register(agent).then(user => {
         login(agent).then(res => {
           //console.log('user data', res.headers.authorization, res.body.id)
@@ -162,7 +153,7 @@ describe("tasks", () => {
       }).catch(done)
     })
 
-    xit('should invite for a task', (done) => {
+    it('should invite for a task', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization).then(task => {
           agent

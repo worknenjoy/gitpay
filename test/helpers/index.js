@@ -34,7 +34,7 @@ const registerAndLogin = (agent, params = {}) => {
       return activate(agent, a).then((active) => {
         return login(agent, params).then(
           (res) => {
-            return a
+            return {...a, headers: res.headers}
           }
         ).catch((e) => {
           console.log('error on login', e)

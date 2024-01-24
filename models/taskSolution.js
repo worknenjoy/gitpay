@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 
   TaskSolution.associate = (models) => {
     TaskSolution.belongsTo(models.Task, { foreignKey: 'taskId' })
+    TaskSolution.belongsTo(models.User, { foreignKey: 'userId' })
   }
 
   return TaskSolution

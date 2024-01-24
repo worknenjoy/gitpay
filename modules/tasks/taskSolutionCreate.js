@@ -6,7 +6,6 @@ const assignExist = require('../assigns').assignExists
 
 module.exports = Promise.method(async function taskSolutionCreate (taskSolutionParams) {
   const pullRequestURLSplitted = taskSolutionParams.pullRequestURL.split('/')
-
   const params = {
     pullRequestId: pullRequestURLSplitted[6],
     userId: taskSolutionParams.userId,

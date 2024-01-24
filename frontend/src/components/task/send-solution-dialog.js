@@ -10,6 +10,7 @@ import {
 import { FormattedMessage } from 'react-intl'
 import SendSolutionRequirements from './send-solution-requirements'
 import TaskSolution from './task-solution'
+import notification from '../../containers/notification'
 
 const SendSolutionDialog = props => {
   const [pullRequestURL, setPullRequestURL] = useState('')
@@ -20,7 +21,7 @@ const SendSolutionDialog = props => {
 
   useEffect(() => {
     props.getTaskSolution(props.user.id, props.task.id)
-  }, [])
+  }, [props.user, props.task])
 
   useEffect(() => {
     props.cleanPullRequestDataState()
@@ -45,6 +46,7 @@ const SendSolutionDialog = props => {
   }
 
   const submitTaskSolution = () => {
+    console.log('submitTaskSolution', props)
     if (editMode) {
       const payload = { pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload)
@@ -56,7 +58,9 @@ const SendSolutionDialog = props => {
 
     const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id }
 
-    props.createTaskSolution(payload)
+    props.createTaskSolution(payload).then((solution) => {
+      console.log('solution', solution)
+    })
   }
 
   return (

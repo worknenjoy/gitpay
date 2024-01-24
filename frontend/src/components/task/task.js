@@ -752,7 +752,7 @@ class Task extends Component {
           size='small'
           color='secondary'
           variant='contained'
-          disabled={this.props.task.data.paid || this.props.task.data.status === 'closed'}
+          disabled={this.props.task.data.paid || this.props.task.data.transfer_id }
           fullWidth
           style={{ marginRight: 5 }}
         >
@@ -1225,7 +1225,7 @@ class Task extends Component {
                 fullWidth
                 size='large'
                 variant='contained'
-                disabled={task.data.paid || task.data.status !== 'open'}
+                disabled={task.data.paid || task.data.transfer_id}
               >
                 <FormattedMessage id='task.interested.button.label' defaultMessage='Solve issue' />
                 <HowToRegIcon style={{ marginLeft: 10 }} />
