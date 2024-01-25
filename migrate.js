@@ -6,6 +6,7 @@ const Promise = require('bluebird');
 const env = process.env.NODE_ENV || 'development';
 const database_env = {
   'development': 'databaseDev',
+  'staging': 'databaseStaging',
   'production': 'databaseProd',
   'test': 'databaseTest'
 };
@@ -14,7 +15,7 @@ const Sequelize = require('sequelize');
 const Umzug = require('umzug');
 let sequelize = {};
 
-if (env === 'production') {
+if (env === 'production' || env === 'staging') {
   const database_url = process.env.DATABASE_URL;
   const database_settings = database_url.split(':');
   const port = database_settings[4];
