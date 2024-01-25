@@ -14,7 +14,7 @@ const config = require('../config/secrets')[databaseEnv[env]]
 let Sequelize = require('sequelize')
 let sequelize = {}
 
-if (env === 'production') {
+if (env === 'production' || env === 'staging') {
   const databaseUrl = process.env.DATABASE_URL
   const databaseSettings = databaseUrl.split(':')
   const port = databaseSettings[4]
