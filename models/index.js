@@ -5,6 +5,7 @@ const env = process.env.NODE_ENV || 'development'
 
 const databaseEnv = {
   'development': 'databaseDev',
+  'staging': 'databaseStaging',
   'production': 'databaseProd',
   'test': 'databaseTest'
 }

@@ -33,6 +33,17 @@ const databaseProd = {
   protocol: 'postgres'
 }
 
+const databaseStaging = {
+  username: 'root',
+  password: null,
+  database: process.env.DATABASE_URL,
+  schema: 'public',
+  host: '127.0.0.1',
+  port: 5432,
+  dialect: 'postgres',
+  protocol: 'postgres'
+}
+
 const facebook = {
   id: process.env.FACEBOOK_ID,
   secret: process.env.FACEBOOK_SECRET
@@ -77,6 +88,7 @@ const oauthCallbacks = {
 module.exports = {
   databaseDev,
   databaseTest,
+  databaseStaging,
   databaseProd,
   facebook,
   google,
