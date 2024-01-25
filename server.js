@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors')
   app.use(cors())
 }
-else {
+if(process.env.NODE_ENV === 'production') {
   app.use(sslRedirect())
 }
 

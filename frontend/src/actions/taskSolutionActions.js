@@ -45,12 +45,13 @@ const getTaskSolution = (userId, taskId) => {
   validToken()
   return dispatch => {
     dispatch(getTaskSolutionRequested())
-    axios.get(`${api.API_URL}/tasksolutions`, { params: { userId: userId, taskId: taskId } }).then(response => {
-      dispatch(getTaskSolutionSuccess(response.data))
+    return axios.get(`${api.API_URL}/tasksolutions`, { params: { userId: userId, taskId: taskId } }).then(response => {
+      return dispatch(getTaskSolutionSuccess(response.data))
     }).catch(error => {
-      if (error.response.data && error.response.data.error) {
-        dispatch(addNotification(ERRORS[error.response.data.error]))
-        return dispatch(getTaskSolutionError(error.response.data.error))
+      if (error) {
+        console.log('error', error)
+        dispatch(addNotification(ERRORS[error]))
+        return dispatch(getTaskSolutionError(error))
       }
 
       dispatch(addNotification(ERRORS['COULD_NOT_GET_TASK_SOLUTION']))

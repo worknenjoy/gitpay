@@ -10,7 +10,6 @@ import {
 import { FormattedMessage } from 'react-intl'
 import SendSolutionRequirements from './send-solution-requirements'
 import TaskSolution from './task-solution'
-import notification from '../../containers/notification'
 
 const SendSolutionDialog = props => {
   const [pullRequestURL, setPullRequestURL] = useState('')
@@ -77,9 +76,9 @@ const SendSolutionDialog = props => {
         { Object.keys(props.taskSolution).length === 0 || editMode
           ? <React.Fragment>
             <SendSolutionForm handlePullRequestURLChange={ handlePullRequestURLChange } pullRequestURL={ pullRequestURL } />
-            <SendSolutionRequirements completed={ props.completed } isConnectedToGitHub={ pullRequestData.isConnectedToGitHub } isAuthorOfPR={ pullRequestData.isAuthorOfPR } isPRMerged={ pullRequestData.isPRMerged } isIssueClosed={ pullRequestData.isIssueClosed } />
+            <SendSolutionRequirements completed={ props.completed } isConnectedToGitHub={ pullRequestData.isConnectedToGitHub } isAuthorOfPR={ pullRequestData.isAuthorOfPR } isPRMerged={ pullRequestData.isPRMerged } isIssueClosed={ pullRequestData.isIssueClosed } hasIssueReference={ pullRequestData.hasIssueReference } />
           </React.Fragment>
-          : <TaskSolution taskSolution={ taskSolution } />
+          : <TaskSolution taskSolution={ taskSolution } task={props.task} />
         }
       </DialogContent>
       <DialogActions>
@@ -87,11 +86,11 @@ const SendSolutionDialog = props => {
           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
         </Button>
         { Object.keys(props.taskSolution).length !== 0 && !editMode // Edit mode will change the button to "send solution"
-          ? <Button type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ props.task.paid }>
+          ? <Button type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ props.task.paid || props.task.Transfer || props.task.transfer_id }>
             <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />
           </Button>
           : <Button type='primary' htmlFor='submit' variant='contained' color='primary' disabled={
-            !pullRequestURL || !pullRequestData.isConnectedToGitHub || !pullRequestData.isAuthorOfPR || !pullRequestData.isPRMerged || !pullRequestData.isIssueClosed
+            !pullRequestURL || !pullRequestData.isConnectedToGitHub || !pullRequestData.isAuthorOfPR || !pullRequestData.isPRMerged || !pullRequestData.isIssueClosed || !pullRequestData.hasIssueReference || props.task.paid || props.task.transfer_id || props.task.Transfer
           } onClick={ submitTaskSolution }>
             <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />
           </Button>

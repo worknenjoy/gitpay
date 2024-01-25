@@ -2,6 +2,12 @@ const Promise = require('bluebird')
 const models = require('../../models')
 const requestPromise = require('request-promise')
 
+function extractIssueReferences(text) {
+  const issueReferenceRegex = /#(\d+)/g;
+  const matches = text.match(issueReferenceRegex);
+  return matches ? matches.map(match => match.slice(1)) : []; // Remove the '#' prefix
+}
+
 module.exports = Promise.method(async function fetchTaskSolutionData (solutionParams) {
   return requestPromise({
     uri: `https://api.github.com/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
@@ -14,6 +20,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     let isAuthorOfPR = false
     let isPRMerged = false
     let isIssueClosed = false
+    let hasIssueReference = false
     const pullRequestData = JSON.parse(response)
 
     const user = await models.User.findOne({
@@ -51,16 +58,24 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
       }
     }
 
+    if(task.dataValues.url.includes(extractIssueReferences(pullRequestData.body))) {
+      hasIssueReference = true
+    }
+
     // Verify if Issue is closed (trusting in the gitpay/github synchronization)
     if (task.dataValues.status === 'closed') {
       isIssueClosed = true
     }
 
+
+
     return {
       isConnectedToGitHub: isConnectedToGitHub,
       isAuthorOfPR: isAuthorOfPR,
       isPRMerged: isPRMerged,
-      isIssueClosed: isIssueClosed
+      isIssueClosed: isIssueClosed,
+      hasIssueReference: hasIssueReference
+
     }
   }).catch(err => {
     // eslint-disable-next-line no-console

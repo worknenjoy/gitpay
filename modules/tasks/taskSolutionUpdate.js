@@ -25,7 +25,7 @@ module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskS
           owner: pullRequestURLSplitted[3],
           taskId: taskSolution.taskId
         }).then(async response => {
-          if (response.isAuthorOfPR && response.isConnectedToGitHub && response.isIssueClosed && response.isPRMerged) {
+          if (response.isAuthorOfPR && response.isConnectedToGitHub && response.isIssueClosed && response.isPRMerged && response.hasIssueReference) {
             if (!taskData.dataValues.paid && !taskData.dataValues.transfer_id) {
               //taskPayment({ taskId: taskData.dataValues.id, value: taskData.dataValues.value })
               const transferSend = await transferBuilds({ taskId: taskData.dataValues.id, userId: taskData.dataValues.userId })

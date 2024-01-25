@@ -54,6 +54,14 @@ const SendSolutionRequirements = props => {
         </ListItemIcon>
         <ListItemText primary='The issue is closed on GitHub' />
       </ListItem>
+      <ListItem>
+        <ListItemIcon style={ { color: 'black' } }>
+          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed }>
+            { props.hasIssueReference ? <CheckCircleRoundedIcon /> : <CancelRoundedIcon /> }
+          </ReactPlaceholder>
+        </ListItemIcon>
+        <ListItemText primary='The issue is referenced on the PR' />
+      </ListItem>
     </List>
   )
 }
