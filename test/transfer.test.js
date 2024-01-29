@@ -42,7 +42,6 @@ describe("Transfer", () => {
         const taskData = task.dataValues;
         const assign = await createAssign(agent, {taskId: taskData.id});
         const res = await createTransferWithTaskData(taskData, taskData.userId);
-        console.log('assign, assign', assign)
         expect(res.body).to.exist;
         expect(res.body.error).to.equal('No orders found');
       } catch (e) {
