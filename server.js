@@ -13,11 +13,10 @@ const xFrameOptions = require('x-frame-options')
 
 // const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid } = require('./cron')
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'staging') {
   const cors = require('cors')
   app.use(cors())
-}
-if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+} else {
   app.use(sslRedirect())
 }
 
