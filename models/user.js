@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.hasMany(models.Organization)
+    User.hasMany(models.Payout, { foreignKey: 'userId' })
     User.belongsToMany(models.Type, { through: 'User_Types' })
   }
 

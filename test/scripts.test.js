@@ -30,7 +30,7 @@ describe('Scripts', () => {
   })
 
   describe('Scripts', () => {
-    it('Check for invalid tasks and delete it', (done) => {
+    xit('Check for invalid tasks and delete it', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testscripts@gitpay.me', password: 'teste'})

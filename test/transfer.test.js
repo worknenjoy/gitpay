@@ -7,8 +7,7 @@ const spies = require('chai-spies')
 const api = require('../server')
 const agent = request.agent(api)
 const nock = require('nock')
-const { registerAndLogin, createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
-const { create } = require('core-js/core/object')
+const { createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
 const models = require('../models')
 const transfer = require('./data/transfer').transfer.data.object
 
@@ -25,17 +24,17 @@ const createTransferWithTaskData = async (taskData, userId, transferId) => {
 }
 
 describe("Transfer", () => {
+  beforeEach(async () => {
+    await truncateModels(models.Task);
+    await truncateModels(models.User);
+    await truncateModels(models.Assign);
+    await truncateModels(models.Order);
+    await truncateModels(models.Transfer);
+  })
+  afterEach(async () => {
+    nock.cleanAll()
+  })
   describe("Initial transfer with one credit card and account activated", () => {
-    beforeEach(async () => {
-      await truncateModels(models.Task);
-      await truncateModels(models.User);
-      await truncateModels(models.Assign);
-      await truncateModels(models.Order);
-      await truncateModels(models.Transfer);
-    })
-    afterEach(async () => {
-      nock.cleanAll()
-    })
     it("should not create transfer with no orders", async () => {
       try {
         const task = await createTask(agent);

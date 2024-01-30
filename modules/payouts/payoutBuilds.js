@@ -1,0 +1,33 @@
+const models = require('../../models')
+const Promise = require('bluebird')
+
+module.exports = Promise.method(async function payoutBuilds(params) {
+
+  if(!params.userId) {
+    return { error: 'No userId' }
+  }
+
+  const existingPayout = params.payout_id && await models.Payout.findOne({
+    where: {
+      payout_id: params.payout_id
+    }
+  })
+
+  if (existingPayout) {
+    return { error: 'This payout already exists' }
+  }
+
+  const payout = await models.Payout.build({
+    source_id: params.source_id,
+    userId: params.userId,
+    amount: params.amount,
+    currency: params.currency,
+    method: params.method,
+    status: params.status,
+    destination: params.destination,
+  })
+  console.log('payout build', payout)
+  const newPayout = await payout.save()
+  console.log('newPayout', newPayout)
+  return newPayout
+})

@@ -7,6 +7,7 @@ const userExists = async userAttributes => {
         where: {
           email: userAttributes.email
         },
+        
         include: [
           models.Type,
           {
@@ -17,6 +18,7 @@ const userExists = async userAttributes => {
             }]
           }
         ]
+        
       })
     if (!user) return false
 

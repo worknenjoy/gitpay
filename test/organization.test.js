@@ -44,7 +44,7 @@ xdescribe("Organizations", () => {
     })
   })
 
-  describe('register Organization', () => {
+  xdescribe('register Organization', () => {
     it('should register new organization with a user', (done) => {
       register(agent, {
         email: 'test_register_organization@gmail.com',
