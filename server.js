@@ -13,7 +13,7 @@ const xFrameOptions = require('x-frame-options')
 
 // const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid } = require('./cron')
 
-if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'staging') {
+if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors')
   app.use(cors())
 } else {
