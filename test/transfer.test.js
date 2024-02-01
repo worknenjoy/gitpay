@@ -9,7 +9,7 @@ const agent = request.agent(api)
 const nock = require('nock')
 const { createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
 const models = require('../models')
-const transfer = require('./data/transfer').transfer.data.object
+const transfer = require('./data/transfer').updated.data.object
 
 // Common function to create transfer
 const createTransferWithTaskData = async (taskData, userId, transferId) => {

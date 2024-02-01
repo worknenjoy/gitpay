@@ -23,11 +23,10 @@ module.exports = Promise.method(async function payoutBuilds(params) {
     amount: params.amount,
     currency: params.currency,
     method: params.method,
-    status: params.status,
-    destination: params.destination,
+    status: params.status
   })
-  console.log('payout build', payout)
+  
   const newPayout = await payout.save()
-  console.log('newPayout', newPayout)
+  
   return newPayout
 })

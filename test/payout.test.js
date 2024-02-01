@@ -16,7 +16,6 @@ const createPayoutData = async (userId, source_id) => {
     .post('/payouts/create')
     .send({
       userId: userId,
-      destination: userId,
       source_id: source_id,
       method: 'stripe',
       amount: 200,
@@ -64,6 +63,38 @@ describe("payout", () => {
         throw e;
       }
     })
+
+
+    it("should search payouts", async () => {
+      try {
+        const user = await models.User.build({
+          email: 'teste@mail.com',
+          password: 'teste',
+          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
+        })
+        .save()
+        const payout = await models.Payout.build({
+          source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
+          amount: 7311,
+          currency: 'brl',
+          status: 'in_transit',
+          description: 'STRIPE TRANSFER',
+          userId: user.dataValues.id,
+          method: 'bank_account',
+        }).save()
+        console.log('user', user)
+        console.log('payout', payout)
+        const res = await agent
+          .get('/payouts/search')
+          .query({userId: user.dataValues.id});
+        expect(res.body).to.exist;
+        expect(res.body.length).to.equal(1);
+      } catch (e) {
+        console.log('error on transfer', e);
+        throw e;
+      }
+    })
+
   })
 
 })

@@ -32,14 +32,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      destination: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        allowNull: false,
-      },
       description: {
         type: Sequelize.STRING,
         allowNull: true

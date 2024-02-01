@@ -7,13 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'usd'
     },
-    destination: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Users',
-        key: 'id'
-      },
-    },
     description: {
       type: DataTypes.STRING,
       allowNull: true
