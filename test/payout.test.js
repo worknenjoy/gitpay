@@ -82,8 +82,6 @@ describe("payout", () => {
           userId: user.dataValues.id,
           method: 'bank_account',
         }).save()
-        console.log('user', user)
-        console.log('payout', payout)
         const res = await agent
           .get('/payouts/search')
           .query({userId: user.dataValues.id});
