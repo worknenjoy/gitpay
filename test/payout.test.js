@@ -46,6 +46,29 @@ describe("payout", () => {
         throw e;
       }
     })
+    it("should not create payout with existing payout id", async () => {
+      try {
+        const user = await models.User.create({
+          email: 'test@gmail.com',
+        });
+        const userId = user.dataValues.id;
+        const payout = await models.Payout.create({
+          source_id: '123',
+          userId: userId,
+          amount: 200,
+          currency: 'usd',
+          method: 'stripe',
+          status: 'in_transit',
+        });
+        const res = await createPayoutData(userId, '123');
+        expect(res.body).to.exist;
+        expect(res.body.error).to.equal('This payout already exists');
+      } catch (e) {
+        console.log('error on payout', e);
+        throw e;
+      }
+    })
+        
     it("should create payout with userId and payout id", async () => {
       try {
         const user = await models.User.create({

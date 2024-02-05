@@ -386,8 +386,9 @@ describe('webhooks', () => {
                   models.Payout.findOne({where: {id: newPayout.dataValues.id}}).then(payout => {
                     expect(payout.dataValues.status).to.equal('paid')
                     expect(payout.dataValues.paid).to.equal(true)
+                    expect(payout.dataValues.amount).to.equal('7311')
                     done(err);
-                  })
+                  }).catch(done)
               })
             }).catch(done)
           }).catch(done)

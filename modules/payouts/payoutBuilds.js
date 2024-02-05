@@ -7,9 +7,9 @@ module.exports = Promise.method(async function payoutBuilds(params) {
     return { error: 'No userId' }
   }
 
-  const existingPayout = params.payout_id && await models.Payout.findOne({
+  const existingPayout = params.source_id && await models.Payout.findOne({
     where: {
-      payout_id: params.payout_id
+      source_id: params.source_id
     }
   })
 
