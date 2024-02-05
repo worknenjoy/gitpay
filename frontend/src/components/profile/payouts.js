@@ -13,16 +13,16 @@ import CustomPaginationActionsTable from './payout-table'
 
 function currencyCodeToSymbol(code) {
   const currencyMap = {
-      USD: '$', // US Dollar
-      EUR: '€', // Euro
-      GBP: '£', // British Pound
-      JPY: '¥', // Japanese Yen
-      CNY: '¥', // Chinese Yuan
-      INR: '₹', // Indian Rupee
-      // Add more currencies here
+    usd: '$', // US Dollar
+    eur: '€', // Euro
+    gbp: '£', // British Pound
+    jpy: '¥', // Japanese Yen
+    cny: '¥', // Chinese Yuan
+    inr: '₹', // Indian Rupee
+    // Add more currencies here
   };
 
-  return currencyMap[code] || code;
+  return currencyMap[code.toLowerCase()] || code;
 }
 
 function formatStripeAmount(amountInCents) {
