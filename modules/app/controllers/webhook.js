@@ -84,8 +84,10 @@ exports.github = async (req, res) => {
           }
           )
         }
-        return res.json({ ...response,
-          task: updatedTask })
+        return res.json({
+          ...response,
+          task: updatedTask
+        })
       }
       else return res.status(500).json({})
     }
@@ -172,7 +174,8 @@ exports.github = async (req, res) => {
                   userId: userData ? userData.id : null,
                   label: label.name,
                   status: !taskUpdate ? 404 : 200,
-                } }
+                }
+              }
             }
             catch (e) {
               finalResponse = {}
@@ -229,7 +232,8 @@ exports.github = async (req, res) => {
                   userId: userData ? userData.id : null,
                   label: label.name,
                   status: 200,
-                } }
+                }
+              }
             }
             catch (e) {
               // eslint-disable-next-line no-console
@@ -544,6 +548,15 @@ exports.updateWebhook = (req, res) => {
 
         break
       case 'transfer.created':
+        models.Transfer.update({
+          status: 'created'
+        }, {
+          where: {
+            transfer_id: event.data.object.id
+          }
+        }).then(updateTransfer => {
+          return updateTransfer
+        })
         return models.Task.findOne({
           where: {
             transfer_id: event.data.object.id
@@ -606,8 +619,19 @@ exports.updateWebhook = (req, res) => {
             account_id: event.account
           }
         })
-          .then(user => {
+          .then(async user => {
             if (user) {
+              const payout = await models.Payout.build({
+                userId: user.dataValues.id,
+                amount: event.data.object.amount,
+                currency: event.data.object.currency,
+                status: event.data.object.status,
+                source_id: event.data.object.id,
+                description: event.data.object.description,
+                method: event.data.object.type,
+              }).save()
+
+              if (!payout) return res.status(400).send({ error: 'Error to create payout' })
               const date = new Date(event.data.object.arrival_date * 1000)
               const language = user.language || 'en'
               i18n.setLocale(language)
@@ -654,48 +678,44 @@ exports.updateWebhook = (req, res) => {
           })
         break
       case 'payout.paid':
-        return stripe.balanceTransactions
-          .retrieve(event.data.object.balance_transaction).then((balance_transaction) => {
-            return models.Transfer.update({
-              status: event.data.object.status
-            }, {
-              where: {
-                transfer_id: balance_transaction.source
-              }
-            }).then(updateTransfer => {
-              return models.User.findOne({
-                where: {
-                  account_id: event.account
-                }
-              })
-                .then(user => {
-                  if (user) {
-                    const date = new Date(event.data.object.arrival_date * 1000)
-                    const language = user.language || 'en'
-                    i18n.setLocale(language)
-                    SendMail.success(
-                      user.dataValues,
-                      i18n.__('mail.webhook.payment.transfer.finished.subject'),
-                      i18n.__('mail.webhook.payment.transfer.finished.message', {
-                        currency: CURRENCIES[event.data.object.currency],
-                        amount: event.data.object.amount / 100,
-                        date: date
-                      })
-                    )
-                    return res.json(req.body)
-                  }
-                })
-                .catch(e => {
-                  console.log('error to find user', e)
-                  return res.status(400).send(e)
-                })
-            })
-          })
-          .catch(e => {
-            console.log('error to find balance transaction', e)
-            return res.status(400).send(e)
+        return models.Payout.update({
+          status: event.data.object.status,
+          paid: true
+        }, {
+          where: {
+            source_id: event.data.object.id
           }
-          )
+        }).then(updatedPayout => {
+          if(updatedPayout[0] === 0) return res.status(400).send({ error: 'Error to update payout' })
+          return models.User.findOne({
+            where: {
+              account_id: event.account
+            }
+          })
+            .then(user => {
+              if (user) {
+                const date = new Date(event.data.object.arrival_date * 1000)
+                const language = user.language || 'en'
+                i18n.setLocale(language)
+                SendMail.success(
+                  user.dataValues,
+                  i18n.__('mail.webhook.payment.transfer.finished.subject'),
+                  i18n.__('mail.webhook.payment.transfer.finished.message', {
+                    currency: CURRENCIES[event.data.object.currency],
+                    amount: event.data.object.amount / 100,
+                    date: date
+                  })
+                )
+                return res.json(req.body)
+              }
+            })
+            .catch(e => {
+              console.log('error to find user', e)
+              return res.status(400).send(e)
+            })
+        })
+
+
         break
       case 'balance.available':
         SendMail.success(

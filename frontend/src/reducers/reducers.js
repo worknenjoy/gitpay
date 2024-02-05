@@ -18,6 +18,7 @@ import couponReducer from './couponReducer'
 import { profileReducer } from './profileReducer'
 import { labels } from './labelReducer'
 import { transfers } from './transfersReducer'
+import { payouts } from './payoutsReducer'
 
 const reducers = combineReducers({
   notification,
@@ -43,7 +44,8 @@ const reducers = combineReducers({
   couponReducer: couponReducer,
   profileReducer: profileReducer,
   intl: intlReducer,
-  transfers
+  transfers,
+  payouts
 })
 
 export default reducers

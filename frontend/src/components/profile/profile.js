@@ -22,6 +22,7 @@ import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 import UserTasksContainer from '../../containers/user-tasks'
 import TransfersContainer from '../../containers/transfers'
+import PayoutsContainer from '../../containers/payouts'
 import { UserAccount } from './pages/user-account'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
@@ -393,6 +394,13 @@ class Profile extends Component {
                         exact
                         path='/profile/transfers'
                         component={ TransfersContainer }
+                      />
+                    }
+                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
+                      <Route
+                        exact
+                        path='/profile/payouts'
+                        component={ PayoutsContainer }
                       />
                     }
                     <Route

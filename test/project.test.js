@@ -12,7 +12,7 @@ xdescribe("Projects", () => {
         done()
       }).catch(done)
     })
-    it("create and add task to a project and organization", (done) => {
+    xit("create and add task to a project and organization", (done) => {
       models.User.create({email: 'foo@mail.com'}).then(u => {
         models.Organization.create({name: 'Foo Organization', UserId: u.id}).then(o => {
           o.createProject({name: 'Foo Project'}).then(p => {

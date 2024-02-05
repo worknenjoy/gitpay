@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Button, MenuList, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Home, Business, LibraryBooks, Payment as PaymentIcon, AccountBalance as TransferIcon } from '@material-ui/icons'
+import { Home, Business, LibraryBooks, Payment as PaymentIcon, AccountBalance as TransferIcon, SwapHoriz as PayoutIcon } from '@material-ui/icons'
 import classNames from 'classnames'
 import logo from '../../images/gitpay-logo.png'
 import {
@@ -29,6 +29,10 @@ const ProfileSidebar = ({
       setSelected(3)
     } else if (path.includes('/profile/payments')) {
       setSelected(5)
+    } else if(path.includes('/profile/transfers')) {
+      setSelected(6)
+    } else if(path.includes('/profile/payouts')) {
+      setSelected(7)
     } else {
       setSelected(0)
     }
@@ -161,6 +165,30 @@ const ProfileSidebar = ({
                             <FormattedMessage
                               id='account.profile.transfer.list'
                               defaultMessage='Transfers'
+                            />
+                          </span>
+                        }
+                      />
+                    </MenuItem>
+                  }
+                  { userTypes && (userTypes?.includes('contributor')) &&
+                    <MenuItem
+                      onClick={ () =>
+                        history.push('/profile/payouts')
+                      }
+                      className={ classes.menuItem }
+                      selected={ selected === 7 }
+                    >
+                      <ListItemIcon className={ classes.icon }>
+                        <PayoutIcon />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={ { primary: classes.primary } }
+                        primary={
+                          <span>
+                            <FormattedMessage
+                              id='account.profile.payout.list'
+                              defaultMessage='Payouts'
                             />
                           </span>
                         }

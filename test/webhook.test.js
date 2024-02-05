@@ -285,7 +285,7 @@ describe('webhooks', () => {
           }).catch(done)
       })
 
-      it('should notify the transfer when a webhook transfer.update is triggered', done => {
+      it('should notify about the transfer and update status when a webhook transfer.created is triggered', done => {
         models.User.build({ email: 'teste@mail.com', password: 'teste' })
           .save()
           .then(user => {
@@ -302,27 +302,33 @@ describe('webhooks', () => {
                   .then(assign => {
                     task
                       .update({ assigned: assign.dataValues.id }, { where: { id: task.id } })
-                      .then(updatedTask => {
-                        agent
-                          .post('/webhooks')
-                          .send(transferData.transfer)
-                          .expect('Content-Type', /json/)
-                          .expect(200)
-                          .end((err, res) => {
-                            expect(res.statusCode).to.equal(200)
-                            expect(res.body).to.exist
-                            expect(res.body.id).to.equal(
-                              'evt_1CcecMBrSjgsps2DMFZw5Tyx'
-                            )
-                            done(err)
-                          })
-                      }).catch(done)
+                      .then( updatedTask => {
+                        createTransfer({userId: user.dataValues.id, taskId: task.id, transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', to: assign.dataValues.userId, status: 'pending'}).then(transfer => {
+                          agent
+                            .post('/webhooks')
+                            .send(transferData.updated)
+                            .expect('Content-Type', /json/)
+                            .expect(200)
+                            .end((err, res) => {
+                              models.Transfer.findOne({where: {id: transfer.dataValues.id}}).then(transfer => {
+                                expect(res.statusCode).to.equal(200)
+                                expect(res.body).to.exist
+                                expect(res.body.id).to.equal(
+                                  'evt_1CcecMBrSjgsps2DMFZw5Tyx'
+                                )
+                                expect(transfer.dataValues.status).to.equal('created')
+                                done(err);
+                              }).catch(done)     
+                            })
+                          }).catch(done)
+                        }).catch(done)
+                        
                   }).catch(done)
               }).catch(done)
           }).catch(done)
       })
 
-      it('should notify the transfer when a webhook payout.create is triggered', done => {
+      it('should notify the transfer when a webhook payout.create is triggered and create a new payout', done => {
         models.User.build({
           email: 'teste@mail.com',
           password: 'teste',
@@ -332,15 +338,59 @@ describe('webhooks', () => {
           .then(user => {
             agent
               .post('/webhooks')
-              .send(payoutData.update)
+              .send(payoutData.created)
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
-                expect(res.statusCode).to.equal(200)
-                expect(res.body).to.exist
-                expect(res.body.id).to.equal('evt_1CdprOLlCJ9CeQRe4QDlbGRY')
-                done(err)
+                models.Payout.findOne({where: {source_id: res.body.data.object.id}}).then(payout => {
+                  expect(res.statusCode).to.equal(200)
+                  expect(res.body).to.exist
+                  expect(res.body.id).to.equal(
+                    'evt_1CdprOLlCJ9CeQRe4QDlbGRY'
+                  )
+                  expect(payout.dataValues.status).to.equal('in_transit')
+                  done(err);
+                }).catch(done)
               })
+          }).catch(done)
+      })
+
+      it('should notify the transfer when a webhook payout.paid is triggered and update payout status', done => {
+        models.User.build({
+          email: 'teste@mail.com',
+          password: 'teste',
+          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
+        })
+          .save()
+          .then(user => {
+            models.Payout.build({
+              source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
+              amount: 7311,
+              currency: 'brl',
+              status: 'in_transit',
+              description: 'STRIPE TRANSFER',
+              userId: user.dataValues.id,
+              method: 'bank_account',
+            }).save().then(newPayout => {
+              agent
+                .post('/webhooks')
+                .send(payoutData.done)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {
+                  expect(res.statusCode).to.equal(200)
+                  expect(res.body).to.exist
+                  expect(res.body.id).to.equal(
+                    'evt_1CeM4PLlCJ9CeQReQrtxB9GJ'
+                  )
+                  models.Payout.findOne({where: {id: newPayout.dataValues.id}}).then(payout => {
+                    expect(payout.dataValues.status).to.equal('paid')
+                    expect(payout.dataValues.paid).to.equal(true)
+                    expect(payout.dataValues.amount).to.equal('7311')
+                    done(err);
+                  }).catch(done)
+              })
+            }).catch(done)
           }).catch(done)
       })
 
@@ -364,36 +414,6 @@ describe('webhooks', () => {
                 done(err)
               })
           }).catch(done)
-      })
-
-      xit('should notify the transfer and update transfer when a webhook payout.done is triggered', async () => {
-        await nock('https://api.stripe.com')
-        .persist()  
-        .get('/v1/balance_transactions/txn_1CdprOLlCJ9CeQRe7gBPy9Lo')
-        .reply(200, balanceTransactionData.get );
-
-        await models.User.build({
-          email: 'teste@mail.com',
-          password: 'teste',
-          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
-        }).save()
-
-        const task = await createTask(agent)
-        const taskData = task.dataValues
-        await task.createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe' })
-        const assign = await createAssign(agent, {taskId: taskData.id})
-        const newTransfer = await createTransfer({userId: taskData.userId, taskId: taskData.id, transfer_id: 'tr_1CZ5vkLlCJ9CeQRe', to: assign.dataValues.userId, status: 'pending'})
-        const res = await agent
-          .post('/webhooks')
-          .send(payoutData.done)
-          .expect('Content-Type', /json/)
-          .expect(200)
-        const currentTransfer = await models.Transfer.findOne({where: {id: newTransfer.dataValues.id}})
-        expect(currentTransfer.status).to.equal('paid')
-        expect(res.statusCode).to.equal(200)
-        expect(res.body).to.exist
-        expect(res.body.id).to.equal('evt_1CeM4PLlCJ9CeQReQrtxB9GJ')
-        
       })
     })
   })

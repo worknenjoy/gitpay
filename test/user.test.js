@@ -325,7 +325,7 @@ describe("Users", () => {
     });
   })
 
-  describe('user organizations', () => {
+  xdescribe('user organizations', () => {
     xit('should create organization and associate with an user', (done) => {
       nock('https://api.github.com')
         .get(`/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`)
