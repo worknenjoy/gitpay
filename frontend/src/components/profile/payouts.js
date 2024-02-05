@@ -11,6 +11,20 @@ import {
 import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './payout-table'
 
+function currencyCodeToSymbol(code) {
+  const currencyMap = {
+      USD: '$', // US Dollar
+      EUR: '€', // Euro
+      GBP: '£', // British Pound
+      JPY: '¥', // Japanese Yen
+      CNY: '¥', // Chinese Yuan
+      INR: '₹', // Indian Rupee
+      // Add more currencies here
+  };
+
+  return currencyMap[code] || code;
+}
+
 function formatStripeAmount(amountInCents) {
   // Convert to a number in case it's a string
   let amount = Number(amountInCents);
@@ -63,7 +77,7 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
                 ...payouts,
                 data: payouts.data.map(t => [
                   <Chip label={ t.status } />,
-                  `${t.currency} ${formatStripeAmount(t.amount)}`,
+                  `${currencyCodeToSymbol(t.currency)} ${formatStripeAmount(t.amount)}`,
                   moment(t.createdAt).format('LLL')
                 ]) } || {}
             }
