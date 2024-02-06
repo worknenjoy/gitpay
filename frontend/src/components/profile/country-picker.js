@@ -32,6 +32,7 @@ export const countryCodes = [
   { country: 'Netherlands', code: 'NL', image: 'netherlands' },
   { country: 'New Zealand', code: 'NZ', image: 'new-zealand' },
   { country: 'Norway', code: 'NO', image: 'norway' },
+  { country: 'Romania', code: 'RO', image: 'romania' },
   { country: 'Singapore', code: 'SG', image: 'singapore' },
   { country: 'Spain', code: 'ES', image: 'spain' },
   { country: 'Sweden', code: 'SE', image: 'sweden' },
@@ -114,9 +115,9 @@ class CountryPicker extends Component {
             <div className={ classes.countryContainer }>
               { countryCodes.map((item) => {
                 return (
-                  <Button variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
-                    <img width='48' src={ require(`../../images/countries/${item.image}.png`).default } />
-                    <Typography component='span'>
+                  <Button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
+                    <img width='48' style={{marginRight: 10}} src={ require(`../../images/countries/${item.image}.png`).default } />
+                    <Typography component='span' gutterBottom>
                       { item.country }
                     </Typography>
                   </Button>
