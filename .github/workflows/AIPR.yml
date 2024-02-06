@@ -23,6 +23,5 @@ jobs:
       with:
         openai_api_key: ${{ secrets.OPENAI_API_KEY }}
         openai_tokens: 1000
-        file_chunks: 10000
-        target_branch: 'gh-pages'
+        file_chunks: 50000
         
