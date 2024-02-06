@@ -101,7 +101,7 @@ class LoginPage extends Component {
         <div style={ { display: 'flex', flexDirection: 'column' } }>
           <Card className={ classes.card }>
             <CardContent className={ classes.cardContent }>
-              <Link to='/'>
+              <Link to='/#'>
                 <img src={ logo } width={ 210 } />
               </Link>
               <Content>
