@@ -11,27 +11,57 @@ import {
 import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './payout-table'
 
-function currencyCodeToSymbol(code) {
-  const currencyMap = {
-    usd: '$', // US Dollar
-    eur: '€', // Euro
-    gbp: '£', // British Pound
-    jpy: '¥', // Japanese Yen
-    cny: '¥', // Chinese Yuan
-    inr: '₹', // Indian Rupee
-    // Add more currencies here
-  };
+//Define messages for internationalization
+const payoutMessages = defineMessages({
+  title: {
+    id: 'profile.payouts.title',
+    defaultMessage: 'Payouts'
+  },
+  headerStatus: {
+    id: 'profile.payouts.headerStatus',
+    defaultMessage: 'Status'
+  },
+  headerValue: {
+    id: 'profile.payouts.headerValue',
+    defaultMessage: 'Value'
+  },
+  headerCreated: {
+    id: 'profile.payouts.headerCreated',
+    defaultMessage: 'Created'
+  }
+});
 
+//Map for currency symbols
+const currencyMap = {
+  usd: '$', // US Dollar
+  eur: '€', // Euro
+  gbp: '£', // British Pound
+  jpy: '¥', // Japanese Yen
+  cny: '¥', // Chinese Yuan
+  inr: '₹', // Indian Rupee
+  aud: 'A$', // Australian Dollar
+  cad: 'C$', // Canadian Dollar
+  chf: 'F', // Swiss Franc
+  mxn: 'Mex$', // Mexican Peso
+  nzd: 'NZ$', // New Zealand Dollar
+  hkd: 'HK$', // Hong Kong Dollar
+  sgd: 'S$', // Singapore Dollar
+  krw: '₩', // South Korean Won
+};
+
+//Function to convert currency code to symbol
+function currencyCodeToSymbol(code) {
   return currencyMap[code.toLowerCase()] || code;
 }
 
+//Function to format amount from cents to decimal format
 function formatStripeAmount(amountInCents) {
   // Convert to a number in case it's a string
   let amount = Number(amountInCents);
 
   // Check if the conversion result is a valid number
   if (isNaN(amount)) {
-      return 'Invalid amount';
+    return 'Invalid amount';
   }
 
   // Convert cents to a decimal format and fix to 2 decimal places
@@ -63,14 +93,14 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
     <div style={ { margin: '40px 0' } }>
       <Container>
         <Typography variant='h5' gutterBottom>
-          <FormattedMessage id='profile.payouts.title' defaultMessage='Payouts' />
+          <FormattedMessage {...payoutMessages.title} />
         </Typography>
         <div>
           <CustomPaginationActionsTable
             tableHead={ [
-              intl.formatMessage(messages.cardTableHeaderStatus),
-              intl.formatMessage(messages.cardTableHeaderValue),
-              intl.formatMessage(messages.cardTableHeaderCreated),
+              intl.formatMessage(payoutMessages.headerStatus),
+              intl.formatMessage(payoutMessages.headerValue),
+              intl.formatMessage(payoutMessages.headerCreated),
             ] }
             payouts={
               payouts && payouts.data && {
