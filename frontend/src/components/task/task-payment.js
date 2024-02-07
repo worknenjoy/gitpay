@@ -381,7 +381,7 @@ class TaskPayment extends Component {
           </div>
           <DialogContentText>
             <div>
-              { (!this.props.paid || this.props.task.Transfer.id) ? (
+              { (!this.props.paid || this.props.task?.Transfer.id) ? (
                 <div>
                   <Alert severity='warning' gutterBottom>
                   { this.props.assigned
