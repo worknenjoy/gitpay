@@ -307,7 +307,7 @@ class TaskPayment extends Component {
                     <div>
                       <Typography type='heading' color='primary' gutterBottom noWrap>
                         <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={{
-                          value: this.props.task?.Transfer.value
+                          value: this.props.task?.Transfer?.value
                         }}
                        />
                       </Typography>
@@ -381,7 +381,7 @@ class TaskPayment extends Component {
           </div>
           <DialogContentText>
             <div>
-              { (!this.props.paid || this.props.task?.Transfer.id) ? (
+              { (!this.props.paid || this.props.task?.Transfer?.id) ? (
                 <div>
                   <Alert severity='warning' gutterBottom>
                   { this.props.assigned
