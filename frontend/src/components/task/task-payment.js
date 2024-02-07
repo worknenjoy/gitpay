@@ -284,7 +284,7 @@ class TaskPayment extends Component {
               </Tabs>
             </AppBar>
             <TabContainer style={{paddingBottom: 0}}>
-              { (this.props.transferId || this.props.task.Transfer) ? (
+              { (this.props.transferId || this.props.task?.Transfer) ? (
                 <Alert 
                   severity='success'
                   action={<Link to={`/profile/transfers`}>
@@ -307,7 +307,7 @@ class TaskPayment extends Component {
                     <div>
                       <Typography type='heading' color='primary' gutterBottom noWrap>
                         <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={{
-                          value: this.props.task.Transfer.value
+                          value: this.props.task?.Transfer.value
                         }}
                        />
                       </Typography>
@@ -395,7 +395,7 @@ class TaskPayment extends Component {
                   </Alert>
                   { this.props.assigned ? 
                       <TaskAssigned
-                        task={ { id: this.props.id, assigned: this.props.assigned, Transfer: this.props.task.Transfer } }
+                        task={ { id: this.props.id, assigned: this.props.assigned, Transfer: this.props.task?.Transfer } }
                         assign={ {id: this.props.assigned } }
                         isOwner={ this.props.isOwner }
                         user={ sendTo(this.props.assigned) }
@@ -458,7 +458,7 @@ class TaskPayment extends Component {
                   style={ { float: 'right', margin: 10 } }
                   variant='contained'
                   color='primary'
-                  disabled={ !this.props.assigned || this.props.transferId || this.props.task.Transfer}
+                  disabled={ !this.props.assigned || this.props.transferId || this.props.task?.Transfer}
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
                   <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={ {
