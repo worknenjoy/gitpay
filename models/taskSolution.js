@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
       type: DataTypes.BOOLEAN
     },
+    hasIssueReference: {
+      allowNull: false,
+      defaultValue: false,
+      type: DataTypes.BOOLEAN
+    }
   })
 
   TaskSolution.associate = (models) => {

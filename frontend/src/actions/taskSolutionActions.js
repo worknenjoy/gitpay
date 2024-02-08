@@ -139,7 +139,7 @@ const updateTaskSolution = ({ taskSolutionId, pullRequestURL, userId, taskId }) 
   validToken()
   return dispatch => {
     dispatch(updateTaskSolutionRequested())
-    axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, userId: userId, taskId: taskId }).then(response => {
+    return axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, userId: userId, taskId: taskId }).then(response => {
       dispatch(updateTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {

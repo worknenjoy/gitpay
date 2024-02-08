@@ -67,15 +67,12 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
       isIssueClosed = true
     }
 
-
-
     return {
       isConnectedToGitHub: isConnectedToGitHub,
       isAuthorOfPR: isAuthorOfPR,
       isPRMerged: isPRMerged,
       isIssueClosed: isIssueClosed,
       hasIssueReference: hasIssueReference
-
     }
   }).catch(err => {
     // eslint-disable-next-line no-console
