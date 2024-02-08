@@ -1,8 +1,9 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 const taskSolutionFetchData = require('./taskSolutionFetchData')
-const taskPayment = require('./taskPayment')
+const assignExist = require('../assigns').assignExists
 const transferBuilds = require('../transfers/transferBuilds')
+const taskUpdate = require('../tasks/taskUpdate')
 
 module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskSolutionId) {
   return models.TaskSolution.update(taskSolution, {
@@ -25,16 +26,30 @@ module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskS
           owner: pullRequestURLSplitted[3],
           taskId: taskSolution.taskId
         }).then(async response => {
+          const taskSolutionUpdate = await models.TaskSolution.update(response, { where: { id: taskSolutionId }, returning: true, plain: true})
           if (response.isAuthorOfPR && response.isConnectedToGitHub && response.isIssueClosed && response.isPRMerged && response.hasIssueReference) {
             if (!taskData.dataValues.paid && !taskData.dataValues.transfer_id) {
               //taskPayment({ taskId: taskData.dataValues.id, value: taskData.dataValues.value })
-              const transferSend = await transferBuilds({ taskId: taskData.dataValues.id, userId: taskData.dataValues.userId })
-              console.log('update called', taskData.dataValues.id, taskData.dataValues.userId, transferSend)
+              let existingAssignment = await assignExist({ userId: taskSolution.userId, taskId: taskSolution.taskId })
+              if (!existingAssignment) {
+                existingAssignment = await taskData.createAssign({ userId: taskSolution.userId })
+                if(!assign) {
+                  throw new Error('COULD_NOT_CREATE_ASSIGN')
+                }
+              }
+              const taskUpdateAssign = await taskUpdate({ id: taskSolution.taskId, assigned: existingAssignment.dataValues.id })
+              if(!taskUpdateAssign) {
+                throw new Error('COULD_NOT_UPDATE_TASK')
+              }
+              const transferSend = await transferBuilds({ taskId: taskData.dataValues.id, userId: existingAssignment.dataValues.id })
+              console.log('transferSend with data: ', taskData.dataValues.id, taskData.dataValues.userId, transferSend)
               if(transferSend.error) {
                 throw new Error('transferSend.error')
               }
               return response
             }
+          } else {
+            throw new Error('COULD_NOT_UPDATE_TASK_SOLUTION')
           }
         }).catch(err => {
           // eslint-disable-next-line no-console

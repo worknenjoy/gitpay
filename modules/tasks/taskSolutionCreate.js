@@ -21,8 +21,9 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
     where: { id: taskSolutionParams.taskId }
   })
 
-  if (fetchTaskSolutionData.isAuthorOfPR && fetchTaskSolutionData.isConnectedToGitHub && fetchTaskSolutionData.isIssueClosed && fetchTaskSolutionData.isPRMerged) {
+  if (fetchTaskSolutionData.isAuthorOfPR && fetchTaskSolutionData.isConnectedToGitHub && fetchTaskSolutionData.isIssueClosed && fetchTaskSolutionData.isPRMerged && fetchTaskSolutionData.hasIssueReference) {
     if (!task.dataValues.paid && !task.dataValues.transfer_id) {
+      
       const existingAssignment = await assignExist({ userId: taskSolutionParams.userId, taskId: taskSolutionParams.taskId })
 
       if (!existingAssignment) {
