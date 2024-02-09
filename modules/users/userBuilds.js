@@ -8,7 +8,11 @@ module.exports = Promise.method(function userBuilds (userParameters) {
     userParameters.password = models.User.generateHash(userParameters.password)
   }
   userParameters.activation_token = models.User.generateToken()
-  userParameters.email_verified = false
+  if(userParameters.provider) {
+    userParameters.email_verified = true
+  } else {
+    userParameters.email_verified = false
+  }
   if (!userParameters.email && !userParameters.password && !userParameters.confirmPassword) return false
   return models.User.build(
     userParameters
