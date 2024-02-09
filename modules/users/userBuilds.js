@@ -3,7 +3,6 @@ const Sendmail = require('../mail/mail')
 const models = require('../../models')
 
 module.exports = Promise.method(function userBuilds (userParameters) {
-  if(userParameters.password !== userParameters.confirmPassword) return false
   if(userParameters.password) {
     userParameters.password = models.User.generateHash(userParameters.password)
   }
