@@ -76,7 +76,7 @@ describe("Transfer", () => {
     })
     it("should create transfer with a single order paid with stripe", async () => {
       try {
-        await nock('https://api.stripe.com')
+        nock('https://api.stripe.com')
           .persist()  
           .post('/v1/transfers')
           .reply(200, transfer );
@@ -98,7 +98,7 @@ describe("Transfer", () => {
     })
     it("should create transfer with two orders paid with stripe", async () => {
       try {
-        await nock('https://api.stripe.com')
+        nock('https://api.stripe.com')
           .persist()  
           .post('/v1/transfers')
           .reply(200, transfer );
@@ -121,7 +121,7 @@ describe("Transfer", () => {
     })
     it("should create transfer with three mulltiple orders paid with stripe", async () => {
       try {
-        await nock('https://api.stripe.com')
+        nock('https://api.stripe.com')
           .persist()  
           .post('/v1/transfers')
           .reply(200, transfer );
@@ -144,7 +144,7 @@ describe("Transfer", () => {
       }
     })
     it("should create transfer with three mulltiple orders paid with stripe and paypal", async () => {
-      await nock('https://api.stripe.com')
+      nock('https://api.stripe.com')
         .persist()  
         .post('/v1/transfers')
         .reply(200, transfer );
