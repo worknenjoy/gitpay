@@ -121,6 +121,10 @@ const messages = defineMessages({
     id: 'actions.task.create.notification.success',
     defaultMessage: 'Task created successfully'
   },
+  notificationTaskSolutionCreateNotificationSuccess: {
+    id: 'task.solution.dialog.create.success',
+    defaultMessage: 'Task solution created successfully'
+  },
   notificationTaskCreateNotificationError: {
     id: 'actions.task.create.notification.error',
     defaultMessage: 'Error to update task'
