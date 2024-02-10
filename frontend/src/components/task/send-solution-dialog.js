@@ -16,11 +16,11 @@ const SendSolutionDialog = props => {
   const [editMode, setEditMode] = useState(false)
   const [timer, setTimer] = useState()
 
-  const { taskSolution, pullRequestData } = props
+  const { taskSolution, pullRequestData, task } = props
 
   useEffect(() => {
-    props.getTaskSolution(props.user.id, props.task.id)
-  }, [props.user, props.task])
+    props.getTaskSolution(props.user.id, task.data.id)
+  }, [props.user, task ])
 
   useEffect(() => {
     props.cleanPullRequestDataState()
@@ -31,7 +31,7 @@ const SendSolutionDialog = props => {
       clearTimeout(timer)
       setTimer(setTimeout(() => {
         const urlSplitted = pullRequestURL.split('/')
-        props.fetchPullRequestData(urlSplitted[3], urlSplitted[4], urlSplitted[6], props.user.id, props.task.id)
+        props.fetchPullRequestData(urlSplitted[3], urlSplitted[4], urlSplitted[6], props.user.id, task.data.id)
       }, 2500))
     }
   }, [pullRequestURL])
@@ -46,7 +46,7 @@ const SendSolutionDialog = props => {
 
   const submitTaskSolution = () => {
     if (editMode) {
-      const payload = { pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id, taskSolutionId: taskSolution.id }
+      const payload = { pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload).then((solution) => {
         console.log('solution', solution)
       })
@@ -55,7 +55,7 @@ const SendSolutionDialog = props => {
       return
     }
 
-    const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: props.task.id, userId: props.user.id }
+    const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id }
 
     props.createTaskSolution(payload).then((solution) => {
       console.log('solution', solution)
@@ -78,7 +78,7 @@ const SendSolutionDialog = props => {
             <SendSolutionForm handlePullRequestURLChange={ handlePullRequestURLChange } pullRequestURL={ pullRequestURL } />
             <SendSolutionRequirements completed={ props.completed } isConnectedToGitHub={ pullRequestData.isConnectedToGitHub } isAuthorOfPR={ pullRequestData.isAuthorOfPR } isPRMerged={ pullRequestData.isPRMerged } isIssueClosed={ pullRequestData.isIssueClosed } hasIssueReference={ pullRequestData.hasIssueReference } />
           </React.Fragment>
-          : <TaskSolution taskSolution={ taskSolution } task={props.task} />
+          : <TaskSolution taskSolution={ taskSolution } task={task.data} />
         }
       </DialogContent>
       <DialogActions>
@@ -86,11 +86,11 @@ const SendSolutionDialog = props => {
           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
         </Button>
         { Object.keys(props.taskSolution).length !== 0 && !editMode // Edit mode will change the button to "send solution"
-          ? <Button type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ props.task.paid || props.task.Transfer || props.task.transfer_id }>
+          ? <Button type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ task.data.paid || task.data.Transfer || task.data.transfer_id }>
             <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />
           </Button>
           : <Button type='primary' htmlFor='submit' variant='contained' color='primary' disabled={
-            !pullRequestURL || !pullRequestData.isConnectedToGitHub || !pullRequestData.isAuthorOfPR || !pullRequestData.isPRMerged || !pullRequestData.isIssueClosed || !pullRequestData.hasIssueReference || props.task.paid || props.task.transfer_id || props.task.Transfer
+            !pullRequestURL || !pullRequestData.isConnectedToGitHub || !pullRequestData.isAuthorOfPR || !pullRequestData.isPRMerged || !pullRequestData.isIssueClosed || !pullRequestData.hasIssueReference || task.data.paid || task.data.transfer_id || task.data.Transfer
           } onClick={ submitTaskSolution }>
             <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />
           </Button>
