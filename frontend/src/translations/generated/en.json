@@ -510,6 +510,7 @@
   "task.solution.dialog.create.success": "Task solution created successfully",
   "task.solution.dialog.description": "You can send a solution for this issue providing the Pull Request / Merge Request URL of your solution:",
   "task.solution.dialog.message": "Send a solution for this issue",
+  "task.solution.dialog.update.success": "Task solution updated successfully",
   "task.solution.form.edit": "Edit Solution",
   "task.solution.form.send": "Send Solution",
   "task.solution.form.solutionURL": "Pull Request URL",
