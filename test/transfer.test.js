@@ -24,17 +24,18 @@ const createTransferWithTaskData = async (taskData, userId, transferId) => {
 }
 
 describe("Transfer", () => {
-  beforeEach(async () => {
-    await truncateModels(models.Task);
-    await truncateModels(models.User);
-    await truncateModels(models.Assign);
-    await truncateModels(models.Order);
-    await truncateModels(models.Transfer);
-  })
-  afterEach(async () => {
-    nock.cleanAll()
-  })
+  
   describe("Initial transfer with one credit card and account activated", () => {
+    beforeEach(async () => {
+      await truncateModels(models.Task);
+      await truncateModels(models.User);
+      await truncateModels(models.Assign);
+      await truncateModels(models.Order);
+      await truncateModels(models.Transfer);
+    })
+    afterEach(async () => {
+      nock.cleanAll()
+    })
     it("should not create transfer with no orders", async () => {
       try {
         const task = await createTask(agent);

@@ -227,7 +227,7 @@ const TaskSolve = ({
             </>
           }
           { currentTab === 1 && (<React.Fragment>
-            { !logged ? ((loginForm())) : (<SendSolutionDialog task={ task.data } assignDialog={ open } handleAssignFundingDialogClose={ onClose } />) }
+            { !logged ? ((loginForm())) : (<SendSolutionDialog assignDialog={ open } handleAssignFundingDialogClose={ onClose } />) }
           </React.Fragment>) }
       </DialogContent>
       

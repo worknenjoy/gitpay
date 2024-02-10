@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     user: getUser(state),
     taskSolution: state.taskSolutionReducer.taskSolution,
     pullRequestData: state.taskSolutionReducer.pullRequestData,
+    task: state.task,
     completed: state.taskSolutionReducer.completed
   }
 }

@@ -2,6 +2,7 @@ import axios from 'axios'
 import api from '../consts'
 import { validToken } from './helpers'
 import { addNotification } from './notificationActions'
+import { fetchTask } from './taskActions'
 
 const GET_TASK_SOLUTION_REQUESTED = 'GET_TASK_SOLUTION_REQUESTED'
 const GET_TASK_SOLUTION_SUCCESS = 'GET_TASK_SOLUTION_SUCCESS'
@@ -108,8 +109,9 @@ const createTaskSolution = (taskSolution) => {
   validToken()
   return dispatch => {
     dispatch(createTaskSolutionRequested())
-    axios.post(`${api.API_URL}/tasksolutions/create`, taskSolution).then(response => {
+    return axios.post(`${api.API_URL}/tasksolutions/create`, taskSolution).then(response => {
       dispatch(addNotification('task.solution.dialog.create.success'))
+      dispatch(fetchTask(taskSolution.taskId))
       return dispatch(createTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
@@ -140,7 +142,9 @@ const updateTaskSolution = ({ taskSolutionId, pullRequestURL, userId, taskId }) 
   return dispatch => {
     dispatch(updateTaskSolutionRequested())
     return axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, userId: userId, taskId: taskId }).then(response => {
-      dispatch(updateTaskSolutionSuccess(response.data))
+      dispatch(addNotification('task.solution.dialog.update.success'))
+      dispatch(fetchTask(taskId))
+      return dispatch(updateTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))
