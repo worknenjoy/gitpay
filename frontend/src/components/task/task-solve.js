@@ -50,7 +50,6 @@ const TaskSolve = ({
   task,
   open,
   onClose,
-  taskCover,
   location,
   logged,
   renderIssueAuthorLink,
@@ -65,7 +64,7 @@ const TaskSolve = ({
   const closeDialogButton = () => {
     return (
       <Fab size='small' aria-label='close' className={ classes.closeButton } onClick={ onClose }>
-        <CloseIcon />
+        <CloseIcon size='small' />
       </Fab>
     )
   }

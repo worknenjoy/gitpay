@@ -35,6 +35,7 @@ const TaskSolution = props => {
     <>
       {props.task.transfer_id || props.task.Transfer && (
         <Alert 
+          gutterBottom
           severity='success'
           action={<Link to={`/profile/transfers`}>
           <Button size='small' variant='outlined' color='primary'>
@@ -65,8 +66,8 @@ const TaskSolution = props => {
           }
         </Alert>  
       )}
-      <Card style={ { display: 'flex' } }>
-        <CardHeader title={ `Pull Request # ${props.taskSolution.pullRequestURL.split('/')[6]}` } subheader='Updated 5 min ago' />
+      <Card style={ { display: 'flex', marginTop: 12 } }>
+        <CardHeader title={ `Pull Request # ${props.taskSolution?.pullRequestURL?.split('/')[6]}` } subheader='Updated 5 min ago' />
         <CardContent style={ { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', flexDirection: 'row' } }>
           { props.taskSolution.isPRMerged && pullRequestMergedChip() }
           { props.taskSolution.isIssueClosed && issueClosedChip() }

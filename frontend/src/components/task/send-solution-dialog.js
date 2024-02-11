@@ -65,7 +65,7 @@ const SendSolutionDialog = props => {
   return (
     <React.Fragment>
       <DialogTitle>
-        <Typography type='headline' variant='h6' style={ { color: 'black' } } gutterBottom>
+        <Typography type='headline' variant='h6' style={ { color: 'black' } }>
           <FormattedMessage id='task.solution.dialog.message' defaultMessage='Send a solution for this issue' />
         </Typography>
         <Typography variant='body2' style={ { color: 'black' } } gutterBottom>
@@ -86,10 +86,10 @@ const SendSolutionDialog = props => {
           <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
         </Button>
         { Object.keys(props.taskSolution).length !== 0 && !editMode // Edit mode will change the button to "send solution"
-          ? <Button type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ task.data.paid || task.data.Transfer || task.data.transfer_id }>
+          ? <Button data-testid='edit-solution-button' type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ task.data.paid || task.data.Transfer || task.data.transfer_id }>
             <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />
           </Button>
-          : <Button type='primary' htmlFor='submit' variant='contained' color='primary' disabled={
+          : <Button data-testid='send-solution-button' type='primary' htmlFor='submit' variant='contained' color='primary' disabled={
             !pullRequestURL || !pullRequestData.isConnectedToGitHub || !pullRequestData.isAuthorOfPR || !pullRequestData.isPRMerged || !pullRequestData.isIssueClosed || !pullRequestData.hasIssueReference || task.data.paid || task.data.transfer_id || task.data.Transfer
           } onClick={ submitTaskSolution }>
             <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />

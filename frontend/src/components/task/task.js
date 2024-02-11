@@ -450,7 +450,11 @@ class Task extends Component {
       }
     }
     const assign_id = this.props.match.params.interested_id
-    const hash = this.props.history.location.hash
+    const hash = this.props.location.hash
+    if(hash === '#task-solution-dialog') {
+      this.setState({ taskSolveDialog: true })
+
+    }
     if(hash === '#accept' || hash === '#reject') {
       this.setState({ taskPaymentDialog: true })
       

@@ -285,7 +285,7 @@ class TaskPayment extends Component {
             </AppBar>
             <TabContainer style={{paddingBottom: 0}}>
               { (this.props.transferId || this.props.task?.Transfer) ? (
-                <Alert 
+                <Alert gutterBottom
                   severity='success'
                   action={<Link to={`/profile/transfers`}>
                   <Button size='small' variant='outlined' color='primary'>
@@ -293,9 +293,9 @@ class TaskPayment extends Component {
                   </Button>
                 </Link>}
                 >
-                  <AlertTitle>
+                  <AlertTitle gutterBottom>
                     <Typography type='subheading' color='primary' gutterBottom noWrap>
-                      <FormattedMessage id='task.payment.transfer.done' defaultMessage='All your transfer was concluded' />
+                      <FormattedMessage id='task.payment.transfer.done' defaultMessage='Your transfer is concluded' />
                     </Typography>
                   </AlertTitle>
                   
