@@ -730,11 +730,7 @@ exports.updateWebhook = (req, res) => {
         return res.json(req.body)
         break
       default:
-        return res.status(400).send({
-          error: {
-            message: 'Not recognized event type'
-          }
-        })
+        return res.json(req.body)
         break
       case 'invoice.payment_succeeded':
         return models.User.findOne(
