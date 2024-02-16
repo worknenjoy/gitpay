@@ -14,6 +14,7 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
+  TableSortLabel,
   withStyles,
   Tooltip,
   Chip,
@@ -162,7 +163,20 @@ class CustomPaginationActionsTable extends React.Component {
     this.state = {
       page: 0,
       rowsPerPage: 10,
+      sortBy: '',
+      sortDirection: 'asc',
+      data: props.tasks.data || [],
     }
+  }
+
+  sortTasksBy( sortBy = '', direction = 'asc', getter = Function()){
+    const {props, state} = this
+    let sortDirection = direction
+    if( state.sortBy == sortBy ){
+      sortDirection = state.sortDirection == 'asc' ? 'desc' : 'asc'
+    }
+    const sortedData = sortRecords(state.data, sortBy, sortDirection, getter)
+    this.setState({...state, sortBy, sortDirection, data: sortedData})
   }
 
   handleChangePage = (event, page) => {
@@ -185,39 +199,55 @@ class CustomPaginationActionsTable extends React.Component {
 
   render () {
     const { classes, tasks } = this.props
-    const { rowsPerPage, page } = this.state
-    const emptyRows = tasks.data.length ? rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage) : 0
+    const { data, rowsPerPage, page, sortBy, sortDirection } = this.state
+    const emptyRows = data.length ? rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage) : 0
 
+    const humanise = (text = '') => text[0].toUpperCase() + text.slice(1)
+    const TableColumnTitle = ({
+      field = String(),
+      getter = (record) => Object(record)[field],
+      active = sortBy === field,
+      id = `task.table.head.${field}`,
+      defaultMessage = humanise(field),
+    }) => 
+      <TableSortLabel
+        active={ active }
+        direction={ active ? (sortDirection == 'asc' ? 'desc' : 'asc') : 'desc' }
+        onClick={ this.sortTasksBy.bind(this, field, sortDirection, getter) }
+      >
+        <FormattedMessage {...{id, defaultMessage}} />
+      </TableSortLabel>
+    
     return (
       <Paper className={ classes.root }>
-        { tasks.completed && tasks.data.length
+        { tasks.completed && data.length
           ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ tasks.completed }>
             <div className={ classes.tableWrapper }>
               <Table className={ classes.table }>
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
+                      <TableColumnTitle field='task' getter={({title}) => title} />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
+                      <TableColumnTitle field='status' />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
+                      <TableColumnTitle field='project' getter={({Project}) => Object(Project).name} />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
+                      <TableColumnTitle field='value' />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.labels' defaultMessage='Labels' />
+                      <TableColumnTitle field='labels' getter={({Labels}) => String(Object(Labels).length && Object(Labels[0]).name)} />
                     </TableCell>
                     <TableCell>
-                      <FormattedMessage id='task.table.head.createdAt' defaultMessage='Created' />
+                      <TableColumnTitle field='createdAt' />
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  { tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  { data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const assigned = n.Assigns.find(a => a.id === n.assigned)
                     const assignedUser = assigned && assigned.User
                     return (
@@ -285,7 +315,7 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableRow>
                     <TablePagination
                       colSpan={ 3 }
-                      count={ tasks.data.length }
+                      count={ data.length }
                       rowsPerPage={ rowsPerPage }
                       page={ page }
                       onChangePage={ (e, page) => this.handleChangePage(e, page) }
@@ -309,6 +339,21 @@ CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
   tasks: PropTypes.object
+}
+
+const comparator = (a='', b='') => String(a).localeCompare(b, 'en', {numeric:true, sensitivity:'base', ignorePunctuation:true})
+const swapFnArgs = fn => (a, b) => fn(b, a)
+const getRecordsComparator = (field='', direction = 'asc', getter = record => Object(record)[field]) => {
+  const applyDirection = comparator => direction == 'desc' ? swapFnArgs(comparator) : comparator
+  return (recA={}, recB={}) => applyDirection(comparator)(getter(recA), getter(recB))
+}
+
+function sortRecords(records = [], field = '', direction = 'asc', getter = Function()){
+    if( records ){
+      const compareRecords = getRecordsComparator(field, direction, getter)
+      const sortedRecs = records.sort(compareRecords)
+      return sortedRecs
+    } else return records
 }
 
 export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
