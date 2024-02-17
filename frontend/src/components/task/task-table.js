@@ -32,6 +32,7 @@ import slugify from '@sindresorhus/slugify'
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
 import Constants from '../../consts'
+import moment from 'moment'
 
 const messages = defineMessages({
   firstPageLabel: {
@@ -175,16 +176,14 @@ class CustomPaginationActionsTable extends React.Component {
         sortedData: this.props.tasks.data
       })
       if (this.state.sortedBy) {
-        this.setState({
-          sortedData: this.sortData(this.state.sortedBy, this.state.sortDirection)
-        })
+        this.handleSort(this.state.sortedBy)
       }
     }
   }
 
 
   sortData = (property, direction) => {
-    const data = [...this.state.sortedData]; // shallow copy to avoid mutating state directly
+    const data = [...this.props.tasks.data]; // shallow copy to avoid mutating state directly
   
     const getProperty = (obj, property) => {
       return property.split('.').reduce((acc, key) => (acc ? acc[key] : undefined), obj);
@@ -200,10 +199,12 @@ class CustomPaginationActionsTable extends React.Component {
       }
   
       let comparison = 0;
-      if (propertyA > propertyB) {
-        comparison = 1;
-      } else if (propertyA < propertyB) {
-        comparison = -1;
+      if (moment(propertyA).isValid() && moment(propertyB).isValid()) {
+        const unixA = moment(propertyA).unix();
+        const unixB = moment(propertyB).unix();
+        comparison = unixA - unixB;
+      } else {
+        comparison = propertyA.localeCompare(propertyB);
       }
   
       return (direction === 'desc' ? -1 : 1) * comparison;
@@ -211,6 +212,7 @@ class CustomPaginationActionsTable extends React.Component {
   
     return data; // Return the sorted data
   };
+  
   handleSort = (property) => {
     this.setState((prevState) => {
       const { sortedBy, sortDirection } = prevState;
