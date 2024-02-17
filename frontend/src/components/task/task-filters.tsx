@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Button, ButtonGroup } from '@material-ui/core';
+import { AppBar, Toolbar, Button, ButtonGroup, Chip } from '@material-ui/core';
 import { injectIntl, defineMessages } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -18,15 +18,15 @@ const styles = theme => ({
 const messages = defineMessages({
   allTasks: {
     id: 'task.list.lable.filterAllTasks',
-    defaultMessage: 'All public issues available'
+    defaultMessage: 'All public issues available ({count})'
   },
   allPublicTasksWithBounties: {
     id: 'task.list.lable.filterWithBounties',
-    defaultMessage: 'Issues with bounties'
+    defaultMessage: 'Issues with bounties ({count})'
   },
   allPublicTasksNoBounties: {
     id: 'task.list.lable.filterNoBounties',
-    defaultMessage: 'Issues without bounties'
+    defaultMessage: 'Issues without bounties ({count})'
   }
 })
 
@@ -35,7 +35,8 @@ const TaskFilters = ({
   history,
   classes,
   filterTasks,
-  baseUrl = '/tasks/'
+  baseUrl = '/tasks/',
+  counts,
 }) => {
   const [taskListState, setTaskListState] = useState({
     tab: 0,
@@ -77,25 +78,28 @@ const TaskFilters = ({
               onClick={ (e) => handleTabChange(e, 0) }
               className={ taskListState.tab === 0 ? classes.buttonActive : classes.button }
             >
-              { intl.formatMessage(messages.allTasks) }
+              { intl.formatMessage(messages.allTasks, {count: counts.allTasks}) }
             </Button>
             <Button
               value={taskListState.tab}
               onClick={ (e) => handleTabChange(e, 1) }
               className={ taskListState.tab === 1 ? classes.buttonActive : classes.button }
             >
-              { intl.formatMessage(messages.allPublicTasksWithBounties) }
+              { intl.formatMessage(messages.allPublicTasksWithBounties, { count: counts.allPublicTasksWithBounties }) }
             </Button>
             <Button
               value={taskListState.tab}
               onClick={ (e) => handleTabChange(e, 2) }
               className={ taskListState.tab === 2 ? classes.buttonActive : classes.button }
             >
-              { intl.formatMessage(messages.allPublicTasksNoBounties) }
+              { intl.formatMessage(messages.allPublicTasksNoBounties, { count: counts.allPublicTasksNoBounties }) }
             </Button>
           </ButtonGroup>
         </div>
         <div style={{marginLeft: 10}}>
+          <Chip label={`All tasks: ${counts.all}`} className={classes.chip} />
+          <Chip label={`Tasks with Bounties: ${counts.withBounties}`} className={classes.chip} />
+          <Chip label={`Tasks without Bounties: ${counts.noBounties}`} className={classes.chip} />
           <Labels />
         </div>
       </Toolbar>
