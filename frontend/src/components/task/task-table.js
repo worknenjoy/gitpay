@@ -14,6 +14,7 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
+  TableSortLabel,
   withStyles,
   Tooltip,
   Chip,
@@ -162,8 +163,69 @@ class CustomPaginationActionsTable extends React.Component {
     this.state = {
       page: 0,
       rowsPerPage: 10,
+      sortedBy: null,
+      sortDirection: 'asc',
+      sortedData: this.props.tasks.data
     }
   }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.tasks!== this.props.tasks) {
+      this.setState({
+        sortedData: this.props.tasks.data
+      })
+      if (this.state.sortedBy) {
+        this.setState({
+          sortedData: this.sortData(this.state.sortedBy, this.state.sortDirection)
+        })
+      }
+    }
+  }
+
+
+  sortData = (property, direction) => {
+    const data = [...this.state.sortedData]; // shallow copy to avoid mutating state directly
+  
+    const getProperty = (obj, property) => {
+      return property.split('.').reduce((acc, key) => (acc ? acc[key] : undefined), obj);
+    };
+  
+    data.sort((a, b) => {
+      const propertyA = getProperty(a, property);
+      const propertyB = getProperty(b, property);
+  
+      if (propertyA === undefined || propertyB === undefined) {
+        // cases where the property might not exist
+        return 0;
+      }
+  
+      let comparison = 0;
+      if (propertyA > propertyB) {
+        comparison = 1;
+      } else if (propertyA < propertyB) {
+        comparison = -1;
+      }
+  
+      return (direction === 'desc' ? -1 : 1) * comparison;
+    });
+  
+    return data; // Return the sorted data
+  };
+  handleSort = (property) => {
+    this.setState((prevState) => {
+      const { sortedBy, sortDirection } = prevState;
+      const isAsc = sortedBy === property && sortDirection === 'asc';
+      const newSortDirection = isAsc ? 'desc' : 'asc';
+      const newSortedData = this.sortData(property, newSortDirection);
+  
+      return {
+        sortedBy: property,
+        sortDirection: newSortDirection,
+        sortedData: newSortedData,
+      };
+    });
+  };
+  
 
   handleChangePage = (event, page) => {
     this.setState({ page })
@@ -185,39 +247,69 @@ class CustomPaginationActionsTable extends React.Component {
 
   render () {
     const { classes, tasks } = this.props
-    const { rowsPerPage, page } = this.state
-    const emptyRows = tasks.data.length ? rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage) : 0
+    const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state
+    const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
 
     return (
       <Paper className={ classes.root }>
-        { tasks.completed && tasks.data.length
+        { tasks.completed && sortedData.length
           ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ tasks.completed }>
             <div className={ classes.tableWrapper }>
               <Table className={ classes.table }>
                 <TableHead>
                   <TableRow>
                     <TableCell>
+                      <TableSortLabel
+                      active={ sortedBy === 'title' }
+                      direction={ sortedBy === 'title'? sortDirection : 'asc' }
+                      onClick={() => this.handleSort('title')}
+                      >
                       <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell>
+                      <TableSortLabel
+                      active={ sortedBy === 'status' }
+                      direction={ sortedBy === 'status'? sortDirection : 'asc' }
+                      onClick={() => this.handleSort('status')}
+                      >
                       <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell>
+                      <TableSortLabel
+                      active={ sortedBy === 'project.name' }
+                      direction={ sortedBy === 'project.name'? sortDirection : 'asc' }
+                      onClick={() => this.handleSort('project.name')}
+                      >
                       <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell>
+                      <TableSortLabel
+                      active={ sortedBy === 'value' }
+                      direction={ sortedBy === 'value'? sortDirection : 'asc' }
+                      onClick={() => this.handleSort('value')}
+                      >
                       <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
+                      </TableSortLabel>
                     </TableCell>
                     <TableCell>
                       <FormattedMessage id='task.table.head.labels' defaultMessage='Labels' />
                     </TableCell>
                     <TableCell>
+                      <TableSortLabel
+                      active={ sortedBy === 'createdAt' }
+                      direction={ sortedBy === 'createdAt'? sortDirection : 'asc' }
+                      onClick={() => this.handleSort('createdAt')}
+                      >
                       <FormattedMessage id='task.table.head.createdAt' defaultMessage='Created' />
+                      </TableSortLabel>
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  { tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  { sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const assigned = n.Assigns.find(a => a.id === n.assigned)
                     const assignedUser = assigned && assigned.User
                     return (
@@ -285,11 +377,11 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableRow>
                     <TablePagination
                       colSpan={ 3 }
-                      count={ tasks.data.length }
+                      count={ sortedData.length }
                       rowsPerPage={ rowsPerPage }
                       page={ page }
-                      onChangePage={ (e, page) => this.handleChangePage(e, page) }
-                      onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
+                      onPageChange={ (e, page) => this.handleChangePage(e, page) }
+                      onRowsPerPageChange={ (e, page) => this.handleChangeRowsPerPage(e, page) }
                       Actions={ TablePaginationActionsWrapped }
                     />
                   </TableRow>
