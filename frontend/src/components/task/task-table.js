@@ -189,7 +189,7 @@ class CustomPaginationActionsTable extends React.Component {
         },
         [direction]
       )
-      this.setState({...this.state, sortByField:fieldId.split(".")[3], sortDirection:direction, tasksData:sortedData} , ()=> {console.log(" After click : ", this.state)})
+      this.setState({...this.state, sortByField:fieldId.split(".")[3], sortDirection:direction, tasksData:sortedData})
     }
   }
 
@@ -223,7 +223,6 @@ class CustomPaginationActionsTable extends React.Component {
               onClick = {
                 () => {
                   this.setState({sortByField : fieldId});
-                  console.log("Before click : ", this.state, fieldId.split(".")[3] === sortByField );
                   return sortHandler(fieldId, sortDirection ==="asc" ? "desc" : "asc" )
                 }
               }
