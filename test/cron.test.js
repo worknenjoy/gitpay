@@ -2,33 +2,52 @@ const expect = require('chai').expect
 const Promise = require('bluebird')
 const api = require('../server')
 const models = require('../models')
+const { truncateModels, createTask, createOrder } = require('./helpers')
 const nock = require('nock')
 const request = require('supertest')
 const agent = request.agent(api)
 const { TaskCron, OrderCron } = require('../cron')
 const MockDate = require('mockdate')
+const paypalOrder = require('./data/paypal.order')
 
-xdescribe('Crons', () => {
-  beforeEach(() => {
-    models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        //console.log('Deleted successfully');
-      }
-    }, function(err){
-      //console.log(err);
-    });
-    models.Order.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        //console.log('Deleted successfully');
-      }
-    }, function(err){
-      //console.log(err);
-    });
+describe('Crons', () => {
+  beforeEach(async () => {
+    await truncateModels(models.Task);
+    await truncateModels(models.User);
+    await truncateModels(models.Assign);
+    await truncateModels(models.Order);
+    await truncateModels(models.Transfer);
+  })
+
+  afterEach(async () => {
     nock.cleanAll()
   })
 
+  describe('Order', () => {
+    it('should update order status when payment expired on Paypal', async () => {
+      const task = await createTask(agent)
+      const taskData = task.dataValues
+      const order = await createOrder({userId: taskData.userId, taskId: taskData.id, provider: 'paypal', status: 'succeeded', paid: true})
+      const orderData = order.dataValues
+      nock('https://api.sandbox.paypal.com')
+          .persist()  
+          .post(`/v1/oauth2/token`)
+          .reply(200, '{"access_token": "123"}' )
+
+      nock('https://api.sandbox.paypal.com')
+          .persist()  
+          .get(`/v2/checkout/orders/${orderData.source_id}`)
+          .reply(200, paypalOrder.resource_not_found );
+
+      await OrderCron.checkExpiredPaypalOrders()
+      models.Order.findOne({ where: { id: orderData.id } }).then( updatedOrder => {
+        expect(updatedOrder.dataValues.status).to.equal('expired')
+        expect(updatedOrder.dataValues.paid).to.equal(false)
+      })
+    })
+  })
   describe('Task', () => {
-    it('Remember about tasks with bounty invested weekly', (done) => {
+    xit('Remember about tasks with bounty invested weekly', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testcronbasic@gmail.com', password: 'teste'})
@@ -111,7 +130,7 @@ xdescribe('Crons', () => {
           })
         })
     })
-    it('Send email about bounties', (done) => {
+    xit('Send email about bounties', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testcronbasic@gmail.com', password: 'teste'})
@@ -147,7 +166,7 @@ xdescribe('Crons', () => {
         }).catch(done)
       }).catch(done)
     })
-    it('remember deadline 2 days past', (done) => {
+    xit('remember deadline 2 days past', (done) => {
       agent
         .post('/auth/register')
         .send({email: 'testcrondeadline2@gmail.com', password: 'teste'})

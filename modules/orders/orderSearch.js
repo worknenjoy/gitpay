@@ -20,8 +20,6 @@ module.exports = Promise.method(function orderSearch (orderParams) {
         userId: orderParams.userId
       } }
   }
-  // eslint-disable-next-line no-console
-  console.log('findOrderParams', findOrderParams)
   return models.Order
     .findAll(findOrderParams)
     .then(data => {
