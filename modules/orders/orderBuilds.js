@@ -103,8 +103,8 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
                 'description': 'Development services provided by Gitpay',
               }],
               'application_context': {
-                'return_url': `${process.env.API_HOST}/orders/update`,
-                'cancel_url': `${process.env.API_HOST}/orders/update`
+                'return_url': `${process.env.API_HOST}/orders/authorize`,
+                'cancel_url': `${process.env.API_HOST}/orders/authorize`
               },
               'payer': {
                 'payment_method': 'paypal'

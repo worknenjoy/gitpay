@@ -10,8 +10,7 @@ require('./config/passport')
 const load = require('./modules/app')
 const i18n = require('i18n')
 const xFrameOptions = require('x-frame-options')
-
-// const { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid } = require('./cron')
+const { dailyJob } = require('./cron')
 
 if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors')
@@ -38,7 +37,7 @@ i18n.configure({
 
 app.use(i18n.init)
 
-// dailyJob.start()
+dailyJob.start()
 // weeklyJob.start()
 // weeklyJobLatest.start()
 // weeklyJobBountiesClosedNotPaid.start();

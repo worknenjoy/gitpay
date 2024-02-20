@@ -98,5 +98,7 @@
   "mail.report.send.action": "Recebemos um novo relatório de um problema importado para o Gitpay",
   "mail.report.send.message": "Recebemos um novo relatório da tarefa <a href=\"{{url}}\">{{title}}<a/>:<br/><br/>Razão: {{selectedReason}}<br/><br/> <a href=\"{{approveURL}}\">Aprovar</a>",
   "mail.report.delete.send.action": "Sua tarefa criada no Gitpay foi excluída por nossa equipe",
-  "mail.report.delete.send.message": "A tarefa que você criou no Gitpay: <a href=\"{{url}}\">{{title}}</a><br/><br/>Foi excluído por nossa equipe porque viola nossas diretrizes.<br/><br/>Reason: {{selectedReason}}"
+  "mail.report.delete.send.message": "A tarefa que você criou no Gitpay: <a href=\"{{url}}\">{{title}}</a><br/><br/>Foi excluído por nossa equipe porque viola nossas diretrizes.<br/><br/>Reason: {{selectedReason}}",
+  "mail.order.expiredOrders.subject": "O pagamento de uma tarefa no Gitpay expirou",
+  "mail.order.expiredOrders.content.main": "O pagamento pre-autorizado de $ {{value}} pela issue <a href=\"{{url}}\">{{title}}</a> feito usando Paypal expirou, e você precisa realizar o pagamento novamente para manter este bounty atualizado. Por favor visite https://gitpay.me/#/profile/payments para atualizar seu pagamento."
 }
