@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
@@ -213,17 +213,17 @@ class CustomPaginationActionsTable extends React.Component {
 
   render () {
     const { classes, tasks } = this.props
-    const { rowsPerPage, page, sortByField, sortDirection, tasksData } = this.state
+    const { rowsPerPage, page } = this.state
     const emptyRows = tasks.data.length ? rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage) : 0;
     const TableCellWithSortLogic = ({fieldId ,defineMessage, sortHandler})=>{
       return (
             <TableSortLabel
-              active= { fieldId.split(".")[3] === sortByField}
-              direction={ sortDirection ==="asc" ? "desc" : "asc"  }
+              active= { fieldId.split(".")[3] === this.state.sortByField}
+              direction={ this.state.sortDirection ==="asc" ? "desc" : "asc"  }
               onClick = {
                 () => {
                   this.setState({sortByField : fieldId});
-                  return sortHandler(fieldId, sortDirection ==="asc" ? "desc" : "asc" )
+                  return sortHandler(fieldId, this.state.sortDirection ==="asc" ? "desc" : "asc" )
                 }
               }
             >
@@ -265,7 +265,7 @@ class CustomPaginationActionsTable extends React.Component {
               <Table className={ classes.table }>
               <TableHeadNew />
                 <TableBody>
-                  { tasksData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  { this.state.tasksData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const assigned = n.Assigns.find(a => a.id === n.assigned)
                     const assignedUser = assigned && assigned.User
                     return (
