@@ -249,11 +249,7 @@ class CustomPaginationActionsTable extends React.Component {
 
   render () {
     const { classes, tasks } = this.props
-    const rowsPerPage = this.state.rowsPerPage;
-    const page = this.state.page;
-    const sortedBy = this.state.sortedBy;
-    const sortDirection = this.state.sortDirection;
-    const sortedData = this.state.sortedData;
+    const  { rowsPerPage, page, sortedBy, sortDirection, sortedData  } = this.state;
 
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
 
