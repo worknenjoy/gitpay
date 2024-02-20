@@ -20,7 +20,7 @@ jobs:
   build:
     docker:
     # specify the version you desire here
-    - image: cimg/node:19.7.0
+    - image: cimg/node:17.3.0
       environment:
         PG_HOST: 127.0.0.1
         POSTGRES_DB: gitpay_test
