@@ -11,7 +11,7 @@ const { registerAndLogin, register, login } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
 const { error } = require('../modules/mail/transfer')
 
-xdescribe('orders', () => {
+describe('orders', () => {
   beforeEach(() => {
     models.Order.destroy({ where: {}, truncate: true, cascade: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
       if (rowDeleted === 1) {
@@ -257,7 +257,7 @@ xdescribe('orders', () => {
       })
     })
 
-    xit('should update a paypal order', (done) => {
+    it('should authorize a paypal order', (done) => {
       // need mock update route for Paypal api tests as the previous tests
       models.Order.build({
         source_id: 'PAY-TEST',
@@ -265,11 +265,55 @@ xdescribe('orders', () => {
         amount: 200
       }).save().then((order) => {
         agent
-          .get('/orders/update/?paymentId=PAY-TEST&token=EC-TEST&PayerID=TESTPAYERID')
+          .get('/orders/authorize/?paymentId=PAY-TEST&token=EC-TEST&PayerID=TESTPAYERID')
           .expect(302)
           .end((err, res) => {
-            //console.log(err);
             expect(res.statusCode).to.equal(302);
+            done();
+          })
+      })
+    })
+
+    xit('should update a paypal order', (done) => {
+      const url = 'https://api.sandbox.paypal.com'
+      const path = '/v1/oauth2/token'
+      const anotherPath = '/v2/checkout/orders'
+      nock(url)
+      .persist()
+      .post(path)
+      .reply(200, {access_token: 'foo'}, {
+        'Content-Type': 'application/json',
+      })
+      nock(url)
+      .post(anotherPath)
+      .reply(200, {
+        id: 'order_foo',
+        links: [
+          {href: 'http://foo.com'},
+          {href: 'http://foo.com'}
+        ],
+        'purchase_units': [{
+          'payments': {
+            'authorizations': [{
+              id: 'auth_foo'
+            }]
+          }
+        }]
+      }, {
+        'Content-Type': 'application/json',
+      })
+      models.Order.build({
+        source_id: 'PAY-TEST',
+        currency: 'USD',
+        amount: 200,
+        provider: 'paypal'
+      }).save().then((order) => {
+        agent
+          .put('/orders/update/', { id: order.dataValues.id })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.body).to.exist;
+            expect(res.body).to.equal('PAY-TEST');
             done();
           })
       })

@@ -45,7 +45,7 @@ const styles = theme => ({
   }
 })
 
-const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, getOrderDetails, cancelPaypalPayment, transferOrder, refundOrder, intl }) => {
+const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, getOrderDetails, cancelPaypalPayment, transferOrder, refundOrder, updateOrder, intl }) => {
   const [cancelPaypalConfirmDialog, setCancelPaypalConfirmDialog] = useState(false)
   const [orderDetailsDialog, setOrderDetailsDialog] = useState(false)
   const [transferDialogOpen, setTransferDialogOpen] = useState(false)
@@ -57,7 +57,8 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
     succeeded: intl.formatMessage(messages.succeededStatus),
     fail: intl.formatMessage(messages.failStatus),
     canceled: intl.formatMessage(messages.canceledStatus),
-    refunded: intl.formatMessage(messages.refundedStatus)
+    refunded: intl.formatMessage(messages.refundedStatus),
+    expired: intl.formatMessage(messages.expiredStatus)
   }
 
   useEffect(() => {
@@ -110,12 +111,18 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
     setOrderDetailsDialog(false)
   }
 
-  const retryPaypalPayment = (e, paymentUrl) => {
+  const retryPaypalPayment = (e, item) => {
     e.preventDefault()
-
+    const { payment_url: paymentUrl, status } = item
+    if(status === 'expired') {
+      return updateOrder({ id: item.id }).then(order => {
+        if (order.order.payment_url) {
+          window.location.href = order.order.payment_url
+        }
+      })
+    }
     if (paymentUrl) {
       window.location.href = paymentUrl
-      window.location.reload()
     }
   }
 
@@ -129,10 +136,11 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
   };
   */
 
-  const retryPaypalPaymentButton = (paymentUrl) => {
+  const retryPaypalPaymentButton = (item) => {
+    const { payment_url: paymentUrl } = item
     return (
       <Button style={ { marginTop: 10, paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
-        retryPaypalPayment(e, paymentUrl)
+        retryPaypalPayment(e, item)
       } }>
         <FormattedMessage id='general.buttons.retry' defaultMessage='Retry' />
         <RefreshIcon style={ { marginLeft: 5, marginRight: 5 } } />
@@ -143,7 +151,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
   const cancelPaypalPaymentButton = (id) => {
     return (
       <Button style={ { paddingTop: 2, paddingBottom: 2, marginTop: 10, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
-        cancelPaypalPayment(e, id)
+        cancelPaypalPayment(id)
       } }>
         <FormattedMessage id='general.buttons.cancel' defaultMessage='Cancel' />
         <CancelIcon style={ { marginLeft: 5, marginRight: 5 } } />
@@ -189,8 +197,8 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
 
   const retryOrCancelButton = (item, userId) => {
     if (item.User && item.provider === 'paypal' && userId === item.User.id) {
-      if ((item.status === 'fail' || item.status === 'open') && item.payment_url) {
-        return retryPaypalPaymentButton(item.payment_url)
+      if ((item.status === 'fail' || item.status === 'open' || item.status === 'expired' || item.status === 'canceled') && item.payment_url) {
+        return retryPaypalPaymentButton(item)
       }
       else if (item.status === 'succeeded') {
         return cancelPaypalPaymentButton(item.id)
