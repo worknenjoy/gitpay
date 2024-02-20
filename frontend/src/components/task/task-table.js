@@ -263,7 +263,7 @@ class CustomPaginationActionsTable extends React.Component {
           ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ tasks.completed }>
             <div className={ classes.tableWrapper }>
               <Table className={ classes.table }>
-              <TableHeadNew />
+              <TableHead />
                 <TableBody>
                   { this.state.tasksData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const assigned = n.Assigns.find(a => a.id === n.assigned)
