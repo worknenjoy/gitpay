@@ -14,7 +14,6 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
-  TableSortLabel,
   withStyles,
   Tooltip,
   Chip,
@@ -32,7 +31,6 @@ import slugify from '@sindresorhus/slugify'
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
 import Constants from '../../consts'
-import _ from 'lodash'
 
 const messages = defineMessages({
   firstPageLabel: {
@@ -157,15 +155,6 @@ const styles = theme => ({
   },
 })
 
-const tableHeaderMetadata ={
-  "task.table.head.task": { sortable: true, numeric:false, dataBaseKey:"title" },
-  "task.table.head.status" : {sortable: true,numeric:false, dataBaseKey:"status" },
-  "task.table.head.project":{sortable: true,numeric:false, dataBaseKey:"Project.name" },
-  "task.table.head.value" :{sortable: true,numeric:true, dataBaseKey:"value" },
-  "task.table.head.labels":{sortable: true,numeric:false, dataBaseKey:"Labels" },
-  "task.table.head.createdAt":{sortable: true,numeric:false, dataBaseKey:"createdAt" }
-}
-
 class CustomPaginationActionsTable extends React.Component {
   constructor (props) {
     super(props)
@@ -173,23 +162,6 @@ class CustomPaginationActionsTable extends React.Component {
     this.state = {
       page: 0,
       rowsPerPage: 10,
-      sortByField:null,
-      sortDirection:null, // at starting point of page load
-      tasksData: props.tasks.data,
-    }
-  }
-  
-  sortHandler = (fieldId, direction) => {
-    if (tableHeaderMetadata[fieldId].sortable){
-      const sortedData = _.orderBy(
-        this.state.tasksData,
-        o =>{
-          if (tableHeaderMetadata[fieldId].numeric) return +(_.get(o,(tableHeaderMetadata[fieldId].dataBaseKey).split("."))) 
-          else return _.get(o,(tableHeaderMetadata[fieldId].dataBaseKey).split("."))
-        },
-        [direction]
-      )
-      this.setState({...this.state, sortByField:fieldId.split(".")[3], sortDirection:direction, tasksData:sortedData})
     }
   }
 
@@ -214,58 +186,38 @@ class CustomPaginationActionsTable extends React.Component {
   render () {
     const { classes, tasks } = this.props
     const { rowsPerPage, page } = this.state
-    const emptyRows = tasks.data.length ? rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage) : 0;
-    const TableCellWithSortLogic = ({fieldId ,defineMessage, sortHandler})=>{
-      return (
-            <TableSortLabel
-              active= { fieldId.split(".")[3] === this.state.sortByField}
-              direction={ this.state.sortDirection ==="asc" ? "desc" : "asc"  }
-              onClick = {
-                () => {
-                  this.setState({sortByField : fieldId});
-                  return sortHandler(fieldId, this.state.sortDirection ==="asc" ? "desc" : "asc" )
-                }
-              }
-            >
-              <FormattedMessage id={fieldId} defineMessage={defineMessage}/>
-            </TableSortLabel>
-      )
-    }
-    const TableHeadCustom = ()=> {
-      return (
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.task' defaultMessage='Task' />
-            </TableCell>
-            <TableCell>
-            <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.status' defaultMessage='Status' />
-            </TableCell>
-            <TableCell>
-              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.project' defaultMessage='Project' />
-            </TableCell>
-            <TableCell>
-              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.value' defaultMessage='Value' />
-            </TableCell>
-            <TableCell>
-              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.labels' defaultMessage='Labels' />
-            </TableCell>
-            <TableCell>
-              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.createdAt' defaultMessage='Created' />
-            </TableCell>
-          </TableRow>
-        </TableHead>
-      )
-    }
+    const emptyRows = tasks.data.length ? rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage) : 0
+
     return (
       <Paper className={ classes.root }>
         { tasks.completed && tasks.data.length
           ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ tasks.completed }>
             <div className={ classes.tableWrapper }>
               <Table className={ classes.table }>
-              <TableHeadCustom />
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id='task.table.head.labels' defaultMessage='Labels' />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id='task.table.head.createdAt' defaultMessage='Created' />
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
                 <TableBody>
-                  { this.state.tasksData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  { tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const assigned = n.Assigns.find(a => a.id === n.assigned)
                     const assignedUser = assigned && assigned.User
                     return (
