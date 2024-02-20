@@ -231,7 +231,7 @@ class CustomPaginationActionsTable extends React.Component {
             </TableSortLabel>
       )
     }
-    const  TableHeadNew = ()=> {
+    const  TableHead = ()=> {
       return (
         <TableHead>
           <TableRow>
