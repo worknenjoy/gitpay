@@ -14,6 +14,7 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
+  TableSortLabel,
   withStyles,
   Tooltip,
   Chip,
@@ -27,10 +28,12 @@ import {
   LastPage as LastPageIcon
 } from '@material-ui/icons'
 import slugify from '@sindresorhus/slugify'
+import _ from 'lodash';
 
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
 import Constants from '../../consts'
+import moment from 'moment'
 
 const messages = defineMessages({
   firstPageLabel: {
@@ -91,38 +94,39 @@ class TablePaginationActions extends React.Component {
     )
   };
 
-  render () {
+  render() {
     const { classes, count, page, rowsPerPage, theme } = this.props
 
+
     return (
-      <div className={ classes.root } >
+      <div className={classes.root} >
         <IconButton
-          onClick={ (e) => this.handleFirstPageButtonClick(e) }
-          disabled={ page === 0 }
-          aria-label={ this.props.intl.formatMessage(messages.firstPageLabel) }
+          onClick={(e) => this.handleFirstPageButtonClick(e)}
+          disabled={page === 0}
+          aria-label={this.props.intl.formatMessage(messages.firstPageLabel)}
         >
-          { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
+          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
         </IconButton>
         <IconButton
-          onClick={ (e) => this.handleBackButtonClick(e) }
-          disabled={ page === 0 }
-          aria-label={ this.props.intl.formatMessage(messages.previousPageLabel) }
+          onClick={(e) => this.handleBackButtonClick(e)}
+          disabled={page === 0}
+          aria-label={this.props.intl.formatMessage(messages.previousPageLabel)}
         >
-          { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
+          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
         </IconButton>
         <IconButton
-          onClick={ (e) => this.handleNextButtonClick(e) }
-          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label={ this.props.intl.formatMessage(messages.nextPageLabel) }
+          onClick={(e) => this.handleNextButtonClick(e)}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label={this.props.intl.formatMessage(messages.nextPageLabel)}
         >
-          { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
+          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
         </IconButton>
         <IconButton
-          onClick={ (e) => this.handleLastPageButtonClick(e) }
-          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label={ this.props.intl.formatMessage(messages.lastPageLabel) }
+          onClick={(e) => this.handleLastPageButtonClick(e)}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label={this.props.intl.formatMessage(messages.lastPageLabel)}
         >
-          { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
+          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
       </div>
     )
@@ -155,15 +159,84 @@ const styles = theme => ({
   },
 })
 
+const tableHeaderMetadata = {
+  "task.table.head.task": { sortable: true, numeric: false, dataBaseKey: "title" },
+  "task.table.head.status": { sortable: true, numeric: false, dataBaseKey: "status" },
+  "task.table.head.project": { sortable: true, numeric: false, dataBaseKey: "Project.name" },
+  "task.table.head.value": { sortable: true, numeric: true, dataBaseKey: "value" },
+  "task.table.head.labels": { sortable: true, numeric: false, dataBaseKey: "Labels" },
+  "task.table.head.createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt" }
+}
+
+const getSortingValue = (item, fieldId) => {
+  const metadata = tableHeaderMetadata[fieldId];
+  if (!metadata) {
+    console.error(`No metadata found for fieldId: ${fieldId}`);
+    return null; // or handle the case when metadata is undefined
+  }
+  const { numeric, dataBaseKey } = metadata;
+  const value = _.get(item, dataBaseKey.split("."));
+  if (numeric) {
+    const parsedValue = parseFloat(value);
+    if (isNaN(parsedValue)) {
+      console.error(`Failed to parse numeric value for fieldId: ${fieldId}`);
+      return null; // or handle the case when value cannot be parsed as a number
+    }
+    return parsedValue;
+  }
+  return value;
+};
+
 class CustomPaginationActionsTable extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
       page: 0,
       rowsPerPage: 10,
+      sortedBy: null,
+      sortDirection: 'asc',
+      sortedData: this.props.tasks.data
     }
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.tasks !== this.props.tasks) {
+      const { sortedBy, sortDirection } = this.state;
+      const newSortedData = _.orderBy(
+        this.props.tasks.data,
+        o => getSortingValue(o, sortedBy),
+        [sortDirection]
+      );
+
+      this.setState({
+        sortedData: newSortedData
+      });
+    }
+  }
+
+  handleSort = (fieldId, sortDirection) => {
+    const newSortedData = _.orderBy(
+      this.state.sortedData,
+      o => getSortingValue(o, fieldId),
+      [sortDirection]
+    );
+
+    return {
+      sortedBy: fieldId,
+      sortDirection,
+      sortedData: newSortedData,
+    };
+  }
+
+  sortHandler = (fieldId) => {
+    this.setState((prevState) => {
+      const { sortedBy, sortDirection } = prevState;
+      const newSortDirection = sortedBy === fieldId ? (sortDirection === 'asc' ? 'desc' : 'asc') : 'asc';
+      return this.handleSort(fieldId, newSortDirection);
+    });
+  };
+
 
   handleChangePage = (event, page) => {
     this.setState({ page })
@@ -183,123 +256,145 @@ class CustomPaginationActionsTable extends React.Component {
     window.location.reload()
   }
 
-  render () {
+  render() {
     const { classes, tasks } = this.props
-    const { rowsPerPage, page } = this.state
-    const emptyRows = tasks.data.length ? rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage) : 0
+    const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
+
+    const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
+    const TableCellWithSortLogic = ({ fieldId, defineMessage, sortHandler }) => {
+      return (
+        <TableSortLabel
+          active={fieldId.split(".")[3] === sortedBy}
+          direction={sortDirection}
+          onClick={
+            () => {
+              return sortHandler(fieldId)
+            }
+          }
+        >
+          <FormattedMessage id={fieldId} defineMessage={defineMessage} />
+        </TableSortLabel>
+      )
+    }
+
+    const TableHeadCustom = () => {
+      return (
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.task' defaultMessage='Task' />
+            </TableCell>
+            <TableCell>
+              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.status' defaultMessage='Status' />
+            </TableCell>
+            <TableCell>
+              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.project' defaultMessage='Project' />
+            </TableCell>
+            <TableCell>
+              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.value' defaultMessage='Value' />
+            </TableCell>
+            <TableCell>
+              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.labels' defaultMessage='Labels' />
+            </TableCell>
+            <TableCell>
+              <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId='task.table.head.createdAt' defaultMessage='Created' />
+            </TableCell>
+          </TableRow>
+        </TableHead>
+      )
+    }
 
     return (
-      <Paper className={ classes.root }>
-        { tasks.completed && tasks.data.length
-          ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ tasks.completed }>
-            <div className={ classes.tableWrapper }>
-              <Table className={ classes.table }>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>
-                      <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
-                    </TableCell>
-                    <TableCell>
-                      <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
-                    </TableCell>
-                    <TableCell>
-                      <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
-                    </TableCell>
-                    <TableCell>
-                      <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
-                    </TableCell>
-                    <TableCell>
-                      <FormattedMessage id='task.table.head.labels' defaultMessage='Labels' />
-                    </TableCell>
-                    <TableCell>
-                      <FormattedMessage id='task.table.head.createdAt' defaultMessage='Created' />
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
+      <Paper className={classes.root}>
+        {tasks.completed && sortedData.length
+          ? <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation type='text' rows={5} ready={tasks.completed}>
+            <div className={classes.tableWrapper}>
+              <Table className={classes.table}>
+                <TableHeadCustom />
                 <TableBody>
-                  { tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const assigned = n.Assigns.find(a => a.id === n.assigned)
                     const assignedUser = assigned && assigned.User
                     return (
-                      <TableRow key={ n.id }>
-                        <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
-                          <div style={ { width: 350, display: 'flex', alignItems: 'center' } }>
-                            <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n) }>
-                              { TextEllipsis(`${n.title || 'no title'}`, 42) }
+                      <TableRow key={n.id}>
+                        <TableCell component='th' scope='row' style={{ padding: 10, position: 'relative' }}>
+                          <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
+                            <a style={{ cursor: 'pointer' }} onClick={(e) => this.handleClickListItem(n)}>
+                              {TextEllipsis(`${n.title || 'no title'}`, 42)}
                             </a>
-                            <a target='_blank' href={ n.url }>
-                              <Tooltip id='tooltip-fab' title={ `${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` } placement='top'>
-                                <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
+                            <a target='_blank' href={n.url}>
+                              <Tooltip id='tooltip-fab' title={`${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}`} placement='top'>
+                                <img width='24' src={n.provider === 'github' ? logoGithub : logoBitbucket} style={{ borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 }} />
                               </Tooltip>
                             </a>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div style={ { width: 80 } }>
-                            <Chip label={ this.props.intl.formatMessage(Constants.STATUSES[n.status]) } style={ { backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' } } />
+                          <div style={{ width: 80 }}>
+                            <Chip label={this.props.intl.formatMessage(Constants.STATUSES[n.status])} style={{ backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' }} />
                           </div>
                         </TableCell>
                         <TableCell>
                           <div>
-                            <Chip label={ n.Project ? n.Project.name : 'no project' } onClick={ (e) => this.goToProject(e, n.Project.id, n.Project.OrganizationId) } />
+                            <Chip label={n.Project ? n.Project.name : 'no project'} onClick={(e) => this.goToProject(e, n.Project.id, n.Project.OrganizationId)} />
                           </div>
                         </TableCell>
-                        <TableCell numeric style={ { padding: 5 } }>
-                          <div style={ { width: 70, textAlign: 'center' } }>
-                            { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
+                        <TableCell numeric style={{ padding: 5 }}>
+                          <div style={{ width: 70, textAlign: 'center' }}>
+                            {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}
                           </div>
                         </TableCell>
                         <TableCell>
-                          { n?.Labels?.length ? 
-                          <div style={{width: 120}}>
-                            {n?.Labels?.slice(0,3).map(
-                              (label, index) => 
+                          {n?.Labels?.length ?
+                            <div style={{ width: 120 }}>
+                              {n?.Labels?.slice(0, 3).map(
+                                (label, index) =>
                                 (
-                                  <Chip 
-                                    style={{marginRight: 5, marginBottom: 5}}
+                                  <Chip
+                                    style={{ marginRight: 5, marginBottom: 5 }}
                                     size='small'
                                     label={
                                       TextEllipsis(`${label.name || ''}`, 20)
-                                    } 
+                                    }
                                   />
                                 )
                               )
-                            } ...
-                          </div> : <>-</>}  
+                              } ...
+                            </div> : <>-</>}
                         </TableCell>
                         <TableCell>
-                          <div style={ { width: 120 } }>
-                            { n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined) }
+                          <div style={{ width: 120 }}>
+                            {n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined)}
                           </div>
                         </TableCell>
                       </TableRow>
                     )
-                  }) }
-                  { emptyRows > 0 && (
-                    <TableRow style={ { height: 48 * emptyRows } }>
-                      <TableCell colSpan={ 6 } />
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 48 * emptyRows }}>
+                      <TableCell colSpan={6} />
                     </TableRow>
-                  ) }
+                  )}
                 </TableBody>
                 <TableFooter>
                   <TableRow>
                     <TablePagination
-                      colSpan={ 3 }
-                      count={ tasks.data.length }
-                      rowsPerPage={ rowsPerPage }
-                      page={ page }
-                      onChangePage={ (e, page) => this.handleChangePage(e, page) }
-                      onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
-                      Actions={ TablePaginationActionsWrapped }
+                      colSpan={3}
+                      count={sortedData.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={(e, page) => this.handleChangePage(e, page)}
+                      onRowsPerPageChange={(e, page) => this.handleChangeRowsPerPage(e, page)}
+                      Actions={TablePaginationActionsWrapped}
                     />
                   </TableRow>
                 </TableFooter>
               </Table>
             </div>
           </ReactPlaceholder>
-          : <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
+          : <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
             <FormattedMessage id='task.table.body.noTasks' defaultMessage='No tasks' />
-          </div> }
+          </div>}
       </Paper>
     )
   }
