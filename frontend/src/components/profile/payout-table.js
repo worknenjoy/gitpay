@@ -84,38 +84,38 @@ class TablePaginationActions extends React.Component {
     )
   };
 
-  render () {
+  render() {
     const { classes, count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={ classes.root } >
+      <div className={classes.root} >
         <IconButton
-          onClick={ (e) => this.handleFirstPageButtonClick(e) }
-          disabled={ page === 0 }
-          aria-label={ this.props.intl.formatMessage(messages.firstPageLabel) }
+          onClick={(e) => this.handleFirstPageButtonClick(e)}
+          disabled={page === 0}
+          aria-label={this.props.intl.formatMessage(messages.firstPageLabel)}
         >
-          { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
+          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
         </IconButton>
         <IconButton
-          onClick={ (e) => this.handleBackButtonClick(e) }
-          disabled={ page === 0 }
-          aria-label={ this.props.intl.formatMessage(messages.previousPageLabel) }
+          onClick={(e) => this.handleBackButtonClick(e)}
+          disabled={page === 0}
+          aria-label={this.props.intl.formatMessage(messages.previousPageLabel)}
         >
-          { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
+          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
         </IconButton>
         <IconButton
-          onClick={ (e) => this.handleNextButtonClick(e) }
-          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label={ this.props.intl.formatMessage(messages.nextPageLabel) }
+          onClick={(e) => this.handleNextButtonClick(e)}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label={this.props.intl.formatMessage(messages.nextPageLabel)}
         >
-          { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
+          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
         </IconButton>
         <IconButton
-          onClick={ (e) => this.handleLastPageButtonClick(e) }
-          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
-          aria-label={ this.props.intl.formatMessage(messages.lastPageLabel) }
+          onClick={(e) => this.handleLastPageButtonClick(e)}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label={this.props.intl.formatMessage(messages.lastPageLabel)}
         >
-          { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
+          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
       </div>
     )
@@ -149,7 +149,7 @@ const styles = theme => ({
 })
 
 class CustomPaginationActionsTable extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -176,65 +176,74 @@ class CustomPaginationActionsTable extends React.Component {
     window.location.reload()
   }
 
-  render () {
+  render() {
     const { classes, payouts, tableHead } = this.props
     const { rowsPerPage, page } = this.state
     const emptyRows = payouts?.data?.length ? rowsPerPage - Math.min(rowsPerPage, payouts.data.length - page * rowsPerPage) : 0
 
-    return (
-      <Paper className={ classes.root }>
-        { payouts.completed && payouts.data.length
-          ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ payouts.completed }>
-            <div className={ classes.tableWrapper }>
-              <Table className={ classes.table }>
-                <TableHead>
-                  <TableRow>
-                    { tableHead.map( t => 
-                      <TableCell>
-                        {t}
-                      </TableCell>
-                    )}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  { payouts.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                    return (
-                      <TableRow key={ n.id }>
-                        { n.map( p => 
-                          <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative'} }>
-                            {p}    
-                          </TableCell>
-                        )}
-                      </TableRow>
-                    )
-                  }) }
-                  { emptyRows > 0 && (
-                    <TableRow style={ { height: 48 * emptyRows } }>
-                      <TableCell colSpan={ 6 } />
-                    </TableRow>
-                  ) }
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      colSpan={ 3 }
-                      count={ payouts.data.length }
-                      rowsPerPage={ rowsPerPage }
-                      page={ page }
-                      onChangePage={ (e, page) => this.handleChangePage(e, page) }
-                      onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
-                      Actions={ TablePaginationActionsWrapped }
-                    />
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </div>
-          </ReactPlaceholder>
-          : <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
-            <Typography variant='h6' color='textSecondary' gutterBottom>  
-              <FormattedMessage id='transfer.table.body.notransfer' defaultMessage='No Payouts' />
+
+    if (payouts?.data?.length === 0 && payouts?.completed) {
+      return (
+        <Paper className={classes.root}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
+            <Typography variant='h6' color='textSecondary' gutterBottom>
+              <FormattedMessage id='transfer.table.body.noPayouts' defaultMessage='No Payouts' />
             </Typography>
-          </div> }
+          </div>
+        </Paper>
+      )
+    }
+
+    return (
+      <Paper className={classes.root}>
+
+        <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation type='text' rows={5} ready={payouts.completed}>
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  {tableHead.map(t =>
+                    <TableCell>
+                      {t}
+                    </TableCell>
+                  )}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {payouts.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  return (
+                    <TableRow key={n.id}>
+                      {n.map(p =>
+                        <TableCell component='th' scope='row' style={{ padding: 10, position: 'relative' }}>
+                          {p}
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  )
+                })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 48 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    colSpan={3}
+                    count={payouts.data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={(e, page) => this.handleChangePage(e, page)}
+                    onChangeRowsPerPage={(e, page) => this.handleChangeRowsPerPage(e, page)}
+                    Actions={TablePaginationActionsWrapped}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </div>
+        </ReactPlaceholder>
+
       </Paper>
     )
   }

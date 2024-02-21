@@ -183,62 +183,68 @@ class CustomPaginationActionsTable extends React.Component {
   render () {
     const { classes, payments, tableHead } = this.props
     const { rowsPerPage, page } = this.state
-    const emptyRows = payments?.data?.length ? rowsPerPage - Math.min(rowsPerPage, payments.data.length - page * rowsPerPage) : 0
+    const emptyRows = payments?.data?.length ? rowsPerPage - Math.min(rowsPerPage, payments?.data?.length - page * rowsPerPage) : 0
+
+    if(payments?.data?.length === 0 && payments.completed) {
+      return (
+        <Paper className={ classes.root }>
+          <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
+            <Typography variant='caption' color='textSecondary'>
+              <FormattedMessage id='payment.table.body.noPayment' defaultMessage='No Payment' />
+            </Typography>
+          </div>
+        </Paper>
+      )
+    }
 
     return (
       <Paper className={ classes.root }>
-        { payments.completed && payments.data.length
-          ? <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 5 } ready={ payments.completed }>
-            <div className={ classes.tableWrapper }>
-              <Table className={ classes.table }>
-                <TableHead>
-                  <TableRow>
-                    { tableHead.map( t => 
-                      <TableCell>
-                        {t}
-                      </TableCell>
-                    )}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  { payments.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                    return (
-                      <TableRow key={ n.id }>
-                        { n.map( p => 
-                          <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative'} }>
-                            {p}    
-                          </TableCell>
-                        )}
-                      </TableRow>
-                    )
-                  }) }
-                  { emptyRows > 0 && (
-                    <TableRow style={ { height: 48 * emptyRows } }>
-                      <TableCell colSpan={ 6 } />
+        <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 12 } ready={ payments.completed } >
+          <div className={ classes.tableWrapper }>
+            <Table className={ classes.table }>
+              <TableHead>
+                <TableRow>
+                  { tableHead.map( t => 
+                    <TableCell>
+                      {t}
+                    </TableCell>
+                  )}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                { payments?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  return (
+                    <TableRow key={ n.id }>
+                      { n.map( p => 
+                        <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative'} }>
+                          {p}    
+                        </TableCell>
+                      )}
                     </TableRow>
-                  ) }
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      colSpan={ 3 }
-                      count={ payments.data.length }
-                      rowsPerPage={ rowsPerPage }
-                      page={ page }
-                      onChangePage={ (e, page) => this.handleChangePage(e, page) }
-                      onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
-                      Actions={ TablePaginationActionsWrapped }
-                    />
+                  )
+                }) }
+                { emptyRows > 0 && (
+                  <TableRow style={ { height: 48 * emptyRows } }>
+                    <TableCell colSpan={ 6 } />
                   </TableRow>
-                </TableFooter>
-              </Table>
-            </div>
-          </ReactPlaceholder>
-          : <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
-            <Typography variant='caption' color='textSecondary'>
-              <FormattedMessage id='payment.table.body.loadingPayments' defaultMessage='Loading payments...' />
-            </Typography>
-          </div> }
+                ) }
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    colSpan={ 3 }
+                    count={ payments?.data?.length }
+                    rowsPerPage={ rowsPerPage }
+                    page={ page }
+                    onChangePage={ (e, page) => this.handleChangePage(e, page) }
+                    onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
+                    Actions={ TablePaginationActionsWrapped }
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </div>
+        </ReactPlaceholder>
       </Paper>
     )
   }
