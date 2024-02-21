@@ -15,6 +15,7 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
+  Typography,
   withStyles,
   Tooltip,
   Chip,
@@ -340,10 +341,20 @@ class CustomPaginationActionsTable extends React.Component {
       )
     }
 
+
+    if (tasks.completed && sortedDatalength === 0) {
+      <Paper className={classes.root}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
+          <Typography variant='caption'>
+            <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
+          </Typography>
+        </div>
+      </Paper>
+    }
+
     return (
       <Paper className={classes.root}>
-        {tasks.completed && sortedData.length
-          ? <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation type='text' rows={5} ready={tasks.completed}>
+        <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation type='text' rows={12} ready={tasks.completed}>
             <div className={classes.tableWrapper}>
               <Table className={classes.table}>
                 <TableHeadCustom />
@@ -428,13 +439,10 @@ class CustomPaginationActionsTable extends React.Component {
               </Table>
             </div>
           </ReactPlaceholder>
-          : <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
-            <FormattedMessage id='task.table.body.noTasks' defaultMessage='No tasks' />
-          </div>}
       </Paper>
     )
   }
-}
+ }
 
 CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
