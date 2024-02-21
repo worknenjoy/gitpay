@@ -2,6 +2,7 @@ const orderBuild = require('../../orders').orderBuilds
 const orderSearch = require('../../orders').orderSearch
 const orderFetch = require('../../orders').orderFetch
 const orderUpdate = require('../../orders').orderUpdate
+const orderAuthorize = require('../../orders').orderAuthorize
 const orderPayment = require('../../orders').orderPayment
 const orderCancel = require('../../orders').orderCancel
 const orderDetails = require('../../orders').orderDetails
@@ -80,8 +81,8 @@ exports.fetchOrders = (req, res) => {
     })
 }
 
-exports.updateOrders = (req, res) => {
-  orderUpdate(req.query)
+exports.authorizeOrder = (req, res) => {
+  orderAuthorize(req.query)
     .then(data => {
       if (data.paid) {
         res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`)
@@ -90,8 +91,19 @@ exports.updateOrders = (req, res) => {
       res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log('updateOrders error', error)
+      console.log('authorize order error', error)
       res.redirect(process.env.FRONTEND_HOST)
+    })
+}
+
+exports.updateOrder = (req, res) => {
+  orderUpdate(req.body)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('updateOrder error', error)
+      res.status(401).send(error)
     })
 }
 

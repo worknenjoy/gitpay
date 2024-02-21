@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
-import MomentComponent from 'moment'
-import TextEllipsis from 'text-ellipsis'
 import ReactPlaceholder from 'react-placeholder'
 
 import {
@@ -14,9 +12,8 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
+  Typography,
   withStyles,
-  Tooltip,
-  Chip,
   Paper,
   IconButton
 } from '@material-ui/core'
@@ -238,7 +235,9 @@ class CustomPaginationActionsTable extends React.Component {
             </div>
           </ReactPlaceholder>
           : <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
-            <FormattedMessage id='payment.table.body.nopayments' defaultMessage='No payments' />
+            <Typography variant='caption' color='textSecondary'>
+              <FormattedMessage id='payment.table.body.loadingPayments' defaultMessage='Loading payments...' />
+            </Typography>
           </div> }
       </Paper>
     )

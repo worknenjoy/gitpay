@@ -4,8 +4,7 @@ const moment = require('moment')
 const i18n = require('i18n')
 const DeadlineMail = require('./modules/mail/deadline')
 const TaskMail = require('./modules/mail/task')
-const OrderDetails = require('./modules/orders/orderDetails')
-const OrderCancel = require('./modules/orders/orderCancel')
+const OrderCron = require('./cron/orderCron')
 const bountyClosedNotPaidComment = require('./modules/bot/bountyClosedNotPaidComment')
 
 i18n.configure({
@@ -114,47 +113,13 @@ const TaskCron = {
   },
 }
 
-const OrderCron = {
-  verify: async () => {
-    const orders = await models.Order.findAll({ where: {
-      amount: {
-        $gt: 0
-      },
-      status: {
-        $eq: 'succeeded'
-      },
-      provider: {
-        $eq: 'paypal'
-      }
-    },
-    include: [ models.User, models.Task ]
-    })
-    if (orders.length) {
-      let invalids = []
-      orders.forEach(async order => {
-        const orderValues = order.dataValues
-        if (orderValues.source_id) {
-          const orderWithDetails = await OrderDetails({ id: orderValues.id })
-          if (!orderWithDetails) {
-            const orderCanceled = await OrderCancel({ id: orderValues.id })
-            if (orderCanceled) {
-              invalids.push(order)
-            }
-          }
-        }
-      })
-      return invalids
-    }
-    return []
-  }
-}
-
 const dailyJob = new CronJob({
   // Seconds: 0-59   Minutes: 0-59   Hours: 0-23   Day of Month: 1-31   Months: 0-11 (Jan-Dec)   Day of Week: 0-6 (Sun-Sat)
   cronTime: '0 0 0 * * *', // everyday at 12:00AM
   onTick: () => {
-    TaskCron.rememberDeadline()
-    OrderCron.verify()
+    //TaskCron.rememberDeadline()
+    //OrderCron.verify()
+    OrderCron.checkExpiredPaypalOrders()
   }
 })
 

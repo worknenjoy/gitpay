@@ -8,6 +8,10 @@ const CREATE_ORDER_REQUESTED = 'CREATE_ORDER_REQUESTED'
 const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS'
 const CREATE_ORDER_ERROR = 'CREATE_ORDER_ERROR'
 
+const UPDATE_ORDER_REQUESTED = 'UPDATE_ORDER_REQUESTED'
+const UPDATE_ORDER_SUCCESS = 'UPDATE_ORDER_SUCCESS'
+const UPDATE_ORDER_ERROR = 'UPDATE_ORDER_ERROR'
+
 const PAY_ORDER_REQUESTED = 'PAY_ORDER_REQUESTED'
 const PAY_ORDER_SUCCESS = 'PAY_ORDER_SUCCESS'
 const PAY_ORDER_ERROR = 'PAY_ORDER_ERROR'
@@ -63,6 +67,23 @@ const createOrderSuccess = (order) => {
 const createOrderError = error => {
   return { type: CREATE_ORDER_ERROR, completed: true, error: error }
 }
+
+/*
+  * Order update
+*/
+
+const updateOrderRequested = () => {
+  return { type: UPDATE_ORDER_REQUESTED, completed: false }
+}
+
+const updateOrderSuccess = order => {
+  return { type: UPDATE_ORDER_SUCCESS, completed: true, order }
+}
+
+const updateOrderError = error => {
+  return { type: UPDATE_ORDER_ERROR, completed: true, error: error }
+}
+
 
 /*
  * Order pay
@@ -212,6 +233,37 @@ const createOrder = order => {
   }
 }
 
+const updateOrder = order => {
+  return dispatch => {
+    dispatch(updateOrderRequested())
+    return axios
+      .put(api.API_URL + '/orders/update', order)
+      .then(order => {
+        if (order.data) {
+          return dispatch(updateOrderSuccess(order.data))
+        }
+        else {
+          addNotification('actions.order.update.error')
+        }
+        return dispatch(
+          updateOrderError({
+            error: {
+              type: 'update_order_failed'
+            }
+          })
+        )
+      })
+      .catch(e => {
+        dispatch(
+          addNotification(
+            'actions.order.update.error'
+          )
+        )
+        return dispatch(updateOrderError(e))
+      })
+  }
+}
+
 const payOrder = order => {
   validToken()
   return dispatch => {
@@ -287,6 +339,7 @@ const cancelOrder = id => {
     return axios
       .post(api.API_URL + '/orders/cancel', { id })
       .then(order => {
+        console.log('order cancel data', order)
         if (order.data) {
           dispatch(addNotification('actions.order.cancel.success'))
           dispatch(cancelOrderSuccess(order))
@@ -298,6 +351,7 @@ const cancelOrder = id => {
         }
       })
       .catch(e => {
+        console.log('error', e)
         dispatch(
           addNotification(
             'actions.order.cancel.payment.error'
@@ -368,6 +422,9 @@ export {
   CREATE_ORDER_REQUESTED,
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_ERROR,
+  UPDATE_ORDER_REQUESTED,
+  UPDATE_ORDER_SUCCESS,
+  UPDATE_ORDER_ERROR,
   PAY_ORDER_REQUESTED,
   PAY_ORDER_SUCCESS,
   PAY_ORDER_ERROR,
@@ -385,6 +442,7 @@ export {
   REFUND_ORDER_ERROR,
   listOrders,
   createOrder,
+  updateOrder,
   payOrder,
   transferOrder,
   refundOrder,

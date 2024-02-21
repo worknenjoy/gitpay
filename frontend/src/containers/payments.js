@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Payments from '../components/profile/payments'
 import { addNotification } from '../actions/notificationActions'
 import { listTasks, filterTasks, changeTaskTab } from '../actions/taskActions'
-import { listOrders, transferOrder, detailOrder, refundOrder, cancelOrder } from '../actions/orderActions'
+import { listOrders, transferOrder, detailOrder, refundOrder, cancelOrder, updateOrder  } from '../actions/orderActions'
 import { getFilteredTasks } from '../selectors/tasks'
 import { getUser } from '../common/selectors/user/getUser'
 
@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     refundOrder: (id) => dispatch(refundOrder(id)),
     cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
     transferOrder: (order, params) => dispatch(transferOrder(order, params)),
+    updateOrder: (order) => dispatch(updateOrder(order)),
     changeTab: (tab) => dispatch(changeTaskTab(tab))
   }
 }

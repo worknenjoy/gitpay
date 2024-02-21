@@ -23,6 +23,7 @@ const currencyMap = {
   'NZ': 'NZD',
   'NO': 'EUR',
   'PT': 'EUR',
+  'RO': 'RON',
   'SG': 'SGD',
   'ES': 'EUR',
   'SE': 'SEK',
@@ -36,7 +37,7 @@ const getCurrency = (country) => {
 }
 
 module.exports = Promise.method(function userBankAccountCreate (userParameters) {
-  const userCountry = userParameters.country || 'BR'
+  const userCountry = userParameters.country || 'US'
   const userCurrency = getCurrency(userCountry)
   return models.User
     .findOne(
