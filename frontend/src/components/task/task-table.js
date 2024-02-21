@@ -28,7 +28,6 @@ import {
   LastPage as LastPageIcon
 } from '@material-ui/icons'
 import slugify from '@sindresorhus/slugify'
-import _ from 'lodash';
 
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
@@ -169,23 +168,69 @@ const tableHeaderMetadata = {
 }
 
 const getSortingValue = (item, fieldId) => {
+  const getValue = (item, dataBaseKey) => {
+    const keys = dataBaseKey.split(".");
+    return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
+  };
+
   const metadata = tableHeaderMetadata[fieldId];
   if (!metadata) {
     console.error(`No metadata found for fieldId: ${fieldId}`);
-    return null; // or handle the case when metadata is undefined
+    return null;
   }
+
   const { numeric, dataBaseKey } = metadata;
-  const value = _.get(item, dataBaseKey.split("."));
+
+  const value = getValue(item, dataBaseKey);
+
+  if (value === undefined) {
+    console.error(`Failed to get value for fieldId: ${fieldId}`);
+    return null;
+  }
+
   if (numeric) {
     const parsedValue = parseFloat(value);
     if (isNaN(parsedValue)) {
       console.error(`Failed to parse numeric value for fieldId: ${fieldId}`);
-      return null; // or handle the case when value cannot be parsed as a number
+      return null;
     }
     return parsedValue;
   }
   return value;
 };
+
+const sortData = (data, sortedBy, sortDirection) => {
+  return [...data].sort((a, b) => {
+    let aValue = getSortingValue(a, sortedBy);
+    let bValue = getSortingValue(b, sortedBy);
+
+    // Check the type of the values
+    if (typeof aValue === 'number' && typeof bValue === 'number') {
+      // Compare numbers
+      return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+    } else if (Date.parse(aValue) && Date.parse(bValue)) {
+      // Compare dates
+      aValue = new Date(aValue).getTime();
+      bValue = new Date(bValue).getTime();
+    } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+      // Compare strings
+      aValue = aValue.toLowerCase();
+      bValue = bValue.toLowerCase();
+    } else {
+      // Default case: convert values to strings and compare
+      aValue = String(aValue);
+      bValue = String(bValue);
+    }
+
+    if (aValue < bValue) {
+      return sortDirection === 'asc' ? -1 : 1;
+    }
+    if (aValue > bValue) {
+      return sortDirection === 'asc' ? 1 : -1;
+    }
+    return 0;
+  });
+}
 
 class CustomPaginationActionsTable extends React.Component {
   constructor(props) {
@@ -203,12 +248,7 @@ class CustomPaginationActionsTable extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.tasks !== this.props.tasks) {
       const { sortedBy, sortDirection } = this.state;
-      const newSortedData = _.orderBy(
-        this.props.tasks.data,
-        o => getSortingValue(o, sortedBy),
-        [sortDirection]
-      );
-
+      const newSortedData = sortData(this.props.tasks.data, sortedBy, sortDirection);
       this.setState({
         sortedData: newSortedData
       });
@@ -216,11 +256,7 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   handleSort = (fieldId, sortDirection) => {
-    const newSortedData = _.orderBy(
-      this.state.sortedData,
-      o => getSortingValue(o, fieldId),
-      [sortDirection]
-    );
+    const newSortedData = sortData(this.props.tasks.data, fieldId, sortDirection);
 
     return {
       sortedBy: fieldId,
