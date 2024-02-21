@@ -176,7 +176,9 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   handleClickListItem = task => {
-    this.props.history.push(`/task/${task.id}/${slugify(task.title)}`)
+    console.log('user', this.props)
+    const url = this.props.user ? `/profile/task/${task.id}/${slugify(task.title)}` : `/task/${task.id}/${slugify(task.title)}`
+    this.props.history.push(url)
   }
 
   goToProject = (e, id, organizationId) => {
@@ -317,7 +319,8 @@ class CustomPaginationActionsTable extends React.Component {
 CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
-  tasks: PropTypes.object
+  tasks: PropTypes.object,
+  user: PropTypes.object,
 }
 
 export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))

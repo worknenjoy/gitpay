@@ -200,7 +200,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
                 
                 baseUrl={ baseUrl }
               />}
-              <CustomPaginationActionsTable tasks={ tasks } />
+              <CustomPaginationActionsTable tasks={ tasks } user={ user } />
             </>
           ) }
         </div>

@@ -54,6 +54,7 @@ const messages = defineMessages({
 })
 
 const TaskList = (props) => {
+  const { user } = props
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
@@ -211,7 +212,7 @@ const TaskList = (props) => {
             baseUrl={ baseUrl }
           />
           <TabContainer>
-            <CustomPaginationActionsTable tasks={ props.tasks } />
+            <CustomPaginationActionsTable tasks={ props.tasks } user={ user } />
           </TabContainer>
         </div>
       </Paper>

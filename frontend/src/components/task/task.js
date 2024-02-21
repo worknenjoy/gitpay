@@ -976,8 +976,8 @@ class Task extends Component {
                   color='secondary'
                   variant='contained'
                 >
-                  <BugReportIcon style={{ marginRight: 10, verticalAlign: 'middle' }} />
                   <FormattedMessage id='task.report.action' defaultMessage='Report issue' />
+                  <BugReportIcon style={{ marginLeft: 10, verticalAlign: 'middle' }} />
                 </Button>
                 <TaskReport
                   taskData={task.data}
@@ -1186,10 +1186,10 @@ class Task extends Component {
                       justifyContent: 'center'
                     }}
                   >
-                    <RedeemIcon style={{ marginRight: 'auto' }} />
-                    <span style={{ marginRight: 'auto' }} className={classes.spaceRight}>
+                    <span className={classes.spaceRight}>
                       <FormattedMessage id='task.bounties.payment.label' defaultMessage='Pay contributor' />
-                    </span>{' '}
+                    </span>
+                    <RedeemIcon />
                   </Button>
                   <TaskPayment
                     id={task.data.id}
