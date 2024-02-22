@@ -176,8 +176,7 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   handleClickListItem = task => {
-    console.log('user', this.props)
-    const url = this.props.user ? `/profile/task/${task.id}/${slugify(task.title)}` : `/task/${task.id}/${slugify(task.title)}`
+    const url = `/task/${task.id}/${slugify(task.title)}`
     this.props.history.push(url)
   }
 
