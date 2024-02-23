@@ -40,7 +40,8 @@ export const countryCodes = [
   { country: 'United Kingdom', code: 'GB', image: 'united-kingdom' },
   { country: 'United States', code: 'US', image: 'united-states-of-america' },
   { country: 'Italy', code: 'IT', image: 'italy' },
-  { country: 'Portugal', code: 'PT', image: 'portugal' }
+  { country: 'Portugal', code: 'PT', image: 'portugal' },
+  { country: 'Nigeria', code: 'NG', image: 'nigeria' },
 ]
 
 const styles = theme => ({

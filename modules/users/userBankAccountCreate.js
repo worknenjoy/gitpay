@@ -29,7 +29,8 @@ const currencyMap = {
   'SE': 'SEK',
   'CH': 'CHF',
   'GB': 'GBP',
-  'US': 'USD'
+  'US': 'USD',
+  'NG': 'NGN'
 }
 
 const getCurrency = (country) => {
