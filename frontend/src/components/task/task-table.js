@@ -167,6 +167,7 @@ const tableHeaderMetadata = {
 }
 
 const getSortingValue = (item, fieldId) => {
+
   const getValue = (item, dataBaseKey) => {
     const keys = dataBaseKey.split(".");
     return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
@@ -187,10 +188,6 @@ const getSortingValue = (item, fieldId) => {
     return null;
   }
 
-  if (Date.parse(value)) {
-    return new Date(value).getTime();
-  }
-
   if (numeric) {
     const parsedValue = parseFloat(value);
     if (isNaN(parsedValue)) {
@@ -203,21 +200,33 @@ const getSortingValue = (item, fieldId) => {
 };
 
 const sortData = (data, sortedBy, sortDirection) => {
-  if (sortDirection === 'none') {
-    return data; // Return the original data if no sorting is required
-  }
+  if (sortDirection === 'none') return data;
 
   return [...data].sort((a, b) => {
     let aValue = getSortingValue(a, sortedBy);
     let bValue = getSortingValue(b, sortedBy);
 
+    // Handle null values
     if (aValue === null || bValue === null) {
-      return 0;
+      return (aValue === null ? (sortDirection === 'asc' ? -1 : 1) : (sortDirection === 'asc' ? 1 : -1));
     }
 
-    const comparator = String(aValue).localeCompare(String(bValue), 'en', { numeric: true, sensitivity: 'base', ignorePunctuation: true });
+    // Handle date sorting
+    if (sortedBy === 'task.table.head.createdAt') {
+      let aDate = new Date(aValue).getTime();
+      let bDate = new Date(bValue).getTime();
+      return (sortDirection === 'asc' ? aDate - bDate : bDate - aDate);
+    }
 
-    return sortDirection === 'asc' ? comparator : -comparator
+    // Handle labels array sorting
+    if (sortedBy === 'task.table.head.labels') {
+      aValue = aValue.map(label => label.name).join('');
+      bValue = bValue.map(label => label.name).join('');
+    }
+
+    // Handle string sorting
+    let comparator = String(aValue).localeCompare(String(bValue), 'en', { numeric: true, sensitivity: 'base', ignorePunctuation: true });
+    return (sortDirection === 'asc' ? comparator : -comparator);
   });
 };
 
@@ -320,13 +329,13 @@ class CustomPaginationActionsTable extends React.Component {
 
 
     if (tasks.completed && tasks.data.length === 0) {
-      <Paper className={classes.root}>
+      return (<Paper className={classes.root}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
           <Typography variant='caption'>
             <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
           </Typography>
         </div>
-      </Paper>
+      </Paper>);
     }
 
     return (
