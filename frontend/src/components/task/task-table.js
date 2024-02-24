@@ -157,6 +157,79 @@ const styles = theme => ({
   },
 })
 
+const tableHeaderMetadata = {
+  "task.table.head.task": { sortable: true, numeric: false, dataBaseKey: "title" },
+  "task.table.head.status": { sortable: true, numeric: false, dataBaseKey: "status" },
+  "task.table.head.project": { sortable: true, numeric: false, dataBaseKey: "Project.name" },
+  "task.table.head.value": { sortable: true, numeric: true, dataBaseKey: "value" },
+  "task.table.head.labels": { sortable: true, numeric: false, dataBaseKey: "Labels" },
+  "task.table.head.createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt" }
+}
+
+const getSortingValue = (item, fieldId) => {
+
+  const getValue = (item, dataBaseKey) => {
+    const keys = dataBaseKey.split(".");
+    return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
+  };
+
+  const metadata = tableHeaderMetadata[fieldId];
+  if (!metadata) {
+    console.error(`No metadata found for fieldId: ${fieldId}`);
+    return null;
+  }
+
+  const { numeric, dataBaseKey } = metadata;
+
+  const value = getValue(item, dataBaseKey);
+
+  if (value === undefined) {
+    console.error(`Failed to get value for fieldId: ${fieldId}`);
+    return null;
+  }
+
+  if (numeric) {
+    const parsedValue = parseFloat(value);
+    if (isNaN(parsedValue)) {
+      console.error(`Failed to parse numeric value for fieldId: ${fieldId}`);
+      return null;
+    }
+    return parsedValue;
+  }
+  return value;
+};
+
+const sortData = (data, sortedBy, sortDirection) => {
+  if (sortDirection === 'none') return data;
+
+  return [...data].sort((a, b) => {
+    let aValue = getSortingValue(a, sortedBy);
+    let bValue = getSortingValue(b, sortedBy);
+
+    // Handle null values
+    if (aValue === null || bValue === null) {
+      return (aValue === null ? (sortDirection === 'asc' ? -1 : 1) : (sortDirection === 'asc' ? 1 : -1));
+    }
+
+    // Handle date sorting
+    if (sortedBy === 'task.table.head.createdAt') {
+      let aDate = new Date(aValue).getTime();
+      let bDate = new Date(bValue).getTime();
+      return (sortDirection === 'asc' ? aDate - bDate : bDate - aDate);
+    }
+
+    // Handle labels array sorting
+    if (sortedBy === 'task.table.head.labels') {
+      aValue = aValue.map(label => label.name).join('');
+      bValue = bValue.map(label => label.name).join('');
+    }
+
+    // Handle string sorting
+    let comparator = String(aValue).localeCompare(String(bValue), 'en', { numeric: true, sensitivity: 'base', ignorePunctuation: true });
+    return (sortDirection === 'asc' ? comparator : -comparator);
+  });
+};
+
 class CustomPaginationActionsTable extends React.Component {
   constructor(props) {
     super(props)
@@ -164,8 +237,40 @@ class CustomPaginationActionsTable extends React.Component {
     this.state = {
       page: 0,
       rowsPerPage: 10,
+      sortedBy: null,
+      sortDirection: 'asc',
+      sortedData: this.props.tasks.data
     }
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.tasks !== this.props.tasks) {
+      const { sortedBy, sortDirection } = this.state;
+      const newSortedData = sortData(this.props.tasks.data, sortedBy, sortDirection);
+      this.setState({
+        sortedData: newSortedData
+      });
+    }
+  }
+
+  handleSort = (fieldId, sortDirection) => {
+    const newSortedData = sortData(this.props.tasks.data, fieldId, sortDirection);
+
+    return {
+      sortedBy: fieldId,
+      sortDirection,
+      sortedData: newSortedData,
+    };
+  }
+
+  sortHandler = (fieldId) => {
+    this.setState((prevState) => {
+      const { sortedBy, sortDirection } = prevState;
+      const newSortDirection = sortedBy === fieldId ? (sortDirection === 'asc' ? 'desc' : (sortDirection === 'desc' ? 'none' : 'asc')) : 'asc';
+      return this.handleSort(fieldId, newSortDirection);
+    });
+  };
+
 
   handleChangePage = (event, page) => {
     this.setState({ page })
@@ -188,18 +293,49 @@ class CustomPaginationActionsTable extends React.Component {
 
   render() {
     const { classes, tasks } = this.props
-    const { rowsPerPage, page } = this.state
-    const emptyRows = tasks.data.length ? rowsPerPage - Math.min(rowsPerPage, tasks.data.length - page * rowsPerPage) : 0
+    const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
+
+    const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
+    const TableCellWithSortLogic = ({ fieldId, defineMessage, sortHandler }) => {
+      return (
+        <TableSortLabel
+          active={fieldId === sortedBy && sortDirection !== 'none'}
+          direction={sortDirection}
+          onClick={
+            () => {
+              return sortHandler(fieldId)
+            }
+          }
+        >
+          <FormattedMessage id={fieldId} defineMessage={defineMessage} />
+        </TableSortLabel>
+      )
+    }
+
+    const TableHeadCustom = () => {
+      console.log()
+      return (
+        <TableHead>
+          <TableRow>
+            {Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
+              <TableCell key={fieldId}>
+                <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId={fieldId} defaultMessage={metadata.dataBaseKey} />
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+      );
+    };
 
 
     if (tasks.completed && tasks.data.length === 0) {
-      <Paper className={classes.root}>
+      return (<Paper className={classes.root}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
           <Typography variant='caption'>
             <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
           </Typography>
         </div>
-      </Paper>
+      </Paper>);
     }
 
     return (
@@ -207,30 +343,9 @@ class CustomPaginationActionsTable extends React.Component {
         <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation type='text' rows={12} ready={tasks.completed}>
           <div className={classes.tableWrapper}>
             <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <FormattedMessage id='task.table.head.task' defaultMessage='Task' />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id='task.table.head.status' defaultMessage='Status' />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id='task.table.head.project' defaultMessage='Project' />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id='task.table.head.value' defaultMessage='Value' />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id='task.table.head.labels' defaultMessage='Labels' />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id='task.table.head.createdAt' defaultMessage='Created' />
-                  </TableCell>
-                </TableRow>
-              </TableHead>
+              <TableHeadCustom />
               <TableBody>
-                {tasks.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   const assigned = n.Assigns.find(a => a.id === n.assigned)
                   const assignedUser = assigned && assigned.User
                   return (
@@ -298,11 +413,11 @@ class CustomPaginationActionsTable extends React.Component {
                 <TableRow>
                   <TablePagination
                     colSpan={3}
-                    count={tasks.data.length}
+                    count={sortedData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
-                    onChangePage={(e, page) => this.handleChangePage(e, page)}
-                    onChangeRowsPerPage={(e, page) => this.handleChangeRowsPerPage(e, page)}
+                    onPageChange={(e, page) => this.handleChangePage(e, page)}
+                    onRowsPerPageChange={(e, page) => this.handleChangeRowsPerPage(e, page)}
                     Actions={TablePaginationActionsWrapped}
                   />
                 </TableRow>
