@@ -48,14 +48,14 @@ module.exports = Promise.method(async function transferUpdate(params) {
         returning: true
 
       })
-      const { Task: task, User: user } = existingTransfer
+      const { value, Task: task, User: user } = existingTransfer
       if (!updateTask || !updateTransfer) {
         TransferMail.error(user, task, task.value)
         return { error: 'update_task_reject' }
       }
       const taskOwner = await models.User.findByPk(task.userId)
-      TransferMail.notifyOwner(taskOwner.dataValues, task, task.value)
-      TransferMail.success(user, task, task.value)
+      TransferMail.notifyOwner(taskOwner.dataValues, task, value)
+      TransferMail.success(user, task, value)
       return updateTransfer[1][0].dataValues
     }
   }

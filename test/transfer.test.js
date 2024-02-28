@@ -168,6 +168,10 @@ describe("Transfer", () => {
         .persist()  
         .post('/v1/transfers')
         .reply(200, transfer );
+      nock('https://api.stripe.com')
+        .persist()  
+        .get('/v1/transfers')
+        .reply(200, transfer );
       const task = await createTask(agent);
       const taskData = task.dataValues;
       const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});

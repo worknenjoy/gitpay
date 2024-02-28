@@ -67,6 +67,53 @@ const Transfers = ({ searchTransfer, updateTransfer, transfers, user, intl, hist
     getTranfers().then(t => console.log('transfers:', t))
   }, [user])
 
+  const transferActions = (t) => {
+    if(!user.account_id && t.status !== 'pending') return null
+    switch(value) {
+      case 'from':
+        return (user.account_id && t.status === 'pending') ?
+          (<Button
+              size='small'
+              onClick={ async () => {
+                await updateTransfer({ id: t.id })
+                await searchTransfer({ userId: user.id })
+              } }
+              variant='contained'
+              color='secondary'
+            >
+              <FormattedMessage id='transfers.button.cancel' defaultMessage='Send bounty' />
+            </Button>
+          ) : null
+      case 'to':
+        return ( user.account_id && t.status === 'pending') ? 
+          <Button
+            size='small'
+            onClick={ async () => {
+              await updateTransfer({ id: t.id })
+              await searchTransfer({ to: user.id })
+            } }
+            variant='contained'
+            color='secondary'
+            disabled={ t.status !== 'pending'}
+          >
+            <FormattedMessage id='transfers.action.payout.button' defaultMessage='Request payout' />
+          </Button>
+          :
+          !user.account_id && <Button
+            size='small'
+            onClick={ () => {
+              history.push('/profile/user-account/details')
+            } }
+            variant='contained'
+            color='secondary'
+          >
+            <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
+          </Button>
+      default:
+        return null
+    }
+  }
+
   return (
     <div style={ { margin: '40px 0' } }>
       <Container>
@@ -126,33 +173,8 @@ const Transfers = ({ searchTransfer, updateTransfer, transfers, user, intl, hist
                   <a href={ `/#/task/${t.Task.id}/${slugify(t.Task.title)}` }>
                     { t.Task.title }
                   </a>,
-                  value === 'to' && (
-                  (user.account_id && t.status === 'pending') ? 
-                    <Button
-                      size='small'
-                      onClick={ async () => {
-                        await updateTransfer({ id: t.id })
-                        await searchTransfer({ to: user.id })
-                      } }
-                      variant='contained'
-                      color='secondary'
-                      disabled={ t.status !== 'pending'}
-                    >
-                      <FormattedMessage id='transfers.action.payout.button' defaultMessage='Request payout' />
-                    </Button>
-                    :
-                    !user.account_id && <Button
-                      size='small'
-                      onClick={ () => {
-                        history.push('/profile/user-account/details')
-                      } }
-                      variant='contained'
-                      color='secondary'
-                    >
-                      <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
-                    </Button>
-              )]) } || {}
-            }
+                  transferActions(t)
+                  ]) } || {}}
           />
         </div>
       </Container>
