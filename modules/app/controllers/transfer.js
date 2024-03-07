@@ -9,6 +9,16 @@ exports.createTransfer = (req, res) => {
     })
 }
 
+exports.updateTransfer = (req, res) => {
+  Transfer.transferUpdate(req.body)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      console.log('error', error)
+      res.status(error.StatusCode || 400).send(error)
+    })
+}
+
 exports.searchTransfer = (req, res) => {
   Transfer.transferSearch(req.query)
     .then(data => {

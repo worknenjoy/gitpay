@@ -193,6 +193,14 @@ const messages = defineMessages({
     id: 'actions.task.payment.transfer.sucess',
     defaultMessage: 'The transfer was completed successfully!'
   },
+  notificationTaskTransferUpdateSuccess: {
+    id: 'actions.transfer.update.success',
+    defaultMessage: 'Transfer updated successfully'
+  },
+  notificationTaskTransferUpdateError: {
+    id: 'actions.transfer.update.error',
+    defaultMessage: 'We could not update this transfer'
+  },
   notificationTaskPaymentErrorSend: {
     id: 'actions.task.payment.error.send',
     defaultMessage: 'We could not process the payment for this task'

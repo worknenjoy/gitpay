@@ -5,5 +5,6 @@ const controllers = require('../controllers/transfer')
 
 router.post('/create', controllers.createTransfer)
 router.get('/search', controllers.searchTransfer)
+router.put('/update', controllers.updateTransfer)
 
 module.exports = router

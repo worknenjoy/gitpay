@@ -29,8 +29,6 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
             'grant_type': 'client_credentials'
           }
         }).then(response => {
-          // eslint-disable-next-line no-console
-          console.log('response from oauth token', response)
           const cancelUri = `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.dataValues.authorization_id}/void`
           return requestPromise({
             method: 'POST',
@@ -42,8 +40,6 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
               'Content-Type': 'application/json'
             }
           }).then(payment => {
-            // eslint-disable-next-line no-console
-            console.log('payment response for cancel', payment)
             return order.update({
               status: 'canceled',
               paid: 'false'
@@ -52,8 +48,6 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
                 id: order.dataValues.id
               }
             }).then(orderUpdated => {
-              // eslint-disable-next-line no-console
-              console.log('orderUpdated', orderUpdated)
               if (orderUpdated) {
                 PaymentMail.cancel(order.dataValues.User, order.dataValues.Task, order)
               }
@@ -71,8 +65,6 @@ module.exports = Promise.method(function orderCancel (orderParameters) {
               id: order.dataValues.id
             }
           }).then(orderUpdated => {
-            // eslint-disable-next-line no-console
-            console.log('orderUpdated', orderUpdated)
             if (orderUpdated) {
               PaymentMail.cancel(order.dataValues.User, order.dataValues.Task, order)
             }

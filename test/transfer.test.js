@@ -163,6 +163,33 @@ describe("Transfer", () => {
       expect(res.body.transfer_id).to.exist;
       expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
     })
+    it("should update transfer pending to created for a pending transfer for an activated account", async () => {
+      nock('https://api.stripe.com')
+        .persist()  
+        .post('/v1/transfers')
+        .reply(200, transfer );
+      nock('https://api.stripe.com')
+        .persist()  
+        .get('/v1/transfers')
+        .reply(200, transfer );
+      const task = await createTask(agent);
+      const taskData = task.dataValues;
+      const order = await createOrder({userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe'});
+      const assign = await createAssign(agent, {taskId: taskData.id});
+      const transferData = await createTransferWithTaskData(taskData, taskData.userId);
+      const res = await agent
+      .put('/transfers/update')
+      .send({
+        id: transferData.body.id,
+      });
+      expect(res.status).to.equal(200);
+      expect(res.body).to.exist;
+      expect(res.body.status).to.equal('in_transit');
+      expect(res.body.value).to.equal('200');
+      expect(res.body.transfer_method).to.equal('stripe');
+      expect(res.body.transfer_id).to.exist;
+      expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
+    })
     it("should search transfers", async () => {
       try {
         const task = await createTask(agent);
