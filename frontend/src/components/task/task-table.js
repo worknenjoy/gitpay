@@ -201,6 +201,7 @@ const getSortingValue = (item, fieldId) => {
 
 const sortData = (data, sortedBy, sortDirection) => {
   if (sortDirection === 'none') return data;
+  if (!sortedBy) return data;
 
   return [...data].sort((a, b) => {
     let aValue = getSortingValue(a, sortedBy);
@@ -313,7 +314,6 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     const TableHeadCustom = () => {
-      console.log()
       return (
         <TableHead>
           <TableRow>
