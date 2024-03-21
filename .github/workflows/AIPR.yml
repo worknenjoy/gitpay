@@ -22,7 +22,7 @@ jobs:
       uses: alexanmtz/AIPR@main
       with:
         openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-        openai_tokens: 2000
+        openai_tokens: 12000
         file_chunks: 1000000
         target_branch: master
         
