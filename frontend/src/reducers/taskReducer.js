@@ -98,11 +98,20 @@ export const task = (state = {
       return { ...state, completed: true, error: action.error }
 
     case UPDATE_TASK_REQUESTED:
-      return { ...state, completed: false }
+      return { ...state, completed: false };
     case UPDATE_TASK_SUCCESS:
-      return { ...state, completed: true }
+      // Assuming the updated task data is provided in the action payload as 'task'
+      const updatedTaskData = action.task;
+      // Find the index of the task to be updated
+      const taskIndex = state.data.findIndex(t => t.id === updatedTaskData.id);
+      // Create a new array for tasks with the updated task data
+      const newData = [...state.data];
+      if (taskIndex !== -1) {
+        newData[taskIndex] = { ...newData[taskIndex], ...updatedTaskData };
+      }
+      return { ...state, completed: true, data: newData };
     case UPDATE_TASK_ERROR:
-      return { ...state, completed: true, error: action.error }
+      return { ...state, completed: true, error: action.error };
     case CHANGE_TASK_TAB:
       return { ...state, tab: action.tab }
 
