@@ -19,7 +19,13 @@ const routes = {
   '/profile/user-account/settings': 'settings',
 };
 
-const getTabValue = (pathname) => routes[pathname] || 'account';
+const getTabValue = (pathname) => {
+  if (typeof pathname === 'string' && routes.hasOwnProperty(pathname)) {
+    return routes[pathname];
+  } else {
+    return 'account';
+  }
+};
 
 export default function AccountTabs({ user, updateUser, deleteUser, addNotification, history }) {
   const [value, setValue] = React.useState(getTabValue(history.location.pathname));
@@ -53,6 +59,7 @@ export default function AccountTabs({ user, updateUser, deleteUser, addNotificat
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
+          data-test-id="profile-account-tab"
           aria-label="basic tabs example"
           onChange={handleChange}
           textColor="secondary"
@@ -100,7 +107,7 @@ export default function AccountTabs({ user, updateUser, deleteUser, addNotificat
             <Route
               exact
               path="/profile/user-account"
-              component={(props) => (
+              component={() => (
                 <AccountTabMain
                   user={user}
                   updateUser={updateUser}
@@ -114,20 +121,20 @@ export default function AccountTabs({ user, updateUser, deleteUser, addNotificat
             <Route
               exact
               path="/profile/user-account/bank"
-              component={(props) => <PaymentOptions />}
+              component={() => <PaymentOptions />}
             />
-            <Route exact path="/profile/user-account/roles" component={(props) => <UserRoles />} />
+            <Route exact path="/profile/user-account/roles" component={() => <UserRoles />} />
             <Route
               exact
               path="/profile/user-account/skills"
-              component={(props) => (
+              component={() => (
                 <Preferences user={user} preferences={user} updateUser={updateUser} />
               )}
             />
             <Route
               exact
               path="/profile/user-account/settings"
-              component={(props) => <SettingsComponent updateUser={updateUser} user={user} />}
+              component={() => <SettingsComponent updateUser={updateUser} user={user} />}
             />
           </Switch>
         </HashRouter>
