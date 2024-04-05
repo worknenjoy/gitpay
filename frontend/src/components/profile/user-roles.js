@@ -286,7 +286,7 @@ class Roles extends Component {
   }
 }
 
-Roles.PropTypes = {
+Roles.propTypes = {
   classes: PropTypes.object.isRequired,
   preferences: PropTypes.string,
   language: PropTypes.string,
