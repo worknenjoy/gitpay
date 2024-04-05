@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Tabs,
-  Tab,
-  Box
-} from '@material-ui/core';
+import { Tabs, Tab, Box } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
@@ -12,157 +8,127 @@ import UserRoles from '../../../containers/user-roles';
 import PaymentOptions from '../../payment/payment-options';
 import SettingsComponent from '../settings';
 import Preferences from '../preferences';
-
-
 import AccountTabMain from './account-tab-main';
 
-export default function AccountTabs({
-    user,
-    updateUser,
-    deleteUser,
-    addNotification,
-    history,
-}) {
-  const [value, setValue] = React.useState('account');
+const routes = {
+  '/profile/user-account': 'account',
+  '/profile/user-account/details': 'details',
+  '/profile/user-account/bank': 'bank',
+  '/profile/user-account/roles': 'roles',
+  '/profile/user-account/skills': 'skills',
+  '/profile/user-account/settings': 'settings',
+};
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    switch (newValue) {
-      case 'account':
-        history.push('/profile/user-account');
-        break;
-      case 'details':
-        history.push('/profile/user-account/details');
-        break;
-      case 'bank':
-        history.push('/profile/user-account/bank');
-        break;
-      case 'roles':
-        history.push('/profile/user-account/roles');
-        break;
-      case 'skills':
-        history.push('/profile/user-account/skills');
-        break;
-      case 'settings':
-        history.push('/profile/user-account/settings');
-        break;
-      default:
-        history.push('/profile/user-account');
-        break;
-    }
-  };
+const getTabValue = (pathname) => routes[pathname] || 'account';
+
+export default function AccountTabs({ user, updateUser, deleteUser, addNotification, history }) {
+  const [value, setValue] = React.useState(getTabValue(history.location.pathname));
+
+  const handleChange = React.useCallback(
+    (event, newValue) => {
+      const path = {
+        'account': '/profile/user-account',
+        'details': '/profile/user-account/details',
+        'bank': '/profile/user-account/bank',
+        'roles': '/profile/user-account/roles',
+        'skills': '/profile/user-account/skills',
+        'settings': '/profile/user-account/settings',
+      }[newValue];
+
+      history.push(path);
+    },
+    [history]
+  );
 
   useEffect(() => {
-    if (history.location.pathname === '/profile/user-account') {
-      setValue('account')
-    } else if (history.location.pathname === '/profile/user-account/details') {
-      setValue('details')
-    } else if (history.location.pathname === '/profile/user-account/bank') {
-      setValue('bank')
-    } else if (history.location.pathname === '/profile/user-account/roles') {
-      setValue('roles')
-    } else if (history.location.pathname === '/profile/user-account/skills') {
-      setValue('skills')
-    } else if (history.location.pathname === '/profile/user-account/settings') {
-      setValue('settings')
-    }
-  }, [history.location.pathname]);
+    const unlisten = history.listen((location) => {
+      setValue(getTabValue(location.pathname));
+    });
+
+    return unlisten;
+  }, [history]);
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs 
+        <Tabs
           value={value}
           aria-label="basic tabs example"
           onChange={handleChange}
-          textColor='secondary'
-          indicatorColor='secondary'
+          textColor="secondary"
+          indicatorColor="secondary"
         >
-          <Tab 
-            label={
-              <FormattedMessage id="profile.account.tab.login" defaultMessage='Login and account details' />
-            }
-            value={'account'} 
-          />
-          { user?.Types?.map(u => u.name)?.includes('contributor') && 
-            <Tab 
-              label={
-                <FormattedMessage id="profile.account.tab.details" defaultMessage='Personal details and address' />
-              }
-              value={'details'}  
-            />
-          }
-          { user?.Types?.map(u => u.name)?.includes('contributor') &&
-            <Tab
-              label={
-                <FormattedMessage id="profile.account.tab.bank" defaultMessage='Bank details' />
-              }
-              value={'bank'} 
-            />
-          }
           <Tab
             label={
-              <FormattedMessage id="profile.account.tab.roles" defaultMessage='Roles' />
+              <FormattedMessage id="profile.account.tab.login" defaultMessage="Login and account details" />
             }
-            value='roles'
+            value={'account'}
           />
-          { user?.Types?.map(u => u.name)?.includes('contributor') && 
+          {user?.Types?.map((u) => u.name)?.includes('contributor') && (
             <Tab
               label={
-                <FormattedMessage id="profile.account.tab.skills" defaultMessage='Skills' />
+                <FormattedMessage id="profile.account.tab.details" defaultMessage="Personal details and address" />
               }
-              value='skills'
+              value={'details'}
             />
-          }
+          )}
+          {user?.Types?.map((u) => u.name)?.includes('contributor') && (
+            <Tab
+              label={<FormattedMessage id="profile.account.tab.bank" defaultMessage="Bank details" />}
+              value={'bank'}
+            />
+          )}
           <Tab
-            label={
-              <FormattedMessage id="profile.account.tab.settings" defaultMessage='Settings' />
-            }
-            value='settings'
+            label={<FormattedMessage id="profile.account.tab.roles" defaultMessage="Roles" />}
+            value="roles"
+          />
+          {user?.Types?.map((u) => u.name)?.includes('contributor') && (
+            <Tab
+              label={<FormattedMessage id="profile.account.tab.skills" defaultMessage="Skills" />}
+              value="skills"
+            />
+          )}
+          <Tab
+            label={<FormattedMessage id="profile.account.tab.settings" defaultMessage="Settings" />}
+            value="settings"
           />
         </Tabs>
       </Box>
-      <Box sx={{ p: 2, pl: 0}}>
+      <Box sx={{ p: 2, pl: 0 }}>
         <HashRouter>
           <Switch>
-            <Route exact path="/profile/user-account" component={
-              (props) => (
-                  <AccountTabMain
-                    user={user}
-                    updateUser={updateUser}
-                    addNotification={addNotification}
-                    deleteUser={deleteUser}
-                    history={history}
-                  />
-              )} 
+            <Route
+              exact
+              path="/profile/user-account"
+              component={(props) => (
+                <AccountTabMain
+                  user={user}
+                  updateUser={updateUser}
+                  addNotification={addNotification}
+                  deleteUser={deleteUser}
+                  history={history}
+                />
+              )}
             />
             <Route exact path="/profile/user-account/details" component={AccountDetails} />
-            <Route exact path="/profile/user-account/bank" component={
-              (props) => (  
-                  <PaymentOptions />
-              )
-            } />
-            <Route exact path="/profile/user-account/roles" component={
-              (props) => (
-                  <UserRoles />
-              ) 
-            } />
-            <Route exact path="/profile/user-account/skills" component={
-              (props) => (
-                  <Preferences 
-                    user={user}
-                    preferences={user}
-                    updateUser={updateUser}
-                  />
-              )
-            } />
-            <Route exact path="/profile/user-account/settings" component={
-              (props) => (
-                  <SettingsComponent
-                    updateUser={updateUser}
-                    user={user}
-                  />
-              )
-            } />
+            <Route
+              exact
+              path="/profile/user-account/bank"
+              component={(props) => <PaymentOptions />}
+            />
+            <Route exact path="/profile/user-account/roles" component={(props) => <UserRoles />} />
+            <Route
+              exact
+              path="/profile/user-account/skills"
+              component={(props) => (
+                <Preferences user={user} preferences={user} updateUser={updateUser} />
+              )}
+            />
+            <Route
+              exact
+              path="/profile/user-account/settings"
+              component={(props) => <SettingsComponent updateUser={updateUser} user={user} />}
+            />
           </Switch>
         </HashRouter>
       </Box>
