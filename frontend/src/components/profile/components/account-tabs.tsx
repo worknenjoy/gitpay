@@ -23,9 +23,26 @@ export default function AccountTabs({
     addNotification,
     history,
 }) {
-  const [value, setValue] = React.useState('account');
+  
+  const getCurrentTab = (location) => {
+    if (location.pathname === '/profile/user-account') {
+      return 'account';
+    } else if (location.pathname === '/profile/user-account/details') {
+      return 'details';
+    } else if (location.pathname === '/profile/user-account/bank') {
+      return 'bank';
+    } else if (location.pathname === '/profile/user-account/roles') {
+      return 'roles';
+    } else if (location.pathname === '/profile/user-account/skills') {
+      return 'skills';
+    } else if (location.pathname === '/profile/user-account/settings') {
+      return 'settings';
+    }
+  }
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const [value, setValue] = React.useState(getCurrentTab(history.location));
+
+  const handleChange = React.useCallback((event: React.SyntheticEvent, newValue: string) => {
     switch (newValue) {
       case 'account':
         history.push('/profile/user-account');
@@ -49,23 +66,14 @@ export default function AccountTabs({
         history.push('/profile/user-account');
         break;
     }
-  };
+  }, [history])
+
 
   useEffect(() => {
-    if (history.location.pathname === '/profile/user-account') {
-      setValue('account')
-    } else if (history.location.pathname === '/profile/user-account/details') {
-      setValue('details')
-    } else if (history.location.pathname === '/profile/user-account/bank') {
-      setValue('bank')
-    } else if (history.location.pathname === '/profile/user-account/roles') {
-      setValue('roles')
-    } else if (history.location.pathname === '/profile/user-account/skills') {
-      setValue('skills')
-    } else if (history.location.pathname === '/profile/user-account/settings') {
-      setValue('settings')
-    }
-  }, [history.location.pathname]);
+    const unlisten = history.listen((location) => setValue(getCurrentTab(location)));
+
+    return unlisten;
+  }, [history]);
 
   return (
     <Box sx={{ width: '100%' }}>
