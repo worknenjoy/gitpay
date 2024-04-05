@@ -111,8 +111,6 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
               }
             })
           }).then(payment => {
-            // eslint-disable-next-line no-console
-            console.log('payment result', payment)
             const paymentData = JSON.parse(payment)
             const paymentUrl = paymentData.links[1].href
             const resultUrl = URL.parse(paymentUrl)

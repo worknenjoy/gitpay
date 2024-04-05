@@ -14,8 +14,6 @@ exports.createOrder = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log(error)
       res.status(401).send(error)
     })
 }
@@ -23,12 +21,8 @@ exports.createOrder = (req, res) => {
 exports.cancelOrder = (req, res) => {
   orderCancel(req.body)
     .then(data => {
-      // eslint-disable-next-line no-console
-      console.log('data send from controller on cancelOrder', data)
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('error on cancelOrder', error)
       res.status(401).send(error)
     })
 }
@@ -36,12 +30,8 @@ exports.cancelOrder = (req, res) => {
 exports.refundOrder = (req, res) => {
   orderRefund(req.params)
     .then(data => {
-      // eslint-disable-next-line no-console
-      console.log('data send from controller on details Order controller', data)
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('error on cancelDetails', error)
       res.status(401).send(error)
     })
 }
@@ -49,12 +39,8 @@ exports.refundOrder = (req, res) => {
 exports.detailsOrder = (req, res) => {
   orderDetails(req.params)
     .then(data => {
-      // eslint-disable-next-line no-console
-      console.log('data send from controller on details Order controller', data)
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('error on cancelDetails', error)
       res.status(401).send(error)
     })
 }
@@ -64,8 +50,6 @@ exports.listOrders = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log(error)
       res.send(false)
     })
 }
@@ -75,8 +59,6 @@ exports.fetchOrders = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log(error)
       res.send(false)
     })
 }
@@ -90,8 +72,6 @@ exports.authorizeOrder = (req, res) => {
       }
       res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('authorize order error', error)
       res.redirect(process.env.FRONTEND_HOST)
     })
 }
@@ -101,8 +81,6 @@ exports.updateOrder = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('updateOrder error', error)
       res.status(401).send(error)
     })
 }
@@ -112,8 +90,6 @@ exports.paymentOrder = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-    // eslint-disable-next-line no-console
-      console.log(error)
       res.status(401).send(error)
     })
 }
@@ -121,12 +97,8 @@ exports.paymentOrder = (req, res) => {
 exports.transferOrder = (req, res) => {
   orderTransfer(req.params, req.body)
     .then(data => {
-      // eslint-disable-next-line no-console
-      console.log('data sent from transfer order', data)
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('error on transfer order', error)
       res.status(401).send(error)
     })
 }

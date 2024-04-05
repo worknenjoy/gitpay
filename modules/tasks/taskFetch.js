@@ -162,16 +162,18 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   })
                   .then(task => responseGithub)
               }
-
-              if (data.status !== issueDataJsonGithub.state) {
+              if (data.status !== 'in_progress' && data.status !== issueDataJsonGithub.state) {
                 // eslint-disable no-unused-vars
                 data
                   .update({ status: issueDataJsonGithub.state }, {
                     where: {
                       id: data.id
-                    }
+                    },
+                    returning: true,
                   })
-                  .then(task => responseGithub)
+                  .then(task => {
+                    return responseGithub
+                  })
               }
               if (data.Labels.length !== issueDataJsonGithub.labels.length) {
                 // eslint-disable no-unused-vars
@@ -264,7 +266,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
             })
             .catch(e => {
               // eslint-disable-next-line no-console
-              console.log('github response error')
+              console.log('Bitbucket response error')
               // eslint-disable-next-line no-console
               console.log(e)
               return data.dataValues
