@@ -296,7 +296,6 @@ const createTask = (task, history) => {
       .then(response => {
         console.log('response', response)
         if (response.data && response.data.errors) {
-          console.log('error on create task action: ', response)
           const firstError = response.data.errors[0].message
           if(firstError === 'url must be unique') {
             dispatch(
