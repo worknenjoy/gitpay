@@ -580,7 +580,7 @@
   "task.table.head.labels": "Labels",
   "task.table.head.project": "Project",
   "task.table.head.status": "Status",
-  "task.table.head.task": "Task",
+  "task.table.head.task": "Issue",
   "task.table.head.value": "Value",
   "task.table.onHover": "See on",
   "task.table.page.first": "First page",

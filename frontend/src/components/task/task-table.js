@@ -37,7 +37,7 @@ import Constants from '../../consts'
 const messages = defineMessages({
   tableHeaderTask: {
     id: 'task.table.head.task',
-    defaultMessage: 'Task'
+    defaultMessage: 'Issue'
   },
   tableHeaderStatus: {
     id: 'task.table.head.status',
