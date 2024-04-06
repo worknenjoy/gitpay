@@ -35,6 +35,34 @@ import logoBitbucket from '../../images/bitbucket-logo.png'
 import Constants from '../../consts'
 
 const messages = defineMessages({
+  tableHeaderTask: {
+    id: 'task.table.head.task',
+    defaultMessage: 'Task'
+  },
+  tableHeaderStatus: {
+    id: 'task.table.head.status',
+    defaultMessage: 'Status'
+  },
+  tableHeaderProject: {
+    id: 'task.table.head.project',
+    defaultMessage: 'Project'
+  },
+  tableHeaderValue: {
+    id: 'task.table.head.value',
+    defaultMessage: 'Value'
+  },
+  tableHeaderDeadline: {
+    id: 'task.table.head.deadline',
+    defaultMessage: 'Deadline'
+  },
+  tableHeaderLabels: {
+    id: 'task.table.head.labels',
+    defaultMessage: 'Labels'
+  },
+  tableHeaderCreatedAt: {
+    id: 'task.table.head.createdAt',
+    defaultMessage: 'Created'
+  },
   firstPageLabel: {
     id: 'task.table.page.first',
     defaultMessage: 'First page'

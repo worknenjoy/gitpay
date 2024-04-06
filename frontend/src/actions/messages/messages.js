@@ -341,7 +341,14 @@ const messages = defineMessages({
     id: 'actions.offer.update.sucess',
     defaultMessage: 'Offer updated successfully'
   },
-
+  notificationIssueAlreadyExist: {
+    id: 'actions.task.create.validation.url',
+    defaultMessage: 'This issue already imported on Gitpay'
+  },
+  notificationIssueLimitExceeded: {
+    id: 'actions.task.create.validation.limit',
+    defaultMessage: 'Github API rate limit exceeded, please try again later'
+  },
 })
 
 export default messages
