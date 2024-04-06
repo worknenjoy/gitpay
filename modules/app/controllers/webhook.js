@@ -39,6 +39,7 @@ const CURRENCIES = {
   isk: 'kr',
   pln: 'zł',
   ron: 'lei',
+  ngn: '₦',
   sgd: 'S$',
   sek: 'kr',
   chf: 'fr',
