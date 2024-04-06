@@ -6,10 +6,16 @@ exports.createTask = (req, res) => {
   Tasks.taskBuilds(req.body)
     .then(data => {
       res.send(data)
-    }).catch(error => {
+    }).catch(async error => {
       // eslint-disable-next-line no-console
-      console.log('createTask error on controller', error)
-      res.status(error.StatusCodeError || 400).send(error)
+      console.log('createTask error on controller: ', error)
+      if(error.StatusCodeError) res.status(error.StatusCodeError).send(error)
+      if(error.name === 'SequelizeUniqueConstraintError') {
+        const task = await Tasks.taskSearch({ url: req.body.url })
+        res.send({...error, ...{id: task[0].id}})
+      } else {
+        res.send(error)
+      }
     })
 }
 
