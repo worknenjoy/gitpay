@@ -13,6 +13,7 @@ module.exports = Promise.method(function taskSearch (searchParams) {
   if (searchParams.projectId) query.ProjectId = { [Op.eq]: parseInt(searchParams.projectId) }
   if (searchParams.userId) query.userId = searchParams.userId
   if (searchParams.status) query.status = searchParams.status
+  if (searchParams.url) query.url = searchParams.url
 
   const labelWhere = searchParams.labelIds ? {
     model: models.Label,

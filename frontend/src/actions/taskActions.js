@@ -294,10 +294,20 @@ const createTask = (task, history) => {
     axios
       .post(api.API_URL + '/tasks/create', task)
       .then(response => {
+        console.log('response', response)
         if (response.data && response.data.errors) {
-          dispatch(
-            addNotification(VALIDATION_ERRORS[response.data.errors[0].message])
-          )
+          console.log('error on create task action: ', response)
+          const firstError = response.data.errors[0].message
+          if(firstError === 'url must be unique') {
+            dispatch(
+              addNotification(VALIDATION_ERRORS[firstError], '', `/#/task/${response.data.id}`)
+            )
+          }
+          if(firstError === 'Not Found') {
+            dispatch(
+              addNotification(VALIDATION_ERRORS[firstError])
+            )
+          }
           return dispatch(createTaskError(response.data.errors))
         }
         if (response.data && response.data.error) {
@@ -311,7 +321,7 @@ const createTask = (task, history) => {
       })
       .catch(error => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        console.log('error on update task: ', error)
         if (error.response && error.response.status === 403) {
           dispatch(addNotification('actions.task.create.auth.error'))
           return dispatch(createTaskError(error))
