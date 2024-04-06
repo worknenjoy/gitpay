@@ -487,7 +487,7 @@
   "notifications.bank.create.error": "We could not create your account",
   "notifications.bank.create.success": "Your bank account was registered successfully",
   "notifications.bank.create.other.error": "We could not update your account",
-  "actions.task.create.validation.url": "This URL already exist",
+  "actions.task.create.validation.url": "This issue already exist",
   "actions.task.create.validation.invalid": "This issue was not found",
   "actions.task.issues.error.notfound": "Github API rate limit exceeded, please try again later",
   "actions.task.delete.notification.success": "Task deleted successfully",

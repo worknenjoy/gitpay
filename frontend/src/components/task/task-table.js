@@ -336,7 +336,7 @@ class CustomPaginationActionsTable extends React.Component {
             }
           }
         >
-          <FormattedMessage id={fieldId} defineMessage={defineMessage} />
+          <FormattedMessage id={fieldId} />
         </TableSortLabel>
       )
     }

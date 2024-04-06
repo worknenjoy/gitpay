@@ -343,7 +343,7 @@ const messages = defineMessages({
   },
   notificationIssueAlreadyExist: {
     id: 'actions.task.create.validation.url',
-    defaultMessage: 'This issue already imported on Gitpay'
+    defaultMessage: 'This issue was imported already'
   },
   notificationIssueLimitExceeded: {
     id: 'actions.task.create.validation.limit',
