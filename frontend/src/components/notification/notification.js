@@ -9,6 +9,29 @@ import {
 import Close from '@material-ui/icons/Close'
 
 class Notification extends Component {
+
+  getActions = () => {
+    let actions = [
+      <IconButton
+        key='close'
+        aria-label='Close'
+        color='inherit'
+        onClick={ this.props.onClose }
+      >
+        <Close />
+      </IconButton>
+    ]
+    if(this.props.link) {
+      actions = [this.getLink(), actions]
+    }
+  
+    return actions
+  }
+
+  getLink = () => (
+    <a href={ this.props.link }>View</a>
+  )
+
   componentDidMount () { }
 
   render () {
@@ -16,25 +39,16 @@ class Notification extends Component {
       <Snackbar
         anchorOrigin={ {
           vertical: 'bottom',
-          horizontal: 'left'
+          horizontal: 'right'
         } }
         open={ this.props.open }
         onClose={ this.props.onClose }
-        autoHideDuration={ 6000 }
+        autoHideDuration={ 8000 }
         snackbarcontentprops={ {
           'aria-describedby': 'message-id'
         } }
         message={ <span id='message-id'>{ this.props.message }</span> }
-        action={ [
-          <IconButton
-            key='close'
-            aria-label='Close'
-            color='inherit'
-            onClick={ this.props.onClose }
-          >
-            <Close />
-          </IconButton>
-        ] }
+        action={ this.getActions() }
       />
     )
   }
@@ -43,7 +57,8 @@ class Notification extends Component {
 Notification.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  message: PropTypes.string
+  message: PropTypes.string,
+  link: PropTypes.string
 }
 
 export default Notification
