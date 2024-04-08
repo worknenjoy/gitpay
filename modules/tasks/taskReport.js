@@ -10,7 +10,7 @@ module.exports = Promise.method(function ({ id }, { task, reason, baseUrl }) {
   const token = jwt.sign(id, process.env.SECRET_PHRASE)
   const title = task.title.replace(/\s/g, '-')
   const formattedReason = reason.replace(/\s/g, '-')
-  const userId = task.user ? task.user.id : ''
+  const userId = task.User ? task.User.id : ''
   const approveURL = baseUrl + '/tasks/delete/' + id + '/' + userId + '?title=' + title + '&reason=' + formattedReason + '&token=' + token
   return models.Task
     .findByPk(id, { include: [ models.User, models.Order, models.Assign ] })
