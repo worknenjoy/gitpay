@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import MuiAlert from '@material-ui/lab/Alert'
 import { FormattedMessage } from 'react-intl'
 
+import { countryCodes } from './country-codes'
+
 import {
   withStyles,
   Button,
@@ -13,36 +15,6 @@ import {
   DialogTitle,
   Typography
 } from '@material-ui/core'
-
-export const countryCodes = [
-  { country: 'Australia', code: 'AU', image: 'australia' },
-  { country: 'Austria', code: 'AT', image: 'austria' },
-  { country: 'Belgium', code: 'BE', image: 'belgium' },
-  { country: 'Brazil ', code: 'BR', image: 'brazil' },
-  { country: 'Canada', code: 'CA', image: 'canada' },
-  { country: 'Denmark', code: 'DK', image: 'denmark' },
-  { country: 'Finland', code: 'FI', image: 'finland' },
-  { country: 'France', code: 'FR', image: 'france' },
-  { country: 'Germany', code: 'DE', image: 'germany' },
-  { country: 'Hong Kong', code: 'HK', image: 'hong-kong' },
-  { country: 'Ireland', code: 'IE', image: 'ireland' },
-  { country: 'Japan', code: 'JP', image: 'japan' },
-  { country: 'Luxembourg', code: 'LU', image: 'luxembourg' },
-  { country: 'Mexico ', code: 'MX', image: 'mexico' },
-  { country: 'Netherlands', code: 'NL', image: 'netherlands' },
-  { country: 'New Zealand', code: 'NZ', image: 'new-zealand' },
-  { country: 'Norway', code: 'NO', image: 'norway' },
-  { country: 'Romania', code: 'RO', image: 'romania' },
-  { country: 'Singapore', code: 'SG', image: 'singapore' },
-  { country: 'Spain', code: 'ES', image: 'spain' },
-  { country: 'Sweden', code: 'SE', image: 'sweden' },
-  { country: 'Switzerland', code: 'CH', image: 'switzerland' },
-  { country: 'United Kingdom', code: 'GB', image: 'united-kingdom' },
-  { country: 'United States', code: 'US', image: 'united-states-of-america' },
-  { country: 'Italy', code: 'IT', image: 'italy' },
-  { country: 'Portugal', code: 'PT', image: 'portugal' },
-  { country: 'Nigeria', code: 'NG', image: 'nigeria' },
-]
 
 const styles = theme => ({
   countryContainer: {
@@ -90,6 +62,21 @@ class CountryPicker extends Component {
       return <MuiAlert elevation={ 2 } variant='outlined' { ...props } />
     }
 
+    const getCountryButtons = () => {
+      return countryCodes.map((item) => {
+        const imageModule = require(`../../images/countries/${item.image}.png`)
+        const countryImageSrc = imageModule.default || imageModule
+        return (
+          <Button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
+            <img width='48' style={{marginRight: 10}} src={ countryImageSrc } onLoad={() => {}} />
+            <Typography component='span' gutterBottom>
+              { item.country }
+            </Typography>
+          </Button>
+        )
+      })
+    }
+
     return (
       <div>
         <Dialog
@@ -114,16 +101,7 @@ class CountryPicker extends Component {
               </Alert>
             </DialogContentText>
             <div className={ classes.countryContainer }>
-              { countryCodes.map((item) => {
-                return (
-                  <Button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
-                    <img width='48' style={{marginRight: 10}} src={ require(`../../images/countries/${item.image}.png`).default } />
-                    <Typography component='span' gutterBottom>
-                      { item.country }
-                    </Typography>
-                  </Button>
-                )
-              }) }
+              { getCountryButtons() }
             </div>
           </DialogContent>
           <DialogActions>

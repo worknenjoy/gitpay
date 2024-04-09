@@ -21,7 +21,8 @@ import Moment from 'moment'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 
-import CountryPicker, { countryCodes } from './country-picker'
+import CountryPicker from './country-picker'
+import { countryCodes } from './country-codes'
 
 import messages from './messages'
 
