@@ -23,6 +23,6 @@ jobs:
       with:
         openai_api_key: ${{ secrets.OPENAI_API_KEY }}
         openai_tokens: 1000
-        file_chunks: 2000000
+        file_chunks: 100
         target_branch: master
         
