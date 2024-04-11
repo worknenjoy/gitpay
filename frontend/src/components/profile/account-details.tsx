@@ -233,8 +233,8 @@ const AccountDetails = ({
                         </Typography>
                       </div>
                     </Grid>
-                    <Grid item xs={12} md={12}>
-                      <Button variant='text' onClick={() => {
+                    <Grid item xs={12} md={12} justifyContent='flex-end' alignContent='flex-end' style={{display: 'flex'}}>
+                      <Button variant='contained' color='primary' onClick={() => {
                         displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
                         setDisplayCurrentCountry({ country: '', code: '' })
                       }} style={{ margin: 20 }}>

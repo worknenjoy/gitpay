@@ -8,7 +8,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center', // fix me : this property did not  work
-    marginTop: '48vh',
+    height: '100%',
   },
   progress: {
     color: '#009688',
