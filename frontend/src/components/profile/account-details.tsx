@@ -208,7 +208,7 @@ const AccountDetails = ({
                   {account && account.data.country
                     ? <Grid item xs={12} md={12}>
                       <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                        <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
+                        <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
                         <Typography component='span' style={{ marginLeft: 10 }}>
                           {countryCodes.find(c => c.code === account.data.country).country}
                         </Typography>
@@ -227,7 +227,7 @@ const AccountDetails = ({
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={12}>
                       <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                        <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
+                        <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
                         <Typography component='span' style={{ marginLeft: 10 }}>
                           {countryCodes.find(c => c.code === displayCurrentCountry.code).country}
                         </Typography>
