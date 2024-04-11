@@ -720,7 +720,7 @@ exports.updateWebhook = (req, res) => {
         break
       case 'balance.available':
         SendMail.success(
-          'tarefas@gitpay.me',
+          { email: 'tarefas@gitpay.me' },
           'New balance on your account',
           `
                   <p>We have a new balance:</p>
