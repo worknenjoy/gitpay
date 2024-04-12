@@ -34,13 +34,14 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
     .save()
     .then(order => {
       if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
+        console.log('orders parameters', orderParameters)
         stripe.invoiceItems.create({
           customer: orderParameters.customer_id,
           currency: 'usd',
           // price: 'price_1IkrS62eZvKYlo2CHsI3LJLi',
           quantity: 1,
           description: 'Development service for a task on Gitpay: ' + 'https://gitpay.me/#/task/' + orderParameters.taskId,
-          unit_amount: orderParameters.amount * 100 * 1.18,
+          unit_amount: parseInt(orderParameters.amount) * 100 * 1.18,
           metadata: {
             'task_id': orderParameters.taskId,
             'order_id': order.dataValues.id

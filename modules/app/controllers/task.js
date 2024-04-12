@@ -7,8 +7,10 @@ exports.createTask = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(async error => {
-      // eslint-disable-next-line no-console
-      console.log('createTask error on controller: ', error)
+      if(error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
+        res.status(403).send({ error: 'API rate limit exceeded' })
+        return
+      }
       if(error.StatusCodeError) res.status(error.StatusCodeError).send(error)
       if(error.name === 'SequelizeUniqueConstraintError') {
         const task = await Tasks.taskSearch({ url: req.body.url })

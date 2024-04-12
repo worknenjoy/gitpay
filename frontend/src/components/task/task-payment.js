@@ -383,16 +383,6 @@ class TaskPayment extends Component {
             <div>
               { (!this.props.paid || this.props.task?.Transfer?.id) ? (
                 <div>
-                  <Alert severity='warning' gutterBottom>
-                  { this.props.assigned
-                    ? this.props.intl.formatMessage(messages.transferMessage, {
-                      to: sendTo(this.props.assigned).username || 'unknown',
-                      payments: paymentSupport(sendTo(this.props.assigned))
-                    })
-                    : 
-                      this.props.intl.formatMessage(messages.taskNoAssigned)
-                  }
-                  </Alert>
                   { this.props.assigned ? 
                       <TaskAssigned
                         task={ { id: this.props.id, assigned: this.props.assigned, Transfer: this.props.task?.Transfer } }

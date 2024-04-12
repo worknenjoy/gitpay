@@ -370,11 +370,10 @@ class TopBar extends Component {
                 open={ this.state.createTaskDialog }
                 onClose={ this.handleClickDialogCreateTaskClose }
                 onCreate={ (props) => {
-                  this.props.createTask(props)
+                  this.props.createTask(props, history)
                   this.handleClickDialogCreateTaskClose()
                 } }
                 user={ user }
-                history={ this.props.history }
               />
             ) : (
               <Dialog

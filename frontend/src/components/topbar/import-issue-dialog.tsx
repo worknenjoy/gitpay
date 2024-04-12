@@ -8,7 +8,6 @@ import api from '../../consts'
 
 const ImportIssueDialog = ({ 
   user,
-  history,
   open,
   onClose,
   onCreate 
@@ -43,7 +42,7 @@ const ImportIssueDialog = ({
           url: url,
           provider: provider,
           userId: user ? user.id : null
-        }, history)
+        })
       } catch (e) {
         console.log(e)
       }

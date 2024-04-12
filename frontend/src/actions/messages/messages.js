@@ -349,6 +349,10 @@ const messages = defineMessages({
     id: 'actions.task.create.validation.limit',
     defaultMessage: 'Github API rate limit exceeded, please try again later'
   },
+  notificationIssueNotFound: {
+    id: 'actions.task.issues.error.notfound',
+    defaultMessage: 'Issue not found'
+  },
 })
 
 export default messages

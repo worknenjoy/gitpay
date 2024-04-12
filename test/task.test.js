@@ -11,6 +11,7 @@ const nock = require('nock')
 const secrets = require('../config/secrets')
 const sampleIssue = require('./data/github.issue.create')
 const getSingleIssue = require('./data/github.issue.get')
+const getIssueError = require('./data/github.issue.error')
 const getSingleRepo = require('./data/github.repository.get')
 const spies = require('chai-spies')
 const AssignMail = require('../modules/mail/assign')
@@ -19,6 +20,7 @@ const taskUpdate = require('../modules/tasks/taskUpdate')
 
 const nockAuth = () => {
   nock('https://github.com')
+    .persist()
     .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
     .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
     .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
@@ -26,7 +28,27 @@ const nockAuth = () => {
     .persist()
     .get('/repos/worknenjoy/gitpay/issues/1080')
     .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
-    .reply(200, getSingleIssue.issue)
+    .reply(200, getSingleIssue.issue)  
+    
+  nock('https://api.github.com')
+    .persist()
+    .get('/repos/worknenjoy/gitpay')
+    .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+  .reply(200, getSingleRepo.repo)
+}
+
+const nockAuthLimitExceeded = () => {
+  nock('https://github.com')
+    .persist()
+    .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
+    .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
+    .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
+  nock('https://api.github.com')
+    .persist()
+    .get('/repos/worknenjoy/gitpay/issues/1080')
+    .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+    .reply(403, getIssueError.limitException)  
+    
   nock('https://api.github.com')
     .persist()
     .get('/repos/worknenjoy/gitpay')
@@ -129,10 +151,9 @@ describe("tasks", () => {
   describe('Task crud', () => {
     it('should create a new task wiht projects ands organizations', (done) => {
       nockAuth()
-
       registerAndLogin(agent).then(res => {
-        createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/truppie/issues/1080'}).then(task => {
-          expect(task.url).to.equal('https://github.com/worknenjoy/truppie/issues/1080');
+        createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080'}).then(task => {
+          expect(task.url).to.equal('https://github.com/worknenjoy/gitpay/issues/1080');
           done();
         }).catch(done)
       }).catch(done)
@@ -140,14 +161,24 @@ describe("tasks", () => {
 
     it('should give error on update if the task already exists', (done) => {
       nockAuth()
-
       registerAndLogin(agent).then(res => {
-        createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/truppie/issues/1080'}).then(task => {
-          createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/truppie/issues/1080'}).then(task => {
+        createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080', provider: 'github'}).then(task => {
+          createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080', provider: 'github'}).then(task => {
             expect(task.errors).exist
             expect(task.errors[0].message).to.equal('url must be unique')
             done();
           }).catch(done)
+        }).catch(done)
+      }).catch(done)
+    })
+
+    it('should give an error on update if the issue build responds with limit exceeded', (done) => {
+      nockAuthLimitExceeded()
+      registerAndLogin(agent).then(res => {
+        createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080', provider: 'github'}).then(task => {
+          expect(task.error).exist
+          expect(task.error).to.contain('API rate limit exceeded')
+          done();
         }).catch(done)
       }).catch(done)
     })

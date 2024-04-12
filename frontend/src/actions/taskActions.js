@@ -319,10 +319,12 @@ const createTask = (task, history) => {
         return dispatch(fetchTask(response.data.id))
       })
       .catch(error => {
-        // eslint-disable-next-line no-console
-        console.log('error on update task: ', error)
-        if (error.response && error.response.status === 403) {
+        if (error.response && error.response.status === 401) {
           dispatch(addNotification('actions.task.create.auth.error'))
+          return dispatch(createTaskError(error))
+        }
+        if (error.response && error.response.status === 403 && error.response.data.error === 'API rate limit exceeded') {
+          dispatch(addNotification('actions.task.create.validation.limit'))
           return dispatch(createTaskError(error))
         }
         dispatch(addNotification('actions.task.create.notification.error'))
@@ -334,7 +336,7 @@ const createTask = (task, history) => {
 const updateTask = task => {
   return dispatch => {
     dispatch(updateTaskRequested())
-    axios
+    return axios
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
         const task = response.data

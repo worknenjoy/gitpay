@@ -137,6 +137,7 @@
   "actions.task.interested.notification.success": "",
   "actions.task.invite.error": "",
   "actions.task.invite.success": "",
+  "actions.task.issues.error.notfound": "",
   "actions.task.message.author.error": "",
   "actions.task.message.author.success": "",
   "actions.task.payment.balance.error": "",

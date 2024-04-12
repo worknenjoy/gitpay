@@ -117,7 +117,6 @@ const AccountHeader = ({
                 onClose={ () => setOpenAddIssue(false) }
                 onCreate={ (props, history) => onHandleCreateTask(props, history) }
                 user={ user }
-                history={ history }
               />
             </>
           }
