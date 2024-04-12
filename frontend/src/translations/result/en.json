@@ -137,6 +137,7 @@
   "actions.task.interested.notification.success": "You applied to solve this issue successfully",
   "actions.task.invite.error": "We could not send this invite",
   "actions.task.invite.success": "Invite sent",
+  "actions.task.issues.error.notfound": "Issue not found",
   "actions.task.message.author.error": "We could not send this message",
   "actions.task.message.author.success": "Your message was sent successfully",
   "actions.task.payment.balance.error": "This price is not available for this issue yet",
