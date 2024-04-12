@@ -137,6 +137,7 @@
   "actions.task.interested.notification.success": "Você adicionou o interesse por esta tarefa com sucesso",
   "actions.task.invite.error": "Não foi possível enviar o convite",
   "actions.task.invite.success": "Convite enviado",
+  "actions.task.issues.error.notfound": "Issue not found",
   "actions.task.message.author.error": "Não foi possível enviar esta mensagem",
   "actions.task.message.author.success": "Sua mensagem foi enviada com sucesso",
   "actions.task.payment.balance.error": "O valor ainda não está disponível para transferência",
