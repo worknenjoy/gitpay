@@ -115,7 +115,7 @@ const AccountHeader = ({
               <ImportIssueDialog
                 open={ openAddIssue }
                 onClose={ () => setOpenAddIssue(false) }
-                onCreate={ (props, history) => onHandleCreateTask(props, history) }
+                onCreate={ props => onHandleCreateTask(props, history) }
                 user={ user }
               />
             </>

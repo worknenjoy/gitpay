@@ -294,7 +294,6 @@ const createTask = (task, history) => {
     axios
       .post(api.API_URL + '/tasks/create', task)
       .then(response => {
-        console.log('response', response)
         if (response.data && response.data.errors) {
           const firstError = response.data.errors[0].message
           if(firstError === 'url must be unique') {
