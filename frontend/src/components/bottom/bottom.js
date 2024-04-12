@@ -195,8 +195,10 @@ class Bottom extends Component {
                 <div style={ { textAlign: 'right' } }>
                   <Typography variant={ 'caption' } component='span'>
                     <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
-                    2035 Sunset Lake Road, Suite B-2 <br />
-                    Newark, DE 19709 - US
+                    <abbr>MA: </abbr>
+                    9450 SW Gemini Dr
+                    PMB 72684
+                    Beaverton, Oregon 97008-7105 US
                   </Typography>
                 </div>
               </div>

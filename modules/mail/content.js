@@ -15,7 +15,10 @@ ${i18n.__('mail.sign.team')}
 <p>
 https://gitpay.me (Web) <br />
 tarefas@gitpay.me (Email) <br />
-Worknenjoy Inc., 2035 Sunset Lake Road #Suite B-2, Newark, DE 19709 (Mail) <br />
+Worknenjoy Inc.,
+9450 SW Gemini Dr
+PMB 72684
+Beaverton, Oregon 97008-7105 US (Mail) <br />
 </p>
 `
 }

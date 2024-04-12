@@ -366,13 +366,29 @@ class CustomPaginationActionsTable extends React.Component {
       </Paper>);
     }
 
+    const TableRowPlaceholder = (
+      [0,1,2,3,4,5].map(() => (
+      <TableRow>
+        { [0,1,2,3,4,5].map(() => (
+          <TableCell>
+            <div style={{ width: 80 }}>
+              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={tasks.completed} />
+            </div>
+          </TableCell>
+        ))}
+      </TableRow>
+      ))
+    );
+
     return (
       <Paper className={classes.root}>
-        <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation type='text' rows={12} ready={tasks.completed}>
+        
           <div className={classes.tableWrapper}>
+          
             <Table className={classes.table}>
               <TableHeadCustom />
               <TableBody>
+              <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation  customPlaceholder={TableRowPlaceholder} rows={10}  ready={tasks.completed}>
                 {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   const assigned = n.Assigns.find(a => a.id === n.assigned)
                   const assignedUser = assigned && assigned.User
@@ -436,6 +452,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell colSpan={6} />
                   </TableRow>
                 )}
+                </ReactPlaceholder>
               </TableBody>
               <TableFooter>
                 <TableRow>
@@ -451,8 +468,9 @@ class CustomPaginationActionsTable extends React.Component {
                 </TableRow>
               </TableFooter>
             </Table>
+            
           </div>
-        </ReactPlaceholder>
+        
       </Paper>
     )
   }
