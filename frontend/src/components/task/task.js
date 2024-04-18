@@ -1074,18 +1074,28 @@ class Task extends Component {
                   <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                     <FormattedMessage id='task.status.label' defaultMessage='Status' />
                   </Typography>
+                  { /* Making editable issue status / needs better implementation to sync between Github and Gitpay
+                    <div>
+                      {this.props.user && this.props.user.id && this.taskOwner() && task.data.status && task.data && task.data.id
+                        ? <TaskStatusDropdown
+                          onSelect={(status) => this.props.updateTask({ id: task.data.id, status: status })}
+                          status={task.data.status}
+                        />
+                        : <Chip
+                          label={this.props.intl.formatMessage(Constants.STATUSES[task.data.status])}
+                          avatar={<Avatar className={task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess} style={{ width: 12, height: 12 }}>{' '}</Avatar>}
+                          className={task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess}
+                        />
+                      }
+                    </div>
+                    */
+                  }
                   <div>
-                    {this.props.user && this.props.user.id && this.taskOwner() && task.data.status && task.data && task.data.id
-                      ? <TaskStatusDropdown
-                        onSelect={(status) => this.props.updateTask({ id: task.data.id, status: status })}
-                        status={task.data.status}
-                      />
-                      : <Chip
-                        label={this.props.intl.formatMessage(Constants.STATUSES[task.data.status])}
-                        avatar={<Avatar className={task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess} style={{ width: 12, height: 12 }}>{' '}</Avatar>}
-                        className={task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess}
-                      />
-                    }
+                    <Chip
+                      label={this.props.intl.formatMessage(Constants.STATUSES[task.data.status])}
+                      avatar={<Avatar className={task.data.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess} style={{ width: 12, height: 12 }}>{' '}</Avatar>}
+                      className={task.data.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess}
+                    />
                   </div>
                 </div>
               }
