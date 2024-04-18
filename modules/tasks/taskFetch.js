@@ -117,7 +117,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               const repoInfoJSON = JSON.parse(repoInfo)
               const repoUrl = repoInfoJSON.html_url
               const ownerUrl = repoInfoJSON.owner.html_url
-              const responseGithub = {
+              let responseGithub = {
                 id: data.dataValues.id,
                 url: issueUrl,
                 private: data.dataValues.private,
@@ -164,16 +164,25 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               }
               if (data.status !== 'in_progress' && data.status !== issueDataJsonGithub.state) {
                 // eslint-disable no-unused-vars
-                data
+                const dataStatusUpdateInProgress = await data
                   .update({ status: issueDataJsonGithub.state }, {
                     where: {
                       id: data.id
                     },
                     returning: true,
                   })
-                  .then(task => {
-                    return responseGithub
+                responseGithub.status = dataStatusUpdateInProgress.status
+              }
+              if (issueDataJsonGithub.state === 'closed' && data.status !== 'closed') {
+                // eslint-disable no-unused-vars
+                const dataStatusUpdatedClosed = await data
+                  .update({ status: issueDataJsonGithub.state }, {
+                    where: {
+                      id: data.id
+                    },
+                    returning: true,
                   })
+                responseGithub.status = dataStatusUpdatedClosed.status
               }
               if (data.Labels.length !== issueDataJsonGithub.labels.length) {
                 // eslint-disable no-unused-vars
@@ -196,7 +205,6 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   console.log('error', e)
                 }
               }
-
               return responseGithub
             })
             .catch(e => {

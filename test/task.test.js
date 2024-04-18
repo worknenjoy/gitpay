@@ -17,6 +17,7 @@ const spies = require('chai-spies')
 const AssignMail = require('../modules/mail/assign')
 const TaskMail = require('../modules/mail/task')
 const taskUpdate = require('../modules/tasks/taskUpdate')
+const { get } = require('request')
 
 const nockAuth = () => {
   nock('https://github.com')
@@ -363,7 +364,7 @@ describe("tasks", () => {
       }).catch(done)
     });
 
-    it('should fetch task and not sync status in_progress', (done) => {
+    it('should fetch task and not sync status in_progress on Gitpay and open on Github', (done) => {
       const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
 
       nock('https://github.com')
@@ -392,6 +393,44 @@ describe("tasks", () => {
               expect(res.body).to.exist;
               expect(res.body.metadata.id).to.equal('1080');
               expect(res.body.status).to.equal('in_progress');
+              done(err);
+            })
+        }).catch(done)
+      }).catch(done)
+    });
+
+    it('should fetch task and sync status in_progress on Gitpay and closed on Github', (done) => {
+      const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
+
+      const closedIssue = getSingleIssue.issue
+      closedIssue.state = 'closed'
+
+      nock('https://github.com')
+        .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
+        .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
+        .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
+      nock('https://api.github.com')
+        .persist()
+        .get('/repos/worknenjoy/gitpay/issues/1080')
+        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+        .reply(200, closedIssue)
+      nock('https://api.github.com')
+        .persist()
+        .get('/repos/worknenjoy/gitpay')
+        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+        .reply(200, getSingleRepo.repo)
+
+      models.Task.build({url: github_url, provider: 'github', title: 'foo'}).save().then((task) => {
+        models.Task.update({status: 'in_progress'}, {where: {id: task.dataValues.id}}).then(() => {
+          agent
+            .get(`/tasks/fetch/${task.dataValues.id}`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.statusCode).to.equal(200);
+              expect(res.body).to.exist;
+              expect(res.body.metadata.id).to.equal('1080');
+              expect(res.body.status).to.equal('closed');
               done(err);
             })
         }).catch(done)
