@@ -34,6 +34,7 @@ import InterestedUsers from './components/interested-users'
 import InterestedOffers from './components/interested-offers'
 import MessageAssignment from './assignment/messageAssignment'
 import TaskAssigned from './task-assigned'
+import TaskOrderInvoiceConfirm from './task-order-invoice-confirm'
 
 const styles = {
   avatar: {
@@ -125,6 +126,8 @@ class TaskPayment extends Component {
     this.state = {
       currentTab: 0,
       messageDialog: false,
+      confirmOrderDialog: false,
+      currentOffer: null,
       interested: null,
       messageType: 'assign'
     }
@@ -180,6 +183,10 @@ class TaskPayment extends Component {
       return this.props.orders && !!this.props.orders.length
     }
 
+    const confirmAssignTaskAndCreateOrder = async (event, offer) => {
+      this.setState({ confirmOrderDialog: true, currentOffer: offer })
+    }
+
     const assignTaskAndCreateOrder = async (event, offer) => {
       const { task, loggedUser, createOrder, assignTask, assigns } = this.props
       event.preventDefault()
@@ -202,24 +209,12 @@ class TaskPayment extends Component {
       })
       await assignTask(task.id, assign.id)
       await this.props.offerUpdate(task.id, offer.id, { status: 'accepted' })
+      this.setState({ confirmOrderDialog: false, currentOffer: null })
     }
 
     const onReject = async (event, offer) => {
       event.preventDefault()
       this.props.offerUpdate(this.props.task.id, offer.id, { status: 'rejected' })
-    }
-
-    const paymentSupport = user => {
-      let supportedTypes = []
-      if (user.account_id) {
-        supportedTypes.push(this.props.intl.formatMessage(messages.labelCreditCard))
-      }
-      if (user.paypal_id) {
-        supportedTypes.push(this.props.intl.formatMessage(messages.labelPayPal))
-      }
-      if (!supportedTypes.length) return this.props.intl.formatMessage(messages.labelNoPayment)
-
-      return supportedTypes.join(` ${this.props.intl.formatMessage(messages.statusAnd)} `)
     }
 
     const sendTo = id => {
@@ -408,7 +403,7 @@ class TaskPayment extends Component {
                       />
                     </div> : null
                   }
-                  { offers?.length ? 
+              { offers?.length ? 
                     <div style={{marginTop: 20}}>
                       <Typography variant='h5' gutterBottom noWrap>
                         <FormattedMessage id='task.payment.offers' defaultMessage='Offers' />
@@ -417,8 +412,14 @@ class TaskPayment extends Component {
                         offers={offers}
                         assigned={this.props.assigned}
                         onMessage={(id) => openMessageDialog(id, 'offers') } 
-                        onAccept={(event, offer) => assignTaskAndCreateOrder(event, offer)}
+                        onAccept={(event, offer) => confirmAssignTaskAndCreateOrder(event, offer)}
                         onReject={(event, offer) => onReject(event, offer)}
+                      />
+                      <TaskOrderInvoiceConfirm
+                        visible={this.state.confirmOrderDialog}
+                        onClose={() => this.setState({ confirmOrderDialog: false })}
+                        onConfirm={(event) => assignTaskAndCreateOrder(event, this.state.currentOffer)}
+                        offer={this.state.currentOffer}
                       />
                     </div> : null
                   }

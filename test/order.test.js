@@ -7,28 +7,20 @@ const api = require('../server')
 const agent = request.agent(api)
 const nock = require('nock')
 const models = require('../models')
-const { registerAndLogin, register, login } = require('./helpers')
+const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
 const { error } = require('../modules/mail/transfer')
+const { stripComments } = require('tslint/lib/utils')
 
 describe('orders', () => {
-  beforeEach(() => {
-    models.Order.destroy({ where: {}, truncate: true, cascade: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
-      if (rowDeleted === 1) {
-        // eslint-disable-next-line no-console
-        //console.log('Deleted successfully')
-      }
-    }, function (err) {
-      // eslint-disable-next-line no-console
-      //console.log(err)
-    })
-    models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        //console.log('Deleted successfully');
-      }
-    }, function(err){
-      //console.log(err);
-    });
+  beforeEach(async () => {
+    await truncateModels(models.Task);
+    await truncateModels(models.User);
+    await truncateModels(models.Assign);
+    await truncateModels(models.Order);
+    await truncateModels(models.Transfer);
+  })
+  afterEach(async () => {
     nock.cleanAll()
   })
 
@@ -47,7 +39,7 @@ describe('orders', () => {
   })
 
   describe('create Order', () => {
-    xit('should create a new order', (done) => {
+    it('should create a new order', (done) => {
       registerAndLogin(agent).then(user => {
         agent
           .post('/orders/create/')
@@ -69,6 +61,52 @@ describe('orders', () => {
             done(err);
           })
       }).catch(done)
+    })
+
+    it('should create a order type invoice-item', (done) => {
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+      nock('https://api.stripe.com')
+        .post('/v1/invoiceitems')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/foo/finalize')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      registerAndLogin(agent).then(user => {
+        agent
+          .post('/orders/create/')
+          .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 200,
+            email: 'test@gmail.com',
+            source_type: 'invoice-item',
+            customer_id: 'cus_12345',
+            provider: 'stripe',
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.exist;
+            expect(res.body.source_id).to.exist;
+            expect(res.body.currency).to.equal('BRL');
+            expect(res.body.amount).to.equal('200');
+            done(err);
+          })
+        }
+      ).catch(done)
     })
 
     xit('should create a new paypal order', (done) => {

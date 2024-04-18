@@ -6,8 +6,10 @@ const URL = require('url')
 
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
+const Sendmail = require('../mail/mail')
 
-module.exports = Promise.method(function orderBuilds (orderParameters) {
+module.exports = Promise.method(function orderBuilds(orderParameters) {
+  const taskUrl = `${process.env.API_HOST}/#/task/${orderParameters.taskId}`
   return models.Order
     .build(
       {
@@ -26,7 +28,7 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
           models.User,
           {
             association: models.Order.Plan,
-            include: [ models.Plan.plan ]
+            include: [models.Plan.plan]
           }
         ]
       }
@@ -34,39 +36,46 @@ module.exports = Promise.method(function orderBuilds (orderParameters) {
     .save()
     .then(order => {
       if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
-        console.log('orders parameters', orderParameters)
-        stripe.invoiceItems.create({
+        const unitAmount = parseInt(orderParameters.amount) * 100 * 1.08
+        const quantity = 1
+
+        stripe.invoices.create({
           customer: orderParameters.customer_id,
-          currency: 'usd',
-          // price: 'price_1IkrS62eZvKYlo2CHsI3LJLi',
-          quantity: 1,
-          description: 'Development service for a task on Gitpay: ' + 'https://gitpay.me/#/task/' + orderParameters.taskId,
-          unit_amount: parseInt(orderParameters.amount) * 100 * 1.18,
           metadata: {
             'task_id': orderParameters.taskId,
             'order_id': order.dataValues.id
-          }
-        }).then(invoiceItem => {
-          stripe.invoices.create({
+          },
+        }).then(invoice => {
+          stripe.invoiceItems.create({
             customer: orderParameters.customer_id,
+            currency: 'usd',
+            quantity,
+            description: 'Development service for a task on Gitpay: ' + taskUrl,
+            unit_amount: unitAmount,
+            invoice: invoice.id,
             metadata: {
               'task_id': orderParameters.taskId,
               'order_id': order.dataValues.id
             }
-          }).then(invoice => {
-            return order.update(
-              {
-                source_id: invoice.id
-              },
-              {
-                where: {
-                  id: order.dataValues.id
-                }
-              }).then(orderUpdated => {
-              return orderUpdated
+          }).then(invoiceItem => {
+            stripe.invoices.finalizeInvoice(invoice.id).then(finalizedInvoice => {
+              Sendmail.success({email: orderParameters.email}, 'Invoice created', `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`)
+              return order.update(
+                {
+                  source_id: invoice.id
+                },
+                {
+                  where: {
+                    id: order.dataValues.id
+                  }
+                }).then(orderUpdated => {
+                  
+                  return orderUpdated
+                })
+              })
             })
-          })
         })
+
       }
       if (orderParameters.provider === 'paypal') {
         const totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)

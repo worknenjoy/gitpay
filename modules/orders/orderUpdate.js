@@ -16,7 +16,6 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
       const { id, provider, amount, plan, currency } = order.dataValues
       if (provider === 'paypal' && id) {
         const totalPrice = models.Plan.calcFinalPrice(amount, plan)
-        console.log('totalPrice', totalPrice)
         return requestPromise({
           method: 'POST',
           uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
