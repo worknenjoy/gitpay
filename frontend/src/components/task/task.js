@@ -50,7 +50,6 @@ import {
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
-import TaskReport from './task-report'
 import TaskPayment from './task-payment'
 import LoginButton from '../session/login-button'
 import TaskAssignment from './task-assignment'
@@ -61,7 +60,6 @@ import TaskLevelSplitButton from './task-level-split-button'
 import TaskDeadlineForm from './task-deadline-form'
 
 import TaskStatusIcons from './task-status-icons'
-import TaskStatusDropdown from './task-status-dropdown'
 
 import Constants from '../../consts'
 
@@ -71,8 +69,6 @@ const inviteCover = require('../../images/funds.png')
 const bounty = require('../../images/bounty.png')
 const sharing = require('../../images/sharing.png')
 const notifications = require('../../images/notifications.png')
-
-const logoGithub = require('../../images/github-logo.png')
 
 const styles = theme => ({
   root: {
@@ -531,10 +527,6 @@ class Task extends Component {
     this.setState({ deleteDialog: true })
   }
 
-  handleDeleteDialogClose = () => {
-    this.setState({ deleteDialog: false })
-  }
-
   handleTaskPaymentDialog = () => {
     this.setState({ taskPaymentDialog: true })
   }
@@ -888,6 +880,8 @@ class Task extends Component {
                 updateTask={this.props.updateTask}
                 fetchTask={this.props.fetchTask}
                 taskOwner={this.taskOwner()}
+                handleDeleteTask={this.handleDeleteTask}
+                reportTask={this.props.reportTask}
               />
               {(task.completed && this.props.logged && task.data) ? (
                 <TaskPaymentForm
@@ -967,80 +961,6 @@ class Task extends Component {
                       ]
                     } />
                 </React.Fragment>
-              }
-              <div style={{ marginBottom: 80 }}>
-                <Button
-                  style={{ display: 'inline-block', marginTop: 40 }}
-                  onClick={this.handleReportIssueDialog}
-                  size='small'
-                  color='secondary'
-                  variant='contained'
-                >
-                  <FormattedMessage id='task.report.action' defaultMessage='Report issue' />
-                  <BugReportIcon style={{ marginLeft: 10, verticalAlign: 'middle' }} />
-                </Button>
-                <TaskReport
-                  taskData={task.data}
-                  reportTask={this.props.reportTask}
-                  user={this.props.user}
-                  visible={this.state.reportIssueDialog}
-                  onClose={() => this.setState({ reportIssueDialog: false })}
-                  onOpen={() => this.setState({ reportIssueDialog: true })}
-                />
-              </div>
-
-              {this.taskOwner() &&
-                <div>
-                  <Button
-                    style={{ marginRight: 10 }}
-                    onClick={this.handleDeleteDialog}
-                    color='secundary'
-                    variant='outlined'
-                  >
-                    <span className={classes.spaceRight}>
-                      <FormattedMessage id='task.actions.issue.delete' defaultMessage='Delete issue' />
-                    </span>
-                    <DeleteIcon />
-                  </Button>
-                  <Typography variant='caption' style={{ color: 'red' }}>This will remove this issue on Gitpay and all payment data will be lost. </Typography>
-                  <Dialog
-                    open={this.state.deleteDialog}
-                    onClose={this.handleDeleteDialogClose}
-                    aria-labelledby='form-dialog-title'
-                  >
-                    {!this.props.logged ? (
-                      <div>
-                        <DialogTitle id='form-dialog-title'>
-                          <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to be assigned to this task' />
-                        </DialogTitle>
-                        <DialogContent>
-                          <div className={classes.mainBlock}>
-                            <LoginButton referer={this.props.location} includeForm />
-                          </div>
-                        </DialogContent>
-                      </div>
-                    ) : (
-                      <div>
-                        <DialogTitle id='form-dialog-title'>
-                          <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
-                        </DialogTitle>
-                        <DialogContent>
-                          <Typography type='caption'>
-                            <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
-                          </Typography>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={this.handleDeleteDialogClose} color='primary'>
-                            <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-                          </Button>
-                          <Button onClick={this.handleDeleteTask} variant='contained' color='secondary' >
-                            <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
-                          </Button>
-                        </DialogActions>
-                      </div>
-                    )}
-                  </Dialog>
-                </div>
               }
             </Container>
           </Grid>

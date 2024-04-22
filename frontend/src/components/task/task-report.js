@@ -87,7 +87,7 @@ class TaskReport extends Component {
     const anotherReason = <FormattedMessage id='task.report.reason.another' defaultMessage='Another Reason' />
 
     return (
-      <Container>
+      
         <Dialog
           open={ visible }
           onClose={ () => this.props.onClose() }
@@ -136,7 +136,7 @@ class TaskReport extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </Container>
+      
     )
   }
 }
