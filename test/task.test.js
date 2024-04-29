@@ -352,7 +352,7 @@ describe("tasks", () => {
             expect(res.body).to.exist;
             expect(res.body.metadata.id).to.equal('1080');
             expect(res.body.url).to.equal(github_url);
-            expect(res.body.title).to.equal('foo');
+            expect(res.body.title).to.equal('Improving testing code');
             expect(res.body.status).to.equal('open');
             expect(res.body.metadata).to.exist;
             expect(res.body.metadata.user).to.equal('worknenjoy');
