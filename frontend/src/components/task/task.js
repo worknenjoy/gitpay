@@ -869,7 +869,7 @@ class Task extends Component {
           <TopBarContainer />
         )}
         <Grid container style={{ marginBottom: 4 }}>
-          <Grid item xs={12} sm={12} md={8} style={{ marginBottom: 40, paddingRight: 40 }}>
+          <Grid item xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
             <Container fixed maxWidth='lg'>
               <TaskHeader
                 taskPaymentDialog={this.taskPaymentDialog}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
+import React, { useEffect, useState, useLayoutEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
@@ -54,12 +54,12 @@ const messages = defineMessages({
 })
 
 const TaskList = (props) => {
-  const { user } = props
+  const { user, tasks } = props
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
   })
-  const [projectState, setProjectState] = useState({ projectId: undefined, organizationId: undefined })
+  const [projectState, setProjectState] = useState({ project_id: undefined, organization_id: undefined })
 
   useLayoutEffect(() => {
     let projectStateChanged
@@ -70,38 +70,44 @@ const TaskList = (props) => {
     setTaskListState({ ...taskListState, loading: false })
   }, [props.match.params])
 
-  useEffect(() => {
-    async function fetchData () {
-      const projectId = props.match.params.project_id
-      const organizationId = props.match.params.organization_id
 
-      if (organizationId && !projectId) {
-        await props.fetchOrganization(organizationId)
-        await props.listTasks({ organizationId: organizationId })
-      }
-      if (organizationId && projectId) {
-        await props.fetchProject(
-          projectId,
-          { status: 'open' }
-        )
-      }
-      if (!projectId && !organizationId) await props.listTasks({ status: 'open' })
-      await props.listProjects()
+  const fetchData = useCallback( async () => {
+    const projectId = props.match.params.project_id
+    const organizationId = props.match.params.organization_id
 
-      const params = props.match.params
-      handleRoutePath(params.filter)
-
-      if ((!projectId && !organizationId) && (props.history.location.pathname === '/tasks/open')) {
-        setTaskListState({ ...taskListState, tab: 0 })
-      }
+    if (organizationId && !projectId) {
+      await props.fetchOrganization(organizationId)
+      await props.listTasks({ organizationId: organizationId })
     }
+    
+    if (organizationId && projectId && !props.project.data.name) {
+      await props.fetchProject(
+        projectId,
+        { status: 'open' }
+      )
+    }
+    
+    if (!projectId && !organizationId) await props.listTasks({ status: 'open' })
+    //if(projectId) await props.listProjects()
 
+    const params = props.match.params
+    handleRoutePath(params.filter)
+    
+    if ((!projectId && !organizationId) && (props.history.location.pathname === '/tasks/open')) {
+      setTaskListState({ ...taskListState, tab: 0 })
+    }
+  }, [ props.match.params ])
+  
+  
+  useEffect(() => {
     fetchData()
-  }, [props.match.params])
-
+  }, [])
+  
   useEffect(() => {
     filterTasksByState()
-  }, [taskListState.tab])
+  }, [taskListState.tab, props.filterTasks])
+  
+  
 
   function filterTasksByState () {
     const currentTab = taskListState.tab
@@ -120,7 +126,7 @@ const TaskList = (props) => {
     }
   }
 
-  const handleRoutePath = (value) => {
+  const handleRoutePath = useCallback((value) => {
     switch (value) {
       case 'explore':
         handleTabChange(0, 0)
@@ -136,11 +142,11 @@ const TaskList = (props) => {
         break
       default:
     }
-  }
+  }, [])
 
-  const handleTabChange = async (event, value) => {
+  const handleTabChange = useCallback(async (event, value) => {
     const baseUrl = projectState && projectState.organization_id && projectState.project_id ? '/organizations/' + projectState.organization_id + '/projects/' + projectState.project_id + '/' : '/tasks/'
-    await setTaskListState({ ...taskListState, tab: value })
+    setTaskListState({ ...taskListState, tab: value })
     switch (value) {
       case 0:
         props.history.push(baseUrl + 'open')
@@ -157,7 +163,7 @@ const TaskList = (props) => {
       default:
         props.filterTasks('all')
     }
-  }
+  }, [projectState, taskListState, props.history, props.filterTasks])
 
   const { classes } = props
   const TabContainer = props => {
@@ -172,7 +178,7 @@ const TaskList = (props) => {
 
   return (
     <React.Fragment>
-      <Paper elevation={ 0 }>
+      
         { props.organization && props.organization.name && props.history.location.pathname.includes('organizations') &&
         <React.Fragment>
           <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
@@ -190,7 +196,7 @@ const TaskList = (props) => {
               defaultMessage='Projects'
             />
           </Typography>
-          <ProjectListSimple projects={ props.organization && props.organization.Projects.length > 0 && { data: props.organization.Projects } } />
+          <ProjectListSimple projects={props.organization && props.organization.Projects.length > 0 && { data: props.organization.Projects }} listProjects={props.listProjects} />
         </React.Fragment>
         }
         { props.project.data.name && props.history.location.pathname.includes('projects') &&
@@ -212,16 +218,16 @@ const TaskList = (props) => {
             baseUrl={ baseUrl }
           />
           <TabContainer>
-            <CustomPaginationActionsTable tasks={ props.tasks } user={ user } />
+            <CustomPaginationActionsTable tasks={ tasks } user={ user } />
           </TabContainer>
         </div>
-      </Paper>
+      
     </React.Fragment>
   )
 }
 
 TaskList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
   project: PropTypes.object

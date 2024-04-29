@@ -123,6 +123,7 @@ const TaskExplorer = (props) => {
 
     handlePathNameChange()
   }, [state.value, props.history.location.pathname])
+  
 
   const handleSectionTab = ({ currentTarget }, value) => {
     setState({ ...state, value })
@@ -146,11 +147,11 @@ const TaskExplorer = (props) => {
     }
   }
 
-  const { classes } = props
+  const { classes, noTopBar, noBottomBar } = props
 
   return (
     <Page>
-      <TopBarContainer />
+      { !noTopBar && <TopBarContainer /> }
       <PageContent>
         { state.showNavigation &&
           <Container maxWidth='lg'>
@@ -199,13 +200,13 @@ const TaskExplorer = (props) => {
           </Grid>
         </Container>
       </PageContent>
-      <Bottom classes={ classes } />
+      { !noBottomBar && <Bottom classes={ classes } /> }
     </Page>
   )
 }
 
 TaskExplorer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object
 }
 
 export default injectIntl(withStyles(styles)(TaskExplorer))

@@ -86,7 +86,7 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
 
   useEffect(() => {
     const getPayouts = async () => await searchPayout({ userId: user.user.id })
-    getPayouts().then(t => console.log('payouts:', t))
+    getPayouts().then(t => {})
   }, [user])
 
   return (

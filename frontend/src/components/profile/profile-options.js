@@ -118,40 +118,6 @@ class ProfileOptions extends Component {
                 </CardActions>
               </Card>
             }
-            { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-              <Card>
-                <FormattedMessage
-                  id='account.profile.tasks.mine.caption'
-                  defaultMessage='Issues'
-                >
-                  { msg => <CardMedia image={ organizationIcon } title={ msg } /> }
-                </FormattedMessage>
-                <CardContent>
-                  <Typography variant='h6'>
-                    <FormattedMessage
-                      id='account.profile.tasks.mine.headline'
-                      defaultMessage='Organizations'
-                    />
-                  </Typography>
-                  <Typography variant='body2'>
-                    <FormattedMessage
-                      id='account.profile.tasks.mine.description'
-                      defaultMessage='Organizations created from issues'
-                    />
-                  </Typography>
-                </CardContent>
-                <CardActions className={ classes.cardActions }>
-                  <Button size='small' color='primary'>
-                    <Link to={ '/profile/user/orgs' }>
-                      <FormattedMessage
-                        id='account.profile.tasks.mine.link'
-                        defaultMessage='See your organizations'
-                      />
-                    </Link>
-                  </Button>
-                </CardActions>
-              </Card>
-            }
             { user.Types && (user.Types.map(t => t.name).includes('funding') || user.Types.map(t => t.name).includes('maintainer')) &&
             <Card>
               <FormattedMessage

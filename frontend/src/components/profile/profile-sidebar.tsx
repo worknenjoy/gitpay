@@ -99,30 +99,6 @@ const ProfileSidebar = ({
                       />
                     </MenuItem>
                   }
-                  { userTypes?.includes('maintainer') &&
-                    <MenuItem
-                      onClick={ () =>
-                        history.push('/profile/user/orgs')
-                      }
-                      className={ classes.menuItem }
-                      selected={ selected === 3 }
-                    >
-                      <ListItemIcon className={ classes.icon }>
-                        <Business />
-                      </ListItemIcon>
-                      <ListItemText
-                        classes={ { primary: classes.primary } }
-                        primary={
-                          <span>
-                            <FormattedMessage
-                              id='account.profile.organization.maintainer'
-                              defaultMessage='Organizations'
-                            />
-                          </span>
-                        }
-                      />
-                    </MenuItem>
-                  }
                   { userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')) &&
                     <MenuItem
                       onClick={ () =>

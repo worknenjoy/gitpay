@@ -57,14 +57,14 @@ const Transfers = ({ searchTransfer, updateTransfer, transfers, user, intl, hist
     if (newValue === 'from') {
       getTransfers = async () => await searchTransfer({ userId: user.id })
     }
-    getTransfers().then(t => console.log('transfers:', t))
+    getTransfers().then(t => {})
   }
 
   const getTranfers = async () => await searchTransfer({ userId: user.id })
 
   useEffect(() => {
     setValue('from')
-    getTranfers().then(t => console.log('transfers:', t))
+    getTranfers().then(t => {})
   }, [user])
 
   const transferActions = (t) => {

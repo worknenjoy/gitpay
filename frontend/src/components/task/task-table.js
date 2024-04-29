@@ -33,65 +33,7 @@ import slugify from '@sindresorhus/slugify'
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
 import Constants from '../../consts'
-
-const messages = defineMessages({
-  tableHeaderTask: {
-    id: 'task.table.head.task',
-    defaultMessage: 'Issue'
-  },
-  tableHeaderStatus: {
-    id: 'task.table.head.status',
-    defaultMessage: 'Status'
-  },
-  tableHeaderProject: {
-    id: 'task.table.head.project',
-    defaultMessage: 'Project'
-  },
-  tableHeaderValue: {
-    id: 'task.table.head.value',
-    defaultMessage: 'Value'
-  },
-  tableHeaderDeadline: {
-    id: 'task.table.head.deadline',
-    defaultMessage: 'Deadline'
-  },
-  tableHeaderLabels: {
-    id: 'task.table.head.labels',
-    defaultMessage: 'Labels'
-  },
-  tableHeaderCreatedAt: {
-    id: 'task.table.head.createdAt',
-    defaultMessage: 'Created'
-  },
-  firstPageLabel: {
-    id: 'task.table.page.first',
-    defaultMessage: 'First page'
-  },
-  previousPageLabel: {
-    id: 'task.table.page.previous',
-    defaultMessage: 'Previous page'
-  },
-  nextPageLabel: {
-    id: 'task.table.page.next',
-    defaultMessage: 'Next page'
-  },
-  lastPageLabel: {
-    id: 'task.table.page.last',
-    defaultMessage: 'Last page'
-  },
-  noDefined: {
-    id: 'task.table.date.none',
-    defaultMessage: 'Not yet defined'
-  },
-  noBounty: {
-    id: 'task.table.value.none',
-    defaultMessage: 'No bounty added'
-  },
-  onHoverTaskProvider: {
-    id: 'task.table.onHover',
-    defaultMessage: 'See on'
-  }
-})
+import messages from './messages/task-messages'
 
 const actionsStyles = theme => ({
   root: {
@@ -184,15 +126,6 @@ const styles = theme => ({
     overflowX: 'auto',
   },
 })
-
-const tableHeaderMetadata = {
-  "task.table.head.task": { sortable: true, numeric: false, dataBaseKey: "title" },
-  "task.table.head.status": { sortable: true, numeric: false, dataBaseKey: "status" },
-  "task.table.head.project": { sortable: true, numeric: false, dataBaseKey: "Project.name" },
-  "task.table.head.value": { sortable: true, numeric: true, dataBaseKey: "value" },
-  "task.table.head.labels": { sortable: true, numeric: false, dataBaseKey: "Labels" },
-  "task.table.head.createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt" }
-}
 
 const getSortingValue = (item, fieldId) => {
 
@@ -321,11 +254,20 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { classes, tasks } = this.props
+    const { classes, tasks, intl } = this.props
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
 
+    const tableHeaderMetadata = {
+      "task.table.head.task": { sortable: true, numeric: false, dataBaseKey: "title", label: 'Issue' },
+      "task.table.head.status": { sortable: true, numeric: false, dataBaseKey: "status", label: 'Status'},
+      "task.table.head.project": { sortable: true, numeric: false, dataBaseKey: "Project.name", label: 'Project'},
+      "task.table.head.value": { sortable: true, numeric: true, dataBaseKey: "value", label: 'Value'},
+      "task.table.head.labels": { sortable: true, numeric: false, dataBaseKey: "Labels", label: 'Labels'},
+      "task.table.head.createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created'},
+    }
+
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
-    const TableCellWithSortLogic = ({ fieldId, defineMessage, sortHandler }) => {
+    const TableCellWithSortLogic = ({ fieldId, defaultMessage, sortHandler }) => {
       return (
         <TableSortLabel
           active={fieldId === sortedBy && sortDirection !== 'none'}
@@ -336,7 +278,7 @@ class CustomPaginationActionsTable extends React.Component {
             }
           }
         >
-          <FormattedMessage id={fieldId} />
+          {defaultMessage}
         </TableSortLabel>
       )
     }
@@ -347,7 +289,7 @@ class CustomPaginationActionsTable extends React.Component {
           <TableRow>
             {Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
               <TableCell key={fieldId}>
-                <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId={fieldId} defaultMessage={metadata.dataBaseKey} />
+                <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId={fieldId} defaultMessage={metadata.label} />
               </TableCell>
             ))}
           </TableRow>

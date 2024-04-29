@@ -194,9 +194,23 @@ class CustomPaginationActionsTable extends React.Component {
       )
     }
 
+    const TableRowPlaceholder = (
+      [0,1,2,3,4].map(() => (
+      <TableRow>
+        { [0,1,2,3,4].map(() => (
+          <TableCell>
+            <div style={{ width: 80 }}>
+              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={transfers.completed} />
+            </div>
+          </TableCell>
+        ))}
+      </TableRow>
+      ))
+    );
+
     return (
       <Paper className={classes.root}>
-        <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation type='text' rows={5} ready={transfers.completed}>
+        
           <div className={classes.tableWrapper}>
             <Table className={classes.table}>
               <TableHead>
@@ -209,6 +223,7 @@ class CustomPaginationActionsTable extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
+              <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation customPlaceholder={TableRowPlaceholder} rows={10} ready={transfers.completed}>
                 {transfers?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   return (
                     <TableRow key={n.id}>
@@ -225,6 +240,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell colSpan={6} />
                   </TableRow>
                 )}
+                </ReactPlaceholder>
               </TableBody>
               <TableFooter>
                 <TableRow>
@@ -241,7 +257,6 @@ class CustomPaginationActionsTable extends React.Component {
               </TableFooter>
             </Table>
           </div>
-        </ReactPlaceholder>
       </Paper>
     )
   }
