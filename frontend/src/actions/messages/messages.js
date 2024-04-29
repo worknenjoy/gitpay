@@ -1,6 +1,18 @@
 import { defineMessages } from 'react-intl'
 
 const messages = defineMessages({
+  noDefined: {
+    id: 'task.table.date.none',
+    defaultMessage: 'Not yet defined'
+  },
+  noBounty: {
+    id: 'task.table.value.none',
+    defaultMessage: 'No bounty added'
+  },
+  onHoverTaskProvider: {
+    id: 'task.table.onHover',
+    defaultMessage: 'See on'
+  },
   notificationLoginSuccessfull: {
     id: 'user.login.successfull',
     defaultMessage: 'You successfully logged in'

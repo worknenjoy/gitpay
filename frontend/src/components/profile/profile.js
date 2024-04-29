@@ -32,6 +32,7 @@ import UserOganizationTree from '../../containers/user-organization-tree'
 import AccountHeader from './components/account-header'
 import ProfileSideBar from './profile-sidebar'
 import TaskContainer from '../../containers/task'
+import TaskListProfile from '../../containers/task-list-profile'
 
 const styles = theme => ({
   root: {
@@ -187,12 +188,15 @@ class Profile extends Component {
     }
   }
 
+  
   async componentDidMount () {
     await this.props.fetchOrganizations()
     this.setState({ orgsLoaded: true })
     if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
     if (!this.props.user.provider && !this.props.user.email_verified) this.setState({ emailNotVerifiedDialog: true })
   }
+
+
 
   setActive (path) {
     switch (path) {
@@ -340,7 +344,7 @@ class Profile extends Component {
                           onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
                         />)
                     } />
-                    <Route path='/profile/user-account' component={
+                    <Route exact path='/profile/user-account' component={
                       (props) =>
                         (<UserAccount
                           user={ this.props.user }
@@ -413,6 +417,18 @@ class Profile extends Component {
                       path='/profile/task/:id/:slug'
                       component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
+                    <Route
+                      exact
+                      path='/profile/organizations/:organization_id'
+                    >
+                      <TaskListProfile noTopBar noBottomBar />
+                    </Route>
+                    <Route
+                      exact
+                      path='/profile/organizations/:organization_id/projects/:project_id'
+                    >
+                      <TaskListProfile noTopBar noBottomBar />
+                    </Route>
                   </Switch>
                 </HashRouter>
               </Container>

@@ -17,6 +17,8 @@
     "jest-preview": "jest-preview"
   },
   "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
     "setupFiles": [
       "<rootDir>/stripe-v3.js"
     ],

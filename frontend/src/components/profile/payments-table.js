@@ -25,10 +25,6 @@ import {
 } from '@material-ui/icons'
 import slugify from '@sindresorhus/slugify'
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
-import Constants from '../../consts'
-
 const messages = defineMessages({
   firstPageLabel: {
     id: 'payments.table.page.first',
@@ -179,11 +175,26 @@ class CustomPaginationActionsTable extends React.Component {
     window.location.href = '/#/organizations/' + organizationId + '/projects/' + id
     window.location.reload()
   }
+  
 
   render () {
     const { classes, payments, tableHead } = this.props
     const { rowsPerPage, page } = this.state
     const emptyRows = payments?.data?.length ? rowsPerPage - Math.min(rowsPerPage, payments?.data?.length - page * rowsPerPage) : 0
+
+    const TableRowPlaceholder = (
+      [0,1,2,3,4,5,6].map(() => (
+      <TableRow>
+        { [0,1,2,3,4,5,6].map(() => (
+          <TableCell>
+            <div style={{ width: 80 }}>
+              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={payments.completed} />
+            </div>
+          </TableCell>
+        ))}
+      </TableRow>
+      ))
+    );
 
     if(payments?.data?.length === 0 && payments.completed) {
       return (
@@ -199,7 +210,7 @@ class CustomPaginationActionsTable extends React.Component {
 
     return (
       <Paper className={ classes.root }>
-        <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation type='text' rows={ 12 } ready={ payments.completed } >
+        
           <div className={ classes.tableWrapper }>
             <Table className={ classes.table }>
               <TableHead>
@@ -212,11 +223,12 @@ class CustomPaginationActionsTable extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
+              <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation customPlaceholder={TableRowPlaceholder} rows={ 10 } ready={ payments.completed } >
                 { payments?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   return (
                     <TableRow key={ n.id }>
                       { n.map( p => 
-                        <TableCell component='th' scope='row' style={ { padding: 10, position: 'relative'} }>
+                        <TableCell component='th' scope='row'>
                           {p}    
                         </TableCell>
                       )}
@@ -228,6 +240,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell colSpan={ 6 } />
                   </TableRow>
                 ) }
+                </ReactPlaceholder>
               </TableBody>
               <TableFooter>
                 <TableRow>
@@ -244,7 +257,7 @@ class CustomPaginationActionsTable extends React.Component {
               </TableFooter>
             </Table>
           </div>
-        </ReactPlaceholder>
+        
       </Paper>
     )
   }

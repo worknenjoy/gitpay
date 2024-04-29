@@ -2,6 +2,62 @@ import { defineMessages } from 'react-intl'
 
 // messages for translations on Crowdin - https://crowdin.com/project/gitpay
 export const messages = defineMessages({
+  tableHeaderTask: {
+    id: 'task.table.head.task',
+    defaultMessage: 'Issue'
+  },
+  tableHeaderStatus: {
+    id: 'task.table.head.status',
+    defaultMessage: 'Status'
+  },
+  tableHeaderProject: {
+    id: 'task.table.head.project',
+    defaultMessage: 'Project'
+  },
+  tableHeaderValue: {
+    id: 'task.table.head.value',
+    defaultMessage: 'Value'
+  },
+  tableHeaderDeadline: {
+    id: 'task.table.head.deadline',
+    defaultMessage: 'Deadline'
+  },
+  tableHeaderLabels: {
+    id: 'task.table.head.labels',
+    defaultMessage: 'Labels'
+  },
+  tableHeaderCreatedAt: {
+    id: 'task.table.head.createdAt',
+    defaultMessage: 'Created'
+  },
+  firstPageLabel: {
+    id: 'task.table.page.first',
+    defaultMessage: 'First page'
+  },
+  previousPageLabel: {
+    id: 'task.table.page.previous',
+    defaultMessage: 'Previous page'
+  },
+  nextPageLabel: {
+    id: 'task.table.page.next',
+    defaultMessage: 'Next page'
+  },
+  lastPageLabel: {
+    id: 'task.table.page.last',
+    defaultMessage: 'Last page'
+  },
+  noDefined: {
+    id: 'task.table.date.none',
+    defaultMessage: 'Not yet defined'
+  },
+  noBounty: {
+    id: 'task.table.value.none',
+    defaultMessage: 'No bounty added'
+  },
+  onHoverTaskProvider: {
+    id: 'task.table.onHover',
+    defaultMessage: 'See on'
+  },
   openPaymentStatus: {
     id: 'task.status.status.payment.open',
     defaultMessage: 'Open'
@@ -227,3 +283,5 @@ export const messages = defineMessages({
     defaultMessage: 'No bounty added'
   }
 })
+
+export default messages

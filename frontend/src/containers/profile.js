@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addNotification: (message) => dispatch(addNotification(message)),
     closeNotification: (message) => dispatch(closeNotification(message)),
     createTask: (task, history) => dispatch(createTask(task, history)),
-    listTasks: ({ projectId, userId, status }) => dispatch(listTasks({ projectId, userId, status })),
+    listTasks: ({ organizationId, projectId, userId, status, labelIds }) => dispatch(listTasks({ organizationId, projectId, userId, status, labelIds })),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
     signOut: () => dispatch(logOut())
   }

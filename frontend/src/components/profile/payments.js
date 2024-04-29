@@ -276,7 +276,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
     return orders.map((item, i) => [
       item.paid ? intl.formatMessage(messages.labelYes) : intl.formatMessage(messages.labelNo),
       <div style={ { display: 'inline-block' } }>
-        <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
+        <span style={ { display: 'inline-block', width: '100%' } }>{ statuses[item.status] }</span>
       </div>,
       issueRow(item.Task),
       `$ ${item.amount}`,

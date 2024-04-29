@@ -152,7 +152,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 Project: data.dataValues.Project && { ...data.dataValues.Project.dataValues, organization: data.dataValues.Project.dataValues.Organization.dataValues }
               }
 
-              if (!data.title && data.title !== issueDataJsonGithub.title) {
+              if (!data.title || data.title !== issueDataJsonGithub.title) {
+                const dataTitleUpdate = await
                 // eslint-disable no-unused-vars
                 data
                   .update({ title: issueDataJsonGithub.title }, {
@@ -160,7 +161,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                       id: data.id
                     }
                   })
-                  .then(task => responseGithub)
+                responseGithub.title = dataTitleUpdate.title
               }
               if (data.status !== 'in_progress' && data.status !== issueDataJsonGithub.state) {
                 // eslint-disable no-unused-vars

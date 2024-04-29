@@ -23,7 +23,6 @@ const listLabels = (params) => {
     return axios
       .get(api.API_URL + '/labels/search', { params })
       .then(labels => {
-        console.log('labels', labels)
         if (labels.status === 200 && labels.data && !labels.data.error) {
           return dispatch(listLabelsSuccess(labels.data))
         }
