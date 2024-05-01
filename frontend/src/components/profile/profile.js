@@ -344,7 +344,7 @@ class Profile extends Component {
                           onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
                         />)
                     } />
-                    <Route exact path='/profile/user-account' component={
+                    <Route path='/profile/user-account' component={
                       (props) =>
                         (<UserAccount
                           user={ this.props.user }
