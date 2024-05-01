@@ -9,6 +9,7 @@ export const countryCodes = [
     { country: 'France', code: 'FR', image: 'france' },
     { country: 'Germany', code: 'DE', image: 'germany' },
     { country: 'Hong Kong', code: 'HK', image: 'hong-kong' },
+    { country: 'India', code: 'IN', image: 'india'},
     { country: 'Ireland', code: 'IE', image: 'ireland' },
     { country: 'Japan', code: 'JP', image: 'japan' },
     { country: 'Luxembourg', code: 'LU', image: 'luxembourg' },
