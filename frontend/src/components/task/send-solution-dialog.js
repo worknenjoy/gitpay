@@ -48,7 +48,7 @@ const SendSolutionDialog = props => {
     if (editMode) {
       const payload = { pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload).then((solution) => {
-        console.log('solution', solution)
+        
       })
       setEditMode(false)
       // eslint-disable-next-line no-useless-return
@@ -58,7 +58,7 @@ const SendSolutionDialog = props => {
     const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id }
 
     props.createTaskSolution(payload).then((solution) => {
-      console.log('solution', solution)
+      
     })
   }
 

@@ -248,9 +248,8 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   goToProject = (e, id, organizationId) => {
-    e.preventDefault()
-    window.location.href = '/#/organizations/' + organizationId + '/projects/' + id
-    window.location.reload()
+    const url = this.props.user?.id ? '/profile/organizations/' + organizationId + '/projects/' + id : '/organizations/' + organizationId + '/projects/' + id
+    this.props.history.push(url)
   }
 
   render() {

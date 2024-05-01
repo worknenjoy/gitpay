@@ -12,6 +12,7 @@ module.exports = Promise.method(function fetchProject (projectParams, params) {
         where: params || null,
         include: [models.Project, models.User, models.Assign]
       },
+      models.Organization
     ]
   })
     .then(data => {

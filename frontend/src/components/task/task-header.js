@@ -31,6 +31,8 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import media from 'app/styleguide/media'
 
+import { Breadcrumb } from '../../common/navigation/breadcrumb'
+
 import TaskLabels from './task-labels'
 
 import logoGithub from '../../images/github-logo.png'
@@ -106,15 +108,6 @@ class TaskHeader extends React.Component {
       reportDialog: false
     }
   }
-  goToProjectRepo = (e, url) => {
-    e.preventDefault()
-    window.open(url, '_blank')
-  }
-
-  handleBackToTaskList = (e) => {
-    e.preventDefault()
-    window.location.assign('/#/tasks/explore')
-  }
 
   handleMoreButton = (e) => {
     e.preventDefault()
@@ -144,68 +137,7 @@ class TaskHeader extends React.Component {
     return (
       <TaskHeaderContainer>
         <Grid item xs={12} sm={12} md={12}>
-          <ReactPlaceholder showLoadingAnimation type='text' rows={1}
-            ready={task.completed}>
-            <div className={classes.breadcrumbRoot}>
-              {task.data.Project ? (
-                <Breadcrumbs aria-label='breadcrumb' separator={' / '}>
-                  {user && user.id ? (
-                    <Link href='/' color='inherit' onClick={(e) => {
-                      e.preventDefault()
-                      history.push('/profile/tasks')
-                    }}>
-                      <Typography variant='subtitle2' className={classes.breadcrumbLink}>
-                        <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />
-                      </Typography>
-                    </Link>
-                  ) : (
-                    <Link href='/' color='inherit' onClick={this.handleBackToTaskList}>
-                      <Typography variant='subtitle2' className={classes.breadcrumbLink}>
-                        <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
-                      </Typography>
-                    </Link>
-                  )}
-                  <Link href='' color='inherit' onClick={(e) => {
-                    e.preventDefault()
-                    window.location.href = '/#/organizations/' + task.data.Project.Organization.id
-                  }}>
-                    <Typography variant='subtitle2' className={classes.breadcrumbLink}>
-                      {task.data.Project.Organization.name}
-                    </Typography>
-                  </Link>
-                  <Link href={`/#/organizations/${task.data.Project.OrganizationId}/projects/${task.data.Project.id}`} className={classes.breadcrumb} color='inherit'>
-                    <Typography variant='subtitle2' className={classes.breadcrumbLink}>
-                      {task.data.Project.name}
-                    </Typography>
-                  </Link>
-                  <Typography variant='subtitle2'>
-                    ...
-                  </Typography>
-                </Breadcrumbs>
-              ) : (
-                <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon fontSize='small' />}>
-                  <Link href='/' color='inherit' onClick={this.handleBackToTaskList}>
-                    <Typography variant='subtitle2' className={classes.breadcrumbLink}>
-                      <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
-                    </Typography>
-                  </Link>
-                  <Link href='/' color='inherit' onClick={(e) => this.goToProjectRepo(e, task.data.metadata.ownerUrl)}>
-                    <Typography variant='h4' className={classes.breadcrumbLink}>
-                      {task.data.metadata.company}
-                    </Typography>
-                  </Link>
-                  <Link href='/' color='inherit' onClick={(e) => this.goToProjectRepo(e, task.data.metadata.repoUrl)}>
-                    <Typography variant='subtitle2' className={classes.breadcrumbLink}>
-                      {task.data.metadata.projectName}
-                    </Typography>
-                  </Link>
-                  <Typography variant='subtitle2'>
-                    ...
-                  </Typography>
-                </Breadcrumbs>
-              )}
-            </div>
-          </ReactPlaceholder>
+          <Breadcrumb task={task} user={user} history={history} classes={classes} />
           <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation
             ready={task.completed}
           >

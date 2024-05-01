@@ -13,6 +13,7 @@ import TaskFilter from './task-filters'
 
 import CustomPaginationActionsTable from './task-table'
 import ProjectListSimple from '../project/project-list-simple'
+import { Breadcrumb } from '../../common/navigation/breadcrumb'
 
 const styles = theme => ({
   card: {},
@@ -178,7 +179,9 @@ const TaskList = (props) => {
 
   return (
     <React.Fragment>
-      
+        <div style={{marginTop: 20}}>
+          <Breadcrumb classes={classes} history={props.history} project={props.project} organization={props.organization} user={user} task={{}}/>
+        </div>
         { props.organization && props.organization.name && props.history.location.pathname.includes('organizations') &&
         <React.Fragment>
           <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
