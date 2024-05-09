@@ -16,7 +16,7 @@ export const TopbarMenu = ({
   }
 
   const handlePricing = () => {
-    history.push('/pricing')
+    window.location.assign('/#/pricing')
   }
 
   const handleTeamLink = () => {
