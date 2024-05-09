@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -63,7 +64,7 @@ const TaskFilterLabels = function({
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="demo-multiple-checkbox-label" size='small'>
-          Labels
+          <FormattedMessage id='task.labels' defaultMessage='Labels' />
         </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
