@@ -50,11 +50,10 @@ const TaskFilterLabels = function({
     }
   };
 
-  /*
+  
   useEffect(() => {
     listLabels()
   }, [listLabels])
-  */
 
   const getSelectedNames = (selected) => {
     return labels?.data?.filter(l => selected.includes(l.id)).map(l => l.name)
