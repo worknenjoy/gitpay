@@ -28,7 +28,7 @@ export const TopbarMenu = ({
   }
 
   const handleViewTasks = () => {
-    history.push('/tasks/open')
+    window.location.assign('/#/tasks/open')
   }
 
   return (
