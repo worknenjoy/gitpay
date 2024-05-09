@@ -179,9 +179,11 @@ const TaskList = (props) => {
 
   return (
     <React.Fragment>
-        <div style={{marginTop: 20}}>
-          <Breadcrumb classes={classes} history={props.history} project={props.project} organization={props.organization} user={user} task={{}}/>
-        </div>
+        { (props.project?.data?.id || props.organization?.data?.id) &&
+          <div style={{marginTop: 20}}>
+            <Breadcrumb classes={classes} history={props.history} project={props.project} organization={props.organization} user={user} task={{}}/>
+          </div>
+        }
         { props.organization && props.organization.name && props.history.location.pathname.includes('organizations') &&
         <React.Fragment>
           <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
