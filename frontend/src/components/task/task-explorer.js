@@ -104,9 +104,18 @@ const TaskExplorer = (props) => {
       setState({ ...state, currentPath: pathname })
       if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) setState({ ...state, isOrganizationPage: true })
       if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) setState({ ...state, isProjectPage: true })
+      console.log('pathname', pathname)
       switch (pathname) {
         case '/tasks/open':
           props.listTasks('open')
+          setState({ ...state, value: 0, showNavigation: true })
+          break
+        case '/tasks/withBounties':
+          props.listTasks('withBounties')
+          setState({ ...state, value: 0, showNavigation: true })
+          break
+        case '/tasks/contribution':
+          props.listTasks('contribution')
           setState({ ...state, value: 0, showNavigation: true })
           break
         case '/projects':

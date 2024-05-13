@@ -429,6 +429,12 @@ class Profile extends Component {
                     >
                       <TaskListProfile noTopBar noBottomBar />
                     </Route>
+                    <Route
+                      exact
+                      path='/profile/organizations/:organization_id/projects/:project_id/:filter'
+                    >
+                      <TaskListProfile noTopBar noBottomBar />
+                    </Route>
                   </Switch>
                 </HashRouter>
               </Container>

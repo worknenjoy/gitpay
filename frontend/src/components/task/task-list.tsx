@@ -174,7 +174,7 @@ const TaskList = (props) => {
       </div>
     )
   }
-
+  const profileUrl = user.id ? '/profile' : ''
   const baseUrl = projectState && projectState.organization_id && projectState.project_id ? '/organizations/' + projectState.organization_id + '/projects/' + projectState.project_id + '/' : '/tasks/'
 
   return (
@@ -220,7 +220,7 @@ const TaskList = (props) => {
         <div className={ classes.rootTabs }>
           <TaskFilter
             filterTasks={ props.filterTasks }
-            baseUrl={ baseUrl }
+            baseUrl={ profileUrl + baseUrl }
           />
           <TabContainer>
             <CustomPaginationActionsTable tasks={ tasks } user={ user } />

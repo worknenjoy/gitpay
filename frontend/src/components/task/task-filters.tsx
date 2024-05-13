@@ -42,8 +42,8 @@ const TaskFilters = ({
     loading: true
   })
 
-  const handleTabChange = async (event, value) => {
-    await setTaskListState({ ...taskListState, tab: value })
+  const handleTabChange = (event, value) => {
+    setTaskListState({ ...taskListState, tab: value })
     switch (value) {
       case 0:
         history.push(baseUrl + 'open')
