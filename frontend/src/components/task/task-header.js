@@ -63,28 +63,6 @@ const styles = theme => ({
   breadcrumbLink: {
     textDecoration: 'underline'
   },
-  chipStatusSuccess: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.primary.success
-  },
-  chipStatusClosed: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.error.main
-  },
-  avatarStatusSuccess: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.primary.success,
-  },
-  avatarStatusClosed: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.error.main,
-  },
   chipStatusPaid: {
     marginLeft: 0,
     verticalAlign: 'middle',

@@ -89,6 +89,11 @@ const Palette = {
         margin: '0 24px 0 0',
       }
     },
+    MuiTableCell: {
+      root: {
+        padding: '8px 16px',
+      }
+    },
     MuiMenuItem: {
       root: {
         /*

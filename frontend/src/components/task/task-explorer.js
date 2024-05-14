@@ -102,9 +102,12 @@ const TaskExplorer = (props) => {
     function handlePathNameChange () {
       const pathname = props.history.location.pathname
       setState({ ...state, currentPath: pathname })
-      if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) setState({ ...state, isOrganizationPage: true })
-      if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) setState({ ...state, isProjectPage: true })
-      console.log('pathname', pathname)
+      if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) {
+        setState({ ...state, isOrganizationPage: true })
+      }
+      if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) { 
+        setState({ ...state, isProjectPage: true }) 
+      }
       switch (pathname) {
         case '/tasks/open':
           props.listTasks('open')
@@ -125,7 +128,7 @@ const TaskExplorer = (props) => {
           setState({ ...state, value: 2, showNavigation: true })
           break
         default:
-          setState({ ...state, value: 0, showNavigation: false })
+          //setState({ ...state, value: 0, showNavigation: false })
           break
       }
     }

@@ -32,13 +32,13 @@ export default props => (
       <Route path='/pricing' component={ Pricing } />
       <Route exact path='/projects' component={ TaskExplorer } />
       <Route exact path='/organizations' component={ TaskExplorer } />
-      <Route exact path='/organizations/:organization_id' component={ TaskExplorer } />
-      <Route exact path='/organizations/:organization_id/:slug' component={ TaskExplorer } />
-      <Route exact path='/organizations/:organization_id/projects/:project_id' component={ TaskExplorer } />
-      <Route exact path='/organizations/:organization_id/projects/:project_id/:filter' component={ TaskExplorer } />
-      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug' component={ TaskExplorer } />
-      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter' component={ TaskExplorer } />
-      <Route exact path='/tasks/:filter' component={ TaskExplorer } />
+      <Route exact path='/organizations/:organization_id' component={ (props) => <TaskExplorer {...props} /> } />
+      <Route exact path='/organizations/:organization_id/:slug' component={ (props) => <TaskExplorer {...props} /> } />
+      <Route exact path='/organizations/:organization_id/projects/:project_id' component={ (props) => <TaskExplorer {...props} />} />
+      <Route exact path='/organizations/:organization_id/projects/:project_id/:filter' component={ (props) => <TaskExplorer {...props} /> } />
+      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug' component={ (props) => <TaskExplorer {...props} /> } />
+      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter' component={ (props) => <TaskExplorer {...props} /> } />
+      <Route exact path='/tasks/:filter' component={ (props) => <TaskExplorer {...props} /> } />
       <Route exact path='/team' component={ TeamContainer } />
       <Route exact path='/signin' component={ LoginPage } />
       <Route exact path='/signin/:status' component={ LoginPageContainer } />

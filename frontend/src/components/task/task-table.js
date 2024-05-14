@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
+import Link from '@material-ui/core/Link'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
 import ReactPlaceholder from 'react-placeholder'
 
 import {
+  Avatar,
   Table,
   TableHead,
   TableBody,
@@ -42,6 +44,15 @@ const actionsStyles = theme => ({
     marginLeft: theme.spacing(2.5),
   },
 })
+
+const tableHeaderMetadata = {
+  "task.table.head.task": { sortable: true, numeric: false, dataBaseKey: "title", label: 'Issue' },
+  "task.table.head.status": { sortable: true, numeric: false, dataBaseKey: "status", label: 'Status'},
+  "task.table.head.project": { sortable: true, numeric: false, dataBaseKey: "Project.name", label: 'Project'},
+  "task.table.head.value": { sortable: true, numeric: true, dataBaseKey: "value", label: 'Value'},
+  "task.table.head.labels": { sortable: true, numeric: false, dataBaseKey: "Labels", label: 'Labels'},
+  "task.table.head.createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created'},
+}
 
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
@@ -122,8 +133,35 @@ const styles = theme => ({
   table: {
     minWidth: 500
   },
+  tableCell: {
+    root: {
+      padding: 5
+    }
+  },
   tableWrapper: {
     overflowX: 'auto',
+  },
+  chipStatusSuccess: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.success
+  },
+  chipStatusClosed: {
+    marginBottom: theme.spacing(1),
+    verticalAlign: 'middle',
+    backgroundColor: 'transparent',
+    color: theme.palette.error.main
+  },
+  avatarStatusSuccess: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.primary.success,
+  },
+  avatarStatusClosed: {
+    width: theme.spacing(0),
+    height: theme.spacing(0),
+    backgroundColor: theme.palette.error.main,
   },
 })
 
@@ -247,23 +285,18 @@ class CustomPaginationActionsTable extends React.Component {
     this.props.history.push(url)
   }
 
-  goToProject = (e, id, organizationId) => {
-    const url = this.props.user?.id ? '/profile/organizations/' + organizationId + '/projects/' + id : '/organizations/' + organizationId + '/projects/' + id
-    this.props.history.push(url)
+  renderProjectLink = ( project ) => {
+    if(!project?.id) return <Typography variant='caption'>no project</Typography>
+    const { id, name, OrganizationId } = project
+    const url = this.props.user?.id ? '/profile/organizations/' + OrganizationId + '/projects/' + id : '/organizations/' + OrganizationId + '/projects/' + id
+    return(
+      <Chip label={project ? name : 'no project'} component={Link} href={'/#' + url} onClick={() => {}} />
+    )
   }
 
   render() {
     const { classes, tasks, intl } = this.props
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
-
-    const tableHeaderMetadata = {
-      "task.table.head.task": { sortable: true, numeric: false, dataBaseKey: "title", label: 'Issue' },
-      "task.table.head.status": { sortable: true, numeric: false, dataBaseKey: "status", label: 'Status'},
-      "task.table.head.project": { sortable: true, numeric: false, dataBaseKey: "Project.name", label: 'Project'},
-      "task.table.head.value": { sortable: true, numeric: true, dataBaseKey: "value", label: 'Value'},
-      "task.table.head.labels": { sortable: true, numeric: false, dataBaseKey: "Labels", label: 'Labels'},
-      "task.table.head.createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created'},
-    }
 
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
     const TableCellWithSortLogic = ({ fieldId, defaultMessage, sortHandler }) => {
@@ -323,19 +356,17 @@ class CustomPaginationActionsTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        
           <div className={classes.tableWrapper}>
-          
             <Table className={classes.table}>
               <TableHeadCustom />
               <TableBody>
               <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation  customPlaceholder={TableRowPlaceholder} rows={10}  ready={tasks.completed}>
                 {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                  const assigned = n.Assigns.find(a => a.id === n.assigned)
-                  const assignedUser = assigned && assigned.User
                   return (
                     <TableRow key={n.id}>
-                      <TableCell component='th' scope='row' style={{ padding: 10, position: 'relative' }}>
+                      <TableCell component='th' scope='row' classes={{
+                        root: classes.tableCell.root
+                      }} style={{ position: 'relative' }}>
                         <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
                           <a style={{ cursor: 'pointer' }} onClick={(e) => this.handleClickListItem(n)}>
                             {TextEllipsis(`${n.title || 'no title'}`, 42)}
@@ -347,32 +378,34 @@ class CustomPaginationActionsTable extends React.Component {
                           </a>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell classes={classes.tableCell}>
                         <div style={{ width: 80 }}>
-                          <Chip label={this.props.intl.formatMessage(Constants.STATUSES[n.status])} style={{ backgroundColor: `${Constants.STATUSES_COLORS[n.status]}`, color: 'white' }} />
+                          <Chip 
+                            label={this.props.intl.formatMessage(Constants.STATUSES[n.status])}
+                            avatar={<Avatar className={n.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess} style={{ width: 12, height: 12 }}>{' '}</Avatar>}
+                            className={n.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess}
+                          />
                         </div>
                       </TableCell>
-                      <TableCell>
-                        <div>
-                          <Chip label={n.Project ? n.Project.name : 'no project'} onClick={(e) => this.goToProject(e, n.Project.id, n.Project.OrganizationId)} />
-                        </div>
+                      <TableCell classes={classes.tableCell}>
+                        {this.renderProjectLink(n?.Project)}
                       </TableCell>
-                      <TableCell numeric style={{ padding: 5 }}>
+                      <TableCell numeric classes={classes.tableCell} style={{ padding: 5 }}>
                         <div style={{ width: 70, textAlign: 'center' }}>
                           {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell classes={classes.tableCell}>
                         {n?.Labels?.length ?
-                          <div style={{ width: 120 }}>
-                            {n?.Labels?.slice(0, 3).map(
+                          <div>
+                            {n?.Labels?.slice(0, 2).map(
                               (label, index) =>
                               (
                                 <Chip
                                   style={{ marginRight: 5, marginBottom: 5 }}
                                   size='small'
                                   label={
-                                    TextEllipsis(`${label.name || ''}`, 20)
+                                    TextEllipsis(`${label.name || ''}`, 10)
                                   }
                                 />
                               )
@@ -380,7 +413,7 @@ class CustomPaginationActionsTable extends React.Component {
                             } ...
                           </div> : <>-</>}
                       </TableCell>
-                      <TableCell>
+                      <TableCell classes={classes.tableCell}>
                         <div style={{ width: 120 }}>
                           {n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined)}
                         </div>

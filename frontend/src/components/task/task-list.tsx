@@ -97,7 +97,7 @@ const TaskList = (props) => {
     if ((!projectId && !organizationId) && (props.history.location.pathname === '/tasks/open')) {
       setTaskListState({ ...taskListState, tab: 0 })
     }
-  }, [ props.match.params ])
+  }, [ props.match.params])
   
   
   useEffect(() => {
