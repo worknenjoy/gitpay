@@ -34,6 +34,9 @@ import ProfileSideBar from './profile-sidebar'
 import TaskContainer from '../../containers/task'
 import TaskListProfile from '../../containers/task-list-profile'
 
+const TaskListProfileProjects = TaskListProfile
+const TaskListProfileOrganization = TaskListProfile
+
 const styles = theme => ({
   root: {
     backgroundColor: '#F7F7F7',
@@ -421,19 +424,19 @@ class Profile extends Component {
                       exact
                       path='/profile/organizations/:organization_id'
                     >
-                      <TaskListProfile noTopBar noBottomBar />
+                      <TaskListProfileOrganization noTopBar noBottomBar />
                     </Route>
                     <Route
                       exact
                       path='/profile/organizations/:organization_id/projects/:project_id'
                     >
-                      <TaskListProfile noTopBar noBottomBar />
+                      <TaskListProfileProjects noTopBar noBottomBar />
                     </Route>
                     <Route
                       exact
                       path='/profile/organizations/:organization_id/projects/:project_id/:filter'
                     >
-                      <TaskListProfile noTopBar noBottomBar />
+                      <TaskListProfileProjects noTopBar noBottomBar />
                     </Route>
                   </Switch>
                 </HashRouter>

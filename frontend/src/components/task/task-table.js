@@ -344,8 +344,8 @@ class CustomPaginationActionsTable extends React.Component {
       [0,1,2,3,4,5].map(() => (
       <TableRow>
         { [0,1,2,3,4,5].map(() => (
-          <TableCell>
-            <div style={{ width: 80 }}>
+          <TableCell classes={classes.tableCell}>
+            <div style={{ width: 80, padding: '8px 4px' }}>
               <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={tasks.completed} />
             </div>
           </TableCell>
