@@ -34,8 +34,8 @@ import ProfileSideBar from './profile-sidebar'
 import TaskContainer from '../../containers/task'
 import TaskListProfile from '../../containers/task-list-profile'
 
-const TaskListProfileProjects = TaskListProfile
-const TaskListProfileOrganization = TaskListProfile
+const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
+const TaskListProfileOrganization = (props) => <TaskListProfile {...props} />
 
 const styles = theme => ({
   root: {
@@ -428,7 +428,25 @@ class Profile extends Component {
                     </Route>
                     <Route
                       exact
+                      path='/profile/organizations/:organization_id/:slug'
+                    >
+                      <TaskListProfileOrganization noTopBar noBottomBar />
+                    </Route>
+                    <Route
+                      exact
                       path='/profile/organizations/:organization_id/projects/:project_id'
+                    >
+                      <TaskListProfileProjects noTopBar noBottomBar />
+                    </Route>
+                    <Route
+                      exact
+                      path='/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug'
+                    >
+                      <TaskListProfileProjects noTopBar noBottomBar />
+                    </Route>
+                    <Route
+                      exact
+                      path='/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
                     >
                       <TaskListProfileProjects noTopBar noBottomBar />
                     </Route>

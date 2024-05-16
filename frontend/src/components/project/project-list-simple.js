@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import slugify from '@sindresorhus/slugify'
+import Link from '@material-ui/core/Link'
 
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ProjectListSimple ({ listProjects, projects }) {
+export default function ProjectListSimple ({ listProjects, projects, user }) {
   const classes = useStyles()
 
   useEffect(() => {
@@ -77,6 +78,20 @@ export default function ProjectListSimple ({ listProjects, projects }) {
     return hasBounties ? `$${bounties} in open bounties` : 'no bounties'
   }
 
+  const getProjectLink = (p) => {
+    const url = user?.id ? `/#/profile/organizations/${p.OrganizationId}/projects/${p.id}` : `/#/organizations/${p.OrganizationId}/projects/${p.id}`
+    return (
+      <Chip 
+        style={ { marginLeft: 10 } }
+        size='medium'
+        clickable
+        avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> }
+        label={ ' open issue(s)' }
+        component={Link}
+        href={url}
+      />
+    )
+  }
   return (
     <div className={ classes.root }>
       { projects && projects.data && projectSortMoreBounties(projectsSort(projects.data)).map(p => {
@@ -113,11 +128,7 @@ export default function ProjectListSimple ({ listProjects, projects }) {
               <div>
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
                   <Chip size='medium' label={ projectBountiesList(p.Tasks) } />
-                  <Chip style={ { marginLeft: 10 } } size='medium' clickable onClick={ () => {
-                    window.location.href = `/#/organizations/${p.OrganizationId}/${p.Organization.name}/projects/${p.id}/${slugify(p.name)}`
-                    window.location.reload()
-                  } } avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
-                  />
+                  {getProjectLink(p)}
                 </CardActions>
               </div>
             </Card>

@@ -201,7 +201,11 @@ const TaskList = (props) => {
               defaultMessage='Projects'
             />
           </Typography>
-          <ProjectListSimple projects={props.organization && props.organization.Projects.length > 0 && { data: props.organization.Projects }} listProjects={props.listProjects} />
+          <ProjectListSimple 
+            projects={props.organization && props.organization.Projects.length > 0 && { data: props.organization.Projects }}
+            listProjects={props.listProjects}
+            user={user}
+          />
         </React.Fragment>
         }
         { props.project.data.name && props.history.location.pathname.includes('projects') &&

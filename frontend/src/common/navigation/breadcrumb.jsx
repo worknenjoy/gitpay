@@ -22,14 +22,14 @@ export const Breadcrumb = ({ history, task, classes, user, project, organization
       ready={true}>
       <div className={classes.breadcrumbRoot}>
           <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />} fontSize='small'>
-            {user && user?.id && user?.id === taskUser?.id ? (
+            { (user?.id && user?.id === taskUser?.id) ? (
               <Link href={'/#/profile/tasks/createdbyme'} color='inherit'>
                 <Typography variant='subtitle2' className={classes.breadcrumbLink}>
                   <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />
                 </Typography>
               </Link>
             ) : (
-              <Link href='/#/profile/tasks/all' color='inherit' onClick={handleBackToTaskList}>
+              <Link href={`/#${breadcrumbPathPrefix}tasks/all`} color='inherit' onClick={handleBackToTaskList}>
                 <Typography variant='subtitle2' className={classes.breadcrumbLink}>
                   <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
                 </Typography>

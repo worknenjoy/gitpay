@@ -290,12 +290,12 @@ class CustomPaginationActionsTable extends React.Component {
     const { id, name, OrganizationId } = project
     const url = this.props.user?.id ? '/profile/organizations/' + OrganizationId + '/projects/' + id : '/organizations/' + OrganizationId + '/projects/' + id
     return(
-      <Chip label={project ? name : 'no project'} component={Link} href={'/#' + url} onClick={() => {}} />
+      <Chip label={project ? name : 'no project'} component={Link} href={'/#' + url} clickable />
     )
   }
 
   render() {
-    const { classes, tasks, intl } = this.props
+    const { classes, tasks, intl,  } = this.props
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
 
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
