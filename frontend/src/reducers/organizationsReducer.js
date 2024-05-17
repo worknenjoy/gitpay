@@ -52,7 +52,7 @@ export const organization = (state = { data: {}, completed: true, error: {} }, a
     case FETCH_ORGANIZATION_REQUESTED:
       return { ...state, completed: action.completed }
     case FETCH_ORGANIZATION_SUCCESS:
-      return { ...state, organization: action.organization, completed: action.completed }
+      return { ...state, data: action.data, completed: action.completed }
     case FETCH_ORGANIZATION_ERROR:
       return { ...state, error: action.error, completed: action.completed }
     default:

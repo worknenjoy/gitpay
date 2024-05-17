@@ -4,7 +4,7 @@ const getVisibilityFilter = (state) => state.tasks.filterType
 export const getTasks = (state) => state.tasks
 export const getUser = (state) => state.loggedIn.user
 export const getProject = (state) => state.project
-export const getOrganization = (state) => state.organization.organization
+export const getOrganization = (state) => state.organization
 
 const filterByAdditional = (task, additional, filteredByPrincipal) => {
   const filteringAllOfAdditional = typeof filteredByPrincipal === 'undefined'

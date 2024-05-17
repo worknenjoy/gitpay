@@ -100,8 +100,8 @@ const fetchOrganizationRequested = () => {
   return { type: FETCH_ORGANIZATION_REQUESTED, completed: false }
 }
 
-const fetchOrganizationSuccess = (response) => {
-  return { type: FETCH_ORGANIZATION_SUCCESS, completed: true, organization: response }
+const fetchOrganizationSuccess = (data) => {
+  return { type: FETCH_ORGANIZATION_SUCCESS, completed: true, data }
 }
 
 const fetchOrganizationError = (error) => {

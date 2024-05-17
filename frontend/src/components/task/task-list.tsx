@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
-  Paper,
   Typography,
   withStyles
 } from '@material-ui/core'
@@ -54,13 +53,15 @@ const messages = defineMessages({
   }
 })
 
+
 const TaskList = (props) => {
-  const { user, tasks } = props
+  const { user, tasks, organization } = props
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
   })
   const [projectState, setProjectState] = useState({ project_id: undefined, organization_id: undefined })
+  const [ isOrganizationPage, setIsOrganizationPage ] = useState(false)
 
   useLayoutEffect(() => {
     let projectStateChanged
@@ -69,6 +70,10 @@ const TaskList = (props) => {
 
     setProjectState({ ...projectStateChanged })
     setTaskListState({ ...taskListState, loading: false })
+
+    return () => {
+      clearProjectState()
+    }
   }, [props.match.params])
 
 
@@ -79,6 +84,11 @@ const TaskList = (props) => {
     if (organizationId && !projectId) {
       await props.fetchOrganization(organizationId)
       await props.listTasks({ organizationId: organizationId })
+      setIsOrganizationPage(true)
+    }
+
+    if (organizationId && projectId) {
+      setIsOrganizationPage(true)
     }
     
     if (organizationId && projectId && !props.project.data.name) {
@@ -97,11 +107,19 @@ const TaskList = (props) => {
     if ((!projectId && !organizationId) && (props.history.location.pathname === '/tasks/open')) {
       setTaskListState({ ...taskListState, tab: 0 })
     }
-  }, [ props.match.params])
+  }, [ props.match.params ])
   
-  
+  const clearProjectState = useCallback(() => {
+    setProjectState({ project_id: undefined, organization_id: undefined })
+    setIsOrganizationPage(false)
+  }, [ projectState ])
+
   useEffect(() => {
     fetchData()
+
+    return () => {
+      clearProjectState()
+    }
   }, [])
   
   useEffect(() => {
@@ -176,15 +194,16 @@ const TaskList = (props) => {
   }
   const profileUrl = user.id ? '/profile' : ''
   const baseUrl = projectState && projectState.organization_id && projectState.project_id ? '/organizations/' + projectState.organization_id + '/projects/' + projectState.project_id + '/' : '/tasks/'
-
+  const { data: organizationData } = organization
+  
   return (
     <React.Fragment>
-        { (props.project?.data?.id || props.organization?.data?.id) &&
+        { (props.project?.data?.id || organizationData?.id) &&
           <div style={{marginTop: 20}}>
-            <Breadcrumb classes={classes} history={props.history} project={props.project} organization={props.organization} user={user} task={{}}/>
+            <Breadcrumb classes={classes} history={props.history} project={props.project} organization={organizationData} user={user} task={{}}/>
           </div>
         }
-        { props.organization && props.organization.name && props.history.location.pathname.includes('organizations') &&
+        { organizationData?.id && isOrganizationPage &&
         <React.Fragment>
           <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
             <FormattedMessage
@@ -193,7 +212,7 @@ const TaskList = (props) => {
             />
           </Typography>
           <Typography variant='h3' component='h2'>
-            { props.organization.name }
+            { organizationData.name }
           </Typography>
           <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
             <FormattedMessage
@@ -202,7 +221,7 @@ const TaskList = (props) => {
             />
           </Typography>
           <ProjectListSimple 
-            projects={props.organization && props.organization.Projects.length > 0 && { data: props.organization.Projects }}
+            projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
             listProjects={props.listProjects}
             user={user}
           />

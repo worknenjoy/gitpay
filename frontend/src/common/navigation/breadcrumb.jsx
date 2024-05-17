@@ -3,9 +3,10 @@ import { FormattedMessage } from 'react-intl'
 import Link from '@material-ui/core/Link'
 import { Breadcrumbs, Typography } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import ReactPlaceholder from 'react-placeholder'
+
 
 export const Breadcrumb = ({ history, task, classes, user, project, organization }) => {
+  console.log('breadcrumb', project, organization)
   const breadcrumbPathPrefix = user?.id ? '/profile/' : '/'
   const { data , completed } = task
   const taskUser = data?.User
@@ -18,8 +19,7 @@ export const Breadcrumb = ({ history, task, classes, user, project, organization
   }
 
   return (
-    <ReactPlaceholder showLoadingAnimation type='text' rows={1}
-      ready={true}>
+    
       <div className={classes.breadcrumbRoot}>
           <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />} fontSize='small'>
             { (user?.id && user?.id === taskUser?.id) ? (
@@ -35,7 +35,7 @@ export const Breadcrumb = ({ history, task, classes, user, project, organization
                 </Typography>
               </Link>
             )}
-            {(data || project) && !organization && (
+            { breadcrumbProject?.id && (
             <Link href={'/#' + breadcrumbPathPrefix + 'organizations/' + breadcrumbOrganization?.id} color='inherit'>
               <Typography variant='subtitle2' className={classes.breadcrumbLink}>
                 {breadcrumbOrganization?.name}
@@ -54,7 +54,6 @@ export const Breadcrumb = ({ history, task, classes, user, project, organization
             </Typography>
           </Breadcrumbs>
       </div>
-    </ReactPlaceholder>
   )
 
 }
