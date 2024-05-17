@@ -295,7 +295,7 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { classes, tasks, intl,  } = this.props
+    const { classes, tasks, intl, excludeProjectColumn } = this.props
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
 
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
@@ -316,10 +316,14 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     const TableHeadCustom = () => {
+      let tableHead = tableHeaderMetadata
+      if(excludeProjectColumn) {
+        delete tableHead['task.table.head.project']
+      }
       return (
         <TableHead>
           <TableRow>
-            {Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
+            {Object.entries(tableHead).map(([fieldId, metadata]) => (
               <TableCell key={fieldId}>
                 <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId={fieldId} defaultMessage={metadata.label} />
               </TableCell>
@@ -387,9 +391,11 @@ class CustomPaginationActionsTable extends React.Component {
                           />
                         </div>
                       </TableCell>
+                      { excludeProjectColumn ? null : 
                       <TableCell classes={classes.tableCell}>
                         {this.renderProjectLink(n?.Project)}
                       </TableCell>
+                      }
                       <TableCell numeric classes={classes.tableCell} style={{ padding: 5 }}>
                         <div style={{ width: 70, textAlign: 'center' }}>
                           {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}

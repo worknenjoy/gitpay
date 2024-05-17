@@ -62,6 +62,7 @@ const TaskList = (props) => {
   })
   const [projectState, setProjectState] = useState({ project_id: undefined, organization_id: undefined })
   const [ isOrganizationPage, setIsOrganizationPage ] = useState(false)
+  const [ isProjectPage, setIsProjectPage ] = useState(false)
 
   useLayoutEffect(() => {
     let projectStateChanged
@@ -88,7 +89,7 @@ const TaskList = (props) => {
     }
 
     if (organizationId && projectId) {
-      setIsOrganizationPage(true)
+      setIsProjectPage(true)
     }
     
     if (organizationId && projectId && !props.project.data.name) {
@@ -246,7 +247,7 @@ const TaskList = (props) => {
             baseUrl={ profileUrl + baseUrl }
           />
           <TabContainer>
-            <CustomPaginationActionsTable tasks={ tasks } user={ user } />
+            <CustomPaginationActionsTable tasks={ tasks } user={ user } excludeProjectColumn={isProjectPage} />
           </TabContainer>
         </div>
       
