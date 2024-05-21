@@ -45,15 +45,6 @@ const actionsStyles = theme => ({
   },
 })
 
-const tableHeaderMetadata = {
-  "task.table.head.task": { sortable: true, numeric: false, dataBaseKey: "title", label: 'Issue' },
-  "task.table.head.status": { sortable: true, numeric: false, dataBaseKey: "status", label: 'Status'},
-  "task.table.head.project": { sortable: true, numeric: false, dataBaseKey: "Project.name", label: 'Project'},
-  "task.table.head.value": { sortable: true, numeric: true, dataBaseKey: "value", label: 'Value'},
-  "task.table.head.labels": { sortable: true, numeric: false, dataBaseKey: "Labels", label: 'Labels'},
-  "task.table.head.createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created'},
-}
-
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0)
@@ -165,14 +156,14 @@ const styles = theme => ({
   },
 })
 
-const getSortingValue = (item, fieldId) => {
+const getSortingValue = (item, fieldId, tableHeaderMetadata = {}) => {
 
   const getValue = (item, dataBaseKey) => {
     const keys = dataBaseKey.split(".");
     return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
   };
 
-  const metadata = tableHeaderMetadata[fieldId];
+  const metadata = tableHeaderMetadata[fieldId]
   if (!metadata) {
     console.error(`No metadata found for fieldId: ${fieldId}`);
     return null;
@@ -198,13 +189,13 @@ const getSortingValue = (item, fieldId) => {
   return value;
 };
 
-const sortData = (data, sortedBy, sortDirection) => {
+const sortData = (data, sortedBy, sortDirection, tableHeaderMetadata) => {
   if (sortDirection === 'none') return data;
   if (!sortedBy) return data;
 
   return [...data].sort((a, b) => {
-    let aValue = getSortingValue(a, sortedBy);
-    let bValue = getSortingValue(b, sortedBy);
+    let aValue = getSortingValue(a, sortedBy, tableHeaderMetadata);
+    let bValue = getSortingValue(b, sortedBy, tableHeaderMetadata);
 
     // Handle null values
     if (aValue === null || bValue === null) {
@@ -246,7 +237,7 @@ class CustomPaginationActionsTable extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.tasks !== this.props.tasks) {
       const { sortedBy, sortDirection } = this.state;
-      const newSortedData = sortData(this.props.tasks.data, sortedBy, sortDirection);
+      const newSortedData = sortData(this.props.tasks.data, sortedBy, sortDirection, this.props.tableHeaderMetadata);
       this.setState({
         sortedData: newSortedData
       });
@@ -295,7 +286,7 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { classes, tasks, intl, excludeProjectColumn } = this.props
+    const { classes, tasks, tableHeaderMetadata, intl } = this.props
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
 
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
@@ -316,10 +307,7 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     const TableHeadCustom = () => {
-      let tableHead = tableHeaderMetadata
-      if(excludeProjectColumn) {
-        delete tableHead['task.table.head.project']
-      }
+      const tableHead = tableHeaderMetadata || [];
       return (
         <TableHead>
           <TableRow>
@@ -391,11 +379,10 @@ class CustomPaginationActionsTable extends React.Component {
                           />
                         </div>
                       </TableCell>
-                      { excludeProjectColumn ? null : 
+                      { tableHeaderMetadata['task.table.head.project'] &&
                       <TableCell classes={classes.tableCell}>
                         {this.renderProjectLink(n?.Project)}
-                      </TableCell>
-                      }
+                      </TableCell>}
                       <TableCell numeric classes={classes.tableCell} style={{ padding: 5 }}>
                         <div style={{ width: 70, textAlign: 'center' }}>
                           {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}

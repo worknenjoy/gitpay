@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { tableHeaderDefault } from '../task/task-header-metadata'
 
 import {
   Container,
@@ -200,7 +201,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
                 
                 baseUrl={ baseUrl }
               />}
-              <CustomPaginationActionsTable tasks={ tasks } user={ user } />
+              <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={tableHeaderDefault}  />
             </>
           ) }
         </div>

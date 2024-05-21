@@ -11,6 +11,7 @@ import {
 import TaskFilter from './task-filters'
 
 import CustomPaginationActionsTable from './task-table'
+import { tableHeaderDefault, tableHeaderWithProject } from './task-header-metadata'
 import ProjectListSimple from '../project/project-list-simple'
 import { Breadcrumb } from '../../common/navigation/breadcrumb'
 
@@ -54,8 +55,7 @@ const messages = defineMessages({
 })
 
 
-const TaskList = (props) => {
-  const { user, tasks, organization } = props
+const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
@@ -64,27 +64,26 @@ const TaskList = (props) => {
   const [ isOrganizationPage, setIsOrganizationPage ] = useState(false)
   const [ isProjectPage, setIsProjectPage ] = useState(false)
 
+  /*
   useLayoutEffect(() => {
     let projectStateChanged
 
-    if (props.match.params.project_id && props.match.params.organization_id) projectStateChanged = { ...props.match.params }
+    if (match.params.project_id && params.organization_id) projectStateChanged = { ...match.params }
 
     setProjectState({ ...projectStateChanged })
     setTaskListState({ ...taskListState, loading: false })
 
-    return () => {
-      clearProjectState()
-    }
-  }, [props.match.params])
+  }, [match.params])
+  */
 
 
   const fetchData = useCallback( async () => {
-    const projectId = props.match.params.project_id
-    const organizationId = props.match.params.organization_id
+    const projectId = match.params.project_id
+    const organizationId = match.params.organization_id
 
     if (organizationId && !projectId) {
-      await props.fetchOrganization(organizationId)
-      await props.listTasks({ organizationId: organizationId })
+      await fetchOrganization(organizationId)
+      await listTasks({ organizationId: organizationId })
       setIsOrganizationPage(true)
     }
 
@@ -92,28 +91,29 @@ const TaskList = (props) => {
       setIsProjectPage(true)
     }
     
-    if (organizationId && projectId && !props.project.data.name) {
-      await props.fetchProject(
+    if (organizationId && projectId && !project.data.name) {
+      await fetchProject(
         projectId,
         { status: 'open' }
       )
     }
     
-    if (!projectId && !organizationId) await props.listTasks({ status: 'open' })
+    if (!projectId && !organizationId) await listTasks({ status: 'open' })
     //if(projectId) await props.listProjects()
 
-    const params = props.match.params
+    const params = match.params
     handleRoutePath(params.filter)
     
-    if ((!projectId && !organizationId) && (props.history.location.pathname === '/tasks/open')) {
+    if ((!projectId && !organizationId) && (history.location.pathname === '/tasks/open')) {
       setTaskListState({ ...taskListState, tab: 0 })
     }
-  }, [ props.match.params ])
+  }, [])
   
   const clearProjectState = useCallback(() => {
     setProjectState({ project_id: undefined, organization_id: undefined })
     setIsOrganizationPage(false)
-  }, [ projectState ])
+    setIsProjectPage(false)
+  }, [])
 
   useEffect(() => {
     fetchData()
@@ -121,11 +121,11 @@ const TaskList = (props) => {
     return () => {
       clearProjectState()
     }
-  }, [])
+  }, [history.location.pathname])
   
   useEffect(() => {
     filterTasksByState()
-  }, [taskListState.tab, props.filterTasks])
+  }, [taskListState.tab, filterTasks])
   
   
 
@@ -134,13 +134,13 @@ const TaskList = (props) => {
 
     switch (currentTab) {
       case 0:
-        props.filterTasks('status', 'open')
+        filterTasks('status', 'open')
         break
       case 1:
-        props.filterTasks('issuesWithBounties')
+        filterTasks('issuesWithBounties')
         break
       case 2:
-        props.filterTasks('contribution')
+        filterTasks('contribution')
         break
       default:
     }
@@ -169,23 +169,23 @@ const TaskList = (props) => {
     setTaskListState({ ...taskListState, tab: value })
     switch (value) {
       case 0:
-        props.history.push(baseUrl + 'open')
-        props.filterTasks('status', 'open')
+        history.push(baseUrl + 'open')
+        filterTasks('status', 'open')
         break
       case 1:
-        props.history.push(baseUrl + 'withBounties')
-        props.filterTasks('issuesWithBounties')
+        history.push(baseUrl + 'withBounties')
+        filterTasks('issuesWithBounties')
         break
       case 2:
-        props.history.push(baseUrl + 'contribution')
-        props.filterTasks('contribution')
+        history.push(baseUrl + 'contribution')
+        filterTasks('contribution')
         break
       default:
-        props.filterTasks('all')
+        filterTasks('all')
     }
-  }, [projectState, taskListState, props.history, props.filterTasks])
+  }, [projectState, taskListState, history, filterTasks])
 
-  const { classes } = props
+  
   const TabContainer = props => {
     return (
       <div>
@@ -199,9 +199,9 @@ const TaskList = (props) => {
   
   return (
     <React.Fragment>
-        { (props.project?.data?.id || organizationData?.id) &&
+        { (project?.data?.id || organizationData?.id) &&
           <div style={{marginTop: 20}}>
-            <Breadcrumb classes={classes} history={props.history} project={props.project} organization={organizationData} user={user} task={{}}/>
+            <Breadcrumb classes={classes} history={history} project={project} organization={organizationData} user={user} task={{}}/>
           </div>
         }
         { organizationData?.id && isOrganizationPage &&
@@ -223,12 +223,12 @@ const TaskList = (props) => {
           </Typography>
           <ProjectListSimple 
             projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
-            listProjects={props.listProjects}
+            listProjects={listProjects}
             user={user}
           />
         </React.Fragment>
         }
-        { props.project.data.name && props.history.location.pathname.includes('projects') &&
+        { project.data.name && history.location.pathname.includes('projects') &&
           <React.Fragment>
             <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
               <FormattedMessage
@@ -237,17 +237,17 @@ const TaskList = (props) => {
               />
             </Typography>
             <Typography variant='h3' component='h2'>
-              { props.project.data.name }
+              { project.data.name }
             </Typography>
           </React.Fragment>
         }
         <div className={ classes.rootTabs }>
           <TaskFilter
-            filterTasks={ props.filterTasks }
+            filterTasks={ filterTasks }
             baseUrl={ profileUrl + baseUrl }
           />
           <TabContainer>
-            <CustomPaginationActionsTable tasks={ tasks } user={ user } excludeProjectColumn={isProjectPage} />
+            <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={isProjectPage ? tableHeaderWithProject : tableHeaderDefault} />
           </TabContainer>
         </div>
       
