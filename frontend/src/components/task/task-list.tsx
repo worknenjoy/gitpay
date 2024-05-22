@@ -14,6 +14,7 @@ import CustomPaginationActionsTable from './task-table'
 import { tableHeaderDefault, tableHeaderWithProject } from './task-header-metadata'
 import ProjectListSimple from '../project/project-list-simple'
 import { Breadcrumb } from '../../common/navigation/breadcrumb'
+import ReactPlaceholder from 'react-placeholder'
 
 const styles = theme => ({
   card: {},
@@ -60,27 +61,12 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
     tab: 0,
     loading: true
   })
-  const [projectState, setProjectState] = useState({ project_id: undefined, organization_id: undefined })
   const [ isOrganizationPage, setIsOrganizationPage ] = useState(false)
   const [ isProjectPage, setIsProjectPage ] = useState(false)
+  const [ organizationId, setOrganizationId ] = useState(match.params.organization_id)
+  const [ projectId, setProjectId ] = useState(match.params.project_id)
 
-  /*
-  useLayoutEffect(() => {
-    let projectStateChanged
-
-    if (match.params.project_id && params.organization_id) projectStateChanged = { ...match.params }
-
-    setProjectState({ ...projectStateChanged })
-    setTaskListState({ ...taskListState, loading: false })
-
-  }, [match.params])
-  */
-
-
-  const fetchData = useCallback( async () => {
-    const projectId = match.params.project_id
-    const organizationId = match.params.organization_id
-
+  const fetchData = async () => {
     if (organizationId && !projectId) {
       await fetchOrganization(organizationId)
       await listTasks({ organizationId: organizationId })
@@ -91,7 +77,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
       setIsProjectPage(true)
     }
     
-    if (organizationId && projectId && !project.data.name) {
+    if (organizationId && projectId) {
       await fetchProject(
         projectId,
         { status: 'open' }
@@ -107,13 +93,14 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
     if ((!projectId && !organizationId) && (history.location.pathname === '/tasks/open')) {
       setTaskListState({ ...taskListState, tab: 0 })
     }
-  }, [])
+  }
   
-  const clearProjectState = useCallback(() => {
-    setProjectState({ project_id: undefined, organization_id: undefined })
+  const clearProjectState = () => {
     setIsOrganizationPage(false)
     setIsProjectPage(false)
-  }, [])
+    setOrganizationId(null)
+    setProjectId(null)
+  }
 
   useEffect(() => {
     fetchData()
@@ -121,7 +108,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
     return () => {
       clearProjectState()
     }
-  }, [history.location.pathname])
+  }, [match.params.organization_id, match.params.project_id])
   
   useEffect(() => {
     filterTasksByState()
@@ -165,7 +152,8 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
   }, [])
 
   const handleTabChange = useCallback(async (event, value) => {
-    const baseUrl = projectState && projectState.organization_id && projectState.project_id ? '/organizations/' + projectState.organization_id + '/projects/' + projectState.project_id + '/' : '/tasks/'
+    const { organization_id, project_id } = match.params
+    const baseUrl = organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
     setTaskListState({ ...taskListState, tab: value })
     switch (value) {
       case 0:
@@ -183,7 +171,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
       default:
         filterTasks('all')
     }
-  }, [projectState, taskListState, history, filterTasks])
+  }, [taskListState, history, filterTasks])
 
   
   const TabContainer = props => {
@@ -193,8 +181,9 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
       </div>
     )
   }
+  const { organization_id, project_id } = match.params
   const profileUrl = user.id ? '/profile' : ''
-  const baseUrl = projectState && projectState.organization_id && projectState.project_id ? '/organizations/' + projectState.organization_id + '/projects/' + projectState.project_id + '/' : '/tasks/'
+  const baseUrl = organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
   const { data: organizationData } = organization
   
   return (
@@ -204,7 +193,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
             <Breadcrumb classes={classes} history={history} project={project} organization={organizationData} user={user} task={{}}/>
           </div>
         }
-        { organizationData?.id && isOrganizationPage &&
+        { isOrganizationPage &&
         <React.Fragment>
           <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
             <FormattedMessage
@@ -228,8 +217,8 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
           />
         </React.Fragment>
         }
-        { project.data.name && history.location.pathname.includes('projects') &&
-          <React.Fragment>
+        { isProjectPage &&
+          <ReactPlaceholder ready={project.completed} type='text' rows={2}>
             <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
               <FormattedMessage
                 id='task.list.headline'
@@ -239,7 +228,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
             <Typography variant='h3' component='h2'>
               { project.data.name }
             </Typography>
-          </React.Fragment>
+          </ReactPlaceholder>
         }
         <div className={ classes.rootTabs }>
           <TaskFilter
