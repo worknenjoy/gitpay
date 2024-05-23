@@ -68,9 +68,9 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
 
   const fetchData = async () => {
     if (organizationId && !projectId) {
+      setIsOrganizationPage(true)
       await fetchOrganization(organizationId)
       await listTasks({ organizationId: organizationId })
-      setIsOrganizationPage(true)
     }
 
     if (organizationId && projectId) {
@@ -194,7 +194,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
           </div>
         }
         { isOrganizationPage &&
-        <React.Fragment>
+        <ReactPlaceholder ready={organization.completed} type='media' rows={2}>
           <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
             <FormattedMessage
               id='task.list.org.headline'
@@ -215,7 +215,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
             listProjects={listProjects}
             user={user}
           />
-        </React.Fragment>
+        </ReactPlaceholder>
         }
         { isProjectPage &&
           <ReactPlaceholder ready={project.completed} type='text' rows={2}>

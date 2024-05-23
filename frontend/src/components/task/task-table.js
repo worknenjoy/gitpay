@@ -156,71 +156,6 @@ const styles = theme => ({
   },
 })
 
-const getSortingValue = (item, fieldId, tableHeaderMetadata = {}) => {
-
-  const getValue = (item, dataBaseKey) => {
-    const keys = dataBaseKey.split(".");
-    return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
-  };
-
-  const metadata = tableHeaderMetadata[fieldId]
-  if (!metadata) {
-    console.error(`No metadata found for fieldId: ${fieldId}`);
-    return null;
-  }
-
-  const { numeric, dataBaseKey } = metadata;
-
-  const value = getValue(item, dataBaseKey);
-
-  if (value === undefined) {
-    console.error(`Failed to get value for fieldId: ${fieldId}`);
-    return null;
-  }
-
-  if (numeric) {
-    const parsedValue = parseFloat(value);
-    if (isNaN(parsedValue)) {
-      console.error(`Failed to parse numeric value for fieldId: ${fieldId}`);
-      return null;
-    }
-    return parsedValue;
-  }
-  return value;
-};
-
-const sortData = (data, sortedBy, sortDirection, tableHeaderMetadata) => {
-  if (sortDirection === 'none') return data;
-  if (!sortedBy) return data;
-
-  return [...data].sort((a, b) => {
-    let aValue = getSortingValue(a, sortedBy, tableHeaderMetadata);
-    let bValue = getSortingValue(b, sortedBy, tableHeaderMetadata);
-
-    // Handle null values
-    if (aValue === null || bValue === null) {
-      return (aValue === null ? (sortDirection === 'asc' ? -1 : 1) : (sortDirection === 'asc' ? 1 : -1));
-    }
-
-    // Handle date sorting
-    if (sortedBy === 'task.table.head.createdAt') {
-      let aDate = new Date(aValue).getTime();
-      let bDate = new Date(bValue).getTime();
-      return (sortDirection === 'asc' ? aDate - bDate : bDate - aDate);
-    }
-
-    // Handle labels array sorting
-    if (sortedBy === 'task.table.head.labels') {
-      aValue = aValue.map(label => label.name).join('');
-      bValue = bValue.map(label => label.name).join('');
-    }
-
-    // Handle string sorting
-    let comparator = String(aValue).localeCompare(String(bValue), 'en', { numeric: true, sensitivity: 'base', ignorePunctuation: true });
-    return (sortDirection === 'asc' ? comparator : -comparator);
-  });
-};
-
 class CustomPaginationActionsTable extends React.Component {
   constructor(props) {
     super(props)
@@ -237,15 +172,80 @@ class CustomPaginationActionsTable extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.tasks !== this.props.tasks) {
       const { sortedBy, sortDirection } = this.state;
-      const newSortedData = sortData(this.props.tasks.data, sortedBy, sortDirection, this.props.tableHeaderMetadata);
+      const newSortedData = this.sortData(this.props.tasks.data, sortedBy, sortDirection);
       this.setState({
         sortedData: newSortedData
       });
     }
   }
 
+  sortData = (data, sortedBy, sortDirection) => {
+    if (sortDirection === 'none') return data;
+    if (!sortedBy) return data;
+  
+    return [...data].sort((a, b) => {
+      let aValue = this.getSortingValue(a, sortedBy);
+      let bValue = this.getSortingValue(b, sortedBy);
+  
+      // Handle null values
+      if (aValue === null || bValue === null) {
+        return (aValue === null ? (sortDirection === 'asc' ? -1 : 1) : (sortDirection === 'asc' ? 1 : -1));
+      }
+  
+      // Handle date sorting
+      if (sortedBy === 'task.table.head.createdAt') {
+        let aDate = new Date(aValue).getTime();
+        let bDate = new Date(bValue).getTime();
+        return (sortDirection === 'asc' ? aDate - bDate : bDate - aDate);
+      }
+  
+      // Handle labels array sorting
+      if (sortedBy === 'task.table.head.labels') {
+        aValue = aValue.map(label => label.name).join('');
+        bValue = bValue.map(label => label.name).join('');
+      }
+  
+      // Handle string sorting
+      let comparator = String(aValue).localeCompare(String(bValue), 'en', { numeric: true, sensitivity: 'base', ignorePunctuation: true });
+      return (sortDirection === 'asc' ? comparator : -comparator);
+    });
+  };
+
+  getSortingValue = (item, fieldId) => {
+    const { tableHeaderMetadata } = this.props
+    const getValue = (item, dataBaseKey) => {
+      const keys = dataBaseKey.split(".");
+      return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
+    };
+  
+    const metadata = tableHeaderMetadata[fieldId]
+    if (!metadata) {
+      console.error(`No metadata found for fieldId: ${fieldId}`);
+      return null;
+    }
+  
+    const { numeric, dataBaseKey } = metadata;
+  
+    const value = getValue(item, dataBaseKey);
+  
+    if (value === undefined) {
+      console.error(`Failed to get value for fieldId: ${fieldId}`);
+      return null;
+    }
+  
+    if (numeric) {
+      const parsedValue = parseFloat(value);
+      if (isNaN(parsedValue)) {
+        console.error(`Failed to parse numeric value for fieldId: ${fieldId}`);
+        return null;
+      }
+      return parsedValue;
+    }
+    return value;
+  };
+
   handleSort = (fieldId, sortDirection) => {
-    const newSortedData = sortData(this.props.tasks.data, fieldId, sortDirection);
+    const newSortedData = this.sortData(this.props.tasks.data, fieldId, sortDirection);
 
     return {
       sortedBy: fieldId,
@@ -307,11 +307,10 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     const TableHeadCustom = () => {
-      const tableHead = tableHeaderMetadata || [];
       return (
         <TableHead>
           <TableRow>
-            {Object.entries(tableHead).map(([fieldId, metadata]) => (
+            {Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
               <TableCell key={fieldId}>
                 <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId={fieldId} defaultMessage={metadata.label} />
               </TableCell>
@@ -380,9 +379,10 @@ class CustomPaginationActionsTable extends React.Component {
                         </div>
                       </TableCell>
                       { tableHeaderMetadata['task.table.head.project'] &&
-                      <TableCell classes={classes.tableCell}>
-                        {this.renderProjectLink(n?.Project)}
-                      </TableCell>}
+                        <TableCell classes={classes.tableCell}>
+                          {this.renderProjectLink(n?.Project)}
+                        </TableCell>
+                      }
                       <TableCell numeric classes={classes.tableCell} style={{ padding: 5 }}>
                         <div style={{ width: 70, textAlign: 'center' }}>
                           {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}
