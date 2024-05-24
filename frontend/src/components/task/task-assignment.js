@@ -38,7 +38,6 @@ import {
   Close as CloseIcon
 } from '@material-ui/icons'
 import LoginButton from '../session/login-button'
-import SendSolutionDialog from '../../containers/send-solution-dialog'
 
 import logoGithub from '../../images/github-logo-black.png'
 import logoBitbucket from '../../images/bitbucket-logo-blue.png'

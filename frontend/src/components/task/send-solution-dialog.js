@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import SendSolutionForm from './send-solution-form'
 import {
   DialogTitle,
@@ -16,11 +17,11 @@ const SendSolutionDialog = props => {
   const [editMode, setEditMode] = useState(false)
   const [timer, setTimer] = useState()
 
-  const { taskSolution, pullRequestData, task } = props
+  const { taskSolution, pullRequestData, task, user } = props
 
   useEffect(() => {
-    props.getTaskSolution(props.user.id, task.data.id)
-  }, [props.user, task ])
+    user.id && task.data.id && props.getTaskSolution(user.id, task.data.id)
+  }, [user, task])
 
   useEffect(() => {
     props.cleanPullRequestDataState()
@@ -60,6 +61,10 @@ const SendSolutionDialog = props => {
     props.createTaskSolution(payload).then((solution) => {
       
     })
+  }
+
+  if(!user.id) {
+    return <Redirect to='/signin' />
   }
 
   return (
