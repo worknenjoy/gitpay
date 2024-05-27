@@ -161,6 +161,6 @@
   "mail.task.claim.confirmation.body": "<p>A tarefa <a href=\"{{url}}\">{{title}}</a> que você importou no Gitpay foi solicitada pelo autor.<br><br>Agora você não tem mais acesso de administrador.<br><br>Comentários: {{comments}}</p>",
   "task.invalid.script.subject": "A tarefa que você criou no Gitpay foi excluída",
   "task.invalid.script.message": "A tarefa que você importou {{url}} para o Gitpay foi excluída de nossa lista de tarefas do Gitpay por ser uma URL de issue inválida.",
-  "mail.order.expiredOrders.subject": "The payment for a issue on Gitpay expired",
-  "mail.order.expiredOrders.content.main": "The pre authorized payment of $ {{value}} for the issue <a href=\"{{url}}\">{{title}}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Please visit https://gitpay.me/#/profile/payments to update your payment."
+  "mail.order.expiredOrders.subject": "O pagamento pela tarefa no Gitpay expirou",
+  "mail.order.expiredOrders.content.main": "O pagamento pré autorizado de $ {{value}} pela issue <a href=\"{{url}}\">{{title}}</a> feito usando o Paypal expirou, e você precisa efetuar um novo pagamento para manter a recompensa disponível. Por favor visite https://gitpay.me/#/profile/pagamentos para atualizar seu pagamento."
 }
