@@ -13,10 +13,23 @@ import {
   Checkbox
 } from '@material-ui/core'
 import LanguageIcon from '@material-ui/icons/Language'
+import { updateIntl } from 'react-intl-redux'
 
 import { LabelButton, StyledAvatarIconOnly } from '../topbar/TopbarStyles'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { store } from '../../main/app'
+
+import messagesBr from '../../translations/result/br.json'
+import messagesEn from '../../translations/result/en.json'
+
+import messagesBrLocal from '../../translations/generated/br.json'
+import messagesEnLocal from '../../translations/generated/en.json'
+
+const messages = {
+  'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
+  'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
+}
 
 const logoLangEn = require('../../images/united-states-of-america.png')
 const logoLangBr = require('../../images/brazil.png')
@@ -57,6 +70,12 @@ class Settings extends Component {
         await this.props.updateUser(this.props.user.id, {
           language: this.state.selectedLanguage
         })
+        localStorage.setItem('userLanguage', lang)
+        store.dispatch(updateIntl({
+          locale: lang,
+          messages: messages[currentLangSuccess],
+        }))
+
       }
       catch (e) {
         // eslint-disable-next-line no-console
