@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { activateUser } from '../actions/userActions';
 import AccountActivation from '../components/profile/account-activation';
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch) => ({
   activateAccount: (token: string, userId: number) => dispatch(activateUser(userId, token)),
 });
 

@@ -53,7 +53,7 @@ If you have any questions or concerns about our privacy policy, please contact u
                 <FormattedMessage id="terms-of-service.title" defaultMessage="Privacy Policy" />
               </Typography>
               <Typography variant="caption" gutterBottom>
-                <FormattedMessage id="terms-of-service.subtitle" defaultMessage="Updated 5 May, 2023" />
+                <FormattedMessage id="terms-of-service.date" defaultMessage="Updated 5 May, 2023" />
               </Typography>
             </div>
             <Typography variant="body1" gutterBottom>

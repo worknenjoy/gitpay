@@ -55,7 +55,7 @@ By using our platform, you agree to these terms and conditions. If you do not ag
             <FormattedMessage id="terms-of-service.title" defaultMessage="Terms of service" />
           </Typography>
           <Typography variant="caption" gutterBottom>
-            <FormattedMessage id="terms-of-service.subtitle" defaultMessage="Updated 5 May, 2023" />
+            <FormattedMessage id="terms-of-service.date" defaultMessage="Updated 5 May, 2023" />
           </Typography>
         </div>
         <Typography variant="body1" gutterBottom>

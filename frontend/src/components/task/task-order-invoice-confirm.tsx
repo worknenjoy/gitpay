@@ -18,12 +18,12 @@ const TaskOrderInvoiceConfirm = ({
       aria-labelledby='form-dialog-title'
     >
       <DialogTitle id='form-dialog-title'>
-        <FormattedMessage id='order.invoice.confirm.text' defaultMessage='Confirm order from user offer' />
+        <FormattedMessage id='order.invoice.confirm.text.primary' defaultMessage='Confirm order from user offer' />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
           <Typography component='div'>
-            <FormattedMessage id='order.invoice.confirm.text' defaultMessage='We will create an order from the user offer' />
+            <FormattedMessage id='order.invoice.confirm.text.secondary' defaultMessage='We will create an order from the user offer' />
           </Typography>
         </DialogContentText>
         <Alert severity='info'>

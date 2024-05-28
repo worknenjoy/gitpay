@@ -122,7 +122,7 @@ const AccountTabMain = ({
                 </legend>
                 <Grid container spacing={2}>
                   <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                    <FormattedMessage id='account.basic.password.old' defaultMessage='Current password'>
+                    <FormattedMessage id='account.basic.password.current' defaultMessage='Current password'>
                       { (msg) => (
                         <Field
                           name='currentPassword'
@@ -133,7 +133,7 @@ const AccountTabMain = ({
                         />
                       ) }
                     </FormattedMessage>
-                    <FormattedMessage id='account.basic.password.old' defaultMessage='New password'>
+                    <FormattedMessage id='account.basic.password.new' defaultMessage='New password'>
                       { (msg) => (
                         <Field
                           name='newPassword'
@@ -165,7 +165,7 @@ const AccountTabMain = ({
                         disabled={provider}
                         onClick={onChangePassword}
                       >
-                        <FormattedMessage id='account.user.actions.update' defaultMessage='Change password' />
+                        <FormattedMessage id='account.user.actions.change' defaultMessage='Change password' />
                       </Button>
                     </div>
                   </Grid>
