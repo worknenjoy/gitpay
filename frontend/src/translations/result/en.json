@@ -16,7 +16,7 @@
   "account.address.line2": "Adress line 2",
   "account.bank.select": "Please select your bank",
   "account.banks.list.title": "Select your bank",
-  "account.basic.name": "name",
+  "account.basic.name": "Name",
   "account.basic.password.current": "Current password",
   "account.basic.password.new": "New password",
   "account.basic.password.old": "Confirm new password",
