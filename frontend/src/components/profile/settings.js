@@ -73,7 +73,7 @@ class Settings extends Component {
         localStorage.setItem('userLanguage', lang)
         store.dispatch(updateIntl({
           locale: lang,
-          messages: messages[currentLangSuccess],
+          messages: messages[lang],
         }))
 
       }
