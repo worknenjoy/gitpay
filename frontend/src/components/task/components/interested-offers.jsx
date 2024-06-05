@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import MessageIcon from '@mui/icons-material/Message';
 import MomentComponent from 'moment';
+import { FormattedMessage } from 'react-intl';
 
 
 export default function InterestedOffers({ offers, onMessage, assigned, onAccept, onReject }) {
