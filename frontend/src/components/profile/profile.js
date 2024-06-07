@@ -403,6 +403,14 @@ class Profile extends Component {
                         component={ TransfersContainer }
                       />
                     }
+                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||
+                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
+                      <Route
+                        exact
+                        path='/profile/transfers/:transfer_id'
+                        component={ TransfersContainer }
+                      />
+                    }
                     { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
                       <Route
                         exact

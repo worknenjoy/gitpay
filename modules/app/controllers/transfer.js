@@ -29,3 +29,14 @@ exports.searchTransfer = (req, res) => {
       res.status(error.StatusCodeError || 400).send(error)
     })
 }
+
+exports.fetchTransfer = (req, res) => {
+  Transfer.transferFetch(req.params.id)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('searchTransfer error on controller', error)
+      res.status(error.StatusCodeError || 400).send(error)
+    })
+}

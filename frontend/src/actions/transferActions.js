@@ -10,6 +10,10 @@ const UPDATE_TRANSFER_REQUESTED = 'UPDATE_TRANSFER_REQUESTED'
 const UPDATE_TRANSFER_SUCCESS = 'UPDATE_TRANSFER_SUCCESS'
 const UPDATE_TRANSFER_FAILED = 'UPDATE_TRANSFER_FAILED'
 
+const FETCH_TRANSFER_REQUESTED = 'FETCH_TRANSFER_REQUESTED'
+const FETCH_TRANSFER_SUCCESS = 'FETCH_TRANSFER_SUCCESS'
+const FETCH_TRANSFER_FAILED = 'FETCH_TRANSFER_FAILED'
+
 const searchTransferRequested = () => {
   return {
     type: SEARCH_TRANSFER_REQUESTED,
@@ -91,6 +95,45 @@ const updateTransfer = (params) => (dispatch) => {
   })
 }
 
+const fetchTransferRequested = () => {
+  return {
+    type: FETCH_TRANSFER_REQUESTED,
+    completed: false
+  }
+}
+
+const fetchTransferSuccess = (data) => {
+  return {
+    type: FETCH_TRANSFER_SUCCESS,
+    data: data,
+    completed: true
+  }
+}
+
+const fetchTransferFailed = (error) => {
+  return {
+    type: FETCH_TRANSFER,
+    error: error,
+    completed: true
+  }
+}
+
+const fetchTransfer = (id) => (dispatch) => {
+  dispatch(fetchTransferRequested())
+  return axios.get(api.API_URL + '/transfers/fetch/' + id).then(
+    transfer => {
+      if (transfer.data) {
+        return dispatch(fetchTransferSuccess(transfer.data))
+      }
+      if (transfer.error) {
+        return dispatch(fetchTransferFailed(transfer.error))
+      }
+    }
+  ).catch(e => {
+    return dispatch(fetchTransferFailed(e))
+  })
+}
+
 export {
   SEARCH_TRANSFER_REQUESTED,
   SEARCH_TRANSFER_SUCCESS,
@@ -98,6 +141,10 @@ export {
   UPDATE_TRANSFER_REQUESTED,
   UPDATE_TRANSFER_SUCCESS,
   UPDATE_TRANSFER_FAILED,
+  FETCH_TRANSFER_REQUESTED,
+  FETCH_TRANSFER_SUCCESS,
+  FETCH_TRANSFER_FAILED,
   searchTransfer,
-  updateTransfer
+  updateTransfer,
+  fetchTransfer
 }

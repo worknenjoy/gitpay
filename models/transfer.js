@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     value: DataTypes.DECIMAL,
     transfer_id: DataTypes.STRING,
     transfer_method: DataTypes.STRING,
+    paypal_payout_id: DataTypes.STRING,
     taskId: {
       type: DataTypes.INTEGER,
       references: {

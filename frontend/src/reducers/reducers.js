@@ -17,7 +17,7 @@ import taskSolution from './taskSolutionReducer'
 import couponReducer from './couponReducer'
 import { profileReducer } from './profileReducer'
 import { labels } from './labelReducer'
-import { transfers } from './transfersReducer'
+import { transfers, transfer } from './transfersReducer'
 import { payouts } from './payoutsReducer'
 
 const reducers = combineReducers({
@@ -45,6 +45,7 @@ const reducers = combineReducers({
   profileReducer: profileReducer,
   intl: intlReducer,
   transfers,
+  transfer,
   payouts
 })
 

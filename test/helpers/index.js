@@ -47,12 +47,12 @@ const registerAndLogin = (agent, params = {}) => {
     })
 }
 
-const createTask = (agent, params = {}) => {
+const createTask = (agent, params = {}, userParams = {}) => {
 
   params.provider = params.provider || 'github'
   params.url = params.url || 'https://github.com/worknenjoy/gitpay/issues/221'
 
-  return registerAndLogin(agent).then((res) => {
+  return registerAndLogin(agent, userParams).then((res) => {
     const user = res.body
     return models.Task.create({
       provider: params.provider || 'github',
@@ -71,8 +71,9 @@ const createTask = (agent, params = {}) => {
   })
 }
 
-const createAssign = (agent, params = {}) => {
+const createAssign = (agent, params = {}, userParams = {}) => {
   return register(agent,{
+    ...userParams,
     email: `${Math.random()}anotheruser@example.com`,
     password: '123345',
     confirmPassword: '123345',
