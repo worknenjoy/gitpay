@@ -485,7 +485,7 @@ const transferTask = (taskId) => {
         if (transfer.data) {
           if(transfer.data.error) {
             return dispatch(
-              addNotification(task.data.error)
+              addNotification(transfer.data.error)
             )
           }
           dispatch(addNotification('actions.task.transfer.success'))

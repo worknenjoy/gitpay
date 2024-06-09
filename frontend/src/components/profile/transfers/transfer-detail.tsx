@@ -1,16 +1,38 @@
 import React from 'react';
 import { Typography, Tabs, Tab } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Drawer, Container, Chip, Card, CardContent, CardMedia, CardHeader } from '@material-ui/core';
+import { Button, Drawer, Container, Chip, Card, CardContent, CardMedia, CardHeader } from '@material-ui/core';
 import { ArrowUpwardTwoTone as ArrowUpIcon } from '@material-ui/icons';
+import Alert from '@material-ui/lab/Alert';
 
-const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id }) => {
+const TransactionRow = ({ label, value }) => (
+  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+    <Typography variant="caption">
+      {label}
+    </Typography>
+    <Typography variant="body2">
+      {value}
+    </Typography>
+  </div>
+)
+
+const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, user }) => {
   const { data } = transfer
   const [currentTab, setCurrentTab] = React.useState(0)
 
   React.useEffect(() => {
     id && fetchTransfer(id)
   }, [fetchTransfer, id])
+
+  React.useEffect(() => {
+    if (data) {
+      if (data.stripeTransfer) {
+        setCurrentTab(0)
+      } else if (data.paypalTransfer) {
+        setCurrentTab(1)
+      }
+    }
+  }, [data])
 
   return (
     <Drawer
@@ -54,6 +76,50 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id }) => {
               avatar={<ArrowUpIcon />}
 
             />
+            { !user.account_id && (data.transfer_method === 'multiple' || data.transfer_method === 'stripe') && data.to === user.id &&
+            <CardContent>
+              <Alert
+                severity='warning'
+                action={
+                  <Button
+                    size='small'
+                    onClick={() => {
+                      history.push('/profile/user-account/details')
+                    }}
+                    variant='contained'
+                    color='secondary'
+                  >
+                    <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
+                  </Button>
+                }
+              >
+                <Typography variant='body2' gutterBottom>
+                  <FormattedMessage id='profile.transfer.notactive' defaultMessage='Your account is not active, please finish the setup of your account to receive payouts' />
+                </Typography>
+              </Alert>
+            </CardContent>}
+            { !user.paypal_id && (data.transfer_method === 'multiple' || data.transfer_method === 'paypal') && data.to === user.id &&
+            <CardContent>
+              <Alert
+                severity='warning'
+                action={
+                  <Button
+                    size='small'
+                    onClick={() => {
+                      history.push('/profile/user-account/bank')
+                    }}
+                    variant='contained'
+                    color='secondary'
+                  >
+                    <FormattedMessage id='transfers.alert.button.paypal' defaultMessage='Link your Paypal account' />
+                  </Button>
+                }
+              >
+                <Typography variant='body2' gutterBottom>
+                  <FormattedMessage id='profile.transfer.paypal.notactive' defaultMessage='Your Paypal account is not active, please finish the setup of your account to receive the missing Paypal payment' />
+                </Typography>
+              </Alert>
+            </CardContent>}
           </Card>
           <Tabs
             indicatorColor="secondary"
@@ -61,27 +127,37 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id }) => {
             value={currentTab}
             onChange={(_, value) => setCurrentTab(value)}
           >
-            <Tab label="Bank Transfer" value={0} />
-            <Tab label="Paypal" value={1} />
+            {data.stripeTransfer && <Tab label="Bank Transfer" value={0} />}
+            {data.paypalTransfer && <Tab label="Paypal" value={1} />}
           </Tabs>
-          <div style={{ margin: '20px 0' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-              <Typography variant="caption">
-                <FormattedMessage id="transfer.amount" defaultMessage='Amount' />
-              </Typography>
-              <Typography variant="body2">
-                $ {data.value}
-              </Typography>
+          {currentTab === 0 && data.stripeTransfer && (
+            <div style={{ margin: '20px 0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+                <Typography variant="caption">
+                  <FormattedMessage id="transfer.amount" defaultMessage='Amount' />
+                </Typography>
+                <Typography variant="body2">
+                  $ {(data.stripeTransfer.amount / 100).toFixed(2)}
+                </Typography>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+                <Typography variant="caption">
+                  <FormattedMessage id="transfer.status" defaultMessage='Status' />
+                </Typography>
+                <Typography variant="body2">
+                  <Chip label={data.status} color={data.status === 'completed' ? 'primary' : 'secondary'} size='small' />
+                </Typography>
+              </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-              <Typography variant="caption">
-                <FormattedMessage id="transfer.status" defaultMessage='Status' />
-              </Typography>
-              <Typography variant="body2">
-                <Chip label={data.status} color={data.status === 'completed' ? 'primary' : 'secondary'} size='small' />
-              </Typography>
+          )}
+          {currentTab === 1 && data.paypalTransfer && (
+            <div style={{ margin: '20px 0' }}>
+              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Transaction ID' />} value={'#' + data.paypalTransfer.batch_header.payout_batch_id} />
+              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Status' />} value={data.paypalTransfer.batch_header.batch_status} />
+              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Amount' />} value={data.paypalTransfer.batch_header.amount.value} />
+              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Time' />} value={data.paypalTransfer.batch_header.time_completed} />
             </div>
-          </div>
+          )}
         </div>
       </Container>
     </Drawer>

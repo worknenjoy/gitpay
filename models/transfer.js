@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     transfer_id: DataTypes.STRING,
     transfer_method: DataTypes.STRING,
     paypal_payout_id: DataTypes.STRING,
+    paypal_transfer_amount: DataTypes.DECIMAL,
+    stripe_transfer_amount: DataTypes.DECIMAL,
     taskId: {
       type: DataTypes.INTEGER,
       references: {

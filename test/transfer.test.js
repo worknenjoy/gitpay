@@ -10,6 +10,7 @@ const nock = require('nock')
 const { createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
 const models = require('../models')
 const transfer = require('./data/transfer').updated.data.object
+const paypalGetPayoutSample = require('./data/paypal.payout').get 
 
 // Common function to create transfer
 const createTransferWithTaskData = async (taskData, userId, transferId) => {
@@ -208,6 +209,8 @@ describe("Transfer", () => {
       expect(res.body.transfer_id).to.exist;
       expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
       expect(res.body.paypal_payout_id).to.equal('5UXD2E8A7EBQJ');
+      expect(res.body.stripe_transfer_amount).to.equal('200');
+      expect(res.body.paypal_transfer_amount).to.equal('200');
       
       const payouts = await models.Payout.findAll()
       expect(payouts.length).to.equal(1);
@@ -240,24 +243,122 @@ describe("Transfer", () => {
       expect(res.body.transfer_id).to.exist;
       expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
     })
-    it("should search transfers", async () => {
-      try {
-        const task = await createTask(agent);
-        const taskData = task.dataValues;
-        const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id });
-        const assign = await createAssign(agent, { taskId: taskData.id });
-        const transfer = await createTransfer({ taskId: taskData.id, userId: taskData.userId, to: assign.dataValues.userId });
-        const res = await agent
-          .get('/transfers/search')
-          .query({ userId: taskData.userId });
-        expect(res.body).to.exist;
-        expect(res.body.length).to.equal(1);
-      } catch (e) {
-        console.log('error on transfer', e);
-        throw e;
-      }
+    it("should update transfer pending to created for a pending transfer for an activated account with multiple payments", async () => {
+      
+      const url = 'https://api.sandbox.paypal.com'
+      const path = '/v1/oauth2/token'
+      const newPayoutPath = '/v1/payments/payouts'
+      const getPayoutPath = '/v1/payments/payouts/5UXD2E8A7EBQJ'
+
+      nock(url)
+        .post(path)
+        .reply(200, { access_token: 'foo' }, {
+          'Content-Type': 'application/json',
+        })
+      nock(url)
+        .post(newPayoutPath)
+        .reply(200, {
+          "batch_header": {
+            "sender_batch_header": {
+              "sender_batch_id": "Payouts_2020_100007",
+              "email_subject": "You have a payout!",
+              "email_message": "You have received a payout! Thanks for using our service!"
+            },
+            "payout_batch_id": "5UXD2E8A7EBQJ",
+            "batch_status": "PENDING"
+          }
+        }, {
+          'Content-Type': 'application/json',
+        })
+
+      nock(url)
+        .get(getPayoutPath)
+        .reply(200, paypalGetPayoutSample, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .persist()
+        .post('/v1/transfers')
+        .reply(200, transfer);
+      
+      nock('https://api.stripe.com')
+        .persist()
+        .get('/v1/transfers')
+        .reply(200, transfer);
+
+      const task = await createTask(agent);
+      const taskData = task.dataValues;
+      const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe' });
+      const anotherOrder = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'paypal' });
+      const assign = await createAssign(agent, { taskId: taskData.id }, { paypal_id: '123'});
+      const transferData = await createTransferWithTaskData(taskData, taskData.userId);
+      const updateAssign = await models.User.update({
+        paypal_id: 'test'
+      }, {
+        where: {
+          id: assign.dataValues.userId
+        } 
+      })
+      const res = await agent
+        .put('/transfers/update')
+        .send({
+          id: transferData.body.id,
+        });
+      expect(res.status).to.equal(200);
+      expect(res.body).to.exist;
+      expect(res.body.status).to.equal('in_transit');
+      expect(res.body.value).to.equal('400');
+      expect(res.body.transfer_method).to.equal('multiple');
+      expect(res.body.transfer_id).to.exist;
+      expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
+      expect(res.body.paypal_payout_id).to.exist;
+    })
+    it("should update transfer pending to created and update value for a pending transfer for an activated account for multiple payments", async () => {
+      nock('https://api.stripe.com')
+        .persist()
+        .post('/v1/transfers')
+        .reply(200, transfer);
+      nock('https://api.stripe.com')
+        .persist()
+        .get('/v1/transfers')
+        .reply(200, transfer);
+      const task = await createTask(agent);
+      const taskData = task.dataValues;
+      const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe' });
+      const anotherOrder = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'paypal' });
+      const assign = await createAssign(agent, { taskId: taskData.id }, { paypal_id: 'foo'});
+      const transferData = await createTransferWithTaskData(taskData, taskData.userId);
+      const res = await agent
+        .put('/transfers/update')
+        .send({
+          id: transferData.body.id,
+        });
+      expect(res.status).to.equal(200);
+      expect(res.body).to.exist;
+      expect(res.body.status).to.equal('in_transit');
+      expect(res.body.value).to.equal('400');
+      expect(res.body.transfer_method).to.equal('multiple');
+      expect(res.body.transfer_id).to.exist;
+      expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
+    })
+    it("should search transfers", async () => {  
+      const task = await createTask(agent);
+      const taskData = task.dataValues;
+      const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id });
+      const assign = await createAssign(agent, { taskId: taskData.id });
+      const transfer = await createTransfer({ taskId: taskData.id, userId: taskData.userId, to: assign.dataValues.userId });
+      const res = await agent
+        .get('/transfers/search')
+        .query({ userId: taskData.userId });
+      expect(res.body).to.exist;
+      expect(res.body.length).to.equal(1);
     })
     it("should fetch transfer", async () => {
+      nock('https://api.stripe.com')
+        .persist()
+        .get('/v1/transfers/1234')
+        .reply(200, transfer);
       try {
         const task = await createTask(agent);
         const taskData = task.dataValues;
@@ -273,6 +374,83 @@ describe("Transfer", () => {
         console.log('error on transfer', e);
         throw e;
       }
+    })
+    it("should fetch transfer with a paypal associated payout", async () => {
+
+      const url = 'https://api.sandbox.paypal.com'
+      const path = '/v1/oauth2/token'
+      const newPayoutPath = '/v1/payments/payouts'
+      const getPayoutPath = '/v1/payments/payouts/5UXD2E8A7EBQJ'
+
+      nock(url)
+        .post(path)
+        .reply(200, { access_token: 'foo' }, {
+          'Content-Type': 'application/json',
+        })
+      nock(url)
+        .post(newPayoutPath)
+        .reply(200, {
+          "batch_header": {
+            "sender_batch_header": {
+              "sender_batch_id": "Payouts_2020_100007",
+              "email_subject": "You have a payout!",
+              "email_message": "You have received a payout! Thanks for using our service!"
+            },
+            "payout_batch_id": "5UXD2E8A7EBQJ",
+            "batch_status": "PENDING"
+          }
+        }, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .persist()
+        .post('/v1/transfers')
+        .reply(200, transfer);
+
+        nock('https://api.stripe.com')
+        .persist()
+        .get('/v1/transfers/tr_1CcGcaBrSjgsps2DGToaoNF5')
+        .reply(200, transfer);
+      
+      nock(url)
+        .post(path)
+        .reply(200, { access_token: 'foo' }, {
+          'Content-Type': 'application/json',
+        })
+      nock(url)
+        .get(getPayoutPath)
+        .reply(200, paypalGetPayoutSample, {
+          'Content-Type': 'application/json',
+        })
+
+
+      const task = await createTask(agent);
+      const taskData = task.dataValues;
+      const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe' });
+      const anotherOrder = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: false, provider: 'stripe' });
+      const oneMoreOrder = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'paypal' });
+      const assign = await createAssign(agent, { taskId: taskData.id }, { paypal_id: 'foo@example.com' });
+      const createTransfer = await createTransferWithTaskData(taskData, taskData.userId);
+      const res = await agent
+          .get('/transfers/fetch/' + createTransfer.body.id);
+      expect(res.body).to.exist;
+      expect(res.body.status).to.equal('in_transit');
+      expect(res.body.value).to.equal('400');
+      expect(res.body.transfer_method).to.equal('multiple');
+      expect(res.body.transfer_id).to.exist;
+      expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5');
+      expect(res.body.paypal_payout_id).to.equal('5UXD2E8A7EBQJ');
+      expect(res.body.paypalTransfer).to.exist;
+      expect(res.body.paypalTransfer.batch_header.payout_batch_id).to.equal('LEP6947CGTKRL');
+      expect(res.body.paypalTransfer.batch_header.batch_status).to.equal('SUCCESS');
+      expect(res.body.paypalTransfer.batch_header.amount.value).to.equal('200.0');
+
+      expect(res.body.stripeTransfer.amount).to.equal(100);
+      
+      const payouts = await models.Payout.findAll()
+      expect(payouts.length).to.equal(1);
+      expect(payouts[0].source_id).to.equal('5UXD2E8A7EBQJ');
     })
     it("should not create transfers with same id", async () => {
       try {

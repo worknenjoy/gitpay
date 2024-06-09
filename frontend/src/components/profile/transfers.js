@@ -125,7 +125,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
 
   return (
     <div style={{ margin: '40px 0' }}>
-      <TransferDetails id={openTransferDetail} fetchTransfer={fetchTransfer} transfer={transfer} open={openTransferDetail} onClose={() => {
+      <TransferDetails user={user} history={history} id={openTransferDetail} fetchTransfer={fetchTransfer} transfer={transfer} open={openTransferDetail} onClose={() => {
         setOpenTransferDetail(false)
         history.push('/profile/transfers')
       }

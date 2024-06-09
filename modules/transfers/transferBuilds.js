@@ -8,6 +8,7 @@ const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
+const { update } = require('../mail/deadline')
 
 module.exports = Promise.method(async function transferBuilds(params) {
   const existingTransfer = params.transfer_id && await Transfer.findOne({
@@ -101,12 +102,15 @@ module.exports = Promise.method(async function transferBuilds(params) {
     taskId: params.taskId,
     userId: taskData.User.dataValues.id,
     to: destination.id,
+    paypal_transfer_amount: paypalTotal,
+    stripe_transfer_amount: stripeTotal
   }).save()
   const taskUpdate = await Task.update({ TransferId: transfer.id }, {
     where: {
       id: params.taskId
     }
   })
+  
   if (!taskUpdate[0]) {
     return { error: 'Task not updated' }
   }
@@ -134,7 +138,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
             id: params.taskId
           }
         })
-        const updateTransfer = await models.Transfer.update({ transfer_id: stripeTransfer.id, status: 'in_transit' }, {
+        const updateTransfer = await models.Transfer.update({ transfer_id: stripeTransfer.id, status: transfer.transfer_method === 'stripe' ? 'in_transit' : 'pending' }, {
           where: {
             id: transfer.id
           },
@@ -189,7 +193,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
             {
               recipient_type: 'EMAIL',
               amount: {
-                value: paypalTotal * 0.92,
+                value: (paypalTotal * 0.92).toFixed(2),
                 currency: 'USD'
               },
               receiver: user.email,
@@ -210,7 +214,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
         if (!paypalPayout) {
           return { error: 'Payout not created' }
         }
-        const transferWithPayPalPayoutInfo = await models.Transfer.update({ paypal_payout_id: paypalTransfer.batch_header.payout_batch_id },
+        const transferWithPayPalPayoutInfo = await models.Transfer.update({ paypal_payout_id: paypalTransfer.batch_header.payout_batch_id, status: transfer.transfer_method === 'paypal' ? 'in_transit' : 'pending'},
           {
             where: {
               id: transfer.id
@@ -222,6 +226,10 @@ module.exports = Promise.method(async function transferBuilds(params) {
     } catch (e) {
       console.log('paypalTransferError', e)
     }
+  }
+  const updateTransferStatus = transfer.transfer_method === 'multiple' && transfer.transfer_id && transfer.paypal_payout_id && await models.Transfer.update({ status: 'in_transit' }, { where: { id: transfer.id }, returning: true})
+  if(updateTransferStatus && updateTransferStatus[1]) {
+    transfer = updateTransferStatus[1][0].dataValues
   }
   return transfer
 })
