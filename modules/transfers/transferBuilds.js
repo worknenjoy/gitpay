@@ -2,13 +2,15 @@ const Transfer = require('../../models').Transfer
 const Task = require('../../models').Task
 const Order = require('../../models').Order
 const Promise = require('bluebird')
+const requestPromise = require('request-promise')
 const { orderDetails } = require('../orders')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
+const { update } = require('../mail/deadline')
 
-module.exports = Promise.method(async function transferBuilds (params) {
+module.exports = Promise.method(async function transferBuilds(params) {
   const existingTransfer = params.transfer_id && await Transfer.findOne({
     where: {
       transfer_id: params.transfer_id
@@ -48,7 +50,7 @@ module.exports = Promise.method(async function transferBuilds (params) {
     where: {
       id: taskData.assigned
     },
-    include: [ models.User ]
+    include: [models.User]
   })
 
   let finalValue = 0
@@ -75,85 +77,159 @@ module.exports = Promise.method(async function transferBuilds (params) {
       return { error: 'All orders must be paid' }
     }
     orders.map(order => {
-      if (order.provider === 'stripe') {
+      if (order.provider === 'stripe' && order.paid) {
         allPaypal = false
         isStripe = true
-        if(order.paid) stripeTotal += parseFloat(order.amount)
+        stripeTotal += parseFloat(order.amount)
       }
-      if (order.provider === 'paypal') {
+      if (order.provider === 'paypal' && order.paid) {
         allStripe = false
         isPaypal = true
-        if(order.paid) paypalTotal += parseFloat(order.amount)
+        paypalTotal += parseFloat(order.amount)
       }
-      if(order.paid) finalValue += parseFloat(order.amount)
+      if (order.paid) finalValue += parseFloat(order.amount)
     })
     if (isStripe && isPaypal) {
       isMultiple = true
     }
   }
-  const transfer = await Transfer.build({
+  const destination = assign.dataValues.User
+  let transfer = await Transfer.build({
     status: 'pending',
     value: finalValue,
     transfer_id: params.transfer_id,
     transfer_method: (isMultiple && 'multiple') || (isStripe && 'stripe') || (isPaypal && 'paypal'),
     taskId: params.taskId,
     userId: taskData.User.dataValues.id,
-    to: assign.dataValues.User.id,
+    to: destination.id,
+    paypal_transfer_amount: paypalTotal,
+    stripe_transfer_amount: stripeTotal
   }).save()
   const taskUpdate = await Task.update({ TransferId: transfer.id }, {
     where: {
       id: params.taskId
     }
   })
+  
   if (!taskUpdate[0]) {
     return { error: 'Task not updated' }
   }
 
+  const user = assign.dataValues.User.dataValues
+
   if (stripeTotal > 0) {
-    const assign = await models.Assign.findOne({
-      where: {
-        id: taskData.assigned
-      },
-      include: [ models.User ]
-    })
-    const user = assign.dataValues.User.dataValues
     const dest = user.account_id
     if (!dest) {
       TransferMail.paymentForInvalidAccount(user)
-      return transfer
-    }
-    const centavosAmount = finalValue * 100
-    let transferData = {
-      amount: centavosAmount * 0.92, // 8% base fee
-      currency: 'usd',
-      destination: dest,
-      source_type: 'card',
-      transfer_group: `task_${taskData.id}`
-    }
+    } else {
+      const centavosAmount = stripeTotal * 100
+      let transferData = {
+        amount: centavosAmount * 0.92, // 8% base fee
+        currency: 'usd',
+        destination: dest,
+        source_type: 'card',
+        transfer_group: `task_${taskData.id}`
+      }
 
-    const stripeTransfer = await stripe.transfers.create(transferData)
-    if (stripeTransfer) {
-      const updateTask = await models.Task.update({ transfer_id: stripeTransfer.id }, {
-        where: {
-          id: params.taskId
+      const stripeTransfer = await stripe.transfers.create(transferData)
+      if (stripeTransfer) {
+        const updateTask = await models.Task.update({ transfer_id: stripeTransfer.id }, {
+          where: {
+            id: params.taskId
+          }
+        })
+        const updateTransfer = await models.Transfer.update({ transfer_id: stripeTransfer.id, status: transfer.transfer_method === 'stripe' ? 'in_transit' : 'pending' }, {
+          where: {
+            id: transfer.id
+          },
+          returning: true
+
+        })
+        if (!updateTask || !updateTransfer) {
+          TransferMail.error(user, task, task.value)
+          return { error: 'update_task_reject' }
+        }
+        const taskOwner = await models.User.findByPk(taskData.userId)
+        TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
+        TransferMail.success(user, taskData, taskData.value)
+        transfer = updateTransfer[1][0].dataValues
+      }
+    }
+  }
+  if (paypalTotal > 0 && destination?.paypal_id) {
+    const paypalCredentials = await requestPromise({
+      method: 'POST',
+      uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
+      headers: {
+        'Accept': 'application/json',
+        'Accept-Language': 'en_US',
+        'Authorization': 'Basic ' + Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString('base64'),
+        'Content-Type': 'application/json',
+        'grant_type': 'client_credentials'
+      },
+      form: {
+        'grant_type': 'client_credentials'
+      }
+    })
+    const paypalToken = JSON.parse(paypalCredentials)['access_token']
+    try {
+      const paypalTransfer = await requestPromise({
+        method: 'POST',
+        uri: `${process.env.PAYPAL_HOST}/v1/payments/payouts`,
+        headers: {
+          'Accept': '*/*',
+          'Accept-Language': 'en_US',
+          'Prefer': 'return=representation',
+          'Authorization': 'Bearer ' + paypalToken,
+          'Content-Type': 'application/json'
+        },
+        json: true,
+        body: {
+          sender_batch_header: {
+            sender_batch_id: `task_${taskData.id}`,
+            email_subject: 'Payment for task'
+          },
+          items: [
+            {
+              recipient_type: 'EMAIL',
+              amount: {
+                value: (paypalTotal * 0.92).toFixed(2),
+                currency: 'USD'
+              },
+              receiver: user.email,
+              note: 'Payment for issue on Gitpay',
+              sender_item_id: `task_${taskData.id}`
+            }
+          ]
         }
       })
-      const updateTransfer = await models.Transfer.update({ transfer_id: stripeTransfer.id, status: 'in_transit' }, {
-        where: {
-          id: transfer.id
-        },
-        returning: true
-
-      })
-      if (!updateTask || !updateTransfer) {
-        TransferMail.error(user, task, task.value)
-        return { error: 'update_task_reject' }
+      if (paypalTransfer) {
+        const paypalPayout = await models.Payout.build({
+          source_id: paypalTransfer.batch_header.payout_batch_id,
+          method: 'paypal',
+          amount: paypalTotal * 0.92,
+          currency: 'usd',
+          userId: user.id
+        }).save()
+        if (!paypalPayout) {
+          return { error: 'Payout not created' }
+        }
+        const transferWithPayPalPayoutInfo = await models.Transfer.update({ paypal_payout_id: paypalTransfer.batch_header.payout_batch_id, status: transfer.transfer_method === 'paypal' ? 'in_transit' : 'pending'},
+          {
+            where: {
+              id: transfer.id
+            },
+            returning: true
+          })
+        transfer = transferWithPayPalPayoutInfo[1][0].dataValues
       }
-      const taskOwner = await models.User.findByPk(taskData.userId)
-      TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
-      TransferMail.success(user, taskData, taskData.value)
-      return updateTransfer[1][0].dataValues
+    } catch (e) {
+      console.log('paypalTransferError', e)
     }
+  }
+  const updateTransferStatus = transfer.transfer_method === 'multiple' && transfer.transfer_id && transfer.paypal_payout_id && await models.Transfer.update({ status: 'in_transit' }, { where: { id: transfer.id }, returning: true})
+  if(updateTransferStatus && updateTransferStatus[1]) {
+    transfer = updateTransferStatus[1][0].dataValues
   }
   return transfer
 })

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import slugify from '@sindresorhus/slugify'
 import moment from 'moment'
 import {
   Container,
@@ -8,7 +7,6 @@ import {
   withStyles,
   Chip
 } from '@material-ui/core'
-import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './payout-table'
 
 //Define messages for internationalization
@@ -20,6 +18,10 @@ const payoutMessages = defineMessages({
   headerStatus: {
     id: 'profile.payouts.headerStatus',
     defaultMessage: 'Status'
+  },
+  headerMethod: {
+    id: 'profile.payouts.headerMethod',
+    defaultMessage: 'Method'
   },
   headerValue: {
     id: 'profile.payouts.headerValue',
@@ -99,6 +101,7 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
           <CustomPaginationActionsTable
             tableHead={ [
               intl.formatMessage(payoutMessages.headerStatus),
+              intl.formatMessage(payoutMessages.headerMethod),
               intl.formatMessage(payoutMessages.headerValue),
               intl.formatMessage(payoutMessages.headerCreated),
             ] }
@@ -107,7 +110,10 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
                 ...payouts,
                 data: payouts.data.map(t => [
                   <Chip label={ t.status } />,
-                  `${currencyCodeToSymbol(t.currency)} ${formatStripeAmount(t.amount)}`,
+                  <Typography variant='body2'>
+                    {t.method}
+                  </Typography>,
+                  `${currencyCodeToSymbol(t.currency)} ${t.method === 'stripe' ? formatStripeAmount(t.amount) : t.amount}`,
                   moment(t.createdAt).format('LLL')
                 ]) } || {}
             }

@@ -34,8 +34,6 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
             }
           }).then(payment => {
             const paymentData = JSON.parse(payment)
-            // eslint-disable-next-line no-console
-            console.log('payment execute result', payment, paymentData)
             return order.update({
               transfer_id: paymentData.id
             }, {
@@ -46,8 +44,6 @@ module.exports = Promise.method(function orderPayment (orderParameters) {
               returning: true,
               plain: true
             }).then(updatedOrder => {
-              // eslint-disable-next-line no-console
-              console.log('updatedOrder', updatedOrder)
               if (!updatedOrder) {
                 throw new Error('update_order_error')
               }

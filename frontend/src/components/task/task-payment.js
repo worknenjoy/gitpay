@@ -453,7 +453,7 @@ class TaskPayment extends Component {
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
                   <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={ {
-                    value: this.props.values.card || 0
+                    value: this.props.values.card + this.props.values.paypal || 0
                   } } />
                 </Button>
               ) }
