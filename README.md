@@ -134,6 +134,43 @@ For exhaustive list of options available, refer `migration.js` in root directory
 
 Then you can access at http://localhost:8082
 
+### Activating user account locally
+
+When you run your backend node server, the e-mail notifications will output in your console, so when setup a new user, you should look for the activation link:
+
+```
+ ----- email / subject ----
+alexandre+contributor7@gitpay.me
+Activate your account
+ ----- end email ----
+ ----- email content ----
+[
+  {
+    type: 'text/html',
+    value: '<p>Hi Contrib7,</p><p>Click <a href="[ACTIVATION LINK]">here</a> to activate your account.</p>\n' +
+      '          \n' +
+      '\n' +
+      '<p>\n' +
+      'Thanks, <br />\n' +
+      'Gitpay Team\n' +
+      '</p>\n' +
+      '----------------------\n' +
+      '\n' +
+      '<p>\n' +
+      'https://gitpay.me (Web) <br />\n' +
+      'tarefas@gitpay.me (Email) <br />\n' +
+      'Worknenjoy Inc.,\n' +
+      '9450 SW Gemini Dr\n' +
+      'PMB 72684\n' +
+      'Beaverton, Oregon 97008-7105 US (Mail) <br />\n' +
+      '</p>\n'
+  }
+]
+ ----- end email content ----
+``` 
+
+You will find the activation link on the e-mail example, copy and paste in your browser to activate your user locally.
+
 ## Translation
 
 Please don't change the translation files directly, they will be managed on Crowdin.
