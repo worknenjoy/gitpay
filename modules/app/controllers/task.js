@@ -38,8 +38,10 @@ exports.fetchTask = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      if(error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
+        res.status(403).send({ error: 'API rate limit exceeded' })
+        return
+      }
       res.send(false)
     })
 }

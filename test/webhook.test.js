@@ -303,7 +303,7 @@ describe('webhooks', () => {
                     task
                       .update({ assigned: assign.dataValues.id }, { where: { id: task.id } })
                       .then( updatedTask => {
-                        createTransfer({userId: user.dataValues.id, taskId: task.id, transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', to: assign.dataValues.userId, status: 'pending'}).then(transfer => {
+                        createTransfer({userId: user.dataValues.id, transfer_method: 'stripe', taskId: task.id, transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', to: assign.dataValues.userId, status: 'pending'}).then(transfer => {
                           agent
                             .post('/webhooks')
                             .send(transferData.updated)

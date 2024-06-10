@@ -549,15 +549,18 @@ exports.updateWebhook = (req, res) => {
 
         break
       case 'transfer.created':
-        models.Transfer.update({
-          status: 'created'
-        }, {
+        models.Transfer.findOne({
           where: {
             transfer_id: event.data.object.id
           }
-        }).then(updateTransfer => {
-          return updateTransfer
+        }).then(existingTransfer => {
+          if (existingTransfer) {
+            if(existingTransfer.transfer_method === 'stripe') existingTransfer.status = 'created'
+            if(existingTransfer.transfer_method === 'multiple') existingTransfer.status = 'pending'
+            return existingTransfer.save().then(t => t)
+          }
         })
+        
         return models.Task.findOne({
           where: {
             transfer_id: event.data.object.id

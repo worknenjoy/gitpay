@@ -359,12 +359,15 @@ const updateTask = task => {
         return dispatch(fetchTask(task.id))
       })
       .catch(error => {
-        console.log('error', error)
         const errorResponse = error?.response?.data
         if (errorResponse.type === 'StripeCardError') {
           dispatch(addNotification('actions.task.payment.notification.error', `. ${errorResponse.message}`))
           dispatch(changeTaskTab(1))
           return dispatch(updateTaskError(errorResponse))
+        }
+        if (error.response && error.response.status === 403 && error.response.data.error === 'API rate limit exceeded') {
+          dispatch(addNotification('actions.task.create.validation.limit'))
+          return dispatch(updateTaskError(error.response.data.error))
         }
         dispatch(addNotification('actions.task.update.notification.error'))
         return dispatch(fetchTask(task.id))

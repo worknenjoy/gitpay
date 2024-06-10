@@ -208,13 +208,6 @@ module.exports = Promise.method(function taskFetch (taskParams) {
               }
               return responseGithub
             })
-            .catch(e => {
-              // eslint-disable-next-line no-console
-              console.log('github response error')
-              // eslint-disable-next-line no-console
-              console.log(e)
-              return data.dataValues
-            })
 
         case 'bitbucket':
           return requestPromise({
@@ -284,10 +277,5 @@ module.exports = Promise.method(function taskFetch (taskParams) {
         default:
           return data.dataValues
       }
-    })
-    .catch(error => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      return false
     })
 })
