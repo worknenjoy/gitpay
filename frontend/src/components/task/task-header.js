@@ -122,7 +122,7 @@ class TaskHeader extends React.Component {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Typography variant='h5' gutterBottom title={task.data.title}>
                 <strong>
-                  {task.data.title || 'no title'}
+                  {task.data.title}
                 </strong>
               </Typography>
               <IconButton onClick={this.handleMoreButton}>

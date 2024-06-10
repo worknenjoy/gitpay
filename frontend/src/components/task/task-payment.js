@@ -5,6 +5,7 @@ import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import Alert from '@material-ui/lab/Alert'
 import AlertTitle from '@material-ui/lab/AlertTitle'
 import {
+  Container,
   withStyles,
   Button,
   Typography,
@@ -14,10 +15,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Divider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
+  Drawer,
   AppBar,
   Tabs,
   Tab,
@@ -233,17 +231,18 @@ class TaskPayment extends Component {
     }
 
     return (
-      <Dialog
+      <Drawer
         onClose={ this.props.onClose }
         aria-labelledby='simple-dialog-title'
         fullWidth
         maxWidth='md'
+        anchor='right'
         { ...other }
       >
-        <DialogTitle id='simple-dialog-title'>
-          <FormattedMessage id='task.payment.action.title' defaultMessage='Pay for this task' />
-        </DialogTitle>
-        <DialogContent>
+        <Container style={{padding: 20}}>
+          <Typography variant='h5' id='simple-dialog-title' gutterBottom>
+            <FormattedMessage id='task.payment.action.title' defaultMessage='Send payment for this issue to an user' />
+          </Typography>
           { this.props.paid && (
             <Typography type='subheading' color='primary' gutterBottom noWrap>
               <FormattedMessage id='task.payment.transfers.concluded' defaultMessage='All transfers was succeeded to the destination account' />
@@ -374,7 +373,7 @@ class TaskPayment extends Component {
                 </List> }
             </TabContainer>
           </div>
-          <DialogContentText>
+          
             <div>
               { (!this.props.paid || this.props.task?.Transfer?.id) ? (
                 <div>
@@ -439,7 +438,7 @@ class TaskPayment extends Component {
                 </div>
               ) }
             </div>
-          </DialogContentText>
+          
           <Divider />
           { hasOrders() ? (
             <div>
@@ -474,8 +473,8 @@ class TaskPayment extends Component {
               <FormattedMessage id='task.payment.action.close' defaultMessage='Close' />
             </Button>
           ) }
-        </DialogContent>
-      </Dialog>
+        </Container>
+      </Drawer>
     )
   }
 }

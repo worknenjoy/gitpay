@@ -51,7 +51,7 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
               title={
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                   <Typography variant="body1">
-                    <FormattedMessage id="transfer.amount" defaultMessage='Sending money to {value}'
+                    <FormattedMessage id="transfer.to.label" defaultMessage='Sending money to {value}'
                       values={{ value: <strong>{data?.User?.username}</strong> }}
                     />
                   </Typography>
@@ -153,9 +153,9 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
           {currentTab === 1 && data.paypalTransfer && (
             <div style={{ margin: '20px 0' }}>
               <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Transaction ID' />} value={'#' + data.paypalTransfer.batch_header.payout_batch_id} />
-              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Status' />} value={data.paypalTransfer.batch_header.batch_status} />
-              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Amount' />} value={data.paypalTransfer.batch_header.amount.value} />
-              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Time' />} value={data.paypalTransfer.batch_header.time_completed} />
+              <TransactionRow label={<FormattedMessage id='transfer.details.status' defaultMessage='Status' />} value={data.paypalTransfer.batch_header.batch_status} />
+              <TransactionRow label={<FormattedMessage id='transfer.details.amount' defaultMessage='Amount' />} value={data.paypalTransfer.batch_header.amount.value} />
+              <TransactionRow label={<FormattedMessage id='transfer.details.time' defaultMessage='Time' />} value={data.paypalTransfer.batch_header.time_completed} />
             </div>
           )}
         </div>

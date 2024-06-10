@@ -187,15 +187,15 @@ describe("tasks", () => {
       }).catch(done)
     })
 
-    it('should give an error on fetch if the issue build responds with limit exceeded', (done) => {
+    it('should not raise an error on fetch if the issue build responds with limit exceeded', (done) => {
       registerAndLogin(agent).then(res => {
         createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080', provider: 'github'}).then(task => {
           nockAuthLimitExceeded()
           agent
           .get(`/tasks/fetch/${task.id}`)
           .end((err, res) => {
-            expect(res.body.error).exist
-            expect(res.body.error).to.contain('API rate limit exceeded')
+            expect(res.body).exist
+            expect(res.body.id).to.equal(task.id)
             done();
           })
         }).catch(done)
