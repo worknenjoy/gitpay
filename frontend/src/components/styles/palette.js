@@ -1,4 +1,4 @@
-import { indigo, teal, grey, green } from '@material-ui/core/colors'
+import { grey, green } from '@material-ui/core/colors'
 
 const Palette = {
   typography: {

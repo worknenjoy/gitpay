@@ -9,96 +9,107 @@ const orderDetails = require('../../orders').orderDetails
 const orderTransfer = require('../../orders').orderTransfer
 const orderRefund = require('../../orders').orderRefund
 
-exports.createOrder = (req, res) => {
-  orderBuild(req.body)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.status(401).send(error)
-    })
+exports.createOrder = async (req, res) => {
+  try {
+    const data = await orderBuild(req.body)
+    res.send(data)
+  }
+  catch (error) {
+    res.status(401).send(error)
+  }
 }
 
-exports.cancelOrder = (req, res) => {
-  orderCancel(req.body)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.status(401).send(error)
-    })
+exports.cancelOrder = async (req, res) => {
+  try {
+    const data = await orderCancel(req.body)
+    res.send(data)
+  }
+  catch (error) {
+    res.status(401).send(error)
+  }
 }
 
-exports.refundOrder = (req, res) => {
-  orderRefund(req.params)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.status(401).send(error)
-    })
+exports.refundOrder = async (req, res) => {
+  try {
+    const data = await orderRefund(req.params)
+    res.send(data)
+  }
+  catch (error) {
+    res.status(401).send(error)
+  }
 }
 
-exports.detailsOrder = (req, res) => {
-  orderDetails(req.params)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.status(401).send(error)
-    })
+exports.detailsOrder = async (req, res) => {
+  try {
+    const data = await orderDetails(req.params)
+    res.send(data)
+  }
+  catch (error) {
+    res.status(401).send(error)
+  }
 }
 
-exports.listOrders = (req, res) => {
-  orderSearch(req.query)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.send(false)
-    })
+exports.listOrders = async (req, res) => {
+  try {
+    const data = await orderSearch(req.query)
+    res.send(data)
+  }
+  catch (error) {
+    res.send(false)
+  }
 }
 
-exports.fetchOrders = (req, res) => {
-  orderFetch(req.params)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.send(false)
-    })
+exports.fetchOrders = async (req, res) => {
+  try {
+    const data = await orderFetch(req.params)
+    res.send(data)
+  }
+  catch (error) {
+    res.send(false)
+  }
 }
 
-exports.authorizeOrder = (req, res) => {
-  orderAuthorize(req.query)
-    .then(data => {
-      if (data.paid) {
-        res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`)
-        return
-      }
+exports.authorizeOrder = async (req, res) => {
+  try {
+    const data = await orderAuthorize(req.query)
+    if (data.paid) {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`)
+    }
+    else {
       res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
-    }).catch(error => {
-      res.redirect(process.env.FRONTEND_HOST)
-    })
+    }
+  }
+  catch (error) {
+    res.redirect(process.env.FRONTEND_HOST)
+  }
 }
 
-exports.updateOrder = (req, res) => {
-  orderUpdate(req.body)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.status(401).send(error)
-    })
+exports.updateOrder = async (req, res) => {
+  try {
+    const data = await orderUpdate(req.body)
+    res.send(data)
+  }
+  catch (error) {
+    res.status(401).send(error)
+  }
 }
 
-exports.paymentOrder = (req, res) => {
-  orderPayment(req.body)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.status(401).send(error)
-    })
+exports.paymentOrder = async (req, res) => {
+  try {
+    const data = await orderPayment(req.body)
+    res.send(data)
+  }
+  catch (error) {
+    res.status(401).send(error)
+  }
 }
 
-exports.transferOrder = (req, res) => {
-  orderTransfer(req.params, req.body)
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      res.status(401).send(error)
-    })
+exports.transferOrder = async (req, res) => {
+  try {
+    const data = await orderTransfer(req.params, req.body)
+    res.send(data)
+  }
+  catch (error) {
+    res.status(401).send(error)
+  }
 }

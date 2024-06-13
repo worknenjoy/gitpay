@@ -87,56 +87,56 @@ class TaskReport extends Component {
     const anotherReason = <FormattedMessage id='task.report.reason.another' defaultMessage='Another Reason' />
 
     return (
-      
-        <Dialog
-          open={ visible }
-          onClose={ () => this.props.onClose() }
-          aria-labelledby='form-dialog-title'
-        >
-          <DialogTitle id='form-dialog-title' style={ { padding: '16px 24px 8px' } }>
-            <FormattedMessage id='task.report.title' defaultMessage='Report Issue' />
-          </DialogTitle>
-          <DialogContent>
-            <Typography variant='subtitle1' gutterBottom style={ { color: 'grey', fontWeight: 'bold', marginBottom: 20 } }>
-              <FormattedMessage id='task.report.subtitle' defaultMessage='If you think this issue is invalid, is just for test purposes,
+
+      <Dialog
+        open={ visible }
+        onClose={ () => this.props.onClose() }
+        aria-labelledby='form-dialog-title'
+      >
+        <DialogTitle id='form-dialog-title' style={ { padding: '16px 24px 8px' } }>
+          <FormattedMessage id='task.report.title' defaultMessage='Report Issue' />
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant='subtitle1' gutterBottom style={ { color: 'grey', fontWeight: 'bold', marginBottom: 20 } }>
+            <FormattedMessage id='task.report.subtitle' defaultMessage='If you think this issue is invalid, is just for test purposes,
                 or has some error or even inapropriate content, please let us know and we will take action' />
-            </Typography>
-            <form onChange={ this.onChangeReason } type='POST' style={ { marginTop: '20px 0px 10px', color: 'grey' } }>
-              <FormControl fullWidth >
-                <RadioGroup name={ 'reason' } value={ reason } onChange={ this.onChangeReason }>
-                  <FormControlLabel id='task.report.reason.invalid'
-                    value={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.invalid'] : messageEn['task.report.reason.invalid'] }
-                    label={ invalid }
-                    control={ <Radio color='primary' /> } />
-                  <FormControlLabel id='task.report.reason.fourOFour'
-                    value={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.fourOFour'] : messageEn['task.report.reason.fourOFour'] }
-                    label={ fourOFour }
-                    control={ <Radio color='primary' /> } />
-                  <FormControlLabel id='task.report.reason.testOrAccident'
-                    value={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.testOrAccident'] : messageEn['task.report.reason.testOrAccident'] }
-                    label={ testOrAccident }
-                    control={ <Radio color='primary' /> } />
-                  <FormControlLabel value='' label={ anotherReason } control={ <Radio color='primary' /> }
-                    onChange={ this.onChangeReason } checked={ anotherReasonListed } />
-                  <TextField
-                    style={ { maxWidth: 300, display: !anotherReasonListed && 'none' } }
-                    label={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.custom'] : messageEn['task.report.reason.custom'] }
-                    inputProps={ { maxLength: characterLimit } }
-                    helperText={ `${reason.length}/${characterLimit}` } />
-                </RadioGroup>
-              </FormControl>
-            </form>
-          </DialogContent>
-          <DialogActions style={ { marginBottom: 10 } }>
-            <Button onClick={ () => this.closeModal() } color='primary'>
-              <FormattedMessage id='task.report.form.cancel' defaultMessage='Cancel' />
-            </Button>
-            <Button disabled={ reason.length === 0 } onClick={ this.sendReport } variant='contained' color='primary' >
-              <FormattedMessage id='task.report.form.report' defaultMessage='Report' />
-            </Button>
-          </DialogActions>
-        </Dialog>
-      
+          </Typography>
+          <form onChange={ this.onChangeReason } type='POST' style={ { marginTop: '20px 0px 10px', color: 'grey' } }>
+            <FormControl fullWidth >
+              <RadioGroup name={ 'reason' } value={ reason } onChange={ this.onChangeReason }>
+                <FormControlLabel id='task.report.reason.invalid'
+                  value={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.invalid'] : messageEn['task.report.reason.invalid'] }
+                  label={ invalid }
+                  control={ <Radio color='primary' /> } />
+                <FormControlLabel id='task.report.reason.fourOFour'
+                  value={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.fourOFour'] : messageEn['task.report.reason.fourOFour'] }
+                  label={ fourOFour }
+                  control={ <Radio color='primary' /> } />
+                <FormControlLabel id='task.report.reason.testOrAccident'
+                  value={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.testOrAccident'] : messageEn['task.report.reason.testOrAccident'] }
+                  label={ testOrAccident }
+                  control={ <Radio color='primary' /> } />
+                <FormControlLabel value='' label={ anotherReason } control={ <Radio color='primary' /> }
+                  onChange={ this.onChangeReason } checked={ anotherReasonListed } />
+                <TextField
+                  style={ { maxWidth: 300, display: !anotherReasonListed && 'none' } }
+                  label={ this.getLanguage().localeCompare('br') === 0 ? messageBr['task.report.reason.custom'] : messageEn['task.report.reason.custom'] }
+                  inputProps={ { maxLength: characterLimit } }
+                  helperText={ `${reason.length}/${characterLimit}` } />
+              </RadioGroup>
+            </FormControl>
+          </form>
+        </DialogContent>
+        <DialogActions style={ { marginBottom: 10 } }>
+          <Button onClick={ () => this.closeModal() } color='primary'>
+            <FormattedMessage id='task.report.form.cancel' defaultMessage='Cancel' />
+          </Button>
+          <Button disabled={ reason.length === 0 } onClick={ this.sendReport } variant='contained' color='primary' >
+            <FormattedMessage id='task.report.form.report' defaultMessage='Report' />
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     )
   }
 }

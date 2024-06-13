@@ -7,11 +7,24 @@
     "xdescribe": false,
     "xit": false
   },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Automatically detect the React version
+    }
+  },
   "rules": {
     "no-mixed-operators": 0,
     "import/first": 0,
     "prefer-promise-reject-errors": 0,
     "react/prop-types": 0,
-    "react/jsx-no-bind": 0
+    "react/jsx-no-bind": 0,
+    "react/jsx-indent-props": ["error", 2] // Enforce 2-space indentation for JSX props
   }
 }

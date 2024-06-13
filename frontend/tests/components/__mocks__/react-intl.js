@@ -1,7 +1,6 @@
 import React from 'react'
 const Intl = jest.requireActual('react-intl')
 
-
 const intl = {
   formatMessage: ({ defaultMessage }) => defaultMessage,
   defineMessages: (messages) => messages

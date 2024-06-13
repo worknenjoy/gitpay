@@ -1,9 +1,8 @@
 const models = require('../../models')
 const Promise = require('bluebird')
 
-module.exports = Promise.method(async function payoutBuilds(params) {
-
-  if(!params.userId) {
+module.exports = Promise.method(async function payoutBuilds (params) {
+  if (!params.userId) {
     return { error: 'No userId' }
   }
 
@@ -25,8 +24,8 @@ module.exports = Promise.method(async function payoutBuilds(params) {
     method: params.method,
     status: params.status
   })
-  
+
   const newPayout = await payout.save()
-  
+
   return newPayout
 })

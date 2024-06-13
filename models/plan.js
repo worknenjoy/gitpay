@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Plan.calcFinalPrice = (price, plan) => {
     const percentages = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
-    return Math.round(Number((price * (percentages[plan ? plan : 'open source'])).toFixed(2)))
+    return Math.round(Number((price * (percentages[plan || 'open source'])).toFixed(2)))
   }
 
   Plan.prototype.finalPrice = () => this.price + this.fee

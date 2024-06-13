@@ -64,10 +64,10 @@ module.exports = Promise.method(async function issueAddedComment (task) {
   This issue was a comment made by our GitpayBot [Gitpay Bot](https://github.com/gitpaybot).`
       }
     })
-    console.log('req response from github issue comment', req)
+    // console.log('req response from github issue comment', req)
     return req
   }
   catch (e) {
-    console.log('error on comment to Github', e)
+  // console.log('error on comment to Github', e)
   }
 })

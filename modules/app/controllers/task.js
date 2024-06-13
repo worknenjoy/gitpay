@@ -7,15 +7,16 @@ exports.createTask = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(async error => {
-      if(error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
+      if (error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
         res.status(403).send({ error: 'API rate limit exceeded' })
         return
       }
-      if(error.StatusCodeError) res.status(error.StatusCodeError).send(error)
-      if(error.name === 'SequelizeUniqueConstraintError') {
+      if (error.StatusCodeError) res.status(error.StatusCodeError).send(error)
+      if (error.name === 'SequelizeUniqueConstraintError') {
         const task = await Tasks.taskSearch({ url: req.body.url })
-        res.send({...error, ...{id: task[0].id}})
-      } else {
+        res.send({ ...error, ...{ id: task[0].id } })
+      }
+      else {
         res.send(error)
       }
     })
@@ -38,7 +39,7 @@ exports.fetchTask = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-      if(error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
+      if (error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
         res.status(403).send({ error: 'API rate limit exceeded' })
         return
       }
@@ -88,7 +89,7 @@ exports.deleteTaskById = (req, res) => {
     .then((deleted) => {
       res.status(200).send(`${deleted}`)
     }).catch(error => {
-      console.log('error', error)
+      // console.log('error', error)
       res.status(400).send(error)
     })
 }

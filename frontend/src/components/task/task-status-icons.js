@@ -46,8 +46,7 @@ const TaskStatusIcons = ({ status }) => {
 }
 
 TaskStatusIcons.propTypes = {
-  status: PropTypes.string.isRequired,
-  bounty: PropTypes.bool.isRequired
+  status: PropTypes.string.isRequired
 }
 
 export default TaskStatusIcons

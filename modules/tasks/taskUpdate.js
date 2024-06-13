@@ -3,7 +3,6 @@ const Promise = require('bluebird')
 const models = require('../../models')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
-const TransferMail = require('../mail/transfer')
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists

@@ -40,17 +40,17 @@ const OrderCron = {
   },
   checkExpiredPaypalOrders: async () => {
     const orders = await models.Order.findAll({ where: {
-        status: {
-          [Op.eq]: 'succeeded'
-        },
-        provider: {
-          [Op.eq]: 'paypal'
-        },
-        paid: {
-          [Op.eq]: true
-        }
+      status: {
+        [Op.eq]: 'succeeded'
       },
-      include: [ models.User, models.Task ]
+      provider: {
+        [Op.eq]: 'paypal'
+      },
+      paid: {
+        [Op.eq]: true
+      }
+    },
+    include: [ models.User, models.Task ]
     })
     if (orders[0]) {
       try {
@@ -81,23 +81,23 @@ const OrderCron = {
               }).then(result => {
                 return JSON.parse(result)
               }).catch(e => {
-                console.log('error on order details', e.error)
+                // console.log('error on order details', e.error)
                 return JSON.parse(e.error)
               })
-              const orderDetailsResult =  await orderDetails()
-              if(orderDetailsResult["name"] === 'RESOURCE_NOT_FOUND') {
+              const orderDetailsResult = await orderDetails()
+              if (orderDetailsResult['name'] === 'RESOURCE_NOT_FOUND') {
                 return models.Order.update({ status: 'expired', paid: false }, { where: { id: o.dataValues.id } }).then(orderUpdated => {
-                  if(orderUpdated[0] === 1) {
+                  if (orderUpdated[0] === 1) {
                     orderMail.expiredOrders(order)
-                    return;
                   }
                 })
               }
             }
           }
         })
-      } catch (e) {
-        console.log('error', e)
+      }
+      catch (e) {
+        // console.log('error', e)
       }
     }
     return orders

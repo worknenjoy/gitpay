@@ -34,7 +34,7 @@ const styles = theme => mainStyles(theme)
 
 const Welcome = (props) => {
   const ref = useRef(null)
-  const [value, setValue] = React.useState(0)
+  // const [] = React.useState(0)
 
   React.useEffect(() => {
     // componentDidMount() equivalent

@@ -9,7 +9,6 @@ import {
 import Close from '@material-ui/icons/Close'
 
 class Notification extends Component {
-
   getActions = () => {
     let actions = [
       <IconButton
@@ -21,10 +20,10 @@ class Notification extends Component {
         <Close />
       </IconButton>
     ]
-    if(this.props.link) {
+    if (this.props.link) {
       actions = [this.getLink(), actions]
     }
-  
+
     return actions
   }
 

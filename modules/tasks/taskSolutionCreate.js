@@ -1,7 +1,6 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 const taskSolutionFetchData = require('./taskSolutionFetchData')
-const taskPayment = require('./taskPayment')
 const assignExist = require('../assigns').assignExists
 const transferBuilds = require('../transfers/transferBuilds')
 const taskUpdate = require('../tasks/taskUpdate')
@@ -23,16 +22,15 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
 
   if (fetchTaskSolutionData.isAuthorOfPR && fetchTaskSolutionData.isConnectedToGitHub && fetchTaskSolutionData.isIssueClosed && fetchTaskSolutionData.isPRMerged && fetchTaskSolutionData.hasIssueReference) {
     if (!task.dataValues.paid && !task.dataValues.transfer_id) {
-      
       const existingAssignment = await assignExist({ userId: taskSolutionParams.userId, taskId: taskSolutionParams.taskId })
 
       if (!existingAssignment) {
         const assign = await task.createAssign({ userId: taskSolutionParams.userId })
-        if(!assign) {
+        if (!assign) {
           throw new Error('COULD_NOT_CREATE_ASSIGN')
         }
         const taskUpdateAssign = await taskUpdate({ id: taskSolutionParams.taskId, assigned: assign.dataValues.id })
-        if(!taskUpdateAssign) {
+        if (!taskUpdateAssign) {
           throw new Error('COULD_NOT_UPDATE_TASK')
         }
       }
@@ -40,7 +38,7 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
 
     return models.TaskSolution.create(taskSolutionParams).then(async data => {
       const transferSend = await transferBuilds({ taskId: task.dataValues.id, userId: task.dataValues.userId })
-      if(transferSend.error) {
+      if (transferSend.error) {
         throw new Error('transferSend.error')
       }
       return data.dataValues

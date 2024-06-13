@@ -555,12 +555,12 @@ exports.updateWebhook = (req, res) => {
           }
         }).then(existingTransfer => {
           if (existingTransfer) {
-            if(existingTransfer.transfer_method === 'stripe') existingTransfer.status = 'created'
-            if(existingTransfer.transfer_method === 'multiple') existingTransfer.status = 'pending'
+            if (existingTransfer.transfer_method === 'stripe') existingTransfer.status = 'created'
+            if (existingTransfer.transfer_method === 'multiple') existingTransfer.status = 'pending'
             return existingTransfer.save().then(t => t)
           }
         })
-        
+
         return models.Task.findOne({
           where: {
             transfer_id: event.data.object.id
@@ -690,7 +690,7 @@ exports.updateWebhook = (req, res) => {
             source_id: event.data.object.id
           }
         }).then(updatedPayout => {
-          if(updatedPayout[0] === 0) return res.status(400).send({ error: 'Error to update payout' })
+          if (updatedPayout[0] === 0) return res.status(400).send({ error: 'Error to update payout' })
           return models.User.findOne({
             where: {
               account_id: event.account
@@ -718,7 +718,6 @@ exports.updateWebhook = (req, res) => {
               return res.status(400).send(e)
             })
         })
-
 
         break
       case 'balance.available':

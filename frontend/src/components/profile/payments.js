@@ -114,7 +114,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
   const retryPaypalPayment = (e, item) => {
     e.preventDefault()
     const { payment_url: paymentUrl, status } = item
-    if(status === 'expired') {
+    if (status === 'expired') {
       return updateOrder({ id: item.id }).then(order => {
         if (order.order.payment_url) {
           window.location.href = order.order.payment_url
@@ -137,7 +137,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
   */
 
   const retryPaypalPaymentButton = (item) => {
-    const { payment_url: paymentUrl } = item
+    // const { payment_url: paymentUrl } = item
     return (
       <Button style={ { marginTop: 10, paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
         retryPaypalPayment(e, item)

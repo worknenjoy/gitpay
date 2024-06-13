@@ -49,7 +49,7 @@ const SendSolutionDialog = props => {
     if (editMode) {
       const payload = { pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload).then((solution) => {
-        
+
       })
       setEditMode(false)
       // eslint-disable-next-line no-useless-return
@@ -59,11 +59,11 @@ const SendSolutionDialog = props => {
     const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id }
 
     props.createTaskSolution(payload).then((solution) => {
-      
+
     })
   }
 
-  if(!user.id) {
+  if (!user.id) {
     return <Redirect to='/signin' />
   }
 
@@ -83,7 +83,7 @@ const SendSolutionDialog = props => {
             <SendSolutionForm handlePullRequestURLChange={ handlePullRequestURLChange } pullRequestURL={ pullRequestURL } />
             <SendSolutionRequirements completed={ props.completed } isConnectedToGitHub={ pullRequestData.isConnectedToGitHub } isAuthorOfPR={ pullRequestData.isAuthorOfPR } isPRMerged={ pullRequestData.isPRMerged } isIssueClosed={ pullRequestData.isIssueClosed } hasIssueReference={ pullRequestData.hasIssueReference } />
           </React.Fragment>
-          : <TaskSolution taskSolution={ taskSolution } task={task.data} />
+          : <TaskSolution taskSolution={ taskSolution } task={ task.data } />
         }
       </DialogContent>
       <DialogActions>

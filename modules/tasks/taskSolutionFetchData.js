@@ -2,10 +2,10 @@ const Promise = require('bluebird')
 const models = require('../../models')
 const requestPromise = require('request-promise')
 
-function extractIssueReferences(text) {
-  const issueReferenceRegex = /#(\d+)/g;
-  const matches = text.match(issueReferenceRegex);
-  return matches ? matches.map(match => match.slice(1)) : []; // Remove the '#' prefix
+function extractIssueReferences (text) {
+  const issueReferenceRegex = /#(\d+)/g
+  const matches = text.match(issueReferenceRegex)
+  return matches ? matches.map(match => match.slice(1)) : [] // Remove the '#' prefix
 }
 
 module.exports = Promise.method(async function fetchTaskSolutionData (solutionParams) {
@@ -58,7 +58,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
       }
     }
 
-    if(task.dataValues.url.includes(extractIssueReferences(pullRequestData.body))) {
+    if (task.dataValues.url.includes(extractIssueReferences(pullRequestData.body))) {
       hasIssueReference = true
     }
 

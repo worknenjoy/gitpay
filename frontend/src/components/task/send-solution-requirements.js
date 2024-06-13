@@ -9,7 +9,7 @@ import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded'
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded'
 import { makeStyles } from '@material-ui/core/styles'
 import ReactPlaceholder from 'react-placeholder'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +25,7 @@ const SendSolutionRequirements = props => {
     <List className={ classes.root }>
       <ListItem>
         <ListItemIcon style={ { color: 'black' } }>
-          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={<CircularProgress size={24} />}>
+          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={ <CircularProgress size={ 24 } /> }>
             { props.isConnectedToGitHub ? <CheckCircleRoundedIcon color='primary' /> : <CancelRoundedIcon /> }
           </ReactPlaceholder>
         </ListItemIcon>
@@ -33,7 +33,7 @@ const SendSolutionRequirements = props => {
       </ListItem>
       <ListItem>
         <ListItemIcon style={ { color: 'black' } }>
-          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={<CircularProgress size={24} />}>
+          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={ <CircularProgress size={ 24 } /> }>
             { props.isAuthorOfPR ? <CheckCircleRoundedIcon color='primary' /> : <CancelRoundedIcon /> }
           </ReactPlaceholder>
         </ListItemIcon>
@@ -41,7 +41,7 @@ const SendSolutionRequirements = props => {
       </ListItem>
       <ListItem>
         <ListItemIcon style={ { color: 'black' } }>
-          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={<CircularProgress size={24} />}>
+          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={ <CircularProgress size={ 24 } /> }>
             { props.isPRMerged ? <CheckCircleRoundedIcon color='primary' /> : <CancelRoundedIcon /> }
           </ReactPlaceholder>
         </ListItemIcon>
@@ -49,7 +49,7 @@ const SendSolutionRequirements = props => {
       </ListItem>
       <ListItem>
         <ListItemIcon style={ { color: 'black' } }>
-          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={<CircularProgress size={24} />}>
+          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={ <CircularProgress size={ 24 } /> }>
             { props.isIssueClosed ? <CheckCircleRoundedIcon color='primary' /> : <CancelRoundedIcon /> }
           </ReactPlaceholder>
         </ListItemIcon>
@@ -57,7 +57,7 @@ const SendSolutionRequirements = props => {
       </ListItem>
       <ListItem>
         <ListItemIcon style={ { color: 'black' } }>
-          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={<CircularProgress size={24} />}>
+          <ReactPlaceholder showLoadingAnimation rows={ 1 } ready={ props.completed } customPlaceholder={ <CircularProgress size={ 24 } /> }>
             { props.hasIssueReference ? <CheckCircleRoundedIcon color='primary' /> : <CancelRoundedIcon /> }
           </ReactPlaceholder>
         </ListItemIcon>

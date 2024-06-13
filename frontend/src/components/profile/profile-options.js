@@ -4,27 +4,19 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import {
-  Avatar,
   Typography,
   Button,
   CardActions,
   CardContent,
-  withStyles,
-  Chip,
+  withStyles
 } from '@material-ui/core'
 
 import {
   Alert, AlertTitle
 } from '@material-ui/lab'
-
-import {
-  Person
-} from '@material-ui/icons'
-
 import { Card, CardList, CardMedia } from './ProfileStyles'
 import WelcomeUser from '../session/welcome-user'
 
-const organizationIcon = require('../../images/icons/noun_project management_3063542.svg')
 const toolsIcon = require('../../images/icons/noun_project management_3063515.svg')
 const preferencesIcon = require('../../images/icons/noun_project management_3063532.svg')
 const generalSettingsIcon = require('../../images/icons/noun_project management_3063521.svg')

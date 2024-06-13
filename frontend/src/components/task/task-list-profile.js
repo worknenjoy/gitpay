@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { defineMessages, injectIntl } from 'react-intl'
+import { injectIntl } from 'react-intl'
 
 import {
   Container,
-  Typography,
-  Tabs,
-  Tab,
   Grid,
   withStyles,
 } from '@material-ui/core'
@@ -67,26 +64,6 @@ const styles = theme => ({
     marginRight: 5
   }
 })
-
-const messages = defineMessages({
-  issuesTitle: {
-    id: 'task.list.issue.title',
-    defaultMessage: 'Explore issues, projects and organizations'
-  },
-  issuesLabel: {
-    id: 'task.list.issue.label',
-    defaultMessage: 'Issues'
-  },
-  projectsLabel: {
-    id: 'task.list.issue.projects',
-    defaultMessage: 'Projects'
-  },
-  organizationsLabel: {
-    id: 'task.list.issue.organizations',
-    defaultMessage: 'Organizations'
-  }
-})
-
 const TaskListProfile = (props) => {
   const { classes, noTopBar, noBottomBar } = props
 

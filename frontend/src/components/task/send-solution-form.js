@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   customInput: {
     padding: '12px 14px', // Customize padding as needed
   },
-});
+})
 
 const SendSolutionForm = props => {
   const classes = useStyles()
@@ -23,13 +23,13 @@ const SendSolutionForm = props => {
           { (msg) => (
             <FilledInput
               id='solution-url'
-              endAdornment={ <InputAdornment position='end'><GitHubIcon size={16} /></InputAdornment> }
+              endAdornment={ <InputAdornment position='end'><GitHubIcon size={ 16 } /></InputAdornment> }
               placeholder={ msg }
               type='string'
               value={ props.pullRequestURL }
               onChange={ props.handlePullRequestURLChange }
               inputProps={ { className: classes.customInput, 'data-testid': 'pull-request-url' } }
-              
+
             />
           ) }
         </FormattedMessage>

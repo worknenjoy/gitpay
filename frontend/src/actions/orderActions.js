@@ -84,7 +84,6 @@ const updateOrderError = error => {
   return { type: UPDATE_ORDER_ERROR, completed: true, error: error }
 }
 
-
 /*
  * Order pay
  */

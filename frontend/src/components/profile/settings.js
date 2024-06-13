@@ -10,7 +10,8 @@ import {
   MenuItem,
   Button,
   Switch,
-  Checkbox
+  Checkbox,
+  localStorage
 } from '@material-ui/core'
 import LanguageIcon from '@material-ui/icons/Language'
 import { updateIntl } from 'react-intl-redux'
@@ -75,7 +76,6 @@ class Settings extends Component {
           locale: lang,
           messages: messages[lang],
         }))
-
       }
       catch (e) {
         // eslint-disable-next-line no-console

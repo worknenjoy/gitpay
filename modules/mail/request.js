@@ -10,7 +10,7 @@ module.exports = (to, subject, content, replyEmail) => {
   console.log(' ----- email / subject ---- ')
   // eslint-disable-next-line no-console
   console.log(to)
-  console.log(subject)
+  // console.log(subject)
   // eslint-disable-next-line no-console
   console.log(' ----- end email ---- ')
   // eslint-disable-next-line no-console

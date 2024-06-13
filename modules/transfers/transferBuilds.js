@@ -10,7 +10,7 @@ const TransferMail = require('../mail/transfer')
 const models = require('../../models')
 const { update } = require('../mail/deadline')
 
-module.exports = Promise.method(async function transferBuilds(params) {
+module.exports = Promise.method(async function transferBuilds (params) {
   const existingTransfer = params.transfer_id && await Transfer.findOne({
     where: {
       transfer_id: params.transfer_id
@@ -110,7 +110,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       id: params.taskId
     }
   })
-  
+
   if (!taskUpdate[0]) {
     return { error: 'Task not updated' }
   }
@@ -121,7 +121,8 @@ module.exports = Promise.method(async function transferBuilds(params) {
     const dest = user.account_id
     if (!dest) {
       TransferMail.paymentForInvalidAccount(user)
-    } else {
+    }
+    else {
       const centavosAmount = stripeTotal * 100
       let transferData = {
         amount: centavosAmount * 0.92, // 8% base fee
@@ -214,7 +215,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
         if (!paypalPayout) {
           return { error: 'Payout not created' }
         }
-        const transferWithPayPalPayoutInfo = await models.Transfer.update({ paypal_payout_id: paypalTransfer.batch_header.payout_batch_id, status: transfer.transfer_method === 'paypal' ? 'in_transit' : 'pending'},
+        const transferWithPayPalPayoutInfo = await models.Transfer.update({ paypal_payout_id: paypalTransfer.batch_header.payout_batch_id, status: transfer.transfer_method === 'paypal' ? 'in_transit' : 'pending' },
           {
             where: {
               id: transfer.id
@@ -223,12 +224,19 @@ module.exports = Promise.method(async function transferBuilds(params) {
           })
         transfer = transferWithPayPalPayoutInfo[1][0].dataValues
       }
-    } catch (e) {
-      console.log('paypalTransferError', e)
+    }
+    catch (e) {
+      // console.log('paypalTransferError', e)
     }
   }
-  const updateTransferStatus = transfer.transfer_method === 'multiple' && transfer.transfer_id && transfer.paypal_payout_id && await models.Transfer.update({ status: 'in_transit' }, { where: { id: transfer.id }, returning: true})
-  if(updateTransferStatus && updateTransferStatus[1]) {
+  const updateTransferStatus = await models.Transfer.update({ status: 'in_transit' }, {
+    where: {
+      id: transfer.id
+    },
+    returning: true
+  })
+
+  if (updateTransferStatus && updateTransferStatus[1]) {
     transfer = updateTransferStatus[1][0].dataValues
   }
   return transfer

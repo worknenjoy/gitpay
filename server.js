@@ -15,7 +15,8 @@ const { dailyJob } = require('./cron')
 if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors')
   app.use(cors())
-} else {
+}
+else {
   app.use(sslRedirect())
 }
 

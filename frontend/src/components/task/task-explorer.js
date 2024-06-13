@@ -105,8 +105,8 @@ const TaskExplorer = (props) => {
       if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) {
         setState({ ...state, isOrganizationPage: true })
       }
-      if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) { 
-        setState({ ...state, isProjectPage: true }) 
+      if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) {
+        setState({ ...state, isProjectPage: true })
       }
       switch (pathname) {
         case '/tasks/open':
@@ -128,14 +128,13 @@ const TaskExplorer = (props) => {
           setState({ ...state, value: 2, showNavigation: true })
           break
         default:
-          //setState({ ...state, value: 0, showNavigation: false })
+          // setState({ ...state, value: 0, showNavigation: false })
           break
       }
     }
 
     handlePathNameChange()
   }, [state.value, props.history.location.pathname])
-  
 
   const handleSectionTab = ({ currentTarget }, value) => {
     setState({ ...state, value })

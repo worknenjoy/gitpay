@@ -11,7 +11,6 @@ import {
   ListItemText,
   ListItemIcon,
   Button,
-  Container
 } from '@material-ui/core'
 
 import {
@@ -31,7 +30,6 @@ import messages from './messages'
 import mainStyles from '../styles/style'
 
 const freelancerImage = require('../../images/collections/collection-flat-build.svg')
-const citySoftware = require('../../images/collections/collection-flat-background.svg')
 const deal = require('../../images/collections/collection-flat-works.svg')
 
 import {

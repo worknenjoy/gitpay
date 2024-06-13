@@ -8,7 +8,7 @@ const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const Sendmail = require('../mail/mail')
 
-module.exports = Promise.method(function orderBuilds(orderParameters) {
+module.exports = Promise.method(function orderBuilds (orderParameters) {
   const taskUrl = `${process.env.API_HOST}/#/task/${orderParameters.taskId}`
   return models.Order
     .build(
@@ -59,7 +59,7 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
             }
           }).then(invoiceItem => {
             stripe.invoices.finalizeInvoice(invoice.id).then(finalizedInvoice => {
-              Sendmail.success({email: orderParameters.email}, 'Invoice created', `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`)
+              Sendmail.success({ email: orderParameters.email }, 'Invoice created', `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`)
               return order.update(
                 {
                   source_id: invoice.id
@@ -69,13 +69,11 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
                     id: order.dataValues.id
                   }
                 }).then(orderUpdated => {
-                  
-                  return orderUpdated
-                })
+                return orderUpdated
               })
             })
+          })
         })
-
       }
       if (orderParameters.provider === 'paypal') {
         const totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)

@@ -14,7 +14,7 @@ exports.updateTransfer = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
-      console.log('error', error)
+      // console.log('error', error)
       res.status(error.StatusCode || 400).send(error)
     })
 }

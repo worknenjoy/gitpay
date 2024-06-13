@@ -25,9 +25,6 @@ import {
   Link,
   FormControlLabel,
   DialogContentText,
-  AppBar,
-  Tabs,
-  Tab,
   TextareaAutosize,
 } from '@material-ui/core'
 import {
@@ -45,11 +42,7 @@ import logoBitbucket from '../../images/bitbucket-logo-blue.png'
 const TaskAssignment = (props) => {
   const { classes, task } = props
 
-  const [currentTab, setCurrentTab] = useState(0)
-
-  const handleTabChange = (event, value) => {
-    setCurrentTab(value)
-  }
+  const [currentTab] = useState(0)
 
   const taskAssignmentCheckboxes = () => {
     if (props.taskFundingDialog) {

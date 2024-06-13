@@ -288,14 +288,9 @@ class Roles extends Component {
 
 Roles.propTypes = {
   classes: PropTypes.object.isRequired,
-  preferences: PropTypes.string,
-  language: PropTypes.string,
   updateUser: PropTypes.func,
-  createRoles: PropTypes.func,
-  deleteRoles: PropTypes.func,
   fetchRoles: PropTypes.func,
   roles: PropTypes.object,
-  fetchPreferences: PropTypes.func,
   addNotification: PropTypes.func.isRequired,
 }
 

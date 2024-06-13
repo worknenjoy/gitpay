@@ -34,8 +34,8 @@ import ProfileSideBar from './profile-sidebar'
 import TaskContainer from '../../containers/task'
 import TaskListProfile from '../../containers/task-list-profile'
 
-const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
-const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBottomBar {...props} />
+const TaskListProfileProjects = (props) => <TaskListProfile { ...props } />
+const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBottomBar { ...props } />
 
 const styles = theme => ({
   root: {
@@ -191,15 +191,12 @@ class Profile extends Component {
     }
   }
 
-  
   async componentDidMount () {
     await this.props.fetchOrganizations()
     this.setState({ orgsLoaded: true })
     if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
     if (!this.props.user.provider && !this.props.user.email_verified) this.setState({ emailNotVerifiedDialog: true })
   }
-
-
 
   setActive (path) {
     switch (path) {
@@ -431,7 +428,7 @@ class Profile extends Component {
                     <Route
                       exact
                       path='/profile/organizations/:organization_id'
-                      component={TaskListProfileOrganization}
+                      component={ TaskListProfileOrganization }
                     />
                     <Route
                       exact

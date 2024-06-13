@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import CustomPaginationActionsTable from './payout-table'
 
-//Define messages for internationalization
+// Define messages for internationalization
 const payoutMessages = defineMessages({
   title: {
     id: 'profile.payouts.title',
@@ -31,9 +31,9 @@ const payoutMessages = defineMessages({
     id: 'profile.payouts.headerCreated',
     defaultMessage: 'Created'
   }
-});
+})
 
-//Map for currency symbols
+// Map for currency symbols
 const currencyMap = {
   usd: '$', // US Dollar
   eur: '€', // Euro
@@ -49,25 +49,25 @@ const currencyMap = {
   hkd: 'HK$', // Hong Kong Dollar
   sgd: 'S$', // Singapore Dollar
   krw: '₩', // South Korean Won
-};
-
-//Function to convert currency code to symbol
-function currencyCodeToSymbol(code) {
-  return currencyMap[code.toLowerCase()] || code;
 }
 
-//Function to format amount from cents to decimal format
-function formatStripeAmount(amountInCents) {
+// Function to convert currency code to symbol
+function currencyCodeToSymbol (code) {
+  return currencyMap[code.toLowerCase()] || code
+}
+
+// Function to format amount from cents to decimal format
+function formatStripeAmount (amountInCents) {
   // Convert to a number in case it's a string
-  let amount = Number(amountInCents);
+  let amount = Number(amountInCents)
 
   // Check if the conversion result is a valid number
   if (isNaN(amount)) {
-    return 'Invalid amount';
+    return 'Invalid amount'
   }
 
   // Convert cents to a decimal format and fix to 2 decimal places
-  return (amount / 100).toFixed(2);
+  return (amount / 100).toFixed(2)
 }
 
 const styles = theme => ({
@@ -85,7 +85,6 @@ const styles = theme => ({
 })
 
 const Payouts = ({ searchPayout, payouts, user, intl }) => {
-
   useEffect(() => {
     const getPayouts = async () => await searchPayout({ userId: user.user.id })
     getPayouts().then(t => {})
@@ -95,7 +94,7 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
     <div style={ { margin: '40px 0' } }>
       <Container>
         <Typography variant='h5' gutterBottom>
-          <FormattedMessage {...payoutMessages.title} />
+          <FormattedMessage { ...payoutMessages.title } />
         </Typography>
         <div>
           <CustomPaginationActionsTable
@@ -111,7 +110,7 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
                 data: payouts.data.map(t => [
                   <Chip label={ t.status } />,
                   <Typography variant='body2'>
-                    {t.method}
+                    { t.method }
                   </Typography>,
                   `${currencyCodeToSymbol(t.currency)} ${t.method === 'stripe' ? formatStripeAmount(t.amount) : t.amount}`,
                   moment(t.createdAt).format('LLL')

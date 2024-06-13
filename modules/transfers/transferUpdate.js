@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
 
-module.exports = Promise.method(async function transferUpdate(params) {
+module.exports = Promise.method(async function transferUpdate (params) {
   let existingTransfer = params.id && await Transfer.findOne({
     where: {
       id: params.id
@@ -25,10 +25,10 @@ module.exports = Promise.method(async function transferUpdate(params) {
   })
 
   if (
-    existingTransfer && 
-    destination.account_id && 
-    existingTransfer.status === 'pending' && 
-    (existingTransfer.transfer_method === 'multiple' || existingTransfer.transfer_method === 'stripe') && 
+    existingTransfer &&
+    destination.account_id &&
+    existingTransfer.status === 'pending' &&
+    (existingTransfer.transfer_method === 'multiple' || existingTransfer.transfer_method === 'stripe') &&
     existingTransfer.stripe_transfer_amount &&
     !existingTransfer.transfer_id
   ) {
@@ -67,12 +67,12 @@ module.exports = Promise.method(async function transferUpdate(params) {
       existingTransfer = updateTransfer[1][0].dataValues
     }
   }
-  if(
+  if (
     existingTransfer &&
     !existingTransfer.paypal_payout_id &&
     existingTransfer.paypal_transfer_amount &&
-    (existingTransfer.transfer_method === 'multiple' || existingTransfer.transfer_method === 'paypal')
-    && destination.paypal_id
+    (existingTransfer.transfer_method === 'multiple' || existingTransfer.transfer_method === 'paypal') &&
+    destination.paypal_id
   ) {
     const paypalCredentials = await requestPromise({
       method: 'POST',
@@ -119,17 +119,18 @@ module.exports = Promise.method(async function transferUpdate(params) {
         },
         json: true
       })
-      if(paypalTransfer) {
+      if (paypalTransfer) {
         existingTransfer.paypal_payout_id = paypalTransfer.batch_header.payout_batch_id
         existingTransfer.status = existingTransfer.transfer_method === 'paypal' ? 'in_transit' : 'pending'
         existingTransfer.save()
       }
-    } catch (error) {
-      console.error('Error fetching PayPal transfer:', error)
+    }
+    catch (error) {
+      // console.error('Error fetching PayPal transfer:', error)
     }
   }
-  const updateTransferStatus = existingTransfer.transfer_method === 'multiple' && existingTransfer.transfer_id && existingTransfer.paypal_payout_id && await models.Transfer.update({ status: 'in_transit' }, { where: { id: existingTransfer.id }, returning: true})
-  if(updateTransferStatus && updateTransferStatus[1]) {
+  const updateTransferStatus = existingTransfer.transfer_method === 'multiple' && existingTransfer.transfer_id && existingTransfer.paypal_payout_id && await models.Transfer.update({ status: 'in_transit' }, { where: { id: existingTransfer.id }, returning: true })
+  if (updateTransferStatus && updateTransferStatus[1]) {
     existingTransfer = updateTransferStatus[1][0].dataValues
   }
   return existingTransfer

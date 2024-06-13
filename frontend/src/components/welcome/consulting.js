@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
-
 import {
   List,
   ListItem,
@@ -23,10 +22,11 @@ import {
 
 import Transition from '../transition'
 import messages from './messages'
-
 import { InfoList, MainTitle } from './components/CommonStyles'
 
 const Consulting = (props) => {
+  const { classes } = props // Assuming classes are passed as props
+
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -45,71 +45,71 @@ const Consulting = (props) => {
     <ListItem button component='a'>
       <Typography
         variant='h6'
-        onClick={handleClickOpen}
+        onClick={ handleClickOpen }
         component='div'
-        style={{ display: 'block', width: '100%' }}
+        style={ { display: 'block', width: '100%' } }
       >
         <FormattedMessage id='welcome.how.consulting.main.title' defaultMessage='Privacy'>
-          {(msg) => (
-            <ListItemText primary={msg} />
-          )}
+          { (msg) => (
+            <ListItemText primary={ msg } />
+          ) }
         </FormattedMessage>
       </Typography>
       <Dialog
         fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
+        open={ open }
+        onClose={ handleClose }
+        TransitionComponent={ Transition }
       >
-        <AppBar className={classes.appBar}>
+        <AppBar className={ classes.appBar }>
           <Toolbar>
-            <IconButton color='inherit' onClick={handleClose} aria-label='Close'>
+            <IconButton color='inherit' onClick={ handleClose } aria-label='Close'>
               <Close />
             </IconButton>
-            <Typography variant='h5' className={classes.appBarHeader}>
+            <Typography variant='h5' className={ classes.appBarHeader }>
               <FormattedMessage id='welcome.consulting.title.company' defaultMessage='For companies' />
             </Typography>
           </Toolbar>
-          <div className={classes.spacedTop}>
+          <div className={ classes.spacedTop }>
             <MainTitle>
-              <Typography variant='h5' className={classes.appBarHeader} gutterBottom>
+              <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
                 <FormattedMessage id='welcome.consulting.title.consulting' defaultMessage='Privacy' />
               </Typography>
             </MainTitle>
           </div>
           <InfoList>
             <List>
-              <ListItem className={classes.listIconTop}>
+              <ListItem className={ classes.listIconTop }>
                 <ListItemIcon>
-                  <Avatar className={classes.iconFillAlt}>
+                  <Avatar className={ classes.iconFillAlt }>
                     <Apps />
                   </Avatar>
                 </ListItemIcon>
                 <ListItemText
-                  primary={props.intl.formatMessage(messages.workflowItemPrimary)}
-                  secondary={props.intl.formatMessage(messages.workflowItemSecondary)}
+                  primary={ props.intl.formatMessage(messages.workflowItemPrimary) }
+                  secondary={ props.intl.formatMessage(messages.workflowItemSecondary) }
                 />
               </ListItem>
-              <ListItem className={classes.listIconTop}>
+              <ListItem className={ classes.listIconTop }>
                 <ListItemIcon>
-                  <Avatar className={classes.iconFillAlt}>
+                  <Avatar className={ classes.iconFillAlt }>
                     <Work />
                   </Avatar>
                 </ListItemIcon>
                 <ListItemText
-                  primary={props.intl.formatMessage(messages.workflowItemTwoPrimary)}
-                  secondary={props.intl.formatMessage(messages.workflowItemTwoSecondary)}
+                  primary={ props.intl.formatMessage(messages.workflowItemTwoPrimary) }
+                  secondary={ props.intl.formatMessage(messages.workflowItemTwoSecondary) }
                 />
               </ListItem>
-              <ListItem className={classes.listIconTop}>
+              <ListItem className={ classes.listIconTop }>
                 <ListItemIcon>
-                  <Avatar className={classes.iconFillAlt}>
+                  <Avatar className={ classes.iconFillAlt }>
                     <AccountBalanceWallet />
                   </Avatar>
                 </ListItemIcon>
                 <ListItemText
-                  primary={props.intl.formatMessage(messages.workflowItemThreePrimary)}
-                  secondary={props.intl.formatMessage(messages.workflowItemThreeSecondary)}
+                  primary={ props.intl.formatMessage(messages.workflowItemThreePrimary) }
+                  secondary={ props.intl.formatMessage(messages.workflowItemThreeSecondary) }
                 />
               </ListItem>
             </List>

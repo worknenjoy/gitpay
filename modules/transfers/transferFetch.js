@@ -2,12 +2,11 @@ const Promise = require('bluebird')
 const requestPromise = require('request-promise')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
-const transfer = require('../../models/transfer')
 const Transfer = require('../../models').Transfer
 const Task = require('../../models').Task
 const User = require('../../models').User
 
-module.exports = Promise.method(async function transferFetch(id) {
+module.exports = Promise.method(async function transferFetch (id) {
   if (id) {
     const transfer = await Transfer.findOne({
       where: { id },
@@ -43,13 +42,14 @@ module.exports = Promise.method(async function transferFetch(id) {
           json: true
         })
         transfer.dataValues.paypalTransfer = paypalTransfer
-      } catch (error) {
-        console.error('Error fetching PayPal transfer:', error)
+      }
+      catch (error) {
+        // console.error('Error fetching PayPal transfer:', error)
       }
     }
-    if(transfer.transfer_id) {
+    if (transfer.transfer_id) {
       const stripeTransfer = await stripe.transfers.retrieve(transfer.transfer_id)
-      if(stripeTransfer) {
+      if (stripeTransfer) {
         transfer.dataValues.stripeTransfer = stripeTransfer
       }
     }

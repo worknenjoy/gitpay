@@ -141,7 +141,7 @@ const TaskListUser = (props) => {
                   </Tabs>
                 </AppBar>
                 <TabContainer>
-                  <CustomPaginationActionsTable tasks={ props.tasks } user={props.user}  />
+                  <CustomPaginationActionsTable tasks={ props.tasks } user={ props.user } />
                 </TabContainer>
               </div>
             </Grid>
