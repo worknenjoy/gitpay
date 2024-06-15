@@ -178,10 +178,10 @@ export const messages = defineMessages({
     id: 'task.card.table.header.payment.created',
     defaultMessage: 'Created'
   },
-  cardTableHeaderIssue: {
-    id: 'task.card.table.header.issue',
-    defaultMessage: 'Issue'
-  },
+  // cardTableHeaderIssue: {
+  //   id: 'task.card.table.header.issue',
+  //   defaultMessage: 'Issue'
+  // },
   cardTableHeaderPayment: {
     id: 'task.card.table.header.payment.type',
     defaultMessage: 'Type'

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import { listTasks, filterTasks } from './frontend/src/actions/taskAction.js'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../task/messages/task-messages'
 import MomentComponent from 'moment'
@@ -341,7 +341,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
 
 Payments.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleTabChange: PropTypes.func,
+  // handleTabChange: PropTypes.func,
   user: PropTypes.object,
   logged: PropTypes.bool,
   listOrders: PropTypes.func,

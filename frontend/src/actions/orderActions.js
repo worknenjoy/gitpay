@@ -338,7 +338,7 @@ const cancelOrder = id => {
     return axios
       .post(api.API_URL + '/orders/cancel', { id })
       .then(order => {
-        console.log('order cancel data', order)
+        // console.log('order cancel data', order)
         if (order.data) {
           dispatch(addNotification('actions.order.cancel.success'))
           dispatch(cancelOrderSuccess(order))
@@ -350,7 +350,7 @@ const cancelOrder = id => {
         }
       })
       .catch(e => {
-        console.log('error', e)
+        // console.log('error', e)
         dispatch(
           addNotification(
             'actions.order.cancel.payment.error'

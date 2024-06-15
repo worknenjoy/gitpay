@@ -86,7 +86,9 @@ const styles = theme => ({
 
 const Payouts = ({ searchPayout, payouts, user, intl }) => {
   useEffect(() => {
-    const getPayouts = async () => await searchPayout({ userId: user.user.id })
+    const getPayouts = async () => {
+      return searchPayout({ userId: user.user.id })
+    }
     getPayouts().then(t => {})
   }, [user])
 

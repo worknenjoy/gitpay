@@ -30,8 +30,7 @@ import {
 } from '@material-ui/icons'
 
 import ReactPlaceholder from 'react-placeholder'
-import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
-import Moment from 'moment'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import Const from '../../consts'
 import TabContainer from '../Tabs/TabContainer'
@@ -92,7 +91,7 @@ class Account extends Component {
     fetchAccount: PropTypes.func,
     getBankAccount: PropTypes.func,
     updateUser: PropTypes.func,
-    history: PropTypes.object,
+    // history: PropTypes.object,
   }
 
   constructor (props) {
@@ -275,7 +274,7 @@ class Account extends Component {
       ]
     }
 
-    const steps = getSteps()
+    // const steps = getSteps()
 
     return (
       <div>

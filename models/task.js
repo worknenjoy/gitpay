@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       afterCreate: async (instance, options) => {
         try {
           const changed = instance.changed()
+          // eslint-disable-next-line no-unused-vars
           const taskHistory = await sequelize.models.History.create({
             TaskId: instance.id,
             type: 'create',

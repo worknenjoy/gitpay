@@ -50,7 +50,7 @@ const getTaskSolution = (userId, taskId) => {
       return dispatch(getTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error) {
-        console.log('error', error)
+        // console.log('error', error)
         dispatch(addNotification(ERRORS[error]))
         return dispatch(getTaskSolutionError(error))
       }
