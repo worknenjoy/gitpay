@@ -239,7 +239,7 @@ class TaskPayment extends Component {
         anchor='right'
         { ...other }
       >
-        <Container style={{padding: 20}}>
+        <Container style={ {padding: 20} }>
           <Typography variant='h5' id='simple-dialog-title' gutterBottom>
             <FormattedMessage id='task.payment.action.title' defaultMessage='Send payment for this issue to an user' />
           </Typography>
@@ -260,32 +260,32 @@ class TaskPayment extends Component {
               >
                 <StyledTab
                   value={ 0 }
-                  label={this.props.intl.formatMessage(messages.allPayments)}
-                  icon={<RedeemIcon style={{marginRight: 10}} />}
+                  label={ this.props.intl.formatMessage(messages.allPayments) }
+                  icon={ <RedeemIcon style={ {marginRight: 10} } /> }
                 />
                 <StyledTab
                   
                   value={ 1 }
                   label={ this.props.intl.formatMessage(messages.creditCardPayment) }
-                  icon={ <PaymentTypeIcon type='card' notext style={{marginRight: 10}} /> }
+                  icon={ <PaymentTypeIcon type='card' notext style={ {marginRight: 10} } /> }
                 />
                 <StyledTab
                   
                   value={ 2 }
                   label={ this.props.intl.formatMessage(messages.payPalPayment) }
-                  icon={ <PaymentTypeIcon type='paypal' style={{marginRight: 10}} /> }
+                  icon={ <PaymentTypeIcon type='paypal' style={ {marginRight: 10} } /> }
                 />
               </Tabs>
             </AppBar>
-            <TabContainer style={{paddingBottom: 0}}>
+            <TabContainer style={ {paddingBottom: 0} }>
               { (this.props.transferId || this.props.task?.Transfer) ? (
                 <Alert gutterBottom
                   severity='success'
-                  action={<Link to={`/profile/transfers`}>
-                  <Button size='small' variant='outlined' color='primary'>
-                    <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
-                  </Button>
-                </Link>}
+                  action={ <Link to={ `/profile/transfers` }>
+                    <Button size='small' variant='outlined' color='primary'>
+                      <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
+                    </Button>
+                  </Link> }
                 >
                   <AlertTitle gutterBottom>
                     <Typography type='subheading' color='primary' gutterBottom noWrap>
@@ -293,16 +293,16 @@ class TaskPayment extends Component {
                     </Typography>
                   </AlertTitle>
                   
-                  {this.props.transferId ?
+                  { this.props.transferId ?
                     <Typography type='subheading' color='primary' gutterBottom noWrap>
                       { `${this.props.transferId}` }
                     </Typography>
                   : 
                     <div>
                       <Typography type='heading' color='primary' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={{
+                        <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={ {
                           value: this.props.task?.Transfer?.value
-                        }}
+                        } }
                        />
                       </Typography>
                       
@@ -348,14 +348,14 @@ class TaskPayment extends Component {
                             </ListItemAvatar>
                             <ListItemText
                               primary={ 
-                              <div style={{display: 'flex', verticalAlign: 'center'}}>
-                                <Typography variant='subtitle1' gutterBottom style={{marginRight: 10}}>
-                                  {`$ ${order.amount}`}
-                                </Typography>
-                                <Typography variant='caption' style={{marginTop: 3}}>
-                                  {order?.User ? 'by ' + order?.User?.name : ''} 
-                                </Typography>
-                              </div>}
+                                <div style={ {display: 'flex', verticalAlign: 'center'} }>
+                                  <Typography variant='subtitle1' gutterBottom style={ {marginRight: 10} }>
+                                    { `$ ${order.amount}` }
+                                  </Typography>
+                                  <Typography variant='caption' style={ {marginTop: 3} }>
+                                    { order?.User ? 'by ' + order?.User?.name : '' } 
+                                  </Typography>
+                                </div> }
                               secondary={ `${this.statuses(order.status) + ' ' + MomentComponent(order.createdAt).fromNow() || this.props.intl.formatMessage(messages.labelCreditCard)}` }
                             />
                             <Chip label={ order.status } />
@@ -374,62 +374,62 @@ class TaskPayment extends Component {
             </TabContainer>
           </div>
           
-            <div>
-              { (!this.props.paid || this.props.task?.Transfer?.id) ? (
-                <div>
-                  { this.props.assigned ? 
-                      <TaskAssigned
-                        task={ { id: this.props.id, assigned: this.props.assigned, Transfer: this.props.task?.Transfer } }
-                        assign={ {id: this.props.assigned } }
-                        isOwner={ this.props.isOwner }
-                        user={ sendTo(this.props.assigned) }
-                        loggedUser={ this.props.loggedUser }
-                        removeAssignment={ this.props.removeAssignment }
-                        assignTask={ this.props.assignTask }
+          <div>
+            { (!this.props.paid || this.props.task?.Transfer?.id) ? (
+              <div>
+                { this.props.assigned ? 
+                  <TaskAssigned
+                    task={ { id: this.props.id, assigned: this.props.assigned, Transfer: this.props.task?.Transfer } }
+                    assign={ {id: this.props.assigned } }
+                    isOwner={ this.props.isOwner }
+                    user={ sendTo(this.props.assigned) }
+                    loggedUser={ this.props.loggedUser }
+                    removeAssignment={ this.props.removeAssignment }
+                    assignTask={ this.props.assignTask }
                       /> : null
                   }
-                  { this.props?.assigns?.length > 0 ? 
-                    <div style={{marginTop: 20}}>
-                      <Typography variant='h5' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.interested' defaultMessage='Interested users' />
-                      </Typography>
-                      <InterestedUsers 
-                        assigned={this.props.assigned}
-                        users={this.props.assigns}
-                        onMessage={openMessageDialog}
-                        onAccept={async (id) => await this.props.assignTask(this.props.id, id)}
-                        onReject={async (id) => await this.props.actionAssign(this.props.id, id, false)}
+                { this.props?.assigns?.length > 0 ? 
+                  <div style={ {marginTop: 20} }>
+                    <Typography variant='h5' gutterBottom noWrap>
+                      <FormattedMessage id='task.payment.interested' defaultMessage='Interested users' />
+                    </Typography>
+                    <InterestedUsers 
+                      assigned={ this.props.assigned }
+                      users={ this.props.assigns }
+                      onMessage={ openMessageDialog }
+                      onAccept={ async (id) => await this.props.assignTask(this.props.id, id) }
+                      onReject={ async (id) => await this.props.actionAssign(this.props.id, id, false) }
                       />
-                    </div> : null
+                  </div> : null
                   }
-              { offers?.length ? 
-                    <div style={{marginTop: 20}}>
-                      <Typography variant='h5' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.offers' defaultMessage='Offers' />
-                      </Typography>
-                      <InterestedOffers 
-                        offers={offers}
-                        assigned={this.props.assigned}
-                        onMessage={(id) => openMessageDialog(id, 'offers') } 
-                        onAccept={(event, offer) => confirmAssignTaskAndCreateOrder(event, offer)}
-                        onReject={(event, offer) => onReject(event, offer)}
+                { offers?.length ? 
+                  <div style={ {marginTop: 20} }>
+                    <Typography variant='h5' gutterBottom noWrap>
+                      <FormattedMessage id='task.payment.offers' defaultMessage='Offers' />
+                    </Typography>
+                    <InterestedOffers 
+                      offers={ offers }
+                      assigned={ this.props.assigned }
+                      onMessage={ (id) => openMessageDialog(id, 'offers') } 
+                      onAccept={ (event, offer) => confirmAssignTaskAndCreateOrder(event, offer) }
+                      onReject={ (event, offer) => onReject(event, offer) }
                       />
-                      <TaskOrderInvoiceConfirm
-                        visible={this.state.confirmOrderDialog}
-                        onClose={() => this.setState({ confirmOrderDialog: false })}
-                        onConfirm={(event) => assignTaskAndCreateOrder(event, this.state.currentOffer)}
-                        offer={this.state.currentOffer}
+                    <TaskOrderInvoiceConfirm
+                      visible={ this.state.confirmOrderDialog }
+                      onClose={ () => this.setState({ confirmOrderDialog: false }) }
+                      onConfirm={ (event) => assignTaskAndCreateOrder(event, this.state.currentOffer) }
+                      offer={ this.state.currentOffer }
                       />
-                    </div> : null
+                  </div> : null
                   }
-                  <MessageAssignment
-                    visible={ this.state.messageDialog }
-                    onClose={ closeMessageDialog }
-                    id={ this.props.id }
-                    to={ this.state.interested }
-                    messageAction={ this.state.messageType === 'assign' ? this.props.messageTask : this.props.messageOffer }
+                <MessageAssignment
+                  visible={ this.state.messageDialog }
+                  onClose={ closeMessageDialog }
+                  id={ this.props.id }
+                  to={ this.state.interested }
+                  messageAction={ this.state.messageType === 'assign' ? this.props.messageTask : this.props.messageOffer }
                   />
-                </div>
+              </div>
               ) : (
                 <div>
                   <FormattedMessage id='task.payment.done.to' defaultMessage='You made a payment to $ {user}' values={ {
@@ -437,7 +437,7 @@ class TaskPayment extends Component {
                   } } />
                 </div>
               ) }
-            </div>
+          </div>
           
           <Divider />
           { hasOrders() ? (
@@ -448,7 +448,7 @@ class TaskPayment extends Component {
                   style={ { float: 'right', margin: 10 } }
                   variant='contained'
                   color='primary'
-                  disabled={ !this.props.assigned || this.props.transferId || this.props.task?.Transfer}
+                  disabled={ !this.props.assigned || this.props.transferId || this.props.task?.Transfer }
                 >
                   <RedeemIcon style={ { marginRight: 10 } } />
                   <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={ {

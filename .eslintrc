@@ -1,5 +1,9 @@
 {
-  "extends": ["taller/react"],
+  "extends": [
+    "taller/react",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "globals": {
     "DEV": false,
     "MOCK_GRAPHQL__": false,
@@ -7,6 +11,7 @@
     "xdescribe": false,
     "xit": false
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -26,5 +31,6 @@
     "react/prop-types": 0,
     "react/jsx-no-bind": 0,
     "react/jsx-indent-props": ["error", 2] // Enforce 2-space indentation for JSX props
+    // Add any additional rules specific to your project
   }
 }

@@ -88,34 +88,34 @@ class TablePaginationActions extends React.Component {
     const { classes, count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={classes.root} >
+      <div className={ classes.root } >
         <IconButton
-          onClick={(e) => this.handleFirstPageButtonClick(e)}
-          disabled={page === 0}
-          aria-label={this.props.intl.formatMessage(messages.firstPageLabel)}
+          onClick={ (e) => this.handleFirstPageButtonClick(e) }
+          disabled={ page === 0 }
+          aria-label={ this.props.intl.formatMessage(messages.firstPageLabel) }
         >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+          { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
         </IconButton>
         <IconButton
-          onClick={(e) => this.handleBackButtonClick(e)}
-          disabled={page === 0}
-          aria-label={this.props.intl.formatMessage(messages.previousPageLabel)}
+          onClick={ (e) => this.handleBackButtonClick(e) }
+          disabled={ page === 0 }
+          aria-label={ this.props.intl.formatMessage(messages.previousPageLabel) }
         >
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+          { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
         </IconButton>
         <IconButton
-          onClick={(e) => this.handleNextButtonClick(e)}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label={this.props.intl.formatMessage(messages.nextPageLabel)}
+          onClick={ (e) => this.handleNextButtonClick(e) }
+          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
+          aria-label={ this.props.intl.formatMessage(messages.nextPageLabel) }
         >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+          { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
         </IconButton>
         <IconButton
-          onClick={(e) => this.handleLastPageButtonClick(e)}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label={this.props.intl.formatMessage(messages.lastPageLabel)}
+          onClick={ (e) => this.handleLastPageButtonClick(e) }
+          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
+          aria-label={ this.props.intl.formatMessage(messages.lastPageLabel) }
         >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+          { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>
       </div>
     )
@@ -184,8 +184,8 @@ class CustomPaginationActionsTable extends React.Component {
 
     if (transfers?.data?.length === 0 && transfers.completed) {
       return (
-        <Paper className={classes.root}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
+        <Paper className={ classes.root }>
+          <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
             <Typography variant='h6' color='textSecondary' gutterBottom>
               <FormattedMessage id='transfer.table.body.notransfer' defaultMessage='No Transfers' />
             </Typography>
@@ -196,67 +196,67 @@ class CustomPaginationActionsTable extends React.Component {
 
     const TableRowPlaceholder = (
       [0,1,2,3,4].map(() => (
-      <TableRow>
-        { [0,1,2,3,4].map(() => (
-          <TableCell>
-            <div style={{ width: 80 }}>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={transfers.completed} />
-            </div>
-          </TableCell>
-        ))}
-      </TableRow>
+        <TableRow>
+          { [0,1,2,3,4].map(() => (
+            <TableCell>
+              <div style={ { width: 80 } }>
+                <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ transfers.completed } />
+              </div>
+            </TableCell>
+        )) }
+        </TableRow>
       ))
     );
 
     return (
-      <Paper className={classes.root}>
+      <Paper className={ classes.root }>
         
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  {tableHead.map(t =>
-                    <TableCell>
-                      {t}
-                    </TableCell>
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation customPlaceholder={TableRowPlaceholder} rows={10} ready={transfers.completed}>
-                {transfers?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+        <div className={ classes.tableWrapper }>
+          <Table className={ classes.table }>
+            <TableHead>
+              <TableRow>
+                { tableHead.map(t =>
+                    (<TableCell>
+                      { t }
+                    </TableCell>)
+                  ) }
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation customPlaceholder={ TableRowPlaceholder } rows={ 10 } ready={ transfers.completed }>
+                { transfers?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   return (
-                    <TableRow key={n.id}>
-                      {n.map(p =>
-                        <TableCell component='th' scope='row' style={{ padding: 10, position: 'relative' }}>
-                          {p}
-                        </TableCell>
-                      )}
+                    <TableRow key={ n.id }>
+                      { n.map(p =>
+                        (<TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
+                          { p }
+                        </TableCell>)
+                      ) }
                     </TableRow>
                   )
-                })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
+                }) }
+                { emptyRows > 0 && (
+                  <TableRow style={ { height: 48 * emptyRows } }>
+                    <TableCell colSpan={ 6 } />
                   </TableRow>
-                )}
-                </ReactPlaceholder>
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    colSpan={3}
-                    count={transfers?.data?.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={(e, page) => this.handleChangePage(e, page)}
-                    onChangeRowsPerPage={(e, page) => this.handleChangeRowsPerPage(e, page)}
-                    Actions={TablePaginationActionsWrapped}
+                ) }
+              </ReactPlaceholder>
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={ 3 }
+                  count={ transfers?.data?.length }
+                  rowsPerPage={ rowsPerPage }
+                  page={ page }
+                  onChangePage={ (e, page) => this.handleChangePage(e, page) }
+                  onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
+                  Actions={ TablePaginationActionsWrapped }
                   />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </div>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </div>
       </Paper>
     )
   }

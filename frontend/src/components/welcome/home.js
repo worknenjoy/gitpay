@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import 'typeface-roboto'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import 'typeface-roboto';
 import {
   withStyles,
   Grid,
@@ -11,26 +11,26 @@ import {
   ListItemText,
   ListItemIcon,
   Button,
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 import {
   Work,
   Archive,
   CardMembership,
   BugReport
-} from '@material-ui/icons'
+} from '@material-ui/icons';
 
-import './mailchimp.css'
+import './mailchimp.css';
 
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 
-import TopBarContainer from '../../containers/topbar'
-import Bottom from '../../components/bottom/bottom'
-import messages from './messages'
-import mainStyles from '../styles/style'
+import TopBarContainer from '../../containers/topbar';
+import Bottom from '../../components/bottom/bottom';
+import messages from './messages';
+import mainStyles from '../styles/style';
 
-const freelancerImage = require('../../images/collections/collection-flat-build.svg')
-const deal = require('../../images/collections/collection-flat-works.svg')
+const freelancerImage = require('../../images/collections/collection-flat-build.svg');
+const deal = require('../../images/collections/collection-flat-works.svg');
 
 import {
   MainTitle,
@@ -40,26 +40,32 @@ import {
   HeroTitle,
   HeroContent,
   HeroActions
-} from './components/CommonStyles'
+} from './components/CommonStyles';
 
-const styles = theme => mainStyles(theme)
+const styles = theme => mainStyles(theme);
 
 class Home extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
       value: 0
-    }
+    };
+
+    // Create refs using React.createRef() for callback refs
+    this.introRef = React.createRef();
+    this.heroRef = React.createRef();
+    this.howItWorksRef = React.createRef();
+    this.getStartedRef = React.createRef();
   }
 
-  render () {
-    const { classes } = this.props
+  render() {
+    const { classes } = this.props;
 
     return (
       <div className={ classes.root }>
-        <TopBarContainer ref='intro' hide />
-        <Section ref='hero'>
+        <TopBarContainer ref={ this.introRef } hide />
+        <Section ref={ this.heroRef }>
           <HeroSection>
             <Grid container spacing={ 3 } alignContent={ 'flex-end' }>
               <Grid item xs={ 12 } sm={ 5 }>
@@ -86,7 +92,6 @@ class Home extends Component {
                   <Button
                     variant='text'
                     color='primary'
-
                     onClick={ () => this.props.history.push('/tasks/open') }
                   >
                     <FormattedMessage
@@ -112,7 +117,7 @@ class Home extends Component {
           </HeroSection>
         </Section>
 
-        <Section ref='how-it-works' className={ classes.sectionBgAlt }>
+        <Section ref={ this.howItWorksRef } className={ classes.sectionBgAlt }>
           <MainTitle>
             <Typography variant='h5' gutterBottom>
               <FormattedMessage
@@ -191,10 +196,8 @@ class Home extends Component {
           </Grid>
         </Section>
         <Section
-          ref='get-started'
+          ref={ this.getStartedRef }
           style={ {
-            // background: `url(${citySoftware}) 50% 5px no-repeat`,
-            // backgroundSize: 'cover',
             height: 350,
             display: 'flex',
             flexDirection: 'column',
@@ -237,12 +240,12 @@ class Home extends Component {
         </Section>
         <Bottom />
       </div>
-    )
+    );
   }
 }
 
 Home.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
-export default injectIntl(withStyles(styles)(Home))
+export default injectIntl(withStyles(styles)(Home));

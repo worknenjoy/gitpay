@@ -81,10 +81,10 @@ class LoginPage extends Component {
   renderDialog() {
     const { cookie, privacy, terms } = this.state
     if(cookie) {
-      return <CookiePolicy extraStyles={false} />
+      return <CookiePolicy extraStyles={ false } />
     }
     if(privacy) {
-      return <PrivacyPolicy extraStyles={false} />
+      return <PrivacyPolicy extraStyles={ false } />
     }
     if(terms) {
       return <TermsOfService />
@@ -105,34 +105,34 @@ class LoginPage extends Component {
                 <img src={ logo } width={ 210 } />
               </Link>
               <Content>
-                <LoginButton includeForm mode={ this.state.mode } noCancelButton user={this.props?.user} />
+                <LoginButton includeForm mode={ this.state.mode } noCancelButton user={ this.props?.user } />
               </Content>
             </CardContent>
           </Card>
           <div style={ { marginTop: 10, textAlign: 'center' } }>
             <Typography variant='caption' color='default' gutterBottom noWrap component='span'>
               <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay - All rights reserved' />
-              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'cookie') } style={{display: 'inline-block', margin: '0 5px'}}>
+              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'cookie') } style={ {display: 'inline-block', margin: '0 5px'} }>
                
-                  <FormattedMessage id='legal.cookie.label' defaultMessage='Cookie Preferences' />
+                <FormattedMessage id='legal.cookie.label' defaultMessage='Cookie Preferences' />
                 
               </Link>
               |
-              <Link to='#' color='inherit' onClick={(e) => this.openDialog(e, 'privacy') } style={{display: 'inline-block', margin: '0 5px'}} >
+              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'privacy') } style={ {display: 'inline-block', margin: '0 5px'} } >
               
-                  <FormattedMessage id='legal.prviacy.label' defaultMessage='Privacy' />
+                <FormattedMessage id='legal.prviacy.label' defaultMessage='Privacy' />
                 
               </Link>
               |
-              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'terms') } style={{display: 'inline-block', margin: '0 5px'}}>
+              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'terms') } style={ {display: 'inline-block', margin: '0 5px'} }>
               
-                  <FormattedMessage id='legal.terms.label' defaultMessage='Terms' />
+                <FormattedMessage id='legal.terms.label' defaultMessage='Terms' />
                 
               </Link>
             </Typography>
-            <Dialog onClose={() => this.closeDialog()} open={openDialog}>
-              <div style={{padding: '10px 20px'}}>
-                {this.renderDialog()}
+            <Dialog onClose={ () => this.closeDialog() } open={ openDialog }>
+              <div style={ {padding: '10px 20px'} }>
+                { this.renderDialog() }
               </div>
             </Dialog>
           </div>

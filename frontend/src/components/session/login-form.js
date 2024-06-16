@@ -345,7 +345,7 @@ class LoginForm extends Component {
 
     if(termsOfServiceOpen) { 
       return (
-        <div style={{height: 'calc(100vh - 20px)', width: 500}}>
+        <div style={ {height: 'calc(100vh - 20px)', width: 500} }>
           <TermsOfService 
             onArrowBack={
               (e) => {
@@ -366,7 +366,7 @@ class LoginForm extends Component {
 
     if(privacyPolicyOpen) { 
       return (
-        <div style={{height: 'calc(100vh - 20px)', width: 500}}>
+        <div style={ {height: 'calc(100vh - 20px)', width: 500} }>
           <PrivacyPolicy 
             onArrowBack={
               (e) => {
@@ -522,25 +522,25 @@ class LoginForm extends Component {
         ) }
         { formType === 'signup' && (
           <>
-          <div style={ { display: 'flex', justifyContent: 'flex-start' } }>
-            <div style={ { display: 'flex', alignItems: 'center' } }>
-              { this.state.agreeTermsCheck
+            <div style={ { display: 'flex', justifyContent: 'flex-start' } }>
+              <div style={ { display: 'flex', alignItems: 'center' } }>
+                { this.state.agreeTermsCheck
                 ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid='agree-terms-checkbox-checked' />
                 : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid='agree-terms-checkbox' />
               }
-              <Typography variant='body1' style={ { marginLeft: 10 } }>
-                <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the ' /> 
-                <a onClick={this.handleOpenTermsOfService} href='/#/terms' target='_blank' style={ { display: 'inline-block', marginRight: 5, marginLeft: 5 } }>
-                  <FormattedMessage id='account.login.label.terms' defaultMessage='Terms of Service' />
-                </a> 
-                 <FormattedMessage id='account.login.label.terms.and' defaultMessage=' and' /> 
-                <a href='/#/privacy-policy' onClick={this.handleOpenPrivacyPolicy} target='_blank' style={ { display: 'inline-block', marginLeft: 5 } }>
-                  <FormattedMessage id='account.login.label.privacy' defaultMessage='Privacy Policy' />
-                </a>
-              </Typography>
+                <Typography variant='body1' style={ { marginLeft: 10 } }>
+                  <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the ' /> 
+                  <a onClick={ this.handleOpenTermsOfService } href='/#/terms' target='_blank' style={ { display: 'inline-block', marginRight: 5, marginLeft: 5 } }>
+                    <FormattedMessage id='account.login.label.terms' defaultMessage='Terms of Service' />
+                  </a> 
+                  <FormattedMessage id='account.login.label.terms.and' defaultMessage=' and' /> 
+                  <a href='/#/privacy-policy' onClick={ this.handleOpenPrivacyPolicy } target='_blank' style={ { display: 'inline-block', marginLeft: 5 } }>
+                    <FormattedMessage id='account.login.label.privacy' defaultMessage='Privacy Policy' />
+                  </a>
+                </Typography>
+              </div>
             </div>
-          </div>
-           { agreeTermsCheckError &&
+            { agreeTermsCheckError &&
             <div style={ {
               color: 'red',
               fontSize: 10,

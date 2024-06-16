@@ -15,13 +15,13 @@ import { lightGreen } from '@material-ui/core/colors'
 const TaskSolution = props => {
   const paymentSentChip = () => {
     return (
-      <Chip size='small' style={{backgroundColor: lightGreen[200], marginLeft: 10}} avatar={ <Avatar size='small' style={{backgroundColor: lightGreen[600]}}><DoneIcon size='small' style={{backgroundColor: lightGreen[400]}} /></Avatar> } label='Payment Sent' />
+      <Chip size='small' style={ {backgroundColor: lightGreen[200], marginLeft: 10} } avatar={ <Avatar size='small' style={ {backgroundColor: lightGreen[600]} }><DoneIcon size='small' style={ {backgroundColor: lightGreen[400]} } /></Avatar> } label='Payment Sent' />
     )
   }
 
   const issueClosedChip = () => {
     return (
-      <Chip size='small' avatar={ <Avatar size='small'><DoneIcon size='small' /></Avatar> } label='Issue Closed' style={{marginLeft: 10}} />
+      <Chip size='small' avatar={ <Avatar size='small'><DoneIcon size='small' /></Avatar> } label='Issue Closed' style={ {marginLeft: 10} } />
     )
   }
 
@@ -33,15 +33,15 @@ const TaskSolution = props => {
 
   return (
     <>
-      {props.task.transfer_id || props.task.Transfer && (
+      { props.task.transfer_id || props.task.Transfer && (
         <Alert 
           gutterBottom
           severity='success'
-          action={<Link to={`/profile/transfers`}>
-          <Button size='small' variant='outlined' color='primary'>
-            <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
-          </Button>
-        </Link>}
+          action={ <Link to={ `/profile/transfers` }>
+            <Button size='small' variant='outlined' color='primary'>
+              <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
+            </Button>
+          </Link> }
         >
           <AlertTitle>
             <Typography type='subheading' color='primary' gutterBottom noWrap>
@@ -49,23 +49,23 @@ const TaskSolution = props => {
             </Typography>
           </AlertTitle>
           
-          {props.transferId ?
+          { props.transferId ?
             <Typography type='subheading' color='primary' gutterBottom noWrap>
               { `${props.transferId}` }
             </Typography>
           : 
             <div>
               <Typography type='heading' color='primary' gutterBottom noWrap>
-                <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={{
+                <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={ {
                   value: props.task.Transfer.value
-                }}
+                } }
               />
               </Typography>
               
             </div>
           }
         </Alert>  
-      )}
+      ) }
       <Card style={ { display: 'flex', marginTop: 12 } }>
         <CardHeader title={ `Pull Request # ${props.taskSolution?.pullRequestURL?.split('/')[6]}` } subheader='Updated 5 min ago' />
         <CardContent style={ { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', flexDirection: 'row' } }>

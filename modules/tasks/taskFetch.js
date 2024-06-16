@@ -203,6 +203,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   })
                 }
                 catch (e) {
+                  // eslint-disable-next-line no-console
                   console.log('error', e)
                 }
               }

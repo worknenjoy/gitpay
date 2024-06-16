@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   Card,
@@ -10,14 +9,11 @@ import {
   Grid,
   Typography,
   withStyles
-} from '@material-ui/core'
-
-import { injectIntl, FormattedMessage } from 'react-intl'
-import TopBarContainer from '../../containers/topbar'
-import Bottom from '../../components/bottom/bottom'
-import {
-  MainTitle
-} from './components/CommonStyles'
+} from '@material-ui/core';
+import { injectIntl, FormattedMessage } from 'react-intl';
+import TopBarContainer from '../../containers/topbar';
+import Bottom from '../../components/bottom/bottom';
+import { MainTitle } from './components/CommonStyles';
 
 const styles = theme => ({
   layout: {
@@ -56,7 +52,7 @@ const styles = theme => ({
       paddingBottom: theme.spacing(2),
     },
   }
-})
+});
 
 const tiersMaintainers = [
   {
@@ -79,7 +75,7 @@ const tiersMaintainers = [
       '18% fee for payment in Credit Card or Paypal'
     ]
   }
-]
+];
 
 const tiersContributors = [
   {
@@ -92,15 +88,22 @@ const tiersContributors = [
       '8% fee to withdraw your bounty after the Pull request is merged'
     ]
   }
-]
+];
 
 class Pricing extends Component {
+  constructor(props) {
+    super(props);
+    // Create a ref for TopBarContainer
+    this.topBarRef = React.createRef();
+  }
+
   render () {
-    const { classes } = this.props
+    const { classes } = this.props;
 
     return (
       <div className={ classes.root }>
-        <TopBarContainer ref='intro' hide />
+        { /* Use callback ref to assign the ref */ }
+        <TopBarContainer ref={ this.topBarRef } hide />
         <div className={ classes.layout }>
           <React.Fragment>
             { /* Hero unit */ }
@@ -117,7 +120,6 @@ class Pricing extends Component {
             { /* End hero unit */ }
             <Grid container spacing={ 5 } justifyContent='center'>
               { tiersMaintainers.map(tier => (
-                // Enterprise card is full width at sm breakpoint
                 <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 6 }>
                   <Card>
                     <CardHeader
@@ -155,7 +157,6 @@ class Pricing extends Component {
             </Grid>
             <Grid container spacing={ 5 } justifyContent='center'>
               { tiersContributors.map(tier => (
-                // Enterprise card is full width at sm breakpoint
                 <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 12 }>
                   <Card>
                     <CardHeader
@@ -195,12 +196,12 @@ class Pricing extends Component {
         </div>
         <Bottom />
       </div>
-    )
+    );
   }
 }
 
 Pricing.propTypes = {
   classes: PropTypes.object.isRequired,
-}
+};
 
-export default injectIntl(withStyles(styles)(Pricing))
+export default injectIntl(withStyles(styles)(Pricing));

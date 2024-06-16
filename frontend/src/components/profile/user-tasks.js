@@ -106,9 +106,9 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
   }
 
   return (
-    <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
+    <Paper elevation={ 0 } style={ {backgroundColor: 'transparent'} }>
       <Container>
-        <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
+        <Typography variant='h5' gutterBottom style={ {marginTop: 40} }>
           <FormattedMessage id='issues.title' defaultMessage='Issues' />
         </Typography>
         <Tabs
@@ -118,9 +118,9 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
           scrollButtons='on'
           indicatorColor='secondary'
           textColor='secondary'
-          style={{marginTop: 20, marginBottom: 20}}
+          style={ {marginTop: 20, marginBottom: 20} }
         >
-           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
           <Tab
             value={ 'all' }
             label={ intl.formatMessage(messages.allTasks) }
@@ -147,7 +147,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
             />
           }
         </Tabs>
-        <div style={{marginBottom: 20}}>
+        <div style={ {marginBottom: 20} }>
           { !user.id ? (
             <Card className={ classes.card }>
               <CardMedia
@@ -200,8 +200,8 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
                 filterTasks={ filterTasks }
                 
                 baseUrl={ baseUrl }
-              />}
-              <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={tableHeaderDefault}  />
+              /> }
+              <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={ tableHeaderDefault }  />
             </>
           ) }
         </div>

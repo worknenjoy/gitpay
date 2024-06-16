@@ -69,34 +69,34 @@ class TablePaginationActions extends React.Component {
     const { classes, count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={classes.root} >
+      <div className={ classes.root } >
         <IconButton
-          onClick={(e) => this.handleFirstPageButtonClick(e)}
-          disabled={page === 0}
-          aria-label={this.props.intl.formatMessage(messages.firstPageLabel)}
+          onClick={ (e) => this.handleFirstPageButtonClick(e) }
+          disabled={ page === 0 }
+          aria-label={ this.props.intl.formatMessage(messages.firstPageLabel) }
         >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+          { theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon /> }
         </IconButton>
         <IconButton
-          onClick={(e) => this.handleBackButtonClick(e)}
-          disabled={page === 0}
-          aria-label={this.props.intl.formatMessage(messages.previousPageLabel)}
+          onClick={ (e) => this.handleBackButtonClick(e) }
+          disabled={ page === 0 }
+          aria-label={ this.props.intl.formatMessage(messages.previousPageLabel) }
         >
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+          { theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft /> }
         </IconButton>
         <IconButton
-          onClick={(e) => this.handleNextButtonClick(e)}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label={this.props.intl.formatMessage(messages.nextPageLabel)}
+          onClick={ (e) => this.handleNextButtonClick(e) }
+          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
+          aria-label={ this.props.intl.formatMessage(messages.nextPageLabel) }
         >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+          { theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight /> }
         </IconButton>
         <IconButton
-          onClick={(e) => this.handleLastPageButtonClick(e)}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label={this.props.intl.formatMessage(messages.lastPageLabel)}
+          onClick={ (e) => this.handleLastPageButtonClick(e) }
+          disabled={ page >= Math.ceil(count / rowsPerPage) - 1 }
+          aria-label={ this.props.intl.formatMessage(messages.lastPageLabel) }
         >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+          { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>
       </div>
     )
@@ -281,7 +281,7 @@ class CustomPaginationActionsTable extends React.Component {
     const { id, name, OrganizationId } = project
     const url = this.props.user?.id ? '/profile/organizations/' + OrganizationId + '/projects/' + id : '/organizations/' + OrganizationId + '/projects/' + id
     return(
-      <Chip label={project ? name : 'no project'} component={Link} href={'/#' + url} clickable />
+      <Chip label={ project ? name : 'no project' } component={ Link } href={ '/#' + url } clickable />
     )
   }
 
@@ -293,15 +293,15 @@ class CustomPaginationActionsTable extends React.Component {
     const TableCellWithSortLogic = ({ fieldId, defaultMessage, sortHandler }) => {
       return (
         <TableSortLabel
-          active={fieldId === sortedBy && sortDirection !== 'none'}
-          direction={sortDirection}
+          active={ fieldId === sortedBy && sortDirection !== 'none' }
+          direction={ sortDirection }
           onClick={
             () => {
               return sortHandler(fieldId)
             }
           }
         >
-          {defaultMessage}
+          { defaultMessage }
         </TableSortLabel>
       )
     }
@@ -310,11 +310,11 @@ class CustomPaginationActionsTable extends React.Component {
       return (
         <TableHead>
           <TableRow>
-            {Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
-              <TableCell key={fieldId}>
-                <TableCellWithSortLogic sortHandler={this.sortHandler} fieldId={fieldId} defaultMessage={metadata.label} />
+            { Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
+              <TableCell key={ fieldId }>
+                <TableCellWithSortLogic sortHandler={ this.sortHandler } fieldId={ fieldId } defaultMessage={ metadata.label } />
               </TableCell>
-            ))}
+            )) }
           </TableRow>
         </TableHead>
       );
@@ -322,8 +322,8 @@ class CustomPaginationActionsTable extends React.Component {
 
 
     if (tasks.completed && tasks.data.length === 0) {
-      return (<Paper className={classes.root}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
+      return (<Paper className={ classes.root }>
+        <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
           <Typography variant='caption'>
             <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
           </Typography>
@@ -333,69 +333,69 @@ class CustomPaginationActionsTable extends React.Component {
 
     const TableRowPlaceholder = (
       [0,1,2,3,4,5].map(() => (
-      <TableRow>
-        { [0,1,2,3,4,5].map(() => (
-          <TableCell classes={classes.tableCell}>
-            <div style={{ width: 80, padding: '8px 4px' }}>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={tasks.completed} />
-            </div>
-          </TableCell>
-        ))}
-      </TableRow>
+        <TableRow>
+          { [0,1,2,3,4,5].map(() => (
+            <TableCell classes={ classes.tableCell }>
+              <div style={ { width: 80, padding: '8px 4px' } }>
+                <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ tasks.completed } />
+              </div>
+            </TableCell>
+        )) }
+        </TableRow>
       ))
     );
 
     return (
-      <Paper className={classes.root}>
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
-              <TableHeadCustom />
-              <TableBody>
-              <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation  customPlaceholder={TableRowPlaceholder} rows={10}  ready={tasks.completed}>
-                {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+      <Paper className={ classes.root }>
+        <div className={ classes.tableWrapper }>
+          <Table className={ classes.table }>
+            <TableHeadCustom />
+            <TableBody>
+              <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation  customPlaceholder={ TableRowPlaceholder } rows={ 10 }  ready={ tasks.completed }>
+                { sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   return (
-                    <TableRow key={n.id}>
-                      <TableCell component='th' scope='row' classes={{
+                    <TableRow key={ n.id }>
+                      <TableCell component='th' scope='row' classes={ {
                         root: classes.tableCell.root
-                      }} style={{ position: 'relative' }}>
-                        <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
-                          <a style={{ cursor: 'pointer' }} onClick={(e) => this.handleClickListItem(n)}>
-                            {TextEllipsis(`${n.title || 'no title'}`, 42)}
+                      } } style={ { position: 'relative' } }>
+                        <div style={ { width: 350, display: 'flex', alignItems: 'center' } }>
+                          <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n) }>
+                            { TextEllipsis(`${n.title || 'no title'}`, 42) }
                           </a>
-                          <a target='_blank' href={n.url}>
-                            <Tooltip id='tooltip-fab' title={`${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}`} placement='top'>
-                              <img width='24' src={n.provider === 'github' ? logoGithub : logoBitbucket} style={{ borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 }} />
+                          <a target='_blank' href={ n.url } rel="noreferrer">
+                            <Tooltip id='tooltip-fab' title={ `${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` } placement='top'>
+                              <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
                             </Tooltip>
                           </a>
                         </div>
                       </TableCell>
-                      <TableCell classes={classes.tableCell}>
-                        <div style={{ width: 80 }}>
+                      <TableCell classes={ classes.tableCell }>
+                        <div style={ { width: 80 } }>
                           <Chip 
-                            label={this.props.intl.formatMessage(Constants.STATUSES[n.status])}
-                            avatar={<Avatar className={n.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess} style={{ width: 12, height: 12 }}>{' '}</Avatar>}
-                            className={n.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess}
+                            label={ this.props.intl.formatMessage(Constants.STATUSES[n.status]) }
+                            avatar={ <Avatar className={ n.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
+                            className={ n.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
                           />
                         </div>
                       </TableCell>
                       { tableHeaderMetadata['task.table.head.project'] &&
-                        <TableCell classes={classes.tableCell}>
-                          {this.renderProjectLink(n?.Project)}
+                        <TableCell classes={ classes.tableCell }>
+                          { this.renderProjectLink(n?.Project) }
                         </TableCell>
                       }
-                      <TableCell numeric classes={classes.tableCell} style={{ padding: 5 }}>
-                        <div style={{ width: 70, textAlign: 'center' }}>
-                          {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}
+                      <TableCell numeric classes={ classes.tableCell } style={ { padding: 5 } }>
+                        <div style={ { width: 70, textAlign: 'center' } }>
+                          { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
                         </div>
                       </TableCell>
-                      <TableCell classes={classes.tableCell}>
-                        {n?.Labels?.length ?
+                      <TableCell classes={ classes.tableCell }>
+                        { n?.Labels?.length ?
                           <div>
-                            {n?.Labels?.slice(0, 2).map(
+                            { n?.Labels?.slice(0, 2).map(
                               (label, index) =>
                               (
                                 <Chip
-                                  style={{ marginRight: 5, marginBottom: 5 }}
+                                  style={ { marginRight: 5, marginBottom: 5 } }
                                   size='small'
                                   label={
                                     TextEllipsis(`${label.name || ''}`, 10)
@@ -404,39 +404,39 @@ class CustomPaginationActionsTable extends React.Component {
                               )
                             )
                             } ...
-                          </div> : <>-</>}
+                          </div> : <>-</> }
                       </TableCell>
-                      <TableCell classes={classes.tableCell}>
-                        <div style={{ width: 120 }}>
-                          {n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined)}
+                      <TableCell classes={ classes.tableCell }>
+                        <div style={ { width: 120 } }>
+                          { n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined) }
                         </div>
                       </TableCell>
                     </TableRow>
                   )
-                })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
+                }) }
+                { emptyRows > 0 && (
+                  <TableRow style={ { height: 48 * emptyRows } }>
+                    <TableCell colSpan={ 6 } />
                   </TableRow>
-                )}
-                </ReactPlaceholder>
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    colSpan={3}
-                    count={sortedData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={(e, page) => this.handleChangePage(e, page)}
-                    onRowsPerPageChange={(e, page) => this.handleChangeRowsPerPage(e, page)}
-                    Actions={TablePaginationActionsWrapped}
+                ) }
+              </ReactPlaceholder>
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={ 3 }
+                  count={ sortedData.length }
+                  rowsPerPage={ rowsPerPage }
+                  page={ page }
+                  onPageChange={ (e, page) => this.handleChangePage(e, page) }
+                  onRowsPerPageChange={ (e, page) => this.handleChangeRowsPerPage(e, page) }
+                  Actions={ TablePaginationActionsWrapped }
                   />
-                </TableRow>
-              </TableFooter>
-            </Table>
+              </TableRow>
+            </TableFooter>
+          </Table>
             
-          </div>
+        </div>
         
       </Paper>
     )

@@ -3,12 +3,12 @@ const Task = require('../../models').Task
 const Order = require('../../models').Order
 const Promise = require('bluebird')
 const requestPromise = require('request-promise')
-const { orderDetails } = require('../orders')
+// const { orderDetails } = require('../orders')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
-const { update } = require('../mail/deadline')
+// const { update } = require('../mail/deadline')
 
 module.exports = Promise.method(async function transferBuilds (params) {
   const existingTransfer = params.transfer_id && await Transfer.findOne({
@@ -57,8 +57,9 @@ module.exports = Promise.method(async function transferBuilds (params) {
   let isStripe = false
   let isPaypal = false
   let isMultiple = false
-
+// eslint-disable-next-line no-unused-vars
   let allStripe = true
+// eslint-disable-next-line no-unused-vars
   let allPaypal = true
 
   let stripeTotal = 0

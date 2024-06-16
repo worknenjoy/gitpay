@@ -97,10 +97,12 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/preset-env": "^7.24.7",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
+    "babel-eslint": "^10.1.0",
     "chai": "^3.5.0",
     "chai-spies": "^1.0.0",
     "compression": "^1.7.4",

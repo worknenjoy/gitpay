@@ -7,7 +7,7 @@ const creditCardIcon = require('../../images/credit-card-icon.svg')
 
 const PaymentTypeIcon = props => {
   return (
-    <div style={props?.style}>
+    <div style={ props?.style }>
       { props.type === 'paypal'
         ? (<div style={ { textAlign: 'left' } }><img src={ logoPaypal } width={ 32 } /></div>)
         : (<div style={ { textAlign: 'left', color: '#12789a', fontSize: 8 } }><img src={ creditCardIcon } width={ 32 } /> <br />

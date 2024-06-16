@@ -87,8 +87,8 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
         clickable
         avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> }
         label={ ' open issue(s)' }
-        component={Link}
-        href={url}
+        component={ Link }
+        href={ url }
       />
     )
   }
@@ -107,7 +107,7 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
                 action={
                   <IconButton aria-label='provider'>
                     <Tooltip id='tooltip-fab' title={ p.Organization && (p.Organization.provider ? p.Organization.provider : 'See on repository') } placement='right'>
-                      <a target='_blank' href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) }>
+                      <a target='_blank' href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) } rel="noreferrer">
                         <img width='28' src={ p.Organization && (p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
                           style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
                         />
@@ -128,7 +128,7 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
               <div>
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
                   <Chip size='medium' label={ projectBountiesList(p.Tasks) } />
-                  {getProjectLink(p)}
+                  { getProjectLink(p) }
                 </CardActions>
               </div>
             </Card>

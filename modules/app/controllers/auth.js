@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 let crypto = require('crypto')
 
 const requestPromise = require('request-promise')

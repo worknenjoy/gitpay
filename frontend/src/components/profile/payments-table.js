@@ -184,15 +184,15 @@ class CustomPaginationActionsTable extends React.Component {
 
     const TableRowPlaceholder = (
       [0,1,2,3,4,5,6].map(() => (
-      <TableRow>
-        { [0,1,2,3,4,5,6].map(() => (
-          <TableCell>
-            <div style={{ width: 80 }}>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={payments.completed} />
-            </div>
-          </TableCell>
-        ))}
-      </TableRow>
+        <TableRow>
+          { [0,1,2,3,4,5,6].map(() => (
+            <TableCell>
+              <div style={ { width: 80 } }>
+                <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ payments.completed } />
+              </div>
+            </TableCell>
+        )) }
+        </TableRow>
       ))
     );
 
@@ -211,27 +211,27 @@ class CustomPaginationActionsTable extends React.Component {
     return (
       <Paper className={ classes.root }>
         
-          <div className={ classes.tableWrapper }>
-            <Table className={ classes.table }>
-              <TableHead>
-                <TableRow>
-                  { tableHead.map( t => 
-                    <TableCell>
-                      {t}
-                    </TableCell>
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation customPlaceholder={TableRowPlaceholder} rows={ 10 } ready={ payments.completed } >
+        <div className={ classes.tableWrapper }>
+          <Table className={ classes.table }>
+            <TableHead>
+              <TableRow>
+                { tableHead.map( t => 
+                    (<TableCell>
+                      { t }
+                    </TableCell>)
+                  ) }
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation customPlaceholder={ TableRowPlaceholder } rows={ 10 } ready={ payments.completed } >
                 { payments?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                   return (
                     <TableRow key={ n.id }>
                       { n.map( p => 
-                        <TableCell component='th' scope='row'>
-                          {p}    
-                        </TableCell>
-                      )}
+                        (<TableCell component='th' scope='row'>
+                          { p }    
+                        </TableCell>)
+                      ) }
                     </TableRow>
                   )
                 }) }
@@ -240,23 +240,23 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell colSpan={ 6 } />
                   </TableRow>
                 ) }
-                </ReactPlaceholder>
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    colSpan={ 3 }
-                    count={ payments?.data?.length }
-                    rowsPerPage={ rowsPerPage }
-                    page={ page }
-                    onChangePage={ (e, page) => this.handleChangePage(e, page) }
-                    onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
-                    Actions={ TablePaginationActionsWrapped }
+              </ReactPlaceholder>
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={ 3 }
+                  count={ payments?.data?.length }
+                  rowsPerPage={ rowsPerPage }
+                  page={ page }
+                  onChangePage={ (e, page) => this.handleChangePage(e, page) }
+                  onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
+                  Actions={ TablePaginationActionsWrapped }
                   />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </div>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </div>
         
       </Paper>
     )

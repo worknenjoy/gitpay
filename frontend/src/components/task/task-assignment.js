@@ -406,7 +406,7 @@ const TaskAssignment = (props) => {
                               >
                                 <a
                                   href={ `${task.data.metadata.issue.user.html_url}` }
-                                  target='_blank'
+                                  target='_blank' rel="noreferrer"
                                 >
                                   <Avatar
                                     src={ task.data.metadata.issue.user.avatar_url }
