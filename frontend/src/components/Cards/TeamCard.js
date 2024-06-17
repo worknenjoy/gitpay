@@ -1,15 +1,15 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { FormattedMessage } from 'react-intl'
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import LinkedInIcon from '@material-ui/icons/LinkedIn'
-import GitHubIcon from '@material-ui/icons/GitHub'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { FormattedMessage } from 'react-intl';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -38,11 +38,11 @@ const useStyles = makeStyles(theme => ({
   media: {
     height: 220,
   },
-}))
+}));
 
-export default function TeamCard (props) {
-  const { data } = props
-  const classes = useStyles()
+export default function TeamCard(props) {
+  const { data } = props;
+  const classes = useStyles();
 
   return (
     <div className={ classes.wrapper }>
@@ -53,43 +53,40 @@ export default function TeamCard (props) {
         />
       </Typography>
       <div className={ classes.root }>
-        { data && data.map(member => {
-          return (
-            <Card className={ classes.card }>
-              <CardActionArea>
-                <CardMedia
-                  className={ classes.media }
-                  image={ member.image }
-                  title={ member.name }
-                />
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='h2'>
-                    { member.name }
-                  </Typography>
-                  <Typography variant='body2' color='textSecondary' style={ { whiteSpace: 'initial' } }>
-                    { member.description }
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions style={ { display: 'flex', flexDirection: 'row', justifyContent: 'center' } }>
-                { member.linkedinUrl &&
-                  <Button target='_blank' href={ member.linkedinUrl } size='small' color='secondary' variant='outlined'>
-                    <span>Linkedin</span>
-                    <LinkedInIcon />
-                  </Button>
-                }
-                { member.githubUrl &&
-                  <Button target='_blank' href={ member.githubUrl } size='small' variant='outlined'>
-                    <span>Github&thinsp;</span>
-                    <GitHubIcon />
-                  </Button>
-                }
-              </CardActions>
-            </Card>
-          )
-        })
-        }
+        { data && data.map((member, index) => (
+          <Card className={ classes.card } key={ index }>
+            <CardActionArea>
+              <CardMedia
+                className={ classes.media }
+                image={ member.image }
+                title={ member.name }
+              />
+              <CardContent>
+                <Typography gutterBottom variant='h5' component='h2'>
+                  { member.name }
+                </Typography>
+                <Typography variant='body2' color='textSecondary' style={ { whiteSpace: 'initial' } }>
+                  { member.description }
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions style={ { display: 'flex', flexDirection: 'row', justifyContent: 'center' } }>
+              { member.linkedinUrl &&
+                <Button target='_blank' href={ member.linkedinUrl } size='small' color='secondary' variant='outlined'>
+                  <span>Linkedin</span>
+                  <LinkedInIcon />
+                </Button>
+              }
+              { member.githubUrl &&
+                <Button target='_blank' href={ member.githubUrl } size='small' variant='outlined'>
+                  <span>Github&thinsp;</span>
+                  <GitHubIcon />
+                </Button>
+              }
+            </CardActions>
+          </Card>
+        )) }
       </div>
     </div>
-  )
+  );
 }

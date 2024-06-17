@@ -146,17 +146,17 @@ class Preferences extends Component {
 
     let instance = this
 
-    let listSkills = skills.map(function (item) {
+    let listSkills = skills.map(function (item, index) {
       return (
-        <Skill classes={ classes } title={ item } onClick={ () => instance.handleSkillClick(item) } isSelected={ instance.isSkillSelected(item) } />
-      )
-    })
+        <Skill key={ index } classes={ classes } title={ item } onClick={ () => instance.handleSkillClick(item) } isSelected={ instance.isSkillSelected(item) } />
+      );
+    });
 
-    let selectedSkills = this.state.selectedSkills.map(function (item) {
+    let selectedSkills = this.state.selectedSkills.map(function (item, index) {
       return (
-        <MySkill classes={ classes } title={ item } onDelete={ () => instance.handleRemoveSkill(item) } />
-      )
-    })
+        <MySkill key={ index } classes={ classes } title={ item } onDelete={ () => instance.handleRemoveSkill(item) } />
+      );
+    });
 
     return (
       <Paper elevation={ 1 } style={ { padding: 20 } }>
@@ -223,12 +223,11 @@ class Preferences extends Component {
   }
 }
 
-Preferences.PropTypes = {
+Preferences.propTypes = {
   classes: PropTypes.object.isRequired,
-  preferences: PropTypes.string,
-  language: PropTypes.string,
-  updateUser: PropTypes.func,
-  fetchPreferences: PropTypes.func
+  preferences: PropTypes.object,
+  user: PropTypes.object.isRequired,
+  updateUser: PropTypes.func.isRequired,
 }
 
 export const PreferencesPure = Preferences

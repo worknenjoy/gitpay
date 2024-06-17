@@ -159,7 +159,7 @@ const styles = theme => ({
 })
 
 class Order extends Component {
-  componentWillMount () { }
+  UNSAFE_componentWillMount () { }
 
   render () {
     const { classes } = this.props

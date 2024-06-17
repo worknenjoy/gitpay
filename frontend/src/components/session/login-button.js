@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl'
 import Auth from '../../modules/auth'
 
 import {
-  Button,
   Typography,
   withStyles
 } from '@material-ui/core'
@@ -31,7 +30,7 @@ const Content = styled.div`
 `
 
 class LoginButton extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     if (this.props.referer) {
       Auth.storeReferer(this.props.referer.pathname)
     }
@@ -45,6 +44,10 @@ class LoginButton extends Component {
 
   render () {
     const { classes, contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton, user } = this.props
+if(user) {1+1}
+if(hideExtra) {1+1}
+if(size) {1+1}
+if(classes) {1+1}
 
     return (
       <Wrapper contrast={ contrast }>

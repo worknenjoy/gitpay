@@ -39,11 +39,10 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
   return (
     <React.Fragment>
       <List className={ classes.root }>
-        { authors && authors.map(a => {
-          return (
-            <React.Fragment>
-              { a.name &&
-              <ListItem alignItems='center'>
+        { authors && authors.map((a, index) => (
+          <React.Fragment key={ index }>
+            { a.name &&
+              <ListItem alignItems='center' key={ a.id }>
                 <ListItemAvatar>
                   { a.avatar_url ? (
                     <Avatar alt={ nameInitials(a.name) } src={ a.avatar_url } />
@@ -64,10 +63,9 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
                   }
                 />
               </ListItem>
-              }
-            </React.Fragment>
-          )
-        }) }
+            }
+          </React.Fragment>
+        )) }
       </List>
       <React.Fragment>
         { !logged ? (
@@ -89,7 +87,6 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
             name={ '' }
             onClose={ () => setOpenDialog(false) }
             onSend={ messageAuthor }
-
           />
         ) }
       </React.Fragment>

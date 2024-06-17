@@ -1,23 +1,24 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import {
   Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Checkbox,
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 class PaypalPaymentDialog extends Component {
   state = {
     termsPaypal: false
-  }
+  };
 
-  componentWillMount () { }
+  // UNSAFE_componentWillMount is used here due to legacy code. Ideally, refactor to componentDidMount or constructor.
+  UNSAFE_componentWillMount() { }
 
   handleNewOrder = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (this.state.termsPaypal) {
       this.props.createOrder({
         provider: 'paypal',
@@ -29,29 +30,28 @@ class PaypalPaymentDialog extends Component {
       }).then(order => {
         if (order) {
           // eslint-disable-next-line no-console
-          console.log('Paypal order order', order)
-          this.triggerPayment(this.props.order.data)
-        }
-        else {
+          console.log('Paypal order order', order);
+          this.triggerPayment(this.props.order.data);
+        } else {
           // eslint-disable-next-line no-console
-          console.log('no paypal order', order)
+          console.log('no paypal order', order);
         }
       }).catch(e => {
         // eslint-disable-next-line no-console
-        console.log('failed paypal order', e)
-      })
+        console.log('failed paypal order', e);
+      });
     }
-  }
+  };
 
-  triggerPayment (order) {
-    window.location.href = order.payment_url
+  triggerPayment(order) {
+    window.location.href = order.payment_url;
   }
 
   agreeTermsPaypal = () => {
-    this.setState({ termsPaypal: !this.state.termsPaypal })
-  }
+    this.setState({ termsPaypal: !this.state.termsPaypal });
+  };
 
-  render () {
+  render() {
     return (
       <Dialog
         open={ this.props.open }
@@ -100,7 +100,7 @@ class PaypalPaymentDialog extends Component {
           ) }
         </DialogContent>
       </Dialog>
-    )
+    );
   }
 }
 
@@ -112,6 +112,6 @@ PaypalPaymentDialog.propTypes = {
   onClose: PropTypes.func,
   order: PropTypes.object.isRequired,
   price: PropTypes.any
-}
+};
 
-export default PaypalPaymentDialog
+export default PaypalPaymentDialog;

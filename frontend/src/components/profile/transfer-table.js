@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import { withRouter } from 'react-router-dom'
-import ReactPlaceholder from 'react-placeholder'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
+import ReactPlaceholder from 'react-placeholder';
 
 import {
   Table,
@@ -16,14 +16,14 @@ import {
   withStyles,
   Paper,
   IconButton
-} from '@material-ui/core'
+} from '@material-ui/core';
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons'
-import slugify from '@sindresorhus/slugify'
+} from '@material-ui/icons';
+import slugify from '@sindresorhus/slugify';
 
 const messages = defineMessages({
   firstPageLabel: {
@@ -54,7 +54,7 @@ const messages = defineMessages({
     id: 'transfer.table.onHover',
     defaultMessage: 'See on'
   }
-})
+});
 
 const actionsStyles = theme => ({
   root: {
@@ -62,33 +62,33 @@ const actionsStyles = theme => ({
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing(2.5),
   },
-})
+});
 
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
-    this.props.onChangePage(event, 0)
+    this.props.onChangePage(event, 0);
   };
 
   handleBackButtonClick = event => {
-    this.props.onChangePage(event, this.props.page - 1)
+    this.props.onChangePage(event, this.props.page - 1);
   };
 
   handleNextButtonClick = event => {
-    this.props.onChangePage(event, this.props.page + 1)
+    this.props.onChangePage(event, this.props.page + 1);
   };
 
   handleLastPageButtonClick = event => {
     this.props.onChangePage(
       event,
       Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
-    )
+    );
   };
 
   render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props
+    const { classes, count, page, rowsPerPage, theme } = this.props;
 
     return (
-      <div className={ classes.root } >
+      <div className={ classes.root }>
         <IconButton
           onClick={ (e) => this.handleFirstPageButtonClick(e) }
           disabled={ page === 0 }
@@ -118,7 +118,7 @@ class TablePaginationActions extends React.Component {
           { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>
       </div>
-    )
+    );
   }
 }
 
@@ -129,11 +129,9 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   theme: PropTypes.object.isRequired,
-}
+};
 
-const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions
-))
+const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(TablePaginationActions));
 
 const styles = theme => ({
   root: {
@@ -141,46 +139,45 @@ const styles = theme => ({
     marginTop: theme.spacing(3),
   },
   table: {
-    minWidth: 500
+    minWidth: 500,
   },
   tableWrapper: {
     overflowX: 'auto',
   },
-})
+});
 
 class CustomPaginationActionsTable extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       page: 0,
       rowsPerPage: 10,
-    }
+    };
   }
 
   handleChangePage = (event, page) => {
-    this.setState({ page })
+    this.setState({ page });
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
+    this.setState({ rowsPerPage: event.target.value });
   };
 
   handleClickListItem = transfer => {
-    this.props.history.push(`/transfer/${transfer.id}/${slugify(transfer.title)}`)
-  }
+    this.props.history.push(`/transfer/${transfer.id}/${slugify(transfer.title)}`);
+  };
 
   goToProject = (e, id, organizationId) => {
-    e.preventDefault()
-    window.location.href = '/#/organizations/' + organizationId + '/projects/' + id
-    window.location.reload()
-  }
+    e.preventDefault();
+    window.location.href = `/#/organizations/${organizationId}/projects/${id}`;
+    window.location.reload();
+  };
 
   render() {
-    const { classes, transfers, tableHead } = this.props
-    const { rowsPerPage, page } = this.state
-    const emptyRows = transfers?.data?.length ? rowsPerPage - Math.min(rowsPerPage, transfers.data.length - page * rowsPerPage) : 0
-
+    const { classes, transfers, tableHead } = this.props;
+    const { rowsPerPage, page } = this.state;
+    const emptyRows = transfers?.data?.length ? rowsPerPage - Math.min(rowsPerPage, transfers.data.length - page * rowsPerPage) : 0;
 
     if (transfers?.data?.length === 0 && transfers.completed) {
       return (
@@ -191,50 +188,47 @@ class CustomPaginationActionsTable extends React.Component {
             </Typography>
           </div>
         </Paper>
-      )
+      );
     }
 
     const TableRowPlaceholder = (
-      [0,1,2,3,4].map(() => (
-        <TableRow>
-          { [0,1,2,3,4].map(() => (
-            <TableCell>
+      [0, 1, 2, 3, 4].map(index => (
+        <TableRow key={ index }>
+          { [0, 1, 2, 3, 4].map(subIndex => (
+            <TableCell key={ subIndex }>
               <div style={ { width: 80 } }>
                 <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ transfers.completed } />
               </div>
             </TableCell>
-        )) }
+          )) }
         </TableRow>
       ))
     );
 
     return (
       <Paper className={ classes.root }>
-        
         <div className={ classes.tableWrapper }>
           <Table className={ classes.table }>
             <TableHead>
               <TableRow>
-                { tableHead.map(t =>
-                    (<TableCell>
-                      { t }
-                    </TableCell>)
-                  ) }
+                { tableHead.map((t, index) => (
+                  <TableCell key={ index }>
+                    { t }
+                  </TableCell>
+                )) }
               </TableRow>
             </TableHead>
             <TableBody>
               <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation customPlaceholder={ TableRowPlaceholder } rows={ 10 } ready={ transfers.completed }>
-                { transfers?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                  return (
-                    <TableRow key={ n.id }>
-                      { n.map(p =>
-                        (<TableCell component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
-                          { p }
-                        </TableCell>)
-                      ) }
-                    </TableRow>
-                  )
-                }) }
+                { transfers?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, index) => (
+                  <TableRow key={ n.id }>
+                    { n.map((p, subIndex) => (
+                      <TableCell key={ subIndex } component='th' scope='row' style={ { padding: 10, position: 'relative' } }>
+                        { p }
+                      </TableCell>
+                    )) }
+                  </TableRow>
+                )) }
                 { emptyRows > 0 && (
                   <TableRow style={ { height: 48 * emptyRows } }>
                     <TableCell colSpan={ 6 } />
@@ -250,22 +244,21 @@ class CustomPaginationActionsTable extends React.Component {
                   rowsPerPage={ rowsPerPage }
                   page={ page }
                   onChangePage={ (e, page) => this.handleChangePage(e, page) }
-                  onChangeRowsPerPage={ (e, page) => this.handleChangeRowsPerPage(e, page) }
+                  onChangeRowsPerPage={ this.handleChangeRowsPerPage }
                   Actions={ TablePaginationActionsWrapped }
-                  />
+                />
               </TableRow>
             </TableFooter>
           </Table>
         </div>
       </Paper>
-    )
+    );
   }
 }
 
 CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object,
-  payments: PropTypes.object
-}
+  history: PropTypes.object
+};
 
-export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
+export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)));

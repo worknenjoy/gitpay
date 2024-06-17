@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react'
-import nameInitials from 'name-initials'
-
+import React, { useEffect } from 'react';
+import nameInitials from 'name-initials';
 import {
   withStyles,
   Typography,
   Chip,
   Avatar,
-} from '@material-ui/core'
-
+} from '@material-ui/core';
 import {
   Person as PersonIcon
-} from '@material-ui/icons'
-import { withRouter } from 'react-router'
+} from '@material-ui/icons';
+import { withRouter } from 'react-router';
 
-const logoGithub = require('../../images/github-logo.png')
+const logoGithub = require('../../images/github-logo.png');
 
 const styles = theme => ({
   profile: {
@@ -39,17 +37,17 @@ const styles = theme => ({
     color: '#515bc4',
     fontSize: '0.8rem',
   }
-})
+});
 
 const ProfileHead = (props) => {
-  const { classes, profile } = props
+  const { classes, profile } = props;
 
   useEffect(() => {
-    const userId = props.match.params.usernameId.split('-')[0]
+    const userId = props.match.params.usernameId.split('-')[0];
     if (!isNaN(userId)) {
-      props.getUserTypes(userId)
+      props.getUserTypes(userId);
     }
-  }, [props.match.params])
+  }, [props.match.params]);
 
   return (
     <div className={ classes.profile }>
@@ -86,22 +84,21 @@ const ProfileHead = (props) => {
         <Typography className={ classes.website }>
           <a href={ profile.website } target='__blank'>
             { profile.website &&
-                        profile.website.replace(/^https?:\/\//, '') }
+              profile.website.replace(/^https?:\/\//, '') }
           </a>
         </Typography>
       </div>
       <div>
-        { profile && profile.Types && profile.Types.map(r => {
-          return (
-            <Chip
-              style={ { marginRight: 10 } }
-              label={ r.name }
-            />
-          )
-        }) }
+        { profile && profile.Types && profile.Types.map(r => (
+          <Chip
+            key={ r.id } // Add key prop here, assuming r.id is a unique identifier
+            style={ { marginRight: 10 } }
+            label={ r.name }
+          />
+        )) }
       </div>
     </div>
-  )
+  );
 }
 
-export default withStyles(styles)(withRouter(ProfileHead))
+export default withStyles(styles)(withRouter(ProfileHead));

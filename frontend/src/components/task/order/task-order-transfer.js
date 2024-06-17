@@ -28,7 +28,7 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task }) => {
   useEffect(() => {
     setCurrentTaskId(task.id)
     setSelectedIndex(task.id)
-  }, [])
+  }, [task])
 
   const handleListItemClick = (event, taskId, index) => {
     setCurrentTaskId(taskId)
@@ -58,26 +58,25 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task }) => {
           </Typography>
           <div className={ classes.root }>
             <List component='nav' aria-label='secondary mailbox folder'>
-              { tasks && tasks.data.map((t, index) => {
-                return (
-                  <ListItem
-                    button
-                    selected={ selectedIndex === t.id }
-                    onClick={ (event) => handleListItemClick(event, t.id, index) }
-                  >
-                    <ListItemText primary={ t.title } />
-                  </ListItem>
-                )
-              }) }
+              { tasks && tasks.data.map((t) => (
+                <ListItem
+                  key={ t.id } // Unique key prop
+                  button
+                  selected={ selectedIndex === t.id }
+                  onClick={ (event) => handleListItemClick(event, t.id) }
+                >
+                  <ListItemText primary={ t.title } />
+                </ListItem>
+              )) }
             </List>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ onClose } variant='outlined' color='secondary' >
+          <Button onClick={ onClose } variant='outlined' color='secondary'>
             <FormattedMessage id='general.buttons.close' defaultMessage='Close' />
           </Button>
           <Button disabled={ selectedIndex === null } onClick={ sendTransfer } variant='contained' color='secondary'>
-            <FormattedMessage id='task.bounties.order.transfer.action' defaultMessage='transfer bounty order' />
+            <FormattedMessage id='task.bounties.order.transfer.action' defaultMessage='Transfer bounty order' />
           </Button>
         </DialogActions>
       </div>

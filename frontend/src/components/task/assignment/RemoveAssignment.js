@@ -15,10 +15,10 @@ import {
 } from '@material-ui/core'
 import Icon from '@material-ui/icons/Delete'
 
-const Container = styled.div`
-  display: inline-block;
-  margin-right: 1rem;
-`
+// const Container = styled.div`
+//   display: inline-block;
+//   margin-right: 1rem;
+// `
 
 const RemoveIcon = styled(Icon)`
   margin-right: .5rem;

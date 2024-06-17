@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import { withRouter } from 'react-router-dom'
-import Link from '@material-ui/core/Link'
-import MomentComponent from 'moment'
-import TextEllipsis from 'text-ellipsis'
-import ReactPlaceholder from 'react-placeholder'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { injectIntl, FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import MomentComponent from 'moment';
+import TextEllipsis from 'text-ellipsis';
+import ReactPlaceholder from 'react-placeholder';
 
 import {
   Avatar,
@@ -23,19 +23,19 @@ import {
   Chip,
   Paper,
   IconButton
-} from '@material-ui/core'
+} from '@material-ui/core';
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons'
-import slugify from '@sindresorhus/slugify'
+} from '@material-ui/icons';
+import slugify from '@sindresorhus/slugify';
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
-import Constants from '../../consts'
-import messages from './messages/task-messages'
+import logoGithub from '../../images/github-logo.png';
+import logoBitbucket from '../../images/bitbucket-logo.png';
+import Constants from '../../consts';
+import messages from './messages/task-messages';
 
 const actionsStyles = theme => ({
   root: {
@@ -43,33 +43,33 @@ const actionsStyles = theme => ({
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing(2.5),
   },
-})
+});
 
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
-    this.props.onChangePage(event, 0)
+    this.props.onChangePage(event, 0);
   };
 
   handleBackButtonClick = event => {
-    this.props.onChangePage(event, this.props.page - 1)
+    this.props.onChangePage(event, this.props.page - 1);
   };
 
   handleNextButtonClick = event => {
-    this.props.onChangePage(event, this.props.page + 1)
+    this.props.onChangePage(event, this.props.page + 1);
   };
 
   handleLastPageButtonClick = event => {
     this.props.onChangePage(
       event,
       Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
-    )
+    );
   };
 
   render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props
+    const { classes, count, page, rowsPerPage, theme } = this.props;
 
     return (
-      <div className={ classes.root } >
+      <div className={ classes.root }>
         <IconButton
           onClick={ (e) => this.handleFirstPageButtonClick(e) }
           disabled={ page === 0 }
@@ -99,7 +99,7 @@ class TablePaginationActions extends React.Component {
           { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>
       </div>
-    )
+    );
   }
 }
 
@@ -110,11 +110,11 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   theme: PropTypes.object.isRequired,
-}
+};
 
 const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
   TablePaginationActions
-))
+));
 
 const styles = theme => ({
   root: {
@@ -122,12 +122,12 @@ const styles = theme => ({
     marginTop: theme.spacing(3),
   },
   table: {
-    minWidth: 500
+    minWidth: 500,
   },
   tableCell: {
     root: {
-      padding: 5
-    }
+      padding: 5,
+    },
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -136,13 +136,13 @@ const styles = theme => ({
     marginBottom: theme.spacing(1),
     verticalAlign: 'middle',
     backgroundColor: 'transparent',
-    color: theme.palette.primary.success
+    color: theme.palette.primary.success,
   },
   chipStatusClosed: {
     marginBottom: theme.spacing(1),
     verticalAlign: 'middle',
     backgroundColor: 'transparent',
-    color: theme.palette.error.main
+    color: theme.palette.error.main,
   },
   avatarStatusSuccess: {
     width: theme.spacing(0),
@@ -154,193 +154,195 @@ const styles = theme => ({
     height: theme.spacing(0),
     backgroundColor: theme.palette.error.main,
   },
-})
+});
 
 class CustomPaginationActionsTable extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       page: 0,
       rowsPerPage: 10,
       sortedBy: null,
       sortDirection: 'asc',
-      sortedData: this.props.tasks.data
-    }
+      sortedData: this.props.tasks.data,
+    };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.tasks !== this.props.tasks) {
-      const { sortedBy, sortDirection } = this.state;
-      const newSortedData = this.sortData(this.props.tasks.data, sortedBy, sortDirection);
-      this.setState({
-        sortedData: newSortedData
-      });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.tasks.data !== prevState.sortedData) {
+      const { sortedBy, sortDirection } = prevState;
+      const newSortedData = CustomPaginationActionsTable.sortData(nextProps.tasks.data, sortedBy, sortDirection);
+      return {
+        sortedData: newSortedData,
+      };
     }
+    return null;
   }
 
-  sortData = (data, sortedBy, sortDirection) => {
+  static sortData(data, sortedBy, sortDirection) {
     if (sortDirection === 'none') return data;
     if (!sortedBy) return data;
-  
+
     return [...data].sort((a, b) => {
-      let aValue = this.getSortingValue(a, sortedBy);
-      let bValue = this.getSortingValue(b, sortedBy);
-  
+      let aValue = CustomPaginationActionsTable.getSortingValue(a, sortedBy);
+      let bValue = CustomPaginationActionsTable.getSortingValue(b, sortedBy);
+
       // Handle null values
       if (aValue === null || bValue === null) {
-        return (aValue === null ? (sortDirection === 'asc' ? -1 : 1) : (sortDirection === 'asc' ? 1 : -1));
+        return aValue === null ? (sortDirection === 'asc' ? -1 : 1) : sortDirection === 'asc' ? 1 : -1;
       }
-  
+
       // Handle date sorting
       if (sortedBy === 'task.table.head.createdAt') {
         let aDate = new Date(aValue).getTime();
         let bDate = new Date(bValue).getTime();
-        return (sortDirection === 'asc' ? aDate - bDate : bDate - aDate);
+        return sortDirection === 'asc' ? aDate - bDate : bDate - aDate;
       }
-  
+
       // Handle labels array sorting
       if (sortedBy === 'task.table.head.labels') {
-        aValue = aValue.map(label => label.name).join('');
-        bValue = bValue.map(label => label.name).join('');
+        aValue = aValue.map((label) => label.name).join('');
+        bValue = bValue.map((label) => label.name).join('');
       }
-  
-      // Handle string sorting
-      let comparator = String(aValue).localeCompare(String(bValue), 'en', { numeric: true, sensitivity: 'base', ignorePunctuation: true });
-      return (sortDirection === 'asc' ? comparator : -comparator);
-    });
-  };
 
-  getSortingValue = (item, fieldId) => {
-    const { tableHeaderMetadata } = this.props
+      // Handle string sorting
+      let comparator = String(aValue).localeCompare(String(bValue), 'en', {
+        numeric: true,
+        sensitivity: 'base',
+        ignorePunctuation: true,
+      });
+      return sortDirection === 'asc' ? comparator : -comparator;
+    });
+  }
+
+  static getSortingValue(item, fieldId) {
+    const { tableHeaderMetadata } = this.props;
     const getValue = (item, dataBaseKey) => {
-      const keys = dataBaseKey.split(".");
-      return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
+      const keys = dataBaseKey.split('.');
+      return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined' ? obj[key] : undefined), item);
     };
-  
-    const metadata = tableHeaderMetadata[fieldId]
+
+    const metadata = tableHeaderMetadata[fieldId];
     if (!metadata) {
+      // eslint-disable-next-line no-console
       console.error(`No metadata found for fieldId: ${fieldId}`);
       return null;
     }
-  
+
     const { numeric, dataBaseKey } = metadata;
-  
+
     const value = getValue(item, dataBaseKey);
-  
+
     if (value === undefined) {
+      // eslint-disable-next-line no-console
       console.error(`Failed to get value for fieldId: ${fieldId}`);
       return null;
     }
-  
+
     if (numeric) {
       const parsedValue = parseFloat(value);
       if (isNaN(parsedValue)) {
+        // eslint-disable-next-line no-console
         console.error(`Failed to parse numeric value for fieldId: ${fieldId}`);
         return null;
       }
       return parsedValue;
     }
     return value;
-  };
+  }
 
   handleSort = (fieldId, sortDirection) => {
-    const newSortedData = this.sortData(this.props.tasks.data, fieldId, sortDirection);
-
-    return {
+    const newSortedData = CustomPaginationActionsTable.sortData(this.props.tasks.data, fieldId, sortDirection);
+    this.setState({
       sortedBy: fieldId,
       sortDirection,
       sortedData: newSortedData,
-    };
-  }
-
-  sortHandler = (fieldId) => {
-    this.setState((prevState) => {
-      const { sortedBy, sortDirection } = prevState;
-      const newSortDirection = sortedBy === fieldId ? (sortDirection === 'asc' ? 'desc' : (sortDirection === 'desc' ? 'none' : 'asc')) : 'asc';
-      return this.handleSort(fieldId, newSortDirection);
     });
   };
 
-
   handleChangePage = (event, page) => {
-    this.setState({ page })
+    this.setState({ page });
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
+    this.setState({ rowsPerPage: event.target.value });
   };
 
   handleClickListItem = task => {
-    const url = this.props.user?.id ? `/profile/task/${task.id}/${slugify(task.title)}` : `/task/${task.id}/${slugify(task.title)}`
-    this.props.history.push(url)
-  }
+    const { user, history } = this.props;
+    const url = user?.id ? `/profile/task/${task.id}/${slugify(task.title)}` : `/task/${task.id}/${slugify(task.title)}`;
+    history.push(url);
+  };
 
-  renderProjectLink = ( project ) => {
-    if(!project?.id) return <Typography variant='caption'>no project</Typography>
-    const { id, name, OrganizationId } = project
-    const url = this.props.user?.id ? '/profile/organizations/' + OrganizationId + '/projects/' + id : '/organizations/' + OrganizationId + '/projects/' + id
-    return(
-      <Chip label={ project ? name : 'no project' } component={ Link } href={ '/#' + url } clickable />
-    )
-  }
+  renderProjectLink = project => {
+    if (!project) return <Typography>No project</Typography>;
+    const { id, name, OrganizationId } = project;
+    const url = this.props.user?.id
+      ? `/profile/organizations/${OrganizationId}/projects/${id}`
+      : `/organizations/${OrganizationId}/projects/${id}`;
+    return (
+      <Chip
+        label={ project ? name : 'no project' }
+        component={ Link }
+        href={ `/#${url}` }
+        clickable
+      />
+    );
+  };
 
   render() {
-    const { classes, tasks, tableHeaderMetadata, intl } = this.props
+    const { classes, tasks, tableHeaderMetadata, intl } = this.props;
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
 
-    const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
-    const TableCellWithSortLogic = ({ fieldId, defaultMessage, sortHandler }) => {
-      return (
-        <TableSortLabel
-          active={ fieldId === sortedBy && sortDirection !== 'none' }
-          direction={ sortDirection }
-          onClick={
-            () => {
-              return sortHandler(fieldId)
-            }
-          }
-        >
-          { defaultMessage }
-        </TableSortLabel>
-      )
-    }
+    const emptyRows = sortedData.length
+      ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage)
+      : 0;
 
-    const TableHeadCustom = () => {
-      return (
-        <TableHead>
-          <TableRow>
-            { Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
-              <TableCell key={ fieldId }>
-                <TableCellWithSortLogic sortHandler={ this.sortHandler } fieldId={ fieldId } defaultMessage={ metadata.label } />
-              </TableCell>
-            )) }
-          </TableRow>
-        </TableHead>
-      );
-    };
+    const TableCellWithSortLogic = ({ fieldId, defaultMessage }) => (
+      <TableSortLabel
+        active={ fieldId === sortedBy && sortDirection !== 'none' }
+        direction={ sortDirection }
+        onClick={ () => this.handleSort(fieldId, sortDirection === 'asc' ? 'desc' : 'asc') }
+      >
+        { defaultMessage }
+      </TableSortLabel>
+    );
 
+    const TableHeadCustom = () => (
+      <TableHead>
+        <TableRow>
+          { Object.entries(tableHeaderMetadata).map(([fieldId, metadata]) => (
+            <TableCell key={ fieldId }>
+              <TableCellWithSortLogic fieldId={ fieldId } defaultMessage={ metadata.label } />
+            </TableCell>
+          )) }
+        </TableRow>
+      </TableHead>
+    );
 
     if (tasks.completed && tasks.data.length === 0) {
-      return (<Paper className={ classes.root }>
-        <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
-          <Typography variant='caption'>
-            <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
-          </Typography>
-        </div>
-      </Paper>);
+      return (
+        <Paper className={ classes.root }>
+          <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
+            <Typography variant="caption">
+              <FormattedMessage id="task.table.body.noIssues" defaultMessage="No issues" />
+            </Typography>
+          </div>
+        </Paper>
+      );
     }
 
     const TableRowPlaceholder = (
-      [0,1,2,3,4,5].map(() => (
-        <TableRow>
-          { [0,1,2,3,4,5].map(() => (
-            <TableCell classes={ classes.tableCell }>
+      Array.from({ length: 6 }).map((_, rowIndex) => (
+        <TableRow key={ rowIndex }>
+          { Array.from({ length: 6 }).map((_, cellIndex) => (
+            <TableCell key={ cellIndex } classes={ classes.tableCell }>
               <div style={ { width: 80, padding: '8px 4px' } }>
-                <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ tasks.completed } />
+                <ReactPlaceholder showLoadingAnimation type="text" rows={ 1 } ready={ tasks.completed } />
               </div>
             </TableCell>
-        )) }
+          )) }
         </TableRow>
       ))
     );
@@ -351,69 +353,83 @@ class CustomPaginationActionsTable extends React.Component {
           <Table className={ classes.table }>
             <TableHeadCustom />
             <TableBody>
-              <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation  customPlaceholder={ TableRowPlaceholder } rows={ 10 }  ready={ tasks.completed }>
-                { sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                  return (
-                    <TableRow key={ n.id }>
-                      <TableCell component='th' scope='row' classes={ {
-                        root: classes.tableCell.root
-                      } } style={ { position: 'relative' } }>
-                        <div style={ { width: 350, display: 'flex', alignItems: 'center' } }>
-                          <a style={ { cursor: 'pointer' } } onClick={ (e) => this.handleClickListItem(n) }>
-                            { TextEllipsis(`${n.title || 'no title'}`, 42) }
-                          </a>
-                          <a target='_blank' href={ n.url } rel="noreferrer">
-                            <Tooltip id='tooltip-fab' title={ `${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` } placement='top'>
-                              <img width='24' src={ n.provider === 'github' ? logoGithub : logoBitbucket } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
-                            </Tooltip>
-                          </a>
-                        </div>
-                      </TableCell>
+              <ReactPlaceholder
+                style={ { marginBottom: 20, padding: 20 } }
+                showLoadingAnimation
+                customPlaceholder={ TableRowPlaceholder }
+                rows={ 10 }
+                ready={ tasks.completed }
+              >
+                { sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => (
+                  <TableRow key={ n.id }>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      classes={ { root: classes.tableCell.root } }
+                      style={ { position: 'relative' } }
+                    >
+                      <div style={ { width: 350, display: 'flex', alignItems: 'center' } }>
+                        <a style={ { cursor: 'pointer' } } onClick={ e => this.handleClickListItem(n) }>
+                          { TextEllipsis(`${n.title || 'no title'}`, 42) }
+                        </a>
+                        <a target="_blank" href={ n.url } rel="noreferrer">
+                          <Tooltip
+                            id="tooltip-fab"
+                            title={ `${intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}` }
+                            placement="top"
+                          >
+                            <img
+                              width="24"
+                              src={ n.provider === 'github' ? logoGithub : logoBitbucket }
+                              style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } }
+                            />
+                          </Tooltip>
+                        </a>
+                      </div>
+                    </TableCell>
+                    <TableCell classes={ classes.tableCell }>
+                      <div style={ { width: 80 } }>
+                        <Chip
+                          label={ intl.formatMessage(Constants.STATUSES[n.status]) }
+                          avatar={ <Avatar className={ n.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
+                          className={ n.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
+                        />
+                      </div>
+                    </TableCell>
+                    { tableHeaderMetadata['task.table.head.project'] && (
                       <TableCell classes={ classes.tableCell }>
-                        <div style={ { width: 80 } }>
-                          <Chip 
-                            label={ this.props.intl.formatMessage(Constants.STATUSES[n.status]) }
-                            avatar={ <Avatar className={ n.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess } style={ { width: 12, height: 12 } }>{ ' ' }</Avatar> }
-                            className={ n.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess }
-                          />
+                        { this.renderProjectLink(n?.Project) }
+                      </TableCell>
+                    ) }
+                    <TableCell numeric classes={ classes.tableCell } style={ { padding: 5 } }>
+                      <div style={ { width: 70, textAlign: 'center' } }>
+                        { n.value ? (n.value === '0' ? intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : intl.formatMessage(messages.noBounty) }
+                      </div>
+                    </TableCell>
+                    <TableCell classes={ classes.tableCell }>
+                      { n?.Labels?.length ? (
+                        <div>
+                          { n?.Labels?.slice(0, 2).map((label, index) => (
+                            <Chip
+                              key={ index }
+                              style={ { marginRight: 5, marginBottom: 5 } }
+                              size="small"
+                              label={ TextEllipsis(`${label.name || ''}`, 10) }
+                            />
+                          )) }
+                          ...
                         </div>
-                      </TableCell>
-                      { tableHeaderMetadata['task.table.head.project'] &&
-                        <TableCell classes={ classes.tableCell }>
-                          { this.renderProjectLink(n?.Project) }
-                        </TableCell>
-                      }
-                      <TableCell numeric classes={ classes.tableCell } style={ { padding: 5 } }>
-                        <div style={ { width: 70, textAlign: 'center' } }>
-                          { n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty) }
-                        </div>
-                      </TableCell>
-                      <TableCell classes={ classes.tableCell }>
-                        { n?.Labels?.length ?
-                          <div>
-                            { n?.Labels?.slice(0, 2).map(
-                              (label, index) =>
-                              (
-                                <Chip
-                                  style={ { marginRight: 5, marginBottom: 5 } }
-                                  size='small'
-                                  label={
-                                    TextEllipsis(`${label.name || ''}`, 10)
-                                  }
-                                />
-                              )
-                            )
-                            } ...
-                          </div> : <>-</> }
-                      </TableCell>
-                      <TableCell classes={ classes.tableCell }>
-                        <div style={ { width: 120 } }>
-                          { n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined) }
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )
-                }) }
+                      ) : (
+                        <>-</>
+                      ) }
+                    </TableCell>
+                    <TableCell classes={ classes.tableCell }>
+                      <div style={ { width: 120 } }>
+                        { n.createdAt ? MomentComponent(n.createdAt).fromNow() : intl.formatMessage(messages.noDefined) }
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )) }
                 { emptyRows > 0 && (
                   <TableRow style={ { height: 48 * emptyRows } }>
                     <TableCell colSpan={ 6 } />
@@ -429,17 +445,15 @@ class CustomPaginationActionsTable extends React.Component {
                   rowsPerPage={ rowsPerPage }
                   page={ page }
                   onPageChange={ (e, page) => this.handleChangePage(e, page) }
-                  onRowsPerPageChange={ (e, page) => this.handleChangeRowsPerPage(e, page) }
+                  onRowsPerPageChange={ this.handleChangeRowsPerPage }
                   Actions={ TablePaginationActionsWrapped }
-                  />
+                />
               </TableRow>
             </TableFooter>
           </Table>
-            
         </div>
-        
       </Paper>
-    )
+    );
   }
 }
 
@@ -448,6 +462,8 @@ CustomPaginationActionsTable.propTypes = {
   history: PropTypes.object,
   tasks: PropTypes.object,
   user: PropTypes.object,
-}
+  intl: PropTypes.object.isRequired,
+  tableHeaderMetadata: PropTypes.object.isRequired,
+};
 
-export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
+export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)));

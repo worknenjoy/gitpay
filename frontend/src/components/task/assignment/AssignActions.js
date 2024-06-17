@@ -220,35 +220,39 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
             if (assign.status === 'accepted') {
               return (<FormattedMessage id='task.payment.action.chosen' defaultMessage='Chosen' >
                 { (msg) => (
-                  <Chip label={ msg } />
+                  <Chip key="chosen" label={ msg } />
                 ) }
               </FormattedMessage>)
             }
           }
           else if (loggedUser.id === assign.userId && assign.status === 'pending-confirmation') {
-            return (['Accept', 'Reject'].map(action => (<Button
-              onClick={ action === 'Accept'
-                ? () => handleAssign(task.id, assign.id, true)
-                : () => setRejectModal(true)
-              }
-              style={ { marginRight: 10 } }
-              variant='contained'
-              size='small'
-              color='primary'
-            > { action } </Button>)
-            ))
+            return (['Accept', 'Reject'].map((action, index) => (
+              <Button
+                key={ index } // Adding key prop here
+                onClick={ action === 'Accept'
+                  ? () => handleAssign(task.id, assign.id, true)
+                  : () => setRejectModal(true)
+                }
+                style={ { marginRight: 10 } }
+                variant='contained'
+                size='small'
+                color='primary'
+              >
+                { action }
+              </Button>
+            )))
           }
           else if (isOwner && assign.status === 'pending-confirmation') {
             return (<FormattedMessage id='task.payment.action.pendingConfirmation' defaultMessage='Pending User Confirmation' >
               { (msg) => (
-                <Chip label={ msg } />
+                <Chip key="pendingConfirmation" label={ msg } />
               ) }
             </FormattedMessage>)
           }
           else if ((isOwner || (loggedUser.id === assign.userId)) && (assign.status === 'rejected')) {
             return (<FormattedMessage id='task.payment.action.rejected' defaultMessage='Rejected by User' >
               { (msg) => (
-                <Chip label={ msg } />
+                <Chip key="rejected" label={ msg } />
               ) }
             </FormattedMessage>)
           }

@@ -113,7 +113,7 @@ class LoginForm extends Component {
 
   containUrl = (string) => {
     // Regular expression to match a basic URL structure
-    const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    const urlPattern = /\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]/gi;
     
     // Test if the string matches the URL pattern
     return urlPattern.test(string);
@@ -244,6 +244,7 @@ class LoginForm extends Component {
           window.location.reload('/#/signin')
         }
         else {
+          // eslint-disable-next-line no-console
           console.log('register user')
           this.props.history.push('/signin')
           return false

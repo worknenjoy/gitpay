@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import MuiAlert from '@material-ui/lab/Alert'
-import { FormattedMessage } from 'react-intl'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import MuiAlert from '@material-ui/lab/Alert';
+import { FormattedMessage } from 'react-intl';
 
-import { countryCodes } from './country-codes'
+import { countryCodes } from './country-codes';
 
 import {
   withStyles,
@@ -14,7 +14,7 @@ import {
   DialogContentText,
   DialogTitle,
   Typography
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 const styles = theme => ({
   countryContainer: {
@@ -29,22 +29,22 @@ const styles = theme => ({
     textAlign: 'center',
     padding: 25
   }
-})
+});
 
 class CountryPicker extends Component {
   static propTypes = {
-    classes: PropTypes.object.required,
+    classes: PropTypes.object.isRequired,
     open: PropTypes.bool,
     onClose: PropTypes.func
   }
 
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       currentCountryLabel: null,
       currentCountryCode: null,
       currentCountryImage: null
-    }
+    };
   }
 
   handleCountry = (e, item) => {
@@ -52,30 +52,36 @@ class CountryPicker extends Component {
       currentCountryCode: item.code,
       currentCountryLabel: item.country,
       currentCountryImage: item.image
-    })
+    });
   }
 
-  render () {
-    const { classes } = this.props
+  render() {
+    const { classes } = this.props;
 
     const Alert = (props) => {
-      return <MuiAlert elevation={ 2 } variant='outlined' { ...props } />
-    }
+      return <MuiAlert elevation={ 2 } variant='outlined' { ...props } />;
+    };
 
     const getCountryButtons = () => {
       return countryCodes.map((item) => {
-        const imageModule = require(`../../images/countries/${item.image}.png`)
-        const countryImageSrc = imageModule.default || imageModule
+        const imageModule = require(`../../images/countries/${item.image}.png`);
+        const countryImageSrc = imageModule.default || imageModule;
         return (
-          <Button style={ { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' } } variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
-            <img width='48' style={ { marginRight: 10 } } src={ countryImageSrc } onLoad={ () => {} } />
+          <Button
+            key={ item.code } // <-- Adding key prop here
+            style={ { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' } }
+            variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' }
+            onClick={ (e) => this.handleCountry(e, item) }
+            className={ classes.countryItem }
+          >
+            <img width='48' style={ { marginRight: 10 } } src={ countryImageSrc } onLoad={ () => {} } alt={ `Flag of ${item.country}` } />
             <Typography component='span' gutterBottom>
               { item.country }
             </Typography>
           </Button>
-        )
-      })
-    }
+        );
+      });
+    };
 
     return (
       <div>
@@ -127,8 +133,8 @@ class CountryPicker extends Component {
           </DialogContent>
         </Dialog>
       </div>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(CountryPicker)
+export default withStyles(styles)(CountryPicker);

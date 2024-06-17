@@ -1,60 +1,56 @@
-// CardSection.js
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import {
   Input,
   InputAdornment,
   FormControl,
   FormHelperText
-} from '@material-ui/core'
+} from '@material-ui/core';
 import {
   AccountCircle,
   Email
-} from '@material-ui/icons'
+} from '@material-ui/icons';
 
 class UserSection extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       error: {
         fullname: false,
         email: false
       }
-    }
+    };
 
-    this.onChangeName = this.onChangeName.bind(this)
-    this.onChangeEmail = this.onChangeEmail.bind(this)
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
   }
 
-  componentWillReceiveProps (props, newProps) {
+  UNSAFE_componentWillReceiveProps(props, newProps) {
     if (props !== newProps) {
       this.setState({
         error: props.error
-      })
+      });
     }
   }
 
-  onChangeName (ev) {
+  onChangeName(ev) {
     if (ev.target.value.length < 1) {
-      this.setState({ error: { fullname: true } })
-    }
-    else {
-      this.setState({ error: { fullname: false } })
+      this.setState({ error: { ...this.state.error, fullname: true } });
+    } else {
+      this.setState({ error: { ...this.state.error, fullname: false } });
     }
   }
 
-  onChangeEmail (ev) {
+  onChangeEmail(ev) {
     if (ev.target.value.length < 1) {
-      this.setState({ error: { email: true } })
-    }
-    else {
-      this.setState({ error: { email: false } })
+      this.setState({ error: { ...this.state.error, email: true } });
+    } else {
+      this.setState({ error: { ...this.state.error, email: false } });
     }
   }
 
-  render () {
+  render() {
     return (
       <label>
         <FormControl error={ this.state.error.fullname }>
@@ -69,11 +65,11 @@ class UserSection extends Component {
                   </InputAdornment>
                 }
                 placeholder={ msg }
-                ref='payment-form-user'
                 defaultValue={ this.props.name }
                 required
                 style={ { marginRight: 20 } }
                 onChange={ this.onChangeName }
+                inputRef={ (input) => (this.fullnameInput = input) }
               />
             ) }
           </FormattedMessage>
@@ -97,12 +93,12 @@ class UserSection extends Component {
               </InputAdornment>
             }
             placeholder='e-mail'
-            ref='payment-form-email'
             type='email'
             disabled={ this.props.email }
             defaultValue={ this.props.email }
             required
             onChange={ this.onChangeEmail }
+            inputRef={ (input) => (this.emailInput = input) }
           />
           { this.state.error.email && (
             <FormattedMessage id='user.data.email.error' defaultMessage='Provide your email correctly'>
@@ -115,7 +111,7 @@ class UserSection extends Component {
           ) }
         </FormControl>
       </label>
-    )
+    );
   }
 }
 
@@ -123,6 +119,6 @@ UserSection.propTypes = {
   error: PropTypes.object.isRequired,
   email: PropTypes.string,
   name: PropTypes.string
-}
+};
 
-export default UserSection
+export default UserSection;

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages } from 'react-intl'
 import {
-  Redirect, BrowserRouter as Router
+  Redirect,
+  BrowserRouter as Router
 } from 'react-router-dom'
 
 const messages = defineMessages({
@@ -12,23 +13,22 @@ const messages = defineMessages({
   },
   orderError: {
     id: 'task.order.payment.error',
-    defaultMessage: 'We had a issue to process your payment'
+    defaultMessage: 'We had an issue processing your payment'
   }
 })
 
 class TaskOrders extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount() {
     if (this.props.match.params.status === 'success') {
       this.props.addNotification(this.props.intl.formatMessage(messages.orderSuccess))
-    }
-    else {
+    } else {
       this.props.addNotification(this.props.intl.formatMessage(messages.orderError))
     }
     this.props.history.replace(`/#/task/${this.props.match.params.id}`)
     this.props.changeTab(1)
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Router>

@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import MomentComponent from 'moment'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import classNames from 'classnames'
 import {
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Avatar,
   Card,
   CardHeader,
@@ -15,26 +12,11 @@ import {
   Button,
   Fab,
   Tooltip,
-  Chip,
-  Paper,
-  FormControl,
-  Input,
-  InputAdornment,
-  InputLabel,
-  Checkbox,
-  Link,
-  FormControlLabel,
-  DialogContentText,
-  AppBar,
   Tabs,
   Tab,
-  TextareaAutosize,
+  Link
 } from '@material-ui/core'
 import {
-  DateRange as DateIcon,
-  CalendarToday as CalendarIcon,
-  Warning as WarningIcon,
-  Info as InfoIcon,
   Close as CloseIcon
 } from '@material-ui/icons'
 import LoginButton from '../session/login-button'
@@ -43,7 +25,7 @@ import TaskSolveInstructions from './task-solve-instructions'
 
 import logoGithub from '../../images/github-logo-black.png'
 import logoBitbucket from '../../images/bitbucket-logo-blue.png'
-import Task from './task'
+// import Task from './task'
 
 const TaskSolve = ({ 
   classes,

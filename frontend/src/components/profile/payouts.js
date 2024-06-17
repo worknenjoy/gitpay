@@ -1,37 +1,37 @@
-import React, { useEffect } from 'react'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import moment from 'moment'
+import React, { useEffect } from 'react';
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
+import moment from 'moment';
 import {
   Container,
   Typography,
   withStyles,
-  Chip
-} from '@material-ui/core'
-import CustomPaginationActionsTable from './payout-table'
+  Chip,
+} from '@material-ui/core';
+import CustomPaginationActionsTable from './payout-table';
 
 // Define messages for internationalization
 const payoutMessages = defineMessages({
   title: {
     id: 'profile.payouts.title',
-    defaultMessage: 'Payouts'
+    defaultMessage: 'Payouts',
   },
   headerStatus: {
     id: 'profile.payouts.headerStatus',
-    defaultMessage: 'Status'
+    defaultMessage: 'Status',
   },
   headerMethod: {
     id: 'profile.payouts.headerMethod',
-    defaultMessage: 'Method'
+    defaultMessage: 'Method',
   },
   headerValue: {
     id: 'profile.payouts.headerValue',
-    defaultMessage: 'Value'
+    defaultMessage: 'Value',
   },
   headerCreated: {
     id: 'profile.payouts.headerCreated',
-    defaultMessage: 'Created'
-  }
-})
+    defaultMessage: 'Created',
+  },
+});
 
 // Map for currency symbols
 const currencyMap = {
@@ -49,48 +49,48 @@ const currencyMap = {
   hkd: 'HK$', // Hong Kong Dollar
   sgd: 'S$', // Singapore Dollar
   krw: '₩', // South Korean Won
-}
+};
 
 // Function to convert currency code to symbol
-function currencyCodeToSymbol (code) {
-  return currencyMap[code.toLowerCase()] || code
+function currencyCodeToSymbol(code) {
+  return currencyMap[code.toLowerCase()] || code;
 }
 
 // Function to format amount from cents to decimal format
-function formatStripeAmount (amountInCents) {
+function formatStripeAmount(amountInCents) {
   // Convert to a number in case it's a string
-  let amount = Number(amountInCents)
+  let amount = Number(amountInCents);
 
   // Check if the conversion result is a valid number
   if (isNaN(amount)) {
-    return 'Invalid amount'
+    return 'Invalid amount';
   }
 
   // Convert cents to a decimal format and fix to 2 decimal places
-  return (amount / 100).toFixed(2)
+  return (amount / 100).toFixed(2);
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
     padding: 10,
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'left',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   button: {
     width: 100,
-    font: 10
-  }
-})
+    font: 10,
+  },
+});
 
 const Payouts = ({ searchPayout, payouts, user, intl }) => {
   useEffect(() => {
     const getPayouts = async () => {
-      return searchPayout({ userId: user.user.id })
-    }
-    getPayouts().then(t => {})
-  }, [user])
+      return searchPayout({ userId: user.user.id });
+    };
+    getPayouts().then((t) => {});
+  }, [user]);
 
   return (
     <div style={ { margin: '40px 0' } }>
@@ -109,20 +109,26 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
             payouts={
               payouts && payouts.data && {
                 ...payouts,
-                data: payouts.data.map(t => [
-                  <Chip label={ t.status } />,
-                  <Typography variant='body2'>
-                    { t.method }
-                  </Typography>,
-                  `${currencyCodeToSymbol(t.currency)} ${t.method === 'stripe' ? formatStripeAmount(t.amount) : t.amount}`,
-                  moment(t.createdAt).format('LLL')
-                ]) } || {}
+                data: payouts.data.map((t, index) => ({
+                  key: `payout-${index}`, // Add a unique key for each row
+                  content: [
+                    <Chip key={ `status-chip-${index}` } label={ t.status } />,
+                    <Typography key={ `method-typography-${index}` } variant='body2'>
+                      { t.method }
+                    </Typography>,
+                    `${currencyCodeToSymbol(t.currency)} ${
+                      t.method === 'stripe' ? formatStripeAmount(t.amount) : t.amount
+                    }`,
+                    moment(t.createdAt).format('LLL'),
+                  ],
+                })),
+              }
             }
           />
         </div>
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default injectIntl(withStyles(styles)(Payouts))
+export default injectIntl(withStyles(styles)(Payouts));

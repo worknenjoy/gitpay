@@ -23,10 +23,11 @@ const renderCustomizedLabel = ({
     </text>
   )
 }
+
 export default class LabelPieCharts extends PureComponent {
-  render () {
+  render() {
     return (
-      <PieChart width={ 800 } height={ 400 } style={ { height: '100px', alignItems: 'center', margin: 'auto', marginLeft: '5.8em', display: `${this.props.display}` } } >
+      <PieChart width={ 800 } height={ 400 } style={ { height: '100px', alignItems: 'center', margin: 'auto', marginLeft: '5.8em', display: `${this.props.display}` } }>
         <Pie
           style={ { backgroundColor: 'blue' } }
           data={ data }
@@ -42,7 +43,7 @@ export default class LabelPieCharts extends PureComponent {
           label={ renderCustomizedLabel }
         >
           {
-            data.map((entry, index) => <Cell fill={ COLORS[(COLORS.length - index) % COLORS.length] } />)
+            data.map((entry, index) => <Cell key={ `cell-${index}` } fill={ COLORS[index % COLORS.length] } />)
           }
         </Pie>
       </PieChart>

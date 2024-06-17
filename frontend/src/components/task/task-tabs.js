@@ -188,6 +188,7 @@ class TaskTabs extends React.Component {
         if (item.User && userId === item.User.id) {
           return (
             <Button
+              key={ `details-${item.id}` } // Added key prop
               style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
               variant='contained'
               size='small'
@@ -231,7 +232,7 @@ class TaskTabs extends React.Component {
 
       const items = assign.map((item, i) => {
         const userField = () => (
-          <span>
+          <span key={ `user-${item.id}` }>
             { item.User && item.User.profile_url
               ? (
                 <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
@@ -275,7 +276,7 @@ class TaskTabs extends React.Component {
       if (item.User && item.provider === 'stripe' && userId === item.User.id) {
         if (item.status === 'succeeded' && !task.paid) {
           return (
-            <React.Fragment>
+            <React.Fragment key={ `transfer-${item.id}` }>
               <Button
                 style={ { paddingTop: 2, paddingBottom: 2, width: 'auto', marginLeft: 5, marginRight: 5 } }
                 variant='contained'
@@ -312,7 +313,7 @@ class TaskTabs extends React.Component {
 
       return orders.map((item, i) => [
         item.paid ? this.props.intl.formatMessage(messages.labelYes) : this.props.intl.formatMessage(messages.labelNo),
-        <div style={ { display: 'inline-block' } }>
+        <div key={ `status-${item.id}` } style={ { display: 'inline-block' } }>
           <span style={ { display: 'inline-block', width: '100%', marginRight: '1rem', marginBottom: '1em' } }>{ statuses[item.status] }</span>
           { detailsOrderButton(item, userId) }
           { retryOrCancelButton(item, userId) }
@@ -321,7 +322,7 @@ class TaskTabs extends React.Component {
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
-        <PaymentTypeIcon type={ item.provider } />
+        <PaymentTypeIcon key={ `payment-${item.id}` } type={ item.provider } />
       ])
     }
 

@@ -24,6 +24,7 @@ const renderCustomizedLabel = ({
     </text>
   )
 }
+
 export default class LabelPieCharts extends PureComponent {
   render () {
     return (
@@ -43,7 +44,7 @@ export default class LabelPieCharts extends PureComponent {
           label={ renderCustomizedLabel }
         >
           {
-            data.map((entry, index) => <Cell fill={ COLORS[(COLORS.length - index) % COLORS.length] } />)
+            data.map((entry, index) => <Cell key={ `cell-${index}` } fill={ COLORS[index % COLORS.length] } />)
           }
         </Pie>
       </PieChart>

@@ -203,6 +203,7 @@ export const searchUser = data => {
         }
       })
       .catch(error => {
+        // eslint-disable-next-line no-console
         console.log('error', error)
         dispatch(addNotification('user.search.error'))
         dispatch(searchUserError(error))

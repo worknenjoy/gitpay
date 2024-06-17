@@ -268,11 +268,11 @@ class Account extends Component {
   render () {
     const { classes, account, bankAccount, user } = this.props
 
-    const getSteps = () => {
-      return [
-        <FormattedMessage id='account.id.register.bank' defaultMessage='Register bank account' />
-      ]
-    }
+    // const getSteps = () => {
+    //   return [
+    //     <FormattedMessage id='account.id.register.bank' defaultMessage='Register bank account' />
+    //   ]
+    // }
 
     // const steps = getSteps()
 

@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import { withStyles } from '@material-ui/core/styles'
-import Chip from '@material-ui/core/Chip'
-import Avatar from '@material-ui/core/Avatar'
-import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Button from '@material-ui/core/Button'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { withStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 import {
   WorkRounded as WorkRoundedIcon,
   Done as DoneIcon,
   Sync as ImportIcon
-} from '@material-ui/icons'
-import { Typography } from '@material-ui/core'
+} from '@material-ui/icons';
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -27,30 +27,30 @@ const styles = theme => ({
   chip: {
     margin: theme.spacing(0.5),
   },
-})
+});
 
 class Organizations extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       dialogOpen: false,
       currentOrg: {}
-    }
+    };
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.object,
+    data: PropTypes.array.isRequired,
     user: PropTypes.object,
-    onImport: PropTypes.func
+    onImport: PropTypes.func.isRequired
   }
 
   handleClick = (org) => {
-    this.setState({ dialogOpen: true, currentOrg: org })
+    this.setState({ dialogOpen: true, currentOrg: org });
   }
 
   handleClose = () => {
-    this.setState({ dialogOpen: false })
+    this.setState({ dialogOpen: false });
   }
 
   handleImport = () => {
@@ -58,35 +58,33 @@ class Organizations extends Component {
       name: this.state.currentOrg.name,
       userId: this.props.user.id
     }).then(org => {
-      this.setState({ dialogOpen: false })
+      this.setState({ dialogOpen: false });
     }).catch(e => {
       // eslint-disable-next-line no-console
-      console.log('error', e)
-      this.setState({ dialogOpen: false })
-    })
+      console.error('Error importing organization:', e);
+      this.setState({ dialogOpen: false });
+    });
   }
 
-  render () {
-    const { classes, data } = this.props
-    const { dialogOpen, currentOrg } = this.state
+  render() {
+    const { classes, data } = this.props;
+    const { dialogOpen, currentOrg } = this.state;
 
     return (
       <div className={ classes.root }>
-        { data.length && data.map(org => {
-          return (
-            <Chip
-              avatar={ <Avatar src={ org.image } /> }
-              key={ org.name }
-              clickable
-              icon={ <WorkRoundedIcon /> }
-              label={ org.name }
-              onDelete={ () => this.handleClick(org) }
-              onClick={ () => this.handleClick(org) }
-              className={ classes.chip }
-              deleteIcon={ org.imported ? <DoneIcon /> : <ImportIcon /> }
-            />
-          )
-        }) }
+        { data.length && data.map(org => (
+          <Chip
+            key={ org.name } // <-- Ensure each Chip has a unique key
+            avatar={ <Avatar src={ org.image } /> }
+            clickable
+            icon={ <WorkRoundedIcon /> }
+            label={ org.name }
+            onDelete={ () => this.handleClick(org) }
+            onClick={ () => this.handleClick(org) }
+            className={ classes.chip }
+            deleteIcon={ org.imported ? <DoneIcon /> : <ImportIcon /> }
+          />
+        )) }
         <Dialog open={ dialogOpen } onClose={ this.handleClose } aria-labelledby='form-dialog-title'>
           <DialogTitle id='form-dialog-title'>
             <FormattedMessage id='organization.dialog.title' defaultMessage='Import organizations' />
@@ -94,15 +92,13 @@ class Organizations extends Component {
           <DialogContent>
             { currentOrg && currentOrg.organizations &&
               <DialogContentText>
-                <FormattedMessage id='organization.dialog.exist' defaultMessage='We have an project imported already' />
-                { currentOrg.organizations.map(o => {
-                  return (
-                    <div style={ { marginTop: 20, marginBottom: 20 } }>
-                      <Typography>Project: { o.name }</Typography>
-                      <Typography>User: { o.User && o.User.name }</Typography>
-                    </div>
-                  )
-                }) }
+                <FormattedMessage id='organization.dialog.exist' defaultMessage='We have a project imported already' />
+                { currentOrg.organizations.map(o => (
+                  <div key={ o.name } style={ { marginTop: 20, marginBottom: 20 } }>
+                    <Typography>Project: { o.name }</Typography>
+                    <Typography>User: { o.User && o.User.name }</Typography>
+                  </div>
+                )) }
               </DialogContentText>
             }
             <DialogContentText>
@@ -135,8 +131,8 @@ class Organizations extends Component {
           </DialogActions>
         </Dialog>
       </div>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(Organizations)
+export default withStyles(styles)(Organizations);

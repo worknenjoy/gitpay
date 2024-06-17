@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-no-duplicate-props */
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { injectIntl, FormattedMessage, defineMessages } from 'react-intl'
-import funder from '../../images/bounty.png'
-import contributor from '../../images/sharing.png'
-import maintainer from '../../images/notifications.png'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
+import funder from '../../images/bounty.png';
+import contributor from '../../images/sharing.png';
+import maintainer from '../../images/notifications.png';
 
 import {
   withStyles,
@@ -18,9 +18,9 @@ import {
   CardMedia,
   CardContent,
   CardActions
-} from '@material-ui/core'
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
-import CheckBoxIcon from '@material-ui/icons/CheckBox'
+} from '@material-ui/core';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = theme => ({
   row: {
@@ -157,7 +157,7 @@ const styles = theme => ({
     fontWeight: 'bold',
     fontFamily: 'roboto'
   }
-})
+});
 
 const messages = defineMessages({
   saveSuccess: {
@@ -168,72 +168,69 @@ const messages = defineMessages({
     id: 'user.role.update.error',
     defaultMessage: 'We couldnt update your information properly'
   }
-})
+});
 
 const imageMap = {
   'funding': funder,
   'contributor': contributor,
   'maintainer': maintainer
-}
+};
 
 class Roles extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       selectedRoles: this.props.user.Types
-    }
+    };
   }
+
   async componentDidMount () {
     try {
       if (this.props.roles.data.length === 0) {
-        await this.props.fetchRoles()
+        await this.props.fetchRoles();
       }
-    }
-    catch (e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   }
 
   handleRoleClick = (event, item) => {
-    let allItems = this.state.selectedRoles
-    const itemExist = allItems.filter(i => i.id === item.id)
+    let allItems = this.state.selectedRoles;
+    const itemExist = allItems.filter(i => i.id === item.id);
     if (itemExist.length) {
-      allItems = allItems.filter(i => i.id !== item.id)
-    }
-    else {
-      allItems.push(item)
+      allItems = allItems.filter(i => i.id !== item.id);
+    } else {
+      allItems.push(item);
     }
     this.setState({
       selectedRoles: allItems
-    })
-  }
+    });
+  };
 
   shouldBeChecked = (item) => {
-    return !!(this.state.selectedRoles && this.state.selectedRoles.find(s => item.name === s.name))
-  }
+    return !!(this.state.selectedRoles && this.state.selectedRoles.find(s => item.name === s.name));
+  };
 
   handleCancelClick = () => {
-    this.props.onClose && this.props.onClose()
-  }
+    this.props.onClose && this.props.onClose();
+  };
 
   handleSaveClick = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await this.props.updateUser(this.props.user.id, {
         Types: this.state.selectedRoles
-      })
-      this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess))
-      this.props.onClose && this.props.onClose()
+      });
+      this.props.addNotification(this.props.intl.formatMessage(messages.saveSuccess));
+      this.props.onClose && this.props.onClose();
+    } catch (e) {
+      console.log(e);
+      this.props.addNotification(this.props.intl.formatMessage(messages.saveError));
     }
-    catch (e) {
-      console.log(e)
-      this.props.addNotification(this.props.intl.formatMessage(messages.saveError))
-    }
-  }
+  };
 
   render () {
-    // eslint-disable-next-line no-unused-vars
-    const { classes, roles } = this.props
+    const { classes, roles } = this.props;
     return (
       <Paper elevation={ 2 } style={ { padding: '10px 20px 20px 20px' } }>
         <div className={ classes.bigRow }>
@@ -244,45 +241,43 @@ class Roles extends Component {
             <FormattedMessage id='user.type.description' defaultMessage='Define how you will use Gitpay. You can choose multiple types of user roles you want.' />
           </Typography>
         </div>
-        <Grid container className={ classes.row } direction='row' alignItems='strech'>
-          { roles.data && roles.data.map(r => {
-            return (
-              <Grid item xs={ 12 } md={ 3 } spacing={ 2 } className={ classes.rowList }>
-                <Paper>
-                  <Card className={ classes.rowContent } variant='outlined'>
-                    <CardMedia>
-                      <img src={ imageMap[r.name] } />
-                    </CardMedia>
-                    <CardContent className={ classes.rootLabel }>
-                      <Typography variant='h5' >
-                        { r.label }
-                      </Typography>
-                    </CardContent>
-                    <CardActions className={ classes.action }>
-                      <Typography variant='body2' color='textSecondary' component='p'>
-                        { r.description }
-                      </Typography>
-                      <Checkbox
-                        icon={ <CheckBoxOutlineBlankIcon fontSize='large' style={ { color: 'transparent' } } /> }
-                        checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
-                        color='primary'
-                        inputProps={ { 'aria-label': r.name } }
-                        checked={ this.shouldBeChecked(r) }
-                        onChange={ (e) => this.handleRoleClick(e, r) }
-                      />
-                    </CardActions>
-                  </Card>
-                </Paper>
-              </Grid>
-            )
-          }) }
+        <Grid container className={ classes.row } direction='row' alignItems='stretch'>
+          { roles.data && roles.data.map(r => (
+            <Grid item key={ r.id } xs={ 12 } md={ 3 } spacing={ 2 } className={ classes.rowList }>
+              <Paper>
+                <Card className={ classes.rowContent } variant='outlined'>
+                  <CardMedia className={ classes.media }>
+                    <img src={ imageMap[r.name] } alt={ r.name } />
+                  </CardMedia>
+                  <CardContent className={ classes.rootLabel }>
+                    <Typography variant='h5' >
+                      { r.label }
+                    </Typography>
+                  </CardContent>
+                  <CardActions className={ classes.action }>
+                    <Typography variant='body2' color='textSecondary' component='p'>
+                      { r.description }
+                    </Typography>
+                    <Checkbox
+                      icon={ <CheckBoxOutlineBlankIcon fontSize='large' style={ { color: 'transparent' } } /> }
+                      checkedIcon={ <CheckBoxIcon color='white' fontSize='large' /> }
+                      color='primary'
+                      inputProps={ { 'aria-label': r.name } }
+                      checked={ this.shouldBeChecked(r) }
+                      onChange={ (e) => this.handleRoleClick(e, r) }
+                    />
+                  </CardActions>
+                </Card>
+              </Paper>
+            </Grid>
+          )) }
         </Grid>
         <div className={ classes.buttons }>
           <button onClick={ () => this.handleCancelClick() } className={ classes.cButton }>CANCEL</button>
           <button onClick={ (e) => this.handleSaveClick(e) } className={ classes.sButton }>SAVE</button>
         </div>
       </Paper>
-    )
+    );
   }
 }
 
@@ -292,6 +287,6 @@ Roles.propTypes = {
   fetchRoles: PropTypes.func,
   roles: PropTypes.object,
   addNotification: PropTypes.func.isRequired,
-}
+};
 
-export default injectIntl(withStyles(styles)(Roles))
+export default injectIntl(withStyles(styles)(Roles));

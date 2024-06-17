@@ -3,7 +3,7 @@ import { Block } from '@material-ui/icons'
 import { Link } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 
-export default () => {
+const FourOFour = () => {
   return (
     <div style={ {
       margin: 'auto',
@@ -47,3 +47,7 @@ export default () => {
     </div>
   )
 }
+
+FourOFour.displayName = 'FourOFour'; // Add displayName
+
+export default FourOFour;
