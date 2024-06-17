@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { listTasks, filterTasks } from './frontend/src/actions/taskAction.js'
+import { listTasks, filterTasks } from '../../actions/taskActions'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import MomentComponent from 'moment'
 import slugify from '@sindresorhus/slugify';

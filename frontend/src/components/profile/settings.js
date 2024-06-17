@@ -10,8 +10,7 @@ import {
   MenuItem,
   Button,
   Switch,
-  Checkbox,
-  localStorage
+  Checkbox
 } from '@material-ui/core'
 import LanguageIcon from '@material-ui/icons/Language'
 import { updateIntl } from 'react-intl-redux'
