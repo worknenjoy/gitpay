@@ -9,7 +9,8 @@
     "MOCK_GRAPHQL__": false,
     "drupalSettings": false,
     "xdescribe": false,
-    "xit": false
+    "xit": false,
+    "localStorage": true
   },
   "parser": "babel-eslint",
   "parserOptions": {
