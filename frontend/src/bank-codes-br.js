@@ -1,4 +1,4 @@
-const BANK_CODES = {
+const bank_codes = {
   '110': 'BANCO PARA TESTE STRIPE',
   '260': 'NUBANK',
   '001': 'BANCO DO BRASIL S.A. (Banco do Brasil)',
@@ -43,4 +43,4 @@ const BANK_CODES = {
   '085': 'CECRED-COOPERATIVA CENTRAL DE CREDITO URBANO'
 }
 
-export default BANK_CODES;
+export default bank_codes;
