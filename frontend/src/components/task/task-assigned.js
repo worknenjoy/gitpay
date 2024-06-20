@@ -81,7 +81,7 @@ class TaskAssigned extends Component {
                   >
                     <a
                       href={ `${user.profile_url || user.website || '#'}` }
-                      target='_blank'
+                      target='_blank' rel="noreferrer"
                     >
                       { user.picture_url &&
                         <Avatar

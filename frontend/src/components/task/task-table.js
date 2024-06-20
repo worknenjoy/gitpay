@@ -362,7 +362,7 @@ class CustomPaginationActionsTable extends React.Component {
                           <a style={{ cursor: 'pointer' }} onClick={(e) => this.handleClickListItem(n)}>
                             {TextEllipsis(`${n.title || 'no title'}`, 42)}
                           </a>
-                          <a target='_blank' href={n.url}>
+                          <a target='_blank' href={n.url} rel="noreferrer">
                             <Tooltip id='tooltip-fab' title={`${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}`} placement='top'>
                               <img width='24' src={n.provider === 'github' ? logoGithub : logoBitbucket} style={{ borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 }} />
                             </Tooltip>

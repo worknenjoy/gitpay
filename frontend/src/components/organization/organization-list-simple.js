@@ -69,7 +69,7 @@ export default function OrganizationList ({ listOrganizations, organizations }) 
                 action={
                   <IconButton aria-label='provider'>
                     <Tooltip id='tooltip-fab' title={ o.provider ? o.provider : 'See on repository' } placement='right'>
-                      <a target='_blank' href={ o.provider === 'bitbucket' ? `https://bitbucket.com/${o.name}` : `https://github.com/${o.name}` }>
+                      <a target='_blank' href={ o.provider === 'bitbucket' ? `https://bitbucket.com/${o.name}` : `https://github.com/${o.name}` } rel="noreferrer">
                         <img width='28' src={ o.provider === 'bitbucket' ? logoBitbucket : logoGithub }
                           style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
                         />
