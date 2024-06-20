@@ -112,7 +112,7 @@ const fetchTransferSuccess = (data) => {
 
 const fetchTransferFailed = (error) => {
   return {
-    type: FETCH_TRANSFER,
+    type: FETCH_TRANSFER_FAILED,
     error: error,
     completed: true
   }

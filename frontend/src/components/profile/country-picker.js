@@ -33,7 +33,7 @@ const styles = theme => ({
 
 class CountryPicker extends Component {
   static propTypes = {
-    classes: PropTypes.object.required,
+    classes: PropTypes.object.isRequired,
     open: PropTypes.bool,
     onClose: PropTypes.func
   }

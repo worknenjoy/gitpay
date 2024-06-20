@@ -29,7 +29,7 @@ class MyLanguage extends Component {
   }
 }
 
-MyLanguage.PropTypes = {
+MyLanguage.propTypes = {
   classes: PropTypes.object.isRequired,
   preferences: PropTypes.string,
   language: PropTypes.string,

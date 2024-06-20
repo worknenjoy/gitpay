@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
@@ -26,7 +26,7 @@ import messages from './messages'
 
 import { InfoList, MainTitle } from './components/CommonStyles'
 
-const Consulting = (props) => {
+const Consulting = ({ classes, ...props }) => {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {

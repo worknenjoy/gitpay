@@ -1,5 +1,9 @@
 {
-  "extends": ["taller/react"],
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "react-app"
+  ],
   "globals": {
     "DEV": false,
     "MOCK_GRAPHQL__": false,

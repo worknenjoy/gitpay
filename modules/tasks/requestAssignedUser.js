@@ -67,7 +67,7 @@ const invite = Promise.method(async ({ taskId, assignId }) => {
 
 const actionAssign = async (data) => {
   if (typeof data !== 'object' ||
-   !['taskId', 'assignId', 'confirm'].every(prop => data.hasOwnProperty(prop))) {
+   !['taskId', 'assignId', 'confirm'].every(prop => prop in data)) {
     return new Error('Bad Token')
   }
 

@@ -30,6 +30,7 @@ import TaskOrderDetails from '../task/order/task-order-details'
 import TaskOrderTransfer from '../task/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
 import CustomPaginationActionsTable from './payments-table'
+import { filterTasks, listTasks } from '../../actions/taskActions'
 
 const styles = theme => ({
   paper: {

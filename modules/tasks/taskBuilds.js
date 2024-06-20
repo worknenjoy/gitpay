@@ -25,10 +25,11 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
 
   if (!userId) return false
 
+  let uri, headers;
   switch (taskParameters.provider) {
     case 'github':
-      const uri = taskParameters.token ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}` : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
-      const headers = {
+      uri = taskParameters.token ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}` : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      headers = {
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
       }
       if (taskParameters.token) headers.Authorization = `token ${token}`

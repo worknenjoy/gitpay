@@ -223,7 +223,7 @@ class Preferences extends Component {
   }
 }
 
-Preferences.PropTypes = {
+Preferences.propTypes = {
   classes: PropTypes.object.isRequired,
   preferences: PropTypes.string,
   language: PropTypes.string,
