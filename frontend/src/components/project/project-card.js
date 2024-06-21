@@ -61,7 +61,7 @@ const ProjectCard = ({ className, project, ...rest }) => {
       <CardContent style={ { position: 'relative' } }>
         <IconButton aria-label='provider' style={ { position: 'absolute', right: 10, top: 10 } }>
           <Tooltip id='tooltip-fab' title={ project.Organization && (project.Organization.provider ? project.Organization.provider : 'See on repository') } placement='right'>
-            <a target='_blank' href={ project.Organization && (project.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${project.Organization.name}/${project.name}` : `https://github.com/${project.Organization.name}/${project.name}`) }>
+            <a target='_blank' href={ project.Organization && (project.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${project.Organization.name}/${project.name}` : `https://github.com/${project.Organization.name}/${project.name}`) } rel="noreferrer">
               <img width='28' src={ project.Organization && (project.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
                 style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
               />

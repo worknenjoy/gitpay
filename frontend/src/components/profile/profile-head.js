@@ -78,7 +78,7 @@ const ProfileHead = (props) => {
       </div>
       <div className={ classes.nameContainer }>
         <Typography component='h4' variant='h4'>{ profile.name }</Typography>
-        <a target='_blank' href={ profile.profile_url }>
+        <a target='_blank' href={ profile.profile_url } rel="noreferrer">
           <img width='20' src={ logoGithub } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
         </a>
       </div>

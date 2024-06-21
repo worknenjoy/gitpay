@@ -29,7 +29,7 @@ class TaskInvite extends Component {
   static defaultProps = { visible: true }
 
   static propTypes = {
-    id: PropTypes.int,
+    id: PropTypes.number,
     visible: PropTypes.bool,
     onClose: PropTypes.func,
     onInvite: PropTypes.func

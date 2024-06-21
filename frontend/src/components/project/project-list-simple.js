@@ -107,7 +107,7 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
                 action={
                   <IconButton aria-label='provider'>
                     <Tooltip id='tooltip-fab' title={ p.Organization && (p.Organization.provider ? p.Organization.provider : 'See on repository') } placement='right'>
-                      <a target='_blank' href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) }>
+                      <a target='_blank' href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) } rel="noreferrer">
                         <img width='28' src={ p.Organization && (p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
                           style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
                         />

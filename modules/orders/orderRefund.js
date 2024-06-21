@@ -11,9 +11,10 @@ module.exports = Promise.method(function orderRefund (orderParams) {
       { where: { id: orderParams.id }, include: models.User }
     )
     .then(async order => {
+      let refund;
       switch (order.provider) {
         case 'stripe':
-          const refund = await stripe.refunds.create({
+          refund = await stripe.refunds.create({
             charge: order.source,
           })
           if (refund.id) {

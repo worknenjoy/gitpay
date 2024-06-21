@@ -415,7 +415,7 @@ const AccountDetails = ({
                           <Typography color='primary' style={{ marginTop: 8 }}>
                             <a
                               target='_blank'
-                              href={`https://stripe.com/${user.user.country}/connect-account/legal`}
+                              href={`https://stripe.com/${user.user.country}/connect-account/legal`} rel="noreferrer"
                             >
                               {' '}
                               <FormattedMessage id='account.details.terms.access' defaultMessage='see stripe terms' />{' '}

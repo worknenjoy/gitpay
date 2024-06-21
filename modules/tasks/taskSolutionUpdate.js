@@ -33,7 +33,7 @@ module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskS
               let existingAssignment = await assignExist({ userId: taskSolution.userId, taskId: taskSolution.taskId })
               if (!existingAssignment) {
                 existingAssignment = await taskData.createAssign({ userId: taskSolution.userId })
-                if(!assign) {
+                if(!existingAssignment) {
                   throw new Error('COULD_NOT_CREATE_ASSIGN')
                 }
               }

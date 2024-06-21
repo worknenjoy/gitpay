@@ -188,7 +188,7 @@ class Bottom extends Component {
                       defaultMessage='is part of'
                     />
                   </Typography>
-                  <a href='http://worknenjoy.com' target='_blank'>
+                  <a href='http://worknenjoy.com' target='_blank' rel="noreferrer">
                     <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
                   </a>
                 </BaseFooter>

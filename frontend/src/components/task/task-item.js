@@ -76,7 +76,7 @@ class TaskItem extends Component {
           <ListItemSecondaryAction>
             <IconButton aria-label='provider'>
               <Tooltip id='tooltip-fab' title={ `${item.provider}` } placement='right'>
-                <a target='_blank' href={ item.url }>
+                <a target='_blank' href={ item.url } rel="noreferrer">
                   <img width='24' src={ item.provider === 'github' ? logoGithub : logoBitbucket } className={ classes.icon } />
                 </a>
               </Tooltip>

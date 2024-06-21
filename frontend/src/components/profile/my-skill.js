@@ -29,7 +29,7 @@ class MySkill extends Component {
   }
 }
 
-MySkill.PropTypes = {
+MySkill.propTypes = {
   classes: PropTypes.object.isRequired,
   preferences: PropTypes.string,
   language: PropTypes.string,

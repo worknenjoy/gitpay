@@ -408,7 +408,7 @@ passport.use(
       catch (err) {
         console.log('err', err)
         return done(err)
-      };
+      }
     })
 )
 

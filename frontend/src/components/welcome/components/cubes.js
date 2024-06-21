@@ -152,7 +152,7 @@ const Cubes = ({ children }) => {
         render()
       }
       renderer.render(scene, camera)
-    };
+    }
 
     render()
   }, [])

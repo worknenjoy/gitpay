@@ -36,7 +36,7 @@ class Skill extends Component {
   }
 }
 
-Skill.PropTypes = {
+Skill.propTypes = {
   classes: PropTypes.object.isRequired,
   preferences: PropTypes.string,
   language: PropTypes.string,

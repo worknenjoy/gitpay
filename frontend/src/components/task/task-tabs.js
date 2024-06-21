@@ -210,7 +210,7 @@ class TaskTabs extends React.Component {
             <FormattedMessage id='task.payment.user.check.github' defaultMessage='Check this user profile at Github'>
               { (msg) => (
                 <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                  <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
+                  <a target='_blank' href={ user.profile_url } style={ { display: 'flex', alignItems: 'center' } } rel="noreferrer">
                     <span>{ user.username || user.name || ' - ' }</span>
                     <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
                   </a>
@@ -237,7 +237,7 @@ class TaskTabs extends React.Component {
                 <FormattedMessage id='task.user.check.github' defaultMessage='Check this profile at Github'>
                   { (msg) => (
                     <Tooltip id='tooltip-github' title={ msg } placement='bottom'>
-                      <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } }>
+                      <a target='_blank' href={ item.User.profile_url } style={ { display: 'flex', alignItems: 'center' } } rel="noreferrer">
                         <span>{ item.User.username || item.User.name || ' - ' }</span>
                         <img style={ { backgroundColor: 'black', marginLeft: 10 } } width={ 18 } src={ logoGithub } />
                       </a>
