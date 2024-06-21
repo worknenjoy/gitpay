@@ -1,6 +1,5 @@
 ![Gitpay](https://alexandremagno.net/wp-content/uploads/2019/05/gitpaydesigntop.png)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3881c342cfde4bcebb5fbe87f7998743)](https://app.codacy.com/gh/worknenjoy/gitpay/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Financial Contributors on Open Collective](https://opencollective.com/gitpay/all/badge.svg?label=financial+contributors)](https://opencollective.com/gitpay) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_shield) [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay "Percentage of issues still open")
