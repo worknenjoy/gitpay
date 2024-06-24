@@ -106,7 +106,7 @@ const AccountHeader = ({
               </Grid>
             </Grid>
           }
-          {user?.Types?.map(t => t.name).includes('maintainer') &&
+          {user?.Types?.map(t => t.name).includes('maintainer') || user?.Types?.map(t => t.name).includes('funding') &&
             <>
               <ImportIssueButton
                 onAddIssueClick={ handleAddIssueClick }
