@@ -122,7 +122,6 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
           if (taskParameters.Orders) {
             return task.createOrder(taskParameters.Orders).then((order) => {
               const orderParameters = taskParameters.Orders
-              console.log('orderParameters', orderParameters)
               if (order.userId) {
                 return models.User.findByPk(order.userId).then((user) => {
                   if (user && user.dataValues.customer_id) {
