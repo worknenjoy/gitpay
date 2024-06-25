@@ -122,6 +122,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
           if (taskParameters.Orders) {
             return task.createOrder(taskParameters.Orders).then((order) => {
               const orderParameters = taskParameters.Orders
+              console.log('orderParameters', orderParameters)
               if (order.userId) {
                 return models.User.findByPk(order.userId).then((user) => {
                   if (user && user.dataValues.customer_id) {
@@ -135,7 +136,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
                 })
               }
               else {
-                return createCustomer(orderParameters, order, task, { email: taskParameters.Orders[0].email }, couponValidation)
+                return createCustomer(orderParameters, order, task, { email: orderParameters.email }, couponValidation)
               }
             })
           }
