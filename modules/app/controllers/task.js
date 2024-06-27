@@ -51,6 +51,8 @@ exports.updateTask = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on update issue', error)
       res.status(400).send(error)
     })
 }
@@ -63,7 +65,7 @@ exports.paymentTask = (req, res) => {
       // eslint-disable-next-line no-console
       console.log('error on task controller', error)
       // eslint-disable-next-line no-console
-      console.log('error raw', error.raw)
+      console.log('error raw', error)
       res.send({ error: error.raw })
     })
 }

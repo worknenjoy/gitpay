@@ -135,7 +135,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
                 })
               }
               else {
-                return createCustomer(orderParameters, order, task, { email: taskParameters.Orders[0].email }, couponValidation)
+                return createCustomer(orderParameters, order, task, { email: orderParameters.email }, couponValidation)
               }
             })
           }
