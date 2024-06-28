@@ -195,13 +195,12 @@ class CustomPaginationActionsTable extends React.Component {
       </TableRow>
       ))
     );
-
     if(payments?.data?.length === 0 && payments.completed) {
       return (
         <Paper className={ classes.root }>
           <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
             <Typography variant='caption' color='textSecondary'>
-              <FormattedMessage id='payment.table.body.noPayment' defaultMessage='No Payment' />
+              <FormattedMessage id='payment.table.body.payments.empty' defaultMessage='No Payments' />
             </Typography>
           </div>
         </Paper>

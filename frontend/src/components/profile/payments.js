@@ -312,7 +312,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, get
             payments={
               orders && orders.data && orders.data.length
                 ? { ...orders, data: displayOrders(orders.data) }
-                : []
+                : { ...orders, data: [] }
             }
           />
         </div>
