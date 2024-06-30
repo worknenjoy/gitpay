@@ -88,7 +88,7 @@ const AccountHeader = ({
   }
 
   return (
-    <Container className={classes.container}>
+    <div className={classes.container}>
       <Grid xs={12} md={4}></Grid>
       <Grid xs={12} md={8} className={classes.wrapper}>
         <div className={classes.inner}>
@@ -129,7 +129,7 @@ const AccountHeader = ({
           />
         </div>
       </Grid>
-    </Container>
+    </div>
   )
 }
 
