@@ -7,29 +7,46 @@ const models = require('../models')
 const nock = require('nock')
 const request = require('supertest')
 const agent = request.agent(api)
+const { createTask, createOrder, truncateModels } = require('./helpers')
 const SendMail = require('../modules/mail/mail')
 const { scripts } = require('../scripts')
+const sampleCharge = require('./data/stripe.charge').get
+const sampleTransaction = require('./data/stripe.charge.balance_transaction').get
 
 describe('Scripts', () => {
-  beforeEach(() => {
-    models.Task.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        //console.log('Deleted successfully');
-      }
-    }, function(err){
-      //console.log(err);
-    });
-    models.Order.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        //console.log('Deleted successfully');
-      }
-    }, function(err){
-      //console.log(err);
-    });
+  beforeEach(async () => {
+    await truncateModels(models.Task);
+    await truncateModels(models.User);
+    await truncateModels(models.Assign);
+    await truncateModels(models.Order);
+    await truncateModels(models.Transfer);
     nock.cleanAll()
   })
 
   describe('Scripts', () => {
+    it('Check for total Gitpay Balance', async () => {
+      try {
+        nock('https://api.stripe.com')
+          .persist()
+          .get('/v1/charges/ch_123')
+          .reply(200, sampleCharge);
+
+          nock('https://api.stripe.com')
+          .persist()
+          .get('/v1/balance_transactions/txn_123')
+          .reply(200, sampleTransaction);
+
+        const task = await createTask(agent);
+        const taskData = task.dataValues;
+        const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe', source: 'ch_123', amount: 100 });
+        const scriptBalance = await scripts.balance()
+        expect(scriptBalance).to.deep.equal({ total: "2.95" })
+        
+      } catch (e) {
+        console.log('error on transfer', e);
+        throw e;
+      }
+    })
     xit('Check for invalid tasks and delete it', (done) => {
       agent
         .post('/auth/register')

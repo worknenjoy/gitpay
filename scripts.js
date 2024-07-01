@@ -56,7 +56,47 @@ const newOrExistingProject = async (userOrCompany, projectName, userId) => {
   }
 }
 
+const calculateTotal = async () => {
+  const orders = await models.Order.findAll(
+    {},
+    {
+      where: {
+        paid: true
+      }
+    }
+  ) || []
+  const total = orders.reduce(async (accPromise, order) => {
+    const acc = await accPromise;
+
+    if (!order.source) return acc;
+
+    try {
+      const charge = await stripe.charges.retrieve(order.source);
+      const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
+
+      if (balanceTransaction) {
+        return acc + ((balanceTransaction.net / 100).toFixed(2) - parseFloat(order.amount).toFixed(2));
+      }
+
+      return acc;
+    } catch (e) {
+      console.log('error on balance script', e);
+      return acc;
+    }
+  }, Promise.resolve(0));
+  return total;
+}
+
 const scripts = {
+  balance: async () => {
+    try {
+      const total = await calculateTotal();
+      return { total: total.toFixed(2) };
+    } catch (e) {
+      console.log('error on balance script', e);
+      return 0;
+    }
+  },
   accountInfo: () => {
     return models.User
       .findAll(
@@ -99,7 +139,7 @@ const scripts = {
           where: {
             provider: 'github'
           },
-          include: [ models.User ]
+          include: [models.User]
         }
       )
       .then(tasks => {
@@ -173,7 +213,7 @@ const scripts = {
           where: {
             provider: 'github'
           },
-          include: [ models.User, models.Project ]
+          include: [models.User, models.Project]
         }
       )
       .then(tasks => {

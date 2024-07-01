@@ -105,7 +105,7 @@ const createOrder = (params = {}) => {
 
   params.source_id = params.source_id || '1234'
   params.status = params.status || 'open'
-  params.amount = 200
+  params.amount = params.amount || 200
 
   return models.Order.create(params).then(order => {
     return order
