@@ -67,31 +67,84 @@ const calculateTotal = async () => {
   ) || []
   const total = orders.reduce(async (accPromise, order) => {
     const acc = await accPromise;
-
-    if (!order.source) return acc;
-
-    try {
-      const charge = await stripe.charges.retrieve(order.source);
-      const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
-
-      if (balanceTransaction) {
-        return acc + ((balanceTransaction.net / 100).toFixed(2) - parseFloat(order.amount).toFixed(2));
+    if(order.provider === 'stripe') {
+      if(!order.source) return acc;
+      try {
+        const charge = await stripe.charges.retrieve(order.source);
+        const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
+  
+        if (balanceTransaction) {
+          return acc + ((balanceTransaction.net / 100).toFixed(2) - parseFloat(order.amount).toFixed(2));
+        }
+  
+        return acc;
+      } catch (e) {
+        console.log('error on balance script for stripe', e);
+        return acc;
       }
-
-      return acc;
-    } catch (e) {
-      console.log('error on balance script', e);
-      return acc;
+    }
+    if(order.provider === 'paypal') {
+      try {
+        return requestPromise({
+          method: 'POST',
+          uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
+          headers: {
+            'Accept': 'application/json',
+            'Accept-Language': 'en_US',
+            'Authorization': 'Basic ' + Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString('base64'),
+            'Content-Type': 'application/json',
+            'grant_type': 'client_credentials'
+          },
+          form: {
+            'grant_type': 'client_credentials'
+          }
+        }).then(response => {
+          return requestPromise({
+            method: 'GET',
+            uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${order.source_id}`,
+            headers: {
+              'Accept': '*/*',
+              'Prefer': 'return=representation',
+              'Accept-Language': 'en_US',
+              'Authorization': 'Bearer ' + JSON.parse(response)['access_token'],
+              'Content-Type': 'application/json'
+            }
+          }).then(orderDetails => {
+            const orderDetailsParsed = JSON.parse(orderDetails)
+            console.log('orderDetailsParsed', orderDetailsParsed)
+            return acc;
+          }).catch( (e) => {
+            console.log('error on balance script for paypal', e);
+            return acc;
+          })
+        })  
+      } catch (e) {
+        console.log('error on balance script for paypal', e);
+        return acc;
+      }
     }
   }, Promise.resolve(0));
+
   return total;
+}
+
+const calculateTotalTransfers = async () => {
+  const transfers = await models.Transfer.findAll();
+  return transfers.reduce((acc, transfer) => {
+    return parseFloat(acc) + parseFloat(transfer.value);
+  }, 0);
 }
 
 const scripts = {
   balance: async () => {
     try {
-      const total = await calculateTotal();
-      return { total: total.toFixed(2) };
+      const totalFromOrders = await calculateTotal();
+      const totalFromTransfers = await calculateTotalTransfers();
+      return { 
+        total: parseFloat(totalFromOrders).toFixed(2) + parseFloat(totalFromTransfers).toFixed(2),
+        transfers: parseFloat(totalFromTransfers).toFixed(2),
+        orders: parseFloat(totalFromOrders).toFixed(2)
+      };
     } catch (e) {
       console.log('error on balance script', e);
       return 0;

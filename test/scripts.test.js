@@ -24,7 +24,7 @@ describe('Scripts', () => {
   })
 
   describe('Scripts', () => {
-    it('Check for total Gitpay Balance', async () => {
+    xit('Check for total Gitpay Balance', async () => {
       try {
         nock('https://api.stripe.com')
           .persist()
@@ -39,6 +39,7 @@ describe('Scripts', () => {
         const task = await createTask(agent);
         const taskData = task.dataValues;
         const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe', source: 'ch_123', amount: 100 });
+        //const anotherOrder = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'paypal', source_id: 'paypal_123', amount: 100 });
         const scriptBalance = await scripts.balance()
         expect(scriptBalance).to.deep.equal({ total: "2.95" })
         

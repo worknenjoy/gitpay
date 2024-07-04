@@ -39,6 +39,7 @@ class MessageAssignment extends Component {
   messageAssignment = async () => {
     const { id, messageAction, to } = this.props
     const { message } = this.state
+    console.log('messageAssignment', id, to, message)
     await messageAction(id, to, message)
     this.props.onClose()
   }
