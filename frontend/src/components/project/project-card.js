@@ -41,7 +41,7 @@ const projectBounties = (data) => {
 const projectBountiesList = (data) => {
   const bounties = projectBounties(data)
   const hasBounties = bounties > 0
-  return hasBounties ? `$${bounties} in open bounties` : 'no bounties'
+  return hasBounties ? `$${bounties} in bounties` : 'no bounties'
 }
 
 const ProjectCard = ({ className, project, ...rest }) => {
@@ -120,7 +120,9 @@ const ProjectCard = ({ className, project, ...rest }) => {
             className={ classes.statsItem }
             item
           >
-            <Chip size='small' label={ projectBountiesList(project.Tasks) } />
+            <Typography variant='subtitle1'>
+              { projectBountiesList(project.Tasks) }
+            </Typography>
           </Grid>
           <Grid
             className={ classes.statsItem }

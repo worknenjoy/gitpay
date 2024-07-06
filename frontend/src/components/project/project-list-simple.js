@@ -75,7 +75,7 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
   const projectBountiesList = (data) => {
     const bounties = projectBounties(data)
     const hasBounties = bounties > 0
-    return hasBounties ? `$${bounties} in open bounties` : 'no bounties'
+    return hasBounties ? `$${bounties} in bounties` : 'no bounties'
   }
 
   const getProjectLink = (p) => {
@@ -127,7 +127,9 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
               }
               <div>
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
-                  <Chip size='medium' label={ projectBountiesList(p.Tasks) } />
+                  <Typography variant='subtitle1'>
+                    { projectBountiesList(p.Tasks) }
+                  </Typography>
                   {getProjectLink(p)}
                 </CardActions>
               </div>
