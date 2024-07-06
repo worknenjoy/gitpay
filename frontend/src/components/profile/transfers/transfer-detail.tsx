@@ -34,6 +34,14 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
     }
   }, [data])
 
+  const getUserDisplayName = (user) => {
+    if(!user) return 'unknown user'
+    if(user?.name && user?.name !== '') return user.name
+    if(user?.username && user?.username !== '') return user.username
+    if(user?.provider_username && user?.provider_username !== '') return user.provider_username
+    return `User #${user.id}`
+  }
+
   return (
     <Drawer
       anchor='right'
@@ -51,8 +59,8 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
               title={
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                   <Typography variant="body1">
-                    <FormattedMessage id="transfer.to.label" defaultMessage='Sending money to {value}'
-                      values={{ value: <strong>{data?.User?.username}</strong> }}
+                    <FormattedMessage id="transfer.destination.label" defaultMessage='Sending bounty to {value}'
+                      values={{ value: <strong>{getUserDisplayName(data?.destination)}</strong> }}
                     />
                   </Typography>
                   <Typography variant="h5">

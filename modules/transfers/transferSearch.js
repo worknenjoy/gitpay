@@ -9,13 +9,25 @@ module.exports = Promise.method(async function transferSearch (params = {}) {
   if (params.userId) {
     transfers = await Transfer.findAll({
       where: { userId: params.userId },
-      include: [ Task, User ]
+      include: [ 
+        Task,
+        {
+          model: User,
+          as: 'User'
+        },  
+      ]
     })
   }
   if (params.to) {
     transfers = await Transfer.findAll({
       where: { to: params.to },
-      include: [ Task, User ]
+      include: [ 
+        Task,
+        {
+          model: User,
+          as: 'User'
+        },  
+      ]
     })
   }
   return transfers
