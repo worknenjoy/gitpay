@@ -126,6 +126,14 @@ const createTransfer = (params = {}) => {
   })
 }
 
+const createPayout = (params = {}) => {
+  return models.Payout.create(params).then(payout => {
+    return payout
+  }).catch((e) => {
+    console.log('error on createTransfer', e)
+  })
+}
+
 async function truncateModels(model) {
   await model.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
     if(rowDeleted === 1){
@@ -144,5 +152,6 @@ module.exports = {
   createOrder,
   createAssign,
   createTransfer,
+  createPayout,
   truncateModels
 }

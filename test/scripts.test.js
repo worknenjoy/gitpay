@@ -7,7 +7,7 @@ const models = require('../models')
 const nock = require('nock')
 const request = require('supertest')
 const agent = request.agent(api)
-const { createTask, createOrder, truncateModels } = require('./helpers')
+const { createTask, createOrder, createPayout, truncateModels } = require('./helpers')
 const SendMail = require('../modules/mail/mail')
 const { scripts } = require('../scripts')
 const sampleCharge = require('./data/stripe.charge').get
@@ -20,11 +20,12 @@ describe('Scripts', () => {
     await truncateModels(models.Assign);
     await truncateModels(models.Order);
     await truncateModels(models.Transfer);
+    await truncateModels(models.Payout);
     nock.cleanAll()
   })
 
   describe('Scripts', () => {
-    xit('Check for total Gitpay Balance', async () => {
+    it('Check for total Gitpay Balance', async () => {
       try {
         nock('https://api.stripe.com')
           .persist()
@@ -39,10 +40,10 @@ describe('Scripts', () => {
         const task = await createTask(agent);
         const taskData = task.dataValues;
         const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'stripe', source: 'ch_123', amount: 100 });
-        //const anotherOrder = await createOrder({ userId: taskData.userId, TaskId: taskData.id, paid: true, provider: 'paypal', source_id: 'paypal_123', amount: 100 });
-        const scriptBalance = await scripts.balance()
-        expect(scriptBalance).to.deep.equal({ total: "2.95" })
+        const payout = await createPayout({ userId: taskData.userId, source_id: '123', amount: 100, method: 'stripe' });
         
+        const scriptBalance = await scripts.balance()
+        expect(scriptBalance).to.deep.equal({ payments_fee: "2.95", payouts: "8.00" })     
       } catch (e) {
         console.log('error on transfer', e);
         throw e;

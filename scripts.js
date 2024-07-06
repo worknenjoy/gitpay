@@ -74,52 +74,12 @@ const calculateTotal = async () => {
         const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
   
         if (balanceTransaction) {
-          return acc + ((balanceTransaction.net / 100).toFixed(2) - parseFloat(order.amount).toFixed(2));
+          return acc + ((balanceTransaction.net / 100) - parseFloat(order.amount));
         }
   
         return acc;
       } catch (e) {
         console.log('error on balance script for stripe', e);
-        return acc;
-      }
-    }
-    if(order.provider === 'paypal') {
-      try {
-        return requestPromise({
-          method: 'POST',
-          uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-          headers: {
-            'Accept': 'application/json',
-            'Accept-Language': 'en_US',
-            'Authorization': 'Basic ' + Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString('base64'),
-            'Content-Type': 'application/json',
-            'grant_type': 'client_credentials'
-          },
-          form: {
-            'grant_type': 'client_credentials'
-          }
-        }).then(response => {
-          return requestPromise({
-            method: 'GET',
-            uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${order.source_id}`,
-            headers: {
-              'Accept': '*/*',
-              'Prefer': 'return=representation',
-              'Accept-Language': 'en_US',
-              'Authorization': 'Bearer ' + JSON.parse(response)['access_token'],
-              'Content-Type': 'application/json'
-            }
-          }).then(orderDetails => {
-            const orderDetailsParsed = JSON.parse(orderDetails)
-            console.log('orderDetailsParsed', orderDetailsParsed)
-            return acc;
-          }).catch( (e) => {
-            console.log('error on balance script for paypal', e);
-            return acc;
-          })
-        })  
-      } catch (e) {
-        console.log('error on balance script for paypal', e);
         return acc;
       }
     }
@@ -129,9 +89,9 @@ const calculateTotal = async () => {
 }
 
 const calculateTotalTransfers = async () => {
-  const transfers = await models.Transfer.findAll();
-  return transfers.reduce((acc, transfer) => {
-    return parseFloat(acc) + parseFloat(transfer.value);
+  const transfers = await models.Payout.findAll();
+  return transfers.reduce((acc, payout) => {
+    return (acc + (parseFloat(payout.amount) - parseFloat(payout.amount) * 0.92));
   }, 0);
 }
 
@@ -140,10 +100,11 @@ const scripts = {
     try {
       const totalFromOrders = await calculateTotal();
       const totalFromTransfers = await calculateTotalTransfers();
+      console.log('totalFromOrders', totalFromOrders)
+      console.log('totalFromTransfers', totalFromTransfers)
       return { 
-        total: parseFloat(totalFromOrders).toFixed(2) + parseFloat(totalFromTransfers).toFixed(2),
-        transfers: parseFloat(totalFromTransfers).toFixed(2),
-        orders: parseFloat(totalFromOrders).toFixed(2)
+        payments_fee: totalFromOrders.toFixed(2),
+        payouts: totalFromTransfers.toFixed(2),
       };
     } catch (e) {
       console.log('error on balance script', e);
