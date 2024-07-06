@@ -11,7 +11,13 @@ module.exports = Promise.method(async function transferUpdate(params) {
     where: {
       id: params.id
     },
-    include: [models.User, models.Task]
+    include: [
+      {
+        model: models.User,
+        as: 'User'
+      },
+      models.Task
+    ]
   })
 
   if (!existingTransfer) {

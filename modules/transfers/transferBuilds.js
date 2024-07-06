@@ -35,7 +35,13 @@ module.exports = Promise.method(async function transferBuilds(params) {
     where: {
       id: params.taskId
     },
-    include: [Order, models.User]
+    include: [
+      Order,
+      {
+        model: models.User,
+        as: 'User'
+      },
+    ]
   })
 
   const taskData = task.dataValues
@@ -50,7 +56,12 @@ module.exports = Promise.method(async function transferBuilds(params) {
     where: {
       id: taskData.assigned
     },
-    include: [models.User]
+    include: [
+      {
+        model: models.User,
+        as: 'User'
+      },
+    ]
   })
 
   let finalValue = 0
