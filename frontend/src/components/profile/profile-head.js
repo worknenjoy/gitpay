@@ -13,7 +13,7 @@ import {
 } from '@material-ui/icons'
 import { withRouter } from 'react-router'
 
-const logoGithub = require('../../images/github-logo.png')
+import logoGithub from '../../images/github-logo.png'
 
 const styles = theme => ({
   profile: {
