@@ -272,7 +272,6 @@ const payOrder = order => {
       .post(api.API_URL + '/orders/payment', order)
       .then(order => {
         // eslint-disable-next-line no-console
-        console.log('payment for order', order)
         if (order.data.transfer_id) {
           dispatch(addNotification(
             'actions.order.create.payment.send.success'
@@ -305,8 +304,6 @@ const transferOrder = (order, params) => {
     axios
       .post(api.API_URL + `/orders/transfer/${order.id}`, params)
       .then(order => {
-        // eslint-disable-next-line no-console
-        console.log('payment for order', order)
         if (order.data) {
           dispatch(addNotification(
             'actions.order.transfer.success'

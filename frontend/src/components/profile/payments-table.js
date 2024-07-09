@@ -227,7 +227,7 @@ class CustomPaginationActionsTable extends React.Component {
                   return (
                     <TableRow key={ n.id }>
                       { n.map( p => 
-                        <TableCell component='th' scope='row'>
+                        <TableCell component='th' scope='row' style={{ padding: 10, position: 'relative' }}>
                           {p}    
                         </TableCell>
                       )}
