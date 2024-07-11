@@ -77,10 +77,10 @@ exports.syncTask = (req, res) => {
       res.send(data)
     }).catch((error) => {
       // eslint-disable-next-line no-console
-      console.log('error on task controller', error)
+      console.log('error on sync task controller', error)
       // eslint-disable-next-line no-console
-      console.log('error raw', error.raw)
-      res.send({ error: error.raw })
+      console.log('error raw', error)
+      res.send({ error: error })
     })
 }
 
