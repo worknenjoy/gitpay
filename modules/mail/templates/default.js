@@ -89,8 +89,8 @@ module.exports.defaultEmailTemplate = (content) => `
 </style>
   </head>
   <body style="font-family: Helvetica, sans-serif; -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.3; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #f4f5f6; margin: 0; padding: 0;">
-  <div style="width: 100%; text-align: center; margin: 20px 0 0 0; padding: 10px 0 0 0;">
-    <img width="360" src="https://alexandremagno.net/wp-content/uploads/2018/09/logo-transparent.png" alt="Gitpay" />
+  <div style="width: 100%; text-align: center; margin: 20px 0 0 0; padding: 10px 0 0;">
+    <img width="320" src="https://docs.gitpay.me/assets/img/logo-complete.png" alt="Gitpay" />
   </div>  
   <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f4f5f6; width: 100%;" width="100%" bgcolor="#f4f5f6">
       <tr>
