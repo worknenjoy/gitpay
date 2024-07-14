@@ -2,6 +2,7 @@ const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
 const i18n = require('i18n')
+const emailTemplate = require('./templates/main-content')
 
 const TransferMail = {
   success: (to, task, value) => {},
@@ -17,15 +18,15 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.transfer.new.subject.success'),
       [
         {
           type: 'text/html',
-          value: `
-          <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
-          <p>${Signatures.sign(language)}</p>`
+          value: emailTemplate.mainContentEmailTemplate(`
+            <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`
+          )
         },
       ]
     )
@@ -35,15 +36,14 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.transfer.notify.subject.success'),
       [
         {
           type: 'text/html',
-          value: `
-          <p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
-          <p>${Signatures.sign(language)}</p>`
+          value: emailTemplate.mainContentEmailTemplate(
+            `<p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
         },
       ]
     )
@@ -53,15 +53,14 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.transfer.error.subject'),
       [
         {
           type: 'text/html',
-          value: `
-          <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>
-          <p>${Signatures.sign(language)}</p>`
+          value: emailTemplate.mainContentEmailTemplate(`
+          <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
         },
       ]
     )
@@ -71,15 +70,13 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.transfer.missing.subject'),
       [
         {
           type: 'text/html',
-          value: `
-          <p>${i18n.__('mail.transfer.missing.message')}</p>
-          <p>${Signatures.sign(language)}</p>`
+          value: emailTemplate.mainContentEmailTemplate(`<p>${i18n.__('mail.transfer.missing.message')}</p>`)
         },
       ]
     )
@@ -89,15 +86,15 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.transfer.missing.subject'),
       [
         {
           type: 'text/html',
-          value: `
-          <p>${i18n.__('mail.transfer.invalid.message')}</p>
-          <p>${Signatures.sign(language)}</p>`
+          value: emailTemplate.mainContentEmailTemplate(
+            `<p>${i18n.__('mail.transfer.invalid.message')}</p>`
+          )
         },
       ]
     )
@@ -107,21 +104,20 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.transfer.bounty.subject'),
       [
         {
           type: 'text/html',
-          value: `
+          value: emailTemplate.mainContentEmailTemplate(`
           <p>${i18n.__('mail.transfer.bounty.message', {
     taskFromTitle: taskFrom.title,
     taskFromUrl: taskFrom.url,
     taskToTitle: taskTo.title,
     taskToUrl: taskTo.url,
     amount: order.amount
-  })}</p>
-          <p>${Signatures.sign(language)}</p>`
+  })}</p>`)
         },
       ]
     )

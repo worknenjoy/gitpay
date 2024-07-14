@@ -7,6 +7,11 @@ const i18n = require('i18n')
 const constants = require('./constants')
 const withTemplate = require('./template')
 const models = require('../../models')
+const emailTemplate = require('./templates/main-content')
+
+function capitalizeFirstLetter(string) {
+  return string[0].toUpperCase() + string.slice(1);
+}
 
 // moment.locale('pt-br', ptLocale)
 
@@ -29,15 +34,46 @@ i18n.configure({
 i18n.init()
 
 const TaskMail = {
-  send: (user, data) => Promise.resolve({}),
+  new: (user, task) => {},
+  send: (user, task) => Promise.resolve({}),
   notify: (user, data) => Promise.resolve({}),
   weeklyBounties: (data) => Promise.resolve({}),
   weeklyLatest: () => Promise.resolve({}),
   notifyPayment: () => Promise.resolve({}),
-  messageAuthor: (user, task, message) => Promise.resolve({})
+  messageAuthor: (user, task, message) => {}
 }
 
 if (constants.canSendEmail) {
+
+  TaskMail.new = (user, task) => {
+    const to = user.email
+    const language = user.language || 'en'
+    i18n.setLocale(language)
+    setMomentLocale(language)
+    user?.receiveNotifications && request(
+      to,
+      i18n.__('mail.task.me.subject'),
+      [
+        {
+          type: 'text/html',
+          value: emailTemplate.mainContentEmailTemplate(
+            i18n.__('mail.task.new.intro'),
+            i18n.__('mail.task.new.subtitle1', { 
+              provider: capitalizeFirstLetter(task.provider),
+              providerUrl: task.url,
+              title: task.title,
+              url: constants.taskUrl(task.id)
+            }),
+            i18n.__('mail.task.new.callToActionText'),
+            constants.taskUrl(task.id),
+            i18n.__('mail.task.new.subtitle2'),
+            i18n.__('mail.task.new.footerMessage'),
+          )
+        }],
+      constants.notificationEmail
+    )
+  }
+
   TaskMail.send = (user, data) => {
     const to = user.email
     const language = user.language || 'en'

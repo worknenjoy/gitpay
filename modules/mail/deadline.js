@@ -32,7 +32,7 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.deadline.update.subject'),
       [
@@ -52,7 +52,7 @@ ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? mom
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.deadline.daysLeft.subject', { deadline: moment(task.deadline).fromNow() }),
       [
@@ -70,7 +70,7 @@ ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? mom
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.deadline.remember.subject', { deadline: moment(task.deadline).fromNow() }),
       [
@@ -90,7 +90,7 @@ ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? mom
     // const urlExtend = `${process.env.FRONTEND_HOST}/task/${task.id}/interested/extend`
     i18n.setLocale(language)
     moment.locale(locales[language].label, locales[language].file)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.deadline.end.subject', { deadline: moment(task.deadline).fromNow() }),
       [
@@ -124,7 +124,7 @@ ${Signatures.buttons(language, {
     // const urlExtend = `${process.env.FRONTEND_HOST}/task/${task.id}/interested/extend`
     i18n.setLocale(language)
     moment.locale(locales[language].label, locales[language].file)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.deadline.end.owner.subject', { deadline: moment(task.deadline).fromNow() }),
       [

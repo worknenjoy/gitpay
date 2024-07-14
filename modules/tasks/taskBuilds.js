@@ -4,8 +4,7 @@ const secrets = require('../../config/secrets')
 const url = require('url')
 const requestPromise = require('request-promise')
 const constants = require('../mail/constants')
-// const TaskMail = require('../mail/task')
-const Sendmail = require('../mail/mail')
+const TaskMail = require('../mail/task')
 const roleExists = require('../roles').roleExists
 const userExists = require('../users').userExists
 // const userOrganizations = require('../users/userOrganizations')
@@ -65,24 +64,15 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
 
               const taskData = task.dataValues
               const userData = await task.getUser()
-              /*
-                TaskMail.send(userData, {
-                  task: {
-                    title: taskData.title,
-                    issue_url: taskData.url,
-                    url: constants.taskUrl(taskData.id)
-                  }
-                })
-                TaskMail.notify(userData, {
-                  task: {
-                    title: taskData.title,
-                    issue_url: taskData.url,
-                    url: constants.taskUrl(taskData.id)
-                  }
-                })
-                */
-              Sendmail.success({ email: constants.fromEmail }, `A task ${taskData.url} was created`, `A task ${taskData.id} from ${userData.email} was created just now`)
-              issueAddedComment(task)
+
+              try {
+                if(userData.receiveNotifications) {
+                  TaskMail.new(userData, taskData)
+                }
+                issueAddedComment(task)
+              } catch (e) {
+                console.log('error on send email and post', e)
+              }
               return { ...taskData, ProjectId: taskData.ProjectId }
             })
         })
