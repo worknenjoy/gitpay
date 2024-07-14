@@ -99,7 +99,7 @@ module.exports.defaultEmailTemplate = (content) => `
           <div class="content" style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">We have updates for your issues imported on Gitpay.</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">We have a new message for you from Gitpay.</span>
             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border: 1px solid #eaebed; border-radius: 16px; width: 100%;" width="100%">
               ${content}
             </table>
@@ -115,7 +115,8 @@ module.exports.defaultEmailTemplate = (content) => `
                       Worknenjoy Inc.,<br />
                       9450 SW Gemini Dr<br />
                       PMB 72684<br />
-                      Beaverton, Oregon 97008-7105 US (Mail) <br />
+                      Beaverton,<br />
+                      Oregon 97008-7105 US (Mail) <br />
                     </span>
                     <br> Don't like these emails? <a href="https://gitpay.me/#/profile/user-account/settings" style="text-decoration: underline; color: #9a9ea6; font-size: 16px; text-align: center;">Change your e-mail notification settings in your account</a>.
                   </td>

@@ -13,7 +13,7 @@ const sendConfirmationEmail = (task, user, comments) => {
   const language = user.language || 'en'
   i18n.setLocale(language)
 
-  const body = `${i18n.__('mail.task.claim.request.body', {
+  const body = `${i18n.__('mail.issue.claim.request.body', {
     title: task.title,
     url: task.url,
     approveURL: approveURL
@@ -21,7 +21,7 @@ const sendConfirmationEmail = (task, user, comments) => {
 
   return SendMail.success(
     { email: user.email, language },
-    i18n.__('mail.task.claim.request.subject'), body
+    i18n.__('mail.issue.claim.request.subject'), body
   )
 }
 
@@ -48,7 +48,7 @@ const verifyIssueAndClaim = async (task, user, comments, token) => {
     // Update task
     await taskUpdate({ id: task.id, userId: user.id })
 
-    const body = `${i18n.__('mail.task.claim.confirmation.body', {
+    const body = `${i18n.__('mail.issue.claim.confirmation.body', {
       title: task.title,
       url: task.url,
       comments: comments
@@ -56,7 +56,7 @@ const verifyIssueAndClaim = async (task, user, comments, token) => {
 
     return SendMail.success(
       { email: taskUser.email, language },
-      i18n.__('mail.task.claim.confirmation.subject'), body
+      i18n.__('mail.issue.claim.confirmation.subject'), body
     )
   })
 }
