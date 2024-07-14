@@ -2,6 +2,7 @@ const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
 const i18n = require('i18n')
+const emailTemplate = require('./templates/base-content')
 
 const Sendmail = {
   success: (user, subject, msg) => {},
@@ -13,14 +14,13 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       subject,
       [
         {
           type: 'text/html',
-          value: `${msg}
-          ${Signatures.sign()}`
+          value: emailTemplate.baseContentEmailTemplate(msg)
         },
       ]
     )
@@ -30,14 +30,13 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       subject,
       [
         {
           type: 'text/html',
-          value: `${msg}
-          ${Signatures.sign()}`
+          value: emailTemplate.baseContentEmailTemplate(msg)
         },
       ]
     )

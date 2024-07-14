@@ -8,7 +8,6 @@ const constants = require('./constants')
 const withTemplate = require('./template')
 const models = require('../../models')
 const emailTemplate = require('./templates/main-content')
-const { url } = require('inspector')
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -51,7 +50,7 @@ if (constants.canSendEmail) {
     const language = user.language || 'en'
     i18n.setLocale(language)
     setMomentLocale(language)
-    request(
+    user?.receiveNotifications && request(
       to,
       i18n.__('mail.task.me.subject'),
       [
