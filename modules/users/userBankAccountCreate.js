@@ -38,7 +38,7 @@ const getCurrency = (country) => {
 }
 
 module.exports = Promise.method(function userBankAccountCreate (userParameters) {
-  const userCountry = userParameters.country || 'US'
+  const userCountry = userParameters.country
   const userCurrency = getCurrency(userCountry)
   return models.User
     .findOne(

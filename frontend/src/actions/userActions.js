@@ -224,6 +224,10 @@ const createAccount = (country) => {
     axios
       .post(api.API_URL + '/user/account', { country })
       .then(account => {
+        if(!account.data) {
+          dispatch(addNotification('actions.user.account.create.error'))
+          return dispatch(createUserAccountError({ message: 'actions.user.account.create.error' }))
+        }
         dispatch(addNotification('actions.user.account.create.success'))
         return dispatch(createUserAccountSuccess(account))
       })
