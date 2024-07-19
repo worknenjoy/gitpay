@@ -105,7 +105,7 @@ const createOrder = (params = {}) => {
 
   params.source_id = params.source_id || '1234'
   params.status = params.status || 'open'
-  params.amount = 200
+  params.amount = params.amount || 200
 
   return models.Order.create(params).then(order => {
     return order
@@ -121,6 +121,14 @@ const createTransfer = (params = {}) => {
 
   return models.Transfer.create(params).then(transfer => {
     return transfer
+  }).catch((e) => {
+    console.log('error on createTransfer', e)
+  })
+}
+
+const createPayout = (params = {}) => {
+  return models.Payout.create(params).then(payout => {
+    return payout
   }).catch((e) => {
     console.log('error on createTransfer', e)
   })
@@ -144,5 +152,6 @@ module.exports = {
   createOrder,
   createAssign,
   createTransfer,
+  createPayout,
   truncateModels
 }

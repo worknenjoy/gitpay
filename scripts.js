@@ -56,7 +56,61 @@ const newOrExistingProject = async (userOrCompany, projectName, userId) => {
   }
 }
 
+const calculateTotal = async () => {
+  const orders = await models.Order.findAll(
+    {},
+    {
+      where: {
+        paid: true
+      }
+    }
+  ) || []
+  const total = orders.reduce(async (accPromise, order) => {
+    const acc = await accPromise;
+    if(order.provider === 'stripe') {
+      if(!order.source) return acc;
+      try {
+        const charge = await stripe.charges.retrieve(order.source);
+        const balanceTransaction = await stripe.balanceTransactions.retrieve(charge.balance_transaction);
+  
+        if (balanceTransaction) {
+          return acc + ((balanceTransaction.net / 100) - parseFloat(order.amount));
+        }
+  
+        return acc;
+      } catch (e) {
+        console.log('error on balance script for stripe', e);
+        return acc;
+      }
+    }
+  }, Promise.resolve(0));
+
+  return total;
+}
+
+const calculateTotalTransfers = async () => {
+  const transfers = await models.Payout.findAll();
+  return transfers.reduce((acc, payout) => {
+    return (acc + (parseFloat(payout.amount) - parseFloat(payout.amount) * 0.92));
+  }, 0);
+}
+
 const scripts = {
+  balance: async () => {
+    try {
+      const totalFromOrders = await calculateTotal();
+      const totalFromTransfers = await calculateTotalTransfers();
+      console.log('totalFromOrders', totalFromOrders)
+      console.log('totalFromTransfers', totalFromTransfers)
+      return { 
+        payments_fee: totalFromOrders.toFixed(2),
+        payouts: totalFromTransfers.toFixed(2),
+      };
+    } catch (e) {
+      console.log('error on balance script', e);
+      return 0;
+    }
+  },
   accountInfo: () => {
     return models.User
       .findAll(
@@ -99,7 +153,7 @@ const scripts = {
           where: {
             provider: 'github'
           },
-          include: [ models.User ]
+          include: [models.User]
         }
       )
       .then(tasks => {
@@ -173,7 +227,7 @@ const scripts = {
           where: {
             provider: 'github'
           },
-          include: [ models.User, models.Project ]
+          include: [models.User, models.Project]
         }
       )
       .then(tasks => {

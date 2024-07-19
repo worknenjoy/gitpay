@@ -200,6 +200,8 @@ const AssignActions = ({ hash, actionAssign, user, loggedUser, isOwner, assign, 
             messageAction={ messageTask }
             visible={ messageOpen }
             onClose={ () => setMessageOpen(false) }
+            to={ assign.id }
+            id={ task.id }
           />
           <Button
             onClick={ () => setMessageOpen(true) }

@@ -4,6 +4,7 @@ const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
 module.exports = Promise.method(function userAccountCreate (userParameters) {
+  const { country } = userParameters
   return models.User
     .findOne(
       {
@@ -17,7 +18,7 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
 
       return stripe.accounts.create({
         type: 'custom',
-        country: userParameters.country || 'US',
+        country: country,
         email: user.dataValues.email,
         business_type: 'individual',
         capabilities: {
@@ -26,14 +27,14 @@ module.exports = Promise.method(function userAccountCreate (userParameters) {
           }
         },
         tos_acceptance: {
-          service_agreement: 'recipient'
+          service_agreement: country === 'US' ? 'full' : 'recipient'
         }
       }).then(account => {
         // eslint-disable-next-line no-console
         console.log('account created', account)
         return user.update({
           account_id: account.id,
-          country: userParameters.country
+          country: country
         },
         {
           where: { id: userParameters.id }

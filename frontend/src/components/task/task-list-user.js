@@ -5,6 +5,7 @@ import Bottom from '../bottom/bottom'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages } from 'react-intl'
 import CustomPaginationActionsTable from './task-table'
+import { tableHeaderDefault } from '../task/task-header-metadata'
 
 import {
   Container,
@@ -15,18 +16,12 @@ import {
   Tabs,
   AppBar,
 } from '@material-ui/core'
-
-import {
-  Redeem as RedeemIcon,
-  MonetizationOn as MoneyIcon
-} from '@material-ui/icons'
 import ProfileHead from '../../containers/profile-head'
 
 const styles = theme => ({
   rootTabs: {
     marginRight: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    backgroundColor: theme.palette.primary.light
+    marginBottom: theme.spacing(3)
   }
 })
 
@@ -76,7 +71,7 @@ const TaskListUser = (props) => {
     props.filterTasks('supported')
   }
 
-  function filterTasksByState () {
+  function filterTasksByState() {
     const currentTab = taskListState.tab
 
     switch (currentTab) {
@@ -102,9 +97,9 @@ const TaskListUser = (props) => {
 
   const TabContainer = props => {
     return (
-      <Typography component='div' style={ { padding: 8 * 3 } }>
-        { props.children }
-      </Typography>
+      <div style={{ padding: '24px 0' }}>
+        {props.children}
+      </div>
     )
   }
 
@@ -116,38 +111,31 @@ const TaskListUser = (props) => {
           <ProfileHead />
         </Container>
         <Container fixed maxWidth='lg'>
-          <Grid container className={ classes.root }>
-            <Grid item xs={ 12 } md={ 12 }>
-              <div className={ classes.rootTabs }>
-                <AppBar position='static' color='default'>
-                  <Tabs
-                    value={ taskListState.tab }
-                    onChange={ handleTabChange }
-                    scrollable
-                    scrollButtons='on'
-                    indicatorColor='primary'
-                    textColor='primary'
-                  >
-                    <Tab
-                      value={ 0 }
-                      label={ props.intl.formatMessage(messages.issuesCreated) }
-                      icon={ <RedeemIcon /> }
-                    />
-                    <Tab
-                      value={ 1 }
-                      label={ props.intl.formatMessage(messages.issuesSupported) }
-                      icon={ <MoneyIcon /> }
-                    />
-                  </Tabs>
-                </AppBar>
-                <TabContainer>
-                  <CustomPaginationActionsTable tasks={ props.tasks } user={props.user}  />
-                </TabContainer>
-              </div>
+          <Grid container className={classes.root}>
+            <Grid item xs={12} md={12}>
+              <Tabs
+                value={taskListState.tab}
+                onChange={handleTabChange}
+                indicatorColor='secondary'
+                textColor='secondary'
+                style={{ marginTop: 20, marginBottom: 20 }}
+              >
+                <Tab
+                  value={0}
+                  label={props.intl.formatMessage(messages.issuesCreated)}
+                />
+                <Tab
+                  value={1}
+                  label={props.intl.formatMessage(messages.issuesSupported)}
+                />
+              </Tabs>
+              <TabContainer>
+                <CustomPaginationActionsTable tasks={props.tasks} user={props.user} tableHeaderMetadata={tableHeaderDefault} />
+              </TabContainer>
             </Grid>
           </Grid>
         </Container>
-        <Bottom classes={ classes } />
+        <Bottom classes={classes} />
       </Page>
     </React.Fragment>
   )

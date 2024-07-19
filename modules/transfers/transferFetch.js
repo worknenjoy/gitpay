@@ -11,7 +11,17 @@ module.exports = Promise.method(async function transferFetch(id) {
   if (id) {
     const transfer = await Transfer.findOne({
       where: { id },
-      include: [Task, User]
+      include: [
+        Task,
+        {
+          model: User,
+          as: 'User'
+        },
+        {
+          model: User,
+          as: 'destination'
+        }
+      ]
     })
     if (transfer.paypal_payout_id) {
       const paypalCredentials = await requestPromise({

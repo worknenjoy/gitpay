@@ -386,6 +386,7 @@ class TaskPayment extends Component {
                         loggedUser={ this.props.loggedUser }
                         removeAssignment={ this.props.removeAssignment }
                         assignTask={ this.props.assignTask }
+                        messageTask={ this.props.messageTask }
                       /> : null
                   }
                   { this.props?.assigns?.length > 0 ? 

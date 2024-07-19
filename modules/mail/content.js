@@ -14,7 +14,7 @@ ${i18n.__('mail.sign.team')}
 
 <p>
 https://gitpay.me (Web) <br />
-tarefas@gitpay.me (Email) <br />
+contact@gitpay.me (Email) <br />
 Worknenjoy Inc.,
 9450 SW Gemini Dr
 PMB 72684
