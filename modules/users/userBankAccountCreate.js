@@ -15,6 +15,7 @@ const currencyMap = {
   'DE': 'EUR',
   'HK': 'HKD',
   'IE': 'EUR',
+  'IN': 'INR',
   'IT': 'EUR',
   'JP': 'JPY',
   'LU': 'EUR',
