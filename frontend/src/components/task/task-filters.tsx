@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Button, ButtonGroup } from '@material-ui/core';
+import React, { useState , useEffect } from 'react';
+import { AppBar, Toolbar, Button, ButtonGroup, Chip} from '@material-ui/core';
 import { injectIntl, defineMessages } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Labels from '../../containers/label';
+import { get } from "lodash";
+import { connect } from "react-redux";
+import { filterTasks } from "../../actions/taskActions";
+import { backdropClasses } from "@mui/material";
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
-    backgroundColor: theme.palette.primary.light
+    backgroundColor: theme.palette.primary.light,
   },
   buttonActive: {
     backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.contrastText
-  }
+    color: theme.palette.primary.contrastText,
+  },
+  chip: {
+    marginLeft: theme.spacing(0.5),
+    backgroundColor: theme.palette.success.main, 
+    color: theme.palette.common.white,
+  },
 });
 
 const messages = defineMessages({
@@ -35,32 +44,53 @@ const TaskFilters = ({
   history,
   classes,
   filterTasks,
-  baseUrl = '/tasks/'
+  baseUrl = '/tasks/',
+  tasks,
+  filteredTasks,
 }) => {
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
   })
-
+  const [allTasksCount, setAllTasksCount] = useState(0);
+  const [withBountiesCount, setWithBountiesCount] = useState(0);
+  const [noBountiesCount, setNoBountiesCount] = useState(0);
+  useEffect(() => {
+    updateCounts(tasks);
+  }, [tasks]);
+  const updateCounts = (taskList) => {
+    setAllTasksCount(taskList.length);
+    setWithBountiesCount(
+      taskList.filter((task) => parseFloat(task.value) > 0).length
+    );
+    setNoBountiesCount(
+      taskList.filter((task) => parseFloat(task.value) === 0).length
+    );
+  };
   const handleTabChange = (event, value) => {
-    setTaskListState({ ...taskListState, tab: value })
+    setTaskListState({ ...taskListState, tab: value });
+    let filterPromise;
     switch (value) {
       case 0:
-        history.push(baseUrl + 'open')
-        filterTasks('status', 'open')
-        break
+        history.push(baseUrl + "open");
+        filterPromise = filterTasks("status", "open");
+        break;
       case 1:
-        history.push(baseUrl + 'withBounties')
-        filterTasks('issuesWithBounties')
-        break
+        history.push(baseUrl + "withBounties");
+        filterPromise = filterTasks("issuesWithBounties");
+        break;
       case 2:
-        history.push(baseUrl + 'contribution')
-        filterTasks('contribution')
-        break
+        history.push(baseUrl + "contribution");
+        filterPromise = filterTasks("contribution");
+        break;
       default:
-        filterTasks('all')
+        filterPromise = filterTasks("all");
     }
-  }
+    filterPromise.then((result) => {
+      // We don't need to update the counts here, as they reflect the total
+    });
+  };
+
 
   return(
     <AppBar position='static' color='transparent' elevation={ 0 }>
@@ -78,6 +108,12 @@ const TaskFilters = ({
               className={ taskListState.tab === 0 ? classes.buttonActive : classes.button }
             >
               { intl.formatMessage(messages.allTasks) }
+              <Chip
+                label={allTasksCount}
+                size="small"
+                className={classes.chip}
+              />
+
             </Button>
             <Button
               value={taskListState.tab}
@@ -85,6 +121,11 @@ const TaskFilters = ({
               className={ taskListState.tab === 1 ? classes.buttonActive : classes.button }
             >
               { intl.formatMessage(messages.allPublicTasksWithBounties) }
+              <Chip
+                label={withBountiesCount}
+                size="small"
+                className={classes.chip}
+              />
             </Button>
             <Button
               value={taskListState.tab}
@@ -92,6 +133,12 @@ const TaskFilters = ({
               className={ taskListState.tab === 2 ? classes.buttonActive : classes.button }
             >
               { intl.formatMessage(messages.allPublicTasksNoBounties) }
+              <Chip
+                label={noBountiesCount}
+                size="small"
+                className={classes.chip}
+              />
+
             </Button>
           </ButtonGroup>
         </div>
@@ -103,4 +150,16 @@ const TaskFilters = ({
   )
 }
 
-export default injectIntl(withRouter(withStyles(styles)(TaskFilters)))
+// export default injectIntl(withRouter(withStyles(styles)(TaskFilters)))
+const mapStateToProps = (state) => ({
+  tasks: state.tasks.data, // Assuming you have tasks in your Redux state
+  filteredTasks: state.tasks.filteredData,
+});
+const mapDispatchToProps = {
+  filterTasks,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(withRouter(withStyles(styles)(TaskFilters))));
+

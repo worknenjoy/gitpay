@@ -191,16 +191,17 @@ const filterTaskRequested = () => {
   return { type: FILTER_TASK_REQUESTED, completed: false }
 }
 
-const filterTaskSuccess = (tasks, filter, value, additional) => {
-  return {
+
+const filterTaskSuccess = (filteredTasks, filter, value, additional) => {
+   return {
     type: FILTER_TASK_SUCCESS,
     completed: true,
-    data: tasks.data,
+    data: filteredTasks,
     filterType: filter,
     filterValue: value,
-    filterAdditional: additional
-  }
-}
+    filterAdditional: additional,
+  };
+};
 
 /*
  * Task order filter
@@ -417,13 +418,27 @@ const listTasks = ({ organizationId, projectId, userId, status, labelIds }) => {
   }
 }
 
-const filterTasks = (key = 'all', value, additional) => {
+
+const filterTasks = (key = "all", value, additional) => {
   return (dispatch, getState) => {
-    const tasks = getState().tasks
-    dispatch(filterTaskRequested())
-    return dispatch(filterTaskSuccess(tasks, key, value, additional))
-  }
-}
+    const tasks = getState().tasks.data;
+    dispatch({ type: FILTER_TASK_REQUESTED });
+    let filteredTasks;
+    // dispatch({ type: FILTER_TASK_REQUESTED });
+    if (key === "status") {
+      filteredTasks = tasks.filter((task) => task.status === value);
+    } else if (key === "issuesWithBounties") {
+      filteredTasks = tasks.filter((task) => parseFloat(task.value) > 0);
+    } else if (key === "contribution") {
+      filteredTasks = tasks.filter((task) => parseFloat(task.value) === 0);
+    } else {
+      filteredTasks = tasks;
+    }
+    dispatch(filterTaskSuccess(filteredTasks, key, value, additional));
+    return filteredTasks;
+  };
+};
+
 
 const filterTaskOrders = (filter = {}) => {
   return (dispatch, getState) => {

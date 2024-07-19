@@ -188,6 +188,7 @@ export const tasks = (state = {
     message: false
   },
   data: [],
+  filteredData: [],
   filterType: 'all',
   filterValue: null,
   filterAdditional: null
@@ -208,7 +209,14 @@ export const tasks = (state = {
     case FILTER_TASK_REQUESTED:
       return { ...state, completed: false }
     case FILTER_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data, filterType: action.filterType, filterValue: action.filterValue, filterAdditional: action.filterAdditional }
+      return {
+        ...state,
+        completed: true,
+        filteredData: action.data,
+        filterType: action.filterType,
+        filterValue: action.filterValue,
+        filterAdditional: action.filterAdditional,
+      }
     default:
       return state
   }
