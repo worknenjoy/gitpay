@@ -1,4 +1,4 @@
-module.exports.baseContentEmailTemplate = (intro, content = '') => `
+module.exports.baseContentEmailTemplate = (intro = '', content = '') => `
  <!-- START MAIN CONTENT AREA -->
               <tr>
                 <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px;" valign="top">
