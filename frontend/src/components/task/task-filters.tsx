@@ -150,16 +150,5 @@ const TaskFilters = ({
   )
 }
 
-// export default injectIntl(withRouter(withStyles(styles)(TaskFilters)))
-const mapStateToProps = (state) => ({
-  tasks: state.tasks.data, // Assuming you have tasks in your Redux state
-  filteredTasks: state.tasks.filteredData,
-});
-const mapDispatchToProps = {
-  filterTasks,
-};
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(withRouter(withStyles(styles)(TaskFilters))));
+export default injectIntl(withRouter(withStyles(styles)(TaskFilters)))
 
