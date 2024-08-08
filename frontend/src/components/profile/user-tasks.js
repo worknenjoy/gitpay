@@ -17,7 +17,8 @@ import {
   withStyles
 } from '@material-ui/core'
 
-import TaskFilter from '../task/task-filters'
+// import TaskFilter from '../task/task-filters'
+import Taskfilters from '../../containers/task-filter'
 import CustomPaginationActionsTable from '../task/task-table';
 
 import logoGithub from '../../images/github-logo.png'
@@ -196,7 +197,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
           ) : (
             <>
               { currentTab === 'all' &&
-              <TaskFilter
+              <Taskfilters
                 filterTasks={ filterTasks }
                 
                 baseUrl={ baseUrl }

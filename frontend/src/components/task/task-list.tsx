@@ -8,7 +8,8 @@ import {
   withStyles
 } from '@material-ui/core'
 
-import TaskFilter from './task-filters'
+// import TaskFilter from './task-filters'
+import TaskFilters from '../../containers/task-filter';
 
 import CustomPaginationActionsTable from './task-table'
 import { tableHeaderDefault, tableHeaderWithProject } from './task-header-metadata'
@@ -231,7 +232,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
           </ReactPlaceholder>
         }
         <div className={ classes.rootTabs }>
-          <TaskFilter
+          <TaskFilters
             filterTasks={ filterTasks }
             baseUrl={ profileUrl + baseUrl }
           />
