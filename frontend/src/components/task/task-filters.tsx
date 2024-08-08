@@ -18,9 +18,12 @@ const styles = (theme) => ({
     color: theme.palette.primary.contrastText,
   },
   chip: {
-    marginLeft: theme.spacing(0.5),
-    backgroundColor: theme.palette.success.main, 
-    color: theme.palette.common.white,
+    marginLeft: theme.spacing(1),
+  },
+  chipActive: {
+    marginLeft: theme.spacing(1),
+    color: theme.palette.primary.contrastText,
+    borderColor: theme.palette.primary.light,
   },
 });
 
@@ -111,7 +114,8 @@ const TaskFilters = ({
               <Chip
                 label={allTasksCount}
                 size="small"
-                className={classes.chip}
+                variant="outlined"
+                className={taskListState.tab === 0 ? classes.chipActive : classes.chip}
               />
 
             </Button>
@@ -124,7 +128,8 @@ const TaskFilters = ({
               <Chip
                 label={withBountiesCount}
                 size="small"
-                className={classes.chip}
+                variant="outlined"
+                className={taskListState.tab === 1 ? classes.chipActive : classes.chip}
               />
             </Button>
             <Button
@@ -136,7 +141,8 @@ const TaskFilters = ({
               <Chip
                 label={noBountiesCount}
                 size="small"
-                className={classes.chip}
+                variant="outlined"
+                className={taskListState.tab === 2 ? classes.chipActive : classes.chip}
               />
 
             </Button>
