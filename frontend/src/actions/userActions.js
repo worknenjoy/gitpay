@@ -16,6 +16,18 @@ const UPDATE_USER_ACCOUNT_REQUESTED = 'UPDATE_USER_ACCOUNT_REQUESTED'
 const UPDATE_USER_ACCOUNT_SUCCESS = 'UPDATE_USER_ACCOUNT_SUCCESS'
 const UPDATE_USER_ACCOUNT_ERROR = 'UPDATE_USER_ACCOUNT_ERROR'
 
+const FETCH_USER_CUSTOMER_REQUESTED = 'FETCH_USER_CUSTOMER_REQUESTED'
+const FETCH_USER_CUSTOMER_SUCCESS = 'FETCH_USER_CUSTOMER_SUCCESS'
+const FETCH_USER_CUSTOMER_ERROR = 'FETCH_USER_CUSTOMER_ERROR'
+
+const CREATE_USER_CUSTOMER_REQUESTED = 'CREATE_USER_CUSTOMER_REQUESTED'
+const CREATE_USER_CUSTOMER_SUCCESS = 'CREATE_USER_CUSTOMER_SUCCESS'
+const CREATE_USER_CUSTOMER_ERROR = 'CREATE_USER_CUSTOMER_ERROR'
+
+const UPDATE_USER_CUSTOMER_REQUESTED = 'UPDATE_USER_CUSTOMER_REQUESTED'
+const UPDATE_USER_CUSTOMER_SUCCESS = 'UPDATE_USER_CUSTOMER_SUCCESS'
+const UPDATE_USER_CUSTOMER_ERROR = 'UPDATE_USER_CUSTOMER_ERROR'
+
 const UPDATE_USER_REQUESTED = 'UPDATE_USER_REQUESTED'
 const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
 const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR'
@@ -94,6 +106,66 @@ const updateUserAccountSuccess = account => {
 
 const updateUserAccountError = error => {
   return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error }
+}
+
+/*
+* User customer fetch
+*/
+
+const fetchUserCustomerRequested = () => {
+  return { type: FETCH_USER_CUSTOMER_REQUESTED, completed: false }
+}
+
+const fetchUserCustomerSuccess = customer => {
+  return {
+    type: FETCH_USER_CUSTOMER_SUCCESS,
+    completed: true,
+    data: customer.data
+  }
+}
+
+const fetchUserCustomerError = error => {
+  return { type: FETCH_USER_CUSTOMER_ERROR, completed: true, error: error }
+}
+
+/*
+* User customer create
+*/
+
+const createUserCustomerRequested = () => {
+  return { type: CREATE_USER_CUSTOMER_REQUESTED, completed: false }
+}
+
+const createUserCustomerSuccess = customer => {
+  return {
+    type: CREATE_USER_CUSTOMER_SUCCESS,
+    completed: true,
+    data: customer.data
+  }
+}
+
+const createUserCustomerError = error => {
+  return { type: CREATE_USER_CUSTOMER_ERROR, completed: true, error: error }
+}
+
+/*
+* User customer update
+*/
+
+const updateUserCustomerRequested = () => {
+  return { type: UPDATE_USER_CUSTOMER_REQUESTED, completed: false }
+}
+
+const updateUserCustomerSuccess = customer => {
+  return {
+    type: UPDATE_USER_CUSTOMER_SUCCESS,
+    completed: true,
+    data: customer.data
+  }
+}
+
+const updateUserCustomerError = error => {
+  return { type: UPDATE_USER_CUSTOMER_ERROR, completed: true, error: error }
 }
 
 /*
@@ -192,6 +264,82 @@ const createBankAccountError = error => {
   return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error: error }
 }
 
+const fetchCustomer = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch(fetchUserCustomerRequested())
+    return axios
+      .get(api.API_URL + '/user/customer')
+      .then(customer => {
+        return dispatch(fetchUserCustomerSuccess(customer))
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.log('fetch user customer error', e)
+        return dispatch(fetchUserCustomerError(e))
+      })
+  }
+}
+
+const createCustomer = (customerData) => {
+  validToken()
+  return (dispatch, getState) => {
+    dispatch(createUserCustomerRequested())
+    const customerId = getState().loggedIn.user.customer_id
+
+    if (customerId) {
+      dispatch(addNotification('actions.user.customer.exist'))
+      return dispatch(
+        createUserCustomerError({ message: 'actions.user.customer.exist' })
+      )
+    }
+    axios
+      .post(api.API_URL + '/user/customer', customerData)
+      .then(customer => {
+        if(!customer.data) {
+          dispatch(addNotification('actions.user.customer.create.error'))
+          return dispatch(createUserCustomerError({ message: 'actions.user.customer.create.error' }))
+        }
+        dispatch(addNotification('actions.user.customer.create.success'))
+        return dispatch(createUserCustomerSuccess(customer))
+      })
+      .catch(error => {
+        dispatch(addNotification('actions.user.customer.create.error'))
+        // eslint-disable-next-line no-console
+        console.log('error on create customer', error)
+        return dispatch(createUserCustomerError(error))
+      })
+  }
+}
+
+const updateCustomer = (_, customerData) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(updateUserCustomerRequested())
+    axios
+      .put(api.API_URL + '/user/customer', customerData)
+      .then(customer => {
+        dispatch(addNotification('actions.user.customer.update.success'))
+        return dispatch(updateUserCustomerSuccess(customer))
+      })
+      .catch(error => {
+        const errorMessage = error.response.data
+        dispatch(
+          addNotification(
+            errorMessage ? `${errorMessage.message} ${errorMessage.param}` : 'actions.user.customer.update.error.missing'
+          )
+        )
+        // eslint-disable-next-line no-console
+        console.log('error on update customer', error)
+        return dispatch(updateUserCustomerError(error))
+      })
+  }
+}
+
+/*
+* Connected Account
+*/
+
 const fetchAccount = () => {
   validToken()
   return (dispatch) => {
@@ -264,6 +412,10 @@ const updateAccount = (_, accountData) => {
       })
   }
 }
+
+/*
+* User
+*/
 
 const updateUser = (_, userData) => {
   validToken()
@@ -411,6 +563,15 @@ export {
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
   UPDATE_USER_ACCOUNT_ERROR,
+  FETCH_USER_CUSTOMER_REQUESTED,
+  FETCH_USER_CUSTOMER_SUCCESS,
+  FETCH_USER_CUSTOMER_ERROR,
+  CREATE_USER_CUSTOMER_REQUESTED,
+  CREATE_USER_CUSTOMER_SUCCESS,
+  CREATE_USER_CUSTOMER_ERROR,
+  UPDATE_USER_CUSTOMER_REQUESTED,
+  UPDATE_USER_CUSTOMER_SUCCESS,
+  UPDATE_USER_CUSTOMER_ERROR,
   UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
@@ -429,6 +590,9 @@ export {
   fetchAccount,
   createAccount,
   updateAccount,
+  fetchCustomer,
+  createCustomer,
+  updateCustomer,
   updateUser,
   activateUser,
   resendActivationEmail,

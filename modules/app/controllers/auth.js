@@ -205,6 +205,30 @@ exports.customer = (req, res) => {
     })
 }
 
+exports.customerCreate = (req, res) => {
+  user.userCustomerCreate(req.user.id, req.body)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}
+
+exports.customerUpdate = (req, res) => {
+  console.log('req.query', req.query)
+  console.log('req.user', req.user)
+  user.userCustomerUpdate(req.user.id, req.body)
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}
+
 exports.account = (req, res) => {
   user.userAccount({ id: req.user.id })
     .then(data => {

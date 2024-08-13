@@ -1,10 +1,11 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 const Stripe = require('stripe')
+const { databaseStaging } = require('../../config/secrets')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
-module.exports = Promise.method(function userCustomer (userParameters) {
-  const { id } = userParameters
+module.exports = Promise.method(function userCustomerUpdate(id, customerParameters) {
+  console.log('customerParameters', customerParameters, 'id', id)
   return models.User
     .findOne(
       {
@@ -12,9 +13,8 @@ module.exports = Promise.method(function userCustomer (userParameters) {
       }
     )
     .then(data => {
-      const { customer_id } = data.dataValues
-      if (customer_id) {
-        return stripe.customers.retrieve(customer_id).then(customer => {
+      if (data.dataValues.customer_id) {
+        return stripe.customers.update(data.dataValues.customer_id, customerParameters).then(customer => {
           return customer
         }).catch(e => {
           // eslint-disable-next-line no-console
@@ -25,7 +25,7 @@ module.exports = Promise.method(function userCustomer (userParameters) {
       return false
     }).catch(error => {
       // eslint-disable-next-line no-console
-      console.log('error to find customer', error)
+      console.log(error)
       return false
     })
 })

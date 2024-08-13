@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
 import AccountDetails from '../../../containers/account-details';
+import CustomerDetails from '../../../containers/customer-details';
 import UserRoles from '../../../containers/user-roles';
 import PaymentOptions from '../../payment/payment-options';
 import SettingsComponent from '../settings';
@@ -27,6 +28,8 @@ export default function AccountTabs({
   const getCurrentTab = (location) => {
     if (location.pathname === '/profile/user-account') {
       return 'account';
+    } else if (location.pathname === '/profile/user-account/customer') {
+      return 'customer';
     } else if (location.pathname === '/profile/user-account/details') {
       return 'details';
     } else if (location.pathname === '/profile/user-account/bank') {
@@ -46,6 +49,9 @@ export default function AccountTabs({
     switch (newValue) {
       case 'account':
         history.push('/profile/user-account');
+        break;
+      case 'customer':
+        history.push('/profile/user-account/customer');
         break;
       case 'details':
         history.push('/profile/user-account/details');
@@ -91,10 +97,19 @@ export default function AccountTabs({
             }
             value={'account'} 
           />
+          { (user?.Types?.map(u => u.name)?.includes('maintainer') ||
+             user?.Types?.map(u => u.name)?.includes('sponsor')) && 
+            <Tab 
+              label={
+                <FormattedMessage id="profile.account.tab.customer" defaultMessage='Payment information details' />
+              }
+              value={'customer'}  
+            />
+          }
           { user?.Types?.map(u => u.name)?.includes('contributor') && 
             <Tab 
               label={
-                <FormattedMessage id="profile.account.tab.details" defaultMessage='Personal details and address' />
+                <FormattedMessage id="profile.account.tab.bank.person" defaultMessage='Bank holder details' />
               }
               value={'details'}  
             />
@@ -102,7 +117,7 @@ export default function AccountTabs({
           { user?.Types?.map(u => u.name)?.includes('contributor') &&
             <Tab
               label={
-                <FormattedMessage id="profile.account.tab.bank" defaultMessage='Bank details' />
+                <FormattedMessage id="profile.account.tab.bank.details" defaultMessage='Bank account information' />
               }
               value={'bank'} 
             />
@@ -144,6 +159,7 @@ export default function AccountTabs({
               )} 
             />
             <Route exact path="/profile/user-account/details" component={AccountDetails} />
+            <Route exact path="/profile/user-account/customer" component={CustomerDetails} />
             <Route exact path="/profile/user-account/bank" component={
               (props) => (  
                   <PaymentOptions />

@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import MotorcycleIcon from '@material-ui/icons/Motorcycle'
-import DriveEtaIcon from '@material-ui/icons/DriveEta'
-import CheckIcon from '@material-ui/icons/Check'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import {
   Container,
-  Card,
-  CardContent,
+  Tabs,
+  Tab,
   Typography,
   Button,
   Chip,
@@ -24,6 +21,23 @@ const paymentIcon = require('../../images/payment-icon-alt.png')
 
 import PaymentDialog from '../payment/payment-dialog'
 import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
+import { TaskPaymentPlans } from './payment/plans/task-payment-plans'
+import { Height } from '@material-ui/icons'
+
+const taskPaymentFormMessages = defineMessages({
+  tabPaymentMethodCrediCard: {
+    id: 'task.payment.method.card',
+    defaultMessage: 'Credit Card'
+  },
+  tabPaymentMethodPaypal: {
+    id: 'task.payment.method.paypal',
+    defaultMessage: 'Paypal'
+  },
+  tabPaymentMethodInvoice: {
+    id: 'task.payment.method.invoice',
+    defaultMessage: 'Invoice'
+  },
+})
 
 const fee = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
 
@@ -35,13 +49,14 @@ class TaskPaymentForm extends Component {
       orderPrice: 0,
       samplePrice: 0,
       plan: null,
+      tabValue: 'card',
+      checkPlan(plan) {
+        if(!plan || !this.plan) return false
+        return this.plan === plan
+      },
       priceAfterFee() {
         return this.plan && Number((parseInt(this.price) * fee[this.plan]).toFixed(2))
       },
-      checkPlan(plan) {
-        if (!plan || !this.plan) return false
-        return this.plan === plan
-      }
     }
   }
 
@@ -77,30 +92,34 @@ class TaskPaymentForm extends Component {
     })
   }
 
+  handleChange = (event, newValue) => {
+    this.setState({ tabValue: newValue })
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes, intl, open, onClose } = this.props
+    const { tabValue } = this.state
 
     return (
-      <div>
+      <>
         <Drawer
-          open={this.props.open} onClose={this.props.onClose}
+          open={open} onClose={onClose}
           aria-labelledby='form-dialog-title'
           maxWidth='md'
           anchor='right'
+          fullWidth
         >
           <Container>
             <div style={{ padding: 20 }}>
               <Typography variant='h5' id='form-dialog-title' gutterBottom>
                 <FormattedMessage id='task.payment.headline' defaultMessage='New payment for an issue' />
               </Typography>
-
               <div className={classes.details}>
-
                 <Typography variant='subtitle2'>
-                  <FormattedMessage id='task.payment.headline.bounty.add' defaultMessage='Add a bounty for this task' />
+                  <FormattedMessage id='issue.payment.headline.bounty.add' defaultMessage='Add a bounty for this issue' />
                 </Typography>
                 <Typography variant='body1' color='textSecondary' gutterBottom>
-                  <FormattedMessage id='task.payment.form.message.subheading' defaultMessage='Create a bounty for this task and who you assign will receive the payment for this bounty' />
+                  <FormattedMessage id='issue.payment.form.message.subheading' defaultMessage='Create a bounty for this issue and who you assign will receive the payment for this bounty' />
                 </Typography>
                 <div className={classes.chipContainer}>
                   <Chip
@@ -129,8 +148,19 @@ class TaskPaymentForm extends Component {
                     onClick={() => this.pickTaskPrice(300)}
                   />
                 </div>
+                <Grid
+                  
+                  container
+                  spacing={0}
+                >
+                <Grid
+                  spacing={0}
+                  xs={0}
+                  md={4}
+                  lg={4}
+                >
                 <form className={classes.formPayment} action='POST'>
-                  <FormControl fullWidth>
+                  <FormControl>
                     <InputLabel htmlFor='adornment-amount'>
                       <FormattedMessage id='task.payment.input.amount.value' defaultMessage='Price' />
                     </InputLabel>
@@ -138,126 +168,94 @@ class TaskPaymentForm extends Component {
                       {(msg) => (
                         <Input
                           id='adornment-amount'
-                          startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                          endAdornment={
+                            <InputAdornment position='end'> + </InputAdornment>
+                          }
+                          startAdornment={
+                            <InputAdornment position='start'>
+                              $
+                            </InputAdornment>
+                          }
                           placeholder={msg}
                           type='number'
-                          inputProps={{ 'min': 0 }}
+                          inputProps={{ 'min': 0, style: { textAlign: 'right', height: 92  }}}
                           defaultValue={this.state.price}
                           value={this.state.price}
                           onChange={this.handleInputChange}
+                          align='right'
+                          style={{ fontSize: 42, fontWeight: 'bold' }}
                         />
                       )}
                     </FormattedMessage>
                   </FormControl>
                 </form>
+                </Grid>
                 <Grid
-                  className={classes.planContainer}
-                  container
-                  alignItems='center'
-                  justifyContent='center'
-                  spacing={0}
                   xs={0}
-                  md={12}
-                  lg={12} >
-                  {this.props.plan === 'open source' ? (
-                    <Grid item className={classes.planGridItem}>
-                      <Card className={classes.planGrid}
-                        {...this.state.checkPlan('open source')}
-                      >
-
-                        <CardContent className={classes.planGridContent}>
-                          <div className={classes.planButton}>
-                            <MotorcycleIcon color={`${this.state.checkPlan('open source') ? 'primary' : 'disabled'}`} className={classes.planIcon} />
-                          </div>
-                          <Typography align='center' color='textPrimary' variant='h5'>
-                            <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={{ fee: '8' }} />
-                          </Typography>
-                          <Typography align='center' color='textSecondary' variant='h6' gutterBottom>
-                            <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />
-                          </Typography>
-                          <Typography align='center' variant='caption' gutterBottom>
-                            <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />
-                          </Typography>
-
-                          <div className={classes.planBullets}
-
-                          >
-                            <Typography>
-                              <CheckIcon className={classes.checkIcon} fontSize='small' color='primary' />
-                              <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />
-                            </Typography>
-
-                            <Typography>
-                              <CheckIcon className={classes.checkIcon} fontSize='small' color='primary' />
-                              <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />
-                            </Typography>
-                          </div>
-                        </CardContent>
-
-                      </Card>
-                    </Grid>
-                  ) : (
-                    <Grid item className={classes.planGridItem} >
-                      <Card className={classes.planGrid}
-                        {...this.state.checkPlan('private')}
-                      >
-
-                        <CardContent className={classes.planGridContent}>
-                          <div className={classes.planButton}>
-                            <DriveEtaIcon color={`${this.state.checkPlan('private') ? 'primary' : 'disabled'}`} className={classes.planIcon} />
-                          </div>
-                          <Typography align='center' color='textPrimary' variant='h5'>
-                            <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={{ fee: '18' }} />
-                          </Typography >
-                          <Typography align='center' color='textSecondary' variant='h6'>
-                            <FormattedMessage id='actions.task.payment.plan.private' defaultMessage='Private Projects' />
-                          </Typography>
-                          <Typography align='center' variant='caption' gutterBottom>
-                            <FormattedMessage id='actions.task.payment.plan.private.info' defaultMessage='For Private Project' />
-                          </Typography>
-
-                          <div className={classes.planBullets}
-
-                          >
-                            <Typography>
-                              <CheckIcon className={classes.checkIcon} fontSize='small' color='primary' />
-                              <FormattedMessage id='actions.task.payment.plan.bullet.private' defaultMessage='Private Projects' />
-                            </Typography>
-
-                            <Typography>
-                              <CheckIcon className={classes.checkIcon} fontSize='small' color='primary' />
-                              <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />
-                            </Typography>
-                          </div>
-                        </CardContent>
-
-                      </Card>
-                    </Grid>
-                  )}
+                  md={8}
+                  lg={8}
+                >
+                  <TaskPaymentPlans
+                    classes={classes}
+                    plan={this.props.plan}
+                  />  
+                </Grid>
                 </Grid>
                 <div>
-                  <Button
-                    style={{ marginLeft: 20 }}
+                <Tabs
+                  value={tabValue}
+                  onChange={this.handleChange}
+                  indicatorColor='secondary'
+                  textColor='secondary'
+                >
+                  <Tab label={intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodCrediCard)} value='card' />
+                  <Tab label={intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice)} value='invoice' />
+                  <Tab label={intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodPaypal)} value='paypal' />
+                </Tabs>
+                { tabValue === 'card' &&
+                    <Button
+                      style={{ marginLeft: 20 }}
+                      disabled={!this.state.priceAfterFee()}
+                      onClick={() => this.handlePayment('PaymentDialog')}
+                      variant='contained'
+                      color='primary'
+                      className={classes.btnPayment}
+                    >
+                      <FormattedMessage 
+                        id='task.payment.creditcard.action'
+                        defaultMessage='Pay {amount} with Credit Card'
+                        values={{
+                          amount: this.formatCurrency(this.state.priceAfterFee())
+                        }}
+                      />
+                    </Button>
+                  }
+                  { tabValue === 'invoice' &&
+                    <Button
                     disabled={!this.state.priceAfterFee()}
-                    onClick={() => this.handlePayment('PaymentDialog')}
-                    variant='contained'
-                    color='primary'
-                    className={classes.btnPayment}>
-                    <FormattedMessage id='task.payment.creditcard.action' defaultMessage='Pay {amount} with Credit Card' values={{
-                      amount: this.formatCurrency(this.state.priceAfterFee())
-                    }} />
-                  </Button>
-                  <Button
-                    disabled={!this.state.priceAfterFee()}
-                    onClick={() => this.handlePayment('PaypalPaymentDialog')}
+                    onClick={() => this.handlePayment('InvoicePayment')}
                     variant='contained'
                     color='primary'
                     className={classes.btnPayment}
-                  >
-                    <FormattedMessage id='task.payment.paypal.action' defaultMessage='Pay {amount} with PayPal' values={{
-                      amount: this.formatCurrency(this.state.priceAfterFee())
-                    }} />
-                  </Button>
+                    >
+                      <FormattedMessage id='task.payment.invoice.action' defaultMessage='Pay {amount} with Invoice' values={{
+                        amount: this.formatCurrency(this.state.priceAfterFee())
+                      }} />
+                    </Button> 
+                  }
+                  { tabValue === 'paypal' &&
+                    <Button
+                      disabled={!this.state.priceAfterFee()}
+                      onClick={() => this.handlePayment('PaypalPaymentDialog')}
+                      variant='contained'
+                      color='primary'
+                      className={classes.btnPayment}
+                    >
+                      <FormattedMessage id='task.payment.paypal.action' defaultMessage='Pay {amount} with PayPal' values={{
+                        amount: this.formatCurrency(this.state.priceAfterFee())
+                      }} />
+                    </Button>
+                  }
                 </div>
               </div>
 
@@ -289,7 +287,7 @@ class TaskPaymentForm extends Component {
           order={this.props.order}
           plan={this.state.plan}
         />
-      </div>
+      </>
     )
   }
 }
@@ -310,4 +308,4 @@ TaskPaymentForm.propTypes = {
   createOrder: PropTypes.func.isRequired
 }
 
-export default TaskPaymentForm
+export default injectIntl(TaskPaymentForm)

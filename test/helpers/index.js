@@ -9,6 +9,7 @@ const register = (agent, params = {}) => {
   params.password = params.password || testPassword
   params.confirmPassword = params.password || testPassword
   params.name = params.name || testName
+  params.customer_id = params.customer_id
   return agent
     .post('/auth/register')
     .send(params)
@@ -29,7 +30,7 @@ const activate = (agent, res) => {
 }
 
 const registerAndLogin = (agent, params = {}) => {
-  return register(agent, params = {})
+  return register(agent, params)
     .then((a) => {
       return activate(agent, a).then((active) => {
         return login(agent, params).then(
