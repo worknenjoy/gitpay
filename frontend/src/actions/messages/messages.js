@@ -89,6 +89,30 @@ const messages = defineMessages({
     id: 'actions.message.recruiters.error',
     defaultMessage: 'There was an issue to send this message, please try again later'
   },
+  notificationCustomerFetchError: {
+    id: 'actions.customer.fetch.error',
+    defaultMessage: 'We could not obtain this customer, please try again later'
+  },
+  notificationCustomerCreateError: {
+    id: 'actions.customer.create.error',
+    defaultMessage: 'We could not save this payment information'
+  },
+  notificationCustomerCreateSuccess: {
+    id: 'actions.customer.create.success',
+    defaultMessage: 'We saved your payment information successfully'
+  },
+  notificationCustomerUpdateError: {
+    id: 'actions.customer.update.error',
+    defaultMessage: 'We could not update this payment information'
+  },
+  notificationCustomerUpdateSuccess: {
+    id: 'actions.customer.update.success',
+    defaultMessage: 'We updated your payment information successfully'
+  },
+  notificationOrderCreateSuccess: {
+    id: 'actions.order.create.success',
+    defaultMessage: 'Your payment was created successfully'
+  },
   notificationOrderCreateError: {
     id: 'actions.order.create.error',
     defaultMessage: 'We could not create this payment'

@@ -209,11 +209,10 @@ const createOrder = order => {
       .post(api.API_URL + '/orders/create', order)
       .then(order => {
         if (order.data) {
+          dispatch(addNotification('actions.order.create.success'))
           return dispatch(createOrderSuccess(order))
         }
-        else {
-          addNotification('actions.order.create.error')
-        }
+        addNotification('actions.order.create.error')
         return dispatch(
           payOrderError({
             error: {

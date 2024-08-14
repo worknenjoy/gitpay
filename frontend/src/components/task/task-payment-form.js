@@ -17,12 +17,10 @@ import {
   Grid
 } from '@material-ui/core'
 
-const paymentIcon = require('../../images/payment-icon-alt.png')
-
 import PaymentDialog from '../payment/payment-dialog'
 import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
 import { TaskPaymentPlans } from './payment/plans/task-payment-plans'
-import { Height } from '@material-ui/icons'
+import { PaymentMethodInvoiceTab } from './payment/methods/invoice/payment-method-invoice-tab'
 
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
@@ -97,7 +95,7 @@ class TaskPaymentForm extends Component {
   }
 
   render() {
-    const { classes, intl, open, onClose } = this.props
+    const { classes, intl, open, onClose, fetchCustomer, customer } = this.props
     const { tabValue } = this.state
 
     return (
@@ -173,7 +171,7 @@ class TaskPaymentForm extends Component {
                           }
                           startAdornment={
                             <InputAdornment position='start'>
-                              $
+                              <span style={{fontSize: 28}}> $ </span>
                             </InputAdornment>
                           }
                           placeholder={msg}
@@ -231,17 +229,18 @@ class TaskPaymentForm extends Component {
                     </Button>
                   }
                   { tabValue === 'invoice' &&
-                    <Button
-                    disabled={!this.state.priceAfterFee()}
-                    onClick={() => this.handlePayment('InvoicePayment')}
-                    variant='contained'
-                    color='primary'
-                    className={classes.btnPayment}
-                    >
-                      <FormattedMessage id='task.payment.invoice.action' defaultMessage='Pay {amount} with Invoice' values={{
-                        amount: this.formatCurrency(this.state.priceAfterFee())
-                      }} />
-                    </Button> 
+                    <PaymentMethodInvoiceTab
+                      classes={classes}
+                      priceAfterFee={this.state.priceAfterFee()}
+                      formatCurrency={this.formatCurrency}
+                      fetchCustomer={fetchCustomer}
+                      customer={customer}
+                      user={this.props.user}
+                      createOrder={this.props.createOrder}
+                      task={this.props.task?.data}
+                      price={this.state.price}
+                      onPayment={onClose}
+                    />
                   }
                   { tabValue === 'paypal' &&
                     <Button

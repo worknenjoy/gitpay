@@ -885,25 +885,27 @@ class Task extends Component {
               />
               {this.props.logged ? 
                 (
-                  task.completed &&
-                  <TaskPaymentForm
-                    classes={classes}
-                    match={this.props.match}
-                    dialog={this.props.dialog}
-                    task={task}
-                    plan={task.data.private ? 'private' : 'open source'}
-                    order={this.props.order}
-                    open={this.state.paymentForm}
-                    onClose={() => this.setState({ paymentForm: false })}
-                    user={this.props.user}
-                    openDialog={this.props.openDialog}
-                    closeDialog={this.props.closeDialog}
-                    addNotification={this.props.addNotification}
-                    updateTask={this.props.updateTask}
-                    createOrder={this.props.createOrder}
-                  />
-                )
-               : (
+                  <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={task.completed}>
+                    <TaskPaymentForm
+                      classes={classes}
+                      match={this.props.match}
+                      dialog={this.props.dialog}
+                      task={task}
+                      plan={task.data.private ? 'private' : 'open source'}
+                      order={this.props.order}
+                      open={this.state.paymentForm}
+                      onClose={() => this.setState({ paymentForm: false })}
+                      user={this.props.user}
+                      openDialog={this.props.openDialog}
+                      closeDialog={this.props.closeDialog}
+                      addNotification={this.props.addNotification}
+                      updateTask={this.props.updateTask}
+                      createOrder={this.props.createOrder}
+                      fetchCustomer={this.props.fetchCustomer}
+                      customer={this.props.customer}
+                    />
+                  </ReactPlaceholder>
+               ) : (
                 <Collapse in={this.state.paymentForm}>
                   <div className={classes.mainBlock} style={{ marginBottom: 40 }}>
                     <LoginButton referer={this.props.location} includeForm />

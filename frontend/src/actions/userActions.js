@@ -288,23 +288,23 @@ const createCustomer = (customerData) => {
     const customerId = getState().loggedIn.user.customer_id
 
     if (customerId) {
-      dispatch(addNotification('actions.user.customer.exist'))
+      dispatch(addNotification('actions.customer.exist'))
       return dispatch(
-        createUserCustomerError({ message: 'actions.user.customer.exist' })
+        createUserCustomerError({ message: 'actions.customer.exist' })
       )
     }
     axios
       .post(api.API_URL + '/user/customer', customerData)
       .then(customer => {
         if(!customer.data) {
-          dispatch(addNotification('actions.user.customer.create.error'))
-          return dispatch(createUserCustomerError({ message: 'actions.user.customer.create.error' }))
+          dispatch(addNotification('actions.customer.create.error'))
+          return dispatch(createUserCustomerError({ message: 'actions.customer.create.error' }))
         }
-        dispatch(addNotification('actions.user.customer.create.success'))
+        dispatch(addNotification('actions.customer.create.success'))
         return dispatch(createUserCustomerSuccess(customer))
       })
       .catch(error => {
-        dispatch(addNotification('actions.user.customer.create.error'))
+        dispatch(addNotification('actions.customer.create.error'))
         // eslint-disable-next-line no-console
         console.log('error on create customer', error)
         return dispatch(createUserCustomerError(error))
@@ -319,19 +319,19 @@ const updateCustomer = (_, customerData) => {
     axios
       .put(api.API_URL + '/user/customer', customerData)
       .then(customer => {
-        dispatch(addNotification('actions.user.customer.update.success'))
+        dispatch(addNotification('actions.customer.update.success'))
         return dispatch(updateUserCustomerSuccess(customer))
       })
       .catch(error => {
         const errorMessage = error.response.data
         dispatch(
           addNotification(
-            errorMessage ? `${errorMessage.message} ${errorMessage.param}` : 'actions.user.customer.update.error.missing'
+            'actions.customer.update.error'
           )
         )
         // eslint-disable-next-line no-console
         console.log('error on update customer', error)
-        return dispatch(updateUserCustomerError(error))
+        return dispatch(updateUserCustomerError('actions.customer.update.error'))
       })
   }
 }
