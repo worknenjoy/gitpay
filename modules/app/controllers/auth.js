@@ -217,8 +217,6 @@ exports.customerCreate = (req, res) => {
 }
 
 exports.customerUpdate = (req, res) => {
-  console.log('req.query', req.query)
-  console.log('req.user', req.user)
   user.userCustomerUpdate(req.user.id, req.body)
     .then(data => {
       res.send(data)

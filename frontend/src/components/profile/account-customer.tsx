@@ -27,7 +27,10 @@ const styles = (theme) => ({
   },
   fieldset: {
     border: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: 20
+    marginBottom: 20,
+    '&[disabled] legend': {
+      color: theme.palette.primary.light,
+    }
   }
 })
 
@@ -98,25 +101,26 @@ const CustomerDetails = ({
   const [userId] = useState('')
 
   const handleSubmit = (e) => {
-    console.log(e)
     e.preventDefault()
     if (!e.target) return false
     let formData = {
-      'name': e.target['name'].value,
-      'address[city]': e.target['address[city]'].value,
-      'address[country]': e.target['address[country]'].value,
-      'address[line1]': e.target['address[line1]'].value,
-      'address[line2]': e.target['address[line2]'].value,
-      'address[postal_code]': e.target['address[postal_code]'].value,
-      'address[state]': e.target['address[state]'].value,
-      'metadata': {
-        'user_id': user.id,
-        //'customer_type': e.target['customer_type'].value
+      name: e.target['name'].value,
+      email: user.user.email,
+      address: {
+        city: e.target['address[city]'].value,
+        country: e.target['address[country]'].value,
+        line1: e.target['address[line1]'].value,
+        line2: e.target['address[line2]'].value,
+        postal_code: e.target['address[postal_code]'].value,
+        state: e.target['address[state]'].value
+      },
+      metadata: {
+        user_id: user.user.id,
+        //customer_type: e.target['customer_type'].value
       }
-
     }
     setCustomerData(formData)
-    if (!user.user.id) {
+    if (!user.user.customer_id) {
       createCustomer(formData)
     } else {
       updateCustomer(formData)
@@ -156,7 +160,7 @@ const CustomerDetails = ({
               <fieldset className={classes.fieldset}>
                 <legend className={classes.legend}>
                   <Typography>
-                    <FormattedMessage id='customer.personal.title' defaultMessage='Personal / business details' />
+                    <FormattedMessage id='customer.personal.title' defaultMessage='1. Personal / business details' />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
@@ -175,10 +179,10 @@ const CustomerDetails = ({
                   </Grid>
                 </Grid>
               </fieldset>
-              <fieldset className={classes.fieldset}>
+              <fieldset className={classes.fieldset} disabled={!user.user.customer_id}>
                 <legend className={classes.legend}>
                   <Typography>
-                    <FormattedMessage id='account-details-address' defaultMessage='Address information' />
+                    <FormattedMessage id='account-details-address' defaultMessage='2. Address information' />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
@@ -189,7 +193,7 @@ const CustomerDetails = ({
                     <Field name='address[line2]' label='Address line 2' value={customerData['address[line2]']} defaultValue={customer.data.address?.line2} completed={customer.completed} />
                   </Grid>
                   <Grid item xs={12} md={2}>
-                    <Field name='address[postal_code]' label='Postal code' defaultValue={customerData['address[postal_code]']} value={customer.data.address?.postal_code} completed={customer.completed} />
+                    <Field name='address[postal_code]' label='Postal code' value={customerData['address[postal_code]']} defaultValue={customer.data.address?.postal_code} completed={customer.completed} />
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Field name='address[city]' label='City' value={customerData['address[city]']} defaultValue={customer.data.address?.city} completed={customer.completed} />

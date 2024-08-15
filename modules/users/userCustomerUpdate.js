@@ -5,7 +5,6 @@ const { databaseStaging } = require('../../config/secrets')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
 module.exports = Promise.method(function userCustomerUpdate(id, customerParameters) {
-  console.log('customerParameters', customerParameters, 'id', id)
   return models.User
     .findOne(
       {

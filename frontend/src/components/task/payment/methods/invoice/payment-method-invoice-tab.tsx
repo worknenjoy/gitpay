@@ -8,6 +8,7 @@ import {
   Alert, AlertTitle
 } from '@material-ui/lab'
 import { countryCodesFull } from '../../../../profile/country-codes';
+import LoginButton from '../../../../session/login-button'
 
 const PaymentMethodInvoiceTab = ({
   classes,
@@ -20,7 +21,8 @@ const PaymentMethodInvoiceTab = ({
   task,
   createOrder,
   onPayment,
-  history
+  history,
+  location
 }) => {
 
   const { name, address } = customer.data
@@ -46,6 +48,8 @@ const PaymentMethodInvoiceTab = ({
   useEffect(() => {
     user.id && fetchCustomer(user.id);
   }, [fetchCustomer, user]);
+
+  if (!user.id) return <div style={{marginTop: 10, marginBottom: 10}}><LoginButton referer={location} includeForm /></div>;
 
   return (
     <>
@@ -78,12 +82,12 @@ const PaymentMethodInvoiceTab = ({
         rows={5}
       >
         <BillingInfoCard
-          name={name}
-          address={`${address?.line1} ${address?.line2}`}
-          city={address?.city}
-          state={address?.state}
-          zipCode={address?.postal_code}
-          country={countryCodesFull.find(c => c.code === address?.country)?.country}
+          name={name || ' - '}
+          address={`${address?.line1 || ' - '} ${address?.line2 || ' - '}`}
+          city={address?.city || ' - '}
+          state={address?.state || ' - '}
+          zipCode={address?.postal_code || ' - '}
+          country={countryCodesFull.find(c => c.code === address?.country)?.country || ' - '}
           totalAmount={priceAfterFee}
         />
       </ReactPlaceholder>

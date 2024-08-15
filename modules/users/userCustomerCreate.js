@@ -27,10 +27,14 @@ module.exports = Promise.method(function userCustomerCreate(id, customerParamete
           phone: customerParameters.phone,
           address: {
             line1: customerParameters.line1,
+            line2: customerParameters.line2,
             city: customerParameters.city,
             postal_code: customerParameters.postal_code,
             state: customerParameters.state,
             country: customerParameters.country
+          },
+          metadata: {
+            'user_id': id
           }
         }).then(customer => {
           return data.update({
