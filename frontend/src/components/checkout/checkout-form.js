@@ -83,6 +83,7 @@ const CheckoutForm = (props) => {
             props.onClose()
           }
           catch (e) {
+            console.log('error to proccess your payment', e)
             props.addNotification(
               'payment.message.error', e.message
             )
@@ -168,7 +169,7 @@ const CheckoutForm = (props) => {
   }
 
   const logged = checkoutFormState.authenticated
-  const { user } = props
+  const { user, price } = props
 
   return (
     <form
@@ -210,14 +211,11 @@ const CheckoutForm = (props) => {
         </Grid>
         <Grid item xs={ 12 }>
           <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
-            <Button color='primary' onClick={ props.onClose }>
-              <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
-            </Button>
             <Button
               type='submit'
               variant='contained'
               color='secondary'
-              disabled={ checkoutFormState.paymentRequested }
+              disabled={ checkoutFormState.paymentRequested || price === 0 }
             >
               {
                 (couponStoreState.coupon.orderPrice !== null || couponStoreState.coupon.orderPrice !== undefined) && couponStoreState.coupon.orderPrice >= 0 && couponState.couponApplied

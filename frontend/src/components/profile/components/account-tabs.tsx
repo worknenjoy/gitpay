@@ -101,7 +101,7 @@ export default function AccountTabs({
              user?.Types?.map(u => u.name)?.includes('sponsor')) && 
             <Tab 
               label={
-                <FormattedMessage id="profile.account.tab.customer" defaultMessage='Payment information details' />
+                <FormattedMessage id="profile.account.tab.customer" defaultMessage='Billing details' />
               }
               value={'customer'}  
             />

@@ -42,7 +42,7 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
       }).then(order => {
         const taskTitle = order?.Task?.dataValues?.title || ''
         if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
-          const unitAmount = parseInt(orderParameters.amount) * 100 * 1.08
+          const unitAmount = (parseInt(orderParameters.amount) * 100 * 1.08).toFixed(0)
           const quantity = 1
 
           stripe.invoices.create({

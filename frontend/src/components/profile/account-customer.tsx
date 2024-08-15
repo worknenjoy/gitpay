@@ -148,7 +148,7 @@ const CustomerDetails = ({
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Typography variant='h6' gutterBottom>
-              <FormattedMessage id='account.customer.title' defaultMessage='Payment information' />
+              <FormattedMessage id='account.customer.title' defaultMessage='Billing information' />
             </Typography>
           </Grid>
           

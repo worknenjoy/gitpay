@@ -7,7 +7,6 @@ import {
   Tabs,
   Tab,
   Typography,
-  Button,
   Chip,
   FormControl,
   Input,
@@ -20,7 +19,7 @@ import {
 import PaymentDialog from '../payment/payment-dialog'
 import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
 import { TaskPaymentPlans } from './payment/plans/task-payment-plans'
-import { PaymentMethodInvoiceTab } from './payment/methods/invoice/payment-method-invoice-tab'
+import PaymentMethodInvoiceTab from './payment/methods/invoice/payment-method-invoice-tab'
 
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
@@ -49,7 +48,7 @@ class TaskPaymentForm extends Component {
       plan: null,
       tabValue: 'card',
       checkPlan(plan) {
-        if(!plan || !this.plan) return false
+        if (!plan || !this.plan) return false
         return this.plan === plan
       },
       priceAfterFee() {
@@ -99,94 +98,92 @@ class TaskPaymentForm extends Component {
     const { tabValue } = this.state
 
     return (
-      <>
-        <Drawer
-          open={open} onClose={onClose}
-          aria-labelledby='form-dialog-title'
-          maxWidth='md'
-          anchor='right'
-          fullWidth
-        >
-          <Container>
-            <div style={{ padding: 20 }}>
-              <Typography variant='h5' id='form-dialog-title' gutterBottom>
-                <FormattedMessage id='task.payment.headline' defaultMessage='New payment for an issue' />
+      <Drawer
+        open={open} onClose={onClose}
+        aria-labelledby='form-dialog-title'
+        maxWidth='md'
+        anchor='right'
+      >
+        <Container>
+          <div style={{ padding: 20 }}>
+            <Typography variant='h5' id='form-dialog-title' gutterBottom>
+              <FormattedMessage id='task.payment.headline' defaultMessage='New payment for an issue' />
+            </Typography>
+            <div className={classes.details}>
+              <Typography variant='subtitle2'>
+                <FormattedMessage id='issue.payment.headline.bounty.add' defaultMessage='Add a bounty for this issue' />
               </Typography>
-              <div className={classes.details}>
-                <Typography variant='subtitle2'>
-                  <FormattedMessage id='issue.payment.headline.bounty.add' defaultMessage='Add a bounty for this issue' />
-                </Typography>
-                <Typography variant='body1' color='textSecondary' gutterBottom>
-                  <FormattedMessage id='issue.payment.form.message.subheading' defaultMessage='Create a bounty for this issue and who you assign will receive the payment for this bounty' />
-                </Typography>
-                <div className={classes.chipContainer}>
-                  <Chip
-                    label=' $ 20'
-                    className={classes.chip}
-                    onClick={() => this.pickTaskPrice(20)}
-                  />
-                  <Chip
-                    label=' $ 50'
-                    className={classes.chip}
-                    onClick={() => this.pickTaskPrice(50)}
-                  />
-                  <Chip
-                    label=' $ 100'
-                    className={classes.chip}
-                    onClick={() => this.pickTaskPrice(100)}
-                  />
-                  <Chip
-                    label=' $ 150'
-                    className={classes.chip}
-                    onClick={() => this.pickTaskPrice(150)}
-                  />
-                  <Chip
-                    label=' $ 300'
-                    className={classes.chip}
-                    onClick={() => this.pickTaskPrice(300)}
-                  />
-                </div>
-                <Grid
-                  
-                  container
-                  spacing={0}
-                >
+              <Typography variant='body1' color='textSecondary' gutterBottom>
+                <FormattedMessage id='issue.payment.form.message.subheading' defaultMessage='Create a bounty for this issue and who you assign will receive the payment for this bounty' />
+              </Typography>
+              <div className={classes.chipContainer}>
+                <Chip
+                  label=' $ 20'
+                  className={classes.chip}
+                  onClick={() => this.pickTaskPrice(20)}
+                />
+                <Chip
+                  label=' $ 50'
+                  className={classes.chip}
+                  onClick={() => this.pickTaskPrice(50)}
+                />
+                <Chip
+                  label=' $ 100'
+                  className={classes.chip}
+                  onClick={() => this.pickTaskPrice(100)}
+                />
+                <Chip
+                  label=' $ 150'
+                  className={classes.chip}
+                  onClick={() => this.pickTaskPrice(150)}
+                />
+                <Chip
+                  label=' $ 300'
+                  className={classes.chip}
+                  onClick={() => this.pickTaskPrice(300)}
+                />
+              </div>
+              <Grid
+
+                container
+                spacing={0}
+              >
                 <Grid
                   spacing={0}
                   xs={0}
                   md={4}
                   lg={4}
                 >
-                <form className={classes.formPayment} action='POST'>
-                  <FormControl>
-                    <InputLabel htmlFor='adornment-amount'>
-                      <FormattedMessage id='task.payment.input.amount.value' defaultMessage='Price' />
-                    </InputLabel>
-                    <FormattedMessage id='task.payment.input.amount' defaultMessage='Price insert a value for this task' >
-                      {(msg) => (
-                        <Input
-                          id='adornment-amount'
-                          endAdornment={
-                            <InputAdornment position='end'> + </InputAdornment>
-                          }
-                          startAdornment={
-                            <InputAdornment position='start'>
-                              <span style={{fontSize: 28}}> $ </span>
-                            </InputAdornment>
-                          }
-                          placeholder={msg}
-                          type='number'
-                          inputProps={{ 'min': 0, style: { textAlign: 'right', height: 92  }}}
-                          defaultValue={this.state.price}
-                          value={this.state.price}
-                          onChange={this.handleInputChange}
-                          align='right'
-                          style={{ fontSize: 42, fontWeight: 'bold' }}
-                        />
-                      )}
-                    </FormattedMessage>
-                  </FormControl>
-                </form>
+                  <form className={classes.formPayment} action='POST'>
+                    <FormControl>
+                      <InputLabel htmlFor='adornment-amount'>
+                        <FormattedMessage id='task.payment.input.amount.value' defaultMessage='Price' />
+                      </InputLabel>
+                      <FormattedMessage id='task.payment.input.amount' defaultMessage='Price insert a value for this task' >
+                        {(msg) => (
+                          <Input
+                            id='adornment-amount'
+                            endAdornment={
+                              <InputAdornment position='end'> + </InputAdornment>
+                            }
+                            startAdornment={
+                              <InputAdornment position='start'>
+                                <span style={{ fontSize: 28 }}> $ </span>
+                              </InputAdornment>
+                            }
+                            placeholder={msg}
+                            type='number'
+                            inputProps={{ 'min': 0, style: { textAlign: 'right', height: 92 } }}
+                            defaultValue={this.state.price}
+                            value={this.state.price}
+                            onChange={this.handleInputChange}
+                            align='right'
+                            style={{ fontSize: 42, fontWeight: 'bold' }}
+                          />
+                        )}
+                      </FormattedMessage>
+                    </FormControl>
+                  </form>
                 </Grid>
                 <Grid
                   xs={0}
@@ -196,10 +193,10 @@ class TaskPaymentForm extends Component {
                   <TaskPaymentPlans
                     classes={classes}
                     plan={this.props.plan}
-                  />  
+                  />
                 </Grid>
-                </Grid>
-                <div>
+              </Grid>
+              <div>
                 <Tabs
                   value={tabValue}
                   onChange={this.handleChange}
@@ -210,83 +207,53 @@ class TaskPaymentForm extends Component {
                   <Tab label={intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice)} value='invoice' />
                   <Tab label={intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodPaypal)} value='paypal' />
                 </Tabs>
-                { tabValue === 'card' &&
-                    <Button
-                      style={{ marginLeft: 20 }}
-                      disabled={!this.state.priceAfterFee()}
-                      onClick={() => this.handlePayment('PaymentDialog')}
-                      variant='contained'
-                      color='primary'
-                      className={classes.btnPayment}
-                    >
-                      <FormattedMessage 
-                        id='task.payment.creditcard.action'
-                        defaultMessage='Pay {amount} with Credit Card'
-                        values={{
-                          amount: this.formatCurrency(this.state.priceAfterFee())
-                        }}
-                      />
-                    </Button>
-                  }
-                  { tabValue === 'invoice' &&
-                    <PaymentMethodInvoiceTab
-                      classes={classes}
-                      priceAfterFee={this.state.priceAfterFee()}
-                      formatCurrency={this.formatCurrency}
-                      fetchCustomer={fetchCustomer}
-                      customer={customer}
-                      user={this.props.user}
-                      createOrder={this.props.createOrder}
-                      task={this.props.task?.data}
-                      price={this.state.price}
-                      onPayment={onClose}
-                    />
-                  }
-                  { tabValue === 'paypal' &&
-                    <Button
-                      disabled={!this.state.priceAfterFee()}
-                      onClick={() => this.handlePayment('PaypalPaymentDialog')}
-                      variant='contained'
-                      color='primary'
-                      className={classes.btnPayment}
-                    >
-                      <FormattedMessage id='task.payment.paypal.action' defaultMessage='Pay {amount} with PayPal' values={{
-                        amount: this.formatCurrency(this.state.priceAfterFee())
-                      }} />
-                    </Button>
-                  }
-                </div>
+                {tabValue === 'card' &&
+                  <PaymentDialog
+                    addNotification={this.props.addNotification}
+                    onPayment={this.props.updateTask}
+                    price={this.state.price}
+                    formatedPrice={this.formatCurrency(this.state.priceAfterFee())}
+                    user={this.props.user}
+                    task={this.props.match.params.id}
+                    plan={this.state.plan}
+                    onClose={onClose}
+                  />
+                }
+                {tabValue === 'invoice' &&
+                  <PaymentMethodInvoiceTab
+                    classes={classes}
+                    priceAfterFee={this.state.priceAfterFee()}
+                    formatCurrency={this.formatCurrency}
+                    fetchCustomer={fetchCustomer}
+                    customer={customer}
+                    user={this.props.user}
+                    createOrder={this.props.createOrder}
+                    task={this.props.task?.data}
+                    price={this.state.price}
+                    onPayment={onClose}
+                  />
+                }
+                {tabValue === 'paypal' &&
+                  <PaypalPaymentDialog
+                    onClose={onClose}
+                    addNotification={this.props.addNotification}
+                    onPayment={this.props.updateTask}
+                    price={this.state.price}
+                    formatedPrice={this.formatCurrency(this.state.priceAfterFee())}
+                    taskId={this.props.match.params.id}
+                    createOrder={this.props.createOrder}
+                    user={this.props.user}
+                    order={this.props.order}
+                    plan={this.state.plan}
+                  />
+                }
               </div>
-
             </div>
-          </Container>
-        </Drawer>
-        <PaymentDialog
-          open={this.props.dialog.open && this.props.dialog.target === 'PaymentDialog'}
-          onClose={this.props.closeDialog}
-          addNotification={this.props.addNotification}
-          onPayment={this.props.updateTask}
-          price={this.state.price}
-          formatedPrice={this.formatCurrency(this.state.priceAfterFee())}
-          user={this.props.user}
-          task={this.props.match.params.id}
-          plan={this.state.plan}
-        />
 
-        <PaypalPaymentDialog
-          open={this.props.dialog.open && this.props.dialog.target === 'PaypalPaymentDialog'}
-          onClose={this.props.closeDialog}
-          addNotification={this.props.addNotification}
-          onPayment={this.props.updateTask}
-          price={this.state.price}
-          formatedPrice={this.formatCurrency(this.state.priceAfterFee())}
-          taskId={this.props.match.params.id}
-          createOrder={this.props.createOrder}
-          user={this.props.user}
-          order={this.props.order}
-          plan={this.state.plan}
-        />
-      </>
+          </div>
+        </Container>
+      </Drawer>
+
     )
   }
 }

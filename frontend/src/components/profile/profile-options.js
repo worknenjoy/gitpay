@@ -17,9 +17,6 @@ import {
   Alert, AlertTitle
 } from '@material-ui/lab'
 
-import {
-  Person
-} from '@material-ui/icons'
 
 import { Card, CardList, CardMedia } from './ProfileStyles'
 import WelcomeUser from '../session/welcome-user'

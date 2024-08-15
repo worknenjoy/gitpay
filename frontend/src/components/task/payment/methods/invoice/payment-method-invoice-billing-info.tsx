@@ -17,7 +17,7 @@ export const BillingInfoCard = ({ name, address, city, state, zipCode, country, 
 
   return (
     <Card sx={{ width: '100%', margin: 'auto', padding: 2 }}>
-      <CardContent sx={{ padding: 5 }}>
+      <CardContent style={{padding: 0}}>
         <Typography variant="h6" gutterBottom>
           <FormattedMessage id="task.payment.invoice.billingInfo" defaultMessage="Billing Information" />
         </Typography>
