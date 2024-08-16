@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import {
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Button,
+  Card,
+  CardContent,
   Checkbox,
+  Typography,
 } from '@material-ui/core'
 
 class PaypalPaymentDialog extends Component {
@@ -53,60 +53,67 @@ class PaypalPaymentDialog extends Component {
 
   render () {
     return (
-      <Dialog
-        open={ this.props.open }
-        onClose={ this.props.onClose }
-        aria-labelledby='alert-dialog-payment-title'
-        aria-describedby='alert-dialog-payment-description'
+      <Card
         fullWidth
-        maxWidth='md'
       >
-        <DialogTitle id='alert-dialog-payment-title'>
-          <FormattedMessage id='payment.paypal.title' defaultMessage='Make a new payment with Paypal' />
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-payment-description'>
-            <FormattedMessage id='payment.paypal.description' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
+        <CardContent>
+          <Typography variant='h6' gutterBottom>
+            <FormattedMessage id='payment.paypal.title' defaultMessage='Make a new payment with Paypal' />
+          </Typography>
+          <div>
+            <Typography variant='body1' gutterBottom>
+              <FormattedMessage id='payment.paypal.subtitle' defaultMessage='The user who solves this issue, once they activate their PayPal account on Gitpay, will be able to receive payment via PayPal' />
+            </Typography>
             <div style={ {
               margin: 'auto',
               textAlign: 'center',
               width: '50%',
               marginTop: 40,
-              fontFamily: 'Roboto',
               background: '#ecf0f1',
               padding: 20
             } }>
-              <FormattedMessage id='payment.paypal.warning' defaultMessage='Remember that the assigned for this task will receive the payment with Paypal as well.' />
+              <Typography variant='body1' gutterBottom>
+                <FormattedMessage id='payment.paypal.warning2' defaultMessage='By continuing with PayPal, you will initiate a pre-authorized payment. We will authorize the payment afterwards, and you will receive a confirmation from Paypal' />
+              </Typography>
             </div>
             <div style={ { textAlign: 'center' } }>
-              <FormattedMessage id='payment.paypal.confirm' defaultMessage='Ok, I accept.' />
-              <Checkbox onChange={ this.agreeTermsPaypal } />
+              <Typography variant='body1' gutterBottom>
+                <Checkbox onChange={ this.agreeTermsPaypal } />
+                <FormattedMessage id='payment.paypal.confirm' defaultMessage='Ok, I accept.' />
+              </Typography>
             </div>
-          </DialogContentText>
+          </div>
           { !this.props.order.completed ? (
             'Requesting'
           ) : (
-            <div style={ { textAlign: 'center', width: '100%', marginTop: 40, fontFamily: 'Roboto' } }>
-              <FormattedMessage id='payment.paypal.paywith' defaultMessage='Pay with ' />
-              <br />
+            <div style={ { textAlign: 'center', width: '100%', marginTop: 20 } }>
               <FormattedMessage id='payment.paypal.logo.title' defaultMessage='Make the payment with paypal'>
                 { (msg) => (
-                  <a href='#' title={ msg } onClick={ this.handleNewOrder }>
-                    <img src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
-                  </a>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    color='secondary'
+                    disabled={ !this.state.termsPaypal || this.props.price === 0 }
+                    onClick={ this.handleNewOrder }
+                    
+                  >
+                    <span style={{marginRight: 10, display: 'inline-block'}}>
+                      {msg}
+                    </span>
+                    <img width={32} height={19} src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
+                  </Button>
                 ) }
               </FormattedMessage>
             </div>
           ) }
-        </DialogContent>
-      </Dialog>
+        </CardContent>
+      </Card>
     )
   }
 }
 
 PaypalPaymentDialog.propTypes = {
   taskId: PropTypes.number,
-  open: PropTypes.bool,
   user: PropTypes.object.isRequired,
   createOrder: PropTypes.func,
   onClose: PropTypes.func,

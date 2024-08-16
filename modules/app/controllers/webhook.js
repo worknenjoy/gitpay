@@ -281,14 +281,16 @@ exports.updateWebhook = (req, res) => {
           }
           const language = user.language || 'en'
           i18n.setLocale(language)
-          SendMail.success(
-            user.dataValues,
-            i18n.__('mail.webhook.payment.success.subject'),
-            i18n.__('mail.webhook.payment.success.message', {
-              name: event.data.object.name,
-              number: event.data.object.last4
-            })
-          )
+          if(event.data.object.name && event.data.object.last4) {
+            SendMail.success(
+              user.dataValues,
+              i18n.__('mail.webhook.payment.success.subject'),
+              i18n.__('mail.webhook.payment.success.message', {
+                name: event.data.object.name,
+                number: event.data.object.last4
+              })
+            )
+          }
           return res.json(req.body)
         }).catch(error => res.status(400).send(error))
         /* eslint-disable no-unreachable */

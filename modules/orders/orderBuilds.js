@@ -7,6 +7,7 @@ const URL = require('url')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const Sendmail = require('../mail/mail')
+const { collapseTextChangeRangesAcrossMultipleVersions } = require('typescript')
 
 module.exports = Promise.method(function orderBuilds(orderParameters) {
   const taskUrl = `${process.env.API_HOST}/#/task/${orderParameters.taskId}`
@@ -25,7 +26,6 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
           plan: orderParameters.plan
         },
         include: [
-          models.User,
           {
             association: models.Order.Plan,
             include: [models.Plan.plan]
@@ -34,112 +34,120 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
       }
     )
     .save()
-    .then(order => {
-      if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
-        const unitAmount = parseInt(orderParameters.amount) * 100 * 1.08
-        const quantity = 1
+    .then(orderCreated => {
+      return orderCreated.reload({
+        include: [
+          models.Task
+        ]
+      }).then(order => {
+        const taskTitle = order?.Task?.dataValues?.title || ''
+        if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
+          const unitAmount = (parseInt(orderParameters.amount) * 100 * 1.08).toFixed(0)
+          const quantity = 1
 
-        stripe.invoices.create({
-          customer: orderParameters.customer_id,
-          metadata: {
-            'task_id': orderParameters.taskId,
-            'order_id': order.dataValues.id
-          },
-        }).then(invoice => {
-          stripe.invoiceItems.create({
+          stripe.invoices.create({
             customer: orderParameters.customer_id,
-            currency: 'usd',
-            quantity,
-            description: 'Development service for a task on Gitpay: ' + taskUrl,
-            unit_amount: unitAmount,
-            invoice: invoice.id,
+            collection_method: 'send_invoice',
+            days_until_due: 0,
             metadata: {
               'task_id': orderParameters.taskId,
               'order_id': order.dataValues.id
-            }
-          }).then(invoiceItem => {
-            stripe.invoices.finalizeInvoice(invoice.id).then(finalizedInvoice => {
-              Sendmail.success({email: orderParameters.email}, 'Invoice created', `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`)
-              return order.update(
-                {
-                  source_id: invoice.id
-                },
-                {
-                  where: {
-                    id: order.dataValues.id
-                  }
-                }).then(orderUpdated => {
-                  
-                  return orderUpdated
-                })
+            },
+          }).then(invoice => {
+            stripe.invoiceItems.create({
+              customer: orderParameters.customer_id,
+              currency: 'usd',
+              quantity,
+              description: 'Development service for solving an issue on Gitpay: ' + taskTitle + '(' + taskUrl + ')',
+              unit_amount: unitAmount,
+              invoice: invoice.id,
+              metadata: {
+                'task_id': orderParameters.taskId,
+                'order_id': order.dataValues.id
+              }
+            }).then(invoiceItem => {
+              stripe.invoices.finalizeInvoice(invoice.id).then(finalizedInvoice => {
+                Sendmail.success({ email: orderParameters.email }, 'Invoice created', `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`)
+                return order.update(
+                  {
+                    source_id: invoice.id
+                  },
+                  {
+                    where: {
+                      id: order.dataValues.id
+                    }
+                  }).then(orderUpdated => {
+                    return orderUpdated
+                  })
               })
             })
-        })
+          })
 
-      }
-      if (orderParameters.provider === 'paypal') {
-        const totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
-        return requestPromise({
-          method: 'POST',
-          uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-          headers: {
-            'Accept': 'application/json',
-            'Accept-Language': 'en_US',
-            'Authorization': 'Basic ' + Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString('base64'),
-            'Content-Type': 'application/json',
-            'grant_type': 'client_credentials'
-          },
-          form: {
-            'grant_type': 'client_credentials'
-          }
-        }).then(response => {
+        }
+        if (orderParameters.provider === 'paypal') {
+          const totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
           return requestPromise({
             method: 'POST',
-            uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders`,
+            uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
             headers: {
-              'Accept': '*/*',
-              'Prefer': 'return=representation',
+              'Accept': 'application/json',
               'Accept-Language': 'en_US',
-              'Authorization': 'Bearer ' + JSON.parse(response)['access_token'],
-              'Content-Type': 'application/json'
+              'Authorization': 'Basic ' + Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString('base64'),
+              'Content-Type': 'application/json',
+              'grant_type': 'client_credentials'
             },
-            body: JSON.stringify({
-              'intent': 'AUTHORIZE',
-              'purchase_units': [{
-                'amount': {
-                  'value': totalPrice,
-                  'currency_code': orderParameters.currency
-                },
-                'description': 'Development services provided by Gitpay',
-              }],
-              'application_context': {
-                'return_url': `${process.env.API_HOST}/orders/authorize`,
-                'cancel_url': `${process.env.API_HOST}/orders/authorize`
+            form: {
+              'grant_type': 'client_credentials'
+            }
+          }).then(response => {
+            return requestPromise({
+              method: 'POST',
+              uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders`,
+              headers: {
+                'Accept': '*/*',
+                'Prefer': 'return=representation',
+                'Accept-Language': 'en_US',
+                'Authorization': 'Bearer ' + JSON.parse(response)['access_token'],
+                'Content-Type': 'application/json'
               },
-              'payer': {
-                'payment_method': 'paypal'
-              }
-            })
-          }).then(payment => {
-            const paymentData = JSON.parse(payment)
-            const paymentUrl = paymentData.links[1].href
-            const resultUrl = URL.parse(paymentUrl)
-            const searchParams = new URLSearchParams(resultUrl.search)
-            return order.update({
-              source_id: paymentData.id,
-              authorization_id: paymentData.purchase_units && paymentData.purchase_units[0] && paymentData.purchase_units[0].payments && paymentData.purchase_units[0].payments.authorizations[0].id,
-              payment_url: paymentUrl,
-              token: searchParams.get('token')
-            }, {
-              where: {
-                id: order.dataValues.id
-              }
-            }).then(orderUpdated => {
-              return orderUpdated
+              body: JSON.stringify({
+                'intent': 'AUTHORIZE',
+                'purchase_units': [{
+                  'amount': {
+                    'value': totalPrice,
+                    'currency_code': orderParameters.currency
+                  },
+                  'description': 'Development services provided by Gitpay',
+                }],
+                'application_context': {
+                  'return_url': `${process.env.API_HOST}/orders/authorize`,
+                  'cancel_url': `${process.env.API_HOST}/orders/authorize`
+                },
+                'payer': {
+                  'payment_method': 'paypal'
+                }
+              })
+            }).then(payment => {
+              const paymentData = JSON.parse(payment)
+              const paymentUrl = paymentData.links[1].href
+              const resultUrl = URL.parse(paymentUrl)
+              const searchParams = new URLSearchParams(resultUrl.search)
+              return order.update({
+                source_id: paymentData.id,
+                authorization_id: paymentData.purchase_units && paymentData.purchase_units[0] && paymentData.purchase_units[0].payments && paymentData.purchase_units[0].payments.authorizations[0].id,
+                payment_url: paymentUrl,
+                token: searchParams.get('token')
+              }, {
+                where: {
+                  id: order.dataValues.id
+                }
+              }).then(orderUpdated => {
+                return orderUpdated
+              })
             })
           })
-        })
-      }
-      return order
+        }
+        return order
+      })
     })
 })

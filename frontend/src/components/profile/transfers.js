@@ -162,8 +162,8 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor='primary'
-          textColor='primary'
+          indicatorColor='secondary'
+          textColor='secondary'
           style={{ margin: '20px 0' }}
         >
           <Tab label={intl.formatMessage(transferMessages.cardTableHeaderFrom)} value='from' />

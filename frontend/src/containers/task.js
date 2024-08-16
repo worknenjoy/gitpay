@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import Task from '../components/task/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
+import { fetchCustomer } from '../actions/userActions'
 import { assignTask, removeAssignment, messageTask, messageOffer, offerUpdate, actionAssign } from '../actions/assignActions'
 import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask, transferTask } from '../actions/taskActions'
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
@@ -18,7 +19,8 @@ const mapStateToProps = (state, ownProps) => {
     task: getTaskOrdersByFilter(state),
     tasks: getFilteredTasks(state),
     project: getProject(state.project),
-    order: state.order
+    order: state.order,
+    customer: state.customer,
   }
 }
 
@@ -54,7 +56,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
     getOrderDetails: (id) => dispatch(detailOrder(id)),
     reportTask: (task, reason) => dispatch(reportTask(task, reason)),
-    requestClaimTask: (taskId, userId, comments, isApproved, token, history) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history))
+    requestClaimTask: (taskId, userId, comments, isApproved, token, history) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
+    fetchCustomer: (id) => dispatch(fetchCustomer(id)),
   }
 }
 

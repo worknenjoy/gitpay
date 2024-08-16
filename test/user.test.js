@@ -264,7 +264,7 @@ describe("Users", () => {
   })
 
   describe("Customer get", () => {
-    xit('should try get customer info with no customer', (done) => {
+    it('should try get customer info with no customer', (done) => {
       registerAndLogin(agent).then(res => {
         agent
           .get(`/user/customer/`)
@@ -277,19 +277,20 @@ describe("Users", () => {
           })
       }).catch(done)
     });
-    xit('should try get customer info with customer id set', (done) => {
-      registerAndLogin(agent, {
-        customer_id: 'cus_Ec8ZOuHXnSlBh8'
-      }).then(res => {
-        nock('https://api.stripe.com')
+    it('should try get customer info with customer id set', (done) => {
+      nock('https://api.stripe.com')
         .get('/v1/customers/cus_Ec8ZOuHXnSlBh8')
         .reply(200, {
           id: 'cus_Ec8ZOuHXnSlBh8',
           object: 'customer',
         })
-        nock('https://api.stripe.com')
+      nock('https://api.stripe.com')
         .post('/v1/accounts')
         .reply(200, {});
+      
+      registerAndLogin(agent, {
+        customer_id: 'cus_Ec8ZOuHXnSlBh8'
+      }).then(res => {
         agent
           .get(`/user/customer/`)
           .set('Authorization', res.headers.authorization)
@@ -297,6 +298,63 @@ describe("Users", () => {
           .end((err, user) => {
             expect(user.statusCode).to.equal(200);
             expect(user.body.object).to.equal('customer');
+            expect(user.body.id).to.equal('cus_Ec8ZOuHXnSlBh8');
+            done(err);
+          })
+      }).catch(done)
+    });
+  });
+
+  describe("Customer create", () => {
+    it('should try to create new customer', (done) => {
+      nock('https://api.stripe.com')
+        .post('/v1/customers')
+        .reply(200, {
+          id: 'cus_Ec8ZOuHXnSlBh8',
+          object: 'customer',
+          name: 'test',
+          email: 'test'
+        })
+      
+      registerAndLogin(agent).then(res => {
+        agent
+          .post(`/user/customer/`)
+          .send({ name: 'test', email: res.body.email })
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body.id).to.equal('cus_Ec8ZOuHXnSlBh8');
+
+            done(err);
+          })
+      }).catch(done)
+    });
+  });
+
+  describe("Customer update", () => {
+    it('should try to update customer', (done) => {
+      nock('https://api.stripe.com')
+        .post('/v1/customers/cus_Ec8ZOuHXnSlBh8')
+        .reply(200, {
+          id: 'cus_Ec8ZOuHXnSlBh8',
+          object: 'customer',
+          name: 'test2',
+          email: 'test'
+        })
+      
+      registerAndLogin(agent, {
+        customer_id: 'cus_Ec8ZOuHXnSlBh8'
+      }).then(res => {
+        agent
+          .put(`/user/customer/`)
+          .send({ name: 'test2' })
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body.id).to.equal('cus_Ec8ZOuHXnSlBh8');
+            expect(user.body.name).to.equal('test2');
             done(err);
           })
       }).catch(done)

@@ -320,8 +320,8 @@ const styles = theme => ({
     }
   },
   planContainer: {
-    paddingTop: 10,
-    paddingBottom: 25
+    paddingTop: 5,
+    paddingBottom: 5
   },
   planGrid: {
     margin: 0
@@ -329,33 +329,33 @@ const styles = theme => ({
   planButton: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: 'column',
   },
   HowToRegIcon: {
     paddingRight: theme.spacing(1),
     fontSize: 20
   },
   planIcon: {
+    textAlign: 'center',
     fontSize: 32,
-    padding: 10
+    padding: 2
   },
   planFinalPrice: {
     paddingTop: theme.spacing(1),
     fontSize: '2rem'
   },
   planGridItem: {
-    width: '80%',
     padding: theme.spacing(1),
-    margin: 10
+    margin: 2
   },
   planGridContent: {
-    minHeight: theme.spacing(5),
-    margin: 0,
-    padding: 10
+    display: 'flex',
+    minHeight: theme.spacing(2),
+    margin: 0
   },
   planBullets: {
     paddingLeft: theme.spacing(1),
-    padding: 10
+    padding: 5
   },
   chip: {
     marginRight: theme.spacing(2)
@@ -885,25 +885,27 @@ class Task extends Component {
               />
               {this.props.logged ? 
                 (
-                  task.completed &&
-                  <TaskPaymentForm
-                    classes={classes}
-                    match={this.props.match}
-                    dialog={this.props.dialog}
-                    task={task}
-                    plan={task.data.private ? 'private' : 'open source'}
-                    order={this.props.order}
-                    open={this.state.paymentForm}
-                    onClose={() => this.setState({ paymentForm: false })}
-                    user={this.props.user}
-                    openDialog={this.props.openDialog}
-                    closeDialog={this.props.closeDialog}
-                    addNotification={this.props.addNotification}
-                    updateTask={this.props.updateTask}
-                    createOrder={this.props.createOrder}
-                  />
-                )
-               : (
+                  <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={task.completed}>
+                    <TaskPaymentForm
+                      classes={classes}
+                      match={this.props.match}
+                      dialog={this.props.dialog}
+                      task={task}
+                      plan={task.data.private ? 'private' : 'open source'}
+                      order={this.props.order}
+                      open={this.state.paymentForm}
+                      onClose={() => this.setState({ paymentForm: false })}
+                      user={this.props.user}
+                      openDialog={this.props.openDialog}
+                      closeDialog={this.props.closeDialog}
+                      addNotification={this.props.addNotification}
+                      updateTask={this.props.updateTask}
+                      createOrder={this.props.createOrder}
+                      fetchCustomer={this.props.fetchCustomer}
+                      customer={this.props.customer}
+                    />
+                  </ReactPlaceholder>
+               ) : (
                 <Collapse in={this.state.paymentForm}>
                   <div className={classes.mainBlock} style={{ marginBottom: 40 }}>
                     <LoginButton referer={this.props.location} includeForm />
