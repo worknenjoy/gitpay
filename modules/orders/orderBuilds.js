@@ -7,7 +7,6 @@ const URL = require('url')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const Sendmail = require('../mail/mail')
-const { collapseTextChangeRangesAcrossMultipleVersions } = require('typescript')
 
 module.exports = Promise.method(function orderBuilds(orderParameters) {
   const taskUrl = `${process.env.API_HOST}/#/task/${orderParameters.taskId}`
