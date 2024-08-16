@@ -117,11 +117,8 @@ For exhaustive list of options available, refer `migration.js` in root directory
 
 ### For windows users:
 
-- Go to line 42 in the `migrate.js` file and hardcode "seed" into the env var below:
-`const migrationType = process.env.TYPE`
-- So it will be: 
-`const migrationType = "seed"`
-- Then run the commands above
+- install cross-env 
+- run `npm run seed:windows` and `npm run seed-test:windows`
 
 ## Run project
 
