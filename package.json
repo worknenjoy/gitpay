@@ -12,6 +12,8 @@
     "migrate-test": "NODE_ENV=test node migrate.js up",
     "seed": "TYPE=seed node migrate.js up",
     "seed-test": "TYPE=seed NODE_ENV=test node migrate.js up",
+    "seed:windows": "cross-env TYPE=seed node migrate.js up",
+    "seed-test:windows": "cross-env TYPE=seed NODE_ENV=test node migrate.js up",
     "migrate-test-rollback": "NODE_ENV=test node migrate.js prev",
     "report": "NODE_ENV=production node report.js",
     "rollback": "node migrate.js prev",
