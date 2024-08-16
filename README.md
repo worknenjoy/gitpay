@@ -29,7 +29,7 @@ This project has been made possible thanks to all the amazing people contributin
 
 To contribute to Gitpay, you will need the following:
 
-* Node.js (currently at v8.6.0)
+* Node.js (currently at v17.3.0)
 * React with webpack
 
 ## Running Tests
@@ -49,7 +49,7 @@ You can do this with: `cp .env.example .env`
 #### You need to run create the .env in order to run the project: `cp .env.example .env`
 
 ### Important
-- Make sure to use Node v12 (you can use <a href="https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/"> Node Version Manager (NVM)</a> to manage and switch different Node versions)
+- Make sure to use Node v17 (you can use <a href="https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/"> Node Version Manager (NVM)</a> to manage and switch different Node versions)
 - Don't forget to run `npm install` on the root and front-end folders
 
 ### Database
