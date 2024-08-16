@@ -76,7 +76,9 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
                       id: order.dataValues.id
                     }
                   }).then(orderUpdated => {
-                    return orderUpdated
+                    stripe.invoices.sendInvoice(invoice.id).then(sentInvoice => {
+                      return orderUpdated
+                    })
                   })
               })
             })
