@@ -6,7 +6,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 
 export const Breadcrumb = ({ history, task, classes, user, project, organization }) => {
-  const breadcrumbPathPrefix = user?.id ? '/profile/' : '/'
+  const isProfile = history.location.pathname.includes('profile')
+  const breadcrumbPathPrefix = isProfile ? '/profile/' : '/'
   const { data , completed } = task
   const taskUser = data?.User
   const breadcrumbProject = data?.Project || project?.data

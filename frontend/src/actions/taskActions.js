@@ -422,9 +422,8 @@ const listTasks = ({ organizationId, projectId, userId, status, labelIds }) => {
 const filterTasks = (key = "all", value, additional) => {
   return (dispatch, getState) => {
     const tasks = getState().tasks.data;
-    dispatch({ type: FILTER_TASK_REQUESTED });
+    dispatch(filterTaskRequested());
     let filteredTasks;
-    // dispatch({ type: FILTER_TASK_REQUESTED });
     if (key === "status") {
       filteredTasks = tasks.filter((task) => task.status === value);
     } else if (key === "issuesWithBounties") {

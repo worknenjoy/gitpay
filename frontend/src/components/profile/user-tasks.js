@@ -112,6 +112,12 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
         <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
           <FormattedMessage id='issues.title' defaultMessage='Issues' />
         </Typography>
+        <Typography variant='caption' gutterBottom>
+          <FormattedMessage
+            id='issues.description'
+            defaultMessage="Here you can see all the issues on our network, issues imported or you're working on."
+          />
+        </Typography>
         <Tabs
           value={ currentTab }
           onChange={ handleTabChange }
@@ -121,18 +127,19 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
           textColor='secondary'
           style={{marginTop: 20, marginBottom: 20}}
         >
+           { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+          <Tab
+            value={ 'createdbyme' }
+            label={ intl.formatMessage(messages.createdByMeTasks) }
+          />
+          }
            { user.Types && user.Types.map(t => t.name).includes('contributor') &&
           <Tab
             value={ 'all' }
             label={ intl.formatMessage(messages.allTasks) }
           />
           }
-          { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-          <Tab
-            value={ 'createdbyme' }
-            label={ intl.formatMessage(messages.createdByMeTasks) }
-          />
-          }
+         
           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Tab
               value={ 'assigned' }

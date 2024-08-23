@@ -16,6 +16,7 @@ const ImportIssueDialog = ({
   const [ url, setUrl ] = useState('')
   const [ provider, setProvider ] = useState('github')
   const [ privateRepo, setPrivateRepo ] = useState(false)
+  const [ notListed, setNotListed ] = useState(false)
 
   const validURL = (url) => {
     return isGithubUrl(url) || isBitbucketUrl(url)
@@ -39,6 +40,7 @@ const ImportIssueDialog = ({
       try { 
         await onCreate({
           private: !!privateRepo,
+          not_listed: !!notListed,
           url: url,
           provider: provider,
           userId: user ? user.id : null
@@ -91,6 +93,13 @@ const ImportIssueDialog = ({
                     label='private'
                     labelPlacement='end'
                     onChange={(e) => setPrivateRepo(!privateRepo)}
+                  />
+                  <FormControlLabel
+                    value='not_listed'
+                    control={<Checkbox color='primary' />}
+                    label='not listed'
+                    labelPlacement='end'
+                    onChange={(e) => setNotListed(!notListed)}
                   />
                 </FormGroup>
               </FormControl>

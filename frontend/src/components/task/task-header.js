@@ -7,6 +7,8 @@ import {
   MoreVert as MoreIcon,
   Delete as DeleteIcon,
   BugReport as ReportIcon,
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon
 } from '@material-ui/icons'
 import ReactPlaceholder from 'react-placeholder'
 import { RectShape } from 'react-placeholder/lib/placeholders'
@@ -92,6 +94,10 @@ class TaskHeader extends React.Component {
     this.setState({ anchorEl: e.currentTarget })
   }
 
+  handleCloseMoreButton = () => {
+    this.setState({ anchorEl: null })
+  }
+
   handleDeleteDialogClose = () => {
     this.setState({ deleteDialog: false })
   }
@@ -101,7 +107,7 @@ class TaskHeader extends React.Component {
   }
 
   render() {
-    const { classes, task, user, history, handleDeleteTask, taskOwner, reportTask } = this.props
+    const { classes, task, user, history, handleDeleteTask, taskOwner, reportTask, updateTask } = this.props
 
     const headerPlaceholder = (
       <div className='line-holder'>
@@ -120,7 +126,7 @@ class TaskHeader extends React.Component {
             ready={task.completed}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant='h5' gutterBottom title={task.data.title}>
+              <Typography variant='h5' gutterBottom>
                 <strong>
                   {task.data.title}
                 </strong>
@@ -134,9 +140,19 @@ class TaskHeader extends React.Component {
               open={Boolean(this.state.anchorEl)}
               onClose={() => this.setState({ anchorEl: null })}
             >
+              {taskOwner &&
+                <MenuItem onClick={async () => {
+                  await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
+                  this.handleCloseMoreButton()
+                }}>
+                  <ListItemIcon>
+                    { task.data.not_listed ?  <VisibilityIcon size='small' /> : <VisibilityOffIcon size='small' /> }
+                  </ListItemIcon>
+                  <ListItemText primary={ task.data.not_listed ? 'Change to public' : 'Change to not listed'} />
+                </MenuItem>
+              }
               <MenuItem onClick={() => {
                 this.setState({ anchorEl: null, reportDialog: true})
-
               }}>
                 <ListItemIcon>
                   <ReportIcon size='small' />
