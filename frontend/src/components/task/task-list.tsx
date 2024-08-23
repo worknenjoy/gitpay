@@ -4,8 +4,11 @@ import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
+  Tabs,
+  Tab,
   Typography,
-  withStyles
+  withStyles,
+  Link
 } from '@material-ui/core'
 
 // import TaskFilter from './task-filters'
@@ -39,8 +42,8 @@ const styles = theme => ({
 
 const messages = defineMessages({
   allTasks: {
-    id: 'task.list.lable.allPublicTasks',
-    defaultMessage: 'All public issues available'
+    id: 'task.list.lable.issues.all',
+    defaultMessage: 'All issues'
   },
   allPublicTasksWithBounties: {
     id: 'task.list.lable.allPublicTasksWithBounties',
@@ -53,11 +56,26 @@ const messages = defineMessages({
   assignedToMeTasks: {
     id: 'task.status.assigned',
     defaultMessage: 'Assigned to me'
+  },
+  createdByMeTasks: {
+    id: 'task.status.myissues',
+    defaultMessage: 'My issues'
+  },
+  interestedTasks: {
+    id: 'tasks.status.interested',
+    defaultMessage: 'I\'m interested'
   }
 })
 
 
-const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
+const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes, intl }) => {
+  const isProfilePage = history.location.pathname.includes('/profile')
+  const { organization_id, project_id } = match.params
+  const profileUrl = isProfilePage ? '/profile' : ''
+  const baseUrl = organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
+  const { data: organizationData } = organization
+
+  const [currentTab, setCurrentTab] = useState('createdbyme')
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
@@ -103,8 +121,23 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
     setProjectId(null)
   }
 
+
   useEffect(() => {
-    fetchData()
+    fetchData().then(() => {
+      if (history.location.pathname === '/profile/organizations/2/projects/2') {
+        user.Types && user.Types.map(t => t.name).includes('contributor') && handleSecTabChange({}, 'all')
+        user.Types && user.Types.map(t => t.name).includes('maintainer') && handleSecTabChange({}, 'createdbyme')
+      }
+      if (history.location.pathname === '/profile/organizations/2/projects/2/createdbyme') {
+        handleSecTabChange({}, 'createdbyme')
+      }
+      if (history.location.pathname === '/profile/organizations/2/projects/2/interested') {
+        handleSecTabChange({}, 'interested')
+      }
+      if (history.location.pathname === '/profile/organizations/2/projects/2/assigned') {
+        handleSecTabChange({}, 'assigned')
+      }
+    })
 
     return () => {
       clearProjectState()
@@ -114,7 +147,6 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
   useEffect(() => {
     filterTasksByState()
   }, [taskListState.tab, filterTasks])
-  
   
 
   function filterTasksByState () {
@@ -154,7 +186,7 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
 
   const handleTabChange = useCallback(async (event, value) => {
     const { organization_id, project_id } = match.params
-    const baseUrl = organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
+    const  baseUrl = profileUrl + organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
     setTaskListState({ ...taskListState, tab: value })
     switch (value) {
       case 0:
@@ -174,6 +206,26 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
     }
   }, [taskListState, history, filterTasks])
 
+  const handleSecTabChange = async (event: any, value: React.SetStateAction<string>) => {
+    setCurrentTab(value)
+    history.push(profileUrl + baseUrl + value)
+    switch (value) {
+      case 'all':
+        filterTasks('all')
+        break
+      case 'createdbyme':
+        filterTasks('userId')
+        break
+      case 'interested':
+        filterTasks('Assigns')
+        break
+      case 'assigned':
+        filterTasks('assigned')
+        break
+      default:
+    }
+  }
+
   
   const TabContainer = props => {
     return (
@@ -182,10 +234,6 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
       </div>
     )
   }
-  const { organization_id, project_id } = match.params
-  const profileUrl = user.id ? '/profile' : ''
-  const baseUrl = organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
-  const { data: organizationData } = organization
   
   return (
     <React.Fragment>
@@ -231,11 +279,49 @@ const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTas
             </Typography>
           </ReactPlaceholder>
         }
+        { isProfilePage &&
+        <Tabs
+          value={ currentTab }
+          onChange={ handleSecTabChange }
+          scrollButtons='on'
+          indicatorColor='secondary'
+          textColor='secondary'
+          style={{marginTop: 20, marginBottom: 20}}
+        >
+          { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
+            <Tab
+              value={ 'createdbyme' }
+              label={ intl.formatMessage(messages.createdByMeTasks) }
+            />
+          }
+           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+            <Tab
+              value={ 'all' }
+              label={ intl.formatMessage(messages.allTasks) }
+            />
+          }
+          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+            <Tab
+              value={ 'assigned' }
+              label={ intl.formatMessage(
+                messages.assignedToMeTasks
+              ) }
+            />
+          }
+          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
+            <Tab
+              value={ 'interested' }
+              label={ intl.formatMessage(messages.interestedTasks) }
+            />
+          }
+        </Tabs>}
         <div className={ classes.rootTabs }>
+        { currentTab === 'all' &&
           <TaskFilters
             filterTasks={ filterTasks }
             baseUrl={ profileUrl + baseUrl }
           />
+          }
           <TabContainer>
             <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={isProjectPage ? tableHeaderWithProject : tableHeaderDefault} />
           </TabContainer>
