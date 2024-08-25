@@ -2,12 +2,15 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const router = express.Router()
 const passport = require('passport')
 const authenticationHelpers = require('../../authenticationHelpers')
 require('../../../models')
 const controllers = require('../controllers/auth')
 const secure = require('./secure')
+const userUpdate = require('../../../modules/users').userUpdate
+const userExists = require('../../../modules/users').userExists
 
 router.get('/authenticated', authenticationHelpers.isAuth)
 
@@ -23,12 +26,43 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
   failureRedirect: '/signin'
 }))
 
-router.get('/authorize/github', passport.authenticate('github', { scope: ['user:email'], accessType: 'offline' }))
+router.get('/authorize/github', secure, (req, res, next) => {
+  const user = req.user
+  if(user) {
+    passport.authenticate('github', { scope: ['user:email'], accessType: 'offline', state: req.user.email})(req, res, next)
+  } else {
+    passport.authenticate('github', { scope: ['user:email'], accessType: 'offline' })(req, res, next)
+  }
+})
 router.get('/callback/github',
-  passport.authenticate('github', { failureRedirect: '/' }),
+  passport.authenticate('github', { failureRedirect: `${process.env.FRONTEND_HOST}/#/` }),
   (req, res) => {
-    res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
+    const user = req.user
+    if(req.query.token) {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/token/${user.token}`)
+    } else {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?connectGithubAction=success`)
+    }
   })
+
+router.get('/authorize/github/disconnect', secure, (req, res, next) => {
+  const user = req.user
+  userUpdate({
+    id: user.id,
+    provider: null,
+    provider_username: null,
+    provider_id: null,
+    provider_email: null,
+  }).then((userUpdated) => {
+    if(userUpdated) {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`)  
+    } else {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`)
+    }
+  }).catch(e => {
+    res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`)
+  })
+})
 
 router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'], accessType: 'offline' }))
 router.get('/callback/bitbucket',

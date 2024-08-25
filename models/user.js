@@ -3,8 +3,14 @@ const crypto = require('crypto')
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    login_strategy: {
+      type: DataTypes.STRING,
+      defaultValue: 'local'
+    },
     provider: DataTypes.STRING,
+    provider_id: DataTypes.STRING,
     provider_username: DataTypes.STRING,
+    provider_email: DataTypes.STRING,
     email: DataTypes.STRING,
     email_verified: DataTypes.BOOLEAN,
     password: DataTypes.STRING,

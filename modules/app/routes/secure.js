@@ -18,7 +18,6 @@ module.exports = (req, res, next) => {
 
       req.decoded = decoded
       req.user = await userExists(decoded).catch(next)
-
       next()
     })
   }
