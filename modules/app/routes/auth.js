@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const express = require('express')
-const jwt = require('jsonwebtoken')
 const router = express.Router()
 const passport = require('passport')
 const authenticationHelpers = require('../../authenticationHelpers')
@@ -10,7 +9,6 @@ require('../../../models')
 const controllers = require('../controllers/auth')
 const secure = require('./secure')
 const userUpdate = require('../../../modules/users').userUpdate
-const userExists = require('../../../modules/users').userExists
 
 router.get('/authenticated', authenticationHelpers.isAuth)
 
