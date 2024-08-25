@@ -44,13 +44,13 @@ const AccountTabMain = ({
     const disconnectAction = queryParams.get('disconnectAction')
     const connectGithubAction = queryParams.get('connectGithubAction')
     if(disconnectAction === 'success') {
-      addNotification && addNotification('Your account was disconnected from Github successfully', 'success');
+      addNotification && addNotification('Your account has been successfully disconnected from GitHub.', 'success');
     }
     if(disconnectAction === 'error') {
       addNotification && addNotification('We had an error to disconnect from your Github account', 'error');
     }
     if(connectGithubAction === 'success') {
-      addNotification && addNotification('Your account was connected to Github successfully', 'success');
+      addNotification && addNotification('Your account has been successfully connected to Github', 'success');
     }
   }, [])
 
