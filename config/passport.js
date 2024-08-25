@@ -243,9 +243,7 @@ passport.use(
         })
           .then(response => {
             data.repos = JSON.parse(response).length
-            userExist({
-              email
-            })
+            userExist(data)
               .then(user => {
                 if (user) {
                   userUpdate(data)
@@ -286,7 +284,6 @@ passport.use(
                       return done(null)
                     })
                   }
-                  return done(null, data)
                 })
                 .catch(error => {
                   // eslint-disable-next-line no-console

@@ -95,6 +95,7 @@ const AccountTabMain = ({
                   <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
                     <ProviderLoginButtons 
                       provider={provider}
+                      login_strategy={login_strategy}
                       position='flex-start'
                       textPosition='left'
                     />

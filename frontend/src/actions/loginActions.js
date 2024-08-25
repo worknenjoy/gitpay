@@ -255,7 +255,7 @@ export const searchUser = data => {
 export const authorizeGithub = () => {
   return dispatch => {
     dispatch(authorizedGithubRequested())
-    window.location.href = `${api.API_URL}/authorize/github/?token=${Auth.getToken()}`;
+    window.location.href = `${api.API_URL}/connect/github/?token=${Auth.getToken()}`;
   }
 }
 

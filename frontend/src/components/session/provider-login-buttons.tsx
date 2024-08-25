@@ -11,6 +11,7 @@ const ProviderLoginButtons = ({
   contrast = false,
   hideExtra = false,
   provider = undefined,
+  login_strategy = undefined,
   position = 'center',
   textPosition = 'center',
   authorizeGithub,
@@ -29,12 +30,13 @@ return (
           <FormattedMessage id='account.login.connect.provider.connected' defaultMessage='You are already connected on {value}' values={
             { value: provider }
           } />
+          { (login_strategy === 'local' || login_strategy === null) &&
           <a href='#' onClick={(e) => {
             e.preventDefault();
             disconnectGithub();
           }} style={{display: 'inline-box', marginLeft: 5}}>
             <FormattedMessage id='account.login.connect.provider.disconnect' defaultMessage='disconnect' />
-          </a>
+          </a> }
         </Typography>
       </div> : 
       <div style={ { display: hideExtra ? 'none' : 'block' } }>

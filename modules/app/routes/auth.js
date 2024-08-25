@@ -26,24 +26,29 @@ router.get('/callback/facebook', passport.authenticate('facebook', {
   failureRedirect: '/signin'
 }))
 
-router.get('/authorize/github', secure, (req, res, next) => {
+router.get('/authorize/github', passport.authenticate('github', { scope: ['user:email'], accessType: 'offline' }))
+
+router.get('/callback/github',
+  passport.authenticate('github', { failureRedirect: `/` }),
+  (req, res) => {
+    const user = req.user
+    if(user.token) {
+      if(user.login_strategy === 'local' || user.login_strategy === null) {
+        res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?connectGithubAction=success`)
+      } else {
+        res.redirect(`${process.env.FRONTEND_HOST}/#/token/${user.token}`)
+      }
+    } 
+  })
+
+router.get('/connect/github', secure, (req, res, next) => {
   const user = req.user
   if(user) {
     passport.authenticate('github', { scope: ['user:email'], accessType: 'offline', state: req.user.email})(req, res, next)
   } else {
-    passport.authenticate('github', { scope: ['user:email'], accessType: 'offline' })(req, res, next)
+    res.redirect(`${process.env.FRONTEND_HOST}/#/signin/invalid`)
   }
 })
-router.get('/callback/github',
-  passport.authenticate('github', { failureRedirect: `${process.env.FRONTEND_HOST}/#/` }),
-  (req, res) => {
-    const user = req.user
-    if(req.query.token) {
-      res.redirect(`${process.env.FRONTEND_HOST}/#/token/${user.token}`)
-    } else {
-      res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?connectGithubAction=success`)
-    }
-  })
 
 router.get('/authorize/github/disconnect', secure, (req, res, next) => {
   const user = req.user

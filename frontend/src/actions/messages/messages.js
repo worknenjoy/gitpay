@@ -154,16 +154,16 @@ const messages = defineMessages({
     defaultMessage: 'We could not cancel this refund'
   },
   notificationTaskCreateNotificationSuccess: {
-    id: 'actions.task.create.notification.success',
-    defaultMessage: 'Task created successfully'
+    id: 'actions.issue.import.notification.success',
+    defaultMessage: 'Issue imported successfully'
   },
   notificationTaskSolutionCreateNotificationSuccess: {
-    id: 'task.solution.dialog.create.success',
-    defaultMessage: 'Task solution created successfully'
+    id: 'issue.solution.dialog.create.success',
+    defaultMessage: 'The solution for this issue was created successfully'
   },
   notificationTaskSoluctionUpdateNotificationSuccess: {
-    id: 'task.solution.dialog.update.success',
-    defaultMessage: 'Task solution updated successfully'
+    id: 'issue.solution.dialog.update.success',
+    defaultMessage: 'The solution for this issue was updated successfully'
   },
   notificationTaskCreateNotificationError: {
     id: 'actions.task.create.notification.error',
