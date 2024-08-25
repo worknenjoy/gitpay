@@ -23,6 +23,7 @@ const userUpdate = require('../modules/users').userUpdate
 
 const jwt = require('jsonwebtoken')
 const Mailchimp = require('mailchimp-api-v3')
+const user = require('../models/user')
 
 const mailChimpConnect = mail => {
   if (!mailchimp.apiKey) {
@@ -200,24 +201,35 @@ passport.use(
       clientID: github.id,
       clientSecret: github.secret,
       callbackURL: oauthCallbacks.githubCallbackUrl,
+      passReqToCallback: true,
       scope: ['user:email', 'read:org']
     },
-    (accessToken, accessTokenSecret, profile, done) => {
+    (req, accessToken, accessTokenSecret, profile, done) => {
+      const githubEmail = profile.emails ? profile.emails[0].value : profile._json.email
+      const userEmail = req.query.state
+      const email = userEmail || githubEmail
       process.nextTick(() => {
         const data = {
           provider: profile.provider,
           provider_username: profile.username,
-          social_id: profile.id,
+          provider_id: profile.id,
+          provider_email: githubEmail,
           name: profile.displayName,
           username: profile.username,
           picture_url: profile.photos[0].value,
           website: profile._json.blog,
           profile_url: profile.profileUrl,
           repos: 0,
-          email: profile.emails ? profile.emails[0].value : profile._json.email
+          email: email
         }
 
-        if (!data.email) {
+        if(userEmail) {
+          data.login_strategy = 'local'
+        } else {
+          data.login_strategy = 'github'
+        }
+        
+        if (!email) {
           return done(null)
         }
 
@@ -271,18 +283,18 @@ passport.use(
 
                       return done(null)
                     })
-                }
-              })
-              .catch(error => {
-                // eslint-disable-next-line no-console
-                console.log(
-                  'Error in passport.js configuration file - search users'
-                )
-                // eslint-disable-next-line no-console
-                console.log(error)
+                  }
+                })
+                .catch(error => {
+                  // eslint-disable-next-line no-console
+                  console.log(
+                    'Error in passport.js configuration file - search users'
+                  )
+                  // eslint-disable-next-line no-console
+                  console.log(error)
 
-                return done(null)
-              })
+                  return done(null)
+                })
           })
           .catch(e => {
             // eslint-disable-next-line no-console

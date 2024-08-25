@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
+import { addNotification } from '../../../actions/notificationActions';
 
 import { Field } from '../account-details';
-import ProviderLoginButtons from '../../session/provider-login-buttons';
+import ProviderLoginButtons from '../../../containers/provider-login-buttons';
 import DeleteAccountButton from './delete-account-button';
 
 const styles = (theme) => ({
@@ -30,16 +31,31 @@ const AccountTabMain = ({
   history,
   deleteUser
 }) => {
-  const { provider, name, password } = user;
+  const { login_strategy, provider, name, password } = user;
   const [ fieldName, setFieldName ] = useState<string>(name);
   const [ currentPassword, setCurrentPassword ] = useState<string>('');
   const [ newPassword, setNewPassword ] = useState<string>('');
   const [ confirmNewPassword, setConfirmNewPassword ] = useState<string>('');
 
+  const shouldAllowPasswordChange = login_strategy === 'local' || login_strategy === null;
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(history.location.search)
+    const disconnectAction = queryParams.get('disconnectAction')
+    const connectGithubAction = queryParams.get('connectGithubAction')
+    if(disconnectAction === 'success') {
+      addNotification && addNotification('Your account has been successfully disconnected from GitHub.', 'success');
+    }
+    if(disconnectAction === 'error') {
+      addNotification && addNotification('We had an error to disconnect from your Github account', 'error');
+    }
+    if(connectGithubAction === 'success') {
+      addNotification && addNotification('Your account has been successfully connected to Github', 'success');
+    }
+  }, [])
 
   const handleUpdateAccount = (e) => {
     e.preventDefault();
-    console.log('handleUpdateAccount', fieldName)
     updateUser && updateUser(user.id, { name: fieldName });
   }
 
@@ -72,12 +88,17 @@ const AccountTabMain = ({
               <fieldset className={ classes.fieldset }>
                 <legend className={ classes.legend }>
                   <Typography>
-                    <FormattedMessage id='account.provider' defaultMessage='Provider' />
+                    <FormattedMessage id='account.provider.link' defaultMessage='Link accounts' />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
-                    <ProviderLoginButtons provider={provider} position='flex-start' textPosition='left' />
+                    <ProviderLoginButtons 
+                      provider={provider}
+                      login_strategy={login_strategy}
+                      position='flex-start'
+                      textPosition='left'
+                    />
                   </Grid>
                 </Grid>
               </fieldset>
@@ -127,7 +148,7 @@ const AccountTabMain = ({
                         <Field
                           name='currentPassword'
                           label={ msg }
-                          disabled={provider}
+                          disabled={!shouldAllowPasswordChange}
                           onChange={ (e) => setCurrentPassword(e.target.value) }
                           type='password'
                         />
@@ -138,7 +159,7 @@ const AccountTabMain = ({
                         <Field
                           name='newPassword'
                           label={ msg }
-                          disabled={provider}
+                          disabled={!shouldAllowPasswordChange}
                           onChange={ (e) => setNewPassword(e.target.value) }
                           type='password'
                         />
@@ -149,7 +170,7 @@ const AccountTabMain = ({
                         <Field
                           name='confirmNewPassword'
                           label={ msg }
-                          disabled={provider}
+                          disabled={!shouldAllowPasswordChange}
                           onChange={ (e) => setConfirmNewPassword(e.target.value) }
                           type='password'
                         />
@@ -162,7 +183,7 @@ const AccountTabMain = ({
                         type='submit'
                         variant='contained'
                         color='secondary'
-                        disabled={provider}
+                        disabled={!shouldAllowPasswordChange}
                         onClick={onChangePassword}
                       >
                         <FormattedMessage id='account.user.actions.change' defaultMessage='Change password' />
