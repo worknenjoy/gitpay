@@ -1,1 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path d="M0 8.934l49.854.158 14.167 24.47 14.432-24.47L128 8.935l-63.834 110.14zm126.98.637l-24.36.02-38.476 66.053L25.691 9.592.942 9.572l63.211 107.89zm-25.149-.008l-22.745.168-15.053 24.647L49.216 9.73l-22.794-.168 37.731 64.476zm-75.834-.17l23.002.009m-23.002-.01l23.002.01" fill="none"/><path d="M25.997 9.393l23.002.009L64.035 34.36 79.018 9.404 102 9.398 64.15 75.053z" fill="#35495e"/><path d="M.91 9.569l25.067-.172 38.15 65.659L101.98 9.401l25.11.026-62.966 108.06z" fill="#41b883"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="Vue.js.svg"
+   width="64"
+   height="64"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.25"
+     inkscape:cx="64"
+     inkscape:cy="46.08"
+     inkscape:window-width="1920"
+     inkscape:window-height="1004"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" />
+  <path
+     d="M 0,8.934 49.854,9.092 64.021,33.562 78.453,9.092 128,8.935 64.166,119.075 Z M 126.98,9.571 102.62,9.591 64.144,75.644 25.691,9.592 0.942,9.572 64.153,117.462 Z M 101.831,9.563 79.086,9.731 64.033,34.378 49.216,9.73 26.422,9.562 64.153,74.038 Z M 25.997,9.393 48.999,9.402 m -23.002,-0.01 23.002,0.01"
+     fill="none"
+     id="path1" />
+  <path
+     d="M 25.997,9.393 48.999,9.402 64.035,34.36 79.018,9.404 102,9.398 64.15,75.053 Z"
+     fill="#35495e"
+     id="path2" />
+  <path
+     d="M 0.91,9.569 25.977,9.397 64.127,75.056 101.98,9.401 127.09,9.427 64.124,117.487 Z"
+     fill="#41b883"
+     id="path3" />
+</svg>
