@@ -10,20 +10,22 @@ import { withRouter } from 'react-router-dom'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 
+import { SkillIcon } from "./skill-icon"
+
 class MySkill extends Component {
-  render () {
+  render() {
     const { classes, title } = this.props
 
     return (
       <Chip
         avatar={
           <Avatar>
-            <Folder />
+            <SkillIcon name={title} />
           </Avatar>
         }
-        label={ title }
-        className={ classes.chipSkill }
-        onDelete={ this.props.onDelete }
+        label={title}
+        className={classes.chipSkill}
+        onDelete={this.props.onDelete}
       />
     )
   }
