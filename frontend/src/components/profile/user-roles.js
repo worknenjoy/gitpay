@@ -41,8 +41,7 @@ const styles = theme => ({
     margin: '2% 5% 0 0',
     padding: '0 0 0 0',
     '& h1': {
-      fontWeight: '500',
-      fontFamily: 'roboto',
+      fontWeight: '500'
     },
     '& p': {
       color: 'gray',
@@ -155,7 +154,6 @@ const styles = theme => ({
     color: '#FFFFFF',
     cursor: 'pointer',
     fontWeight: 'bold',
-    fontFamily: 'roboto'
   }
 })
 

@@ -101,7 +101,6 @@ class TaskPaymentForm extends Component {
       <Drawer
         open={open} onClose={onClose}
         aria-labelledby='form-dialog-title'
-        maxWidth='md'
         anchor='right'
       >
         <Container>

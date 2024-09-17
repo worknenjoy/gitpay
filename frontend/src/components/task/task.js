@@ -350,6 +350,7 @@ const styles = theme => ({
   },
   planGridContent: {
     display: 'flex',
+    justifyContent: 'space-evenly',
     minHeight: theme.spacing(2),
     margin: 0
   },
