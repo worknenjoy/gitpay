@@ -1,4 +1,5 @@
 import { defineMessages } from 'react-intl'
+import notification from '../../containers/notification'
 
 const messages = defineMessages({
   noDefined: {
@@ -160,6 +161,26 @@ const messages = defineMessages({
   notificationTaskSolutionCreateNotificationSuccess: {
     id: 'issue.solution.dialog.create.success',
     defaultMessage: 'The solution for this issue was created successfully'
+  },
+  notificationTaskSolutionCreateNotificationError: {
+    id: 'issue.solution.dialog.get.error',
+    defaultMessage: 'We could not get the task solution'
+  },
+  notificationTaskSolutionCouldNotUpdate: {
+    id: 'issue.solution.dialog.update.error',
+    defaultMessage: 'We could not update the task solution'
+  },
+  notificationTaskSolutionCouldNotCreate: {
+    id: 'issue.solution.dialog.create.error',
+    defaultMessage: 'We could not create the task solution'
+  },
+  notificationCouldNotGetPullRequestData: {
+    id: 'issue.solution.dialog.fetch.error',
+    defaultMessage: 'We could not get the pull request data'
+  },
+  notificationPullRequestNotFound: {
+    id: 'issue.solution.dialog.pullRequest.notFound',
+    defaultMessage: 'Pull request not found'
   },
   notificationTaskSoluctionUpdateNotificationSuccess: {
     id: 'issue.solution.dialog.update.success',

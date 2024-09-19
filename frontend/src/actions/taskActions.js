@@ -314,7 +314,7 @@ const createTask = (task, history) => {
           return dispatch(createTaskError(JSON.parse(response.data.error)))
         }
         dispatch(createTaskSuccess())
-        dispatch(addNotification('actions.task.create.notification.success'))
+        dispatch(addNotification('actions.issue.import.notification.success'))
         history.push(`/task/${response.data.id}`)
         return dispatch(fetchTask(response.data.id))
       })
