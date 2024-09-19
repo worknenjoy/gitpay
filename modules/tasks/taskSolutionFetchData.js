@@ -77,7 +77,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     }
   }).catch(err => {
     // eslint-disable-next-line no-console
-    console.log(err)
+    console.log('error to fetch pull request data', err)
 
     if (err.statusCode === 404) {
       throw new Error('PULL_REQUEST_NOT_FOUND')
