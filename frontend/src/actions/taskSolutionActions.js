@@ -23,11 +23,11 @@ const UPDATE_TASK_SOLUTION_ERROR = 'UPDATE_TASK_SOLUTION_ERROR'
 const CLEAN_PULL_REQUEST_DATA_STATE = 'CLEAN_PULL_REQUEST_DATA_STATE'
 
 const ERRORS = {
-  'COULD_NOT_GET_TASK_SOLUTION': 'task.solution.dialog.get.error',
-  'COULD_NOT_UPDATE_TASK_SOLUTION': 'task.solution.dialog.update.error',
-  'COULD_NOT_CREATE_TASK_SOLUTION': 'task.solution.dialog.create.error',
-  'COULD_NOT_FETCH_PULL_REQUEST_DATA': 'task.solution.dialog.fetch.error',
-  'PULL_REQUEST_NOT_FOUND': 'task.solution.dialog.pullRequest.notFound'
+  'COULD_NOT_GET_TASK_SOLUTION': 'issue.solution.dialog.get.error',
+  'COULD_NOT_UPDATE_TASK_SOLUTION': 'issue.solution.dialog.update.error',
+  'COULD_NOT_CREATE_TASK_SOLUTION': 'issue.solution.dialog.create.error',
+  'COULD_NOT_FETCH_PULL_REQUEST_DATA': 'issue.solution.dialog.fetch.error',
+  'PULL_REQUEST_NOT_FOUND': 'issue.solution.dialog.pullRequest.notFound'
 }
 
 const getTaskSolutionRequested = () => {
@@ -110,7 +110,7 @@ const createTaskSolution = (taskSolution) => {
   return dispatch => {
     dispatch(createTaskSolutionRequested())
     return axios.post(`${api.API_URL}/tasksolutions/create`, taskSolution).then(response => {
-      dispatch(addNotification('task.solution.dialog.create.success'))
+      dispatch(addNotification('issue.solution.dialog.create.success'))
       dispatch(fetchTask(taskSolution.taskId))
       return dispatch(createTaskSolutionSuccess(response.data))
     }).catch(error => {
@@ -142,7 +142,7 @@ const updateTaskSolution = ({ taskSolutionId, pullRequestURL, userId, taskId }) 
   return dispatch => {
     dispatch(updateTaskSolutionRequested())
     return axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, userId: userId, taskId: taskId }).then(response => {
-      dispatch(addNotification('task.solution.dialog.update.success'))
+      dispatch(addNotification('issue.solution.dialog.update.success'))
       dispatch(fetchTask(taskId))
       return dispatch(updateTaskSolutionSuccess(response.data))
     }).catch(error => {

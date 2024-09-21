@@ -37,12 +37,11 @@ module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskS
                   throw new Error('COULD_NOT_CREATE_ASSIGN')
                 }
               }
-              const taskUpdateAssign = await taskUpdate({ id: taskSolution.taskId, assigned: existingAssignment.dataValues.id })
+              const taskUpdateAssign = await taskUpdate({ id: taskSolution.taskId,  userId: taskData.dataValues.userId, assigned: existingAssignment.dataValues.id })
               if(!taskUpdateAssign) {
                 throw new Error('COULD_NOT_UPDATE_TASK')
               }
               const transferSend = await transferBuilds({ taskId: taskData.dataValues.id, userId: existingAssignment.dataValues.id })
-              console.log('transferSend with data: ', taskData.dataValues.id, taskData.dataValues.userId, transferSend)
               if(transferSend.error) {
                 throw new Error('transferSend.error')
               }

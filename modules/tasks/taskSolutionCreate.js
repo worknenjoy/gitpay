@@ -20,10 +20,9 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
   const task = await models.Task.findOne({
     where: { id: taskSolutionParams.taskId }
   })
-
+  
   if (fetchTaskSolutionData.isAuthorOfPR && fetchTaskSolutionData.isConnectedToGitHub && fetchTaskSolutionData.isIssueClosed && fetchTaskSolutionData.isPRMerged && fetchTaskSolutionData.hasIssueReference) {
     if (!task.dataValues.paid && !task.dataValues.transfer_id) {
-      
       const existingAssignment = await assignExist({ userId: taskSolutionParams.userId, taskId: taskSolutionParams.taskId })
 
       if (!existingAssignment) {
@@ -31,26 +30,26 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
         if(!assign) {
           throw new Error('COULD_NOT_CREATE_ASSIGN')
         }
-        const taskUpdateAssign = await taskUpdate({ id: taskSolutionParams.taskId, assigned: assign.dataValues.id })
+        const taskUpdateAssign = await taskUpdate({ id: taskSolutionParams.taskId, userId: task.dataValues.userId, assigned: assign.dataValues.id })
         if(!taskUpdateAssign) {
           throw new Error('COULD_NOT_UPDATE_TASK')
         }
       }
     }
-
-    return models.TaskSolution.create(taskSolutionParams).then(async data => {
+    try {
+      const taskSolutionCreateResponse = await models.TaskSolution.create(taskSolutionParams)
       const transferSend = await transferBuilds({ taskId: task.dataValues.id, userId: task.dataValues.userId })
+      
       if(transferSend.error) {
         throw new Error('transferSend.error')
       }
-      return data.dataValues
-    }).catch(err => {
+      return taskSolutionCreateResponse
+    } catch(err) {
       // eslint-disable-next-line no-console
-      console.log(err)
-
+      console.log('error to create task solution: ', err)
       throw new Error('COULD_NOT_CREATE_TASK_SOLUTION')
-    })
+    }
+  } else {
+    throw new Error('COULD_NOT_CREATE TASK_SOLUTION')
   }
-
-  throw new Error('COULD_NOT_CREATE_TASK_SOLUTION')
 })

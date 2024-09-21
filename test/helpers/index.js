@@ -52,12 +52,14 @@ const createTask = (agent, params = {}, userParams = {}) => {
 
   params.provider = params.provider || 'github'
   params.url = params.url || 'https://github.com/worknenjoy/gitpay/issues/221'
+  params.status = params.status || 'open'
 
   return registerAndLogin(agent, userParams).then((res) => {
     const user = res.body
     return models.Task.create({
       provider: params.provider || 'github',
       url: params.url,
+      status: params.status,
       userId: user.id
     }, {
       include: [ models.User ]
