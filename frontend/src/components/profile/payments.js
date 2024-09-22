@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { defineMessages } from 'react-intl'
+
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../task/messages/task-messages'
 import MomentComponent from 'moment'
@@ -7,8 +7,6 @@ import PaymentTypeIcon from '../payment/payment-type-icon'
 
 import {
   Container,
-  Tabs,
-  Tab,
   withStyles,
   Button,
   Link,
@@ -32,18 +30,7 @@ import TaskOrderDetails from '../task/order/task-order-details'
 import TaskOrderTransfer from '../task/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
 import CustomPaginationActionsTable from './payments-table'
-import AddFundsFormDrawer from './components/payments/add-funds-form-drawer'
-
-const paymentMessages = defineMessages({
-  paymentTabIssue: {
-    id: 'payment.table.header.payment.issue',
-    defaultMessage: 'Payments for issues'
-  },
-  paymentTabFund: {
-    id: 'payment.table.header.payment.funds',
-    defaultMessage: 'Payments for funds'
-  },
-})
+import { filterTasks, listTasks } from '../../actions/taskActions'
 
 const styles = theme => ({
   paper: {
@@ -69,8 +56,6 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
   const [refundDialogOpen, setRefundDialogOpen] = useState(false)
   const [currentOrderId, setCurrentOrderId] = useState(null)
   const [ transferOpened, setTransferOpened ] = useState(false)
-  const [ addFundsDialog, setAddFundsDialog ] = useState(false)
-  const [ currentTab, setCurrentTab ] = useState('issue')
 
   const statuses = {
     open: intl.formatMessage(messages.openPaymentStatus),
@@ -316,51 +301,13 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
     ])
   }
 
-  const openAddFundsDialog = (e) => {
-    e.preventDefault()
-    setAddFundsDialog(true)
-  }
-
-  const handleChange = (event, newValue) => {
-    setCurrentTab(newValue)
-  }
-
   return (
     <div style={ { marginTop: 40 } }>
-      <AddFundsFormDrawer classes={classes} open={ addFundsDialog } onClose={ () => setAddFundsDialog(false) } />
       <Container>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Typography variant='h5' gutterBottom>
-            <FormattedMessage id='general.payments' defaultMessage='Payments' />
-          </Typography>
-          <div>
-            <Button
-              variant='contained'
-              size='small'
-              color='secondary'
-              className={ classes.button }
-              onClick={ (e) => openAddFundsDialog(e) }
-            >
-              <FormattedMessage id='general.payments.add' defaultMessage='Add funds' />
-            </Button>
-          </div>
-        </div>
-        
-        <div style={ { marginTop: 10, marginBottom: 30 } }>
-        <Tabs
-            value={ currentTab }
-            onChange={handleChange}
-            indicatorColor='secondary'
-            textColor='secondary'
-          >
-            <Tab label={intl.formatMessage(paymentMessages.paymentTabIssue)} value='issue' />
-            <Tab label={intl.formatMessage(paymentMessages.paymentTabFund)} value='funds' />
-          </Tabs>
+        <Typography variant='h5' gutterBottom>
+          <FormattedMessage id='general.payments' defaultMessage='Payments' />
+        </Typography>
+        <div style={ { marginTop: 40, marginBottom: 30 } }>
           <CustomPaginationActionsTable
             tableHead={ [
               intl.formatMessage(messages.cardTableHeaderPaid),

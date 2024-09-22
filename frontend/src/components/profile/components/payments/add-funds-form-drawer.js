@@ -2,20 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import {
-  Container,
-  Tabs,
-  Tab,
   Typography,
-  Chip,
-  FormControl,
-  Input,
-  InputLabel,
-  InputAdornment,
-  Drawer,
-  Grid
 } from '@material-ui/core'
 
-import { TaskPaymentPlans } from '../../../task/payment/plans/task-payment-plans'
+import PaymentDrawer from '../../../design-library/templates/payment-drawer/payment-drawer'
 
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
@@ -76,107 +66,28 @@ const AddFundsFormDrawer = ({ classes, intl, open, onClose }) => {
   }
 
   return (
-    <Drawer
-      open={open} onClose={onClose}
-      aria-labelledby='form-dialog-title'
-      anchor='right'
-    >
-      <Container>
-        <div style={{ padding: 20 }}>
-          <Typography variant='h5' id='form-dialog-title' gutterBottom>
-            <FormattedMessage id='payment.addfunds.headline' defaultMessage='Add funds' />
-          </Typography>
-          <div className={classes.details}>
-            <Typography variant='subtitle2'>
-              <FormattedMessage id='payment.addfunds.headline.bounty.add' defaultMessage='Add a payment in advance and use it to pay for bounties' />
-            </Typography>
-            <Typography variant='body1' color='textSecondary' gutterBottom>
-              <FormattedMessage id='issue.payment.form.message.subheading' defaultMessage='Create a bounty for this issue and who you assign will receive the payment for this bounty' />
-            </Typography>
-            <div className={classes.chipContainer}>
-              <Chip
-                label=' $ 20'
-                className={classes.chip}
-                onClick={() => pickTaskPrice(20)}
-              />
-              <Chip
-                label=' $ 50'
-                className={classes.chip}
-                onClick={() => pickTaskPrice(50)}
-              />
-              <Chip
-                label=' $ 100'
-                className={classes.chip}
-                onClick={() => pickTaskPrice(100)}
-              />
-              <Chip
-                label=' $ 150'
-                className={classes.chip}
-                onClick={() => pickTaskPrice(150)}
-              />
-              <Chip
-                label=' $ 300'
-                className={classes.chip}
-                onClick={() => pickTaskPrice(300)}
-              />
-            </div>
-            <Grid container spacing={0}>
-              <Grid spacing={0} xs={0} md={4} lg={4}>
-                <form className={classes.formPayment} action='POST'>
-                  <FormControl>
-                    <InputLabel htmlFor='adornment-amount'>
-                      <FormattedMessage id='task.payment.input.amount.value' defaultMessage='Price' />
-                    </InputLabel>
-                    <FormattedMessage id='task.payment.input.amount' defaultMessage='Price insert a value for this task' >
-                      {(msg) => (
-                        <Input
-                          id='adornment-amount'
-                          endAdornment={
-                            <InputAdornment position='end'> + </InputAdornment>
-                          }
-                          startAdornment={
-                            <InputAdornment position='start'>
-                              <span style={{ fontSize: 28 }}> $ </span>
-                            </InputAdornment>
-                          }
-                          placeholder={msg}
-                          type='number'
-                          inputProps={{ 'min': 0, style: { textAlign: 'right', height: 92 } }}
-                          defaultValue={price}
-                          value={price}
-                          onChange={handleInputChange}
-                          align='right'
-                          style={{ fontSize: 42, fontWeight: 'bold' }}
-                        />
-                      )}
-                    </FormattedMessage>
-                  </FormControl>
-                </form>
-              </Grid>
-              <Grid xs={0} md={8} lg={8}>
-                <TaskPaymentPlans
-                  classes={classes}
-                  plan={plan}
-                />
-              </Grid>
-            </Grid>
+    <PaymentDrawer
+      title={ <FormattedMessage id='payment.addfunds.headline' defaultMessage='Add funds' />}
+      pickupTagListMessagesPrimaryText={<FormattedMessage id='payment.addfunds.headline.bounty.add' defaultMessage='Add a payment in advance and use it to pay for bounties' />}
+      pickupTagListMessagesSecondaryText={<FormattedMessage id='payment.addfunds.subheading' defaultMessage='Add funds to your wallet and use it later to pay for bounties' />}
+      onChangePrice={(price) => pickTaskPrice(price)}
+      open={open}
+      onClose={onClose}
+      tabs={[
+        {
+          default: true,
+          label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice),
+          value: 'invoice',
+          component: (
             <div>
-              <Tabs
-                value={tabValue}
-                onChange={handleChange}
-                indicatorColor='secondary'
-                textColor='secondary'
-              >
-                <Tab label={intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice)} value='invoice' /> 
-              </Tabs>
-              {tabValue === 'invoice' &&
-                <>invoice payment tab</>
-              }
+              <Typography variant='body1' gutterBottom>
+                <FormattedMessage id='task.payment.form.message.invoice.heading' defaultMessage='Invoice payment method' />
+              </Typography>
             </div>
-          </div>
-        </div>
-      </Container>
-    </Drawer>
+          )
+        }
+      ]}
+    />
   )
 }
 

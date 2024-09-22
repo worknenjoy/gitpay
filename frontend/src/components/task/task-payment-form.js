@@ -1,28 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-
-import {
-  Container,
-  Tabs,
-  Tab,
-  Typography,
-  Chip,
-  FormControl,
-  Input,
-  InputLabel,
-  InputAdornment,
-  Drawer,
-  Grid
-} from '@material-ui/core'
  
 import PaymentDrawer from '../design-library/templates/payment-drawer/payment-drawer'
 
 import PaymentDialog from '../payment/payment-dialog'
 import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
-import { TaskPaymentPlans } from './payment/plans/task-payment-plans'
 import PaymentMethodInvoiceTab from './payment/methods/invoice/payment-method-invoice-tab'
-import PricePlan from '../design-library/organisms/price-plan/price-plan'
 
 
 const taskPaymentFormMessages = defineMessages({
@@ -99,7 +83,6 @@ class TaskPaymentForm extends Component {
 
   render() {
     const { classes, intl, open, onClose, fetchCustomer, customer } = this.props
-    const { tabValue } = this.state
 
     const tags = [
       {

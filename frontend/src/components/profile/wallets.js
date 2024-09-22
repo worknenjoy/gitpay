@@ -62,7 +62,7 @@ const styles = theme => ({
   }
 })
 
-const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, listTasks, filterTasks, getOrderDetails, cancelPaypalPayment, transferOrder, refundOrder, updateOrder, intl }) => {
+const Wallets = ({ classes, tasks, orders, order, user, logged, listOrders, listTasks, filterTasks, getOrderDetails, cancelPaypalPayment, transferOrder, refundOrder, updateOrder, intl }) => {
   const [cancelPaypalConfirmDialog, setCancelPaypalConfirmDialog] = useState(false)
   const [orderDetailsDialog, setOrderDetailsDialog] = useState(false)
   const [transferDialogOpen, setTransferDialogOpen] = useState(false)
@@ -336,7 +336,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
           }}
         >
           <Typography variant='h5' gutterBottom>
-            <FormattedMessage id='general.payments' defaultMessage='Payments' />
+            <FormattedMessage id='general.wallets' defaultMessage='Wallets' />
           </Typography>
           <div>
             <Button
@@ -402,7 +402,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
   )
 }
 
-Payments.propTypes = {
+Wallets.propTypes = {
   classes: PropTypes.object.isRequired,
   handleTabChange: PropTypes.func,
   user: PropTypes.object,
@@ -415,4 +415,4 @@ Payments.propTypes = {
   intl: PropTypes.object
 }
 
-export default injectIntl(withStyles(styles)(Payments))
+export default injectIntl(withStyles(styles)(Wallets))
