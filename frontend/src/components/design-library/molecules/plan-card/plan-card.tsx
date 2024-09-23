@@ -40,7 +40,20 @@ const styles = (theme: Theme) =>
     },
   });
 
-const PlanCard = ({ classes }) => {
+type PlanDetails = {
+  fee: number;
+  category: string;
+  title: string;
+  items: string[];
+}
+
+type PlanProps = {
+  classes: any;
+  plan: PlanDetails;
+}
+
+const PlanCard = ({ classes, plan }:PlanProps) => {
+  const { fee, category, title, items } = plan;
   return (
     <Grid item className={classes.planGridItem}>
       <Card className={classes.planGrid}>
@@ -48,24 +61,23 @@ const PlanCard = ({ classes }) => {
           <div className={classes.planButton}>
             <MotorcycleIcon color={'primary'} className={classes.planIcon} />
             <Typography align='center' color='textPrimary' variant='h5'>
-              <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={{ fee: '8' }} />
+              <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={{ fee: fee }} />
             </Typography>
             <Typography align='center' color='textSecondary' variant='h6' gutterBottom>
-              <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />
+              {category}
             </Typography>
           </div>
           <div className={classes.planBullets}>
             <Typography align='center' variant='caption' gutterBottom>
-              <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />
+              {title}
             </Typography>
-            <Typography>
+            {items.map((item, index) => (
+              <Typography>
               <CheckIcon fontSize='small' color='primary' />
-              <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />
+              {item}
             </Typography>
-            <Typography>
-              <CheckIcon fontSize='small' color='primary' />
-              <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />
-            </Typography>
+            ))}
+            
           </div>
         </CardContent>
       </Card>

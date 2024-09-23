@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import PriceInput from '../../atoms/price-input/price-input';
 import PlanCard from '../../molecules/plan-card/plan-card';
 
-const PricePlan = ({ price, onChange }) => {
+const PricePlan = ({ price, plan, onChange }) => {
   return (
     <Grid
       container
@@ -12,8 +12,8 @@ const PricePlan = ({ price, onChange }) => {
       <Grid
         spacing={0}
         xs={12}
-        md={4}
-        lg={4}
+        md={plan ? 4 : 12}
+        lg={plan ? 4 : 12}
       >
         <PriceInput
           priceLabel='Price'
@@ -21,16 +21,19 @@ const PricePlan = ({ price, onChange }) => {
           onChange={onChange}
           defaultValue={0}
           currency='$'
+          endAdornment={!!plan}
         />
       </Grid>
-      <Grid
-        spacing={0}
-        xs={12}
-        md={8}
-        lg={8}
-      >
-        <PlanCard />
-      </Grid>
+      {plan && 
+        <Grid
+          spacing={0}
+          xs={12}
+          md={8}
+          lg={8}
+        >
+          <PlanCard plan={plan} />
+        </Grid>
+      }
     </Grid>
   );
 }

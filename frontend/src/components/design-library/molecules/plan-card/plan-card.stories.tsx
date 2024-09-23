@@ -18,5 +18,15 @@ const Template = (args) => <PlanCard {...args} />;
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  
+  plan: {
+    fee: 8,
+    title: 'Plan Title',
+    category: 'Category',
+    price: 100,
+    items: [
+      'Feature 1',
+      'Feature 2',
+      'Feature 3',
+    ],
+  },
 };

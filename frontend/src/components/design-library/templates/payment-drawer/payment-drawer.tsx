@@ -51,7 +51,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, title, pickupTagListMessagesPrimaryText, pickupTagListMessagesSecondaryText, classes }) => {
+const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickupTagListMessagesPrimaryText, pickupTagListMessagesSecondaryText, classes }) => {
   const [tabValue, setTabValue] = useState(tabs.find(tab => tab.default)?.value)
   const [ price, setPrice ] = useState(0)
 
@@ -86,7 +86,7 @@ const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, title, pickupTagLis
               secondaryText={pickupTagListMessagesSecondaryText}
               onPickItem={onPickItem}
             />
-            <PricePlan price={price} onChange={onChangePrice} />
+            <PricePlan plan={plan} price={price} onChange={onChangePrice} />
             <div>
               <Tabs
                 value={tabValue}

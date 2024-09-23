@@ -17,7 +17,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-const PriceInput = ({ classes, priceLabel, value, onChange, defaultValue, currency = '$' }) => {
+const PriceInput = ({ classes, priceLabel, value, onChange, defaultValue, currency = '$', endAdornment = true }) => {
   const [ price, setPrice ] = useState(0)
 
   const handleChange = (event) => {
@@ -40,7 +40,7 @@ const PriceInput = ({ classes, priceLabel, value, onChange, defaultValue, curren
         <Input
           id='adornment-amount'
           endAdornment={
-            <InputAdornment position='end'> + </InputAdornment>
+            endAdornment ? <InputAdornment position='end'> + </InputAdornment> : null
           }
           startAdornment={
             <InputAdornment position='start'>

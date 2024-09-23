@@ -34,6 +34,17 @@ Primary.args = {
   open: true,
   onClose: () => {},
   onChangePrice: () => {},
+  plan: {
+    fee: 8,
+    title: 'Plan Title',
+    category: 'Category',
+    price: 100,
+    items: [
+      'Feature 1',
+      'Feature 2',
+      'Feature 3',
+    ],
+  },
   title: 'Title',
   pickupTagListMessagesPrimaryText: 'Primary Text',
   pickupTagListMessagesSecondaryText: 'Secondary Text',

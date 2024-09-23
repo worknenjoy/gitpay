@@ -22,47 +22,15 @@ const taskPaymentFormMessages = defineMessages({
   },
 })
 
-const fee = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
-
-const AddFundsFormDrawer = ({ classes, intl, open, onClose }) => {
+const AddFundsFormDrawer = ({ intl, open, onClose }) => {
   const [price, setPrice] = useState(0)
-  const [plan, setPlan] = useState(null)
-  const [tabValue, setTabValue] = useState('invoice')
 
   useEffect(() => {
     
   }, [])
 
-  const formatCurrency = (amount) => {
-    return (new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumSignificantDigits: 4
-    }).format(amount))
-  }
-
   const pickTaskPrice = (price) => {
     setPrice(price)
-  }
-
-  const handleInputChange = (e) => {
-    setPrice(e.target.value)
-  }
-
-  const handlePayment = (value) => {
-    props.openDialog(value)
-  }
-
-  const handlePlan = (plan) => {
-    setPlan(plan)
-  }
-
-  const handleChange = (event, newValue) => {
-    setTabValue(newValue)
-  }
-
-  const priceAfterFee = () => {
-    return plan && Number((parseInt(price) * fee[plan]).toFixed(2))
   }
 
   return (
