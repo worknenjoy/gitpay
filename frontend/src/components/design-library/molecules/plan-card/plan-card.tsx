@@ -41,15 +41,15 @@ const styles = (theme: Theme) =>
   });
 
 type PlanDetails = {
-  fee: number;
-  category: string;
-  title: string;
-  items: string[];
+  fee?: number;
+  category?: string;
+  title?: string;
+  items?: string[];
 }
 
 type PlanProps = {
   classes: any;
-  plan: PlanDetails;
+  plan?: PlanDetails;
 }
 
 const PlanCard = ({ classes, plan }:PlanProps) => {

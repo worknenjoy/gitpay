@@ -3,7 +3,13 @@ import { Grid } from '@material-ui/core';
 import PriceInput from '../../atoms/price-input/price-input';
 import PlanCard from '../../molecules/plan-card/plan-card';
 
-const PricePlan = ({ price, plan, onChange }) => {
+type PricePlanProps = {
+  price: number;
+  plan?: any | undefined | null;
+  onChange: any;
+}
+
+const PricePlan = ({ price, plan, onChange }:PricePlanProps) => {
   return (
     <Grid
       container

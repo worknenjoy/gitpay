@@ -51,7 +51,19 @@ const styles = (theme: Theme) =>
     },
   });
 
-const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickupTagListMessagesPrimaryText, pickupTagListMessagesSecondaryText, classes }) => {
+type PaymentDrawerProps = {
+  tabs: any;
+  open: boolean;
+  onClose: any;
+  onChangePrice: any;
+  plan?: any | undefined | null;
+  title: any;
+  pickupTagListMessagesPrimaryText: any;
+  pickupTagListMessagesSecondaryText: any;
+  classes: any;
+}
+
+const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickupTagListMessagesPrimaryText, pickupTagListMessagesSecondaryText, classes }:PaymentDrawerProps) => {
   const [tabValue, setTabValue] = useState(tabs.find(tab => tab.default)?.value)
   const [ price, setPrice ] = useState(0)
 

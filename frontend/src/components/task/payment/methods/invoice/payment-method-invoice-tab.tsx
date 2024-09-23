@@ -1,18 +1,9 @@
 import React, { useEffect } from 'react';
-import { Button } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
-import { BillingInfoCard } from './payment-method-invoice-billing-info'
-import ReactPlaceholder from 'react-placeholder';
 import { withRouter } from 'react-router-dom'
-import {
-  Alert, AlertTitle
-} from '@material-ui/lab'
-import { countryCodesFull } from '../../../../profile/country-codes';
 import LoginButton from '../../../../session/login-button'
 import InvoicePayment from '../../../../design-library/organisms/invoice-payment/invoice-payment'
 
 const PaymentMethodInvoiceTab = ({
-  classes,
   priceAfterFee,
   price,
   formatCurrency,

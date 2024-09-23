@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-import {
-  Typography,
-} from '@material-ui/core'
-
 import PaymentDrawer from '../../../design-library/templates/payment-drawer/payment-drawer'
+import AddFundsInvoiceTab from './add-funds-invoice-tab'
 
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
@@ -47,11 +44,10 @@ const AddFundsFormDrawer = ({ intl, open, onClose }) => {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice),
           value: 'invoice',
           component: (
-            <div>
-              <Typography variant='body1' gutterBottom>
-                <FormattedMessage id='task.payment.form.message.invoice.heading' defaultMessage='Invoice payment method' />
-              </Typography>
-            </div>
+            <AddFundsInvoiceTab
+              price={price}
+              onClose={onClose}
+            />
           )
         }
       ]}
