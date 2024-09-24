@@ -4,7 +4,8 @@ import { Theme, createStyles, withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import { BillingInfoCard } from '../../molecules/billing-info-card/billing-info-card'
 import ReactPlaceholder from 'react-placeholder';
-import { countryCodesFull } from '../../../profile/country-codes';
+import { countryCodesFull } from '../../../profile/country-codes'
+import { formatCurrency } from '../../../../utils/format-currency'
 import {
   Alert, AlertTitle
 } from '@material-ui/lab'
@@ -73,7 +74,7 @@ const InvoicePayment = ({
         className={classes.btnPayment}
       >
         <FormattedMessage id='task.payment.invoice.action' defaultMessage='Pay {amount} with Invoice' values={{
-          amount: price
+          amount: formatCurrency(price)
         }} />
       </Button>
     </>

@@ -6,8 +6,7 @@ import { getUser } from '../common/selectors/user/getUser'
 const mapStateToProps = (state, ownProps) => {
   return {
     user: getUser(state),
-    customer: state.customer,
-    logged: state.loggedIn.logged
+    customer: state.customer
   }
 }
 

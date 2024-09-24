@@ -6,7 +6,6 @@ import InvoicePayment from '../../../../design-library/organisms/invoice-payment
 const PaymentMethodInvoiceTab = ({
   priceAfterFee,
   price,
-  formatCurrency,
   fetchCustomer,
   customer,
   user,
@@ -45,7 +44,7 @@ const PaymentMethodInvoiceTab = ({
 
   return (
     <InvoicePayment 
-      price={formatCurrency(priceAfterFee)}
+      price={priceAfterFee}
       customer={customer}
       onInvoicePayment={onInvoicePayment}
       onInfoClick={ () => history.push('/profile/user-account/customer') }

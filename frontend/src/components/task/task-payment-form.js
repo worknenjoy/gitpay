@@ -154,7 +154,6 @@ class TaskPaymentForm extends Component {
               <PaymentMethodInvoiceTab
                 classes={classes}
                 priceAfterFee={this.state.priceAfterFee()}
-                formatCurrency={this.formatCurrency}
                 fetchCustomer={fetchCustomer}
                 customer={customer}
                 user={this.props.user}
