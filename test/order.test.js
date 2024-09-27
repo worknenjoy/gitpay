@@ -9,8 +9,6 @@ const nock = require('nock')
 const models = require('../models')
 const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
-const { error } = require('../modules/mail/transfer')
-const { stripComments } = require('tslint/lib/utils')
 
 describe('orders', () => {
   beforeEach(async () => {
@@ -19,6 +17,7 @@ describe('orders', () => {
     await truncateModels(models.Assign);
     await truncateModels(models.Order);
     await truncateModels(models.Transfer);
+    await truncateModels(models.Wallet);
   })
   afterEach(async () => {
     nock.cleanAll()
@@ -107,6 +106,38 @@ describe('orders', () => {
           })
         }
       ).catch(done)
+    })
+
+    it('should create a order type wallet funds', async () => {
+      const user = await registerAndLogin(agent)
+      const newWallet = await models.Wallet.create({
+        name: 'Test Wallet',
+        balance: 400,
+        userId: user.body.id
+      });
+      const res = await agent
+        .post('/orders/create/')
+        .send({
+          source_id: newWallet.id,
+          currency: 'usd',
+          amount: 200,
+          source_type: 'wallet-funds',
+          provider: 'wallet',
+          userId: user.body.id
+        })
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.exist;
+      expect(res.body.source_id).to.exist;
+      expect(res.body.currency).to.equal('usd');
+      expect(res.body.amount).to.equal('200');
+      const wallet = await models.Wallet.findOne({
+        where: {
+          userId: user.body.id
+        }
+      })
+      expect(wallet.balance).to.equal('200.00')
     })
 
     xit('should create a new paypal order', (done) => {
