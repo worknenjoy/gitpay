@@ -48,7 +48,7 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
           stripe.invoices.create({
             customer: orderParameters.customer_id,
             collection_method: 'send_invoice',
-            days_until_due: 0,
+            days_until_due: 30,
             metadata: {
               'task_id': orderParameters.taskId,
               'order_id': order.dataValues.id

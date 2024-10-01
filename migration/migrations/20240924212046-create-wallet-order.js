@@ -44,7 +44,7 @@ module.exports = {
         unique: true
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('pending', 'draft', 'open', 'paid', 'failed', 'uncollectible', 'void', 'refunded'),
       },
       capture: {
         type: Sequelize.BOOLEAN

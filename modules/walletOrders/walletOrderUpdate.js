@@ -24,7 +24,7 @@ module.exports = Promise.method(async function walletOrderUpdate(params) {
   })
   const updatedWalletOrder = wallet[1][0].dataValues
 
-  if(updatedWalletOrder.status === 'succeeded') {
+  if(updatedWalletOrder.status === 'paid') {
     try {
       const currentWallet = await Wallet.findOne({
         where: {
