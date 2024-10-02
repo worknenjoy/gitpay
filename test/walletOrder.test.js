@@ -212,4 +212,31 @@ describe('WalletOrder', () => {
       expect(walletUpdated.balance).to.equal('100.00');
     });
   })
+  describe('list wallet orders', () => {
+    it('should list wallet orders', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await models.Wallet.create({
+        userId: user.body.id,
+        name: 'Test Wallet',
+        balance: 0
+      });
+      const walletOrder = await models.WalletOrder.create({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'pending'
+      });
+      const res = await agent
+        .get('/wallets/orders')
+        .query({ walletId: wallet.id })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', user.headers.authorization)
+        .expect(200);
+      expect(res.body).to.exist;
+      expect(res.body[0].id).to.exist;
+      expect(res.body[0].amount).to.equal('100');
+      expect(res.body[0].status).to.equal('pending');
+      expect(res.body[0].walletId).to.equal(wallet.id);
+    })
+  })
 })

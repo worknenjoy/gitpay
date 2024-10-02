@@ -7,6 +7,10 @@ const CREATE_WALLET_REQUESTED = 'CREATE_WALLET_REQUESTED';
 const CREATE_WALLET_SUCCESS = 'CREATE_WALLET_SUCCESS';
 const CREATE_WALLET_ERROR = 'CREATE_WALLET_ERROR';
 
+const LIST_WALLETS_REQUESTED = 'LIST_WALLETS_REQUESTED';
+const LIST_WALLETS_SUCCESS = 'LIST_WALLETS_SUCCESS';
+const LIST_WALLETS_ERROR = 'LIST_WALLETS_ERROR';
+
 export const createWalletRequested = () => {
   return { type: CREATE_WALLET_REQUESTED };
 }
@@ -47,8 +51,43 @@ export const createWallet = (wallet) => {
   }
 }
 
+export const listWalletsRequested = () => {
+  return { type: LIST_WALLETS_REQUESTED, completed: false };
+}
+
+export const listWalletsSuccess = (wallets) => {
+  return { type: LIST_WALLETS_SUCCESS, completed: true, wallets };
+}
+
+export const listWalletsError = (error) => {
+  return { type: LIST_WALLETS_ERROR, completed: true, error };
+}
+
+export const listWallets = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch(listWalletsRequested());
+    return axios
+      .get(api.API_URL + '/wallets')
+      .then(wallets => {
+        if (wallets.data) {
+          return dispatch(listWalletsSuccess(wallets.data))
+        }
+        return dispatch(
+          listWalletsError('actions.wallet.list.error')
+        )
+      })
+      .catch(e => {
+        return dispatch(listWalletsError(e))
+      })
+  }
+}
+
 export {
   CREATE_WALLET_REQUESTED,
   CREATE_WALLET_SUCCESS,
-  CREATE_WALLET_ERROR
+  CREATE_WALLET_ERROR,
+  LIST_WALLETS_REQUESTED,
+  LIST_WALLETS_SUCCESS,
+  LIST_WALLETS_ERROR
 }

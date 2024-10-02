@@ -19,3 +19,13 @@ exports.updateWalletOrder = async (req, res) => {
     res.status(400).send(error);
   }
 }
+
+exports.walletOrderList = async (req, res) => {
+  try {
+    const wallets = await WalletOrder.walletOrderList({walletId: req.query.walletId});
+    res.status(200).send(wallets);
+  } catch (error) {
+    console.log('error on walletList', error);
+    res.status(400).send(error);
+  }
+}
