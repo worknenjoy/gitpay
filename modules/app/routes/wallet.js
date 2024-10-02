@@ -8,5 +8,6 @@ router.use(secure)
 
 router.post('/', controllers.createWallet)
 router.put('/:id', controllers.updateWallet)
+router.get('/', controllers.walletList)
 
 module.exports = router

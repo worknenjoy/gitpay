@@ -44,12 +44,26 @@ const styles = (theme: Theme) =>
     }
   })
 
-const Wallets = ({ classes, intl, user, customer, fetchCustomer, wallets }) => {
+const Wallets = ({ classes, intl, user, customer, fetchCustomer, wallets, createWallet }) => {
   const [addFundsDialog, setAddFundsDialog] = useState(false)
+  const [ showWalletName, setShowWalletName ] = useState(false)
+  const [ walletName, setWalletName ] = useState('Default wallet')
 
   const openAddFundsDialog = (e) => {
     e.preventDefault()
     setAddFundsDialog(true)
+  }
+
+  const createWalletName = () => {
+    console.log('Create wallet')
+    setShowWalletName(true)
+  }
+
+  const confirmWalletCreate = async () => {
+    console.log('Confirm wallet creation')
+    await createWallet({
+      name: walletName,
+    })
   }
 
   useEffect(() => {
@@ -80,12 +94,59 @@ const Wallets = ({ classes, intl, user, customer, fetchCustomer, wallets }) => {
               size='small'
               color='secondary'
               className={classes.button}
+              disabled={!wallets || wallets?.length === 0}
               onClick={(e) => openAddFundsDialog(e)}
             >
               <FormattedMessage id='general.payments.add' defaultMessage='Add funds' />
             </Button>
           </div>
         </div>
+        { wallets && wallets.length > 0 ? (
+          wallets.map((wallet, index) => (
+            <div key={index} className={classes.paper}>
+              <Typography variant='h6' gutterBottom>
+                {wallet.name}
+              </Typography>
+              <Typography variant='body1' gutterBottom>
+                {wallet.balance}
+              </Typography>
+            </div>
+          ))
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'center'}}>
+            <div className={classes.paper}>
+              <div>
+                <Typography variant='body1' gutterBottom>
+                  <FormattedMessage id='general.wallets.empty' defaultMessage='No wallets found' />
+                </Typography>
+                <Button onClick={createWalletName} variant='contained' size='large' color='secondary' className={classes.button}>
+                  <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
+                </Button>
+              </div>
+              { showWalletName && (
+                <form>
+                  <div>
+                    <Typography variant='body1' gutterBottom>
+                      <FormattedMessage id='general.wallets.name' defaultMessage='Wallet name' />
+                    </Typography>
+                  </div>
+                  <div>
+                    <input 
+                      type='text'
+                      defaultValue={'Default wallet'}
+                      onChange={(e) => setWalletName(e.target.value)}
+                      value={walletName}
+                    />
+                    <Button onClick={confirmWalletCreate} variant='contained' size='large' color='secondary' className={classes.button}>
+                      <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
+        { wallets && wallets.length > 0 && (
         <div style={{ marginTop: 10, marginBottom: 30 }}>
           <CustomPaginationActionsTable
             tableHead={[
@@ -103,6 +164,7 @@ const Wallets = ({ classes, intl, user, customer, fetchCustomer, wallets }) => {
             }}
           />
         </div>
+        )}
       </Container>
     </div>
   )

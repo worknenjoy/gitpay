@@ -12,6 +12,8 @@ const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')
 const IssueClosedMail = require('../../mail/issueClosed')
 
+const WalletOrderUpdate = require('../../walletOrders/walletOrderUpdate')
+
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
@@ -261,7 +263,7 @@ exports.github = async (req, res) => {
   // eslint-disable-next-line no-console
 }
 
-exports.updateWebhook = (req, res) => {
+exports.updateWebhook = async (req, res) => {
   // eslint-disable-next-line no-console
 
   if (req.body.object === 'event') {
@@ -549,6 +551,22 @@ exports.updateWebhook = (req, res) => {
             return res.status(400).send(e)
           })
 
+        break
+      case 'invoice.paid':
+        try {
+          const walletOrderUpdate = await models.WalletOrder.update({
+            status: event.data.object.status
+          }, {
+            where: {
+              source_id: event.data.object.id
+            }
+          })
+          console.log('walletOrderUpdate', walletOrderUpdate)
+        } catch (error) {
+          console.log('error', error)
+          return new Error(error)
+        }
+        return res.json(req.body)
         break
       case 'transfer.created':
         models.Transfer.findOne({

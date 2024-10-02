@@ -5,7 +5,7 @@ const expect = require('chai').expect
 const api = require('../server')
 const agent = request.agent(api)
 const nock = require('nock')
-const { truncateModels, createTask, createAssign, createTransfer, createOrder } = require('./helpers')
+const { truncateModels, registerAndLogin, createTransfer } = require('./helpers')
 const models = require('../models')
 
 const chargeData = require('./data/charge')
@@ -21,6 +21,8 @@ const githubWebhookIssueLabeled = require('./data/github.issue.labeled')
 const invoiceUpdated = require('./data/stripe.invoice.update')
 const invoiceCreated = require('./data/stripe.invoice.create')
 const invoicePaid = require('./data/stripe.invoice.paid')
+const invoiceWebhookPaid = require('./data/stripe.webhook.invoice')
+const { register } = require('module')
 
 describe('webhooks', () => {
   beforeEach(async () => {
@@ -302,15 +304,15 @@ describe('webhooks', () => {
                   .then(assign => {
                     task
                       .update({ assigned: assign.dataValues.id }, { where: { id: task.id } })
-                      .then( updatedTask => {
-                        createTransfer({userId: user.dataValues.id, transfer_method: 'stripe', taskId: task.id, transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', to: assign.dataValues.userId, status: 'pending'}).then(transfer => {
+                      .then(updatedTask => {
+                        createTransfer({ userId: user.dataValues.id, transfer_method: 'stripe', taskId: task.id, transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', to: assign.dataValues.userId, status: 'pending' }).then(transfer => {
                           agent
                             .post('/webhooks')
                             .send(transferData.updated)
                             .expect('Content-Type', /json/)
                             .expect(200)
                             .end((err, res) => {
-                              models.Transfer.findOne({where: {id: transfer.dataValues.id}}).then(transfer => {
+                              models.Transfer.findOne({ where: { id: transfer.dataValues.id } }).then(transfer => {
                                 expect(res.statusCode).to.equal(200)
                                 expect(res.body).to.exist
                                 expect(res.body.id).to.equal(
@@ -318,11 +320,11 @@ describe('webhooks', () => {
                                 )
                                 expect(transfer.dataValues.status).to.equal('created')
                                 done(err);
-                              }).catch(done)     
+                              }).catch(done)
                             })
-                          }).catch(done)
                         }).catch(done)
-                        
+                      }).catch(done)
+
                   }).catch(done)
               }).catch(done)
           }).catch(done)
@@ -342,7 +344,7 @@ describe('webhooks', () => {
               .expect('Content-Type', /json/)
               .expect(200)
               .end((err, res) => {
-                models.Payout.findOne({where: {source_id: res.body.data.object.id}}).then(payout => {
+                models.Payout.findOne({ where: { source_id: res.body.data.object.id } }).then(payout => {
                   expect(res.statusCode).to.equal(200)
                   expect(res.body).to.exist
                   expect(res.body.id).to.equal(
@@ -383,13 +385,13 @@ describe('webhooks', () => {
                   expect(res.body.id).to.equal(
                     'evt_1CeM4PLlCJ9CeQReQrtxB9GJ'
                   )
-                  models.Payout.findOne({where: {id: newPayout.dataValues.id}}).then(payout => {
+                  models.Payout.findOne({ where: { id: newPayout.dataValues.id } }).then(payout => {
                     expect(payout.dataValues.status).to.equal('paid')
                     expect(payout.dataValues.paid).to.equal(true)
                     expect(payout.dataValues.amount).to.equal('7311')
                     done(err);
                   }).catch(done)
-              })
+                })
             }).catch(done)
           }).catch(done)
       })
@@ -437,46 +439,46 @@ describe('webhooks', () => {
   describe('webhooks for invoice', () => {
     it('should notify the user when the invoice is created', done => {
       agent
-      .post('/auth/register')
-      .send({email: 'invoice_test@gmail.com', password: 'teste'})
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .then((user) => {
-        const userId = user.body.id;
-        const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-        models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
-          task.createAssign({userId: userId}).then((assign) => {
-            task.update({ assigned: assign.dataValues.id}).then(taskUpdated => {
-              task.createOrder({
-                provider: 'stripe',
-                type: 'invoice-item',
-                source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
-                userId: userId,
-                currency: 'usd',
-                amount: 200
-              }).then(order => {
-                agent
-                  .post('/webhooks')
-                  .send(invoiceCreated.created)
-                  .expect('Content-Type', /json/)
-                  .expect(200)
-                  .end((err, res) => {
-                    expect(res.statusCode).to.equal(200)
-                    expect(res.body).to.exist
-                    expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx')
-                    expect(res.body.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
-                    models.Order.findOne({
-                      where: {
-                        id: order.id
-                      },
-                      include: [models.Task]
-                    }).then(orderFinal => {
-                      expect(orderFinal.dataValues.paid).to.equal(false)
-                      expect(orderFinal.dataValues.source_id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
-                      expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
-                      done()
-                    }).catch(e => done(e))
-                  })
+        .post('/auth/register')
+        .send({ email: 'invoice_test@gmail.com', password: 'teste' })
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then((user) => {
+          const userId = user.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          models.Task.build({ url: github_url, provider: 'github', userId: userId }).save().then((task) => {
+            task.createAssign({ userId: userId }).then((assign) => {
+              task.update({ assigned: assign.dataValues.id }).then(taskUpdated => {
+                task.createOrder({
+                  provider: 'stripe',
+                  type: 'invoice-item',
+                  source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
+                  userId: userId,
+                  currency: 'usd',
+                  amount: 200
+                }).then(order => {
+                  agent
+                    .post('/webhooks')
+                    .send(invoiceCreated.created)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+                      expect(res.body).to.exist
+                      expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx')
+                      expect(res.body.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
+                      models.Order.findOne({
+                        where: {
+                          id: order.id
+                        },
+                        include: [models.Task]
+                      }).then(orderFinal => {
+                        expect(orderFinal.dataValues.paid).to.equal(false)
+                        expect(orderFinal.dataValues.source_id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
+                        expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
+                        done()
+                      }).catch(e => done(e))
+                    })
                 })
               }).catch(e => console.log('cant create order', e))
             })
@@ -485,48 +487,48 @@ describe('webhooks', () => {
     })
     it('should notify the user when the invoice is updated', done => {
       agent
-      .post('/auth/register')
-      .send({email: 'invoice_test@gmail.com', password: 'teste'})
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .then((user) => {
-        if(!user) console.log('error to register user')
-        const userId = user.body.id;
-        const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-        models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
-          task.createAssign({userId: userId}).then((assign) => {
-            task.update({ assigned: assign.dataValues.id}).then(taskUpdated => {
-              task.createOrder({
-                provider: 'stripe',
-                type: 'invoice-item',
-                source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
-                userId: userId,
-                currency: 'usd',
-                amount: 200
-              }).then(order => {
-                agent
-                  .post('/webhooks')
-                  .send(invoiceUpdated.updated)
-                  .expect('Content-Type', /json/)
-                  .expect(200)
-                  .end((err, res) => {
-                    expect(res.statusCode).to.equal(200)
-                    expect(res.body).to.exist
-                    expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx')
-                    expect(res.body.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
-                    models.Order.findOne({
-                      where: {
-                        id: order.id
-                      },
-                      include: [models.Task]
-                    }).then(orderFinal => {
-                      expect(orderFinal.dataValues.paid).to.equal(true)
-                      expect(orderFinal.dataValues.status).to.equal('succeeded')
-                      expect(orderFinal.dataValues.source).to.equal('ch_1IlAjBBrSjgsps2DLjTdMXwJ')
-                      expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
-                      done()
-                    }).catch(e => done(e))
-                  })
+        .post('/auth/register')
+        .send({ email: 'invoice_test@gmail.com', password: 'teste' })
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then((user) => {
+          if (!user) console.log('error to register user')
+          const userId = user.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          models.Task.build({ url: github_url, provider: 'github', userId: userId }).save().then((task) => {
+            task.createAssign({ userId: userId }).then((assign) => {
+              task.update({ assigned: assign.dataValues.id }).then(taskUpdated => {
+                task.createOrder({
+                  provider: 'stripe',
+                  type: 'invoice-item',
+                  source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
+                  userId: userId,
+                  currency: 'usd',
+                  amount: 200
+                }).then(order => {
+                  agent
+                    .post('/webhooks')
+                    .send(invoiceUpdated.updated)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+                      expect(res.body).to.exist
+                      expect(res.body.id).to.equal('evt_1CcecMBrSjgsps2DMFZw5Tyx')
+                      expect(res.body.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
+                      models.Order.findOne({
+                        where: {
+                          id: order.id
+                        },
+                        include: [models.Task]
+                      }).then(orderFinal => {
+                        expect(orderFinal.dataValues.paid).to.equal(true)
+                        expect(orderFinal.dataValues.status).to.equal('succeeded')
+                        expect(orderFinal.dataValues.source).to.equal('ch_1IlAjBBrSjgsps2DLjTdMXwJ')
+                        expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
+                        done()
+                      }).catch(e => done(e))
+                    })
                 })
               }).catch(e => console.log('cant create order', e))
             })
@@ -535,68 +537,102 @@ describe('webhooks', () => {
     })
     xit('should update order and create an user with funding type when the invoice payment is a success', done => {
       agent
-      .post('/auth/register')
-      .send({email: 'invoice_test@gmail.com', password: 'teste'})
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .then((user) => {
-        if(!user) console.log('error to register user')
-        const userId = user.body.id;
-        const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
-        models.Task.build({url: github_url, provider: 'github', userId: userId}).save().then((task) => {
-          task.createAssign({userId: userId}).then((assign) => {
-            task.update({ assigned: assign.dataValues.id}).then(taskUpdated => {
-              task.createOrder({
-                provider: 'stripe',
-                type: 'invoice-item',
-                userId: userId,
-                currency: 'usd',
-                amount: 200,
-                taskId: task.id,
-                customer_id: 'cus_J4zTz8uySTkLlL',
-                email: 'test@fitnowbrasil.com.br',
-                source_id: 'in_1KknpoBrSjgsps2DMwiQEzJ9'
-              }).then(order => {
-                agent
-                  .post('/webhooks')
-                  .send(invoicePaid.paid)
-                  .expect('Content-Type', /json/)
-                  .expect(200)
-                  .end((err, res) => {
-                    expect(res.statusCode).to.equal(200)
-                    expect(res.body).to.exist
-                    expect(res.body.id[0]).to.equal('evt_1KkomkBrSjgsps2DGGBtipW4')
-                    expect(res.body.data.object.id[0]).to.equal('in_1KknpoBrSjgsps2DMwiQEzJ9')
-                    models.Order.findOne({
-                      where: {
-                        id: order.id
-                      },
-                      include: [models.Task]
-                    }).then(orderFinal => {
-                      expect(orderFinal.dataValues.paid).to.equal(true)
-                      expect(orderFinal.dataValues.status).to.equal('paid')
-                      expect(orderFinal.dataValues.source).to.equal('ch_3KknvTBrSjgsps2D036v7gVJ')
-                      expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
+        .post('/auth/register')
+        .send({ email: 'invoice_test@gmail.com', password: 'teste' })
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then((user) => {
+          if (!user) console.log('error to register user')
+          const userId = user.body.id;
+          const github_url = 'https://github.com/worknenjoy/truppie/issues/76';
+          models.Task.build({ url: github_url, provider: 'github', userId: userId }).save().then((task) => {
+            task.createAssign({ userId: userId }).then((assign) => {
+              task.update({ assigned: assign.dataValues.id }).then(taskUpdated => {
+                task.createOrder({
+                  provider: 'stripe',
+                  type: 'invoice-item',
+                  userId: userId,
+                  currency: 'usd',
+                  amount: 200,
+                  taskId: task.id,
+                  customer_id: 'cus_J4zTz8uySTkLlL',
+                  email: 'test@fitnowbrasil.com.br',
+                  source_id: 'in_1KknpoBrSjgsps2DMwiQEzJ9'
+                }).then(order => {
+                  agent
+                    .post('/webhooks')
+                    .send(invoicePaid.paid)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+                      expect(res.body).to.exist
+                      expect(res.body.id[0]).to.equal('evt_1KkomkBrSjgsps2DGGBtipW4')
+                      expect(res.body.data.object.id[0]).to.equal('in_1KknpoBrSjgsps2DMwiQEzJ9')
+                      models.Order.findOne({
+                        where: {
+                          id: order.id
+                        },
+                        include: [models.Task]
+                      }).then(orderFinal => {
+                        expect(orderFinal.dataValues.paid).to.equal(true)
+                        expect(orderFinal.dataValues.status).to.equal('paid')
+                        expect(orderFinal.dataValues.source).to.equal('ch_3KknvTBrSjgsps2D036v7gVJ')
+                        expect(orderFinal.dataValues.Task.dataValues.url).to.equal(github_url)
 
-                      models.User.findOne(
-                        {
-                          where: {
-                            active: false,
-                            email: "test@fitnowbrasil.com.br"
-                          },
-                        }
-                      ).then(async user => {
-                        const types = await user.getTypes({where: {name: "funding"}})
-                        expect(types).to.not.be.empty
-                        done()
-                      }).catch(e => done(e))
+                        models.User.findOne(
+                          {
+                            where: {
+                              active: false,
+                              email: "test@fitnowbrasil.com.br"
+                            },
+                          }
+                        ).then(async user => {
+                          const types = await user.getTypes({ where: { name: "funding" } })
+                          expect(types).to.not.be.empty
+                          done()
+                        }).catch(e => done(e))
+                      })
                     })
-                  })
                 })
               }).catch(e => console.log('cant create order', e))
             })
           })
         })
+    })
+  })
+
+  describe('wehooks for Wallet order', () => {
+    it('should update a new wallet order when a webhook invoice.paid is triggered', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await models.Wallet.create({
+        name: 'Test Wallet',
+        userId: user.body.id,
+        balance: 0
+      })
+      await models.WalletOrder.create({
+        amount: 100,
+        status: 'open',
+        source_id: 'in_1Q2fh8BrSjgsps2DUqQsGLDj',
+        walletId: wallet.id
+      })
+      const res = await agent
+        .post('/webhooks')
+        .send(invoiceWebhookPaid.paid)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.id).to.equal('evt_1Q2fklBrSjgsps2Dx0mEXsXv')
+      expect(res.body.data.object.id).to.equal('in_1Q2fh8BrSjgsps2DUqQsGLDj')
+      const walletOrder = await models.WalletOrder.findOne({
+        where: {
+          source_id: res.body.data.object.id
+        }
+      })
+      expect(walletOrder).to.exist
+      expect(walletOrder.status).to.equal('paid')
     })
   })
 

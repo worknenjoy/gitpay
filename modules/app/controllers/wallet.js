@@ -20,3 +20,13 @@ exports.updateWallet = async (req, res) => {
     res.status(400).send(error);
   }
 }
+
+exports.walletList = async (req, res) => {
+  try {
+    const wallets = await Wallet.walletList({userId: req.user.id});
+    res.status(200).send(wallets);
+  } catch (error) {
+    console.log('error on walletList', error);
+    res.status(400).send(error);
+  }
+}
