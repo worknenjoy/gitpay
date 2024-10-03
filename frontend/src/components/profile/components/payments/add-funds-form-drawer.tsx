@@ -19,7 +19,7 @@ const taskPaymentFormMessages = defineMessages({
   },
 })
 
-const AddFundsFormDrawer = ({ intl, open, onClose, customer }) => {
+const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
   const [price, setPrice] = useState(0)
 
   useEffect(() => {
@@ -48,6 +48,7 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer }) => {
               price={price}
               onClose={onClose}
               customer={customer}
+              onPay={onPay}
             />
           )
         }

@@ -9,20 +9,29 @@ const User = require('../../models').User
 
 
 module.exports = Promise.method(async function walletOrderBuilds(params) {
+  const wallet = params.walletId && await Wallet.findOne({
+    where: {
+      id: params.walletId
+    }
+  })
+
   const user = params.userId && await User.findOne({
     where: {
       id: params.userId
     }
   })
 
-  if (!user) {
-    return { error: 'No valid user' }
+  if(!user) {
+    return new Error({ error: 'No valid User' })
+  }
+
+  if (!wallet) {
+    return new Error({ error: 'No valid Wallet' })
   }
 
   const walletOrder = await WalletOrder.create({
     ...params,
-    status: 'pending',
-    userId: user.id,
+    status: 'pending'
   })
   try {
     const invoice = await stripe.invoices.create({
@@ -53,7 +62,7 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
     const updatedWalletOrder = await WalletOrder.update({
       source_id: invoiceItem.id,
       source_type: 'invoice-item',
-      status: invoice.status
+      status: finalizeInvoice.status || invoice.status
     }, {
       where: {
         id: walletOrder.id

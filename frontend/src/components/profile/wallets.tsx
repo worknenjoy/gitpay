@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import moment from 'moment'
 
 import CustomPaginationActionsTable from './wallets-table'
 import AddFundsFormDrawer from './components/payments/add-funds-form-drawer'
@@ -77,6 +78,17 @@ const Wallets = ({
     await listWallets(user.id)
   }
 
+  const payFunds = async (price) => {
+    const walletId = wallets.data[0]?.id
+    await createWalletOrder({
+      walletId,
+      amount: price
+    })
+    await listWalletOrders(walletId)
+    setAddFundsDialog(false)
+
+  }
+
   useEffect(() => {
     const userId = user.id
     userId && listWallets(userId)
@@ -86,7 +98,7 @@ const Wallets = ({
   useEffect(() => {
     const walletId = wallets.data[0]?.id
     walletId && listWalletOrders(walletId)
-  }, [wallets])
+  }, [wallets, createWalletOrder])
 
   return (
     <div style={{ marginTop: 40 }}>
@@ -94,6 +106,7 @@ const Wallets = ({
         open={addFundsDialog}
         onClose={() => setAddFundsDialog(false)}
         customer={customer}
+        onPay={payFunds}
       />
       <Container>
         <div
@@ -155,18 +168,23 @@ const Wallets = ({
         <div style={{ marginTop: 10, marginBottom: 30 }}>
           <CustomPaginationActionsTable
             tableHead={[
-              intl.formatMessage(messages.cardTableHeaderPaid),
               intl.formatMessage(messages.cardTableHeaderStatus),
-              intl.formatMessage(messages.cardTableHeaderIssue),
               intl.formatMessage(messages.cardTableHeaderValue),
-              intl.formatMessage(messages.cardTableHeaderPayment),
               intl.formatMessage(messages.cardTableHeaderCreated),
               intl.formatMessage(messages.cardTableHeaderActions)
             ]}
-            walletOrders={{
-              data: walletOrders.data,
-              completed: true
-            }}
+            walletOrders={
+              walletOrders && walletOrders.data &&
+              {
+                ...walletOrders,
+                data: walletOrders?.data?.map( wo => [
+                  wo.status,
+                  `$ ${wo.amount}`,
+                  moment(wo.createdAt).format('LLL'),
+                  ' '
+                ])
+              } || {}
+            }
           />
         </div>
         )}

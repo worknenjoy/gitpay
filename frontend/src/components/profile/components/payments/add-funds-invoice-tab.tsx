@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom'
-import { formatCurrency } from '../../../../utils/format-currency'
 import InvoicePayment from '../../../design-library/organisms/invoice-payment/invoice-payment'
 
 const AddFundsInvoiceTab = ({
   price,
   customer,
-  history
+  history,
+  onPay
 }) => {
 
   const onInvoicePayment = async () => {
-    
+    await onPay(price)
   }
 
   useEffect(() => {

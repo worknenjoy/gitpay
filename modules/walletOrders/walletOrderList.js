@@ -15,6 +15,9 @@ module.exports = Promise.method(async function walletListOrder(params) {
   return models.WalletOrder.findAll({
     where: {
       walletId: wallet.id
-    }
+    },
+    order: [
+      ['id', 'DESC']
+    ]
   })
 })

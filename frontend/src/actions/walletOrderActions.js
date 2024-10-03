@@ -67,7 +67,7 @@ export const listWalletOrders = (walletId) => {
   return (dispatch) => {
     dispatch(listWalletOrdersRequested());
     return axios
-      .get(api.API_URL + '/wallet/orders', { query: { walletId } })
+      .get(api.API_URL + '/wallets/orders', { params: { walletId } })
       .then(walletOrders => {
         if (walletOrders.data) {
           return dispatch(listWalletOrdersSuccess(walletOrders.data))
