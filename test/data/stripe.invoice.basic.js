@@ -171,7 +171,7 @@ module.exports.updated = {
   "ending_balance": null,
   "footer": null,
   "from_invoice": null,
-  "hosted_invoice_url": null,
+  "hosted_invoice_url": 'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj',
   "invoice_pdf": null,
   "issuer": {
     "type": "self"

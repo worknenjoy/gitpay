@@ -11,6 +11,10 @@ const LIST_WALLET_ORDERS_REQUESTED = 'LIST_WALLET_ORDERS_REQUESTED';
 const LIST_WALLET_ORDERS_SUCCESS = 'LIST_WALLET_ORDERS_SUCCESS';
 const LIST_WALLET_ORDERS_ERROR = 'LIST_WALLET_ORDERS_ERROR';
 
+const FETCH_WALLET_ORDER_REQUESTED = 'FETCH_WALLET_ORDER_REQUESTED';
+const FETCH_WALLET_ORDER_SUCCESS = 'FETCH_WALLET_ORDER_SUCCESS';
+const FETCH_WALLET_ORDER_ERROR = 'FETCH_WALLET_ORDER_ERROR';
+
 export const createWalletOrderRequested = () => {
   return { type: CREATE_WALLET_ORDER_REQUESTED };
 }
@@ -82,11 +86,46 @@ export const listWalletOrders = (walletId) => {
   }
 }
 
+export const fetchWalletOrderRequested = () => {
+  return { type: FETCH_WALLET_ORDER_REQUESTED };
+}
+
+export const fetchWalletOrderSuccess = (walletOrder) => {
+  return { type: FETCH_WALLET_ORDER_SUCCESS, walletOrder };
+}
+
+export const fetchWalletOrderError = (error) => {
+  return { type: FETCH_WALLET_ORDER_ERROR, error };
+}
+
+export const fetchWalletOrder = (id) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(fetchWalletOrderRequested());
+    return axios
+      .get(api.API_URL + '/wallets/orders/' + id)
+      .then(walletOrder => {
+        if (walletOrder.data) {
+          return dispatch(fetchWalletOrderSuccess(walletOrder.data))
+        }
+        return dispatch(
+          fetchWalletOrderError('actions.walletOrder.fetch.error')
+        )
+      })
+      .catch(e => {
+        return dispatch(fetchWalletOrderError(e))
+      })
+  }
+}
+
 export {
   CREATE_WALLET_ORDER_REQUESTED,
   CREATE_WALLET_ORDER_SUCCESS,
   CREATE_WALLET_ORDER_ERROR,
   LIST_WALLET_ORDERS_REQUESTED,
   LIST_WALLET_ORDERS_SUCCESS,
-  LIST_WALLET_ORDERS_ERROR
+  LIST_WALLET_ORDERS_ERROR,
+  FETCH_WALLET_ORDER_REQUESTED,
+  FETCH_WALLET_ORDER_SUCCESS,
+  FETCH_WALLET_ORDER_ERROR
 }

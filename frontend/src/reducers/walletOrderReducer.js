@@ -4,7 +4,10 @@ import {
   CREATE_WALLET_ORDER_ERROR,
   LIST_WALLET_ORDERS_REQUESTED,
   LIST_WALLET_ORDERS_SUCCESS,
-  LIST_WALLET_ORDERS_ERROR
+  LIST_WALLET_ORDERS_ERROR,
+  FETCH_WALLET_ORDER_REQUESTED,
+  FETCH_WALLET_ORDER_SUCCESS,
+  FETCH_WALLET_ORDER_ERROR,
 } from '../actions/walletOrderActions'
 
 export const walletOrder = (state = { data: {}, completed: true, error: {} }, action) => {
@@ -14,6 +17,12 @@ export const walletOrder = (state = { data: {}, completed: true, error: {} }, ac
     case CREATE_WALLET_ORDER_SUCCESS:
       return { ...state, completed: action.completed, data: action.walletOrder }
     case CREATE_WALLET_ORDER_ERROR:
+      return { ...state, completed: action.completed, error: action.error }
+    case FETCH_WALLET_ORDER_REQUESTED:
+      return { ...state, completed: action.completed }
+    case FETCH_WALLET_ORDER_SUCCESS:
+      return { ...state, completed: action.completed, data: action.walletOrder }
+    case FETCH_WALLET_ORDER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     default:
       return state

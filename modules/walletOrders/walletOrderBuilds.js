@@ -31,7 +31,9 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
 
   const walletOrder = await WalletOrder.create({
     ...params,
-    status: 'pending'
+    currency: 'usd',
+    status: 'pending',
+    paid: false,
   })
   try {
     const invoice = await stripe.invoices.create({
@@ -62,6 +64,7 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
     const updatedWalletOrder = await WalletOrder.update({
       source_id: invoiceItem.id,
       source_type: 'invoice-item',
+      source: invoice.id,
       status: finalizeInvoice.status || invoice.status
     }, {
       where: {

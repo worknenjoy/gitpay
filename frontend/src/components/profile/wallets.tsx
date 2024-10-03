@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { defineMessages } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../task/messages/task-messages'
@@ -9,12 +8,13 @@ import {
   Typography
 } from '@material-ui/core'
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import moment from 'moment'
 
 import CustomPaginationActionsTable from './wallets-table'
 import AddFundsFormDrawer from './components/payments/add-funds-form-drawer'
 import BalanceCard from '../design-library/molecules/balance-card/balance-card'
+import WalletForm from './components/wallets/wallet-form'
 
 const paymentMessages = defineMessages({
   paymentTabIssue: {
@@ -45,7 +45,7 @@ const styles = (theme: Theme) =>
     }
   })
 
-const Wallets = ({ 
+const Wallets = ({
   classes,
   intl,
   user,
@@ -56,11 +56,13 @@ const Wallets = ({
   listWallets,
   createWalletOrder,
   listWalletOrders,
-  walletOrders
+  walletOrders,
+  walletOrder,
+  fetchWalletOrder
 }) => {
   const [addFundsDialog, setAddFundsDialog] = useState(false)
-  const [ showWalletName, setShowWalletName ] = useState(false)
-  const [ walletName, setWalletName ] = useState('Default wallet')
+  const [showWalletName, setShowWalletName] = useState(false)
+  const [walletName, setWalletName] = useState('Default wallet')
 
   const openAddFundsDialog = (e) => {
     e.preventDefault()
@@ -86,7 +88,14 @@ const Wallets = ({
     })
     await listWalletOrders(walletId)
     setAddFundsDialog(false)
+  }
 
+  const handleInvoicePayment = async (walletOrderId) => {
+    await fetchWalletOrder(walletOrderId)
+    const invoice = walletOrder?.data?.invoice
+    if(invoice?.hosted_invoice_url) {
+      window.location.href = invoice.hosted_invoice_url
+    }
   }
 
   useEffect(() => {
@@ -119,74 +128,73 @@ const Wallets = ({
             <FormattedMessage id='general.wallets' defaultMessage='Wallets' />
           </Typography>
         </div>
-        { wallets.data && wallets.data.length > 0 ? (
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-          {wallets.data.map((wallet, index) => (
-            <ReactPlaceholder type='text' rows={2} ready={wallets.completed} key={index}>
-              <BalanceCard 
-                name={wallet.name || `Wallet #${index + 1}`} balance={wallet.balance} 
-                onAdd={(e) => openAddFundsDialog(e)}
-              />
-            </ReactPlaceholder>
-          ))}
+        {wallets.data && wallets.data.length > 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+            {wallets.data.map((wallet, index) => (
+              <ReactPlaceholder type='text' rows={2} ready={wallets.completed} key={index}>
+                <BalanceCard
+                  name={wallet.name || `Wallet #${index + 1}`} balance={wallet.balance}
+                  onAdd={(e) => openAddFundsDialog(e)}
+                />
+              </ReactPlaceholder>
+            ))}
           </div>
         ) : (
-          <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignSelf: 'center' }}>
             <div className={classes.paper}>
-              <div>
-                <Typography variant='body1' gutterBottom>
-                  <FormattedMessage id='general.wallets.empty' defaultMessage='No wallets found' />
-                </Typography>
-                <Button onClick={createWalletName} variant='contained' size='large' color='secondary' className={classes.button}>
-                  <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
-                </Button>
-              </div>
-              { showWalletName && (
-                <form>
-                  <div>
-                    <Typography variant='body1' gutterBottom>
-                      <FormattedMessage id='general.wallets.name' defaultMessage='Wallet name' />
-                    </Typography>
-                  </div>
-                  <div>
-                    <input 
-                      type='text'
-                      defaultValue={'Default wallet'}
-                      onChange={(e) => setWalletName(e.target.value)}
-                      value={walletName}
-                    />
-                    <Button onClick={confirmWalletCreate} variant='contained' size='large' color='secondary' className={classes.button}>
-                      <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
-                    </Button>
-                  </div>
-                </form>
+              {showWalletName ? (
+                <WalletForm
+                  value={walletName}
+                  onChange={setWalletName}
+                  onCreate={confirmWalletCreate}
+                />
+              ) : (
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}>
+                  <Typography variant='body1' gutterBottom>
+                    <FormattedMessage id='general.wallets.empty' defaultMessage='You dont have any active wallet' />
+                  </Typography>
+                  <Button style={{ marginTop: 12 }} onClick={createWalletName} variant='contained' size='large' color='secondary' className={classes.button}>
+                    <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
+                  </Button>
+                </div>
               )}
             </div>
           </div>
         )}
-        { wallets.data && wallets.data.length > 0 && (
-        <div style={{ marginTop: 10, marginBottom: 30 }}>
-          <CustomPaginationActionsTable
-            tableHead={[
-              intl.formatMessage(messages.cardTableHeaderStatus),
-              intl.formatMessage(messages.cardTableHeaderValue),
-              intl.formatMessage(messages.cardTableHeaderCreated),
-              intl.formatMessage(messages.cardTableHeaderActions)
-            ]}
-            walletOrders={
-              walletOrders && walletOrders.data &&
-              {
-                ...walletOrders,
-                data: walletOrders?.data?.map( wo => [
-                  wo.status,
-                  `$ ${wo.amount}`,
-                  moment(wo.createdAt).format('LLL'),
-                  ' '
-                ])
-              } || {}
-            }
-          />
-        </div>
+        {wallets.data && wallets.data.length > 0 && (
+          <div style={{ marginTop: 10, marginBottom: 30 }}>
+            <CustomPaginationActionsTable
+              tableHead={[
+                intl.formatMessage(messages.cardTableHeaderStatus),
+                intl.formatMessage(messages.cardTableHeaderValue),
+                intl.formatMessage(messages.cardTableHeaderCreated),
+                intl.formatMessage(messages.cardTableHeaderActions)
+              ]}
+              walletOrders={
+                walletOrders && walletOrders.data &&
+                {
+                  ...walletOrders,
+                  data: walletOrders?.data?.map(wo => [
+                    wo.status,
+                    `$ ${wo.amount}`,
+                    moment(wo.createdAt).format('LLL'),
+                    <>
+                      {(wo.status === 'open') &&
+                        <Button onClick={(e) => handleInvoicePayment(wo.id)} variant='contained' color='secondary' size='small'>
+                          <FormattedMessage id='general.wallets.table.actions.pay' defaultMessage='Pay invoice' />
+                        </Button>
+                      }
+                    </>
+                  ])
+                } || {}
+              }
+            />
+          </div>
         )}
       </Container>
     </div>

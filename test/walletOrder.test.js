@@ -56,6 +56,11 @@ describe('WalletOrder', () => {
       expect(res.body.amount).to.equal('100');
       expect(res.body.status).to.equal('open');
       expect(res.body.walletId).to.equal(wallet.id);
+      expect(res.body.source_id).to.equal('ii_1Q2fh8BrSjgsps2DQqY9k2h3');
+      expect(res.body.source_type).to.equal('invoice-item');
+      expect(res.body.currency).to.equal('usd');
+      expect(res.body.source).to.equal('in_1Q2fh8BrSjgsps2DUqQsGLDj');
+      expect(res.body.paid).to.equal(false);
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
@@ -237,6 +242,44 @@ describe('WalletOrder', () => {
       expect(res.body[0].amount).to.equal('100');
       expect(res.body[0].status).to.equal('pending');
       expect(res.body[0].walletId).to.equal(wallet.id);
+    })
+  })
+  describe('fetch wallet orders', () => {
+    beforeEach(() => {
+      nock('https://api.stripe.com')
+        .get(`/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj`)
+        .reply(200, invoiceBasic.updated, {
+          'Content-Type': 'application/json',
+        })
+    })
+    it('should fetch wallet order', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await models.Wallet.create({
+        userId: user.body.id,
+        name: 'Test Wallet',
+        balance: 0
+      });
+      const walletOrder = await models.WalletOrder.create({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'paid',
+        source_id: 'ii_1Q2fh8BrSjgsps2DQqY9k2h3',
+        source_type: 'invoice-item',
+        currency: 'usd',
+        source: 'in_1Q2fh8BrSjgsps2DUqQsGLDj',
+      });
+      const res = await agent
+        .get(`/wallets/orders/${walletOrder.id}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', user.headers.authorization)
+        .expect(200);
+      expect(res.body).to.exist;
+      expect(res.body.id).to.exist;
+      expect(res.body.amount).to.equal('100');
+      expect(res.body.status).to.equal('paid');
+      expect(res.body.walletId).to.equal(wallet.id);
+      expect(res.body.invoice.hosted_invoice_url).to.equal('https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj');
     })
   })
 })

@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     padding: 10,
   },
   balance: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
   },
   name: {

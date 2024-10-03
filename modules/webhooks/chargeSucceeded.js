@@ -52,8 +52,8 @@ const updateOrder = (event, paid, status, req, res) => {
 }
 
 const createOrder = (event) => {
-  const taskId = event.data.object.transfer_group.split('_')[1]
-
+  const taskId = event.data.object?.transfer_group?.split('_')[1]
+  if(!taskId) return Promise.resolve();
   return models.Task.findOne({
     where: { id: taskId }
   }).then(task => {
@@ -71,21 +71,25 @@ const createOrder = (event) => {
 }
 
 module.exports = (event, paid, status, req, res) => {
-  return models.Order.findOne({
-    where: {
-      source_id: event.data.object.source.id,
-      source: event.data.object.id
-    },
-  }).then(order => {
-    if (order) {
-      return updateOrder(event, paid, status, req, res)
-    }
-    else {
-      return createOrder(event).then(orderCreated => {
-        if (orderCreated) {
-          return updateOrder(event, paid, status, req, res)
-        }
-      })
-    }
-  })
+  const source_id = event?.data?.object?.source?.id
+  if(source_id) {
+    return models.Order.findOne({
+      where: {
+        source_id: event?.data?.object?.source?.id,
+        source: event?.data?.object?.id
+      },
+    }).then(order => {
+      if (order) {
+        return updateOrder(event, paid, status, req, res)
+      }
+      else {
+        return createOrder(event).then(orderCreated => {
+          if (orderCreated) {
+            return updateOrder(event, paid, status, req, res)
+          }
+        })
+      }
+    })
+  }
+  return res.json(req.body)
 }

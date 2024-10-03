@@ -29,3 +29,13 @@ exports.walletOrderList = async (req, res) => {
     res.status(400).send(error);
   }
 }
+
+exports.walletOrderFetch = async (req, res) => {
+  try {
+    const wallet = await WalletOrder.walletOrderFetch({id: req.params.id});
+    res.status(200).send(wallet);
+  } catch (error) {
+    console.log('error on walletFetch', error);
+    res.status(400).send(error);
+  }
+}

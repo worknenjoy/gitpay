@@ -613,7 +613,9 @@ describe('webhooks', () => {
       await models.WalletOrder.create({
         amount: 100,
         status: 'open',
-        source_id: 'in_1Q2fh8BrSjgsps2DUqQsGLDj',
+        source_id: 'ii_1Q2fh8BrSjgsps2DQqY9k2h3',
+        source_type: 'invoice-item',
+        source: 'in_1Q2fh8BrSjgsps2DUqQsGLDj',
         walletId: wallet.id
       })
       const res = await agent
@@ -628,7 +630,7 @@ describe('webhooks', () => {
       expect(res.body.data.object.id).to.equal('in_1Q2fh8BrSjgsps2DUqQsGLDj')
       const walletOrder = await models.WalletOrder.findOne({
         where: {
-          source_id: res.body.data.object.id
+          source: res.body.data.object.id
         }
       })
       expect(walletOrder).to.exist

@@ -558,15 +558,14 @@ exports.updateWebhook = async (req, res) => {
             status: event.data.object.status
           }, {
             where: {
-              source_id: event.data.object.id
+              source: event.data.object.id
             }
           })
-          console.log('walletOrderUpdate', walletOrderUpdate)
+          return res.json(req.body)
         } catch (error) {
           console.log('error', error)
           return new Error(error)
         }
-        return res.json(req.body)
         break
       case 'transfer.created':
         models.Transfer.findOne({
@@ -771,22 +770,26 @@ exports.updateWebhook = async (req, res) => {
               active: false
             }).then(async user => {
               await user.addType(await models.Type.find({ name: 'funding' }))
-              models.Order.update(
-                {
-                  status: event.data.object.status,
-                  source: event.data.object.charge[0],
-                  paid: true,
-                  userId: user.dataValues.id
-                },
-                {
-                  where: {
-                    source_id: event.data.object.id[0]
+              const source_id = event.data.object.id[0]
+              if(source_id) {
+                return models.Order.update(
+                  {
+                    status: event.data.object.status,
+                    source: event.data.object.charge[0],
+                    paid: true,
+                    userId: user.dataValues.id
                   },
-                  returning: true
-                }
-              ).then(order => {
-                return res.json(req.body)
-              })
+                  {
+                    where: {
+                      source_id: event.data.object.id[0]
+                    },
+                    returning: true
+                  }
+                ).then(order => {
+                  return res.json(req.body)
+                })
+              }
+              return res.json(req.body)
             })
           }
         }).catch(e => {
