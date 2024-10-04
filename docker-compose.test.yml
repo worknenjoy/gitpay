@@ -1,18 +1,33 @@
-version: '3.7'
-
 services:
   backend_test:
-    image: node:8.6
-    command: sh -c "npm install && npm run migrate-test && npm run test"
-    working_dir: /gitpay
-    volumes: 
-      - .:/gitpay    
+    container_name: backend_test
+    image: backend
+    command: bash -c "npm run migrate-test  && npm run seed-test && npm run test"
+    build:
+      context: .
+      dockerfile: .docker/backend.dockerfile
     environment:
       - NODE_ENV=test
-    network_mode: host
-  db_test:
-    image: postgres
-    environment:      
+      - POSTGRES_PORT=5433
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=gitpay_test
-    network_mode: host
+      - OAUTH_CLIENT_ID=fakeid
+      - OAUTH_CLIENT_SECRET=fakesecret
+      - PAYPAL_HOST="https://api.sandbox.paypal.com"
+
+    pull_policy: missing
+    depends_on:
+      - db_test
+    restart: "no"
+    ports:
+      - "3001:3000"
+
+  db_test:
+    container_name: db_test
+    image: postgres
+    pull_policy: missing
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gitpay_test
