@@ -152,7 +152,7 @@ describe('WalletOrder', () => {
         amount: 100
       });
       await agent
-        .put(`/wallets/orders/${walletOrder.id}`)
+        .put(`/wallets/orders/${walletOrder2.id}`)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('authorization', user.headers.authorization)
@@ -166,7 +166,7 @@ describe('WalletOrder', () => {
         amount: 100
       });
       await agent
-        .put(`/wallets/orders/${walletOrder.id}`)
+        .put(`/wallets/orders/${walletOrder3.id}`)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('authorization', user.headers.authorization)

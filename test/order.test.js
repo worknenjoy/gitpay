@@ -112,18 +112,28 @@ describe('orders', () => {
       const user = await registerAndLogin(agent)
       const newWallet = await models.Wallet.create({
         name: 'Test Wallet',
-        balance: 400,
+        balance: 0,
         userId: user.body.id
       });
+      const WalletOrder = await models.WalletOrder.create({
+        walletId: newWallet.id,
+        amount: 400,
+        status: 'paid'
+      });
+      const task = await models.Task.create({
+        url: 'https://foo',
+        userId: user.body.id
+      })
       const res = await agent
         .post('/orders/create/')
         .send({
-          source_id: newWallet.id,
+          walletId: newWallet.id,
           currency: 'usd',
           amount: 200,
-          source_type: 'wallet-funds',
           provider: 'wallet',
-          userId: user.body.id
+          source_type: 'wallet-funds',
+          userId: user.body.id,
+          taskId: task.id
         })
         .set('Authorization', user.headers.authorization)
         .expect(200)
@@ -132,6 +142,7 @@ describe('orders', () => {
       expect(res.body.source_id).to.exist;
       expect(res.body.currency).to.equal('usd');
       expect(res.body.amount).to.equal('200');
+      expect(res.body.status).to.equal('succeeded');
       const wallet = await models.Wallet.findOne({
         where: {
           userId: user.body.id

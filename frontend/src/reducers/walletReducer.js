@@ -4,7 +4,10 @@ import {
   CREATE_WALLET_ERROR,
   LIST_WALLETS_REQUESTED,
   LIST_WALLETS_SUCCESS,
-  LIST_WALLETS_ERROR
+  LIST_WALLETS_ERROR,
+  FETCH_WALLET_REQUESTED,
+  FETCH_WALLET_SUCCESS,
+  FETCH_WALLET_ERROR
 } from '../actions/walletActions'
 
 export const wallet = (state = { data: {}, completed: true, error: {} }, action) => {
@@ -14,6 +17,12 @@ export const wallet = (state = { data: {}, completed: true, error: {} }, action)
     case CREATE_WALLET_SUCCESS:
       return { ...state, completed: action.completed, data: action.wallet }
     case CREATE_WALLET_ERROR:
+      return { ...state, completed: action.completed, error: action.error }
+    case FETCH_WALLET_REQUESTED:
+      return { ...state, completed: action.completed }
+    case FETCH_WALLET_SUCCESS:
+      return { ...state, completed: action.completed, data: action.wallet }
+    case FETCH_WALLET_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     default:
       return state

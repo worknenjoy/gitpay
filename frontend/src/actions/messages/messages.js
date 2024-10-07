@@ -410,6 +410,38 @@ const messages = defineMessages({
     id: 'actions.task.issues.error.notfound',
     defaultMessage: 'Issue not found'
   },
+  notificationWalletCreateSuccess: {
+    id: 'actions.wallet.create.success',
+    defaultMessage: 'Wallet created successfully'
+  },
+  notificationWalletCreateError: {
+    id: 'actions.wallet.create.error',
+    defaultMessage: 'We could not create this wallet'
+  },
+  notificationWalletListSuccess: {
+    id: 'actions.wallet.list.error',
+    defaultMessage: 'We had an error to list your wallets'
+  },
+  notificationWalletFetchError: {
+    id: 'actions.wallet.fetch.error',
+    defaultMessage: 'We could not obtain this wallet'
+  },
+  notificationWalletOrderListError: {
+    id: 'actions.walletOrder.list.error',
+    defaultMessage: 'We could not list your wallet orders'
+  },
+  notificationWalletOrderFetchError: {
+    id: 'actions.walletOrder.fetch.error',
+    defaultMessage: 'We could not obtain this wallet order'
+  },
+  notificationWalletOrderCreateError: {
+    id: 'actions.walletOrder.create.error',
+    defaultMessage: 'We could not create this wallet order'
+  },
+  notificationWalletOrderCreateSuccess: {
+    id: 'actions.walletOrder.create.success',
+    defaultMessage: 'Wallet order created successfully'
+  },
 })
 
 export default messages

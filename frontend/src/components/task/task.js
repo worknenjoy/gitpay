@@ -904,6 +904,10 @@ class Task extends Component {
                       createOrder={this.props.createOrder}
                       fetchCustomer={this.props.fetchCustomer}
                       customer={this.props.customer}
+                      listWallets={this.props.listWallets}
+                      wallets={this.props.wallets}
+                      fetchWallet={this.props.fetchWallet}
+                      wallet={this.props.wallet}
                     />
                   </ReactPlaceholder>
                ) : (

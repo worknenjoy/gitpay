@@ -15,6 +15,8 @@ module.exports = Promise.method(async function walletList(params) {
   return models.Wallet.findAll({
     where: {
       userId: user.id
-    }
+    },
+    hooks: true,
+    individualHooks: true
   })
 })

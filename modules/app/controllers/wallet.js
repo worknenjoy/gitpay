@@ -30,3 +30,13 @@ exports.walletList = async (req, res) => {
     res.status(400).send(error);
   }
 }
+
+exports.walletFetch = async (req, res) => {
+  try {
+    const wallet = await Wallet.walletFetch({id: req.params.id, userId: req.user.id});
+    res.status(200).send(wallet);
+  } catch (error) {
+    console.log('error on walletFetch', error);
+    res.status(400).send(error);
+  }
+}

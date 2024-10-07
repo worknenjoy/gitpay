@@ -68,4 +68,22 @@ describe('Wallet', () => {
     expect(res.body[0].name).to.equal('Test Wallet');
     expect(res.body[0].balance).to.equal('0.00');
   });
+  it('should fetch wallet', async () => {
+    const user = await registerAndLogin(agent)
+    const wallet = await models.Wallet.create({
+      userId: user.body.id,
+      name: 'Test Wallet',
+      balance: 0
+    });
+    const res = await agent
+      .get(`/wallets/${wallet.id}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', user.headers.authorization)
+      .expect(200);
+    expect(res.body).to.exist;
+    expect(res.body.id).to.exist;
+    expect(res.body.name).to.equal('Test Wallet');
+    expect(res.body.balance).to.equal('0.00');
+  });
 })

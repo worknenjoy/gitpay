@@ -18,7 +18,13 @@ const useStyles = makeStyles({
   },
 });
 
-const BalanceCard = ({ name, balance, onAdd }) => {
+type BalanceCardProps = {
+  name: string;
+  balance: number;
+  onAdd?: (e: any) => void;
+}
+
+const BalanceCard = ({ name, balance, onAdd }:BalanceCardProps) => {
   const classes = useStyles();
 
   return (
@@ -31,16 +37,18 @@ const BalanceCard = ({ name, balance, onAdd }) => {
           ${balance}
         </Typography>
       </CardContent>
-      <CardActions style={{display: 'flex', justifyContent: 'flex-end'}}>
-        <Button 
-          variant='contained'
-          size='small'
-          color='secondary'
-          onClick={onAdd}
-        >
-          <FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />
-        </Button>
-      </CardActions>
+      { onAdd &&
+        <CardActions style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <Button 
+            variant='contained'
+            size='small'
+            color='secondary'
+            onClick={onAdd}
+          >
+            <FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />
+          </Button>
+        </CardActions>
+      }
     </Card>
   );
 };

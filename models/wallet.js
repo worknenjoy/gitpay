@@ -24,27 +24,62 @@ module.exports = (sequelize, DataTypes) => {
     })
   }
 
-  Wallet.addHook('afterFind', async (wallets, options) => {
-    if (!wallets) return;
+  Wallet.prototype.addBalance = async function () {
+    const orders = await sequelize.models.WalletOrder.findAll({
+      where: {
+        walletId: this.id,
+        status: 'paid'
+      },
+    })
+    const balance = orders.reduce((acc, order) => {
+      return acc.plus(order.amount)
+    }, new Decimal(0))
+    return balance
+  }
 
-    const updateBalance = async (wallet) => {
-      const walletOrders = await wallet.getWalletOrders({
-        where: { status: 'paid' }
-      });
+  Wallet.prototype.spendBalance = async function () {
+    const orders = await sequelize.models.Order.findAll({
+      where: {
+        provider: 'wallet',
+        source_type: 'wallet-funds',
+        source_id: `${this.id}`,
+        status: 'succeeded'
+      }
+    })
+    const balance = orders.reduce((acc, order) => {
+      return acc.plus(order.amount)
+    }, new Decimal(0))
+    return balance
+  }
 
-      const totalBalance = walletOrders.reduce((sum, order) => {
-        return sum + parseFloat(order.amount);
-      }, 0);
+  Wallet.prototype.totalBalance = async function () {
+    const totalAddedBalance = await this.addBalance()
+    const addedBalance = new Decimal(totalAddedBalance)
+    return addedBalance.minus(await this.spendBalance())
+  }
 
-      wallet.balance = new Decimal(totalBalance).toFixed(2);
-    };
-
-    if (Array.isArray(wallets)) {
-      await Promise.all(wallets.map(updateBalance));
+  Wallet.addHook('afterFind', async (wallet, options) => {
+    if (!wallet) return;
+  
+    if (Array.isArray(wallet)) {
+      // Handle findAll case
+      for (const singleWallet of wallet) {
+        await updateWalletBalance(singleWallet, options);
+      }
     } else {
-      await updateBalance(wallets);
+      // Handle findByPk or findOne case
+      await updateWalletBalance(wallet, options);
     }
   });
+  
+  // Helper function to update the balance of a wallet
+  async function updateWalletBalance(wallet, options) {
+    const totalBalance = await wallet.totalBalance();  // Calculate balance using your methods
+    wallet.balance = totalBalance.toFixed(2);  // Update the balance field in memory
+    await wallet.save({
+      transaction: options.transaction
+    });  // Persist the updated balance to the database (optional)
+  }
 
   return Wallet
 }

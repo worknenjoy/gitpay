@@ -28,7 +28,7 @@ const SendSolutionDialog = props => {
   }, [props.assignDialog])
 
   useEffect(() => {
-    if (pullRequestURL.length >= 43) {
+    if (pullRequestURL.length >= 20) {
       clearTimeout(timer)
       setTimer(setTimeout(() => {
         const urlSplitted = pullRequestURL.split('/')

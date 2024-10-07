@@ -1,3 +1,5 @@
+const Decimal = require('decimal.js')
+
 module.exports = (sequelize, DataTypes) => {
   const WalletOrder = sequelize.define('WalletOrder', {
     walletId: {

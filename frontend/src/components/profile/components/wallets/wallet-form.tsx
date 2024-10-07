@@ -27,6 +27,11 @@ const WalletForm = ({
   onCreate
 }) => {
 
+  const handleCreateWallet = (e) => {
+    e.preventDefault();
+    onCreate();
+  }
+
   return (
     <Paper elevation={ 1 } style={{padding: 20}}>
       <form>
@@ -57,7 +62,7 @@ const WalletForm = ({
                         type='submit'
                         variant='contained'
                         color='secondary'
-                        onClick={ (e) => onCreate() }
+                        onClick={ handleCreateWallet }
                       >
                         <FormattedMessage id='account.wallet.actions.create' defaultMessage='Create Wallet' />
                       </Button>

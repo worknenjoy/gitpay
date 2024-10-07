@@ -6,6 +6,7 @@ import { fetchCustomer } from '../actions/userActions'
 import { assignTask, removeAssignment, messageTask, messageOffer, offerUpdate, actionAssign } from '../actions/assignActions'
 import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask, transferTask } from '../actions/taskActions'
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
+import { fetchWallet, listWallets } from '../actions/walletActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
 import { getUser } from '../common/selectors/user/getUser'
@@ -21,6 +22,8 @@ const mapStateToProps = (state, ownProps) => {
     project: getProject(state.project),
     order: state.order,
     customer: state.customer,
+    wallets: state.wallets,
+    wallet: state.wallet,
   }
 }
 
@@ -58,6 +61,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     reportTask: (task, reason) => dispatch(reportTask(task, reason)),
     requestClaimTask: (taskId, userId, comments, isApproved, token, history) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
     fetchCustomer: (id) => dispatch(fetchCustomer(id)),
+    fetchWallet: (id) => dispatch(fetchWallet(id)),
+    listWallets: () => dispatch(listWallets()),
   }
 }
 

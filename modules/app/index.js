@@ -36,6 +36,6 @@ exports.init = (app) => {
   app.use('/offers', routerOffer)
   app.use('/transfers', routerTransfer)
   app.use('/payouts', routerPayout)
-  app.use('/wallets', routerWallet)
   app.use('/wallets/orders', routerWalletOrder)
+  app.use('/wallets', routerWallet)
 }

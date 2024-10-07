@@ -152,36 +152,26 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
         if(orderParameters.provider === 'wallet' && orderParameters.source_type === 'wallet-funds') {
           return models.Wallet.findOne({
             where: {
-              userId: orderParameters.userId
+              id: orderParameters.walletId
             }
           }).then(wallet => {
+            console.log('wallet', wallet)
             const currentBalance = wallet.balance
             const enoughBalance = currentBalance >= orderParameters.amount
             if(!enoughBalance) {
               return new Error('Not enough balance')
             }
-            return wallet.update({
-              balance: wallet.balance - orderParameters.amount
+            return order.update({
+              status: 'succeeded',
+              source_id: `${wallet.id}`,
+              source_type: 'wallet-funds',
+              paid: true
             }, {
               where: {
-                id: wallet.id
-              },
-              returning: true
-            }).then(walletUpdated => {
-              if(walletUpdated) {
-                return order.update({
-                  status: 'succeeded',
-                  source_id: wallet.id,
-                  source_type: 'wallet-funds'
-                }, {
-                  where: {
-                    id: order.dataValues.id
-                  }
-                }).then(orderUpdated => {
-                  return orderUpdated
-                })
+                id: order.dataValues.id
               }
-              return new Error('Error updating wallet')
+            }).then(orderUpdated => {
+              return orderUpdated
             })
           })
         }

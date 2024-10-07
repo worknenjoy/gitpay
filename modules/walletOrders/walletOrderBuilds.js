@@ -34,6 +34,9 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
     currency: 'usd',
     status: 'pending',
     paid: false,
+  }, {
+    hooks: true,
+    individualHooks: true,
   })
   try {
     const invoice = await stripe.invoices.create({

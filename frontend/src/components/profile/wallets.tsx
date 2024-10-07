@@ -58,11 +58,14 @@ const Wallets = ({
   listWalletOrders,
   walletOrders,
   walletOrder,
-  fetchWalletOrder
+  fetchWalletOrder,
+  wallet,
+  fetchWallet
 }) => {
   const [addFundsDialog, setAddFundsDialog] = useState(false)
   const [showWalletName, setShowWalletName] = useState(false)
   const [walletName, setWalletName] = useState('Default wallet')
+  const [ gotToInvoicePaument, setGoToInvoicePayment ] = useState(false)
 
   const openAddFundsDialog = (e) => {
     e.preventDefault()
@@ -92,11 +95,27 @@ const Wallets = ({
 
   const handleInvoicePayment = async (walletOrderId) => {
     await fetchWalletOrder(walletOrderId)
-    const invoice = walletOrder?.data?.invoice
-    if(invoice?.hosted_invoice_url) {
-      window.location.href = invoice.hosted_invoice_url
-    }
+    setGoToInvoicePayment(true)
   }
+
+  const downloadInvoicePayment = async (walletOrderId) => {
+    await fetchWalletOrder(walletOrderId)
+    window.setTimeout(() => {
+    const invoice = walletOrder?.data?.invoice
+      if(invoice?.invoice_pdf) {
+        window.location.href = invoice.invoice_pdf
+      }
+    }, 1000)
+  }
+
+  useEffect(() => {
+    if (gotToInvoicePaument) {
+      const invoice = walletOrder?.data?.invoice
+      if(invoice?.hosted_invoice_url) {
+        window.location.href = invoice.hosted_invoice_url
+      }
+    }
+  }, [gotToInvoicePaument, walletOrder])
 
   useEffect(() => {
     const userId = user.id
@@ -106,6 +125,7 @@ const Wallets = ({
 
   useEffect(() => {
     const walletId = wallets.data[0]?.id
+    walletId && fetchWallet(walletId)
     walletId && listWalletOrders(walletId)
   }, [wallets, createWalletOrder])
 
@@ -128,19 +148,17 @@ const Wallets = ({
             <FormattedMessage id='general.wallets' defaultMessage='Wallets' />
           </Typography>
         </div>
-        {wallets.data && wallets.data.length > 0 ? (
+        {wallet.data.id ? (
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-            {wallets.data.map((wallet, index) => (
-              <ReactPlaceholder type='text' rows={2} ready={wallets.completed} key={index}>
-                <BalanceCard
-                  name={wallet.name || `Wallet #${index + 1}`} balance={wallet.balance}
-                  onAdd={(e) => openAddFundsDialog(e)}
-                />
-              </ReactPlaceholder>
-            ))}
+            <ReactPlaceholder type='text' rows={2} ready={wallets.completed} key={wallet.id}>
+              <BalanceCard
+                name={wallet.data.name || `Wallet #${wallet.id}`} balance={wallet.data.balance}
+                onAdd={(e) => openAddFundsDialog(e)}
+              />
+            </ReactPlaceholder>
           </div>
         ) : (
-          <div style={{ display: 'flex', justifyContent: 'center', alignSelf: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
             <div className={classes.paper}>
               {showWalletName ? (
                 <WalletForm
@@ -153,7 +171,8 @@ const Wallets = ({
                   display: 'flex',
                   justifyContent: 'center',
                   flexDirection: 'column',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  height: '60vh'
                 }}>
                   <Typography variant='body1' gutterBottom>
                     <FormattedMessage id='general.wallets.empty' defaultMessage='You dont have any active wallet' />
@@ -187,6 +206,11 @@ const Wallets = ({
                       {(wo.status === 'open') &&
                         <Button onClick={(e) => handleInvoicePayment(wo.id)} variant='contained' color='secondary' size='small'>
                           <FormattedMessage id='general.wallets.table.actions.pay' defaultMessage='Pay invoice' />
+                        </Button>
+                      }
+                      {(wo.status === 'paid') &&
+                        <Button onClick={(e) => downloadInvoicePayment(wo.id)} variant='contained' color='secondary' size='small'>
+                          <FormattedMessage id='general.wallets.table.actions.download' defaultMessage='Download invoice' />
                         </Button>
                       }
                     </>

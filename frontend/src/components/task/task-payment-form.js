@@ -7,6 +7,7 @@ import PaymentDrawer from '../design-library/templates/payment-drawer/payment-dr
 import PaymentDialog from '../payment/payment-dialog'
 import PaypalPaymentDialog from '../payment/paypal-payment-dialog'
 import PaymentMethodInvoiceTab from './payment/methods/invoice/payment-method-invoice-tab'
+import PaymentMethodWalletTab from './payment/methods/wallet/payment-method-wallet-tab'
 
 
 const taskPaymentFormMessages = defineMessages({
@@ -22,6 +23,10 @@ const taskPaymentFormMessages = defineMessages({
     id: 'task.payment.method.invoice',
     defaultMessage: 'Invoice'
   },
+  tabPaymentMethodWallet: {
+    id: 'task.payment.method.wallet',
+    defaultMessage: 'Wallet'
+  }
 })
 
 const fee = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
@@ -179,6 +184,25 @@ class TaskPaymentForm extends Component {
                 user={this.props.user}
                 order={this.props.order}
                 plan={this.state.plan}
+              />
+            )
+          },
+          {
+            label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodWallet),
+            value: 'wallet',
+            component: (
+              <PaymentMethodWalletTab
+                classes={classes}
+                user={this.props.user}
+                task={this.props.task?.data}
+                price={this.state.priceAfterFee()}
+                plan={this.state.plan}
+                createOrder={this.props.createOrder}
+                fetchWallet={this.props.fetchWallet}
+                wallet={this.props.wallet}
+                listWallets={this.props.listWallets}
+                wallets={this.props.wallets}
+                onClose={onClose}
               />
             )
           }
