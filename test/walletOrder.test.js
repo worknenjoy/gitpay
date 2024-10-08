@@ -7,6 +7,7 @@ const models = require('../models')
 const { truncateModels, registerAndLogin } = require('./helpers')
 const invoiceBasic = require('./data/stripe.invoice.basic')
 const invoiceItem = require('./data/stripe.invoiceitem')
+const customer = require('./data/stripe.customer')
 
 describe('WalletOrder', () => {
 
@@ -35,6 +36,11 @@ describe('WalletOrder', () => {
       })
     })
     it('should create an initial wallet Order', async () => {
+      nock('https://api.stripe.com')
+      .post('/v1/customers')
+      .reply(200, customer.customer, {
+        'Content-Type': 'application/json',
+      })
       const user = await registerAndLogin(agent)
       const wallet = await models.Wallet.create({
         userId: user.body.id,

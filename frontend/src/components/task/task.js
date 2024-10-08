@@ -908,6 +908,8 @@ class Task extends Component {
                       wallets={this.props.wallets}
                       fetchWallet={this.props.fetchWallet}
                       wallet={this.props.wallet}
+                      fetchTask={this.props.fetchTask}
+                      syncTask={this.props.syncTask}
                     />
                   </ReactPlaceholder>
                ) : (

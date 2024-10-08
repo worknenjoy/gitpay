@@ -16,6 +16,7 @@ import MuiAlert from '@material-ui/lab/Alert'
 import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfers/transfer-detail'
+import { formatCurrency } from '../../utils/format-currency'
 
 const Alert = (props) => {
   return <MuiAlert elevation={0} variant='standard' size='small' {...props} />
@@ -188,7 +189,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
                   <a href={`/#/task/${t.Task.id}/${slugify(t.Task.title)}`}>
                     {t.Task.title}
                   </a>,
-                  `$ ${t.value}`,
+                  formatCurrency(t.value),
                   moment(t.createdAt).format('LLL'),
                   <>
                     {transferActions(t)}

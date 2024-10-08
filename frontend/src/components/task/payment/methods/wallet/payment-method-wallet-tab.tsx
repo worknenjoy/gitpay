@@ -16,7 +16,9 @@ const PaymentMethodWalletTab = ({
   wallet,
   listWallets,
   wallets,
-  onClose
+  onClose,
+  fetchTask,
+  syncTask
 }) => {
 
   const onWalletPayment = async () => {
@@ -35,6 +37,8 @@ const PaymentMethodWalletTab = ({
         user_id: user.id,
       }
     })
+    await syncTask(task.id)
+    await fetchTask(task.id)
     onClose()
   }
 

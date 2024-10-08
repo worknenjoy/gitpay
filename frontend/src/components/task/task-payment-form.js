@@ -203,6 +203,8 @@ class TaskPaymentForm extends Component {
                 listWallets={this.props.listWallets}
                 wallets={this.props.wallets}
                 onClose={onClose}
+                fetchTask={this.props.fetchTask}
+                syncTask={this.props.syncTask}
               />
             )
           }

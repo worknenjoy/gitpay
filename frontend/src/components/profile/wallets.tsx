@@ -65,7 +65,8 @@ const Wallets = ({
   const [addFundsDialog, setAddFundsDialog] = useState(false)
   const [showWalletName, setShowWalletName] = useState(false)
   const [walletName, setWalletName] = useState('Default wallet')
-  const [ gotToInvoicePaument, setGoToInvoicePayment ] = useState(false)
+  const [ gotToInvoicePayment, setGoToInvoicePayment ] = useState(false)
+  const [ downloadInvoice, setDownloadInvoice ] = useState(false)
 
   const openAddFundsDialog = (e) => {
     e.preventDefault()
@@ -100,22 +101,26 @@ const Wallets = ({
 
   const downloadInvoicePayment = async (walletOrderId) => {
     await fetchWalletOrder(walletOrderId)
-    window.setTimeout(() => {
-    const invoice = walletOrder?.data?.invoice
-      if(invoice?.invoice_pdf) {
-        window.location.href = invoice.invoice_pdf
-      }
-    }, 1000)
+    setDownloadInvoice(true)
   }
 
   useEffect(() => {
-    if (gotToInvoicePaument) {
+    if (gotToInvoicePayment) {
       const invoice = walletOrder?.data?.invoice
       if(invoice?.hosted_invoice_url) {
         window.location.href = invoice.hosted_invoice_url
       }
     }
-  }, [gotToInvoicePaument, walletOrder])
+  }, [gotToInvoicePayment, walletOrder])
+
+  useEffect(() => {
+    if (downloadInvoice) {
+      const invoice = walletOrder?.data?.invoice
+      if(invoice?.invoice_pdf) {
+        window.location.href = invoice.invoice_pdf
+      }
+    }
+  }, [downloadInvoice, walletOrder])
 
   useEffect(() => {
     const userId = user.id

@@ -6,6 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 const WalletOrder = require('../../models').WalletOrder
 const Wallet = require('../../models').Wallet
 const User = require('../../models').User
+const { createOrUpdateCustomer } = require('../util/customer')
 
 
 module.exports = Promise.method(async function walletOrderBuilds(params) {
@@ -39,19 +40,23 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
     individualHooks: true,
   })
   try {
+    let userCustomer = user.customer_id
+    console.log('userCustomer:', userCustomer)
+    if(!userCustomer) {
+      const costumer = await createOrUpdateCustomer(user)
+      userCustomer = costumer.id
+    }
     const invoice = await stripe.invoices.create({
-      customer: user.customer_id,
+      customer: userCustomer,
       collection_method: 'send_invoice',
       days_until_due: 30,
       metadata: {
         'wallet_order_id': walletOrder.id
       },
     })
-    //console.log('invoice', invoice)
-  
 
     const invoiceItem = await stripe.invoiceItems.create({
-      customer: user.customer_id,
+      customer: userCustomer,
       currency: 'usd',
       quantity: 1,
       unit_amount: (parseInt(params.amount) * 100).toFixed(0),

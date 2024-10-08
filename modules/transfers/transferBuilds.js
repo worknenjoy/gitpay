@@ -86,7 +86,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       return { error: 'All orders must be paid' }
     }
     orders.map(order => {
-      if (order.provider === 'stripe' && order.paid) {
+      if ((order.provider === 'stripe' || order.provider === 'wallet')  && order.paid) {
         allPaypal = false
         isStripe = true
         stripeTotal += parseFloat(order.amount)

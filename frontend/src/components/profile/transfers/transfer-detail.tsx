@@ -6,6 +6,8 @@ import { ArrowUpwardTwoTone as ArrowUpIcon } from '@material-ui/icons';
 import Alert from '@material-ui/lab/Alert';
 import ReactPlaceholder from 'react-placeholder'
 
+import { formatCurrency } from '../../../utils/format-currency'
+
 const TransactionRow = ({ label, value }) => (
   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
     <Typography variant="caption">
@@ -66,7 +68,7 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
                       />
                     </Typography>
                     <Typography variant="h5">
-                      $ {data.value}
+                      {formatCurrency(data.value)}
                     </Typography>
                   </div>
                 }
