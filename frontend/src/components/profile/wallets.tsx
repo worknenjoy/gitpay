@@ -10,11 +10,13 @@ import {
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import moment from 'moment'
+import { status } from '../../consts'
 
 import CustomPaginationActionsTable from './wallets-table'
 import AddFundsFormDrawer from './components/payments/add-funds-form-drawer'
 import BalanceCard from '../design-library/molecules/balance-card/balance-card'
 import WalletForm from './components/wallets/wallet-form'
+import InvoiceStatus from '../design-library/atoms/invoice-status/invoice-status'
 
 const paymentMessages = defineMessages({
   paymentTabIssue: {
@@ -204,7 +206,7 @@ const Wallets = ({
                 {
                   ...walletOrders,
                   data: walletOrders?.data?.map(wo => [
-                    wo.status,
+                    <InvoiceStatus invoiceStatus={status.invoice[wo.status]} />,
                     `$ ${wo.amount}`,
                     moment(wo.createdAt).format('LLL'),
                     <>

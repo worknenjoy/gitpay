@@ -649,7 +649,9 @@ exports.updateWebhook = async (req, res) => {
                   source_id: event.data.object.id
                 }
               })
+
               if (existingPayout) return res.json(req.body)
+                
               const payout = await models.Payout.build({
                 userId: user.dataValues.id,
                 amount: event.data.object.amount,

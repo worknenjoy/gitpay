@@ -155,7 +155,6 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
               id: orderParameters.walletId
             }
           }).then(wallet => {
-            console.log('wallet', wallet)
             const currentBalance = wallet.balance
             const enoughBalance = currentBalance >= orderParameters.amount
             if(!enoughBalance) {

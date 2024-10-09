@@ -357,6 +357,51 @@ describe('webhooks', () => {
           }).catch(done)
       })
 
+      it('should not create a new payout when a webhook payout.create triggers again', done => {
+        models.User.build({
+          email: 'teste@mail.com',
+          password: 'teste',
+          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
+        })
+          .save()
+          .then(async user => {
+            await models.Payout.create({
+              source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
+              amount: 7311,
+              currency: 'brl',
+              status: 'in_transit',
+              description: 'STRIPE TRANSFER',
+              userId: user.dataValues.id,
+              method: 'bank_account',
+            })
+            agent
+              .post('/webhooks')
+              .send(payoutData.created)
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                models.Payout.findAll().then(payouts => {
+                  expect(payouts.statusCode).to.equal(200)
+                  expect(payouts.body).to.exist
+                  expect(payouts.body.id).to.equal(
+                    'evt_1CdprOLlCJ9CeQRe4QDlbGRY'
+                  )
+                  expect(payouts.length).to.equal(1)
+                })
+                models.Payout.findOne({ where: { source_id: res.body.data.object.id } }).then(payout => {
+                  expect(res.statusCode).to.equal(200)
+                  expect(res.body).to.exist
+                  expect(res.body.id).to.equal(
+                    'evt_1CdprOLlCJ9CeQRe4QDlbGRY'
+                  )
+                  expect(payout.dataValues.status).to.equal('in_transit')
+                  
+                })
+                done(err)
+              })
+          }).catch(done)
+      })
+
       it('should notify the transfer when a webhook payout.paid is triggered and update payout status', done => {
         models.User.build({
           email: 'teste@mail.com',

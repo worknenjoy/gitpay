@@ -129,6 +129,21 @@ let msgs = defineMessages({
 
 msgs = msgs || {}
 
+enum invoiceStatuses {
+  pending = 'pending',
+  draft = 'draft',
+  open = 'open',
+  paid = 'paid',
+  failed = 'failed',
+  uncollectible = 'uncollectible',
+  void = 'void',
+  refunded = 'refunded'
+}
+
+export const status = {
+  invoice: invoiceStatuses
+}
+
 const api = {
   API_URL: process.env.API_HOST || 'http://localhost:3000',
   ACCOUNT_FIELDS: {
