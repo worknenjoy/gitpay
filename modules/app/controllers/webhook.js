@@ -444,6 +444,7 @@ exports.updateWebhook = async (req, res) => {
 
         break
       case 'invoice.created':
+        // eslint-disable-next-line no-case-declarations
         const shouldCreateWalletOrder = event.data.object.metadata['create_wallet_order']
         if(shouldCreateWalletOrder === 'true' || shouldCreateWalletOrder === true) {
           const walletId = event.data.object.metadata.wallet_id
@@ -531,6 +532,7 @@ exports.updateWebhook = async (req, res) => {
 
         break
       case 'invoice.updated':
+        // eslint-disable-next-line no-case-declarations
         const shouldCreateWalletOrderOnUpdated = event.data.object.metadata['create_wallet_order']
         if(shouldCreateWalletOrderOnUpdated === 'true' || shouldCreateWalletOrderOnUpdated === true) {
           const walletIdUpdate = event.data.object.metadata.wallet_id
@@ -632,7 +634,7 @@ exports.updateWebhook = async (req, res) => {
           return res.json(req.body)
         } catch (error) {
           console.log('error', error)
-          return new Error(error)
+          return res.json(req.body)
         }
         break
       case 'transfer.created':
