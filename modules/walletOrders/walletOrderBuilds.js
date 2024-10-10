@@ -41,7 +41,6 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
   })
   try {
     let userCustomer = user.customer_id
-    console.log('userCustomer:', userCustomer)
     if(!userCustomer) {
       const costumer = await createOrUpdateCustomer(user)
       userCustomer = costumer.id

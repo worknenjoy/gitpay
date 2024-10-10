@@ -196,3 +196,297 @@ module.exports.paid = {
   },
   "type": "invoice.paid"
 }
+
+module.exports.created = {
+  "id": "evt_1Q8JR1BrSjgsps2DTYquL0UC",
+  "object": "event",
+  "api_version": "2020-03-02",
+  "created": 1728555451,
+  "data": {
+    "object": {
+      "id": "in_1Q8JR1BrSjgsps2DmN3iPASq",
+      "object": "invoice",
+      "account_country": "US",
+      "account_name": "Work n Enjoy",
+      "account_tax_ids": null,
+      "amount_due": 10800,
+      "amount_paid": 10800,
+      "amount_remaining": 0,
+      "amount_shipping": 0,
+      "application": null,
+      "application_fee_amount": null,
+      "attempt_count": 0,
+      "attempted": false,
+      "auto_advance": false,
+      "automatic_tax": {
+        "enabled": false,
+        "liability": null,
+        "status": null
+      },
+      "automatically_finalizes_at": null,
+      "billing_reason": "manual",
+      "charge": null,
+      "collection_method": "send_invoice",
+      "created": 1728555451,
+      "currency": "usd",
+      "custom_fields": null,
+      "customer": "cus_QzijiGBXrZujqa",
+      "customer_address": {
+        "city": "Copenhagen",
+        "country": "DK",
+        "line1": "Borgergade, 26",
+        "line2": "sal 4 lej 3",
+        "postal_code": "1300",
+        "state": "Copenhagen"
+      },
+      "customer_email": "alexanmtz@gmail.com",
+      "customer_name": "Work n Enjoy",
+      "customer_phone": null,
+      "customer_shipping": null,
+      "customer_tax_exempt": "none",
+      "customer_tax_ids": [
+      ],
+      "default_payment_method": null,
+      "default_source": null,
+      "default_tax_rates": [
+      ],
+      "description": "",
+      "discount": null,
+      "discounts": [
+      ],
+      "due_date": 1731147451,
+      "effective_at": null,
+      "ending_balance": null,
+      "footer": null,
+      "from_invoice": null,
+      "hosted_invoice_url": null,
+      "invoice_pdf": null,
+      "issuer": {
+        "type": "self"
+      },
+      "last_finalization_error": null,
+      "latest_revision": null,
+      "lines": {
+        "object": "list",
+        "data": [
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/invoices/in_1Q8JR1BrSjgsps2DmN3iPASq/lines"
+      },
+      "livemode": false,
+      "metadata": {
+        "create_wallet_order": "true",
+        "wallet_id": "2"
+      },
+      "next_payment_attempt": null,
+      "number": null,
+      "on_behalf_of": null,
+      "paid": false,
+      "paid_out_of_band": false,
+      "payment_intent": null,
+      "payment_settings": {
+        "default_mandate": null,
+        "payment_method_options": null,
+        "payment_method_types": null
+      },
+      "period_end": 1728555451,
+      "period_start": 1728555451,
+      "post_payment_credit_notes_amount": 0,
+      "pre_payment_credit_notes_amount": 0,
+      "quote": null,
+      "receipt_number": null,
+      "rendering": {
+        "amount_tax_display": null,
+        "pdf": {
+          "page_size": "auto"
+        },
+        "template": null,
+        "template_version": null
+      },
+      "rendering_options": null,
+      "shipping_cost": null,
+      "shipping_details": null,
+      "starting_balance": 0,
+      "statement_descriptor": null,
+      "status": "draft",
+      "status_transitions": {
+        "finalized_at": null,
+        "marked_uncollectible_at": null,
+        "paid_at": null,
+        "voided_at": null
+      },
+      "subscription": null,
+      "subscription_details": {
+        "metadata": null
+      },
+      "subtotal": 0,
+      "subtotal_excluding_tax": 0,
+      "tax": null,
+      "tax_percent": null,
+      "test_clock": null,
+      "total": 0,
+      "total_discount_amounts": [
+      ],
+      "total_excluding_tax": 0,
+      "total_tax_amounts": [
+      ],
+      "transfer_data": null,
+      "webhooks_delivered_at": null
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 1,
+  "request": {
+    "id": "req_oi0QaoOwvd8eiu",
+    "idempotency_key": "stripe-node-retry-5b01300e-5e0e-49de-b754-398913baee58"
+  },
+  "type": "invoice.created"
+}
+
+module.exports.updated = {
+  "id": "evt_1Q8JR1BrSjgsps2DTYquL0UC",
+  "object": "event",
+  "api_version": "2020-03-02",
+  "created": 1728555451,
+  "data": {
+    "object": {
+      "id": "in_1Q8JR1BrSjgsps2DmN3iPASq",
+      "object": "invoice",
+      "account_country": "US",
+      "account_name": "Work n Enjoy",
+      "account_tax_ids": null,
+      "amount_due": 10800,
+      "amount_paid": 10800,
+      "amount_remaining": 0,
+      "amount_shipping": 0,
+      "application": null,
+      "application_fee_amount": null,
+      "attempt_count": 0,
+      "attempted": false,
+      "auto_advance": false,
+      "automatic_tax": {
+        "enabled": false,
+        "liability": null,
+        "status": null
+      },
+      "automatically_finalizes_at": null,
+      "billing_reason": "manual",
+      "charge": null,
+      "collection_method": "send_invoice",
+      "created": 1728555451,
+      "currency": "usd",
+      "custom_fields": null,
+      "customer": "cus_QzijiGBXrZujqa",
+      "customer_address": {
+        "city": "Copenhagen",
+        "country": "DK",
+        "line1": "Borgergade, 26",
+        "line2": "sal 4 lej 3",
+        "postal_code": "1300",
+        "state": "Copenhagen"
+      },
+      "customer_email": "alexanmtz@gmail.com",
+      "customer_name": "Work n Enjoy",
+      "customer_phone": null,
+      "customer_shipping": null,
+      "customer_tax_exempt": "none",
+      "customer_tax_ids": [
+      ],
+      "default_payment_method": null,
+      "default_source": null,
+      "default_tax_rates": [
+      ],
+      "description": "",
+      "discount": null,
+      "discounts": [
+      ],
+      "due_date": 1731147451,
+      "effective_at": null,
+      "ending_balance": null,
+      "footer": null,
+      "from_invoice": null,
+      "hosted_invoice_url": null,
+      "invoice_pdf": null,
+      "issuer": {
+        "type": "self"
+      },
+      "last_finalization_error": null,
+      "latest_revision": null,
+      "lines": {
+        "object": "list",
+        "data": [
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/invoices/in_1Q8JR1BrSjgsps2DmN3iPASq/lines"
+      },
+      "livemode": false,
+      "metadata": {
+        "create_wallet_order": "true",
+        "wallet_id": "2"
+      },
+      "next_payment_attempt": null,
+      "number": null,
+      "on_behalf_of": null,
+      "paid": false,
+      "paid_out_of_band": false,
+      "payment_intent": null,
+      "payment_settings": {
+        "default_mandate": null,
+        "payment_method_options": null,
+        "payment_method_types": null
+      },
+      "period_end": 1728555451,
+      "period_start": 1728555451,
+      "post_payment_credit_notes_amount": 0,
+      "pre_payment_credit_notes_amount": 0,
+      "quote": null,
+      "receipt_number": null,
+      "rendering": {
+        "amount_tax_display": null,
+        "pdf": {
+          "page_size": "auto"
+        },
+        "template": null,
+        "template_version": null
+      },
+      "rendering_options": null,
+      "shipping_cost": null,
+      "shipping_details": null,
+      "starting_balance": 0,
+      "statement_descriptor": null,
+      "status": "draft",
+      "status_transitions": {
+        "finalized_at": null,
+        "marked_uncollectible_at": null,
+        "paid_at": null,
+        "voided_at": null
+      },
+      "subscription": null,
+      "subscription_details": {
+        "metadata": null
+      },
+      "subtotal": 0,
+      "subtotal_excluding_tax": 0,
+      "tax": null,
+      "tax_percent": null,
+      "test_clock": null,
+      "total": 0,
+      "total_discount_amounts": [
+      ],
+      "total_excluding_tax": 0,
+      "total_tax_amounts": [
+      ],
+      "transfer_data": null,
+      "webhooks_delivered_at": null
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 1,
+  "request": {
+    "id": "req_oi0QaoOwvd8eiu",
+    "idempotency_key": "stripe-node-retry-5b01300e-5e0e-49de-b754-398913baee58"
+  },
+  "type": "invoice.updated"
+}

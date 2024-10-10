@@ -668,7 +668,6 @@ describe('webhooks', () => {
         .send(invoiceWebhookPaid.paid)
         .expect('Content-Type', /json/)
         .expect(200)
-
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
       expect(res.body.id).to.equal('evt_1Q2fklBrSjgsps2Dx0mEXsXv')
@@ -680,6 +679,62 @@ describe('webhooks', () => {
       })
       expect(walletOrder).to.exist
       expect(walletOrder.status).to.equal('paid')
+    })
+    it('should create a new wallet order when a webhook invoice.create is triggered', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await models.Wallet.create({
+        name: 'Test Wallet',
+        userId: user.body.id,
+        balance: 0
+      })
+      const invoiceWebhookCreated = invoiceWebhookPaid.created
+      invoiceWebhookCreated.data.object.metadata['wallet_id'] = wallet.id
+      const res = await agent
+        .post('/webhooks')
+        .send(invoiceWebhookCreated)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.id).to.equal('evt_1Q8JR1BrSjgsps2DTYquL0UC')
+      expect(res.body.data.object.id).to.equal('in_1Q8JR1BrSjgsps2DmN3iPASq')
+      const walletOrder = await models.WalletOrder.findOne({
+        where: {
+          source: res.body.data.object.id
+        }
+      })
+      expect(walletOrder).to.exist
+      expect(walletOrder.status).to.equal('draft')
+      expect(walletOrder.amount).to.equal('108.00')
+    })
+    it('should create a new wallet order when a webhook invoice.updated is triggered', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await models.Wallet.create({
+        name: 'Test Wallet',
+        userId: user.body.id,
+        balance: 0
+      })
+      const invoiceWebhookUpdated = invoiceWebhookPaid.updated
+      invoiceWebhookUpdated.data.object.metadata['wallet_id'] = wallet.id
+      const res = await agent
+        .post('/webhooks')
+        .send(invoiceWebhookUpdated)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.id).to.equal('evt_1Q8JR1BrSjgsps2DTYquL0UC')
+      expect(res.body.data.object.id).to.equal('in_1Q8JR1BrSjgsps2DmN3iPASq')
+      const walletOrder = await models.WalletOrder.findOne({
+        where: {
+          source: res.body.data.object.id
+        }
+      })
+      expect(walletOrder).to.exist
+      expect(walletOrder.status).to.equal('draft')
+      expect(walletOrder.amount).to.equal('108.00')
     })
   })
 

@@ -10,7 +10,6 @@ import {
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import moment from 'moment'
-import { status } from '../../consts'
 
 import CustomPaginationActionsTable from './wallets-table'
 import AddFundsFormDrawer from './components/payments/add-funds-form-drawer'
@@ -67,8 +66,8 @@ const Wallets = ({
   const [addFundsDialog, setAddFundsDialog] = useState(false)
   const [showWalletName, setShowWalletName] = useState(false)
   const [walletName, setWalletName] = useState('Default wallet')
-  const [ gotToInvoicePayment, setGoToInvoicePayment ] = useState(false)
-  const [ downloadInvoice, setDownloadInvoice ] = useState(false)
+  const [gotToInvoicePayment, setGoToInvoicePayment] = useState(false)
+  const [downloadInvoice, setDownloadInvoice] = useState(false)
 
   const openAddFundsDialog = (e) => {
     e.preventDefault()
@@ -109,7 +108,7 @@ const Wallets = ({
   useEffect(() => {
     if (gotToInvoicePayment) {
       const invoice = walletOrder?.data?.invoice
-      if(invoice?.hosted_invoice_url) {
+      if (invoice?.hosted_invoice_url) {
         window.location.href = invoice.hosted_invoice_url
       }
     }
@@ -118,7 +117,7 @@ const Wallets = ({
   useEffect(() => {
     if (downloadInvoice) {
       const invoice = walletOrder?.data?.invoice
-      if(invoice?.invoice_pdf) {
+      if (invoice?.invoice_pdf) {
         window.location.href = invoice.invoice_pdf
       }
     }
@@ -155,43 +154,45 @@ const Wallets = ({
             <FormattedMessage id='general.wallets' defaultMessage='Wallets' />
           </Typography>
         </div>
-        {wallet.data.id ? (
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-            <ReactPlaceholder type='text' rows={2} ready={wallets.completed} key={wallet.id}>
+        <ReactPlaceholder type='text' rows={2} ready={wallet.completed}>
+          {wallet.data.id ? (
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+
               <BalanceCard
                 name={wallet.data.name || `Wallet #${wallet.id}`} balance={wallet.data.balance}
                 onAdd={(e) => openAddFundsDialog(e)}
               />
-            </ReactPlaceholder>
-          </div>
-        ) : (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-            <div className={classes.paper}>
-              {showWalletName ? (
-                <WalletForm
-                  value={walletName}
-                  onChange={setWalletName}
-                  onCreate={confirmWalletCreate}
-                />
-              ) : (
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  height: '60vh'
-                }}>
-                  <Typography variant='body1' gutterBottom>
-                    <FormattedMessage id='general.wallets.empty' defaultMessage='You dont have any active wallet' />
-                  </Typography>
-                  <Button style={{ marginTop: 12 }} onClick={createWalletName} variant='contained' size='large' color='secondary' className={classes.button}>
-                    <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
-                  </Button>
-                </div>
-              )}
+
             </div>
-          </div>
-        )}
+          ) : (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+              <div className={classes.paper}>
+                {showWalletName ? (
+                  <WalletForm
+                    value={walletName}
+                    onChange={setWalletName}
+                    onCreate={confirmWalletCreate}
+                  />
+                ) : (
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    height: '60vh'
+                  }}>
+                    <Typography variant='body1' gutterBottom>
+                      <FormattedMessage id='general.wallets.empty' defaultMessage='You dont have any active wallet' />
+                    </Typography>
+                    <Button style={{ marginTop: 12 }} onClick={createWalletName} variant='contained' size='large' color='secondary' className={classes.button}>
+                      <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </ReactPlaceholder>
         {wallets.data && wallets.data.length > 0 && (
           <div style={{ marginTop: 10, marginBottom: 30 }}>
             <CustomPaginationActionsTable
@@ -206,7 +207,7 @@ const Wallets = ({
                 {
                   ...walletOrders,
                   data: walletOrders?.data?.map(wo => [
-                    <InvoiceStatus invoiceStatus={status.invoice[wo.status]} />,
+                    <InvoiceStatus invoiceStatus={wo.status} />,
                     `$ ${wo.amount}`,
                     moment(wo.createdAt).format('LLL'),
                     <>

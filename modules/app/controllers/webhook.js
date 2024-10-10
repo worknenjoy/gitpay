@@ -12,8 +12,6 @@ const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')
 const IssueClosedMail = require('../../mail/issueClosed')
 
-const WalletOrderUpdate = require('../../walletOrders/walletOrderUpdate')
-
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
@@ -47,6 +45,20 @@ const CURRENCIES = {
   chf: 'fr',
   gbp: '£',
   usd: '$'
+}
+
+//Function to format amount from cents to decimal format
+function formatStripeAmount(amountInCents) {
+  // Convert to a number in case it's a string
+  let amount = Number(amountInCents);
+
+  // Check if the conversion result is a valid number
+  if (isNaN(amount)) {
+    return 'Invalid amount';
+  }
+
+  // Convert cents to a decimal format and fix to 2 decimal places
+  return (amount / 100).toFixed(2);
 }
 
 i18n.configure({
@@ -432,6 +444,33 @@ exports.updateWebhook = async (req, res) => {
 
         break
       case 'invoice.created':
+        const shouldCreateWalletOrder = event.data.object.metadata['create_wallet_order']
+        if(shouldCreateWalletOrder === 'true' || shouldCreateWalletOrder === true) {
+          const walletId = event.data.object.metadata.wallet_id
+          const walletOrderExists = await models.WalletOrder.findOne({
+            where: {
+              source: event.data.object.id
+            }
+          })
+          if(!walletOrderExists) {
+            const walletOrder = await models.WalletOrder.create({
+              walletId,
+              source_id: event.data.object.id,
+              currency: event.data.object.currency,
+              amount: formatStripeAmount(event.data.object.amount_due),
+              description: `created wallet order from stripe invoice. ${event.data.object.description}`,
+              source_type: 'stripe',
+              source: event.data.object.id,
+              capture: event.data.object.charge,
+              ordered_in: new Date(),
+              paid: false,
+              status: event.data.object.status
+            })
+            if(walletOrder) {
+              console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
+            }
+          }
+        }
         return models.Order.update(
           {
             status: event.data.object.status,
@@ -492,6 +531,35 @@ exports.updateWebhook = async (req, res) => {
 
         break
       case 'invoice.updated':
+        const shouldCreateWalletOrderOnUpdated = event.data.object.metadata['create_wallet_order']
+        if(shouldCreateWalletOrderOnUpdated === 'true' || shouldCreateWalletOrderOnUpdated === true) {
+          const walletIdUpdate = event.data.object.metadata.wallet_id
+          const walletOrderUpdateExists = await models.WalletOrder.findOne({
+            where: {
+              source: event.data.object.id
+            }
+          })
+          
+          if(!walletOrderUpdateExists) {
+            const walletOrderCreateOnUpdate = await models.WalletOrder.create({
+              walletId: walletIdUpdate,
+              source_id: event.data.object.id,
+              currency: event.data.object.currency,
+              amount: formatStripeAmount(event.data.object.amount_due),
+              description: `created wallet order from stripe invoice. ${event.data.object.description}`,
+              source_type: 'stripe',
+              source: event.data.object.id,
+              capture: event.data.object.charge,
+              ordered_in: new Date(),
+              paid: event.data.object.paid,
+              status: event.data.object.status
+            })
+
+            if(walletOrderCreateOnUpdate) {
+              console.log('wallet order created on invoice.updated stripe webhook event: ', walletOrderCreateOnUpdate)
+            }
+          }
+        }
         return models.Order.update(
           {
             paid: event.data.object.status === 'paid',

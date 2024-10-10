@@ -6,14 +6,42 @@ import { status } from '../../../../consts'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'flex',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
+    pending: {
+      backgroundColor: orange[900],
+      color: theme.palette.common.white,
     },
+    draft: {
+      backgroundColor: orange[500],
+      color: theme.palette.common.white,
+    },
+    open: {
+      backgroundColor: orange[300],
+      color: theme.palette.common.white,
+    },
+    paid: {
+      backgroundColor: lime[800],
+      color: theme.palette.common.white,
+    },
+    failed: {
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.common.white,
+    },
+    uncollectible: {
+      backgroundColor: cyan[500],
+      color: theme.palette.common.white,
+    },
+    void: {
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.common.white,
+    },
+    refunded: {
+      backgroundColor: blue[500],
+      color: theme.palette.common.white,
+    },
+    unknown: {
+      backgroundColor: theme.palette.grey[500],
+      color: theme.palette.common.white
+    }
   }),
 );
 
@@ -21,7 +49,7 @@ type statusProps = {
   invoiceStatus: string;
 }
 
-type GetStatusProps = { label?: string, color?: "secondary" | "default" | "primary" }
+type GetStatusProps = { label?: string, color?: 'pending' | 'draft' | 'open' | 'paid' | 'failed' | 'uncollectible' | 'void' | 'refunded' | 'unknown' }
 type GetStatus = (currentStatus:string) => GetStatusProps
 
 export default function InvoiceStatus({ invoiceStatus }:statusProps) {
@@ -34,63 +62,64 @@ export default function InvoiceStatus({ invoiceStatus }:statusProps) {
       case `${invoice.pending}`:
         choosenStatus = {
           label: 'Pending',
-          color: 'default',
+          color: 'pending',
         };
       break;
       case invoice.draft:
         choosenStatus = {
           label: 'Draft',
-          color: 'default',
+          color: 'draft',
         };
       break;
       case `${invoice.open}`:
         choosenStatus = {
           label: 'Open',
-          color: 'secondary',
+          color: 'open',
         };
       break;
       case `${invoice.paid}`:
         choosenStatus = {
           label: 'Paid',
-          color: 'primary',
+          color: 'paid',
         };
       break;
       case invoice.failed:
         choosenStatus = {
           label: 'Failed',
-          color: 'secondary',
+          color: 'failed',
         };
       break;
       case invoice.uncollectible:
         choosenStatus = {
           label: 'Uncollectible',
-          color: 'secondary',
+          color: 'uncollectible',
         };
       break;
       case invoice.void:
         choosenStatus = {
           label: 'Void',
-          color: 'secondary',
+          color: 'void',
         };
       break;
       case invoice.refunded:
         choosenStatus = {
           label: 'Refunded',
-          color: 'secondary',
+          color: 'refunded',
         };
       break;
       default:
         choosenStatus = {
           label: 'Unknown',
-          color: 'default',
+          color: 'unknown',
         };
-      return choosenStatus;
+      break;
     }
+    return choosenStatus;
   }
 
   const currentStatus = getStatus(invoiceStatus)
 
   return (
-    <Chip size="small" label={currentStatus?.label} color={currentStatus?.color} />
+    <Chip size="small" label={currentStatus.label} className={classes[currentStatus.color]} />
   );
 }
