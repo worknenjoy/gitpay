@@ -462,7 +462,6 @@ exports.updateWebhook = async (req, res) => {
               description: `created wallet order from stripe invoice. ${event.data.object.description}`,
               source_type: 'stripe',
               source: event.data.object.id,
-              capture: event.data.object.charge,
               ordered_in: new Date(),
               paid: false,
               status: event.data.object.status
@@ -551,7 +550,6 @@ exports.updateWebhook = async (req, res) => {
               description: `created wallet order from stripe invoice. ${event.data.object.description}`,
               source_type: 'stripe',
               source: event.data.object.id,
-              capture: event.data.object.charge,
               ordered_in: new Date(),
               paid: event.data.object.paid,
               status: event.data.object.status
