@@ -73,7 +73,7 @@ const InvoicePayment = ({
         color='secondary'
         className={classes.btnPayment}
       >
-        <FormattedMessage id='task.payment.invoice.action' defaultMessage='Pay {amount} with Invoice' values={{
+        <FormattedMessage id='fund.payment.invoice.action' defaultMessage='Generate a {amount} invoice' values={{
           amount: formatCurrency(price)
         }} />
       </Button>

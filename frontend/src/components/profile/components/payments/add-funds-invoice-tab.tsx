@@ -4,6 +4,7 @@ import InvoicePayment from '../../../design-library/organisms/invoice-payment/in
 
 const AddFundsInvoiceTab = ({
   price,
+  priceAfterFee,
   customer,
   history,
   onPay

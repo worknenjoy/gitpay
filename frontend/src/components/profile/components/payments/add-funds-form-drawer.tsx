@@ -21,10 +21,11 @@ const taskPaymentFormMessages = defineMessages({
 
 const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
   const [price, setPrice] = useState(0)
+  const [ priceAfterFee, setPriceAfterFee ] = useState(0)
 
   useEffect(() => {
-    
-  }, [])
+    setPriceAfterFee(price * 1.08)
+  }, [price])
 
   const pickTaskPrice = (price) => {
     setPrice(price)
@@ -45,6 +46,7 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
           value: 'invoice',
           component: (
             <AddFundsInvoiceTab
+              priceAfterFee={priceAfterFee}
               price={price}
               onClose={onClose}
               customer={customer}
