@@ -47,6 +47,7 @@
     "core-js": "^2.4.1",
     "cron": "^1.4.0",
     "dateformat": "^3.0.3",
+    "decimal.js": "^10.4.3",
     "dotenv": "^4.0.0",
     "eslint-config-taller": "^2.0.0",
     "eslint-plugin-import": "^2.12.0",

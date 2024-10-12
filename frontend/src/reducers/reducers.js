@@ -20,6 +20,8 @@ import { profileReducer } from './profileReducer'
 import { labels } from './labelReducer'
 import { transfers, transfer } from './transfersReducer'
 import { payouts } from './payoutsReducer'
+import { wallet, wallets } from './walletReducer'
+import { walletOrder, walletOrders } from './walletOrderReducer'
 
 const reducers = combineReducers({
   notification,
@@ -48,7 +50,11 @@ const reducers = combineReducers({
   intl: intlReducer,
   transfers,
   transfer,
-  payouts
+  payouts,
+  wallets,
+  wallet,
+  walletOrders,
+  walletOrder,
 })
 
 export default reducers

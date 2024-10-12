@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl'
 import { Typography } from '@material-ui/core'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { lightGreen } from '@material-ui/core/colors'
+import { formatCurrency } from '../../utils/format-currency'
 
 const TaskSolution = props => {
   const paymentSentChip = () => {
@@ -56,8 +57,8 @@ const TaskSolution = props => {
           : 
             <div>
               <Typography type='heading' color='primary' gutterBottom noWrap>
-                <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={{
-                  value: props.task.Transfer.value
+                <FormattedMessage id='task.payment.transfer.value' defaultMessage='Transfer of {value} requested' values={{
+                  value: formatCurrency(props.task.Transfer.value)
                 }}
               />
               </Typography>

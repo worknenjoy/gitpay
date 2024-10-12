@@ -100,7 +100,7 @@ const CustomerDetails = ({
   const [customerData, setCustomerData] = useState({})
   const [userId] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!e.target) return false
     let formData = {
@@ -121,9 +121,9 @@ const CustomerDetails = ({
     }
     setCustomerData(formData)
     if (!user.user.customer_id) {
-      createCustomer(formData)
+      await createCustomer(formData)
     } else {
-      updateCustomer(formData)
+      await updateCustomer(formData)
     }
   }
   const onChange = (e) => {

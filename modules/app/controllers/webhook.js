@@ -47,6 +47,20 @@ const CURRENCIES = {
   usd: '$'
 }
 
+//Function to format amount from cents to decimal format
+function formatStripeAmount(amountInCents) {
+  // Convert to a number in case it's a string
+  let amount = Number(amountInCents);
+
+  // Check if the conversion result is a valid number
+  if (isNaN(amount)) {
+    return 'Invalid amount';
+  }
+
+  // Convert cents to a decimal format and fix to 2 decimal places
+  return (amount / 100).toFixed(2);
+}
+
 i18n.configure({
   directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
@@ -261,7 +275,7 @@ exports.github = async (req, res) => {
   // eslint-disable-next-line no-console
 }
 
-exports.updateWebhook = (req, res) => {
+exports.updateWebhook = async (req, res) => {
   // eslint-disable-next-line no-console
 
   if (req.body.object === 'event') {
@@ -430,6 +444,33 @@ exports.updateWebhook = (req, res) => {
 
         break
       case 'invoice.created':
+        // eslint-disable-next-line no-case-declarations
+        const shouldCreateWalletOrder = event.data.object.metadata['create_wallet_order']
+        if(shouldCreateWalletOrder === 'true' || shouldCreateWalletOrder === true) {
+          const walletId = event.data.object.metadata.wallet_id
+          const walletOrderExists = await models.WalletOrder.findOne({
+            where: {
+              source: event.data.object.id
+            }
+          })
+          if(!walletOrderExists) {
+            const walletOrder = await models.WalletOrder.create({
+              walletId,
+              source_id: event.data.object.id,
+              currency: event.data.object.currency,
+              amount: formatStripeAmount(event.data.object.amount_due),
+              description: `created wallet order from stripe invoice. ${event.data.object.description}`,
+              source_type: 'stripe',
+              source: event.data.object.id,
+              ordered_in: new Date(),
+              paid: false,
+              status: event.data.object.status
+            })
+            if(walletOrder) {
+              console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
+            }
+          }
+        }
         return models.Order.update(
           {
             status: event.data.object.status,
@@ -490,6 +531,35 @@ exports.updateWebhook = (req, res) => {
 
         break
       case 'invoice.updated':
+        // eslint-disable-next-line no-case-declarations
+        const shouldCreateWalletOrderOnUpdated = event.data.object.metadata['create_wallet_order']
+        if(shouldCreateWalletOrderOnUpdated === 'true' || shouldCreateWalletOrderOnUpdated === true) {
+          const walletIdUpdate = event.data.object.metadata.wallet_id
+          const walletOrderUpdateExists = await models.WalletOrder.findOne({
+            where: {
+              source: event.data.object.id
+            }
+          })
+          
+          if(!walletOrderUpdateExists) {
+            const walletOrderCreateOnUpdate = await models.WalletOrder.create({
+              walletId: walletIdUpdate,
+              source_id: event.data.object.id,
+              currency: event.data.object.currency,
+              amount: formatStripeAmount(event.data.object.amount_due),
+              description: `created wallet order from stripe invoice. ${event.data.object.description}`,
+              source_type: 'stripe',
+              source: event.data.object.id,
+              ordered_in: new Date(),
+              paid: event.data.object.paid,
+              status: event.data.object.status
+            })
+
+            if(walletOrderCreateOnUpdate) {
+              console.log('wallet order created on invoice.updated stripe webhook event: ', walletOrderCreateOnUpdate)
+            }
+          }
+        }
         return models.Order.update(
           {
             paid: event.data.object.status === 'paid',
@@ -549,6 +619,21 @@ exports.updateWebhook = (req, res) => {
             return res.status(400).send(e)
           })
 
+        break
+      case 'invoice.paid':
+        try {
+          const walletOrderUpdate = await models.WalletOrder.update({
+            status: event.data.object.status
+          }, {
+            where: {
+              source: event.data.object.id
+            }
+          })
+          return res.json(req.body)
+        } catch (error) {
+          console.log('error', error)
+          return res.json(req.body)
+        }
         break
       case 'transfer.created':
         models.Transfer.findOne({
@@ -627,6 +712,14 @@ exports.updateWebhook = (req, res) => {
         })
           .then(async user => {
             if (user) {
+              const existingPayout = await models.Payout.findOne({
+                where: {
+                  source_id: event.data.object.id
+                }
+              })
+
+              if (existingPayout) return res.json(req.body)
+                
               const payout = await models.Payout.build({
                 userId: user.dataValues.id,
                 amount: event.data.object.amount,
@@ -753,22 +846,26 @@ exports.updateWebhook = (req, res) => {
               active: false
             }).then(async user => {
               await user.addType(await models.Type.find({ name: 'funding' }))
-              models.Order.update(
-                {
-                  status: event.data.object.status,
-                  source: event.data.object.charge[0],
-                  paid: true,
-                  userId: user.dataValues.id
-                },
-                {
-                  where: {
-                    source_id: event.data.object.id[0]
+              const source_id = event.data.object.id[0]
+              if(source_id) {
+                return models.Order.update(
+                  {
+                    status: event.data.object.status,
+                    source: event.data.object.charge[0],
+                    paid: true,
+                    userId: user.dataValues.id
                   },
-                  returning: true
-                }
-              ).then(order => {
-                return res.json(req.body)
-              })
+                  {
+                    where: {
+                      source_id: event.data.object.id[0]
+                    },
+                    returning: true
+                  }
+                ).then(order => {
+                  return res.json(req.body)
+                })
+              }
+              return res.json(req.body)
             })
           }
         }).catch(e => {

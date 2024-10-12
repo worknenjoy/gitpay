@@ -6,7 +6,7 @@ import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import { addNotification } from '../../../actions/notificationActions';
 
-import { Field } from '../account-details';
+import { Field } from '../../design-library/atoms/field/field';
 import ProviderLoginButtons from '../../../containers/provider-login-buttons';
 import DeleteAccountButton from './delete-account-button';
 

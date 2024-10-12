@@ -33,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       afterUpdate: async (instance, options) => {
         if (instance.paid) {
-          const task = await sequelize.models.Task.findByPk(instance.TaskId)
-          await comment(instance, task)
+          const task = await sequelize.models.Task.findByPk(instance.TaskId || instance.taskId)
+          task?.id && await comment(instance, task)
         }
       }
     }

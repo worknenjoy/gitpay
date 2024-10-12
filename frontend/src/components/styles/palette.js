@@ -1,8 +1,8 @@
-import { indigo, teal, grey, green } from '@material-ui/core/colors'
+import { grey, green } from '@material-ui/core/colors'
 
 const Palette = {
   typography: {
-    fontFamily: ['Inter', 'Helvetica', 'Roboto'],
+    fontFamily: ['Roboto', 'Inter', 'Helvetica', ],
     h3: {
       fontWeight: 200,
       fontSize: 42,
@@ -67,6 +67,19 @@ const Palette = {
     },
   },
   overrides: {
+    // Name of the component
+    MuiDrawer: {
+      
+        root: {
+          // Some CSS
+          
+        },
+        paper: {
+          // Some CSS
+          width: 700
+        }
+      
+    },
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: '#4D7E6F',

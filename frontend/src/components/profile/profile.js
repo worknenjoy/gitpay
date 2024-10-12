@@ -17,10 +17,12 @@ import {
   DialogActions
 } from '@material-ui/core'
 
-import PaymentsContainer from '../../containers/payments'
 import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
+
 import UserTasksContainer from '../../containers/user-tasks'
+import PaymentsContainer from '../../containers/payments'
+import WalletsContainer from '../../containers/wallets'
 import TransfersContainer from '../../containers/transfers'
 import PayoutsContainer from '../../containers/payouts'
 import { UserAccount } from './pages/user-account'
@@ -221,6 +223,9 @@ class Profile extends Component {
       case '/profile/payments':
         this.setState({ selected: 8 })
         break
+      case '/profile/payments':
+        this.setState({ selected: 9 })
+        break
       default:
         this.setState({ selected: null })
         break
@@ -393,6 +398,14 @@ class Profile extends Component {
                         exact
                         path='/profile/payments'
                         component={ PaymentsContainer }
+                      />
+                    }
+                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||
+                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('funding')) &&
+                      <Route
+                        exact
+                        path='/profile/wallets'
+                        component={ WalletsContainer }
                       />
                     }
                     { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||

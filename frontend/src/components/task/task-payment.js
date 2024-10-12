@@ -33,6 +33,7 @@ import InterestedOffers from './components/interested-offers'
 import MessageAssignment from './assignment/messageAssignment'
 import TaskAssigned from './task-assigned'
 import TaskOrderInvoiceConfirm from './task-order-invoice-confirm'
+import { formatCurrency } from '../../utils/format-currency'
 
 const styles = {
   avatar: {
@@ -300,8 +301,8 @@ class TaskPayment extends Component {
                   : 
                     <div>
                       <Typography type='heading' color='primary' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.transfer.id' defaultMessage='Transfer of ${value} requested' values={{
-                          value: this.props.task?.Transfer?.value
+                        <FormattedMessage id='task.payment.transfer.value' defaultMessage='Transfer of {value} requested' values={{
+                          value: formatCurrency(this.props.task?.Transfer?.value)
                         }}
                        />
                       </Typography>
