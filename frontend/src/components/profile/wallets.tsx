@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import ReactPlaceholder from 'react-placeholder'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../task/messages/task-messages'
@@ -16,7 +16,9 @@ import AddFundsFormDrawer from './components/payments/add-funds-form-drawer'
 import BalanceCard from '../design-library/molecules/balance-card/balance-card'
 import WalletForm from './components/wallets/wallet-form'
 import InvoiceStatus from '../design-library/atoms/invoice-status/invoice-status'
+import InvoiceId from './wallets/invoice-id'
 import { formatCurrency } from '../../utils/format-currency'
+import InvoiceDueDate from './wallets/invoice-due-date'
 
 const paymentMessages = defineMessages({
   paymentTabIssue: {
@@ -158,12 +160,10 @@ const Wallets = ({
         <ReactPlaceholder type='text' rows={2} ready={wallet.completed}>
           {wallet.data.id ? (
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-
               <BalanceCard
                 name={wallet.data.name || `Wallet #${wallet.id}`} balance={wallet.data.balance}
                 onAdd={(e) => openAddFundsDialog(e)}
               />
-
             </div>
           ) : (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
@@ -198,19 +198,23 @@ const Wallets = ({
           <div style={{ marginTop: 10, marginBottom: 30 }}>
             <CustomPaginationActionsTable
               tableHead={[
+                intl.formatMessage(messages.cardTableHeaderId),
                 intl.formatMessage(messages.cardTableHeaderStatus),
                 intl.formatMessage(messages.cardTableHeaderValue),
                 intl.formatMessage(messages.cardTableHeaderCreated),
+                intl.formatMessage(messages.cardTableHeaderDueDate),
                 intl.formatMessage(messages.cardTableHeaderActions)
               ]}
               walletOrders={
                 walletOrders && walletOrders.data &&
                 {
                   ...walletOrders,
-                  data: walletOrders?.data?.map(wo => [
+                  data: walletOrders?.data?.map( wo => [
+                    <InvoiceId key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
                     <InvoiceStatus invoiceStatus={wo.status} />,
                     formatCurrency(wo.amount),
                     moment(wo.createdAt).format('LLL'),
+                    <InvoiceDueDate key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
                     <>
                       {(wo.status === 'open') &&
                         <Button onClick={(e) => handleInvoicePayment(wo.id)} variant='contained' color='secondary' size='small'>

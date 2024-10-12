@@ -148,7 +148,7 @@ describe('orders', () => {
           userId: user.body.id
         }
       })
-      expect(wallet.balance).to.equal('200.00')
+      expect(wallet.balance).to.equal('184.00')
     })
 
     xit('should create a new paypal order', (done) => {

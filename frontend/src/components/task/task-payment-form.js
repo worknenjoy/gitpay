@@ -195,7 +195,8 @@ class TaskPaymentForm extends Component {
                 classes={classes}
                 user={this.props.user}
                 task={this.props.task?.data}
-                price={this.state.priceAfterFee()}
+                price={this.state.price}
+                priceAfterFee={this.state.priceAfterFee()}
                 plan={this.state.plan}
                 createOrder={this.props.createOrder}
                 fetchWallet={this.props.fetchWallet}

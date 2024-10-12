@@ -150,6 +150,14 @@ export const messages = defineMessages({
     id: 'task.card.subtitle',
     defaultMessage: 'This payments will be transfered after the task be finished'
   },
+  cardTableHeaderNumber: {
+    id: 'task.table.head.number',
+    defaultMessage: 'Number'
+  },
+  cardTableHeaderId: {
+    id: 'task.table.head.id',
+    defaultMessage: 'ID'
+  },
   cardTableHeaderPaid: {
     id: 'task.card.table.header.paid',
     defaultMessage: 'Paid'
@@ -185,6 +193,10 @@ export const messages = defineMessages({
   cardTableHeaderPayment: {
     id: 'task.card.table.header.payment.type',
     defaultMessage: 'Type'
+  },
+  cardTableHeaderDueDate: {
+    id: 'task.card.table.header.due.date',
+    defaultMessage: 'Due date'
   },
   interestedCardTitle: {
     id: 'task.card.interested.title',
