@@ -58,7 +58,7 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       customer: userCustomer,
       currency: 'usd',
       quantity: 1,
-      unit_amount: (parseInt(params.amount) * 100).toFixed(0),
+      unit_amount: Math.round(parseFloat(params.amount) * 100),
       invoice: invoice.id,
       metadata: {
         'wallet_order_id': walletOrder.id
