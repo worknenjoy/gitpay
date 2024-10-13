@@ -39,6 +39,15 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
       onChangePrice={(price) => pickTaskPrice(price)}
       open={open}
       onClose={onClose}
+      plan={{
+        fee: 8,
+        category: <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />,
+        title: <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />,
+        items: [
+          <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />,
+          <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />,
+        ],
+      }}
       tabs={[
         {
           default: true,

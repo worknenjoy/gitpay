@@ -11,7 +11,7 @@ const AddFundsInvoiceTab = ({
 }) => {
 
   const onInvoicePayment = async () => {
-    await onPay(price)
+    await onPay(priceAfterFee)
   }
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const AddFundsInvoiceTab = ({
 
   return (
     <InvoicePayment 
-      price={price}
+      price={priceAfterFee}
       customer={customer}
       onInvoicePayment={onInvoicePayment}
       onInfoClick={ () => history.push('/profile/user-account/customer') }

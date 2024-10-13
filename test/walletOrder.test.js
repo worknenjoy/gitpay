@@ -105,7 +105,7 @@ describe('WalletOrder', () => {
       });
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100
+        amount: 108
       });
       const res = await agent
         .put(`/wallets/orders/${walletOrder.id}`)
@@ -119,7 +119,7 @@ describe('WalletOrder', () => {
 
       expect(res.body).to.exist;
       expect(res.body.id).to.exist;
-      expect(res.body.amount).to.equal('100');
+      expect(res.body.amount).to.equal('108');
       expect(res.body.status).to.equal('paid');
       expect(res.body.walletId).to.equal(wallet.id);
 
@@ -141,7 +141,7 @@ describe('WalletOrder', () => {
       
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100
+        amount: 108
       });
       await agent
         .put(`/wallets/orders/${walletOrder.id}`)
@@ -155,7 +155,7 @@ describe('WalletOrder', () => {
 
       const walletOrder2 = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100
+        amount: 108
       });
       await agent
         .put(`/wallets/orders/${walletOrder2.id}`)
@@ -169,7 +169,7 @@ describe('WalletOrder', () => {
 
       const walletOrder3 = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100
+        amount: 108
       });
       await agent
         .put(`/wallets/orders/${walletOrder3.id}`)
@@ -198,7 +198,7 @@ describe('WalletOrder', () => {
       });
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100,
+        amount: 108,
         status: 'pending'
       });
       const res = await agent
