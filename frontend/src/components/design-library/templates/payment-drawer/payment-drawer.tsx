@@ -98,7 +98,7 @@ const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickup
               secondaryText={pickupTagListMessagesSecondaryText}
               onPickItem={onPickItem}
             />
-            <PricePlan plan={plan} price={price} onChange={onChangePrice} />
+            <PricePlan plan={tabValue !== 'wallet' ? plan : false} price={price} onChange={onChangePrice} />
             <div>
               <Tabs
                 value={tabValue}
