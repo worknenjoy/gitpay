@@ -219,7 +219,7 @@ describe('webhooks', () => {
         })
     })
 
-    xit('should update the order when a webhook charge.failed is triggered', done => {
+    it('should update the order when a webhook charge.failed is triggered', done => {
       models.User.build({ email: 'teste@mail.com', password: 'teste' })
         .save()
         .then(user => {
@@ -256,6 +256,51 @@ describe('webhooks', () => {
                         )
                         expect(o.dataValues.paid).to.equal(false)
                         expect(o.dataValues.status).to.equal('failed')
+                        done(err)
+                      }).catch(done)
+                    })
+                }).catch(done)
+            }).catch(done)
+        }).catch(done)
+    })
+
+    it('should update the order when a webhook invoice.payment_failed is triggered', done => {
+      models.User.build({ email: 'teste@mail.com', password: 'teste' })
+        .save()
+        .then(user => {
+          models.Task.build({
+            url: 'https://github.com/worknenjoy/truppie/issues/99',
+            provider: 'github',
+            userId: user.dataValues.id
+          })
+            .save()
+            .then(task => {
+              task
+                .createOrder({
+                  source_id: 'card_1D8FH6BrSjgsps2DtehhSR4l',
+                  currency: 'BRL',
+                  amount: 200,
+                  source: 'ch_3Q9RUEBrSjgsps2D27S1mdjK',
+                  userId: user.dataValues.id
+                })
+                .then(order => {
+                  agent
+                    .post('/webhooks')
+                    .send(invoiceWebhookPaid.payment_failed)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                      expect(res.statusCode).to.equal(200)
+                      expect(res.body).to.exist
+                      expect(res.body.id).to.equal(
+                        'evt_1Q9RVHBrSjgsps2D9rGhy2En'
+                      )
+                      models.Order.findByPk(order.dataValues.id).then(o => {
+                        expect(o.dataValues.source).to.equal(
+                          'ch_3Q9RUEBrSjgsps2D27S1mdjK'
+                        )
+                        expect(o.dataValues.paid).to.equal(false)
+                        expect(o.dataValues.status).to.equal('open')
                         done(err)
                       }).catch(done)
                     })
@@ -735,6 +780,34 @@ describe('webhooks', () => {
       expect(walletOrder).to.exist
       expect(walletOrder.status).to.equal('draft')
       expect(walletOrder.amount).to.equal('108.00')
+    })
+    it('should create a new wallet order when a webhook invoice.payment_failed is triggered', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await models.Wallet.create({
+        name: 'Test Wallet',
+        userId: user.body.id,
+        balance: 0
+      })
+      const invoiceWebhookUpdated = invoiceWebhookPaid.payment_failed
+      invoiceWebhookUpdated.data.object.metadata['wallet_id'] = wallet.id
+      const res = await agent
+        .post('/webhooks')
+        .send(invoiceWebhookUpdated)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.id).to.equal('evt_1Q9RVHBrSjgsps2D9rGhy2En')
+      expect(res.body.data.object.id).to.equal('in_1Q9RUDBrSjgsps2DRUgEGbgc')
+      const walletOrder = await models.WalletOrder.findOne({
+        where: {
+          source: res.body.data.object.id
+        }
+      })
+      expect(walletOrder).to.exist
+      expect(walletOrder.status).to.equal('open')
+      expect(walletOrder.amount).to.equal('21.00')
     })
   })
 

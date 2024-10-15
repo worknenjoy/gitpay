@@ -871,6 +871,41 @@ exports.updateWebhook = async (req, res) => {
         }).catch(e => {
           return res.status(400).send(e)
         })
+      break;
+      case 'invoice.payment_failed':
+        const walletOrderExists = await models.WalletOrder.findOne({
+          where: {
+            source: event.data.object.id
+          }
+        })
+        if(!walletOrderExists) {
+          const walletId = event.data.object.metadata.wallet_id
+          const walletOrder = walletId && await models.WalletOrder.create({
+            walletId,
+            source_id: event.data.object.id,
+            currency: event.data.object.currency,
+            amount: formatStripeAmount(event.data.object.amount_due),
+            description: `created wallet order from stripe invoice. ${event.data.object.description}`,
+            source_type: 'stripe',
+            source: event.data.object.id,
+            ordered_in: new Date(),
+            paid: false,
+            status: event.data.object.status
+          })
+          if(walletOrder) {
+            console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
+          }
+        } else {
+          const walletOrderUpdate = await models.WalletOrder.update({
+            status: event.data.object.status
+          }, {
+            where: {
+              source: event.data.object.id
+            }
+          })
+        }
+        return res.json(req.body)
+      break;
     }
   }
   else {
