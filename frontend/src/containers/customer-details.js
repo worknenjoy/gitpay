@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(createCustomer(data))
     },
     updateCustomer: data => {
+      //eslint-disable-next-line
       dispatch(updateCustomer(_, data))
     },
     searchUser: data => {

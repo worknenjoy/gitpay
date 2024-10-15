@@ -11,12 +11,15 @@ const ProviderLoginButtons = ({
   contrast = false,
   hideExtra = false,
   provider = undefined,
+  login_strategy = undefined,
   position = 'center',
-  textPosition = 'center'
+  textPosition = 'center',
+  authorizeGithub,
+  disconnectGithub
 }) => {
   const styles = { 
     textAlign: textPosition,
-    marginBottom: 10 
+    marginBottom: 10
   } as React.CSSProperties;
 
 return (
@@ -27,6 +30,13 @@ return (
           <FormattedMessage id='account.login.connect.provider.connected' defaultMessage='You are already connected on {value}' values={
             { value: provider }
           } />
+          { (login_strategy === 'local' || login_strategy === null) &&
+          <a href='#' onClick={(e) => {
+            e.preventDefault();
+            disconnectGithub();
+          }} style={{display: 'inline-box', marginLeft: 5}}>
+            <FormattedMessage id='account.login.connect.provider.disconnect' defaultMessage='disconnect' />
+          </a> }
         </Typography>
       </div> : 
       <div style={ { display: hideExtra ? 'none' : 'block' } }>
@@ -41,7 +51,10 @@ return (
       <div>
         <Button
           style={{ marginRight: 10 }}
-          href={`${api.API_URL}/authorize/github`}
+          {...authorizeGithub ? 
+            { onClick: () => authorizeGithub() } :
+            { href: `${api.API_URL}/authorize/github`} 
+          }
           variant='contained'
           color='secondary'
           disabled={provider === 'github'}

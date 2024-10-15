@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="Python.svg"
+   width="64"
+   height="64"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.25"
+     inkscape:cx="64"
+     inkscape:cy="64"
+     inkscape:window-width="1920"
+     inkscape:window-height="1004"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <linearGradient
+     id="python-original-a"
+     gradientUnits="userSpaceOnUse"
+     x1="70.251999"
+     y1="1237.476"
+     x2="170.659"
+     y2="1151.089"
+     gradientTransform="matrix(0.563,0,0,-0.568,-29.215,718.077)">
+    <stop
+       offset="0"
+       stop-color="#5A9FD4"
+       id="stop1" />
+    <stop
+       offset="1"
+       stop-color="#306998"
+       id="stop2" />
+  </linearGradient>
+  <linearGradient
+     id="python-original-b"
+     gradientUnits="userSpaceOnUse"
+     x1="209.474"
+     y1="1098.811"
+     x2="173.62"
+     y2="1149.537"
+     gradientTransform="matrix(0.563,0,0,-0.568,-29.215,718.077)">
+    <stop
+       offset="0"
+       stop-color="#FFD43B"
+       id="stop3" />
+    <stop
+       offset="1"
+       stop-color="#FFE873"
+       id="stop4" />
+  </linearGradient>
+  <path
+     fill="url(#python-original-a)"
+     d="m 63.391,12.248 c -4.222,0.02 -8.252,0.379 -11.8,1.007 -10.45,1.846 -12.346,5.71 -12.346,12.837 v 9.411 H 63.938 V 38.64 H 29.977 c -7.176,0 -13.46,4.313 -15.426,12.521 -2.268,9.405 -2.368,15.275 0,25.096 1.755,7.311 5.947,12.519 13.124,12.519 h 8.491 V 77.494 c 0,-8.151 7.051,-15.34 15.426,-15.34 h 24.665 c 6.866,0 12.346,-5.654 12.346,-12.548 V 26.093 C 88.603,19.4 82.957,14.373 76.257,13.256 72.013,12.55 67.612,12.229 63.391,12.248 Z m -13.354,7.569 c 2.55,0 4.634,2.117 4.634,4.721 0,2.593 -2.083,4.69 -4.634,4.69 -2.56,0 -4.633,-2.097 -4.633,-4.69 -0.001,-2.604 2.073,-4.721 4.633,-4.721 z"
+     id="path4"
+     style="fill:url(#python-original-a)" />
+  <path
+     fill="url(#python-original-b)"
+     d="m 91.682,38.64 v 10.966 c 0,8.5 -7.208,15.655 -15.426,15.655 H 51.591 c -6.756,0 -12.346,5.783 -12.346,12.549 v 23.515 c 0,6.691 5.818,10.628 12.346,12.547 7.816,2.297 15.312,2.713 24.665,0 6.216,-1.801 12.346,-5.423 12.346,-12.547 V 91.913 H 63.938 v -3.138 h 37.012 c 7.176,0 9.852,-5.005 12.348,-12.519 2.578,-7.735 2.467,-15.174 0,-25.096 -1.774,-7.145 -5.161,-12.521 -12.348,-12.521 H 91.682 Z M 77.809,98.187 c 2.561,0 4.634,2.097 4.634,4.692 0,2.602 -2.074,4.719 -4.634,4.719 -2.55,0 -4.633,-2.117 -4.633,-4.719 0,-2.595 2.083,-4.692 4.633,-4.692 z"
+     id="path5"
+     style="fill:url(#python-original-b)" />
+  <radialGradient
+     id="python-original-c"
+     cx="1825.678"
+     cy="444.45001"
+     r="26.743"
+     gradientTransform="matrix(0,-0.24,-1.055,0,532.979,557.576)"
+     gradientUnits="userSpaceOnUse">
+    <stop
+       offset="0"
+       stop-color="#B8B8B8"
+       stop-opacity=".498"
+       id="stop5" />
+    <stop
+       offset="1"
+       stop-color="#7F7F7F"
+       stop-opacity="0"
+       id="stop6" />
+  </radialGradient>
+  <path
+     opacity="0.444"
+     fill="url(#python-original-c)"
+     d="m 97.309,119.597 c 0,3.543 -14.816,6.416 -33.091,6.416 -18.276,0 -33.092,-2.873 -33.092,-6.416 0,-3.544 14.815,-6.417 33.092,-6.417 18.275,0 33.091,2.872 33.091,6.417 z"
+     id="path6"
+     style="fill:url(#python-original-c)" />
+</svg>

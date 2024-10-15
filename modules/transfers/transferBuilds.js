@@ -3,12 +3,10 @@ const Task = require('../../models').Task
 const Order = require('../../models').Order
 const Promise = require('bluebird')
 const requestPromise = require('request-promise')
-const { orderDetails } = require('../orders')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
-const { update } = require('../mail/deadline')
 
 module.exports = Promise.method(async function transferBuilds(params) {
   const existingTransfer = params.transfer_id && await Transfer.findOne({
@@ -88,7 +86,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       return { error: 'All orders must be paid' }
     }
     orders.map(order => {
-      if (order.provider === 'stripe' && order.paid) {
+      if ((order.provider === 'stripe' || order.provider === 'wallet')  && order.paid) {
         allPaypal = false
         isStripe = true
         stripeTotal += parseFloat(order.amount)

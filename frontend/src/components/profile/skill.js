@@ -3,16 +3,26 @@ import { withRouter } from "react-router-dom";
 import { injectIntl } from "react-intl";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import { withStyles, Grid, Typography, Checkbox, Avatar, } from "@material-ui/core";
+import { SkillIcon } from "./skill-icon"
 
-import { Grid, Typography, Checkbox, Avatar } from "@material-ui/core";
-import FolderIcon from "@material-ui/icons/Folder";
+const styles = theme => ({
+  skillIcon: {
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+  },
+  greyed: {
+    filter: 'grayscale(0.8)',
+  }
+})
+
 
 function Skill({ classes, title, onClick, isSelected }) {
   return (
     <Grid container direction="row" alignItems="center" xs={6}>
       <Grid item xs={2}>
-        <Avatar className={classNames(classes.avatar, classes.bigAvatar)}>
-          <FolderIcon />
+        <Avatar className={classNames(classes.skillIcon, !isSelected && classes.greyed)}>
+          <SkillIcon name={title} />
         </Avatar>
       </Grid>
       <Grid item xs={6}>
@@ -36,4 +46,4 @@ Skill.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-export default injectIntl(withRouter(Skill));
+export default injectIntl(withRouter(withStyles(styles)(Skill)));

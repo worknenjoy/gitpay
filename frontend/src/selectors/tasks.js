@@ -34,24 +34,32 @@ const getTaskWithAnyOrder = (task) => {
   }
 }
 
+const getListed = (data) => {
+  return data.filter(t => t.not_listed === false)
+}
+
 export const getFilteredTasks = createSelector(
   [getVisibilityFilter, getTasks, getUser, getProject, getOrganization],
   (visibilityFilter, tasks, user, project, organization) => {
+    let filteredTasks
     switch (visibilityFilter) {
       case 'all':
-        return tasks
+        filteredTasks = tasks
+        break;
       case 'userId':
-        return { ...tasks, data: tasks.data.filter(item => item.userId === user.id) }
+        filteredTasks = { ...tasks, data: tasks.data.filter(item => item.userId === user.id) }
+        break;
       case 'Assigns':
-        return {
+        filteredTasks = {
           ...tasks,
           data: tasks.data.length ? tasks.data.filter(item => {
             const interested = item.Assigns.filter(assign => assign.userId === user.id)
             return interested.length
-          }) : []
+          }) : []  
         }
+        break;
       case 'status':
-        return {
+        filteredTasks = {
           ...tasks,
           data: tasks.data.length ? tasks.data.filter(item => {
             const additionalFilter = tasks.filterAdditional
@@ -65,8 +73,9 @@ export const getFilteredTasks = createSelector(
             }
           }) : []
         }
+        break;
       case 'assigned':
-        return {
+        filteredTasks = {
           ...tasks,
           data: tasks.data.length ? tasks.data.filter(item => {
             const interested = item.Assigns.filter(assign => assign.userId === user.id)
@@ -75,15 +84,24 @@ export const getFilteredTasks = createSelector(
             }
           }) : []
         }
+        break;
       case 'issuesWithBounties':
-        return { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) : [] }
+        filteredTasks = { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) : [] }
+        break;
       case 'contribution':
-        return { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) : [] }
+        filteredTasks = { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) : [] }
+        break;
       case 'supported':
-        return { ...tasks,
+        filteredTasks = { ...tasks,
           data: tasks.data.length ? tasks.data.filter(item => getTaskWithAnyOrder(item)) : [] }
+        break;
       default:
-        return tasks
-    }
+        filteredTasks = tasks
+      }
+      if(visibilityFilter === 'userId') {
+        return filteredTasks
+      } else {
+        return {...tasks, data: getListed(filteredTasks.data)}
+      }
   }
 )

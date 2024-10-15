@@ -1,4 +1,5 @@
 import { defineMessages } from 'react-intl'
+import notification from '../../containers/notification'
 
 const messages = defineMessages({
   noDefined: {
@@ -154,16 +155,36 @@ const messages = defineMessages({
     defaultMessage: 'We could not cancel this refund'
   },
   notificationTaskCreateNotificationSuccess: {
-    id: 'actions.task.create.notification.success',
-    defaultMessage: 'Task created successfully'
+    id: 'actions.issue.import.notification.success',
+    defaultMessage: 'Issue imported successfully'
   },
   notificationTaskSolutionCreateNotificationSuccess: {
-    id: 'task.solution.dialog.create.success',
-    defaultMessage: 'Task solution created successfully'
+    id: 'issue.solution.dialog.create.success',
+    defaultMessage: 'The solution for this issue was created successfully'
+  },
+  notificationTaskSolutionCreateNotificationError: {
+    id: 'issue.solution.dialog.get.error',
+    defaultMessage: 'We could not get the task solution'
+  },
+  notificationTaskSolutionCouldNotUpdate: {
+    id: 'issue.solution.dialog.update.error',
+    defaultMessage: 'We could not update the task solution'
+  },
+  notificationTaskSolutionCouldNotCreate: {
+    id: 'issue.solution.dialog.create.error',
+    defaultMessage: 'We could not create the task solution'
+  },
+  notificationCouldNotGetPullRequestData: {
+    id: 'issue.solution.dialog.fetch.error',
+    defaultMessage: 'We could not get the pull request data'
+  },
+  notificationPullRequestNotFound: {
+    id: 'issue.solution.dialog.pullRequest.notFound',
+    defaultMessage: 'Pull request not found'
   },
   notificationTaskSoluctionUpdateNotificationSuccess: {
-    id: 'task.solution.dialog.update.success',
-    defaultMessage: 'Task solution updated successfully'
+    id: 'issue.solution.dialog.update.success',
+    defaultMessage: 'The solution for this issue was updated successfully'
   },
   notificationTaskCreateNotificationError: {
     id: 'actions.task.create.notification.error',
@@ -388,6 +409,38 @@ const messages = defineMessages({
   notificationIssueNotFound: {
     id: 'actions.task.issues.error.notfound',
     defaultMessage: 'Issue not found'
+  },
+  notificationWalletCreateSuccess: {
+    id: 'actions.wallet.create.success',
+    defaultMessage: 'Wallet created successfully'
+  },
+  notificationWalletCreateError: {
+    id: 'actions.wallet.create.error',
+    defaultMessage: 'We could not create this wallet'
+  },
+  notificationWalletListSuccess: {
+    id: 'actions.wallet.list.error',
+    defaultMessage: 'We had an error to list your wallets'
+  },
+  notificationWalletFetchError: {
+    id: 'actions.wallet.fetch.error',
+    defaultMessage: 'We could not obtain this wallet'
+  },
+  notificationWalletOrderListError: {
+    id: 'actions.walletOrder.list.error',
+    defaultMessage: 'We could not list your wallet orders'
+  },
+  notificationWalletOrderFetchError: {
+    id: 'actions.walletOrder.fetch.error',
+    defaultMessage: 'We could not obtain this wallet order'
+  },
+  notificationWalletOrderCreateError: {
+    id: 'actions.walletOrder.create.error',
+    defaultMessage: 'We could not create this wallet order'
+  },
+  notificationWalletOrderCreateSuccess: {
+    id: 'actions.walletOrder.create.success',
+    defaultMessage: 'Wallet order created successfully'
   },
 })
 

@@ -350,6 +350,7 @@ const styles = theme => ({
   },
   planGridContent: {
     display: 'flex',
+    justifyContent: 'space-evenly',
     minHeight: theme.spacing(2),
     margin: 0
   },
@@ -903,6 +904,12 @@ class Task extends Component {
                       createOrder={this.props.createOrder}
                       fetchCustomer={this.props.fetchCustomer}
                       customer={this.props.customer}
+                      listWallets={this.props.listWallets}
+                      wallets={this.props.wallets}
+                      fetchWallet={this.props.fetchWallet}
+                      wallet={this.props.wallet}
+                      fetchTask={this.props.fetchTask}
+                      syncTask={this.props.syncTask}
                     />
                   </ReactPlaceholder>
                ) : (

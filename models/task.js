@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
+    not_listed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     provider: DataTypes.STRING,
     description: DataTypes.STRING,
     type: DataTypes.STRING,

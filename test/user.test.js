@@ -250,6 +250,16 @@ describe("Users", () => {
           done();
         })
     })
+    xit('should callback after authorize on github', (done) => {
+      agent
+        .get('/callback/github')
+        .send({scope:['user:email']})
+        .expect(200)
+        .end((err, res) => {
+          expect(res.headers.location).to.include('https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id=')
+          done(err);
+        })
+    })
     it('should user ask permissions with github to access private issue', (done) => {
       agent
         .get('/authorize/github/private')

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
-import { FormattedMessage, addLocaleData } from 'react-intl'
+import { addLocaleData } from 'react-intl'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
 import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
 import { getCookieConsentValue } from 'react-cookie-consent'
-
-import 'fontsource-roboto'
 
 import {
   MuiThemeProvider,

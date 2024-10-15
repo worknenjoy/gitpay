@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Button, MenuList, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Home, Business, LibraryBooks, Payment as PaymentIcon, AccountBalance as TransferIcon, SwapHoriz as PayoutIcon } from '@material-ui/icons'
-import classNames from 'classnames'
+import { 
+  Home,
+  AccountBalanceWallet as WalletIcon,
+  LibraryBooks,
+  Payment as PaymentIcon,
+  AccountBalance as TransferIcon,
+  SwapHoriz as PayoutIcon 
+} from '@material-ui/icons'
 import logo from '../../images/gitpay-logo.png'
 import {
   Logo,
   StyledButton
 } from '../topbar/TopbarStyles'
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
-
-import api from '../../consts'
 
 const ProfileSidebar = ({
   classes,
@@ -29,10 +31,12 @@ const ProfileSidebar = ({
       setSelected(3)
     } else if (path.includes('/profile/payments')) {
       setSelected(5)
-    } else if(path.includes('/profile/transfers')) {
+    } else if(path.includes('/profile/wallets')) {
       setSelected(6)
-    } else if(path.includes('/profile/payouts')) {
+    } else if(path.includes('/profile/transfers')) {
       setSelected(7)
+    } else if(path.includes('/profile/payouts')) {
+      setSelected(8)
     } else {
       setSelected(0)
     }
@@ -123,13 +127,37 @@ const ProfileSidebar = ({
                       />
                     </MenuItem>
                   }
+                  { userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')) &&
+                    <MenuItem
+                      onClick={ () =>
+                        history.push('/profile/wallets')
+                      }
+                      className={ classes.menuItem }
+                      selected={ selected === 6 }
+                    >
+                      <ListItemIcon className={ classes.icon }>
+                        <WalletIcon />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={ { primary: classes.primary } }
+                        primary={
+                          <span>
+                            <FormattedMessage
+                              id='account.profile.wallet.list'
+                              defaultMessage='Wallets'
+                            />
+                          </span>
+                        }
+                      />
+                    </MenuItem>
+                  }
                   { userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')) &&
                     <MenuItem
                       onClick={ () =>
                         history.push('/profile/transfers')
                       }
                       className={ classes.menuItem }
-                      selected={ selected === 6 }
+                      selected={ selected === 7 }
                     >
                       <ListItemIcon className={ classes.icon }>
                         <TransferIcon />
@@ -153,7 +181,7 @@ const ProfileSidebar = ({
                         history.push('/profile/payouts')
                       }
                       className={ classes.menuItem }
-                      selected={ selected === 7 }
+                      selected={ selected === 8 }
                     >
                       <ListItemIcon className={ classes.icon }>
                         <PayoutIcon />
@@ -174,51 +202,6 @@ const ProfileSidebar = ({
                 </MenuList>
               </div>
             </div>
-            { false &&
-              <Grid
-                container
-                direction='column'
-                justifyContent='center'
-                alignItems='center'
-                className={ classes.rowList }
-              >
-                <Grid item className={ classNames(classes.rowContent) }>
-                  <Button
-                    disabled={ user.provider === 'github' }
-                    href={ `${api.API_URL}/authorize/github` }
-                    variant='outlined'
-                    size='medium'
-                    className={
-                      user.provider === 'github'
-                        ? 'buttons-disabled'
-                        : 'buttons'
-                    }
-                  >
-                    Connect to Github
-                    <img width='16' src={ logoGithub } className='icon' />
-                  </Button>
-                </Grid>
-                <Grid item className={ classNames(classes.rowContent) }>
-                  <Button
-                    disabled={ user.provider === 'bitbucket' }
-                    href={ `${api.API_URL}/authorize/bitbucket` }
-                    variant='contained'
-                    size='medium'
-                    className={
-                      user.provider === 'bitbucket'
-                        ? 'buttons-disabled'
-                        : 'buttons'
-                    }
-                  >
-                    Connect to Bitbucket
-                    <img
-                      width='16'
-                      src={ logoBitbucket }
-                      className='icon'
-                    />
-                  </Button>
-                </Grid>
-              </Grid> }
           </div>
         </div>
       </div>

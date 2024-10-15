@@ -3,6 +3,7 @@ const models = require('../../models')
 const requestPromise = require('request-promise')
 const URLSearchParams = require('url-search-params')
 const URL = require('url')
+const Decimal = require('decimal.js')
 
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
@@ -47,7 +48,7 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
           stripe.invoices.create({
             customer: orderParameters.customer_id,
             collection_method: 'send_invoice',
-            days_until_due: 0,
+            days_until_due: 30,
             metadata: {
               'task_id': orderParameters.taskId,
               'order_id': order.dataValues.id
@@ -145,6 +146,31 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
               }).then(orderUpdated => {
                 return orderUpdated
               })
+            })
+          })
+        }
+        if(orderParameters.provider === 'wallet' && orderParameters.source_type === 'wallet-funds') {
+          return models.Wallet.findOne({
+            where: {
+              id: orderParameters.walletId
+            }
+          }).then(wallet => {
+            const currentBalance = wallet.balance
+            const enoughBalance = currentBalance >= orderParameters.amount
+            if(!enoughBalance) {
+              return new Error('Not enough balance')
+            }
+            return order.update({
+              status: 'succeeded',
+              source_id: `${wallet.id}`,
+              source_type: 'wallet-funds',
+              paid: true
+            }, {
+              where: {
+                id: order.dataValues.id
+              }
+            }).then(orderUpdated => {
+              return orderUpdated
             })
           })
         }

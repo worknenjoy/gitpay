@@ -5,6 +5,7 @@ const url = require('url')
 const requestPromise = require('request-promise')
 const roleExists = require('../roles').roleExists
 const { userExists } = require('../users')
+const { not } = require('ip')
 const memberExists = require('../members').memberExists
 
 module.exports = Promise.method(function taskFetch (taskParams) {
@@ -121,6 +122,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 id: data.dataValues.id,
                 url: issueUrl,
                 private: data.dataValues.private,
+                not_listed: data.dataValues.not_listed,
                 title: data.dataValues.title,
                 description: data.dataValues.description,
                 value: data.dataValues.value || 0,
@@ -225,6 +227,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 id: data.dataValues.id,
                 url: issueUrl,
                 private: data.dataValues.private,
+                not_listed: data.dataValues.not_listed,
                 title: data.dataValues.title,
                 value: data.dataValues.value || 0,
                 deadline: data.dataValues.deadline,

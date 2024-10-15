@@ -18,6 +18,48 @@ export const SEARCH_USER_REQUESTED = 'SEARCH_USER_REQUESTED'
 export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
 export const SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
 
+export const AUTHORIZED_GITHUB_REQUESTED = 'AUTHORIZED_GITHUB_REQUESTED'
+export const AUTHORIZED_GITHUB_SUCCESS = 'AUTHORIZED_GITHUB_SUCCESS'
+export const AUTHORIZED_GITHUB_ERROR = 'AUTHORIZED_GITHUB_ERROR'
+
+export const DISCONNECT_GITHUB_REQUESTED = 'DISCONNECT_GITHUB_REQUESTED'
+export const DISCONNECT_GITHUB_SUCCESS = 'DISCONNECT_GITHUB_SUCCESS'
+export const DISCONNECT_GITHUB_ERROR = 'DISCONNECT_GITHUB_ERROR'
+
+/*
+*
+* Github authorize
+*
+*/
+
+const authorizedGithubRequested = () => {
+  return { type: AUTHORIZED_GITHUB_REQUESTED, logged: false, completed: false }
+}
+
+const authorizedGithubSuccess = user => {
+  return { type: AUTHORIZED_GITHUB_SUCCESS, logged: false, completed: true, user: user }
+}
+
+const authorizedGithubError = error => {
+  return { type: AUTHORIZED_GITHUB_ERROR, logged: false, completed: true, error: error }
+}
+
+/*
+* Github disconnect
+*/
+
+const disconnectGithubRequested = () => {
+  return { type: DISCONNECT_GITHUB_REQUESTED, logged: false, completed: false }
+}
+
+const disconnectGithubSuccess = user => {
+  return { type: DISCONNECT_GITHUB_SUCCESS, logged: false, completed: true, user: user }
+}
+
+const disconnectGithubError = error => {
+  return { type: DISCONNECT_GITHUB_ERROR, logged: false, completed: true, error: error }
+}
+
 /*
  *
  * Login
@@ -207,5 +249,19 @@ export const searchUser = data => {
         dispatch(addNotification('user.search.error'))
         dispatch(searchUserError(error))
       })
+  }
+}
+
+export const authorizeGithub = () => {
+  return dispatch => {
+    dispatch(authorizedGithubRequested())
+    window.location.href = `${api.API_URL}/connect/github/?token=${Auth.getToken()}`;
+  }
+}
+
+export const disconnectGithub = () => {
+  return dispatch => {
+    dispatch(disconnectGithubRequested())
+    window.location.href = `${api.API_URL}/authorize/github/disconnect/?token=${Auth.getToken()}`;
   }
 }

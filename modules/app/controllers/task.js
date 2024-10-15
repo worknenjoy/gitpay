@@ -47,6 +47,7 @@ exports.fetchTask = (req, res) => {
 }
 
 exports.updateTask = (req, res) => {
+  req.body.userId = req.user.id
   Tasks.taskUpdate(req.body)
     .then(data => {
       res.send(data)

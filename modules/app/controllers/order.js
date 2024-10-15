@@ -14,6 +14,7 @@ exports.createOrder = (req, res) => {
     .then(data => {
       res.send(data)
     }).catch(error => {
+      console.log('error on createOrder', error)
       res.status(401).send(error)
     })
 }

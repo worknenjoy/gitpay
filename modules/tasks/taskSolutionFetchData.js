@@ -3,6 +3,7 @@ const models = require('../../models')
 const requestPromise = require('request-promise')
 
 function extractIssueReferences(text) {
+  if(!text) return [];
   const issueReferenceRegex = /#(\d+)/g;
   const matches = text.match(issueReferenceRegex);
   return matches ? matches.map(match => match.slice(1)) : []; // Remove the '#' prefix
@@ -57,8 +58,8 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
         }
       }
     }
-
-    if(task.dataValues.url.includes(extractIssueReferences(pullRequestData.body))) {
+    const issueReferences = extractIssueReferences(pullRequestData.body)
+    if(issueReferences.length && task.dataValues.url.includes(issueReferences)) {
       hasIssueReference = true
     }
 
@@ -76,7 +77,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     }
   }).catch(err => {
     // eslint-disable-next-line no-console
-    console.log(err)
+    console.log('error to fetch pull request data', err)
 
     if (err.statusCode === 404) {
       throw new Error('PULL_REQUEST_NOT_FOUND')

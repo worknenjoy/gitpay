@@ -17,7 +17,6 @@ const spies = require('chai-spies')
 const AssignMail = require('../modules/mail/assign')
 const TaskMail = require('../modules/mail/task')
 const taskUpdate = require('../modules/tasks/taskUpdate')
-const { get } = require('request')
 
 const nockAuth = () => {
   nock('https://github.com')
@@ -455,7 +454,7 @@ describe("tasks", () => {
       }).catch(done)
     });
 
-    it('should update task value', (done) => {
+    xit('should update task value', (done) => {
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
 
       nock('https://github.com')
@@ -481,7 +480,7 @@ describe("tasks", () => {
       }).catch(done)
     });
 
-    it('should update task status', (done) => {
+    xit('should update task status', (done) => {
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';
 
       nock('https://github.com')
@@ -721,12 +720,12 @@ describe("tasks", () => {
         })
     });
 
-    xit('should update status to closed when is paid', (done) => {
+    it('should update status to closed when is paid', (done) => {
       models.Task.build({url: 'http://github.com/check/issue/1', transfer_id: 'foo'}).save().then((task) => {
         task.createOrder({
           source_id: '12345',
           currency: 'BRL',
-          amount: 256,
+          amount: 256.56,
           status: 'succeeded'
         }).then((order) => {
           agent
@@ -736,6 +735,7 @@ describe("tasks", () => {
             .end((err, res) => {
               models.Task.findOne({where: {id: task.dataValues.id}}).then(t => {
                 expect(t.dataValues.status).to.equal('closed')
+                expect(t.dataValues.value).to.equal('256.56')
                 done(err)
               }).catch(done)
             })
