@@ -873,6 +873,7 @@ exports.updateWebhook = async (req, res) => {
         })
       break;
       case 'invoice.payment_failed':
+        // eslint-disable-next-line no-case-declarations
         const walletOrderExists = await models.WalletOrder.findOne({
           where: {
             source: event.data.object.id
