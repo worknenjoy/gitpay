@@ -8,31 +8,53 @@ const currencyMap = {
   'AT': 'EUR',
   'BE': 'EUR',
   'BR': 'BRL',
+  'BG': 'BGN', // Bulgaria
   'CA': 'CAD',
+  'HR': 'HRK', // Croatia
+  'CY': 'EUR', // Cyprus
+  'CZ': 'CZK', // Czech Republic
   'DK': 'DKK',
+  'EE': 'EUR', // Estonia
   'FI': 'EUR',
   'FR': 'EUR',
   'DE': 'EUR',
+  'GH': 'GHS', // Ghana
+  'GI': 'GIP', // Gibraltar
+  'GR': 'EUR', // Greece
   'HK': 'HKD',
-  'IE': 'EUR',
+  'HU': 'HUF', // Hungary
   'IN': 'INR',
+  'IE': 'EUR',
   'IT': 'EUR',
   'JP': 'JPY',
+  'KE': 'KES', // Kenya
+  'LV': 'EUR', // Latvia
+  'LI': 'CHF', // Liechtenstein
+  'LT': 'EUR', // Lithuania
   'LU': 'EUR',
+  'MY': 'MYR', // Malaysia
+  'MT': 'EUR', // Malta
   'MX': 'MXN',
   'NL': 'EUR',
   'NZ': 'NZD',
-  'NO': 'EUR',
+  'NG': 'NGN',
+  'NO': 'NOK', // Norway
+  'PL': 'PLN', // Poland
   'PT': 'EUR',
   'RO': 'RON',
   'SG': 'SGD',
+  'SK': 'EUR', // Slovakia
+  'SI': 'EUR', // Slovenia
+  'ZA': 'ZAR', // South Africa
   'ES': 'EUR',
   'SE': 'SEK',
   'CH': 'CHF',
+  'TH': 'THB', // Thailand
+  'AE': 'AED', // United Arab Emirates
   'GB': 'GBP',
-  'US': 'USD',
-  'NG': 'NGN'
-}
+  'US': 'USD'
+};
+
 
 const getCurrency = (country) => {
   return currencyMap[country]
