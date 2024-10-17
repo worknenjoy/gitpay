@@ -2,11 +2,13 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Grid, Typography, Container } from '@material-ui/core';
 import AccountTabs from '../components/account-tabs';
+import { changePassword } from '../../../actions/loginActions';
 
 
 export const UserAccount = ({ 
   user,
   updateUser,
+  changePassword,
   addNotification,
   history,
   deleteUser
@@ -23,6 +25,7 @@ export const UserAccount = ({
           <AccountTabs 
             user={user}
             updateUser={updateUser}
+            changePassword={changePassword}
             addNotification={addNotification}
             history={history}
             deleteUser={deleteUser}

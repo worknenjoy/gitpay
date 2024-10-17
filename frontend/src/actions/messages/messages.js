@@ -42,6 +42,38 @@ const messages = defineMessages({
     id: 'actions.assign.task.sucess',
     defaultMessage: 'This task was updated successfully!'
   },
+  userChangePasswordSuccessfull: {
+    id: 'user.change.password.successfull',
+    defaultMessage: 'Your password was changed successfully. You will be redirected to the login page'
+  },
+  userChangePasswordErrorCurrentTooShort: {
+    id: 'user.password.current.incorrect.too_short',
+    defaultMessage: 'Your current password is too short'
+  },
+  userChangePasswordErrorCurrentTooLong: {
+    id: 'user.password.current.incorrect.too_long',
+    defaultMessage: 'Your current password is too long'
+  },
+  userChangePasswordErrorNewTooLong: {
+    id: 'user.password.new.incorrect.too_long',
+    defaultMessage: 'Your new password is too long'
+  },
+  userChangePasswordErrorCurrentInvalid: {
+    id: 'user.change.password.error',
+    defaultMessage: 'We could not change your password'
+  },
+  userChangePasswordErrorNewTooShort: {
+    id: 'user.change.password.error',
+    defaultMessage: 'We could not change your password'
+  },
+  userChangePasswordErrorCurrentnvalid: {
+    id: 'user.password.incorerct.current',
+    defaultMessage: 'The current password is incorrect'
+  },
+  userChangePasswordError: {
+    id: 'user.change.password.error',
+    defaultMessage: 'We could not change your password'
+  },
   userForgotPasswordSuccessfull: {
     id: 'user.forgot.password.successfull',
     defaultMessage: 'We have sent you an email with instructions to reset your password'

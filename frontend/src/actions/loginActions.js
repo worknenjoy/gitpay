@@ -204,7 +204,7 @@ export const forgotPassword = data => {
 export const resetPassword = data => {
   return dispatch => {
     return axios
-      .put(api.API_URL + '/auth/change-password', data)
+      .put(api.API_URL + '/auth/reset-password', data)
       .then(response => {
         if(response) {
           dispatch(addNotification('user.reset.password.successfull'))
@@ -214,6 +214,28 @@ export const resetPassword = data => {
       })
       .catch(error => {
         dispatch(addNotification('user.reset.password.error'))
+      })
+  }
+}
+
+export const changePassword = data => {
+  return dispatch => {
+    return axios
+      .put(api.API_URL + '/auth/change-password', data)
+      .then(response => {
+        if(response.data) {
+          dispatch(addNotification('user.change.password.successfull'))
+          logOut()
+          window.setTimeout(() => {
+            window.location.href = '/#/signin'
+          }, 2000)
+        } else {
+          dispatch(addNotification(response.error.message || 'user.change.password.error'))
+        }
+      })
+      .catch(error => {
+        const errorCode = error.response.data.error
+        dispatch(addNotification(errorCode || 'user.change.password.error'))
       })
   }
 }

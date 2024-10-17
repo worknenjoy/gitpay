@@ -357,6 +357,7 @@ class Profile extends Component {
                         (<UserAccount
                           user={ this.props.user }
                           updateUser={ this.props.updateUser }
+                          changePassword={ this.props.changePassword }
                           addNotification={ this.props.addNotification }
                           history={ this.props.history }
                           deleteUser={ this.props.deleteUser }

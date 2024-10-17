@@ -27,6 +27,7 @@ const AccountTabMain = ({
   classes,
   user,
   updateUser,
+  changePassword,
   addNotification,
   history,
   deleteUser
@@ -59,7 +60,7 @@ const AccountTabMain = ({
     updateUser && updateUser(user.id, { name: fieldName });
   }
 
-  const onChangePassword = (e) => {
+  const onChangePassword = async (e) => {
     e.preventDefault();
     if(newPassword !== confirmNewPassword) {
       addNotification && addNotification('Passwords do not match', 'error');
@@ -73,11 +74,10 @@ const AccountTabMain = ({
       addNotification && addNotification('Password must be at least 8 characters long', 'error');
       return;
     } 
-    if(password !== currentPassword) {
-      addNotification && addNotification('Current password is incorrect', 'error');
-      return;
-    }
-    updateUser && updateUser(user.id, { currentPassword, newPassword, confirmNewPassword });
+    changePassword && await changePassword({ 
+      old_password: currentPassword, 
+      password: newPassword
+     });
   }
 
   return (
