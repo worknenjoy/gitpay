@@ -40,12 +40,12 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
       open={open}
       onClose={onClose}
       plan={{
-        fee: 8,
-        category: <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />,
-        title: <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />,
+        fee: 0,
+        category: <FormattedMessage id='actions.wallet.funds.plan.title' defaultMessage='Wallet payment' />,
+        title: <FormattedMessage id='actions.wallet.funds.plan.info' defaultMessage='Pay using your wallet' />,
         items: [
-          <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />,
-          <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />,
+          <FormattedMessage id='actions.wallet.plan.bullet.one' defaultMessage='No platform fee' />,
+          <FormattedMessage id='actions.wallet.plan.bullet.two' defaultMessage='Use your funds to pay for bounties' />,
         ],
       }}
       tabs={[
@@ -55,7 +55,7 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
           value: 'invoice',
           component: (
             <AddFundsInvoiceTab
-              priceAfterFee={priceAfterFee}
+              priceAfterFee={price}
               price={price}
               onClose={onClose}
               customer={customer}
