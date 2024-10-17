@@ -71,7 +71,7 @@ const PaymentMethodWalletTab = ({
         className={classes.btnPayment}
       >
         <FormattedMessage id='task.payment.wallet.action' defaultMessage='Pay {amount} with your Wallet' values={{
-          amount: formatCurrency(price)
+          amount: formatCurrency(priceAfterFee)
         }} />
       </Button>
     </div>
