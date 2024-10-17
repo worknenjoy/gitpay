@@ -20,6 +20,7 @@ import AccountTabMain from './account-tab-main';
 export default function AccountTabs({
     user,
     updateUser,
+    changePassword,
     deleteUser,
     addNotification,
     history,
@@ -152,6 +153,7 @@ export default function AccountTabs({
                   <AccountTabMain
                     user={user}
                     updateUser={updateUser}
+                    changePassword={changePassword}
                     addNotification={addNotification}
                     deleteUser={deleteUser}
                     history={history}

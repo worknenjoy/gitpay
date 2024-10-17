@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Profile from '../components/profile/profile'
 import { fetchPreferences } from '../actions/preferencesActions'
-import { logOut } from '../actions/loginActions'
+import { logOut, changePassword } from '../actions/loginActions'
 import { listTasks, filterTasks, createTask } from '../actions/taskActions'
 import { fetchRoles, createRoles, deleteRoles } from '../actions/userRoleActions'
 import { updateUser, deleteUser, resendActivationEmail } from '../actions/userActions'
@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     createOrganizations: (org) => dispatch(createOrganizations(org)),
     updateOrganization: (org) => dispatch(updateOrganization(org)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
+    changePassword: (data) => dispatch(changePassword(data)),
     resendActivationEmail: (userId) => dispatch(resendActivationEmail(userId)),
     deleteUser: (user) => dispatch(deleteUser(user)),
     addNotification: (message) => dispatch(addNotification(message)),

@@ -87,7 +87,7 @@ router.post('/authorize/local',
   }
 )
 
-router.put('/auth/change-password', controllers.changePassword)
+router.put('/auth/reset-password', controllers.resetPassword)
 
 router.post('/auth/forgot-password', controllers.forgotPasswordNotification)
 
@@ -100,6 +100,10 @@ router.get('/users', controllers.searchAll)
 router.get('/callback/github/private', controllers.createPrivateTask)
 
 router.get('/users/types/:id', controllers.getUserTypes)
+
+router.use('/auth/', secure)
+
+router.put('/auth/change-password', controllers.changePassword)
 
 router.use('/user/', secure)
 
