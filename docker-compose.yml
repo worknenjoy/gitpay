@@ -1,30 +1,36 @@
-version: '3.7'
-
 services:
-  frontend:
-    image: node:8.6
-    command: sh -c "npm install && npm run dev"
-    working_dir: /gitpay/frontend
-    volumes: 
-      - .:/gitpay
-    network_mode: host
-    ports:
-      - "8082:8082"
-    expose:
-      - "8082"
-  backend:
+  db:
+    container_name: db
     env_file:
       - .env
-    image: node:8.6
-    command: sh -c "npm install && npm run migrate && npm run start"
-    working_dir: /gitpay
-    volumes: 
-      - .:/gitpay
-    network_mode: host
+    image: postgres
+    pull_policy: missing
+    ports:
+      - "5432:5432"
+
+  backend:
+    container_name: backend
+    image: backend
+    env_file:
+      - .env
+    command: bash -c 'npm run migrate && npm run seed && npm run start'
+    build:
+      context: .
+      dockerfile: .docker/backend.dockerfile
+    pull_policy: missing
     ports:
       - "3000:3000"
-  db:
-    env_file:
-      - .env
-    image: postgres    
-    network_mode: host
+    restart: always
+    depends_on:
+      - db
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: .docker/frontend.dockerfile
+    pull_policy: missing
+    ports:
+      - "8082:8082"
+    depends_on:
+      - backend
