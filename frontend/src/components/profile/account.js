@@ -18,6 +18,8 @@ import {
   MenuItem,
   FormHelperText,
   FormControlLabel,
+  RadioGroup,
+  Radio,
   Switch,
   Select,
   Tabs,
@@ -33,12 +35,15 @@ import ReactPlaceholder from 'react-placeholder'
 import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import Moment from 'moment'
 
+import Alert from '../../components/design-library/atoms/alert/alert'
+
 import Const from '../../consts'
 import TabContainer from '../Tabs/TabContainer'
 import messages from './messages'
 
 import CountryPicker from './country-picker'
 import { countryCodes } from './country-codes'
+import account from '../../containers/account'
 
 const styles = theme => ({
   card: {
@@ -112,7 +117,10 @@ class Account extends Component {
       monthOfBirth: 0,
       currentTab: 0,
       ibanMode: false,
-      currentCountry: ''
+      currentCountry: '',
+      editBankAccount: false,
+      bankAccountType: 'individual',
+      bankAccountHolderName: ''
     }
     this.openUpdateModal = this.openUpdateModal.bind(this)
     this.closeUpdateModal = this.closeUpdateModal.bind(this)
@@ -130,6 +138,12 @@ class Account extends Component {
       this.props.fetchAccount(userId)
       this.props.getBankAccount(userId)
       this.setState({ userId, currentCountry: this.props.user.user.country })
+      if(this.props.bankAccount.data.account_holder_type) {
+        this.setState({ bankAccountType: this.props.bankAccount.data.account_holder_type })
+      }
+      if(this.props.bankAccount.data.account_holder_name) {
+        this.setState({ bankAccountHolderName: this.props.bankAccount.data.account_holder_name })
+      }
     }
   }
 
@@ -191,7 +205,7 @@ class Account extends Component {
   }
 
   handleBankAccount (e) {
-    const { userId, currentCountry } = this.state
+    const { userId, currentCountry, bankAccountType, bankAccountHolderName } = this.state
     e.preventDefault()
     const userCountry = currentCountry
     if (userCountry === 'BR') {
@@ -230,10 +244,18 @@ class Account extends Component {
         accountInfo = {
           routing_number: e.target.routing_number.value,
           account_number: e.target.account_number.value,
+          account_holder_type: bankAccountType,
           country: userCountry
         }
       }
-      this.props.createBankAccount(this.state.userId, accountInfo)
+      if(this.state.editBankAccount) {
+        this.props.updateBankAccount({
+          account_holder_type: bankAccountType,
+          account_holder_name: bankAccountHolderName,
+        })
+      } else {
+        this.props.createBankAccount(this.state.userId, accountInfo)
+      }
     }
   }
 
@@ -261,6 +283,10 @@ class Account extends Component {
     this.setState({ ibanMode: e.target.checked })
   }
 
+  handleEditAccount = () => {
+    this.setState({ editBankAccount: true })
+  }
+
   onChange (e) {
     e.preventDefault()
     let formData = {}
@@ -273,8 +299,14 @@ class Account extends Component {
     this.setState({ currentCountry: e.target.value })
   }
 
+  onChangeHolderName = (e) => {
+    e.preventDefault()
+    this.setState({ bankAccountHolderName: e.target.value })
+  }
+
   render () {
     const { classes, account, bankAccount, user } = this.props
+    const { bankAccountType } = this.state
 
     const getSteps = () => {
       return [
@@ -306,6 +338,13 @@ class Account extends Component {
             </Tabs>
             { this.state.currentTab === 0 &&
               <TabContainer>
+                { this.state.editBankAccount && (
+                  <Alert severity='info' variant='outlined'>
+                  <Typography color='primary'>
+                    <FormattedMessage id='account.active.info' defaultMessage='You can edit only some information of your bank account' />
+                  </Typography>
+                </Alert>
+                ) }
                 { account.data.id ? (
                   <div>
                     <form
@@ -320,9 +359,26 @@ class Account extends Component {
                           <Grid container spacing={ 3 }>
                             <Grid item xs={ 12 }>
                               { bankAccount.data.routing_number ? (
-                                <Typography color='primary'>
-                                  <FormattedMessage id='account.active.statement' defaultMessage='Your bank account is active' />
-                                </Typography>
+                                <div style={{ marginBottom: 8, marginTop: 8 }}>
+                                  <Alert
+                                    severity='success'
+                                    variant='outlined'
+                                    action={
+                                      <Button
+                                        size='small'
+                                        onClick={this.handleEditAccount}
+                                        variant='contained'
+                                        color='primary'
+                                      >
+                                        <FormattedMessage id='bank.alert.button.edit' defaultMessage='Edit bank account' />
+                                      </Button>
+                                    }
+                                  >
+                                    <Typography color='primary'>
+                                      <FormattedMessage id='account.active.statement' defaultMessage='Your bank account is active' />
+                                    </Typography>
+                                  </Alert>
+                                </div>
                               ) : (
                                 <FormControl
                                   className={ classes.formControl }
@@ -362,6 +418,47 @@ class Account extends Component {
                             </Grid>
                           </Grid>
                           <Grid container spacing={ 3 }>
+                            <Grid item xs={12}>
+                              <FormControl component="fieldset">
+                                <Typography variant="caption" gutterBottom>
+                                  <FormattedMessage id="account.register.type" defaultMessage="Account Type:" />
+                                </Typography>
+                                <RadioGroup
+                                  aria-label="bankAccountType"
+                                  name="bankAccountType"
+                                  value={bankAccountType}
+                                  onChange={(e) => this.setState({ bankAccountType: e.target.value })}
+                                  row
+                                >
+                                  <FormControlLabel
+                                    value="individual"
+                                    control={<Radio color="primary" />}
+                                    label={<FormattedMessage id="account.type.individual" defaultMessage="Individual" />}
+                                    disabled={ !!bankAccount.data.routing_number && !this.state.editBankAccount }
+                                  />
+                                  <FormControlLabel
+                                    value="company"
+                                    control={<Radio color="primary" />}
+                                    label={<FormattedMessage id="account.type.company" defaultMessage="Company" />}
+                                    disabled={ !!bankAccount.data.routing_number && !this.state.editBankAccount }
+                                  />
+                                </RadioGroup>
+                              </FormControl>
+                              <FormControl fullWidth>
+                                <InputLabel htmlFor='adornment-password'>
+                                  <FormattedMessage id='account.register.bank.accountHolderName' defaultMessage='Account holder name / company name' />
+                                </InputLabel>
+                                <Input
+                                  name='account_holder_name'
+                                  id='account_holder_name'
+                                  disabled={ !!bankAccount.data.routing_number && !this.state.editBankAccount }
+                                  value={ this.state.bankAccountHolderName }
+                                  onChange={ this.onChangeHolderName }
+                                />
+                              </FormControl>
+                            </Grid>
+                          </Grid>
+                          <Grid container spacing={ 3 }>
                             <Grid item xs={12} md={12}>
                               <FormControl>
                                 <div>
@@ -395,6 +492,9 @@ class Account extends Component {
                                 <FormControl
                                   error={ this.state.AccountNumberError }
                                 >
+                                  <Typography variant='caption' gutterBottom style={{width: '100%'}}>
+                                    <FormattedMessage id='account.details.iban' defaultMessage='IBAN' />
+                                  </Typography>
                                   <FormattedMessage id='account.details.iban' defaultMessage='IBAN'>
                                     { (msg) => (
                                       <Input
@@ -421,24 +521,33 @@ class Account extends Component {
                             ) : (
                               <Grid item xs={ 12 }>
                                 { (user.user.country !== 'DK' || user.user.country !== 'BE') && (
-                                  <FormControl>
-                                    <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
-                                      { (msg) => (
-                                        <Input
-                                          id='bank-routing-number'
-                                          name='routing_number'
-                                          placeholder={ msg }
-                                          style={ { marginRight: 20 } }
-                                          disabled={ !!bankAccount.data.routing_number }
-                                          defaultValue={ bankAccount.data.routing_number }
-                                        />
-                                      ) }
-                                    </FormattedMessage>
-                                  </FormControl>
+                                  <>
+                                   
+                                    <FormControl>
+                                      <Typography variant='caption' gutterBottom style={{width: '100%'}}>
+                                        <FormattedMessage id='account.register.bank.routing' defaultMessage='Routing number' />
+                                      </Typography>
+                                      <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
+                                        { (msg) => (
+                                          <Input
+                                            id='bank-routing-number'
+                                            name='routing_number'
+                                            placeholder={ msg }
+                                            style={ { marginRight: 20 } }
+                                            disabled={ !!bankAccount.data.routing_number }
+                                            defaultValue={ bankAccount.data.routing_number }
+                                          />
+                                        ) }
+                                      </FormattedMessage>
+                                    </FormControl>
+                                  </>
                                 ) }
                                 <FormControl
                                   error={ this.state.AccountNumberError }
                                 >
+                                  <Typography variant='caption' gutterBottom style={{width: '100%'}}>
+                                    <FormattedMessage id='account.register.bank.accountNumber' defaultMessage='Account number' />
+                                  </Typography>
                                   <FormattedMessage id='account.details.accountNumber' defaultMessage='Account number'>
                                     { (msg) => (
                                       <Input
@@ -498,9 +607,13 @@ class Account extends Component {
                             variant='contained'
                             color='primary'
                             type='submit'
-                            disabled={ bankAccount.data.routing_number }
+                            disabled={ !this.state.editBankAccount && bankAccount.data.routing_number }
                           >
-                            <FormattedMessage id='account.details.activate.action' defaultMessage='Activate bank account' />
+                            {this.state.editBankAccount ? (
+                              <FormattedMessage id='account.details.update.action' defaultMessage='Update bank account' />
+                            ) : (
+                              <FormattedMessage id='account.details.activate.action' defaultMessage='Activate bank account' />
+                            )}
                           </Button>
                         </CardActions>
                       </Card>
