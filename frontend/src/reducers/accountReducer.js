@@ -11,6 +11,9 @@ import {
   GET_BANKACCOUNT_REQUESTED,
   GET_BANKACCOUNT_SUCCESS,
   GET_BANKACCOUNT_ERROR,
+  UPDATE_BANKACCOUNT_REQUESTED,
+  UPDATE_BANKACCOUNT_SUCCESS,
+  UPDATE_BANKACCOUNT_ERROR,
   CREATE_BANKACCOUNT_REQUESTED,
   CREATE_BANKACCOUNT_SUCCESS,
   CREATE_BANKACCOUNT_ERROR,
@@ -54,6 +57,12 @@ export const bankAccount = (state = { data: { }, completed: true, error: {} }, a
     case CREATE_BANKACCOUNT_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case CREATE_BANKACCOUNT_ERROR:
+      return { ...state, completed: true, error: action.error }
+    case UPDATE_BANKACCOUNT_REQUESTED:
+      return { ...state, completed: false }
+    case UPDATE_BANKACCOUNT_SUCCESS:
+      return { ...state, completed: true, data: action.data, error: {} }
+    case UPDATE_BANKACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error }
     default:
       return state

@@ -386,6 +386,14 @@ const messages = defineMessages({
     id: 'notifications.bank.create.other.error',
     defaultMessage: 'We could not update your account'
   },
+  notificationBankUpdateError: {
+    id: 'notifications.bank.update.error',
+    defaultMessage: 'We could not update your account'
+  },
+  notificationBankUpdateSuccess: {
+    id: 'notifications.bank.update.success',
+    defaultMessage: 'Your bank account was updated successfully'
+  },
   notificationPaymentMessageError: {
     id: 'payment.message.error',
     defaultMessage: 'We couldn\'t process your payment'

@@ -48,6 +48,10 @@ const GET_BANKACCOUNT_REQUESTED = 'GET_BANKACCOUNT_REQUESTED'
 const GET_BANKACCOUNT_SUCCESS = 'GET_BANKACCOUNT_SUCCESS'
 const GET_BANKACCOUNT_ERROR = 'GET_BANKACCOUNT_ERROR'
 
+const UPDATE_BANKACCOUNT_REQUESTED = 'UPDATE_BANKACCOUNT_REQUESTED'
+const UPDATE_BANKACCOUNT_SUCCESS = 'UPDATE_BANKACCOUNT_SUCCESS'
+const UPDATE_BANKACCOUNT_ERROR = 'UPDATE_BANKACCOUNT_ERROR'
+
 /*
  * Account fetch
  */
@@ -263,6 +267,27 @@ const createBankAccountSuccess = account => {
 const createBankAccountError = error => {
   return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error: error }
 }
+
+/*
+  * Account bank update
+*/
+
+const updateBankAccountRequested = () => {
+  return { type: UPDATE_BANKACCOUNT_REQUESTED, completed: false }
+}
+
+const updateBankAccountSuccess = account => {
+  return {
+    type: UPDATE_BANKACCOUNT_SUCCESS,
+    completed: true,
+    data: account.data
+  }
+}
+
+const updateBankAccountError = error => {
+  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error: error }
+}
+
 
 const fetchCustomer = () => {
   validToken()
@@ -553,6 +578,30 @@ const createBankAccount = (_, bank) => {
   }
 }
 
+const updateBankAccount = (bank_account) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(updateBankAccountRequested())
+    axios
+      .put(api.API_URL + '/user/bank_accounts', bank_account)
+      .then(bankAccount => {
+        if (bankAccount.data.statusCode === 400) {
+          dispatch(addNotification('notifications.bank.update.error'))
+          return dispatch(updateBankAccountError(bankAccount.data))
+        }
+        dispatch(addNotification('notifications.bank.update.success'))
+
+        return dispatch(updateBankAccountSuccess(bankAccount))
+      })
+      .catch(error => {
+        dispatch(addNotification('notifications.bank.update.other.error'))
+        // eslint-disable-next-line no-console
+        console.log('error on create account', error)
+        return dispatch(updateBankAccountError(error))
+      })
+  }
+}
+
 export {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
@@ -587,6 +636,9 @@ export {
   CREATE_BANKACCOUNT_REQUESTED,
   CREATE_BANKACCOUNT_SUCCESS,
   CREATE_BANKACCOUNT_ERROR,
+  UPDATE_BANKACCOUNT_REQUESTED,
+  UPDATE_BANKACCOUNT_SUCCESS,
+  UPDATE_BANKACCOUNT_ERROR,
   fetchAccount,
   createAccount,
   updateAccount,
@@ -597,6 +649,7 @@ export {
   activateUser,
   resendActivationEmail,
   createBankAccount,
+  updateBankAccount,
   getBankAccount,
   deleteUser,
 }
