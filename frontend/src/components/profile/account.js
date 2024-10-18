@@ -38,6 +38,7 @@ import TabContainer from '../Tabs/TabContainer'
 import messages from './messages'
 
 import CountryPicker from './country-picker'
+import { countryCodes } from './country-codes'
 
 const styles = theme => ({
   card: {
@@ -110,7 +111,8 @@ class Account extends Component {
       bankNumberError: false,
       monthOfBirth: 0,
       currentTab: 0,
-      ibanMode: false
+      ibanMode: false,
+      currentCountry: ''
     }
     this.openUpdateModal = this.openUpdateModal.bind(this)
     this.closeUpdateModal = this.closeUpdateModal.bind(this)
@@ -127,7 +129,7 @@ class Account extends Component {
       const userId = this.props.user.user.id
       this.props.fetchAccount(userId)
       this.props.getBankAccount(userId)
-      this.setState({ userId })
+      this.setState({ userId, currentCountry: this.props.user.user.country })
     }
   }
 
@@ -189,9 +191,9 @@ class Account extends Component {
   }
 
   handleBankAccount (e) {
-    const { userId } = this.state
+    const { userId, currentCountry } = this.state
     e.preventDefault()
-    const userCountry = this.props.user.user.country
+    const userCountry = currentCountry
     if (userCountry === 'BR') {
       const bankNumber = e.target['bank_number'].value
       if (bankNumber) {
@@ -264,6 +266,11 @@ class Account extends Component {
     let formData = {}
     formData[e.target.name] = e.target.value
     this.setState(formData)
+  }
+
+  onChangeCountry = (e) => {
+    e.preventDefault()
+    this.setState({ currentCountry: e.target.value })
   }
 
   render () {
@@ -352,6 +359,34 @@ class Account extends Component {
                                   ) }
                                 </FormControl>
                               ) }
+                            </Grid>
+                          </Grid>
+                          <Grid container spacing={ 3 }>
+                            <Grid item xs={12} md={12}>
+                              <FormControl>
+                                <div>
+                                  <Typography variant='caption' gutterBottom>
+                                    <FormattedMessage id='account.register.bank.account' defaultMessage='Country:' />
+                                  </Typography>
+                                </div>
+                                <Select
+                                  native
+                                  name='country'
+                                  value={bankAccount.data.routing_number ? bankAccount.data.country : this.state.currentCountry}
+                                  input={<Input id='bank-country' />}
+                                  fullWidth
+                                  style={{ marginTop: 12, marginBottom: 12 }}
+                                  onChange={this.onChangeCountry}
+                                  disabled={ !!bankAccount.data.routing_number }
+                                >
+                                  <option value=''>
+                                    Select bank country
+                                  </option>
+                                  {countryCodes.map((c, index) => (
+                                    <option key={index} value={c.code} selected={this.props.user.user.country === c.code}>{c.country}</option>
+                                  ))}
+                                </Select>
+                              </FormControl>
                             </Grid>
                           </Grid>
                           <Grid container spacing={ 3 }>
