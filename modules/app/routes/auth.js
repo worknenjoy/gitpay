@@ -121,6 +121,7 @@ router.put('/user/account', controllers.accountUpdate)
 
 router.post('/user/bank_accounts', controllers.createBankAccount)
 router.get('/user/bank_accounts', controllers.userBankAccount)
+router.put('/user/bank_accounts', controllers.updateBankAccount)
 
 router.delete('/user/delete/:id', controllers.deleteUserById)
 

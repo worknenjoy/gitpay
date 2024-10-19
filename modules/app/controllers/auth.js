@@ -296,6 +296,18 @@ exports.createBankAccount = (req, res) => {
     })
 }
 
+exports.updateBankAccount = (req, res) => {
+  user.userBankAccountUpdate({...req.body, id: req.user.id})
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(error)
+    }
+  )
+}
+
 exports.userBankAccount = (req, res) => {
   user.userBankAccount({ id: req.user.id })
     .then(data => {

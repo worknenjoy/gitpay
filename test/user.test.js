@@ -625,7 +625,7 @@ describe("Users", () => {
   })
 
   describe('user account', () => {
-    xit('should retrieve account for user', (done) => {
+    it('should retrieve account for user', (done) => {
       nock('https://api.stripe.com')
         .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL')
         .reply(200, {
@@ -716,5 +716,39 @@ describe("Users", () => {
         }).catch(done)
     });
   });
+  describe('bank account', () => {
+    it('should update bank account for user', (done) => {
+      nock('https://api.stripe.com')
+        .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL/external_accounts?object=bank_account')
+        .reply(200, {
+          object: 'list',
+          data: [
+            {
+              object: 'bank_account',
+              id: 'ba_1CVSl2EI8tTzMKoL'
+            }
+          ]
+        });
 
+      nock('https://api.stripe.com')
+        .post('/v1/accounts/acct_1CVSl2EI8tTzMKoL/external_accounts/ba_1CVSl2EI8tTzMKoL')
+        .reply(200, {
+          object: 'account'
+        });
+      registerAndLogin(agent, {
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      }).then(res => {
+        agent
+          .put(`/user/bank_accounts`)
+          .send({ account_id: 'acct_1CVSl2EI8tTzMKoL', routing_number: '110000000', account_number: '000123456789', country: 'US' })
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body.object).to.exist;
+            done(err);
+          })
+      }).catch(done)
+    })
+  });
 });

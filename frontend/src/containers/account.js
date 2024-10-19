@@ -6,7 +6,8 @@ import {
   updateAccount,
   updateUser,
   createBankAccount,
-  getBankAccount
+  getBankAccount,
+  updateBankAccount
 } from '../actions/userActions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -25,7 +26,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateAccount: (userId, account) => dispatch(updateAccount(userId, account)),
     updateUser: (userId, user) => dispatch(updateUser(userId, user)),
     getBankAccount: (userId) => dispatch(getBankAccount(userId)),
-    createBankAccount: (userId, bank) => dispatch(createBankAccount(userId, bank))
+    createBankAccount: (userId, bank) => dispatch(createBankAccount(userId, bank)),
+    updateBankAccount: (bankAccount) => dispatch(updateBankAccount(bankAccount))
   }
 }
 
