@@ -205,10 +205,10 @@ class Account extends Component {
   }
 
   handleBankAccount (e) {
-    const { userId, currentCountry, bankAccountType, bankAccountHolderName } = this.state
+    const { userId, currentCountry, bankAccountType, bankAccountHolderName, editBankAccount } = this.state
     e.preventDefault()
     const userCountry = currentCountry
-    if (userCountry === 'BR') {
+    if (userCountry === 'BR' && !editBankAccount) {
       const bankNumber = e.target['bank_number'].value
       if (bankNumber) {
         const routingNumber = `${bankNumber}-${e.target.routing_number.value}`
@@ -218,14 +218,21 @@ class Account extends Component {
         else {
           this.setState({ AccountNumberError: false })
           const accountNumber = e.target.account_number.value.replace('-', '')
-          this.props.createBankAccount(userId, this.state.ibanMode ? {
-            account_number: accountNumber,
-            country: userCountry
-          } : {
-            routing_number: routingNumber,
-            account_number: accountNumber,
-            country: userCountry
-          })
+          if(editBankAccount) {
+            this.props.updateBankAccount({
+              account_holder_type: bankAccountType,
+              account_holder_name: bankAccountHolderName,
+            })
+          } else {
+            this.props.createBankAccount(userId, this.state.ibanMode ? {
+              account_number: accountNumber,
+              country: userCountry
+            } : {
+              routing_number: routingNumber,
+              account_number: accountNumber,
+              country: userCountry
+            })
+          }
         }
       }
       else {
@@ -248,7 +255,7 @@ class Account extends Component {
           country: userCountry
         }
       }
-      if(this.state.editBankAccount) {
+      if(editBankAccount) {
         this.props.updateBankAccount({
           account_holder_type: bankAccountType,
           account_holder_name: bankAccountHolderName,
