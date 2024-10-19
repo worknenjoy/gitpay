@@ -6,7 +6,7 @@ const databaseDev = {
   username: 'postgres',
   password: 'postgres',
   database: 'gitpay_dev',
-  host: '127.0.0.1',
+  host: 'db',
   port: 5432,
   dialect: 'postgres',
   logging: false
@@ -16,8 +16,8 @@ const databaseTest = {
   username: 'postgres',
   password: 'postgres',
   database: 'gitpay_test',
-  host: '127.0.0.1',
-  port: 5432,
+  host: 'db_test',
+  port: 5433,
   dialect: 'postgres',
   logging: false
 }
@@ -27,7 +27,7 @@ const databaseProd = {
   password: null,
   database: process.env.DATABASE_URL,
   schema: 'public',
-  host: '127.0.0.1',
+  host: 'db',
   port: 5432,
   dialect: 'postgres',
   protocol: 'postgres'
@@ -38,7 +38,7 @@ const databaseStaging = {
   password: null,
   database: process.env.DATABASE_URL,
   schema: 'public',
-  host: '127.0.0.1',
+  host: 'db',
   port: 5432,
   dialect: 'postgres',
   protocol: 'postgres'
