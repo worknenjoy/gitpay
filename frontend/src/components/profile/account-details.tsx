@@ -53,6 +53,7 @@ const AccountDetails = ({
   const [userId] = useState('')
   const [openCountryPicker, setOpenCountryPicker] = useState(false)
   const [terms, setTerms] = useState(false)
+  const [ editIdNumber, setEditIdNumber ] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -88,6 +89,7 @@ const AccountDetails = ({
     }
     setAccountData(formData)
     updateAccount(userId, formData)
+    setEditIdNumber(false)
   }
   const onChange = (e) => {
 
@@ -123,6 +125,13 @@ const AccountDetails = ({
   const closeCountryPicker = (e, country) => {
     setDisplayCurrentCountry(country)
     setOpenCountryPicker(false)
+  }
+
+  const shouldDisableIdNumber = () => {
+    if (editIdNumber) {
+      return false
+    }
+    return accountData['individual[id_number]'] || account.data.individual && account.data.individual.id_number_provided
   }
 
   return (
@@ -234,18 +243,48 @@ const AccountDetails = ({
                   <Grid item xs={12} sm={6} md={4}>
                     <Field
                       name='individual[id_number]'
-                      label='ID number'
+                      label={
+                        editIdNumber ? intl.formatMessage(messages.documentProvide) : (
+                          account.data.individual && account.data.individual
+                            .id_number_provided
+                            ? intl.formatMessage(messages.documentProvided)
+                            : intl.formatMessage(messages.documentProvide)
+                        )
+                      }
                       placeholder={
-                        account.data.individual && account.data.individual
-                          .id_number_provided
-                          ? intl.formatMessage(messages.documentProvided)
-                          : intl.formatMessage(messages.documentProvide)
+                        editIdNumber ? intl.formatMessage(messages.documentProvide) :
+                        (
+                          account.data.individual && account.data.individual
+                            .id_number_provided
+                            ? intl.formatMessage(messages.documentProvided)
+                            : intl.formatMessage(messages.documentProvide)
+                        )
                       }
                       disabled={
-                        accountData['individual[id_number]'] || account.data.individual && account.data.individual.id_number_provided
+                        shouldDisableIdNumber()
                       }
                       defaultValue={
-                        accountData['individual[id_number]'] || account.data.individual && account.data.individual.id_number
+                        editIdNumber ? '' : accountData['individual[id_number]'] || account.data.individual && account.data.individual.id_number
+                      }
+                      endAdornment={
+                        account.data.individual && account.data.individual
+                          .id_number_provided
+                          && (
+                            <Button
+                              variant='text'
+                              color='primary'
+                              size='small'
+                              onClick={(e) => {
+                                setEditIdNumber(!editIdNumber)
+                              }}
+                            >
+                              { !editIdNumber ? (
+                              <FormattedMessage id='account.actions.id.edit' defaultMessage='Change' />
+                              ) : (
+                                <FormattedMessage id='account.actions.id.cancel' defaultMessage='Cancel' />
+                              )}
+                            </Button>
+                          )
                       }
                     />
                   </Grid>

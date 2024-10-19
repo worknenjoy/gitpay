@@ -12,12 +12,13 @@ type FieldProps = {
   placeholder?: string,
   disabled?: boolean,
   help?: boolean,
-  inputComponent?: any
+  inputComponent?: any,
+  endAdornment?: React.ReactNode,
   ref?: React.Ref<HTMLElement> | null
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Field = ({ ref, name, value, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent, onChange }: FieldProps) => {
+export const Field = ({ ref, name, value, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent, endAdornment, onChange }: FieldProps) => {
   return (
     <FormControl style={{ width: '100%' }}>
       <InputLabel
@@ -39,6 +40,7 @@ export const Field = ({ ref, name, value, label, type = 'text', required = false
         disabled={disabled}
         inputComponent={inputComponent}
         onChange={onChange}
+        endAdornment={endAdornment}
       />
       {help &&
         <FormHelperText id='component-helper-text'>
