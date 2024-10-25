@@ -18,6 +18,14 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.error.main,
       color: theme.palette.common.white,
     },
+    expired: {
+      backgroundColor: theme.palette.grey[500],
+      color: theme.palette.common.white,
+    },
+    canceled: {
+      backgroundColor: theme.palette.grey[500],
+      color: theme.palette.common.white
+    },
     unknown: {
       backgroundColor: theme.palette.grey[500],
       color: theme.palette.common.white
@@ -29,7 +37,7 @@ type statusProps = {
   orderStatus: string;
 }
 
-type GetStatusProps = { label?: string, color?: 'pending' | 'succeeded' | 'failed' }
+type GetStatusProps = { label?: string, color?: 'pending' | 'succeeded' | 'failed' | 'cancelled' | 'canceled' | 'expired' | 'unknown' }
 type GetStatus = (currentStatus:string) => GetStatusProps
 
 export default function PaymentStatus({ orderStatus }:statusProps) {
@@ -55,6 +63,42 @@ export default function PaymentStatus({ orderStatus }:statusProps) {
         choosenStatus = {
           label: 'Failed',
           color: 'failed',
+        };
+      break;
+      case order.fail:
+        choosenStatus = {
+          label: 'Failed',
+          color: 'failed',
+        };
+      break;
+      case order.expired:
+        choosenStatus = {
+          label: 'Expired',
+          color: 'expired',
+        };
+      break;
+      case order.cancelled:
+        choosenStatus = {
+          label: 'Cancelled',
+          color: 'failed',
+        };
+      break;
+      case order.canceled:
+        choosenStatus = {
+          label: 'Cancelled',
+          color: 'failed',
+        };
+      break;
+      case order.refunded:
+        choosenStatus = {
+          label: 'Refunded',
+          color: 'expired',
+        };
+      break;
+      default:
+        choosenStatus = {
+          label: 'unknown',
+          color: 'unknown',
         };
       break;
     }

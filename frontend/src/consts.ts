@@ -140,10 +140,24 @@ enum invoiceStatuses {
   refunded = 'refunded'
 }
 
-enum orderStatuses {
+enum orderStripeStatuses {
   pending = 'pending',
   succeeded = 'succeeded',
   failed = 'failed',
+}
+
+enum orderSystemStatuses {
+  fail = 'fail',
+  success = 'success',
+  expired = 'expired',
+  cancelled = 'cancelled',
+  canceled = 'canceled', // TODO: fix temporary status name
+  refunded = 'refunded',
+}
+
+const orderStatuses = {
+  ...orderStripeStatuses,
+  ...orderSystemStatuses
 }
 
 export const status = {

@@ -36,3 +36,33 @@ export const FailedStatus = Template.bind({});
 FailedStatus.args = {
   orderStatus: 'failed',
 };
+
+export const ExpiredStatus = Template.bind({});
+ExpiredStatus.args = {
+  orderStatus: 'expired',
+};
+
+export const CancelledStatus = Template.bind({});
+CancelledStatus.args = {
+  orderStatus: 'cancelled',
+};
+
+export const FailStatus = Template.bind({});
+FailStatus.args = {
+  orderStatus: 'fail',
+};
+
+export const CanceledStatus = Template.bind({});
+CanceledStatus.args = {
+  orderStatus: 'canceled',
+};
+
+export const RefundedStatus = Template.bind({});
+RefundedStatus.args = {
+  orderStatus: 'refunded',
+};
+
+export const UndefinedStatus = Template.bind({});
+UndefinedStatus.args = {
+  orderStatus: 'undefined',
+};
