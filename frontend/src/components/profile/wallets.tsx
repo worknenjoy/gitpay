@@ -213,7 +213,7 @@ const Wallets = ({
                     <InvoiceId key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
                     <InvoiceStatus invoiceStatus={wo.status} />,
                     formatCurrency(wo.amount),
-                    moment(wo.createdAt).format('LLL'),
+                    moment(wo.createdAt).fromNow(),
                     <InvoiceDueDate key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
                     <>
                       {(wo.status === 'open') &&

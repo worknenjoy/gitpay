@@ -30,7 +30,8 @@ import TaskOrderDetails from '../task/order/task-order-details'
 import TaskOrderTransfer from '../task/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
 import CustomPaginationActionsTable from './payments-table'
-import { filterTasks, listTasks } from '../../actions/taskActions'
+import InvoiceStatus from '../design-library/atoms/invoice-status/invoice-status'
+import PaymentStatus from '../design-library/atoms/payment-status/payment-status'
 
 const styles = theme => ({
   paper: {
@@ -61,6 +62,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
     open: intl.formatMessage(messages.openPaymentStatus),
     succeeded: intl.formatMessage(messages.succeededStatus),
     fail: intl.formatMessage(messages.failStatus),
+    failed: intl.formatMessage(messages.failStatus),
     canceled: intl.formatMessage(messages.canceledStatus),
     refunded: intl.formatMessage(messages.refundedStatus),
     expired: intl.formatMessage(messages.expiredStatus)
@@ -285,9 +287,9 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
 
     return orders.map((item, i) => [
       item.paid ? intl.formatMessage(messages.labelYes) : intl.formatMessage(messages.labelNo),
-      <div style={ { display: 'inline-block' } }>
-        <span style={ { display: 'inline-block', width: '100%' } }>{ statuses[item.status] }</span>
-      </div>,
+      item.source_type === 'invoice-item' ?
+      <InvoiceStatus invoiceStatus={item.status === 'succeeded' ? 'paid' : item.status} />
+      : <PaymentStatus orderStatus={item.status} />,
       issueRow(item.Task),
       `$ ${item.amount}`,
       <PaymentTypeIcon type={ item.provider } />,

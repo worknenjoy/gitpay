@@ -140,8 +140,15 @@ enum invoiceStatuses {
   refunded = 'refunded'
 }
 
+enum orderStatuses {
+  pending = 'pending',
+  succeeded = 'succeeded',
+  failed = 'failed',
+}
+
 export const status = {
-  invoice: invoiceStatuses
+  invoice: invoiceStatuses,
+  order: orderStatuses
 }
 
 const api = {
