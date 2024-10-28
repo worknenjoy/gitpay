@@ -220,7 +220,7 @@ const filterTaskOrdersSuccess = (task, filter) => {
 }
 
 /*
- * Task fetch
+ * Task fetch 
  */
 
 const fetchTaskRequested = () => {
@@ -350,6 +350,10 @@ const updateTask = task => {
             addNotification('actions.task.interested.notification.success')
           )
           dispatch(changeTaskTab(2))
+          dispatch(updateTaskSuccess())
+        }
+        else if ('deadline' in task && task.deadline === null) {
+          dispatch(addNotification('actions.task.deadline.clear'))
           dispatch(updateTaskSuccess())
         }
         else {

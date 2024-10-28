@@ -165,6 +165,10 @@ const messages = defineMessages({
     id: 'actions.task.update.notification.success',
     defaultMessage: 'Task updated successfully'
   },
+  notificationTaskDeadlineClear: {
+    id: 'actions.task.deadline.clear',
+    defaultMessage: 'Deadline has been removed'
+  },
   notificationTaskUpdateNotificationError: {
     id: 'actions.task.update.notification.error',
     defaultMessage: 'Error on task update'

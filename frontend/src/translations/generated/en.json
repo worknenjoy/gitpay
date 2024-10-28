@@ -189,6 +189,7 @@
   "actions.task.payment.transfer.sucess": "The transfer was completed successfully!",
   "actions.task.report.error": "Error in reporting task",
   "actions.task.report.success": "Task successfuly reported",
+  "actions.task.deadline.clear": "Deadline has been removed",
   "actions.task.status.forbidden": "You cannot change the status from this task",
   "actions.task.update.notification.error": "Error on task update",
   "actions.task.update.notification.success": "Task updated successfully",
