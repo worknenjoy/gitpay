@@ -165,6 +165,19 @@ export const status = {
   order: orderStatuses
 }
 
+export enum paymentProviders {
+  stripe = 'stripe',
+  paypal = 'paypal',
+  wallet = 'wallet',
+  unknown = 'unknown'
+}
+
+export enum paymentSources {
+  card = 'card',
+  invoice = 'invoice-item',
+  unknown = 'unknown'
+}
+
 const api = {
   API_URL: process.env.API_HOST || 'http://localhost:3000',
   ACCOUNT_FIELDS: {

@@ -4,6 +4,7 @@ import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../task/messages/task-messages'
 import MomentComponent from 'moment'
 import PaymentTypeIcon from '../payment/payment-type-icon'
+import PaymentProvider from '../design-library/atoms/payment-provider/payment-provider'
 
 import {
   Container,
@@ -292,7 +293,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
       : <PaymentStatus orderStatus={item.status} />,
       issueRow(item.Task),
       `$ ${item.amount}`,
-      <PaymentTypeIcon type={ item.provider } />,
+      <PaymentProvider provider={item.provider} sourceType={item.source_type} />,
       MomentComponent(item.createdAt).fromNow(),
       <div style={ { display: 'flex', justifyContent: 'space-around' } }>
         { detailsOrderButton(item, userId) }
