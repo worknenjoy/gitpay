@@ -17,6 +17,7 @@ import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfers/transfer-detail'
 import { formatCurrency } from '../../utils/format-currency'
+import api from '../../consts'
 
 const Alert = (props) => {
   return <MuiAlert elevation={0} variant='standard' size='small' {...props} />
@@ -47,7 +48,7 @@ const styles = theme => ({
   }
 })
 
-const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, transfer, user, intl, match, history }) => {
+const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount, transfers, transfer, user, account, intl, match, history }) => {
   const [value, setValue] = React.useState(0)
   const [openTransferDetail, setOpenTransferDetail] = React.useState(0)
 
@@ -68,6 +69,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
   useEffect(() => {
     setValue('from')
     getTranfers().then(t => { })
+    fetchAccount().then(a => { })
   }, [user])
 
   useEffect(() => {
@@ -104,7 +106,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
             }}
             variant='contained'
             color='secondary'
-            disabled={t.status !== 'pending'}
+            disabled={t.status !== 'pending' || !validAccount()}
           >
             <FormattedMessage id='transfers.action.payout.button' defaultMessage='Request payout' />
           </Button>
@@ -124,6 +126,28 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
     }
   }
 
+  const validAccount = () => {
+    if(!user.account_id) {
+      return false
+    } else if(account?.data?.requirements?.currently_due?.length > 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  const missingRequirements = () => {
+    if(account?.data?.requirements?.currently_due?.length > 0) {
+      return account?.data?.requirements?.currently_due.map((requirement, index) => {
+        return (
+          <li key={index}>
+            {intl.formatMessage(api.ACCOUNT_FIELDS[requirement])}
+          </li>
+        )
+      })
+    }
+  }
+  
   return (
     <div style={{ margin: '40px 0' }}>
       <TransferDetails user={user} history={history} id={openTransferDetail} fetchTransfer={fetchTransfer} transfer={transfer} open={openTransferDetail} onClose={() => {
@@ -133,12 +157,10 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
       }
       />
       <Container>
-        <Typography variant='h5' gutterBottom>
-          <FormattedMessage id='profile.transfer.title' defaultMessage='Transfers' />
-        </Typography>
-        {
-          !user.account_id && value === 'to' ?
+      {
+          !validAccount() && value === 'to' ?
             <Alert
+              style={{ marginBottom: 20 }}
               severity='warning'
               action={
                 <Button
@@ -156,10 +178,23 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
               <Typography variant='subtitle1' gutterBottom>
                 <FormattedMessage id='profile.transfer.notactive' defaultMessage='Your account is not active, please finish the setup of your account to receive payouts' />
               </Typography>
+              { missingRequirements() &&
+                <>
+                  <Typography variant='subtitle1' gutterBottom>
+                    <FormattedMessage id='profile.transfer.missingrequirements' defaultMessage='Missing requirements:' />
+                  </Typography>
+                  <ul>
+                    {missingRequirements()}
+                  </ul>
+                </>
+              }
             </Alert>
             :
             null
         }
+        <Typography variant='h5' gutterBottom>
+          <FormattedMessage id='profile.transfer.title' defaultMessage='Transfers' />
+        </Typography>
         <Tabs
           value={value}
           onChange={handleChange}
