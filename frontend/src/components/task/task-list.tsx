@@ -68,7 +68,30 @@ const messages = defineMessages({
 })
 
 
-const TaskList = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes, intl }) => {
+import { RouteComponentProps } from 'react-router-dom';
+import { InjectedIntlProps } from 'react-intl';
+
+interface TaskListProps extends RouteComponentProps, InjectedIntlProps {
+  user: any;
+  tasks: any;
+  organization: any;
+  fetchOrganization: any;
+  listTasks: any;
+  listProjects: any;
+  project: any;
+  fetchProject: any;
+  filterTasks: any;
+  classes: any;
+  intl: any;
+}
+
+interface MatchParams {
+  organization_id?: string;
+  project_id?: string;
+  filter?: string;
+}
+
+const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes, intl }) => {
   const isProfilePage = history.location.pathname.includes('/profile')
   const { organization_id, project_id } = match.params
   const profileUrl = isProfilePage ? '/profile' : ''

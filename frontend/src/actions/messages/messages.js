@@ -218,6 +218,10 @@ const messages = defineMessages({
     id: 'issue.solution.dialog.update.success',
     defaultMessage: 'The solution for this issue was updated successfully'
   },
+  notificationTaskSolutionTransferError: {
+    id: 'issue.solution.error.insufficient_capabilities_for_transfer',
+    defaultMessage: 'Your account needs to be updated to receive payments. Please update your bank holder details and bank account information to receive payments in your bank account'
+  },
   notificationTaskCreateNotificationError: {
     id: 'actions.task.create.notification.error',
     defaultMessage: 'Error to update task'

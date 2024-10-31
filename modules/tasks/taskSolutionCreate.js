@@ -37,16 +37,18 @@ module.exports = Promise.method(async function taskSolutionCreate (taskSolutionP
       }
     }
     try {
-      const taskSolutionCreateResponse = await models.TaskSolution.create(taskSolutionParams)
       const transferSend = await transferBuilds({ taskId: task.dataValues.id, userId: task.dataValues.userId })
-      
       if(transferSend.error) {
         throw new Error('transferSend.error')
       }
+      const taskSolutionCreateResponse = await models.TaskSolution.create(taskSolutionParams)
       return taskSolutionCreateResponse
     } catch(err) {
       // eslint-disable-next-line no-console
       console.log('error to create task solution: ', err)
+      if(err.type === 'StripeInvalidRequestError' && err.code === 'insufficient_capabilities_for_transfer') {
+        throw new Error('issue.solution.error.insufficient_capabilities_for_transfer')
+      }
       throw new Error('COULD_NOT_CREATE_TASK_SOLUTION')
     }
   } else {

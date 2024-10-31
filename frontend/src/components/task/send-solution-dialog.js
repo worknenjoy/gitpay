@@ -64,6 +64,7 @@ const SendSolutionDialog = props => {
   }
 
   if(!user.id) {
+    console.log('redirecetd to signin', user)
     return <Redirect to='/signin' />
   }
 
