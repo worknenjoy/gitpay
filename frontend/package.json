@@ -53,6 +53,7 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-controls": "^8.4.1",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",

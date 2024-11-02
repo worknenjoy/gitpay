@@ -9,16 +9,6 @@ import TaskSolutionDialog from '../../../src/components/task/send-solution-dialo
 import { BrowserRouter } from 'react-router-dom';
 import { debug } from 'jest-preview';
 
-const router = {
-  history: {},
-  route: {
-    location: {
-      pathname: '/',
-    },
-    match: {},
-  },
-};
-
 describe('Components - TaskSolutionDialog', () => {
   beforeEach(() => {
     jest.useFakeTimers();

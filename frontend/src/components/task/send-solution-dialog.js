@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import SendSolutionForm from './send-solution-form'
 import {
   DialogTitle,
@@ -9,6 +9,8 @@ import {
   Typography
 } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
+import { validAccount } from '../../utils/valid-account'
+import AccountRequirements from '../../components/design-library/molecules/account-requirements/account-requirements'
 import SendSolutionRequirements from './send-solution-requirements'
 import TaskSolution from './task-solution'
 
@@ -17,7 +19,7 @@ const SendSolutionDialog = props => {
   const [editMode, setEditMode] = useState(false)
   const [timer, setTimer] = useState()
 
-  const { taskSolution, pullRequestData, task, user } = props
+  const { taskSolution, pullRequestData, task, user, fetchAccount, account, history } = props
 
   useEffect(() => {
     user.id && task.data.id && props.getTaskSolution(user.id, task.data.id)
@@ -36,6 +38,10 @@ const SendSolutionDialog = props => {
       }, 2500))
     }
   }, [pullRequestURL])
+
+  useEffect(() => {
+    fetchAccount()
+  }, [])
 
   const handlePullRequestURLChange = (event) => {
     setPullRequestURL(event.target.value)
@@ -78,6 +84,11 @@ const SendSolutionDialog = props => {
         </Typography>
       </DialogTitle>
       <DialogContent>
+        <AccountRequirements
+          user={ user }
+          account={ account }
+          onClick={() => history.push('/profile/user-account/details')}
+        />
         { Object.keys(props.taskSolution).length === 0 || editMode
           ? <React.Fragment>
             <SendSolutionForm handlePullRequestURLChange={ handlePullRequestURLChange } pullRequestURL={ pullRequestURL } />
@@ -95,7 +106,16 @@ const SendSolutionDialog = props => {
             <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />
           </Button>
           : <Button data-testid='send-solution-button' type='primary' htmlFor='submit' variant='contained' color='primary' disabled={
-            !pullRequestURL || !pullRequestData.isConnectedToGitHub || !pullRequestData.isAuthorOfPR || !pullRequestData.isPRMerged || !pullRequestData.isIssueClosed || !pullRequestData.hasIssueReference || task.data.paid || task.data.transfer_id || task.data.Transfer
+            !pullRequestURL ||
+            !pullRequestData.isConnectedToGitHub ||
+            !pullRequestData.isAuthorOfPR ||
+            !pullRequestData.isPRMerged ||
+            !pullRequestData.isIssueClosed ||
+            !pullRequestData.hasIssueReference ||
+            task.data.paid ||
+            task.data.transfer_id ||
+            task.data.Transfer ||
+            !validAccount(user, account)
           } onClick={ submitTaskSolution }>
             <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />
           </Button>
@@ -105,4 +125,4 @@ const SendSolutionDialog = props => {
   )
 }
 
-export default SendSolutionDialog
+export default withRouter(SendSolutionDialog)

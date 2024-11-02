@@ -12,16 +12,13 @@ import {
   Tabs,
   Tab
 } from '@material-ui/core'
-import MuiAlert from '@material-ui/lab/Alert'
 import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfers/transfer-detail'
 import { formatCurrency } from '../../utils/format-currency'
-import api from '../../consts'
+import { validAccount } from '../../utils/valid-account'
+import AccountRequirements from '../../components/design-library/molecules/account-requirements/account-requirements'
 
-const Alert = (props) => {
-  return <MuiAlert elevation={0} variant='standard' size='small' {...props} />
-}
 
 const transferMessages = defineMessages({
   cardTableHeaderFrom: {
@@ -106,7 +103,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
             }}
             variant='contained'
             color='secondary'
-            disabled={t.status !== 'pending' || !validAccount()}
+            disabled={t.status !== 'pending' || !validAccount(user, account)}
           >
             <FormattedMessage id='transfers.action.payout.button' defaultMessage='Request payout' />
           </Button>
@@ -125,28 +122,6 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
         return null
     }
   }
-
-  const validAccount = () => {
-    if(!user.account_id) {
-      return false
-    } else if(account?.data?.requirements?.currently_due?.length > 0) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  const missingRequirements = () => {
-    if(account?.data?.requirements?.currently_due?.length > 0) {
-      return account?.data?.requirements?.currently_due.map((requirement, index) => {
-        return (
-          <li key={index}>
-            {intl.formatMessage(api.ACCOUNT_FIELDS[requirement])}
-          </li>
-        )
-      })
-    }
-  }
   
   return (
     <div style={{ margin: '40px 0' }}>
@@ -158,39 +133,13 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
       />
       <Container>
       {
-          !validAccount() && value === 'to' ?
-            <Alert
-              style={{ marginBottom: 20 }}
-              severity='warning'
-              action={
-                <Button
-                  size='small'
-                  onClick={() => {
-                    history.push('/profile/user-account/details')
-                  }}
-                  variant='contained'
-                  color='secondary'
-                >
-                  <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
-                </Button>
+          value === 'to' &&
+            <AccountRequirements user={user} account={account} onClick={
+              () => {
+                history.push('/profile/user-account/details')
               }
-            >
-              <Typography variant='subtitle1' gutterBottom>
-                <FormattedMessage id='profile.transfer.notactive' defaultMessage='Your account is not active, please finish the setup of your account to receive payouts' />
-              </Typography>
-              { missingRequirements() &&
-                <>
-                  <Typography variant='subtitle1' gutterBottom>
-                    <FormattedMessage id='profile.transfer.missingrequirements' defaultMessage='Missing requirements:' />
-                  </Typography>
-                  <ul>
-                    {missingRequirements()}
-                  </ul>
-                </>
-              }
-            </Alert>
-            :
-            null
+            } 
+            />
         }
         <Typography variant='h5' gutterBottom>
           <FormattedMessage id='profile.transfer.title' defaultMessage='Transfers' />
