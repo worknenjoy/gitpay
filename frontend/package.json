@@ -53,6 +53,7 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-controls": "^8.4.1",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
@@ -62,6 +63,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^12.1.2",
+    "@types/react-router-dom": "^5.3.3",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.2.0",
     "enzyme-react-intl": "^2.0.2",

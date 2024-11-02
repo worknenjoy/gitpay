@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import InvoicePayment from '../../../design-library/organisms/invoice-payment/invoice-payment'
 
-const AddFundsInvoiceTab = ({
+interface AddFundsInvoiceTabProps extends RouteComponentProps {
+  price: any;
+  priceAfterFee: any;
+  customer: any;
+  onPay: (amount: any) => Promise<void>;
+  onClose: () => void;
+}
+
+const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
   price,
   priceAfterFee,
   customer,

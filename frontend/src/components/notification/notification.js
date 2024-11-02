@@ -29,7 +29,7 @@ class Notification extends Component {
   }
 
   getLink = () => (
-    <a href={ this.props.link }>View</a>
+    <a href={ this.props.link }>{this.props.linkLabel || 'View'}</a>
   )
 
   componentDidMount () { }
@@ -58,7 +58,8 @@ Notification.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   message: PropTypes.string,
-  link: PropTypes.string
+  link: PropTypes.string,
+  linkLabel: PropTypes.string
 }
 
 export default Notification

@@ -141,6 +141,8 @@ module.exports = Promise.method(async function transferBuilds(params) {
       }
 
       const stripeTransfer = await stripe.transfers.create(transferData)
+      console.log('stripeTransfer', stripeTransfer)
+      
       if (stripeTransfer) {
         const updateTask = await models.Task.update({ transfer_id: stripeTransfer.id }, {
           where: {
