@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-    width: 180,
+    width: 160,
     alignItems: 'flex-end'
   },
   tab: {
@@ -48,15 +48,16 @@ const PayoutSettings = ({
   user,
   account,
   createAccount,
+  updateAccount,
   bankAccount,
   createBankAccount,
   updateBankAccount,
+  getBankAccount,
   fetchAccount,
   updateUser,
   deleteUser,
   changePassword,
-  addNotification,
-  history,
+  addNotification
 }) => {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = React.useState('bank');
@@ -97,9 +98,11 @@ const PayoutSettings = ({
                   changePassword={changePassword}
                   addNotification={addNotification}
                   createAccount={createAccount}
+                  updateAccount={updateAccount}
                   bankAccount={bankAccount}
                   createBankAccount={createBankAccount}
                   updateBankAccount={updateBankAccount}
+                  getBankAccount={getBankAccount}
                 />
               </TabPanel>}
             { currentTab === 'paypal' && 

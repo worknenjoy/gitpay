@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import {
-  Paper,
   withStyles,
   Grid,
   Button,
@@ -75,7 +74,6 @@ const AccountDetails = ({
       'individual[dob][month]': e.target['individual[dob][month]'].value,
       'individual[dob][year]': e.target['individual[dob][year]'].value
     }
-
     if (terms) {
       formData['tos_acceptance[date]'] = Math.round(+new Date() / 1000)
     }
@@ -89,7 +87,9 @@ const AccountDetails = ({
     setEditIdNumber(false)
   }
   const onChange = (e) => {
-
+    if(e.target.name === 'tos_acceptance') {
+      setTerms(!terms)
+    }
   }
 
   function TextMaskCustom(props) {

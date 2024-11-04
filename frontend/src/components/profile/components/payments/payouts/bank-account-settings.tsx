@@ -13,12 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: '100%',
     },
-    button: {
-      marginRight: theme.spacing(1),
-    },
-    completed: {
-      display: 'inline-block',
-    },
     instructions: {
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
@@ -34,26 +28,35 @@ export default function BankAccountSettings({
   changePassword,
   addNotification,
   createAccount,
+  updateAccount,
   bankAccount,
   createBankAccount,
   updateBankAccount,
+  getBankAccount,
   deleteUser
 }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState<{ [k: number]: boolean }>({});
-
 
   function getSteps() {
-    return ['Account holder details', 'Bank Account information'];
+    return [
+      {
+        label: 'Account holder details',
+        disabled: false
+      }, 
+      {
+        label: 'Bank Account information',
+        disabled: !account.data.id
+      }
+    ];
   }
   
   function getStepContent(step: number) {
     switch (step) {
       case 0:
-        return <AccountDetails user={user} account={account} fetchAccount={fetchAccount} updateUser={updateUser} changePassword={changePassword} addNotification={addNotification} deleteUser={deleteUser}  />;
+        return <AccountDetails user={user} account={account} createAccount={createAccount} updateAccount={updateAccount} fetchAccount={fetchAccount} updateUser={updateUser} changePassword={changePassword} addNotification={addNotification} deleteUser={deleteUser}  />;
       case 1:
-        return <BankAccount user={user} account={account} bankAccount={bankAccount} createAccount={createAccount} createBankAccount={createBankAccount} updateBankAccount={updateBankAccount} />;
+        return <BankAccount user={user} account={account} bankAccount={bankAccount} createAccount={createAccount} createBankAccount={createBankAccount} updateBankAccount={updateBankAccount} getBankAccount={getBankAccount} />;
       default:
         return 'Unknown step';
     }
@@ -61,31 +64,6 @@ export default function BankAccountSettings({
 
   const steps = getSteps();
 
-  const totalSteps = () => {
-    return steps.length;
-  };
-
-  const completedSteps = () => {
-    return Object.keys(completed).length;
-  };
-
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
-
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps();
-  };
-
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
-  };
 
   const handleStep = (step: number) => () => {
     setActiveStep(step);
@@ -94,10 +72,10 @@ export default function BankAccountSettings({
   return (
     <div className={classes.root}>
       <Stepper nonLinear activeStep={activeStep}>
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepButton onClick={handleStep(index)} completed={completed[index]}>
-              {label}
+        {steps.map((step, index) => (
+          <Step key={step.label}>
+            <StepButton onClick={handleStep(index)} disabled={step.disabled}>
+              {step.label}
             </StepButton>
           </Step>
         ))}

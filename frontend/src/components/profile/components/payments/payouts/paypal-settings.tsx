@@ -63,11 +63,10 @@ const PaypalSettings = ({
   updateUser,
   classes,
 }) => {
-  const [userId, setUserId] = React.useState(null)
 
-  const handlePaypalAccount = async (e) => {
+  const handlePaypalAccount = (e) => {
     e.preventDefault()
-    await updateUser(userId, {
+    updateUser(user.user.id, {
       paypal_id: e.target.paypal_email.value
     })
   }
@@ -138,7 +137,7 @@ const PaypalSettings = ({
             color='primary'
             type='submit'
           >
-            {!user.paypal_id
+            {!user.user.paypal_id
               ? <FormattedMessage id='account.register.paypay.activate' defaultMessage='Activate account' />
               : <FormattedMessage id='account.register.paypay.update' defaultMessage='Update account' />
             }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { withStyles, Grid, Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar } from '@material-ui/core';
@@ -64,6 +64,7 @@ const BankAccount = ({
   createAccount,
   createBankAccount,
   updateBankAccount,
+  getBankAccount,
   user
 }) => {
 
@@ -185,8 +186,22 @@ const BankAccount = ({
       } else {
         createBankAccount(userId, accountInfo)
       }
+      setEditBankAccount(false)
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      setUserId(user.user.id)
+      getBankAccount()
+    }
+  }, [user])
+
+  useEffect(() => {
+    if(bankAccount.data.account_holder_type) {
+      setBankAccountType(bankAccount.data.account_holder_type)
+    }
+  }, [bankAccount])
 
   return (
     <div>
@@ -197,8 +212,6 @@ const BankAccount = ({
         ready={account.completed && !account.error.error}
       >
         <div>
-
-
           {editBankAccount && (
             <Alert severity='info' variant='outlined'>
               <Typography color='primary'>
@@ -225,6 +238,7 @@ const BankAccount = ({
                               severity='success'
                               variant='outlined'
                               action={
+                                !editBankAccount ? 
                                 <Button
                                   size='small'
                                   onClick={handleEditAccount}
@@ -232,7 +246,15 @@ const BankAccount = ({
                                   color='primary'
                                 >
                                   <FormattedMessage id='bank.alert.button.edit' defaultMessage='Edit bank account' />
-                                </Button>
+                                </Button> : 
+                                  <Button
+                                  size='small'
+                                  onClick={() => setEditBankAccount(false)}
+                                  variant='contained'
+                                  color='primary'
+                                  >
+                                    <FormattedMessage id='bank.alert.button.cancel' defaultMessage='Cancel edit bank account' />
+                                  </Button>
                               }
                             >
                               <Typography color='primary'>
