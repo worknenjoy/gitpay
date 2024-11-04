@@ -87,9 +87,10 @@ const tiersContributors = [
     subheader: 'For contributors who solve issues, you will have a fee to receive the transfer',
     price: '8%',
     description: [
-      'We support direct transfer for your bank account registered on Gitpay',
-      'We support Paypal to receive the money',
-      '8% fee to withdraw your bounty after the Pull request is merged'
+      'We support direct transfer for your bank account registered on Gitpay for credit card payments or invoice',
+      'We support Paypal to receive payments when the bounty is paid using Paypal',
+      '8% fee to withdraw your bounty after the Pull request is merged',
+      '⚠️ Note: You will receive the payouts according to the payment method used by the maintainer, if the maintainer paid with credit card, you will receive the payout in your bank account, if the maintainer paid with Paypal, you will receive the payout in your Paypal account'
     ]
   }
 ]
@@ -136,7 +137,7 @@ class Pricing extends Component {
                           <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
                         </Typography>
                       </div>
-                      { tier.description.map(line => (
+                      { tier.description.map((line, i) => (
                         <Typography variant='body1' align='center' key={ line }>
                           { line }
                         </Typography>
@@ -174,9 +175,9 @@ class Pricing extends Component {
                           <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
                         </Typography>
                       </div>
-                      { tier.description.map(line => (
-                        <Typography variant='body1' align='center' key={ line }>
-                          { line }
+                      { tier.description.map((line, i) => (
+                        <Typography gutterBottom variant={tier.description.length - 1 === i ? 'caption' : 'body1'} align='center' key={ line }>
+                          {line}
                         </Typography>
                       )) }
                     </CardContent>

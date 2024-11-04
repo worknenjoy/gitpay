@@ -1,4 +1,5 @@
 import { grey, green } from '@material-ui/core/colors'
+import { divide } from 'lodash'
 
 const Palette = {
   typography: {
@@ -65,6 +66,7 @@ const Palette = {
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#fff',
     },
+    divider: '#E2E5EA',
   },
   overrides: {
     // Name of the component
