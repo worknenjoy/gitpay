@@ -81,7 +81,7 @@ const PaypalSettings = ({
       <Card elevation={0} className={classes.card}>
         <CardContent>
           <div className={classes.title}>
-            <Typography className={classes.pos} color='textSecondary'>
+            <Typography variant='h6' className={classes.pos}>
               <FormattedMessage id='account.register.paypal.title' defaultMessage='Activate PayPal account:' />
             </Typography>
             <Typography component='p' color='textSecondary' style={{ marginBottom: 20, marginTop: 20 }}>
