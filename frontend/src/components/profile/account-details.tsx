@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import {
@@ -42,6 +42,7 @@ const AccountDetails = ({
   user,
   createAccount,
   fetchAccount,
+  setActiveStep,
   classes
 }) => {
   const [accountData, setAccountData] = useState({})
@@ -51,7 +52,7 @@ const AccountDetails = ({
   const [terms, setTerms] = useState(false)
   const [editIdNumber, setEditIdNumber] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!e.target) return false
     let formData = {
@@ -83,11 +84,13 @@ const AccountDetails = ({
         e.target['individual[id_number]'].value
     }
     setAccountData(formData)
-    updateAccount(userId, formData)
+    const accountUpdated = await updateAccount(userId, formData)
+    if(!accountUpdated.error) setActiveStep(1)
     setEditIdNumber(false)
   }
+
   const onChange = (e) => {
-    if(e.target.name === 'tos_acceptance') {
+    if (e.target.name === 'tos_acceptance') {
       setTerms(!terms)
     }
   }
@@ -113,7 +116,7 @@ const AccountDetails = ({
       const userId = user.user.id
       fetchAccount(userId)
     }
-  }, [user])
+  }, [])
 
   const closeCountryPicker = (e, country) => {
     setDisplayCurrentCountry(country)
@@ -128,82 +131,81 @@ const AccountDetails = ({
   }
 
   return (
-
-    <form
-      onSubmit={handleSubmit}
-      onChange={onChange}
-      style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
-    >
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
-          <Typography variant='h6' gutterBottom>
-            <FormattedMessage id='account-details-personal-information-title' defaultMessage='Account details' />
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <ReactPlaceholder
-            showLoadingAnimation
-            type='media'
-            rows={1}
-            ready={account.completed}
-          >
-            <fieldset className={classes.fieldset}>
-              <legend className={classes.legend}>
-                <Typography>
-                  <FormattedMessage id='account-details-country-information-title' defaultMessage='Country' />
-                </Typography>
-              </legend>
-              <Grid container spacing={2}>
-                {displayCurrentCountry.country &&
-                  <Grid item xs={12} md={12}>
-                    <Alert severity='info'>
-                      <FormattedMessage id='account-details-country-information-desc' defaultMessage='Please make sure you have bank account on the country selected before continue.' />
-                    </Alert>
-                  </Grid>
-                }
-                {account && account.data.country
-                  ? <Grid item xs={12} md={12}>
-                    <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                      <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
-                      <Typography component='span' style={{ marginLeft: 10 }}>
-                        {countryCodes.find(c => c.code === account.data.country).country}
-                      </Typography>
-                    </div>
-                  </Grid>
-                  : <div>
-                    <Button variant='outlined' onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
-                      <FormattedMessage id='account-details-country-information-action' defaultMessage='Select Country' />
-                    </Button>
-                    <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
-                  </div>
-                }
-                <code style={{ display: 'none' }}>{account && JSON.stringify(account.data)}</code>
-              </Grid>
-              {displayCurrentCountry.country ? (
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={12}>
-                    <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                      <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
-                      <Typography component='span' style={{ marginLeft: 10 }}>
-                        {countryCodes.find(c => c.code === displayCurrentCountry.code).country}
-                      </Typography>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} md={12} justifyContent='flex-end' alignContent='flex-end' style={{ display: 'flex' }}>
-                    <Button variant='contained' color='primary' onClick={() => {
-                      displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
-                      setDisplayCurrentCountry({ country: '', code: '' })
-                    }} style={{ margin: 20 }}>
-                      <FormattedMessage id='account-details-country-information-save' defaultMessage='Save Country and continue' />
-                    </Button>
-                  </Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={12}>
+        <Typography variant='h6' gutterBottom>
+          <FormattedMessage id='account-details-personal-information-title' defaultMessage='Account details' />
+        </Typography>
+      </Grid>
+      <Grid item xs={12} md={12}>
+        <ReactPlaceholder
+          showLoadingAnimation
+          type='media'
+          rows={1}
+          ready={account.completed}
+        >
+          <fieldset className={classes.fieldset}>
+            <legend className={classes.legend}>
+              <Typography>
+                <FormattedMessage id='account-details-country-information-title' defaultMessage='Country' />
+              </Typography>
+            </legend>
+            <Grid container spacing={2}>
+              {displayCurrentCountry.country &&
+                <Grid item xs={12} md={12}>
+                  <Alert severity='info'>
+                    <FormattedMessage id='account-details-country-information-desc' defaultMessage='Please make sure you have bank account on the country selected before continue.' />
+                  </Alert>
                 </Grid>
-              ) : ('')}
-            </fieldset>
-          </ReactPlaceholder>
-        </Grid>
-        {account.completed && account.data.country && (
-          <Grid item xs={12} md={12}>
+              }
+              {account && account.data.country
+                ? <Grid item xs={12} md={12}>
+                  <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
+                    <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
+                    <Typography component='span' style={{ marginLeft: 10 }}>
+                      {countryCodes.find(c => c.code === account.data.country).country}
+                    </Typography>
+                  </div>
+                </Grid>
+                : <div>
+                  <Button variant='outlined' onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
+                    <FormattedMessage id='account-details-country-information-action' defaultMessage='Select Country' />
+                  </Button>
+                  <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
+                </div>
+              }
+              <code style={{ display: 'none' }}>{account && JSON.stringify(account.data)}</code>
+            </Grid>
+            {displayCurrentCountry.country ? (
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12}>
+                  <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
+                    <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
+                    <Typography component='span' style={{ marginLeft: 10 }}>
+                      {countryCodes.find(c => c.code === displayCurrentCountry.code).country}
+                    </Typography>
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={12} justifyContent='flex-end' alignContent='flex-end' style={{ display: 'flex' }}>
+                  <Button variant='contained' color='secondary' onClick={() => {
+                    displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
+                    setDisplayCurrentCountry({ country: '', code: '' })
+                  }} style={{ margin: 20 }}>
+                    <FormattedMessage id='account-details-country-information-save' defaultMessage='Save Country and continue' />
+                  </Button>
+                </Grid>
+              </Grid>
+            ) : ('')}
+          </fieldset>
+        </ReactPlaceholder>
+      </Grid>
+      {account.data.country && (
+        <Grid item xs={12} md={12}>
+          <form
+            onSubmit={handleSubmit}
+            onChange={onChange}
+            style={{ marginTop: 20, marginBottom: 20 }}
+          >
             <fieldset className={classes.fieldset}>
               <legend className={classes.legend}>
                 <Typography>
@@ -434,10 +436,9 @@ const AccountDetails = ({
                 </Button>
               </div>
             </Grid>
-          </Grid>)}
-      </Grid>
-    </form>
-
+          </form>
+        </Grid>)}
+    </Grid>
   )
 }
 

@@ -134,7 +134,7 @@ const PaypalSettings = ({
             style={{ color: 'white' }}
             size='large'
             variant='contained'
-            color='primary'
+            color='secondary'
             type='submit'
           >
             {!user.user.paypal_id

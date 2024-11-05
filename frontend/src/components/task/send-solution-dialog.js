@@ -87,7 +87,7 @@ const SendSolutionDialog = props => {
         <AccountRequirements
           user={ user }
           account={ account }
-          onClick={() => history.push('/profile/user-account/details')}
+          onClick={() => history.push('/profile/user-account/payouts')}
         />
         { Object.keys(props.taskSolution).length === 0 || editMode
           ? <React.Fragment>

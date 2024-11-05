@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { withStyles, Grid, Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar } from '@material-ui/core';
+import { Grid, Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar } from '@material-ui/core';
 import {
   Public as PublicIcon,
   Person as PersonIcon
@@ -15,12 +15,11 @@ import { countryCodes } from './country-codes'
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
-    //minWidth: 275,
+    width: '100%',
     marginBottom: 20,
     padding: 10
   },
   cardEmpty: {
-    //minWidth: 275,
     textAlign: 'center',
     marginBottom: 40
   },
@@ -79,11 +78,11 @@ const BankAccount = ({
   const [editBankAccount, setEditBankAccount] = React.useState(false);
   const [bankNumberError, setBankNumberError] = React.useState(false);
   const [AccountNumberError, setAccountNumberError] = React.useState(false);
-  const [ countryLabel, setCountryLabel ] = React.useState('');
-  const [ countryCode, setCountryCode ] = React.useState('');
-  const [ countryImage, setCountryImage ] = React.useState('');
-  const [ countryPickerModal, setCountryPickerModal ] = React.useState(false);
-  const [ canCreateAccount, setCanCreateAccount ] = React.useState(false);
+  const [countryLabel, setCountryLabel] = React.useState('');
+  const [countryCode, setCountryCode] = React.useState('');
+  const [countryImage, setCountryImage] = React.useState('');
+  const [countryPickerModal, setCountryPickerModal] = React.useState(false);
+  const [canCreateAccount, setCanCreateAccount] = React.useState(false);
 
 
   const handleEditAccount = () => {
@@ -198,20 +197,20 @@ const BankAccount = ({
   }, [user])
 
   useEffect(() => {
-    if(bankAccount.data.account_holder_type) {
+    if (bankAccount.data.account_holder_type) {
       setBankAccountType(bankAccount.data.account_holder_type)
     }
   }, [bankAccount])
 
   return (
-    <div>
-      <ReactPlaceholder
-        showLoadingAnimation
-        type='media'
-        rows={5}
-        ready={account.completed && !account.error.error}
-      >
-        <div>
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={12}>
+        <ReactPlaceholder
+          showLoadingAnimation
+          type='media'
+          rows={5}
+          ready={bankAccount.completed}
+        >
           {editBankAccount && (
             <Alert severity='info' variant='outlined'>
               <Typography color='primary'>
@@ -238,20 +237,20 @@ const BankAccount = ({
                               severity='success'
                               variant='outlined'
                               action={
-                                !editBankAccount ? 
-                                <Button
-                                  size='small'
-                                  onClick={handleEditAccount}
-                                  variant='contained'
-                                  color='primary'
-                                >
-                                  <FormattedMessage id='bank.alert.button.edit' defaultMessage='Edit bank account' />
-                                </Button> : 
+                                !editBankAccount ?
                                   <Button
-                                  size='small'
-                                  onClick={() => setEditBankAccount(false)}
-                                  variant='contained'
-                                  color='primary'
+                                    size='small'
+                                    onClick={handleEditAccount}
+                                    variant='contained'
+                                    color='secondary'
+                                  >
+                                    <FormattedMessage id='bank.alert.button.edit' defaultMessage='Edit bank account' />
+                                  </Button> :
+                                  <Button
+                                    size='small'
+                                    onClick={() => setEditBankAccount(false)}
+                                    variant='contained'
+                                    color='secondary'
                                   >
                                     <FormattedMessage id='bank.alert.button.cancel' defaultMessage='Cancel edit bank account' />
                                   </Button>
@@ -488,7 +487,7 @@ const BankAccount = ({
                       style={{ color: 'white' }}
                       size='large'
                       variant='contained'
-                      color='primary'
+                      color='secondary'
                       type='submit'
                       disabled={!editBankAccount && bankAccount.data.routing_number}
                     >
@@ -552,10 +551,9 @@ const BankAccount = ({
               <CountryPicker open={countryPickerModal} onClose={handleCountryClose} />
             </div>)
           }
-
-        </div>
-      </ReactPlaceholder>
-    </div>
+        </ReactPlaceholder>
+      </Grid>
+    </Grid>
   );
 }
 

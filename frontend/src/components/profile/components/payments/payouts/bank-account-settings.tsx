@@ -3,8 +3,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import AccountDetails from '../../../account-details';
 import BankAccount from '../../../bank-account';
 
@@ -17,6 +15,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
     },
+    step: {
+      '& .MuiStepIcon-root.MuiStepIcon-active': {
+        color: theme.palette.secondary.main,
+      },
+      '& .MuiStepLabel-labelContainer .MuiStepLabel-active': {
+        color: theme.palette.secondary.main,
+      } 
+    }
   }),
 );
 
@@ -54,9 +60,32 @@ export default function BankAccountSettings({
   function getStepContent(step: number) {
     switch (step) {
       case 0:
-        return <AccountDetails user={user} account={account} createAccount={createAccount} updateAccount={updateAccount} fetchAccount={fetchAccount} updateUser={updateUser} changePassword={changePassword} addNotification={addNotification} deleteUser={deleteUser}  />;
+        return (
+          <AccountDetails 
+            user={user}
+            account={account}
+            createAccount={createAccount}
+            updateAccount={updateAccount}
+            fetchAccount={fetchAccount}
+            updateUser={updateUser}
+            changePassword={changePassword}
+            addNotification={addNotification}
+            deleteUser={deleteUser}
+            setActiveStep={setActiveStep}
+          />
+        );
       case 1:
-        return <BankAccount user={user} account={account} bankAccount={bankAccount} createAccount={createAccount} createBankAccount={createBankAccount} updateBankAccount={updateBankAccount} getBankAccount={getBankAccount} />;
+        return (
+          <BankAccount 
+            user={user} 
+            account={account} 
+            bankAccount={bankAccount} 
+            createAccount={createAccount} 
+            createBankAccount={createBankAccount} 
+            updateBankAccount={updateBankAccount} 
+            getBankAccount={getBankAccount} 
+          />
+        );
       default:
         return 'Unknown step';
     }
@@ -73,7 +102,10 @@ export default function BankAccountSettings({
     <div className={classes.root}>
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((step, index) => (
-          <Step key={step.label}>
+          <Step 
+            key={step.label}
+            className={classes.step}
+          >
             <StepButton onClick={handleStep(index)} disabled={step.disabled}>
               {step.label}
             </StepButton>

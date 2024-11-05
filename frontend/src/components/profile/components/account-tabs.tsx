@@ -31,8 +31,6 @@ export default function AccountTabs({
       return 'account';
     } else if (location.pathname === '/profile/user-account/customer') {
       return 'customer';
-    } else if (location.pathname === '/profile/user-account/details') {
-      return 'details';
     } else if (location.pathname === '/profile/user-account/payouts') {
       return 'payouts';
     } else if (location.pathname === '/profile/user-account/roles') {
@@ -53,9 +51,6 @@ export default function AccountTabs({
         break;
       case 'customer':
         history.push('/profile/user-account/customer');
-        break;
-      case 'details':
-        history.push('/profile/user-account/details');
         break;
       case 'payouts':
         history.push('/profile/user-account/payouts');

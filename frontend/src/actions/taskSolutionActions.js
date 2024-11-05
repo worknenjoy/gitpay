@@ -115,7 +115,7 @@ const createTaskSolution = (taskSolution) => {
       return dispatch(createTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
-        dispatch(addNotification(ERRORS[error.response.data.error] || error.response.data.error, '', '/#/profile/user-account/details', 'Update your account'))
+        dispatch(addNotification(ERRORS[error.response.data.error] || error.response.data.error, '', '/#/profile/user-account/payouts', 'Update your account'))
         dispatch(fetchTask(taskSolution.taskId))
         return dispatch(createTaskSolutionError(error.response.data.error))
       }

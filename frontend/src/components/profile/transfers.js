@@ -111,7 +111,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
           !user.account_id && <Button
             size='small'
             onClick={() => {
-              history.push('/profile/user-account/details')
+              history.push('/profile/user-account/payouts')
             }}
             variant='contained'
             color='secondary'
@@ -136,7 +136,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
           value === 'to' &&
             <AccountRequirements user={user} account={account} onClick={
               () => {
-                history.push('/profile/user-account/details')
+                history.push('/profile/user-account/payouts')
               }
             } 
             />

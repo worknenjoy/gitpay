@@ -96,7 +96,7 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
                       <Button
                         size='small'
                         onClick={() => {
-                          history.push('/profile/user-account/details')
+                          history.push('/profile/user-account/payouts')
                         }}
                         variant='contained'
                         color='secondary'
