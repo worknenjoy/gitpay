@@ -116,7 +116,7 @@ class CountryPicker extends Component {
               country: this.state.currentCountryLabel,
               code: this.state.currentCountryCode,
               image: this.state.currentCountryImage
-            }) } size='large' color='primary' autoFocus>
+            }) } size='large' color='secondary' autoFocus>
               Choose { this.state.currentCountryLabel }
             </Button>
           </DialogActions>

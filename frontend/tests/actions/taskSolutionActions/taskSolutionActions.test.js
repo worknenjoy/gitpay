@@ -76,7 +76,7 @@ describe('task solution', () => {
       })
       const expectedActions = [
         { completed: false, type: 'CREATE_TASK_SOLUTION_REQUESTED' },
-        { open: true, text: 'issue.solution.error.insufficient_capabilities_for_transfer', type: 'ADD_NOTIFICATION', "link": "/#/profile/user-account/details" },
+        { open: true, text: 'issue.solution.error.insufficient_capabilities_for_transfer', type: 'ADD_NOTIFICATION', "link": "/#/profile/user-account/payouts" },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
         { completed: true, type: 'CREATE_TASK_SOLUTION_ERROR', error: 'issue.solution.error.insufficient_capabilities_for_transfer' }
       ]
