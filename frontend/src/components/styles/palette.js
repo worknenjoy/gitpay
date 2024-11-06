@@ -65,8 +65,7 @@ const Palette = {
       main: '#d0722a',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#fff',
-    },
-    divider: '#E2E5EA',
+    }
   },
   overrides: {
     // Name of the component
