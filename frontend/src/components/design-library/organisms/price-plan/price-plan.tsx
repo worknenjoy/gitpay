@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles'
 import PriceInput from '../../atoms/price-input/price-input';
 import PlanCard from '../../molecules/plan-card/plan-card';
 
@@ -9,11 +10,21 @@ type PricePlanProps = {
   onChange: any;
 }
 
+const useStyles = makeStyles(theme => ({
+  planGrid: {
+    '&.MuiGrid-root': {
+      alignItems: 'center',
+    }
+  }
+}))
+
 const PricePlan = ({ price, plan, onChange }:PricePlanProps) => {
+  const classes = useStyles();
   return (
     <Grid
       container
       spacing={0}
+      className={classes.planGrid}
     >
       <Grid
         spacing={0}

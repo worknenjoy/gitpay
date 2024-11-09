@@ -14,7 +14,7 @@ const styles = (theme: Theme) =>
     formPayment: {
       marginTop: 10,
       marginBottom: 10
-    },
+    }
   });
 
 const PriceInput = ({ classes, priceLabel, value, onChange, defaultValue, currency = '$', endAdornment = true }) => {
@@ -48,7 +48,7 @@ const PriceInput = ({ classes, priceLabel, value, onChange, defaultValue, curren
             </InputAdornment>
           }
           type='number'
-          inputProps={{ 'min': 0, style: { textAlign: 'right', height: 92 } }}
+          inputProps={{ 'min': 0, style: { textAlign: 'right', height: 98 } }}
           defaultValue={defaultValue}
           value={price}
           onChange={handleChange}
