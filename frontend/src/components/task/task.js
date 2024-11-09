@@ -310,15 +310,6 @@ const styles = theme => ({
       marginLeft: 10
     }
   },
-  taskCoverImg: {
-    display: 'flex',
-    textAlign: 'center',
-    alignSelf: 'center',
-    width: 250,
-    [theme.breakpoints.down('sm')]: {
-      width: '100%'
-    }
-  },
   planContainer: {
     paddingTop: 5,
     paddingBottom: 5

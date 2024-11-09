@@ -9,20 +9,24 @@ const styles = (theme: Theme) =>
   createStyles({
     planGridItem: {
       padding: theme.spacing(1),
-      margin: 2
+      marginTop: 16,
     },
     planContainer: {
       paddingTop: 5,
       paddingBottom: 5
     },
     planGrid: {
-      margin: 0
+      margin: 0,
+      padding: 8
     },
     planGridContent: {
       display: 'flex',
       justifyContent: 'space-evenly',
-      minHeight: theme.spacing(2),
-      margin: 0
+      alignItems: 'center',
+      margin: 0,
+      '&.MuiCardContent-root': {
+        padding: 0
+      }
     },
     planButton: {
       display: 'flex',
