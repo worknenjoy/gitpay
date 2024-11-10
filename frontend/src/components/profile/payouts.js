@@ -49,6 +49,8 @@ const currencyMap = {
   hkd: 'HK$', // Hong Kong Dollar
   sgd: 'S$', // Singapore Dollar
   krw: '₩', // South Korean Won
+  cop: 'COL$', // Colombian Peso
+  php: '₱', // Philippine Peso
 };
 
 //Function to convert currency code to symbol

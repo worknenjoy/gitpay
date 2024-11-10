@@ -34,6 +34,7 @@ module.exports.currencyMap = {
   'NZ': 'NZD',
   'NG': 'NGN',
   'NO': 'NOK', // Norway
+  'PH': 'PHP', // Philippines
   'PL': 'PLN', // Poland
   'PT': 'EUR',
   'RO': 'RON',
@@ -47,5 +48,6 @@ module.exports.currencyMap = {
   'TH': 'THB', // Thailand
   'AE': 'AED', // United Arab Emirates
   'GB': 'GBP',
-  'US': 'USD'
+  'US': 'USD',
+  'CO': 'COP' // Colombia
 };
