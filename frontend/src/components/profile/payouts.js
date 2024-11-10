@@ -51,6 +51,7 @@ const currencyMap = {
   krw: '₩', // South Korean Won
   cop: 'COL$', // Colombian Peso
   php: '₱', // Philippine Peso
+  huf: 'Ft', // Hungarian Forint
 };
 
 //Function to convert currency code to symbol
