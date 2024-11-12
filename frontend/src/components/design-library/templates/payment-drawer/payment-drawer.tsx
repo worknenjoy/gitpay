@@ -13,34 +13,6 @@ import Drawer from '../../molecules/drawer/drawer'
 import PickupTagList from '../../molecules/pickup-tag-list/pickup-tag-list'
 import PricePlan from '../../organisms/price-plan/price-plan'
 
-const tags = [
-  {
-    id: 1,
-    name: '$ 20',
-    value: 20
-  },
-  {
-    id: 2,
-    name: '$ 50',
-    value: 50
-  },
-  {
-    id: 3,
-    name: '$ 100',
-    value: 100
-  },
-  {
-    id: 4,
-    name: '$ 150',
-    value: 150
-  },
-  {
-    id: 5,
-    name: '$ 300',
-    value: 300
-  }
-]
-
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -85,7 +57,6 @@ const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickup
       title={title}
     >
       <PickupTagList
-        tags={tags}
         primaryText={pickupTagListMessagesPrimaryText}
         secondaryText={pickupTagListMessagesSecondaryText}
         onPickItem={onPickItem}
