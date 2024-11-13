@@ -36,6 +36,9 @@ import {
 
 import Drawer from '../../components/design-library/molecules/drawer/drawer'
 import Introduction from '../../components/design-library/molecules/introduction/introduction'
+import PickupTagList from '../../components/design-library/molecules/pickup-tag-list/pickup-tag-list'
+import PricePlan from '../../components/design-library/organisms/price-plan/price-plan'
+
 import LoginButton from '../session/login-button'
 
 import logoGithub from '../../images/github-logo-black.png'
@@ -174,10 +177,10 @@ const TaskAssignment = (props) => {
       return (
         <div style={{display: 'flex', justifyContent: 'flex-end', margin: 10}}>
           <Button onClick={props.handleAssignFundingDialogClose} color='primary' style={{marginRight: 10}}>
-            <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
+            <FormattedMessage id='general.actions.cancel' defaultMessage='Cancel' />
           </Button>
           <Button variant='contained' type='primary' htmlFor='submit' color='primary' disabled={!props.priceConfirmed || !props.termsAgreed}>
-            <FormattedMessage id='task.bounties.actions.work' defaultMessage='I want to work on this issue' />
+            <FormattedMessage id='issues.bounties.actions.work' defaultMessage='Create Offer' />
           </Button>
         </div>
       )
@@ -323,7 +326,7 @@ const TaskAssignment = (props) => {
       open={props.assignDialog || props.taskFundingDialog}
       onClose={props.handleAssignFundingDialogClose}
       aria-labelledby='form-dialog-title'
-      title={<FormattedMessage id='task.suggest.dialog.title' defaultMessage='Suggest Bounty' />}
+      title={<FormattedMessage id='issue.offer.drawer.title' defaultMessage='Make an offer' />}
     >
       {dialogCoverInvite()}
       {currentTab === 0 && (
@@ -461,58 +464,30 @@ const TaskAssignment = (props) => {
                       </FormControl>
                     )}
                   </Paper>
-
-                  <div style={{ textAlign: 'center' }}>
-                    <Typography type='heading' style={{ padding: 10 }} variant='body1'>
-                      <FormattedMessage id='task.bounties.interested.canSuggestBounty' defaultMessage='Suggest a bounty' />
-                    </Typography>
-                  </div>
-
-                  <div className={classes.pricesContainer}>
-                    <Chip
-                      label=' $ 20'
-                      className={classes.priceChip}
-                      color={props.currentPrice === 20 ? 'primary' : ''}
-                      onClick={() => props.pickTaskPrice(20)}
-                    />
-                    <Chip
-                      label=' $ 50'
-                      className={classes.priceChip}
-                      color={props.currentPrice === 50 ? 'primary' : ''}
-                      onClick={() => props.pickTaskPrice(50)}
-                    />
-                    <Chip
-                      label=' $ 100'
-                      className={classes.priceChip}
-                      color={props.currentPrice === 100 ? 'primary' : ''}
-                      onClick={() => props.pickTaskPrice(100)}
-                    />
-                    <Chip
-                      label=' $ 150'
-                      className={classes.priceChip}
-                      color={props.currentPrice === 150 ? 'primary' : ''}
-                      onClick={() => props.pickTaskPrice(150)}
-                    />
-                    <Chip
-                      label=' $ 300'
-                      className={classes.priceChip}
-                      color={props.currentPrice === 300 ? 'primary' : ''}
-                      onClick={() => props.pickTaskPrice(300)}
-                    />
-                  </div>
-
-                  <FormControl fullWidth style={{ marginTop: 15, marginBottom: 15 }}>
-                    <InputLabel htmlFor='interested-amount'>
-                      <FormattedMessage id='task.bounties.interested.amount.value' defaultMessage='Price' />
-                    </InputLabel>
-                    <Input
-                      id='interested-amount'
-                      endAdornment={<InputAdornment position='start'>USD</InputAdornment>}
-                      type='text'
-                      value={props.currentPrice > 0 ? props.currentPrice : ''}
-                      onChange={props.handleInputInterestedAmountChange}
-                    />
-                  </FormControl>
+                  <PickupTagList
+                    primaryText={
+                      <Typography type='heading' style={{ padding: 10 }} variant='body1'>
+                        <FormattedMessage id='issues.bounties.interested.canSuggestBounty.title' defaultMessage='Suggest a bounty offer' />
+                      </Typography>
+                    }
+                    secondaryText={
+                      <Typography type='heading' style={{ padding: 10 }} variant='body1'>
+                        <FormattedMessage id='issues.bounties.interested.canSuggestBounty.headline' defaultMessage='You will suggest a bounty that will generate an order when the maintainer accept and you receive a payment when is merged' />
+                      </Typography>
+                    }
+                    onPickItem={(price) => props.pickTaskPrice(price)}
+                  />
+                  <PricePlan plan={
+                    {
+                      fee: 8,
+                      category: <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />,
+                      title: <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />,
+                      items: [
+                        <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />,
+                        <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />,
+                      ],
+                    }
+                  } price={props.currentPrice} onChange={() => {}} />
 
                   {dialogInputComment()}
                   {taskAssignmentCheckboxes()}
