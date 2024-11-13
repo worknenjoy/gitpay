@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const IssueCard = ({ issue }) => {
-  console.log('issue', issue)
+  
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -108,7 +108,7 @@ const IssueCard = ({ issue }) => {
             <Link
               href={`${issue.data.url}`}
               target='_blank'
-              class={classes.taskTitle}>
+              className={classes.taskTitle}>
               {issue.data.title}
               <img width='24' height='24' style={{ marginLeft: 10 }} src={issue.data.provider === 'github' ? logoGithub : logoBitbucket} />
             </Link>
@@ -120,7 +120,7 @@ const IssueCard = ({ issue }) => {
           </Typography>
         }
         action={
-          <Typography type='subheading' variant='caption' style={{ padding: 10, color: 'gray', marginRight: 10 }}>
+          <Typography variant='caption' style={{ padding: 10, color: 'gray', marginRight: 10 }}>
             <FormattedMessage id='task.bounties.interested.created' defaultMessage='created' /> {updatedAtTimeString}
           </Typography>
         }

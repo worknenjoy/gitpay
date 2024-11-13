@@ -200,6 +200,9 @@ const BankAccount = ({
     if (bankAccount.data.account_holder_type) {
       setBankAccountType(bankAccount.data.account_holder_type)
     }
+    if (bankAccount.data.account_holder_name) {
+      setBankAccountHolderName(bankAccount.data.account_holder_name)
+    }
   }, [bankAccount])
 
   return (

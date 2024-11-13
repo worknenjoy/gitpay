@@ -1,6 +1,5 @@
 import React from 'react';
 import CheckboxTerms from './checkbox-terms';
-import { on } from 'events';
 
 export default {
   title: 'Design Library/Molecules/CheckboxTerms',

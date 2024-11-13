@@ -22,7 +22,7 @@ const OfferDrawerActions = ({ disabled, onClose }) => {
     <Button onClick={onClose} color='primary' style={{marginRight: 10}}>
       <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
     </Button>
-    <Button type='primary' htmlFor='submit' variant='contained' color='primary' disabled={disabled}>
+    <Button type='button' variant='contained' color='primary' disabled={disabled}>
       <FormattedMessage id='task.funding.form.send' defaultMessage='Send Invite' />
     </Button>
   </div>
