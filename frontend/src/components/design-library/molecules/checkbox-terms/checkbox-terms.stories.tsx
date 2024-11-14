@@ -11,4 +11,5 @@ const Template = (args) => <CheckboxTerms {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   onchange: () => {},
+  onAccept: () => {},
 };

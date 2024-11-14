@@ -23,6 +23,22 @@ Primary.args = {
   introMessage: 'Introduction Message',
   introImage: 'https://via.placeholder.com/48x48',
   open: true,
+  actions: [
+    { 
+      label: 'Action 1',
+      onClick: () => {},
+      variant: 'contained',
+      color: 'primary',
+      disabled: false,
+    },
+    { 
+      label: 'Action 2',
+      onClick: () => {},
+      variant: 'contained',
+      color: 'primary', 
+      disabled: true,
+    },
+  ],
   onClose: () => {},
   issue: {
     completed: true,

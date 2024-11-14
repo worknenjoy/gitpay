@@ -10,6 +10,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 
 import { Theme, makeStyles } from '@material-ui/core/styles';
+import DrawerActions from './drawer-actions/drawer-actions';
 
 const useStyles = makeStyles((theme: Theme) => ({
   closeButton: {
@@ -27,13 +28,15 @@ type DrawerProps = {
   onClose: any;
   title: any;
   children: any;
+  actions?: Array<any>;
 }
 
 const Drawer = ({
   open,
   onClose,
   title,
-  children
+  children,
+  actions = []
 }: DrawerProps) => {
 
   const classes = useStyles();
@@ -61,6 +64,9 @@ const Drawer = ({
           </Typography>
           {closeDialogButton()}
           {children}
+          { actions.length > 0 &&
+            <DrawerActions actions={actions} />
+          }
         </div>
       </Container>
     </MuiDrawer>
