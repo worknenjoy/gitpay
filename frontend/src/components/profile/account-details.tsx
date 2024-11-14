@@ -38,10 +38,12 @@ const styles = (theme) => ({
 const AccountDetails = ({
   intl,
   account,
+  countries,
   updateAccount,
   user,
   createAccount,
   fetchAccount,
+  fetchAccountCountries,
   setActiveStep,
   classes
 }) => {
@@ -85,7 +87,7 @@ const AccountDetails = ({
     }
     setAccountData(formData)
     const accountUpdated = await updateAccount(userId, formData)
-    if(!accountUpdated.error) setActiveStep(1)
+    if (!accountUpdated.error) setActiveStep(1)
     setEditIdNumber(false)
   }
 
@@ -115,6 +117,7 @@ const AccountDetails = ({
     if (user.user.id) {
       const userId = user.user.id
       fetchAccount(userId)
+      fetchAccountCountries()
     }
   }, [])
 
@@ -159,14 +162,46 @@ const AccountDetails = ({
                 </Grid>
               }
               {account && account.data.country
-                ? <Grid item xs={12} md={12}>
-                  <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                    <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
-                    <Typography component='span' style={{ marginLeft: 10 }}>
-                      {countryCodes.find(c => c.code === account.data.country).country}
-                    </Typography>
-                  </div>
-                </Grid>
+                ? <>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
+                      <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
+                      <Typography component='span' style={{ marginLeft: 10 }}>
+                        {countryCodes.find(c => c.code === account.data.country).country}
+                      </Typography>
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <ReactPlaceholder
+                      showLoadingAnimation
+                      type='text'
+                      rows={1}
+                      ready={countries.completed}
+                    >
+                      <FormControl style={{ width: '100%' }}>
+                        <Select
+                          native
+                          value={countries.data.default_currency}
+                          onChange={(e) => {
+                            
+                          }}
+                          inputProps={{
+                            name: 'country',
+                            id: 'country-native-simple',
+                          }}
+                        >
+                          <option aria-label="None" value="" />
+                          { countries.data?.supported_bank_account_currencies &&
+                            Object.keys(countries.data.supported_bank_account_currencies).map((country, index) => (
+                            <option key={country} value={country}>
+                              {country}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </ReactPlaceholder>
+                  </Grid>
+                </>
                 : <div>
                   <Button variant='outlined' onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
                     <FormattedMessage id='account-details-country-information-action' defaultMessage='Select Country' />

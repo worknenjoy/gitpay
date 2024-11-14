@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updateUser, fetchAccount, deleteUser, createBankAccount, createAccount, updateAccount, updateBankAccount, getBankAccount } from '../actions/userActions';
+import { updateUser, fetchAccount, fetchAccountCountries, deleteUser, createBankAccount, createAccount, updateAccount, updateBankAccount, getBankAccount } from '../actions/userActions';
 import { changePassword } from '../actions/loginActions'
 import { addNotification } from '../actions/notificationActions';
 import PayoutSettings from '../components/profile/pages/payout-settings';
@@ -8,7 +8,8 @@ const mapStateToProps = (state: any) => {
   return {
     user: state.loggedIn,
     account: state.account,
-    bankAccount: state.bankAccount
+    bankAccount: state.bankAccount,
+    countries: state.countries
   }
 }
 
@@ -17,6 +18,7 @@ const mapDispatchToProps = (dispatch: any) => {
     addNotification: (notification: any) => dispatch(addNotification(notification)),
     updateUser: (userId, user: any) => dispatch(updateUser(userId, user)),
     fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccountCountries: () => dispatch(fetchAccountCountries()),
     changePassword: (password: any) => dispatch(changePassword(password)),
     deleteUser: (id: any) => dispatch(deleteUser(id)),
     createAccount: (account: any) => dispatch(createAccount(account)),

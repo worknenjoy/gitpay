@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function BankAccountSettings({
   user,
   account,
+  countries,
   fetchAccount,
+  fetchAccountCountries,
   updateUser,
   changePassword,
   addNotification,
@@ -72,6 +74,8 @@ export default function BankAccountSettings({
             addNotification={addNotification}
             deleteUser={deleteUser}
             setActiveStep={setActiveStep}
+            fetchAccountCountries={fetchAccountCountries}
+            countries={countries}
           />
         );
       case 1:

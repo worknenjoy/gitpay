@@ -203,6 +203,9 @@ const BankAccount = ({
     if (bankAccount.data.account_holder_name) {
       setBankAccountHolderName(bankAccount.data.account_holder_name)
     }
+    if(currentCountry === '') {
+      setCurrentCountry(bankAccount.data.country || account.data.country)
+    }
   }, [bankAccount])
 
   return (
@@ -354,7 +357,7 @@ const BankAccount = ({
                           <Select
                             native
                             name='country'
-                            value={bankAccount.data.routing_number ? bankAccount.data.country : currentCountry}
+                            value={currentCountry}
                             input={<Input id='bank-country' />}
                             fullWidth
                             style={{ marginTop: 12, marginBottom: 12 }}
