@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import {
@@ -17,7 +17,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 
 import CountryPicker from './country-picker'
-import { countryCodes } from './country-codes'
+import { countryCodes, countryCurrencies } from './country-codes'
 import Field from '../design-library/atoms/field/field'
 import Alert from '../design-library/atoms/alert/alert'
 
@@ -141,105 +141,121 @@ const AccountDetails = ({
         </Typography>
       </Grid>
       <Grid item xs={12} md={12}>
-        <ReactPlaceholder
-          showLoadingAnimation
-          type='media'
-          rows={1}
-          ready={account.completed}
-        >
-          <fieldset className={classes.fieldset}>
-            <legend className={classes.legend}>
-              <Typography>
-                <FormattedMessage id='account-details-country-information-title' defaultMessage='Country' />
-              </Typography>
-            </legend>
-            <Grid container spacing={2}>
-              {displayCurrentCountry.country &&
-                <Grid item xs={12} md={12}>
-                  <Alert severity='info'>
-                    <FormattedMessage id='account-details-country-information-desc' defaultMessage='Please make sure you have bank account on the country selected before continue.' />
-                  </Alert>
-                </Grid>
-              }
-              {account && account.data.country
-                ? <>
-                  <Grid item xs={12} md={6}>
-                    <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                      <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
-                      <Typography component='span' style={{ marginLeft: 10 }}>
-                        {countryCodes.find(c => c.code === account.data.country).country}
-                      </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={account && account.data.country ? 6 : 12}>
+            <ReactPlaceholder
+              showLoadingAnimation
+              type='media'
+              rows={1}
+              ready={account.completed}
+            >
+              <fieldset className={classes.fieldset}>
+                <legend className={classes.legend}>
+                  <Typography>
+                    <FormattedMessage id='account-details-country-information-title' defaultMessage='Country' />
+                  </Typography>
+                </legend>
+                <Grid container spacing={2}>
+                  {displayCurrentCountry.country &&
+                    <Grid item xs={12} md={12}>
+                      <Alert severity='info'>
+                        <FormattedMessage id='account-details-country-information-desc' defaultMessage='Please make sure you have bank account on the country selected before continue.' />
+                      </Alert>
+                    </Grid>
+                  }
+                  {account && account.data.country
+                    ? <>
+                      <Grid item xs={12} md={6}>
+                        <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
+                          <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
+                          <Typography component='span' style={{ marginLeft: 10 }}>
+                            {countryCodes.find(c => c.code === account.data.country).country}
+                          </Typography>
+                        </div>
+                      </Grid>
+                    </>
+                    : <div>
+                      <Button variant='outlined' onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
+                        <FormattedMessage id='account-details-country-information-action' defaultMessage='Select Country' />
+                      </Button>
+                      <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
                     </div>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ReactPlaceholder
-                      showLoadingAnimation
-                      type='text'
-                      rows={1}
-                      ready={countries.completed}
-                    >
-                      <FormControl style={{ width: '100%' }}>
-                        <Select
-                          native
-                          value={countries.data.default_currency}
-                          onChange={(e) => {
-                            
-                          }}
-                          inputProps={{
-                            name: 'country',
-                            id: 'country-native-simple',
-                          }}
-                        >
-                          <option aria-label="None" value="" />
-                          { countries.data?.supported_bank_account_currencies &&
-                            Object.keys(countries.data.supported_bank_account_currencies).map((country, index) => (
-                            <option key={country} value={country}>
-                              {country}
-                            </option>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </ReactPlaceholder>
-                  </Grid>
-                </>
-                : <div>
-                  <Button variant='outlined' onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
-                    <FormattedMessage id='account-details-country-information-action' defaultMessage='Select Country' />
-                  </Button>
-                  <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
-                </div>
-              }
-              <code style={{ display: 'none' }}>{account && JSON.stringify(account.data)}</code>
-            </Grid>
-            {displayCurrentCountry.country ? (
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={12}>
-                  <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                    <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
-                    <Typography component='span' style={{ marginLeft: 10 }}>
-                      {countryCodes.find(c => c.code === displayCurrentCountry.code).country}
-                    </Typography>
-                  </div>
+                  }
+                  <code style={{ display: 'none' }}>{account && JSON.stringify(account.data)}</code>
                 </Grid>
-                <Grid item xs={12} md={12} justifyContent='flex-end' alignContent='flex-end' style={{ display: 'flex' }}>
-                  <Button variant='contained' color='secondary' onClick={() => {
-                    displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
-                    setDisplayCurrentCountry({ country: '', code: '' })
-                  }} style={{ margin: 20 }}>
-                    <FormattedMessage id='account-details-country-information-save' defaultMessage='Save Country and continue' />
-                  </Button>
-                </Grid>
-              </Grid>
-            ) : ('')}
-          </fieldset>
-        </ReactPlaceholder>
+                {displayCurrentCountry.country ? (
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={12}>
+                      <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
+                        <img width='48' src={require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`../../images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
+                        <Typography component='span' style={{ marginLeft: 10 }}>
+                          {countryCodes.find(c => c.code === displayCurrentCountry.code).country}
+                        </Typography>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} md={12} justifyContent='flex-end' alignContent='flex-end' style={{ display: 'flex' }}>
+                      <Button variant='contained' color='secondary' onClick={() => {
+                        displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
+                        setDisplayCurrentCountry({ country: '', code: '' })
+                      }} style={{ margin: 20 }}>
+                        <FormattedMessage id='account-details-country-information-save' defaultMessage='Save Country and continue' />
+                      </Button>
+                    </Grid>
+                  </Grid>
+                ) : ('')}
+              </fieldset>
+            </ReactPlaceholder>
+          </Grid>
+          {account && account.data.country &&
+          <Grid item xs={12} md={6}>
+            <fieldset className={classes.fieldset} style={{height: 108, display: 'flex', alignItems: 'center'}}>
+              <legend className={classes.legend}>
+                <Typography>
+                  <FormattedMessage id='account.details.currency.title' defaultMessage='Currency' />
+                </Typography>
+              </legend>
+              <ReactPlaceholder
+                showLoadingAnimation
+                type='text'
+                rows={1}
+                ready={countries.completed}
+              >
+                <FormControl style={{ width: '100%' }}>
+                  <Select
+                    native
+                    value={countries.data.default_currency}
+                    disabled={true}
+                    onChange={(e) => {
+
+                    }}
+                    inputProps={{
+                      name: 'country',
+                      id: 'country-native-simple',
+                    }}
+                  >
+                    <option aria-label="None" value="" />
+                    <option value={countries.data.default_currency}>
+                      {`${countryCurrencies.find(c => c.code.toLowerCase() === countries.data.default_currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === countries.data.default_currency)?.symbol}` || countries.data.default_currency}
+                    </option>
+                    {countries.data?.supported_bank_account_currencies &&
+                      Object.keys(countries.data.supported_bank_account_currencies).map((currency, index) => (
+                      <option key={currency} value={currency}>
+                        {`${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.symbol}` || currency}
+                      </option>
+                      ))}
+                  </Select>
+                </FormControl>
+              </ReactPlaceholder>
+            </fieldset>
+          </Grid>}
+        </Grid>
       </Grid>
       {account.data.country && (
         <Grid item xs={12} md={12}>
           <form
             onSubmit={handleSubmit}
             onChange={onChange}
-            style={{ marginTop: 20, marginBottom: 20 }}
+            style={{ marginBottom: 20 }}
           >
             <fieldset className={classes.fieldset}>
               <legend className={classes.legend}>

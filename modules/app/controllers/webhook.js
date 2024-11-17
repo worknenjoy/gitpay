@@ -44,7 +44,18 @@ const CURRENCIES = {
   sek: 'kr',
   chf: 'fr',
   gbp: '£',
-  usd: '$'
+  usd: '$',
+  bgn: 'лв', // Bulgaria
+  hrk: 'kn', // Croatia
+  ghs: '₵', // Ghana
+  gip: '£', // Gibraltar
+  huf: 'Ft', // Hungary
+  kes: 'KSh', // Kenya
+  php: '₱', // Philippines
+  zar: 'R', // South Africa
+  thb: '฿', // Thailand
+  aed: 'د.إ', // United Arab Emirates
+  cop: '$' // Colombia
 }
 
 //Function to format amount from cents to decimal format
