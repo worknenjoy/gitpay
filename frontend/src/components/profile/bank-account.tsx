@@ -11,7 +11,7 @@ import ReactPlaceholder from 'react-placeholder';
 import CountryPicker from './country-picker'
 import Const from '../../consts'
 
-import { countryCodes } from './country-codes'
+import { countryCodes, countryCurrencies } from './country-codes'
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -75,6 +75,7 @@ const BankAccount = ({
   const [bankAccountHolderName, setBankAccountHolderName] = React.useState('');
   const [selectedBank, setSelectedBank] = React.useState('');
   const [currentCountry, setCurrentCountry] = React.useState('');
+  const [currentCurrency, setCurrentCurrency] = React.useState('');
   const [editBankAccount, setEditBankAccount] = React.useState(false);
   const [bankNumberError, setBankNumberError] = React.useState(false);
   const [AccountNumberError, setAccountNumberError] = React.useState(false);
@@ -107,6 +108,11 @@ const BankAccount = ({
   const onChangeCountry = (e) => {
     e.preventDefault()
     setCurrentCountry(e.target.value)
+  }
+
+  const onChangeCurrency = (e) => {
+    e.preventDefault()
+    setCurrentCurrency(e.target.value)
   }
 
   const handleCountry = () => {
@@ -174,7 +180,9 @@ const BankAccount = ({
           routing_number: e.target.routing_number.value,
           account_number: e.target.account_number.value,
           account_holder_type: bankAccountType,
-          country: userCountry
+          country: userCountry,
+          currency: currentCurrency,
+          account_holder_name: bankAccountHolderName
         }
       }
       if (editBankAccount) {
@@ -202,6 +210,13 @@ const BankAccount = ({
     }
     if (bankAccount.data.account_holder_name) {
       setBankAccountHolderName(bankAccount.data.account_holder_name)
+    }
+    if(currentCountry === '') {
+      setCurrentCountry(bankAccount.data.country || account.data.country)
+    }
+
+    if(currentCurrency === '') {
+      setCurrentCurrency(bankAccount.data.currency || account.data.currency)
     }
   }, [bankAccount])
 
@@ -303,6 +318,60 @@ const BankAccount = ({
                       </Grid>
                     </Grid>
                     <Grid container spacing={3}>
+                      <Grid item xs={12} md={3}>
+                        <FormControl>
+                          <div>
+                            <Typography variant='caption' gutterBottom>
+                              <FormattedMessage id='account.register.bank.account.country' defaultMessage='Country:' />
+                            </Typography>
+                          </div>
+                          <Select
+                            native
+                            name='country'
+                            value={currentCountry}
+                            input={<Input id='bank-country' />}
+                            fullWidth
+                            style={{ marginTop: 12, marginBottom: 12 }}
+                            onChange={onChangeCountry}
+                            disabled={!!bankAccount.data.routing_number}
+                          >
+                            <option value=''>
+                              Select bank country
+                            </option>
+                            {countryCodes.map((c, index) => (
+                              <option key={index} value={c.code} selected={user.user.country === c.code}>{c.country}</option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} md={9}>
+                        <FormControl>
+                          <div>
+                            <Typography variant='caption' gutterBottom>
+                              <FormattedMessage id='account.register.bank.account.currency' defaultMessage='Currency:' />
+                            </Typography>
+                          </div>
+                          <Select
+                            native
+                            name='currency'
+                            value={currentCurrency}
+                            input={<Input id='bank-currency' />}
+                            fullWidth
+                            style={{ marginTop: 12, marginBottom: 12 }}
+                            onChange={onChangeCurrency}
+                            disabled={!!bankAccount.data.routing_number}
+                          >
+                            <option value=''>
+                              Select currency
+                            </option>
+                            {countryCurrencies.map((c, index) => (
+                              <option key={index} value={c.code} selected={c.countries.includes(currentCountry)}>{`${c.currency} - ${c.symbol}`}</option>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
                       <Grid item xs={12}>
                         <FormControl component="fieldset">
                           <Typography variant="caption" gutterBottom>
@@ -340,34 +409,6 @@ const BankAccount = ({
                             value={bankAccountHolderName}
                             onChange={onChangeHolderName}
                           />
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} md={12}>
-                        <FormControl>
-                          <div>
-                            <Typography variant='caption' gutterBottom>
-                              <FormattedMessage id='account.register.bank.account' defaultMessage='Country:' />
-                            </Typography>
-                          </div>
-                          <Select
-                            native
-                            name='country'
-                            value={bankAccount.data.routing_number ? bankAccount.data.country : currentCountry}
-                            input={<Input id='bank-country' />}
-                            fullWidth
-                            style={{ marginTop: 12, marginBottom: 12 }}
-                            onChange={onChangeCountry}
-                            disabled={!!bankAccount.data.routing_number}
-                          >
-                            <option value=''>
-                              Select bank country
-                            </option>
-                            {countryCodes.map((c, index) => (
-                              <option key={index} value={c.code} selected={user.user.country === c.code}>{c.country}</option>
-                            ))}
-                          </Select>
                         </FormControl>
                       </Grid>
                     </Grid>

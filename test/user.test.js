@@ -654,6 +654,42 @@ describe("Users", () => {
           }).catch(done)
         }).catch(done)
     });
+    it('should retrieve country specs for user', (done) => {
+      nock('https://api.stripe.com')
+        .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL')
+        .reply(200, {
+          object: 'account',
+          country: 'US'
+        });
+
+      nock('https://api.stripe.com')
+        .get('/v1/country_specs/US')
+        .reply(200, {
+          object: 'country_spec'
+        });
+      register(agent, {
+        email: 'test_user_account@gmail.com',
+        password: 'test',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_account@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .get(`/user/account/countries`)
+            .send({ id: userId })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body.object).to.equal('country_spec');
+              done(err);
+            })
+          }).catch(done)
+        }).catch(done)
+    });
     xit('should create account for user in US', (done) => {
       nock('https://api.stripe.com')
             .post('/v1/accounts')

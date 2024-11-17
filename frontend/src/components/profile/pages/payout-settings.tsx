@@ -52,6 +52,7 @@ const PayoutSettings = ({
   intl,
   user,
   account,
+  countries,
   createAccount,
   updateAccount,
   bankAccount,
@@ -59,6 +60,7 @@ const PayoutSettings = ({
   updateBankAccount,
   getBankAccount,
   fetchAccount,
+  fetchAccountCountries,
   updateUser,
   deleteUser,
   changePassword,
@@ -113,6 +115,7 @@ const PayoutSettings = ({
                 <BankAccountSettings
                   user={user}
                   account={account}
+                  countries={countries}
                   fetchAccount={fetchAccount}
                   updateUser={updateUser}
                   deleteUser={deleteUser}
@@ -124,6 +127,7 @@ const PayoutSettings = ({
                   createBankAccount={createBankAccount}
                   updateBankAccount={updateBankAccount}
                   getBankAccount={getBankAccount}
+                  fetchAccountCountries={fetchAccountCountries}
                 />
               </TabPanel>}
             { currentTab === 'paypal' && 

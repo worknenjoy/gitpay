@@ -2,6 +2,9 @@ import {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
   FETCH_USER_ACCOUNT_ERROR,
+  FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED,
+  FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
+  FETCH_USER_ACCOUNT_COUNTRIES_ERROR,
   CREATE_USER_ACCOUNT_REQUESTED,
   CREATE_USER_ACCOUNT_SUCCESS,
   CREATE_USER_ACCOUNT_ERROR,
@@ -38,6 +41,19 @@ export const account = (state = { data: { }, completed: true, error: {} }, actio
     case UPDATE_USER_ACCOUNT_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case UPDATE_USER_ACCOUNT_ERROR:
+      return { ...state, completed: true, error: action.error }
+    default:
+      return state
+  }
+}
+
+export const countries = (state = { data: {}, completed: true, error: {} }, action) => {
+  switch (action.type) {
+    case FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED:
+      return { ...state, completed: false }
+    case FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS:
+      return { ...state, completed: true, data: action.data, error: {} }
+    case FETCH_USER_ACCOUNT_COUNTRIES_ERROR:
       return { ...state, completed: true, error: action.error }
     default:
       return state
