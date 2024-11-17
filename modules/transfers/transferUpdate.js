@@ -30,8 +30,6 @@ module.exports = Promise.method(async function transferUpdate(params) {
     }
   })
 
-  console.log('existingTransfer:', existingTransfer)
-
   if (
     existingTransfer && 
     destination.account_id && 

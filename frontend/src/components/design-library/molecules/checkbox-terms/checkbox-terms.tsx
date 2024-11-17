@@ -3,8 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import { Checkbox, FormControlLabel, Grid, Link, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TermsDialog from './terms-dialog';
+// import { on } from 'events';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   termsLabel: {
     paddingTop: 0,
   },
@@ -13,14 +14,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CheckboxTerms = ({ onChange }) => {
+const CheckboxTerms = ({ onAccept }) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const [ openTerms, setOpenTerms ] = useState(false);
 
   const handleChange = () => {
     setChecked(!checked);
-    onChange(!checked);
+    onAccept();
   };
 
   return (
@@ -34,11 +35,7 @@ const CheckboxTerms = ({ onChange }) => {
               className={classes.checkbox}
             />
           }
-          onClick={
-            (e) => {
-              e.preventDefault();
-            }
-          }
+          onClick={handleChange}
           label={<Typography variant='caption' >
             <FormattedMessage id='task.bounties.interested.termsOfUseLabel' defaultMessage='I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION' values={{
               termsOfUseAnchor: (
@@ -51,7 +48,7 @@ const CheckboxTerms = ({ onChange }) => {
         />
         <TermsDialog
           open={openTerms}
-          onClose={() => { } } onAccept={undefined}
+          onClose={() => setOpenTerms(false) } onAccept={() => setChecked(true)} onDisagree={() => setChecked(false)}
         />
       </Grid>
   );

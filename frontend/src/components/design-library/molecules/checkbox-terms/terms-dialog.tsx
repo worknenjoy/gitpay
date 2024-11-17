@@ -2,16 +2,18 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Checkbox, FormControlLabel, DialogContentText } from '@material-ui/core';
 
-const TermsDialog = ({ open, onClose, onAccept }) => {
+const TermsDialog = ({ open, onClose, onAccept, onDisagree }) => {
   const [ agree, setAgree ] = React.useState(false);
 
   const handleAgree = () => {
     setAgree(true);
+    onAccept();
     onClose();
   };
 
   const handleDisagree = () => {
     setAgree(false);
+    onDisagree();
     onClose();
   };
 

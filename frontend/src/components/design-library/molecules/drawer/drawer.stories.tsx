@@ -22,4 +22,20 @@ Primary.args = {
   onClose: () => {},
   title: 'Drawer Title',
   children: 'Drawer Content',
+  actions: [
+    { 
+      label: 'Action 1',
+      onClick: () => {},
+      variant: 'contained',
+      color: 'primary',
+      disabled: false,
+    },
+    { 
+      label: 'Action 2',
+      onClick: () => {},
+      variant: 'contained',
+      color: 'primary', 
+      disabled: true,
+    },
+  ],
 };

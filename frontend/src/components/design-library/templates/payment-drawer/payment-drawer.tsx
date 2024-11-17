@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import {
-  Container,
   Tabs,
   Tab,
   withStyles

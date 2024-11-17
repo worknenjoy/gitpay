@@ -8,6 +8,10 @@ const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS'
 const FETCH_USER_ACCOUNT_ERROR = 'FETCH_USER_ACCOUNT_ERROR'
 
+const FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED = 'FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED'
+const FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS = 'FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS'
+const FETCH_USER_ACCOUNT_COUNTRIES_ERROR = 'FETCH_USER_ACCOUNT_COUNTRIES_ERROR'
+
 const CREATE_USER_ACCOUNT_REQUESTED = 'CREATE_USER_ACCOUNT'
 const CREATE_USER_ACCOUNT_SUCCESS = 'CREATE_USER_ACCOUNT_SUCCESS'
 const CREATE_USER_ACCOUNT_ERROR = 'CREATE_USER_ACCOUNT_ERROR'
@@ -70,6 +74,26 @@ const fetchUserAccountSuccess = account => {
 
 const fetchUserAccountError = error => {
   return { type: FETCH_USER_ACCOUNT_ERROR, completed: true, error: error }
+}
+
+/*
+  * Account fetch countries
+*/
+
+const fetchUserAccountCountriesRequested = () => {
+  return { type: FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED, completed: false }
+}
+
+const fetchUserAccountCountriesSuccess = countries => {
+  return {
+    type: FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
+    completed: true,
+    data: countries.data
+  }
+}
+
+const fetchUserAccountCountriesError = error => {
+  return { type: FETCH_USER_ACCOUNT_COUNTRIES_ERROR, completed: true, error: error }
 }
 
 /*
@@ -382,6 +406,23 @@ const fetchAccount = () => {
   }
 }
 
+const fetchAccountCountries = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch(fetchUserAccountCountriesRequested())
+    return axios
+      .get(api.API_URL + '/user/account/countries')
+      .then(countries => {
+        return dispatch(fetchUserAccountCountriesSuccess(countries))
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.log('fetch user account countries error', e)
+        return dispatch(fetchUserAccountCountriesError(e))
+      })
+  }
+}
+
 const createAccount = (country) => {
   validToken()
   return (dispatch, getState) => {
@@ -606,6 +647,9 @@ export {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
   FETCH_USER_ACCOUNT_ERROR,
+  FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED,
+  FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
+  FETCH_USER_ACCOUNT_COUNTRIES_ERROR,
   CREATE_USER_ACCOUNT_REQUESTED,
   CREATE_USER_ACCOUNT_SUCCESS,
   CREATE_USER_ACCOUNT_ERROR,
@@ -640,6 +684,7 @@ export {
   UPDATE_BANKACCOUNT_SUCCESS,
   UPDATE_BANKACCOUNT_ERROR,
   fetchAccount,
+  fetchAccountCountries,
   createAccount,
   updateAccount,
   fetchCustomer,

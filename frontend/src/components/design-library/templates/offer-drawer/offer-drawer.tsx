@@ -14,6 +14,7 @@ import PricePlan from '../../organisms/price-plan/price-plan';
 import InputComment from '../../molecules/input-comment/input-comment';
 import OfferDrawerCheckboxes from './components/offer/offer-drawer-checkboxes';
 import OfferDrawerActions from './components/offer/offer-drawer-actions';
+import CheckboxTerms from '../../molecules/checkbox-terms/checkbox-terms';
 
 
 const useStyles = makeStyles(theme => ({
@@ -35,9 +36,10 @@ type OfferDrawerProps = {
   open: boolean;
   onClose: any;
   issue: any;
+  actions?: Array<any>;
 }
 
-const OfferDrawer = ({ title, introTitle, introMessage, introImage, open, onClose, issue }: OfferDrawerProps) => {
+const OfferDrawer = ({ title, introTitle, introMessage, introImage, open, onClose, issue, actions }: OfferDrawerProps) => {
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
 
   const classes = useStyles();
@@ -46,7 +48,7 @@ const OfferDrawer = ({ title, introTitle, introMessage, introImage, open, onClos
     <Drawer
       open={open}
       onClose={onClose}
-
+      actions={actions}
       title={title}
     >
       <Introduction
@@ -106,11 +108,9 @@ const OfferDrawer = ({ title, introTitle, introMessage, introImage, open, onClos
         termsAgreed={true}
         handleCheckboxTerms={(e) => console.log(e.target.checked)}
       />
-      <OfferDrawerActions
-        priceConfirmed={true}
-        termsAgreed={true}
-        onClose={() => console.log('cancel')}
-      />
+      <CheckboxTerms
+        onAccept={() => console.log('accept')}
+       />
     </Drawer>
   )
 }
