@@ -9,7 +9,6 @@ module.exports = Promise.method(async function userAccount (userParameters) {
   const userAccount = await getUserAccount({ id })
   const accountCountry = userAccount.country
   return stripe.countrySpecs.retrieve(accountCountry).then((countrySpecs) => {
-    console.log('countrySpecs', countrySpecs)
     return countrySpecs
   })
 })
