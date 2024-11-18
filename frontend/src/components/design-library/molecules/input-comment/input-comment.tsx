@@ -12,11 +12,11 @@ const InputComment = ({ placeholder, value, onChange }) => {
   }
   return (
     <FormControl fullWidth>
-      <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' >
-        {placeholder => (
+      <FormattedMessage id='issue.bounties.offer.comment.placeholder' defaultMessage='Leave a comment'>
+        {p => (
           <TextareaAutosize
             id='interested-comment'
-            placeholder={placeholder}
+            placeholder={p}
             minRows={8}
             maxLength={1000}
             value={interestedComment}

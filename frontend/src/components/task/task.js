@@ -47,6 +47,8 @@ import {
   EmojiFoodBeverage as CoffeeIcon,
 } from '@material-ui/icons'
 
+import OfferDrawer from '../design-library/templates/offer-drawer/offer-drawer'
+
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import TaskPayment from './task-payment'
@@ -1177,44 +1179,105 @@ class Task extends Component {
               user={this.props.user}
               id={task.data.id}
             />
-            <TaskAssignment
-              taskFundingDialog={this.state.taskFundingDialog}
-              assignDialog={this.state.assignDialog}
-              handleAssignFundingDialogClose={this.handleAssignFundingDialogClose}
-              renderIssueAuthorLink={this.renderIssueAuthorLink}
-              timePlaceholder={timePlaceholder}
-              deadline={deadline}
-              deliveryDate={deliveryDate}
-              handleSuggestAnotherDate={this.handleSuggestAnotherDate}
-              showSuggestAnotherDateField={this.state.showSuggestAnotherDateField}
-              interestedSuggestedDate={this.state.interestedSuggestedDate}
-              handleInputChangeCalendar={this.handleInputChangeCalendar}
-              currentPrice={this.state.currentPrice}
-              interestedComment={this.state.interestedComment}
-              handleInputInterestedCommentChange={this.handleInputInterestedCommentChange}
-              handleInputInterestedAmountChange={this.handleInputInterestedAmountChange}
-              pickTaskPrice={this.pickTaskPrice}
-              priceConfirmed={this.state.priceConfirmed}
-              handleCheckboxIwillDoFor={this.handleCheckboxIwillDoFor}
-              charactersCount={this.state.charactersCount}
-              interestedLearn={this.state.interestedLearn}
-              handleCheckboxLearn={this.handleCheckboxLearn}
-              termsAgreed={this.state.termsAgreed}
-              handleCheckboxTerms={this.handleCheckboxTerms}
-              handleTermsDialog={this.handleTermsDialog}
-              termsDialog={this.state.termsDialog}
-              handleTermsDialogClose={this.handleTermsDialogClose}
-              handleOfferTask={this.handleOfferTask}
-              logged={this.props.logged}
-              task={task}
-              classes={classes}
-              fundingInvite={this.state.fundingInvite}
-              handleFundingEmailInputChange={this.handleFundingEmailInputChange}
-              handleFundingInputMessageChange={this.handleFundingInputMessageChange}
-              sendFundingInvite={this.sendFundingInvite}
-              inviteCover={inviteCover}
-              taskCover={taskCover}
-              location={this.props.location}
+            <OfferDrawer
+              offerCheckboxes={true}
+              title={<FormattedMessage id='issue.offer.drawer.title' defaultMessage='Make an offer' />}
+              introTitle={
+                <FormattedMessage id='task.solve.title' defaultMessage='Are you interested to solve this issue and earn bounties?' />
+              }
+              introMessage={
+                <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={'Please apply only if you\'re able to do it and if you\'re available and commited to finish in the deadline.'}>
+                  {(msg) => (
+                    <span className={classes.spanText}>
+                      {msg}
+                    </span>
+                  )}
+                </FormattedMessage>
+              }
+              pickupTagListTitle={
+                <Typography style={{ padding: 10 }} variant='body1'>
+                  <FormattedMessage id='issues.bounties.interested.canSuggestBounty.title' defaultMessage='Suggest a bounty offer' />
+                </Typography>
+              }
+              pickutTagListDescription={
+                <Typography style={{ padding: 10 }} variant='body1'>
+                  <FormattedMessage id='issues.bounties.interested.canSuggestBounty.headline' defaultMessage='You will suggest a bounty that will generate an order when the maintainer accept and you receive a payment when is merged' />
+                </Typography>
+              }
+              simpleInfoText={
+                <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
+                  {(msg) => (
+                    <span className={classes.spanText}>
+                      {msg}
+                    </span>
+                  )}
+                </FormattedMessage>
+              }
+              commentAreaPlaceholder={
+                <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' />
+              }
+              introImage={taskCover}
+              issue={task}
+              open={this.state.assignDialog}
+              onClose={this.handleAssignFundingDialogClose}
+              actions={
+                [
+                  {
+                    label: <FormattedMessage id='task.bounties.interested.cancel' defaultMessage='Cancel' />,
+                    onClick: this.handleAssignFundingDialogClose
+                  },
+                  {
+                    label: <FormattedMessage id='task.bounties.interested.offer' defaultMessage='Make an offer' />,
+                    onClick: this.handleOfferTask,
+                    variant: 'contained',
+                    color: 'secondary',
+                  }
+                ]
+              }
+            />
+            <OfferDrawer
+              hasEmailInput
+              title={<FormattedMessage id='issue.offer.drawer.invite.title' defaultMessage='Invite sponsor' />}
+              introTitle={<FormattedMessage id='task.funding.title' defaultMessage='Invite someone to add bounties to this issue' />}
+              introMessage={
+                <FormattedMessage id='task.funding.description' defaultMessage={'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'}>
+                  {(msg) => (
+                    <span className={classes.spanText}>
+                      {msg}
+                    </span>
+                  )}
+                </FormattedMessage>
+              }
+              simpleInfoText={
+                <FormattedMessage id='issue.funding.invite.info' defaultMessage='You will invite a sponsor to add bounties to this issue' />
+              }
+              commentAreaPlaceholder={
+                <FormattedMessage id='task.funding.comment.value' defaultMessage='Leave a message to be sent together with the invite' />
+              }
+              pickupTagListTitle={
+                <FormattedMessage id='task.funding.invite.title' defaultMessage='Suggest a bounty for the sponsor' />
+              }
+              pickutTagListDescription={
+                <FormattedMessage id='task.funding.invite.headline' defaultMessage='You can suggest a bounty for the sponsor to add a bounty to this issue' />
+              }
+              introImage={inviteCover}
+              issue={task}
+              open={this.state.taskFundingDialog}
+              onClose={this.handleAssignFundingDialogClose}
+              actions={
+                [
+                  {
+                    label: <FormattedMessage id='task.funding.cancel' defaultMessage='Cancel' />,
+                    onClick: this.handleAssignFundingDialogClose
+                  },
+                  {
+                    label: <FormattedMessage id='task.funding.invite' defaultMessage='Invite' />,
+                    onClick: this.sendFundingInvite,
+                    variant: 'contained',
+                    color: 'secondary',
+                  }
+                ]
+              }
             />
             <TaskSolve
               open={taskSolveDialog}

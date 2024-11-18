@@ -7,6 +7,7 @@ import classNames from "classnames";
 
 import logoGithub from '../../../../images/github-logo-black.png'
 import logoBitbucket from '../../../../images/bitbucket-logo-blue.png'
+import ReactPlaceholder from "react-placeholder";
 
 const useStyles = makeStyles(theme => ({
   cardHeader: {
@@ -52,13 +53,13 @@ const IssueCard = ({ issue }) => {
   }
 
   const renderIssueAuthorLink = () => {
-    if (issue.data.metadata && issue.data.metadata.issue.user.html_url) {
+    if (issue.data.metadata && issue.data.metadata?.issue?.user?.html_url) {
       return (
         <Link
           href={`${issue.data.metadata.issue.user.html_url}`}
           target='_blank'>
           <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
-            name: issue.data.metadata ? issue.data.metadata.issue.user.login : 'unknown'
+            name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
           }} />
         </Link>
       )
@@ -66,7 +67,7 @@ const IssueCard = ({ issue }) => {
     else {
       return (
         <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
-          name: issue.data.metadata ? issue.data.metadata.issue.user.login : 'unknown'
+          name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
         }} />
       )
     }
@@ -75,27 +76,31 @@ const IssueCard = ({ issue }) => {
   const updatedAtTimeString = MomentComponent(issue?.data?.updated_at).utc().format('DD/MM/YYYY hh:mm A')
 
   return (
+    <ReactPlaceholder
+      ready={issue.completed}
+      showLoadingAnimation={true}
+      type='media'
+    >
     <Card>
       <CardHeader
         className={classes.cardHeader}
         classes={{ avatar: classes.cardAvatar }}
         avatar={
           <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={{
-            name: issue.data.metadata ? issue.data.metadata.issue.user.login : 'unknown'
+            name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
           }}>
             {(msg) => (
-
               <Tooltip
                 id='tooltip-github'
                 title={msg}
                 placement='bottom'
               >
                 <a
-                  href={`${issue.data.metadata.issue.user.html_url}`}
+                  href={`${issue.data.metadata?.issue?.user?.html_url}`}
                   target='_blank' rel="noreferrer"
                 >
                   <Avatar
-                    src={issue.data.metadata.issue.user.avatar_url}
+                    src={issue.data.metadata?.issue?.user?.avatar_url}
                     className={classNames(classes.avatar)}
                   />
                 </a>
@@ -126,6 +131,7 @@ const IssueCard = ({ issue }) => {
         }
       />
     </Card>
+    </ReactPlaceholder>
   )
 }
 
