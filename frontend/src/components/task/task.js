@@ -1234,6 +1234,10 @@ class Task extends Component {
                   }
                 ]
               }
+              onDeliveryDateChange={(date) => this.setState({ interestedSuggestedDate: date })}
+              onChangePrice={(price) => this.setState({ currentPrice: price })}
+              onLearnCheckboxChange={(checked) => this.setState({ interestedLearn: checked })}
+              onCommentChange={(checked) => this.setState({ interestedComment: checked })}
             />
             <OfferDrawer
               hasEmailInput

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,6 +43,10 @@ type OfferDrawerProps = {
   simpleInfoText: any;
   commentAreaPlaceholder: any;
   hasEmailInput?: boolean;
+  onDeliveryDateChange?: any;
+  onChangePrice?: any;
+  onLearnCheckboxChange?: any;
+  onCommentChange?: any;
 }
 
 const OfferDrawer = ({ 
@@ -60,6 +64,10 @@ const OfferDrawer = ({
   simpleInfoText,
   commentAreaPlaceholder,
   hasEmailInput = false,
+  onDeliveryDateChange,
+  onChangePrice,
+  onLearnCheckboxChange,
+  onCommentChange
 }: OfferDrawerProps) => {
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
 
@@ -84,6 +92,10 @@ const OfferDrawer = ({
     }
   }
 
+  useEffect(() => {
+    onChangePrice?.(currentPrice)
+  }, [currentPrice])
+
   return (
     <Drawer
       open={open}
@@ -104,7 +116,10 @@ const OfferDrawer = ({
         simpleInfoText
       } />
       { emailInviteInput() }
-      <DeliveryDate date={issue.data.deadline} />
+      <DeliveryDate 
+        date={issue.data.deadline}  
+        onDateChange={onDeliveryDateChange}
+      />
       <PickupTagList
         primaryText={
           pickupTagListTitle
@@ -126,19 +141,14 @@ const OfferDrawer = ({
         }
       } price={currentPrice} onChange={(price) => setCurrentPrice(price)} />
       <InputComment 
+        value={''}
         placeholder={commentAreaPlaceholder}
-        value=''
-        onChange={(e) => console.log(e.target.value)}
+        onChange={onCommentChange}
       />
       { offerCheckboxes &&
         <OfferDrawerCheckboxes
-          priceConfirmed={true}
           currentPrice={currentPrice}
-          handleCheckboxIwillDoFor={(e) => console.log(e.target.checked)}
-          interestedLearn={false}
-          handleCheckboxLearn={(e) => console.log(e.target.checked)}
-          termsAgreed={true}
-          handleCheckboxTerms={(e) => console.log(e.target.checked)}
+          onLearnCheckboxChange={onLearnCheckboxChange}
         />
       }
       <CheckboxTerms

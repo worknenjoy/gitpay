@@ -9,6 +9,7 @@ const InputComment = ({ placeholder, value, onChange }) => {
   const handleInputInterestedCommentChange = (e) => {
     setInterestedComment(e.target.value)
     setCharactersCount(e.target.value.length)
+    onChange(e.target.value)
   }
   return (
     <FormControl fullWidth>

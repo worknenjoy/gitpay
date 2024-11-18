@@ -31,8 +31,9 @@ const Checkboxes = ({ checkboxes }) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, onChange) => {
     setChecked(event.target.checked);
+    onChange?.(event.target.checked);
   };
 
   return (
@@ -43,7 +44,7 @@ const Checkboxes = ({ checkboxes }) => {
             control={
               <Checkbox
                 checked={checked[checkbox.value]}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, checkbox?.onChange)}
                 color='primary'
                 className={classes.checkbox}
               />

@@ -47,10 +47,6 @@ const TaskAssignment = (props) => {
 
   const [currentTab, setCurrentTab] = useState(0)
 
-  const handleTabChange = (event, value) => {
-    setCurrentTab(value)
-  }
-
   const taskAssignmentCheckboxes = () => {
     if (props.taskFundingDialog) {
       return (
