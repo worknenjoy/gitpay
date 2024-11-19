@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -11,92 +10,31 @@ export const TopbarMenu = ({
   history
 }) => {
 
-  const handleHowItWorks = () => {
-    window.location.assign('/#/welcome')
-  }
-
-  const handlePricing = () => {
-    window.location.assign('/#/pricing')
-  }
-
-  const handleTeamLink = () => {
-    window.location.assign('/#/team')
-  }
-
-  const handleDocsLink = () => {
-    window.open('https://docs.gitpay.me/en')
-  }
-
-  const handleViewTasks = () => {
-    window.location.assign('/#/tasks/open')
-  }
+  const menuItems = [
+    { onClick: () => window.location.assign('/#/welcome'), id: 'topbar.link.about', defaultMessage: 'About us' },
+    { onClick: () => window.location.assign('/#/pricing'), id: 'topbar.link.prices', defaultMessage: 'Prices' },
+    { onClick: () => window.location.assign('/#/team'), id: 'task.actions.team', defaultMessage: 'Team' },
+    { onClick: () => window.open('https://docs.gitpay.me/en'), id: 'task.actions.docs', defaultMessage: 'Documentation' },
+    { onClick: () => window.location.assign('/#/tasks/open'), id: 'topbar.link.explore', defaultMessage: 'Explore' }
+  ];
 
   return (
     <>
-      <LinkButton
-        onClick={ handleHowItWorks }
-        variant='text'
-        size='small'
-        color='primary'
-      >
-        <LabelButton>
-          <FormattedMessage
-            id='topbar.link.about'
-            defaultMessage='About us' />
-        </LabelButton>
-      </LinkButton>
-
-      <LinkButton
-        onClick={ handlePricing }
-        variant='text'
-        size='small'
-        color='primary'
-      >
-        <LabelButton>
-          <FormattedMessage
-            id='topbar.link.prices'
-            defaultMessage='Prices' />
-        </LabelButton>
-      </LinkButton>
-
-      <LinkButton
-        onClick={ handleTeamLink }
-        variant='text'
-        size='small'
-        color='primary'
-      >
-        <LabelButton>
-          <FormattedMessage
-            id='task.actions.team'
-            defaultMessage='Team' />
-        </LabelButton>
-      </LinkButton>
-
-      <LinkButton
-        onClick={ handleDocsLink }
-        variant='text'
-        size='small'
-        color='primary'
-      >
-        <LabelButton>
-          <FormattedMessage
-            id='task.actions.docs'
-            defaultMessage='Documentation' />
-        </LabelButton>
-      </LinkButton>
-
-      <LinkButton
-        onClick={ handleViewTasks }
-        variant='text'
-        size='small'
-        color='primary'
-      >
-        <LabelButton>
-          <FormattedMessage
-            id='topbar.link.explore'
-            defaultMessage='Explore' />
-        </LabelButton>
-      </LinkButton>
+      {menuItems.map((item, index) => (
+        <LinkButton
+          key={index}
+          onClick={item.onClick}
+          variant='text'
+          size='small'
+          color='primary'
+        >
+          <LabelButton>
+            <FormattedMessage
+              id={item.id}
+              defaultMessage={item.defaultMessage} />
+          </LabelButton>
+        </LinkButton>
+      ))}
     </>
   )
 }
