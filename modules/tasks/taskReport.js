@@ -17,8 +17,9 @@ module.exports = Promise.method(function ({ id }, { task, reason, baseUrl }) {
     .then(task => {
       const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
       i18n.setLocale('en')
+      const receiveNotifications = task.User.receiveNotifications
       SendMail.success(
-        { email: reportEmail, language: 'en' },
+        { email: reportEmail, language: 'en', receiveNotifications },
         i18n.__('mail.report.send.action'),
         `${i18n.__('mail.report.send.message', {
           title: task.title,

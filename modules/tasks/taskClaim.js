@@ -20,7 +20,7 @@ const sendConfirmationEmail = (task, user, comments) => {
   })}`
 
   return SendMail.success(
-    { email: user.email, language },
+    { email: user.email, language, receiveNotifications: user.receiveNotifications },
     i18n.__('mail.issue.claim.request.subject'), body
   )
 }
@@ -55,7 +55,7 @@ const verifyIssueAndClaim = async (task, user, comments, token) => {
     })}`
 
     return SendMail.success(
-      { email: taskUser.email, language },
+      { email: taskUser.email, language, receiveNotifications: taskUser.receiveNotifications },
       i18n.__('mail.issue.claim.confirmation.subject'), body
     )
   })

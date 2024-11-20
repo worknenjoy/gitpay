@@ -11,9 +11,10 @@ module.exports = Promise.method(function ({ id }, { message, email, name }) {
       const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
       const user = task.User.dataValues
       const language = user.language || 'en'
+      const receiveNotifications = user.receiveNotifications
       i18n.setLocale(language)
       SendMail.success(
-        { email, language },
+        { email, language, receiveNotifications },
         i18n.__('mail.invite.send.action', { name: name }),
         `${i18n.__('mail.invite.send.message', {
           name: name,
