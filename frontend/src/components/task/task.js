@@ -375,6 +375,7 @@ class Task extends Component {
       interestedComment: '',
       interestedLearn: false,
       termsAgreed: false,
+      confirmOffer: false,
       priceConfirmed: false,
       orderPrice: 0,
       assignDialog: false,
@@ -1231,13 +1232,16 @@ class Task extends Component {
                     onClick: this.handleOfferTask,
                     variant: 'contained',
                     color: 'secondary',
+                    disabled: !this.state.confirmOffer || !this.state.termsAgreed || !this.state.currentPrice || this.state.currentPrice === 0
                   }
                 ]
               }
               onDeliveryDateChange={(date) => this.setState({ interestedSuggestedDate: date })}
               onChangePrice={(price) => this.setState({ currentPrice: price })}
               onLearnCheckboxChange={(checked) => this.setState({ interestedLearn: checked })}
-              onCommentChange={(checked) => this.setState({ interestedComment: checked })}
+              onTermsCheckboxChange={(checked) => this.setState({ termsAgreed: checked })}
+              onConfirmOfferChange={(checked) => this.setState({ confirmOffer: checked })}
+              onCommentChange={(e) => this.setState({ interestedComment: e.target.value })}
             />
             <OfferDrawer
               hasEmailInput
@@ -1267,7 +1271,12 @@ class Task extends Component {
               introImage={inviteCover}
               issue={task}
               open={this.state.taskFundingDialog}
+              onDeliveryDateChange={(date) => this.setState({ interestedSuggestedDate: date })}
+              onChangePrice={(price) => this.setState({ currentPrice: price })}
               onClose={this.handleAssignFundingDialogClose}
+              onCommentChange={this.handleFundingInputMessageChange}
+              onEmailInviteChange={this.handleFundingEmailInputChange}
+              onTermsCheckboxChange={(checked) => this.setState({ termsAgreed: checked })}
               actions={
                 [
                   {
@@ -1275,6 +1284,7 @@ class Task extends Component {
                     onClick: this.handleAssignFundingDialogClose
                   },
                   {
+                    disabled: !this.state.fundingInvite.email || !this.state.termsAgreed || !this.state.currentPrice || this.state.currentPrice === 0,
                     label: <FormattedMessage id='task.funding.invite' defaultMessage='Invite' />,
                     onClick: this.sendFundingInvite,
                     variant: 'contained',

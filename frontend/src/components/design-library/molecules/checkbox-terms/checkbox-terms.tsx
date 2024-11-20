@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Checkbox, FormControlLabel, Grid, Link, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,8 +21,11 @@ const CheckboxTerms = ({ onAccept }) => {
 
   const handleChange = () => {
     setChecked(!checked);
-    onAccept();
   };
+
+  useEffect(() => {
+    onAccept?.(checked);
+  }, [checked]);
 
   return (
     <Grid item xs={12} className={classes.termsLabel}>

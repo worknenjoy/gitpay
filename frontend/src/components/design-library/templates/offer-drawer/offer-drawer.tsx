@@ -47,6 +47,9 @@ type OfferDrawerProps = {
   onChangePrice?: any;
   onLearnCheckboxChange?: any;
   onCommentChange?: any;
+  onTermsCheckboxChange?: any;
+  onConfirmOfferChange: any;
+  onEmailInviteChange?: any;
 }
 
 const OfferDrawer = ({ 
@@ -67,7 +70,10 @@ const OfferDrawer = ({
   onDeliveryDateChange,
   onChangePrice,
   onLearnCheckboxChange,
-  onCommentChange
+  onCommentChange,
+  onTermsCheckboxChange,
+  onConfirmOfferChange,
+  onEmailInviteChange
 }: OfferDrawerProps) => {
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
 
@@ -84,8 +90,7 @@ const OfferDrawer = ({
             id='email'
             type='email'
             name='email-funding-invite'
-            value={''}
-            onChange={() => {}}
+            onChange={onEmailInviteChange}
           />
         </FormControl>
       )
@@ -140,8 +145,7 @@ const OfferDrawer = ({
           ],
         }
       } price={currentPrice} onChange={(price) => setCurrentPrice(price)} />
-      <InputComment 
-        value={''}
+      <InputComment
         placeholder={commentAreaPlaceholder}
         onChange={onCommentChange}
       />
@@ -149,10 +153,11 @@ const OfferDrawer = ({
         <OfferDrawerCheckboxes
           currentPrice={currentPrice}
           onLearnCheckboxChange={onLearnCheckboxChange}
+          onConfirmOfferChange={onConfirmOfferChange}
         />
       }
       <CheckboxTerms
-        onAccept={() => console.log('accept')}
+        onAccept={onTermsCheckboxChange}
        />
     </Drawer>
   )

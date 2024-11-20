@@ -31,12 +31,14 @@ const useStyles = makeStyles((theme) => ({
 
 const OfferDrawerCheckboxes = ({
   currentPrice,
-  onLearnCheckboxChange
+  onLearnCheckboxChange,
+  onConfirmOfferChange
 }) => {
   const classes = useStyles();
 
   const checkboxes = [
     {
+      onChange: onConfirmOfferChange,
       value: 'price',
       label: <FormattedMessage id='task.bounties.interested.iWillDoFor' defaultMessage='I will do for'>
         {msg => (
