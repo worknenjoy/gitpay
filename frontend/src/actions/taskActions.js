@@ -637,7 +637,7 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
   return dispatch => {
     const username = user.name
     dispatch(fundingInviteTaskRequested())
-    axios
+    return axios
       .post(api.API_URL + `/tasks/${id}/funding/`, {
         email, comment, suggestedValue, suggestedDate, username
       })
@@ -659,7 +659,7 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
         dispatch(
           addNotification('actions.task.invite.error')
         )
-        dispatch(fundingInviteTaskError(e))
+        return dispatch(fundingInviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
         // eslint-disable-next-line no-console

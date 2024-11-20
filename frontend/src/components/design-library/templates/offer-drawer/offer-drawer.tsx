@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,7 +9,7 @@ import IssueCard from '../../organisms/issue-card/issue-card';
 import SimpleInfo from '../../molecules/simple-info/simple-info';
 import DeliveryDate from '../../organisms/delivery-date/delivery-date';
 import PickupTagList from '../../molecules/pickup-tag-list/pickup-tag-list';
-import { Typography } from '@material-ui/core';
+import { FormControl, Input, InputLabel, Typography } from '@material-ui/core';
 import PricePlan from '../../organisms/price-plan/price-plan';
 import InputComment from '../../molecules/input-comment/input-comment';
 import OfferDrawerCheckboxes from './components/offer/offer-drawer-checkboxes';
@@ -37,12 +37,69 @@ type OfferDrawerProps = {
   onClose: any;
   issue: any;
   actions?: Array<any>;
+  offerCheckboxes?: boolean;
+  pickupTagListTitle: any;
+  pickutTagListDescription: any;
+  simpleInfoText: any;
+  commentAreaPlaceholder: any;
+  hasEmailInput?: boolean;
+  onDeliveryDateChange?: any;
+  onChangePrice?: any;
+  onLearnCheckboxChange?: any;
+  onCommentChange?: any;
+  onTermsCheckboxChange?: any;
+  onConfirmOfferChange: any;
+  onEmailInviteChange?: any;
 }
 
-const OfferDrawer = ({ title, introTitle, introMessage, introImage, open, onClose, issue, actions }: OfferDrawerProps) => {
+const OfferDrawer = ({ 
+  title,
+  introTitle,
+  introMessage,
+  introImage,
+  open,
+  onClose,
+  issue,
+  actions,
+  offerCheckboxes,
+  pickupTagListTitle,
+  pickutTagListDescription,
+  simpleInfoText,
+  commentAreaPlaceholder,
+  hasEmailInput = false,
+  onDeliveryDateChange,
+  onChangePrice,
+  onLearnCheckboxChange,
+  onCommentChange,
+  onTermsCheckboxChange,
+  onConfirmOfferChange,
+  onEmailInviteChange
+}: OfferDrawerProps) => {
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
 
   const classes = useStyles();
+
+  const emailInviteInput = () => {
+    if (hasEmailInput) {
+      return (
+        <FormControl fullWidth style={{marginTop: 10, marginBottom: 10}}>
+          <InputLabel htmlFor='email-funding-invite'>
+            <FormattedMessage id='task.funding.email' defaultMessage='Please provide the invitee e-mail' />
+          </InputLabel>
+          <Input
+            id='email'
+            type='email'
+            name='email-funding-invite'
+            onChange={onEmailInviteChange}
+          />
+        </FormControl>
+      )
+    }
+  }
+
+  useEffect(() => {
+    onChangePrice?.(currentPrice)
+  }, [currentPrice])
 
   return (
     <Drawer
@@ -61,25 +118,19 @@ const OfferDrawer = ({ title, introTitle, introMessage, introImage, open, onClos
       </Introduction>
       <IssueCard issue={issue} />
       <SimpleInfo text={
-        <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-          {(msg) => (
-            <span className={classes.spanText}>
-              {msg}
-            </span>
-          )}
-        </FormattedMessage>
+        simpleInfoText
       } />
-      <DeliveryDate date={issue.data.deadline} />
+      { emailInviteInput() }
+      <DeliveryDate 
+        date={issue.data.deadline}  
+        onDateChange={onDeliveryDateChange}
+      />
       <PickupTagList
         primaryText={
-          <Typography style={{ padding: 10 }} variant='body1'>
-            <FormattedMessage id='issues.bounties.interested.canSuggestBounty.title' defaultMessage='Suggest a bounty offer' />
-          </Typography>
+          pickupTagListTitle
         }
         secondaryText={
-          <Typography style={{ padding: 10 }} variant='body1'>
-            <FormattedMessage id='issues.bounties.interested.canSuggestBounty.headline' defaultMessage='You will suggest a bounty that will generate an order when the maintainer accept and you receive a payment when is merged' />
-          </Typography>
+          pickutTagListDescription
         }
         onPickItem={(price) => setCurrentPrice(price)}
       />
@@ -94,22 +145,19 @@ const OfferDrawer = ({ title, introTitle, introMessage, introImage, open, onClos
           ],
         }
       } price={currentPrice} onChange={(price) => setCurrentPrice(price)} />
-      <InputComment 
-        placeholder='Write a comment'
-        value=''
-        onChange={(e) => console.log(e.target.value)}
+      <InputComment
+        placeholder={commentAreaPlaceholder}
+        onChange={onCommentChange}
       />
-      <OfferDrawerCheckboxes
-        priceConfirmed={true}
-        currentPrice={currentPrice}
-        handleCheckboxIwillDoFor={(e) => console.log(e.target.checked)}
-        interestedLearn={false}
-        handleCheckboxLearn={(e) => console.log(e.target.checked)}
-        termsAgreed={true}
-        handleCheckboxTerms={(e) => console.log(e.target.checked)}
-      />
+      { offerCheckboxes &&
+        <OfferDrawerCheckboxes
+          currentPrice={currentPrice}
+          onLearnCheckboxChange={onLearnCheckboxChange}
+          onConfirmOfferChange={onConfirmOfferChange}
+        />
+      }
       <CheckboxTerms
-        onAccept={() => console.log('accept')}
+        onAccept={onTermsCheckboxChange}
        />
     </Drawer>
   )

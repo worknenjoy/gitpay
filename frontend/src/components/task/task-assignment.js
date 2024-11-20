@@ -13,9 +13,7 @@ import {
   CardHeader,
   Typography,
   Button,
-  Fab,
   Tooltip,
-  Chip,
   Paper,
   FormControl,
   Input,
@@ -48,10 +46,6 @@ const TaskAssignment = (props) => {
   const { classes, task } = props
 
   const [currentTab, setCurrentTab] = useState(0)
-
-  const handleTabChange = (event, value) => {
-    setCurrentTab(value)
-  }
 
   const taskAssignmentCheckboxes = () => {
     if (props.taskFundingDialog) {
@@ -323,7 +317,7 @@ const TaskAssignment = (props) => {
 
   return (
     <Drawer
-      open={props.assignDialog || props.taskFundingDialog}
+      open={props.taskFundingDialog}
       onClose={props.handleAssignFundingDialogClose}
       aria-labelledby='form-dialog-title'
       title={<FormattedMessage id='issue.offer.drawer.title' defaultMessage='Make an offer' />}

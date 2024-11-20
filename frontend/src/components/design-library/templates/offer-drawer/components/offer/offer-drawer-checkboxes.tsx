@@ -30,23 +30,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const OfferDrawerCheckboxes = ({
-  termsAgreed,
-  handleCheckboxTerms,
-  ...props
+  currentPrice,
+  onLearnCheckboxChange,
+  onConfirmOfferChange
 }) => {
   const classes = useStyles();
 
   const checkboxes = [
     {
-      value: 'checkbox1',
+      onChange: onConfirmOfferChange,
+      value: 'price',
       label: <FormattedMessage id='task.bounties.interested.iWillDoFor' defaultMessage='I will do for'>
         {msg => (
-          <Typography variant='caption'> {msg} <span style={{ fontWeight: 'bold' }}>${props.currentPrice}</span> </Typography>
+          <Typography variant='caption'> {msg} <span style={{ fontWeight: 'bold' }}>${currentPrice}</span> </Typography>
         )}
       </FormattedMessage>
     },
     {
-      value: 'checkbox2',
+      onChange: onLearnCheckboxChange,
+      value: 'learning',
       label: <FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage='I want to do for learning purposes'>
         {msg => (
           <Typography variant='caption'> {msg} </Typography>
@@ -57,71 +59,6 @@ const OfferDrawerCheckboxes = ({
 
   return (
     <Checkboxes checkboxes={checkboxes} />
-  )
-
-  return (
-    <Grid container spacing={3} className={classes.container}>
-      <Grid item xs={12} sm={6} className={classes.item}>
-        <FormattedMessage id='task.bounties.interested.iWillDoFor' defaultMessage='I will do for'>
-          {msg => (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={props.priceConfirmed}
-                  onChange={props.handleCheckboxIwillDoFor}
-                  color='primary'
-                  className={classes.checkbox}
-                />
-              }
-              label={<Typography variant='caption'> {msg} <span style={{ fontWeight: 'bold' }}>${props.currentPrice}</span> </Typography>}
-            />
-          )}
-        </FormattedMessage>
-      </Grid>
-      <Grid item xs={12} sm={6} className={`${classes.item} ${classes.starterCheckbox}`}>
-        <FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage='I want to do for learning purposes'>
-          {msg => (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={props.interestedLearn}
-                  onChange={props.handleCheckboxLearn}
-                  color='primary'
-                  className={classes.checkbox}
-                />
-              }
-              label={<Typography variant='caption'> {msg} </Typography>}
-            />
-          )}
-        </FormattedMessage>
-      </Grid>
-      <Grid item xs={12} className={classes.termsLabel}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={termsAgreed}
-              onChange={handleCheckboxTerms}
-              color='primary'
-              className={classes.checkbox}
-            />
-          }
-          onClick={
-            (e) => {
-              e.preventDefault();
-            }
-          }
-          label={<Typography variant='caption' >
-            <FormattedMessage id='task.bounties.interested.termsOfUseLabel' defaultMessage='I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION' values={{
-              termsOfUseAnchor: (
-                <Link onClick={props.handleTermsDialog}>
-                  <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
-                </Link>
-              )
-            }} />
-          </Typography>}
-        />
-      </Grid>
-    </Grid>
   );
 };
 

@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DeliveryDate = ({ date }) => {
+const DeliveryDate = ({ date, onDateChange }) => {
   const classes = useStyles();
   const [showSuggestAnotherDateField, setShowSuggestAnotherDateField] = React.useState(false);
   const [interestedSuggestedDate, setInterestedSuggestedDate] = React.useState('');
@@ -53,6 +53,7 @@ const DeliveryDate = ({ date }) => {
   const handleInputChangeCalendar = (e) => {
     e.preventDefault();
     setInterestedSuggestedDate(e.target.value);
+    onDateChange(e.target.value);
   }
 
   return (

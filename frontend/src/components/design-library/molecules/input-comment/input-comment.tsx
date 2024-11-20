@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { TextareaAutosize, FormControl } from '@material-ui/core';
 
-const InputComment = ({ placeholder, value, onChange }) => {
-  const [ interestedComment, setInterestedComment ] = useState(value)
-  const [ charactersCount, setCharactersCount ] = useState(value.length)
+const InputComment = ({ placeholder, onChange }) => {
+  const [ interestedComment, setInterestedComment ] = useState('')
+  const [ charactersCount, setCharactersCount ] = useState(0)
   
   const handleInputInterestedCommentChange = (e) => {
     setInterestedComment(e.target.value)
     setCharactersCount(e.target.value.length)
+    onChange(e)
   }
   return (
     <FormControl fullWidth>
-      <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' >
-        {placeholder => (
+      <FormattedMessage id='issue.bounties.offer.comment.placeholder' defaultMessage='Leave a comment'>
+        {p => (
           <TextareaAutosize
             id='interested-comment'
-            placeholder={placeholder}
+            placeholder={p}
             minRows={8}
             maxLength={1000}
             value={interestedComment}
