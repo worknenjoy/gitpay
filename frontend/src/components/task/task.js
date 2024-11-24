@@ -59,6 +59,7 @@ import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'
 import TaskLevelSplitButton from './task-level-split-button'
 import TaskDeadlineForm from './task-deadline-form'
+import TaskOfferDrawer from './offers/task-offer-drawer'
 
 import TaskStatusIcons from './task-status-icons'
 
@@ -1180,72 +1181,16 @@ class Task extends Component {
               user={this.props.user}
               id={task.data.id}
             />
-            <OfferDrawer
-              offerCheckboxes={true}
-              title={<FormattedMessage id='issue.offer.drawer.title' defaultMessage='Make an offer' />}
-              introTitle={
-                <FormattedMessage id='task.solve.title' defaultMessage='Are you interested to solve this issue and earn bounties?' />
-              }
-              introMessage={
-                <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={'Please apply only if you\'re able to do it and if you\'re available and commited to finish in the deadline.'}>
-                  {(msg) => (
-                    <span className={classes.spanText}>
-                      {msg}
-                    </span>
-                  )}
-                </FormattedMessage>
-              }
-              pickupTagListTitle={
-                <Typography style={{ padding: 10 }} variant='body1'>
-                  <FormattedMessage id='issues.bounties.interested.canSuggestBounty.title' defaultMessage='Suggest a bounty offer' />
-                </Typography>
-              }
-              pickutTagListDescription={
-                <Typography style={{ padding: 10 }} variant='body1'>
-                  <FormattedMessage id='issues.bounties.interested.canSuggestBounty.headline' defaultMessage='You will suggest a bounty that will generate an order when the maintainer accept and you receive a payment when is merged' />
-                </Typography>
-              }
-              simpleInfoText={
-                <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
-                  {(msg) => (
-                    <span className={classes.spanText}>
-                      {msg}
-                    </span>
-                  )}
-                </FormattedMessage>
-              }
-              commentAreaPlaceholder={
-                <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' />
-              }
-              introImage={taskCover}
+            <TaskOfferDrawer
               issue={task}
               open={this.state.assignDialog}
               onClose={this.handleAssignFundingDialogClose}
-              actions={
-                [
-                  {
-                    label: <FormattedMessage id='task.bounties.interested.cancel' defaultMessage='Cancel' />,
-                    onClick: this.handleAssignFundingDialogClose
-                  },
-                  {
-                    label: <FormattedMessage id='task.bounties.interested.offer' defaultMessage='Make an offer' />,
-                    onClick: this.handleOfferTask,
-                    variant: 'contained',
-                    color: 'secondary',
-                    disabled: !this.state.confirmOffer || !this.state.termsAgreed || !this.state.currentPrice || this.state.currentPrice === 0
-                  }
-                ]
-              }
-              onDeliveryDateChange={(date) => this.setState({ interestedSuggestedDate: date })}
-              onChangePrice={(price) => this.setState({ currentPrice: price })}
-              onLearnCheckboxChange={(checked) => this.setState({ interestedLearn: checked })}
-              onTermsCheckboxChange={(checked) => this.setState({ termsAgreed: checked })}
-              onConfirmOfferChange={(checked) => this.setState({ confirmOffer: checked })}
-              onCommentChange={(e) => this.setState({ interestedComment: e.target.value })}
-              tabs={true}
-              offersProps={{
-                offers: task.data.Offers
-              }}
+              offerUpdate={this.props.offerUpdate}
+              loggedUser={this.props.logged}
+              createOrder={this.props.createOrder}
+              assignTask={this.props.assignTask}
+              assigns={task.data.Assigns}
+              onMessage={this.props.messageOffer}
             />
             <OfferDrawer
               hasEmailInput

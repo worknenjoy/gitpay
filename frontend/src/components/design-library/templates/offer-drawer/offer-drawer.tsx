@@ -5,6 +5,7 @@ import Drawer from '../../molecules/drawer/drawer'
 import OfferDrawerCreate from './components/offer-drawer-create';
 import OfferDrawerTabs from './components/offer-drawer-tabs';
 import OffersList from '../../molecules/offers-list/offers-list';
+import { AddCircleTwoTone as AddIcon } from '@material-ui/icons';
 
 
 const useStyles = makeStyles(theme => ({
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type OfferDrawerProps = {
+export type OfferDrawerProps = {
   title: any;
   introTitle: any;
   introMessage: any;
@@ -70,6 +71,7 @@ const OfferDrawer = ({
   offersProps
 }: OfferDrawerProps) => {
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
+  const [ enableActions, setEnableActions ] = React.useState(false);
 
   const classes = useStyles();
 
@@ -104,7 +106,12 @@ const OfferDrawer = ({
     },
     {
       value: 1,
-      label: 'Make a new offer',
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>Make a new offer</span>
+            <AddIcon fontSize='small'  style={{ marginLeft: 3 }} />
+        </div>
+      ),
       component: createSection
     }
   ]
@@ -113,16 +120,20 @@ const OfferDrawer = ({
     onChangePrice?.(currentPrice)
   }, [currentPrice])
 
+  useEffect(() => {
+    tabs && setEnableActions(false)
+  }, [tabs])
+
   return (
     <Drawer
       open={open}
       onClose={onClose}
-      actions={actions}
+      actions={enableActions ? actions : []}
       title={title}
     >
       {tabs ? 
       <div>
-        <OfferDrawerTabs tabs={drawerTabs} />
+        <OfferDrawerTabs tabs={drawerTabs} onTabChange={(value) => value !== 0 ? setEnableActions(true) : setEnableActions(false)} />
       </div>
       : <div>
           {createSection}

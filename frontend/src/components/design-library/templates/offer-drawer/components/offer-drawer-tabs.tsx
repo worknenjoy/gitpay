@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Tab, Tabs } from "@material-ui/core";
 
 
-const OfferDrawerTabs = ({ tabs }) => {
+const OfferDrawerTabs = ({ tabs, onTabChange }) => {
   const [tabValue, setTabValue] = useState(0)
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue)
+    onTabChange(newValue)
   }
   
   return (
