@@ -1,20 +1,11 @@
 import React, { useEffect } from 'react'
-import { FormattedMessage } from 'react-intl'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '../../molecules/drawer/drawer'
-
-import Introduction from '../../molecules/introduction/introduction';
-import IssueCard from '../../organisms/issue-card/issue-card';
-import SimpleInfo from '../../molecules/simple-info/simple-info';
-import DeliveryDate from '../../organisms/delivery-date/delivery-date';
-import PickupTagList from '../../molecules/pickup-tag-list/pickup-tag-list';
-import { FormControl, Input, InputLabel, Typography } from '@material-ui/core';
-import PricePlan from '../../organisms/price-plan/price-plan';
-import InputComment from '../../molecules/input-comment/input-comment';
-import OfferDrawerCheckboxes from './components/offer/offer-drawer-checkboxes';
-import OfferDrawerActions from './components/offer/offer-drawer-actions';
-import CheckboxTerms from '../../molecules/checkbox-terms/checkbox-terms';
+import OfferDrawerCreate from './components/offer-drawer-create';
+import OfferDrawerTabs from './components/offer-drawer-tabs';
+import OffersList from '../../molecules/offers-list/offers-list';
+import { AddCircleTwoTone as AddIcon } from '@material-ui/icons';
 
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type OfferDrawerProps = {
+export type OfferDrawerProps = {
   title: any;
   introTitle: any;
   introMessage: any;
@@ -50,6 +41,8 @@ type OfferDrawerProps = {
   onTermsCheckboxChange?: any;
   onConfirmOfferChange: any;
   onEmailInviteChange?: any;
+  tabs?: any;
+  offersProps?: any;
 }
 
 const OfferDrawer = ({ 
@@ -73,92 +66,79 @@ const OfferDrawer = ({
   onCommentChange,
   onTermsCheckboxChange,
   onConfirmOfferChange,
-  onEmailInviteChange
+  onEmailInviteChange,
+  tabs,
+  offersProps
 }: OfferDrawerProps) => {
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
+  const [ enableActions, setEnableActions ] = React.useState(true);
 
   const classes = useStyles();
 
-  const emailInviteInput = () => {
-    if (hasEmailInput) {
-      return (
-        <FormControl fullWidth style={{marginTop: 10, marginBottom: 10}}>
-          <InputLabel htmlFor='email-funding-invite'>
-            <FormattedMessage id='task.funding.email' defaultMessage='Please provide the invitee e-mail' />
-          </InputLabel>
-          <Input
-            id='email'
-            type='email'
-            name='email-funding-invite'
-            onChange={onEmailInviteChange}
-          />
-        </FormControl>
-      )
+  const createSection =
+    <OfferDrawerCreate
+      introTitle={introTitle}
+      introMessage={introMessage}
+      introImage={introImage}
+      issue={issue}
+      simpleInfoText={simpleInfoText}
+      commentAreaPlaceholder={commentAreaPlaceholder}
+      onDeliveryDateChange={onDeliveryDateChange}
+      pickupTagListTitle={pickupTagListTitle}
+      pickutTagListDescription={pickutTagListDescription}
+      setCurrentPrice={setCurrentPrice}
+      currentPrice={currentPrice}
+      onCommentChange={onCommentChange}
+      offerCheckboxes={offerCheckboxes}
+      onLearnCheckboxChange={onLearnCheckboxChange}
+      onConfirmOfferChange={onConfirmOfferChange}
+      onTermsCheckboxChange={onTermsCheckboxChange}
+      onEmailInviteChange={onEmailInviteChange}
+      hasEmailInput={hasEmailInput}
+    />
+
+  const drawerTabs = [
+    {
+      value: 0,
+      label: 'Your existing offers',
+      default: true,
+      component: <OffersList {...offersProps} />
+    },
+    {
+      value: 1,
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>Make a new offer</span>
+            <AddIcon fontSize='small'  style={{ marginLeft: 3 }} />
+        </div>
+      ),
+      component: createSection
     }
-  }
+  ]
 
   useEffect(() => {
     onChangePrice?.(currentPrice)
   }, [currentPrice])
 
+  useEffect(() => {
+    tabs && setEnableActions(false)
+  }, [tabs])
+
   return (
     <Drawer
       open={open}
       onClose={onClose}
-      actions={actions}
+      actions={enableActions ? actions : []}
       title={title}
     >
-      <Introduction
-        title={introTitle}
-        image={introImage}
-      >
-        <span className={classes.spanText}>
-          {introMessage}
-        </span>
-      </Introduction>
-      <IssueCard issue={issue} />
-      <SimpleInfo text={
-        simpleInfoText
-      } />
-      { emailInviteInput() }
-      <DeliveryDate 
-        date={issue.data.deadline}  
-        onDateChange={onDeliveryDateChange}
-      />
-      <PickupTagList
-        primaryText={
-          pickupTagListTitle
-        }
-        secondaryText={
-          pickutTagListDescription
-        }
-        onPickItem={(price) => setCurrentPrice(price)}
-      />
-      <PricePlan plan={
-        {
-          fee: 8,
-          category: <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />,
-          title: <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />,
-          items: [
-            <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />,
-            <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />,
-          ],
-        }
-      } price={currentPrice} onChange={(price) => setCurrentPrice(price)} />
-      <InputComment
-        placeholder={commentAreaPlaceholder}
-        onChange={onCommentChange}
-      />
-      { offerCheckboxes &&
-        <OfferDrawerCheckboxes
-          currentPrice={currentPrice}
-          onLearnCheckboxChange={onLearnCheckboxChange}
-          onConfirmOfferChange={onConfirmOfferChange}
-        />
+      {tabs ? 
+      <div>
+        <OfferDrawerTabs tabs={drawerTabs} onTabChange={(value) => value !== 0 ? setEnableActions(true) : setEnableActions(false)} />
+      </div>
+      : <div>
+          {createSection}
+        </div>
       }
-      <CheckboxTerms
-        onAccept={onTermsCheckboxChange}
-       />
     </Drawer>
   )
 }
