@@ -71,7 +71,7 @@ const OfferDrawer = ({
   offersProps
 }: OfferDrawerProps) => {
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
-  const [ enableActions, setEnableActions ] = React.useState(false);
+  const [ enableActions, setEnableActions ] = React.useState(true);
 
   const classes = useStyles();
 

@@ -752,8 +752,6 @@ class Task extends Component {
           </span>
           <BountyIcon style={{ marginLeft: 10 }} />
         </Button>
-
-        
           <Button
             disabled={this.props.task.data.paid || this.props.task.data.status === 'closed'}
             onClick={this.handleAssignDialogOpen}
@@ -1191,6 +1189,7 @@ class Task extends Component {
               assignTask={this.props.assignTask}
               assigns={task.data.Assigns}
               onMessage={this.props.messageOffer}
+              updateTask={this.props.updateTask}
             />
             <OfferDrawer
               hasEmailInput

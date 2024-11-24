@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import OfferDrawer, { type OfferDrawerProps } from '../../design-library/templates/offer-drawer/offer-drawer';
 import { makeStyles, Typography, } from '@material-ui/core';
@@ -19,7 +19,7 @@ type TaskOfferDrawerProps = {
   onClose: any;
   onMessage: any;
   assigned: boolean;
-  handleOfferTask: any;
+  updateTask: any;
   offerUpdate: any;
   loggedUser: any;
   createOrder: any;
@@ -33,7 +33,7 @@ const TaskOfferDrawer = ({
   onClose,
   onMessage,
   assigned,
-  handleOfferTask,
+  updateTask,
   offerUpdate,
   loggedUser,
   createOrder,
@@ -44,6 +44,9 @@ const TaskOfferDrawer = ({
   const classes = useStyles();
 
   const { data } = issue
+  const allOffers = data?.Offers || []
+  const userOffers = allOffers.filter(offer => offer.User.id === loggedUser?.user?.id) || []
+  const isOwner = data?.User?.id === loggedUser?.user?.id
 
   const [interestedSuggestedDate, setInterestedSuggestedDate] = React.useState(null);
   const [currentPrice, setCurrentPrice] = React.useState(null);
@@ -97,7 +100,19 @@ const TaskOfferDrawer = ({
     setInterested(id)
   }
 
-  const userOffers = data?.Offers?.filter(offer => offer.User.id === loggedUser?.user?.id) || []
+  const handleOfferTask = () => {
+    updateTask({
+      id: data.id,
+      Offer: {
+        userId: loggedUser?.user?.id,
+        suggestedDate: interestedSuggestedDate,
+        value: currentPrice,
+        learn: interestedLearn,
+        comment: interestedComment
+      }
+    })
+    onClose()
+  }
 
   return (
     <>
@@ -166,7 +181,7 @@ const TaskOfferDrawer = ({
               onClick: handleOfferTask,
               variant: 'contained',
               color: 'secondary',
-              disabled: confirmOffer || termsAgreed || currentPrice || currentPrice === 0
+              disabled: !confirmOffer || !termsAgreed || !currentPrice || currentPrice === 0
             }
           ]
         }
@@ -176,13 +191,14 @@ const TaskOfferDrawer = ({
         onTermsCheckboxChange={(checked) => setTermsAgreed(checked)}
         onConfirmOfferChange={(checked) => setConfirmOffer(checked)}
         onCommentChange={(e) => setInterestedComment(e.target.value)}
-        tabs={!!userOffers.length}
+        tabs={isOwner ? !!allOffers.length : !!userOffers.length}
         offersProps={{
-          offers: userOffers,
+          offers: isOwner ? allOffers : userOffers,
           onMessage: (id) => openMessageDialog(id),
           assigned: assigned,
           onAccept: (event, offer) => confirmAssignTaskAndCreateOrder(event, offer),
-          onReject: (event, offer) => onReject(event, offer)
+          onReject: (event, offer) => onReject(event, offer),
+          viewMode: data?.User?.id !== loggedUser?.user?.id
         }}
       />
     </>

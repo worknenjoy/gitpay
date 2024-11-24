@@ -20,10 +20,18 @@ interface OfferListProps {
   assigned?: boolean;
   onAccept?: any;
   onReject?: any;
+  viewMode?: boolean;
 }
 
 
-export default function OffersList({ offers, onMessage, assigned, onAccept, onReject }:OfferListProps) {
+export default function OffersList({ 
+  offers,
+  onMessage,
+  assigned,
+  onAccept,
+  onReject,
+  viewMode
+}:OfferListProps) {
   const onSendMessage = (id) => {
     onMessage(id);
   }
@@ -84,6 +92,8 @@ export default function OffersList({ offers, onMessage, assigned, onAccept, onRe
                       </Typography>
                     }
                   </div>
+                  
+                  { !viewMode ? (
                   <div>
                     <Button onClick={ (event) => onReject(event, offer) } disabled={assigned || offer.status === 'rejected' || offer.status === 'accepted'} variant="outlined" color="secondary" size={'small'} style={{marginRight: 20}}>
                       Reject
@@ -95,6 +105,7 @@ export default function OffersList({ offers, onMessage, assigned, onAccept, onRe
                       <MessageIcon fontSize='small' />
                     </Button>
                   </div>
+                  ) : null }
                 </div>
               }
             />
