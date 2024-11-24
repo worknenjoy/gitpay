@@ -58,3 +58,21 @@ Primary.args = {
     }
   }
 };
+
+export const WithTabs = Template.bind({});
+WithTabs.args = {
+  ...Primary.args,
+  offers: [
+    {
+      User: {
+        username: 'username',
+        picture_url: 'https://via.placeholder.com/150',
+        name: 'name',
+      },
+      status: 'status',
+      value: 100,
+      suggestedDate: new Date(),
+    },
+  ],
+  tabs: true,
+};

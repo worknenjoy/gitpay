@@ -1242,6 +1242,10 @@ class Task extends Component {
               onTermsCheckboxChange={(checked) => this.setState({ termsAgreed: checked })}
               onConfirmOfferChange={(checked) => this.setState({ confirmOffer: checked })}
               onCommentChange={(e) => this.setState({ interestedComment: e.target.value })}
+              tabs={true}
+              offersProps={{
+                offers: task.data.Offers
+              }}
             />
             <OfferDrawer
               hasEmailInput
