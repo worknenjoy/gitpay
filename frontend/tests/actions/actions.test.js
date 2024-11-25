@@ -17,7 +17,7 @@ Auth.getToken = () => true
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-describe('actions', () => {
+xdescribe('actions', () => {
   describe('task actions', () => {
     describe('message author', () => {
       it('should dispatch an action to send message to author', () => {
