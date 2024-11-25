@@ -22,7 +22,7 @@
   "mail.assign.owner.main": "{{name}} is interested in working on the issue <a href=\"{{url}}\">{{title}}</a>.",
   "mail.assign.owner.suggest": "<p>Recompensa sugerida: <strong>${{value}}</strong></p> <p>Data sugerida para entrega: <strong>{{suggestedDate}}</strong></p> <p>Tarefa para aprendizado: <strong>{{learn}}</strong></p><p>Comment: {{comment}}</p>",
   "mail.assign.owner.sec": "You can accept or reject this proposal.",
-  "mail.assign.owner.button.primary": "Check offer",
+  "mail.assign.owner.button.offer": "Check offer",
   "mail.messageInterested.subject": "You received a message about an issue you're interested in on Gitpay",
   "mail.messageInterested.intro": "{{name}} wrote about the issue <a href=\"{{url}}\">{{title}}</a> you're interested in on Gitpay:",
   "mail.messageInterested.message": "{{message}}",
