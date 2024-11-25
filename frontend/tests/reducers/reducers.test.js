@@ -1,8 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-
-jest.unmock('react-intl')
 import { preferences } from '../../src/reducers/preferencesReducer'
 import { organizations } from '../../src/reducers/organizationsReducer'
 import { task } from '../../src/reducers/taskReducer'

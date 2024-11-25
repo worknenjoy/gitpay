@@ -179,5 +179,5 @@ xdescribe('Components - Session - LoginForm', () => {
     expect(emailField.value).toBe('test@example.com')
     expect(onRegisterUser).toHaveBeenCalled()
     unmount()
-  }, 10000);
+  });
 });
