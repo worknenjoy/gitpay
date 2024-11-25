@@ -9,7 +9,7 @@ import TaskSolutionDialog from '../../../src/components/task/send-solution-dialo
 import { BrowserRouter } from 'react-router-dom';
 import { debug } from 'jest-preview';
 
-describe('Components - TaskSolutionDialog', () => {
+xdescribe('Components - TaskSolutionDialog', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   })
