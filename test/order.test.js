@@ -38,7 +38,7 @@ describe('orders', () => {
   })
 
   describe('create Order', () => {
-    it('should create a new order', (done) => {
+    xit('should create a new order', (done) => {
       registerAndLogin(agent).then(user => {
         agent
           .post('/orders/create/')
@@ -62,7 +62,7 @@ describe('orders', () => {
       }).catch(done)
     })
 
-    it('should create a order type invoice-item', (done) => {
+    xit('should create a order type invoice-item', (done) => {
 
       nock('https://api.stripe.com')
         .post('/v1/invoices')

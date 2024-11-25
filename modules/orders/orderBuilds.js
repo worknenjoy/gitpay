@@ -87,7 +87,6 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
               })
             })
           })
-
         }
         if (orderParameters.provider === 'paypal') {
           const totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
