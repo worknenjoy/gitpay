@@ -1,8 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-
-jest.unmock('react-intl')
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import moxios from 'moxios'
@@ -10,9 +8,9 @@ import * as preferencesActions from '../../src/actions/preferencesActions'
 import * as organizationsActions from '../../src/actions/organizationsActions'
 import * as taskActions from '../../src/actions/taskActions'
 import * as contactActions from '../../src/actions/contactActions'
-import Auth from '../../src/modules/auth'
+// import Auth from '../../src/modules/auth'
 
-Auth.getToken = () => true
+//Auth.getToken = () => true
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
