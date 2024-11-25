@@ -36,14 +36,11 @@ import {
   Close as CloseIcon,
   ExpandLess,
   ExpandMore,
-  BugReport as BugReportIcon,
   AttachMoney as MoneyIcon,
   HowToReg as HowToRegIcon,
   CreditCard as BountyIcon,
   Gavel as OfferIcon,
   Redeem as RedeemIcon,
-  Delete as DeleteIcon,
-  AssignmentInd as AssignmentIcon,
   EmojiFoodBeverage as CoffeeIcon,
 } from '@material-ui/icons'
 
@@ -53,7 +50,6 @@ import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import TaskPayment from './task-payment'
 import LoginButton from '../session/login-button'
-import TaskAssignment from './task-assignment'
 import TaskSolve from './task-solve'
 import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'
@@ -442,6 +438,12 @@ class Task extends Component {
     }
     const assign_id = this.props.match.params.interested_id
     const hash = this.props.location.hash
+    const isOfferPage = this.props.match.path === '/profile/task/:id/offers'
+    
+    if(isOfferPage) {
+      this.setState({ assignDialog: true })
+    }
+
     if(hash === '#task-solution-dialog') {
       this.setState({ taskSolveDialog: true })
 
