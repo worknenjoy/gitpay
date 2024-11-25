@@ -444,6 +444,11 @@ class Profile extends Component {
                     />
                     <Route
                       exact
+                      path='/profile/task/:id/:slug/offers'
+                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
+                    />
+                    <Route
+                      exact
                       path='/profile/task/:id/:slug'
                       component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />

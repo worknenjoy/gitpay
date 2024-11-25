@@ -50,7 +50,7 @@ ${Signatures.buttons(language, {
               primary: {
                 label: 'mail.assign.owner.button.offer',
                 title: task.title,
-                url: `${process.env.FRONTEND_HOST}/#/task/${task.id}/offers`
+                url: `${process.env.FRONTEND_HOST}/#/profile/task/${task.id}/offers`
               }
             })}`)
         },
