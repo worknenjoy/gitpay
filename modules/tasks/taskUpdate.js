@@ -96,7 +96,7 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
   }
 })
 
-module.exports = Promise.method(async function taskUpdate (taskParameters) {
+module.exports = Promise.method(async function taskUpdate (taskParameters, notifyOnAssign = true) {
   let couponValidation = null
 
   if (taskParameters.coupon) {
@@ -222,21 +222,12 @@ module.exports = Promise.method(async function taskUpdate (taskParameters) {
                 const assignedUser = assigned.User.dataValues
                 const ownerUser = task.dataValues.User.dataValues
                 const interestedUsersId = task.Assigns.map(user => user.userId).filter(user => user !== assignedUser.id)
-                AssignMail.owner.assigned(ownerUser, task.dataValues, assignedUser)
-                AssignMail.assigned(assignedUser, task.dataValues)
+                notifyOnAssign && AssignMail.owner.assigned(ownerUser, task.dataValues, assignedUser)
+                notifyOnAssign && AssignMail.assigned(assignedUser, task.dataValues)
                 return { interestedUsersId, assignedUser }
               })
             }).then(({ interestedUsersId, assignedUser }) => {
-              return models.User.findAll({
-                where: {
-                  id: interestedUsersId
-                }
-              }).then(users => {
-                users.forEach(user => {
-                  AssignMail.notifyInterestedUser(user.dataValues, task.dataValues, assignedUser)
-                })
-                return task.dataValues
-              })
+              return task.dataValues
             })
           }
           return task.dataValues
