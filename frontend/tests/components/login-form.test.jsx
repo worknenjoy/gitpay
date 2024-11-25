@@ -19,7 +19,7 @@ const router = {
   },
 };
 
-xdescribe('Components - Session - LoginForm', () => {
+describe('Components - Session - LoginForm', () => {
   it('should render and fill the form with invalid email', async () => {
     render(
       <BrowserRouter router={router}>
