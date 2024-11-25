@@ -4,21 +4,7 @@ module.exports.mainContentEmailTemplate = (intro = '', subtitle1 = '', callToAct
                 <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px;" valign="top">
                   <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">${intro}</p>
                   <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">${subtitle1}</p>
-                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; box-sizing: border-box; width: 100%; min-width: 100%;" width="100%">
-                    <tbody>
-                      <tr>
-                        <td align="center" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; padding-bottom: 16px;" valign="top">
-                          <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
-                            <tbody>
-                              <tr>
-                                <td style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; border-radius: 4px; text-align: center; background-color: #2b5c45;" valign="top" align="center" bgcolor="#0867ec"> <a href="${callToActionLink}" target="_blank" style="border: solid 2px #0867ec; border-radius: 4px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 16px; font-weight: bold; margin: 0; padding: 12px 24px; text-decoration: none; text-transform: capitalize; background-color: #2b5c45; border-color: #2b5c45; color: #ffffff;">${callToActionText}</a> </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  ${getActions(callToActionText, callToActionLink)}
                   <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">${subtitle2}</p>
                   <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">${footerMessage}</p>
                 </td>
@@ -26,3 +12,28 @@ module.exports.mainContentEmailTemplate = (intro = '', subtitle1 = '', callToAct
 
               <!-- END MAIN CONTENT AREA -->
 `;
+
+const getActions = (callToActionText, callToActionLink) => {
+  if (callToActionText && callToActionLink) {
+    return `
+      <table class="btn btn-primary" cellpadding="0" cellspacing="0" border="0">
+        <tbody>
+          <tr>
+            <td align="left">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                  <tr>
+                    <td style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 12px 24px;" valign="top">
+                      <a href="${callToActionLink}" target="_blank" style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; color: #ffffff; text-decoration: none; display: inline-block; background-color: #3498db; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);">${callToActionText}</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+  }
+  return '';
+}
