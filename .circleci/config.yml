@@ -80,7 +80,7 @@ jobs:
           working_directory: frontend
       - run:
           name: run frontend tests
-          command: npm run test
+          command: npm run test:ci
           working_directory: frontend
 
 workflows:

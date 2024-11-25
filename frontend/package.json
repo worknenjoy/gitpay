@@ -7,6 +7,7 @@
     "dev": "webpack serve --progress",
     "webpack-help": "webpack --help",
     "test": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache",
+    "test:ci": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --maxWorkers=2 --runInBand --logHeapUsage",
     "update-snapshot": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache --updateSnapshot",
     "production": "webpack --progress --config webpack.config.prod.js",
     "translate": "NODE_ENV=development extract-messages --flat true -l=en,br -o src/translations/generated 'src/**/*.{js,jsx,ts,tsx}'",
