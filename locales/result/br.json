@@ -106,7 +106,7 @@
   "mail.funding.send.message": "<p>Hello,<br>{{username}} invites you to contribute with <strong>${{suggestedValue}}</strong> for the issue {{title}}.</p><p>They suggested the deadline for <strong>{{suggestedDate}}</strong></p><p>{{message}}</p><p>You can add a bounty at {{url}}</p>",
   "mail.assign.register.error": "Someone is interested in an issue but couldn't receive the email",
   "mail.webhook.payment.success.subject": "You made a new purchase on your card from Gitpay",
-  "mail.webhook.payment.success.message": "<p>A payment was made on your credit card for an issue on Gitpay. When the issue is concluded, the payment will be sent to the person you assigned.</p><p>Name on credit card: {{name}}</p><p>Last 4 digits: {{number}}</p>",
+  "mail.webhook.payment.success.message": "<p>Your credit card has been charged for an issue on Gitpay. When the issue is concluded, the payment will be sent to the contributor whose solution is merged.</p><p>Name on credit card: {{name}}</p><p>Last 4 digits: {{number}}</p>",
   "mail.webhook.payment.update.subject": "The payment for this issue was updated!",
   "mail.webhook.payment.update.message": "<p>The payment of ${{amount}} for an issue on Gitpay was approved</p>",
   "mail.webhook.invoice.update.subject": "The payment for an issue you are working on Gitpay has been updated",
