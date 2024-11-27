@@ -169,7 +169,7 @@ class TaskPayment extends Component {
   }
 
   render() {
-    const { classes, orders, offers, ...other } = this.props
+    const { classes, task, orders, offers, ...other } = this.props
 
     const TabContainer = props => {
       return (
