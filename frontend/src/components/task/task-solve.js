@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
+import { withRouter } from 'react-router-dom'
 import classNames from 'classnames'
 import {
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Avatar,
   Card,
   CardHeader,
@@ -15,26 +14,12 @@ import {
   Button,
   Fab,
   Tooltip,
-  Chip,
-  Paper,
-  FormControl,
-  Input,
-  InputAdornment,
-  InputLabel,
-  Checkbox,
   Link,
-  FormControlLabel,
-  DialogContentText,
-  AppBar,
   Tabs,
   Tab,
-  TextareaAutosize,
+  withStyles
 } from '@material-ui/core'
 import {
-  DateRange as DateIcon,
-  CalendarToday as CalendarIcon,
-  Warning as WarningIcon,
-  Info as InfoIcon,
   Close as CloseIcon
 } from '@material-ui/icons'
 import LoginButton from '../session/login-button'
@@ -43,7 +28,35 @@ import TaskSolveInstructions from './task-solve-instructions'
 
 import logoGithub from '../../images/github-logo-black.png'
 import logoBitbucket from '../../images/bitbucket-logo-blue.png'
-import Task from './task'
+
+const styles = theme => ({
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    backgroundColor: 'darkgray',
+    color: 'white',
+    boxShadow: 'none'
+  },
+  mainBlock: {
+    textAlign: 'center',
+    padding: 20
+  },
+  cardHeader: {
+    paddingBottom: 0
+  },
+  cardAvatar: {
+    display: 'inline-block'
+  },
+  avatar: {
+    width: 40,
+    height: 40
+  },
+  taskTitle: {
+    color: 'black',
+    textDecoration: 'none'
+  },
+})
 
 const TaskSolve = ({ 
   classes,
@@ -51,14 +64,40 @@ const TaskSolve = ({
   open,
   onClose,
   location,
-  logged,
-  renderIssueAuthorLink,
-  timePlaceholder
+  logged
 }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
   const handleTabChange = (event, value) => {
     setCurrentTab(value)
+  }
+
+  const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().fromNow() : 'not available'
+  const timePlaceholder = (
+    <Typography type='subheading' variant='caption' style={{ padding: 10, color: 'gray', marginRight: 10 }}>
+      <FormattedMessage id='task.bounties.interested.created' defaultMessage='created' /> {updatedAtTimeString}
+    </Typography>
+  )
+
+  const renderIssueAuthorLink = () => {
+    if (task.data.metadata && task.data.metadata.issue.user.html_url) {
+      return (
+        <Link
+          href={`${task.data.metadata.issue.user.html_url}`}
+          target='_blank'>
+          <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
+            name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
+          }} />
+        </Link>
+      )
+    }
+    else {
+      return (
+        <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
+          name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown'
+        }} />
+      )
+    }
   }
 
   const closeDialogButton = () => {
@@ -234,4 +273,4 @@ const TaskSolve = ({
   )
 }
 
-export default injectIntl(TaskSolve)
+export default withRouter(injectIntl(withStyles(styles)(TaskSolve)))

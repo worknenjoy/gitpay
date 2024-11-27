@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect, withRouter } from 'react-router-dom'
-import SendSolutionForm from './send-solution-form'
+import SendSolutionForm from '../send-solution-form'
 import {
   DialogTitle,
   DialogActions,
@@ -9,15 +9,16 @@ import {
   Typography
 } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
-import { validAccount } from '../../utils/valid-account'
-import AccountRequirements from '../../components/design-library/molecules/account-requirements/account-requirements'
-import SendSolutionRequirements from './send-solution-requirements'
-import TaskSolution from './task-solution'
+import { validAccount } from '../../../utils/valid-account'
+import AccountRequirements from '../../../components/design-library/molecules/account-requirements/account-requirements'
+import SendSolutionRequirements from '../send-solution-requirements'
+import TaskSolution from '../task-solution'
+import Drawer from '../../design-library/molecules/drawer/drawer'
 
 const SendSolutionDialog = props => {
   const [pullRequestURL, setPullRequestURL] = useState('')
   const [editMode, setEditMode] = useState(false)
-  const [timer, setTimer] = useState()
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
   const { taskSolution, pullRequestData, task, user, fetchAccount, account, history } = props
 
@@ -27,7 +28,7 @@ const SendSolutionDialog = props => {
 
   useEffect(() => {
     props.cleanPullRequestDataState()
-  }, [props.open])
+  }, [props.assignDialog])
 
   useEffect(() => {
     if (pullRequestURL.length >= 20) {
@@ -69,21 +70,58 @@ const SendSolutionDialog = props => {
     })
   }
 
+  /*
   if(!user.id) {
     return <Redirect to='/signin' />
   }
+  */
 
   return (
     <React.Fragment>
-      <DialogTitle>
-        <Typography type='headline' variant='h6' style={ { color: 'black' } }>
-          <FormattedMessage id='task.solution.dialog.message' defaultMessage='Send a solution for this issue' />
-        </Typography>
+      <Drawer
+        open={ props.open }
+        onClose={ props.onClose }
+        title={ <FormattedMessage id='task.solution.dialog.message' defaultMessage='Send a solution for this issue' /> }
+        actions={[
+          {
+            label: <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />,
+            onClick: props.onClose,
+            variant: 'contained',
+            color: 'primary',
+            disabled: false,
+          },
+          Object.keys(props.taskSolution).length !== 0 && !editMode 
+            ? 
+            {
+              onclick: handleTaskSolutionUpdate,
+              label: <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />, 
+              variant: 'contained',
+              color: 'primary',
+              disabled: task.data.paid || task.data.Transfer || task.data.transfer_id,
+            }
+            :
+            {
+              onclick: submitTaskSolution,
+              label: <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />, 
+              variant: 'contained',
+              color: 'primary',
+              disabled: !pullRequestURL ||
+              !pullRequestData.isConnectedToGitHub ||
+              !pullRequestData.isAuthorOfPR ||
+              !pullRequestData.isPRMerged ||
+              !pullRequestData.isIssueClosed ||
+              !pullRequestData.hasIssueReference ||
+              task.data.paid ||
+              task.data.transfer_id ||
+              task.data.Transfer ||
+              !validAccount(user, account),
+            }
+        ]}
+
+      >
         <Typography variant='body2' style={ { color: 'black' } } gutterBottom>
           <FormattedMessage id='task.solution.dialog.description' defaultMessage='You can send a solution for this issue providing the Pull Request / Merge Request URL of your solution:' />
         </Typography>
-      </DialogTitle>
-      <DialogContent>
         <AccountRequirements
           user={ user }
           account={ account }
@@ -96,31 +134,7 @@ const SendSolutionDialog = props => {
           </React.Fragment>
           : <TaskSolution taskSolution={ taskSolution } task={task.data} />
         }
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={ props.handleAssignFundingDialogClose } color='primary'>
-          <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />
-        </Button>
-        { Object.keys(props.taskSolution).length !== 0 && !editMode // Edit mode will change the button to "send solution"
-          ? <Button data-testid='edit-solution-button' type='primary' htmlFor='submit' variant='contained' color='primary' onClick={ handleTaskSolutionUpdate } disabled={ task.data.paid || task.data.Transfer || task.data.transfer_id }>
-            <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />
-          </Button>
-          : <Button data-testid='send-solution-button' type='primary' htmlFor='submit' variant='contained' color='primary' disabled={
-            !pullRequestURL ||
-            !pullRequestData.isConnectedToGitHub ||
-            !pullRequestData.isAuthorOfPR ||
-            !pullRequestData.isPRMerged ||
-            !pullRequestData.isIssueClosed ||
-            !pullRequestData.hasIssueReference ||
-            task.data.paid ||
-            task.data.transfer_id ||
-            task.data.Transfer ||
-            !validAccount(user, account)
-          } onClick={ submitTaskSolution }>
-            <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />
-          </Button>
-        }
-      </DialogActions>
+      </Drawer>  
     </React.Fragment>
   )
 }

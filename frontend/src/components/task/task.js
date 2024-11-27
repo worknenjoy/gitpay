@@ -46,6 +46,7 @@ import {
 
 import OfferDrawer from '../design-library/templates/offer-drawer/offer-drawer'
 
+import IssueActionsByRole from './components/issue-actions-by-role'
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
 import TaskPayment from './task-payment'
@@ -1106,75 +1107,9 @@ class Task extends Component {
                 <TaskPayments orders={(task?.data?.orders || task?.data?.Orders)?.filter(o => o.paid && o.status === 'succeeded')} />
               </div> : null
             }
-            { this.taskOwner() &&
-              <React.Fragment>
-                <div style={{ marginTop: 30, marginBottom: 30 }}> 
-                  <Button
-                    onClick={this.handleTaskPaymentDialog}
-                    color='primary'
-                    fullWidth
-                    size='large'
-                    variant='contained'
-                    style={{
-                      marginRight: 10,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <span className={classes.spaceRight}>
-                      <FormattedMessage id='task.bounties.payment.label' defaultMessage='Pay contributor' />
-                    </span>
-                    <RedeemIcon />
-                  </Button>
-                  <TaskPayment
-                    id={task.data.id}
-                    task={task.data}
-                    values={task.values}
-                    paid={task.data.paid}
-                    transferId={task.data.transfer_id}
-                    assigned={task.data.assigned}
-                    assigns={task.data.Assigns}
-                    orders={task.data.orders || task.data.Orders}
-                    order={order.data}
-                    offers={task.data.Offers}
-                    open={this.state.taskPaymentDialog}
-                    onClose={this.handleTaskPaymentDialogClose}
-                    onPayTask={this.props.paymentTask}
-                    onTransferTask={this.props.transferTask}
-                    filterTaskOrders={this.props.filterTaskOrders}
-                    onPayOrder={this.props.paymentOrder}
-                    messageTask={this.props.messageTask}
-                    messageOffer={this.props.messageOffer}
-                    assignTask={this.props.assignTask}
-                    actionAssign={this.props.actionAssign}
-                    removeAssignment={this.props.removeAssignment}
-                    isOwner={this.taskOwner()}
-                    updateTask={this.props.updateTask}
-                    loggedUser={this.props.logged}
-                    offerUpdate={this.props.offerUpdate}
-                    createOrder={this.props.createOrder}
-                  />
-                </div>
-              </React.Fragment>
-            }
-            <div style={{ marginTop: 30, marginBottom: 10 }}>
-              <Button
-                onClick={this.handleTaskSolveDialogOpen}
-                color='primary'
-                fullWidth
-                size='large'
-                variant='contained'
-                disabled={task.data.paid || task.data.transfer_id}
-              >
-                <FormattedMessage id='task.interested.button.label' defaultMessage='Solve issue' />
-                <HowToRegIcon style={{ marginLeft: 10 }} />
-              </Button>
-            </div>
-
-            <div style={{ marginTop: 20, marginBottom: 20 }}>
-              {this.rendereAmountStatsCardContent(this.taskOwner())}
-            </div>
+            <IssueActionsByRole
+              currentRole={this.taskOwner() ? 'admin' : 'user'}
+            />
             <TaskInviteCard
               onInvite={this.props.inviteTask}
               onFunding={this.handleTaskFundingDialogOpen}
@@ -1242,19 +1177,6 @@ class Task extends Component {
                   }
                 ]
               }
-            />
-            <TaskSolve
-              open={taskSolveDialog}
-              onClose={this.handleTaskSolveDialogClose}
-              handleAssignFundingDialogClose={this.handleAssignFundingDialogClose}
-              renderIssueAuthorLink={this.renderIssueAuthorLink}
-              timePlaceholder={timePlaceholder}
-              logged={this.props.logged}
-              task={task}
-              classes={classes}
-              inviteCover={inviteCover}
-              taskCover={taskCover}
-              location={this.props.location}
             />
           </Grid>
         </Grid>

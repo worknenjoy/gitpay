@@ -137,8 +137,9 @@ class TaskPayment extends Component {
   }
 
   payTask = e => {
+    const { task } = this.props
     //this.props.onPayTask(this.props.id, this.props.values.card)
-    this.props.onTransferTask(this.props.id)
+    this.props.onTransferTask(task.data.id)
     this.props.onClose()
   }
 
@@ -192,7 +193,7 @@ class TaskPayment extends Component {
 
       const assign = this.props.assigns.filter(item => item.userId === offer.userId)[0]
 
-      await task.id && loggedUser.logged && await createOrder({
+      await task.data.id && loggedUser.logged && await createOrder({
         provider: 'stripe',
         amount: offer.value,
         userId: loggedUser?.user?.id,
@@ -206,14 +207,14 @@ class TaskPayment extends Component {
           offer_id: offer.id,
         }
       })
-      await assignTask(task.id, assign.id)
-      await this.props.offerUpdate(task.id, offer.id, { status: 'accepted' })
+      await assignTask(task.data.id, assign.id)
+      await this.props.offerUpdate(task.data.id, offer.id, { status: 'accepted' })
       this.setState({ confirmOrderDialog: false, currentOffer: null })
     }
 
     const onReject = async (event, offer) => {
       event.preventDefault()
-      this.props.offerUpdate(this.props.task.id, offer.id, { status: 'rejected' })
+      this.props.offerUpdate(task.data.id, offer.id, { status: 'rejected' })
     }
 
     const sendTo = id => {
@@ -376,11 +377,11 @@ class TaskPayment extends Component {
           </div>
 
           <div>
-            {(!this.props.paid || this.props.task?.Transfer?.id) ? (
+            {(!this.props.task?.data?.paid || this.props.task?.Transfer?.id) ? (
               <div>
                 {this.props.assigned ?
                   <TaskAssigned
-                    task={{ id: this.props.id, assigned: this.props.assigned, Transfer: this.props.task?.Transfer }}
+                    task={task.data}
                     assign={{ id: this.props.assigned }}
                     isOwner={this.props.isOwner}
                     user={sendTo(this.props.assigned)}
@@ -424,7 +425,7 @@ class TaskPayment extends Component {
           <Divider />
           {hasOrders() ? (
             <div>
-              {!this.props.paid && (
+              {!this.props.task.data.paid && (
                 <Button
                   onClick={this.payTask}
                   style={{ float: 'right', margin: 10 }}
@@ -434,7 +435,7 @@ class TaskPayment extends Component {
                 >
                   <RedeemIcon style={{ marginRight: 10 }} />
                   <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={{
-                    value: this.props.values.card + this.props.values.paypal || 0
+                    value: this.props.task.data.values.card + this.props.task.data.values.paypal || 0
                   }} />
                 </Button>
               )}
@@ -462,21 +463,13 @@ class TaskPayment extends Component {
 }
 
 TaskPayment.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onClose: PropTypes.func,
   onPay: PropTypes.func,
   onPayOrder: PropTypes.func,
   onPayTask: PropTypes.func,
   onTransfer: PropTypes.func,
-  selectedValue: PropTypes.string,
-  id: PropTypes.number,
   orders: PropTypes.array,
-  assigned: PropTypes.number,
-  paid: PropTypes.bool,
   assigns: PropTypes.array,
-  transferId: PropTypes.string,
-  filterTaskOrders: PropTypes.func,
-  values: PropTypes.object
+  filterTaskOrders: PropTypes.func
 }
 
 export default injectIntl(withStyles(styles)(TaskPayment))
