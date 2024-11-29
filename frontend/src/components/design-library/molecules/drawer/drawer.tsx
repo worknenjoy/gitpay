@@ -5,6 +5,7 @@ import {
   Container,
   Typography,
   Fab,
+  Box,
 } from '@material-ui/core'
 
 import CloseIcon from '@material-ui/icons/Close'
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: 'none'
   },
 }));
-  
+
 type DrawerProps = {
   open: boolean;
   onClose: any;
@@ -42,13 +43,13 @@ const Drawer = ({
   const classes = useStyles();
 
   const closeDialogButton = () => {
-    
-      return (
-        <Fab size='small' aria-label='close' className={ classes.closeButton } onClick={ onClose }>
-          <CloseIcon fontSize='small' />
-        </Fab>
-      )
-    
+
+    return (
+      <Fab size='small' aria-label='close' className={classes.closeButton} onClick={onClose}>
+        <CloseIcon fontSize='small' />
+      </Fab>
+    )
+
   }
 
   return (
@@ -57,18 +58,30 @@ const Drawer = ({
       aria-labelledby='form-dialog-title'
       anchor='right'
     >
-      <Container>
-        <div style={{ padding: 20 }}>
-          <Typography variant='h5' id='form-dialog-title' gutterBottom>
-            {title}
-          </Typography>
-          {closeDialogButton()}
-          {children}
-          { actions.length > 0 &&
-            <DrawerActions actions={actions} />
+      <Box
+        display='flex'
+        flexDirection='column'
+        height='100%'
+        p={2}
+      >
+        
+          <Box flexGrow={1}>
+            <div style={{ padding: 20 }}>
+              <Typography variant='h5' id='form-dialog-title' gutterBottom>
+                {title}
+              </Typography>
+              {closeDialogButton()}
+              {children}
+            </div>
+          </Box>
+
+          {actions.length > 0 &&
+            <Box>
+              <DrawerActions actions={actions} />
+            </Box>
           }
-        </div>
-      </Container>
+        
+      </Box>
     </MuiDrawer>
   )
 }

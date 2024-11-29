@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles, withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import { BillingInfoCard } from '../../molecules/billing-info-card/billing-info-card'
 import ReactPlaceholder from 'react-placeholder';
@@ -10,21 +10,23 @@ import {
   Alert, AlertTitle
 } from '@material-ui/lab'
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     btnPayment: {
       float: 'right',
       marginTop: 10
     },
   })
+)
 
 const InvoicePayment = ({
   price,
   customer,
   onInvoicePayment,
-  onInfoClick,
-  classes
+  onInfoClick
 }) => {
+
+  const classes = useStyles()
 
   const { name, address } = customer.data
 
@@ -81,4 +83,4 @@ const InvoicePayment = ({
   )
 }
 
-export default withStyles(styles)(InvoicePayment)
+export default InvoicePayment

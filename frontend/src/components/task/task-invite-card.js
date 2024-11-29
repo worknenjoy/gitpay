@@ -11,7 +11,8 @@ import TaskInvite from './task-invite'
 
 const useStyles = makeStyles({
   root: {
-
+    marginBottom: 20,
+    marginTop: 20,
   },
 })
 
