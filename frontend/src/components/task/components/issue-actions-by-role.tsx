@@ -11,36 +11,30 @@ import TaskPaymentFormContainer from '../../../containers/task-payment-form';
 import TaskSolutionDrawer from '../../../containers/send-solution-drawer';
 
 interface IssueActionsProps {
+  issue: any;
   currentRole: string;
   children?: React.ReactNode;
 }
 
 const IssueActionsByRole = ({
+  issue,
   currentRole,
 }:IssueActionsProps) => {
+  const { data } = issue;
+  const shouldDisable = data?.paid || data?.transfer_id || data?.Transfer?.id;
   const commonAction = {
     key: 'add-bounty',
     onClick: () => {},
     label: 'Add bounty',
-    disabled: false,
+    disabled: shouldDisable,
     icon: <BountyIcon fontSize='small' />,
     component: <TaskPaymentFormContainer />,
   }
   const roles = {
     admin: {
       primary: [
-        {
-          key: 'pay-contributor',
-          onClick: () => {},
-          label: 'Pay contributor',
-          disabled: false,
-          icon: <RedeemIcon fontSize='small' />,
-          component: <TaskPaymentContainer />,
-        },
-      ],
-      secondary: [
         commonAction
-      ],
+      ]
     },
     user: {
       primary: [
@@ -48,7 +42,7 @@ const IssueActionsByRole = ({
           key: 'send-solution',
           onClick: () => {},
           label: 'Send solution',
-          disabled: false,
+          disabled: shouldDisable,
           icon: <HowToRegIcon fontSize='small' />,
           component: <TaskSolutionDrawer />,
         },

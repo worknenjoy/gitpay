@@ -1108,6 +1108,7 @@ class Task extends Component {
               </div> : null
             }
             <IssueActionsByRole
+              issue={task}
               currentRole={this.taskOwner() ? 'admin' : 'user'}
             />
             <TaskInviteCard

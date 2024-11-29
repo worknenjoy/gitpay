@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder'
-import { Button } from '@material-ui/core'
+import { Button, createStyles, makeStyles, Theme } from '@material-ui/core'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import BalanceCard from '../../../../design-library/molecules/balance-card/balance-card'
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    btnPayment: {
+      float: 'right',
+      marginTop: 10
+    },
+  })
+)
+
 const PaymentMethodWalletTab = ({
-  classes,
   user,
   task,
   price,
@@ -21,6 +29,8 @@ const PaymentMethodWalletTab = ({
   fetchTask,
   syncTask
 }) => {
+
+  const classes = useStyles()
 
   const onWalletPayment = async () => {
     await createOrder({

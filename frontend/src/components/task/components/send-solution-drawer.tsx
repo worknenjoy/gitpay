@@ -49,10 +49,12 @@ const SendSolutionDialog = props => {
   }
 
   const handleTaskSolutionUpdate = () => {
+    console.log('handleTaskSolutionUpdate')
     setEditMode(true)
   }
 
   const submitTaskSolution = () => {
+    console.log('submitTaskSolution', editMode)
     if (editMode) {
       const payload = { pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload).then((solution) => {
@@ -86,14 +88,14 @@ const SendSolutionDialog = props => {
           {
             label: <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />,
             onClick: props.onClose,
-            variant: 'contained',
-            color: 'primary',
+            variant: 'text',
+            color: 'default',
             disabled: false,
           },
           Object.keys(props.taskSolution).length !== 0 && !editMode 
             ? 
             {
-              onclick: handleTaskSolutionUpdate,
+              onClick: handleTaskSolutionUpdate,
               label: <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />, 
               variant: 'contained',
               color: 'primary',
@@ -101,7 +103,7 @@ const SendSolutionDialog = props => {
             }
             :
             {
-              onclick: submitTaskSolution,
+              onClick: submitTaskSolution,
               label: <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />, 
               variant: 'contained',
               color: 'primary',
