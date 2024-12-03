@@ -1,15 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-import '@testing-library/jest-dom'
 import React from 'react';
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import TaskSolutionDialog from '../../../src/components/task/send-solution-dialog';
+import TaskSolutionDrawer from '../../../src/components/task/components/send-solution-drawer';
 import { BrowserRouter } from 'react-router-dom';
 import { debug } from 'jest-preview';
 
-xdescribe('Components - TaskSolutionDialog', () => {
+xdescribe('Components - TaskSolutionDrawer', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   })
@@ -20,7 +19,7 @@ xdescribe('Components - TaskSolutionDialog', () => {
   it('should render correctly on loading state', () => {
     render(
       <BrowserRouter>
-        <TaskSolutionDialog
+        <TaskSolutionDrawer
           taskSolution={{}}
           pullRequestData={{}}
           task={{
@@ -41,7 +40,7 @@ xdescribe('Components - TaskSolutionDialog', () => {
   it('should render correctly with all conditions failed and buttom disabled', async () => {
     render(
       <BrowserRouter>
-        <TaskSolutionDialog
+        <TaskSolutionDrawer
           pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
           taskSolution={{}}
           pullRequestData={{
@@ -87,7 +86,7 @@ xdescribe('Components - TaskSolutionDialog', () => {
     })
     render(
       <BrowserRouter>
-        <TaskSolutionDialog
+        <TaskSolutionDrawer
           pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
           taskSolution={{}}
           pullRequestData={{
@@ -149,7 +148,7 @@ xdescribe('Components - TaskSolutionDialog', () => {
     })
     render(
       <BrowserRouter>
-        <TaskSolutionDialog
+        <TaskSolutionDrawer
           pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
           taskSolution={{}}
           pullRequestData={{
@@ -198,7 +197,7 @@ xdescribe('Components - TaskSolutionDialog', () => {
   it('enable edit mode', async () => {
     render(
       <BrowserRouter>
-        <TaskSolutionDialog
+        <TaskSolutionDrawer
           pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
           taskSolution={{
             pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
