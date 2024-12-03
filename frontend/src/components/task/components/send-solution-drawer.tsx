@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import SendSolutionForm from '../send-solution-form'
 import {
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-  Button,
   Typography
 } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 import { validAccount } from '../../../utils/valid-account'
 import AccountRequirements from '../../../components/design-library/molecules/account-requirements/account-requirements'
 import SendSolutionRequirements from '../send-solution-requirements'
-import TaskSolution from '../task-solution'
 import Drawer from '../../design-library/molecules/drawer/drawer'
+import IssueSolutionCard from '../../design-library/molecules/issue-solution-card/issue-solution-card'
 
-const SendSolutionDialog = props => {
+const SendSolutionDrawer = props => {
   const [pullRequestURL, setPullRequestURL] = useState('')
   const [editMode, setEditMode] = useState(false)
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
@@ -54,7 +50,6 @@ const SendSolutionDialog = props => {
   }
 
   const submitTaskSolution = () => {
-    console.log('submitTaskSolution', editMode)
     if (editMode) {
       const payload = { pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload).then((solution) => {
@@ -134,11 +129,11 @@ const SendSolutionDialog = props => {
             <SendSolutionForm handlePullRequestURLChange={ handlePullRequestURLChange } pullRequestURL={ pullRequestURL } />
             <SendSolutionRequirements completed={ props.completed } isConnectedToGitHub={ pullRequestData.isConnectedToGitHub } isAuthorOfPR={ pullRequestData.isAuthorOfPR } isPRMerged={ pullRequestData.isPRMerged } isIssueClosed={ pullRequestData.isIssueClosed } hasIssueReference={ pullRequestData.hasIssueReference } />
           </React.Fragment>
-          : <TaskSolution taskSolution={ taskSolution } task={task.data} />
+          : <IssueSolutionCard taskSolution={ taskSolution } task={task.data} />
         }
       </Drawer>  
     </React.Fragment>
   )
 }
 
-export default withRouter(SendSolutionDialog)
+export default withRouter(SendSolutionDrawer)

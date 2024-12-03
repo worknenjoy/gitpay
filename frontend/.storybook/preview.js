@@ -3,6 +3,7 @@ import {
   MuiThemeProvider,
   createTheme
 } from '@material-ui/core'
+import { BrowserRouter as Router } from 'react-router-dom';
 import { addDecorator } from '@storybook/react';
 import '../src/main/app.css';
 import messagesEnLocal from '../src/translations/generated/en.json';
@@ -25,8 +26,15 @@ const withMuiTheme = (Story) => (
   </MuiThemeProvider>
 );
 
+const withRouter = (Story) => (
+  <Router>
+    <Story />
+  </Router>
+);
+
 addDecorator(withIntl);
 addDecorator(withMuiTheme);
+addDecorator(withRouter);
 
 export const globalTypes = {
   locale: {
