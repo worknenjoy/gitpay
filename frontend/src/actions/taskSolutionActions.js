@@ -81,10 +81,10 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, userId, task
   validToken()
   return dispatch => {
     dispatch(fetchPullRequestDataRequested())
-    axios.get(`${api.API_URL}/tasksolutions/fetch`, {
+    return axios.get(`${api.API_URL}/tasksolutions/fetch`, {
       params: { owner: owner, repositoryName: repositoryName, pullRequestId: pullRequestId, userId: userId, taskId: taskId }
     }).then(response => {
-      dispatch(fetchPullRequestDataSuccess(response.data))
+      return dispatch(fetchPullRequestDataSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))

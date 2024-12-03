@@ -45,7 +45,6 @@ const SendSolutionDrawer = props => {
   }
 
   const handleTaskSolutionUpdate = () => {
-    console.log('handleTaskSolutionUpdate')
     setEditMode(true)
   }
 
