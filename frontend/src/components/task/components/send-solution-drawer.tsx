@@ -107,7 +107,7 @@ const SendSolutionDrawer = props => {
               !pullRequestData.isPRMerged ||
               !pullRequestData.isIssueClosed ||
               !pullRequestData.hasIssueReference ||
-              !task.data.value || 
+              Number(task.data.value) || 
               task.data.paid ||
               task.data.transfer_id ||
               task.data.Transfer ||
@@ -134,7 +134,7 @@ const SendSolutionDrawer = props => {
               isPRMerged={ pullRequestData.isPRMerged }
               isIssueClosed={ pullRequestData.isIssueClosed }
               hasIssueReference={ pullRequestData.hasIssueReference } 
-              bountyAvailable={ task.data.value && !task.data.paid }
+              bountyAvailable={ Number(task.data.value) && !task.data.paid }
             />
           </React.Fragment>
           : <IssueSolutionCard taskSolution={ taskSolution } task={task.data} />
