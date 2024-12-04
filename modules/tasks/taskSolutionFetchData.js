@@ -43,9 +43,12 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     })
 
     // Verify if the current user is the owner of PR (currently used to verify if user is authenticated to GitHub too)
-    if (user.dataValues.provider === 'github' && user.dataValues.provider_username === pullRequestData.user.login) {
-      isAuthorOfPR = true
+    if (user.dataValues.provider === 'github') {
       isConnectedToGitHub = true
+    }
+
+    if (user.dataValues.provider_username === pullRequestData.user.login) {
+      isAuthorOfPR = true
     }
 
     // Verify if PR is closed/merged

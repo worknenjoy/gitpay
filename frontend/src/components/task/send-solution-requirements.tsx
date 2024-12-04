@@ -1,9 +1,10 @@
 import React from 'react'
 import RequirementList from '../design-library/molecules/requirements-list/requirement-list'
 
-const SendSolutionRequirements = ({ completed, isConnectedToGitHub, isAuthorOfPR, isPRMerged, isIssueClosed, hasIssueReference }) => {
+const SendSolutionRequirements = ({ completed, isConnectedToGitHub, isAuthorOfPR, isPRMerged, isIssueClosed, hasIssueReference, bountyAvailable }) => {
 
   const requirements = [
+    { done: bountyAvailable, label: 'The bounty is available' },
     { done: isConnectedToGitHub, label: "You're connected to GitHub" },
     { done: isAuthorOfPR, label: "You're the author of this Pull Request on GitHub" },
     { done: isPRMerged, label: 'The Pull Request / Merge Request was merged' },

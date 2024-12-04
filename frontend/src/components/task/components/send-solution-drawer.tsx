@@ -107,6 +107,7 @@ const SendSolutionDrawer = props => {
               !pullRequestData.isPRMerged ||
               !pullRequestData.isIssueClosed ||
               !pullRequestData.hasIssueReference ||
+              !task.data.value || 
               task.data.paid ||
               task.data.transfer_id ||
               task.data.Transfer ||
@@ -126,7 +127,15 @@ const SendSolutionDrawer = props => {
         { Object.keys(props.taskSolution).length === 0 || editMode
           ? <React.Fragment>
             <SendSolutionForm handlePullRequestURLChange={ handlePullRequestURLChange } pullRequestURL={ pullRequestURL } />
-            <SendSolutionRequirements completed={ props.completed } isConnectedToGitHub={ pullRequestData.isConnectedToGitHub } isAuthorOfPR={ pullRequestData.isAuthorOfPR } isPRMerged={ pullRequestData.isPRMerged } isIssueClosed={ pullRequestData.isIssueClosed } hasIssueReference={ pullRequestData.hasIssueReference } />
+            <SendSolutionRequirements 
+              completed={ props.completed }
+              isConnectedToGitHub={ pullRequestData.isConnectedToGitHub }
+              isAuthorOfPR={ pullRequestData.isAuthorOfPR }
+              isPRMerged={ pullRequestData.isPRMerged }
+              isIssueClosed={ pullRequestData.isIssueClosed }
+              hasIssueReference={ pullRequestData.hasIssueReference } 
+              bountyAvailable={ task.data.value && !task.data.paid }
+            />
           </React.Fragment>
           : <IssueSolutionCard taskSolution={ taskSolution } task={task.data} />
         }

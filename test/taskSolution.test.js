@@ -336,5 +336,75 @@ describe("Task Solution", () => {
         throw err;
       }
     })
+    it("The author of the PR is not the same as the user", async () => {
+      try {
+        const solutionParams = {
+          pullRequestId: '2',
+          userId: 1,
+          repositoryName: 'test-repository',
+          owner: 'alexanmtz',
+          taskId: 1
+        }
+        
+        nock('https://api.github.com')
+          .persist()
+          .get(`/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`)
+          
+          .reply(200, {
+            user: {
+              login: 'alexanmtz'
+            },
+            state: 'closed',
+            merged: true,
+            title: 'test PR',
+            body: 'closes #5 and #1 and #11111 and #1234'
+          })
+        // Await the login process
+        const loginResponse = await registerAndLogin(agent, {
+          email: 'test@gitpay.me',
+          provider: 'github',
+          provider_username: 'test',
+        });
+        const { body: user, headers } = loginResponse;
+        const task = await models.Task.create({
+          url: 'https://github.com/alexanmtz/test-repository/issues/1',
+          userId: user.id,
+          status: 'closed'
+        });
+        const taskAssignment = await models.Assign.create({
+          userId: user.id,
+          TaskId: task.id
+        });
+
+        const params = {
+          pullRequestId: solutionParams.pullRequestId,
+          userId: solutionParams.userId,
+          repositoryName: solutionParams.repositoryName,
+          owner: solutionParams.owner,
+          taskId: solutionParams.taskId
+        }
+        // Send a GET request to fetch task solution data
+        const taskSolutionFetchDataRes = await agent
+          .get(`/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&userId=${params.userId}&taskId=${params.taskId}`)
+          .set('Authorization', headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          //.send(params)
+        expect(taskSolutionFetchDataRes.body).to.have.property('isConnectedToGitHub');
+        expect(taskSolutionFetchDataRes.body).to.have.property('isAuthorOfPR');
+        expect(taskSolutionFetchDataRes.body).to.have.property('isPRMerged');
+        expect(taskSolutionFetchDataRes.body).to.have.property('isIssueClosed');
+        expect(taskSolutionFetchDataRes.body).to.have.property('hasIssueReference');
+
+        expect(taskSolutionFetchDataRes.body.isConnectedToGitHub).to.equal(false);
+        expect(taskSolutionFetchDataRes.body.isAuthorOfPR).to.equal(false);
+        expect(taskSolutionFetchDataRes.body.isPRMerged).to.equal(true);
+        expect(taskSolutionFetchDataRes.body.isIssueClosed).to.equal(true);
+        expect(taskSolutionFetchDataRes.body.hasIssueReference).to.equal(true);
+      } catch (err) {
+        // Fail the test if any error occurs
+        throw err;
+      }
+    })
   })  
 })
