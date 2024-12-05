@@ -72,6 +72,11 @@ const SendSolutionDrawer = props => {
   }
   */
 
+  const taskValue = task.data.value
+
+  const shouldDisableForNoBountyAvailable = taskValue === "0" || taskValue === null || taskValue === "" || isNaN(Number(taskValue));
+
+
   return (
     <React.Fragment>
       <Drawer
@@ -107,7 +112,7 @@ const SendSolutionDrawer = props => {
               !pullRequestData.isPRMerged ||
               !pullRequestData.isIssueClosed ||
               !pullRequestData.hasIssueReference ||
-              Number(task.data.value) || 
+              shouldDisableForNoBountyAvailable || 
               task.data.paid ||
               task.data.transfer_id ||
               task.data.Transfer ||
