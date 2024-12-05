@@ -15,10 +15,12 @@ const { account } = require('../modules/app/controllers/auth')
 describe("Task Solution", () => {
   beforeEach(async () => {
     await truncateModels(models.Task);
-    await truncateModels(models.User);
     await truncateModels(models.Assign);
     await truncateModels(models.Order);
     await truncateModels(models.Transfer);
+    await truncateModels(models.Payout);
+    await truncateModels(models.TaskSolution);
+    await truncateModels(models.User);
   })
 
   afterEach(async () => {
@@ -277,7 +279,7 @@ describe("Task Solution", () => {
         }
         
         nock('https://api.github.com')
-          .persist()
+         
           .get(`/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`)
           
           .reply(200, {
@@ -338,16 +340,34 @@ describe("Task Solution", () => {
     })
     it("The author of the PR is not the same as the user", async () => {
       try {
+        const loginResponse = await registerAndLogin(agent, {
+          email: 'test@gitpay.me',
+          provider: 'github',
+          provider_username: 'test',
+        });
+        const { body: user, headers } = loginResponse;
+
+        console.log('user', user)
+
+        const task = await models.Task.create({
+          url: 'https://github.com/alexanmtz/test-repository/issues/1',
+          userId: user.id,
+          status: 'closed'
+        });
+        const taskAssignment = await models.Assign.create({
+          userId: user.id,
+          TaskId: task.id
+        });
+
         const solutionParams = {
           pullRequestId: '2',
-          userId: 1,
+          userId: user.id,
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
-          taskId: 1
+          taskId: task.id
         }
         
         nock('https://api.github.com')
-          .persist()
           .get(`/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`)
           
           .reply(200, {
@@ -360,21 +380,6 @@ describe("Task Solution", () => {
             body: 'closes #5 and #1 and #11111 and #1234'
           })
         // Await the login process
-        const loginResponse = await registerAndLogin(agent, {
-          email: 'test@gitpay.me',
-          provider: 'github',
-          provider_username: 'test',
-        });
-        const { body: user, headers } = loginResponse;
-        const task = await models.Task.create({
-          url: 'https://github.com/alexanmtz/test-repository/issues/1',
-          userId: user.id,
-          status: 'closed'
-        });
-        const taskAssignment = await models.Assign.create({
-          userId: user.id,
-          TaskId: task.id
-        });
 
         const params = {
           pullRequestId: solutionParams.pullRequestId,
@@ -389,14 +394,13 @@ describe("Task Solution", () => {
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)
           .expect(200)
-          //.send(params)
         expect(taskSolutionFetchDataRes.body).to.have.property('isConnectedToGitHub');
         expect(taskSolutionFetchDataRes.body).to.have.property('isAuthorOfPR');
         expect(taskSolutionFetchDataRes.body).to.have.property('isPRMerged');
         expect(taskSolutionFetchDataRes.body).to.have.property('isIssueClosed');
         expect(taskSolutionFetchDataRes.body).to.have.property('hasIssueReference');
 
-        expect(taskSolutionFetchDataRes.body.isConnectedToGitHub).to.equal(false);
+        expect(taskSolutionFetchDataRes.body.isConnectedToGitHub).to.equal(true);
         expect(taskSolutionFetchDataRes.body.isAuthorOfPR).to.equal(false);
         expect(taskSolutionFetchDataRes.body.isPRMerged).to.equal(true);
         expect(taskSolutionFetchDataRes.body.isIssueClosed).to.equal(true);

@@ -12,6 +12,8 @@ const register = (agent, params = {}) => {
   params.customer_id = params.customer_id
   params.recover_password_token = params.recover_password_token
   params.account_id = params.account_id
+  params.provider_username = params.provider_username
+  params.provider = params.provider
   return agent
     .post('/auth/register')
     .send(params)
