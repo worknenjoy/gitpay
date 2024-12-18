@@ -11,6 +11,7 @@ const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')
 const IssueClosedMail = require('../../mail/issueClosed')
+const WalletMail = require('../../mail/wallet')
 
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
@@ -646,6 +647,28 @@ exports.updateWebhook = async (req, res) => {
           return res.json(req.body)
         }
         break
+      case 'invoice.finalized':
+        try {
+          const invoice = event.data.object
+          const invoiceId = invoice.id
+          const walletOrder = await models.WalletOrder.findOne({
+            where: {
+              source: invoiceId
+            },
+            include: [
+              {
+              model: models.Wallet,
+              include: [models.User]
+              }
+            ]
+            })
+          if(walletOrder?.id) {
+            WalletMail.invoiceCreated(invoice,  walletOrder, walletOrder.Wallet.User)
+          }
+        } catch (error) {
+          console.log('error', error)
+          return res.json(req.body)
+        }
       case 'transfer.created':
         models.Transfer.findOne({
           where: {
