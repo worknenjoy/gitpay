@@ -16,7 +16,7 @@ if (constants.canSendEmail) {
     i18n.setLocale(language)
     request(
       to,
-      i18n.__('mail.wallet.invoice.subject'),
+      i18n.__('mail.webhook.wallet.invoice.subject'),
       [
       {
         type: 'text/html',
