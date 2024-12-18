@@ -21,7 +21,7 @@ if (constants.canSendEmail) {
       {
         type: 'text/html',
         value: emailTemplate.mainContentEmailTemplate(
-        i18n.__('mail.webhook.wallet.invoice.intro'),
+        i18n.__('mail.webhook.wallet.invoice.intro', { name: user.name }),
         i18n.__('mail.webhook.wallet.invoice.message', { 
           amount: walletOrder.amount,
           currency: invoice.currency,

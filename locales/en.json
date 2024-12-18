@@ -169,8 +169,8 @@
   "mail.order.expiredOrders.subject": "The payment for an issue on Gitpay expired",
   "mail.order.expiredOrders.content.main": "The pre-authorized payment of ${{value}} for the issue <a href=\"{{url}}\">{{title}}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Please visit https://gitpay.me/#/profile/payments to update your payment.",
   "mail.webhook.wallet.invoice.intro": "Hello {{name}},",
-  "mail.webhook.wallet.invoice.subject": "There's a new invoice to adding funds to your Wallet on Gitpay",
-  "mail.webhook.wallet.invoice.message": "<p>We generated an invoice of ${{amount}} to add funds to your Wallet {{walletName}} on Gitpay.</p>",
+  "mail.webhook.wallet.invoice.subject": "New Invoice for Adding Funds to Your Gitpay Wallet",
+  "mail.webhook.wallet.invoice.message": "<p>We generated a new invoice of ${{amount}} to add funds to your {{walletName}} wallet on Gitpay.</p>",
   "mail.webhook.wallet.invoice.button": "Pay invoice",
-  "mail.webhook.wallet.invoice.footer": "You received this message because you requested to add funds to your Wallet on <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a>"
+  "mail.webhook.wallet.invoice.footer": "You’re receiving this message because you recently requested to add funds to your <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a> account"
 }
