@@ -664,6 +664,7 @@ exports.updateWebhook = async (req, res) => {
             })
           if(walletOrder?.id) {
             WalletMail.invoiceCreated(invoice,  walletOrder, walletOrder.Wallet.User)
+            return res.json(req.body)
           }
         } catch (error) {
           console.log('error', error)
