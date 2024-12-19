@@ -5,17 +5,16 @@ import {
   LabelButton
 } from './TopbarStyles'
 
-
 export const TopbarMenu = ({
   history
 }) => {
 
   const menuItems = [
-    { onClick: () => window.location.assign('/#/welcome'), id: 'topbar.link.about', defaultMessage: 'About us' },
-    { onClick: () => window.location.assign('/#/pricing'), id: 'topbar.link.prices', defaultMessage: 'Prices' },
-    { onClick: () => window.location.assign('/#/team'), id: 'task.actions.team', defaultMessage: 'Team' },
-    { onClick: () => window.open('https://docs.gitpay.me/en'), id: 'task.actions.docs', defaultMessage: 'Documentation' },
-    { onClick: () => window.location.assign('/#/tasks/open'), id: 'topbar.link.explore', defaultMessage: 'Explore' }
+    { onClick: () => window.location.assign('/#/welcome'), message: <FormattedMessage id='topbar.link.about' defaultMessage='About us' /> },
+    { onClick: () => window.location.assign('/#/pricing'), message: <FormattedMessage id='topbar.link.prices' defaultMessage='Prices' /> },
+    { onClick: () => window.location.assign('/#/team'), message: <FormattedMessage id='task.actions.team' defaultMessage='Team' /> },
+    { onClick: () => window.open('https://docs.gitpay.me/en'), message: <FormattedMessage id='task.actions.docs' defaultMessage='Documentation' /> },
+    { onClick: () => window.location.assign('/#/tasks/open'), message: <FormattedMessage id='topbar.link.explore' defaultMessage='Explore' /> }
   ];
 
   return (
@@ -29,9 +28,7 @@ export const TopbarMenu = ({
           color='primary'
         >
           <LabelButton>
-            <FormattedMessage
-              id={item.id}
-              defaultMessage={item.defaultMessage} />
+            {item.message}
           </LabelButton>
         </LinkButton>
       ))}
