@@ -11,9 +11,11 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
   const missingRequirements = () => {
     if (account?.data?.requirements?.currently_due?.length > 0) {
       return account?.data?.requirements?.currently_due.map((requirement, index) => {
+        const requirementItem = api.ACCOUNT_FIELDS?.[requirement];
         return (
+          requirementItem && 
           <li key={index}>
-            {intl.formatMessage(api.ACCOUNT_FIELDS[requirement])}
+            {intl.formatMessage(requirementItem)}
           </li>
         )
       })
