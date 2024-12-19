@@ -13,9 +13,12 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
       return account?.data?.requirements?.currently_due.map((requirement, index) => {
         const requirementItem = api.ACCOUNT_FIELDS?.[requirement];
         return (
-          requirementItem && 
+          requirementItem ? 
           <li key={index}>
             {intl.formatMessage(requirementItem)}
+          </li> :
+          <li key={index}>
+            {intl.formatMessage({ id: 'consts.account.requirement.other', defaultMessage: 'Other' })}
           </li>
         )
       })
