@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
+import { withStyles } from '@material-ui/core/styles' 
 
 import {
+  Drawer,
   Card,
   CardContent,
   CardMedia,
@@ -13,10 +15,9 @@ import {
   Input,
   InputLabel,
   InputAdornment,
-  Collapse,
   FormControl,
 } from '@material-ui/core'
-import DateIcon from '@material-ui/icons/DateRange'
+import { DateRange as DateIcon } from '@material-ui/icons'
 
 const timeIcon = require('../../images/time-icon.png')
 
@@ -38,6 +39,24 @@ const messages = defineMessages({
     defaultMessage: ' In on month '
   },
 })
+
+const styles = theme => ({
+   drawerPaper: {
+    width: '35%', 
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    },
+    right: 0,
+    left: 'auto', 
+    maxHeight: '80vh', 
+    borderTopLeftRadius: theme.spacing(2),
+    borderTopRightRadius: theme.spacing(2),
+  },
+   clearButton: {
+    marginTop:10,
+    float: 'right',    
+  }
+ });
 
 class TaskDeadlineForm extends Component {
   constructor (props) {
@@ -68,6 +87,18 @@ class TaskDeadlineForm extends Component {
     this.setState({ open: true })
   }
 
+  handleClearDeadline = () => {
+    const { deadline, updateTask, match, addNotification } = this.props 
+    if (deadline) { 
+      updateTask({
+        id: match.params.id,
+        deadline: null
+      })
+      addNotification('actions.task.deadline.clear')
+    }
+    this.setState({ deadline: null })
+  }
+
   pickTaskDeadline = (time) => {
     const date = MomentComponent(this.state.deadline).isValid()
       ? MomentComponent(this.state.deadline)
@@ -92,12 +123,19 @@ class TaskDeadlineForm extends Component {
   }
 
   render () {
-    const { classes, intl } = this.props
+    const { classes, intl, open, onClose } = this.props
 
     return (
       <div>
-        <Collapse in={ !!this.props.open }>
-          <Card className={ classes.card }>
+         <Drawer
+          anchor="bottom"
+          open={open}
+          onClose={onClose}
+          classes={{
+            paper: classes.drawerPaper
+            }}
+          >
+            <Card className={ classes.card }>
             <FormattedMessage id='task.status.deadline.subheading.main' defaultMessage='Choose a date that this task should be finished'>
               { (msg) => (
                 <CardMedia
@@ -141,6 +179,15 @@ class TaskDeadlineForm extends Component {
                       ) }
                     </FormattedMessage>
                   </FormControl>
+                  <div className={classes.buttonGroup}>
+                  <Button disabled={ !this.props.deadline }
+                    variant='contained' 
+                    color='primary'
+                    className={ classes.clearButton}
+                    onClick={this.handleClearDeadline}
+                  >
+                    <FormattedMessage id='task.deadline.button.clear' defaultMessage='Clear date' />
+                  </Button>
                   <Button disabled={ !this.state.deadline } onClick={ this.handleDeadline } variant='contained' color='primary' className={ classes.btnPayment }>
                     { this.state.deadline
                       ? <FormattedMessage id='task.status.deadline.set.target' defaultMessage='set to target date to {date}' values={ {
@@ -149,12 +196,13 @@ class TaskDeadlineForm extends Component {
                       : <FormattedMessage id='task.deadline.button.save' defaultMessage='Save date' />
                     }
                   </Button>
+                  </div>
                 </form>
               </CardContent>
               <div className={ classes.controls } />
             </div>
           </Card>
-        </Collapse>
+        </Drawer>
       </div>
     )
   }
@@ -164,7 +212,8 @@ TaskDeadlineForm.propTypes = {
   updateTask: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  open: PropTypes.bool
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  addNotification: PropTypes.func.isRequired,
 }
-
-export default injectIntl(TaskDeadlineForm)
+export default withStyles(styles)(injectIntl(TaskDeadlineForm))
