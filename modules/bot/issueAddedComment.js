@@ -18,17 +18,16 @@ module.exports = Promise.method(async function issueAddedComment (task) {
       uri: `${commentIssueEndpoint}`,
       headers: {
         'User-Agent': 'gitpaybot',
+        'Accept': 'application/vnd.github+json',
         'Content-Type': 'application/json',
         'Authorization': 'token ' + process.env.GITHUB_BOT_ACCESS_TOKEN,
         'X-GitHub-Api-Version': '2022-11-28'
-      },
+      },      
       json: true,
       body: {
         body: `This issue was added to Gitpay, check the task [${gitPayURL}](${gitPayURL}) 💝
   
   [About Gitpay platform](https://gitpay.me).
-  
-  For portuguese, you can [access the portuguese version](https://github.com/worknenjoy/gitpay-github-app/blob/master/first-comment.pt-br.md)
   
   ### 📋 Step by Step
   
@@ -61,6 +60,8 @@ module.exports = Promise.method(async function issueAddedComment (task) {
   
   ### 🤔❓ Questions
   Leave a comment below!
+  For portuguese, you can [access the portuguese version](https://github.com/worknenjoy/gitpay-github-app/blob/master/first-comment.pt-br.md)
+
   This issue was a comment made by our GitpayBot [Gitpay Bot](https://github.com/gitpaybot).`
       }
     })
