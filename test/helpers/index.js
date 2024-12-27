@@ -1,7 +1,7 @@
 const { create } = require('core-js/core/object')
 const models = require('../../models')
 const testEmail = `teste+${Math.random()*100}@gmail.com`
-const testPassword = 'test'
+const testPassword = 'test12345678'
 const testName = 'Test'
 
 const register = (agent, params = {}) => {
@@ -10,6 +10,10 @@ const register = (agent, params = {}) => {
   params.confirmPassword = params.password || testPassword
   params.name = params.name || testName
   params.customer_id = params.customer_id
+  params.recover_password_token = params.recover_password_token
+  params.account_id = params.account_id
+  params.provider_username = params.provider_username
+  params.provider = params.provider
   return agent
     .post('/auth/register')
     .send(params)

@@ -2,7 +2,7 @@ const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
 const i18n = require('i18n')
-const emailTemplate = require('./templates/main-content')
+const emailTemplate = require('./templates/base-content')
 
 const TransferMail = {
   success: (to, task, value) => {},
@@ -24,7 +24,7 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: emailTemplate.mainContentEmailTemplate(`
+          value: emailTemplate.baseContentEmailTemplate(`
             <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`
           )
         },
@@ -42,7 +42,7 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: emailTemplate.mainContentEmailTemplate(
+          value: emailTemplate.baseContentEmailTemplate(
             `<p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
         },
       ]
@@ -59,7 +59,7 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: emailTemplate.mainContentEmailTemplate(`
+          value: emailTemplate.baseContentEmailTemplate(`
           <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
         },
       ]
@@ -76,7 +76,7 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: emailTemplate.mainContentEmailTemplate(`<p>${i18n.__('mail.transfer.missing.message')}</p>`)
+          value: emailTemplate.baseContentEmailTemplate(`<p>${i18n.__('mail.transfer.missing.message')}</p>`)
         },
       ]
     )
@@ -92,7 +92,7 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: emailTemplate.mainContentEmailTemplate(
+          value: emailTemplate.baseContentEmailTemplate(
             `<p>${i18n.__('mail.transfer.invalid.message')}</p>`
           )
         },
@@ -110,7 +110,7 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: emailTemplate.mainContentEmailTemplate(`
+          value: emailTemplate.baseContentEmailTemplate(`
           <p>${i18n.__('mail.transfer.bounty.message', {
     taskFromTitle: taskFrom.title,
     taskFromUrl: taskFrom.url,

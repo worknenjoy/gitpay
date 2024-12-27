@@ -26,9 +26,10 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
           plan: orderParameters.plan
         },
         include: [
+          models.User,
           {
             association: models.Order.Plan,
-            include: [models.Plan.plan]
+            include: [models.Plan.plan],
           }
         ]
       }
@@ -37,9 +38,11 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
     .then(orderCreated => {
       return orderCreated.reload({
         include: [
-          models.Task
+          models.Task,
+          models.User
         ]
       }).then(order => {
+        const orderUser = order.User.dataValues
         const taskTitle = order?.Task?.dataValues?.title || ''
         if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
           const unitAmount = (parseInt(orderParameters.amount) * 100 * 1.08).toFixed(0)
@@ -67,7 +70,7 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
               }
             }).then(invoiceItem => {
               stripe.invoices.finalizeInvoice(invoice.id).then(finalizedInvoice => {
-                Sendmail.success({ email: orderParameters.email }, 'Invoice created', `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`)
+                Sendmail.success({ ...orderUser, email: orderParameters.email }, 'Invoice created', `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`)
                 return order.update(
                   {
                     source_id: invoice.id
@@ -84,7 +87,6 @@ module.exports = Promise.method(function orderBuilds(orderParameters) {
               })
             })
           })
-
         }
         if (orderParameters.provider === 'paypal') {
           const totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)

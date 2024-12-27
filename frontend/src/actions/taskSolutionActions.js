@@ -27,7 +27,7 @@ const ERRORS = {
   'COULD_NOT_UPDATE_TASK_SOLUTION': 'issue.solution.dialog.update.error',
   'COULD_NOT_CREATE_TASK_SOLUTION': 'issue.solution.dialog.create.error',
   'COULD_NOT_FETCH_PULL_REQUEST_DATA': 'issue.solution.dialog.fetch.error',
-  'PULL_REQUEST_NOT_FOUND': 'issue.solution.dialog.pullRequest.notFound'
+  'PULL_REQUEST_NOT_FOUND': 'issue.solution.dialog.pullRequest.notFound',
 }
 
 const getTaskSolutionRequested = () => {
@@ -81,10 +81,10 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, userId, task
   validToken()
   return dispatch => {
     dispatch(fetchPullRequestDataRequested())
-    axios.get(`${api.API_URL}/tasksolutions/fetch`, {
+    return axios.get(`${api.API_URL}/tasksolutions/fetch`, {
       params: { owner: owner, repositoryName: repositoryName, pullRequestId: pullRequestId, userId: userId, taskId: taskId }
     }).then(response => {
-      dispatch(fetchPullRequestDataSuccess(response.data))
+      return dispatch(fetchPullRequestDataSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
         dispatch(addNotification(ERRORS[error.response.data.error]))
@@ -115,7 +115,8 @@ const createTaskSolution = (taskSolution) => {
       return dispatch(createTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error.response.data && error.response.data.error) {
-        dispatch(addNotification(ERRORS[error.response.data.error]))
+        dispatch(addNotification(ERRORS[error.response.data.error] || error.response.data.error, '', '/#/profile/user-account/payouts', 'Update your account'))
+        dispatch(fetchTask(taskSolution.taskId))
         return dispatch(createTaskSolutionError(error.response.data.error))
       }
 

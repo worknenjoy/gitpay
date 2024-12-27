@@ -29,9 +29,9 @@ export const taskSolution = (state = initialState, action) => {
     case CREATE_TASK_SOLUTION_SUCCESS:
       return { ...state, completed: action.completed, taskSolution: action.taskSolution }
     case CLEAN_PULL_REQUEST_DATA_STATE:
-      return { ...state, pullRequestData: {} }
+      return { ...state, pullRequestData: {}, completed: true }
     default:
-      return state
+      return { ...state, completed: true }
   }
 }
 

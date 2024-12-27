@@ -2,45 +2,16 @@ const Promise = require('bluebird')
 const models = require('../../models')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
+const currencyMap = require('../util/currency-map')
 
-const currencyMap = {
-  'AU': 'AUD',
-  'AT': 'EUR',
-  'BE': 'EUR',
-  'BR': 'BRL',
-  'CA': 'CAD',
-  'DK': 'DKK',
-  'FI': 'EUR',
-  'FR': 'EUR',
-  'DE': 'EUR',
-  'HK': 'HKD',
-  'IE': 'EUR',
-  'IN': 'INR',
-  'IT': 'EUR',
-  'JP': 'JPY',
-  'LU': 'EUR',
-  'MX': 'MXN',
-  'NL': 'EUR',
-  'NZ': 'NZD',
-  'NO': 'EUR',
-  'PT': 'EUR',
-  'RO': 'RON',
-  'SG': 'SGD',
-  'ES': 'EUR',
-  'SE': 'SEK',
-  'CH': 'CHF',
-  'GB': 'GBP',
-  'US': 'USD',
-  'NG': 'NGN'
-}
 
 const getCurrency = (country) => {
-  return currencyMap[country]
+  return currencyMap.currencyMap[country]
 }
 
 module.exports = Promise.method(function userBankAccountCreate (userParameters) {
   const userCountry = userParameters.country
-  const userCurrency = getCurrency(userCountry)
+  const userCurrency = userParameters.currency || getCurrency(userCountry)
   return models.User
     .findOne(
       {

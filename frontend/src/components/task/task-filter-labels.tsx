@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -25,6 +25,10 @@ const TaskFilterLabels = function({
   listLabels,
   listTasks,
   history
+}: RouteComponentProps & {
+  labels: any;
+  listLabels: any;
+  listTasks: any;
 }) {
   const [currentLabels, setCurrentLabels] = React.useState<typeof labels>([]);
 

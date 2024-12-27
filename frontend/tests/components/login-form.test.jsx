@@ -19,7 +19,7 @@ const router = {
   },
 };
 
-xdescribe('Components - Session - LoginForm', () => {
+describe('Components - Session - LoginForm', () => {
   it('should render and fill the form with invalid email', async () => {
     render(
       <BrowserRouter router={router}>
@@ -179,5 +179,5 @@ xdescribe('Components - Session - LoginForm', () => {
     expect(emailField.value).toBe('test@example.com')
     expect(onRegisterUser).toHaveBeenCalled()
     unmount()
-  }, 10000);
+  });
 });

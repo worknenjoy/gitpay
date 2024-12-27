@@ -357,6 +357,7 @@ class Profile extends Component {
                         (<UserAccount
                           user={ this.props.user }
                           updateUser={ this.props.updateUser }
+                          changePassword={ this.props.changePassword }
                           addNotification={ this.props.addNotification }
                           history={ this.props.history }
                           deleteUser={ this.props.deleteUser }
@@ -434,6 +435,16 @@ class Profile extends Component {
                     <Route
                       exact
                       path='/profile/task/:id'
+                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
+                    />
+                    <Route
+                      exact
+                      path='/profile/task/:id/offers'
+                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
+                    />
+                    <Route
+                      exact
+                      path='/profile/task/:id/:slug/offers'
                       component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
                     <Route

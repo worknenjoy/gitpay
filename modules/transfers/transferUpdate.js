@@ -30,8 +30,6 @@ module.exports = Promise.method(async function transferUpdate(params) {
     }
   })
 
-  console.log('existingTransfer:', existingTransfer)
-
   if (
     existingTransfer && 
     destination.account_id && 
@@ -97,6 +95,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
       }
     })
     const paypalToken = JSON.parse(paypalCredentials)['access_token']
+    console.log('existingTransfer', existingTransfer)
     try {
       const paypalTransfer = !existingTransfer.paypal_payout_id && await requestPromise({
         method: 'POST',

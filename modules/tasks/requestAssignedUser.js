@@ -112,7 +112,7 @@ const actionAssign = async (data) => {
       `
 
     SendMail.success(
-      { email: taskOwner.email, language },
+      { email: taskOwner.email, language, receiveNotifications: taskOwner.receiveNotifications},
       i18n.__('mail.assigned.request.deny.subject'), body
     )
 

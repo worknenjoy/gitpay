@@ -20,7 +20,35 @@ const styles = (theme: Theme) =>
     },
   });
 
-const PickupTagList = ({ tags, classes, onPickItem, primaryText, secondaryText }) => {
+  const tags = [
+    {
+      id: 1,
+      name: '$ 20',
+      value: 20
+    },
+    {
+      id: 2,
+      name: '$ 50',
+      value: 50
+    },
+    {
+      id: 3,
+      name: '$ 100',
+      value: 100
+    },
+    {
+      id: 4,
+      name: '$ 150',
+      value: 150
+    },
+    {
+      id: 5,
+      name: '$ 300',
+      value: 300
+    }
+  ]
+
+const PickupTagList = ({ classes, onPickItem, primaryText, secondaryText }) => {
   return (
     <div className={classes.root}>
       <div className={classes.chipContainer}>

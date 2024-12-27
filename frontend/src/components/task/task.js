@@ -21,7 +21,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  DialogActions,
   Grid,
   Typography,
   Button,
@@ -37,27 +36,25 @@ import {
   Close as CloseIcon,
   ExpandLess,
   ExpandMore,
-  BugReport as BugReportIcon,
   AttachMoney as MoneyIcon,
   HowToReg as HowToRegIcon,
   CreditCard as BountyIcon,
   Gavel as OfferIcon,
   Redeem as RedeemIcon,
-  Delete as DeleteIcon,
-  AssignmentInd as AssignmentIcon,
   EmojiFoodBeverage as CoffeeIcon,
 } from '@material-ui/icons'
 
+import OfferDrawer from '../design-library/templates/offer-drawer/offer-drawer'
+
+import IssueActionsByRole from './components/issue-actions-by-role'
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../bottom/bottom'
-import TaskPayment from './task-payment'
 import LoginButton from '../session/login-button'
-import TaskAssignment from './task-assignment'
-import TaskSolve from './task-solve'
 import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'
 import TaskLevelSplitButton from './task-level-split-button'
 import TaskDeadlineForm from './task-deadline-form'
+import TaskOfferDrawer from './offers/task-offer-drawer'
 
 import TaskStatusIcons from './task-status-icons'
 
@@ -310,15 +307,6 @@ const styles = theme => ({
       marginLeft: 10
     }
   },
-  taskCoverImg: {
-    display: 'flex',
-    textAlign: 'center',
-    alignSelf: 'center',
-    width: 250,
-    [theme.breakpoints.down('sm')]: {
-      width: '100%'
-    }
-  },
   planContainer: {
     paddingTop: 5,
     paddingBottom: 5
@@ -383,6 +371,7 @@ class Task extends Component {
       interestedComment: '',
       interestedLearn: false,
       termsAgreed: false,
+      confirmOffer: false,
       priceConfirmed: false,
       orderPrice: 0,
       assignDialog: false,
@@ -448,6 +437,12 @@ class Task extends Component {
     }
     const assign_id = this.props.match.params.interested_id
     const hash = this.props.location.hash
+    const isOfferPage = this.props.match.path === '/profile/task/:id/offers'
+    
+    if(isOfferPage) {
+      this.setState({ assignDialog: true })
+    }
+
     if(hash === '#task-solution-dialog') {
       this.setState({ taskSolveDialog: true })
 
@@ -758,8 +753,6 @@ class Task extends Component {
           </span>
           <BountyIcon style={{ marginLeft: 10 }} />
         </Button>
-
-        
           <Button
             disabled={this.props.task.data.paid || this.props.task.data.status === 'closed'}
             onClick={this.handleAssignDialogOpen}
@@ -1112,132 +1105,77 @@ class Task extends Component {
                 <TaskPayments orders={(task?.data?.orders || task?.data?.Orders)?.filter(o => o.paid && o.status === 'succeeded')} />
               </div> : null
             }
-            { this.taskOwner() &&
-              <React.Fragment>
-                <div style={{ marginTop: 30, marginBottom: 30 }}> 
-                  <Button
-                    onClick={this.handleTaskPaymentDialog}
-                    color='primary'
-                    fullWidth
-                    size='large'
-                    variant='contained'
-                    style={{
-                      marginRight: 10,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <span className={classes.spaceRight}>
-                      <FormattedMessage id='task.bounties.payment.label' defaultMessage='Pay contributor' />
-                    </span>
-                    <RedeemIcon />
-                  </Button>
-                  <TaskPayment
-                    id={task.data.id}
-                    task={task.data}
-                    values={task.values}
-                    paid={task.data.paid}
-                    transferId={task.data.transfer_id}
-                    assigned={task.data.assigned}
-                    assigns={task.data.Assigns}
-                    orders={task.data.orders || task.data.Orders}
-                    order={order.data}
-                    offers={task.data.Offers}
-                    open={this.state.taskPaymentDialog}
-                    onClose={this.handleTaskPaymentDialogClose}
-                    onPayTask={this.props.paymentTask}
-                    onTransferTask={this.props.transferTask}
-                    filterTaskOrders={this.props.filterTaskOrders}
-                    onPayOrder={this.props.paymentOrder}
-                    messageTask={this.props.messageTask}
-                    messageOffer={this.props.messageOffer}
-                    assignTask={this.props.assignTask}
-                    actionAssign={this.props.actionAssign}
-                    removeAssignment={this.props.removeAssignment}
-                    isOwner={this.taskOwner()}
-                    updateTask={this.props.updateTask}
-                    loggedUser={this.props.logged}
-                    offerUpdate={this.props.offerUpdate}
-                    createOrder={this.props.createOrder}
-                  />
-                </div>
-              </React.Fragment>
-            }
-            <div style={{ marginTop: 30, marginBottom: 10 }}>
-              <Button
-                onClick={this.handleTaskSolveDialogOpen}
-                color='primary'
-                fullWidth
-                size='large'
-                variant='contained'
-                disabled={task.data.paid || task.data.transfer_id}
-              >
-                <FormattedMessage id='task.interested.button.label' defaultMessage='Solve issue' />
-                <HowToRegIcon style={{ marginLeft: 10 }} />
-              </Button>
-            </div>
-
-            <div style={{ marginTop: 20, marginBottom: 20 }}>
-              {this.rendereAmountStatsCardContent(this.taskOwner())}
-            </div>
+            <IssueActionsByRole
+              issue={task}
+              currentRole={this.taskOwner() ? 'admin' : 'user'}
+            />
             <TaskInviteCard
               onInvite={this.props.inviteTask}
               onFunding={this.handleTaskFundingDialogOpen}
               user={this.props.user}
               id={task.data.id}
             />
-            <TaskAssignment
-              taskFundingDialog={this.state.taskFundingDialog}
-              assignDialog={this.state.assignDialog}
-              handleAssignFundingDialogClose={this.handleAssignFundingDialogClose}
-              renderIssueAuthorLink={this.renderIssueAuthorLink}
-              timePlaceholder={timePlaceholder}
-              deadline={deadline}
-              deliveryDate={deliveryDate}
-              handleSuggestAnotherDate={this.handleSuggestAnotherDate}
-              showSuggestAnotherDateField={this.state.showSuggestAnotherDateField}
-              interestedSuggestedDate={this.state.interestedSuggestedDate}
-              handleInputChangeCalendar={this.handleInputChangeCalendar}
-              currentPrice={this.state.currentPrice}
-              interestedComment={this.state.interestedComment}
-              handleInputInterestedCommentChange={this.handleInputInterestedCommentChange}
-              handleInputInterestedAmountChange={this.handleInputInterestedAmountChange}
-              pickTaskPrice={this.pickTaskPrice}
-              priceConfirmed={this.state.priceConfirmed}
-              handleCheckboxIwillDoFor={this.handleCheckboxIwillDoFor}
-              charactersCount={this.state.charactersCount}
-              interestedLearn={this.state.interestedLearn}
-              handleCheckboxLearn={this.handleCheckboxLearn}
-              termsAgreed={this.state.termsAgreed}
-              handleCheckboxTerms={this.handleCheckboxTerms}
-              handleTermsDialog={this.handleTermsDialog}
-              termsDialog={this.state.termsDialog}
-              handleTermsDialogClose={this.handleTermsDialogClose}
-              handleOfferTask={this.handleOfferTask}
-              logged={this.props.logged}
-              task={task}
-              classes={classes}
-              fundingInvite={this.state.fundingInvite}
-              handleFundingEmailInputChange={this.handleFundingEmailInputChange}
-              handleFundingInputMessageChange={this.handleFundingInputMessageChange}
-              sendFundingInvite={this.sendFundingInvite}
-              inviteCover={inviteCover}
-              taskCover={taskCover}
-              location={this.props.location}
+            <TaskOfferDrawer
+              issue={task}
+              open={this.state.assignDialog}
+              onClose={this.handleAssignFundingDialogClose}
+              offerUpdate={this.props.offerUpdate}
+              loggedUser={this.props.logged}
+              createOrder={this.props.createOrder}
+              assignTask={this.props.assignTask}
+              assigns={task.data.Assigns}
+              onMessage={this.props.messageOffer}
+              updateTask={this.props.updateTask}
             />
-            <TaskSolve
-              open={taskSolveDialog}
-              onClose={this.handleTaskSolveDialogClose}
-              handleAssignFundingDialogClose={this.handleAssignFundingDialogClose}
-              renderIssueAuthorLink={this.renderIssueAuthorLink}
-              timePlaceholder={timePlaceholder}
-              logged={this.props.logged}
-              task={task}
-              classes={classes}
-              inviteCover={inviteCover}
-              taskCover={taskCover}
-              location={this.props.location}
+            <OfferDrawer
+              hasEmailInput
+              title={<FormattedMessage id='issue.offer.drawer.invite.title' defaultMessage='Invite sponsor' />}
+              introTitle={<FormattedMessage id='task.funding.title' defaultMessage='Invite someone to add bounties to this issue' />}
+              introMessage={
+                <FormattedMessage id='task.funding.description' defaultMessage={'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'}>
+                  {(msg) => (
+                    <span className={classes.spanText}>
+                      {msg}
+                    </span>
+                  )}
+                </FormattedMessage>
+              }
+              simpleInfoText={
+                <FormattedMessage id='issue.funding.invite.info' defaultMessage='You will invite a sponsor to add bounties to this issue' />
+              }
+              commentAreaPlaceholder={
+                <FormattedMessage id='task.funding.comment.value' defaultMessage='Leave a message to be sent together with the invite' />
+              }
+              pickupTagListTitle={
+                <FormattedMessage id='task.funding.invite.title' defaultMessage='Suggest a bounty for the sponsor' />
+              }
+              pickutTagListDescription={
+                <FormattedMessage id='task.funding.invite.headline' defaultMessage='You can suggest a bounty for the sponsor to add a bounty to this issue' />
+              }
+              introImage={inviteCover}
+              issue={task}
+              open={this.state.taskFundingDialog}
+              onDeliveryDateChange={(date) => this.setState({ interestedSuggestedDate: date })}
+              onChangePrice={(price) => this.setState({ currentPrice: price })}
+              onClose={this.handleAssignFundingDialogClose}
+              onCommentChange={this.handleFundingInputMessageChange}
+              onEmailInviteChange={this.handleFundingEmailInputChange}
+              onTermsCheckboxChange={(checked) => this.setState({ termsAgreed: checked })}
+              actions={
+                [
+                  {
+                    label: <FormattedMessage id='task.funding.cancel' defaultMessage='Cancel' />,
+                    onClick: this.handleAssignFundingDialogClose
+                  },
+                  {
+                    disabled: !this.state.fundingInvite.email || !this.state.termsAgreed || !this.state.currentPrice || this.state.currentPrice === 0,
+                    label: <FormattedMessage id='task.funding.invite' defaultMessage='Invite' />,
+                    onClick: this.sendFundingInvite,
+                    variant: 'contained',
+                    color: 'secondary',
+                  }
+                ]
+              }
             />
           </Grid>
         </Grid>

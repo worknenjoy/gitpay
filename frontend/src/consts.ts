@@ -140,8 +140,42 @@ enum invoiceStatuses {
   refunded = 'refunded'
 }
 
+enum orderStripeStatuses {
+  pending = 'pending',
+  succeeded = 'succeeded',
+  failed = 'failed',
+}
+
+enum orderSystemStatuses {
+  fail = 'fail',
+  success = 'success',
+  expired = 'expired',
+  cancelled = 'cancelled',
+  canceled = 'canceled', // TODO: fix temporary status name
+  refunded = 'refunded',
+}
+
+const orderStatuses = {
+  ...orderStripeStatuses,
+  ...orderSystemStatuses
+}
+
 export const status = {
-  invoice: invoiceStatuses
+  invoice: invoiceStatuses,
+  order: orderStatuses
+}
+
+export enum paymentProviders {
+  stripe = 'stripe',
+  paypal = 'paypal',
+  wallet = 'wallet',
+  unknown = 'unknown'
+}
+
+export enum paymentSources {
+  card = 'card',
+  invoice = 'invoice-item',
+  unknown = 'unknown'
 }
 
 const api = {

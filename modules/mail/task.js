@@ -8,6 +8,7 @@ const constants = require('./constants')
 const withTemplate = require('./template')
 const models = require('../../models')
 const emailTemplate = require('./templates/main-content')
+const basicEmailTemplate = require('./templates/base-content')
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -240,9 +241,9 @@ if (constants.canSendEmail) {
       [
         {
           type: 'text/html',
-          value: `
+          value: basicEmailTemplate.baseContentEmailTemplate(`
            <p>${i18n.__('mail.messageAuthor.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-${i18n.__('mail.messageAuthor.message', { message })} <p>${Signatures.sign(language)}</p>`
+${i18n.__('mail.messageAuthor.message', { message })}`)
         }],
       senderEmail
     )

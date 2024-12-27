@@ -22,7 +22,7 @@
   "mail.assign.owner.main": "{{name}} is interested in working on the issue <a href=\"{{url}}\">{{title}}</a>.",
   "mail.assign.owner.suggest": "<p>Suggested bounty: <strong>${{value}}</strong></p> <p>Suggested date: <strong>{{suggestedDate}}</strong></p> <p>For learning purposes: <strong>{{learn}}</strong></p><p>Comment: {{comment}}</p>",
   "mail.assign.owner.sec": "You can accept or reject this proposal.",
-  "mail.assign.owner.button.primary": "Accept work and assign them to this issue",
+  "mail.assign.owner.button.offer": "Check offer",
   "mail.messageInterested.subject": "You received a message about an issue you're interested in on Gitpay",
   "mail.messageInterested.intro": "{{name}} wrote about the issue <a href=\"{{url}}\">{{title}}</a> you're interested in on Gitpay:",
   "mail.messageInterested.message": "{{message}}",
@@ -106,7 +106,7 @@
   "mail.funding.send.message": "<p>Hello,<br>{{username}} invites you to contribute with <strong>${{suggestedValue}}</strong> for the issue {{title}}.</p><p>They suggested the deadline for <strong>{{suggestedDate}}</strong></p><p>{{message}}</p><p>You can add a bounty at {{url}}</p>",
   "mail.assign.register.error": "Someone is interested in an issue but couldn't receive the email",
   "mail.webhook.payment.success.subject": "You made a new purchase on your card from Gitpay",
-  "mail.webhook.payment.success.message": "<p>A payment was made on your credit card for an issue on Gitpay. When the issue is concluded, the payment will be sent to the person you assigned.</p><p>Name on credit card: {{name}}</p><p>Last 4 digits: {{number}}</p>",
+  "mail.webhook.payment.success.message": "<p>Your credit card has been charged for an issue on Gitpay. When the issue is concluded, the payment will be sent to the contributor whose solution is merged.</p><p>Name on credit card: {{name}}</p><p>Last 4 digits: {{number}}</p>",
   "mail.webhook.payment.update.subject": "The payment for this issue was updated!",
   "mail.webhook.payment.update.message": "<p>The payment of ${{amount}} for an issue on Gitpay was approved</p>",
   "mail.webhook.invoice.update.subject": "The payment for an issue you are working on Gitpay has been updated",
@@ -167,5 +167,10 @@
   "issue.invalid.script.subject": "The issue you created on Gitpay was deleted",
   "issue.invalid.script.message": "The issue you imported with the {{url}} to Gitpay was deleted from our list on Gitpay because it is an invalid issue URL.",
   "mail.order.expiredOrders.subject": "The payment for an issue on Gitpay expired",
-  "mail.order.expiredOrders.content.main": "The pre-authorized payment of ${{value}} for the issue <a href=\"{{url}}\">{{title}}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Please visit https://gitpay.me/#/profile/payments to update your payment."
+  "mail.order.expiredOrders.content.main": "The pre-authorized payment of ${{value}} for the issue <a href=\"{{url}}\">{{title}}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Please visit https://gitpay.me/#/profile/payments to update your payment.",
+  "mail.webhook.wallet.invoice.intro": "Hello {{name}},",
+  "mail.webhook.wallet.invoice.subject": "New Invoice for Adding Funds to Your Gitpay Wallet",
+  "mail.webhook.wallet.invoice.message": "<p>We generated a new invoice of ${{amount}} to add funds to your {{walletName}} wallet on Gitpay.</p>",
+  "mail.webhook.wallet.invoice.button": "Pay invoice",
+  "mail.webhook.wallet.invoice.footer": "You’re receiving this message because you recently requested to add funds to your <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a> wallet."
 }

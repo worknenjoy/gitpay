@@ -8,6 +8,10 @@ const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS'
 const FETCH_USER_ACCOUNT_ERROR = 'FETCH_USER_ACCOUNT_ERROR'
 
+const FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED = 'FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED'
+const FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS = 'FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS'
+const FETCH_USER_ACCOUNT_COUNTRIES_ERROR = 'FETCH_USER_ACCOUNT_COUNTRIES_ERROR'
+
 const CREATE_USER_ACCOUNT_REQUESTED = 'CREATE_USER_ACCOUNT'
 const CREATE_USER_ACCOUNT_SUCCESS = 'CREATE_USER_ACCOUNT_SUCCESS'
 const CREATE_USER_ACCOUNT_ERROR = 'CREATE_USER_ACCOUNT_ERROR'
@@ -48,6 +52,10 @@ const GET_BANKACCOUNT_REQUESTED = 'GET_BANKACCOUNT_REQUESTED'
 const GET_BANKACCOUNT_SUCCESS = 'GET_BANKACCOUNT_SUCCESS'
 const GET_BANKACCOUNT_ERROR = 'GET_BANKACCOUNT_ERROR'
 
+const UPDATE_BANKACCOUNT_REQUESTED = 'UPDATE_BANKACCOUNT_REQUESTED'
+const UPDATE_BANKACCOUNT_SUCCESS = 'UPDATE_BANKACCOUNT_SUCCESS'
+const UPDATE_BANKACCOUNT_ERROR = 'UPDATE_BANKACCOUNT_ERROR'
+
 /*
  * Account fetch
  */
@@ -66,6 +74,26 @@ const fetchUserAccountSuccess = account => {
 
 const fetchUserAccountError = error => {
   return { type: FETCH_USER_ACCOUNT_ERROR, completed: true, error: error }
+}
+
+/*
+  * Account fetch countries
+*/
+
+const fetchUserAccountCountriesRequested = () => {
+  return { type: FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED, completed: false }
+}
+
+const fetchUserAccountCountriesSuccess = countries => {
+  return {
+    type: FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
+    completed: true,
+    data: countries.data
+  }
+}
+
+const fetchUserAccountCountriesError = error => {
+  return { type: FETCH_USER_ACCOUNT_COUNTRIES_ERROR, completed: true, error: error }
 }
 
 /*
@@ -264,6 +292,27 @@ const createBankAccountError = error => {
   return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error: error }
 }
 
+/*
+  * Account bank update
+*/
+
+const updateBankAccountRequested = () => {
+  return { type: UPDATE_BANKACCOUNT_REQUESTED, completed: false }
+}
+
+const updateBankAccountSuccess = account => {
+  return {
+    type: UPDATE_BANKACCOUNT_SUCCESS,
+    completed: true,
+    data: account.data
+  }
+}
+
+const updateBankAccountError = error => {
+  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error: error }
+}
+
+
 const fetchCustomer = () => {
   validToken()
   return (dispatch) => {
@@ -357,6 +406,23 @@ const fetchAccount = () => {
   }
 }
 
+const fetchAccountCountries = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch(fetchUserAccountCountriesRequested())
+    return axios
+      .get(api.API_URL + '/user/account/countries')
+      .then(countries => {
+        return dispatch(fetchUserAccountCountriesSuccess(countries))
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.log('fetch user account countries error', e)
+        return dispatch(fetchUserAccountCountriesError(e))
+      })
+  }
+}
+
 const createAccount = (country) => {
   validToken()
   return (dispatch, getState) => {
@@ -392,7 +458,7 @@ const updateAccount = (_, accountData) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(updateUserAccountRequested())
-    axios
+    return axios
       .put(api.API_URL + '/user/account', { account: accountData })
       .then(account => {
         dispatch(addNotification('actions.user.account.update.success'))
@@ -553,10 +619,37 @@ const createBankAccount = (_, bank) => {
   }
 }
 
+const updateBankAccount = (bank_account) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(updateBankAccountRequested())
+    axios
+      .put(api.API_URL + '/user/bank_accounts', bank_account)
+      .then(bankAccount => {
+        if (bankAccount.data.statusCode === 400) {
+          dispatch(addNotification('notifications.bank.update.error'))
+          return dispatch(updateBankAccountError(bankAccount.data))
+        }
+        dispatch(addNotification('notifications.bank.update.success'))
+
+        return dispatch(updateBankAccountSuccess(bankAccount))
+      })
+      .catch(error => {
+        dispatch(addNotification('notifications.bank.update.other.error'))
+        // eslint-disable-next-line no-console
+        console.log('error on create account', error)
+        return dispatch(updateBankAccountError(error))
+      })
+  }
+}
+
 export {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
   FETCH_USER_ACCOUNT_ERROR,
+  FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED,
+  FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
+  FETCH_USER_ACCOUNT_COUNTRIES_ERROR,
   CREATE_USER_ACCOUNT_REQUESTED,
   CREATE_USER_ACCOUNT_SUCCESS,
   CREATE_USER_ACCOUNT_ERROR,
@@ -587,7 +680,11 @@ export {
   CREATE_BANKACCOUNT_REQUESTED,
   CREATE_BANKACCOUNT_SUCCESS,
   CREATE_BANKACCOUNT_ERROR,
+  UPDATE_BANKACCOUNT_REQUESTED,
+  UPDATE_BANKACCOUNT_SUCCESS,
+  UPDATE_BANKACCOUNT_ERROR,
   fetchAccount,
+  fetchAccountCountries,
   createAccount,
   updateAccount,
   fetchCustomer,
@@ -597,6 +694,7 @@ export {
   activateUser,
   resendActivationEmail,
   createBankAccount,
+  updateBankAccount,
   getBankAccount,
   deleteUser,
 }

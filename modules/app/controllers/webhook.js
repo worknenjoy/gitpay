@@ -11,6 +11,7 @@ const constants = require('../../mail/constants')
 const TaskMail = require('../../mail/task')
 const SendMail = require('../../mail/mail')
 const IssueClosedMail = require('../../mail/issueClosed')
+const WalletMail = require('../../mail/wallet')
 
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
@@ -44,7 +45,18 @@ const CURRENCIES = {
   sek: 'kr',
   chf: 'fr',
   gbp: '£',
-  usd: '$'
+  usd: '$',
+  bgn: 'лв', // Bulgaria
+  hrk: 'kn', // Croatia
+  ghs: '₵', // Ghana
+  gip: '£', // Gibraltar
+  huf: 'Ft', // Hungary
+  kes: 'KSh', // Kenya
+  php: '₱', // Philippines
+  zar: 'R', // South Africa
+  thb: '฿', // Thailand
+  aed: 'د.إ', // United Arab Emirates
+  cop: '$' // Colombia
 }
 
 //Function to format amount from cents to decimal format
@@ -635,6 +647,29 @@ exports.updateWebhook = async (req, res) => {
           return res.json(req.body)
         }
         break
+      case 'invoice.finalized':
+        try {
+          const invoice = event.data.object
+          const invoiceId = invoice.id
+          const walletOrder = await models.WalletOrder.findOne({
+            where: {
+              source: invoiceId
+            },
+            include: [
+              {
+              model: models.Wallet,
+              include: [models.User]
+              }
+            ]
+            })
+          if(walletOrder?.id) {
+            WalletMail.invoiceCreated(invoice,  walletOrder, walletOrder.Wallet.User)
+            return res.json(req.body)
+          }
+        } catch (error) {
+          console.log('error', error)
+          return res.json(req.body)
+        }
       case 'transfer.created':
         models.Transfer.findOne({
           where: {
@@ -871,6 +906,42 @@ exports.updateWebhook = async (req, res) => {
         }).catch(e => {
           return res.status(400).send(e)
         })
+      break;
+      case 'invoice.payment_failed':
+        // eslint-disable-next-line no-case-declarations
+        const walletOrderExists = await models.WalletOrder.findOne({
+          where: {
+            source: event.data.object.id
+          }
+        })
+        if(!walletOrderExists) {
+          const walletId = event.data.object.metadata.wallet_id
+          const walletOrder = walletId && await models.WalletOrder.create({
+            walletId,
+            source_id: event.data.object.id,
+            currency: event.data.object.currency,
+            amount: formatStripeAmount(event.data.object.amount_due),
+            description: `created wallet order from stripe invoice. ${event.data.object.description}`,
+            source_type: 'stripe',
+            source: event.data.object.id,
+            ordered_in: new Date(),
+            paid: false,
+            status: event.data.object.status
+          })
+          if(walletOrder) {
+            console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
+          }
+        } else {
+          const walletOrderUpdate = await models.WalletOrder.update({
+            status: event.data.object.status
+          }, {
+            where: {
+              source: event.data.object.id
+            }
+          })
+        }
+        return res.json(req.body)
+      break;
     }
   }
   else {

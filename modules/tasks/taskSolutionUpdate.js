@@ -37,7 +37,7 @@ module.exports = Promise.method(function taskSolutionUpdate (taskSolution, taskS
                   throw new Error('COULD_NOT_CREATE_ASSIGN')
                 }
               }
-              const taskUpdateAssign = await taskUpdate({ id: taskSolution.taskId,  userId: taskData.dataValues.userId, assigned: existingAssignment.dataValues.id })
+              const taskUpdateAssign = await taskUpdate({ id: taskSolution.taskId,  userId: taskData.dataValues.userId, assigned: existingAssignment.dataValues.id }, false)
               if(!taskUpdateAssign) {
                 throw new Error('COULD_NOT_UPDATE_TASK')
               }

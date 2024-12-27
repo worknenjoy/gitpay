@@ -33,7 +33,8 @@ module.exports = Promise.method(function taskFetch (taskParams) {
       },
       {
         model: models.Offer,
-        include: [models.User, models.Task]
+        include: [models.User, models.Task],
+        order: [ ['createdAt', 'ASC'] ]
       },
       {
         model: models.History

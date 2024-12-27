@@ -42,7 +42,18 @@ const messages = defineMessages({
   }
 })
 
-const TaskFilters = ({
+import { RouteComponentProps } from 'react-router-dom';
+
+interface TaskFiltersProps extends RouteComponentProps {
+  intl: any;
+  classes: any;
+  filterTasks: any;
+  baseUrl?: string;
+  tasks: any;
+  filteredTasks: any;
+}
+
+const TaskFilters: React.FC<TaskFiltersProps> = ({
   intl,
   history,
   classes,
@@ -144,7 +155,6 @@ const TaskFilters = ({
                 variant="outlined"
                 className={taskListState.tab === 2 ? classes.chipActive : classes.chip}
               />
-
             </Button>
           </ButtonGroup>
         </div>

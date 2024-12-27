@@ -17,7 +17,7 @@ class Auth {
     return localStorage.getItem('authNotified')
   }
 
-  static storeReferer (path) {
+  static storeReferrer (path) {
     localStorage.setItem('referer', path)
   }
 

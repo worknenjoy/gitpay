@@ -9,6 +9,12 @@ function extractIssueReferences(text) {
   return matches ? matches.map(match => match.slice(1)) : []; // Remove the '#' prefix
 }
 
+function extractIssueNumberFromURL(url) {
+  const match = url.match(/\/issues\/(\d+)(\/)?$/);
+  return match ? match[1] : null;
+}
+
+
 module.exports = Promise.method(async function fetchTaskSolutionData (solutionParams) {
   return requestPromise({
     uri: `https://api.github.com/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
@@ -37,9 +43,12 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     })
 
     // Verify if the current user is the owner of PR (currently used to verify if user is authenticated to GitHub too)
-    if (user.dataValues.provider === 'github' && user.dataValues.provider_username === pullRequestData.user.login) {
-      isAuthorOfPR = true
+    if (user.dataValues.provider === 'github') {
       isConnectedToGitHub = true
+    }
+
+    if (user.dataValues.provider_username === pullRequestData.user.login) {
+      isAuthorOfPR = true
     }
 
     // Verify if PR is closed/merged
@@ -59,7 +68,10 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
       }
     }
     const issueReferences = extractIssueReferences(pullRequestData.body)
-    if(issueReferences.length && task.dataValues.url.includes(issueReferences)) {
+    const issueNumber = extractIssueNumberFromURL(task.dataValues.url)
+    const issueReferencesMatch = issueReferences.some(issueReference => issueNumber === issueReference)
+    
+    if(issueReferences.length && issueReferencesMatch) {
       hasIssueReference = true
     }
 

@@ -12,15 +12,13 @@ import {
   Tabs,
   Tab
 } from '@material-ui/core'
-import MuiAlert from '@material-ui/lab/Alert'
 import { messages } from '../task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfers/transfer-detail'
 import { formatCurrency } from '../../utils/format-currency'
+import { validAccount } from '../../utils/valid-account'
+import AccountRequirements from '../../components/design-library/molecules/account-requirements/account-requirements'
 
-const Alert = (props) => {
-  return <MuiAlert elevation={0} variant='standard' size='small' {...props} />
-}
 
 const transferMessages = defineMessages({
   cardTableHeaderFrom: {
@@ -47,7 +45,7 @@ const styles = theme => ({
   }
 })
 
-const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, transfer, user, intl, match, history }) => {
+const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount, transfers, transfer, user, account, intl, match, history }) => {
   const [value, setValue] = React.useState(0)
   const [openTransferDetail, setOpenTransferDetail] = React.useState(0)
 
@@ -68,6 +66,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
   useEffect(() => {
     setValue('from')
     getTranfers().then(t => { })
+    fetchAccount().then(a => { })
   }, [user])
 
   useEffect(() => {
@@ -104,7 +103,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
             }}
             variant='contained'
             color='secondary'
-            disabled={t.status !== 'pending'}
+            disabled={t.status !== 'pending' || !validAccount(user, account)}
           >
             <FormattedMessage id='transfers.action.payout.button' defaultMessage='Request payout' />
           </Button>
@@ -112,7 +111,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
           !user.account_id && <Button
             size='small'
             onClick={() => {
-              history.push('/profile/user-account/details')
+              history.push('/profile/user-account/payouts')
             }}
             variant='contained'
             color='secondary'
@@ -123,7 +122,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
         return null
     }
   }
-
+  
   return (
     <div style={{ margin: '40px 0' }}>
       <TransferDetails user={user} history={history} id={openTransferDetail} fetchTransfer={fetchTransfer} transfer={transfer} open={openTransferDetail} onClose={() => {
@@ -133,33 +132,18 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, transfers, t
       }
       />
       <Container>
+      {
+          value === 'to' &&
+            <AccountRequirements user={user} account={account} onClick={
+              () => {
+                history.push('/profile/user-account/payouts')
+              }
+            } 
+            />
+        }
         <Typography variant='h5' gutterBottom>
           <FormattedMessage id='profile.transfer.title' defaultMessage='Transfers' />
         </Typography>
-        {
-          !user.account_id && value === 'to' ?
-            <Alert
-              severity='warning'
-              action={
-                <Button
-                  size='small'
-                  onClick={() => {
-                    history.push('/profile/user-account/details')
-                  }}
-                  variant='contained'
-                  color='secondary'
-                >
-                  <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
-                </Button>
-              }
-            >
-              <Typography variant='subtitle1' gutterBottom>
-                <FormattedMessage id='profile.transfer.notactive' defaultMessage='Your account is not active, please finish the setup of your account to receive payouts' />
-              </Typography>
-            </Alert>
-            :
-            null
-        }
         <Tabs
           value={value}
           onChange={handleChange}

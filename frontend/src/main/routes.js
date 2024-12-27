@@ -59,7 +59,7 @@ export default props => (
       <Route exact path='/task/:id/:slug/interested' component={ TaskContainer } />
       <Route exact path='/task/:id/interested/:interested_id' component={ TaskContainer } />
       <Route exact path='/task/:id/members' component={ TaskContainer } />
-      <Route exact path='/task/:id/offers' component={ TaskContainer } />
+      
       <Route exact path='/task/:id/history' component={ TaskContainer } />
       <Route exact path='/task/:id/claim' component={ TaskContainer } />
       <Route exact path='/stats' component={ Stats } />

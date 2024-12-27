@@ -57,7 +57,7 @@ exports.forgotPasswordNotification = async (req, res) => {
   }
 }
 
-exports.changePassword = async (req, res) => {
+exports.resetPassword = async (req, res) => {
   try {
     const foundUser = await models.User.findOne({ where: { recover_password_token: req.body.token } })
     if (!foundUser) res.status(401)
@@ -75,6 +75,16 @@ exports.changePassword = async (req, res) => {
     console.log(error)
     res.send(false)
   }
+}
+
+exports.changePassword = (req, res) => {
+  user.userChangePassword({...req.body, id: req.user.id}).then(data => {
+    res.send(data)
+  }).catch(error => {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(400).send({ error: error.message })
+  })
 }
 
 exports.searchAll = (req, res) => {
@@ -250,6 +260,17 @@ exports.accountCreate = (req, res) => {
     })
 }
 
+exports.accountCountries = (req, res) => {
+  user.userAccountCountries({ id: req.user.id })
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}
+
 exports.userUpdate = (req, res) => {
   req.body.id = req.user.id
   user.userUpdate(req.body)
@@ -284,6 +305,18 @@ exports.createBankAccount = (req, res) => {
       console.log(error)
       res.send(error)
     })
+}
+
+exports.updateBankAccount = (req, res) => {
+  user.userBankAccountUpdate({...req.body, id: req.user.id})
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(error)
+    }
+  )
 }
 
 exports.userBankAccount = (req, res) => {

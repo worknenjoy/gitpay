@@ -1,24 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-import '@testing-library/jest-dom'
 import React from 'react';
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import TaskSolutionDialog from '../../../src/components/task/send-solution-dialog';
+import TaskSolutionDrawer from '../../../src/components/task/components/send-solution-drawer';
 import { BrowserRouter } from 'react-router-dom';
+import { debug } from 'jest-preview';
 
-const router = {
-  history: {},
-  route: {
-    location: {
-      pathname: '/',
-    },
-    match: {},
-  },
-};
-
-xdescribe('Components - TaskSolutionDialog', () => {
+xdescribe('Components - TaskSolutionDrawer', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   })
@@ -28,14 +18,18 @@ xdescribe('Components - TaskSolutionDialog', () => {
   })
   it('should render correctly on loading state', () => {
     render(
-      <BrowserRouter router={router}>
-        <TaskSolutionDialog
+      <BrowserRouter>
+        <TaskSolutionDrawer
           taskSolution={{}}
           pullRequestData={{}}
           task={{
             data: {},
           }}
-          user={{}}
+          user={{
+            id: 1,
+            provider: 'github',
+            provider_username: 'alexanmtz'
+          }}
           cleanPullRequestDataState={() => {}}
           getTaskSolution={() => {}}
         />
@@ -45,8 +39,8 @@ xdescribe('Components - TaskSolutionDialog', () => {
   });
   it('should render correctly with all conditions failed and buttom disabled', async () => {
     render(
-      <BrowserRouter router={router}>
-        <TaskSolutionDialog
+      <BrowserRouter>
+        <TaskSolutionDrawer
           pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
           taskSolution={{}}
           pullRequestData={{
@@ -60,7 +54,11 @@ xdescribe('Components - TaskSolutionDialog', () => {
             data: {},
             completed: true,
           }}
-          user={{}}
+          user={{
+            id: 1,
+            provider: 'github',
+            provider_username: 'alexanmtz'
+          }}
           cleanPullRequestDataState={() => {}}
           getTaskSolution={() => {}}
           fetchPullRequestData={() => {}}
@@ -87,8 +85,8 @@ xdescribe('Components - TaskSolutionDialog', () => {
       })
     })
     render(
-      <BrowserRouter router={router}>
-        <TaskSolutionDialog
+      <BrowserRouter>
+        <TaskSolutionDrawer
           pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
           taskSolution={{}}
           pullRequestData={{
@@ -133,10 +131,73 @@ xdescribe('Components - TaskSolutionDialog', () => {
     screen.getByTestId('send-solution-button').click()
     expect(spyTaskSolution).toHaveBeenCalled()
   });
+  it('should have all requirements to submit and have a response error with no capatibilities for transfer', async () => {
+    const spy = jest.fn(new Promise((resolve) => {
+      resolve({
+        error: 'issue.solution.error.insufficient_capabilities_for_transfer'
+      })
+    }))
+    const spyTaskSolution = jest.fn().mockImplementation(() => {
+      return new Promise((resolve) => {
+        resolve({
+          pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
+          taskId: 1,
+          userId: 1,
+        })
+      })
+    })
+    render(
+      <BrowserRouter>
+        <TaskSolutionDrawer
+          pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
+          taskSolution={{}}
+          pullRequestData={{
+            merged: true,
+            pullRequestUrl: 'https://github.com/alexanmtz/test-repository/pull/2',
+            isPRMerged: true,
+            isIssueClosed: true,
+            isConnectedToGitHub: true,
+            hasIssueReference: true,
+            isAuthorOfPR: true,
+          }}
+          task={{
+            id: 1,
+            data: {},
+            completed: true,
+          }}
+          user={{
+            id: 1,
+            provider: 'github',
+            provider_username: 'alexanmtz'
+          }}
+          cleanPullRequestDataState={() => {}}
+          getTaskSolution={() => {}}
+          fetchPullRequestData={() => ({
+            state: 'closed',
+            title: 'Fixes #1',
+            body: 'Fixes #1',
+            user: {
+              login: 'alexanmtz'
+            },
+          })}
+          completed={true}
+          updateTaskSolution={spy}
+          createTaskSolution={spyTaskSolution}
+        />
+      </BrowserRouter>
+    );
+    
+    userEvent.type(await screen.findByTestId('pull-request-url'), 'https://github.com/alexanmtz/test-repository/pull/2')
+    jest.runAllTimers();
+    expect(screen.getByTestId('send-solution-button')).toBeEnabled();
+    screen.getByTestId('send-solution-button').click()
+    debug()
+    expect(spyTaskSolution).toHaveBeenCalled()
+  });
   it('enable edit mode', async () => {
     render(
-      <BrowserRouter router={router}>
-        <TaskSolutionDialog
+      <BrowserRouter>
+        <TaskSolutionDrawer
           pullRequestUrl={'https://github.com/alexanmtz/test-repository/pull/2'}
           taskSolution={{
             pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',

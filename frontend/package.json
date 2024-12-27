@@ -7,6 +7,7 @@
     "dev": "webpack serve --progress",
     "webpack-help": "webpack --help",
     "test": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache",
+    "test:ci": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --runInBand --logHeapUsage",
     "update-snapshot": "STRIPE_PUBKEY=$STRIPE_PUBKEY jest --no-cache --updateSnapshot",
     "production": "webpack --progress --config webpack.config.prod.js",
     "translate": "NODE_ENV=development extract-messages --flat true -l=en,br -o src/translations/generated 'src/**/*.{js,jsx,ts,tsx}'",
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-controls": "^8.4.1",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
@@ -95,6 +97,7 @@
     "@mui/material": "^5.11.8",
     "@mui/styled-engine-sc": "^5.11.0",
     "@sindresorhus/slugify": "^2.2.0",
+    "@types/react-router-dom": "^5.3.3",
     "axios": "^0.21.4",
     "babel-jest": "^23.4.2",
     "babel-loader": "^9.1.2",

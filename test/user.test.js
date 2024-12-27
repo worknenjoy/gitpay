@@ -178,6 +178,136 @@ describe("Users", () => {
     })
   })
 
+  describe('update User', () => {
+    it('should update user', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .put(`/user/update`)
+          .send({name: 'test', email: 'test@gmail.com'})
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body.name).to.equal('test');
+            expect(user.body.email).to.equal('test@gmail.com');
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+
+    it('should reset password from the right token', (done) => {
+      registerAndLogin(agent, {
+        recover_password_token: '123'
+      }).then(res => {
+        agent
+          .put(`/auth/reset-password`)
+          .send({ password: '', token: '123' })
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.text).to.equal('successfully change password');
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+
+    it('should not reset password from the wrong token', (done) => {
+      registerAndLogin(agent, {
+        recover_password_token: '1234'
+      }).then(res => {
+        agent
+          .put(`/auth/reset-password`)
+          .send({ password: '', token: '123' })
+          .set('Authorization', res.headers.authorization)
+          .expect(401)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(401);
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+
+    it('should not update if old password is incorrect (too small)', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .put(`/auth/change-password`)
+          .send({old_password: '1232', password: ''})
+          .set('Authorization', res.headers.authorization)
+          .expect(400)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(400);
+            expect(user.body.error).to.equal('user.password.current.incorrect.too_short');
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+    it('should not update if password is the same', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .put(`/auth/change-password`)
+          .send({old_password: 'test12345678', password: 'test12345678'})
+          .set('Authorization', res.headers.authorization)
+          .expect(400)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(400);
+            expect(user.body.error).to.equal('user.password.incorrect.same');
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+    it('should update if password is correct', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .put(`/auth/change-password`)
+          .send({old_password: 'test12345678', password: 'test12345678910'})
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body).to.equal(true);
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+    it('should not update if new password is too small', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .put(`/auth/change-password`)
+          .send({old_password: 'test12345678', password: 'test'})
+          .set('Authorization', res.headers.authorization)
+          .expect(400)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(400);
+            expect(user.body.error).to.equal('user.password.new.incorrect.too_short');
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+    it('should not update if new password is too big', (done) => {
+      registerAndLogin(agent).then(res => {
+        agent
+          .put(`/auth/change-password`)
+          .send({old_password: 'test12345678', password: 'test12345678test12345678test12345678test12345678test12345678test12345678test12345678'})
+          .set('Authorization', res.headers.authorization)
+          .expect(400)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(400);
+            expect(user.body.error).to.equal('user.password.new.incorrect.too_long');
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
+  })
+
   describe('login User Local', () => {
     it('should user local', (done) => {
       agent
@@ -495,7 +625,7 @@ describe("Users", () => {
   })
 
   describe('user account', () => {
-    xit('should retrieve account for user', (done) => {
+    it('should retrieve account for user', (done) => {
       nock('https://api.stripe.com')
         .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL')
         .reply(200, {
@@ -519,6 +649,42 @@ describe("Users", () => {
             .end((err, user) => {
               expect(user.statusCode).to.equal(200);
               expect(user.body.object).to.equal('account');
+              done(err);
+            })
+          }).catch(done)
+        }).catch(done)
+    });
+    it('should retrieve country specs for user', (done) => {
+      nock('https://api.stripe.com')
+        .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL')
+        .reply(200, {
+          object: 'account',
+          country: 'US'
+        });
+
+      nock('https://api.stripe.com')
+        .get('/v1/country_specs/US')
+        .reply(200, {
+          object: 'country_spec'
+        });
+      register(agent, {
+        email: 'test_user_account@gmail.com',
+        password: 'test',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      }).then(res => {
+          const userId = res.body.id
+          login(agent, {
+            email: 'test_user_account@gmail.com',
+            password: 'test'
+          }).then(login => {
+            agent
+            .get(`/user/account/countries`)
+            .send({ id: userId })
+            .set('Authorization', login.headers.authorization)
+            .expect(200)
+            .end((err, user) => {
+              expect(user.statusCode).to.equal(200);
+              expect(user.body.object).to.equal('country_spec');
               done(err);
             })
           }).catch(done)
@@ -586,5 +752,39 @@ describe("Users", () => {
         }).catch(done)
     });
   });
+  describe('bank account', () => {
+    it('should update bank account for user', (done) => {
+      nock('https://api.stripe.com')
+        .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL/external_accounts?object=bank_account')
+        .reply(200, {
+          object: 'list',
+          data: [
+            {
+              object: 'bank_account',
+              id: 'ba_1CVSl2EI8tTzMKoL'
+            }
+          ]
+        });
 
+      nock('https://api.stripe.com')
+        .post('/v1/accounts/acct_1CVSl2EI8tTzMKoL/external_accounts/ba_1CVSl2EI8tTzMKoL')
+        .reply(200, {
+          object: 'account'
+        });
+      registerAndLogin(agent, {
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      }).then(res => {
+        agent
+          .put(`/user/bank_accounts`)
+          .send({ account_id: 'acct_1CVSl2EI8tTzMKoL', routing_number: '110000000', account_number: '000123456789', country: 'US' })
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.body.object).to.exist;
+            done(err);
+          })
+      }).catch(done)
+    })
+  });
 });

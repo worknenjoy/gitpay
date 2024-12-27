@@ -1,8 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-
-jest.unmock('react-intl')
 import { preferences } from '../../src/reducers/preferencesReducer'
 import { organizations } from '../../src/reducers/organizationsReducer'
 import { task } from '../../src/reducers/taskReducer'
@@ -16,7 +14,7 @@ xdescribe('task reducer', () => {
   })
 })
 
-xdescribe('preferences reducer', () => {
+describe('preferences reducer', () => {
   it('should return the initial state', () => {
     expect(preferences(undefined, {})).toEqual(
       {
@@ -34,7 +32,7 @@ xdescribe('preferences reducer', () => {
   })
 })
 
-xdescribe('organizations reducer', () => {
+describe('organizations reducer', () => {
   it('should return the initial state', () => {
     expect(organizations(undefined, {})).toEqual(
       {
@@ -46,7 +44,7 @@ xdescribe('organizations reducer', () => {
   })
 })
 
-xdescribe('contact reducer', () => {
+describe('contact reducer', () => {
   it('should return the initial state', () => {
     expect(contact(undefined, {})).toEqual(
       { 'completed': true }

@@ -10,9 +10,9 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import AccountDetails from '../../../containers/account-details';
 import CustomerDetails from '../../../containers/customer-details';
 import UserRoles from '../../../containers/user-roles';
-import PaymentOptions from '../../payment/payment-options';
 import SettingsComponent from '../settings';
 import Preferences from '../preferences';
+import PayoutSettingsContainer from '../../../containers/payouts-settings';
 
 
 import AccountTabMain from './account-tab-main';
@@ -20,6 +20,7 @@ import AccountTabMain from './account-tab-main';
 export default function AccountTabs({
     user,
     updateUser,
+    changePassword,
     deleteUser,
     addNotification,
     history,
@@ -30,10 +31,8 @@ export default function AccountTabs({
       return 'account';
     } else if (location.pathname === '/profile/user-account/customer') {
       return 'customer';
-    } else if (location.pathname === '/profile/user-account/details') {
-      return 'details';
-    } else if (location.pathname === '/profile/user-account/bank') {
-      return 'bank';
+    } else if (location.pathname === '/profile/user-account/payouts') {
+      return 'payouts';
     } else if (location.pathname === '/profile/user-account/roles') {
       return 'roles';
     } else if (location.pathname === '/profile/user-account/skills') {
@@ -53,11 +52,8 @@ export default function AccountTabs({
       case 'customer':
         history.push('/profile/user-account/customer');
         break;
-      case 'details':
-        history.push('/profile/user-account/details');
-        break;
-      case 'bank':
-        history.push('/profile/user-account/bank');
+      case 'payouts':
+        history.push('/profile/user-account/payouts');
         break;
       case 'roles':
         history.push('/profile/user-account/roles');
@@ -106,20 +102,12 @@ export default function AccountTabs({
               value={'customer'}  
             />
           }
-          { user?.Types?.map(u => u.name)?.includes('contributor') && 
-            <Tab 
-              label={
-                <FormattedMessage id="profile.account.tab.bank.person" defaultMessage='Bank holder details' />
-              }
-              value={'details'}  
-            />
-          }
           { user?.Types?.map(u => u.name)?.includes('contributor') &&
             <Tab
               label={
-                <FormattedMessage id="profile.account.tab.bank.details" defaultMessage='Bank account information' />
+                <FormattedMessage id="profile.account.tab.payouts" defaultMessage='Payout settings' />
               }
-              value={'bank'} 
+              value={'payouts'} 
             />
           }
           <Tab
@@ -152,19 +140,15 @@ export default function AccountTabs({
                   <AccountTabMain
                     user={user}
                     updateUser={updateUser}
+                    changePassword={changePassword}
                     addNotification={addNotification}
                     deleteUser={deleteUser}
                     history={history}
                   />
               )} 
             />
-            <Route exact path="/profile/user-account/details" component={AccountDetails} />
             <Route exact path="/profile/user-account/customer" component={CustomerDetails} />
-            <Route exact path="/profile/user-account/bank" component={
-              (props) => (  
-                  <PaymentOptions />
-              )
-            } />
+            <Route exact path="/profile/user-account/payouts" component={PayoutSettingsContainer} />
             <Route exact path="/profile/user-account/roles" component={
               (props) => (
                   <UserRoles />

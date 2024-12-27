@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
  
@@ -231,4 +232,4 @@ TaskPaymentForm.propTypes = {
   createOrder: PropTypes.func.isRequired
 }
 
-export default injectIntl(TaskPaymentForm)
+export default withRouter(injectIntl(TaskPaymentForm))
