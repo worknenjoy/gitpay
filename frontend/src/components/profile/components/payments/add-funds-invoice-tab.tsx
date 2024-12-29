@@ -4,6 +4,7 @@ import InvoicePayment from '../../../design-library/organisms/invoice-payment/in
 
 interface AddFundsInvoiceTabProps extends RouteComponentProps {
   price: any;
+  history: any;
   priceAfterFee: any;
   customer: any;
   onPay: (amount: any) => Promise<void>;

@@ -18,6 +18,7 @@ const routerTransfer = require('./routes/transfer')
 const routerPayout = require('./routes/payout')
 const routerWallet = require('./routes/wallet')
 const routerWalletOrder = require('./routes/walletOrder')
+const routerLanguage = require('./routes/language')
 
 exports.init = (app) => {
   app.use('/', routerAuth)
@@ -33,6 +34,7 @@ exports.init = (app) => {
   app.use('/tasksolutions', routerTaskSolution)
   app.use('/coupon', routerCoupon)
   app.use('/labels', routerLabel)
+  app.use('/languages', routerLanguage)
   app.use('/offers', routerOffer)
   app.use('/transfers', routerTransfer)
   app.use('/payouts', routerPayout)

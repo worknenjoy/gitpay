@@ -18,6 +18,7 @@ import taskSolution from './taskSolutionReducer'
 import couponReducer from './couponReducer'
 import { profileReducer } from './profileReducer'
 import { labels } from './labelReducer'
+import { languages } from './languageReducer'
 import { transfers, transfer } from './transfersReducer'
 import { payouts } from './payoutsReducer'
 import { wallet, wallets } from './walletReducer'
@@ -42,6 +43,7 @@ const reducers = combineReducers({
   preferences,
   roles,
   labels,
+  languages,
   organizations,
   organization,
   contact,

@@ -12,6 +12,8 @@ interface PaymentMethodInvoiceTabProps extends RouteComponentProps, InjectedIntl
   task: any;
   createOrder: any;
   fetchCustomer: any;
+  history: any;
+  location: any;
   onPayment: () => void;
 }
 

@@ -209,7 +209,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                   console.log('error', e)
                 }
               }
-              return responseGithub
+                            return responseGithub
             }).catch(e => {
               // eslint-disable-next-line no-console
               console.log('Github response error')

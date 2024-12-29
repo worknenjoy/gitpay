@@ -83,6 +83,7 @@ interface TaskListProps extends RouteComponentProps, InjectedIntlProps {
   filterTasks: any;
   classes: any;
   intl: any;
+  history: any;
 }
 
 interface MatchParams {

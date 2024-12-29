@@ -321,6 +321,7 @@ class CustomPaginationActionsTable extends React.Component {
     };
 
 
+    
     if (tasks.completed && tasks.data.length === 0) {
       return (<Paper className={classes.root}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
@@ -399,6 +400,24 @@ class CustomPaginationActionsTable extends React.Component {
                                   size='small'
                                   label={
                                     TextEllipsis(`${label.name || ''}`, 10)
+                                  }
+                                />
+                              )
+                            )
+                            } ...
+                          </div> : <>-</>}
+                      </TableCell>
+                      <TableCell classes={classes.tableCell}>
+                      {n?.ProgrammingLanguages?.length ?
+                          <div>
+                            {n?.ProgrammingLanguages?.slice(0, 2).map(
+                              (language, index) =>
+                              (
+                                <Chip
+                                  style={{ marginRight: 5, marginBottom: 5 }}
+                                  size='small'
+                                  label={
+                                    TextEllipsis(`${language.name || ''}`, 10)
                                   }
                                 />
                               )

@@ -35,15 +35,48 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
       return requestPromise({
         uri,
         headers
-      }).then(response => {
+      }).then(async response => {
         if (!response && !response.title) return false
         const issueDataJsonGithub = JSON.parse(response)
         if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
         if (!taskParameters.description) taskParameters.description = issueDataJsonGithub.body
+
+        const programmingLanguagesUri = `https://api.github.com/repos/${userOrCompany}/${projectName}/languages?client_id=${githubClientId}&client_secret=${githubClientSecret}`;
+        const programmingLanguagesResponse = await requestPromise({
+          uri: programmingLanguagesUri,
+          headers: {
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+          },
+          json: true,
+        });
+
+        const languages = Object.keys(programmingLanguagesResponse);
+
         return project(userOrCompany, projectName, userId, 'github').then(p => {
           return p
             .createTask(taskParameters)
             .then(async task => {
+
+              for (const language of languages) {
+                // Check if the language exists
+                let programmingLanguage = await models.ProgrammingLanguage.findOne({
+                  where: { name: language },
+                });
+
+                // If it doesn't exist, create it
+                if (!programmingLanguage) {
+                  programmingLanguage = await models.ProgrammingLanguage.create({
+                    name: language,
+                  });
+                }
+
+                // Associate the programming language with the task
+                await models.TaskProgrammingLanguage.create({
+                  taskId: task.id,
+                  programmingLanguageId: programmingLanguage.id,
+                });
+              }
+
               const role = await roleExists({ name: 'company_owner' })
               if (role.dataValues && role.dataValues.id) {
                 const userInfo = await requestPromise({

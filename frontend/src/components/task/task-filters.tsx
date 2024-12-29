@@ -4,6 +4,7 @@ import { injectIntl, defineMessages } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Labels from '../../containers/label';
+import Language from '../../containers/language';
 import { get } from "lodash";
 import { connect } from "react-redux";
 import { filterTasks } from "../../actions/taskActions";
@@ -46,6 +47,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 interface TaskFiltersProps extends RouteComponentProps {
   intl: any;
+  history: any;
   classes: any;
   filterTasks: any;
   baseUrl?: string;
@@ -160,6 +162,9 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
         </div>
         <div style={{marginLeft: 10}}>
           <Labels />
+        </div>
+        <div style={{marginLeft: 10}}>
+          <Language />
         </div>
       </Toolbar>
     </AppBar>

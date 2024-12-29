@@ -33,6 +33,7 @@ const Content = styled.div`
 
 interface LoginButtonProps extends RouteComponentProps,  WithStyles<typeof styles> {
   referrer?: Location;
+  location?: any
   contrast?: boolean
   includeForm?: boolean
   hideExtra?: boolean
