@@ -587,7 +587,10 @@ class Task extends Component {
 
   handleDeadlineForm = (e) => {
     e.preventDefault()
-    this.state.deadlineForm ? this.setState({ deadlineForm: false }) : this.setState({ deadlineForm: true, paymentForm: false })
+    this.setState((prevState) => ({
+    deadlineForm: !prevState.deadlineForm,
+    paymentForm: false,
+  }));
   }
 
   handleInvite = () => {
@@ -1095,9 +1098,17 @@ class Task extends Component {
               }
             </div>
             <div>
-              <TaskDeadlineForm match={{ params: { id: task.data.id } }} classes={classes} open={this.state.deadlineForm} updateTask={(task) => {
+              <TaskDeadlineForm match={{ params: { id: task.data.id } }} 
+              classes={classes} 
+              open={this.state.deadlineForm} 
+              deadline={task.data.deadline}
+              onClose={() => this.setState({ deadlineForm: false })}
+              addNotification={this.props.addNotification}
+               updateTask={(task) => {
                 this.props.updateTask(task)
-                this.setState({ deadlineForm: false })
+                if (task.deadline !== null) {
+                  this.setState({ deadlineForm: false })
+                }
               }} />
             </div>
             {task?.data && (task?.data?.orders?.length || task?.data?.Orders?.length) ?
