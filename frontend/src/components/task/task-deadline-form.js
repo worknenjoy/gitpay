@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
+import { withStyles } from '@material-ui/core/styles'
 
 import {
   CardMedia,
@@ -35,6 +36,19 @@ const messages = defineMessages({
     id: 'task.deadline.level4',
     defaultMessage: ' In on month '
   },
+})
+
+const styles = theme => ({
+  btnClearDeadline: {
+    float: 'left',
+    marginTop: 10,
+    color: theme.palette.error.main,
+    borderColor: theme.palette.error.main
+  },
+  dayLabel: {
+    marginTop: 0,
+    marginLeft: '2em'
+  }
 })
 
 class TaskDeadlineForm extends Component {
@@ -142,7 +156,7 @@ class TaskDeadlineForm extends Component {
               <FormControl fullWidth>
                 <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
                   {(msg) => (
-                    <InputLabel htmlFor='adornment-date'>{msg}</InputLabel>
+                    <InputLabel htmlFor='adornment-date' className={classes.dayLabel}>{msg}</InputLabel>
                   )}
                 </FormattedMessage>
                 <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
@@ -193,4 +207,4 @@ TaskDeadlineForm.propTypes = {
   task: PropTypes.object
 }
 
-export default injectIntl(TaskDeadlineForm)
+export default injectIntl(withStyles(styles)(TaskDeadlineForm))

@@ -133,12 +133,6 @@ const styles = theme => ({
     marginTop: 10,
     color: 'white'
   },
-  btnClearDeadline: {
-    float: 'left',
-    marginTop: 10,
-    color: theme.palette.error.main,
-    borderColor: theme.palette.error.main
-  },
   avatar: {
     width: 40,
     height: 40,
