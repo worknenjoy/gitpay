@@ -162,6 +162,7 @@
   "task.status.deadline.day.insert.label": "Choose a date",
   "task.status.deadline.set.target": "Set deadline to {date}",
   "task.deadline.button.save": "Save date",
+  "task.deadline.button.clear": "Clear deadline",
   "task.invite.title": "Invite someone to work on this task",
   "task.funding.title": "Invite someone to add bounties to this issue",
   "task.invite.text.label": "Write an invitation text",
