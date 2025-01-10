@@ -1,6 +1,6 @@
-const models = require("./models");
+const models = require("../models");
 const requestPromise = require("request-promise");
-const secrets = require("./config/secrets");
+const secrets = require("../config/secrets");
 
 async function updateTaskLanguages() {
   const githubClientId = secrets.github.id;
