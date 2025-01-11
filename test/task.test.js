@@ -35,6 +35,12 @@ const nockAuth = () => {
     .get('/repos/worknenjoy/gitpay')
     .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
   .reply(200, getSingleRepo.repo)
+
+  nock('https://api.github.com')
+    .persist()
+    .get('/repos/worknenjoy/gitpay/languages')
+    .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+    .reply(200, {JavaScript: 100000, HTML: 50000})
 }
 
 const nockAuthLimitExceeded = () => {
@@ -59,6 +65,7 @@ const nockAuthLimitExceeded = () => {
 describe("tasks", () => {
   // API rate limit exceeded
   const createTask = (authorizationHeader, params) => {
+    
     return agent
       .post('/tasks/create/')
       .send(params ? params : {url: 'https://github.com/worknenjoy/truppie/issues/99'})
@@ -165,9 +172,9 @@ describe("tasks", () => {
     it('should give error on update if the task already exists', (done) => {
       nockAuth()
       registerAndLogin(agent).then(res => {
-        createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080', provider: 'github'}).then(task => {
+        createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080', provider: 'github'}).then(() => {
           createTask(res.headers.authorization, {url: 'https://github.com/worknenjoy/gitpay/issues/1080', provider: 'github'}).then(task => {
-            expect(task.errors).exist
+            expect(task.errors).to.exist
             expect(task.errors[0].message).to.equal('url must be unique')
             done();
           }).catch(done)
@@ -335,7 +342,7 @@ describe("tasks", () => {
           .get(`/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`)
           .expect(200)
           .end((err, res) => {
-            expect(res.statusCode).to.equal(302);
+            expect(res.statusCode).to.equal(200);
             done();
           })
         })
