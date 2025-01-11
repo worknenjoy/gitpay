@@ -123,6 +123,8 @@ class CountryPicker extends Component {
           <DialogContent>
             <DialogContentText id='alert-dialog-footer'>
               <div>Icons made by <a href='http://www.freepik.com/' title='Freepik'>Freepik</a> and <a href="https://www.flaticon.com/free-icons/flags" title="flags icons">Icon.doit - Flaticon</a> from <a href='https://www.flaticon.com/' title='Flaticon'>www.flaticon.com</a> is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0' target='_blank' rel="noreferrer">CC 3.0 BY</a></div>
+              <div><a href="https://www.flaticon.com/free-icons/pakistan" title="pakistan icons">Pakistan icons created by Roundicons - Flaticon</a></div>
+              <div><a href="https://www.flaticon.com/free-icons/turkey" title="turkey icons">Turkey icons created by IconsBox - Flaticon</a></div>
             </DialogContentText>
           </DialogContent>
         </Dialog>

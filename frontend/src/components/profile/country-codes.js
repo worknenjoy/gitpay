@@ -36,6 +36,7 @@ export const countryCodes = [
   { country: 'New Zealand', code: 'NZ', image: 'new-zealand' },
   { country: 'Nigeria', code: 'NG', image: 'nigeria' },
   { country: 'Norway', code: 'NO', image: 'norway' },
+  { country: 'Pakistan', code: 'PK', image: 'pakistan' },
   { country: 'Philippines', code: 'PH', image: 'philippine' },
   { country: 'Poland', code: 'PL', image: 'poland'},
   { country: 'Portugal', code: 'PT', image: 'portugal' },
@@ -48,6 +49,7 @@ export const countryCodes = [
   { country: 'Sweden', code: 'SE', image: 'sweden' },
   { country: 'Switzerland', code: 'CH', image: 'switzerland' },
   { country: 'Thailand', code: 'TH', image: 'thailand' },
+  { country: 'Turkey', code: 'TR', image: 'turkey' },
   { country: 'United Arab Emirates', code: 'AE', image: 'united-arab-emirates'},
   { country: 'United Kingdom', code: 'GB', image: 'united-kingdom' },
   { country: 'United States', code: 'US', image: 'united-states-of-america' }
@@ -85,7 +87,9 @@ export const countryCurrencies = [
   { currency: 'Thai Baht', symbol: '฿', code: 'THB', countries: ['TH'] },
   { currency: 'United Arab Emirates Dirham', symbol: 'د.إ', code: 'AED', countries: ['AE'] },
   { currency: 'British Pound', symbol: '£', code: 'GBP', countries: ['GB'] },
-  { currency: 'United States Dollar', symbol: '$', code: 'USD', countries: ['US'] }
+  { currency: 'United States Dollar', symbol: '$', code: 'USD', countries: ['US'] },
+  { currency: 'Turkish Lira', symbol: '₺', code: 'TRY', countries: ['TR'] },
+  { currency: 'Pakistani Rupee', symbol: '₨', code: 'PKR', countries: ['PK'] }
 ];
 
 export const countryCodesFull = [

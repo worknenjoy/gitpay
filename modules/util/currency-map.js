@@ -49,5 +49,7 @@ module.exports.currencyMap = {
   'AE': 'AED', // United Arab Emirates
   'GB': 'GBP',
   'US': 'USD',
-  'CO': 'COP' // Colombia
+  'CO': 'COP', // Colombia
+  'TR': 'TRY', // Turkey
+  'PK': 'PKR'  // Pakistan
 };
