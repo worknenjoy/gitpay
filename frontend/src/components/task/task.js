@@ -60,6 +60,8 @@ import TaskStatusIcons from './task-status-icons'
 
 import Constants from '../../consts'
 
+import TaskDeadlineDrawer from '../design-library/templates/task-deadline-drawer/task-deadline-drawer'
+
 const taskCover = require('../../images/task-cover.png')
 const inviteCover = require('../../images/funds.png')
 
@@ -1047,12 +1049,19 @@ class Task extends Component {
                   </Typography>
                   <div>
                     <Typography variant='h6' className={classes.taskInfoContent}>
-                      <div>
-                        <div>{deliveryDate}</div>
-                        {deadline && parseInt(deadline) > 0 ? <small>in {deadline} days</small>
-                          : <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
-                        }
-                      </div>
+                      <Button onClick={() => this.setState({ deadlineForm: true })}>
+                        {task.data.deadline ? (
+                          <div>
+                            <div>{deliveryDate}</div>
+                            {deadline && parseInt(deadline) > 0 ?
+                              <small>in {deadline} days</small>
+                              : <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
+                            }
+                          </div>
+                        ) : (
+                          <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
+                        )}
+                      </Button>
                     </Typography>
                   </div>
                 </div>
@@ -1076,30 +1085,35 @@ class Task extends Component {
                   </Typography>
                   <div>
                     <Typography variant='h6' className={classes.taskInfoContent}>
-                      <Button onClick={() => this.setState({ deadlineForm: !this.state.deadlineForm })}>
+                      <Button onClick={() => this.setState({ deadlineForm: true })}>
                         {task.data.deadline ? (
                           <div>
                             <div>{deliveryDate}</div>
-                            {deadline && parseInt(deadline) > 0 ? <small>in {deadline} days</small>
+                            {deadline && parseInt(deadline) > 0 ?
+                              <small>in {deadline} days</small>
                               : <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
                             }
                           </div>
                         ) : (
                           <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
                         )}
-
                       </Button>
                     </Typography>
                   </div>
                 </div>
               }
             </div>
-            <div>
-              <TaskDeadlineForm match={{ params: { id: task.data.id } }} classes={classes} open={this.state.deadlineForm} updateTask={(task) => {
+            <TaskDeadlineDrawer
+              open={this.state.deadlineForm}
+              onClose={() => this.setState({ deadlineForm: false })}
+              taskId={task.data.id}
+              task={task.data}
+              onUpdate={(task) => {
                 this.props.updateTask(task)
                 this.setState({ deadlineForm: false })
-              }} />
-            </div>
+              }}
+              classes={classes}
+            />
             {task?.data && (task?.data?.orders?.length || task?.data?.Orders?.length) ?
               <div>
                 <TaskPayments orders={(task?.data?.orders || task?.data?.Orders)?.filter(o => o.paid && o.status === 'succeeded')} />

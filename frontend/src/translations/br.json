@@ -138,6 +138,7 @@
   "task.status.deadline.day.insert.label": "Escolha uma data",
   "task.status.deadline.set.target": "Escolher data para {date}",
   "task.deadline.button.save": "Salvar data",
+  "task.deadline.button.clear": "Limpar data",
   "task.invite.title": "Convide alguém para trabalhar nesta tarefa",
   "task.funding.title": "Convide alguém para adicionar uma recompensa para essa tarefa",
   "task.invite.text.label": "Escreva um texto para ser enviado junto ao convite",
