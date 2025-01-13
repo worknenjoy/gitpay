@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-  const TaskProgrammingLanguage = sequelize.define('TaskProgrammingLanguage', {
-    taskId: {
+  const ProjectProgrammingLanguage = sequelize.define('ProjectProgrammingLanguage', {
+    projectId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Tasks',
+        model: 'Projects',
         key: 'id'
       }
     },
@@ -18,5 +18,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  return TaskProgrammingLanguage;
+  return ProjectProgrammingLanguage;
 };

@@ -61,14 +61,12 @@ const TaskFilterLangauges = function({
     }
   };
   
-
   
   useEffect(() => {
     listLanguages()
   }, [listLanguages])
 
   const getSelectedNames = (selected) => {
-    console.log("selected", selected)
     return languages?.data?.filter(l => selected.includes(l.id)).map(l => l.name)
   }
 

@@ -2,7 +2,7 @@ const Promise = require('bluebird')
 const models = require('../../models')
 const { Op, Sequelize } = require('sequelize')
 
-module.exports = Promise.method(function taskSearch (searchParams) {
+module.exports = Promise.method(function taskSearch(searchParams) {
   let query = {
     [Op.or]: [
       { private: null },
@@ -26,28 +26,17 @@ module.exports = Promise.method(function taskSearch (searchParams) {
     having: Sequelize.literal(`COUNT(DISTINCT "Label"."id") = ${searchParams.labelIds.length}`)
   } : models.Label
 
-  // Programming Language filter
-  console.log(searchParams.languageIds)
-  const languageWhere = searchParams.languageIds ? {
-    model: models.ProgrammingLanguage,
-    where: { id: { [Op.in]: searchParams.languageIds } },
-    attributes: ['name'],
-    through: {
-      attributes: []
-    },
-    group: ['tasks.id'],
-    having: Sequelize.literal(`COUNT(DISTINCT "ProgrammingLanguage"."id") = ${searchParams.languageIds.length}`)
-  } : models.ProgrammingLanguage
-
   if (searchParams.organizationId && !searchParams.projectId) {
     let tasks = []
     return models.Project
       .findAll(
         {
-          where: { OrganizationId: parseInt(searchParams.organizationId) },
-          include: [ {
+          where: {
+            OrganizationId: parseInt(searchParams.organizationId)
+          },
+          include: [{
             model: models.Task,
-            include: [ models.User, models.Order, models.Assign, models.Project, labelWhere, languageWhere ]
+            include: [models.User, models.Order, models.Assign, models.Project, labelWhere]
           }],
           order: [
             ['id', 'DESC']
@@ -70,11 +59,23 @@ module.exports = Promise.method(function taskSearch (searchParams) {
             models.User,
             models.Order,
             {
+              model: models.Project,
+              include: [
+                {
+                  model: models.ProgrammingLanguage,
+                  where: searchParams.languageIds ? { id: { [Op.in]: searchParams.languageIds } } : {},
+                  attributes: ['name'],
+                  through: {
+                    attributes: [],
+                  },
+                  having: searchParams.languageIds ? Sequelize.literal(`COUNT(DISTINCT "ProgrammingLanguage"."id") = ${searchParams.languageIds.length}`) : undefined,
+                },
+              ],
+            },
+            {
               model: models.Assign, include: [models.User]
             },
-            models.Project,
-            labelWhere,
-            languageWhere
+            labelWhere
           ],
           order: [
             ['status', 'DESC'],

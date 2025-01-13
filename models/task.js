@@ -115,12 +115,6 @@ module.exports = (sequelize, DataTypes) => {
     )
     Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
     Task.hasOne(models.Transfer, { foreignKey: 'taskId' })
-    Task.belongsToMany(models.ProgrammingLanguage, {
-      through: 'TaskProgrammingLanguages',
-      foreignKey: 'taskId',
-      otherKey: 'programmingLanguageId'
-    });
-    
   }
 
   

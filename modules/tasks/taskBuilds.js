@@ -56,7 +56,8 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
           return p
             .createTask(taskParameters)
             .then(async task => {
-
+              
+              
               for (const language of languages) {
                 // Check if the language exists
                 let programmingLanguage = await models.ProgrammingLanguage.findOne({
@@ -71,8 +72,8 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
                 }
 
                 // Associate the programming language with the task
-                await models.TaskProgrammingLanguage.create({
-                  taskId: task.id,
+                await models.ProjectProgrammingLanguage.create({
+                  projectId: task.ProjectId,
                   programmingLanguageId: programmingLanguage.id,
                 });
               }

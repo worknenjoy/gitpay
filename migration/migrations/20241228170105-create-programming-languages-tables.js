@@ -23,19 +23,19 @@ module.exports = {
       }
     });
 
-    // Create TaskProgrammingLanguages table
-    await queryInterface.createTable('TaskProgrammingLanguages', {
+    // Create ProjectProgrammingLanguages table
+    await queryInterface.createTable('ProjectProgrammingLanguages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      taskId: {
+      projectId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Tasks',
+          model: 'Projects',
           key: 'id'
         },
         onDelete: 'CASCADE',
@@ -63,8 +63,8 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Drop TaskProgrammingLanguages table first due to foreign key dependency
-    await queryInterface.dropTable('TaskProgrammingLanguages');
+    // Drop ProjectProgrammingLanguages table first due to foreign key dependency
+    await queryInterface.dropTable('ProjectProgrammingLanguages');
 
     // Drop ProgrammingLanguages table
     await queryInterface.dropTable('ProgrammingLanguages');

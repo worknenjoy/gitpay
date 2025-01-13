@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
   Project.associate = (models) => {
     Project.hasMany(models.Task)
     Project.belongsTo(models.Organization)
+    Project.belongsToMany(models.ProgrammingLanguage, {
+      through: 'ProjectProgrammingLanguages',
+      foreignKey: 'projectId',
+      otherKey: 'programmingLanguageId'
+    });
   }
 
   return Project
