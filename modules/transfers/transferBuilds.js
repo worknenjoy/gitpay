@@ -133,7 +133,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
     } else {
       const centavosAmount = stripeTotal * 100
       let transferData = {
-        amount: centavosAmount * 0.92, // 8% base fee
+        amount: Math.floor((centavosAmount * 92) / 100), // 8% base fee
         currency: 'usd',
         destination: dest,
         source_type: 'card',

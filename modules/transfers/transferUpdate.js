@@ -40,8 +40,9 @@ module.exports = Promise.method(async function transferUpdate(params) {
   ) {
     const finalValue = existingTransfer.dataValues.stripe_transfer_amount
     const centavosAmount = finalValue * 100
+    
     const transferData = {
-      amount: centavosAmount * 0.92, // 8% base fee
+      amount: Math.floor((centavosAmount * 92) / 100), // 8% base fee
       currency: 'usd',
       destination: destination.account_id,
       source_type: 'card',
