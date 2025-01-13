@@ -42,8 +42,6 @@ const TaskFilterLangauges = function({
       Array.isArray(value) ? value : [] // Ensure `value` is an array
     );
   
-    console.log(value);
-  
     // Prepare filters and update tasks
     const filters = { languageIds: value };
     const splitUrl = history?.location?.pathname.split('/');

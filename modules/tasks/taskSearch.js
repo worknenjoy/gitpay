@@ -1,6 +1,7 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 const { Op, Sequelize } = require('sequelize')
+const programminglanguage = require('../../models/programminglanguage')
 
 module.exports = Promise.method(function taskSearch(searchParams) {
   let query = {
@@ -56,26 +57,17 @@ module.exports = Promise.method(function taskSearch(searchParams) {
         {
           where: query,
           include: [
-            models.User,
-            models.Order,
-            {
+            { model: models.User },
+            { model: models.Order },
+            { 
               model: models.Project,
-              include: [
-                {
-                  model: models.ProgrammingLanguage,
-                  where: searchParams.languageIds ? { id: { [Op.in]: searchParams.languageIds } } : {},
-                  attributes: ['name'],
-                  through: {
-                    attributes: [],
-                  },
-                  having: searchParams.languageIds ? Sequelize.literal(`COUNT(DISTINCT "ProgrammingLanguage"."id") = ${searchParams.languageIds.length}`) : undefined,
-                },
-              ],
+              include: [{ model: models.ProgrammingLanguage, as: 'ProgrammingLanguages' }]
             },
-            {
-              model: models.Assign, include: [models.User]
+            { 
+              model: models.Assign, 
+              include: [{ model: models.User }] 
             },
-            labelWhere
+            { model: labelWhere }
           ],
           order: [
             ['status', 'DESC'],
@@ -84,7 +76,13 @@ module.exports = Promise.method(function taskSearch(searchParams) {
         }
       )
       .then(data => {
-        return data
+        return data.filter(task => {
+          const project = task.Project
+          if (searchParams.languageIds && searchParams.languageIds.length > 0) {
+            return project?.ProgrammingLanguages.some(pl => searchParams.languageIds.includes(`${pl.id}`))
+          }
+          return true
+        })
       })
   }
 })

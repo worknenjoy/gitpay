@@ -23,7 +23,6 @@ const listLanguage = (params) => {
     return axios
       .get(api.API_URL + '/languages/search', { params })
       .then(languages => {
-        console.log('languages', languages)
         if (languages.status === 200 && languages.data && !languages.data.error) {
           return dispatch(listLanguageSuccess(languages.data))
         }
