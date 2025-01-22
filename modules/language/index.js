@@ -1,7 +1,7 @@
 const languageSearch = require('./languageSearch')
-const tasklanguageSearch = require('./taskProgrammingLanguage')
+const projectlanguageSearch = require('./projectProgrammingLanguage')
 
 module.exports = {
   languageSearch,
-  tasklanguageSearch
+  projectlanguageSearch
 }

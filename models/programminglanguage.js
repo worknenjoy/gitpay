@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   ProgrammingLanguage.associate = function (models) {
-    ProgrammingLanguage.belongsToMany(models.Task, {
-      through: 'TaskProgrammingLanguages',
+    ProgrammingLanguage.belongsToMany(models.Project, {
+      through: 'ProjectProgrammingLanguages',
       foreignKey: 'programmingLanguageId',
-      otherKey: 'taskId'
+      otherKey: 'projectId'
     });
   };
 

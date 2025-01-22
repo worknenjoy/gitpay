@@ -408,9 +408,9 @@ class CustomPaginationActionsTable extends React.Component {
                           </div> : <>-</>}
                       </TableCell>
                       <TableCell classes={classes.tableCell}>
-                      {n?.ProgrammingLanguages?.length ?
+                      {n?.Project?.ProgrammingLanguages?.length ?
                           <div>
-                            {n?.ProgrammingLanguages?.slice(0, 2).map(
+                            {n?.Project?.ProgrammingLanguages?.slice(0, 2).map(
                               (language, index) =>
                               (
                                 <Chip

@@ -1,8 +1,9 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 const { Op, Sequelize } = require('sequelize')
+const programminglanguage = require('../../models/programminglanguage')
 
-module.exports = Promise.method(function taskSearch (searchParams) {
+module.exports = Promise.method(function taskSearch(searchParams) {
   let query = {
     [Op.or]: [
       { private: null },
@@ -26,28 +27,17 @@ module.exports = Promise.method(function taskSearch (searchParams) {
     having: Sequelize.literal(`COUNT(DISTINCT "Label"."id") = ${searchParams.labelIds.length}`)
   } : models.Label
 
-  // Programming Language filter
-  console.log(searchParams.languageIds)
-  const languageWhere = searchParams.languageIds ? {
-    model: models.ProgrammingLanguage,
-    where: { id: { [Op.in]: searchParams.languageIds } },
-    attributes: ['name'],
-    through: {
-      attributes: []
-    },
-    group: ['tasks.id'],
-    having: Sequelize.literal(`COUNT(DISTINCT "ProgrammingLanguage"."id") = ${searchParams.languageIds.length}`)
-  } : models.ProgrammingLanguage
-
   if (searchParams.organizationId && !searchParams.projectId) {
     let tasks = []
     return models.Project
       .findAll(
         {
-          where: { OrganizationId: parseInt(searchParams.organizationId) },
-          include: [ {
+          where: {
+            OrganizationId: parseInt(searchParams.organizationId)
+          },
+          include: [{
             model: models.Task,
-            include: [ models.User, models.Order, models.Assign, models.Project, labelWhere, languageWhere ]
+            include: [models.User, models.Order, models.Assign, models.Project, labelWhere]
           }],
           order: [
             ['id', 'DESC']
@@ -67,14 +57,17 @@ module.exports = Promise.method(function taskSearch (searchParams) {
         {
           where: query,
           include: [
-            models.User,
-            models.Order,
-            {
-              model: models.Assign, include: [models.User]
+            { model: models.User },
+            { model: models.Order },
+            { 
+              model: models.Project,
+              include: [{ model: models.ProgrammingLanguage, as: 'ProgrammingLanguages' }]
             },
-            models.Project,
-            labelWhere,
-            languageWhere
+            { 
+              model: models.Assign, 
+              include: [{ model: models.User }] 
+            },
+            { model: labelWhere }
           ],
           order: [
             ['status', 'DESC'],
@@ -83,7 +76,13 @@ module.exports = Promise.method(function taskSearch (searchParams) {
         }
       )
       .then(data => {
-        return data
+        return data.filter(task => {
+          const project = task.Project
+          if (searchParams.languageIds && searchParams.languageIds.length > 0) {
+            return project?.ProgrammingLanguages.some(pl => searchParams.languageIds.includes(`${pl.id}`))
+          }
+          return true
+        })
       })
   }
 })

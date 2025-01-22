@@ -10,8 +10,8 @@ exports.languageSearchController = (req, res) => {
       res.status(401).send(error)
     })
 }
-exports.taskLanguageSearchController = (req, res) => {
-  languageSearch.tasklanguageSearch(req.body)
+exports.projectLanguageSearchController = (req, res) => {
+  languageSearch.projectlanguageSearch(req.body)
     .then(data => {
       res.status(200).send(data)
     }).catch(error => {
