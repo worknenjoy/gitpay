@@ -1,29 +1,22 @@
-import React, { useState , useEffect } from 'react';
-import { AppBar, Toolbar, Button, ButtonGroup, Chip} from '@material-ui/core';
-import { injectIntl, defineMessages } from 'react-intl';
+import React, { useState, useEffect } from 'react';
+import { AppBar, Toolbar, Select, MenuItem, Chip, InputLabel, OutlinedInput } from '@material-ui/core';
+import FormControl from '@mui/material/FormControl';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Labels from '../../containers/label';
 import Language from '../../containers/language';
-import { get } from "lodash";
-import { connect } from "react-redux";
-import { filterTasks } from "../../actions/taskActions";
-import { backdropClasses } from "@mui/material";
 
 const styles = (theme) => ({
-  button: {
-    backgroundColor: theme.palette.primary.light,
-  },
-  buttonActive: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.contrastText,
+  select: {
+    backgroundColor: 'transparent',
   },
   chip: {
     marginLeft: theme.spacing(1),
   },
   chipActive: {
     marginLeft: theme.spacing(1),
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.dark,
     borderColor: theme.palette.primary.light,
   },
 });
@@ -83,7 +76,8 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
       taskList.filter((task) => parseFloat(task.value) === 0).length
     );
   };
-  const handleTabChange = (event, value) => {
+  const handleTabChange = (event) => {
+    const value = event.target.value;
     setTaskListState({ ...taskListState, tab: value });
     let filterPromise;
     switch (value) {
@@ -107,64 +101,54 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
     });
   };
 
-
-  return(
-    <AppBar position='static' color='transparent' elevation={ 0 }>
-      <Toolbar style={{display: 'flex', justifyContent: 'space-between', margin: 0, padding: 0}}>
+  return (
+    <AppBar position='static' color='transparent' elevation={0}>
+      <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
         <div>
-          <ButtonGroup
-            disableElevation
-            variant="contained"
-            aria-label="Disabled elevation buttons"
-            size='small'
-          >
-            <Button
+          <FormControl sx={{ m: 1 }}>
+            <Select
               value={taskListState.tab}
-              onClick={ (e) => handleTabChange(e, 0) }
-              className={ taskListState.tab === 0 ? classes.buttonActive : classes.button }
+              onChange={handleTabChange}
+              className={classes.select}
+              variant="outlined"
             >
-              { intl.formatMessage(messages.allTasks) }
-              <Chip
-                label={allTasksCount}
-                size="small"
-                variant="outlined"
-                className={taskListState.tab === 0 ? classes.chipActive : classes.chip}
-              />
-
-            </Button>
-            <Button
-              value={taskListState.tab}
-              onClick={ (e) => handleTabChange(e, 1) }
-              className={ taskListState.tab === 1 ? classes.buttonActive : classes.button }
-            >
-              { intl.formatMessage(messages.allPublicTasksWithBounties) }
-              <Chip
-                label={withBountiesCount}
-                size="small"
-                variant="outlined"
-                className={taskListState.tab === 1 ? classes.chipActive : classes.chip}
-              />
-            </Button>
-            <Button
-              value={taskListState.tab}
-              onClick={ (e) => handleTabChange(e, 2) }
-              className={ taskListState.tab === 2 ? classes.buttonActive : classes.button }
-            >
-              { intl.formatMessage(messages.allPublicTasksNoBounties) }
-              <Chip
-                label={noBountiesCount}
-                size="small"
-                variant="outlined"
-                className={taskListState.tab === 2 ? classes.chipActive : classes.chip}
-              />
-            </Button>
-          </ButtonGroup>
+              <MenuItem value={0}>
+                {intl.formatMessage(messages.allTasks)}
+                <Chip
+                  label={allTasksCount}
+                  size="small"
+                  variant="outlined"
+                  className={taskListState.tab === 0 ? classes.chipActive : classes.chip}
+                />
+              </MenuItem>
+              <MenuItem value={1}>
+                {intl.formatMessage(messages.allPublicTasksWithBounties)}
+                <Chip
+                  label={withBountiesCount}
+                  size="small"
+                  variant="outlined"
+                  className={taskListState.tab === 1 ? classes.chipActive : classes.chip}
+                />
+              </MenuItem>
+              <MenuItem value={2}>
+                {intl.formatMessage(messages.allPublicTasksNoBounties)}
+                <Chip
+                  label={noBountiesCount}
+                  size="small"
+                  variant="outlined"
+                  className={taskListState.tab === 2 ? classes.chipActive : classes.chip}
+                />
+              </MenuItem>
+            </Select>
+          </FormControl>
         </div>
-        <div style={{marginLeft: 10}}>
-          <Labels />
-        </div>
-        <div style={{marginLeft: 10}}>
-          <Language />
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+          <div>
+            <Labels />
+          </div>
+          <div style={{ marginLeft: 10 }}>
+            <Language />
+          </div>
         </div>
       </Toolbar>
     </AppBar>
@@ -172,4 +156,3 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
 }
 
 export default injectIntl(withRouter(withStyles(styles)(TaskFilters)))
-
