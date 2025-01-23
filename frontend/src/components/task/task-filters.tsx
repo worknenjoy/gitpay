@@ -9,7 +9,7 @@ import Language from '../../containers/language';
 
 const styles = (theme) => ({
   select: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   chip: {
     marginLeft: theme.spacing(1),
@@ -104,44 +104,42 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
   return (
     <AppBar position='static' color='transparent' elevation={0}>
       <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
-        <div>
-          <FormControl sx={{ m: 1 }}>
-            <Select
-              value={taskListState.tab}
-              onChange={handleTabChange}
-              className={classes.select}
-              variant="outlined"
-            >
-              <MenuItem value={0}>
-                {intl.formatMessage(messages.allTasks)}
-                <Chip
-                  label={allTasksCount}
-                  size="small"
-                  variant="outlined"
-                  className={taskListState.tab === 0 ? classes.chipActive : classes.chip}
-                />
-              </MenuItem>
-              <MenuItem value={1}>
-                {intl.formatMessage(messages.allPublicTasksWithBounties)}
-                <Chip
-                  label={withBountiesCount}
-                  size="small"
-                  variant="outlined"
-                  className={taskListState.tab === 1 ? classes.chipActive : classes.chip}
-                />
-              </MenuItem>
-              <MenuItem value={2}>
-                {intl.formatMessage(messages.allPublicTasksNoBounties)}
-                <Chip
-                  label={noBountiesCount}
-                  size="small"
-                  variant="outlined"
-                  className={taskListState.tab === 2 ? classes.chipActive : classes.chip}
-                />
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+        <FormControl>
+          <Select
+            value={taskListState.tab}
+            onChange={handleTabChange}
+            className={classes.select}
+            variant="outlined"
+          >
+            <MenuItem value={0}>
+              {intl.formatMessage(messages.allTasks)}
+              <Chip
+                label={allTasksCount}
+                size="small"
+                variant="outlined"
+                className={taskListState.tab === 0 ? classes.chipActive : classes.chip}
+              />
+            </MenuItem>
+            <MenuItem value={1}>
+              {intl.formatMessage(messages.allPublicTasksWithBounties)}
+              <Chip
+                label={withBountiesCount}
+                size="small"
+                variant="outlined"
+                className={taskListState.tab === 1 ? classes.chipActive : classes.chip}
+              />
+            </MenuItem>
+            <MenuItem value={2}>
+              {intl.formatMessage(messages.allPublicTasksNoBounties)}
+              <Chip
+                label={noBountiesCount}
+                size="small"
+                variant="outlined"
+                className={taskListState.tab === 2 ? classes.chipActive : classes.chip}
+              />
+            </MenuItem>
+          </Select>
+        </FormControl>
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
           <div>
             <Labels />
