@@ -2,21 +2,23 @@ const models = require("../models");
 const requestPromise = require("request-promise");
 const secrets = require("../config/secrets");
 
-async function updateTaskLanguages() {
+async function updateProjectLanguages() {
   const githubClientId = secrets.github.id;
   const githubClientSecret = secrets.github.secret;
 
   // Fetch all tasks with GitHub URLs
-  const tasks = await models.Task.findAll({
-    where: { provider: "github" },
+  const projects = await models.Project.findAll({
+    //where: { provider: "github" },
+    include: [
+      models.Organization
+    ]
   });
 
-  for (const task of tasks) {
+  for (const project of projects) {
     try {
-      const issueUrl = task.url;
-      const splitIssueUrl = new URL(issueUrl).pathname.split("/");
-      const owner = splitIssueUrl[1];
-      const repo = splitIssueUrl[2];
+      const owner = project.Organization.name;
+      const repo = project.name;
+      console.log(`Fetching languages for ${owner}/${repo}`);
 
       // Fetch programming languages from GitHub API
       const languagesResponse = await requestPromise({
@@ -31,13 +33,11 @@ async function updateTaskLanguages() {
       // Extract languages
       const languages = Object.keys(languagesResponse);
 
-      // Print task title and languages
-      console.log(`Task: ${task.title}`);
       console.log(`Languages: ${languages.join(", ") || "No languages found"}`);
 
       // Clear existing language associations for the task
-      await models.TaskProgrammingLanguage.destroy({
-        where: { taskId: task.id },
+      await models.ProjectProgrammingLanguage.destroy({
+        where: { projectId: project.id },
       });
 
       // Ensure all programming languages exist in the ProgrammingLanguage table
@@ -55,23 +55,23 @@ async function updateTaskLanguages() {
         }
 
         // Associate the language with the task
-        await models.TaskProgrammingLanguage.create({
-          taskId: task.id,
+        await models.ProjectProgrammingLanguage.create({
+          projectId: project.id,
           programmingLanguageId: programmingLanguage.id,
         });
       }
 
-      console.log(`Updated languages for task ID: ${task.id}`);
+      console.log(`Updated languages for project ID: ${project.id}`);
     } catch (error) {
       console.error(
-        `Failed to update languages for task ID: ${task.id}`,
+        `Failed to update languages for project ID: ${project.id}`,
         error
       );
     }
   }
 }
 
-updateTaskLanguages().then(() => {
-  console.log("Task language update complete.");
+updateProjectLanguages().then(() => {
+  console.log("Project language update complete.");
   process.exit();
 });
