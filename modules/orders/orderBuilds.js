@@ -31,17 +31,20 @@ module.exports = async function orderBuilds(orderParameters) {
   }).save()
 
   if(plan === 'open source') {
-    const planSchema = await models.PlanSchema.findAll({
+    const planFeeBasedOnPrice = amount >= 5000 ? 'Open Source - no fee' : 'Open Source - default'
+    const planSchema = await models.PlanSchema.findOne({
       where: {
-        plan: plan
+        plan: plan,
+        name: planFeeBasedOnPrice,
+        feeType: 'charge'
       }
     })
     
     const orderPlan = await order.createPlan({
-      plan: 'open source',
-      PlanSchemaId: planSchema[0].id,
-      fee: (planSchema[0].fee/100) * amount,
-      feePercentage: planSchema[0].fee
+      plan: plan,
+      PlanSchemaId: planSchema.id,
+      fee: parseInt(planSchema.fee) > 0 ? (planSchema.fee/100) * amount : 0,
+      feePercentage: planSchema.fee
     })
     
   }

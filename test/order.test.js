@@ -64,45 +64,123 @@ describe('orders', () => {
       }).catch(done)
     })
 
-    it('should create a new order with a plan', async () => {
-      try {
-        const PlanSchema = models.PlanSchema.build({
+    describe('Order with Plan', () => {
+      let PlanSchema
+      beforeEach(async () => {
+        PlanSchema = await models.PlanSchema.build({
           plan: 'open source',
-          name: 'default open source',
+          name: 'Open Source - default',
           description: 'open source',
           fee: 8,
           feeType: 'charge'
         });
-        const user = await registerAndLogin(agent);
-        const res = await agent
-          .post('/orders/create/')
-          .send({
-          source_id: '12345',
-          currency: 'BRL',
-          amount: 100,
-          email: 'testing@gitpay.me',
-          userId: user.body.id,
-          plan: 'open source'
-        })
-        .set('Authorization', user.headers.authorization)
-        .expect('Content-Type', /json/)
-        .expect(200);
+        PlanSchema = await models.PlanSchema.build({
+          plan: 'open source',
+          name: 'Open Source - no fee',
+          description: 'open source with no fee',
+          fee: 0,
+          feeType: 'charge'
+        });
+      })
+      it('should create a new order with a plan', async () => {
+        try {
+          const user = await registerAndLogin(agent);
+          const res = await agent
+            .post('/orders/create/')
+            .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 100,
+            email: 'testing@gitpay.me',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200);
 
-        expect(res.statusCode).to.equal(200);
-        expect(res.body).to.exist;
-        expect(res.body.source_id).to.equal('12345');
-        expect(res.body.currency).to.equal('BRL');
-        expect(res.body.amount).to.equal('100');
-        expect(res.body.Plan.plan).to.equal('open source');
-        expect(res.body.Plan.fee).to.equal('8');
-        expect(res.body.Plan.feePercentage).to.equal(8);
-        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
-        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          expect(res.body.source_id).to.equal('12345');
+          expect(res.body.currency).to.equal('BRL');
+          expect(res.body.amount).to.equal('100');
+          expect(res.body.Plan.plan).to.equal('open source');
+          expect(res.body.Plan.fee).to.equal('8');
+          expect(res.body.Plan.feePercentage).to.equal(8);
+          expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
+          expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
 
-      } catch (err) {
-        throw err;
-      }
-    });
+        } catch (err) {
+          throw err;
+        }
+      });
+
+      it('should create a new order with no exact amount with a plan', async () => {
+        try {
+          const user = await registerAndLogin(agent);
+          const res = await agent
+            .post('/orders/create/')
+            .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 832,
+            email: 'testing@gitpay.me',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200);
+
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          expect(res.body.source_id).to.equal('12345');
+          expect(res.body.currency).to.equal('BRL');
+          expect(res.body.amount).to.equal('832');
+          expect(res.body.Plan.plan).to.equal('open source');
+          expect(res.body.Plan.fee).to.equal('66.56');
+          expect(res.body.Plan.feePercentage).to.equal(8);
+          expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
+          expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
+
+        } catch (err) {
+          throw err;
+        }
+      });
+
+      it('should create a new order with a plan above 5000', async () => {
+        try {
+          const user = await registerAndLogin(agent);
+          const res = await agent
+            .post('/orders/create/')
+            .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 5000,
+            email: 'testing@gitpay.me',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200);
+
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          expect(res.body.source_id).to.equal('12345');
+          expect(res.body.currency).to.equal('BRL');
+          expect(res.body.amount).to.equal('5000');
+          expect(res.body.Plan.plan).to.equal('open source');
+          expect(res.body.Plan.fee).to.equal('0');
+          expect(res.body.Plan.feePercentage).to.equal(0);
+          expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - no fee');
+          expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
+
+        } catch (err) {
+          throw err;
+        }
+      });
+    })
 
     xit('should create a order type invoice-item', (done) => {
 
