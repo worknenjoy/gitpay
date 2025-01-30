@@ -1,3 +1,5 @@
+const { timestamp } = require("rxjs/operator/timestamp")
+
 module.exports = (sequelize, DataTypes) => {
   const Plan = sequelize.define('Plan', {
     plan: {
@@ -7,7 +9,15 @@ module.exports = (sequelize, DataTypes) => {
     fee: DataTypes.DECIMAL,
     feePercentage: {
       type: DataTypes.INTEGER
-    }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
   }, {
     hook: {
       beforeCreate: async (instance, options) => {
@@ -26,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Plan.associate = (models) => {
     Plan.belongsTo(models.Order, { foreignKey: 'OrderId' })
+    Plan.belongsTo(models.PlanSchema, { foreignKey: 'PlanSchemaId' })
   }
 
   Plan.calcFinalPrice = (price, plan) => {

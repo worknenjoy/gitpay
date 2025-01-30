@@ -9,6 +9,7 @@ const nock = require('nock')
 const models = require('../models')
 const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
+const plan = require('../models/plan')
 
 describe('orders', () => {
   beforeEach(async () => {
@@ -38,7 +39,7 @@ describe('orders', () => {
   })
 
   describe('create Order', () => {
-    xit('should create a new order', (done) => {
+    it('should create a new order', (done) => {
       registerAndLogin(agent).then(user => {
         agent
           .post('/orders/create/')
@@ -46,7 +47,8 @@ describe('orders', () => {
             source_id: '12345',
             currency: 'BRL',
             amount: 200,
-            email: 'testing@gitpay.me'
+            email: 'testing@gitpay.me',
+            userId: user.body.id
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -61,6 +63,46 @@ describe('orders', () => {
           })
       }).catch(done)
     })
+
+    it('should create a new order with a plan', async () => {
+      try {
+        const PlanSchema = models.PlanSchema.build({
+          plan: 'open source',
+          name: 'default open source',
+          description: 'open source',
+          fee: 8,
+          feeType: 'charge'
+        });
+        const user = await registerAndLogin(agent);
+        const res = await agent
+          .post('/orders/create/')
+          .send({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 100,
+          email: 'testing@gitpay.me',
+          userId: user.body.id,
+          plan: 'open source'
+        })
+        .set('Authorization', user.headers.authorization)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+        expect(res.statusCode).to.equal(200);
+        expect(res.body).to.exist;
+        expect(res.body.source_id).to.equal('12345');
+        expect(res.body.currency).to.equal('BRL');
+        expect(res.body.amount).to.equal('100');
+        expect(res.body.Plan.plan).to.equal('open source');
+        expect(res.body.Plan.fee).to.equal('8');
+        expect(res.body.Plan.feePercentage).to.equal(8);
+        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
+        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
+
+      } catch (err) {
+        throw err;
+      }
+    });
 
     xit('should create a order type invoice-item', (done) => {
 
