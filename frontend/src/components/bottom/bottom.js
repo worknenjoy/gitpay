@@ -137,7 +137,7 @@ class Bottom extends Component {
                 <BottomSectionDialog
                   classes={ classes }
                   title='Legal'
-                  header='Termos of Service'
+                  header='Terms of Service'
                   subtitle={ 'Terms of Service' }
                   content={
                     <TermsOfService extraStyles={ false } />
