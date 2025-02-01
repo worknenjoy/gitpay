@@ -113,7 +113,7 @@ For test environment
 
 `npm run seed-test`
 
-For exhaustive list of options available, refer `migration.js` in root directory
+_For exhaustive list of options available, refer `migration.js` in root directory_
 
 ### For windows users:
 
