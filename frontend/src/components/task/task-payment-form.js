@@ -39,13 +39,19 @@ class TaskPaymentForm extends Component {
       price: 0,
       orderPrice: 0,
       samplePrice: 0,
-      plan: null,
+      plan: 'open source',
       tabValue: 'card',
       checkPlan(plan) {
         if (!plan || !this.plan) return false
         return this.plan === plan
       },
+      fee() {
+        if(this.plan === 'open source' && this.price >= 5000) return 0 // no fee above $5000
+        return this.plan === 'open source' ? 8 : 'cannot calculate fee'
+      },
       priceAfterFee() {
+        if(!this.price) return 0
+        if(this.plan === 'open source' && this.fee() === 0) return this.price // no fee above $5000
         return this.plan && Number((parseInt(this.price) * fee[this.plan]).toFixed(2))
       },
     }
@@ -90,34 +96,6 @@ class TaskPaymentForm extends Component {
   render() {
     const { classes, intl, open, onClose, fetchCustomer, customer } = this.props
 
-    const tags = [
-      {
-        id: 1,
-        name: '$ 20',
-        value: 20
-      },
-      {
-        id: 2,
-        name: '$ 50',
-        value: 50
-      },
-      {
-        id: 3,
-        name: '$ 100',
-        value: 100
-      },
-      {
-        id: 4,
-        name: '$ 150',
-        value: 150
-      },
-      {
-        id: 5,
-        name: '$ 300',
-        value: 300
-      }
-    ]
-
     return (
       <PaymentDrawer
         title={ <FormattedMessage id='task.payment.headline' defaultMessage='New payment for an issue' />}
@@ -127,12 +105,13 @@ class TaskPaymentForm extends Component {
         open={open}
         onClose={onClose}
         plan={{
-          fee: 8,
+          fee: this.state.fee(),
           category: <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />,
           title: <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />,
           items: [
+            this.state.fee() === 0 ? <FormattedMessage id='actions.task.payment.plan.bullet.noFee' defaultMessage='No fee for issues equal or above 5000' /> : undefined,
             <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />,
-            <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />,
+            <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />
           ],
         }}
         tabs={[

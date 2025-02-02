@@ -40,7 +40,7 @@ module.exports = async function orderBuilds(orderParameters) {
       }
     })
     
-    const orderPlan = await order.createPlan({
+    await order.createPlan({
       plan: plan,
       PlanSchemaId: planSchema.id,
       fee: parseInt(planSchema.fee) > 0 ? (planSchema.fee/100) * amount : 0,
@@ -51,20 +51,21 @@ module.exports = async function orderBuilds(orderParameters) {
 
   const orderCreated = await order.reload({
     include: [
-      models.Task,
-      models.User,
+      { model: models.Task },
+      { model: models.User },
       {
         model: models.Plan,
-        include: [models.PlanSchema]
+        include: [{ model: models.PlanSchema }]
       }
     ]
   })
 
   const orderUser = orderCreated.User.dataValues
   const taskTitle = orderCreated?.Task?.dataValues?.title || ''
+  const percentage = orderCreated.Plan?.feePercentage
 
   if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
-    const unitAmount = (parseInt(orderParameters.amount) * 100 * 1.08).toFixed(0)
+    const unitAmount = (parseInt(orderParameters.amount) * 100 * (1 + (percentage/100))).toFixed(0)
     const quantity = 1
 
     const invoice = await stripe.invoices.create({

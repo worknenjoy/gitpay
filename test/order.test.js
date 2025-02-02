@@ -10,6 +10,8 @@ const models = require('../models')
 const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
 const plan = require('../models/plan')
+const Stripe = require('stripe')
+const stripe = new Stripe(process.env.STRIPE_KEY)
 
 describe('orders', () => {
   beforeEach(async () => {
@@ -182,7 +184,7 @@ describe('orders', () => {
       });
     })
 
-    xit('should create a order type invoice-item', (done) => {
+    it('should create a order type invoice-item', (done) => {
 
       nock('https://api.stripe.com')
         .post('/v1/invoices')
@@ -191,6 +193,12 @@ describe('orders', () => {
         })
       nock('https://api.stripe.com')
         .post('/v1/invoiceitems')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/foo/send')
         .reply(200, {id: 'foo'}, {
           'Content-Type': 'application/json',
         })
@@ -212,6 +220,8 @@ describe('orders', () => {
             source_type: 'invoice-item',
             customer_id: 'cus_12345',
             provider: 'stripe',
+            userId: user.body.id,
+            plan: 'open source'
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -222,6 +232,72 @@ describe('orders', () => {
             expect(res.body.source_id).to.exist;
             expect(res.body.currency).to.equal('BRL');
             expect(res.body.amount).to.equal('200');
+            expect(res.body.Plan).to.exist;
+            expect(res.body.Plan.plan).to.equal('open source');
+            expect(res.body.Plan.fee).to.equal('16');
+            expect(res.body.Plan.feePercentage).to.equal(8);
+            done(err);
+          })
+        }
+      ).catch(done)
+    })
+
+    xit('should create a order type invoice-item above 5000', (done) => {
+      chai.use(spies);
+      const invoiceItem = chai.spy.on(stripe.invoiceItems, 'create')
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+      nock('https://api.stripe.com')
+        .post('/v1/invoiceitems')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/foo/send')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/foo/finalize')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      registerAndLogin(agent).then(user => {
+        agent
+          .post('/orders/create/')
+          .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 5000,
+            email: 'test@gmail.com',
+            source_type: 'invoice-item',
+            customer_id: 'cus_12345',
+            provider: 'stripe',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.exist;
+            expect(res.body.source_id).to.exist;
+            expect(res.body.currency).to.equal('BRL');
+            expect(res.body.amount).to.equal('5000');
+            expect(res.body.Plan).to.exist;
+            expect(res.body.Plan.plan).to.equal('open source');
+            expect(res.body.Plan.fee).to.equal('0');
+            expect(res.body.Plan.feePercentage).to.equal(0);
+            expect(invoiceItem).to.have.been.called();
+            chai.spy.restore(stripe.invoiceItems, 'create');
             done(err);
           })
         }

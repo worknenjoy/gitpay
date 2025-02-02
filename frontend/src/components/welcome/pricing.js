@@ -66,7 +66,8 @@ const tiersMaintainers = [
     description: [
       'Public projects from Github or Bitbucket',
       'We will match your issues with our contributor skills to find the right candidate',
-      '8% fee for payment with Credit Card or Paypal'
+      '8% fee for payment with Credit Card or Paypal',
+      'No fee for payments above $5000'
     ]
   },
   {

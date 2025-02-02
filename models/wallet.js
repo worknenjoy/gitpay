@@ -47,7 +47,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     })
     const balance = orders.reduce((acc, order) => {
-      return acc.plus(order.amount*1.08)
+      const fee = order.amount >= 5000 ? 1 : 1.08
+      return acc.plus(order.amount*fee)
     }, new Decimal(0))
     return balance
   }

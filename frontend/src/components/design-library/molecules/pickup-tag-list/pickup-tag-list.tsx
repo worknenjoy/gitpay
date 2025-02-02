@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Chip, Typography, withStyles } from '@material-ui/core';
+import { Chip, Tooltip, Typography, withStyles } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 
 import { Theme, createStyles } from '@material-ui/core/styles';
 
@@ -45,6 +46,27 @@ const styles = (theme: Theme) =>
       id: 5,
       name: '$ 300',
       value: 300
+    },
+    {
+      id: 5,
+      name: '$ 500',
+      value: 500
+    },
+    {
+      id: 6,
+      name: '$ 1000',
+      value: 1000
+    },
+    {
+      id: 7,
+      name: '$ 2000',
+      value: 2000
+    },
+    {
+      id: 8,
+      name: '$ 5000',
+      value: 5000,
+      info: 'No fee for Open Source projects with a bounty equal or higher than $5000'
     }
   ]
 
@@ -65,6 +87,11 @@ const PickupTagList = ({ classes, onPickItem, primaryText, secondaryText }) => {
               label={tag.name}
               className={classes.chip}
               onClick={() => onPickItem(tag.value)}
+              icon={tag?.info && (
+              <Tooltip title={tag.info}>
+                <InfoIcon fontSize='small' />
+              </Tooltip>
+              )}
             />
           ))}
         </div>
