@@ -1,7 +1,6 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 const { Op, Sequelize } = require('sequelize')
-const programminglanguage = require('../../models/programminglanguage')
 
 module.exports = Promise.method(function taskSearch(searchParams) {
   let query = {
@@ -16,65 +15,59 @@ module.exports = Promise.method(function taskSearch(searchParams) {
   if (searchParams.status) query.status = searchParams.status
   if (searchParams.url) query.url = searchParams.url
 
-  const labelWhere = searchParams.labelIds ? {
-    model: models.Label,
-    where: { id: { [Op.in]: searchParams.labelIds } },
-    attributes: ['name'],
-    through: {
-      attributes: []
-    },
-    group: ['tasks.id'], // Adjust according to your SQL dialect, e.g., "tasks.id" for Postgres
-    having: Sequelize.literal(`COUNT(DISTINCT "Label"."id") = ${searchParams.labelIds.length}`)
-  } : models.Label
+  // Ensure labelWhere is always a valid object for Sequelize includes
+  let labelInclude = null
+  if (searchParams.labelIds) {
+    labelInclude = {
+      model: models.Label,
+      where: { id: { [Op.in]: searchParams.labelIds } },
+      attributes: ['name'],
+      through: { attributes: [] },
+      group: ['Task.id'], // Adjust according to your SQL dialect
+      having: Sequelize.literal(`COUNT(DISTINCT "Label"."id") = ${searchParams.labelIds.length}`)
+    }
+  }
 
   if (searchParams.organizationId && !searchParams.projectId) {
     let tasks = []
     return models.Project
-      .findAll(
-        {
-          where: {
-            OrganizationId: parseInt(searchParams.organizationId)
-          },
-          include: [{
-            model: models.Task,
-            include: [models.User, models.Order, models.Assign, models.Project, labelWhere]
-          }],
-          order: [
-            ['id', 'DESC']
-          ]
-        }
-      )
+      .findAll({
+        where: {
+          OrganizationId: parseInt(searchParams.organizationId)
+        },
+        include: [{
+          model: models.Task,
+          include: [models.User, models.Order, models.Assign, models.Project].concat(labelInclude ? [labelInclude] : [])
+        }],
+        order: [['id', 'DESC']]
+      })
       .then(projects => {
-        projects.map(p => {
-          p.Tasks.map(t => tasks.push(t))
+        projects.forEach(p => {
+          p.Tasks.forEach(t => tasks.push(t))
         })
         return tasks
       })
-  }
-  else {
+  } else {
     return models.Task
-      .findAll(
-        {
-          where: query,
-          include: [
-            { model: models.User },
-            { model: models.Order },
-            { 
-              model: models.Project,
-              include: [{ model: models.ProgrammingLanguage, as: 'ProgrammingLanguages' }]
-            },
-            { 
-              model: models.Assign, 
-              include: [{ model: models.User }] 
-            },
-            { model: labelWhere }
-          ],
-          order: [
-            ['status', 'DESC'],
-            ['id', 'DESC']
-          ]
-        }
-      )
+      .findAll({
+        where: query,
+        include: [
+          { model: models.User },
+          { model: models.Order },
+          { 
+            model: models.Project,
+            include: [{ model: models.ProgrammingLanguage, as: 'ProgrammingLanguages' }]
+          },
+          { 
+            model: models.Assign, 
+            include: [{ model: models.User }] 
+          }
+        ].concat(labelInclude ? [labelInclude] : []), // Conditionally include labels
+        order: [
+          ['status', 'DESC'],
+          ['id', 'DESC']
+        ]
+      })
       .then(data => {
         return data.filter(task => {
           const project = task.Project
