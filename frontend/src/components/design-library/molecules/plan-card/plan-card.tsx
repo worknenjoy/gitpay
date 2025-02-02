@@ -76,10 +76,10 @@ const PlanCard = ({ classes, plan }:PlanProps) => {
               {title}
             </Typography>
             {items.map((item, index) => (
-              <Typography>
-              <CheckIcon fontSize='small' color='primary' />
-              {item}
-            </Typography>
+              item && <Typography>
+                <CheckIcon fontSize='small' color='primary' />
+                {item}
+              </Typography>
             ))}
             
           </div>

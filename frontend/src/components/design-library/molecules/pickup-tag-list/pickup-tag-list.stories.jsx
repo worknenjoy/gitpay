@@ -18,7 +18,6 @@ const Template = (args) => <PickupTagList {...args} />;
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  tags: [{ id: 1, name: 'tag1' }, { id: 2, name: 'tag2' }],
   primaryText: 'Primary Text',
   secondaryText: 'Secondary Text',
 };

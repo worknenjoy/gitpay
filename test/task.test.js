@@ -348,66 +348,34 @@ describe("tasks", () => {
         })
     })
 
-    it('should fetch task', (done) => {
-      const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
-
-      nock('https://github.com')
-        .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
-        .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
-        .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
-      nock('https://api.github.com')
+    describe('task fetch', () => {
+      beforeEach(async () => {
+        nock('https://api.github.com')
         .persist()
-        .get('/repos/worknenjoy/gitpay/issues/1080')
-        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
-        .reply(200, getSingleIssue.issue)
-      nock('https://api.github.com')
-        .persist()
-        .get('/repos/worknenjoy/gitpay')
+        .get('/users/worknenjoy')
         .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
         .reply(200, getSingleRepo.repo)
-
-      models.Task.build({url: github_url, provider: 'github', title: 'foo'}).save().then((task) => {
-        agent
-          .get(`/tasks/fetch/${task.dataValues.id}`)
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .end((err, res) => {
-            expect(res.statusCode).to.equal(200);
-            expect(res.body).to.exist;
-            expect(res.body.metadata.id).to.equal('1080');
-            expect(res.body.url).to.equal(github_url);
-            expect(res.body.title).to.equal('Improving testing code');
-            expect(res.body.status).to.equal('open');
-            expect(res.body.metadata).to.exist;
-            expect(res.body.metadata.user).to.equal('worknenjoy');
-            expect(res.body.metadata.company).to.equal('worknenjoy');
-            expect(res.body.metadata.projectName).to.equal('gitpay');
-            expect(res.body.metadata.issue.url).to.equal('https://api.github.com/repos/worknenjoy/gitpay/issues/1080');
-            done(err);
-          })
-      }).catch(done)
-    });
-
-    it('should fetch task and not sync status in_progress on Gitpay and open on Github', (done) => {
-      const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
-
-      nock('https://github.com')
-        .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
-        .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
-        .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
-      nock('https://api.github.com')
-        .persist()
-        .get('/repos/worknenjoy/gitpay/issues/1080')
-        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
-        .reply(200, getSingleIssue.issue)
-      nock('https://api.github.com')
-        .persist()
-        .get('/repos/worknenjoy/gitpay')
-        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
-        .reply(200, getSingleRepo.repo)
-
-      models.Task.build({url: github_url, provider: 'github', title: 'foo'}).save().then((task) => {
-        models.Task.update({status: 'in_progress'}, {where: {id: task.dataValues.id}}).then(() => {
+      })
+      
+      it('should fetch task', (done) => {
+        const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
+  
+        nock('https://github.com')
+          .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
+          .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
+          .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
+        nock('https://api.github.com')
+          .persist()
+          .get('/repos/worknenjoy/gitpay/issues/1080')
+          .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+          .reply(200, getSingleIssue.issue)
+        nock('https://api.github.com')
+          .persist()
+          .get('/repos/worknenjoy/gitpay')
+          .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+          .reply(200, getSingleRepo.repo)
+  
+        models.Task.build({url: github_url, provider: 'github', title: 'foo'}).save().then((task) => {
           agent
             .get(`/tasks/fetch/${task.dataValues.id}`)
             .expect('Content-Type', /json/)
@@ -416,50 +384,95 @@ describe("tasks", () => {
               expect(res.statusCode).to.equal(200);
               expect(res.body).to.exist;
               expect(res.body.metadata.id).to.equal('1080');
-              expect(res.body.status).to.equal('in_progress');
+              expect(res.body.url).to.equal(github_url);
+              expect(res.body.title).to.equal('Improving testing code');
+              expect(res.body.status).to.equal('open');
+              expect(res.body.metadata).to.exist;
+              expect(res.body.metadata.user).to.equal('worknenjoy');
+              expect(res.body.metadata.company).to.equal('worknenjoy');
+              expect(res.body.metadata.projectName).to.equal('gitpay');
+              expect(res.body.metadata.issue.url).to.equal('https://api.github.com/repos/worknenjoy/gitpay/issues/1080');
               done(err);
             })
         }).catch(done)
-      }).catch(done)
-    });
-
-    it('should fetch task and sync status in_progress on Gitpay and closed on Github', (done) => {
-      const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
-
-      const closedIssue = getSingleIssue.issue
-      closedIssue.state = 'closed'
-
-      nock('https://github.com')
-        .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
-        .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
-        .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
-      nock('https://api.github.com')
-        .persist()
-        .get('/repos/worknenjoy/gitpay/issues/1080')
-        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
-        .reply(200, closedIssue)
-      nock('https://api.github.com')
-        .persist()
-        .get('/repos/worknenjoy/gitpay')
-        .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
-        .reply(200, getSingleRepo.repo)
-
-      models.Task.build({url: github_url, provider: 'github', title: 'foo'}).save().then((task) => {
-        models.Task.update({status: 'in_progress'}, {where: {id: task.dataValues.id}}).then(() => {
-          agent
-            .get(`/tasks/fetch/${task.dataValues.id}`)
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end((err, res) => {
-              expect(res.statusCode).to.equal(200);
-              expect(res.body).to.exist;
-              expect(res.body.metadata.id).to.equal('1080');
-              expect(res.body.status).to.equal('closed');
-              done(err);
-            })
+      });
+  
+      it('should fetch task and not sync status in_progress on Gitpay and open on Github', (done) => {
+        const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
+  
+        nock('https://github.com')
+          .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
+          .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
+          .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
+        nock('https://api.github.com')
+          .persist()
+          .get('/repos/worknenjoy/gitpay/issues/1080')
+          .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+          .reply(200, getSingleIssue.issue)
+        nock('https://api.github.com')
+          .persist()
+          .get('/repos/worknenjoy/gitpay')
+          .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+          .reply(200, getSingleRepo.repo)
+  
+        models.Task.build({url: github_url, provider: 'github', title: 'foo'}).save().then((task) => {
+          models.Task.update({status: 'in_progress'}, {where: {id: task.dataValues.id}}).then(() => {
+            agent
+              .get(`/tasks/fetch/${task.dataValues.id}`)
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.statusCode).to.equal(200);
+                expect(res.body).to.exist;
+                expect(res.body.metadata.id).to.equal('1080');
+                expect(res.body.status).to.equal('in_progress');
+                done(err);
+              })
+          }).catch(done)
         }).catch(done)
-      }).catch(done)
+      });
+  
+      it('should fetch task and sync status in_progress on Gitpay and closed on Github', (done) => {
+        const github_url = 'https://github.com/worknenjoy/gitpay/issues/1080';
+  
+        const closedIssue = getSingleIssue.issue
+        closedIssue.state = 'closed'
+  
+        nock('https://github.com')
+          .post('/login/oauth/access_token/', {code: 'eb518274e906c68580f7'})
+          .basicAuth({user: secrets.github.id, pass: secrets.github.secret})
+          .reply(200, {access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a'})
+        nock('https://api.github.com')
+          .persist()
+          .get('/repos/worknenjoy/gitpay/issues/1080')
+          .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+          .reply(200, closedIssue)
+        nock('https://api.github.com')
+          .persist()
+          .get('/repos/worknenjoy/gitpay')
+          .query({client_id: secrets.github.id, client_secret: secrets.github.secret})
+          .reply(200, getSingleRepo.repo)
+  
+        models.Task.build({url: github_url, provider: 'github', title: 'foo'}).save().then((task) => {
+          models.Task.update({status: 'in_progress'}, {where: {id: task.dataValues.id}}).then(() => {
+            agent
+              .get(`/tasks/fetch/${task.dataValues.id}`)
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end((err, res) => {
+                expect(res.statusCode).to.equal(200);
+                expect(res.body).to.exist;
+                expect(res.body.metadata.id).to.equal('1080');
+                expect(res.body.status).to.equal('closed');
+                done(err);
+              })
+          }).catch(done)
+        }).catch(done)
+      });
+      
     });
+
+    
 
     xit('should update task value', (done) => {
       const github_url = 'https://github.com/worknenjoy/truppie/issues/98';

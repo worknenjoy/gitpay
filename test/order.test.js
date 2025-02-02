@@ -9,6 +9,9 @@ const nock = require('nock')
 const models = require('../models')
 const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
+const plan = require('../models/plan')
+const Stripe = require('stripe')
+const stripe = new Stripe(process.env.STRIPE_KEY)
 
 describe('orders', () => {
   beforeEach(async () => {
@@ -38,7 +41,7 @@ describe('orders', () => {
   })
 
   describe('create Order', () => {
-    xit('should create a new order', (done) => {
+    it('should create a new order', (done) => {
       registerAndLogin(agent).then(user => {
         agent
           .post('/orders/create/')
@@ -46,7 +49,8 @@ describe('orders', () => {
             source_id: '12345',
             currency: 'BRL',
             amount: 200,
-            email: 'testing@gitpay.me'
+            email: 'testing@gitpay.me',
+            userId: user.body.id
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -62,7 +66,125 @@ describe('orders', () => {
       }).catch(done)
     })
 
-    xit('should create a order type invoice-item', (done) => {
+    describe('Order with Plan', () => {
+      let PlanSchema
+      beforeEach(async () => {
+        PlanSchema = await models.PlanSchema.build({
+          plan: 'open source',
+          name: 'Open Source - default',
+          description: 'open source',
+          fee: 8,
+          feeType: 'charge'
+        });
+        PlanSchema = await models.PlanSchema.build({
+          plan: 'open source',
+          name: 'Open Source - no fee',
+          description: 'open source with no fee',
+          fee: 0,
+          feeType: 'charge'
+        });
+      })
+      it('should create a new order with a plan', async () => {
+        try {
+          const user = await registerAndLogin(agent);
+          const res = await agent
+            .post('/orders/create/')
+            .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 100,
+            email: 'testing@gitpay.me',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200);
+
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          expect(res.body.source_id).to.equal('12345');
+          expect(res.body.currency).to.equal('BRL');
+          expect(res.body.amount).to.equal('100');
+          expect(res.body.Plan.plan).to.equal('open source');
+          expect(res.body.Plan.fee).to.equal('8');
+          expect(res.body.Plan.feePercentage).to.equal(8);
+          expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
+          expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
+
+        } catch (err) {
+          throw err;
+        }
+      });
+
+      it('should create a new order with no exact amount with a plan', async () => {
+        try {
+          const user = await registerAndLogin(agent);
+          const res = await agent
+            .post('/orders/create/')
+            .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 832,
+            email: 'testing@gitpay.me',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200);
+
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          expect(res.body.source_id).to.equal('12345');
+          expect(res.body.currency).to.equal('BRL');
+          expect(res.body.amount).to.equal('832');
+          expect(res.body.Plan.plan).to.equal('open source');
+          expect(res.body.Plan.fee).to.equal('66.56');
+          expect(res.body.Plan.feePercentage).to.equal(8);
+          expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
+          expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
+
+        } catch (err) {
+          throw err;
+        }
+      });
+
+      it('should create a new order with a plan above 5000', async () => {
+        try {
+          const user = await registerAndLogin(agent);
+          const res = await agent
+            .post('/orders/create/')
+            .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 5000,
+            email: 'testing@gitpay.me',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200);
+
+          expect(res.statusCode).to.equal(200);
+          expect(res.body).to.exist;
+          expect(res.body.source_id).to.equal('12345');
+          expect(res.body.currency).to.equal('BRL');
+          expect(res.body.amount).to.equal('5000');
+          expect(res.body.Plan.plan).to.equal('open source');
+          expect(res.body.Plan.fee).to.equal('0');
+          expect(res.body.Plan.feePercentage).to.equal(0);
+          expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - no fee');
+          expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
+
+        } catch (err) {
+          throw err;
+        }
+      });
+    })
+
+    it('should create a order type invoice-item', (done) => {
 
       nock('https://api.stripe.com')
         .post('/v1/invoices')
@@ -71,6 +193,12 @@ describe('orders', () => {
         })
       nock('https://api.stripe.com')
         .post('/v1/invoiceitems')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/foo/send')
         .reply(200, {id: 'foo'}, {
           'Content-Type': 'application/json',
         })
@@ -92,6 +220,8 @@ describe('orders', () => {
             source_type: 'invoice-item',
             customer_id: 'cus_12345',
             provider: 'stripe',
+            userId: user.body.id,
+            plan: 'open source'
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -102,6 +232,72 @@ describe('orders', () => {
             expect(res.body.source_id).to.exist;
             expect(res.body.currency).to.equal('BRL');
             expect(res.body.amount).to.equal('200');
+            expect(res.body.Plan).to.exist;
+            expect(res.body.Plan.plan).to.equal('open source');
+            expect(res.body.Plan.fee).to.equal('16');
+            expect(res.body.Plan.feePercentage).to.equal(8);
+            done(err);
+          })
+        }
+      ).catch(done)
+    })
+
+    xit('should create a order type invoice-item above 5000', (done) => {
+      chai.use(spies);
+      const invoiceItem = chai.spy.on(stripe.invoiceItems, 'create')
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+      nock('https://api.stripe.com')
+        .post('/v1/invoiceitems')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/foo/send')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/foo/finalize')
+        .reply(200, {id: 'foo'}, {
+          'Content-Type': 'application/json',
+        })
+
+      registerAndLogin(agent).then(user => {
+        agent
+          .post('/orders/create/')
+          .send({
+            source_id: '12345',
+            currency: 'BRL',
+            amount: 5000,
+            email: 'test@gmail.com',
+            source_type: 'invoice-item',
+            customer_id: 'cus_12345',
+            provider: 'stripe',
+            userId: user.body.id,
+            plan: 'open source'
+          })
+          .set('Authorization', user.headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end((err, res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.exist;
+            expect(res.body.source_id).to.exist;
+            expect(res.body.currency).to.equal('BRL');
+            expect(res.body.amount).to.equal('5000');
+            expect(res.body.Plan).to.exist;
+            expect(res.body.Plan.plan).to.equal('open source');
+            expect(res.body.Plan.fee).to.equal('0');
+            expect(res.body.Plan.feePercentage).to.equal(0);
+            expect(invoiceItem).to.have.been.called();
+            chai.spy.restore(stripe.invoiceItems, 'create');
             done(err);
           })
         }

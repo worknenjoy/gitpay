@@ -51,7 +51,8 @@ const PaymentMethodInvoiceTab: React.FC<PaymentMethodInvoiceTabProps & { match: 
       customer_id: user?.customer_id,
       metadata: {
         user_id: user.id,
-      }
+      },
+      plan: 'open source',
     })
     onPayment()
   }
