@@ -5,6 +5,19 @@ import { Button, createStyles, makeStyles, Theme } from '@material-ui/core'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import BalanceCard from '../../../../design-library/molecules/balance-card/balance-card'
 
+function isGreaterThan(a: string | number, b: string | number): boolean {
+  const numA = parseFloat(a as string);
+  const numB = parseFloat(b as string);
+  console.log(numA, numB)
+
+  if (isNaN(numA) || isNaN(numB)) {
+    throw new Error("Invalid number input");
+  }
+
+  return numA >= numB;
+}
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     btnPayment: {
@@ -74,7 +87,7 @@ const PaymentMethodWalletTab = ({
         </ReactPlaceholder>
       </div>
       <Button
-        disabled={!price || price > wallet?.data?.balance}
+        disabled={!price || isGreaterThan(priceAfterFee, wallet?.data?.balance)}
         onClick={onWalletPayment}
         variant='contained'
         color='secondary'
