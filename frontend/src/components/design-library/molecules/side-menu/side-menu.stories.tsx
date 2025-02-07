@@ -4,8 +4,6 @@ import {
   AccountBalanceWallet as WalletIcon,
   LibraryBooks,
   Payment as PaymentIcon,
-  AccountBalance as TransferIcon,
-  SwapHoriz as PayoutIcon 
 } from '@material-ui/icons'
 import { SideMenu } from './side-menu';
 
@@ -16,22 +14,45 @@ export default {
 
 const Template = (args) => <SideMenu {...args} />;
 
+
 export const Default = Template.bind({});
 Default.args = {
   // Add default props here
   menuItems: [
     {
-      include: true,
-      onClick: () => console.log('clicked'),
-      label: 'Dashboard',
-      selected: true,
-      icon: <Home />,
+      category: "Issues",
+      items: [
+        {
+          include: true,
+          onClick: () => console.log("My Issues"),
+          icon: <LibraryBooks />,
+          label: "My Issues",
+          selected: true,
+        },
+        {
+          include: true,
+          onClick: () => console.log("Explore Issues"),
+          icon: <Home />,
+          label: "Explore Issues"
+        },
+      ],
     },
     {
-      include: true,
-      onClick: () => console.log('clicked'),
-      label: 'Payments',
-      icon: <PaymentIcon />,
+      category: "Wallet",
+      items: [
+        {
+          include: true,
+          onClick: () => console.log("My Wallet"),
+          icon: <WalletIcon />,
+          label: "My Wallet"
+        },
+        {
+          include: true,
+          onClick: () => console.log("Payments"),
+          icon: <PaymentIcon />,
+          label: "Payments"
+        },
+      ],
     },
-  ],
+  ]
 };

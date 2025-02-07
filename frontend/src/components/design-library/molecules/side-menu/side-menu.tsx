@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { FormattedMessage } from 'react-intl'
-import { Grid, MenuList, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { Grid, MenuList, MenuItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
 import {
   Home,
   AccountBalanceWallet as WalletIcon,
@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   menuItem: {
+    marginTop: 10,
+    marginBottom: 10,
     /*
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
@@ -112,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-interface MenuItem {
+interface MenuItemProps {
   include: boolean;
   onClick: () => void;
   icon: React.ReactElement;
@@ -121,7 +123,10 @@ interface MenuItem {
 }
 
 interface SideMenuProps {
-  menuItems: MenuItem[];
+  menuItems: {
+    category?: React.ReactNode;
+    items: MenuItemProps[];
+  }[];
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({
@@ -134,7 +139,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
     <div className={classes.sidePaper}>
       <div>
         <div className={classes.profile}>
-          <div style={{ display: 'flex', justifyContent: 'center', padding: 20 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', padding: 20, paddingBottom: 0 }}>
             <StyledButton href='/'>
               <Logo src={logo} />
             </StyledButton>
@@ -147,23 +152,41 @@ export const SideMenu: React.FC<SideMenuProps> = ({
               padding: 20
             }}>
               <MenuList>
-                {menuItems.map((item, index) => (
-                  item.include &&
-                  <MenuItem
-                    onClick={item.onClick}
-                    className={classes.menuItem}
-                    selected={item.selected}
-                  >
-                    <ListItemIcon className={classes.icon}>
-                      {item.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{ primary: classes.primary }}
-                      primary={item.label}
-                    />
-                  </MenuItem>
+                {menuItems.map((section, sectionIndex) => (
+                  <div key={`section-${sectionIndex}`}>
+                    {section.category && (
+                    <Typography
+                      variant="caption"
+                      style={{
+                        color: "rgba(255, 255, 255, 0.5)",
+                        fontSize: "0.75rem",
+                        textTransform: "uppercase",
+                        fontWeight: 600,
+                        marginTop: sectionIndex === 0 ? 0 : 16,
+                        marginBottom: 16,
+                        paddingLeft: 16,
+                      }}
+                    >
+                      {section.category}
+                    </Typography>
+                    )}
+                    {section.items.map((item, index) => (
+                      item.include && (
+                        <MenuItem
+                          key={`item-${sectionIndex}-${index}`}
+                          onClick={item.onClick}
+                          className={classes.menuItem}
+                          selected={item.selected}
+                        >
+                          <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
+                          <ListItemText classes={{ primary: classes.primary }} primary={item.label} />
+                        </MenuItem>
+                      )
+                    ))}
+                  </div>
                 ))}
               </MenuList>
+
             </div>
           </div>
         </div>

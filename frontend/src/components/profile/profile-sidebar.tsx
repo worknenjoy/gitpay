@@ -7,7 +7,8 @@ import {
   LibraryBooks,
   Payment as PaymentIcon,
   AccountBalance as TransferIcon,
-  SwapHoriz as PayoutIcon 
+  SwapHoriz as PayoutIcon,
+  Public as ExploreIcon
 } from '@material-ui/icons'
 import logo from '../../images/gitpay-logo.png'
 import {
@@ -46,50 +47,72 @@ const ProfileSidebar = ({
   return (
     <Grid item xs={ 12 } md={ 2 } spacing={ 0 } className={ classes.sidePaper }>
       <SideMenu
-        menuItems={[
-          {
-            include: true,
-            onClick: () => history.push('/profile'),
-            label: <FormattedMessage id='account.profile.home.link.label' defaultMessage='Dashboard' />,
-            selected: selected === 0,
-            icon: <Home />,
-          },
-          {
-            include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')),
-            onClick: () => history.push('/profile/tasks'),
-            label: <FormattedMessage id='account.profile.issues.setup' defaultMessage='Issues' />,
-            selected: selected === 4,
-            icon: <LibraryBooks />,
-          },
-          {
-            include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
-            onClick: () => history.push('/profile/payments'),
-            label: <FormattedMessage id='account.profile.payments.list' defaultMessage='Payments' />,
-            selected: selected === 5,
-            icon: <PaymentIcon />,
-          },
-          {
-            include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
-            onClick: () => history.push('/profile/wallets'),
-            label: <FormattedMessage id='account.profile.wallet.list' defaultMessage='Wallets' />,
-            selected: selected === 6,
-            icon: <WalletIcon />,
-          },
-          {
-            include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')),
-            onClick: () => history.push('/profile/transfers'),
-            label: <FormattedMessage id='account.profile.transfer.list' defaultMessage='Transfers' />,
-            selected: selected === 7,
-            icon: <TransferIcon />,
-          },
-          {
-            include: userTypes && (userTypes?.includes('contributor')),
-            onClick: () => history.push('/profile/payouts'),
-            label: <FormattedMessage id='account.profile.payout.list' defaultMessage='Payouts' />,
-            selected: selected === 8,
-            icon: <PayoutIcon />,
-          },
-        ]}
+        menuItems={
+          [
+            {
+              items: [
+                {
+                  include: true,
+                  onClick: () => history.push('/profile'),
+                  icon: <Home />,
+                  label: <FormattedMessage id='account.profile.sidemenu.home.link.label' defaultMessage='Dashboard' />,
+                  selected: selected === 0
+                }
+              ]
+            },
+            {
+              category: <FormattedMessage id='account.profile.sidemenu.issues' defaultMessage='Issues' />,
+              items: [
+                {
+                  include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')),
+                  onClick: () => history.push('/profile/tasks'),
+                  icon: <LibraryBooks />,
+                  label: <FormattedMessage id='account.profile.sidemenu.issues.network' defaultMessage='My issues' />,
+                  selected: selected === 4
+                },
+                {
+                  include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('funding')),
+                  onClick: () => history.push('/profile/tasks/explore'),
+                  icon: <ExploreIcon />,
+                  label: <FormattedMessage id='account.profile.sidemenu.issues.explore' defaultMessage='Explore issues' />
+                }
+              ]
+            },
+            {
+              category: <FormattedMessage id='account.profile.sidemenu.section.bounties' defaultMessage='Bounties' />,
+              items: [
+                {
+                  include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                  onClick: () => history.push('/profile/payments'),
+                  icon: <PaymentIcon />,
+                  label: <FormattedMessage id='account.profile.payments.list' defaultMessage='Payments' />,
+                  selected: selected === 5
+                },
+                {
+                  include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                  onClick: () => history.push('/profile/wallets'),
+                  icon: <WalletIcon />,
+                  label: <FormattedMessage id='account.profile.wallet.list' defaultMessage='Wallets' />,
+                  selected: selected === 6
+                },
+                {
+                  include: userTypes && userTypes?.includes('contributor'),
+                  onClick: () => history.push('/profile/transfers'),
+                  icon: <TransferIcon />,
+                  label: <FormattedMessage id='account.profile.transfer.list' defaultMessage='Transfers' />,
+                  selected: selected === 7
+                },
+                {
+                  include: userTypes && userTypes?.includes('contributor'),
+                  onClick: () => history.push('/profile/payouts'),
+                  icon: <PayoutIcon />,
+                  label: <FormattedMessage id='account.profile.payout.list' defaultMessage='Payouts' />,
+                  selected: selected === 8
+                }
+              ]
+            }
+          ]
+        }
       />
       <div>
         <div>

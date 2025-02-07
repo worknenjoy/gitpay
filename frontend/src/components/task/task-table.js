@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import MomentComponent from 'moment'
