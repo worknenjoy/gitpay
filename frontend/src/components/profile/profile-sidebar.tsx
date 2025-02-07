@@ -14,6 +14,7 @@ import {
   Logo,
   StyledButton
 } from '../topbar/TopbarStyles'
+import { SideMenu } from '../design-library/molecules/side-menu/side-menu'
 
 const ProfileSidebar = ({
   classes,
@@ -44,6 +45,52 @@ const ProfileSidebar = ({
 
   return (
     <Grid item xs={ 12 } md={ 2 } spacing={ 0 } className={ classes.sidePaper }>
+      <SideMenu
+        menuItems={[
+          {
+            include: true,
+            onClick: () => history.push('/profile'),
+            label: <FormattedMessage id='account.profile.home.link.label' defaultMessage='Dashboard' />,
+            selected: selected === 0,
+            icon: <Home />,
+          },
+          {
+            include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')),
+            onClick: () => history.push('/profile/tasks'),
+            label: <FormattedMessage id='account.profile.issues.setup' defaultMessage='Issues' />,
+            selected: selected === 4,
+            icon: <LibraryBooks />,
+          },
+          {
+            include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+            onClick: () => history.push('/profile/payments'),
+            label: <FormattedMessage id='account.profile.payments.list' defaultMessage='Payments' />,
+            selected: selected === 5,
+            icon: <PaymentIcon />,
+          },
+          {
+            include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+            onClick: () => history.push('/profile/wallets'),
+            label: <FormattedMessage id='account.profile.wallet.list' defaultMessage='Wallets' />,
+            selected: selected === 6,
+            icon: <WalletIcon />,
+          },
+          {
+            include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')),
+            onClick: () => history.push('/profile/transfers'),
+            label: <FormattedMessage id='account.profile.transfer.list' defaultMessage='Transfers' />,
+            selected: selected === 7,
+            icon: <TransferIcon />,
+          },
+          {
+            include: userTypes && (userTypes?.includes('contributor')),
+            onClick: () => history.push('/profile/payouts'),
+            label: <FormattedMessage id='account.profile.payout.list' defaultMessage='Payouts' />,
+            selected: selected === 8,
+            icon: <PayoutIcon />,
+          },
+        ]}
+      />
       <div>
         <div>
           <div className={ classes.profile }>
