@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import { tableHeaderDefault } from '../task/task-header-metadata'
 
 import {
   Container,
@@ -12,14 +11,12 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Tabs,
-  Tab,
   withStyles
 } from '@material-ui/core'
 
 // import TaskFilter from '../task/task-filters'
 import Taskfilters from '../../containers/task-filter'
-import CustomPaginationActionsTable from '../task/task-table';
+import ExploreIssuesTable from './explore/explore-issues-table';
 
 import logoGithub from '../../images/github-logo.png'
 import logoBitbucket from '../../images/bitbucket-logo.png'
@@ -60,51 +57,17 @@ const messages = defineMessages({
   }
 })
 
-const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user }) => {
-  const [currentTab, setCurrentTab] = useState('')
+const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user, intl }) => {
 
-  const baseUrl = '/profile/tasks/'
+  const baseUrl = '/profile/explore/'
+
+  const getListTasks = async () => {
+    await listTasks({})
+  }
 
   useEffect(() => {
-    listTasks({}).then((t) => {
-      if (history.location.pathname === '/profile/tasks/all') {
-        handleTabChange({}, 'all')
-      }
-      if (history.location.pathname === '/profile/tasks') {
-        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'all')
-        user.Types && user.Types.map(t => t.name).includes('maintainer') && handleTabChange({}, 'createdbyme')
-      }
-      if (history.location.pathname === '/profile/tasks/createdbyme') {
-        handleTabChange({}, 'createdbyme')
-      }
-      if (history.location.pathname === '/profile/tasks/interested') {
-        handleTabChange({}, 'interested')
-      }
-      if (history.location.pathname === '/profile/tasks/assigned') {
-        handleTabChange({}, 'assigned')
-      }
-    })
+    getListTasks()
   }, [])
-
-  const handleTabChange = async (event, value) => {
-    setCurrentTab(value)
-    history.push(baseUrl + value)
-    switch (value) {
-      case 'all':
-        filterTasks()
-      break
-      case 'createdbyme':
-        filterTasks('userId')
-        break
-      case 'interested':
-        filterTasks('Assigns')
-        break
-      case 'assigned':
-        filterTasks('assigned')
-        break
-      default:
-    }
-  }
 
   return (
     <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
@@ -118,36 +81,6 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
             defaultMessage="Here you can see all the issues on our network, issues imported or you're working on."
           />
         </Typography>
-        <Tabs
-          value={ currentTab }
-          onChange={ handleTabChange }
-          scrollable
-          scrollButtons='on'
-          indicatorColor='secondary'
-          textColor='secondary'
-          style={{marginTop: 20, marginBottom: 20}}
-        >
-           { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-          <Tab
-            value={ 'createdbyme' }
-            label={ intl.formatMessage(messages.createdByMeTasks) }
-          />
-          }
-          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-            <Tab
-              value={ 'assigned' }
-              label={ intl.formatMessage(
-                messages.assignedToMeTasks
-              ) }
-            />
-          }
-          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-            <Tab
-              value={ 'interested' }
-              label={ intl.formatMessage(messages.interestedTasks) }
-            />
-          }
-        </Tabs>
         <div style={{marginBottom: 20}}>
           { !user.id ? (
             <Card className={ classes.card }>
@@ -195,9 +128,13 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
               </CardActions>
             </Card>
           ) : (
-            <>
-              <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={tableHeaderDefault}  />
-            </>
+            <div style={{marginTop: 20, marginBottom: 20}}>
+              <Taskfilters
+                filterTasks={ filterTasks }
+                baseUrl={ baseUrl }
+              />
+              <ExploreIssuesTable issues={ tasks } />
+            </div>
           ) }
         </div>
       </Container>
@@ -205,7 +142,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
   )
 }
 
-UserTasks.propTypes = {
+UserTasksExplore.propTypes = {
   classes: PropTypes.object.isRequired,
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
@@ -213,4 +150,4 @@ UserTasks.propTypes = {
   user: PropTypes.object
 }
 
-export default injectIntl(withStyles(styles)(UserTasks))
+export default injectIntl(withStyles(styles)(UserTasksExplore))

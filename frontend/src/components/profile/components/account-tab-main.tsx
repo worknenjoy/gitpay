@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { injectIntl } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
-import { addNotification } from '../../../actions/notificationActions';
 
 import { Field } from '../../design-library/atoms/field/field';
 import ProviderLoginButtons from '../../../containers/provider-login-buttons';
@@ -207,4 +205,4 @@ const AccountTabMain = ({
   );
 }
 
-export default injectIntl(withStyles(styles)(AccountTabMain));
+export default withStyles(styles)(AccountTabMain);

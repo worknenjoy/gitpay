@@ -22,7 +22,7 @@ import {
 
 import './mailchimp.css'
 
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import TopBarContainer from '../../containers/topbar'
 import Bottom from '../../components/bottom/bottom'
@@ -204,7 +204,7 @@ class Home extends Component {
           } }
         >
           <Typography variant='h6' gutterBottom style={ { padding: '0 60px' } }>
-            <FormattedHTMLMessage
+            <FormattedMessage
               id='welcome.bottom.call'
               defaultMessage='A better way to build your project, a better way to work in projects'
             />

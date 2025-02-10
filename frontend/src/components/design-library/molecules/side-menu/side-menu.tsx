@@ -1,15 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { FormattedMessage } from 'react-intl'
-import { Grid, MenuList, MenuItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
-import {
-  Home,
-  AccountBalanceWallet as WalletIcon,
-  LibraryBooks,
-  Payment as PaymentIcon,
-  AccountBalance as TransferIcon,
-  SwapHoriz as PayoutIcon
-} from '@material-ui/icons'
+import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
 import logo from '../../../../images/gitpay-logo.png'
 import {
   Logo,

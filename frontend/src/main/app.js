@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
-import { addLocaleData } from 'react-intl'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { IntlProvider, updateIntl } from 'react-intl-redux'
@@ -26,14 +25,9 @@ import messagesEn from '../translations/result/en.json'
 
 import messagesBrLocal from '../translations/generated/br.json'
 import messagesEnLocal from '../translations/generated/en.json'
-
-import localeEn from 'react-intl/locale-data/en'
-import localeBr from 'react-intl/locale-data/br'
 import Loader from '../components/loader/loader'
 
 import CookieConsentBar, { GITPAY_COOKIE_CONSENT } from './cookie-consent-bar'
-
-addLocaleData([...localeEn, ...localeBr])
 
 const cookieConsent = getCookieConsentValue(GITPAY_COOKIE_CONSENT)
 

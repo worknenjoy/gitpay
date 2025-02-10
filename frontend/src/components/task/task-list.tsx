@@ -69,9 +69,10 @@ const messages = defineMessages({
 
 
 import { RouteComponentProps } from 'react-router-dom';
-import { InjectedIntlProps } from 'react-intl';
+import { useIntl } from 'react-intl';
+import SectionTable from '../design-library/molecules/section-table/section-table'
 
-interface TaskListProps extends RouteComponentProps, InjectedIntlProps {
+interface TaskListProps extends RouteComponentProps {
   user: any;
   tasks: any;
   organization: any;
@@ -92,7 +93,8 @@ interface MatchParams {
   filter?: string;
 }
 
-const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes, intl }) => {
+const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
+  const intl = useIntl()
   const isProfilePage = history.location.pathname.includes('/profile')
   const { organization_id, project_id } = match.params
   const profileUrl = isProfilePage ? '/profile' : ''
@@ -347,7 +349,10 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           />
           }
           <TabContainer>
-            <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={isProjectPage ? tableHeaderWithProject : tableHeaderDefault} />
+            <SectionTable
+              tableData={tasks}
+              tableHeaderMetadata={isProjectPage ? tableHeaderWithProject : tableHeaderDefault}
+            />
           </TabContainer>
         </div>
       
@@ -355,11 +360,4 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
   )
 }
 
-TaskList.propTypes = {
-  classes: PropTypes.object,
-  filterTasks: PropTypes.func,
-  tasks: PropTypes.object,
-  project: PropTypes.object
-}
-
-export default injectIntl(withRouter(withStyles(styles)(TaskList)))
+export default withRouter(withStyles(styles)(TaskList))

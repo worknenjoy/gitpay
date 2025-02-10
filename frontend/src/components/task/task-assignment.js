@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
 import classNames from 'classnames'
 import {
@@ -424,9 +424,9 @@ const TaskAssignment = (props) => {
                       <div className={classes.deliveryDateSuggestion}>
                         <Typography type='caption' variant='caption' style={{ color: 'gray' }}>
                           <span className={classes.spanText}>
-                            <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={{ deliveryDate: props.deliveryDate }} />
+                            <FormattedMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={{ deliveryDate: props.deliveryDate }} />
                             {props.deadline
-                              ? <FormattedHTMLMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={{ deadline: props.deadline }} />
+                              ? <FormattedMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={{ deadline: props.deadline }} />
                               : null}
                           </span>
                         </Typography>

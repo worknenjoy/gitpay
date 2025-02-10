@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { injectIntl } from 'react-intl';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
@@ -77,4 +76,4 @@ const WalletForm = ({
   );
 }
 
-export default injectIntl(withStyles(styles)(WalletForm));
+export default withStyles(styles)(WalletForm);

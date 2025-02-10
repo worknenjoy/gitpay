@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import MomentComponent from 'moment';
 import {
   Paper,
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DeliveryDate = ({ date, onDateChange }) => {
+  const intl = useIntl();
   const classes = useStyles();
   const [showSuggestAnotherDateField, setShowSuggestAnotherDateField] = React.useState(false);
   const [interestedSuggestedDate, setInterestedSuggestedDate] = React.useState('');
@@ -82,9 +83,9 @@ const DeliveryDate = ({ date, onDateChange }) => {
         <div className={classes.deliveryDateSuggestion}>
           <Typography variant='caption' style={{ color: 'gray' }}>
             <span className={classes.spanText}>
-              <FormattedHTMLMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={{ deliveryDate: deliveryDate }} />
+              <FormattedMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={{ deliveryDate: deliveryDate }} />
               {deadline
-                ? <FormattedHTMLMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={{ deadline: deadline }} />
+                ? <FormattedMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={{ deadline: deadline }} />
                 : null}
             </span>
           </Typography>
@@ -101,18 +102,15 @@ const DeliveryDate = ({ date, onDateChange }) => {
               <InputLabel htmlFor='interested-date' shrink={true}>{msg}</InputLabel>
             )}
           </FormattedMessage>
-          <FormattedMessage id='task.status.deadline.day.insert.label' defaultMessage='Choose a date'>
-            {(msg) => (
-              <Input
-                id='interested-date'
-                startAdornment={<InputAdornment position='start'><DateIcon /></InputAdornment>}
-                placeholder={msg}
-                type='date'
-                value={`${MomentComponent(interestedSuggestedDate).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}`}
-                onChange={handleInputChangeCalendar}
-              />
-            )}
-          </FormattedMessage>
+          <Input
+            id='interested-date'
+            startAdornment={<InputAdornment position='start'><DateIcon /></InputAdornment>}
+            placeholder={intl.formatMessage({ id: 'task.status.deadline.day.insert.label', defaultMessage: 'Choose a date' })}
+            type='date'
+            value={`${MomentComponent(interestedSuggestedDate).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}`}
+            onChange={handleInputChangeCalendar}
+          />
+           
         </FormControl>
       )}
     </Paper>

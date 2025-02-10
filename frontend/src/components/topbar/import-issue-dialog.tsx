@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import React, { useState } from 'react'
+import { FormattedMessage } from 'react-intl'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField, FormControl, FormHelperText, Typography, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
 import isGithubUrl from 'is-github-url'
 import logoGithub from '../../images/github-logo.png'
@@ -68,7 +68,7 @@ const ImportIssueDialog = ({
         <DialogContent>
           <DialogContentText>
             <Typography variant='subtitle1' gutterBottom>
-              <FormattedHTMLMessage
+              <FormattedMessage
                 id='task.actions.insert.subheading'
                 defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
             </Typography>

@@ -21,6 +21,7 @@ import Bottom from '../bottom/bottom'
 import ProfileOptions from './profile-options'
 
 import UserTasksContainer from '../../containers/user-tasks'
+import UserTasksExploreContainer from '../../containers/user-tasks-explore'
 import PaymentsContainer from '../../containers/payments'
 import WalletsContainer from '../../containers/wallets'
 import TransfersContainer from '../../containers/transfers'
@@ -289,6 +290,13 @@ class Profile extends Component {
                         />) }
                       />
                     }
+                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                      <Route
+                        exact
+                        path='/profile/explore'
+                        component={ UserTasksExploreContainer }
+                      />
+                    }
                     { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') ||
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
                       <Route
@@ -297,6 +305,7 @@ class Profile extends Component {
                         component={ UserTasksContainer }
                       />
                     }
+                     
                     { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') ||
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
                       <Route

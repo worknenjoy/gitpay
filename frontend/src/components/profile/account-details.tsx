@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
+import { useIntl, FormattedMessage, FormattedDate } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import {
   withStyles,
@@ -36,7 +36,6 @@ const styles = (theme) => ({
 })
 
 const AccountDetails = ({
-  intl,
   account,
   countries,
   updateAccount,
@@ -47,6 +46,7 @@ const AccountDetails = ({
   setActiveStep,
   classes
 }) => {
+  const intl = useIntl()
   const [accountData, setAccountData] = useState({})
   const [displayCurrentCountry, setDisplayCurrentCountry] = useState({ country: '', code: '' })
   const [userId] = useState('')
@@ -469,7 +469,7 @@ const AccountDetails = ({
                         {' '}
                         <FormattedDate value={Moment.unix(
                           account.data.tos_acceptance.date
-                        )} />
+                        ).toDate()} />
                       </Typography>
                     </FormControl>
                   )}
@@ -493,4 +493,4 @@ const AccountDetails = ({
   )
 }
 
-export default injectIntl(withStyles(styles)(AccountDetails))
+export default withStyles(styles)(AccountDetails)

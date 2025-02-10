@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 
 type FieldProps = {
   name: string,
-  label: string,
+  label: string | React.ReactNode,
   type?: string,
   required?: boolean,
   defaultValue?: string,
