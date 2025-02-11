@@ -308,7 +308,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
                   <TableCell key={fieldId} className={classes.tableCell}>
                     <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={tableData.completed}>
                     <div>
-                      {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n[fieldId]) : n[fieldId]}
+                      {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
                     </div>
                     </ReactPlaceholder>
                   </TableCell>

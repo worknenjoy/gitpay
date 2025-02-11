@@ -43,6 +43,6 @@ Table.args = {
     "action": { sortable: false, dataBaseKey: "action", label: 'Action' },
   },
   customColumnRenderer: {
-    action: (value) => <a href='#'>{value}</a>,
+    action: (item) => <a href='#'>{item.action}</a>,
   }
 };

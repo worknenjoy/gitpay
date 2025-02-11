@@ -22,7 +22,7 @@ const ProfileSidebar = ({
 
   useEffect(() => {
     const path = history.location.pathname
-    if (path.includes('/profile/tasks/explore')) {
+    if (path.includes('/profile/explore')) {
       setSelected(2)
     } else if (path.includes('/profile/tasks')) {
       setSelected(1)
