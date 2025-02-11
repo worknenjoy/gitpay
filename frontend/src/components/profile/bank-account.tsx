@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Grid, Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar } from '@material-ui/core';
 import {
@@ -66,7 +66,7 @@ const BankAccount = ({
   getBankAccount,
   user
 }) => {
-
+  const intl = useIntl()
   const classes = useStyles();
 
   const [ibanMode, setIbanMode] = React.useState(false);
@@ -421,21 +421,17 @@ const BankAccount = ({
                             <Typography variant='caption' gutterBottom style={{ width: '100%' }}>
                               <FormattedMessage id='account.details.iban' defaultMessage='IBAN' />
                             </Typography>
-                            <FormattedMessage id='account.details.iban' defaultMessage='IBAN'>
-                              {(msg) => (
-                                <Input
-                                  id='bank-account-number'
-                                  name='account_number'
-                                  placeholder={msg}
-                                  disabled={!!bankAccount.data.routing_number}
-                                  defaultValue={
-                                    bankAccount.data.last4
-                                      ? `*****${bankAccount.data.last4}`
-                                      : ''
-                                  }
-                                />
-                              )}
-                            </FormattedMessage>
+                            <Input
+                              id='bank-account-number'
+                              name='account_number'
+                              placeholder={intl.formatMessage({id: 'account.details.iban', defaultMessage: 'IBAN'})}
+                              disabled={!!bankAccount.data.routing_number}
+                              defaultValue={
+                                bankAccount.data.last4
+                                  ? `*****${bankAccount.data.last4}`
+                                  : ''
+                              }
+                            /> 
                             {AccountNumberError && (
                               <FormHelperText>
                                 {' '}
@@ -453,18 +449,14 @@ const BankAccount = ({
                                 <Typography variant='caption' gutterBottom style={{ width: '100%' }}>
                                   <FormattedMessage id='account.register.bank.routing' defaultMessage='Routing number' />
                                 </Typography>
-                                <FormattedMessage id='account.details.rountingNumber' defaultMessage='Rounting number'>
-                                  {(msg) => (
-                                    <Input
-                                      id='bank-routing-number'
-                                      name='routing_number'
-                                      placeholder={msg}
-                                      style={{ marginRight: 20 }}
-                                      disabled={!!bankAccount.data.routing_number}
-                                      defaultValue={bankAccount.data.routing_number}
-                                    />
-                                  )}
-                                </FormattedMessage>
+                                <Input
+                                  id='bank-routing-number'
+                                  name='routing_number'
+                                  placeholder={intl.formatMessage({ id: 'account.details.rountingNumber', defaultMessage: 'Rounting number' })}
+                                  style={{ marginRight: 20 }}
+                                  disabled={!!bankAccount.data.routing_number}
+                                  defaultValue={bankAccount.data.routing_number}
+                                /> 
                               </FormControl>
                             </>
                           )}
@@ -474,21 +466,18 @@ const BankAccount = ({
                             <Typography variant='caption' gutterBottom style={{ width: '100%' }}>
                               <FormattedMessage id='account.register.bank.accountNumber' defaultMessage='Account number' />
                             </Typography>
-                            <FormattedMessage id='account.details.accountNumber' defaultMessage='Account number'>
-                              {(msg) => (
-                                <Input
-                                  id='bank-account-number'
-                                  name='account_number'
-                                  placeholder={msg}
-                                  disabled={!!bankAccount.data.routing_number}
-                                  defaultValue={
-                                    bankAccount.data.last4
-                                      ? `*****${bankAccount.data.last4}`
-                                      : ''
-                                  }
-                                />
-                              )}
-                            </FormattedMessage>
+                            <Input
+                              id='bank-account-number'
+                              name='account_number'
+                              placeholder={intl.formatMessage({id: 'account.details.accountNumber', defaultMessage: 'Account number'})}
+                              disabled={!!bankAccount.data.routing_number}
+                              defaultValue={
+                                bankAccount.data.last4
+                                  ? `*****${bankAccount.data.last4}`
+                                  : ''
+                              }
+                            />
+                              
                             {AccountNumberError && (
                               <FormHelperText>
                                 {' '}

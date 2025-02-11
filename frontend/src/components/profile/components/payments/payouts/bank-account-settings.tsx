@@ -69,10 +69,6 @@ export default function BankAccountSettings({
             createAccount={createAccount}
             updateAccount={updateAccount}
             fetchAccount={fetchAccount}
-            updateUser={updateUser}
-            changePassword={changePassword}
-            addNotification={addNotification}
-            deleteUser={deleteUser}
             setActiveStep={setActiveStep}
             fetchAccountCountries={fetchAccountCountries}
             countries={countries}

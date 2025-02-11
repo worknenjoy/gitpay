@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import LoginButton from '../../../../session/login-button'
-import { InjectedIntlProps } from 'react-intl'
+import { useIntl } from 'react-intl'
 import InvoicePayment from '../../../../design-library/organisms/invoice-payment/invoice-payment'
 
-interface PaymentMethodInvoiceTabProps extends RouteComponentProps, InjectedIntlProps {
+interface PaymentMethodInvoiceTabProps extends RouteComponentProps {
   price: any;
   priceAfterFee: any;
   customer: any;
@@ -35,7 +35,7 @@ const PaymentMethodInvoiceTab: React.FC<PaymentMethodInvoiceTabProps & { match: 
   history,
   location
 }) => {
-
+  const intl = useIntl()
   const { name, address } = customer.data
 
   const onInvoicePayment = async () => {

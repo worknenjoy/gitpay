@@ -8,7 +8,7 @@ import {
   Typography
 } from '@material-ui/core'
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import moment from 'moment'
 
 import CustomPaginationActionsTable from './wallets-table'
@@ -19,17 +19,6 @@ import InvoiceStatus from '../design-library/atoms/invoice-status/invoice-status
 import InvoiceId from './wallets/invoice-id'
 import { formatCurrency } from '../../utils/format-currency'
 import InvoiceDueDate from './wallets/invoice-due-date'
-
-const paymentMessages = defineMessages({
-  paymentTabIssue: {
-    id: 'payment.table.header.payment.issue',
-    defaultMessage: 'Payments for issues'
-  },
-  paymentTabFund: {
-    id: 'payment.table.header.payment.funds',
-    defaultMessage: 'Payments for funds'
-  },
-})
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -51,7 +40,6 @@ const styles = (theme: Theme) =>
 
 const Wallets = ({
   classes,
-  intl,
   user,
   customer,
   fetchCustomer,
@@ -66,6 +54,7 @@ const Wallets = ({
   wallet,
   fetchWallet
 }) => {
+  const intl = useIntl()
   const [addFundsDialog, setAddFundsDialog] = useState(false)
   const [showWalletName, setShowWalletName] = useState(false)
   const [walletName, setWalletName] = useState('Default wallet')
@@ -238,4 +227,4 @@ const Wallets = ({
   )
 }
 
-export default injectIntl(withStyles(styles)(Wallets))
+export default withStyles(styles)(Wallets)

@@ -1,6 +1,6 @@
 import { defineMessages } from 'react-intl'
 
-let msgs = defineMessages({
+let msgs:any = defineMessages({
   externalAccount: {
     id: 'consts.external.account',
     defaultMessage: 'Bank account'

@@ -96,7 +96,7 @@ const AccountHeader = ({
             <Grid container direction='column' alignItems='center'>
               <Grid item xs={ 12 }>
                 <Button
-                  onClick={ () => history.push('/profile/tasks/all') }
+                  onClick={ () => history.push('/profile/explore') }
                   color="primary"
                   variant="outlined"
                   className={ classes.actionButtons }

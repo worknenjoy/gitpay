@@ -71,7 +71,7 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
         handleTabChange({}, 'all')
       }
       if (history.location.pathname === '/profile/tasks') {
-        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'all')
+        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'assigned')
         user.Types && user.Types.map(t => t.name).includes('maintainer') && handleTabChange({}, 'createdbyme')
       }
       if (history.location.pathname === '/profile/tasks/createdbyme') {
@@ -110,12 +110,12 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
     <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
       <Container>
         <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
-          <FormattedMessage id='issues.title' defaultMessage='Issues' />
+          <FormattedMessage id='issues.user.title' defaultMessage='My issues' />
         </Typography>
         <Typography variant='caption' gutterBottom>
           <FormattedMessage
-            id='issues.description'
-            defaultMessage="Here you can see all the issues on our network, issues imported or you're working on."
+            id='issues.user.description'
+            defaultMessage="Here you can see issues imported or that you're working on."
           />
         </Typography>
         <Tabs
@@ -133,13 +133,6 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
             label={ intl.formatMessage(messages.createdByMeTasks) }
           />
           }
-           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-          <Tab
-            value={ 'all' }
-            label={ intl.formatMessage(messages.allTasks) }
-          />
-          }
-         
           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Tab
               value={ 'assigned' }
@@ -203,12 +196,6 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
             </Card>
           ) : (
             <>
-              { currentTab === 'all' &&
-              <Taskfilters
-                filterTasks={ filterTasks }
-                
-                baseUrl={ baseUrl }
-              />}
               <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={tableHeaderDefault}  />
             </>
           ) }

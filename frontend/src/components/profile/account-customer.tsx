@@ -36,7 +36,7 @@ const styles = (theme) => ({
 
 type FieldProps = {
   name: string,
-  label: string,
+  label: string | React.ReactNode,
   type?: string,
   required?: boolean,
   defaultValue?: string,

@@ -32,14 +32,14 @@ const TaskOrderInvoiceConfirm = ({
         <div>
           <div style={ {margin: '20px 0', display: 'flex', justifyContent: 'space-between', textAlign: 'right'} }>
             <Typography component='div' gutterBottom >
-              <FormattedMessage id='order.value.label' defaultMessage='Value' gutterBottom />
-              <Typography variant='h4'>
+              <FormattedMessage id='order.value.label' defaultMessage='Value' />
+              <Typography variant='h4' gutterBottom>
                 ${offer?.value}
               </Typography>
             </Typography>
             <Typography component='div' gutterBottom>
-              <FormattedMessage id='order.finalValue.label' defaultMessage='Total with Fees' gutterBottom />
-              <Typography variant='h4'>
+              <FormattedMessage id='order.finalValue.label' defaultMessage='Total with Fees' />
+              <Typography variant='h4' gutterBottom>
                 ${(offer?.value*1.08).toFixed(2)}
               </Typography>
             </Typography>
