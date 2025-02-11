@@ -290,10 +290,22 @@ class Profile extends Component {
                         />) }
                       />
                     }
-                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') &&
+                    { 
+                      this.props.user.Types && (
+                      this.props.user.Types.map(t => t.name).includes('contributor') ||
+                      this.props.user.Types.map(t => t.name).includes('funding')) &&
                       <Route
                         exact
                         path='/profile/explore'
+                        component={ UserTasksExploreContainer }
+                      />
+                    }
+                    { this.props.user.Types && (
+                      this.props.user.Types.map(t => t.name).includes('contributor') ||
+                      this.props.user.Types.map(t => t.name).includes('funding')) &&
+                      <Route
+                        exact
+                        path='/profile/explore/:filter'
                         component={ UserTasksExploreContainer }
                       />
                     }

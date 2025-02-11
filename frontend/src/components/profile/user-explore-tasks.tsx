@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import React, { useEffect } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import {
   Container,
@@ -38,30 +37,12 @@ const styles = theme => ({
   }
 })
 
-const messages = defineMessages({
-  allTasks: {
-    id: 'task.list.lable.issues.all',
-    defaultMessage: 'All issues'
-  },
-  createdByMeTasks: {
-    id: 'task.status.myissues',
-    defaultMessage: 'My issues'
-  },
-  interestedTasks: {
-    id: 'tasks.status.interested',
-    defaultMessage: 'I\'m interested'
-  },
-  assignedToMeTasks: {
-    id: 'task.status.assigned',
-    defaultMessage: 'Assigned to me'
-  }
-})
-
-const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user, intl }) => {
+const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user }) => {
 
   const baseUrl = '/profile/explore/'
 
   const getListTasks = async () => {
+    await filterTasks({})
     await listTasks({})
   }
 
@@ -73,12 +54,12 @@ const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user, intl }
     <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
       <Container>
         <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
-          <FormattedMessage id='issues.title' defaultMessage='Issues' />
+          <FormattedMessage id='issues.explore.title' defaultMessage='Explore issues' />
         </Typography>
         <Typography variant='caption' gutterBottom>
           <FormattedMessage
-            id='issues.description'
-            defaultMessage="Here you can see all the issues on our network, issues imported or you're working on."
+            id='issues.explore.description'
+            defaultMessage="Here you can see all the issues on our network"
           />
         </Typography>
         <div style={{marginBottom: 20}}>
@@ -142,12 +123,4 @@ const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user, intl }
   )
 }
 
-UserTasksExplore.propTypes = {
-  classes: PropTypes.object.isRequired,
-  listTasks: PropTypes.func,
-  filterTasks: PropTypes.func,
-  tasks: PropTypes.object,
-  user: PropTypes.object
-}
-
-export default injectIntl(withStyles(styles)(UserTasksExplore))
+export default withStyles(styles)(UserTasksExplore)

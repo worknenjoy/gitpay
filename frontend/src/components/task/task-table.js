@@ -379,7 +379,7 @@ class CustomPaginationActionsTable extends React.Component {
                           />
                         </div>
                       </TableCell>
-                      { tableHeaderMetadata['task.table.head.project'] &&
+                      { tableHeaderMetadata['project'] &&
                         <TableCell classes={classes.tableCell}>
                           {this.renderProjectLink(n?.Project)}
                         </TableCell>

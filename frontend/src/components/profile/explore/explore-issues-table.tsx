@@ -6,7 +6,6 @@ import IssueStatusField from '../../design-library/molecules/section-table/secti
 import IssueProjectField from '../../design-library/molecules/section-table/section-table-custom-fields/issue-project-field/issue-project-field'
 import IssuePriceField from '../../design-library/molecules/section-table/section-table-custom-fields/issue-price-field/issue-price-field'
 import IssueLabelsField from '../../design-library/molecules/section-table/section-table-custom-fields/issue-labels-field/issue-labels-field'
-import language from '../../../containers/language'
 import IssueLanguageField from '../../design-library/molecules/section-table/section-table-custom-fields/issue-language-field/issue-language-field'
 import IssueCreatedField from '../../design-library/molecules/section-table/section-table-custom-fields/issue-created-field/issue-created-field'
 

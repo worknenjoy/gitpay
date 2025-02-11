@@ -1,20 +1,13 @@
-import React, { useEffect, useState, useLayoutEffect, useCallback } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useState, useCallback } from 'react'
 import { withRouter } from 'react-router-dom'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { defineMessages, FormattedMessage } from 'react-intl'
 
 import {
   Tabs,
   Tab,
   Typography,
   withStyles,
-  Link
 } from '@material-ui/core'
-
-// import TaskFilter from './task-filters'
-import TaskFilters from '../../containers/task-filter';
-
-import CustomPaginationActionsTable from './task-table'
 import { tableHeaderDefault, tableHeaderWithProject } from './task-header-metadata'
 import ProjectListSimple from '../project/project-list-simple'
 import { Breadcrumb } from '../../common/navigation/breadcrumb'
@@ -71,6 +64,13 @@ const messages = defineMessages({
 import { RouteComponentProps } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import SectionTable from '../design-library/molecules/section-table/section-table'
+import IssueLinkField from '../design-library/molecules/section-table/section-table-custom-fields/issue-link-field/issue-link-field'
+import IssueCreatedField from '../design-library/molecules/section-table/section-table-custom-fields/issue-created-field/issue-created-field'
+import IssueLabelsField from '../design-library/molecules/section-table/section-table-custom-fields/issue-labels-field/issue-labels-field'
+import IssueLanguageField from '../design-library/molecules/section-table/section-table-custom-fields/issue-language-field/issue-language-field'
+import IssuePriceField from '../design-library/molecules/section-table/section-table-custom-fields/issue-price-field/issue-price-field'
+import IssueProjectField from '../design-library/molecules/section-table/section-table-custom-fields/issue-project-field/issue-project-field'
+import IssueStatusField from '../design-library/molecules/section-table/section-table-custom-fields/issue-status-field/issue-status-field'
 
 interface TaskListProps extends RouteComponentProps {
   user: any;
@@ -91,6 +91,44 @@ interface MatchParams {
   organization_id?: string;
   project_id?: string;
   filter?: string;
+}
+
+const customColumnRenderer = {
+  title: (item:any) => (
+    <IssueLinkField
+      issue={item}
+    />
+  ),
+  status: (item:any) => (
+    <IssueStatusField
+      issue={item}
+    />
+  ),
+  project: (item:any) => (
+    <IssueProjectField
+      issue={item}
+    />
+  ),
+  value: (item:any) => (
+    <IssuePriceField
+      issue={item}
+    />
+  ),
+  labels: (item:any) => (
+    <IssueLabelsField
+      issue={item}
+    />
+  ),
+  languages: (item:any) => (
+    <IssueLanguageField
+      issue={item}
+    />
+  ),
+  createdAt: (item:any) => (
+    <IssueCreatedField
+      issue={item}
+    />
+  ),
 }
 
 const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
@@ -194,9 +232,6 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
 
   const handleRoutePath = useCallback((value) => {
     switch (value) {
-      case 'explore':
-        handleTabChange(0, 0)
-        break
       case 'createdbyme':
         handleTabChange(0, 1)
         break
@@ -320,12 +355,6 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
               label={ intl.formatMessage(messages.createdByMeTasks) }
             />
           }
-           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-            <Tab
-              value={ 'all' }
-              label={ intl.formatMessage(messages.allTasks) }
-            />
-          }
           { user.Types && user.Types.map(t => t.name).includes('contributor') &&
             <Tab
               value={ 'assigned' }
@@ -342,20 +371,14 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           }
         </Tabs>}
         <div className={ classes.rootTabs }>
-        { currentTab === 'all' &&
-          <TaskFilters
-            filterTasks={ filterTasks }
-            baseUrl={ profileUrl + baseUrl }
-          />
-          }
           <TabContainer>
             <SectionTable
               tableData={tasks}
               tableHeaderMetadata={isProjectPage ? tableHeaderWithProject : tableHeaderDefault}
+              customColumnRenderer={customColumnRenderer}
             />
           </TabContainer>
         </div>
-      
     </React.Fragment>
   )
 }
