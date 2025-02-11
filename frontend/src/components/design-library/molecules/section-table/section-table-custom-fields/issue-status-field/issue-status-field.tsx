@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const issueStatusField = ({ issue }) => {
+const IssueStatusField = ({ issue }) => {
   const classes = useStyles();
   const intl = useIntl(); 
   return (
@@ -44,4 +44,4 @@ const issueStatusField = ({ issue }) => {
   );
 }
 
-export default issueStatusField;
+export default IssueStatusField;
