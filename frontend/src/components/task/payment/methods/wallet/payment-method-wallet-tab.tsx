@@ -8,7 +8,6 @@ import BalanceCard from '../../../../design-library/molecules/balance-card/balan
 function isGreaterThan(a: string | number, b: string | number): boolean {
   const numA = parseFloat(a as string);
   const numB = parseFloat(b as string);
-  console.log(numA, numB)
 
   if (isNaN(numA) || isNaN(numB)) {
     throw new Error("Invalid number input");
@@ -87,7 +86,7 @@ const PaymentMethodWalletTab = ({
         </ReactPlaceholder>
       </div>
       <Button
-        disabled={!price || isGreaterThan(priceAfterFee, wallet?.data?.balance)}
+        disabled={!price || !wallet?.data?.balance || (wallet?.data?.balance && isGreaterThan(priceAfterFee, wallet?.data?.balance))}
         onClick={onWalletPayment}
         variant='contained'
         color='secondary'

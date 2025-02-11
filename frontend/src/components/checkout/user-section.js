@@ -55,65 +55,68 @@ class UserSection extends Component {
   }
 
   render () {
+    const nameInputRef = React.createRef();
+    const emailInputRef = React.createRef();
+
     return (
       <label>
-        <FormControl error={ this.state.error.fullname }>
-          <FormattedMessage id='user.data.fullname' defaultMessage='Full name'>
-            { (msg) => (
-              <Input
-                id='payment-form-user'
-                name='fullname'
-                startAdornment={
-                  <InputAdornment position='start'>
-                    <AccountCircle />
-                  </InputAdornment>
-                }
-                placeholder={ msg }
-                ref='payment-form-user'
-                defaultValue={ this.props.name }
-                required
-                style={ { marginRight: 20 } }
-                onChange={ this.onChangeName }
-              />
-            ) }
-          </FormattedMessage>
-          { this.state.error.fullname && (
-            <FormattedMessage id='user.data.fullname.error' defaultMessage='Provide your full name'>
-              { (msg) => (
-                <FormHelperText error={ this.state.error.fullname }>
-                  { msg }
-                </FormHelperText>
-              ) }
-            </FormattedMessage>
-          ) }
-        </FormControl>
-        <FormControl error={ this.state.error.email }>
+      <FormControl error={ this.state.error.fullname }>
+        <FormattedMessage id='user.data.fullname' defaultMessage='Full name'>
+        { (msg) => (
           <Input
-            name='email'
-            id='adornment-email'
-            startAdornment={
-              <InputAdornment position='start'>
-                <Email />
-              </InputAdornment>
-            }
-            placeholder='e-mail'
-            ref='payment-form-email'
-            type='email'
-            disabled={ this.props.email }
-            defaultValue={ this.props.email }
-            required
-            onChange={ this.onChangeEmail }
+          id='payment-form-user'
+          name='fullname'
+          startAdornment={
+            <InputAdornment position='start'>
+            <AccountCircle />
+            </InputAdornment>
+          }
+          placeholder={ msg }
+          ref={ nameInputRef }
+          defaultValue={ this.props.name }
+          required
+          style={ { marginRight: 20 } }
+          onChange={ this.onChangeName }
           />
-          { this.state.error.email && (
-            <FormattedMessage id='user.data.email.error' defaultMessage='Provide your email correctly'>
-              { (msg) => (
-                <FormHelperText error={ this.state.error.email }>
-                  { msg }
-                </FormHelperText>
-              ) }
-            </FormattedMessage>
+        ) }
+        </FormattedMessage>
+        { this.state.error.fullname && (
+        <FormattedMessage id='user.data.fullname.error' defaultMessage='Provide your full name'>
+          { (msg) => (
+          <FormHelperText error={ this.state.error.fullname }>
+            { msg }
+          </FormHelperText>
           ) }
-        </FormControl>
+        </FormattedMessage>
+        ) }
+      </FormControl>
+      <FormControl error={ this.state.error.email }>
+        <Input
+        name='email'
+        id='adornment-email'
+        startAdornment={
+          <InputAdornment position='start'>
+          <Email />
+          </InputAdornment>
+        }
+        placeholder='e-mail'
+        ref={ emailInputRef }
+        type='email'
+        disabled={ this.props.email }
+        defaultValue={ this.props.email }
+        required
+        onChange={ this.onChangeEmail }
+        />
+        { this.state.error.email && (
+        <FormattedMessage id='user.data.email.error' defaultMessage='Provide your email correctly'>
+          { (msg) => (
+          <FormHelperText error={ this.state.error.email }>
+            { msg }
+          </FormHelperText>
+          ) }
+        </FormattedMessage>
+        ) }
+      </FormControl>
       </label>
     )
   }
