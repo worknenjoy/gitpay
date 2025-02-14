@@ -347,6 +347,49 @@ describe('orders', () => {
       expect(wallet.balance).to.equal('184.00')
     })
 
+    it('should create a order type wallet funds with enough balance', async () => {
+      const user = await registerAndLogin(agent)
+      const newWallet = await models.Wallet.create({
+        name: 'Test Wallet',
+        balance: 0,
+        userId: user.body.id
+      });
+      const WalletOrder = await models.WalletOrder.create({
+        walletId: newWallet.id,
+        amount: 1929,
+        status: 'paid'
+      });
+      const task = await models.Task.create({
+        url: 'https://foo',
+        userId: user.body.id
+      })
+      const res = await agent
+        .post('/orders/create/')
+        .send({
+          walletId: newWallet.id,
+          currency: 'usd',
+          amount: 250,
+          provider: 'wallet',
+          source_type: 'wallet-funds',
+          userId: user.body.id,
+          taskId: task.id
+        })
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.exist;
+      expect(res.body.source_id).to.exist;
+      expect(res.body.currency).to.equal('usd');
+      expect(res.body.amount).to.equal('250');
+      expect(res.body.status).to.equal('succeeded');
+      const wallet = await models.Wallet.findOne({
+        where: {
+          userId: user.body.id
+        }
+      })
+      expect(wallet.balance).to.equal('1659.00')
+    })
+
     xit('should create a new paypal order', (done) => {
       const url = 'https://api.sandbox.paypal.com'
       const path = '/v1/oauth2/token'
