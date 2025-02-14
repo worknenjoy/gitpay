@@ -15,7 +15,7 @@ export const Breadcrumb = ({ history, task, classes, user, project, organization
 
   const handleBackToTaskList = (e) => {
     e.preventDefault()
-    history.push(breadcrumbPathPrefix + 'tasks/all')
+    history.push(breadcrumbPathPrefix + 'explore')
   }
 
   return (

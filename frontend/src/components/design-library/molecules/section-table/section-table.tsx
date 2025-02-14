@@ -34,7 +34,7 @@ import slugify from '@sindresorhus/slugify';
 import logoGithub from '../../images/github-logo.png';
 import logoBitbucket from '../../images/bitbucket-logo.png';
 import Constants from '../../../../consts';
-import messages from '../../../task/messages/task-messages';
+import messages from '../../../areas/public/features/task/messages/task-messages';
 
 const actionsStyles = theme => ({
   root: {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import TaskListUser from '../components/task/task-list-user'
+import TaskListUser from '../components/areas/public/features/task/task-list-user'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { getFilteredTasks } from '../selectors/tasks'
 import { getUser } from '../common/selectors/user/getUser'

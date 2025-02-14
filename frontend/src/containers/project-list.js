@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
-import ProjectList from '../components/project/project-list'
+import ProjectList from '../components/areas/public/features/project/project-list'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { fetchProject, listProjects } from '../actions/projectActions'
 import { getFilteredTasks, getProject } from '../selectors/tasks'

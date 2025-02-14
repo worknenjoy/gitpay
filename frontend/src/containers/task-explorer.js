@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
-import TaskExplorer from '../components/task/task-explorer'
+import TaskExplorer from '../components/areas/public/features/task/task-explorer'
 import { listTasks } from '../actions/taskActions'
 
 const mapDispatchToProps = (dispatch, ownProps) => {

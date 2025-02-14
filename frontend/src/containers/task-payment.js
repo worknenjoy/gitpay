@@ -4,7 +4,7 @@ import { updateTask, paymentTask, filterTaskOrders, transferTask } from '../acti
 import { createOrder, payOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getUser } from '../common/selectors/user/getUser'
-import TaskPayment from '../components/task/task-payment'
+import TaskPayment from '../components/areas/public/features/task/task-payment'
 
 const mapStateToProps = (state, ownProps) => {
   return {

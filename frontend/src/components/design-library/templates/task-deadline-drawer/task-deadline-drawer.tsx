@@ -1,6 +1,6 @@
 import React from 'react'
 import Drawer from '../../molecules/drawer/drawer'
-import TaskDeadlineForm from '../../../task/task-deadline-form'
+import TaskDeadlineForm from '../../../areas/public/features/task/task-deadline-form'
 
 type TaskDeadlineDrawerProps = {
   open: boolean

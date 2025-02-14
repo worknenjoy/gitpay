@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Profile from '../components/profile/profile'
+import Profile from '../components/areas/profile/components/profile'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { logOut, changePassword } from '../actions/loginActions'
 import { listTasks, filterTasks, createTask } from '../actions/taskActions'

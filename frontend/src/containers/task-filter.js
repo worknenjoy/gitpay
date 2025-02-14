@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
 import { filterTasks } from '../actions/taskActions'
-import TaskFilters from '../components/task/task-filters'
+import TaskFilters from '../components/areas/public/features/task/task-filters'
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks.data,

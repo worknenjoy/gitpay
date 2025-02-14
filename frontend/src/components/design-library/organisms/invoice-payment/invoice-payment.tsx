@@ -4,7 +4,7 @@ import { Theme, createStyles, makeStyles, withStyles } from '@material-ui/core/s
 import { FormattedMessage } from 'react-intl';
 import { BillingInfoCard } from '../../molecules/billing-info-card/billing-info-card'
 import ReactPlaceholder from 'react-placeholder';
-import { countryCodesFull } from '../../../profile/country-codes'
+import { countryCodesFull } from '../../../areas/profile/shared/country-codes'
 import { formatCurrency } from '../../../../utils/format-currency'
 import {
   Alert, AlertTitle

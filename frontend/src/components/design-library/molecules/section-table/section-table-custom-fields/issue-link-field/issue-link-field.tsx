@@ -7,7 +7,7 @@ import { Tooltip, Typography } from '@material-ui/core';
 
 import logoGithub from '../../../../../../images/github-logo.png';
 import logoBitbucket from '../../../../../../images/bitbucket-logo.png';
-import messages from '../../../../../task/messages/task-messages';
+import messages from '../../../../../areas/public/features/task/messages/task-messages';
 
 const IssueLinkField = ({ issue }) => {
   const history = useHistory();

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { messageRecruiters } from '../actions/contactActions'
-import ContactRecruiterForm from '../components/welcome/contact-recruiter-form'
+import ContactRecruiterForm from '../components/areas/public/features/welcome/contact-recruiter-form'
 
 const mapStateToProps = (state, props) => {
   return {

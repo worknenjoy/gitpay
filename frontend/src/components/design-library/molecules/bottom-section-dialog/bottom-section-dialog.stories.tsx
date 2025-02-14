@@ -1,0 +1,14 @@
+import React from 'react';
+import BottomSectionDialog from './bottom-section-dialog';
+
+export default {
+  title: 'Design Library/Molecules/BottomSectionDialog',
+  component: BottomSectionDialog,
+};
+
+const Template = (args) => <BottomSectionDialog {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+  // Add default props here
+};

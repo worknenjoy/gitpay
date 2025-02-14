@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Welcome from '../components/welcome/welcome'
+import Welcome from '../components/areas/public/features/welcome/welcome'
 import { addDialog, closeDialog } from '../actions/notificationActions'
 
 const mapStateToProps = (state, ownProps) => {
