@@ -31,7 +31,7 @@ import {
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import styled from 'styled-components'
-import media from 'app/styleguide/media'
+import media from '../../../../../styleguide/media'
 
 import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb'
 

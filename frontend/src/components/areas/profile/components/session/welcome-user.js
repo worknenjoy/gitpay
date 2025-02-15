@@ -9,9 +9,9 @@ import {
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-const welcome1 = require('images//welcome1.png')
-const welcome2 = require('images//welcome2.png')
-const welcome3 = require('images//welcome3.png')
+const welcome1 = require('images/welcome1.png')
+const welcome2 = require('images/welcome2.png')
+const welcome3 = require('images/welcome3.png')
 
 export default class WelcomeUser extends Component {
   constructor (props) {

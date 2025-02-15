@@ -10,7 +10,7 @@ import PrivacyPolicy from './privacy-policy'
 import CookiePolicy from './cookie-policy'
 
 
-import Background from 'images//login_bg.png'
+import Background from 'images/login_bg.png'
 const styles = theme => ({
   container: {
     width: '100%',
@@ -48,7 +48,7 @@ const Content = styled.div`
   margin-top: 10px;
 `
 
-const logo = require('images//logo-complete.png')
+const logo = require('images/logo-complete.png')
 
 class LoginPage extends Component {
   constructor (props) {

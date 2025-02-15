@@ -12,7 +12,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "image/*": ["src/images/*"]
+      "images/*": ["src/images/*"],
+      "app": ["src/"],
     }
   },
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
