@@ -39,8 +39,8 @@ import PricePlan from '../../../../design-library/organisms/price-plan/price-pla
 
 import LoginButton from '../../../profile/components/session/login-button'
 
-import logoGithub from '../../images/github-logo-black.png'
-import logoBitbucket from '../../images/bitbucket-logo-blue.png'
+import logoGithub from 'images/github-logo-black.png'
+import logoBitbucket from 'images/bitbucket-logo-blue.png'
 
 const TaskAssignment = (props) => {
   const { classes, task } = props

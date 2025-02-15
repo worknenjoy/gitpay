@@ -37,8 +37,8 @@ import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/bre
 
 import TaskLabels from './task-labels'
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
+import logoGithub from 'images/github-logo.png'
+import logoBitbucket from 'images/bitbucket-logo.png'
 import TaskReport from './task-report'
 
 

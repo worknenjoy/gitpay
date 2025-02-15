@@ -2,8 +2,8 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 import Typography from '@material-ui/core/Typography'
-import GithubLogo from '../../../../../images/github-logo.png'
-import BitbucketLogo from '../../../../../images/bitbucket-logo.png'
+import GithubLogo from 'images/github-logo.png'
+import BitbucketLogo from 'images/bitbucket-logo.png'
 import api from '../../../../../consts'
 
 const ProviderLoginButtons = ({ 

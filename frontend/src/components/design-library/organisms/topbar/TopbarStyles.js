@@ -4,7 +4,7 @@ import {
   Avatar,
 } from '@material-ui/core'
 
-import media from '../../styleguide/media'
+import media from '../../../../styleguide/media'
 
 export const Bar = styled.div`
   box-sizing: border-box;

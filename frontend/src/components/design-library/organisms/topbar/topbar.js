@@ -57,19 +57,19 @@ import {
   IconHamburger
 } from './TopbarStyles'
 
-import messagesBr from '../../translations/result/br.json'
-import messagesEn from '../../translations/result/en.json'
+import messagesBr from '../../../../translations/result/br.json'
+import messagesEn from '../../../../translations/result/en.json'
 
-import messagesBrLocal from '../../translations/generated/br.json'
-import messagesEnLocal from '../../translations/generated/en.json'
+import messagesBrLocal from '../../../../translations/generated/br.json'
+import messagesEnLocal from '../../../../translations/generated/en.json'
 
-import LoginButton from '../areas/profile/components/session/login-button'
+import LoginButton from '../../../areas/profile/components/session/login-button'
 import ImportIssueButton from './import-issue'
 
-import logo from '../../images/gitpay-logo.png'
+import logo from 'images/gitpay-logo.png'
 
-import logoLangEn from '../../images/united-states-of-america.png'
-import logoLangBr from '../../images/brazil.png'
+import logoLangEn from 'images/united-states-of-america.png'
+import logoLangBr from 'images/brazil.png'
 import ImportIssueDialog from './import-issue-dialog'
 import TopbarMenu from './topbar-menu'
 

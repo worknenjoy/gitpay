@@ -24,8 +24,8 @@ import PrivacyPolicy from '../../../areas/profile/components/session/privacy-pol
 import TermsOfService from '../../../areas/profile/components/session/terms-of-service'
 import CookiePolicy from '../../../areas/profile/components/session/cookie-policy'
 
-const logoCompleteGray = require('../../../../images/logo-complete-gray.png')
-const logoWorknEnjoy = require('../../../../images/worknenjoy-logo.png')
+const logoCompleteGray = require('images/logo-complete-gray.png')
+const logoWorknEnjoy = require('images/worknenjoy-logo.png')
 
 const useStyles = makeStyles((theme) => {
   const styles = mainStyles(theme)
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-const Bottom = ({ getInfo, tasks, bounties, users }) => {
+const Bottom = ({ info, tasks, bounties, users }) => {
   const classes = useStyles()
 
   return (
@@ -217,7 +217,7 @@ const Bottom = ({ getInfo, tasks, bounties, users }) => {
           </Grid>
         </Grid>
         <Divider className={ classes.spacedTop } />
-        <StatsBar info={getInfo} tasks={tasks} bounties={bounties} users={users} />
+        <StatsBar info={info} tasks={tasks} bounties={bounties} users={users} />
       </Container>
     </div>
   )

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
-const logoPaypal = require('../../images/paypal-icon.png').default
-const creditCardIcon = require('../../images/credit-card-icon.svg')
+const logoPaypal = require('images/paypal-icon.png').default
+const creditCardIcon = require('images/credit-card-icon.svg')
 
 const PaymentTypeIcon = props => {
   return (

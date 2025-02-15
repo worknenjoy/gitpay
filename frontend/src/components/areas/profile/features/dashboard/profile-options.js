@@ -21,13 +21,13 @@ import {
 import { Card, CardList, CardMedia } from '../../components/ProfileStyles'
 import WelcomeUser from '../../components/session/welcome-user'
 
-const organizationIcon = require('../../images/icons/noun_project management_3063542.svg')
-const toolsIcon = require('../../images/icons/noun_project management_3063515.svg')
-const preferencesIcon = require('../../images/icons/noun_project management_3063532.svg')
-const generalSettingsIcon = require('../../images/icons/noun_project management_3063521.svg')
-const taskIcon = require('../../images/icons/noun_project management_3063547.svg')
-const configIcon = require('../../images/icons/noun_project management_3063514.svg')
-const paymentsIcon = require('../../images/icons/noun_project management_3063535.svg')
+const organizationIcon = require('images/icons/noun_project management_3063542.svg')
+const toolsIcon = require('images/icons/noun_project management_3063515.svg')
+const preferencesIcon = require('images/icons/noun_project management_3063532.svg')
+const generalSettingsIcon = require('images/icons/noun_project management_3063521.svg')
+const taskIcon = require('images/icons/noun_project management_3063547.svg')
+const configIcon = require('images/icons/noun_project management_3063514.svg')
+const paymentsIcon = require('images/icons/noun_project management_3063535.svg')
 
 const styles = theme => ({
   cardActions: {

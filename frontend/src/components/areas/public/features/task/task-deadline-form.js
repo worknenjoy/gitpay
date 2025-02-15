@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core'
 import DateIcon from '@material-ui/icons/DateRange'
 
-const timeIcon = require('../../images/time-icon.png')
+const timeIcon = require('images/time-icon.png')
 
 const messages = defineMessages({
   deadlineLevel1: {

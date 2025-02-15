@@ -51,28 +51,28 @@ const recruiterTeam = [
   {
     name: 'Alexandre Magno',
     description: 'Founder of Gitpay, and senior software engineer for 15+ years, Alexandre is an active open source maintainer, author of Mobile First Boostrap and he help the development community with your blog alexandremagno.net.',
-    image: require('../../images/teams/headhunter-team-member1.png'),
+    image: require('images/teams/headhunter-team-member1.png'),
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/',
     githubUrl: 'https://github.com/alexanmtz'
   },
   {
     name: 'Wharley Ornelas',
     description: 'Fullstack developer, with 15+ development experience. First developer to contribute and he helped with the core, and a brazilian developer evangelist',
-    image: require('../../images/teams/wharley-team-member.jpg'),
+    image: require('images/teams/wharley-team-member.jpg'),
     linkedinUrl: 'https://in.linkedin.com/in/wharley-ornelas-da-rocha-65420932',
     githubUrl: 'http://github.com/wharley'
   },
   {
     name: 'Mayna Thais',
     description: 'Project leader with 9+ years of experience. She has worked with software projects and IT infrastructure for many companies. Graduated in Information Systems, MBA in Project Management and Scrum Master certified.',
-    image: require('../../images/teams/core-team-mayna.jpg'),
+    image: require('images/teams/core-team-mayna.jpg'),
     linkedinUrl: 'https://br.linkedin.com/in/mayna-thais',
     githubUrl: 'https://github.com/mthais'
   },
   {
     name: 'Rafael Quintanilha',
     description: 'Software Developer Intern at Gitpay. Graduated in IT Management and with a master\'s in e-business, Rafael has experience working as a digital project manager and now embraces a new career path as a web developer.',
-    image: require('../../images/teams/profile_rq.jpg'),
+    image: require('images/teams/profile_rq.jpg'),
     linkedinUrl: 'https://www.linkedin.com/in/rafael-quintanilha/',
     githubUrl: 'https://github.com/RafaelQuintanilha18'
   }
@@ -113,7 +113,7 @@ export default function Team (props) {
       <Section>
         <Grid container spacing={ 3 } style={ { backgroundColor: 'black' } } justify={ 'center' } alignItems={ 'center' } >
           <Grid item lg={ 4 } md={ 4 } sm={ 6 } sx={ 12 }>
-            <img src={ require('../../images/core-team-page-asset.png').default } alt='assets' />
+            <img src={ require('images/core-team-page-asset.png').default } alt='assets' />
           </Grid>
           <Grid item lg={ 4 } md={ 5 } sm={ 6 } sx={ 12 } >
             <form onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>

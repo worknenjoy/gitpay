@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import CheckoutForm from '../components/checkout/checkout-form'
+import CheckoutForm from '../components/areas/profile/features/payments/checkout/checkout-form'
 import { validateCoupon } from '../actions/couponActions'
 
 const mapStateToProps = state => {

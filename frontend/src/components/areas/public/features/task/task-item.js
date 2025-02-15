@@ -19,8 +19,8 @@ import {
 
 import Constants from '../../../../../consts'
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
+import logoGithub from 'images/github-logo.png'
+import logoBitbucket from 'images/bitbucket-logo.png'
 
 class TaskItem extends Component {
   componentDidMount () { }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
-import logo from '../../../../images/gitpay-logo.png'
+import logo from 'images/gitpay-logo.png'
 import {
   Logo,
   StyledButton

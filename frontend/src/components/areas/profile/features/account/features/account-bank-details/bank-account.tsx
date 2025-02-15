@@ -548,7 +548,7 @@ const BankAccount = ({
                           <FormattedMessage id='account.register.country.label' defaultMessage='The country you chose to create your account' />
                         </Typography>
                         <Chip
-                          avatar={<Avatar><img width={72} src={require(`../../images/countries/${countryImage}.png`).default} /></Avatar>}
+                          avatar={<Avatar><img width={72} src={require(`images/countries/${countryImage}.png`).default} /></Avatar>}
                           label={countryLabel}
                           className={classes.chip}
                         />

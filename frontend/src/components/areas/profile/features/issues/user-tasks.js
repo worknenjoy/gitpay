@@ -21,10 +21,10 @@ import {
 import Taskfilters from '../../../../../containers/task-filter'
 import CustomPaginationActionsTable from '../../../public/features/task/task-table';
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
+import logoGithub from 'images/github-logo.png'
+import logoBitbucket from 'images/bitbucket-logo.png'
 
-import imageGettingStarted from '../../images/octodex.png'
+import imageGettingStarted from 'images/octodex.png'
 
 import api from '../../../../../consts'
 

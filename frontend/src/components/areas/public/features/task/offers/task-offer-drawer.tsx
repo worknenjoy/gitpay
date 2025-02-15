@@ -4,7 +4,7 @@ import OfferDrawer from '../../../../../design-library/templates/offer-drawer/of
 import { makeStyles, Typography, } from '@material-ui/core';
 import TaskOrderInvoiceConfirm from '../task-order-invoice-confirm';
 import MessageAssignment from '../assignment/messageAssignment';
-const taskCover = require('../../../images/task-cover.png')
+const taskCover = require('images/task-cover.png')
 
 const useStyles = makeStyles(theme => ({
   spanText: {

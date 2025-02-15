@@ -12,8 +12,8 @@ import Typography from '@material-ui/core/Typography'
 import slugify from '@sindresorhus/slugify'
 import Link from '@material-ui/core/Link'
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
+import logoGithub from 'images/github-logo.png'
+import logoBitbucket from 'images/bitbucket-logo.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {

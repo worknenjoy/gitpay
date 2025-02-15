@@ -64,7 +64,7 @@ class CountryPicker extends Component {
 
     const getCountryButtons = () => {
       return countryCodes.map((item) => {
-        const imageModule = require(`../../images/countries/${item.image}.png`)
+        const imageModule = require(`images/countries/${item.image}.png`)
         const countryImageSrc = imageModule.default || imageModule
         return (
           <Button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>

@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import { FormattedMessage } from 'react-intl';
 import Typography from '@mui/material/Typography';
-import GithubLogo from '../../../../images/github-logo-bottom.png';
+import GithubLogo from 'images/github-logo-bottom.png';
 
 export default function GithubCard(): JSX.Element {
   const theme = useTheme();

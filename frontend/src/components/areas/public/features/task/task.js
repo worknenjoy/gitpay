@@ -62,12 +62,12 @@ import Constants from '../../../../../consts'
 
 import TaskDeadlineDrawer from '../../../../design-library/templates/task-deadline-drawer/task-deadline-drawer'
 
-const taskCover = require('../../images/task-cover.png')
-const inviteCover = require('../../images/funds.png')
+const taskCover = require('images/task-cover.png')
+const inviteCover = require('images/funds.png')
 
-const bounty = require('../../images/bounty.png')
-const sharing = require('../../images/sharing.png')
-const notifications = require('../../images/notifications.png')
+const bounty = require('images/bounty.png')
+const sharing = require('images/sharing.png')
+const notifications = require('images/notifications.png')
 
 const styles = theme => ({
   root: {

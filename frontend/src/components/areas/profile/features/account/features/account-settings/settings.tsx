@@ -25,8 +25,8 @@ const messages = {
   'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
-const logoLangEn = require('../../images/united-states-of-america.png')
-const logoLangBr = require('../../images/brazil.png')
+const logoLangEn = require('images/united-states-of-america.png')
+const logoLangBr = require('images/brazil.png')
 
 const useStyles = makeStyles(theme => ({
   title: {

@@ -32,8 +32,8 @@ import {
 } from '@material-ui/icons'
 import slugify from '@sindresorhus/slugify'
 
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
+import logoGithub from 'images/github-logo.png'
+import logoBitbucket from 'images/bitbucket-logo.png'
 import Constants from '../../../../../consts'
 import messages from './messages/task-messages'
 

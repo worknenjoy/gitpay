@@ -32,9 +32,9 @@ const styles = theme => ({
   }
 })
 
-const clientimg1 = require('../../images/clients/electron-logo.png')
-const clientimg2 = require('../../images/clients/etherpad-logo.png')
-const clientimg3 = require('../../images/clients/sitespeedio-logo.png')
+const clientimg1 = require('images/clients/electron-logo.png')
+const clientimg2 = require('images/clients/etherpad-logo.png')
+const clientimg3 = require('images/clients/sitespeedio-logo.png')
 
 const clients = [
   {

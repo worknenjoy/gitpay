@@ -10,16 +10,16 @@ import {
   Typography,
   Link
 } from '@material-ui/core'
-import peopleImage from '../../images/landingPage_People.png'
-import logoGrey from '../../images/logo-complete-gray.png'
-import screenImage from '../../images/gitpay-explore-task-screenshot.png'
-import profileImage from '../../images/avatar-alexandre.png'
+import peopleImage from 'images/landingPage_People.png'
+import logoGrey from 'images/logo-complete-gray.png'
+import screenImage from 'images/gitpay-explore-task-screenshot.png'
+import profileImage from 'images/avatar-alexandre.png'
 import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
 import Clientlist from './clientlist'
 import TeamCard from '../../../../design-library/atoms/cards/TeamCard'
 import ContactRecruiterFormContainer from '../../../../../containers/contact-recruiter-form'
 
-const deal = require('../../images/deal.png')
+const deal = require('images/deal.png')
 
 import {
   MainTitle,
@@ -37,7 +37,7 @@ const recruiterTeam = [
   {
     name: 'Alexandre Magno',
     description: 'Founder of Gitpay, and senior software engineer, sharing and helping developers to face the challenges of technical recruitment.',
-    image: require('../../images/teams/headhunter-team-member1.png'),
+    image: require('images/teams/headhunter-team-member1.png'),
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/'
   }
 ]

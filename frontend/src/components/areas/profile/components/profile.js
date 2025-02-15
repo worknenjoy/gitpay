@@ -9,8 +9,6 @@ import {
   Container,
   Button,
   withStyles,
-  Page,
-  PageContent,
   AppBar,
   Dialog,
   DialogTitle,
@@ -19,7 +17,9 @@ import {
   DialogActions
 } from '@material-ui/core'
 
-import Bottom from '../../../design-library/organisms/bottom-bar/bottom'
+import { Page, PageContent } from '../../../../styleguide/components/Page'
+
+import BottomContainer from '../../../../containers/bottom'
 import ProfileOptions from '../features/dashboard/profile-options'
 
 import UserTasksContainer from '../../../../containers/user-tasks'
@@ -443,7 +443,9 @@ class Profile extends Component {
               </div>
             </Grid>
           } */ }
-        <Bottom classes={ classes } />
+        <BottomContainer
+          classes={ classes }
+        />
       </Page>
     )
   }

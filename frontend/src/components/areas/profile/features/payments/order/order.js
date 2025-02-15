@@ -13,7 +13,7 @@ import '../../../../../checkout/checkout-form'
 import TopBar from '../../../../../topbar/topbar'
 import Bottom from '../../../../../design-library/organisms/bottom-bar/bottom'
 
-// const paymentIcon = require('../../images/payment-icon-alt.png')
+// const paymentIcon = require('images/payment-icon-alt.png')
 
 const styles = theme => ({
   root: {

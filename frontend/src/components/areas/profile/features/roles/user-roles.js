@@ -4,9 +4,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage, defineMessages } from 'react-intl'
-import funder from '../../images/bounty.png'
-import contributor from '../../images/sharing.png'
-import maintainer from '../../images/notifications.png'
+import funder from 'images/bounty.png'
+import contributor from 'images/sharing.png'
+import maintainer from 'images/notifications.png'
 
 import {
   withStyles,

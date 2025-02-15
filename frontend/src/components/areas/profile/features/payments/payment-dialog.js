@@ -6,7 +6,7 @@ import {
   CardContent,
   Typography
 } from '@material-ui/core'
-import StripeCheckout from '../../../../checkout/stripe-checkout'
+import StripeCheckout from '../../features/payments/checkout/stripe-checkout'
 
 class PaymentDialog extends Component {
   render () {
