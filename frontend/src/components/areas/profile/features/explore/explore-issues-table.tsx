@@ -1,6 +1,6 @@
 import React from 'react'
 import SectionTable from '../../../../design-library/molecules/section-table/section-table'
-import { tableHeaderDefault } from '../../../public/features/task/task-header-metadata'
+import { tableHeaderDefault } from '../../../../shared/table-metadata/task-header-metadata'
 import IssueLinkField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-link-field/issue-link-field'
 import IssueStatusField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-status-field/issue-status-field'
 import IssueProjectField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-project-field/issue-project-field'

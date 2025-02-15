@@ -6,12 +6,12 @@ import {
   Public as PublicIcon,
   Person as PersonIcon
 } from '@material-ui/icons'
-import Alert from '../../shared/design-library/atoms/alert/alert';
+import Alert from '../../../../../../design-library/atoms/alert/alert';
 import ReactPlaceholder from 'react-placeholder';
-import CountryPicker from './country-picker'
-import Const from '../../../consts'
+import CountryPicker from '../../../../shared/country-picker';
+import Const from '../../../../../../../consts'
 
-import { countryCodes, countryCurrencies } from './country-codes'
+import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {

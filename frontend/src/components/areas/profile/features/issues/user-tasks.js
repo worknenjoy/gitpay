@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import { tableHeaderDefault } from '../../../public/features/task/task-header-metadata'
+import { tableHeaderDefault } from '../../../../shared/table-metadata/task-header-metadata'
 
 import {
   Container,

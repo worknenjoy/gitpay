@@ -5,7 +5,7 @@ import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages } from 'react-intl'
 import CustomPaginationActionsTable from './task-table'
-import { tableHeaderDefault } from './task-header-metadata'
+import { tableHeaderDefault } from '../../../../shared/table-metadata/task-header-metadata'
 
 import {
   Container,

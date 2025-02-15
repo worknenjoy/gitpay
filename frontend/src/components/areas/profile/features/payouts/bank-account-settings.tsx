@@ -4,7 +4,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepButton from '@material-ui/core/StepButton';
 import AccountDetails from '../account/features/account-details/account-details';
-import BankAccount from '../../../bank-account';
+import BankAccount from '../account/features/account-bank-details/bank-account';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

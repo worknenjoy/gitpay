@@ -20,6 +20,7 @@ const sizes = {
  * @see: https://github.com/styled-components/styled-components/blob/master/docs/tips-and-tricks.md#media-templates
  * @see: https://www.styled-components.com/docs/advanced#media-templates
  */
+
 const media = Object.keys(sizes).reduce((acc, label) => {
   acc[label] = (...args) => css`
     @media (max-width: ${sizes[label] / 16}em) {
@@ -28,6 +29,10 @@ const media = Object.keys(sizes).reduce((acc, label) => {
   `
 
   return acc
-}, {})
+}, {
+  desktop: null,
+  tablet: null,
+  phone: null
+})
 
 export default media

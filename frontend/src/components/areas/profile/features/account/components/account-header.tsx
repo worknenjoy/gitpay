@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ImportIssueButton from '../../../../../topbar/import-issue';
-import ImportIssueDialog from '../../../../../topbar/import-issue-dialog';
+import ImportIssueButton from '../../../../../design-library/organisms/topbar/import-issue';
+import ImportIssueDialog from '../../../../../design-library/organisms/topbar/import-issue-dialog';
 import AccountMenu from './account-menu';
 import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';

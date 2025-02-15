@@ -8,9 +8,9 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core'
-import { tableHeaderDefault, tableHeaderWithProject } from './task-header-metadata'
-import ProjectListSimple from '../project/project-list-simple'
-import { Breadcrumb } from '../../../../../common/navigation/breadcrumb'
+import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
+import ProjectListSimple from '../../../../design-library/molecules/project-card/project-list-simple'
+import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb'
 import ReactPlaceholder from 'react-placeholder'
 
 const styles = theme => ({

@@ -33,7 +33,7 @@ export const MainTitle = styled.div`
 
 export const MainList = styled.div`
   text-align: left;
-
+  
   ${media.phone`
     margin-left: 0;
   `}

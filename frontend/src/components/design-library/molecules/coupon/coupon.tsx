@@ -3,8 +3,23 @@ import AddIcon from '@material-ui/icons/Add'
 import { TextField, Chip, Button, Typography } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 
-const Coupon = (props) => {
-  const { couponStoreState } = { ...props }
+interface CouponProps {
+  couponState: {
+    couponInput: boolean;
+    coupon: string;
+    couponApplied: boolean;
+  };
+  couponStoreState: {
+    amount: number;
+    orderPrice: number;
+  };
+  handleCouponInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  applyCoupon: () => void;
+  showCouponInput: () => void;
+}
+
+const Coupon: React.FC<CouponProps> = (props) => {
+  const { couponStoreState = { amount: 0, orderPrice: 0 } } = { ...props }
 
   if (props.couponState.couponInput) {
     return (

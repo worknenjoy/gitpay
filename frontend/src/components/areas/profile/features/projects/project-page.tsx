@@ -8,9 +8,9 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core'
-import { tableHeaderDefault, tableHeaderWithProject } from './task-header-metadata'
-import ProjectListSimple from '../project/project-list-simple'
-import { Breadcrumb } from '../../common/navigation/breadcrumb'
+import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
+import ProjectListSimple from '../../../../design-library/molecules/project-card/project-list-simple'
+import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb'
 import ReactPlaceholder from 'react-placeholder'
 
 const styles = theme => ({
@@ -63,14 +63,14 @@ const messages = defineMessages({
 
 import { RouteComponentProps } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import SectionTable from '../design-library/molecules/section-table/section-table'
-import IssueLinkField from '../design-library/molecules/section-table/section-table-custom-fields/issue-link-field/issue-link-field'
-import IssueCreatedField from '../design-library/molecules/section-table/section-table-custom-fields/issue-created-field/issue-created-field'
-import IssueLabelsField from '../design-library/molecules/section-table/section-table-custom-fields/issue-labels-field/issue-labels-field'
-import IssueLanguageField from '../design-library/molecules/section-table/section-table-custom-fields/issue-language-field/issue-language-field'
-import IssuePriceField from '../design-library/molecules/section-table/section-table-custom-fields/issue-price-field/issue-price-field'
-import IssueProjectField from '../design-library/molecules/section-table/section-table-custom-fields/issue-project-field/issue-project-field'
-import IssueStatusField from '../design-library/molecules/section-table/section-table-custom-fields/issue-status-field/issue-status-field'
+import SectionTable from '../../../../design-library/molecules/section-table/section-table'
+import IssueLinkField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-link-field/issue-link-field'
+import IssueCreatedField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-created-field/issue-created-field'
+import IssueLabelsField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-labels-field/issue-labels-field'
+import IssueLanguageField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-language-field/issue-language-field'
+import IssuePriceField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-price-field/issue-price-field'
+import IssueProjectField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-project-field/issue-project-field'
+import IssueStatusField from '../../../../design-library/molecules/section-table/section-table-custom-fields/issue-status-field/issue-status-field'
 
 interface TaskListProps extends RouteComponentProps {
   user: any;

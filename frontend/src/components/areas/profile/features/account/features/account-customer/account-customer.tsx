@@ -15,9 +15,7 @@ import {
   FormHelperText,
 } from '@material-ui/core'
 
-import { countryCodesFull } from './country-codes'
-
-import messages from './messages'
+import { countryCodesFull } from '../../../../shared/country-codes'
 
 const styles = (theme) => ({
   legend: {

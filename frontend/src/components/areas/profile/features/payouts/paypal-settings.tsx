@@ -14,7 +14,7 @@ import {
   Input,
   InputLabel,
 } from '@material-ui/core';
-import messages from '../../../shared/messages';
+import messages from '../../shared/messages';
 
 const styles = theme => ({
   card: {

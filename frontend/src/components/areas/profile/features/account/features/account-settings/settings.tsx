@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom'
 import {
   Typography,
-  withStyles,
   Paper,
   Grid,
   Menu,
@@ -13,7 +11,7 @@ import {
 } from '@material-ui/core'
 import LanguageIcon from '@material-ui/icons/Language'
 import { updateIntl } from 'react-intl-redux'
-import { LabelButton, StyledAvatarIconOnly } from '../../../../../../topbar/TopbarStyles'
+import { LabelButton, StyledAvatarIconOnly } from '../../../../../../design-library/organisms/topbar/TopbarStyles'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { store } from '../../../../../../../main/app'
 import messagesBr from '../../../../../../../translations/result/br.json'
