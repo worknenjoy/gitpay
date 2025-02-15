@@ -6,7 +6,7 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core'
-import Notification from '../../../../../notification/notification'
+import Notification from '../../../../../design-library/atoms/notification/notification'
 
 import '../../../../../checkout/checkout-form'
 

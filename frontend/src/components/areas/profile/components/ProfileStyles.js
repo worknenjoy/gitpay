@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core'
 
 import styled from 'styled-components'
-import media from 'app/styleguide/media'
+import media from '../../../../styleguide/media'
 
 export const Card = styled(BaseCard)`
   max-width: 280px;

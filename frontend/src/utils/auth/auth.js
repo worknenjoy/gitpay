@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { Card, CardText } from '@material-ui/core'
-import Input from '../common/form/inputAuth'
+import Input from '../../common/form/inputAuth'
 
 const cardStyle = {
   minWidth: 275,

@@ -12,7 +12,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 
 import SubscribeForm from '../subscribe-form/subscribe-form'
-import InfoContainer from '../../../../containers/info'
+import StatsBar from '../../molecules/stats-bar/stats-bar'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 
@@ -37,10 +37,13 @@ const useStyles = makeStyles((theme) => {
     spacedTop: {
       marginTop: 20,
     },
+    img: {
+      verticalAlign: 'middle',
+    },
   }
 })
 
-const Bottom = () => {
+const Bottom = ({ getInfo, tasks, bounties, users }) => {
   const classes = useStyles()
 
   return (
@@ -149,7 +152,7 @@ const Bottom = () => {
                 header='Terms of Service'
                 subtitle={ 'Terms of Service' }
                 content={
-                  <TermsOfService extraStyles={ false } />
+                  <TermsOfService />
                 }
               />
               <BottomSectionDialog
@@ -214,14 +217,10 @@ const Bottom = () => {
           </Grid>
         </Grid>
         <Divider className={ classes.spacedTop } />
-        <InfoContainer />
+        <StatsBar info={getInfo} tasks={tasks} bounties={bounties} users={users} />
       </Container>
     </div>
   )
-}
-
-Bottom.propTypes = {
-  classes: PropTypes.object.isRequired,
 }
 
 export default Bottom

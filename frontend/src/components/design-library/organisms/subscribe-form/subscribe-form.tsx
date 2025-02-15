@@ -30,7 +30,12 @@ const msgs = defineMessages({
   }
 })
 
-const SubscribeForm = ({ type, render }) => {
+type SubscribeFormProps = {
+  type?: string
+  render?: boolean
+}
+
+const SubscribeForm = ({ type, render }:SubscribeFormProps) => {
   const intl = useIntl()
   const formProps = {
     action:

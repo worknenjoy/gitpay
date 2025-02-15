@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField, FormControl, FormHelperText, Typography, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
 import isGithubUrl from 'is-github-url'
-import logoGithub from '../../images/github-logo.png'
-import logoBitbucket from '../../images/bitbucket-logo.png'
-import api from '../../consts'
+import logoGithub from '../../../../images/github-logo.png'
+import logoBitbucket from '../../../../images/bitbucket-logo.png'
+import api from '../../../../consts'
 
 const ImportIssueDialog = ({ 
   user,

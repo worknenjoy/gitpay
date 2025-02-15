@@ -8,6 +8,7 @@ import {
   IconButton,
   Slide,
   SlideProps,
+  makeStyles,
 } from '@material-ui/core'
 
 import {
@@ -16,9 +17,18 @@ import {
 
 import { InfoList } from './bottom-section-dialog.styles'
 
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: 'relative',
+  },
+  appBarHeader: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
+}))
+
 
 const BottomSectionDialog = ({
-  classes,
   Transition = React.forwardRef<unknown, SlideProps>((props, ref) => (
     <Slide direction='up' ref={ ref } { ...props } />
   )),
@@ -27,6 +37,8 @@ const BottomSectionDialog = ({
   subtitle,
   content,
 }) => {
+
+  const classes = useStyles()
 
   const [ open, setOpen ] = React.useState(false)
 

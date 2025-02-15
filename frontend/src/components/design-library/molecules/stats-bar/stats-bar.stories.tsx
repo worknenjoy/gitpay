@@ -1,17 +1,17 @@
 import React from 'react';
-import Bottom from './bottom';
+import StatsBar from './stats-bar';
 
 export default {
-  title: 'Design Library/Organisms/Bottom',
-  component: Bottom,
+  title: 'Design Library/Molecules/StatsBar',
+  component: StatsBar,
 };
 
-const Template = (args) => <Bottom {...args} />;
+const Template = (args) => <StatsBar {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   // Add default props here
-  getInfo: () => {},
+  info: () => {},
   tasks: '20',
   bounties: '2000',
   users: '5000',

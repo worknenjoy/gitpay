@@ -16,7 +16,7 @@ import screenImage from '../../images/gitpay-explore-task-screenshot.png'
 import profileImage from '../../images/avatar-alexandre.png'
 import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
 import Clientlist from './clientlist'
-import TeamCard from '../../../../Cards/TeamCard'
+import TeamCard from '../../../../design-library/atoms/cards/TeamCard'
 import ContactRecruiterFormContainer from '../../../../../containers/contact-recruiter-form'
 
 const deal = require('../../images/deal.png')

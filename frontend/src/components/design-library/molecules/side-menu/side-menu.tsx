@@ -5,7 +5,7 @@ import logo from '../../../../images/gitpay-logo.png'
 import {
   Logo,
   StyledButton
-} from '../../../topbar/TopbarStyles'
+} from '../../organisms/topbar/TopbarStyles'
 
 const useStyles = makeStyles((theme) => ({
   sidePaper: {

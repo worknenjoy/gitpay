@@ -9,6 +9,8 @@ import {
   Container,
   Button,
   withStyles,
+  Page,
+  PageContent,
   AppBar,
   Dialog,
   DialogTitle,
@@ -27,8 +29,6 @@ import WalletsContainer from '../../../../containers/wallets'
 import TransfersContainer from '../../../../containers/transfers'
 import PayoutsContainer from '../../../../containers/payouts'
 import { UserAccount } from '../pages/user-account'
-
-import { Page, PageContent } from 'app/styleguide/components/Page'
 
 import PreferencesBar from '../features/account/features/account-settings/preferences-bar'
 import UserOganizationTree from '../../../../containers/user-organization-tree'

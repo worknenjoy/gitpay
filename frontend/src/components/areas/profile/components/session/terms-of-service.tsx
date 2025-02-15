@@ -4,8 +4,14 @@ import { ArrowBack } from "@material-ui/icons"
 import { FormattedMessage } from "react-intl";
 import { Button, Paper } from "@material-ui/core";
 
+type TermsOfServiceProps = {
+  onArrowBack?: () => void;
+  onAgreeTerms?: () => void;
+  extraStyles?: boolean;
+}
 
-const TermsOfService = ({ onArrowBack, onAgreeTerms, extrasStyles }) => {
+
+const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }:TermsOfServiceProps) => {
 
   const content = `
   {br}

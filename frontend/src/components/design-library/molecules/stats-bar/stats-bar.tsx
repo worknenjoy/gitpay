@@ -15,7 +15,7 @@ const Content = styled.span`
   display: inline-block;
 `
 
-const Info = ({ info, tasks, bounties, users }) => {
+const StatsBar = ({ info, tasks, bounties, users }) => {
   useEffect(() => {
     info()
   }, [info])
@@ -43,4 +43,4 @@ const Info = ({ info, tasks, bounties, users }) => {
   )
 }
 
-export default Info
+export default StatsBar

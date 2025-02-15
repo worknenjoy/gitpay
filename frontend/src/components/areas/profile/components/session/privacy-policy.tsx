@@ -4,8 +4,15 @@ import { ArrowBack } from "@material-ui/icons"
 import { FormattedMessage } from "react-intl";
 import { Button, Paper } from "@material-ui/core";
 
+type PrivacyPolicyProps = {
+  onArrowBack?: () => void;
+  onAgreeTerms?: () => void;
+  noHeader?: boolean;
+  extraStyles?: boolean;
+}
 
-const PrivacyPolicy = ({ onArrowBack, onAgreeTerms, noHeader, extraStyles = true }) => {
+
+const PrivacyPolicy = ({ onArrowBack, onAgreeTerms, noHeader, extraStyles = true }:PrivacyPolicyProps) => {
 
   const content = `
   {br}
