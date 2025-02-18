@@ -20,8 +20,6 @@ import {
   BugReport
 } from '@material-ui/icons'
 
-import './mailchimp.css'
-
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import TopBarContainer from '../../../../../containers/topbar'

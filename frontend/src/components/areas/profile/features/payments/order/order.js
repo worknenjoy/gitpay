@@ -10,7 +10,7 @@ import Notification from '../../../../../design-library/atoms/notification/notif
 
 import '../../../../../checkout/checkout-form'
 
-import TopBar from '../../../../../topbar/topbar'
+import TopBar from '../../../../../design-library/organisms/topbar/topbar'
 import Bottom from '../../../../../design-library/organisms/bottom-bar/bottom'
 
 // const paymentIcon = require('images/payment-icon-alt.png')

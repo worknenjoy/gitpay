@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   LinkButton,
   LabelButton
-} from './TopbarStyles'
+} from '../../organisms/topbar/TopbarStyles'
 
 export const TopbarMenu = () => {
 

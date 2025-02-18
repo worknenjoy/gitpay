@@ -10,7 +10,7 @@ import { Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '../../molecules/drawer/drawer'
 
 import PickupTagList from '../../molecules/pickup-tag-list/pickup-tag-list'
-import PricePlan from '../../organisms/price-plan/price-plan'
+import PricePlan from '../price-plan/price-plan'
 
 
 const styles = (theme: Theme) =>

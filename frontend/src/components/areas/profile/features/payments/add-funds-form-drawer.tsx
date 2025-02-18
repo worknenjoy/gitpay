@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-import PaymentDrawer from '../../../../design-library/templates/payment-drawer/payment-drawer'
+import PaymentDrawer from '../../../../design-library/organisms/payment-drawer/payment-drawer'
 import AddFundsInvoiceTab from './add-funds-invoice-tab'
 
 const taskPaymentFormMessages = defineMessages({

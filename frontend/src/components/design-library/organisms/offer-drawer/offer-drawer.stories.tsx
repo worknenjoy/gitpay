@@ -4,7 +4,7 @@ import OfferDrawer from './offer-drawer';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design Library/Templates/Offer Drawer',
+  title: 'Design Library/Organisms/Offer Drawer',
   component: OfferDrawer,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {

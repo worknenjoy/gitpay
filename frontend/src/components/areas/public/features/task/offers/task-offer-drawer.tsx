@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import OfferDrawer from '../../../../../design-library/templates/offer-drawer/offer-drawer';
+import OfferDrawer from '../../../../../design-library/organisms/offer-drawer/offer-drawer';
 import { makeStyles, Typography, } from '@material-ui/core';
 import TaskOrderInvoiceConfirm from '../task-order-invoice-confirm';
 import MessageAssignment from '../assignment/messageAssignment';

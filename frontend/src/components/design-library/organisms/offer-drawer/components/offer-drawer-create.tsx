@@ -1,11 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Introduction from '../../../molecules/introduction/introduction';
-import IssueCard from '../../../organisms/issue-card/issue-card';
+import IssueCard from '../../issue-card/issue-card';
 import SimpleInfo from '../../../molecules/simple-info/simple-info';
-import DeliveryDate from '../../../organisms/delivery-date/delivery-date';
+import DeliveryDate from '../../delivery-date/delivery-date';
 import PickupTagList from '../../../molecules/pickup-tag-list/pickup-tag-list';
-import PricePlan from '../../../organisms/price-plan/price-plan';
+import PricePlan from '../../price-plan/price-plan';
 import InputComment from '../../../molecules/input-comment/input-comment';
 import OfferDrawerCheckboxes from './offer/offer-drawer-checkboxes';
 import InviteInput from './invite/invite-input';

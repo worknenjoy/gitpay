@@ -6,9 +6,10 @@ export default {
   component: Topbar,
 };
 
-const Template = (args) => <Topbar {...args} />;
+const Template = (args: any) => <Topbar {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   // Add default props here
+  
 };

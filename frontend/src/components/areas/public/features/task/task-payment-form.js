@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
  
-import PaymentDrawer from '../../../../design-library/templates/payment-drawer/payment-drawer'
+import PaymentDrawer from '../../../../design-library/organisms/payment-drawer/payment-drawer'
 
 import PaymentDialog from '../../../profile/features/payments/payment-dialog'
 import PaypalPaymentDialog from '../../../profile/features/payments/paypal-payment-dialog'
