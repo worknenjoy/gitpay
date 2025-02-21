@@ -14,10 +14,11 @@ type PublicBaseProps = {
   children: React.ReactNode
   loggedIn?: any,
   bottomBarProps?: any,
-  accountMenuProps?: any
+  accountMenuProps?: any,
+  loginFormSignupFormProps?: any
 }
 
-const PublicBase = ({ children, loggedIn, bottomBarProps, accountMenuProps }:PublicBaseProps) => {
+const PublicBase = ({ children, loggedIn, bottomBarProps, accountMenuProps, loginFormSignupFormProps }:PublicBaseProps) => {
   const classes = useStyles()
 
   return (
@@ -25,6 +26,7 @@ const PublicBase = ({ children, loggedIn, bottomBarProps, accountMenuProps }:Pub
       <TopBar
         loggedIn={ loggedIn }
         accountMenuProps={ accountMenuProps }
+        loginFormSignupFormProps={ loginFormSignupFormProps }
       />
       { children }
       <Bottom

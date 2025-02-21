@@ -1,11 +1,10 @@
 import React from 'react';
 import { Dialog, DialogContent } from '@material-ui/core';
-import { useLocation } from 'react-router-dom';
 import LoginForm from '../login-form/login-form-main/login-form'
 
 
 
-const SignupDialog = ({ open, onClose, mode, onForgot, onSignup, onSignin }) => {
+const SignupDialog = ({ open, onClose, mode, onForgot, onSignup, onSignin, loginFormSignupFormProps }) => {
 
   return (
     <Dialog
@@ -21,6 +20,7 @@ const SignupDialog = ({ open, onClose, mode, onForgot, onSignup, onSignin }) => 
             onForgot={onForgot}
             onSignup={onSignup}
             onSignin={onSignin}
+            loginFormSignupFormProps={loginFormSignupFormProps}
             location={undefined}
             history={undefined}
             match={undefined}

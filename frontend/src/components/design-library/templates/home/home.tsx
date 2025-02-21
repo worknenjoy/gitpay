@@ -69,7 +69,8 @@ const useStyles = makeStyles((theme) => ({
 const Home = ({
   loggedIn,
   bottomBarProps,
-  accountMenuProps
+  accountMenuProps,
+  loginFormSignupFormProps
 }) => {
   const history = useHistory()
   const classes = useStyles()
@@ -77,7 +78,12 @@ const Home = ({
 
   return (
     <div className={classes.root}>
-      <PublicBase loggedIn={loggedIn} bottomBarProps={bottomBarProps} accountMenuProps={accountMenuProps}>
+      <PublicBase
+        loggedIn={loggedIn}
+        bottomBarProps={bottomBarProps}
+        accountMenuProps={accountMenuProps}
+        loginFormSignupFormProps={loginFormSignupFormProps}
+      >
         <>
           <Section>
             <HeroSection>

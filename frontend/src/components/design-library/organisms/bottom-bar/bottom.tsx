@@ -31,8 +31,9 @@ const useStyles = makeStyles((theme) => {
   const styles = mainStyles(theme)
   return {
     secBlock: {
-      backgroundColor: '#f8f8f8',
-      padding: '40px 0',
+      textAlign: 'center',
+      padding: 8,
+      backgroundColor: '#f1f0ea'
     },
     spacedTop: {
       marginTop: 20,
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-const Bottom = ({ info, getInfo }) => {
+const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
   const classes = useStyles()
   const { tasks, bounties, users } = info
 

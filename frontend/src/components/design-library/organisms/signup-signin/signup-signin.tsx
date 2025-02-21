@@ -2,7 +2,9 @@ import React from 'react';
 import SigninButtons from '../../molecules/signin-buttons/signin-buttons';
 import SignupDialog from '../signup-dialog/signup-dialog';
 
-const SignupSignin = () => {
+const SignupSignin = ({
+  loginFormSignupFormProps
+}) => {
   const [ open, setOpen] = React.useState(false);
   const [ mode, setMode] = React.useState('signin');
   return (
@@ -24,6 +26,7 @@ const SignupSignin = () => {
         onForgot={() => setMode('forgot')}
         onSignup={() => setMode('signup')}
         onSignin={() => setMode('signin')}
+        loginFormSignupFormProps={loginFormSignupFormProps}
       />
     </div>
   );

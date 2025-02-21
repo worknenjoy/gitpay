@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   Button,
@@ -8,6 +8,16 @@ import {
 import ReCAPTCHA from 'react-google-recaptcha'
 import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
+import TermsDialog from '../../../organisms/terms-dialog/terms-dialog'
+import PrivacyDialog from '../../../organisms/privacy-dialog/privacy-dialog'
+
+const containUrl = (string) => {
+  // Regular expression to match a basic URL structure
+  const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+
+  // Test if the string matches the URL pattern
+  return urlPattern.test(string);
+}
 
 const useStyles = makeStyles((theme) => ({
   cssLabel: {
@@ -42,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 type LoginFormSignupProps = {
-  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
+  onSubmit?: (data: any) => any
   action?: string
   onClose?: () => void
   noCancelButton?: boolean
@@ -63,8 +73,10 @@ const LoginFormSignup = ({
   confirmPassword,
   agreeTermsCheckError,
   onSignin
-}:LoginFormSignupProps) => {
+}: LoginFormSignupProps) => {
   const classes = useStyles()
+  const [openTermsDialog, setOpenTermsDialog] = useState(false)
+  const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
   const [state, setState] = useState({
     name: '',
     username: '',
@@ -76,7 +88,8 @@ const LoginFormSignup = ({
       username: '',
       name: '',
       password: '',
-      captcha: ''
+      captcha: '',
+      general: ''
     }
   })
 
@@ -92,22 +105,203 @@ const LoginFormSignup = ({
     setState({ ...state, agreeTermsCheck: !state.agreeTermsCheck })
   }
 
-  const handleOpenTermsOfService = () => {
-    // handle open terms of service logic here
+  const handleOpenTermsOfService = (e) => {
+    e.preventDefault()
+    setOpenTermsDialog(true)
+
   }
 
-  const handleOpenPrivacyPolicy = () => {
-    // handle open privacy policy logic here
+  const handleOpenPrivacyPolicy = (e) => {
+    e.preventDefault()
+    setOpenPrivacyDialog(true)
   }
 
-  const handleType = (type) => {
-    // handle type logic here
+  const closeTermsDialog = (e) => {
+    e.preventDefault()
+    setOpenTermsDialog(false)
   }
+
+  const closePrivacyDialog = (e) => {
+    e.preventDefault()
+    setOpenPrivacyDialog(false)
+  }
+
+  const validateName = (name) => {
+    if (name.length > 0 && name.length < 3) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          name: 'Name cannot be too short'
+        }
+      })
+      return false
+    } else if (name.length > 72) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          name: 'Name cannot be longer than 72 characters'
+        }
+      })
+      return false
+    } else if (containUrl(name)) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          name: 'Name should not include URL'
+        }
+      })
+      return false
+    }
+    else {
+      return true;
+    }
+  }
+
+  const validateEmail = (email) => {
+    if (email.length < 3) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          username: 'Email cannot be empty'
+        }
+      })
+      return false
+    } else if (email.length > 72) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          username: 'Email cannot be longer than 72 characters'
+        }
+      })
+      return false
+    }
+    else {
+      if (email && !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        setState({
+          ...state,
+          error: {
+            ...state.error,
+            username: 'Invalid email'
+          }
+        })
+        return false
+      }
+    }
+    return true
+  }
+
+  const validatePassword = (password) => {
+    if (password.length < 3) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          password: 'Password cannot be empty or too short'
+        }
+      })
+      return false
+    } else if (password.length > 72) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          password: 'Password cannot be longer than 72 characters'
+        }
+      })
+      return false
+    } else {
+      return true;
+    }
+  }
+
+  const validatePasswordDontMatch = (password, confirmPassword) => {
+    if (password !== confirmPassword) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          password: 'Password dont match'
+        }
+      })
+      return false
+    }
+    return true
+  }
+
+  const termsChecked = (agreeTermsCheck) => {
+    if (!agreeTermsCheck) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          captcha: 'You must agree with the Terms of Service and Privacy Policy'
+        }
+      })
+    }
+    return agreeTermsCheck
+  }
+
+  const handleForm = async (e) => {
+    e.preventDefault()
+    const termsAgreed = termsChecked(state.agreeTermsCheck)
+    const validName = validateName(state.name)
+    const validEmail = validateEmail(state.username)
+    const validPassword = validatePassword(state.password)
+    const validPasswordDontMatch = validatePasswordDontMatch(state.password, state.confirmPassword)
+    if (termsAgreed && validName && validEmail && validPassword && validPasswordDontMatch) {
+      try {
+        const response = await onSubmit({
+          name: state.name,
+          email: state.username,
+          password: state.password
+        })
+        const errorType = response?.error && response?.error?.response?.data.message
+        if (errorType === 'user.exist') {
+          window.location.assign('/#/signin')
+        }
+        else {
+          console.log('register user')
+          window.location.assign('/#/signin')
+          return false
+        }
+        setState({
+          ...state,
+          error: {
+            captcha: '',
+            general: '',
+            name: '',
+            username: '',
+            password: ''
+          }
+        })
+      } catch (error) {
+        setState({
+          ...state,
+          error: {
+            ...state.error,
+            'general': 'We couldnt register this user'
+          }
+        })
+        /* eslint-disable no-console */
+        console.log(error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    process.env.NODE_ENV === 'development' && setState({ ...state, captchaChecked: true })
+    process.env.NODE_ENV === 'test' && setState({ ...state, captchaChecked: true })
+  }, [])
 
   const { error } = state
 
   return (
-    <form onSubmit={onSubmit} action={action} method='POST' autoComplete='off'>
+    <form onSubmit={handleForm} action={action} method='POST' autoComplete='off'>
       <div className={classes.margins}>
         <TextField
           name='name'
@@ -292,6 +486,8 @@ const LoginFormSignup = ({
           </div>
         </div>
       </div>
+      <TermsDialog open={openTermsDialog} onClose={closeTermsDialog} />
+      <PrivacyDialog open={openPrivacyDialog} onClose={closePrivacyDialog} />
     </form>
   )
 }
