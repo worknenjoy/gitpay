@@ -24,7 +24,8 @@ const Topbar = ({
   loggedIn,
   accountMenuProps,
   loginFormSignupFormProps,
-  loginFormForgotFormProps
+  loginFormForgotFormProps,
+  importIssuesProps
 }) => {
   const [isActive, setIsActive] = useState(false)
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
@@ -86,9 +87,7 @@ const Topbar = ({
               </div>
             </>
           )}
-          <ImportIssue
-            onImport={ () => {} }
-          />
+          <ImportIssue {...importIssuesProps} />
         </RightSide>
       </Container>
     </Bar>

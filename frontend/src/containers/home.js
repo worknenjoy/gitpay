@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import Home from '../components/areas/public/features/welcome/pages/home-page'
+import { createTask } from '../actions/taskActions'
 import { addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn, logOut, registerUser, forgotPassword } from '../actions/loginActions'
 import { info } from '../actions/infoActions'
@@ -19,7 +20,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     closeDialog: () => dispatch(closeDialog()),
     getInfo: () => dispatch(info()),
     registerUser: (data) => dispatch(registerUser(data)),
-    forgotPassword: (data) => dispatch(forgotPassword(data))
+    forgotPassword: (data) => dispatch(forgotPassword(data)),
+    createTask: (task, history) => dispatch(createTask(task, history)),
   }
 }
 

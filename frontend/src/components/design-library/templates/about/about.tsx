@@ -41,12 +41,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
-
 const About = ({
   loggedIn,
   bottomBarProps,
-  accountMenuProps
+  accountMenuProps,
+  loginFormSignupFormProps,
+  loginFormForgotFormProps,
+  importIssuesProps
 }) => {
   const intl = useIntl()
   const classes = useStyles()
@@ -54,7 +55,14 @@ const About = ({
 
   return (
     <div className={classes.root}>
-      <PublicBase loggedIn={loggedIn} bottomBarProps={bottomBarProps} accountMenuProps={accountMenuProps}>
+      <PublicBase
+        loggedIn={loggedIn}
+        bottomBarProps={bottomBarProps}
+        accountMenuProps={accountMenuProps}
+        loginFormSignupFormProps={loginFormSignupFormProps}
+        loginFormForgotFormProps={loginFormForgotFormProps}
+        importIssuesProps={importIssuesProps}
+      >
         <Container>
           <Section name='contrib' ref={ref}>
             <Grid container spacing={3}>

@@ -1,14 +1,46 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import About from '../../../../../design-library/templates/about/about';
 
-const WelcomePage = ({ loggedIn, isLogged, info, getInfo, signOut }) => {
+const WelcomePage = ({ 
+  loggedIn,
+  isLogged,
+  info,
+  getInfo,
+  signOut,
+  registerUser,
+  forgotPassword,
+  createTask,
+}) => {
+
+  const history = useHistory();
+
+  const handleSignupUser = async (data) => {
+    await registerUser(data);
+  }
+
+  const handleForgotPassword = async (data) => {
+    await forgotPassword(data);
+  }
+
+  const handleImportIssue = async (data) => {
+    await createTask(data, history);
+  }
+
 
   useEffect(() => {
     isLogged?.();
   }, [isLogged]);
 
   return (
-    <About loggedIn={loggedIn} bottomBarProps={{ info, getInfo }} accountMenuProps={{ signOut }} />
+    <About
+      loggedIn={loggedIn}
+      bottomBarProps={{ info, getInfo }}
+      accountMenuProps={{ signOut }}
+      loginFormSignupFormProps={{ onSubmit: handleSignupUser }}
+      loginFormForgotFormProps={{ onSubmit: handleForgotPassword }}
+      importIssuesProps={{ onImport: handleImportIssue }}
+    />
   );
 }
 

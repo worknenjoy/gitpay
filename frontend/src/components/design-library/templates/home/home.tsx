@@ -71,7 +71,8 @@ const Home = ({
   bottomBarProps,
   accountMenuProps,
   loginFormSignupFormProps,
-  loginFormForgotFormProps
+  loginFormForgotFormProps,
+  importIssuesProps
 }) => {
   const history = useHistory()
   const classes = useStyles()
@@ -85,6 +86,7 @@ const Home = ({
         accountMenuProps={accountMenuProps}
         loginFormSignupFormProps={loginFormSignupFormProps}
         loginFormForgotFormProps={loginFormForgotFormProps}
+        importIssuesProps={importIssuesProps}
       >
         <>
           <Section>
