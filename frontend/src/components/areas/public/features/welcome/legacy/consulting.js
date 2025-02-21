@@ -21,10 +21,10 @@ import {
   Close
 } from '@material-ui/icons'
 
-import Transition from '../../../../design-library/atoms/transitions/transition'
+import Transition from '../../../../../design-library/atoms/transitions/transition'
 import messages from './messages'
 
-import { InfoList, MainTitle } from './components/CommonStyles'
+import { InfoList, MainTitle } from '../components/CommonStyles'
 
 const Consulting = ({ classes, ...props }) => {
   const [open, setOpen] = useState(false)

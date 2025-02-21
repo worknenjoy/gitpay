@@ -16,15 +16,17 @@ import {
 } from '@material-ui/core'
 import {
   Apps,
+  Work,
+  AccountBalanceWallet,
   Close
 } from '@material-ui/icons'
 
-import Transition from '../../../../design-library/atoms/transitions/transition'
+import Transition from '../../../../../design-library/atoms/transitions/transition'
 import messages from './messages'
 
-import { InfoList, MainTitle } from './components/CommonStyles'
+import { InfoList, MainTitle } from '../components/CommonStyles'
 
-class TermsOfServiceCompany extends Component {
+class Workflow extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -57,7 +59,7 @@ class TermsOfServiceCompany extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.terms.main.title' defaultMessage='Terms Of Service'>
+          <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Privacy'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -75,13 +77,13 @@ class TermsOfServiceCompany extends Component {
                 <Close />
               </IconButton>
               <Typography variant='h5' className={ classes.appBarHeader }>
-                <FormattedMessage id='welcome.terms.company.title' defaultMessage='For Companies' />
+                <FormattedMessage id='welcome.how.workflow.contrib.title' defaultMessage='For contributors' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.terms.main.title' defaultMessage='Terms Of Service' />
+                  <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Privacy' />
                 </Typography>
               </MainTitle>
             </div>
@@ -94,8 +96,30 @@ class TermsOfServiceCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.termsItemOnePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.termsItemOneSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.workflowItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemSecondary) }
+                  />
+                </ListItem>
+                <ListItem className={ classes.listIconTop }>
+                  <ListItemIcon>
+                    <Avatar className={ classes.iconFillAlt }>
+                      <Work />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={ this.props.intl.formatMessage(messages.workflowItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemTwoSecondary) }
+                  />
+                </ListItem>
+                <ListItem className={ classes.listIconTop }>
+                  <ListItemIcon>
+                    <Avatar className={ classes.iconFillAlt }>
+                      <AccountBalanceWallet />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={ this.props.intl.formatMessage(messages.workflowItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.workflowItemThreeSecondary) }
                   />
                 </ListItem>
               </List>
@@ -107,8 +131,8 @@ class TermsOfServiceCompany extends Component {
   }
 }
 
-TermsOfServiceCompany.propTypes = {
+Workflow.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default injectIntl(TermsOfServiceCompany)
+export default injectIntl(Workflow)

@@ -13,11 +13,11 @@ import {
 } from '@material-ui/core'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
-import TopBarContainer from '../../../../../containers/topbar'
-import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
+import TopBarContainer from '../../../../../../containers/topbar'
+import Bottom from '../../../../../design-library/organisms/bottom-bar/bottom'
 import {
   MainTitle
-} from './components/CommonStyles'
+} from '../components/CommonStyles'
 
 const styles = theme => ({
   layout: {

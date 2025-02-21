@@ -21,12 +21,12 @@ import {
   Close
 } from '@material-ui/icons'
 
-import Transition from '../../../../design-library/atoms/transitions/transition'
+import Transition from '../../../../../design-library/atoms/transitions/transition'
 import messages from './messages'
 
-import { InfoList, MainTitle } from './components/CommonStyles'
+import { InfoList, MainTitle } from '../components/CommonStyles'
 
-class HowItWorksCompany extends Component {
+class WhichCompanies extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -34,10 +34,6 @@ class HowItWorksCompany extends Component {
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
-  }
-
-  componentDidMount () {
-
   }
 
   handleClickOpen () {
@@ -59,7 +55,7 @@ class HowItWorksCompany extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.how.title' defaultMessage='How it works'>
+          <FormattedMessage id='welcome.bottom.companies.title' defaultMessage='Fees'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -77,13 +73,13 @@ class HowItWorksCompany extends Component {
                 <Close />
               </IconButton>
               <Typography variant='h5' className={ classes.appBarHeader }>
-                <FormattedMessage id='welcome.how.title.company' defaultMessage='For companies' />
+                <FormattedMessage id='welcome.companies.title' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.how.title' defaultMessage='How it works' />
+                  <FormattedMessage id='welcome.companies.bottom.title.which' defaultMessage='Fees' />
                 </Typography>
               </MainTitle>
             </div>
@@ -96,8 +92,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesItemPrimary1) }
+
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -107,8 +103,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemTwoSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesItemTwoPrimary1) }
+
                   />
                 </ListItem>
                 <ListItem className={ classes.listIconTop }>
@@ -118,8 +114,8 @@ class HowItWorksCompany extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesItemThreePrimary1) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesItemThreeSecondary1) }
                   />
                 </ListItem>
               </List>
@@ -131,8 +127,8 @@ class HowItWorksCompany extends Component {
   }
 }
 
-HowItWorksCompany.propTypes = {
+WhichCompanies.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default injectIntl(HowItWorksCompany)
+export default injectIntl(WhichCompanies)

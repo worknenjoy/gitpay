@@ -10,13 +10,6 @@ import {
 import purple from '@material-ui/core/colors/purple'
 import ReCAPTCHA from 'react-google-recaptcha'
 
-type LoginFormForgotProps = {
-  action?: string
-  onClose?: () => void
-  onSignin?: () => void
-  noCancelButton?: boolean
-}
-
 const useStyles = makeStyles((theme) => ({
   cssLabel: {
     '&$cssFocused': {
@@ -49,6 +42,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+type LoginFormForgotProps = {
+  action?: string
+  onClose?: () => void
+  onSignin?: () => void
+  noCancelButton?: boolean
+}
+
 const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin }:LoginFormForgotProps) => {
   const classes = useStyles()
   const [state, setState] = useState({
@@ -68,10 +68,6 @@ const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin }:LoginForm
 
   const handleBlur = () => {
     // handle blur logic here
-  }
-
-  const handleType = (type) => {
-    // handle type change logic here
   }
 
   const submitByFormType = (event) => {

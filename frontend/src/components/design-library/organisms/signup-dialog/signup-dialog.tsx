@@ -5,7 +5,7 @@ import LoginForm from '../login-form/login-form-main/login-form'
 
 
 
-const SignupDialog = ({ open, onClose, mode }) => {
+const SignupDialog = ({ open, onClose, mode, onForgot, onSignup, onSignin }) => {
 
   return (
     <Dialog
@@ -17,7 +17,15 @@ const SignupDialog = ({ open, onClose, mode }) => {
         <div style={ { display: 'flex', justifyContent: 'center', position: 'relative' } }>
           <LoginForm
             mode={mode}
-            onClose={onClose} location={undefined} history={undefined} match={undefined} classes={undefined} />
+            onClose={onClose}
+            onForgot={onForgot}
+            onSignup={onSignup}
+            onSignin={onSignin}
+            location={undefined}
+            history={undefined}
+            match={undefined}
+            classes={undefined}
+          />
         </div>
       </DialogContent>
     </Dialog>

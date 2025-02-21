@@ -28,7 +28,7 @@ import PaymentsContainer from '../../../../containers/payments'
 import WalletsContainer from '../../../../containers/wallets'
 import TransfersContainer from '../../../../containers/transfers'
 import PayoutsContainer from '../../../../containers/payouts'
-import { UserAccount } from '../pages/user-account'
+import { UserAccount } from '../features/account/user-account'
 
 import PreferencesBar from '../features/account/features/account-settings/preferences-bar'
 import UserOganizationTree from '../../../../containers/user-organization-tree'

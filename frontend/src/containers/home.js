@@ -1,18 +1,23 @@
 import { connect } from 'react-redux'
-import Home from '../components/areas/public/features/welcome/home'
+import Home from '../components/areas/public/features/welcome/pages/home-page'
 import { addDialog, closeDialog } from '../actions/notificationActions'
+import { loggedIn, logOut } from '../actions/loginActions'
+import { info } from '../actions/infoActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    dialog: state.dialog,
-    logged: state.loggedIn.logged
+    loggedIn: state.loggedIn,
+    info: state.info.data,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    isLogged: () => dispatch(loggedIn()),
+    signOut: () => dispatch(logOut()),
     openDialog: (target) => dispatch(addDialog(target)),
-    closeDialog: () => dispatch(closeDialog())
+    closeDialog: () => dispatch(closeDialog()),
+    getInfo: () => dispatch(info())
   }
 }
 

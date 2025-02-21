@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core'
 import { RouteComponentProps } from 'react-router-dom'
 import { Location } from 'history'
-import LoginFormSigin from '../login-form-signin/login-form-signin'
+import LoginFormSignin from '../login-form-signin/login-form-signin'
 import LoginFormSignup from '../login-form-signup/login-form-signup'
 import LoginFormReset from '../login-form-reset/login-form-reset'
 import LoginFormForgot from '../login-form-forgot/login-form-forgot'
@@ -39,18 +39,24 @@ interface LoginButtonProps extends RouteComponentProps, WithStyles<typeof styles
   onClose?: () => void
   noCancelButton?: boolean
   user?: { email: string }
+  onForgot?: () => void
+  onSignup?: () => void
+  onSignin?: () => void
 }
 
 const LoginForm: React.FC<LoginButtonProps> = ({
   contrast,
   mode = 'signin',
   user,
+  onClose,
+  onForgot,
+  onSignup,
+  onSignin,
 }) => {
 
   return (
     <Wrapper contrast={contrast}>
       <Content>
-        
           <div>
             {mode !== 'reset' ? (
               <>
@@ -78,16 +84,16 @@ const LoginForm: React.FC<LoginButtonProps> = ({
               </>
             )}
             { mode === 'signin' && (
-              <LoginFormSigin />
+              <LoginFormSignin onClose={onClose} onForgot={onForgot} onSignup={onSignup} />
             )}
             { mode === 'signup' && (
-              <LoginFormSignup />
+              <LoginFormSignup onClose={onClose} onSignin={onSignin} />
             )}
             {mode === 'forgot' && (
-              <LoginFormForgot />
+              <LoginFormForgot onClose={onClose} onSignin={onSignin} />
             )}
             {mode === 'reset' && (
-              <LoginFormReset />
+              <LoginFormReset onClose={onClose} />
             )}
             
           </div>

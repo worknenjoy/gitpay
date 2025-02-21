@@ -30,7 +30,8 @@ module.exports = {
     alias: {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`,
-      images: path.resolve(__dirname, "src/images")
+      images: path.resolve(__dirname, "src/images"),
+      "design-library": path.resolve(__dirname, "src/components/design-library"),
     },
     fallback: {
       stream: 'stream-browserify'

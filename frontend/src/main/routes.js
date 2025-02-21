@@ -16,10 +16,10 @@ import LoginPage from '../components/areas/profile/components/session/login-page
 import LoginPageContainer from '../containers/login-page'
 import RecoverPasswordContainer from '../containers/recover-password'
 import FourOFour from '../components/design-library/templates/four-o-four/four-o-four'
-import LandingPage from '../components/areas/public/features/welcome/landing-page'
+import LandingPage from '../components/areas/public/features/welcome/legacy/landing-page'
 import Stats from '../components/areas/public/features/stats/Stats-main-page'
 import TaskListUser from '../containers/task-list-user'
-import Pricing from '../components/areas/public/features/welcome/pricing'
+import Pricing from '../components/areas/public/features/welcome/legacy/pricing'
 import Auth from '../modules/auth'
 
 const TaskExplorerProjects = (props) => <TaskExplorer {...props} />

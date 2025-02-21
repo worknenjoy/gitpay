@@ -21,12 +21,12 @@ import {
   Close
 } from '@material-ui/icons'
 
-import Transition from '../../../../design-library/atoms/transitions/transition'
+import Transition from '../../../../../design-library/atoms/transitions/transition'
 import messages from './messages'
 
-import { InfoList, MainTitle } from './components/CommonStyles'
+import { InfoList, MainTitle } from '../components/CommonStyles'
 
-class Workflow extends Component {
+class HowItWorksPeople extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -34,10 +34,6 @@ class Workflow extends Component {
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
-  }
-
-  componentDidMount () {
-
   }
 
   handleClickOpen () {
@@ -59,7 +55,7 @@ class Workflow extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Privacy'>
+          <FormattedMessage id='welcome.how.title' defaultMessage='How it works'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -67,61 +63,68 @@ class Workflow extends Component {
         </Typography>
         <Dialog
           fullScreen
+          TransitionComponent={ Transition }
           open={ this.state.open }
           onClose={ this.handleClose }
-          TransitionComponent={ Transition }
         >
           <AppBar className={ classes.appBar }>
             <Toolbar>
-              <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
+              <IconButton
+                color='inherit'
+                onClick={ this.handleClose }
+                aria-label='Close'
+              >
                 <Close />
               </IconButton>
-              <Typography variant='h5' className={ classes.appBarHeader }>
-                <FormattedMessage id='welcome.how.workflow.contrib.title' defaultMessage='For contributors' />
+              <Typography variant='h6' className={ classes.appBarHeader }>
+                <FormattedMessage id='welcome.how.people.title.freelancer' defaultMessage='For Freelancer' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.how.workflow.main.title' defaultMessage='Privacy' />
+                <Typography variant='h6' className={ classes.appBarHeader } gutterBottom>
+                  <FormattedMessage id='welcome.how.people.title' defaultMessage='How it works' />
                 </Typography>
               </MainTitle>
             </div>
             <InfoList>
               <List>
-                <ListItem className={ classes.listIconTop }>
+                <ListItem className={ classes.lilstIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
                       <Apps />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.workflowItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.workflowItemSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
                   />
                 </ListItem>
-                <ListItem className={ classes.listIconTop }>
+
+                <ListItem className={ classes.lilstIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
                       <Work />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.workflowItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.workflowItemTwoSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
                   />
                 </ListItem>
-                <ListItem className={ classes.listIconTop }>
+
+                <ListItem className={ classes.lilstIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
                       <AccountBalanceWallet />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.workflowItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.workflowItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
                   />
                 </ListItem>
+
               </List>
             </InfoList>
           </AppBar>
@@ -131,8 +134,8 @@ class Workflow extends Component {
   }
 }
 
-Workflow.propTypes = {
+HowItWorksPeople.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default injectIntl(Workflow)
+export default injectIntl(HowItWorksPeople)

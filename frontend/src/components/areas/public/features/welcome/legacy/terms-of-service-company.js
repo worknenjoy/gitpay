@@ -16,17 +16,15 @@ import {
 } from '@material-ui/core'
 import {
   Apps,
-  Work,
-  AccountBalanceWallet,
   Close
 } from '@material-ui/icons'
 
-import Transition from '../../../../design-library/atoms/transitions/transition'
+import Transition from '../../../../../design-library/atoms/transitions/transition'
 import messages from './messages'
 
-import { InfoList, MainTitle } from './components/CommonStyles'
+import { InfoList, MainTitle } from '../components/CommonStyles'
 
-class WhichCompanies extends Component {
+class TermsOfServiceCompany extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -34,6 +32,10 @@ class WhichCompanies extends Component {
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+  }
+
+  componentDidMount () {
+
   }
 
   handleClickOpen () {
@@ -55,7 +57,7 @@ class WhichCompanies extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.bottom.companies.title' defaultMessage='Fees'>
+          <FormattedMessage id='welcome.terms.main.title' defaultMessage='Terms Of Service'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -73,13 +75,13 @@ class WhichCompanies extends Component {
                 <Close />
               </IconButton>
               <Typography variant='h5' className={ classes.appBarHeader }>
-                <FormattedMessage id='welcome.companies.title' defaultMessage='For companies' />
+                <FormattedMessage id='welcome.terms.company.title' defaultMessage='For Companies' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.companies.bottom.title.which' defaultMessage='Fees' />
+                  <FormattedMessage id='welcome.terms.main.title' defaultMessage='Terms Of Service' />
                 </Typography>
               </MainTitle>
             </div>
@@ -92,30 +94,8 @@ class WhichCompanies extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemPrimary1) }
-
-                  />
-                </ListItem>
-                <ListItem className={ classes.listIconTop }>
-                  <ListItemIcon>
-                    <Avatar className={ classes.iconFillAlt }>
-                      <Work />
-                    </Avatar>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemTwoPrimary1) }
-
-                  />
-                </ListItem>
-                <ListItem className={ classes.listIconTop }>
-                  <ListItemIcon>
-                    <Avatar className={ classes.iconFillAlt }>
-                      <AccountBalanceWallet />
-                    </Avatar>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.companiesItemThreePrimary1) }
-                    secondary={ this.props.intl.formatMessage(messages.companiesItemThreeSecondary1) }
+                    primary={ this.props.intl.formatMessage(messages.termsItemOnePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.termsItemOneSecondary) }
                   />
                 </ListItem>
               </List>
@@ -127,8 +107,8 @@ class WhichCompanies extends Component {
   }
 }
 
-WhichCompanies.propTypes = {
+TermsOfServiceCompany.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default injectIntl(WhichCompanies)
+export default injectIntl(TermsOfServiceCompany)

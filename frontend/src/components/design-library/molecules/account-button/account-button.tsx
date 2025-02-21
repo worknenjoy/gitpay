@@ -7,8 +7,9 @@ import nameInitials from 'name-initials'
 
 const AccountButton = ({
   handleMenu,
-  user
+  loggedIn
 }) => {
+  const { user } = loggedIn;
   return (
     <>
       <StyledButton

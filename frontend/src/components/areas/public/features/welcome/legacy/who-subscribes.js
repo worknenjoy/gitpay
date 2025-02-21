@@ -19,12 +19,12 @@ import {
   Close
 } from '@material-ui/icons'
 
-import Transition from '../../../../design-library/atoms/transitions/transition'
+import Transition from '../../../../../design-library/atoms/transitions/transition'
 import messages from './messages'
 
-import { InfoList, MainTitle } from './components/CommonStyles'
+import { InfoList, MainTitle } from '../components/CommonStyles'
 
-class TermsOfServicePeople extends Component {
+class WhoSubscribes extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -57,7 +57,7 @@ class TermsOfServicePeople extends Component {
           component='div'
           style={ { display: 'block', width: '100%' } }
         >
-          <FormattedMessage id='welcome.terms.main.title' defaultMessage='Terms Of Service'>
+          <FormattedMessage id='welcome.footer.contributor.fee.title.menu' defaultMessage='Fees'>
             { (msg) => (
               <ListItemText primary={ msg } />
             ) }
@@ -75,13 +75,13 @@ class TermsOfServicePeople extends Component {
                 <Close />
               </IconButton>
               <Typography variant='h5' className={ classes.appBarHeader }>
-                <FormattedMessage id='welcome.terms.contrib.title' defaultMessage='For Contributors' />
+                <FormattedMessage id='welcome.who.title.contrib' defaultMessage='For contributors' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
                 <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.terms.main.title' defaultMessage='Terms Of Service' />
+                  <FormattedMessage id='welcome.footer.item1.header' defaultMessage='Fees' />
                 </Typography>
               </MainTitle>
             </div>
@@ -94,8 +94,8 @@ class TermsOfServicePeople extends Component {
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.termsItemOnePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.termsItemOneSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.communityItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.communityItemSecondary) }
                   />
                 </ListItem>
               </List>
@@ -107,8 +107,8 @@ class TermsOfServicePeople extends Component {
   }
 }
 
-TermsOfServicePeople.propTypes = {
+WhoSubscribes.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default injectIntl(TermsOfServicePeople)
+export default injectIntl(WhoSubscribes)

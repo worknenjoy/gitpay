@@ -8,8 +8,26 @@ export default {
 
 const Template = (args: any) => <Topbar {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
+export const LoggedIn = Template.bind({});
+LoggedIn.args = {
   // Add default props here
-  
+  user: {
+    completed: true,
+    data: {
+      id: 1,
+      Types: [{
+        id: 1,
+        name: 'contributor',
+      }],
+    },
+    error: false,
+  }
+};
+
+export const LoggedOut = Template.bind({});
+LoggedOut.args = {
+  // Add default props here
+  user: {
+    
+  }
 };

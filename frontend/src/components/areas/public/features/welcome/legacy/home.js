@@ -22,10 +22,10 @@ import {
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import TopBarContainer from '../../../../../containers/topbar'
-import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
+import TopBarContainer from '../../../../../../containers/topbar'
+import Bottom from '../../../../../design-library/organisms/bottom-bar/bottom'
 import messages from './messages'
-import mainStyles from '../../../../styles/style'
+import mainStyles from '../../../../../styles/style'
 
 const freelancerImage = require('images/collections/collection-flat-build.svg')
 const citySoftware = require('images/collections/collection-flat-background.svg')
@@ -39,7 +39,7 @@ import {
   HeroTitle,
   HeroContent,
   HeroActions
-} from './components/CommonStyles'
+} from '../components/CommonStyles'
 
 const styles = theme => mainStyles(theme)
 

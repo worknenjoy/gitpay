@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TopBar from '../../../design-library/organisms/topbar/topbar'
 import Bottom from '../../../design-library/organisms/bottom-bar/bottom'
@@ -10,18 +10,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const PublicBase = ({ children }) => {
+type PublicBaseProps = {
+  children: React.ReactNode
+  loggedIn?: any,
+  bottomBarProps?: any,
+  accountMenuProps?: any
+}
+
+const PublicBase = ({ children, loggedIn, bottomBarProps, accountMenuProps }:PublicBaseProps) => {
   const classes = useStyles()
 
   return (
     <div className={ classes.root }>
-      <TopBar ref='intro' hide />
+      <TopBar
+        loggedIn={ loggedIn }
+        accountMenuProps={ accountMenuProps }
+      />
       { children }
       <Bottom
-        info={ () => {} }
-        tasks={10}
-        bounties={10}
-        users={10}
+        { ...bottomBarProps }
       />
     </div>
   )

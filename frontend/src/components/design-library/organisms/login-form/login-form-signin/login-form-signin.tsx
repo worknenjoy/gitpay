@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   Button,
@@ -10,13 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import ProviderLoginButtons from '../../../molecules/provider-login-buttons/provider-login-buttons'
 import { makeStyles } from '@material-ui/core/styles'
 
-type LoginFormSigninProps = {
-  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
-  action?: string
-  onClose?: () => void
-  onSignup?: () => void
-  noCancelButton?: boolean
-}
+import api from '../../../../../consts'
 
 const useStyles = makeStyles((theme) => ({
   margins: {
@@ -43,7 +37,16 @@ const useStyles = makeStyles((theme) => ({
   notchedOutline: {},
 }))
 
-const LoginFormSignin = ({ onSubmit, action, onClose, onSignup, noCancelButton }:LoginFormSigninProps) => {
+type LoginFormSigninProps = {
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
+  action?: string
+  onClose?: () => void
+  onSignup?: () => void
+  noCancelButton?: boolean,
+  onForgot?: () => void
+}
+
+const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot }:LoginFormSigninProps) => {
   const classes = useStyles()
   const [state, setState] = useState({
     username: '',
@@ -73,15 +76,89 @@ const LoginFormSignin = ({ onSubmit, action, onClose, onSignup, noCancelButton }
     // handle type logic
   }
 
-  const submitByFormType = (event) => {
-    event.preventDefault()
-    // handle form submission
+  const validateEmail = (email, currentErrors) => {
+    if (email.length < 3) {
+      setState({
+        ...state,
+        error: {
+          ...currentErrors,
+          username: 'Email cannot be empty'
+        }
+      })
+      return false
+    } else if(email.length > 72) {
+      setState({
+        ...state,
+        error: {
+          ...currentErrors,
+          username: 'Email cannot be longer than 72 characters'
+        }
+      })
+      return false
+    }
+    else {
+      if (email && !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        setState({
+          ...state,
+          error: {
+            ...currentErrors,
+            username: 'Invalid email'
+          }
+        })
+        return false
+      }
+    }
+    return true
   }
+
+  const validatePassword = (password, currentErrors) => {
+    if (password.length < 3) {
+      setState({
+        ...state,
+        error: {
+          ...currentErrors,
+          password: 'Password cannot be empty or too short'
+        }
+      })
+      return false
+    } else if(password.length > 72) {
+      setState({
+        ...state,
+        error: {
+          ...currentErrors,
+          password: 'Password cannot be longer than 72 characters'
+        }
+      })
+      return false
+    } else {
+      return true;
+    }
+  }
+
+  const submitByFormType = (event) => {
+    const { captchaChecked } = state
+    if (!captchaChecked) {
+      setState({ ...state, error: { ...state.error, captcha: 'Please check the captcha' } })
+      event && event.preventDefault()
+      return false
+    }
+    const validEmail = validateEmail(state.username, state.error)
+    const validPassword = validatePassword(state.password, state.error)
+    if(!validEmail || !validPassword) {
+      return event && event.preventDefault();
+    }
+    onSubmit?.(event)
+  }
+
+  useEffect(() => {
+    process.env.NODE_ENV === 'development' && setState({ ...state, captchaChecked: true })
+    process.env.NODE_ENV === 'test' && setState({ ...state, captchaChecked: true })
+  }, [])
 
   const { error } = state
 
   return (
-    <form onSubmit={submitByFormType} action={action} method='POST' autoComplete='off'>
+    <form onSubmit={submitByFormType} action={`${api.API_URL}/authorize/local`} method='POST' autoComplete='off'>
       <div className={classes.margins}>
         <TextField
           name='username'
@@ -148,7 +225,7 @@ const LoginFormSignin = ({ onSubmit, action, onClose, onSignup, noCancelButton }
             <FormattedMessage id='account.login.label.remember' defaultMessage='Remember me' />
           </Typography>
         </div>
-        <Button variant='caption' style={{ margin: 0, padding: 0 }} onClick={() => handleType('forgot')} component='a' size='small' color='primary'>
+        <Button variant='text' style={{ margin: 0, padding: 0 }} onClick={onForgot} component='a' size='small' color='primary'>
           <FormattedMessage id='account.login.label.forgot' defaultMessage='Forgot password?' />
         </Button>
       </div>

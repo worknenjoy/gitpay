@@ -1,41 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { FormattedMessage } from 'react-intl'
-import { updateIntl } from 'react-intl-redux'
-import { store } from '../../../../main/app'
-import { useHistory } from 'react-router-dom'
-
-import {
-  Chip,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Tooltip,
-  Avatar,
-  CircularProgress,
-  Menu,
-  MenuItem,
-  Button
-} from '@material-ui/core'
-import {
-  LibraryBooks,
-  Tune,
-  Home,
-  Web,
-  Person,
-  ExitToApp,
-  Settings,
-  Business,
-  AccountBox as AccountIcon,
-  AccountBalance,
-  Payment as PaymentIcon
-} from '@material-ui/icons'
-
-import nameInitials from 'name-initials'
 
 import {
   Bar,
@@ -44,75 +7,34 @@ import {
   RightSide,
   Logo,
   StyledButton,
-  LinkButton,
-  LabelButton,
-  StyledAvatar,
-  StyledAvatarIconOnly,
   OnlyDesktop,
   OnlyMobile,
   MenuMobile,
   IconHamburger
 } from './TopbarStyles'
-
-import LoginButton from '../../../areas/profile/components/session/login-button'
-import ImportIssueButton from './import-issue'
-
 import logo from 'images/gitpay-logo.png'
 
-import logoLangEn from 'images/united-states-of-america.png'
-import logoLangBr from 'images/brazil.png'
-import ImportIssueDialog from './import-issue-dialog'
 import TopbarMenu from './topbar-menu'
-
-const languagesIcons = {
-  en: logoLangEn,
-  br: logoLangBr
-}
-
-const messages = {
-  'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
-  'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
-}
-
-const browserLanguage = () => {
-  const browserLang = navigator.language.split(/[-_]/)[0]
-  if (browserLang === 'pt') {
-    return 'br'
-  }
-  return browserLang
-}
-
-const localStorageLang = () => {
-  return localStorage.getItem('userLanguage')
-}
-
-const logoLang = (lang) => {
-  return languagesIcons[lang]
-}
-
-import messagesBr from '../../../../translations/result/br.json'
-import messagesEn from '../../../../translations/result/en.json'
-
-import messagesBrLocal from '../../../../translations/generated/br.json'
-import messagesEnLocal from '../../../../translations/generated/en.json'
-
-const currentUserLanguage = (preferences) => {
-  const prefLang = preferences.language
-  if (prefLang) {
-    localStorage.setItem('userLanguage', prefLang)
-  }
-  return preferences.language || localStorageLang() || browserLanguage()
-}
+import SignupSignin from '../../organisms/signup-signin/signup-signin'
+import ImportIssue from '../../organisms/import-issue/import-issue'
+import AccountSettings from '../../organisms/account-settings/account-settings'
+import LanguageSwitcher from '../../molecules/language-switcher/language-switcher'
 
 const Topbar = ({
-  
-   
+  loggedIn,
+  accountMenuProps
 }) => {
   const [isActive, setIsActive] = useState(false)
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false)
 
   const handleClickMenuMobile = () => {
     setIsActive(!isActive)
   }
+
+  useEffect(() => {
+    const isLoggedIn = loggedIn?.logged
+    setIsLoggedIn(isLoggedIn)
+  }, [loggedIn])
 
   return (
     <Bar>
@@ -123,7 +45,7 @@ const Topbar = ({
               <Logo src={ logo } />
             </StyledButton>
           </div>
-          <OnlyDesktop style={ { marginTop: 12, marginLeft: 20 } }>
+          <OnlyDesktop style={ { display: 'flex', justifyContent: 'space-around', alignSelf: 'center', marginRight: 20 } }>
             <TopbarMenu />
           </OnlyDesktop>
            <MenuMobile
@@ -140,6 +62,28 @@ const Topbar = ({
               <TopbarMenu />
             </MenuMobile>
           </OnlyMobile>
+          { isLoggedIn ? (
+            <AccountSettings loggedIn={ loggedIn } accountMenuProps={accountMenuProps} />
+          ) : (
+            <>
+              <div style={ { display: 'flex', justifyContent: 'space-around', alignSelf: 'center', marginRight: 20 } }>
+                <div style={{marginTop: 6}}>
+                  <SignupSignin />
+                </div>
+                <div>
+                  <LanguageSwitcher
+                    completed={ true }
+                    onSwitchLang={ () => {} }
+                    user={ {} }
+                    userCurrentLanguage={ 'en' }
+                  />
+                </div>
+              </div>
+            </>
+          )}
+          <ImportIssue
+            onImport={ () => {} }
+          />
         </RightSide>
       </Container>
     </Bar>

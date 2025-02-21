@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Grid, Typography, Container } from '@material-ui/core';
-import AccountTabs from '../features/account/components/account-tabs';
-import { changePassword } from '../../../../actions/loginActions';
+import AccountTabs from './components/account-tabs';
+import { changePassword } from '../../../../../actions/loginActions';
 
 
 export const UserAccount = ({ 

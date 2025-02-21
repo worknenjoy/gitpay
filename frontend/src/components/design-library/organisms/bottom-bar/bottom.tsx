@@ -43,8 +43,9 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-const Bottom = ({ info, tasks, bounties, users }) => {
+const Bottom = ({ info, getInfo }) => {
   const classes = useStyles()
+  const { tasks, bounties, users } = info
 
   return (
     <div className={ classes.secBlock }>
@@ -217,7 +218,7 @@ const Bottom = ({ info, tasks, bounties, users }) => {
           </Grid>
         </Grid>
         <Divider className={ classes.spacedTop } />
-        <StatsBar info={info} tasks={tasks} bounties={bounties} users={users} />
+        <StatsBar info={getInfo} tasks={tasks} bounties={bounties} users={users} />
       </Container>
     </div>
   )

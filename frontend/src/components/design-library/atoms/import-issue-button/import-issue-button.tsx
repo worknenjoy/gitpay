@@ -3,13 +3,20 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { FormattedMessage } from 'react-intl'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  actionButtons: {
+    
+  }
+}))
 
 export default function ImportIssueButton ({
-  onAddIssueClick,
-  classes
+  onAddIssueClick
 }) {
+  const classes = useStyles()
   const anchorRef = React.useRef(null)
-
+  
   const handleClick = (e) => {
     e.preventDefault()
     onAddIssueClick()

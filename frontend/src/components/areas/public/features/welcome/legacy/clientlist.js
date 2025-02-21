@@ -13,7 +13,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import {
   MainTitle,
   ResponsiveImage
-} from './components/CommonStyles'
+} from '../components/CommonStyles'
 
 const styles = theme => ({
   layout: {

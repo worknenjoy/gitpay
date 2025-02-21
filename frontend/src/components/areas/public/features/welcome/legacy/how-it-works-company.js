@@ -21,12 +21,12 @@ import {
   Close
 } from '@material-ui/icons'
 
-import Transition from '../../../../design-library/atoms/transitions/transition'
+import Transition from '../../../../../design-library/atoms/transitions/transition'
 import messages from './messages'
 
-import { InfoList, MainTitle } from './components/CommonStyles'
+import { InfoList, MainTitle } from '../components/CommonStyles'
 
-class HowItWorksPeople extends Component {
+class HowItWorksCompany extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -34,6 +34,10 @@ class HowItWorksPeople extends Component {
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+  }
+
+  componentDidMount () {
+
   }
 
   handleClickOpen () {
@@ -63,68 +67,61 @@ class HowItWorksPeople extends Component {
         </Typography>
         <Dialog
           fullScreen
-          TransitionComponent={ Transition }
           open={ this.state.open }
           onClose={ this.handleClose }
+          TransitionComponent={ Transition }
         >
           <AppBar className={ classes.appBar }>
             <Toolbar>
-              <IconButton
-                color='inherit'
-                onClick={ this.handleClose }
-                aria-label='Close'
-              >
+              <IconButton color='inherit' onClick={ this.handleClose } aria-label='Close'>
                 <Close />
               </IconButton>
-              <Typography variant='h6' className={ classes.appBarHeader }>
-                <FormattedMessage id='welcome.how.people.title.freelancer' defaultMessage='For Freelancer' />
+              <Typography variant='h5' className={ classes.appBarHeader }>
+                <FormattedMessage id='welcome.how.title.company' defaultMessage='For companies' />
               </Typography>
             </Toolbar>
             <div className={ classes.spacedTop }>
               <MainTitle>
-                <Typography variant='h6' className={ classes.appBarHeader } gutterBottom>
-                  <FormattedMessage id='welcome.how.people.title' defaultMessage='How it works' />
+                <Typography variant='h5' className={ classes.appBarHeader } gutterBottom>
+                  <FormattedMessage id='welcome.how.title' defaultMessage='How it works' />
                 </Typography>
               </MainTitle>
             </div>
             <InfoList>
               <List>
-                <ListItem className={ classes.lilstIconTop }>
+                <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
                       <Apps />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemSecondary) }
                   />
                 </ListItem>
-
-                <ListItem className={ classes.lilstIconTop }>
+                <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
                       <Work />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemTwoPrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemTwoSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemTwoPrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemTwoSecondary) }
                   />
                 </ListItem>
-
-                <ListItem className={ classes.lilstIconTop }>
+                <ListItem className={ classes.listIconTop }>
                   <ListItemIcon>
                     <Avatar className={ classes.iconFillAlt }>
                       <AccountBalanceWallet />
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary={ this.props.intl.formatMessage(messages.consultingItemThreePrimary) }
-                    secondary={ this.props.intl.formatMessage(messages.consultingItemThreeSecondary) }
+                    primary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemThreePrimary) }
+                    secondary={ this.props.intl.formatMessage(messages.companiesHowItWorksItemThreeSecondary) }
                   />
                 </ListItem>
-
               </List>
             </InfoList>
           </AppBar>
@@ -134,8 +131,8 @@ class HowItWorksPeople extends Component {
   }
 }
 
-HowItWorksPeople.propTypes = {
+HowItWorksCompany.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default injectIntl(HowItWorksPeople)
+export default injectIntl(HowItWorksCompany)

@@ -9,17 +9,6 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
 
-type LoginFormSignupProps = {
-  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
-  action?: string
-  onClose?: () => void
-  noCancelButton?: boolean
-  validating?: boolean
-  password?: string
-  confirmPassword?: string
-  agreeTermsCheckError?: boolean
-}
-
 const useStyles = makeStyles((theme) => ({
   cssLabel: {
     '&$cssFocused': {
@@ -52,6 +41,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+type LoginFormSignupProps = {
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
+  action?: string
+  onClose?: () => void
+  noCancelButton?: boolean
+  validating?: boolean
+  password?: string
+  confirmPassword?: string
+  agreeTermsCheckError?: boolean,
+  onSignin?: () => void
+}
+
 const LoginFormSignup = ({
   onSubmit,
   action,
@@ -60,7 +61,8 @@ const LoginFormSignup = ({
   validating,
   password,
   confirmPassword,
-  agreeTermsCheckError
+  agreeTermsCheckError,
+  onSignin
 }:LoginFormSignupProps) => {
   const classes = useStyles()
   const [state, setState] = useState({
@@ -72,6 +74,7 @@ const LoginFormSignup = ({
     captchaChecked: false,
     error: {
       username: '',
+      name: '',
       password: '',
       captcha: ''
     }
@@ -126,7 +129,7 @@ const LoginFormSignup = ({
           label='Name'
           variant='outlined'
           id='name'
-          error={error.name}
+          error={!!error.name}
           helperText={error.name}
           defaultValue={state.name}
         />
@@ -154,7 +157,7 @@ const LoginFormSignup = ({
           label='E-mail'
           variant='outlined'
           id='username'
-          error={error.username}
+          error={!!error.username}
           helperText={error.username}
           defaultValue={state.username}
         />
@@ -183,7 +186,7 @@ const LoginFormSignup = ({
           label='Password'
           variant='outlined'
           id='password'
-          error={error.password}
+          error={!!error.password}
           helperText={error.password}
           defaultValue={state.password}
         />
@@ -243,7 +246,7 @@ const LoginFormSignup = ({
           display: 'flex',
           justifyContent: 'center',
         }}>
-          <Typography type='body1' component='span'>
+          <Typography variant='body1' component='span'>
             <FormattedMessage id='account.login.label.terms.agree.error' defaultMessage='You must agree with the Terms of Service and Privacy Policy' />
           </Typography>
         </div>
@@ -264,7 +267,7 @@ const LoginFormSignup = ({
           display: 'flex',
           justifyContent: 'center',
         }}>
-          <Typography type='body1' component='span'>
+          <Typography variant='body1' component='span'>
             {error.captcha}
           </Typography>
         </div>
@@ -280,10 +283,10 @@ const LoginFormSignup = ({
             <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
           </Button>
           <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
-            <Typography type='body1' component='span'>
+            <Typography variant='body1' component='span'>
               <FormattedMessage id='account.login.label.or.signup' defaultMessage='Have an account?' />
             </Typography>
-            <Button onClick={() => handleType('signin')} variant='text' size='large' color='primary'>
+            <Button onClick={onSignin} variant='text' size='large' color='primary'>
               <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
             </Button>
           </div>

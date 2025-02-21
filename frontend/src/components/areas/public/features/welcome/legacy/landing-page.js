@@ -14,10 +14,10 @@ import peopleImage from 'images/landingPage_People.png'
 import logoGrey from 'images/logo-complete-gray.png'
 import screenImage from 'images/gitpay-explore-task-screenshot.png'
 import profileImage from 'images/avatar-alexandre.png'
-import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
+import Bottom from '../../../../../design-library/organisms/bottom-bar/bottom'
 import Clientlist from './clientlist'
-import TeamCard from '../../../../design-library/atoms/cards/TeamCard'
-import ContactRecruiterFormContainer from '../../../../../containers/contact-recruiter-form'
+import TeamCard from '../../../../../design-library/atoms/cards/TeamCard'
+import ContactRecruiterFormContainer from '../../../../../../containers/contact-recruiter-form'
 
 const deal = require('images/deal.png')
 
@@ -26,7 +26,7 @@ import {
   MainList,
   ResponsiveImage,
   Section
-} from './components/CommonStyles'
+} from '../components/CommonStyles'
 
 // Landing Page for GitPay
 // Total hours worked on this: ~12hours

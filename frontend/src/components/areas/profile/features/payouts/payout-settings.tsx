@@ -3,10 +3,10 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Tab, Tabs, Box, Typography } from '@material-ui/core';
-import messages from '../shared/messages'
-import BankAccountSettings from '../features/payouts/bank-account-settings';
-import PaypalSettings from '../features/payouts/paypal-settings';
-import Alert from '../../../design-library/atoms/alert/alert';
+import messages from '../../shared/messages'
+import BankAccountSettings from '../payouts/bank-account-settings';
+import PaypalSettings from '../payouts/paypal-settings';
+import Alert from '../../../../design-library/atoms/alert/alert';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

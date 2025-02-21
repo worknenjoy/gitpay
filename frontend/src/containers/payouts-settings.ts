@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { updateUser, fetchAccount, fetchAccountCountries, deleteUser, createBankAccount, createAccount, updateAccount, updateBankAccount, getBankAccount } from '../actions/userActions';
 import { changePassword } from '../actions/loginActions'
 import { addNotification } from '../actions/notificationActions';
-import PayoutSettings from '../components/areas/profile/pages/payout-settings';
+import PayoutSettings from '../components/areas/profile/features/payouts/payout-settings';
 
 const mapStateToProps = (state: any) => {
   return {
