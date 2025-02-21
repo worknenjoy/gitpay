@@ -15,10 +15,18 @@ type PublicBaseProps = {
   loggedIn?: any,
   bottomBarProps?: any,
   accountMenuProps?: any,
-  loginFormSignupFormProps?: any
+  loginFormSignupFormProps?: any,
+  loginFormForgotFormProps?: any
 }
 
-const PublicBase = ({ children, loggedIn, bottomBarProps, accountMenuProps, loginFormSignupFormProps }:PublicBaseProps) => {
+const PublicBase = ({ 
+  children,
+  loggedIn,
+  bottomBarProps,
+  accountMenuProps,
+  loginFormSignupFormProps,
+  loginFormForgotFormProps
+}:PublicBaseProps) => {
   const classes = useStyles()
 
   return (
@@ -27,6 +35,7 @@ const PublicBase = ({ children, loggedIn, bottomBarProps, accountMenuProps, logi
         loggedIn={ loggedIn }
         accountMenuProps={ accountMenuProps }
         loginFormSignupFormProps={ loginFormSignupFormProps }
+        loginFormForgotFormProps={ loginFormForgotFormProps }
       />
       { children }
       <Bottom

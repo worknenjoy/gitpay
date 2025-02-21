@@ -4,7 +4,16 @@ import LoginForm from '../login-form/login-form-main/login-form'
 
 
 
-const SignupDialog = ({ open, onClose, mode, onForgot, onSignup, onSignin, loginFormSignupFormProps }) => {
+const SignupDialog = ({ 
+  open,
+  onClose,
+  mode,
+  onForgot,
+  onSignup,
+  onSignin,
+  loginFormSignupFormProps,
+  loginFormForgotFormProps
+}) => {
 
   return (
     <Dialog
@@ -21,6 +30,7 @@ const SignupDialog = ({ open, onClose, mode, onForgot, onSignup, onSignin, login
             onSignup={onSignup}
             onSignin={onSignin}
             loginFormSignupFormProps={loginFormSignupFormProps}
+            loginFormForgotFormProps={loginFormForgotFormProps}
             location={undefined}
             history={undefined}
             match={undefined}

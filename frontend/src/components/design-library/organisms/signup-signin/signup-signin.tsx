@@ -3,7 +3,8 @@ import SigninButtons from '../../molecules/signin-buttons/signin-buttons';
 import SignupDialog from '../signup-dialog/signup-dialog';
 
 const SignupSignin = ({
-  loginFormSignupFormProps
+  loginFormSignupFormProps,
+  loginFormForgotFormProps
 }) => {
   const [ open, setOpen] = React.useState(false);
   const [ mode, setMode] = React.useState('signin');
@@ -27,6 +28,7 @@ const SignupSignin = ({
         onSignup={() => setMode('signup')}
         onSignin={() => setMode('signin')}
         loginFormSignupFormProps={loginFormSignupFormProps}
+        loginFormForgotFormProps={loginFormForgotFormProps}
       />
     </div>
   );

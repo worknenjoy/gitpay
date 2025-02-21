@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Home from '../components/areas/public/features/welcome/pages/home-page'
 import { addDialog, closeDialog } from '../actions/notificationActions'
-import { loggedIn, logOut, registerUser } from '../actions/loginActions'
+import { loggedIn, logOut, registerUser, forgotPassword } from '../actions/loginActions'
 import { info } from '../actions/infoActions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     closeDialog: () => dispatch(closeDialog()),
     getInfo: () => dispatch(info()),
     registerUser: (data) => dispatch(registerUser(data)),
+    forgotPassword: (data) => dispatch(forgotPassword(data))
   }
 }
 

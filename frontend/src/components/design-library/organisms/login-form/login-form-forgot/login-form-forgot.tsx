@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import {
@@ -46,18 +46,17 @@ type LoginFormForgotProps = {
   action?: string
   onClose?: () => void
   onSignin?: () => void
-  noCancelButton?: boolean
+  noCancelButton?: boolean,
+  onSubmit?: (data:any) => any
 }
 
-const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin }:LoginFormForgotProps) => {
+const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin, onSubmit }:LoginFormForgotProps) => {
   const classes = useStyles()
   const [state, setState] = useState({
     username: '',
-    password: '',
     captchaChecked: false,
     error: {
       username: '',
-      password: '',
       captcha: ''
     }
   })
@@ -70,15 +69,78 @@ const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin }:LoginForm
     // handle blur logic here
   }
 
-  const submitByFormType = (event) => {
-    event.preventDefault()
-    // handle form submission logic here
+  const validEmail = (email) => {
+    if (email.length < 3) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          username: 'Email cannot be empty'
+        }
+      })
+      return false
+    } else if(email.length > 72) {
+      setState({
+        ...state,
+        error: {
+          ...state.error,
+          username: 'Email cannot be longer than 72 characters'
+        }
+      })
+      return false
+    }
+    else {
+      if (email && !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        setState({
+          ...state,
+          error: {
+            ...state.error,
+            username: 'Invalid email'
+          }
+        })
+        return false
+      }
+    }
+    return true
   }
+
+  const submitForm = async (event) => {
+    const { captchaChecked, error, username } = state;
+    event.preventDefault()
+    const isMailValid = validEmail(username)
+    if (!isMailValid) {
+      setState({ ...state, error: { ...error, username: 'Invalid e-mail' } })
+      return
+    }
+    if (!captchaChecked) {
+      setState({ ...state, error: { ...error, captcha: 'Please check the captcha' } })
+      return
+    }
+    if (onSubmit) {
+      try {
+        const forgotSubmit = await onSubmit({
+          email: username
+        })
+        if(forgotSubmit) {
+         window.location.assign('/#/signin')
+        }
+      } catch (e) {
+        console.error(e)
+        setState({ ...state, error: { ...error, username: 'Error to send forgot password' } })
+      }
+    }
+    
+  }
+
+  useEffect(() => {
+    process.env.NODE_ENV === 'development' && setState({ ...state, captchaChecked: true })
+    process.env.NODE_ENV === 'test' && setState({ ...state, captchaChecked: true })
+  }, [])
 
   const { error } = state
 
   return (
-    <form onSubmit={submitByFormType} action={action} method='POST' autoComplete='off'>
+    <form onSubmit={submitForm} action={action} method='POST' autoComplete='off'>
       <div className={classes.margins}>
         <TextField
           name='username'

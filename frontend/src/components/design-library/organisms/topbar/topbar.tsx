@@ -23,7 +23,8 @@ import LanguageSwitcher from '../../molecules/language-switcher/language-switche
 const Topbar = ({
   loggedIn,
   accountMenuProps,
-  loginFormSignupFormProps
+  loginFormSignupFormProps,
+  loginFormForgotFormProps
 }) => {
   const [isActive, setIsActive] = useState(false)
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
@@ -69,7 +70,10 @@ const Topbar = ({
             <>
               <div style={ { display: 'flex', justifyContent: 'space-around', alignSelf: 'center', marginRight: 20 } }>
                 <div style={{marginTop: 6}}>
-                  <SignupSignin loginFormSignupFormProps={loginFormSignupFormProps} />
+                  <SignupSignin
+                    loginFormSignupFormProps={loginFormSignupFormProps}
+                    loginFormForgotFormProps={loginFormForgotFormProps}
+                  />
                 </div>
                 <div>
                   <LanguageSwitcher

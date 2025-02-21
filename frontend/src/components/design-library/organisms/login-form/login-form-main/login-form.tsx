@@ -42,7 +42,8 @@ interface LoginButtonProps extends RouteComponentProps, WithStyles<typeof styles
   onForgot?: () => void
   onSignup?: () => void
   onSignin?: () => void,
-  loginFormSignupFormProps?: any
+  loginFormSignupFormProps?: any,
+  loginFormForgotFormProps
 }
 
 const LoginForm: React.FC<LoginButtonProps> = ({
@@ -53,7 +54,8 @@ const LoginForm: React.FC<LoginButtonProps> = ({
   onForgot,
   onSignup,
   onSignin,
-  loginFormSignupFormProps
+  loginFormSignupFormProps,
+  loginFormForgotFormProps
 }) => {
 
   return (
@@ -89,10 +91,10 @@ const LoginForm: React.FC<LoginButtonProps> = ({
               <LoginFormSignin onClose={onClose} onForgot={onForgot} onSignup={onSignup} />
             )}
             { mode === 'signup' && (
-              <LoginFormSignup onClose={onClose} onSignin={onSignin} { ...loginFormSignupFormProps } />
+              <LoginFormSignup onClose={onClose} onSignin={onSignin} {...loginFormSignupFormProps} />
             )}
             {mode === 'forgot' && (
-              <LoginFormForgot onClose={onClose} onSignin={onSignin} />
+              <LoginFormForgot onClose={onClose} onSignin={onSignin} {...loginFormForgotFormProps} />
             )}
             {mode === 'reset' && (
               <LoginFormReset onClose={onClose} />
