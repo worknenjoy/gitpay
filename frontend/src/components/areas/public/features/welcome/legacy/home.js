@@ -25,7 +25,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import TopBarContainer from '../../../../../../containers/topbar'
 import Bottom from '../../../../../design-library/organisms/bottom-bar/bottom'
 import messages from './messages'
-import mainStyles from '../../../../../styles/style'
+import mainStyles from '../../../../../../styleguide/styles/style'
 
 const freelancerImage = require('images/collections/collection-flat-build.svg')
 const citySoftware = require('images/collections/collection-flat-background.svg')

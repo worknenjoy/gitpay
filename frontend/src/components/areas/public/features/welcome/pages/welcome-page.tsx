@@ -27,7 +27,6 @@ const WelcomePage = ({
     await createTask(data, history);
   }
 
-
   useEffect(() => {
     isLogged?.();
   }, [isLogged]);

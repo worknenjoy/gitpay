@@ -11,7 +11,7 @@ import {
   MuiThemeProvider,
   createTheme
 } from '@material-ui/core'
-import Palette from '../components/styles/palette'
+import Palette from '../styleguide/styles/palette'
 import './app.css'
 import ReactGA from 'react-ga'
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Topbar from '../components/design-library/organisms/topbar/topbar'
+import Topbar from '../components/shared/topbar/topbar'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn, logOut } from '../actions/loginActions'
 import { createTask } from '../actions/taskActions'

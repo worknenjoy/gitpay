@@ -1,26 +1,30 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField, FormControl, FormHelperText, Typography, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
+import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
-
-type ImportIssueDialogProps = {
-  open: boolean,
-  onClose: () => void,
-  onImport?: (data: any) => void,
-}
+import api from '../../../consts'
 
 const ImportIssueDialog = ({ 
+  user,
   open,
   onClose,
-  onImport
-}:ImportIssueDialogProps) => {
+  onCreate 
+}) => {
   const [ error, setError ] = useState(false)
   const [ url, setUrl ] = useState('')
   const [ provider, setProvider ] = useState('github')
   const [ privateRepo, setPrivateRepo ] = useState(false)
   const [ notListed, setNotListed ] = useState(false)
 
+  const validURL = (url) => {
+    return isGithubUrl(url) || isBitbucketUrl(url)
+  }
+
+  const isBitbucketUrl = (url) => {
+    return url.indexOf('bitbucket') > -1
+  }
 
   const onChange = (e:any) => {
     setUrl(e.target.value)
@@ -28,11 +32,25 @@ const ImportIssueDialog = ({
   }
 
   const handleCreateTask = async (e:any) => {
-    try { 
-      await onImport({ url, privateRepo, notListed, provider })
-    } catch (e) {
+    if (validURL(url)) {
+      if (privateRepo) {
+        window.location = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${user.id}` as unknown as Location
+        return
+      }
+      try { 
+        await onCreate({
+          private: !!privateRepo,
+          not_listed: !!notListed,
+          url: url,
+          provider: provider,
+          userId: user ? user.id : null
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    else {
       setError(true)
-      console.log(e)
     }
   }
   
