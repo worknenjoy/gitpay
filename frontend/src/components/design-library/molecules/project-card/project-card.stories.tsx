@@ -1,5 +1,4 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
 import ProjectCard from './project-card';
 import ProjectListSimple from './project-list-simple';
 import ProjectList from './project-list';
@@ -8,9 +7,9 @@ import { project } from '../../../../reducers/projectReducer';
 export default {
   title: 'Design Library/Molecules/ProjectCard',
   component: ProjectCard,
-} as Meta;
+};
 
-const Template: Story = (args) => <ProjectCard className={undefined} project={undefined} {...args} />;
+const Template = (args) => <ProjectCard className={undefined} project={undefined} {...args} />;
 
 export const DefaultProjectCard = Template.bind({});
 DefaultProjectCard.args = {
@@ -24,7 +23,7 @@ DefaultProjectCard.args = {
   },
 };
 
-export const ProjectListSimpleStory: Story = (args) => <ProjectListSimple listProjects={undefined} projects={undefined} user={undefined} {...args} />;
+export const ProjectListSimpleStory = (args) => <ProjectListSimple listProjects={undefined} projects={undefined} user={undefined} {...args} />;
 ProjectListSimpleStory.args = {
   projects: [
     { title: 'Project 1', description: 'Description 1', status: 'Open' },
@@ -32,7 +31,7 @@ ProjectListSimpleStory.args = {
   ],
 };
 
-export const ProjectListStory: Story = (args) => <ProjectList listProjects={undefined} projects={undefined} {...args} />;
+export const ProjectListStory = (args) => <ProjectList listProjects={undefined} projects={undefined} {...args} />;
 ProjectListStory.args = {
   projects: [
     { title: 'Project 1', description: 'Description 1', status: 'Open' },
