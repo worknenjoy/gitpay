@@ -36,7 +36,8 @@ module.exports = {
     extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
     alias: {
       modules: `${__dirname}/node_modules`,
-      app: `${__dirname}/src`
+      app: `${__dirname}/src`,
+      images: path.resolve(__dirname, "src/images")
     },
     fallback: {
       stream: 'stream-browserify'
