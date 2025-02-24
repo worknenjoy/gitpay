@@ -1,44 +1,14 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import About from '../../../../../design-library/templates/about/about';
+import useCommonActions from '../../../../../../hooks/use-common-actions'
 
-const WelcomePage = ({ 
-  loggedIn,
-  isLogged,
-  info,
-  getInfo,
-  signOut,
-  registerUser,
-  forgotPassword,
-  createTask,
-}) => {
+const WelcomePage = (props) => {
 
-  const history = useHistory();
-
-  const handleSignupUser = async (data) => {
-    await registerUser(data);
-  }
-
-  const handleForgotPassword = async (data) => {
-    await forgotPassword(data);
-  }
-
-  const handleImportIssue = async (data) => {
-    await createTask(data, history);
-  }
-
-  useEffect(() => {
-    isLogged?.();
-  }, [isLogged]);
+  const commonProps = useCommonActions(props);
 
   return (
     <About
-      loggedIn={loggedIn}
-      bottomBarProps={{ info, getInfo }}
-      accountMenuProps={{ signOut }}
-      loginFormSignupFormProps={{ onSubmit: handleSignupUser }}
-      loginFormForgotFormProps={{ onSubmit: handleForgotPassword }}
-      importIssuesProps={{ onImport: handleImportIssue }}
+      { ...commonProps }
     />
   );
 }
