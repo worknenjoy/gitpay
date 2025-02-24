@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
 import ImportIssueDialog from './import-issue-dialog';
-import { on } from 'events';
 
 export default {
   title: 'Design Library/Molecules/ImportIssueDialog',
   component: ImportIssueDialog,
-} as Meta;
+};
 
-const Template: Story = (args) => {
+const Template = (args) => {
   const [open, setOpen] = useState(false);
 
   return (
