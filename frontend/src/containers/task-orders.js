@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import TaskOrders from '../components/task/task-orders'
+import TaskOrders from '../components/areas/public/features/task/task-orders'
 import { addNotification } from '../actions/notificationActions'
 import { changeTaskTab } from '../actions/taskActions'
 import { getUser } from '../common/selectors/user/getUser'

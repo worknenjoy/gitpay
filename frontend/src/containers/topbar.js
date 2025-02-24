@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import TopBar from '../components/topbar/topbar'
+import Topbar from '../components/shared/topbar/topbar'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn, logOut } from '../actions/loginActions'
 import { createTask } from '../actions/taskActions'
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopBar)
+export default connect(mapStateToProps, mapDispatchToProps)(Topbar)

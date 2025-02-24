@@ -9,7 +9,13 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "images/*": ["src/images/*"],
+      "app": ["src/"],
+      "design-libary": ["src/components/design-library/"],
+    }
   },
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
   "include": ["src", "index.d.ts"]

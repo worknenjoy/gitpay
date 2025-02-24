@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { searchPayout } from '../actions/payoutActions';
-import Payouts from '../components/profile/payouts';
+import Payouts from '../components/areas/profile/features/payouts/payouts';
 
 const mapStateToProps = (state: any) => {
   return {

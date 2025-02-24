@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { searchTransfer, updateTransfer, fetchTransfer } from '../actions/transferActions';
 import { fetchAccount } from '../actions/userActions'
-import Transfers from '../components/profile/transfers';
+import Transfers from '../components/areas/profile/features/transfers/transfers';
 
 const mapStateToProps = (state: any) => {
   return {

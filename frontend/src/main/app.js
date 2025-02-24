@@ -11,7 +11,7 @@ import {
   MuiThemeProvider,
   createTheme
 } from '@material-ui/core'
-import Palette from '../components/styles/palette'
+import Palette from '../styleguide/styles/palette'
 import './app.css'
 import ReactGA from 'react-ga'
 
@@ -25,7 +25,7 @@ import messagesEn from '../translations/result/en.json'
 
 import messagesBrLocal from '../translations/generated/br.json'
 import messagesEnLocal from '../translations/generated/en.json'
-import Loader from '../components/loader/loader'
+import Loader from '../components/design-library/atoms/loader/loader'
 
 import CookieConsentBar, { GITPAY_COOKIE_CONSENT } from './cookie-consent-bar'
 

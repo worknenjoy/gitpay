@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import UserOrganizationTree from '../components/profile/user-organization-tree'
+import UserOrganizationTree from '../components/areas/profile/features/organizations/user-organization-tree'
 import { listTasks } from '../actions/taskActions'
 import { getUser } from '../common/selectors/user/getUser'
 

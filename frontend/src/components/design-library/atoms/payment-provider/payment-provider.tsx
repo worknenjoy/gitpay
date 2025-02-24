@@ -10,7 +10,7 @@ import {
 import  { Chip } from '@material-ui/core';
 import { paymentProviders, paymentSources } from '../../../../consts'
 
-const logoPaypal = require('../../../../images/paypal-icon.png').default;
+const logoPaypal = require('images/paypal-icon.png').default;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -5,7 +5,7 @@ import { createOrder } from '../actions/orderActions'
 import { fetchWallet, listWallets } from '../actions/walletActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getUser } from '../common/selectors/user/getUser'
-import TaskPaymentForm from '../components/task/task-payment-form'
+import TaskPaymentForm from '../components/areas/public/features/task/task-payment-form'
 
 const mapStateToProps = (state, ownProps) => {
   return {

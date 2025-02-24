@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import media from 'app/styleguide/media'
+import media from '../../styleguide/media'
 
 export const PageContent = styled.div`
   padding: 0 0 0 0;

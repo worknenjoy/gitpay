@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { addDecorator } from '@storybook/react';
 import '../src/main/app.css';
 import messagesEnLocal from '../src/translations/generated/en.json';
-import Palette from '../src/components/styles/palette';
+import Palette from '../src/styleguide/styles/palette';
 
 const theme = createTheme(Palette)
 
@@ -60,4 +60,15 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  
+  backgrounds: {
+    default: 'white',
+    values: [
+      { name: 'black', value: '#000000' },
+      { name: 'white', value: '#ffffff' },
+      { name: 'gray', value: '#888888' },
+    ],
+  },
+  
+  
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Roles from '../components/profile/user-roles'
+import Roles from '../components/areas/profile/features/roles/user-roles'
 import { updateUser } from '../actions/userActions'
 import { fetchRoles, createRoles, deleteRoles } from '../actions/userRoleActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'

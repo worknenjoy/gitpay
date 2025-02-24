@@ -5,8 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import MomentComponent from "moment";
 import classNames from "classnames";
 
-import logoGithub from '../../../../images/github-logo-black.png'
-import logoBitbucket from '../../../../images/bitbucket-logo-blue.png'
+import logoGithub from 'images/github-logo-black.png'
+import logoBitbucket from 'images/bitbucket-logo-blue.png'
 import ReactPlaceholder from "react-placeholder";
 
 const useStyles = makeStyles(theme => ({
