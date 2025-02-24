@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core'
 
 import 'react-phone-number-input/style.css'
-import MaskedInput from 'react-text-mask'
 import Moment from 'moment'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
@@ -20,7 +19,7 @@ import CountryPicker from '../../../../shared/country-picker'
 import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
 import Field from '../../../../../../design-library/atoms/field/field'
 import Alert from '../../../../../../design-library/atoms/alert/alert'
-
+import TextMaskCustom from './TextMaskCustom';
 import messages from '../../../../shared/messages'
 
 const styles = (theme) => ({
@@ -97,21 +96,6 @@ const AccountDetails = ({
     }
   }
 
-  function TextMaskCustom(props) {
-    const { inputRef, ...other } = props
-
-    return (
-      <MaskedInput
-        {...other}
-        ref={(ref) => {
-          inputRef(ref ? ref.inputElement : null)
-        }}
-        mask={['(', '+', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-        placeholderChar={'\u2000'}
-        showMask
-      />
-    )
-  }
 
   useEffect(() => {
     if (user.user.id) {

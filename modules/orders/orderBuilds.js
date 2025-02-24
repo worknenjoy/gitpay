@@ -178,10 +178,11 @@ module.exports = async function orderBuilds(orderParameters) {
       }
     })
 
-    const currentBalance = wallet.balance
-    const enoughBalance = currentBalance >= orderParameters.amount
+    const currentBalance = wallet.balance 
+    const enoughBalance = new Decimal(currentBalance).greaterThanOrEqualTo(new Decimal(orderParameters.amount))
+    
     if (!enoughBalance) {
-      throw new Error('Not enough balance')
+      throw new Error(`Not enough balance. current: ${currentBalance}, amount: ${orderParameters.amount}`)
     }
 
     const orderUpdated = await orderCreated.update({
