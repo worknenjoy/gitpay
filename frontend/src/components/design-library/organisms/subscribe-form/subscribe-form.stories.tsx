@@ -12,5 +12,5 @@ export const Default = Template.bind({});
 Default.args = {
   // Add default props here if any
   render: true,
-  type: 'success',
+  type: 'subscribe-form',
 };

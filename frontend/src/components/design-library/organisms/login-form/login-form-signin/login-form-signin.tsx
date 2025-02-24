@@ -221,7 +221,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
             ? <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
             : <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
           }
-          <Typography variant='caption' style={{ marginLeft: 10 }}>
+          <Typography variant='caption'>
             <FormattedMessage id='account.login.label.remember' defaultMessage='Remember me' />
           </Typography>
         </div>

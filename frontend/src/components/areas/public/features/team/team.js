@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
+import Bottom from '../../../../shared/bottom/bottom'
 import TopBarContainer from '../../../../../containers/topbar'
 import TeamCard from '../../../../design-library/atoms/cards/TeamCard'
 import { Grid } from '@material-ui/core'

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Bottom from '../components/shared/bottom/bottom'
+import Info from '../components/areas/public/features/welcome/components/Info'
 import { info } from '../actions/infoActions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -16,4 +16,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Bottom)
+export default connect(mapStateToProps, mapDispatchToProps)(Info)

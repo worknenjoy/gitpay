@@ -70,7 +70,7 @@ const ImportIssueDialog = ({
             <Typography variant='subtitle1' gutterBottom>
               <FormattedMessage
                 id='task.actions.insert.subheading'
-                defaultMessage='Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>' />
+                defaultMessage='Paste the url of an incident of Github or Bitbucket' />
             </Typography>
           </DialogContentText>
           <FormControl style={{width: '100%'}} error={error}>

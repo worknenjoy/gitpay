@@ -1,3 +1,4 @@
+import './mailchimp.css'
 import React from 'react'
 import SubscribeFrom from 'react-mailchimp-subscribe'
 import {
@@ -35,7 +36,7 @@ type SubscribeFormProps = {
   render?: boolean
 }
 
-const SubscribeForm = ({ type, render }:SubscribeFormProps) => {
+const SubscribeForm = ({ type = 'subscribe-form', render }:SubscribeFormProps) => {
   const intl = useIntl()
   const formProps = {
     action:

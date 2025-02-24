@@ -14,7 +14,7 @@ import {
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 import TopBarContainer from '../../../../../../containers/topbar'
-import Bottom from '../../../../../design-library/organisms/bottom-bar/bottom'
+import Bottom from '../../../../../shared/bottom/bottom'
 import {
   MainTitle
 } from '../components/CommonStyles'

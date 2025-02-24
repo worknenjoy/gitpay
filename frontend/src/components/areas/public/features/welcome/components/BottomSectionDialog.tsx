@@ -6,8 +6,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Slide,
-  SlideProps,
 } from '@material-ui/core'
 
 import {
@@ -19,9 +17,6 @@ import { InfoList } from './CommonStyles'
 
 const BottomSectionDialog = ({
   classes,
-  Transition = React.forwardRef<unknown, SlideProps>((props, ref) => (
-    <Slide direction='up' ref={ ref } { ...props } />
-  )),
   header,
   title,
   subtitle,
@@ -34,7 +29,7 @@ const BottomSectionDialog = ({
     <ListItem button component='a'>
       <Typography
         variant='subtitle1'
-        onClick={ () => setOpen(!open) }
+        onClick={ () => setOpen(true) }
         component='div'
         style={ { display: 'block', width: '100%' } }
       >
@@ -42,7 +37,6 @@ const BottomSectionDialog = ({
       </Typography>
       <Dialog
         fullScreen
-        TransitionComponent={ Transition }
         open={ open }
         onClose={ () => setOpen(false) }
       >

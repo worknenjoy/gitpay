@@ -10,17 +10,18 @@ const Template = (args: any) => <Topbar {...args} />;
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
-  // Add default props here
-  user: {
+  loggedIn: {
+    logged: true,
     completed: true,
-    data: {
+    user: {
       id: 1,
+      email: 'test@gmail.com',
+      username: 'test',
       Types: [{
         id: 1,
-        name: 'contributor',
-      }],
-    },
-    error: false,
+        name: 'maintainer',
+      }]
+    }
   }
 };
 

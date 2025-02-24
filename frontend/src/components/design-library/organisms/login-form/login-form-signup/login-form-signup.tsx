@@ -421,7 +421,7 @@ const LoginFormSignup = ({
             ? <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid='agree-terms-checkbox-checked' />
             : <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid='agree-terms-checkbox' />
           }
-          <Typography variant='body1' style={{ marginLeft: 10 }}>
+          <Typography variant='body1'>
             <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the ' />
             <a onClick={handleOpenTermsOfService} href='/#/terms' target='_blank' style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
               <FormattedMessage id='account.login.label.terms' defaultMessage='Terms of Service' />

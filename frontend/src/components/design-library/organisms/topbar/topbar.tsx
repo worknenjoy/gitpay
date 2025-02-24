@@ -66,7 +66,10 @@ const Topbar = ({
             </MenuMobile>
           </OnlyMobile>
           { isLoggedIn ? (
-            <AccountSettings loggedIn={ loggedIn } accountMenuProps={accountMenuProps} />
+            <>
+              <AccountSettings loggedIn={ loggedIn } accountMenuProps={accountMenuProps} />
+              <ImportIssue {...importIssuesProps} />
+            </>
           ) : (
             <>
               <div style={ { display: 'flex', justifyContent: 'space-around', alignSelf: 'center', marginRight: 20 } }>
@@ -76,6 +79,7 @@ const Topbar = ({
                     loginFormForgotFormProps={loginFormForgotFormProps}
                   />
                 </div>
+                {/* 
                 <div>
                   <LanguageSwitcher
                     completed={ true }
@@ -84,10 +88,10 @@ const Topbar = ({
                     userCurrentLanguage={ 'en' }
                   />
                 </div>
+                */}
               </div>
             </>
           )}
-          <ImportIssue {...importIssuesProps} />
         </RightSide>
       </Container>
     </Bar>

@@ -140,6 +140,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
             </Typography>
             <List component='nav'>
               <BottomSectionDialog
+                key='privacy-policy'
                 classes={ classes }
                 title='Legal'
                 header='Privacy policy'
@@ -149,6 +150,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                 }
               />
               <BottomSectionDialog
+                key='terms-of-service'
                 classes={ classes }
                 title='Legal'
                 header='Terms of Service'
@@ -158,6 +160,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                 }
               />
               <BottomSectionDialog
+                key='cookie-policy'
                 classes={ classes }
                 title='Legal'
                 header='Cookie Policy'
