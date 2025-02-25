@@ -474,7 +474,7 @@
   "task.actions.insert.label": "Insert",
   "task.actions.insert.new": "Insert a new task",
   "task.actions.insert.novalid": "This is not a valid URL",
-  "task.actions.insert.subheading": "Paste the url of an incident of <strong>Github</strong> or <strong>Bitbucket</strong>",
+  "task.actions.insert.subheading": "Paste the url of an incident of Github or Bitbucket",
   "task.actions.menu.user.account": "Account",
   "task.actions.message": "Send message",
   "task.actions.team": "Team",
