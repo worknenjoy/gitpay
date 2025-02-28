@@ -96,7 +96,6 @@ const CustomerDetails = ({
   classes
 }) => {
   const [customerData, setCustomerData] = useState({})
-  const [userId] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -138,7 +137,7 @@ const CustomerDetails = ({
       const userId = user.user.id
       fetchCustomer(userId)
     }
-  }, [user])
+  }, [user, createCustomer, updateCustomer])
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
@@ -177,7 +176,7 @@ const CustomerDetails = ({
                   </Grid>
                 </Grid>
               </fieldset>
-              <fieldset className={classes.fieldset} disabled={!user.user.customer_id}>
+              <fieldset className={classes.fieldset} disabled={!customer.data.id}>
                 <legend className={classes.legend}>
                   <Typography>
                     <FormattedMessage id='account-details-address' defaultMessage='2. Address information' />
