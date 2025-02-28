@@ -4,10 +4,10 @@ const requestPromise = require('request-promise')
 const URLSearchParams = require('url-search-params')
 const URL = require('url')
 const Decimal = require('decimal.js')
-
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const Sendmail = require('../mail/mail')
+const userCustomerCreate = require('../users/userCustomerCreate')
 
 module.exports = async function orderBuilds(orderParameters) {
   const { source_id, source_type, currency, provider, amount, email, userId, taskId, plan  } = orderParameters
@@ -59,14 +59,20 @@ module.exports = async function orderBuilds(orderParameters) {
       }
     ]
   })
-
-  const orderUser = orderCreated.User.dataValues
+  const orderUserModel = orderCreated.User
+  const orderUser = orderUserModel.dataValues
   const taskTitle = orderCreated?.Task?.dataValues?.title || ''
   const percentage = orderCreated.Plan?.feePercentage
 
-  if (orderParameters.customer_id && orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
+  if (orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
     const unitAmount = (parseInt(orderParameters.amount) * 100 * (1 + (percentage/100))).toFixed(0)
     const quantity = 1
+
+    if(!orderParameters.customer_id) {
+      const newCustomer = await userCustomerCreate(orderUser.id, { email: orderUser.email })
+      orderParameters.customer_id = newCustomer.id
+      orderUserModel.reload()
+    }
 
     const invoice = await stripe.invoices.create({
       customer: orderParameters.customer_id,
@@ -99,9 +105,11 @@ module.exports = async function orderBuilds(orderParameters) {
     }, {
       where: {
         id: orderCreated.dataValues.id
-      }
+      },
+      include: [
+        { model: models.User },
+      ]
     })
-
     await stripe.invoices.sendInvoice(invoice.id)
     return orderUpdated
   }
