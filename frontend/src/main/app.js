@@ -25,7 +25,7 @@ import messagesEn from '../translations/result/en.json'
 
 import messagesBrLocal from '../translations/generated/br.json'
 import messagesEnLocal from '../translations/generated/en.json'
-import Loader from '../components/design-library/atoms/loader/loader'
+import Loader from '../components/design-library/atoms/loaders/loader/loader'
 
 import CookieConsentBar, { GITPAY_COOKIE_CONSENT } from './cookie-consent-bar'
 

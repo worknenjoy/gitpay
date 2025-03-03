@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 
 import TopBarContainer from '../../../../../containers/topbar'
-import Bottom from '../../../../design-library/organisms/bottom-bar/bottom'
+import Bottom from '../../../../design-library/organisms/layouts/bottom-bar/bottom'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 

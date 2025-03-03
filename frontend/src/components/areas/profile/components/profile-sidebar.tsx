@@ -10,7 +10,7 @@ import {
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon
 } from '@material-ui/icons'
-import { SideMenu } from '../../../design-library/molecules/side-menu/side-menu'
+import { SideMenu } from '../../../design-library/molecules/menus/side-menu/side-menu'
 
 const ProfileSidebar = ({
   classes,

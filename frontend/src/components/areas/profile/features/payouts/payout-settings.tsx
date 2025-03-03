@@ -6,7 +6,7 @@ import { Grid, Tab, Tabs, Box, Typography } from '@material-ui/core';
 import messages from '../../shared/messages'
 import BankAccountSettings from '../payouts/bank-account-settings';
 import PaypalSettings from '../payouts/paypal-settings';
-import Alert from '../../../../design-library/atoms/alert/alert';
+import Alert from '../../../../design-library/atoms/alerts/alert/alert';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

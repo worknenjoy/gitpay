@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Bottom from '../../../../shared/bottom/bottom'
 import TopBarContainer from '../../../../../containers/topbar'
-import TeamCard from '../../../../design-library/atoms/cards/TeamCard'
+import TeamCard from '../../../../design-library/molecules/cards/team-card/TeamCard'
 import { Grid } from '@material-ui/core'
 import { Page } from 'app/styleguide/components/Page'
 import { Section } from '../welcome/components/CommonStyles'

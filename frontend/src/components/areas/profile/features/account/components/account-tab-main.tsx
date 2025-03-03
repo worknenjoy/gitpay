@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 
-import { Field } from '../../../../../design-library/atoms/field/field';
+import { Field } from '../../../../../design-library/atoms/inputs/field/field';
 import ProviderLoginButtons from '../../../../../../containers/provider-login-buttons';
 import DeleteAccountButton from './delete-account-button';
 

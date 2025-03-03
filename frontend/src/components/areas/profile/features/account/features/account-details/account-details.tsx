@@ -17,8 +17,8 @@ import Switch from '@material-ui/core/Switch'
 
 import CountryPicker from '../../../../shared/country-picker'
 import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
-import Field from '../../../../../../design-library/atoms/field/field'
-import Alert from '../../../../../../design-library/atoms/alert/alert'
+import Field from '../../../../../../design-library/atoms/inputs/field/field'
+import Alert from '../../../../../../design-library/atoms/alerts/alert/alert'
 import TextMaskCustom from './TextMaskCustom';
 import messages from '../../../../shared/messages'
 
