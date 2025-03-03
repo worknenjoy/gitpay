@@ -3,9 +3,35 @@ import { FormattedMessage } from 'react-intl'
 import Link from '@material-ui/core/Link'
 import { Breadcrumbs, Typography } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import { makeStyles } from '@material-ui/core/styles'
+import { useHistory } from 'react-router-dom'
+
+const useStyles = makeStyles(theme => ({
+  breadcrumbRoot: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
+  breadcrumbLink: {
+    textDecoration: 'underline'
+  },
+  chipStatusPaid: {
+    marginLeft: 0,
+    verticalAlign: 'middle',
+    backgroundColor: theme.palette.primary.light
+  },
+  button: {
+    width: 100,
+    font: 10
+  },
+  gutterRight: {
+    marginRight: 10
+  }
+}))
 
 
-export const Breadcrumb = ({ history, task, classes, user, project, organization }) => {
+export const Breadcrumb = ({ task, user, project, organization }) => {
+  const classes = useStyles()
+  const history = useHistory()
   const isProfile = history.location.pathname.includes('profile')
   const breadcrumbPathPrefix = isProfile ? '/profile/' : '/'
   const { data , completed } = task
