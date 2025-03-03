@@ -1,6 +1,22 @@
 import React from 'react';
 import SectionTable from './section-table';
 
+const generateTableData = (count) => {
+  const data = [];
+  for (let i = 0; i < count; i++) {
+    data.push({
+      id: i + 1,
+      name: `John Doe ${i + 1}`,
+      email: `john${i}@gmail.com`,
+      role: 'Contributor',
+      status: 'Active',
+      action: 'Edit',
+      other: 'Other',
+    });
+  }
+  return data;
+};
+
 export default {
   title: 'Design Library/Molecules/SectionTable',
   component: SectionTable,
@@ -13,26 +29,7 @@ Table.args = {
   // Add default props here
   tableData: {
     completed: true,
-    data: [
-      {
-        id: 1,
-        name: 'John Doe',
-        email: 'john@gmail.com',
-        role: 'Admin',
-        status: 'Active',
-        action: 'Edit',
-        other: 'Other',
-      },
-      {
-        id: 2,
-        name: 'Jane Doe',
-        email: 'jane@gmail.com',
-        role: 'User',
-        status: 'Inactive',
-        action: 'Edit',
-        other: 'Other',
-      },
-    ],
+    data: generateTableData(25),
   },
   tableHeaderMetadata: {
     "id": { sortable: true, numeric: true, dataBaseKey: "id", label: 'Id' },

@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import Link from '@material-ui/core/Link';
-import MomentComponent from 'moment';
-import TextEllipsis from 'text-ellipsis';
+import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder';
 import { makeStyles } from '@material-ui/core/styles'
 
 import {
-  Avatar,
   Table,
   TableHead,
   TableBody,
@@ -17,85 +13,11 @@ import {
   TableRow,
   TableSortLabel,
   Typography,
-  withStyles,
-  Tooltip,
-  Chip,
   Paper,
-  IconButton
 } from '@material-ui/core';
-import {
-  FirstPage as FirstPageIcon,
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  LastPage as LastPageIcon
-} from '@material-ui/icons';
-import slugify from '@sindresorhus/slugify';
 
-import logoGithub from 'images/github-logo.png';
-import logoBitbucket from 'images/bitbucket-logo.png';
-import Constants from '../../../../consts';
-import messages from '../../../areas/public/features/task/messages/task-messages';
+import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions';
 
-const actionsStyles = theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
-});
-
-const TablePaginationActions = ({ classes, count, page, rowsPerPage, theme, onChangePage, intl }) => {
-  const handleFirstPageButtonClick = event => {
-    onChangePage(event, 0);
-  };
-
-  const handleBackButtonClick = event => {
-    onChangePage(event, page - 1);
-  };
-
-  const handleNextButtonClick = event => {
-    onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = event => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <div className={classes.root}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label={intl.formatMessage(messages.firstPageLabel)}
-      >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label={intl.formatMessage(messages.previousPageLabel)}
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label={intl.formatMessage(messages.nextPageLabel)}
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label={intl.formatMessage(messages.lastPageLabel)}
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </div>
-  );
-};
-
-const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(TablePaginationActions));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -329,9 +251,9 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
                 count={sortedData.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onPageChange={handleChangePage}
+                onPageChange={(e, page) => handleChangePage(e, page)}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActionsWrapped}
+                ActionsComponent={TablePaginationActions}
               />
             </TableRow>
           </TableFooter>
