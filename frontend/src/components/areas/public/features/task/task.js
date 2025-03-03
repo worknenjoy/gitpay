@@ -48,7 +48,7 @@ import OfferDrawer from '../../../../design-library/molecules/drawers/offer-draw
 
 import IssueActionsByRole from './components/issue-actions-by-role'
 import TopBarContainer from '../../../../../containers/topbar'
-import Bottom from '../../../../design-library/organisms/layouts/bottom-bar/bottom'
+import Bottom from '../../../../../containers/bottom'
 import LoginButton from '../../../profile/components/session/login-button'
 import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'

@@ -9,7 +9,7 @@ const AccountSettings = ({ loggedIn, accountMenuProps }) => {
        <AccountButton
           handleMenu={() => setOpen(!open)}
           loggedIn={loggedIn}          
-       />x
+       />
         <AccountMenu
           handleClose={() => setOpen(false)}
           open={open}
