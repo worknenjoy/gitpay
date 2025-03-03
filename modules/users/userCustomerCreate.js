@@ -21,18 +21,7 @@ module.exports = Promise.method(function userCustomerCreate(id, customerParamete
         })
       } else {
         return stripe.customers.create({
-          email: customerParameters.email,
-          name: customerParameters.name,
-          description: customerParameters.description,
-          phone: customerParameters.phone,
-          address: {
-            line1: customerParameters.line1,
-            line2: customerParameters.line2,
-            city: customerParameters.city,
-            postal_code: customerParameters.postal_code,
-            state: customerParameters.state,
-            country: customerParameters.country
-          },
+          ...customerParameters,
           metadata: {
             'user_id': id
           }

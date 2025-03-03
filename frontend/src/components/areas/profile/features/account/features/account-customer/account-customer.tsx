@@ -176,7 +176,7 @@ const CustomerDetails = ({
                   </Grid>
                 </Grid>
               </fieldset>
-              <fieldset className={classes.fieldset} disabled={!customer.data.id}>
+              <fieldset className={classes.fieldset}>
                 <legend className={classes.legend}>
                   <Typography>
                     <FormattedMessage id='account-details-address' defaultMessage='2. Address information' />
