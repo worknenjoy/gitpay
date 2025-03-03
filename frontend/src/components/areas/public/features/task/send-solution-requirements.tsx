@@ -1,5 +1,5 @@
 import React from 'react'
-import RequirementList from '../../../../design-library/molecules/requirements-list/requirement-list'
+import RequirementList from '../../../../design-library/molecules/lists/requirements-list/requirement-list'
 
 const SendSolutionRequirements = ({ completed, isConnectedToGitHub, isAuthorOfPR, isPRMerged, isIssueClosed, hasIssueReference, bountyAvailable }) => {
 

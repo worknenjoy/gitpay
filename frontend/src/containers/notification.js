@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { closeNotification } from '../actions/notificationActions'
-import Notification from '../components/design-library/atoms/notification/notification'
+import Notification from '../components/design-library/atoms/notifications/notification/notification'
 
 const mapStateToProps = (state, ownProps) => {
   return {

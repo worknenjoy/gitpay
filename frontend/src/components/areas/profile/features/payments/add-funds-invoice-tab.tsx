@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import InvoicePayment from '../../../../design-library/organisms/invoice-payment/invoice-payment'
+import InvoicePayment from '../../../../design-library/organisms/forms/invoice-payment/invoice-payment'
 
 interface AddFundsInvoiceTabProps extends RouteComponentProps {
   price: any;

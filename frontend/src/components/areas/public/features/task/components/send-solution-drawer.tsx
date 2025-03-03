@@ -6,10 +6,10 @@ import {
 } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 import { validAccount } from '../../../../../../utils/valid-account'
-import AccountRequirements from '../../../../../design-library/molecules/account-requirements/account-requirements'
+import AccountRequirements from '../../../../../design-library/atoms/alerts/account-requirements/account-requirements'
 import SendSolutionRequirements from '../send-solution-requirements'
-import Drawer from '../../../../../design-library/molecules/drawer/drawer'
-import IssueSolutionCard from '../../../../../design-library/molecules/issue-solution-card/issue-solution-card'
+import Drawer from '../../../../../design-library/molecules/drawers/drawer/drawer'
+import IssueSolutionCard from '../../../../../design-library/molecules/cards/issue-solution-card/issue-solution-card'
 
 const SendSolutionDrawer = props => {
   const [pullRequestURL, setPullRequestURL] = useState('')

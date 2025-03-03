@@ -33,7 +33,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import media from '../../../../../styleguide/media'
 
-import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb'
+import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 
 import TaskLabels from './task-labels'
 
@@ -121,7 +121,7 @@ class TaskHeader extends React.Component {
     return (
       <TaskHeaderContainer>
         <Grid item xs={12} sm={12} md={12}>
-          <Breadcrumb task={task} user={user} history={history} classes={classes} />
+          <Breadcrumb task={task} user={user} />
           <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation
             ready={task.completed}
           >

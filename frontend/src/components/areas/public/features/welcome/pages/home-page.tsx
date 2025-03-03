@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from '../../../../../design-library/templates/home/home';
+import Home from '../../../../../design-library/templates/pages/home/home';
 import useCommonActions from '../../../../../../hooks/use-common-actions'
 
 const HomePage = (props) => {
