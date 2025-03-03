@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb } from './breadcrumb';;
+import { Breadcrumb } from './breadcrumb';
 
 export default {
   title: 'Design Library/Molecules/Breadcrumbs/Breadcrumb',

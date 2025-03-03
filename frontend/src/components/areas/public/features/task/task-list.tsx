@@ -300,7 +300,7 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
     <React.Fragment>
         { (project?.data?.id || organizationData?.id) &&
           <div style={{marginTop: 20}}>
-            <Breadcrumb classes={classes} history={history} project={project} organization={organizationData} user={user} task={{}}/>
+            <Breadcrumb project={project} organization={organizationData} user={user} task={{}}/>
           </div>
         }
         { isOrganizationPage &&
