@@ -368,7 +368,12 @@ class Profile extends Component {
                     }
                     <Route
                       exact
-                      path='/profile/task/:id'
+                      path={[
+                        '/profile/task/:id',
+                        '/profile/task/:id/:slug',
+                        '/profile/explore/task/:id',
+                        '/profile/explore/task/:id/:slug'
+                      ]}
                       component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
                     <Route
@@ -379,11 +384,6 @@ class Profile extends Component {
                     <Route
                       exact
                       path='/profile/task/:id/:slug/offers'
-                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
-                    />
-                    <Route
-                      exact
-                      path='/profile/task/:id/:slug'
                       component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
                     <Route

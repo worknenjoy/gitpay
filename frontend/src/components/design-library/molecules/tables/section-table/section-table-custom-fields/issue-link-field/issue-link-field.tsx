@@ -12,16 +12,20 @@ import messages from '../../../../../../areas/public/features/task/messages/task
 const IssueLinkField = ({ issue }) => {
   const history = useHistory();
   const intl = useIntl();
+  const isProfile = history.location.pathname.includes('/profile');
+  const isExplore = history.location.pathname.includes('/profile/explore');
+  const profile = isProfile ? '/profile' : '';
+  const explore = isExplore ? '/explore' : '';
   
   const handleClickListItem = (issue) => {
-    const url = `/task/${issue.id}/${slugify(issue.title)}`;
+    const url = `${profile}${explore}/task/${issue.id}/${slugify(issue.title)}`;
     history.push(url);
   };
 
   return (
     <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
       <a style={{ cursor: 'pointer' }} onClick={() => handleClickListItem(issue)}>
-        <Typography variant="body1" style={{ color: 'black', fontWeight: 'bold' }}>
+        <Typography variant="subtitle2">
           {TextEllipsis(`${issue.title || 'no title'}`, 42)}
         </Typography>
       </a>
@@ -32,7 +36,7 @@ const IssueLinkField = ({ issue }) => {
           placement="top"
         >
           <img
-            width="24"
+            width="18"
             src={issue.provider === 'github' ? logoGithub : logoBitbucket}
             style={{
               borderRadius: '50%',

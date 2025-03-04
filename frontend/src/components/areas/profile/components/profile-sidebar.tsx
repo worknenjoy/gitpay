@@ -24,7 +24,7 @@ const ProfileSidebar = ({
     const path = history.location.pathname
     if (path.includes('/profile/explore')) {
       setSelected(2)
-    } else if (path.includes('/profile/tasks')) {
+    } else if (path.includes('/profile/task')) {
       setSelected(1)
     } else if (path.includes('/profile/payments')) {
       setSelected(3)
