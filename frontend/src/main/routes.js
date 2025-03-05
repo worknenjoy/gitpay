@@ -25,15 +25,11 @@ import Auth from '../modules/auth'
 const TaskExplorerProjects = (props) => <TaskExplorer {...props} />
 const TaskExplorerOrganizations = (props) => <TaskExplorer {...props} />
 
-const HandleRedirect = ({ redirectPath, Component}) => {
-  return Auth.isUserAuthenticated() ? () => <Redirect to={redirectPath} /> : HomeContainer
-}
-
 export default props => (
   <HashRouter>
     <Switch>
       <Route path='/recruitment' component={ LandingPage } />
-      <Route exact path='/' component={ HandleRedirect('/profile', HomeContainer)  } />
+      <Route exact path='/' component={ Auth.isUserAuthenticated() ? () => <Redirect to='/profile' /> : HomeContainer } />
       <Route exact path='/welcome' component={ WelcomeContainer } />
       <PrivateRoute path='/profile' component={ ProfileContainer } />
       <Route path='/pricing' component={ Pricing } />
