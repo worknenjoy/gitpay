@@ -388,36 +388,27 @@ class Profile extends Component {
                     />
                     <Route
                       exact
-                      path='/profile/organizations/:organization_id'
+                      path={[
+                        '/profile/organizations/:organization_id',
+                        '/profile/organizations/:organization_id/:slug',
+                        '/profile/explore/organizations/:organization_id',
+                        '/profile/explore/organizations/:organization_id/:slug'
+                      ]}
                       component={TaskListProfileOrganization}
                     />
                     <Route
                       exact
-                      path='/profile/organizations/:organization_id/:slug'
-                    >
-                      <TaskListProfileOrganization noTopBar noBottomBar />
-                    </Route>
-                    <Route
-                      exact
-                      path='/profile/organizations/:organization_id/projects/:project_id'
-                    >
-                      <TaskListProfileProjects noTopBar noBottomBar />
-                    </Route>
-                    <Route
-                      exact
-                      path='/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug'
-                    >
-                      <TaskListProfileProjects noTopBar noBottomBar />
-                    </Route>
-                    <Route
-                      exact
-                      path='/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
-                    >
-                      <TaskListProfileProjects noTopBar noBottomBar />
-                    </Route>
-                    <Route
-                      exact
-                      path='/profile/organizations/:organization_id/projects/:project_id/:filter'
+                      path={[
+                        '/profile/organizations/:organization_id/projects/:project_id',
+                        '/profile/organizations/:organization_id/projects/:project_id/:filter',
+                        '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
+                        '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
+                        '/profile/organizations/:organization_id/projects/:project_id/:filter',
+                        '/profile/explore/organizations/:organization_id/projects/:project_id',
+                        '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
+                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
+                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
+                      ]}
                     >
                       <TaskListProfileProjects noTopBar noBottomBar />
                     </Route>

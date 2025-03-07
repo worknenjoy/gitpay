@@ -41,7 +41,7 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
 
   const handleBackToTaskList = (e) => {
     e.preventDefault()
-    history.push(breadcrumbPathPrefix + 'explore')
+    history.push(isProfile ?  `${breadcrumbPathPrefix}explore` : `${breadcrumbPathPrefix}tasks/open`)
   }
 
   return (
