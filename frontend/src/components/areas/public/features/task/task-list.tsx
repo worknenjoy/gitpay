@@ -185,7 +185,6 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
     setProjectId(null)
   }
 
-
   useEffect(() => {
     fetchData().then(() => {
       if (history.location.pathname === '/profile/organizations/2/projects/2') {
@@ -298,7 +297,7 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
   
   return (
     <React.Fragment>
-        { (project?.data?.id || organizationData?.id) &&
+        { (isOrganizationPage || isProjectPage) &&
           <div style={{marginTop: 20}}>
             <Breadcrumb project={project} organization={organizationData} user={user} task={{}}/>
           </div>
