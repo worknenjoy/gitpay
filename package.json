@@ -27,7 +27,8 @@
     "lint-fix": "eslint . --fix",
     "prepush": "npm run lint-fix",
     "postbuild": "cd frontend && npm run test",
-    "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate"
+    "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run migrate",
+    "stripe:webhook": "stripe listen --forward-to localhost:3000/webhooks"
   },
   "husky": {
     "hooks": {

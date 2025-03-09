@@ -3,14 +3,14 @@
  */
 
 import React from 'react'
-import { CheckoutFormPure } from '../../src/components/checkout/checkout-form'
+import { CheckoutFormPure } from '../../src/components/areas/profile/features/payments/checkout/checkout-form'
 import { mount } from 'enzyme'
 
 /*
   To do
 
   Considering the change of CheckoutForm from stateful component to stateless component and now uses hooks (useState, useEffect, useCallback),
-  these tests are now failing and should be changed.
+these tests are now failing and should be changed.
 */
 
 xdescribe('components', () => {

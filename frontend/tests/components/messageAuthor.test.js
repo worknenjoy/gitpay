@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import MessageAuthor from '../../src/components/task/task-message-author'
+import MessageAuthor from '../../src/components/areas/public/features/task/task-message-author'
 import { mount } from 'enzyme'
 
 xdescribe('components', () => {

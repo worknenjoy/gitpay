@@ -3,6 +3,7 @@ import axios from 'axios'
 import { addNotification } from './notificationActions'
 import { logOut } from './loginActions'
 import { validToken } from './helpers'
+import { StripeErrorMessages } from './messages/stripe-error-messages'
 
 const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS'
@@ -435,7 +436,7 @@ const createAccount = (country) => {
         createUserAccountError({ message: 'actions.user.account.exist' })
       )
     }
-    axios
+    return axios
       .post(api.API_URL + '/user/account', { country })
       .then(account => {
         if(!account.data) {
@@ -462,14 +463,14 @@ const updateAccount = (_, accountData) => {
       .put(api.API_URL + '/user/account', { account: accountData })
       .then(account => {
         dispatch(addNotification('actions.user.account.update.success'))
-        // dispatch(fetchAccount());
         return dispatch(updateUserAccountSuccess(account))
       })
       .catch(error => {
-        const errorMessage = error.response.data
+        const errorData = error.response.data
         dispatch(
           addNotification(
-            errorMessage ? `${errorMessage.message} ${errorMessage.param}` : 'actions.user.account.update.error.missing'
+            errorData?.param ? (StripeErrorMessages.account[errorData.param] ? StripeErrorMessages.account[errorData.param] : `${errorData.raw.message} ${errorData.param}`) : 'actions.user.account.update.error.missing',
+            errorData?.raw?.message ? errorData.raw.message : 'actions.user.account.update.error.missing'
           )
         )
         // eslint-disable-next-line no-console

@@ -1,5 +1,4 @@
 import { defineMessages } from 'react-intl'
-import notification from '../../containers/notification'
 
 const messages = defineMessages({
   noDefined: {
@@ -486,6 +485,43 @@ const messages = defineMessages({
     id: 'actions.walletOrder.create.success',
     defaultMessage: 'Wallet order created successfully'
   },
+  notificatonUpdateErrorPostalCode: {
+    id: 'actions.user.account.update.error.postal_code',
+    defaultMessage: 'Invalid postal code'
+  },
+  notificationUpdateErrorCity: {
+    id: 'actions.user.account.update.error.city',
+    defaultMessage: 'Invalid city'
+  },
+  notificationUpdateErrorState: {
+    id: 'actions.user.account.update.error.state',
+    defaultMessage: 'Invalid state'
+  },
+  notificationUpdateErrorCountry: {
+    id: 'actions.user.account.update.error.country',
+    defaultMessage: 'Invalid country'
+  },
+  notificationUpdateErrorStreet: {
+    id: 'actions.user.account.update.error.street',
+    defaultMessage: 'Invalid street'
+  },
+  notificationUpdateErrorPhone: {
+    id: 'actions.user.account.update.error.phone',
+    defaultMessage: 'Invalid phone'
+  },
+  notificationUpdateErrorDateOfBirthDay: {
+    id: 'actions.user.account.update.error.dob.day',
+    defaultMessage: 'Invalid day of birth'
+  },
+  notificationUpdateErrorDateOfBirthMonth: {
+    id: 'actions.user.account.update.error.dob.month',
+    defaultMessage: 'Invalid month of birth'
+  },
+  notificationUpdateErrorDateOfBirthYear: {
+    id: 'actions.user.account.update.error.dob.year',
+    defaultMessage: 'Invalid year of birth'
+  },
+
 })
 
 export default messages
