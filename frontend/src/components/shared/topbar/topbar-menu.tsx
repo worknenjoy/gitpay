@@ -5,9 +5,7 @@ import {
   LabelButton
 } from './TopbarStyles'
 
-export const TopbarMenu = ({
-  history
-}) => {
+export const TopbarMenu = () => {
 
   const menuItems = [
     { onClick: () => window.location.assign('/#/welcome'), message: <FormattedMessage id='topbar.link.about' defaultMessage='About us' /> },

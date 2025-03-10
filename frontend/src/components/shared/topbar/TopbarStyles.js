@@ -40,9 +40,10 @@ export const IconHamburger = styled.span`
   width: 25px;
   height: 3px;
   position: relative;
+  top: 5px;
 
-    transition-delay: 200ms;
-    transform-origin: 50% 50%;
+  transition-delay: 200ms;
+  transform-origin: 50% 50%;
 
   ${({ isActive }) => isActive && css`
     background-color: transparent;

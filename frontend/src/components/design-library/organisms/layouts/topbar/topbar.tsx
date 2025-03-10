@@ -47,7 +47,7 @@ const Topbar = ({
               <Logo src={ logo } />
             </StyledButton>
           </div>
-          <OnlyDesktop style={ { display: 'flex', justifyContent: 'space-around', alignSelf: 'center', marginRight: 20 } }>
+          <OnlyDesktop style={ { marginTop: 12, marginLeft: 20 } }>
             <TopbarMenu />
           </OnlyDesktop>
            <MenuMobile
@@ -58,11 +58,9 @@ const Topbar = ({
               <IconHamburger isActive={ isActive } />
             </MenuMobile>
         </LeftSide>
-        <RightSide>
+        <RightSide isActive={ isActive }>
           <OnlyMobile>
-            <MenuMobile>
-              <TopbarMenu />
-            </MenuMobile>
+            <TopbarMenu />
           </OnlyMobile>
           { isLoggedIn ? (
             <>
@@ -70,26 +68,22 @@ const Topbar = ({
               <ImportIssue {...importIssuesProps} />
             </>
           ) : (
-            <>
-              <div style={ { display: 'flex', justifyContent: 'space-around', alignSelf: 'center', marginRight: 20 } }>
-                <div style={{marginTop: 6}}>
-                  <SignupSignin
-                    loginFormSignupFormProps={loginFormSignupFormProps}
-                    loginFormForgotFormProps={loginFormForgotFormProps}
-                  />
-                </div>
-                {/* 
-                <div>
-                  <LanguageSwitcher
-                    completed={ true }
-                    onSwitchLang={ () => {} }
-                    user={ {} }
-                    userCurrentLanguage={ 'en' }
-                  />
-                </div>
-                */}
+            <div style={ { display: 'flex', justifyContent: 'space-around', marginRight: 20 } }>
+              <SignupSignin
+                loginFormSignupFormProps={loginFormSignupFormProps}
+                loginFormForgotFormProps={loginFormForgotFormProps}
+              />
+              {/* 
+              <div>
+                <LanguageSwitcher
+                  completed={ true }
+                  onSwitchLang={ () => {} }
+                  user={ {} }
+                  userCurrentLanguage={ 'en' }
+                />
               </div>
-            </>
+              */}
+            </div>
           )}
         </RightSide>
       </Container>

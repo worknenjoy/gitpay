@@ -240,7 +240,7 @@ class TopBar extends Component {
               </StyledButton>
             </div>
             <OnlyDesktop style={ { marginTop: 12, marginLeft: 20 } }>
-              <TopbarMenu history={ history } />
+              <TopbarMenu />
             </OnlyDesktop>
 
             <MenuMobile
