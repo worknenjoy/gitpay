@@ -19,6 +19,7 @@ const MySkill = (props) => {
       label={title}
       className={classes.chipSkill}
       onDelete={onDelete}
+      style={{marginRight: 5}}
     />
   )
 }

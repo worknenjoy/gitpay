@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {
   withStyles,
   Paper,
@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl'
 import Skill from '../account-skills/skill'
 import MySkill from '../account-skills/my-skill'
 
-const skills = [
+const skillsList = [
   'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation',
   'React', 'React Native', 'Angular', 'Vue.js', 'Blogging', 'Wordpress',
   'PHP', 'Testing', 'Git', 'Continuous Integration'
@@ -24,72 +24,46 @@ const styles = theme => ({
 })
 
 const Preferences = (props) => {
-  const { classes } = props
+  const { classes, preferences, updateUser, user } = props
+  const { skills, os } = preferences
 
-  const [selectedSkills, setSelectedSkills] = useState(props.preferences.skills ? props.preferences.skills.split(',') : [])
-  const [selectedOS, setSelectedOS] = useState(props.preferences.os ? props.preferences.os.split(',') : [])
-  const [selectedLanguage, setSelectedLanguage] = useState(props.preferences.language || null)
-  const [receiveNotifications, setReceiveNotifications] = useState(props.preferences.receiveNotifications || false)
+  const skillsArray = skills !== '' ? skills?.split(',') : []
+  const osArray = os!== '' ? os?.split(',') : []
 
-  useEffect(() => {
-    handleSave()
-  }, [selectedSkills, selectedOS, receiveNotifications])
-
-  useEffect(() => {
-    handleSave(true)
-  }, [selectedLanguage])
-
-  const handleSkillClick = (item) => {
-    setSelectedSkills(prevSkills => {
-      if (prevSkills.includes(item)) {
-        return prevSkills.filter(skill => skill !== item)
-      } else {
-        return [...prevSkills, item]
-      }
-    })
+  const handleSkillClick = async (item) => {
+    const updatedSkills = skillsArray?.find(skill => skill === item)?.length > 0
+      ? skillsArray?.filter(skill => skill !== item)
+      : [...skillsArray, item]
+    await updateUser(user.id, { ...preferences, skills: updatedSkills.join(',') })
   }
 
-  const handleOSClick = (item) => {
-    setSelectedOS(prevOS => {
-      if (prevOS.includes(item)) {
-        return prevOS.filter(os => os !== item)
-      } else {
-        return [...prevOS, item]
-      }
-    })
+  const handleOSClick = async (item) => {
+    const updatedOS = osArray?.includes(item)
+      ? osArray.filter(os => os !== item)
+      : [...osArray, item]
+    await updateUser(user.id, { ...preferences, os: updatedOS.join(',') })
   }
 
-  const handleSave = async (fetchPreferences = false) => {
-    props.preferences.skills = selectedSkills.join(',')
-    props.preferences.os = selectedOS.join(',')
-    props.preferences.receiveNotifications = receiveNotifications
-
-    await props.updateUser(props.user.id, {
-      skills: selectedSkills.join(','),
-      os: selectedOS.join(','),
-      language: selectedLanguage,
-      receiveNotifications: receiveNotifications
-    })
-  }
-
-  const listSkills = skills.map(item => (
+  const listSkills = skillsList.map((item, index) => (
     <Skill
-      key={item}
+      key={`skill-${index}`}
       classes={classes}
       title={item}
       onClick={() => handleSkillClick(item)}
-      isSelected={selectedSkills.includes(item)}
+      isSelected={skills?.includes(item)}
     />
   ))
 
-  const selectedSkillsList = selectedSkills.map(item => (
+  const selectedSkillsList = skillsArray?.map((item, index) => (
     <MySkill
-      key={item}
+      key={`myskill-${index}`}
       classes={classes}
       title={item}
       onDelete={() => handleSkillClick(item)}
     />
   ))
+
+  const hasSomeSkill = skillsArray?.length > 0
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
@@ -103,19 +77,19 @@ const Preferences = (props) => {
           <Typography color='primary' variant='h5'>
             <FormattedMessage id='preferences.os' defaultMessage='OS' />
           </Typography>
-          <Checkbox id='checkbox_windows' checked={selectedOS.includes('Windows')} onClick={() => handleOSClick('Windows')} />
+          <Checkbox id='checkbox_windows' checked={osArray?.includes('Windows')} onClick={() => handleOSClick('Windows')} />
           <label htmlFor='checkbox_windows'>
             <Typography style={{ display: 'inline-block' }} component='span' color='primary' variant='body2'>
               Windows
             </Typography>
           </label>
-          <Checkbox id='checkbox_linux' checked={selectedOS.includes('Linux')} onClick={() => handleOSClick('Linux')} />
+          <Checkbox id='checkbox_linux' checked={osArray?.includes('Linux')} onClick={() => handleOSClick('Linux')} />
           <label htmlFor='checkbox_linux'>
             <Typography style={{ display: 'inline-block' }} component='span' color='primary' variant='body2'>
               Linux
             </Typography>
           </label>
-          <Checkbox id='checkbox_mac' checked={selectedOS.includes('Mac')} onClick={() => handleOSClick('Mac')} />
+          <Checkbox id='checkbox_mac' checked={osArray?.includes('Mac')} onClick={() => handleOSClick('Mac')} />
           <label htmlFor='checkbox_mac'>
             <Typography style={{ display: 'inline-block' }} component='span' color='primary' variant='body2'>
               Mac
@@ -139,7 +113,7 @@ const Preferences = (props) => {
             </Typography>
             <Grid container xs={12} style={{ padding: 10 }}>
               <div className={classes.chipContainer}>
-                {selectedSkillsList.length ? (
+                {hasSomeSkill ? (
                   selectedSkillsList
                 ) : (
                   <Typography color='textSecondary' variant='body2'>
