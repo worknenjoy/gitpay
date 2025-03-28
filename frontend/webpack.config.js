@@ -14,6 +14,7 @@ module.exports = {
   node: {
     global: true,
   },
+  devtool: 'source-map',
   mode: 'development',
   entry: './src/index.js',
   output: {

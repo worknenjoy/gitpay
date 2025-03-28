@@ -27,21 +27,25 @@ const Preferences = (props) => {
   const { classes, preferences, updateUser, user } = props
   const { skills, os } = preferences
 
-  const skillsArray = skills !== '' ? skills?.split(',') : []
-  const osArray = os!== '' ? os?.split(',') : []
+  const skillsArray = typeof skills === 'string' && skills.trim() !== ''
+  ? skills.split(',')
+  : [];
+  const osArray = typeof os === 'string' && os.trim() !== ''
+  ? os.split(',')
+  : [];
 
   const handleSkillClick = async (item) => {
-    const updatedSkills = skillsArray?.find(skill => skill === item)?.length > 0
+    const updatedSkills = skillsArray?.some(skill => skill === item)
       ? skillsArray?.filter(skill => skill !== item)
       : [...skillsArray, item]
-    await updateUser(user.id, { skills: updatedSkills.join(',') })
+    await updateUser(user.id, { skills: updatedSkills?.join(',') })
   }
 
   const handleOSClick = async (item) => {
     const updatedOS = osArray?.includes(item)
       ? osArray.filter(os => os !== item)
       : [...osArray, item]
-    await updateUser(user.id, { os: updatedOS.join(',') })
+    await updateUser(user.id, { os: updatedOS?.join(',') })
   }
 
   const listSkills = skillsList.map((item, index) => (
