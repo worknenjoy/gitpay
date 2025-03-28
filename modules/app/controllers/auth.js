@@ -331,7 +331,7 @@ exports.userBankAccount = (req, res) => {
 }
 
 exports.deleteUserById = (req, res) => {
-  const params = { id: req.params.id }
+  const params = { id: req.user.id }
   user.userDeleteById(params)
     .then((deleted) => {
       res.status(200).send(`${deleted}`)

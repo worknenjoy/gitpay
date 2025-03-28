@@ -306,6 +306,23 @@ describe("Users", () => {
         )
       }).catch(done)
     })
+    it('Should delete user', (done) => {
+      registerAndLogin(agent).then(res => {
+        const userId = res.body.id
+        agent
+          .delete(`/user/delete/`)
+          .set('Authorization', res.headers.authorization)
+          .expect(200)
+          .end((err, user) => {
+            expect(user.statusCode).to.equal(200);
+            expect(user.text).to.equal('1');
+            const users = models.User.findAll({where: {id: userId}})
+            expect(users).to.exist;
+            done(err);
+          }
+        )
+      }).catch(done)
+    })
   })
 
   describe('login User Local', () => {

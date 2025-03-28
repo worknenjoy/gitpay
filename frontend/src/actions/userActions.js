@@ -551,9 +551,8 @@ const resendActivationEmail = (userId) => {
 const deleteUser = (user) => {
   validToken()
   return (dispatch) => {
-    const id = user.id
     return axios
-      .delete(api.API_URL + `/user/delete/${id}`, {})
+      .delete(api.API_URL + `/user/delete/`, {})
       .then(result => {
         dispatch(addNotification('account.profile.settings.delete.user.notification'))
         dispatch(logOut())
