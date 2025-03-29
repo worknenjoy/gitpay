@@ -444,7 +444,7 @@ class TopBar extends Component {
                   </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
                     <ListItem button onClick={ () => {
-                      window.location.assign('/#/profile/payment-options')
+                      window.location.assign('/#/profile/user-account/payouts')
                       this.setState({ anchorEl: null })
                     } }>
                       <ListItemIcon>
@@ -465,19 +465,6 @@ class TopBar extends Component {
                       </ListItemIcon>
                       <ListItemText>
                         <FormattedMessage id='task.actions.account.profile.issues' defaultMessage='Your issues' />
-                      </ListItemText>
-                    </ListItem>
-                  }
-                  { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-                    <ListItem button onClick={ () => {
-                      window.location.assign('/#/profile/user/orgs')
-                      this.setState({ anchorEl: null })
-                    } }>
-                      <ListItemIcon>
-                        <Business />
-                      </ListItemIcon>
-                      <ListItemText>
-                        <FormattedMessage id='task.actions.account.profile.orgs' defaultMessage='Organizations' />
                       </ListItemText>
                     </ListItem>
                   }
@@ -508,7 +495,7 @@ class TopBar extends Component {
                     </ListItem>
                   }
                   <ListItem button onClick={ () => {
-                    window.location.assign('/#/profile/settings')
+                    window.location.assign('/#/profile/user-account/settings')
                     this.setState({ anchorEl: null })
                   } }>
                     <ListItemIcon>

@@ -173,7 +173,7 @@ class ProfileOptions extends Component {
               </CardContent>
               <CardActions className={ classes.cardActions }>
                 <Button size='small' color='primary'>
-                  <Link to={ '/profile/user-account/bank' }>
+                  <Link to={ '/profile/user-account/payouts' }>
                     <FormattedMessage
                       id='account.profile.tasks.account.setup'
                       defaultMessage='Setup bank account'
