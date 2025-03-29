@@ -403,7 +403,7 @@ const messages = defineMessages({
   },
   notificationUserInvalid: {
     id: 'user.invalid',
-    defaultMessage: 'Invalid e-mail and / or password, please try again'
+    defaultMessage: 'Invalid email or password. If you signed up with GitHub or Bitbucket, please log in through that instead'
   },
   notificationOrderSuccess: {
     id: 'task.order.payment.success',
