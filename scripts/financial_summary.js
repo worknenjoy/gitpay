@@ -113,6 +113,13 @@ async function getDatabaseData() {
     console.log("Subscription Revenue:", stripeData.subscriptionRevenue.toFixed(2));
     console.log("Total Platform Revenue:", platformRevenueFullModel.toFixed(2));
     console.log("Adjusted Available Balance:", availableBalanceAdjusted.toFixed(2));
+
+    console.log("------ List of Unpaid Tasks ---------");
+    unpaidTasks.forEach(task => {
+      console.log(`Task ID: ${task.id}, Title: ${task.title} Value: ${task.value}`);
+    });
+    console.log("\n========================================\n");
+    
   } catch (error) {
     console.error("Error generating summary:", error);
   }
