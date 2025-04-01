@@ -76,9 +76,10 @@ async function getDatabaseData() {
   try {
     const stripeData = await getStripeData();
     const dbData = await getDatabaseData();
+    const { unpaidTasks, walletReserved, orderTotal } = dbData
 
     // === METHOD 1: Original Stripe-Based Method ===
-    const platformRevenueFromOrders = dbData.orderTotal * 0.08;
+    const platformRevenueFromOrders = orderTotal * 0.08;
     const platformRevenueFromTransfers = stripeData.totalTransfers * 0.08;
     const platformRevenueWithFees = platformRevenueFromOrders + stripeData.totalStripeFees + platformRevenueFromTransfers;
 
@@ -86,7 +87,7 @@ async function getDatabaseData() {
       stripeData.totalPayments -
       stripeData.totalTransfers -
       stripeData.totalPayouts -
-      dbData.walletReserved -
+      walletReserved -
       stripeData.totalRefunds;
 
     // === METHOD 2: Fee Model (Task Earnings minus Stripe Fees + 8% from Transfers) ===
@@ -97,8 +98,8 @@ async function getDatabaseData() {
 
     const availableBalanceAdjusted =
       platformRevenueFullModel -
-      dbData.unpaidTasks -
-      dbData.walletReserved;
+      unpaidTasks -
+      walletReserved;
 
     // === Output ===
     console.log("\n====== Gitpay Financial Summary ======\n");
