@@ -61,6 +61,13 @@ async function getStripeData() {
 async function getDatabaseData() {
   const walletReserved = await Wallet.sum("balance") || 0;
   const orderTotal = await Order.sum("amount", { where: { status: "succeeded" } }) || 0;
+  const unpaidTasksList = await Task.findAll({
+    where: {
+      value: { [Op.gt]: 0 },
+      status: { [Op.ne]: "paid" }
+    },
+    include: [Order]
+  });
 
   const unpaidTasks = await Task.sum("value", {
     where: {
@@ -69,14 +76,14 @@ async function getDatabaseData() {
     },
   }) || 0;
 
-  return { walletReserved, orderTotal, unpaidTasks };
+  return { walletReserved, orderTotal, unpaidTasks, unpaidTasksList };
 }
 
 (async () => {
   try {
     const stripeData = await getStripeData();
     const dbData = await getDatabaseData();
-    const { unpaidTasks, walletReserved, orderTotal } = dbData
+    const { unpaidTasks, unpaidTasksList, walletReserved, orderTotal } = dbData
 
     // === METHOD 1: Original Stripe-Based Method ===
     const platformRevenueFromOrders = orderTotal * 0.08;
@@ -116,7 +123,7 @@ async function getDatabaseData() {
     console.log("Adjusted Available Balance:", availableBalanceAdjusted.toFixed(2));
 
     console.log("------ List of Unpaid Tasks ---------");
-    unpaidTasks.forEach(task => {
+    unpaidTasksList.forEach(task => {
       console.log(`Task ID: ${task.id}, Title: ${task.title} Value: ${task.value}`);
     });
     console.log("\n========================================\n");
