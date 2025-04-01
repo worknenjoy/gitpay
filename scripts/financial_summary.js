@@ -64,7 +64,7 @@ async function getDatabaseData() {
   const unpaidTasksList = await Task.findAll({
     where: {
       value: { [Op.gt]: 0 },
-      status: { [Op.ne]: "paid" }
+      paid: false,
     },
     include: [Order]
   });
@@ -72,7 +72,7 @@ async function getDatabaseData() {
   const unpaidTasks = await Task.sum("value", {
     where: {
       value: { [Op.gt]: 0 },
-      status: { [Op.ne]: "paid" }
+      paid: false,
     },
   }) || 0;
 
