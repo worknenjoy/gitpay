@@ -1,5 +1,4 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
 import IssueMessageAuthorDiialog from './issue-message-author-dialog';
 
 export default {
