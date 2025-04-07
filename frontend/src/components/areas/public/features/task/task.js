@@ -53,7 +53,6 @@ import LoginButton from '../../../profile/components/session/login-button'
 import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'
 import TaskLevelSplitButton from './task-level-split-button'
-import TaskDeadlineForm from './task-deadline-form'
 import TaskOfferDrawer from './offers/task-offer-drawer'
 
 import TaskStatusIcons from './task-status-icons'
@@ -61,6 +60,7 @@ import TaskStatusIcons from './task-status-icons'
 import Constants from '../../../../../consts'
 
 import TaskDeadlineDrawer from '../../../../design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
+import IssueContent from '../../../../design-library/organisms/layouts/issue-content/issue-content'
 
 const taskCover = require('images/task-cover.png')
 const inviteCover = require('images/funds.png')
@@ -440,27 +440,27 @@ class Task extends Component {
     const assign_id = this.props.match.params.interested_id
     const hash = this.props.location.hash
     const isOfferPage = this.props.match.path === '/profile/task/:id/offers'
-    
-    if(isOfferPage) {
+
+    if (isOfferPage) {
       this.setState({ assignDialog: true })
     }
 
-    if(hash === '#task-solution-dialog') {
+    if (hash === '#task-solution-dialog') {
       this.setState({ taskSolveDialog: true })
 
     }
-    if(hash === '#accept' || hash === '#reject') {
+    if (hash === '#accept' || hash === '#reject') {
       this.setState({ taskPaymentDialog: true })
-      
-      if(assign_id)  {
-        if(hash === '#accept') {
+
+      if (assign_id) {
+        if (hash === '#accept') {
           await this.props.actionAssign(id, assign_id, true)
           this.props.addNotification('actions.task.status.accept')
         }
-        if(hash === '#reject') {
+        if (hash === '#reject') {
           await this.props.actionAssign(id, assign_id, false)
           this.props.addNotification('actions.task.status.reject')
-        } 
+        }
       }
     }
   }
@@ -746,7 +746,7 @@ class Task extends Component {
           size='small'
           color='secondary'
           variant='contained'
-          disabled={this.props.task.data.paid || this.props.task.data.transfer_id || this.props.task.data.Transfer }
+          disabled={this.props.task.data.paid || this.props.task.data.transfer_id || this.props.task.data.Transfer}
           fullWidth
           style={{ marginRight: 5 }}
         >
@@ -755,21 +755,21 @@ class Task extends Component {
           </span>
           <BountyIcon style={{ marginLeft: 10 }} />
         </Button>
-          <Button
-            disabled={this.props.task.data.paid || this.props.task.data.status === 'closed'}
-            onClick={this.handleAssignDialogOpen}
-            size='small'
-            color='secondary'
-            variant='contained'
-            fullWidth
-            style={{ marginLeft: 5 }}
-          >
-            <span>
-              <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
-            </span>
-            <OfferIcon style={{ marginLeft: 10 }} />
-          </Button>
-        
+        <Button
+          disabled={this.props.task.data.paid || this.props.task.data.status === 'closed'}
+          onClick={this.handleAssignDialogOpen}
+          size='small'
+          color='secondary'
+          variant='contained'
+          fullWidth
+          style={{ marginLeft: 5 }}
+        >
+          <span>
+            <FormattedMessage id='this.props.ask.interested.offer' defaultMessage='Make an offer' />
+          </span>
+          <OfferIcon style={{ marginLeft: 10 }} />
+        </Button>
+
       </div>
     )
   }
@@ -866,110 +866,50 @@ class Task extends Component {
         )}
         <Grid container style={{ marginBottom: 4 }}>
           <Grid item xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
-            <Container fixed maxWidth='lg'>
-              <TaskHeader
-                taskPaymentDialog={this.taskPaymentDialog}
-                task={task}
-                user={this.props.user}
-                history={this.props.history}
-                project={project}
-                updateTask={this.props.updateTask}
-                fetchTask={this.props.fetchTask}
-                taskOwner={this.taskOwner()}
-                handleDeleteTask={this.handleDeleteTask}
-                reportTask={this.props.reportTask}
-              />
-              {this.props.logged ? 
-                (
-                  <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={task.completed}>
-                    <TaskPaymentForm
-                      classes={classes}
-                      match={this.props.match}
-                      dialog={this.props.dialog}
-                      task={task}
-                      plan={task.data.private ? 'private' : 'open source'}
-                      order={this.props.order}
-                      open={this.state.paymentForm}
-                      onClose={() => this.setState({ paymentForm: false })}
-                      user={this.props.user}
-                      openDialog={this.props.openDialog}
-                      closeDialog={this.props.closeDialog}
-                      addNotification={this.props.addNotification}
-                      updateTask={this.props.updateTask}
-                      createOrder={this.props.createOrder}
-                      fetchCustomer={this.props.fetchCustomer}
-                      customer={this.props.customer}
-                      listWallets={this.props.listWallets}
-                      wallets={this.props.wallets}
-                      fetchWallet={this.props.fetchWallet}
-                      wallet={this.props.wallet}
-                      fetchTask={this.props.fetchTask}
-                      syncTask={this.props.syncTask}
-                    />
-                  </ReactPlaceholder>
-               ) : (
+            <IssueContent
+              logged={this.props.logged.user.id}
+              task={task}
+              project={project}
+              user={this.props.user}
+              updateTask={this.props.updateTask}
+              reportTask={this.props.reportTask}
+              messageAuthor={this.props.messageAuthor}
+            />
+            {this.props.logged ?
+              (
+                <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={task.completed}>
+                  <TaskPaymentForm
+                    classes={classes}
+                    match={this.props.match}
+                    dialog={this.props.dialog}
+                    task={task}
+                    plan={task.data.private ? 'private' : 'open source'}
+                    order={this.props.order}
+                    open={this.state.paymentForm}
+                    onClose={() => this.setState({ paymentForm: false })}
+                    user={this.props.user}
+                    openDialog={this.props.openDialog}
+                    closeDialog={this.props.closeDialog}
+                    addNotification={this.props.addNotification}
+                    updateTask={this.props.updateTask}
+                    createOrder={this.props.createOrder}
+                    fetchCustomer={this.props.fetchCustomer}
+                    customer={this.props.customer}
+                    listWallets={this.props.listWallets}
+                    wallets={this.props.wallets}
+                    fetchWallet={this.props.fetchWallet}
+                    wallet={this.props.wallet}
+                    fetchTask={this.props.fetchTask}
+                    syncTask={this.props.syncTask}
+                  />
+                </ReactPlaceholder>
+              ) : (
                 <Collapse in={this.state.paymentForm}>
                   <div className={classes.mainBlock} style={{ marginBottom: 40 }}>
                     <LoginButton referer={this.props.location} includeForm />
                   </div>
                 </Collapse>
               )}
-              {task.data.description &&
-                <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={task.completed}>
-                  <Typography variant='subtitle1' style={{ marginBottom: 10, marginTop: 20 }}>
-                    <FormattedMessage id='task.info.description' defaultMessage='Description' />
-                  </Typography>
-                  <Typography variant='body1' style={{ marginBottom: 40 }}>
-                    <ShowMoreText
-                      lines={8}
-                      more={
-                        <Button
-                          size='small'
-                          variant='outlined'
-                        >
-                          <FormattedMessage id='task.description.more' defaultMessage='Show more' />
-                          <ExpandMore />
-                        </Button>
-                      }
-                      less={
-                        <Button
-                          size='small'
-                          variant='outlined'
-                        >
-                          <FormattedMessage id='task.description.less' defaultMessage='Show less' />
-                          <ExpandLess />
-                        </Button>
-                      }
-                    >
-                      {renderHTML(marked(task.data.description))}
-                    </ShowMoreText>
-
-                  </Typography>
-                </ReactPlaceholder>
-              }
-              {task.data.User &&
-                <React.Fragment>
-                  <Typography variant='subtitle1' style={{ marginBottom: 10, marginTop: 20 }}>
-                    <FormattedMessage id='task.info.authors' defaultMessage='Imported by' />
-                  </Typography>
-                  <AuthorList
-                    logged={this.props.logged}
-                    user={this.props.user}
-                    task={this.props.task}
-                    messageAuthor={this.props.messageAuthor}
-                    location={this.props.location}
-                    authors={
-                      [
-                        {
-                          name: task.data.User.name || 'anonymous',
-                          email: task.data.User.email,
-                          href: task.data.User.website
-                        }
-                      ]
-                    } />
-                </React.Fragment>
-              }
-            </Container>
           </Grid>
           <Grid style={{ backgroundColor: '#eee', padding: 25 }} item xs={12} sm={12} md={4}>
             {task.values && task.values.available > 0 &&

@@ -120,6 +120,7 @@
     "file-loader": "^3.0.1",
     "fontsource-roboto": "^4.0.0",
     "history": "^4.10.1",
+    "html-react-parser": "^5.2.3",
     "html-webpack-plugin": "^5.5.0",
     "human-format": "^0.10.1",
     "invert-color": "^2.0.0",
