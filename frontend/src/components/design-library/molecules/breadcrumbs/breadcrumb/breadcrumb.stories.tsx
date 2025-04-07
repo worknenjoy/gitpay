@@ -1,5 +1,6 @@
 import React from 'react';
 import { Breadcrumb } from './breadcrumb';
+import task from 'src/components/areas/public/features/task/task';
 
 export default {
   title: 'Design Library/Molecules/Breadcrumbs/Breadcrumb',
@@ -34,4 +35,24 @@ Default.args = {
   organization: {
     name: 'Organization 1',
   }
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  task: {
+    completed: false,
+    data: {},
+  },
+  user: {
+    completed: false,
+    data: {},
+  },
+  project: {
+    completed: false,
+    data: {},
+  },
+  organization: {
+    completed: false,
+    data: {},
+  },
 };
