@@ -407,7 +407,7 @@ passport.use(
       try {
         const user = await userExist(userAttributes)
         if (!user) return done(null, false)
-        if (user.provider) return done(null, false)
+        if (user.login_strategy === 'github') return done(null, false)
         if (user.verifyPassword(password, user.password)) {
           const token = jwt.sign(
             { email: user.email },
