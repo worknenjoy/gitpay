@@ -406,6 +406,8 @@ passport.use(
       }
       try {
         const user = await userExist(userAttributes)
+        console.log('🔒 User Login Attempt:');
+        console.log('✅ Logged User Info: ', user);
         if (!user) return done(null, false)
         if (user.login_strategy && user.login_strategy !== 'local') return done(null, false)
         if (user.verifyPassword(password, user.password)) {
