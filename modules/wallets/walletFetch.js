@@ -1,6 +1,5 @@
 const Promise = require('bluebird')
 const models = require('../../models')
-const { consoleTestResultHandler } = require('tslint/lib/test')
 
 module.exports = Promise.method(async function walletFetch(params) {
   const user = params.userId && await models.User.findOne({
