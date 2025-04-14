@@ -1,10 +1,46 @@
 import React from 'react';
+import { AppBar, Container, Grid } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Page, PageContent } from '../../../../../styleguide/components/Page';
+import ProfileSideBar from '../../../organisms/layouts/profile-sidebar/profile-sidebar'
+import AccountHeader from '../../../organisms/layouts/account-header/account-header';
+import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
+import { useHistory } from 'react-router-dom';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    backgroundColor: '#F7F7F7',
+  },
+  containerRoot: {
+    padding: theme.spacing(4),
+  },
+  menuContainer: {
+    marginBottom: 40,
+    marginRight: 20,
+    marginLeft: 20,
+    width: '100%'
+  },
+  secondaryBar: {
+    backgroundColor: theme.palette.primary.light
+  },
+  
+}));
 
 const PrivateBase = ({
-  classes,
+  children,
   user,
-  roles,
+  createTask,
+  signOut,
 }) => {
+  const classes = useStyles();
+  const history = useHistory();
+  const { data, completed } = user;
+
+  const handleSignOut = () => {
+    history.replace({ pathname: '/' })
+    signOut()
+  }
+
   return (
     <Page>
       <AppBar
@@ -15,31 +51,22 @@ const PrivateBase = ({
         elevation={0} />
       <PageContent>
         <Grid container className={classes.root} spacing={0}>
-          {user &&
-            <ProfileSideBar
-              classes={classes}
-              user={user}
-              onLogout={this.handleSignOut}
-              history={this.props.history}
-            />
-          }
-          <Grid item xs={12} md={10}>
+          <ProfileSideBar
+            user={user}
+          />
+          <Grid item xs={12} md={8}>
             <AccountHeader
-              classes={classes}
-              user={user}
-              onCreateTask={this.props.createTask}
-              history={this.props.history}
-              onLogout={this.handleSignOut}
+              user={data}
+              onCreateTask={createTask}
+              onLogout={handleSignOut}
             />
-            <Container maxWidth='lg'>
+            <Container maxWidth='lg' className={classes.containerRoot}>
               {children}
             </Container>
           </Grid>
         </Grid>
       </PageContent>
-      <BottomContainer
-        classes={classes}
-      />
+      <Bottom getInfo={() => {}} info={{ bounties: 0, tasks: 0, users: 0}} />
     </Page>
   );
 }
