@@ -39,6 +39,8 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
   const taskUser = data?.User
   const breadcrumbProject = data?.Project || project?.data
   const breadcrumbOrganization = breadcrumbProject?.Organization || organization
+  const { completed: projectCompleted } = project || {}
+  const { completed: organizationCompleted } = organization || {}
 
   const handleBackToTaskList = (e) => {
     e.preventDefault()
@@ -47,7 +49,7 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
 
   return (
     <div className={classes.breadcrumbRoot}>
-      <ReactPlaceholder type={'textRow'} row={1} ready={completed} showLoadingAnimation>
+      <ReactPlaceholder type={'textRow'} row={1} ready={completed || projectCompleted || organizationCompleted} showLoadingAnimation>
         <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />} fontSize='small'>
           {(user?.id && user?.id === taskUser?.id) ? (
             <Link href={'/#/profile/tasks/createdbyme'} color='inherit'>
