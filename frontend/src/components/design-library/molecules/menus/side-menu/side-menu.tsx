@@ -6,6 +6,7 @@ import {
   Logo,
   StyledButton
 } from '../../../organisms/layouts/topbar/TopbarStyles'
+import ReactPlaceholder from 'react-placeholder'
 
 const useStyles = makeStyles((theme) => ({
   sidePaper: {
@@ -114,6 +115,7 @@ interface MenuItemProps {
 }
 
 interface SideMenuProps {
+  completed: boolean;
   menuItems: {
     category?: React.ReactNode;
     items: MenuItemProps[];
@@ -121,6 +123,7 @@ interface SideMenuProps {
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({
+  completed,
   menuItems
 }) => {
   const classes = useStyles()
@@ -142,6 +145,12 @@ export const SideMenu: React.FC<SideMenuProps> = ({
               flex: 1,
               padding: 20
             }}>
+              <ReactPlaceholder
+                ready={completed}
+                type='text'
+                rows={6}
+                lineSpacing={32}
+              >
               <MenuList>
                 {menuItems.map((section, sectionIndex) => (
                   <div key={`section-${sectionIndex}`}>
@@ -177,7 +186,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                   </div>
                 ))}
               </MenuList>
-
+              </ReactPlaceholder>
             </div>
           </div>
         </div>

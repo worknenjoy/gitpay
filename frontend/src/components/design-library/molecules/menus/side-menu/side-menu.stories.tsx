@@ -14,45 +14,53 @@ export default {
 
 const Template = (args) => <SideMenu {...args} />;
 
+const menuItems = [
+  {
+    category: "Issues",
+    items: [
+      {
+        include: true,
+        onClick: () => console.log("My Issues"),
+        icon: <LibraryBooks />,
+        label: "My Issues",
+        selected: true,
+      },
+      {
+        include: true,
+        onClick: () => console.log("Explore Issues"),
+        icon: <Home />,
+        label: "Explore Issues"
+      },
+    ],
+  },
+  {
+    category: "Wallet",
+    items: [
+      {
+        include: true,
+        onClick: () => console.log("My Wallet"),
+        icon: <WalletIcon />,
+        label: "My Wallet"
+      },
+      {
+        include: true,
+        onClick: () => console.log("Payments"),
+        icon: <PaymentIcon />,
+        label: "Payments"
+      },
+    ],
+  },
+]
+
 
 export const Default = Template.bind({});
 Default.args = {
-  // Add default props here
-  menuItems: [
-    {
-      category: "Issues",
-      items: [
-        {
-          include: true,
-          onClick: () => console.log("My Issues"),
-          icon: <LibraryBooks />,
-          label: "My Issues",
-          selected: true,
-        },
-        {
-          include: true,
-          onClick: () => console.log("Explore Issues"),
-          icon: <Home />,
-          label: "Explore Issues"
-        },
-      ],
-    },
-    {
-      category: "Wallet",
-      items: [
-        {
-          include: true,
-          onClick: () => console.log("My Wallet"),
-          icon: <WalletIcon />,
-          label: "My Wallet"
-        },
-        {
-          include: true,
-          onClick: () => console.log("Payments"),
-          icon: <PaymentIcon />,
-          label: "Payments"
-        },
-      ],
-    },
-  ]
+  completed: true,
+  menuItems
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  completed: false,
+  menuItems
 };
