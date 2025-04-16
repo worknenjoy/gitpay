@@ -18,8 +18,8 @@ const fetchRolesRequested = () => {
   return { type: FETCH_ROLES_REQUESTED, completed: false }
 }
 
-const fetchRolesSuccess = (response) => {
-  return { type: FETCH_ROLES_SUCCESS, completed: true, response: response }
+const fetchRolesSuccess = (data) => {
+  return { type: FETCH_ROLES_SUCCESS, completed: true, data: data }
 }
 
 const fetchRolesError = (error) => {
@@ -55,7 +55,7 @@ const deleteRoleError = (error) => {
 const fetchRoles = () => {
   validToken()
   return (dispatch) => {
-    return dispatch(loggedIn()).then(user => {
+    
       dispatch(fetchRolesRequested())
       return axios
         .get(`${api.API_URL}/types/search`)
@@ -65,7 +65,7 @@ const fetchRoles = () => {
         .catch(error => {
           return dispatch(fetchRolesError(error))
         })
-    })
+    
   }
 }
 

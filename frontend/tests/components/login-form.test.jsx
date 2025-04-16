@@ -6,7 +6,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom';
-import LoginForm from '../../src/components/areas/profile/components/session/login-form';
+import LoginForm from '../../src/components/areas/private/components/session/login-form';
 
 // Instantiate router context
 const router = {

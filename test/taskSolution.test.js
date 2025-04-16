@@ -347,8 +347,6 @@ describe("Task Solution", () => {
         });
         const { body: user, headers } = loginResponse;
 
-        console.log('user', user)
-
         const task = await models.Task.create({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,

@@ -22,9 +22,10 @@ const Template = (args) => {
 export const Default = Template.bind({});
 Default.args = {
   // Add default args here if needed
-  user: {
+  loggedIn: {
     completed: true,
-    data: {
+    user: {
+
       email: 'user@test.com',
       username: 'Test User',
       picture_url: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
@@ -37,8 +38,12 @@ Default.args = {
           id: 2,
           name: 'maintainer',
         },
+        {
+          id: 3,
+          name: 'funding',
+        },
       ]
     },
-    error: null,
+
   },
 };

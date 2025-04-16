@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Wallets from '../components/areas/profile/features/wallets/wallets'
+import Wallets from '../components/areas/private/features/wallets/wallets'
 import { fetchCustomer } from '../actions/userActions'
 import { getUser } from '../common/selectors/user/getUser'
 import { createWallet, listWallets, fetchWallet } from '../actions/walletActions'

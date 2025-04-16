@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import CustomerDetails from '../components/areas/profile/features/account/features/account-customer/account-customer'
+import CustomerDetails from '../components/areas/private/features/account/features/account-customer/account-customer'
 import {
  fetchCustomer,
  createCustomer,

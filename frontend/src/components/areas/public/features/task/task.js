@@ -49,7 +49,7 @@ import OfferDrawer from '../../../../design-library/molecules/drawers/offer-draw
 import IssueActionsByRole from './components/issue-actions-by-role'
 import TopBarContainer from '../../../../../containers/topbar'
 import Bottom from '../../../../../containers/bottom'
-import LoginButton from '../../../profile/components/session/login-button'
+import LoginButton from '../../../private/components/session/login-button'
 import TaskPaymentForm from './task-payment-form'
 import TaskPayments from './task-payments'
 import TaskLevelSplitButton from './task-level-split-button'
@@ -867,7 +867,7 @@ class Task extends Component {
         <Grid container style={{ marginBottom: 4 }}>
           <Grid item xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
             <IssueContent
-              logged={this.props.logged.user.id}
+              logged={this.props.logged.data.id}
               task={task}
               project={project}
               user={this.props.user}
@@ -913,7 +913,7 @@ class Task extends Component {
           </Grid>
           <Grid style={{ backgroundColor: '#eee', padding: 25 }} item xs={12} sm={12} md={4}>
             {task.values && task.values.available > 0 &&
-              <div style={{ textAlign: 'center', marginTop: 40 }}>
+              <div style={{ textAlign: 'center', marginTop: 10 }}>
                 <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                   <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
                 </Typography>
@@ -927,7 +927,7 @@ class Task extends Component {
               </div>
             }
 
-            <div style={{ display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' }}>
+            <div style={{ display: 'flex', marginTop: 20, marginBottom: 20, justifyContent: 'space-evenly' }}>
               <div style={{ textAlign: 'center' }}>
                 <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                   <FormattedMessage id='task.publicy.label' defaultMessage='Publicy' />
@@ -968,7 +968,7 @@ class Task extends Component {
               }
 
             </div>
-            <div style={{ display: 'flex', marginTop: 40, marginBottom: 40, justifyContent: 'space-evenly' }}>
+            <div style={{ display: 'flex', marginTop: 20, marginBottom: 40, justifyContent: 'space-evenly' }}>
               {task.data.level && !this.taskOwner() &&
                 <div style={{ textAlign: 'center' }}>
                   <Typography variant='caption' style={{ textTransform: 'uppercase' }}>

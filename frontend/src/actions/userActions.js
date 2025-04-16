@@ -335,7 +335,7 @@ const createCustomer = (customerData) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(createUserCustomerRequested())
-    const customerId = getState().loggedIn.user.customer_id
+    const customerId = getState().loggedIn.data.customer_id
 
     if (customerId) {
       dispatch(addNotification('actions.customer.exist'))
@@ -428,7 +428,7 @@ const createAccount = (country) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(createUserAccountRequested())
-    const accountId = getState().loggedIn.user.account_id
+    const accountId = getState().loggedIn.data.account_id
 
     if (accountId) {
       dispatch(addNotification('actions.user.account.exist'))

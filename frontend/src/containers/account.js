@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Account from '../components/areas/profile/account'
+import Account from '../components/areas/private/account'
 import {
   fetchAccount,
   createAccount,

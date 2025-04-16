@@ -27,7 +27,7 @@ import {
 } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import blue from '@material-ui/core/colors/blue'
-import PaymentTypeIcon from '../../../profile/features/payments/payment-type-icon'
+import PaymentTypeIcon from '../../../private/features/payments/payment-type-icon'
 import InterestedUsers from './components/interested-users'
 import InterestedOffers from './components/interested-offers'
 import MessageAssignment from './assignment/messageAssignment'

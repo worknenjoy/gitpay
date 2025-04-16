@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import AccountDetails from '../components/areas/profile/features/account/features/account-details/account-details'
+import AccountDetails from '../components/areas/private/features/account/features/account-details/account-details'
 import {
   fetchAccount,
   createAccount,

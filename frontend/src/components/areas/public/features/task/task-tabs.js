@@ -10,7 +10,7 @@ import RegularCard from '../../../../design-library/molecules/cards/RegularCard'
 import Table from '../../../../Table/Table'
 import MomentComponent from 'moment'
 import AssignActions from './assignment/AssignActions'
-import PaymentTypeIcon from '../../../profile/features/payments/payment-type-icon'
+import PaymentTypeIcon from '../../../private/features/payments/payment-type-icon'
 
 import {
   Card,

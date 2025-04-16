@@ -14,10 +14,10 @@ import {
   UPDATE_USER_ERROR,
 } from '../actions/userActions'
 
-export const loggedIn = (state = { logged: false, user: {}, completed: true, error: {} }, action) => {
+export const loggedIn = (state = { logged: false, data: {}, completed: true, error: {} }, action) => {
   switch (action.type) {
     case LOGGED_IN_SUCCESS:
-      return { ...state, logged: action.logged, user: action.user, completed: action.completed }
+      return { ...state, logged: action.logged, data: action.data, completed: action.completed }
     case LOGGED_IN_ERROR:
       return { ...state, logged: action.logged, completed: action.completed, error: action.error }
     case LOGGED_IN_REQUESTED:
@@ -25,14 +25,14 @@ export const loggedIn = (state = { logged: false, user: {}, completed: true, err
     case UPDATE_USER_REQUESTED:
       return { ...state, completed: action.completed }
     case UPDATE_USER_SUCCESS:
-      return { ...state, user: action.data, completed: action.completed }
+      return { ...state, data: action.data, completed: action.completed }
     case UPDATE_USER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     case LOGOUT_REQUESTED:
     case LOGOUT_COMPLETED:
       return { ...state, logged: action.logged, completed: action.completed }
     case SEARCH_USER_SUCCESS:
-      return { ...state, user: action.user }
+      return { ...state, user: action.data }
     case SEARCH_USER_ERROR:
       return { ...state, error: action.error }
     default:

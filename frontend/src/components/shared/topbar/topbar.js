@@ -69,7 +69,7 @@ import messagesEn from '../../../translations/result/en.json'
 import messagesBrLocal from '../../../translations/generated/br.json'
 import messagesEnLocal from '../../../translations/generated/en.json'
 
-import LoginButton from '../../areas/profile/components/session/login-button'
+import LoginButton from '../../areas/private/components/session/login-button'
 import ImportIssueButton from './import-issue'
 
 import logo from 'images/gitpay-logo.png'

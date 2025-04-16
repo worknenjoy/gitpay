@@ -3,7 +3,7 @@ import CookieConsent from "react-cookie-consent";
 import { FormattedMessage } from 'react-intl';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import CookiePolicy from "../components/areas/profile/components/session/cookie-policy";
+import CookiePolicy from "../components/areas/private/components/session/cookie-policy";
 
 
 export const GITPAY_COOKIE_CONSENT = 'gitpay-cookie-policy-consent-v1'

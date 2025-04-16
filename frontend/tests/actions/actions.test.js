@@ -161,11 +161,11 @@ describe('actions', () => {
           const expectedActions = [
             { completed: false, logged: false, type: 'LOGGED_IN_REQUESTED' },
             { open: true, text: 'user.login.successfull', type: 'ADD_NOTIFICATION' },
-            { completed: true, logged: true, type: 'LOGGED_IN_SUCCESS', user: { id: 1 } },
+            { completed: true, logged: true, type: 'LOGGED_IN_SUCCESS', data: { id: 1 } },
             { completed: false, type: 'FETCH_PREFERENCES_REQUESTED' },
             { completed: true, type: 'FETCH_PREFERENCES_SUCCESS', language: 'br' }
           ]
-          const store = mockStore({ intl: { messages: {} }, preferences: { language: {} }, loggedIn: { logged: true, user: { id: 1 } } })
+          const store = mockStore({ intl: { messages: {} }, preferences: { language: {} }, loggedIn: { logged: true, data: { id: 1 } } })
           return store.dispatch(preferencesActions.fetchPreferences(1)).then(() => {
             // return of async actions
             expect(store.getActions()).toEqual(expectedActions)
@@ -249,11 +249,11 @@ describe('actions', () => {
         const expectedActions = [
           { completed: false, logged: false, type: 'LOGGED_IN_REQUESTED' },
           // { open: true, text: 'user.login.successfull', type: 'ADD_NOTIFICATION' },
-          { completed: true, logged: true, type: 'LOGGED_IN_SUCCESS', user: { id: 2 } },
+          { completed: true, logged: true, type: 'LOGGED_IN_SUCCESS', data: { id: 2 } },
           { completed: false, type: 'FETCH_ORGANIZATIONS_REQUESTED' },
           { completed: true, type: 'FETCH_ORGANIZATIONS_SUCCESS', organizations: { 'organizations': [{ 'name': 'test org' }] } }
         ]
-        const store = mockStore({ intl: { messages: {} }, organizations: { 'organizations': [{ 'name': 'test org' }] }, loggedIn: { logged: true, user: { id: 2 } } })
+        const store = mockStore({ intl: { messages: {} }, organizations: { 'organizations': [{ 'name': 'test org' }] }, loggedIn: { logged: true, data: { id: 2 } } })
         return store.dispatch(organizationsActions.fetchOrganizations(2)).then(() => {
           // return of async actions
           expect(store.getActions()).toEqual(expectedActions)

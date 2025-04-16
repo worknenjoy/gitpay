@@ -37,7 +37,7 @@ import Introduction from '../../../../design-library/molecules/content/introduct
 import PickupTagList from '../../../../design-library/molecules/lists/pickup-tag-list/pickup-tag-list'
 import PricePlan from '../../../../design-library/organisms/forms/price-plan-form/price-plan'
 
-import LoginButton from '../../../profile/components/session/login-button'
+import LoginButton from '../../../private/components/session/login-button'
 
 import logoGithub from 'images/github-logo-black.png'
 import logoBitbucket from 'images/bitbucket-logo-blue.png'
