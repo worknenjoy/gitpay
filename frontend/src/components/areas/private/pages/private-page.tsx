@@ -25,6 +25,8 @@ const PrivatePage = ({
   addNotification,
   deleteUser,
   signOut,
+  info,
+  getInfo,
 }) => {
   const history = useHistory()
 
@@ -41,6 +43,12 @@ const PrivatePage = ({
       createTask={createTask}
       signOut={signOut}
       user={user}
+      bottomProps={
+        {
+          info: info.data,
+          getInfo,
+        }
+      }
     >
       <HashRouter>
         <Switch>

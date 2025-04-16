@@ -7,6 +7,7 @@ import AccountHeader from '../../../organisms/layouts/account-header/account-hea
 import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
 import { useHistory } from 'react-router-dom';
 import ProfileHeader from '../../../molecules/sections/profile-header/profile-header';
+import { info } from 'console';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -32,7 +33,8 @@ const PrivateBase = ({
   user,
   createTask,
   signOut,
-  profileHeaderProps = undefined
+  profileHeaderProps = undefined,
+  bottomProps = { info: { bounties: 0, users: 0, tasks: 0 }, getInfo: () => {} },
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -76,7 +78,7 @@ const PrivateBase = ({
           </Grid>
         </Grid>
       </PageContent>
-      <Bottom getInfo={() => {}} info={{ bounties: 0, tasks: 0, users: 0}} />
+      <Bottom { ...bottomProps } />
     </Page>
   );
 }
