@@ -11,16 +11,7 @@ const Template = (args) => <PrivateBase {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: (
-    <div>
-      <Typography variant='h4' gutterBottom>
-        Private Base Template
-      </Typography>
-      <Typography variant='body1'>
-        This is a private base template example.
-      </Typography>
-    </div>
-  ),
+  children: <Typography variant="body1">Private Base content</Typography>,
   createTask: () => console.log('Create Task'),
   signOut: () => console.log('Sign Out'),
   user: {

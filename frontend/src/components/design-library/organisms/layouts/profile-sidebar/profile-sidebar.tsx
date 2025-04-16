@@ -18,7 +18,7 @@ const ProfileSidebar = ({
 }) => {
   const [selected, setSelected] = useState(0)
   const { data, completed } = user
-  const userTypes = data.Types && data.Types.map(t => t.name)
+  const userTypes = data?.Types?.map(t => t.name)
   const history = useHistory()
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const ProfileSidebar = ({
   }, [history.location.pathname])
 
   return (
-    <Grid item xs={ 12 } md={ 4 }>
+    <Grid item xs={ 12 } md={ 2 }>
       <SideMenu
         completed={ completed }
         menuItems={

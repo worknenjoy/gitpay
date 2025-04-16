@@ -20,9 +20,9 @@ import mainStyles from '../../../../../styleguide/styles/style'
 import { Container, BaseFooter, SubscribeFromWrapper } from './FooterStyles'
 
 import BottomSectionDialog from '../../../../areas/public/features/welcome/components/BottomSectionDialog'
-import PrivacyPolicy from '../../../../areas/profile/components/session/privacy-policy'
-import TermsOfService from '../../../../areas/profile/components/session/terms-of-service'
-import CookiePolicy from '../../../../areas/profile/components/session/cookie-policy'
+import PrivacyPolicy from '../../../../areas/private/components/session/privacy-policy'
+import TermsOfService from '../../../../areas/private/components/session/terms-of-service'
+import CookiePolicy from '../../../../areas/private/components/session/cookie-policy'
 
 const logoCompleteGray = require('images/logo-complete-gray.png')
 const logoWorknEnjoy = require('images/worknenjoy-logo.png')

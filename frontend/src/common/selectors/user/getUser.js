@@ -1,1 +1,1 @@
-export const getUser = (state) => state.loggedIn.user
+export const getUser = (state) => state.loggedIn.data

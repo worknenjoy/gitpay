@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import ProfileHead from '../components/areas/profile/components/profile-head'
+import ProfileHead from '../components/areas/private/components/profile-head'
 import { getUserTypes } from '../actions/profileActions'
 
 const mapStateToProps = state => {

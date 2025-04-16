@@ -71,7 +71,7 @@ const loggedInRequested = () => {
 }
 
 const loggedInSuccess = user => {
-  return { type: LOGGED_IN_SUCCESS, logged: true, completed: true, user: user }
+  return { type: LOGGED_IN_SUCCESS, logged: true, completed: true, data: user }
 }
 
 const loggedInError = error => {

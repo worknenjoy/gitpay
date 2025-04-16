@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { Theme, createStyles, makeStyles, withStyles } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import { BillingInfoCard } from '../../../molecules/cards/billing-info-card/billing-info-card'
 import ReactPlaceholder from 'react-placeholder';
-import { countryCodesFull } from '../../../../areas/profile/shared/country-codes'
+import { countryCodesFull } from '../../../../areas/private/shared/country-codes'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import {
   Alert, AlertTitle

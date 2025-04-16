@@ -16,7 +16,7 @@ import {
   DialogTitle
 } from '@material-ui/core'
 
-import LoginButton from '../../../profile/components/session/login-button'
+import LoginButton from '../../../private/components/session/login-button'
 
 const useStyles = makeStyles((theme) => ({
   root: {

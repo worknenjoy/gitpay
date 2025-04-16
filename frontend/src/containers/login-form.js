@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { registerUser, forgotPassword, resetPassword } from '../actions/loginActions'
-import LoginForm from '../components/areas/profile/components/session/login-form'
+import LoginForm from '../components/areas/private/components/session/login-form'
 
 const mapStateToProps = (state, props) => {
   return {

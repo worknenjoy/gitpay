@@ -6,6 +6,7 @@ import ProfileSideBar from '../../../organisms/layouts/profile-sidebar/profile-s
 import AccountHeader from '../../../organisms/layouts/account-header/account-header';
 import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
 import { useHistory } from 'react-router-dom';
+import ProfileHeader from '../../../molecules/sections/profile-header/profile-header';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -31,6 +32,7 @@ const PrivateBase = ({
   user,
   createTask,
   signOut,
+  profileHeaderProps = undefined
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -54,13 +56,21 @@ const PrivateBase = ({
           <ProfileSideBar
             user={user}
           />
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={10}>
+            
             <AccountHeader
               user={data}
               onCreateTask={createTask}
               onLogout={handleSignOut}
             />
+            
             <Container maxWidth='lg' className={classes.containerRoot}>
+            { profileHeaderProps && (
+              <ProfileHeader
+                title={profileHeaderProps.title}
+                subtitle={profileHeaderProps.subtitle}
+              />
+            )}
               {children}
             </Container>
           </Grid>

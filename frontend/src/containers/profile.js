@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Profile from '../components/areas/profile/components/profile'
+import PrivatePage from '../components/areas/private/pages/private-page'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { logOut, changePassword } from '../actions/loginActions'
 import { listTasks, filterTasks, createTask } from '../actions/taskActions'
@@ -8,15 +8,13 @@ import { updateUser, deleteUser, resendActivationEmail } from '../actions/userAc
 import { fetchOrganizations, createOrganizations, updateOrganization } from '../actions/organizationsActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
 import { getFilteredTasks } from '../selectors/tasks'
-import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn.logged,
-    user: getUser(state),
+    user: state.loggedIn,
     preferences: state.preferences,
     tasks: getFilteredTasks(state),
-    roles: state.roles,
     organizations: state.organizations.organizations,
     completed: state.loggedIn.completed
   }
@@ -25,9 +23,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
-    fetchRoles: () => dispatch(fetchRoles()),
-    createRoles: (rolesData) => dispatch(createRoles(rolesData)),
-    deleteRoles: (rolesData) => dispatch(deleteRoles(rolesData)),
     fetchOrganizations: (userId) => dispatch(fetchOrganizations(userId)),
     createOrganizations: (org) => dispatch(createOrganizations(org)),
     updateOrganization: (org) => dispatch(updateOrganization(org)),
@@ -44,4 +39,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(PrivatePage)

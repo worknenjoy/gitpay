@@ -42,21 +42,21 @@ export default function ProfileAccountMenu({
             onClick={handleClick}
             size="small"
           >
-            { user.picture_url
+            { user?.picture_url
               ? <Avatar
                 alt={ user.username || '' }
                 src={ user.picture_url }
               />
-              : <Avatar alt={ user.username || '' } src=''>
-                { user.username ? nameInitials(user.username) : <Person /> }
+              : <Avatar alt={ user?.username || '' } src=''>
+                { user?.username ? nameInitials(user.username) : <Person /> }
               </Avatar>
             }
             <div style={ { textAlign: 'left', marginLeft: 10, color: '#1c1c1f' } }>
               <Typography variant='body1' color='text'>
-                { user.username }
+                { user?.username }
               </Typography>
               <Typography variant='body2' style={ { fontSize: 8, color: '#666' } }>
-                { user.email }
+                { user?.email }
               </Typography>
             </div>
             <MoreVert style={{marginLeft: 5}} />
@@ -98,7 +98,7 @@ export default function ProfileAccountMenu({
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={(e) => history.push(`/users/${user.id}`)} style={{margin: 5}}>
+        <MenuItem onClick={(e) => history.push(`/users/${user?.id}`)} style={{margin: 5}}>
           <Avatar>
             <Web width={12} /> 
           </Avatar>

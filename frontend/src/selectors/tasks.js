@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 
 const getVisibilityFilter = (state) => state.tasks.filterType
 export const getTasks = (state) => state.tasks
-export const getUser = (state) => state.loggedIn.user
+export const getUser = (state) => state.loggedIn.data
 export const getProject = (state) => state.project
 export const getOrganization = (state) => state.organization
 

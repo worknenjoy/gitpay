@@ -226,7 +226,6 @@ describe("tasks", () => {
     xit('should create a new task with one member', (done) => {
       register(agent).then(user => {
         login(agent).then(res => {
-          //console.log('user data', res.headers.authorization, res.body.id)
 
           agent
             .post('/tasks/create/')

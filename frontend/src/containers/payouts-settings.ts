@@ -2,11 +2,12 @@ import { connect } from 'react-redux';
 import { updateUser, fetchAccount, fetchAccountCountries, deleteUser, createBankAccount, createAccount, updateAccount, updateBankAccount, getBankAccount } from '../actions/userActions';
 import { changePassword } from '../actions/loginActions'
 import { addNotification } from '../actions/notificationActions';
-import PayoutSettings from '../components/areas/profile/features/payouts/payout-settings';
+import PayoutSettings from '../components/areas/private/features/payouts/payout-settings';
+import { getUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any) => {
   return {
-    user: state.loggedIn,
+    user: getUser(state),
     account: state.account,
     bankAccount: state.bankAccount,
     countries: state.countries

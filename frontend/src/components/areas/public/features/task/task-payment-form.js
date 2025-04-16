@@ -5,8 +5,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
  
 import PaymentDrawer from '../../../../design-library/molecules/drawers/payment-drawer/payment-drawer'
 
-import PaymentDialog from '../../../profile/features/payments/payment-dialog'
-import PaypalPaymentDialog from '../../../profile/features/payments/paypal-payment-dialog'
+import PaymentDialog from '../../../private/features/payments/payment-dialog'
+import PaypalPaymentDialog from '../../../private/features/payments/paypal-payment-dialog'
 import PaymentMethodInvoiceTab from './payment/methods/invoice/payment-method-invoice-tab'
 import PaymentMethodWalletTab from './payment/methods/wallet/payment-method-wallet-tab'
 
