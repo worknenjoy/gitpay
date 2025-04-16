@@ -76,7 +76,7 @@ describe('User Actions', () => {
       { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.create.success', open: true },
       { type: types.CREATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
     ]
-    const store = mockStore({ loggedIn: { user: { account_id: null } }, intl: { messages: {} } })
+    const store = mockStore({ loggedIn: { data: { account_id: null } }, intl: { messages: {} } })
 
     return store.dispatch(actions.createAccount('US')).then(() => {
       const actions = store.getActions()
@@ -97,7 +97,7 @@ describe('User Actions', () => {
       { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.create.error', open: true },
       { type: types.CREATE_USER_ACCOUNT_ERROR, completed: true, error: new Error('Request failed with status code 500') }
     ]
-    const store = mockStore({ loggedIn: { user: { account_id: null } }, intl: { messages: {} } })
+    const store = mockStore({ loggedIn: { data: { account_id: null } }, intl: { messages: {} } })
 
     return store.dispatch(actions.createAccount('US')).then(() => {
       const actions = store.getActions()
