@@ -96,13 +96,14 @@ const CustomerDetails = ({
   classes
 }) => {
   const [customerData, setCustomerData] = useState({})
+  const { data } = user
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!e.target) return false
     let formData = {
       name: e.target['name'].value,
-      email: user.email,
+      email: data.email,
       address: {
         city: e.target['address[city]'].value,
         country: e.target['address[country]'].value,
@@ -112,12 +113,12 @@ const CustomerDetails = ({
         state: e.target['address[state]'].value
       },
       metadata: {
-        user_id: user.id,
+        user_id: data.id,
         //customer_type: e.target['customer_type'].value
       }
     }
     setCustomerData(formData)
-    if (!user.customer_id) {
+    if (!data.customer_id) {
       await createCustomer(formData)
     } else {
       await updateCustomer(formData)
@@ -133,11 +134,11 @@ const CustomerDetails = ({
   }
 
   useEffect(() => {
-    if (user.id) {
-      const userId = user.id
+    if (data.id) {
+      const userId = data.id
       fetchCustomer(userId)
     }
-  }, [user, createCustomer, updateCustomer])
+  }, [data, createCustomer, updateCustomer])
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
