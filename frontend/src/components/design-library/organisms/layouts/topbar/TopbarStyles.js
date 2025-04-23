@@ -148,7 +148,7 @@ export const RightSide = styled(Side)`
 `
 
 export const Logo = styled.img`
-  width: 120px;
+  width: 96px;
 
   ${media.phone`width: 100px !important;`}
 `
@@ -158,10 +158,6 @@ export const StyledButton = styled(Button)`
   font-size: 12px;
   cursor: pointer;
   margin-left: 10px !important;
-
-  @media (max-width: 37.5em) {
-    margin-bottom: 20px !important;
-  }
 `
 
 export const LogoButton = styled(StyledButton)`

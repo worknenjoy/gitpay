@@ -3,11 +3,11 @@ import { updateUser, fetchAccount, fetchAccountCountries, deleteUser, createBank
 import { changePassword } from '../actions/loginActions'
 import { addNotification } from '../actions/notificationActions';
 import PayoutSettings from '../components/areas/private/features/payouts/payout-settings';
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
     account: state.account,
     bankAccount: state.bankAccount,
     countries: state.countries

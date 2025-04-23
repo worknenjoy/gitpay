@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, HashRouter, useHistory } from 'react-router-dom'
-import { useIntl } from 'react-intl';
 import PrivateBase from '../../../design-library/templates/base/private-base/private-base';
 import ProfileOptions from '../features/dashboard/profile-options'
 import { UserAccount } from '../features/account/user-account'
@@ -12,6 +11,7 @@ import WalletsContainer from '../../../../containers/wallets'
 import PayoutsContainer from '../../../../containers/payouts'
 import TaskListProfile from '../../../../containers/task-list-profile'
 import TaskContainer from '../../../../containers/task'
+import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
 
 const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
 const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBottomBar {...props} />
@@ -171,6 +171,10 @@ const PrivatePage = ({
           >
             <TaskListProfileProjects noTopBar noBottomBar />
           </Route>
+          <Route
+            
+            path={'/profile/payout-settings'} component={PayoutSettings}
+          />
         </Switch>
       </HashRouter>
     </PrivateBase>

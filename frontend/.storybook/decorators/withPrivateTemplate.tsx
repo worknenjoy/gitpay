@@ -1,0 +1,29 @@
+// .storybook/decorators/withProfileTemplate.tsx
+import React from 'react';
+import PrivateBase from '../../src/components/design-library/templates/base/private-base/private-base';
+import PayoutSettings from '../../src/components/design-library/pages/private/payout-settings/payout-settings';
+
+export const withProfileTemplate = (Story: any, context: any) => {
+  const { user, profileHeaderProps } = context.args;
+  
+  return (
+    <PrivateBase
+      createTask={() => {}}
+      signOut={() => {}}
+      user={user}
+      profileHeaderProps={profileHeaderProps}
+    >
+      <Story />
+    </PrivateBase>
+  )
+};
+
+export const withProfilePayoutSettingsTemplate = (Story: any, context: any) => {
+  const { user, profileHeaderProps } = context.args;
+  
+  return ( 
+    <PayoutSettings>
+      <Story />
+    </PayoutSettings>
+  )
+};

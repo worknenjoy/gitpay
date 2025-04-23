@@ -8,7 +8,8 @@ import {
   Payment as PaymentIcon,
   AccountBalance as TransferIcon,
   SwapHoriz as PayoutIcon,
-  Public as ExploreIcon
+  Public as ExploreIcon,
+  AccountBox
 } from '@material-ui/icons'
 import { SideMenu } from '../../../design-library/molecules/menus/side-menu/side-menu'
 
@@ -106,6 +107,32 @@ const ProfileSidebar = ({
                   label: <FormattedMessage id='account.profile.payout.list' defaultMessage='Payouts' />,
                   selected: selected === 6
                 }
+              ]
+            },
+            {
+              category: <FormattedMessage id='account.profile.sidemenu.section.account' defaultMessage='Account' />,
+              items: [
+                {
+                  include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                  onClick: () => history.push('/profile/payments'),
+                  icon: <AccountBox />,
+                  label: <FormattedMessage id='account.profile.account.settings' defaultMessage='Account settings' />,
+                  selected: selected === 3
+                },
+                {
+                  include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                  onClick: () => history.push('/profile/wallets'),
+                  icon: <WalletIcon />,
+                  label: <FormattedMessage id='account.profile.payout.settings' defaultMessage='Payout settings' />,
+                  selected: selected === 4
+                },
+                {
+                  include: userTypes && userTypes?.includes('maintainer'),
+                  onClick: () => history.push('/profile/transfers'),
+                  icon: <TransferIcon />,
+                  label: <FormattedMessage id='account.profile.transfer.list' defaultMessage='Billing information' />,
+                  selected: selected === 5
+                },
               ]
             }
           ]

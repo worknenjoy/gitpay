@@ -107,6 +107,7 @@ router.put('/auth/change-password', controllers.changePassword)
 
 router.use('/user/', secure)
 
+router.get('/user', controllers.userFetch)
 router.post('/user/customer', controllers.customerCreate)
 router.get('/user/customer', controllers.customer)
 router.put('/user/customer', controllers.customerUpdate)

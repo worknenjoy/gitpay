@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import Wallets from '../components/areas/private/features/wallets/wallets'
 import { fetchCustomer } from '../actions/userActions'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 import { createWallet, listWallets, fetchWallet } from '../actions/walletActions'
 import { createWalletOrder, listWalletOrders, fetchWalletOrder } from '../actions/walletOrderActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
     customer: state.customer,
     wallets: state.wallets,
     wallet: state.wallet,

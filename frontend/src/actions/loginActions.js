@@ -1,6 +1,7 @@
 import api from '../consts'
 import axios from 'axios'
 import Auth from '../modules/auth'
+import { validToken } from './helpers'
 import { addNotification } from './notificationActions'
 
 export const LOGGED_IN_REQUESTED = 'LOGGED_IN_REQUESTED'
@@ -25,6 +26,10 @@ export const AUTHORIZED_GITHUB_ERROR = 'AUTHORIZED_GITHUB_ERROR'
 export const DISCONNECT_GITHUB_REQUESTED = 'DISCONNECT_GITHUB_REQUESTED'
 export const DISCONNECT_GITHUB_SUCCESS = 'DISCONNECT_GITHUB_SUCCESS'
 export const DISCONNECT_GITHUB_ERROR = 'DISCONNECT_GITHUB_ERROR'
+
+export const FETCH_LOGGED_USER_REQUESTED = 'FETCH_LOGGED_IN_USER_REQUESTED'
+export const FETCH_LOGGED_USER_SUCCESS = 'FETCH_LOGGED_IN_USER_SUCCESS'
+export const FETCH_LOGGED_USER_ERROR = 'FETCH_LOGGED_IN_USER_ERROR'
 
 /*
 *
@@ -70,8 +75,8 @@ const loggedInRequested = () => {
   return { type: LOGGED_IN_REQUESTED, logged: false, completed: false }
 }
 
-const loggedInSuccess = user => {
-  return { type: LOGGED_IN_SUCCESS, logged: true, completed: true, data: user }
+const loggedInSuccess = data => {
+  return { type: LOGGED_IN_SUCCESS, logged: true, completed: true, data }
 }
 
 const loggedInError = error => {
@@ -121,6 +126,42 @@ export const loggedIn = () => {
   }
 }
 
+/*
+  *
+  * Fetch logged in user
+  *
+  */
+
+export const fetchLoggedUserRequested = () => {
+  return { type: FETCH_LOGGED_USER_REQUESTED, completed: false }
+}
+
+export const fetchLoggedUserSuccess = data => {
+  return { type: FETCH_LOGGED_USER_SUCCESS, completed: true, data }
+}
+
+export const fetchLoggedUserError = error => {
+  return { type: FETCH_LOGGED_USER_ERROR, completed: true, error: error }
+}
+export const fetchLoggedUser = () => {
+  validToken();
+  return (dispatch, getState) => {
+    dispatch(fetchLoggedUserRequested())
+    return axios
+      .get(api.API_URL + '/user', )
+      .then(response => {
+        if (response.data) {
+          return dispatch(fetchLoggedUserSuccess(response.data))
+        }
+        return dispatch(fetchLoggedUserError({}))
+      })
+      .catch(error => {
+        const errorCode = error.response.data.error
+        dispatch(addNotification(errorCode || 'user.fetch.error'))
+        return dispatch(fetchLoggedUserError(error))
+      })
+  }
+}
 /*
  *
  * Register

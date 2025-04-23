@@ -1,7 +1,7 @@
 import api from '../consts'
 import axios from 'axios'
 import { addNotification } from './notificationActions'
-import { logOut } from './loginActions'
+import { logOut, fetchLoggedUser } from './loginActions'
 import { validToken } from './helpers'
 import { StripeErrorMessages } from './messages/stripe-error-messages'
 
@@ -444,6 +444,7 @@ const createAccount = (country) => {
           return dispatch(createUserAccountError({ message: 'actions.user.account.create.error' }))
         }
         dispatch(addNotification('actions.user.account.create.success'))
+        dispatch(fetchLoggedUser());
         return dispatch(createUserAccountSuccess(account))
       })
       .catch(error => {

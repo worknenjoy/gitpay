@@ -32,16 +32,12 @@ export default function BankAccountSettings({
   countries,
   fetchAccount,
   fetchAccountCountries,
-  updateUser,
-  changePassword,
-  addNotification,
   createAccount,
   updateAccount,
   bankAccount,
   createBankAccount,
   updateBankAccount,
   getBankAccount,
-  deleteUser
 }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);

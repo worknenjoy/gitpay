@@ -4,11 +4,11 @@ import ProjectList from '../components/design-library/molecules/cards/project-ca
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { fetchProject, listProjects } from '../actions/projectActions'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, props) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
     tasks: getFilteredTasks(state),
     project: getProject(state),
     projects: state.projects

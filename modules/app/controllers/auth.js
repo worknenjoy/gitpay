@@ -283,6 +283,17 @@ exports.userUpdate = (req, res) => {
     })
 }
 
+exports.userFetch = (req, res) => {
+  const userId = req.user.id
+  user.userFetch(userId).then((data) => {
+    res.status(200).send(data)
+  }).catch(error => {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(400).send(error)
+  })
+}
+
 exports.accountUpdate = (req, res) => {
   req.body.id = req.user.id
   user.userAccountUpdate(req.body)

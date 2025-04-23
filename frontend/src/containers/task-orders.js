@@ -2,11 +2,11 @@ import { connect } from 'react-redux'
 import TaskOrders from '../components/areas/public/features/task/task-orders'
 import { addNotification } from '../actions/notificationActions'
 import { changeTaskTab } from '../actions/taskActions'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
     task: state.task
   }
 }

@@ -9,14 +9,14 @@ import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrd
 import { fetchWallet, listWallets } from '../actions/walletActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     completed: state.loggedIn.completed,
     logged: state.loggedIn,
     dialog: state.dialog,
-    user: getUser(state),
+    user: getUserData(state),
     task: getTaskOrdersByFilter(state),
     tasks: getFilteredTasks(state),
     project: getProject(state.project),

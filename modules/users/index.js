@@ -2,6 +2,7 @@ const userExists = require('./userExists')
 const userSearch = require('./userSearch')
 const userBuilds = require('./userBuilds')
 const userUpdate = require('./userUpdate')
+const userFetch = require('./userFetch')
 const userChangePassword = require('./userChangePassword')
 const userCustomer = require('./userCustomer')
 const userCustomerCreate = require('./userCustomerCreate')
@@ -24,6 +25,7 @@ module.exports = {
   userSearch: userSearch,
   userBuilds: userBuilds,
   userUpdate: userUpdate,
+  userFetch: userFetch,
   userChangePassword: userChangePassword,
   userAccount: userAccount,
   userAccountCountries: userAccountCountries,
