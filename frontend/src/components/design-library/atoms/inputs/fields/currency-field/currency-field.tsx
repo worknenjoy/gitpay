@@ -26,7 +26,7 @@ const CurrencyField = ({ countries, disabled, onChange }) => {
           <option value={countries.data.default_currency}>
             {`${countryCurrencies.find(c => c.code.toLowerCase() === default_currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === default_currency)?.symbol}` || default_currency}
           </option>
-          {countries.data?.supported_bank_account_currencies &&
+          {supported_bank_account_currencies &&
             Object.keys(supported_bank_account_currencies).map((currency, index) => (
               <option key={currency} value={currency}>
                 {`${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.symbol}` || currency}

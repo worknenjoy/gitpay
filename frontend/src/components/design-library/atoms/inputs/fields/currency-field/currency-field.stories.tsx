@@ -13,17 +13,16 @@ Default.args = {
   countries: {
     completed: true,
     data: {
-      default_currency: 'USD',
+      default_currency: 'usd',
       supported_bank_account_currencies: {
-        USD: 'USD',
-        EUR: 'EUR',
-        GBP: 'GBP',
-        JPY: 'JPY',
-        AUD: 'AUD',
-
+        usd: 'usd',
+        eur: 'eur',
+        gbp: 'gbp',
+        jpy: 'jpy',
+        aud: 'aud',
       },
     },
-  }
+  },
 };
 
 export const Disabled = Template.bind({});

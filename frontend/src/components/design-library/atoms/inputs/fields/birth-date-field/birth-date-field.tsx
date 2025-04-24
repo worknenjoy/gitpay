@@ -1,0 +1,44 @@
+import { FormControl, Grid, Select, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import Field from '../field/field';
+
+const BirthDateField = ({ day, month, year }) => {
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={12}>
+        <Typography color='textPrimary' style={{ marginBottom: -20, marginTop: 10 }}>
+          <FormattedMessage id='account-details-personal-information-birth-date' defaultMessage='Birth date' />
+        </Typography>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Field name='individual[dob][day]' label='Day' type='number' defaultValue={day} />
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <FormControl style={{ width: '100%' }}>
+          <Select
+            autoWidth
+            native
+            name='individual[dob][month]'
+            style={{ marginRight: 8, marginTop: 16, width: '100%' }}
+          >
+            <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
+            {[[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
+              (item, i) => {
+                return (
+                  <option selected={!!(item[0] === month)} key={i} value={item[0]}>
+                    {`${item[1]}`}
+                  </option>
+                )
+              }
+            )}
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Field name='individual[dob][year]' label='Year' type='number' defaultValue={year} />
+      </Grid>
+    </Grid>
+  );
+}
+export default BirthDateField;
