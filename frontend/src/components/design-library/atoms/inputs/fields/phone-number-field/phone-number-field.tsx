@@ -3,13 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import TextMaskCustom from './text-mask-custom';
 import Field from '../field/field';
 
-const PhoneNumberField = ({ name = 'individual[phone]', phone }) => {
+const PhoneNumberField = ({ phone }) => {
   return (
     <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
       {
         (msg) => (
           <Field
-            name={name}
+            name={'phone_number'}
             label={msg}
             defaultValue={ phone }
             help

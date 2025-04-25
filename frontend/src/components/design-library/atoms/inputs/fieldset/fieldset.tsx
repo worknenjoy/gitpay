@@ -1,9 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder';
-import { countries } from 'src/reducers/accountReducer';
 
 const useStyles = makeStyles((theme) => ({
   legend: {
@@ -13,14 +11,14 @@ const useStyles = makeStyles((theme) => ({
   },
   fieldset: {
     border: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: 20
+    margin: '16px 0',
   }
 }));
 
-const Fieldset = ({ children, completed, legend }) => {
+const Fieldset = ({ children, completed, legend, rows = 1 }) => {
   const classes = useStyles();
   return (
-    <fieldset className={classes.fieldset} style={{ height: 108, display: 'flex', alignItems: 'center' }}>
+    <fieldset className={classes.fieldset}>
       <legend className={classes.legend}>
         <Typography>
           {legend}
@@ -29,8 +27,10 @@ const Fieldset = ({ children, completed, legend }) => {
       <ReactPlaceholder
         showLoadingAnimation
         type='text'
-        rows={1}
+        rows={rows}
         ready={completed}
+        lineSpacing={24}
+        style={{ width: '95%', padding: 12 }}
       >
         {children}
       </ReactPlaceholder>

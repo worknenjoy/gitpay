@@ -12,14 +12,14 @@ const BirthDateField = ({ day, month, year }) => {
         </Typography>
       </Grid>
       <Grid item xs={12} md={4}>
-        <Field name='individual[dob][day]' label='Day' type='number' defaultValue={day} />
+        <Field name='dob_day' label='Day' type='number' defaultValue={day} />
       </Grid>
       <Grid item xs={12} md={4}>
         <FormControl style={{ width: '100%' }}>
           <Select
             autoWidth
             native
-            name='individual[dob][month]'
+            name='dob_month'
             style={{ marginRight: 8, marginTop: 16, width: '100%' }}
           >
             <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
@@ -36,7 +36,7 @@ const BirthDateField = ({ day, month, year }) => {
         </FormControl>
       </Grid>
       <Grid item xs={12} md={4}>
-        <Field name='individual[dob][year]' label='Year' type='number' defaultValue={year} />
+        <Field name='dob_year' label='Year' type='number' defaultValue={year} />
       </Grid>
     </Grid>
   );

@@ -2,7 +2,6 @@ import React from 'react';
 import Fieldset from '../../fieldset/fieldset';
 import { Typography } from '@material-ui/core';
 import { countryCodes } from '../../../../../areas/private/shared/country-codes';
-import { account } from 'src/reducers/accountReducer';
 
 const CountryField = ({ country, completed }) => {
   return (
@@ -11,9 +10,9 @@ const CountryField = ({ country, completed }) => {
       completed={completed}
       children={
         <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-          <img width='48' src={require(`images/countries/${countryCodes.find(c => c.code === country).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === country).image}.png`)} />
+          <img width='48' src={require(`images/countries/${countryCodes.find(c => c.code === country)?.image || 'default'}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === country)?.image || 'default'}.png`)} />
           <Typography component='span' style={{ marginLeft: 10 }}>
-            {countryCodes.find(c => c.code === country).country}
+            {countryCodes.find(c => c.code === country)?.country || 'Country not found'}
           </Typography>
         </div>
       }
