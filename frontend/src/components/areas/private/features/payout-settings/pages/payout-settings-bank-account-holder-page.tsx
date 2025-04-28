@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PayoutSettingsBankAccountHolder from '../../../../../design-library/pages/private/payout-settings-bank-account-holder/payout-settings-bank-account-holder';
 
-const BankAccountHolderPage = ({ user, account, countries, fetchAccount, updateAccount }) => {
+const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
   const { data, completed } = account;
   const [terms, setTerms] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const { id, email } = user;
+    const { email } = user;
     
     if (!e.target) return false
     let formData = {
@@ -30,7 +30,8 @@ const BankAccountHolderPage = ({ user, account, countries, fetchAccount, updateA
       'individual[dob][month]': e.target['dob_month'].value,
       'individual[dob][year]': e.target['dob_year'].value
     }
-    if (terms) {
+    console.log('terms', terms)
+    if(terms) {
       formData['tos_acceptance[date]'] = Math.round(+new Date() / 1000)
     }
 
@@ -39,27 +40,15 @@ const BankAccountHolderPage = ({ user, account, countries, fetchAccount, updateA
         e.target['individual[id_number]'].value
     }
     
-   await updateAccount(id, formData)
+   await updateAccount(formData)
   }
-
-  const onChange = (e) => {
-    if (e.target.name === 'tos_acceptance') {
-      setTerms(!terms)
-    }
-  }
-
-  /*
-  useEffect(() => {
-    fetchAccount()
-  }, [fetchAccount])
-  */
 
   return (
     <PayoutSettingsBankAccountHolder
       account={account}
       countries={countries}
       onSubmit={handleSubmit}
-      onChange={onChange}
+      onChange={setTerms}
     />
   );
 }

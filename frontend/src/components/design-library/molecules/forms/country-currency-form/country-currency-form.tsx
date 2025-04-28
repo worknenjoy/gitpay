@@ -3,7 +3,7 @@ import CountryField from '../../../atoms/inputs/fields/country-field/country-fie
 import CurrencyField from '../../../atoms/inputs/fields/currency-field/currency-field';
 import { Grid } from '@material-ui/core';
 
-const CountryCurrencyForm = ({ country, countries, completed}) => {
+const CountryCurrencyForm = ({ country, countries, currency, completed}) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
@@ -18,6 +18,7 @@ const CountryCurrencyForm = ({ country, countries, completed}) => {
           disabled={true}
           onChange={() => {}}
           completed={completed}
+          currency={currency}
         />
       </Grid>
     </Grid>

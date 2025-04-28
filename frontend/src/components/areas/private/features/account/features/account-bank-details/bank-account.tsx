@@ -452,7 +452,7 @@ const BankAccount = ({
                                 <Input
                                   id='bank-routing-number'
                                   name='routing_number'
-                                  placeholder={intl.formatMessage({ id: 'account.details.rountingNumber', defaultMessage: 'Rounting number' })}
+                                  placeholder={intl.formatMessage({ id: 'account.details.rountingNumber', defaultMessage: 'Routing number' })}
                                   style={{ marginRight: 20 }}
                                   disabled={!!bankAccount.data.routing_number}
                                   defaultValue={bankAccount.data.routing_number}

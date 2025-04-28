@@ -23,8 +23,8 @@ const mapDispatchToProps = (dispatch: any) => {
     changePassword: (password: any) => dispatch(changePassword(password)),
     deleteUser: (id: any) => dispatch(deleteUser(id)),
     createAccount: (account: any) => dispatch(createAccount(account)),
-    updateAccount: (userId, account) => dispatch(updateAccount(userId, account)),
-    createBankAccount: (userId, bankAccount: any) => dispatch(createBankAccount(userId, bankAccount)),
+    updateAccount: (account) => dispatch(updateAccount(account)),
+    createBankAccount: (bankAccount: any) => dispatch(createBankAccount(bankAccount)),
     updateBankAccount: (bankAccount: any) => dispatch(updateBankAccount(bankAccount)),
     getBankAccount: () => dispatch(getBankAccount())
   }

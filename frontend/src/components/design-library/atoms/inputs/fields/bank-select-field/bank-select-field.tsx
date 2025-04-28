@@ -3,7 +3,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Const from '../../../../../../consts';
 
-const BankSelectField = ({ user }) => {
+const BankSelectField = ({ user, disabled }) => {
   const { data = {} } = user;
   const { country } = data;
   const [selectedBank, setSelectedBank] = React.useState('');
@@ -28,6 +28,7 @@ const BankSelectField = ({ user }) => {
           name='bankCode'
           onChange={handleBankNumberSelect}
           style={{ marginTop: 12, marginBottom: 12 }}
+          disabled={disabled}
         >
           <MenuItem value='' disabled>
             <em>

@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PayoutSettingsBankAccountInfo from '../../../../../design-library/pages/private/payout-settings-bank-account-info/payout-settings-bank-account-info';
 
 const PayoutSettingsBankAccountInfoPage = ({
   user,
   bankAccount,
-  getBankAccount,
   updateBankAccount,
   createBankAccount,
   countries
 }) => {
   const onUpdateBankAccount = async (e) => {
+    const routingNumberField = e.target['routing_number'];
+    const routingNumberValue = routingNumberField?.value;
     e.preventDefault();
-    const { id } = user;
     let formData = {
-      'routing_number': e.target['routing_number'].value,
+      ...routingNumberValue ? {'routing_number': routingNumberValue } : undefined,
       'account_number': e.target['account_number'].value,
       'country': e.target['bank_account_country'].value,
       'account_holder_name':
@@ -25,17 +25,11 @@ const PayoutSettingsBankAccountInfoPage = ({
     };
     
     if(bankAccount?.data?.id) {
-      await updateBankAccount(id, formData);
+      await updateBankAccount(formData);
     } else {
-      await createBankAccount(id, formData);
+      await createBankAccount(formData);
     }
   };
-
-  /*
-  useEffect(() => {
-    getBankAccount();
-  }, []);
-  */
 
   return (
     <div>

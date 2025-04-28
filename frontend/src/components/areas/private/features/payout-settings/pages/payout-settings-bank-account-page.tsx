@@ -21,8 +21,10 @@ const PayoutSettingsBankAccountPage = ({
   return (
 
     useEffect(() => {
+      fetchAccount();
+      getBankAccount();
       fetchAccountCountries();
-    }, [fetchAccountCountries]),
+    }, [fetchAccount, getBankAccount, fetchAccountCountries]),
 
     <PayoutSettingsBankAccount
       user={user}
@@ -38,7 +40,6 @@ const PayoutSettingsBankAccountPage = ({
               <PayoutSettingsBankAcccountHolderPage 
                 {...routeProps}
                 user={user}
-                fetchAccount={fetchAccount}
                 updateAccount={updateAccount}
                 fetchAccountCountries={fetchAccountCountries}
                 account={account}
@@ -54,7 +55,6 @@ const PayoutSettingsBankAccountPage = ({
                 {...routeProps}
                 user={user}
                 bankAccount={bankAccount}
-                getBankAccount={getBankAccount}
                 createBankAccount={createBankAccount}
                 updateBankAccount={updateBankAccount}
                 countries={countries}

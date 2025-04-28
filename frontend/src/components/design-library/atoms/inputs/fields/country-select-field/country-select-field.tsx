@@ -4,10 +4,11 @@ import { FormattedMessage } from "react-intl";
 import { countryCodes } from '../../../../../areas/private/shared/country-codes'
 import ReactPlaceholder from "react-placeholder";
 
-const CountrySelectField = ({ user, disabled = false }) => {
+const CountrySelectField = ({ user, country, disabled = false }) => {
   const { data = {}, completed } = user;
+  const { country: userCountry } = data;
 
-  const [currentCountry, setCurrentCountry] = React.useState('');
+  const [currentCountry, setCurrentCountry] = React.useState(country);
 
   const onChangeCountry = (e) => {
     e.preventDefault()
@@ -26,6 +27,7 @@ const CountrySelectField = ({ user, disabled = false }) => {
           native
           name='bank_account_country'
           value={currentCountry}
+          defaultValue={userCountry}
           input={<Input id='bank-country' />}
           fullWidth
           style={{ marginTop: 12, marginBottom: 12 }}

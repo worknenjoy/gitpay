@@ -13,16 +13,17 @@ const AccountDetailsForm = ({
   onChange
 }) => {
   const { data = {}, completed } = account;
-  const { individual = {} } = data;
+  const { individual = {}, currency } = data;
   const { tos_acceptance = {}, country = '' } = data;
   const { address = {} } = individual;
   const { date } = tos_acceptance;
   const { line1 = '', line2 = '', city = '', state = '', postal_code = '' } = address;
   return (
-    <form onSubmit={onSubmit} onChange={onChange}>
+    <form onSubmit={onSubmit}>
       <CountryCurrency
         country={country}
         countries={countries}
+        currency={currency}
         completed={completed}
       />
       <PersonalDetailsForm

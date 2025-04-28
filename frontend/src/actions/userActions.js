@@ -445,6 +445,7 @@ const createAccount = (country) => {
         }
         dispatch(addNotification('actions.user.account.create.success'))
         dispatch(fetchLoggedUser());
+        dispatch(fetchAccountCountries());
         return dispatch(createUserAccountSuccess(account))
       })
       .catch(error => {
@@ -456,12 +457,12 @@ const createAccount = (country) => {
   }
 }
 
-const updateAccount = (_, accountData) => {
+const updateAccount = (account) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(updateUserAccountRequested())
     return axios
-      .put(api.API_URL + '/user/account', { account: accountData })
+      .put(api.API_URL + '/user/account', account)
       .then(account => {
         dispatch(addNotification('actions.user.account.update.success'))
         return dispatch(updateUserAccountSuccess(account))
@@ -592,7 +593,7 @@ const getBankAccount = () => {
   }
 }
 
-const createBankAccount = (_, bank) => {
+const createBankAccount = (bank) => {
   validToken()
   return (dispatch) => {
     dispatch(createBankAccountRequested())
@@ -635,7 +636,6 @@ const updateBankAccount = (bank_account) => {
     return axios
       .put(api.API_URL + '/user/bank_accounts', bank_account)
       .then(bankAccount => {
-        console.log('bankAccount update', bankAccount)
         if (bankAccount.data.statusCode === 400) {
           dispatch(addNotification('notifications.bank.update.error'))
           return dispatch(updateBankAccountError(bankAccount.data))

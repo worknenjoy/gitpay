@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactPlaceholder from 'react-placeholder';
 import { FormattedMessage } from 'react-intl';
 import { FormControl, Input, Select, Typography } from '@material-ui/core';
@@ -27,7 +27,7 @@ const BankCurrencyField = ({ countries, disabled = false }) => {
         <Select
           native
           name='bank_account_currency'
-          value={currentCurrency}
+          defaultValue={default_currency?.toUpperCase() || ''}
           input={<Input id='bank-currency' />}
           fullWidth
           style={{ marginTop: 12, marginBottom: 12 }}
@@ -38,7 +38,7 @@ const BankCurrencyField = ({ countries, disabled = false }) => {
             Select currency
           </option>
           {countryCurrencies.map((c, index) => (
-            <option key={index} value={c.code} selected={c.countries.includes(currentCountry)}>{`${c.currency} - ${c.symbol}`}</option>
+            <option key={index} value={c.code}>{`${c.currency} - ${c.symbol}`}</option>
           ))}
         </Select>
       </ReactPlaceholder>

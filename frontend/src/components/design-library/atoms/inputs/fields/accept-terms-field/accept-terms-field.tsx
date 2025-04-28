@@ -7,10 +7,12 @@ import Fieldset from '../../fieldset/fieldset';
 const AcceptTermsField = ({ accepted, acceptanceDate, onAccept, country, completed }) => {
   const [terms, setTerms] = useState(false)
 
-  const handleTerms = () => {
-    setTerms(!terms)
-    onAccept()
+  const handleTerms = (e) => {
+    const checked = e.target.checked
+    setTerms(checked)
+    onAccept(checked)
   }
+
   return (
     <Fieldset completed={completed} legend={<FormattedMessage id='account.details.terms.title' defaultMessage='Terms of Service' />}>
       {!accepted ? (

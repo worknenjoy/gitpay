@@ -26,6 +26,11 @@ Primary.args = {
   placeholder: 'Placeholder',
   disabled: false,
   help: false,
-  
+  completed: true,
   onChange: () => {},
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  completed: false,
 };

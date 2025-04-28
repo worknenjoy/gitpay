@@ -295,8 +295,7 @@ exports.userFetch = (req, res) => {
 }
 
 exports.accountUpdate = (req, res) => {
-  req.body.id = req.user.id
-  user.userAccountUpdate(req.body)
+  user.userAccountUpdate({userParams: req.user, accountParams: req.body})
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -307,8 +306,7 @@ exports.accountUpdate = (req, res) => {
 }
 
 exports.createBankAccount = (req, res) => {
-  req.body.id = req.user.id
-  user.userBankAccountCreate(req.body)
+  user.userBankAccountCreate({userParams: req.user, bankAccountParams: req.body})
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -319,7 +317,7 @@ exports.createBankAccount = (req, res) => {
 }
 
 exports.updateBankAccount = (req, res) => {
-  user.userBankAccountUpdate({...req.body, id: req.user.id})
+  user.userBankAccountUpdate({userParams: req.user, bank_account: req.body, })
     .then(data => {
       res.send(data)
     }).catch(error => {

@@ -16,7 +16,7 @@ Default.args = {
       country: 'BR',
     },
   },
-  bank_account: {
+  bankAccount: {
     completed: true,
     data: {
       routing_number: '123456',
@@ -27,6 +27,7 @@ Default.args = {
     },
   },
   countries: {
+    completed: true,
     data: {
       default_currency: 'USD',
       supported_bank_account_currencies: {
@@ -44,11 +45,12 @@ Loading.args = {
     completed: false,
     data: {},
   },
-  bank_account: {
+  bankAccount: {
     completed: false,
     data: {},
   },
   countries: {
+    completed: false,
     data: {},
   },
 };

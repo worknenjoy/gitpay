@@ -3,7 +3,7 @@ import { FormControl, Select } from '@material-ui/core';
 import { countryCurrencies } from '../../../../../../components/areas/private/shared/country-codes';
 import Fieldset from '../../fieldset/fieldset';
 
-const CurrencyField = ({ countries, disabled, completed, onChange }) => {
+const CurrencyField = ({ countries, currency, disabled, completed, onChange }) => {
   const { data: { default_currency, supported_bank_account_currencies } } = countries;
 
   return (
@@ -15,6 +15,7 @@ const CurrencyField = ({ countries, disabled, completed, onChange }) => {
         <Select
           native
           value={default_currency}
+          defaultValue={currency}
           disabled={disabled}
           onChange={onChange}
           inputProps={{
