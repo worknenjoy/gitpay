@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PayoutSettingsBankAccountHolder from '../../../../../design-library/pages/private/payout-settings-bank-account-holder/payout-settings-bank-account-holder';
 
-const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
+const BankAccountHolderPage = ({ user, account, countries, fetchAccount, updateAccount }) => {
   const { data, completed } = account;
   const [terms, setTerms] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const { id, email } = user;
-    console.log('handleSubmit', e.target)
+    
     if (!e.target) return false
     let formData = {
       'business_profile[url]': e.target['website'].value,
@@ -47,6 +47,12 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
       setTerms(!terms)
     }
   }
+
+  /*
+  useEffect(() => {
+    fetchAccount()
+  }, [fetchAccount])
+  */
 
   return (
     <PayoutSettingsBankAccountHolder

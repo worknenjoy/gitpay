@@ -2,23 +2,27 @@ import React, { useEffect } from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import PayoutSettingsBankAccount from '../../../../../design-library/pages/private/payout-settings-bank-account/payout-settings-bank-account'
 import PayoutSettingsBankAcccountHolderPage from './payout-settings-bank-account-holder-page'
+import PayoutSettingsBankAccountInfoPage from './payout-settings-bank-account-info-page'
 
 
 const PayoutSettingsBankAccountPage = ({ 
   user,
   account,
+  bankAccount,
   countries,
   createAccount,
   updateAccount,
   fetchAccount,
-  fetchAccountCountries
+  fetchAccountCountries,
+  getBankAccount,
+  createBankAccount,
+  updateBankAccount
 }) => {
   return (
 
     useEffect(() => {
-      fetchAccount();
       fetchAccountCountries();
-    }, [fetchAccount, fetchAccountCountries]),
+    }, [fetchAccountCountries]),
 
     <PayoutSettingsBankAccount
       user={user}
@@ -38,10 +42,24 @@ const PayoutSettingsBankAccountPage = ({
                 updateAccount={updateAccount}
                 fetchAccountCountries={fetchAccountCountries}
                 account={account}
-                countries={countries} />
+                countries={countries}
+              />
             }
           />
-          <Route exact path='/profile/payout-settings/bank-account/bank-account-info' component={() => <></>} />
+          <Route 
+            exact
+            path='/profile/payout-settings/bank-account/bank-account-info'
+            component={(routeProps) =>
+              <PayoutSettingsBankAccountInfoPage
+                {...routeProps}
+                user={user}
+                bankAccount={bankAccount}
+                getBankAccount={getBankAccount}
+                createBankAccount={createBankAccount}
+                updateBankAccount={updateBankAccount}
+                countries={countries}
+              />} 
+          />
         </Switch>
       </HashRouter>
     </PayoutSettingsBankAccount>

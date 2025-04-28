@@ -35,21 +35,26 @@ const useStyles = makeStyles((theme: Theme) => ({
   tabPanel: {
     width: '100%',
     marginTop: 20
+  },
+  tabPanelVertical: {
+    marginTop: 0,
+    width: '100%',
   }
 }));
 
 interface TabPanelProps {
   children?: React.ReactNode;
+  isVertical?: boolean;
 }
 
 function TabPanel(props: TabPanelProps) {
   const classes = useStyles();
-  const { children } = props;
+  const { children, isVertical } = props;
 
   return (
     <div
       role="tabpanel"
-      className={classes.tabPanel}
+      className={isVertical ? classes.tabPanelVertical : classes.tabPanel}
     >  
       <Box p={0}>
         <Card className={classes.card} elevation={0}>
@@ -122,7 +127,7 @@ const BaseTabs = ({
           />
         ))}
       </Tabs>
-      <TabPanel>
+      <TabPanel isVertical={isVertical}>
         {children}
       </TabPanel>
     </div>

@@ -12,29 +12,25 @@ const AcceptTermsField = ({ accepted, acceptanceDate, onAccept, country, complet
     onAccept()
   }
   return (
-    <Fieldset completed={completed} legend='Accept Terms'>
+    <Fieldset completed={completed} legend={<FormattedMessage id='account.details.terms.title' defaultMessage='Terms of Service' />}>
       {!accepted ? (
         <>
           <FormControl>
-            <FormattedMessage
-              id='account.details.terms.read'
-              defaultMessage='I read and I accept the Stripe terms to receive transfers about payments directly on my account'
-            >
-              {(msg) => (
-                <FormControlLabel
-                  control={
-                    <Switch
-                      name='tos_acceptance'
-                      checked={terms}
-                      onChange={handleTerms}
-                      value={terms}
-                      color='primary'
-                    />
-                  }
-                  label={msg}
+            <FormControlLabel
+              control={
+                <Switch
+                  name='tos_acceptance'
+                  checked={terms}
+                  onChange={handleTerms}
+                  value={terms}
+                  color='primary'
                 />
-              )}
-            </FormattedMessage>
+              }
+              label={<FormattedMessage
+                id='account.details.terms.read'
+                defaultMessage='I read and I accept the Stripe terms to receive transfers about payments directly on my account'
+              />}
+            />
           </FormControl>
           <FormControl>
             <Typography color='primary' style={{ marginTop: 8 }}>

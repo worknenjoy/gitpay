@@ -11,6 +11,7 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG'
  */
 
 export const addNotification = (message, extra = '', link) => {
+  console.log('addNotification', message, extra)
   return (dispatch, getState) => {
     const messages = getState().intl.messages
     return dispatch({ 
