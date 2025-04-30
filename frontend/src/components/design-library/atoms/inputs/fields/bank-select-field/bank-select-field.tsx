@@ -3,15 +3,14 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Const from '../../../../../../consts';
 
-const BankSelectField = ({ user, disabled }) => {
-  const { data = {} } = user;
-  const { country } = data;
+const BankSelectField = ({ country, onChange, disabled }) => {
   const [selectedBank, setSelectedBank] = React.useState('');
   const [bankNumberError, setBankNumberError] = React.useState(false);
 
   const handleBankNumberSelect = (e) => {
     setSelectedBank(e.target.value)
     setBankNumberError(false)
+    onChange(e.target.value)
   }
 
   return (

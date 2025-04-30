@@ -31,6 +31,7 @@ module.exports = Promise.method(function userBankAccountCreate ({ userParams, ba
               country: bankAccountParams.country || userCountry,
               currency: bankAccountParams.currency || userCurrency,
               account_holder_type: bankAccountParams.account_holder_type,
+              account_holder_name: bankAccountParams.account_holder_name,
               routing_number: bankAccountParams.routing_number,
               account_number: bankAccountParams.account_number
             }

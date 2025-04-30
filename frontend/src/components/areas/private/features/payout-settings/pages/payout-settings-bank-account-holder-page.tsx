@@ -30,7 +30,7 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
       'individual[dob][month]': e.target['dob_month'].value,
       'individual[dob][year]': e.target['dob_year'].value
     }
-    console.log('terms', terms)
+    
     if(terms) {
       formData['tos_acceptance[date]'] = Math.round(+new Date() / 1000)
     }

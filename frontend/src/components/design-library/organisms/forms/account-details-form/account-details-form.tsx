@@ -18,6 +18,7 @@ const AccountDetailsForm = ({
   const { address = {} } = individual;
   const { date } = tos_acceptance;
   const { line1 = '', line2 = '', city = '', state = '', postal_code = '' } = address;
+  
   return (
     <form onSubmit={onSubmit}>
       <CountryCurrency

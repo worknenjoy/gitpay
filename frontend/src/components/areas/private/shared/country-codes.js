@@ -288,5 +288,44 @@ export const countryCodesFull = [
   { country: "Zambia", code: "ZM" },
   { country: "Zimbabwe", code: "ZW" }
 ];
-  
+
+export const SEPA_COUNTRIES = [
+  'AT', // Austria
+  'BE', // Belgium
+  'BG', // Bulgaria
+  'CH', // Switzerland
+  'CY', // Cyprus
+  'CZ', // Czech Republic
+  'DE', // Germany
+  'DK', // Denmark
+  'EE', // Estonia
+  'ES', // Spain
+  'FI', // Finland
+  'FR', // France
+  'GB', // United Kingdom
+  'GI', // Gibraltar
+  'GR', // Greece
+  'HR', // Croatia
+  'HU', // Hungary
+  'IE', // Ireland
+  'IS', // Iceland
+  'IT', // Italy
+  'LI', // Liechtenstein
+  'LT', // Lithuania
+  'LU', // Luxembourg
+  'LV', // Latvia
+  'MC', // Monaco
+  'MT', // Malta
+  'NL', // Netherlands
+  'NO', // Norway
+  'PL', // Poland
+  'PT', // Portugal
+  'RO', // Romania
+  'SE', // Sweden
+  'SI', // Slovenia
+  'SK', // Slovakia
+  'SM', // San Marino
+  'VA'  // Vatican City
+];
+
     

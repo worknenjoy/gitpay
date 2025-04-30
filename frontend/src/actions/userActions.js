@@ -133,7 +133,7 @@ const updateUserAccountSuccess = account => {
   }
 }
 
-const updateUserAccountError = error => {
+const updateUserAccountError = (error, account) => {
   return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 

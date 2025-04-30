@@ -8,9 +8,15 @@ const PayoutSettingsBankAccountInfoPage = ({
   createBankAccount,
   countries
 }) => {
+  const [ bankCode, setBankCode ] = React.useState(null);
+
+  const handleBankCodeChange = (code) => {
+    setBankCode(code);
+  };
+
   const onUpdateBankAccount = async (e) => {
     const routingNumberField = e.target['routing_number'];
-    const routingNumberValue = routingNumberField?.value;
+    const routingNumberValue = bankCode ? `${bankCode}-${routingNumberField?.value}` : routingNumberField?.value;
     e.preventDefault();
     let formData = {
       ...routingNumberValue ? {'routing_number': routingNumberValue } : undefined,
@@ -38,6 +44,7 @@ const PayoutSettingsBankAccountInfoPage = ({
         bankAccount={bankAccount}
         onSubmit={onUpdateBankAccount}
         countries={countries}
+        onChangeBankCode={handleBankCodeChange}
       />
     </div>
   );
