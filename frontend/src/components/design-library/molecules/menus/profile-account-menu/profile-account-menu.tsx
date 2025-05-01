@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import {
   Web,
   AccountBox as AccountIcon,
+  ArrowDownward as SettingsIcon,
 } from '@material-ui/icons'
 import nameInitials from 'name-initials';
 import { useHistory } from 'react-router-dom';
@@ -100,19 +101,28 @@ export default function ProfileAccountMenu({
       >
         <MenuItem onClick={(e) => history.push(`/users/${user?.id}`)} style={{margin: 5}}>
           <Avatar>
-            <Web width={12} /> 
+            <Web fontSize={'small'} /> 
           </Avatar>
           <Typography variant='body2' color='text'>
             <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />
            </Typography>
         </MenuItem>
+        <Divider />
         <MenuItem onClick={(e) => history.push('/profile/user-account')} style={{margin: 5}}>
           <Avatar>
-            <AccountIcon width={12} />
+            <AccountIcon fontSize={'small'} />
           </Avatar>
           <Typography variant='body2' color='text'>
             <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
            </Typography>
+        </MenuItem>
+        <MenuItem onClick={(e) => history.push('/profile/payout-settings')} style={{margin: 5}}>
+          <Avatar>
+            <SettingsIcon fontSize={'small'} />
+          </Avatar>
+          <Typography variant='body2' color='text'>
+            <FormattedMessage id="profile.accountMenu.payoutSettings" defaultMessage="Payout Settings" />
+            </Typography>
         </MenuItem>
         <Divider />
         {/* add later */}

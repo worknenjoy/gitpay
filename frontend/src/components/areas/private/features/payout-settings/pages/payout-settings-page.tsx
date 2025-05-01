@@ -3,7 +3,7 @@ import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import ProfileHeader from '../../../../../design-library/molecules/sections/profile-header/profile-header';
 import PayoutSettings from '../../../../../design-library/pages/private/payout-settings/payout-settings';
 import PayoutSettingsBankAccountContainer from '../../../../../../containers/account/payout-settings/payouts-settings-bank-account';
-import PayoutSettingsPaypalPage from './payout-settings-paypal-page';
+import PayoutSettingsPaypalContainer from '../../../../../../containers/account/payout-settings/payout-settings-paypal';
 import { FormattedMessage } from 'react-intl';
 
 const PayoutSettingsPage = () => {
@@ -18,7 +18,7 @@ const PayoutSettingsPage = () => {
         <Switch>
           <Route exact path='/profile/payout-settings' component={() => <Redirect to='/profile/payout-settings/bank-account' />} />
           <Route path='/profile/payout-settings/bank-account' component={PayoutSettingsBankAccountContainer} />
-          <Route exact path='/profile/payout-settings/paypal' component={PayoutSettingsPaypalPage} />
+          <Route exact path='/profile/payout-settings/paypal' component={PayoutSettingsPaypalContainer} />
         </Switch>
       </HashRouter>
     </PayoutSettings>

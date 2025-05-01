@@ -490,7 +490,7 @@ const updateAccount = (account) => {
 * User
 */
 
-const updateUser = (_, userData) => {
+const updateUser = (userData) => {
   validToken()
   return (dispatch) => {
     dispatch(updateUserRequested())
@@ -498,7 +498,7 @@ const updateUser = (_, userData) => {
       .put(api.API_URL + '/user/update', userData)
       .then(user => {
         dispatch(addNotification('notifications.account.update'))
-        // dispatch(fetchAccount());
+        dispatch(fetchLoggedUser());
         return dispatch(updateUserSuccess(user))
       })
       .catch(error => {

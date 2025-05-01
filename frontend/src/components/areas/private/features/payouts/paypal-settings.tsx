@@ -19,7 +19,7 @@ import messages from '../../shared/messages';
 const styles = theme => ({
   card: {
     minWidth: 275,
-    padding: 10
+    padding: 0
   },
   cardEmpty: {
     minWidth: 275,

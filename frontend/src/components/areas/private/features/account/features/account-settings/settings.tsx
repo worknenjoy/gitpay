@@ -52,7 +52,7 @@ const Settings = (props) => {
     setSelectedLanguage(lang)
     setAnchorEl(null)
     try {
-      await props.updateUser(user.id, { language: lang })
+      await props.updateUser({ language: lang })
       localStorage.setItem('userLanguage', lang)
       store.dispatch(updateIntl({
         locale: lang,
@@ -66,7 +66,7 @@ const Settings = (props) => {
   const handleHiddenChange = async (event) => {
     setReceiveNotifications(event.currentTarget.checked)
     try {
-      await props.updateUser(user.id, { receiveNotifications: event.currentTarget.checked })
+      await props.updateUser({ receiveNotifications: event.currentTarget.checked })
     } catch (e) {
       console.log('error', e)
     }
@@ -75,7 +75,7 @@ const Settings = (props) => {
   const handleJobsCheck = async () => {
     setOpenForJobs(!openForJobs)
     try {
-      await props.updateUser(user.id, { openForJobs: !openForJobs })
+      await props.updateUser({ openForJobs: !openForJobs })
     } catch (e) {
       console.log('error', e)
     }

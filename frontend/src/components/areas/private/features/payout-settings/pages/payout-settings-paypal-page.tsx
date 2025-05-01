@@ -1,12 +1,20 @@
 import React from 'react';
+import PayoutSettingsPaypal from '../../../../../design-library/pages/private/payout-settings-paypal/payout-settings-paypal';
 
-const PayoutSettingsPaypalPage = () => {
+const PayoutSettingsPaypalPage = ({ user, updateUser }) => {
+
+  const handlePaypalAccount = (e) => {
+    e.preventDefault()
+    updateUser({
+      paypal_id: e.target.paypal_email.value
+    })
+  }
+
   return (
-    <div>
-      <h1>Payout Settings - Paypal</h1>
-      <p>Manage your bank account details for payouts.</p>
-      {/* Add form or components to manage bank account details */}
-    </div>
+    <PayoutSettingsPaypal
+      user={user}
+      onSubmit={handlePaypalAccount}
+    />
   );
 }
 export default PayoutSettingsPaypalPage;

@@ -27,8 +27,6 @@ export default function AccountTabs({
       return 'account';
     } else if (location.pathname === '/profile/user-account/customer') {
       return 'customer';
-    } else if (location.pathname === '/profile/user-account/payouts') {
-      return 'payouts';
     } else if (location.pathname === '/profile/user-account/roles') {
       return 'roles';
     } else if (location.pathname === '/profile/user-account/skills') {
@@ -47,9 +45,6 @@ export default function AccountTabs({
         break;
       case 'customer':
         history.push('/profile/user-account/customer');
-        break;
-      case 'payouts':
-        history.push('/profile/user-account/payouts');
         break;
       case 'roles':
         history.push('/profile/user-account/roles');
@@ -95,14 +90,6 @@ export default function AccountTabs({
                 <FormattedMessage id="profile.account.tab.customer" defaultMessage='Billing details' />
               }
               value={'customer'}  
-            />
-          }
-          { user?.Types?.map(u => u.name)?.includes('contributor') &&
-            <Tab
-              label={
-                <FormattedMessage id="profile.account.tab.payouts" defaultMessage='Payout settings' />
-              }
-              value={'payouts'} 
             />
           }
           <Tab

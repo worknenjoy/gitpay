@@ -9,7 +9,7 @@ import BankCurrencyField from '../../../../design-library/atoms/inputs/fields/ba
 import BankSelectField from '../../../../design-library/atoms/inputs/fields/bank-select-field/bank-select-field';
 import Field from '../../../../design-library/atoms/inputs/fields/field/field';
 import Button from '../../../../design-library/atoms/buttons/button/button';
-import BankAccountNumberForm from '../../../molecules/forms/bank-account-number-form/bank-account-number-form';
+import BankAccountNumberForm from '../../../molecules/form-section/bank-account-number-form/bank-account-number-form';
 import Alert from '../../../../design-library/atoms/alerts/alert/alert';
 
 

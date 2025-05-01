@@ -17,7 +17,7 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     addNotification: (notification: any) => dispatch(addNotification(notification)),
-    updateUser: (userId, user: any) => dispatch(updateUser(userId, user)),
+    updateUser: (user: any) => dispatch(updateUser(user)),
     fetchAccount: () => dispatch(fetchAccount()),
     fetchAccountCountries: () => dispatch(fetchAccountCountries()),
     changePassword: (password: any) => dispatch(changePassword(password)),

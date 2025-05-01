@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Button from '../../../atoms/buttons/button/button';
-import CountryCurrency from '../../../molecules/forms/country-currency-form/country-currency-form';
-import PersonalDetailsForm from '../../../molecules/forms/personal-details-form/personal-details-form';
-import AddressInformationForm from '../../../molecules/forms/address-information-form/address-information-form';
+import CountryCurrency from '../../../molecules/form-section/country-currency-form/country-currency-form';
+import PersonalDetailsForm from '../../../molecules/form-section/personal-details-form/personal-details-form';
+import AddressInformationForm from '../../../molecules/form-section/address-information-form/address-information-form';
 import AcceptTermsField from '../../../atoms/inputs/fields/accept-terms-field/accept-terms-field';
 import Alert from '../../../atoms/alerts/alert/alert';
 import { Typography } from '@material-ui/core';
