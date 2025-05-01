@@ -100,6 +100,7 @@ const BankAccountForm = ({
                 country={currentCountry}
                 disabled={!!id}
                 onChange={onChangeBankCode}
+                routingNumber={routing_number}
               />
             </ReactPlaceholder>
             <Field
