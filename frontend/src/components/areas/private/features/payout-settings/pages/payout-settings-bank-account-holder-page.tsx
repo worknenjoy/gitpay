@@ -11,6 +11,8 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
     
     if (!e.target) return false
     let formData = {
+      'country': e.target['account_country'].value,
+      'default_currency': e.target['account_currency'].value,
       'business_profile[url]': e.target['website'].value,
       'individual[phone]': e.target['phone_number'].value,
       'individual[email]': email,
@@ -39,8 +41,12 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
       formData['individual[id_number]'] =
         e.target['individual[id_number]'].value
     }
+    await updateAccount(formData)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
     
-   await updateAccount(formData)
   }
 
   return (

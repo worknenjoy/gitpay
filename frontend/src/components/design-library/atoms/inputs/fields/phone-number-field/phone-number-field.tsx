@@ -9,7 +9,7 @@ const PhoneNumberField = ({ phone }) => {
       {
         (msg) => (
           <Field
-            name={'phone_number'}
+            name='phone_number'
             label={msg}
             defaultValue={ phone }
             help

@@ -11,6 +11,9 @@ type FieldProps = {
   defaultValue?: string,
   value?: string,
   completed?: boolean,
+  error?: boolean,
+  min?: number,
+  max?: number,
   placeholder?: string,
   disabled?: boolean,
   help?: boolean,
@@ -20,7 +23,7 @@ type FieldProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Field = ({ ref, name, value, label, completed = true, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent, endAdornment, onChange }: FieldProps) => {
+export const Field = ({ ref, name, value, label, completed = true, error, type = 'text', min, max, required = false, defaultValue, placeholder, disabled, help, inputComponent, endAdornment, onChange }: FieldProps) => {
   return (
     <FormControl style={{ width: '100%' }}>
       <ReactPlaceholder type='text' rows={1} ready={completed} style={{margin: '20px 0'}} showLoadingAnimation>
@@ -45,6 +48,8 @@ export const Field = ({ ref, name, value, label, completed = true, type = 'text'
         inputComponent={inputComponent}
         onChange={onChange}
         endAdornment={endAdornment}
+        error={error}
+        inputProps={type === 'number' ? { min, max } : {}}
       />
       {help &&
         <FormHelperText id='component-helper-text'>

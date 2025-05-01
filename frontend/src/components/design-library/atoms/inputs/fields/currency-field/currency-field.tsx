@@ -19,12 +19,12 @@ const CurrencyField = ({ countries, currency, disabled, completed, onChange }) =
           disabled={disabled}
           onChange={onChange}
           inputProps={{
-            name: 'country',
+            name: 'account_currency',
             id: 'country-native-simple',
           }}
         >
           <option aria-label="None" value="" />
-          <option value={countries.data.default_currency}>
+          <option value={default_currency}>
             {`${countryCurrencies.find(c => c.code.toLowerCase() === default_currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === default_currency)?.symbol}` || default_currency}
           </option>
           {supported_bank_account_currencies &&

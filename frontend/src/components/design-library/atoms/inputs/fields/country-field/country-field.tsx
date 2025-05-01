@@ -14,6 +14,7 @@ const CountryField = ({ country, completed }) => {
           <Typography component='span' style={{ marginLeft: 10 }}>
             {countryCodes.find(c => c.code === country)?.country || 'Country not found'}
           </Typography>
+          <input type='hidden' name='account_country' value={country} />
         </div>
       }
     />

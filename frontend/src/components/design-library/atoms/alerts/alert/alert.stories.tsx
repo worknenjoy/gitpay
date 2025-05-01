@@ -21,3 +21,29 @@ InfoAlertExample.args = {
   severity: 'info',
   children: 'Please make sure you have bank account on the country selected before continue.',
 };
+
+export const WarningAlertExample = Template.bind({});
+WarningAlertExample.args = {
+  severity: 'warning',
+  children: 'Please make sure you have bank account on the country selected before continue.',
+  completed: true,
+};
+export const ErrorAlertExample = Template.bind({});
+ErrorAlertExample.args = {
+  severity: 'error',
+  children: 'Please make sure you have bank account on the country selected before continue.',
+  completed: true,
+};
+export const SuccessAlertExample = Template.bind({});
+SuccessAlertExample.args = {
+  severity: 'success',
+  children: 'Please make sure you have bank account on the country selected before continue.',
+  completed: true,
+};
+
+export const LoadingAlertExample = Template.bind({});
+LoadingAlertExample.args = {
+  severity: 'info',
+  children: 'Please make sure you have bank account on the country selected before continue.',
+  completed: false,
+};

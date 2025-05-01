@@ -48,6 +48,34 @@ Default.args = {
   },
 };
 
+export const Error = Template.bind({});
+Error.args = {
+  account: {
+    completed: true,
+    data: {
+      country: 'US',
+    },
+    error: {
+      raw: {
+        message: 'An error occurred while fetching account details.',
+      }
+    }
+  },
+  countries: {
+    completed: true,
+    data: {
+      default_currency: 'usd',
+      supported_bank_account_currencies: {
+        usd: 'usd',
+        eur: 'eur',
+        gbp: 'gbp',
+        jpy: 'jpy',
+        aud: 'aud',
+      },
+    },
+  },
+};
+
 export const Loading = Template.bind({});
 Loading.args = {
   account: {

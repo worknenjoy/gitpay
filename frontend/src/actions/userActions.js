@@ -4,6 +4,7 @@ import { addNotification } from './notificationActions'
 import { logOut, fetchLoggedUser } from './loginActions'
 import { validToken } from './helpers'
 import { StripeErrorMessages } from './messages/stripe-error-messages'
+import convertParamsToStripeObject from './helpers/convert-params-to-stripe-object'
 
 const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS'
@@ -133,8 +134,8 @@ const updateUserAccountSuccess = account => {
   }
 }
 
-const updateUserAccountError = (error, account) => {
-  return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error }
+const updateUserAccountError = (error, data) => {
+  return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error, data }
 }
 
 /*
@@ -459,10 +460,13 @@ const createAccount = (country) => {
 
 const updateAccount = (account) => {
   validToken()
+  const accountData = convertParamsToStripeObject(account)
+  const accountUpdateParams = { ...account }
+  delete accountUpdateParams.country;
   return (dispatch, getState) => {
     dispatch(updateUserAccountRequested())
     return axios
-      .put(api.API_URL + '/user/account', account)
+      .put(api.API_URL + '/user/account', accountUpdateParams)
       .then(account => {
         dispatch(addNotification('actions.user.account.update.success'))
         return dispatch(updateUserAccountSuccess(account))
@@ -471,13 +475,13 @@ const updateAccount = (account) => {
         const errorData = error.response.data
         dispatch(
           addNotification(
-            errorData?.param ? (StripeErrorMessages.account[errorData.param] ? StripeErrorMessages.account[errorData.param] : `${errorData.raw.message} ${errorData.param}`) : 'actions.user.account.update.error.missing',
-            errorData?.raw?.message ? errorData.raw.message : 'actions.user.account.update.error.missing'
+            'actions.user.account.update.error.missing',
           )
         )
         // eslint-disable-next-line no-console
         console.log('error on update account', error)
-        return dispatch(updateUserAccountError(error))
+        
+        return dispatch(updateUserAccountError(error.response.data, accountData))
       })
   }
 }

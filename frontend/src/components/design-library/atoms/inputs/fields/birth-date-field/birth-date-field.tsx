@@ -1,9 +1,10 @@
-import { FormControl, Grid, Select, Typography } from '@material-ui/core';
 import React from 'react';
+import { FormControl, FormHelperText, Grid, Select, Typography } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import Field from '../field/field';
 
-const BirthDateField = ({ day, month, year }) => {
+const BirthDateField = ({ day, month, year, error = { month: false, day: false, year: false } }) => {
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={12}>
@@ -12,7 +13,7 @@ const BirthDateField = ({ day, month, year }) => {
         </Typography>
       </Grid>
       <Grid item xs={12} md={4}>
-        <Field name='dob_day' label='Day' type='number' defaultValue={day} />
+        <Field name='dob_day' label='Day' type='number' min={1} max={31} defaultValue={day} />
       </Grid>
       <Grid item xs={12} md={4}>
         <FormControl style={{ width: '100%' }}>
@@ -22,7 +23,7 @@ const BirthDateField = ({ day, month, year }) => {
             name='dob_month'
             style={{ marginRight: 8, marginTop: 16, width: '100%' }}
           >
-            <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
+            <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => !month && <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
             {[[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
               (item, i) => {
                 return (
@@ -33,6 +34,11 @@ const BirthDateField = ({ day, month, year }) => {
               }
             )}
           </Select>
+          {error.month && 
+            <FormHelperText error id='component-helper-text'>
+              <FormattedMessage id='validation-message' defaultMessage='Please select the month of birth' />
+            </FormHelperText>
+          }
         </FormControl>
       </Grid>
       <Grid item xs={12} md={4}>

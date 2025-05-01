@@ -41,7 +41,7 @@ export const account = (state = { data: { }, completed: true, error: {} }, actio
     case UPDATE_USER_ACCOUNT_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case UPDATE_USER_ACCOUNT_ERROR:
-      return { ...state, completed: true, error: action.error }
+      return { ...state, completed: true, error: action.error, data: action.data }
     default:
       return state
   }
