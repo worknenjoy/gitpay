@@ -7,6 +7,7 @@ import {
   StyledButton
 } from '../../../organisms/layouts/topbar/TopbarStyles'
 import ReactPlaceholder from 'react-placeholder'
+import SideMenuPlaceholder from './side-menu.placeholder'
 
 const useStyles = makeStyles((theme) => ({
   sidePaper: {
@@ -150,9 +151,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
             }}>
               <ReactPlaceholder
                 ready={completed}
-                type='text'
-                rows={6}
-                lineSpacing={32}
+                customPlaceholder={<SideMenuPlaceholder />}
               >
               <MenuList>
                 {menuItems.map((section, sectionIndex) => (

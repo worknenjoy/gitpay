@@ -5,7 +5,7 @@ import { FormControl, Input, Select, Typography } from '@material-ui/core';
 import { countryCurrencies } from '../../../../../areas/private/shared/country-codes';
 
 
-const BankCurrencyField = ({ countries, disabled = false }) => {
+const BankCurrencyField = ({ currency, countries, disabled = false }) => {
   const [currentCurrency, setCurrentCurrency] = React.useState('');
   const [currentCountry, setCurrentCountry] = React.useState('');
   
@@ -27,7 +27,7 @@ const BankCurrencyField = ({ countries, disabled = false }) => {
         <Select
           native
           name='bank_account_currency'
-          defaultValue={default_currency?.toUpperCase() || ''}
+          defaultValue={currency ? currency?.toUpperCase() : default_currency?.toUpperCase() || ''}
           input={<Input id='bank-currency' />}
           fullWidth
           style={{ marginTop: 12, marginBottom: 12 }}

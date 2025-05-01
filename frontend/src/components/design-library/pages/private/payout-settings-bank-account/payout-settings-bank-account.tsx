@@ -65,6 +65,7 @@ const PayoutSetingsBankAccount = ({
               text={country.label}
               onActionClick={() => saveCountryAndContinue(country.code)}
               icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
+              completed={completed}
             />
           )
           }

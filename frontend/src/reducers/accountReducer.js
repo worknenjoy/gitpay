@@ -73,13 +73,13 @@ export const bankAccount = (state = { data: { }, completed: true, error: {} }, a
     case CREATE_BANKACCOUNT_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case CREATE_BANKACCOUNT_ERROR:
-      return { ...state, completed: true, error: action.error }
+      return { ...state, completed: true, data: action.data, error: action.error }
     case UPDATE_BANKACCOUNT_REQUESTED:
       return { ...state, completed: false }
     case UPDATE_BANKACCOUNT_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case UPDATE_BANKACCOUNT_ERROR:
-      return { ...state, completed: true, error: action.error }
+      return { ...state, completed: true, error: action.error, data: action.data }
     default:
       return state
   }

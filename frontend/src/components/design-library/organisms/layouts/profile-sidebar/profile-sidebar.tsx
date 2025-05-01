@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { Grid } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import {
-  Home,
+  Dashboard as DashboardIcon,
   AccountBalanceWallet as WalletIcon,
   LibraryBooks,
   Payment as PaymentIcon,
@@ -57,7 +57,7 @@ const ProfileSidebar = ({
                 {
                   include: true,
                   onClick: () => history.push('/profile'),
-                  icon: <Home />,
+                  icon: <DashboardIcon />,
                   label: <FormattedMessage id='account.profile.sidemenu.home.link.label' defaultMessage='Dashboard' />,
                   selected: selected === 0
                 }

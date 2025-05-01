@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography, Button, SvgIconTypeMap } from '@material-ui/core';
+import { Box, Typography, SvgIconTypeMap } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
+import Button from '../../../../atoms/buttons/button/button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,7 @@ type EmptyBaseProps = {
   icon?: React.ReactElement<{ className?: string }>;
   text: string | React.ReactNode;
   actionText: string | React.ReactNode | OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+  completed?: boolean;
 };
 
 const EmptyBase = ({ 
@@ -38,6 +40,7 @@ const EmptyBase = ({
   icon,
   text,
   actionText,
+  completed = true,
 }: EmptyBaseProps) => {
   const classes = useStyles();
 
@@ -49,9 +52,13 @@ const EmptyBase = ({
       <Typography variant="h6" className={classes.message}>
         {text}
       </Typography>
-      <Button variant="contained" color="primary" onClick={onActionClick}>
-        {actionText}
-      </Button>
+      <Button 
+        variant="contained"
+        color="primary"
+        onClick={onActionClick}
+        completed={completed}
+        label={actionText}
+      />
     </Box>
   );
 };

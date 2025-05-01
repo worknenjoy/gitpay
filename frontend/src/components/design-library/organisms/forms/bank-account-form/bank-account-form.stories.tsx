@@ -76,7 +76,7 @@ Austria.args = {
   bankAccount: {
     completed: true,
     data: {
-      
+
     },
   },
   countries: {
@@ -118,6 +118,37 @@ Brazil.args = {
   },
 };
 
+export const Error = Template.bind({});
+Error.args = {
+  user: {
+    completed: true,
+    data: {
+      country: 'AT',
+    },
+  },
+  bankAccount: {
+    completed: true,
+    data: {},
+    error: {
+      raw: {
+        message: 'An error occurred while fetching bank account details.',
+      },
+      params: 'external[account]',
+    },
+  },
+  countries: {
+    completed: true,
+    data: {
+      default_currency: 'EUR',
+      supported_bank_account_currencies: {
+        EUR: 'Euro',
+        USD: 'United States Dollar',
+        GBP: 'British Pound Sterling',
+      },
+    },
+  },
+}
+
 export const Loading = Template.bind({});
 Loading.args = {
   user: {
@@ -133,4 +164,3 @@ Loading.args = {
     data: {},
   },
 };
-export const Error = Template.bind({});

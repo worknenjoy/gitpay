@@ -28,7 +28,7 @@ const AccountDetailsForm = ({
   onSubmit,
   onChange
 }) => {
-  const { data = {}, completed, error } = account;
+  const { data = {}, completed, error = {} } = account;
   const { individual = {}, currency } = data;
   const { tos_acceptance = {}, country = '' } = data;
   const { address = {} } = individual;

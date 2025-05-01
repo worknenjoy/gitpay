@@ -290,8 +290,8 @@ const createBankAccountSuccess = account => {
   }
 }
 
-const createBankAccountError = error => {
-  return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error: error }
+const createBankAccountError = (error, data) => {
+  return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error, data }
 }
 
 /*
@@ -310,8 +310,8 @@ const updateBankAccountSuccess = account => {
   }
 }
 
-const updateBankAccountError = error => {
-  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error: error }
+const updateBankAccountError = (error, data) => {
+  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error, data }
 }
 
 
@@ -614,11 +614,10 @@ const createBankAccount = (bank) => {
         if (bankAccount.data.statusCode === 400) {
           dispatch(
             addNotification(
-              'notifications.bank.create.other.error',
-              bankAccount.data.raw.message
+              'notifications.bank.create.other.error'
             )
           )
-          return dispatch(createBankAccountError(bankAccount.data))
+          return dispatch(createBankAccountError(bankAccount.data, bank))
         }
         dispatch(addNotification('notifications.bank.create.success'))
 
@@ -628,7 +627,7 @@ const createBankAccount = (bank) => {
         dispatch(addNotification('notifications.bank.create.other.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
-        return dispatch(createBankAccountError(error))
+        return dispatch(createBankAccountError(error, bank))
       })
   }
 }
@@ -652,7 +651,7 @@ const updateBankAccount = (bank_account) => {
         dispatch(addNotification('notifications.bank.update.other.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
-        return dispatch(updateBankAccountError(error))
+        return dispatch(updateBankAccountError(error, bank_account))
       })
   }
 }

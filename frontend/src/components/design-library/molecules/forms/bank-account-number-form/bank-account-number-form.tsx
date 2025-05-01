@@ -23,7 +23,8 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
             type="text"
             placeholder="Enter your IBAN number"
             disabled={id}
-            value={last4 ? `**************${last4}` : account_number}
+            defaultValue={last4 ? `**************${last4}` : account_number}
+            required
           />
         </Grid>
       ) : (
@@ -37,6 +38,7 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
               placeholder="Enter your routing number"
               disabled={id}
               value={routing_number}
+              required
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -48,6 +50,7 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
               placeholder="Enter your account number"
               disabled={id}
               value={last4 ? `******${last4}` : account_number}
+              required
             />
           </Grid>
         </>

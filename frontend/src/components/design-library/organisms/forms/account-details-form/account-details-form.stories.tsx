@@ -32,6 +32,7 @@ Default.args = {
       },
       country: 'US',
     },
+    error: {},
   },
   countries: {
     completed: true,
@@ -45,6 +46,7 @@ Default.args = {
         aud: 'aud',
       },
     },
+    error: {}
   },
 };
 
@@ -58,7 +60,8 @@ Error.args = {
     error: {
       raw: {
         message: 'An error occurred while fetching account details.',
-      }
+      },
+      params: 'individual[address][city]',
     }
   },
   countries: {
@@ -81,9 +84,11 @@ Loading.args = {
   account: {
     completed: false,
     data: {},
+    error: {},
   },
   countries: {
     completed: false,
     data: {},
+    error: {},
   },
 };
