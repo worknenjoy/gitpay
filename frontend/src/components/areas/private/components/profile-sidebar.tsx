@@ -130,7 +130,7 @@ const ProfileSidebar = ({
                   include: userTypes && userTypes?.includes('maintainer'),
                   onClick: () => history.push('/profile/transfers'),
                   icon: <TransferIcon />,
-                  label: <FormattedMessage id='account.profile.transfer.list' defaultMessage='Billing information' />,
+                  label: <FormattedMessage id='account.profile.billing.info' defaultMessage='Billing information' />,
                   selected: selected === 5
                 },
               ]
