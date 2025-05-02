@@ -315,6 +315,37 @@ describe("Transfer", () => {
       expect(res.body.paypal_payout_id).to.exist;
     })
     it("should update transfer pending to created and update value for a pending transfer for an activated account for multiple payments", async () => {
+      const url = 'https://api.sandbox.paypal.com'
+      const path = '/v1/oauth2/token'
+      const newPayoutPath = '/v1/payments/payouts'
+      const getPayoutPath = '/v1/payments/payouts/5UXD2E8A7EBQJ'
+
+      nock(url)
+        .post(path)
+        .reply(200, { access_token: 'foo' }, {
+          'Content-Type': 'application/json',
+        })
+      nock(url)
+        .post(newPayoutPath)
+        .reply(200, {
+          "batch_header": {
+            "sender_batch_header": {
+              "sender_batch_id": "Payouts_2020_100007",
+              "email_subject": "You have a payout!",
+              "email_message": "You have received a payout! Thanks for using our service!"
+            },
+            "payout_batch_id": "5UXD2E8A7EBQJ",
+            "batch_status": "PENDING"
+          }
+        }, {
+          'Content-Type': 'application/json',
+        })
+
+      nock(url)
+        .get(getPayoutPath)
+        .reply(200, paypalGetPayoutSample, {
+          'Content-Type': 'application/json',
+        })
       nock('https://api.stripe.com')
         .persist()
         .post('/v1/transfers')

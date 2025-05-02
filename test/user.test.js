@@ -122,14 +122,10 @@ describe("Users", () => {
         })
     })
     it('should resend activation token with no existing one', (done) => {
-      agent
-        .post('/auth/register')
-        .send({email: 'teste22222@gmail.com', password: 'teste'})
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .end((err, res) => {
+      registerAndLogin(agent).then(res => {
           agent
-            .get(`/auth/resend-activation-email?userId=${res.body.id}`)
+            .get(`/auth/resend-activation-email`)
+            .set('Authorization', res.headers.authorization)
             .expect(200)
             .end((err, res) => {
               expect(res.statusCode).to.equal(200);
@@ -138,6 +134,7 @@ describe("Users", () => {
               done(err);
             })
         })
+      
     })
     it('should resend user activation token', (done) => {
       agent

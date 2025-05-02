@@ -96,7 +96,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
       }
     })
     const paypalToken = JSON.parse(paypalCredentials)['access_token']
-    console.log('existingTransfer', existingTransfer)
+    
     try {
       const paypalTransfer = !existingTransfer.paypal_payout_id && await requestPromise({
         method: 'POST',
@@ -136,6 +136,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
       console.error('Error fetching PayPal transfer:', error)
     }
   }
+  console.log('existingTransfer', existingTransfer)
   const updateTransferStatus = existingTransfer.transfer_method === 'multiple' && existingTransfer.transfer_id && existingTransfer.paypal_payout_id && await models.Transfer.update({ status: 'in_transit' }, { where: { id: existingTransfer.id }, returning: true})
   if(updateTransferStatus && updateTransferStatus[1]) {
     existingTransfer = updateTransferStatus[1][0].dataValues
