@@ -1,11 +1,10 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
 import BankCurrencyField from './bank-currency-field';
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/BankCurrencyField',
   component: BankCurrencyField,
-} as Meta;
+};
 
 const Template = (args) => <BankCurrencyField {...args} />;
 
