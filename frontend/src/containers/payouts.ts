@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { searchPayout } from '../actions/payoutActions';
 import Payouts from '../components/areas/private/features/payouts/payouts';
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
     payouts: state.payouts
   }
 }

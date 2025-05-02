@@ -1,9 +1,10 @@
 import api from '../consts'
 import axios from 'axios'
 import { addNotification } from './notificationActions'
-import { logOut } from './loginActions'
+import { logOut, fetchLoggedUser } from './loginActions'
 import { validToken } from './helpers'
 import { StripeErrorMessages } from './messages/stripe-error-messages'
+import convertParamsToStripeObject from './helpers/convert-params-to-stripe-object'
 
 const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS'
@@ -133,8 +134,8 @@ const updateUserAccountSuccess = account => {
   }
 }
 
-const updateUserAccountError = error => {
-  return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error }
+const updateUserAccountError = (error, data) => {
+  return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error, data }
 }
 
 /*
@@ -289,8 +290,8 @@ const createBankAccountSuccess = account => {
   }
 }
 
-const createBankAccountError = error => {
-  return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error: error }
+const createBankAccountError = (error, data) => {
+  return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error, data }
 }
 
 /*
@@ -309,8 +310,8 @@ const updateBankAccountSuccess = account => {
   }
 }
 
-const updateBankAccountError = error => {
-  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error: error }
+const updateBankAccountError = (error, data) => {
+  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error, data }
 }
 
 
@@ -444,6 +445,8 @@ const createAccount = (country) => {
           return dispatch(createUserAccountError({ message: 'actions.user.account.create.error' }))
         }
         dispatch(addNotification('actions.user.account.create.success'))
+        dispatch(fetchLoggedUser());
+        dispatch(fetchAccountCountries());
         return dispatch(createUserAccountSuccess(account))
       })
       .catch(error => {
@@ -455,12 +458,15 @@ const createAccount = (country) => {
   }
 }
 
-const updateAccount = (_, accountData) => {
+const updateAccount = (account) => {
   validToken()
+  const accountData = convertParamsToStripeObject(account)
+  const accountUpdateParams = { ...account }
+  delete accountUpdateParams.country;
   return (dispatch, getState) => {
     dispatch(updateUserAccountRequested())
     return axios
-      .put(api.API_URL + '/user/account', { account: accountData })
+      .put(api.API_URL + '/user/account', accountUpdateParams)
       .then(account => {
         dispatch(addNotification('actions.user.account.update.success'))
         return dispatch(updateUserAccountSuccess(account))
@@ -469,13 +475,13 @@ const updateAccount = (_, accountData) => {
         const errorData = error.response.data
         dispatch(
           addNotification(
-            errorData?.param ? (StripeErrorMessages.account[errorData.param] ? StripeErrorMessages.account[errorData.param] : `${errorData.raw.message} ${errorData.param}`) : 'actions.user.account.update.error.missing',
-            errorData?.raw?.message ? errorData.raw.message : 'actions.user.account.update.error.missing'
+            'actions.user.account.update.error.missing',
           )
         )
         // eslint-disable-next-line no-console
         console.log('error on update account', error)
-        return dispatch(updateUserAccountError(error))
+        
+        return dispatch(updateUserAccountError(error.response.data, accountData))
       })
   }
 }
@@ -484,7 +490,7 @@ const updateAccount = (_, accountData) => {
 * User
 */
 
-const updateUser = (_, userData) => {
+const updateUser = (userData) => {
   validToken()
   return (dispatch) => {
     dispatch(updateUserRequested())
@@ -492,7 +498,7 @@ const updateUser = (_, userData) => {
       .put(api.API_URL + '/user/update', userData)
       .then(user => {
         dispatch(addNotification('notifications.account.update'))
-        // dispatch(fetchAccount());
+        dispatch(fetchLoggedUser());
         return dispatch(updateUserSuccess(user))
       })
       .catch(error => {
@@ -527,11 +533,12 @@ const activateUser = (userId, token) => {
   }
 }
 
-const resendActivationEmail = (userId) => {
+const resendActivationEmail = () => {
+  validToken()
   return (dispatch) => {
     dispatch(resendActivationEmailRequested())
     return axios
-      .get(api.API_URL + `/auth/resend-activation-email?userId=${userId}`, { userId })
+      .get(api.API_URL + `/auth/resend-activation-email`)
       .then(user => {
         dispatch(addNotification('notifications.account.resend_activation_email.success'))
         // dispatch(fetchAccount());
@@ -591,20 +598,27 @@ const getBankAccount = () => {
   }
 }
 
-const createBankAccount = (_, bank) => {
+const createBankAccount = (bank) => {
   validToken()
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(createBankAccountRequested())
-    axios
+    return axios
       .post(api.API_URL + '/user/bank_accounts', {
         routing_number: bank.routing_number,
         account_number: bank.account_number,
-        country: bank.country
+        country: bank.country,
+        account_holder_type: bank.account_holder_type,
+        account_holder_name: bank.account_holder_name,
+        currency: bank.currency,
       })
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(addNotification('notifications.bank.create.error'))
-          return dispatch(createBankAccountError(bankAccount.data))
+          dispatch(
+            addNotification(
+              'notifications.bank.create.other.error'
+            )
+          )
+          return dispatch(createBankAccountError(bankAccount.data, bank))
         }
         dispatch(addNotification('notifications.bank.create.success'))
 
@@ -614,7 +628,7 @@ const createBankAccount = (_, bank) => {
         dispatch(addNotification('notifications.bank.create.other.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
-        return dispatch(createBankAccountError(error))
+        return dispatch(createBankAccountError(error, bank))
       })
   }
 }
@@ -623,7 +637,7 @@ const updateBankAccount = (bank_account) => {
   validToken()
   return (dispatch) => {
     dispatch(updateBankAccountRequested())
-    axios
+    return axios
       .put(api.API_URL + '/user/bank_accounts', bank_account)
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
@@ -638,7 +652,7 @@ const updateBankAccount = (bank_account) => {
         dispatch(addNotification('notifications.bank.update.other.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
-        return dispatch(updateBankAccountError(error))
+        return dispatch(updateBankAccountError(error, bank_account))
       })
   }
 }

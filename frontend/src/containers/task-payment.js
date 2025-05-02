@@ -3,13 +3,13 @@ import { assignTask, removeAssignment, actionAssign } from '../actions/assignAct
 import { updateTask, paymentTask, filterTaskOrders, transferTask } from '../actions/taskActions'
 import { createOrder, payOrder } from '../actions/orderActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 import TaskPayment from '../components/areas/public/features/task/task-payment'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn,
-    user: getUser(state),
+    user: getUserData(state),
     task: getTaskOrdersByFilter(state),
     orders: state.orders
   }

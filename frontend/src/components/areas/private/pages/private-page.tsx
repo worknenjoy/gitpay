@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, HashRouter, useHistory } from 'react-router-dom'
-import { useIntl } from 'react-intl';
 import PrivateBase from '../../../design-library/templates/base/private-base/private-base';
 import ProfileOptions from '../features/dashboard/profile-options'
 import { UserAccount } from '../features/account/user-account'
@@ -12,6 +11,7 @@ import WalletsContainer from '../../../../containers/wallets'
 import PayoutsContainer from '../../../../containers/payouts'
 import TaskListProfile from '../../../../containers/task-list-profile'
 import TaskContainer from '../../../../containers/task'
+import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
 
 const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
 const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBottomBar {...props} />
@@ -22,6 +22,7 @@ const PrivatePage = ({
   createTask,
   updateUser,
   changePassword,
+  resendActivationEmail,
   addNotification,
   deleteUser,
   signOut,
@@ -29,8 +30,6 @@ const PrivatePage = ({
   getInfo,
 }) => {
   const history = useHistory()
-
-  const [openUpdateProfileDialog, setOpenUpdateProfileDialog] = React.useState(false)
 
   const { data } = user;
 
@@ -42,6 +41,7 @@ const PrivatePage = ({
     <PrivateBase
       createTask={createTask}
       signOut={signOut}
+      onResendActivationEmail={resendActivationEmail}
       user={user}
       bottomProps={
         {
@@ -56,11 +56,7 @@ const PrivatePage = ({
             (props) =>
             (<ProfileOptions
               {...props}
-              user={data}
-              onCreateTask={createTask}
-              addNotification={addNotification}
-              visible={openUpdateProfileDialog}
-              onClose={() => setOpenUpdateProfileDialog(false)}
+              user={user}
             />)
           } />
           <Route path='/profile/user-account' component={
@@ -171,6 +167,10 @@ const PrivatePage = ({
           >
             <TaskListProfileProjects noTopBar noBottomBar />
           </Route>
+          <Route
+            
+            path={'/profile/payout-settings'} component={PayoutSettings}
+          />
         </Switch>
       </HashRouter>
     </PrivateBase>

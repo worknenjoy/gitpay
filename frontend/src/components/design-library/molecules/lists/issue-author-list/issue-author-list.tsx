@@ -17,7 +17,7 @@ import {
   DialogTitle
 } from '@material-ui/core'
 
-import LoginButton from '../../../molecules/forms/login-form/login-form-signin/login-form-signin'
+import LoginButton from '../../form-section/login-form/login-form-signin/login-form-signin'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -4,13 +4,13 @@ import { updateTask, fetchTask, syncTask } from '../actions/taskActions'
 import { createOrder } from '../actions/orderActions'
 import { fetchWallet, listWallets } from '../actions/walletActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 import TaskPaymentForm from '../components/areas/public/features/task/task-payment-form'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn,
-    user: getUser(state),
+    user: getUserData(state),
     task: getTaskOrdersByFilter(state),
     order: state.order,
     customer: state.customer,

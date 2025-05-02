@@ -95,7 +95,6 @@ router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 
 router.post('/auth/register', controllers.register)
 router.get('/auth/activate', controllers.activate_user)
-router.get('/auth/resend-activation-email', controllers.resend_activation_email)
 router.get('/users', controllers.searchAll)
 router.get('/callback/github/private', controllers.createPrivateTask)
 
@@ -107,6 +106,9 @@ router.put('/auth/change-password', controllers.changePassword)
 
 router.use('/user/', secure)
 
+router.get('/auth/resend-activation-email', controllers.resend_activation_email)
+
+router.get('/user', controllers.userFetch)
 router.post('/user/customer', controllers.customerCreate)
 router.get('/user/customer', controllers.customer)
 router.put('/user/customer', controllers.customerUpdate)

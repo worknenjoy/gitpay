@@ -10,7 +10,7 @@ import { injectStripe } from 'react-stripe-elements'
 
 import CardSection from './card-section'
 import UserSection from './user-section'
-import Coupon from '../../../../../design-library/molecules/forms/coupon-form/coupon'
+import Coupon from '../../../../../design-library/molecules/form-section/coupon-form/coupon'
 
 const CheckoutForm = (props) => {
   const [checkoutFormState, setCheckoutFormState] = useState({

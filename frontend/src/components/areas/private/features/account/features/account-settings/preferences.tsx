@@ -38,14 +38,14 @@ const Preferences = (props) => {
     const updatedSkills = skillsArray?.some(skill => skill === item)
       ? skillsArray?.filter(skill => skill !== item)
       : [...skillsArray, item]
-    await updateUser(user.id, { skills: updatedSkills?.join(',') })
+    await updateUser({ skills: updatedSkills?.join(',') })
   }
 
   const handleOSClick = async (item) => {
     const updatedOS = osArray?.includes(item)
       ? osArray.filter(os => os !== item)
       : [...osArray, item]
-    await updateUser(user.id, { os: updatedOS?.join(',') })
+    await updateUser({ os: updatedOS?.join(',') })
   }
 
   const listSkills = skillsList.map((item, index) => (

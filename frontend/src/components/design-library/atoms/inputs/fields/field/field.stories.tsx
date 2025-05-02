@@ -4,7 +4,7 @@ import Field from './field';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design Library/Atoms/Inputs/Field',
+  title: 'Design Library/Atoms/Inputs/Fields/Field',
   component: Field,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
@@ -26,6 +26,11 @@ Primary.args = {
   placeholder: 'Placeholder',
   disabled: false,
   help: false,
-  
+  completed: true,
   onChange: () => {},
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  completed: false,
 };

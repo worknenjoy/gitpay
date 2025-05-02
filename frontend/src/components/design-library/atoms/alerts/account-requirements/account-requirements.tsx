@@ -7,6 +7,7 @@ import { validAccount } from '../../../../../utils/valid-account';
 import api from '../../../../../consts';
 
 const AccountRequirements = ({ user, account, intl, onClick }) => {
+  const { completed = true } = account;
 
   const missingRequirements = () => {
     if (account?.data?.requirements?.currently_due?.length > 0) {
@@ -26,36 +27,35 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
   }
   return (
     !validAccount(user, account) ?
-      <ReactPlaceholder ready={account.completed} type='media' rows={5} showLoadingAnimation={true}>
-        <Alert
-          style={{ marginBottom: 20 }}
-          severity='warning'
-          action={
-            <Button
-              size='small'
-              onClick={onClick}
-              variant='contained'
-              color='secondary'
-            >
-              <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
-            </Button>
-          }
-        >
-          <Typography variant='subtitle1' gutterBottom>
-            <FormattedMessage id='profile.transfer.notactive' defaultMessage='Your account is not active, please finish the setup of your account to receive payouts' />
-          </Typography>
-          {missingRequirements() &&
-            <>
-              <Typography variant='subtitle1' gutterBottom>
-                <FormattedMessage id='profile.transfer.missingrequirements' defaultMessage='Missing requirements:' />
-              </Typography>
-              <ul>
-                {missingRequirements()}
-              </ul>
-            </>
-          }
-        </Alert>
-      </ReactPlaceholder>
+      <Alert
+        completed={completed}
+        style={{ marginBottom: 20 }}
+        severity='warning'
+        action={
+          <Button
+            size='small'
+            onClick={onClick}
+            variant='contained'
+            color='secondary'
+          >
+            <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
+          </Button>
+        }
+      >
+        <Typography variant='subtitle1' gutterBottom>
+          <FormattedMessage id='profile.transfer.notactive' defaultMessage='Your account is not active, please finish the setup of your account to receive payouts' />
+        </Typography>
+        {missingRequirements() &&
+          <>
+            <Typography variant='subtitle1' gutterBottom>
+              <FormattedMessage id='profile.transfer.missingrequirements' defaultMessage='Missing requirements:' />
+            </Typography>
+            <ul>
+              {missingRequirements()}
+            </ul>
+          </>
+        }
+      </Alert>
       :
       null
   );

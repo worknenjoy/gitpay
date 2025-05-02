@@ -3,12 +3,12 @@ import Roles from '../components/areas/private/features/roles/user-roles'
 import { updateUser } from '../actions/userActions'
 import { fetchRoles, createRoles, deleteRoles } from '../actions/userRoleActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     roles: state.roles,
-    user: getUser(state)
+    user: getUserData(state)
   }
 }
 

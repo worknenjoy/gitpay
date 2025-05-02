@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { searchTransfer, updateTransfer, fetchTransfer } from '../actions/transferActions';
 import { fetchAccount } from '../actions/userActions'
 import Transfers from '../components/areas/private/features/transfers/transfers';
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
     account: state.account,
     transfers: state.transfers,
     transfer: state.transfer

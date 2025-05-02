@@ -181,7 +181,7 @@ describe('User Actions', () => {
 
     const expectedActions = [
       { type: types.UPDATE_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: typesNotification.ADD_NOTIFICATION, text: 'Invalid phone - \"(+  )            \" is not a valid phone number', open: true },
+      { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.update.error.missing', open: true },
       { type: types.UPDATE_USER_ACCOUNT_ERROR, completed: true, error: new Error('Request failed with status code 401') }
     ]
     const store = mockStore({ intl: { messages: { 'actions.user.account.update.error.phone': 'Invalid phone' } } })

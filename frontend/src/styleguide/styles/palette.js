@@ -20,12 +20,12 @@ const Palette = {
     },
     h5: {
       fontWeight: 500,
-      fontSize: 21,
-      lineHeight: '24px',
+      fontSize: 28,
+      lineHeight: '28px',
       color: '#353A42'
     },
     h6: {
-      fontWeight: 500,
+      fontWeight: 200,
       fontSize: 16,
       lineHeight: '20px',
       color: '#353A42'

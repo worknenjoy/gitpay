@@ -9,13 +9,14 @@ const getCurrency = (country) => {
   return currencyMap.currencyMap[country]
 }
 
-module.exports = Promise.method(function userBankAccountCreate (userParameters) {
-  const userCountry = userParameters.country
-  const userCurrency = userParameters.currency || getCurrency(userCountry)
+module.exports = Promise.method(function userBankAccountCreate ({ userParams, bankAccountParams }) {
+  console.log('userBankAccountCreate', userParams, bankAccountParams)
+  const userCountry = userParams.country
+  const userCurrency = userParams.currency || getCurrency(userCountry)
   return models.User
     .findOne(
       {
-        where: { id: userParameters.id }
+        where: { id: userParams.id }
       }
     )
     .then(data => {
@@ -27,11 +28,12 @@ module.exports = Promise.method(function userBankAccountCreate (userParameters) 
           return stripe.accounts.createExternalAccount(data.dataValues.account_id, {
             external_account: {
               object: 'bank_account',
-              country: userCountry,
-              currency: userCurrency,
-              account_holder_type: 'individual',
-              routing_number: userParameters.routing_number,
-              account_number: userParameters.account_number
+              country: bankAccountParams.country || userCountry,
+              currency: bankAccountParams.currency || userCurrency,
+              account_holder_type: bankAccountParams.account_holder_type,
+              account_holder_name: bankAccountParams.account_holder_name,
+              routing_number: bankAccountParams.routing_number,
+              account_number: bankAccountParams.account_number
             }
           }).then(account => {
             return account

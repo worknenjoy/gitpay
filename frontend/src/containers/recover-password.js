@@ -2,11 +2,11 @@ import { connect } from 'react-redux'
 import { searchUser, resetPassword } from '../actions/loginActions'
 import { addNotification } from '../actions/notificationActions'
 import LoginPage from '../components/areas/private/components/session/login-page'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, props) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
   }
 }
 

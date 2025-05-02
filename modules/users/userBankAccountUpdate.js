@@ -3,11 +3,11 @@ const models = require('../../models')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
-module.exports = Promise.method(function userBankAccountUpdate(userParameters) {
+module.exports = Promise.method(function userBankAccountUpdate({ userParams, bank_account }) {
   return models.User
     .findOne(
       {
-        where: { id: userParameters.id }
+        where: { id: userParams.id }
       }
     )
     .then(data => {
@@ -19,8 +19,8 @@ module.exports = Promise.method(function userBankAccountUpdate(userParameters) {
               data.dataValues.account_id,
               bankAccount.id,
               {  
-                account_holder_name: userParameters.account_holder_name,
-                account_holder_type: userParameters.account_holder_type,
+                account_holder_name: bank_account.account_holder_name,
+                account_holder_type: bank_account.account_holder_type,
               }).then(account => {
                 return account
               })

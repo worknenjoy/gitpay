@@ -4,11 +4,11 @@ import { addNotification } from '../actions/notificationActions'
 import { listTasks, filterTasks, changeTaskTab } from '../actions/taskActions'
 import { listOrders, transferOrder, detailOrder, refundOrder, cancelOrder, updateOrder  } from '../actions/orderActions'
 import { getFilteredTasks } from '../selectors/tasks'
-import { getUser } from '../common/selectors/user/getUser'
+import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: getUser(state),
+    user: getUserData(state),
     orders: state.orders,
     order: state.order,
     tasks: getFilteredTasks(state),

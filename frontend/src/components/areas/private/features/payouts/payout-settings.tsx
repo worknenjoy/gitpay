@@ -62,9 +62,6 @@ const PayoutSettings = ({
   fetchAccount,
   fetchAccountCountries,
   updateUser,
-  deleteUser,
-  changePassword,
-  addNotification
 }) => {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = React.useState('bank');
@@ -117,10 +114,6 @@ const PayoutSettings = ({
                   account={account}
                   countries={countries}
                   fetchAccount={fetchAccount}
-                  updateUser={updateUser}
-                  deleteUser={deleteUser}
-                  changePassword={changePassword}
-                  addNotification={addNotification}
                   createAccount={createAccount}
                   updateAccount={updateAccount}
                   bankAccount={bankAccount}

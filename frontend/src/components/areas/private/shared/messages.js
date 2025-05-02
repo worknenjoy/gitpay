@@ -7,7 +7,7 @@ const messages = defineMessages({
   },
   documentProvide: {
     id: 'account.document.id.provide',
-    defaultMessage: 'Please provide your identification number'
+    defaultMessage: 'Please provide your id'
   },
   addressLine1: {
     id: 'account.address.line1',

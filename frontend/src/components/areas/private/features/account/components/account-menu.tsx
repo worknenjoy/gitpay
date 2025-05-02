@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import {
   Web,
   AccountBox as AccountIcon,
+  Settings as SettingsIcon,
 } from '@material-ui/icons'
 import { nameInitials } from 'name-initials';
 
@@ -111,6 +112,14 @@ export default function AccountMenu({
           </Avatar>
           <Typography variant='body2' color='text'>
             <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
+           </Typography>
+        </MenuItem>
+        <MenuItem onClick={(e) => history.push('/profile/payout-settings')} style={{margin: 5}}>
+          <Avatar>
+            <SettingsIcon width={12} />
+          </Avatar>
+          <Typography variant='body2' color='text'>
+            <FormattedMessage id="profile.accountMenu.payoutSettings" defaultMessage="Payout Settings" />
            </Typography>
         </MenuItem>
         <Divider />

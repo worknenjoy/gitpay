@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateOrganization: (org) => dispatch(updateOrganization(org)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
     changePassword: (data) => dispatch(changePassword(data)),
-    resendActivationEmail: (userId) => dispatch(resendActivationEmail(userId)),
+    resendActivationEmail: () => dispatch(resendActivationEmail()),
     deleteUser: (user) => dispatch(deleteUser(user)),
     addNotification: (message) => dispatch(addNotification(message)),
     closeNotification: (message) => dispatch(closeNotification(message)),

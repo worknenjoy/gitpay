@@ -158,7 +158,7 @@ exports.activate_user = async (req, res) => {
 }
 
 exports.resend_activation_email = async (req, res) => {
-  const { userId } = req.query
+  const { id: userId } = req.user
   try {
     const foundUser = await models.User.findOne({ where: { id: userId } })
     if (!foundUser) res.status(401)
@@ -283,9 +283,19 @@ exports.userUpdate = (req, res) => {
     })
 }
 
+exports.userFetch = (req, res) => {
+  const userId = req.user.id
+  user.userFetch(userId).then((data) => {
+    res.status(200).send(data)
+  }).catch(error => {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.status(400).send(error)
+  })
+}
+
 exports.accountUpdate = (req, res) => {
-  req.body.id = req.user.id
-  user.userAccountUpdate(req.body)
+  user.userAccountUpdate({userParams: req.user, accountParams: req.body})
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -296,8 +306,7 @@ exports.accountUpdate = (req, res) => {
 }
 
 exports.createBankAccount = (req, res) => {
-  req.body.id = req.user.id
-  user.userBankAccountCreate(req.body)
+  user.userBankAccountCreate({userParams: req.user, bankAccountParams: req.body})
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -308,7 +317,7 @@ exports.createBankAccount = (req, res) => {
 }
 
 exports.updateBankAccount = (req, res) => {
-  user.userBankAccountUpdate({...req.body, id: req.user.id})
+  user.userBankAccountUpdate({userParams: req.user, bank_account: req.body, })
     .then(data => {
       res.send(data)
     }).catch(error => {
