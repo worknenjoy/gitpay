@@ -119,14 +119,14 @@ const ProfileSidebar = ({
               category: <FormattedMessage id='account.profile.sidemenu.section.account' defaultMessage='Account' />,
               items: [
                 {
-                  include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                  include: true,
                   onClick: () => history.push('/profile/user-account'),
                   icon: <AccountIcon />,
                   label: <FormattedMessage id='account.profile.account.settings' defaultMessage='Account settings' />,
                   selected: selected === 7
                 },
                 {
-                  include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                  include: userTypes && (userTypes?.includes('contributor')),
                   onClick: () => history.push('/profile/payout-settings'),
                   icon: <PayoutSettingsIcon />,
                   label: <FormattedMessage id='account.profile.payout.settings' defaultMessage='Payout settings' />,

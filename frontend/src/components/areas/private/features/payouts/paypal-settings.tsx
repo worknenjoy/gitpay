@@ -66,7 +66,7 @@ const PaypalSettings = ({
 
   const handlePaypalAccount = (e) => {
     e.preventDefault()
-    updateUser(user.id, {
+    updateUser({
       paypal_id: e.target.paypal_email.value
     })
   }

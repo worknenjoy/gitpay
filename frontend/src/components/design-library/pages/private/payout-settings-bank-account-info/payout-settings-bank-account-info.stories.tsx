@@ -56,6 +56,8 @@ Default.args = {
       },
     },
   },
+  onChangeBankCode: () => {},
+  onSubmit: () => {},
 
 };
 
@@ -73,4 +75,10 @@ Loading.args = {
     completed: false,
     data: {},
   },
+  countries: {
+    completed: false,
+    data: {},
+  },
+  onChangeBankCode: () => {},
+  onSubmit: () => {},
 }

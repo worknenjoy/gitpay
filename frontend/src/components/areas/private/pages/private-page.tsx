@@ -22,6 +22,7 @@ const PrivatePage = ({
   createTask,
   updateUser,
   changePassword,
+  resendActivationEmail,
   addNotification,
   deleteUser,
   signOut,
@@ -29,8 +30,6 @@ const PrivatePage = ({
   getInfo,
 }) => {
   const history = useHistory()
-
-  const [openUpdateProfileDialog, setOpenUpdateProfileDialog] = React.useState(false)
 
   const { data } = user;
 
@@ -42,6 +41,7 @@ const PrivatePage = ({
     <PrivateBase
       createTask={createTask}
       signOut={signOut}
+      onResendActivationEmail={resendActivationEmail}
       user={user}
       bottomProps={
         {
@@ -56,11 +56,7 @@ const PrivatePage = ({
             (props) =>
             (<ProfileOptions
               {...props}
-              user={data}
-              onCreateTask={createTask}
-              addNotification={addNotification}
-              visible={openUpdateProfileDialog}
-              onClose={() => setOpenUpdateProfileDialog(false)}
+              user={user}
             />)
           } />
           <Route path='/profile/user-account' component={

@@ -217,7 +217,7 @@ const Roles = ({
   const handleSaveClick = async (e) => {
     e.preventDefault()
     try {
-      await updateUser(user.id, { Types: selectedRoles })
+      await updateUser({ Types: selectedRoles })
       addNotification(intl.formatMessage(messages.saveSuccess))
       onClose && onClose()
     } catch (e) {
@@ -257,7 +257,7 @@ const Roles = ({
   return (
     <Paper elevation={2} style={{ padding: '10px 20px 20px 20px' }}>
       <div className={classes.bigRow}>
-        <Typography variant='h5' noWrap>
+        <Typography variant='h4' noWrap>
           <FormattedMessage id='user.type.title' defaultMessage='What type of user are you?' />
         </Typography>
         <Typography variant='body2' color='textSecondary' component='p' noWrap>

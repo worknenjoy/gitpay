@@ -20,12 +20,11 @@ import {
 import nameInitials from 'name-initials';
 import { useHistory } from 'react-router-dom';
 
-
-
 export default function ProfileAccountMenu({
   user,
   onLogout
 }) {
+  const { Types } = user;
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -35,6 +34,10 @@ export default function ProfileAccountMenu({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const isFunding = Types && Types.some((type) => type.name === 'funding');
+  const isMaintainer = Types && Types.some((type) => type.name === 'maintainer');
+  const isContributor = Types && Types.some((type) => type.name === 'contributor');
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -116,6 +119,7 @@ export default function ProfileAccountMenu({
             <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
            </Typography>
         </MenuItem>
+        { isContributor && (
         <MenuItem onClick={(e) => history.push('/profile/payout-settings')} style={{margin: 5}}>
           <Avatar>
             <SettingsIcon fontSize={'small'} />
@@ -124,6 +128,7 @@ export default function ProfileAccountMenu({
             <FormattedMessage id="profile.accountMenu.payoutSettings" defaultMessage="Payout Settings" />
             </Typography>
         </MenuItem>
+        )}
         <Divider />
         {/* add later */}
         {/*<MenuItem onClick={handleClose}> */}

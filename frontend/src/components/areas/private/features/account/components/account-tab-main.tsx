@@ -55,7 +55,7 @@ const AccountTabMain = ({
 
   const handleUpdateAccount = (e) => {
     e.preventDefault();
-    updateUser && updateUser(user.id, { name: fieldName });
+    updateUser && updateUser({ name: fieldName });
   }
 
   const onChangePassword = async (e) => {

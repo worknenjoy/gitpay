@@ -533,11 +533,12 @@ const activateUser = (userId, token) => {
   }
 }
 
-const resendActivationEmail = (userId) => {
+const resendActivationEmail = () => {
+  validToken()
   return (dispatch) => {
     dispatch(resendActivationEmailRequested())
     return axios
-      .get(api.API_URL + `/auth/resend-activation-email?userId=${userId}`, { userId })
+      .get(api.API_URL + `/auth/resend-activation-email`)
       .then(user => {
         dispatch(addNotification('notifications.account.resend_activation_email.success'))
         // dispatch(fetchAccount());

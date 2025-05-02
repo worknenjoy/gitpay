@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Container, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Page, PageContent } from '../../../../../styleguide/components/Page';
@@ -7,7 +7,7 @@ import AccountHeader from '../../../organisms/layouts/account-header/account-hea
 import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
 import { useHistory } from 'react-router-dom';
 import ProfileHeader from '../../../molecules/sections/profile-header/profile-header';
-import { info } from 'console';
+import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -28,25 +28,61 @@ const useStyles = makeStyles((theme: Theme) => ({
   
 }));
 
+type PrivateBaseProps = {
+  children: React.ReactNode;
+  user: any;
+  createTask: () => void;
+  onResendActivationEmail?: () => void;
+  signOut: () => void;
+  profileHeaderProps?: {
+    title: string;
+    subtitle: string;
+  };
+  bottomProps?: {
+    info: {
+      bounties: number;
+      users: number;
+      tasks: number;
+    };
+    getInfo: () => void;
+  };
+};
+
 const PrivateBase = ({
   children,
   user,
   createTask,
+  onResendActivationEmail,
   signOut,
   profileHeaderProps = undefined,
   bottomProps = { info: { bounties: 0, users: 0, tasks: 0 }, getInfo: () => {} },
-}) => {
+}:PrivateBaseProps) => {
   const classes = useStyles();
   const history = useHistory();
-  const { data, completed } = user;
+  const { data = {}, completed } = user;
+  const { email_verified } = data;
+  const [ emailNotVerified, setEmailNotVerified ] = React.useState(false);
 
   const handleSignOut = () => {
     history.replace({ pathname: '/' })
     signOut()
   }
 
+  useEffect(() => {
+    if (email_verified === false) {
+      setEmailNotVerified(true);
+    }
+  }, [email_verified]);
+
   return (
     <Page>
+      {emailNotVerified &&
+        <ActivateAccountDialog
+          open={emailNotVerified}
+          completed={completed}
+          onResend={onResendActivationEmail}
+        />
+      }
       <AppBar
         component='div'
         classes={{ colorPrimary: classes.secondaryBar }}

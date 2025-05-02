@@ -5,7 +5,7 @@ import PayoutSettings from '../../src/components/design-library/pages/private/pa
 import PayoutSettingsBankAccount from '../../src/components/design-library/pages/private/payout-settings-bank-account/payout-settings-bank-account';
 
 export const withProfileTemplate = (Story: any, context: any) => {
-  const { user, profileHeaderProps } = context.args;
+  const { user, profileHeaderProps, onResendActivationEmail } = context.args;
   
   return (
     <PrivateBase
@@ -13,6 +13,7 @@ export const withProfileTemplate = (Story: any, context: any) => {
       signOut={() => {}}
       user={user}
       profileHeaderProps={profileHeaderProps}
+      onResendActivationEmail={onResendActivationEmail}
     >
       <Story />
     </PrivateBase>

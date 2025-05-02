@@ -158,7 +158,7 @@ exports.activate_user = async (req, res) => {
 }
 
 exports.resend_activation_email = async (req, res) => {
-  const { userId } = req.query
+  const { id: userId } = req.user
   try {
     const foundUser = await models.User.findOne({ where: { id: userId } })
     if (!foundUser) res.status(401)
