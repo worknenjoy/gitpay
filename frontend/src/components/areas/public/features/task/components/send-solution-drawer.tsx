@@ -127,7 +127,7 @@ const SendSolutionDrawer = props => {
         <AccountRequirements
           user={ user }
           account={ account }
-          onClick={() => history.push('/profile/user-account/payouts')}
+          onClick={() => history.push('/profile/payout-settings')}
         />
         { Object.keys(props.taskSolution).length === 0 || editMode
           ? <React.Fragment>

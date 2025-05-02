@@ -200,7 +200,7 @@ const ProfileOptions = ({ user }) => {
                 </CardContent>
                 <CardActions className={classes.cardActions}>
                   <Button size="small" color="primary">
-                    <Link to={'/profile/user-account/payouts'}>
+                    <Link to={'/profile/payout-settings'}>
                       <FormattedMessage
                         id="account.profile.tasks.account.setup"
                         defaultMessage="Setup bank account"

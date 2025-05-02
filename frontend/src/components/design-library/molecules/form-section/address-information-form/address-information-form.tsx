@@ -26,7 +26,7 @@ const AddressInformationForm = ({
             name="address_line_1"
             type="text"
             placeholder="Enter your address line 1"
-            value={addressLine1}
+            defaultValue={addressLine1}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -35,7 +35,7 @@ const AddressInformationForm = ({
             name="address_line_2"
             type="text"
             placeholder="Enter your address line 2"
-            value={addressLine2}
+            defaultValue={addressLine2}
           />
         </Grid>
       </Grid>
@@ -46,7 +46,7 @@ const AddressInformationForm = ({
             name="city"
             type="text"
             placeholder="Enter your city"
-            value={city}
+            defaultValue={city}
           />
         </Grid>
         <Grid item xs={12} md={2}>
@@ -55,7 +55,7 @@ const AddressInformationForm = ({
             name="state"
             type="text"
             placeholder="Enter your state"
-            value={state}
+            defaultValue={state}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -64,7 +64,7 @@ const AddressInformationForm = ({
             name="postal_code"
             type="text"
             placeholder="Enter your zip code"
-            value={zipCode}
+            defaultValue={zipCode}
           />
         </Grid>
       </Grid>

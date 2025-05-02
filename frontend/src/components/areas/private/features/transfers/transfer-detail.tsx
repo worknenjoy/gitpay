@@ -96,7 +96,7 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
                       <Button
                         size='small'
                         onClick={() => {
-                          history.push('/profile/user-account/payouts')
+                          history.push('/profile/user-account/payout-settings')
                         }}
                         variant='contained'
                         color='secondary'
@@ -118,7 +118,7 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
                       <Button
                         size='small'
                         onClick={() => {
-                          history.push('/profile/user-account/payouts')
+                          history.push('/profile/payout-settings')
                         }}
                         variant='contained'
                         color='secondary'

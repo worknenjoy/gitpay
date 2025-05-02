@@ -20,8 +20,8 @@ const Palette = {
     },
     h5: {
       fontWeight: 500,
-      fontSize: 24,
-      lineHeight: '12px',
+      fontSize: 28,
+      lineHeight: '28px',
       color: '#353A42'
     },
     h6: {

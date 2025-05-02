@@ -444,7 +444,7 @@ class TopBar extends Component {
                   </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
                     <ListItem button onClick={ () => {
-                      window.location.assign('/#/profile/user-account/payouts')
+                      window.location.assign('/#/profile/payout-settings')
                       this.setState({ anchorEl: null })
                     } }>
                       <ListItemIcon>
