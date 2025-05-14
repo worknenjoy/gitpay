@@ -1,0 +1,95 @@
+name: 🐞 Bug Report
+description: Report a reproducible issue or problem in the Gitpay platform
+title: "[Bug] "
+labels: ["bug", "triage", "gitpay"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: 🔍 Summary
+      placeholder: "Example: Error when submitting a bounty"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 📋 Description
+      description: Describe the bug in detail
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🧪 Steps to Reproduce
+      description: How can we reproduce the problem?
+      placeholder: |
+        1. Go to…
+        2. Click on…
+        3. See error…
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: ✅ Expected Behavior
+      placeholder: "Example: The bounty should submit successfully"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: ❌ Actual Behavior
+      placeholder: "Example: Submitting throws a 500 error"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ui_related
+    attributes:
+      label: 🎨 Is this related to the UI?
+      options:
+        - Yes
+        - No
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 🖼️ Screenshot (Required for UI bugs)
+      description: Include a screenshot if the bug affects the UI
+      placeholder: "Paste an image or drag-and-drop here"
+    validations:
+      required: false
+    conditional:
+      field: ui_related
+      value: "Yes"
+
+  - type: input
+    id: browser
+    attributes:
+      label: 🌐 Browser / Device (if relevant)
+      placeholder: "Chrome 123.0, Firefox, iOS Safari"
+    validations:
+      required: false
+
+  - type: input
+    id: bounty
+    attributes:
+      label: 💰 Suggested Bounty (Optional)
+      description: If you'd like to fund this bug fix, suggest a bounty amount
+      placeholder: "$25 USD"
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: ℹ️ Additional Context
+      description: Any other details that might help us reproduce or understand the issue
+    validations:
+      required: false
