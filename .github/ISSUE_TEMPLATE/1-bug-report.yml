@@ -46,3 +46,38 @@ body:
       label: Relevant log output
       description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
       render: shell
+
+    - type: dropdown
+    id: has_bounty
+    attributes:
+      label: 💰 Is there a bounty for this issue?
+      description: Select whether this task has a reward
+      options:
+        - "Yes"
+        - "No"
+        - "Not yet, but maybe later"
+    validations:
+      required: true
+
+  - type: input
+    id: bounty_amount
+    attributes:
+      label: 💵 Bounty Amount (if any)
+      description: Enter a suggested or actual bounty amount
+      placeholder: "$50 USD"
+    validations:
+      required: false
+
+  - type: textarea
+    id: bounty_description
+    attributes:
+      label: 📜 Bounty Details (if applicable)
+      description: Add any rules, payout conditions, or links to Gitpay listings
+      placeholder: |
+        Example:
+        - Paid via Gitpay once PR is merged and reviewed
+        - Must include unit tests and follow code standards
+        - Listing: https://gitpay.me/tasks/1234
+    validations:
+      required: false
+
