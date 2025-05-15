@@ -1,95 +1,64 @@
-name: 🐞 Bug Report
-description: Report a reproducible issue or problem in the Gitpay platform
-title: "[Bug] "
-labels: ["bug", "triage", "gitpay"]
+name: Bug Report
+description: File a bug report.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+projects: ["octo-org/1", "octo-org/44"]
+assignees:
+  - octocat
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
   - type: input
-    id: summary
+    id: contact
     attributes:
-      label: 🔍 Summary
-      placeholder: "Example: Error when submitting a bounty"
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
     validations:
-      required: true
-
+      required: false
   - type: textarea
-    id: description
+    id: what-happened
     attributes:
-      label: 📋 Description
-      description: Describe the bug in detail
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
     validations:
       required: true
-
-  - type: textarea
-    id: steps
-    attributes:
-      label: 🧪 Steps to Reproduce
-      description: How can we reproduce the problem?
-      placeholder: |
-        1. Go to…
-        2. Click on…
-        3. See error…
-    validations:
-      required: true
-
-  - type: textarea
-    id: expected
-    attributes:
-      label: ✅ Expected Behavior
-      placeholder: "Example: The bounty should submit successfully"
-    validations:
-      required: true
-
-  - type: textarea
-    id: actual
-    attributes:
-      label: ❌ Actual Behavior
-      placeholder: "Example: Submitting throws a 500 error"
-    validations:
-      required: true
-
   - type: dropdown
-    id: ui_related
+    id: version
     attributes:
-      label: 🎨 Is this related to the UI?
+      label: Version
+      description: What version of our software are you running?
       options:
-        - Yes
-        - No
+        - 1.0.2 (Default)
+        - 1.0.3 (Edge)
+      default: 0
     validations:
       required: true
-
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
   - type: textarea
-    id: screenshot
+    id: logs
     attributes:
-      label: 🖼️ Screenshot (Required for UI bugs)
-      description: Include a screenshot if the bug affects the UI
-      placeholder: "Paste an image or drag-and-drop here"
-    validations:
-      required: false
-    conditional:
-      field: ui_related
-      value: "Yes"
-
-  - type: input
-    id: browser
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
     attributes:
-      label: 🌐 Browser / Device (if relevant)
-      placeholder: "Chrome 123.0, Firefox, iOS Safari"
-    validations:
-      required: false
-
-  - type: input
-    id: bounty
-    attributes:
-      label: 💰 Suggested Bounty (Optional)
-      description: If you'd like to fund this bug fix, suggest a bounty amount
-      placeholder: "$25 USD"
-    validations:
-      required: false
-
-  - type: textarea
-    id: context
-    attributes:
-      label: ℹ️ Additional Context
-      description: Any other details that might help us reproduce or understand the issue
-    validations:
-      required: false
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com). 
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
