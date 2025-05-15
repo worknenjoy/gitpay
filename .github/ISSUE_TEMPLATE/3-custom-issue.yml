@@ -1,0 +1,68 @@
+name: 📝 Custom Task
+description: Create a custom task or operational issue for Gitpay contributors
+title: "[Task] "
+labels: ["task", "gitpay"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: 🧩 Task Title
+      placeholder: "Example: Refactor the Stripe webhook handler"
+    validations:
+      required: true
+
+  - type: textarea
+    id: task_description
+    attributes:
+      label: 📄 Task Description
+      description: Explain what needs to be done, why, and any important context
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: ✅ Acceptance Criteria
+      placeholder: |
+        - [ ] Code is tested
+        - [ ] PR is linked to issue
+        - [ ] Docs are updated
+    validations:
+      required: true
+
+  - type: textarea
+    id: files
+    attributes:
+      label: 🗂️ Files / Areas Affected
+      placeholder: "Mention files, components, or features to touch"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: ui_related
+    attributes:
+      label: 🎨 Does this involve UI work?
+      options:
+        - Yes
+        - No
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 🖼️ Screenshot / Reference
+      description: Add a screenshot or mockup if visual work is involved
+    validations:
+      required: false
+    conditional:
+      field: ui_related
+      value: "Yes"
+
+  - type: input
+    id: bounty
+    attributes:
+      label: 💰 Suggested Bounty (Optional)
+      placeholder: "$75 USD"
+    validations:
+      required: false
