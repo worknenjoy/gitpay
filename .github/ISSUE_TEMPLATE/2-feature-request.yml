@@ -62,7 +62,7 @@ body:
     validations:
       required: false
 
-    - type: dropdown
+  - type: dropdown
     id: has_bounty
     attributes:
       label: 💰 Is there a bounty for this issue?
