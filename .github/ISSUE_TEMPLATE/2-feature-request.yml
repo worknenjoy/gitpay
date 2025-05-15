@@ -40,22 +40,19 @@ body:
     attributes:
       label: 🎨 Does this feature affect the UI?
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
     validations:
       required: true
 
   - type: textarea
     id: ui_mockup
     attributes:
-      label: 🖼️ UI Mockup / Screenshot
+      label: 🖼️ UI Mockup / Screenshot (if applicable)
       description: Include a mockup or visual reference
       placeholder: "Drag and drop files here"
     validations:
       required: false
-    conditional:
-      field: ui_related
-      value: "Yes"
 
   - type: input
     id: tech
