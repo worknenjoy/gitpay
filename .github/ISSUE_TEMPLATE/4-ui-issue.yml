@@ -1,0 +1,63 @@
+name: 🎨 UI Issue
+description: Report a problem or request related to the user interface
+title: "[UI] "
+labels: ["ui", "gitpay", "triage"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: ✏️ Summary
+      placeholder: "Example: Button misaligned on mobile"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 📋 Description
+      placeholder: "Describe the visual issue or component behavior"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🔍 Steps to Reproduce
+      placeholder: |
+        1. Go to home page
+        2. Resize to mobile
+        3. Observe button shift
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: ✅ Expected Result
+      placeholder: "Button should remain centered in mobile view"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 🖼️ Screenshot / Mockup
+      placeholder: "Paste image or drag and drop here"
+    validations:
+      required: true
+
+  - type: input
+    id: tech
+    attributes:
+      label: 🧰 UI Stack Used
+      placeholder: "React, Tailwind, AntD, Styled-components..."
+    validations:
+      required: false
+
+  - type: input
+    id: bounty
+    attributes:
+      label: 💰 Suggested Bounty (Optional)
+      placeholder: "$40 USD"
+    validations:
+      required: false
