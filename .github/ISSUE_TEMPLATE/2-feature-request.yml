@@ -1,0 +1,74 @@
+name: ✨ Feature Request
+description: Propose a new feature for Gitpay
+title: "[Feature] "
+labels: ["feature", "enhancement", "gitpay"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: 🚀 Feature Title
+      placeholder: "Example: Add bounty sorting by deadline"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: ❓ What problem does this solve?
+      description: Describe the problem or use case this feature addresses
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 💡 Proposed Solution
+      placeholder: "Describe how you think the feature should work"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔁 Alternatives Considered
+      placeholder: "Mention any workarounds you've tried"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: ui_related
+    attributes:
+      label: 🎨 Does this feature affect the UI?
+      options:
+        - Yes
+        - No
+    validations:
+      required: true
+
+  - type: textarea
+    id: ui_mockup
+    attributes:
+      label: 🖼️ UI Mockup / Screenshot
+      description: Include a mockup or visual reference
+      placeholder: "Drag and drop files here"
+    validations:
+      required: false
+    conditional:
+      field: ui_related
+      value: "Yes"
+
+  - type: input
+    id: tech
+    attributes:
+      label: 🛠️ Technical Notes (if any)
+      placeholder: "React, Tailwind, API endpoint, etc."
+    validations:
+      required: false
+
+  - type: input
+    id: bounty
+    attributes:
+      label: 💰 Suggested Bounty (Optional)
+      placeholder: "$50 USD"
+    validations:
+      required: false
