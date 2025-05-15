@@ -43,21 +43,19 @@ body:
     attributes:
       label: 🎨 Does this involve UI work?
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
     validations:
       required: true
 
   - type: textarea
     id: screenshot
     attributes:
-      label: 🖼️ Screenshot / Reference
+      label: 🖼️ Screenshot / Reference (if applicable)
       description: Add a screenshot or mockup if visual work is involved
+      placeholder: "Paste an image or drag-and-drop here"
     validations:
       required: false
-    conditional:
-      field: ui_related
-      value: "Yes"
 
   - type: input
     id: bounty
