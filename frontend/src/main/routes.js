@@ -12,7 +12,6 @@ import TaskContainer from '../containers/task'
 import TaskOrdersContainer from '../containers/task-orders'
 import TaskExplorer from '../containers/task-explorer'
 import TeamContainer from '../containers/team.js'
-import LoginPage from '../components/areas/private/components/session/login-page'
 import LoginPageContainer from '../containers/login-page'
 import RecoverPasswordContainer from '../containers/recover-password'
 import FourOFour from '../components/design-library/pages/public/four-o-four/four-o-four'
@@ -43,10 +42,10 @@ export default props => (
       <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter' component={ (props) => <TaskExplorerProjects {...props} /> } />
       <Route exact path='/tasks/:filter' component={ (props) => <TaskExplorer {...props} /> } />
       <Route exact path='/team' component={ TeamContainer } />
-      <Route exact path='/signin' component={ LoginPage } />
+      <Route exact path='/signin' component={ LoginPageContainer } />
       <Route exact path='/signin/:status' component={ LoginPageContainer } />
-      <Route exact path='/signup' component={ LoginPage } />
-      <Route exact path='/reset-password/:token' component={ RecoverPasswordContainer } />
+      <Route exact path='/signup' component={ LoginPageContainer } />
+      <Route exact path='/reset-password/:token' component={ LoginPageContainer } />
       <Route exact path='/activate/user/:userId/token/:token' component={ AccountActivation } />
       <Route exact path='/signup/:status' component={ LoginPageContainer } />
       <Route exact path='/token/:token' component={ Session } />
