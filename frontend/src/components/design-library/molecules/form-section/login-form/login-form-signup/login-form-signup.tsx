@@ -263,7 +263,6 @@ const LoginFormSignup = ({
     const validEmail = validateEmail(state.username)
     const validPassword = validatePassword(state.password)
     const validPasswordDontMatch = validatePasswordDontMatch(state.password, state.confirmPassword)
-    console.log('password state', state.password, validPassword)
 
     if (termsAgreed && validName && validEmail && validPassword && validPasswordDontMatch && state.captchaChecked) {
       try {
