@@ -258,19 +258,26 @@ const LoginFormSignup = ({
 
   const handleForm = async (e) => {
     e.preventDefault()
-    const termsAgreed = termsChecked(state.agreeTermsCheck)
-    const validName = validateName(state.name)
-    const validEmail = validateEmail(state.username)
-    const validPassword = validatePassword(state.password)
-    const validPasswordDontMatch = validatePasswordDontMatch(state.password, state.confirmPassword)
+    const { captchaChecked, agreeTermsCheck, name, username, password, confirmPassword, Types } = state
+    const termsAgreed = termsChecked(agreeTermsCheck)
+    const validName = validateName(name)
+    const validEmail = validateEmail(username)
+    const validPassword = validatePassword(password)
+    const validPasswordDontMatch = validatePasswordDontMatch(password, confirmPassword)
+    const validCaptcha = captchaChecked
 
-    if (termsAgreed && validName && validEmail && validPassword && validPasswordDontMatch && state.captchaChecked) {
+    if (!validCaptcha) {
+      setState({ ...state, error: { ...state.error, captcha: 'Please check the captcha' } })
+      return false
+    }
+
+    if (termsAgreed && validName && validEmail && validPassword && validPasswordDontMatch) {
       try {
         const response = await onSubmit({
-          name: state.name,
-          email: state.username,
-          password: state.password,
-          Types: state.Types,
+          name: name,
+          email: username,
+          password: password,
+          Types: Types,
         })
         const errorType = response?.error && response?.error?.response?.data.message
         if (errorType === 'user.exist') {
