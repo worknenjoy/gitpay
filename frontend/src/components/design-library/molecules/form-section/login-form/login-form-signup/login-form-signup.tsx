@@ -206,7 +206,7 @@ const LoginFormSignup = ({
   }
 
   const validatePassword = (password) => {
-    if (password.length < 3) {
+    if (password.length < 7) {
       setState({
         ...state,
         error: {
@@ -258,14 +258,14 @@ const LoginFormSignup = ({
 
   const handleForm = async (e) => {
     e.preventDefault()
-    
     const termsAgreed = termsChecked(state.agreeTermsCheck)
     const validName = validateName(state.name)
     const validEmail = validateEmail(state.username)
     const validPassword = validatePassword(state.password)
     const validPasswordDontMatch = validatePasswordDontMatch(state.password, state.confirmPassword)
+    console.log('password state', state.password, validPassword)
 
-    if (termsAgreed && validName && validEmail && validPassword && validPasswordDontMatch) {
+    if (termsAgreed && validName && validEmail && validPassword && validPasswordDontMatch && state.captchaChecked) {
       try {
         const response = await onSubmit({
           name: state.name,
@@ -278,7 +278,6 @@ const LoginFormSignup = ({
           window.location.assign('/#/signin')
         }
         else {
-          console.log('register user')
           window.location.assign('/#/signin')
           return false
         }

@@ -109,7 +109,7 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
 
   useEffect(() => {
     if(validatingPassword) {
-      if (password.length < 8) {
+      if (password.length < 7) {
         setError({ ...error, password: <FormattedMessage id='user.password.error.minimum' defaultMessage='Password must be at least 8 characters' /> })
       } else if (password.length > 72) {
         setError({ ...error, password: <FormattedMessage id='user.password.error.maximum' defaultMessage='Password cannot be longer than 72 characters' /> })
