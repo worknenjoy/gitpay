@@ -10,6 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
 import TermsDialog from '../../../dialogs/terms-dialog/terms-dialog'
 import PrivacyDialog from '../../../dialogs/privacy-dialog/privacy-dialog'
+import UserRoleField from '../../../../atoms/inputs/fields/user-role-field/user-role-field'
 
 const containUrl = (string) => {
   // Regular expression to match a basic URL structure
@@ -56,11 +57,10 @@ type LoginFormSignupProps = {
   action?: string
   onClose?: () => void
   noCancelButton?: boolean
-  validating?: boolean
-  password?: string
-  confirmPassword?: string
   agreeTermsCheckError?: boolean,
-  onSignin?: () => void
+  onSignin?: () => void,
+  roles?: any
+  fetchRoles?: () => void
 }
 
 const LoginFormSignup = ({
@@ -68,15 +68,15 @@ const LoginFormSignup = ({
   action,
   onClose,
   noCancelButton,
-  validating,
-  password,
-  confirmPassword,
   agreeTermsCheckError,
-  onSignin
+  onSignin,
+  roles,
+  fetchRoles,
 }: LoginFormSignupProps) => {
   const classes = useStyles()
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
   const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
+  const [validating, setValidating] = useState(false)
   const [state, setState] = useState({
     name: '',
     username: '',
@@ -84,6 +84,7 @@ const LoginFormSignup = ({
     confirmPassword: '',
     agreeTermsCheck: false,
     captchaChecked: false,
+    Types: [],
     error: {
       username: '',
       name: '',
@@ -94,11 +95,20 @@ const LoginFormSignup = ({
   })
 
   const handleChange = (name) => (event) => {
-    setState({ ...state, [name]: event.target.value })
+    const value = event.target.value
+    setState({ ...state, [name]: value })
+  }
+
+  const handleTypesChange = (name) => (checked) => {
+    setState({ ...state, [name]: checked })
   }
 
   const handleBlur = () => {
-    // handle blur logic here
+    setValidating(true)
+  }
+
+  const handleFocus = () => {
+    setValidating(false)
   }
 
   const handleAgreeTerms = () => {
@@ -196,7 +206,7 @@ const LoginFormSignup = ({
   }
 
   const validatePassword = (password) => {
-    if (password.length < 3) {
+    if (password.length < 7) {
       setState({
         ...state,
         error: {
@@ -248,24 +258,32 @@ const LoginFormSignup = ({
 
   const handleForm = async (e) => {
     e.preventDefault()
-    const termsAgreed = termsChecked(state.agreeTermsCheck)
-    const validName = validateName(state.name)
-    const validEmail = validateEmail(state.username)
-    const validPassword = validatePassword(state.password)
-    const validPasswordDontMatch = validatePasswordDontMatch(state.password, state.confirmPassword)
+    const { captchaChecked, agreeTermsCheck, name, username, password, confirmPassword, Types } = state
+    const termsAgreed = termsChecked(agreeTermsCheck)
+    const validName = validateName(name)
+    const validEmail = validateEmail(username)
+    const validPassword = validatePassword(password)
+    const validPasswordDontMatch = validatePasswordDontMatch(password, confirmPassword)
+    const validCaptcha = captchaChecked
+
+    if (!validCaptcha) {
+      setState({ ...state, error: { ...state.error, captcha: 'Please check the captcha' } })
+      return false
+    }
+
     if (termsAgreed && validName && validEmail && validPassword && validPasswordDontMatch) {
       try {
         const response = await onSubmit({
-          name: state.name,
-          email: state.username,
-          password: state.password
+          name: name,
+          email: username,
+          password: password,
+          Types: Types,
         })
         const errorType = response?.error && response?.error?.response?.data.message
         if (errorType === 'user.exist') {
           window.location.assign('/#/signin')
         }
         else {
-          console.log('register user')
           window.location.assign('/#/signin')
           return false
         }
@@ -296,9 +314,10 @@ const LoginFormSignup = ({
   useEffect(() => {
     process.env.NODE_ENV === 'development' && setState({ ...state, captchaChecked: true })
     process.env.NODE_ENV === 'test' && setState({ ...state, captchaChecked: true })
+    fetchRoles()
   }, [])
 
-  const { error } = state
+  const { error, password, confirmPassword } = state
 
   return (
     <form onSubmit={handleForm} action={action} method='POST' autoComplete='off'>
@@ -328,12 +347,12 @@ const LoginFormSignup = ({
           defaultValue={state.name}
         />
       </div>
-
       <div className={classes.margins}>
         <TextField
           name='username'
           onChange={handleChange('username')}
           onBlur={handleBlur}
+          onFocus={handleFocus}
           fullWidth
           InputLabelProps={{
             classes: {
@@ -356,12 +375,12 @@ const LoginFormSignup = ({
           defaultValue={state.username}
         />
       </div>
-
       <div className={classes.margins}>
         <TextField
           name='password'
           onChange={handleChange('password')}
           onBlur={handleBlur}
+          onFocus={handleFocus}
           fullWidth
           InputLabelProps={{
             classes: {
@@ -393,6 +412,7 @@ const LoginFormSignup = ({
           name='confirm_password'
           onChange={handleChange('confirmPassword')}
           onBlur={handleBlur}
+          onFocus={handleFocus}
           fullWidth
           InputLabelProps={{
             classes: {
@@ -414,7 +434,12 @@ const LoginFormSignup = ({
           defaultValue={state.confirmPassword}
         />
       </div>
-
+      <div className={classes.margins}>
+        <UserRoleField
+          roles={roles}
+          onChange={handleTypesChange('Types')}
+        />
+      </div>
       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {state.agreeTermsCheck

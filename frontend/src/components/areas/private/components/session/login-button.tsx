@@ -71,10 +71,10 @@ class LoginButton extends Component<LoginButtonProps> {
             <div>
               {mode !== 'reset' ? (
                 <>
-                  <Typography variant='h5' style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
+                  <Typography variant='h6' style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
                     <FormattedMessage id='account.login.title.welcome' defaultMessage='Welcome to Gitpay!' />
                   </Typography>
-                  <Typography style={{ marginBottom: 20 }} variant='body1' color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
+                  <Typography style={{ marginBottom: 20 }} variant='body2' color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
                     <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
                   </Typography>
                 </>

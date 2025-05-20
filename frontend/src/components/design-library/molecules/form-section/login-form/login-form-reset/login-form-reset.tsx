@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { useHistory, useParams } from 'react-router-dom'
 import {
   Button,
   TextField,
@@ -8,13 +9,6 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles'
 import { purple } from '@material-ui/core/colors'
-
-type LoginFormResetProps = {
-  action?: string
-  onClose?: () => void
-  onSignin?: () => void
-  noCancelButton?: boolean
-}
 
 const useStyles = makeStyles((theme) => ({
   cssLabel: {
@@ -48,38 +42,101 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const LoginFormReset = ({ action, noCancelButton, onClose, onSignin }:LoginFormResetProps) => {
+type LoginOnResetProps = {
+  password: string
+  token: string
+}
+
+type LoginFormResetProps = {
+  action?: string
+  onClose?: () => void
+  onSignin?: () => void
+  onReset?: ({ password, token}:LoginOnResetProps) => void
+  noCancelButton?: boolean
+}
+
+type ErrorStateType = {
+  password: boolean | JSX.Element
+  confirmPassword: boolean | JSX.Element
+}
+
+const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:LoginFormResetProps) => {
   const classes = useStyles()
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [validating, setValidating] = useState(false)
+  const { token } = useParams<{ token: string }>()
+
+  const [validatingPassword, setValidatingPassword] = useState(false)
+  const [validatingConfirmPassword, setValidatingConfirmPassword] = useState(false)
   const [password, setPassword] = useState('')
-  const [ error, setError ] = useState({
-    captcha: '',
-    email: '',
-    password: '',
-    username: ''
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [ error, setError ] = useState<ErrorStateType>({
+    password: false,
+    confirmPassword: false
   })
 
-  const handleChange = (setter) => (event) => {
-    setter(event.target.value)
+  const handleChangePassword = (event) =>{
+    setPassword(event.target.value)
   }
 
-  const handleBlur = () => {
-    setValidating(true)
+  const handleChangeConfirmPassword = (event) => {
+    setConfirmPassword(event.target.value)
   }
 
-  const submitByFormType = (event) => {
+  const handleBlurPassword = () => {
+    setValidatingPassword(true)
+  }
+
+  const handleFocusPassword = () => {
+    setValidatingPassword(false)
+  }
+
+  const handleBlurConfirmPassword = () => {
+    setValidatingConfirmPassword(true)
+  }
+
+  const handleFocusConfirmPassword = () => {
+    setValidatingConfirmPassword(false)
+  }
+
+  const validForm = !error.password && !error.confirmPassword
+
+  const submitByFormType = async (event) => {
     event.preventDefault()
-    // Add your form submission logic here
+    const password = event.target.password.value
+    if(validForm) {
+      await onReset({ password, token })
+    }
   }
+
+  useEffect(() => {
+    if(validatingPassword) {
+      if (password.length < 7) {
+        setError({ ...error, password: <FormattedMessage id='user.password.error.minimum' defaultMessage='Password must be at least 8 characters' /> })
+      } else if (password.length > 72) {
+        setError({ ...error, password: <FormattedMessage id='user.password.error.maximum' defaultMessage='Password cannot be longer than 72 characters' /> })
+      } else {
+        setError({ ...error, password: false })
+      }
+    }
+  }, [password, confirmPassword, validatingPassword])
+
+  useEffect(() => {
+    if(validatingConfirmPassword) {
+      if (password !== confirmPassword) {
+        setError({ ...error, confirmPassword: <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> })
+      } else {
+        setError({ ...error, confirmPassword: false })
+      }
+    }
+  }, [password, confirmPassword, validatingConfirmPassword])
 
   return (
     <form onSubmit={submitByFormType} action={action} method='POST' autoComplete='off'>
       <div className={ classes.margins }>
         <TextField
           name='password'
-          onChange={ handleChange('password') }
-          onBlur={ handleBlur }
+          onChange={ handleChangePassword }
+          onBlur={ handleBlurPassword }
+          onFocus={ handleFocusPassword }
           fullWidth
           InputLabelProps={ {
             classes: {
@@ -105,11 +162,12 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin }:LoginFormR
       </div>
       <div className={classes.margins}>
         <TextField
-          error={validating && password !== confirmPassword}
-          helperText={validating && password !== confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : ''}
+          error={ !!error.confirmPassword }
+          helperText={ error.confirmPassword }
           name='confirm_password'
-          onChange={handleChange(setConfirmPassword)}
-          onBlur={handleBlur}
+          onChange={handleChangeConfirmPassword}
+          onBlur={handleBlurConfirmPassword}
+          onFocus={ handleFocusConfirmPassword }
           fullWidth
           InputLabelProps={{
             classes: {

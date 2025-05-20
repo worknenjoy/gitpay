@@ -6,24 +6,22 @@ const expect = require('chai').expect
 const api = require('../server');
 const agent = request.agent(api);
 const models = require('../models');
-const { registerAndLogin, register, login } = require('./helpers')
+const { registerAndLogin, register, login, truncateModels} = require('./helpers')
 const nock = require('nock')
 const githubOrg = require('./data/github.org')
 const secrets = require('../config/secrets')
 
 describe("Users", () => {
 
-  beforeEach(() => {
-
+  beforeEach(async () => {
+    await truncateModels(models.Task);
+    await truncateModels(models.User);
+    await truncateModels(models.Assign);
+    await truncateModels(models.Order);
+    await truncateModels(models.Transfer);
+  })
+  afterEach(async () => {
     nock.cleanAll()
-
-    models.User.destroy({where: {}, truncate: true, cascade: true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-      if(rowDeleted === 1){
-        //console.log('Deleted successfully');
-      }
-    }, function(err){
-      //console.log(err);
-    });
   })
 
   describe('findAll User', () => {
@@ -172,6 +170,20 @@ describe("Users", () => {
               done(err);
             })
         })
+    })
+    it('register with user Types', async () => {
+      const res = await agent
+        .post('/auth/register')
+        .send({email: 'teste4343434322222@gmail.com', password: 'test', Types: ['1', '2']})
+        .expect('Content-Type', /json/)
+        .expect(200)
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.exist;
+      expect(res.body.Types).to.exist;
+      expect(res.body.Types[0].id).to.equal(1);
+      expect(res.body.Types[0].name).to.equal('funding');
+      expect(res.body.Types[1].id).to.equal(2);
+      expect(res.body.Types[1].name).to.equal('contributor');
     })
   })
 

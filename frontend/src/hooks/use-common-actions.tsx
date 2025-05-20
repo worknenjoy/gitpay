@@ -1,7 +1,18 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-const useCommonActions = ({ isLogged, registerUser, forgotPassword, createTask, loggedIn, info, getInfo, signOut }) => {
+const useCommonActions = ({ 
+  isLogged,
+  registerUser,
+  forgotPassword,
+  createTask,
+  loggedIn,
+  info,
+  getInfo,
+  signOut,
+  roles,
+  fetchRoles
+}) => {
   const history = useHistory();
 
   const handleSignupUser = async (data) => {
@@ -31,6 +42,8 @@ const useCommonActions = ({ isLogged, registerUser, forgotPassword, createTask, 
     },
     loginFormSignupFormProps: {
       onSubmit: handleSignupUser,
+      roles,
+      fetchRoles,
     },
     loginFormForgotFormProps: {
       onSubmit: handleForgotPassword,

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { createTask } from '../actions/taskActions'
 import { loggedIn, logOut, registerUser, forgotPassword } from '../actions/loginActions'
+import { fetchRoles } from '../actions/userRoleActions'
 import { info } from '../actions/infoActions'
 
 const CommonContainer = (WrappedComponent, customMapStateToProps = () => ({})) => {
@@ -12,6 +13,7 @@ const CommonContainer = (WrappedComponent, customMapStateToProps = () => ({})) =
   const mapStateToProps = (state, ownProps) => ({
     loggedIn: state.loggedIn,
     info: state.info.data,
+    roles: state.roles,
     ...customMapStateToProps(state), // 🔥 Allow dynamic Redux state injection!
     ...ownProps, // Ensure extra props passed from Router are kept
   });
@@ -24,6 +26,7 @@ const CommonContainer = (WrappedComponent, customMapStateToProps = () => ({})) =
      registerUser: (data) => dispatch(registerUser(data)),
      forgotPassword: (data) => dispatch(forgotPassword(data)),
      createTask: (task, history) => dispatch(createTask(task, history)),
+     fetchRoles: () => dispatch(fetchRoles()),
       ...ownProps, // Ensure extra props passed from Router are kept
    }
  }

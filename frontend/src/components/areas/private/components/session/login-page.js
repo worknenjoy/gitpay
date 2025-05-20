@@ -1,17 +1,19 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { withRouter, Link, Redirect } from 'react-router-dom'
-import LoginButton from './login-button'
+import { Link, Redirect, useParams, useHistory } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { withStyles, Card, CardContent, Typography } from '@material-ui/core'
-import Dialog from '@material-ui/core/Dialog'
+import { makeStyles, Card, CardContent, Typography, Dialog } from '@material-ui/core'
+import Background from 'images/login_bg.png'
+
 import TermsOfService from './terms-of-service'
 import PrivacyPolicy from './privacy-policy'
 import CookiePolicy from './cookie-policy'
+import LoginFormSignin from '../../../../design-library/molecules/form-section/login-form/login-form-signin/login-form-signin'
+import LoginFormSignup from '../../../../design-library/molecules/form-section/login-form/login-form-signup/login-form-signup'
+import LoginFormReset from '../../../../design-library/molecules/form-section/login-form/login-form-reset/login-form-reset'
+import LoginFormForgot from '../../../../design-library/molecules/form-section/login-form/login-form-forgot/login-form-forgot'
 
-
-import Background from 'images/login_bg.png'
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     height: '100%',
@@ -27,22 +29,22 @@ const styles = theme => ({
     backgroundRepeat: 'no-repeat',
   },
   card: {
-    minWidth: 400,
+    minWidth: 420,
     marginTop: 40,
     opacity: 0.8,
     overflow: 'visible',
   },
   cardContent: {
     textAlign: 'center',
-    position: 'relative'
+    position: 'relative',
   },
   title: {
-    fontSize: 12
+    fontSize: 12,
   },
   pos: {
-    marginBottom: 10
-  }
-})
+    marginBottom: 10,
+  },
+}))
 
 const Content = styled.div`
   margin-top: 10px;
@@ -50,96 +52,173 @@ const Content = styled.div`
 
 const logo = require('images/logo-complete.png')
 
-class LoginPage extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      mode: props.match.params.mode ? 'signin' : (props.match.params.token ? 'reset' : 'signin'),
-      openDialog: false,
-      cookie: false,
-      privacy: false,
-      terms: false
-    }
-  }
-  componentDidMount () {
-    if (this.props.match && this.props.match.params.status === 'invalid') {
-      this.props.addNotification && this.props.addNotification('user.invalid')
+const LoginPage = ({
+  addNotification,
+  searchUser,
+  user,
+  roles,
+  fetchRoles,
+  registerUser,
+  forgotPassword,
+  resetPassword,
+}) => {
+  const classes = useStyles()
+  const history = useHistory()
+  const { mode: modeParam, token, status } = useParams()
+
+  const [mode, setMode] = useState(modeParam ? 'signin' : token ? 'reset' : 'signin')
+  const [openDialog, setOpenDialog] = useState(false)
+  const [dialogType, setDialogType] = useState(null)
+
+  useEffect(() => {
+    if (status === 'invalid') {
+      addNotification && addNotification('user.invalid')
     }
 
-    this.props.searchUser && this.props.searchUser({recover_password_token: this.props.match.params.token})
-  }
+    searchUser && searchUser({ recover_password_token: token })
+  }, [status, token, addNotification, searchUser])
 
-  openDialog(e, type) {
+  useEffect(() => {
+    fetchRoles()
+  }, [])
+
+  useEffect(() => {
+    history.location.pathname === '/signin' && setMode('signin')
+    history.location.pathname === '/signup' && setMode('signup')
+    history.location.pathname === '/reset-password/:token' && setMode('reset')
+  }, [history])
+
+  const handleOpenDialog = (e, type) => {
     e.preventDefault()
-    this.setState({ [type]: true, openDialog: true })
+    setDialogType(type)
+    setOpenDialog(true)
   }
 
-  closeDialog() {
-    this.setState({ openDialog: false, cookie: false, privacy: false, terms: false })
+  const closeDialog = () => {
+    setOpenDialog(false)
+    setDialogType(null)
   }
 
-  renderDialog() {
-    const { cookie, privacy, terms } = this.state
-    if(cookie) {
+  const handleSignup = async (data) => {
+    await registerUser(data)
+    setMode('signin')
+  }
+
+  const renderDialog = () => {
+    if (dialogType === 'cookie') {
       return <CookiePolicy extraStyles={false} />
     }
-    if(privacy) {
+    if (dialogType === 'privacy') {
       return <PrivacyPolicy extraStyles={false} />
     }
-    if(terms) {
+    if (dialogType === 'terms') {
       return <TermsOfService />
     }
   }
 
-  render () {
-    const { classes, match, user } = this.props
-    const { openDialog } = this.state
+  if (mode === 'reset' && !token && !user?.id) {
+    return <Redirect to='/signin' />
+  }
 
-    return (
-      this.state.mode === 'reset' && !match.params.token && !user.id ? <Redirect to='/signin' /> :
-      <div className={ classes.container }>
-        <div style={ { display: 'flex', flexDirection: 'column' } }>
-          <Card className={ classes.card }>
-            <CardContent className={ classes.cardContent }>
-              <Link to='/#'>
-                <img src={ logo } width={ 210 } />
-              </Link>
-              <Content>
-                <LoginButton includeForm mode={ this.state.mode } noCancelButton user={this.props?.user} />
-              </Content>
-            </CardContent>
-          </Card>
-          <div style={ { marginTop: 10, textAlign: 'center' } }>
-            <Typography variant='caption' color='default' gutterBottom noWrap component='span'>
-              <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay - All rights reserved' />
-              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'cookie') } style={{display: 'inline-block', margin: '0 5px'}}>
-               
-                  <FormattedMessage id='legal.cookie.label' defaultMessage='Cookie Preferences' />
-                
-              </Link>
-              |
-              <Link to='#' color='inherit' onClick={(e) => this.openDialog(e, 'privacy') } style={{display: 'inline-block', margin: '0 5px'}} >
-              
-                  <FormattedMessage id='legal.prviacy.label' defaultMessage='Privacy' />
-                
-              </Link>
-              |
-              <Link to='#' color='inherit' onClick={ (e) => this.openDialog(e, 'terms') } style={{display: 'inline-block', margin: '0 5px'}}>
-              
-                  <FormattedMessage id='legal.terms.label' defaultMessage='Terms' />
-                
-              </Link>
-            </Typography>
-            <Dialog onClose={() => this.closeDialog()} open={openDialog}>
-              <div style={{padding: '10px 20px'}}>
-                {this.renderDialog()}
-              </div>
-            </Dialog>
-          </div>
+  return (
+    <div className={classes.container}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Card className={classes.card}>
+          <CardContent className={classes.cardContent}>
+            <Link to='/#'>
+              <img src={logo} width={140} alt="Logo" />
+            </Link>
+            <Content>
+              <Typography variant='h6' style={{ fontWeight: 'bold' }} gutterBottom>
+                <FormattedMessage id='account.login.title.welcome' defaultMessage='Welcome to Gitpay!' />
+              </Typography>
+              {mode === 'signin' || mode === 'singup' && (
+                <Typography style={{ marginBottom: 20 }} variant='body2' gutterBottom noWrap>
+                  <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
+                </Typography>
+              )}
+              {mode === 'reset' && (
+                <>
+                  <Typography variant='h6' style={{ fontWeight: 'bold' }} gutterBottom>
+                    <FormattedMessage id='account.login.title' defaultMessage='Recover your password' />
+                  </Typography>
+                  <Typography style={{ marginBottom: 20 }} variant='body1' gutterBottom noWrap>
+                    <FormattedMessage id='account.login.connect.form.reset' defaultMessage='To reset your password, type the new password and confirm' />
+                  </Typography>
+                </>
+              )}
+              {mode === 'forgot' && (
+                <>
+                  <Typography variant='h6' style={{ fontWeight: 'bold' }} gutterBottom>
+                    <FormattedMessage id='account.login.title' defaultMessage='Recover your password' />
+                  </Typography>
+                  <Typography style={{ marginBottom: 20 }} variant='body1' gutterBottom noWrap>
+                    <FormattedMessage id='account.login.connect.form.forgot' defaultMessage='To recover your password, type the email address you used to register and we will send you a link to reset it.' />
+                  </Typography>
+                </>
+              )}
+
+              {mode === 'signin' && (
+                <LoginFormSignin
+                  onSignup={() => setMode('signup')}
+                  onForgot={() => setMode('forgot')}
+                  noCancelButton
+                />
+              )}
+              {mode === 'signup' && (
+                <LoginFormSignup
+                  onSignin={() => setMode('signin')}
+                  onForgotPassword={() => setMode('reset')}
+                  onSubmit={handleSignup}
+                  roles={roles}
+                  fetchRoles={fetchRoles}
+                  addNotification={addNotification}
+                  noCancelButton
+                />
+              )}
+              {mode === 'reset' && (
+                <LoginFormReset
+                  onSignin={() => setMode('signin')}
+                  onClose={() => setMode('signin')}
+                  onReset={resetPassword}
+                  noCancelButton
+                />
+              )}
+              {mode === 'forgot' && (
+                <LoginFormForgot
+                  onSignin={() => setMode('signin')}
+                  onClose={() => setMode('signin')}
+                  onSubmit={forgotPassword}
+                  onCancelButton={() => setMode('signin')}
+                />
+              )}
+            </Content>
+          </CardContent>
+        </Card>
+        <div style={{ marginTop: 10, textAlign: 'center' }}>
+          <Typography variant='caption' color='default' gutterBottom noWrap component='span'>
+            <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay - All rights reserved' />
+            <Link to='#' color='inherit' onClick={(e) => handleOpenDialog(e, 'cookie')} style={{ display: 'inline-block', margin: '0 5px' }}>
+              <FormattedMessage id='legal.cookie.label' defaultMessage='Cookie Preferences' />
+            </Link>
+            |
+            <Link to='#' color='inherit' onClick={(e) => handleOpenDialog(e, 'privacy')} style={{ display: 'inline-block', margin: '0 5px' }}>
+              <FormattedMessage id='legal.prviacy.label' defaultMessage='Privacy' />
+            </Link>
+            |
+            <Link to='#' color='inherit' onClick={(e) => handleOpenDialog(e, 'terms')} style={{ display: 'inline-block', margin: '0 5px' }}>
+              <FormattedMessage id='legal.terms.label' defaultMessage='Terms' />
+            </Link>
+          </Typography>
+          <Dialog onClose={closeDialog} open={openDialog}>
+            <div style={{ padding: '10px 20px' }}>
+              {renderDialog()}
+            </div>
+          </Dialog>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-export default withRouter(withStyles(styles)(LoginPage))
+export default LoginPage
