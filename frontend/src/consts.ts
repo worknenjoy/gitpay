@@ -147,6 +147,7 @@ enum orderStripeStatuses {
 }
 
 enum orderSystemStatuses {
+  open = 'open',
   fail = 'fail',
   success = 'success',
   expired = 'expired',

@@ -1,11 +1,15 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { orange, green } from '@material-ui/core/colors';
+import { orange, green, yellow } from '@material-ui/core/colors';
 import Chip from '@material-ui/core/Chip';
 import { status } from '../../../../../consts'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    open: {
+      backgroundColor: yellow[700],
+      color: theme.palette.common.white,
+    },
     pending: {
       backgroundColor: orange[500],
       color: theme.palette.common.white,
@@ -37,7 +41,7 @@ type statusProps = {
   orderStatus: string;
 }
 
-type GetStatusProps = { label?: string, color?: 'pending' | 'succeeded' | 'failed' | 'cancelled' | 'canceled' | 'expired' | 'unknown' }
+type GetStatusProps = { label?: string, color?: 'open' | 'pending' | 'succeeded' | 'failed' | 'cancelled' | 'canceled' | 'expired' | 'unknown' }
 type GetStatus = (currentStatus:string) => GetStatusProps
 
 export default function PaymentStatus({ orderStatus }:statusProps) {
@@ -47,6 +51,12 @@ export default function PaymentStatus({ orderStatus }:statusProps) {
     const { order } = status;
     let choosenStatus:GetStatusProps = {};
     switch (currentStatus) {
+      case `${order.open}`:
+        choosenStatus = {
+          label: 'Open',
+          color: 'open',
+        };
+      break;
       case `${order.pending}`:
         choosenStatus = {
           label: 'Pending',

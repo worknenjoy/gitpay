@@ -43,7 +43,8 @@ const styles = theme => ({
   },
   button: {
     width: 100,
-    font: 10
+    font: 10,
+    margin: 5,
   },
   icon: {
     marginLeft: 5

@@ -21,6 +21,11 @@ Primary.args = {
   orderStatus: 'succeeded',
 };
 
+export const OpenStatus = Template.bind({});
+OpenStatus.args = {
+  orderStatus: 'open',
+};
+
 export const PendingStatus = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 PendingStatus.args = {
