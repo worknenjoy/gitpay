@@ -2,7 +2,7 @@ import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { cyan, blue, lime, orange } from '@material-ui/core/colors';
 import Chip from '@material-ui/core/Chip';
-import { status } from '../../../../../consts'
+import { status } from '../../../../../../consts'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

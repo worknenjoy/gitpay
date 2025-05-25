@@ -6,7 +6,7 @@ import ProfileSideBar from '../../../organisms/layouts/profile-sidebar/profile-s
 import AccountHeader from '../../../organisms/layouts/account-header/account-header';
 import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
 import { useHistory } from 'react-router-dom';
-import ProfileHeader from '../../../molecules/sections/profile-header/profile-header';
+import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header';
 import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog';
 
 const useStyles = makeStyles((theme: Theme) => ({

@@ -29,10 +29,10 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import media from '../../../../../styleguide/media'
 
-import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
+import { Breadcrumb } from '../../breadcrumbs/breadcrumb/breadcrumb'
 
-import { IssueLabelsList as TaskLabels } from './../../../molecules/lists/issue-labels-list/issue-labels-list'
-import { IssueReportDialog as TaskReport } from '../../../molecules/dialogs/issue-reports-dialog/issue-reports-dialog'
+import { IssueLabelsList as TaskLabels } from '../../lists/issue-labels-list/issue-labels-list'
+import { IssueReportDialog as TaskReport } from '../../dialogs/issue-reports-dialog/issue-reports-dialog'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'

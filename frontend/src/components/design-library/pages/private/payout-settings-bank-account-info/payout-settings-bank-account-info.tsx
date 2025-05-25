@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl';
-import ProfileHeader from '../../../molecules/sections/profile-header/profile-header';
+import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header';
 import BankAccountForm from '../../../organisms/forms/bank-account-form/bank-account-form'
 
 const PayoutSetingsBankAccountHolder = ({

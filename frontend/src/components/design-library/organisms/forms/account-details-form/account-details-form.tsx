@@ -1,12 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Typography } from '@material-ui/core';
 import Button from '../../../atoms/buttons/button/button';
 import CountryCurrency from '../../../molecules/form-section/country-currency-form/country-currency-form';
 import PersonalDetailsForm from '../../../molecules/form-section/personal-details-form/personal-details-form';
 import AddressInformationForm from '../../../molecules/form-section/address-information-form/address-information-form';
 import AcceptTermsField from '../../../atoms/inputs/fields/accept-terms-field/accept-terms-field';
 import Alert from '../../../atoms/alerts/alert/alert';
-import { Typography } from '@material-ui/core';
+import ProfileSecondaryHeader from '../../../molecules/headers/profile-secondary-header/profile-secondary-header';
 
 const errorMapping = {
   'individual[dob][day]': 'Invalid day of birth',
@@ -29,14 +30,21 @@ const AccountDetailsForm = ({
   onChange
 }) => {
   const { data = {}, completed, error = {} } = account;
-  const { individual = {}, currency } = data;
+  const { individual = {}, capabilities = {}, currency } = data;
   const { tos_acceptance = {}, country = '' } = data;
+  const { transfers: accountHolderStatus} = capabilities;
   const { address = {} } = individual;
   const { date } = tos_acceptance;
   const { line1 = '', line2 = '', city = '', state = '', postal_code = '' } = address;
   
   return (
     <form onSubmit={onSubmit}>
+      <ProfileSecondaryHeader
+        title={<FormattedMessage id='payout-settings.bank-account-holder' defaultMessage='Account holder details' />}
+        subtitle={<FormattedMessage id='payout-settings.bank-account-holder.description' defaultMessage='Please provide your information to activate your bank account.' />}
+        status={accountHolderStatus}
+        completed={completed}
+      />
       {error.raw && (
         <Alert
           severity="error"

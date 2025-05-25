@@ -2,7 +2,7 @@ import React from 'react';
 import IssueHeader from './issue-header';
 
 export default {
-  title: 'Design Library/Molecules/Sections/IssueHeader',
+  title: 'Design Library/Molecules/Headers/IssueHeader',
   component: IssueHeader,
   argTypes: {
     title: { control: 'text' },

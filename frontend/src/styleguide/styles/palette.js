@@ -25,8 +25,8 @@ const Palette = {
       color: '#353A42'
     },
     h6: {
-      fontWeight: 200,
-      fontSize: 16,
+      fontWeight: 400,
+      fontSize: 21,
       lineHeight: '20px',
       color: '#353A42'
     },
