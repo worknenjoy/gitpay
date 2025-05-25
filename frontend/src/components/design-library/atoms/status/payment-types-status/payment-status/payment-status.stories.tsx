@@ -4,7 +4,7 @@ import PaymentStatus from './payment-status';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design Library/Atoms/Status/Payment Status',
+  title: 'Design Library/Atoms/Status/Payments/PaymentStatus',
   component: PaymentStatus,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {

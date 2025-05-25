@@ -6,7 +6,7 @@ import ReactPlaceholder from 'react-placeholder';
 import ShowMoreText from 'react-show-more-text'
 import { marked } from 'marked'
 import parse from 'html-react-parser';
-import IssueHeader from '../../../molecules/sections/issue-header/issue-header';
+import IssueHeader from '../../../molecules/headers/issue-header/issue-header';
 import IssueAuthorList from '../../../molecules/lists/issue-author-list/issue-author-list';
 
 const IssueContent = ({ user, project, organization, updateTask, reportTask, logged, task, messageAuthor }) => {

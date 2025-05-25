@@ -4,7 +4,7 @@ import InvoiceStatus from './invoice-status';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Design Library/Atoms/Status/Invoice Status',
+  title: 'Design Library/Atoms/Status/Payments/Invoice Status',
   component: InvoiceStatus,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
