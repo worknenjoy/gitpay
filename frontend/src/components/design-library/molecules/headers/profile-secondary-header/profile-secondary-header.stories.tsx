@@ -32,6 +32,5 @@ export const Loading = Template.bind({});
 Loading.args = {
   title: 'Loading Profile Header',
   subtitle: 'This is a loading state',
-  status: 'pending',
-  completed: false,
+  aside: <span>Loading...</span>
 };

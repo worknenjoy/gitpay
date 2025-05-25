@@ -64,13 +64,17 @@ const BaseStatus = ({ status, statusList, classes, completed = true }:statusProp
       showLoadingAnimation
       style={{ width: 100, height: 32, display: 'inline-block' }}
     >
-      <Chip 
-        size="small"
-        label={label}
-        className={classes[color]}
-        icon={icon}
-        {...extraProps}
-      />
+      {status ? 
+        <Chip 
+          size="small"
+          label={label}
+          className={classes[color]}
+          icon={icon}
+          {...extraProps}
+        /> 
+        :
+        <></>
+      }
     </ReactPlaceholder>
   );
 }
