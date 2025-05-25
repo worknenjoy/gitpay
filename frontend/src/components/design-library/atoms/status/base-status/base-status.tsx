@@ -23,14 +23,15 @@ const BaseStatus = ({ status, statusList, classes, completed = true }:statusProp
 
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
 
-  const currentStatus = statusList.find((item) => item.status === status)
+  const currentStatus = statusList.find((item) => item.status === status) || statusList.find((item) => item.status === 'unknown')
 
-  const { label = '', color, icon, message } = currentStatus;
+  const { label , color, icon, message } = currentStatus;
   
   // Custom delete icon with tooltip
   const deleteIconWithTooltip = (
+    message && 
     <Tooltip
-      title={message || 'Click for more information'}
+      title={message}
       open={tooltipOpen}
       onClose={() => setTooltipOpen(!tooltipOpen)}
       disableFocusListener
@@ -50,7 +51,7 @@ const BaseStatus = ({ status, statusList, classes, completed = true }:statusProp
     </Tooltip>
   );
 
-  const extraProps = status === 'active' ? {} : { 
+  const extraProps = message && { 
     deleteIcon: deleteIconWithTooltip,
     onDelete: () => setTooltipOpen(true)
   };

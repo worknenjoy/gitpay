@@ -8,6 +8,7 @@ import AddressInformationForm from '../../../molecules/form-section/address-info
 import AcceptTermsField from '../../../atoms/inputs/fields/accept-terms-field/accept-terms-field';
 import Alert from '../../../atoms/alerts/alert/alert';
 import ProfileSecondaryHeader from '../../../molecules/headers/profile-secondary-header/profile-secondary-header';
+import AccountHolderStatus from '../../../atoms/status/account-status/account-holder-status/account-holder-status';
 
 const errorMapping = {
   'individual[dob][day]': 'Invalid day of birth',
@@ -42,8 +43,12 @@ const AccountDetailsForm = ({
       <ProfileSecondaryHeader
         title={<FormattedMessage id='payout-settings.bank-account-holder' defaultMessage='Account holder details' />}
         subtitle={<FormattedMessage id='payout-settings.bank-account-holder.description' defaultMessage='Please provide your information to activate your bank account.' />}
-        status={accountHolderStatus}
-        completed={completed}
+        aside={
+          <AccountHolderStatus
+            status={accountHolderStatus}
+            completed={completed}
+          />
+        }
       />
       {error.raw && (
         <Alert
