@@ -45,7 +45,7 @@ const AccountHolderStatus: React.FC<AccountHolderStatusProps> = ({
   const statusList = [
     { status: 'pending', label: 'Pending', color: 'pending', icon: <InfoIcon className={classes.pending} />, message: 'Your status is pending. Please provide additional information to complete your profile.' },
     { status: 'active', label: 'Active', color: 'active', icon: <ActiveIcon className={classes.active} /> },
-    { status: 'inactive', label: 'Inactive', color: 'inactive', icon: <InactiveIcon className={classes.inactive} />, message: 'Your account is inactive. Please contact support for assistance.' },
+    { status: 'inactive', label: 'Inactive', color: 'inactive', icon: <InactiveIcon className={classes.inactive} />, message: 'Your account is inactive. Please complete all required information. If your account remains inactive, contact support at issues@gitpay.me for assistance.' },
     { status: 'unknown', label: 'Unknown', color: 'unknown', icon: <QuestionInfoIcon className={classes.unknown} />, message: 'Your status is unknown. Please check back later.' },
   ];
 
