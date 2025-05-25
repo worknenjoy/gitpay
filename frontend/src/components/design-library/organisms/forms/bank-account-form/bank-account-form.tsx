@@ -55,7 +55,7 @@ const BankAccountForm = ({
       <ProfileSecondaryHeader
         title={<FormattedMessage id='payout-settings.bank-account-info.title' defaultMessage='Bank account information' />}
         subtitle={<FormattedMessage id='payout-settings.bank-account-info.description' defaultMessage='Please provide your bank account activation to receive payouts' />}
-        aside={status && 
+        aside={ 
           <BankAccountStatus status={status} completed={completed} />
         }
       />

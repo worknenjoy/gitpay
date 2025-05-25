@@ -22,12 +22,70 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      padding: 8,
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   },
   countryItem: {
     display: 'inline-block',
     textAlign: 'center',
-    padding: 25
+    padding: 25,
+    [theme.breakpoints.down('sm')]: {
+      padding: 10,
+      margin: 8,
+      width: '100%',
+      maxWidth: 200,
+      boxSizing: 'border-box',
+      flex: '1 1 100%',
+      minWidth: 0,
+      fontSize: '0.8rem',
+    }
+  },
+  fullWidthMobile: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: '1 1 100%',
+      padding: 12,
+      minWidth: 0,
+      width: '100%',
+      boxSizing: 'border-box',
+      fontSize: '0.7rem',
+    },
+  },
+  actionsWrapper: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '8px 16px',
+      boxSizing: 'border-box',
+    },
+  },
+  creditTextMobile: {
+    [theme.breakpoints.down('sm')]: {
+      borderTop: '1px solid #e0e0e0',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      order: 3,
+    },
+  },
+  buttomPrimaryActionMobile: {
+    [theme.breakpoints.down('sm')]: {
+      order: 1
+    },
+  },
+  buttomSecondaryActionMobile: {
+    [theme.breakpoints.down('sm')]: {
+      order: 2,
+      marginTop: 8,
+      marginBottom: 8,
+    },
   }
 }));
 
@@ -112,8 +170,10 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
           </DialogContentText>
           <div className={classes.countryContainer}>{getCountryButtons()}</div>
         </DialogContent>
-        <DialogActions>
-          <DialogContent id="alert-dialog-footer">
+        <DialogActions
+          className={classes.fullWidthMobile}
+        >
+          <DialogContent id="alert-dialog-footer" className={classes.creditTextMobile}>
             <DialogContentText>
               Icons made by{' '}
               <a href="http://www.freepik.com/" title="Freepik">
@@ -155,39 +215,43 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
               </a>
             </DialogContentText>
           </DialogContent>
-          <Button
-            onClick={(e) =>
-              onClose(e, {
-                country: null,
-                code: null,
-                image: null
-              })
-            }
-            size="large"
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            onClick={(e) => {
-              onSelectCountry(currentCountry);
-              onClose(e, {
-                country: currentCountry.label,
-                code: currentCountry.code,
-                image: currentCountry.image
-              })
-            }}
-            size="large"
-            color="secondary"
-            autoFocus
-            style={{
-              minWidth: 'auto'
-            }}
-          >
-            <FormattedMessage id='dialog.picker.choose' defaultMessage={`Choose {country}`} values={{
-              country: currentCountry.label
-            }} /> 
-          </Button>
+          
+            <Button
+              onClick={(e) =>
+                onClose(e, {
+                  country: null,
+                  code: null,
+                  image: null
+                })
+              }
+              size="large"
+              className={classes.buttomSecondaryActionMobile}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              onClick={(e) => {
+                onSelectCountry(currentCountry);
+                onClose(e, {
+                  country: currentCountry.label,
+                  code: currentCountry.code,
+                  image: currentCountry.image
+                })
+              }}
+              size="large"
+              color="secondary"
+              autoFocus
+              style={{
+                minWidth: 'auto'
+              }}
+              className={classes.buttomPrimaryActionMobile}
+            >
+              <FormattedMessage id='dialog.picker.choose' defaultMessage={`Choose {country}`} values={{
+                country: currentCountry.label
+              }} /> 
+            </Button>
+          
         </DialogActions>
       </Dialog>
     </div>
