@@ -18,14 +18,14 @@ export const WithStatus = Template.bind({});
 WithStatus.args = {
   title: 'Profile Header with Status',
   subtitle: 'This is a subtitle with status',
-  status: 'active',
+  aside: <span>Status: Active</span>,
 }
 
 export const WithPendingStatus = Template.bind({});
 WithPendingStatus.args = {
   title: 'Profile Header with Pending Status',
   subtitle: 'This is a subtitle with pending status',
-  status: 'pending',
+  aside: <span>Status: Pending</span>,
 };
 
 export const Loading = Template.bind({});

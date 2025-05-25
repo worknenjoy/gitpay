@@ -3,15 +3,16 @@ import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder';
-import AccountTypeField from '../../../../design-library/atoms/inputs/fields/account-type-field/account-type-field';
-import CountrySelectField from '../../../../design-library/atoms/inputs/fields/country-select-field/country-select-field';
-import BankCurrencyField from '../../../../design-library/atoms/inputs/fields/bank-currency-field/bank-currency-field';
-import BankSelectField from '../../../../design-library/atoms/inputs/fields/bank-select-field/bank-select-field';
-import Field from '../../../../design-library/atoms/inputs/fields/field/field';
-import Button from '../../../../design-library/atoms/buttons/button/button';
+import AccountTypeField from '../../../atoms/inputs/fields/account-type-field/account-type-field';
+import CountrySelectField from '../../../atoms/inputs/fields/country-select-field/country-select-field';
+import BankCurrencyField from '../../../atoms/inputs/fields/bank-currency-field/bank-currency-field';
+import BankSelectField from '../../../atoms/inputs/fields/bank-select-field/bank-select-field';
+import Field from '../../../atoms/inputs/fields/field/field';
+import Button from '../../../atoms/buttons/button/button';
 import BankAccountNumberForm from '../../../molecules/form-section/bank-account-number-form/bank-account-number-form';
-import Alert from '../../../../design-library/atoms/alerts/alert/alert';
-
+import Alert from '../../../atoms/alerts/alert/alert';
+import ProfileSecondaryHeader from '../../../molecules/headers/profile-secondary-header/profile-secondary-header';
+import BankAccountStatus from '../../../atoms/status/account-status/bank-account-status/bank-account-status';
 
 const errorMapping = {
   'external_account[account_number]': 'Invalid account number or iban',
@@ -40,7 +41,7 @@ const BankAccountForm = ({
 }) => {
   const classes = useStyles();
   const { data, completed, error = {} } = bankAccount || {};
-  const { id, account_holder_name, account_holder_type, account_number, routing_number, last4, country, currency } = data || {};
+  const { id, status, account_holder_name, account_holder_type, account_number, routing_number, last4, country, currency } = data || {};
   const [ ibanMode, setIbanMode ] = React.useState(false);
   const [ currentCountry, setCurrentCountry ] = React.useState(country);
 
@@ -51,6 +52,13 @@ const BankAccountForm = ({
 
   return (
     <form onSubmit={onSubmit}>
+      <ProfileSecondaryHeader
+        title={<FormattedMessage id='payout-settings.bank-account-info.title' defaultMessage='Bank account information' />}
+        subtitle={<FormattedMessage id='payout-settings.bank-account-info.description' defaultMessage='Please provide your bank account activation to receive payouts' />}
+        aside={status && 
+          <BankAccountStatus status={status} completed={completed} />
+        }
+      />
       {error.raw && (
         <Alert
           severity="error"
