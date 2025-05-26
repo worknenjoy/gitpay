@@ -340,9 +340,9 @@ const updateTask = task => {
       .put(api.API_URL + '/tasks/update', task)
       .then(response => {
         const task = response.data
+        /* TODO: REVIEW THIS LOGIC TO HANLDE UPDATE WITH ORDERS
         if (task?.Orders?.source_id) {
           dispatch(addNotification('actions.task.payment.notification.success'))
-          dispatch(changeTaskTab(1))
           dispatch(syncTask(task.id))
           dispatch(updateTaskSuccess())
         }
@@ -350,14 +350,21 @@ const updateTask = task => {
           dispatch(
             addNotification('actions.task.interested.notification.success')
           )
-          dispatch(changeTaskTab(2))
           dispatch(updateTaskSuccess())
         }
         else {
           dispatch(addNotification('actions.task.update.notification.success'))
           dispatch(updateTaskSuccess())
+        }*/
+       if(task.id) {
+          dispatch(addNotification('actions.task.update.notification.success'))
+          dispatch(updateTaskSuccess())
+          dispatch(syncTask(task.id))
+          return dispatch(fetchTask(task.id))
+        } else {
+          dispatch(addNotification('actions.task.update.notification.error'))
+          return dispatch(updateTaskError({ message: 'actions.task.update.unavailable' }))
         }
-        return dispatch(fetchTask(task.id))
       })
       .catch(error => {
         const errorResponse = error?.response?.data

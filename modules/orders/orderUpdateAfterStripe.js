@@ -17,7 +17,7 @@ module.exports = Promise.method(function orderUpdateAfterStripe (order, charge, 
     where: {
       id: order.dataValues.id
     }
-  }).then(updatedUser => {
+  }).then(updatedOrder => {
     if (orderParameters.plan === 'full') {
       PaymentMail.support(user, task, order)
     }
