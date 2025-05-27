@@ -341,7 +341,7 @@ const updateTask = task => {
       .then(response => {
         const task = response.data
         /* TODO: REVIEW THIS LOGIC TO HANLDE UPDATE WITH ORDERS
-        if (task?.Orders?.source_id) {
+        if (task?.Orders?.[0]?.id) {
           dispatch(addNotification('actions.task.payment.notification.success'))
           dispatch(syncTask(task.id))
           dispatch(updateTaskSuccess())
