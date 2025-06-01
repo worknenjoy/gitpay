@@ -11,11 +11,11 @@ const messages = defineMessages({
   },
   addressLine1: {
     id: 'account.address.line1',
-    defaultMessage: 'Adress line 1'
+    defaultMessage: 'Address line 1'
   },
   addressLine2: {
     id: 'account.address.line2',
-    defaultMessage: 'Adress line 2'
+    defaultMessage: 'Address line 2'
   },
   cardTab: {
     id: 'account.type.card',

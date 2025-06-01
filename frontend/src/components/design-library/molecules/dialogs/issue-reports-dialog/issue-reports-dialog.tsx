@@ -63,7 +63,7 @@ export const IssueReportDialog = ({ visible = true, onClose, reportTask, taskDat
   const characterLimit = 50
 
   const invalid = <FormattedMessage id='task.report.reason.invalid' defaultMessage='The issue is invalid, it was removed by the providers (Github, Bitbucket) and it is not available anymore' />
-  const fourOFour = <FormattedMessage id='task.report.reason.fourOFour' defaultMessage='This page is an error, for some reason the content is not loaded, or I recieve a 404' />
+  const fourOFour = <FormattedMessage id='task.report.reason.fourOFour' defaultMessage='This page is an error, for some reason the content is not loaded, or I receive a 404' />
   const testOrAccident = <FormattedMessage id='task.report.reason.testOrAccident' defaultMessage='This issue seems to be a test issue, or it was added accidentally' />
   const anotherReason = <FormattedMessage id='task.report.reason.another' defaultMessage='Another Reason' />
 

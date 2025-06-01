@@ -83,7 +83,7 @@ const CheckoutForm = (props) => {
             props.onClose()
           }
           catch (e) {
-            console.log('error to proccess your payment', e)
+            console.log('error to process your payment', e)
             props.addNotification(
               'payment.message.error', e.message
             )
