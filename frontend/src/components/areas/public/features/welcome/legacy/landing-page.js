@@ -31,7 +31,7 @@ import {
 // Landing Page for GitPay
 // Total hours worked on this: ~12hours
 // Still need to add in functionality for buttons
-// Export Styles to seperate file to clean up code but left here for you to see for now
+// Export Styles to separate file to clean up code but left here for you to see for now
 
 const recruiterTeam = [
   {

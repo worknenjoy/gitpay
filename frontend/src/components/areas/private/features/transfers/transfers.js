@@ -61,11 +61,11 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
     getTransfers().then(t => { })
   }
 
-  const getTranfers = async () => await searchTransfer({ userId: user.id })
+  const getTransfers = async () => await searchTransfer({ userId: user.id })
 
   useEffect(() => {
     setValue('from')
-    getTranfers().then(t => { })
+    getTransfers().then(t => { })
     fetchAccount().then(a => { })
   }, [user])
 

@@ -94,7 +94,7 @@ module.exports = {
         resolve: {
           /* ... */
           // This will merge with the current resolve options
-          // Arrays will be overriden, but they can use `"..."` to reference to previous items
+          // Arrays will be overridden, but they can use `"..."` to reference to previous items
           // It's not possible to reference previous items except some of them
           // This might be a limitation and we might need to add something to support that
         }
