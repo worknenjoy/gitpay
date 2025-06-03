@@ -136,7 +136,7 @@ const TaskOfferDrawer = ({
           <FormattedMessage id='task.solve.title' defaultMessage='Are you interested to solve this issue and earn bounties?' />
         }
         introMessage={
-          <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={'Please apply only if you\'re able to do it and if you\'re available and commited to finish in the deadline.'}>
+          <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={'Please apply only if you\'re able to do it and if you\'re available and committed to finish in the deadline.'}>
             {(msg) => (
               <span className={classes.spanText}>
                 {msg}

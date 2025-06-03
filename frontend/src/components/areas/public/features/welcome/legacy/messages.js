@@ -31,7 +31,7 @@ export default defineMessages({
   },
   welcomeCompaniesItemOneSecondary: {
     id: 'welcome.companies.item.one.secondary',
-    defaultMessage: 'Import issues from Git, add bounties, then pay contributors when the the related Pull Request is merged'
+    defaultMessage: 'Import issues from Git, add bounties, then pay contributors when the related Pull Request is merged'
   },
   welcomeCompaniesItemTwoPrimary: {
     id: 'welcome.companies.item.two.primary',
@@ -235,7 +235,7 @@ export default defineMessages({
   },
   welcomeCollabItemOneSecondary: {
     id: 'welcome.collab.item.one.secondary',
-    defaultMessage: 'We use tools like Git, and integrations with Github and Gitlab to automate the freelancer proccess'
+    defaultMessage: 'We use tools like Git, and integrations with Github and Gitlab to automate the freelancer process'
   },
   welcomeCollabItemTwoPrimary: {
     id: 'welcome.collab.item.two.primary',
@@ -243,7 +243,7 @@ export default defineMessages({
   },
   welcomeCollabItemTwoSecondary: {
     id: 'welcome.collab.item.two.secondary',
-    defaultMessage: 'We are a open source project made by contributors, and we help our community of contributors to shift their careers to the the next level'
+    defaultMessage: 'We are a open source project made by contributors, and we help our community of contributors to shift their careers to the next level'
   },
   welcomeCollabItemThreePrimary: {
     id: 'welcome.collab.item.three.primary',

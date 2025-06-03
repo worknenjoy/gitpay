@@ -286,7 +286,7 @@ const scripts = {
               }
             })
             // eslint-disable-next-line no-console
-            .catch(err => console.log(`error occured in assigns.map: ${err}`))
+            .catch(err => console.log(`error occurred in assigns.map: ${err}`))
         })
       }).all().then(updateFields => {
         return updateFields.forEach(uf => {
