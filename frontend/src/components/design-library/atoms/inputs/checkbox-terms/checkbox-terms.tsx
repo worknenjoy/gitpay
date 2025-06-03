@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Checkbox, FormControlLabel, Grid, Link, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import useStyles from './checkbox-terms.styles';
 import TermsDialog from './terms-dialog';
 // import { on } from 'events';
 
-const useStyles = makeStyles(() => ({
-  termsLabel: {
-    paddingTop: 0,
-  },
-  checkbox: {
-    paddingRight: 5,
-  },
-}));
 
 const CheckboxTerms = ({ onAccept }) => {
   const classes = useStyles();
