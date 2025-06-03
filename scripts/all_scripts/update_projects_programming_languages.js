@@ -1,5 +1,5 @@
-const models = require("../models");
-const GitHubAPI = require("../modules/github/api");
+const models = require("../../models");
+const GitHubAPI = require("../../modules/github/api");
 const crypto = require("crypto");
 
 /**

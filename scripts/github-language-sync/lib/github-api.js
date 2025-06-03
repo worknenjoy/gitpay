@@ -1,5 +1,5 @@
 const requestPromise = require("request-promise");
-const secrets = require("../../config/secrets");
+const secrets = require("../../../config/secrets");
 
 /**
  * GitHub API utility with rate limiting and smart caching

@@ -44,48 +44,67 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
   };
 
   beforeEach(async () => {
-    // Clean up database completely
-    await truncateModels(models.ProjectProgrammingLanguage);
-    await truncateModels(models.ProgrammingLanguage);
-    await truncateModels(models.Project);
-    await truncateModels(models.Organization);
-    await truncateModels(models.User);
+    try {
+      // Clean up database completely
+      await truncateModels(models.ProjectProgrammingLanguage);
+      await truncateModels(models.ProgrammingLanguage);
+      await truncateModels(models.Project);
+      await truncateModels(models.Organization);
+      await truncateModels(models.User);
 
-    // Create realistic test data
-    testUser = await models.User.create({
-      email: "senior.engineer@gitpay.com",
-      username: "seniorengineer",
-      password: "securepassword123",
-    });
+      // Create realistic test data
+      testUser = await models.User.create({
+        email: "senior.engineer@gitpay.com",
+        username: "seniorengineer",
+        password: "securepassword123",
+      });
 
-    testOrganization = await models.Organization.create({
-      name: "facebook",
-      UserId: testUser.id,
-      provider: "github",
-      description: "Facebook Open Source",
-    });
+      testOrganization = await models.Organization.create({
+        name: "facebook",
+        UserId: testUser.id,
+        provider: "github",
+        description: "Facebook Open Source",
+      });
 
-    testProject = await models.Project.create({
-      name: "react",
-      repo: "react",
-      description:
-        "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
-      OrganizationId: testOrganization.id,
-      private: false,
-    });
+      // Create project with only basic fields (new fields might not exist in CI)
+      const projectData = {
+        name: "react",
+        repo: "react",
+        description:
+          "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
+        OrganizationId: testOrganization.id,
+        private: false,
+      };
 
-    // Initialize managers
-    syncManager = new LanguageSyncManager();
-    githubAPI = new GitHubAPI();
+      // Add new fields only if they exist in the model
+      if (models.Project.rawAttributes.lastLanguageSync) {
+        projectData.lastLanguageSync = null;
+      }
+      if (models.Project.rawAttributes.languageHash) {
+        projectData.languageHash = null;
+      }
+      if (models.Project.rawAttributes.languageEtag) {
+        projectData.languageEtag = null;
+      }
 
-    // Clean nock and setup default interceptors
-    nock.cleanAll();
+      testProject = await models.Project.create(projectData);
 
-    // Setup fake timer for testing time-based functionality
-    clock = sinon.useFakeTimers({
-      now: new Date("2024-01-01T12:00:00Z"),
-      shouldAdvanceTime: false,
-    });
+      // Initialize managers
+      syncManager = new LanguageSyncManager();
+      githubAPI = new GitHubAPI();
+
+      // Clean nock and setup default interceptors
+      nock.cleanAll();
+
+      // Setup fake timer for testing time-based functionality
+      clock = sinon.useFakeTimers({
+        now: new Date("2024-01-01T12:00:00Z"),
+        shouldAdvanceTime: false,
+      });
+    } catch (error) {
+      console.error("Setup error:", error);
+      throw error;
+    }
   });
 
   afterEach(() => {
@@ -168,7 +187,7 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
 
       // Mock the wait function to advance time
       const originalWaitForRateLimit = githubAPI.waitForRateLimit;
-      githubAPI.waitForRateLimit = async function() {
+      githubAPI.waitForRateLimit = async function () {
         clock.tick(11000); // Advance 11 seconds
         this.isRateLimited = false;
         this.rateLimitReset = null;
@@ -210,7 +229,10 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
 
         // Wait for rate limit and retry
         await githubAPI.waitForRateLimit();
-        const result = await githubAPI.getRepositoryLanguages("facebook", "react");
+        const result = await githubAPI.getRepositoryLanguages(
+          "facebook",
+          "react"
+        );
 
         expect(result.languages).to.deep.equal(TEST_LANGUAGES);
         expect(result.etag).to.equal('"after-reset"');
@@ -235,9 +257,13 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
           etag: etag,
         });
 
-      const result = await githubAPI.getRepositoryLanguages("facebook", "react", {
-        etag: etag,
-      });
+      const result = await githubAPI.getRepositoryLanguages(
+        "facebook",
+        "react",
+        {
+          etag: etag,
+        }
+      );
 
       expect(result.notModified).to.be.true;
       expect(result.languages).to.deep.equal({});
@@ -259,9 +285,13 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
           etag: newEtag,
         });
 
-      const result = await githubAPI.getRepositoryLanguages("facebook", "react", {
-        etag: etag,
-      });
+      const result = await githubAPI.getRepositoryLanguages(
+        "facebook",
+        "react",
+        {
+          etag: etag,
+        }
+      );
 
       expect(result.notModified).to.be.false;
       expect(result.languages).to.deep.equal(UPDATED_LANGUAGES);
@@ -279,7 +309,10 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
           documentation_url: "https://docs.github.com/rest",
         });
 
-      const result = await githubAPI.getRepositoryLanguages("facebook", "nonexistent");
+      const result = await githubAPI.getRepositoryLanguages(
+        "facebook",
+        "nonexistent"
+      );
 
       expect(result.languages).to.deep.equal({});
       expect(result.etag).to.be.null;
@@ -329,16 +362,21 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
       // Verify initial state
       let associations = await models.ProjectProgrammingLanguage.findAll({
         where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage]
+        include: [models.ProgrammingLanguage],
       });
       expect(associations).to.have.length(4);
 
       // Mock a database error during update
       const originalCreate = models.ProjectProgrammingLanguage.create;
-      models.ProjectProgrammingLanguage.create = sinon.stub().rejects(new Error("Database connection lost"));
+      models.ProjectProgrammingLanguage.create = sinon
+        .stub()
+        .rejects(new Error("Database connection lost"));
 
       try {
-        await syncManager.updateProjectLanguages(testProject, UPDATED_LANGUAGES);
+        await syncManager.updateProjectLanguages(
+          testProject,
+          UPDATED_LANGUAGES
+        );
         expect.fail("Should have thrown database error");
       } catch (error) {
         expect(error.message).to.include("Database connection lost");
@@ -347,7 +385,7 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
       // Verify rollback - original data should still be there
       associations = await models.ProjectProgrammingLanguage.findAll({
         where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage]
+        include: [models.ProgrammingLanguage],
       });
       expect(associations).to.have.length(4); // Original count preserved
 
@@ -361,37 +399,52 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
 
       let associations = await models.ProjectProgrammingLanguage.findAll({
         where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage]
+        include: [models.ProgrammingLanguage],
       });
       expect(associations).to.have.length(4);
 
-      const initialLanguageNames = associations.map(a => a.ProgrammingLanguage.name).sort();
-      expect(initialLanguageNames).to.deep.equal(['CSS', 'HTML', 'JavaScript', 'TypeScript']);
+      const initialLanguageNames = associations
+        .map((a) => a.ProgrammingLanguage.name)
+        .sort();
+      expect(initialLanguageNames).to.deep.equal([
+        "CSS",
+        "HTML",
+        "JavaScript",
+        "TypeScript",
+      ]);
 
       // Update with different languages (remove CSS, HTML; add Python)
       await syncManager.updateProjectLanguages(testProject, UPDATED_LANGUAGES);
 
       associations = await models.ProjectProgrammingLanguage.findAll({
         where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage]
+        include: [models.ProgrammingLanguage],
       });
       expect(associations).to.have.length(3);
 
-      const updatedLanguageNames = associations.map(a => a.ProgrammingLanguage.name).sort();
-      expect(updatedLanguageNames).to.deep.equal(['JavaScript', 'Python', 'TypeScript']);
+      const updatedLanguageNames = associations
+        .map((a) => a.ProgrammingLanguage.name)
+        .sort();
+      expect(updatedLanguageNames).to.deep.equal([
+        "JavaScript",
+        "Python",
+        "TypeScript",
+      ]);
 
       // Verify project metadata was updated
       await testProject.reload();
       expect(testProject.lastLanguageSync).to.not.be.null;
       expect(testProject.languageHash).to.not.be.null;
-      expect(testProject.languageHash).to.equal(syncManager.generateLanguageHash(UPDATED_LANGUAGES));
+      expect(testProject.languageHash).to.equal(
+        syncManager.generateLanguageHash(UPDATED_LANGUAGES)
+      );
     });
 
     it("should handle concurrent updates safely", async () => {
       // Simulate concurrent updates to the same project
       const promises = [
         syncManager.updateProjectLanguages(testProject, TEST_LANGUAGES),
-        syncManager.updateProjectLanguages(testProject, UPDATED_LANGUAGES)
+        syncManager.updateProjectLanguages(testProject, UPDATED_LANGUAGES),
       ];
 
       // Both should complete without deadlocks
@@ -400,7 +453,7 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
       // Final state should be consistent
       const associations = await models.ProjectProgrammingLanguage.findAll({
         where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage]
+        include: [models.ProgrammingLanguage],
       });
 
       // Should have languages from one of the updates
@@ -421,7 +474,7 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
 
       expect(hash1).to.equal(hash2); // Order shouldn't matter
       expect(hash1).to.equal(hash3); // Byte counts shouldn't matter, only language names
-      expect(hash1).to.be.a('string');
+      expect(hash1).to.be.a("string");
       expect(hash1).to.have.length(32); // MD5 hash length
     });
 
@@ -444,13 +497,16 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
       const hash = syncManager.generateLanguageHash(languages);
 
       // Project with no previous sync - should need update
-      let needsUpdate = await syncManager.shouldUpdateLanguages(testProject, hash);
+      let needsUpdate = await syncManager.shouldUpdateLanguages(
+        testProject,
+        hash
+      );
       expect(needsUpdate).to.be.true;
 
       // Update project with sync data
       await testProject.update({
         lastLanguageSync: new Date(),
-        languageHash: hash
+        languageHash: hash,
       });
       await testProject.reload();
 
@@ -461,7 +517,10 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
       // Different hash - update needed
       const newLanguages = { JavaScript: 100, Python: 200, TypeScript: 50 };
       const newHash = syncManager.generateLanguageHash(newLanguages);
-      needsUpdate = await syncManager.shouldUpdateLanguages(testProject, newHash);
+      needsUpdate = await syncManager.shouldUpdateLanguages(
+        testProject,
+        newHash
+      );
       expect(needsUpdate).to.be.true;
     });
   });
@@ -470,48 +529,53 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
     it("should perform complete sync with rate limit handling", async () => {
       // Create multiple projects for comprehensive testing
       const testProject2 = await models.Project.create({
-        name: 'vue',
-        repo: 'vue',
-        OrganizationId: testOrganization.id
+        name: "vue",
+        repo: "vue",
+        OrganizationId: testOrganization.id,
       });
 
       const currentTime = Math.floor(Date.now() / 1000);
 
       // First project - success
       nock(GITHUB_API_BASE)
-        .get('/repos/facebook/react/languages')
+        .get("/repos/facebook/react/languages")
         .query(true)
         .reply(200, TEST_LANGUAGES, {
-          'x-ratelimit-remaining': '1',
-          'x-ratelimit-reset': (currentTime + 3600).toString(),
-          'etag': '"react-etag"'
+          "x-ratelimit-remaining": "1",
+          "x-ratelimit-reset": (currentTime + 3600).toString(),
+          etag: '"react-etag"',
         });
 
       // Second project - rate limited
       nock(GITHUB_API_BASE)
-        .get('/repos/facebook/vue/languages')
+        .get("/repos/facebook/vue/languages")
         .query(true)
-        .reply(403, {
-          message: 'API rate limit exceeded',
-          documentation_url: 'https://docs.github.com/rest/overview/rate-limits-for-the-rest-api'
-        }, {
-          'x-ratelimit-remaining': '0',
-          'x-ratelimit-reset': (currentTime + 10).toString()
-        });
+        .reply(
+          403,
+          {
+            message: "API rate limit exceeded",
+            documentation_url:
+              "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api",
+          },
+          {
+            "x-ratelimit-remaining": "0",
+            "x-ratelimit-reset": (currentTime + 10).toString(),
+          }
+        );
 
       // After rate limit reset - success
       nock(GITHUB_API_BASE)
-        .get('/repos/facebook/vue/languages')
+        .get("/repos/facebook/vue/languages")
         .query(true)
         .reply(200, UPDATED_LANGUAGES, {
-          'x-ratelimit-remaining': '4999',
-          'x-ratelimit-reset': (currentTime + 3600).toString(),
-          'etag': '"vue-etag"'
+          "x-ratelimit-remaining": "4999",
+          "x-ratelimit-reset": (currentTime + 3600).toString(),
+          etag: '"vue-etag"',
         });
 
       // Mock the wait function for testing
       const originalWaitForRateLimit = syncManager.githubAPI.waitForRateLimit;
-      syncManager.githubAPI.waitForRateLimit = async function() {
+      syncManager.githubAPI.waitForRateLimit = async function () {
         clock.tick(11000); // Advance time
         this.isRateLimited = false;
         this.rateLimitReset = null;
@@ -525,15 +589,17 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
       expect(syncManager.stats.errors).to.equal(0);
 
       // Verify both projects were updated
-      const reactAssociations = await models.ProjectProgrammingLanguage.findAll({
-        where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage]
-      });
+      const reactAssociations = await models.ProjectProgrammingLanguage.findAll(
+        {
+          where: { projectId: testProject.id },
+          include: [models.ProgrammingLanguage],
+        }
+      );
       expect(reactAssociations).to.have.length(4);
 
       const vueAssociations = await models.ProjectProgrammingLanguage.findAll({
         where: { projectId: testProject2.id },
-        include: [models.ProgrammingLanguage]
+        include: [models.ProgrammingLanguage],
       });
       expect(vueAssociations).to.have.length(3);
 
@@ -543,9 +609,9 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
 
     it("should skip projects without organizations", async () => {
       // Create orphan project
-      const orphanProject = await models.Project.create({
-        name: 'orphan-repo',
-        repo: 'orphan-repo'
+      await models.Project.create({
+        name: "orphan-repo",
+        repo: "orphan-repo",
         // No OrganizationId
       });
 
@@ -561,18 +627,18 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
       await testProject.update({
         languageEtag: '"existing-etag"',
         lastLanguageSync: new Date(),
-        languageHash: syncManager.generateLanguageHash(TEST_LANGUAGES)
+        languageHash: syncManager.generateLanguageHash(TEST_LANGUAGES),
       });
 
       // Mock 304 Not Modified response
       nock(GITHUB_API_BASE)
-        .get('/repos/facebook/react/languages')
+        .get("/repos/facebook/react/languages")
         .query(true)
-        .matchHeader('If-None-Match', '"existing-etag"')
-        .reply(304, '', {
-          'x-ratelimit-remaining': '4999',
-          'x-ratelimit-reset': Math.floor(Date.now() / 1000) + 3600,
-          'etag': '"existing-etag"'
+        .matchHeader("If-None-Match", '"existing-etag"')
+        .reply(304, "", {
+          "x-ratelimit-remaining": "4999",
+          "x-ratelimit-reset": Math.floor(Date.now() / 1000) + 3600,
+          etag: '"existing-etag"',
         });
 
       await syncManager.syncAllProjects();
@@ -583,24 +649,30 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
     });
 
     it("should provide comprehensive statistics and logging", async () => {
-      const consoleSpy = sinon.spy(console, 'log');
+      const consoleSpy = sinon.spy(console, "log");
 
       nock(GITHUB_API_BASE)
-        .get('/repos/facebook/react/languages')
+        .get("/repos/facebook/react/languages")
         .query(true)
         .reply(200, TEST_LANGUAGES, {
-          'x-ratelimit-remaining': '4999',
-          'x-ratelimit-reset': Math.floor(Date.now() / 1000) + 3600,
-          'etag': '"test-etag"'
+          "x-ratelimit-remaining": "4999",
+          "x-ratelimit-reset": Math.floor(Date.now() / 1000) + 3600,
+          etag: '"test-etag"',
         });
 
       await syncManager.syncAllProjects();
 
       // Verify comprehensive logging
-      expect(consoleSpy.calledWith('🚀 Starting optimized GitHub programming languages sync...')).to.be.true;
-      expect(consoleSpy.calledWith('📋 Found 1 projects to process')).to.be.true;
-      expect(consoleSpy.calledWith('🔍 Checking languages for facebook/react')).to.be.true;
-      expect(consoleSpy.calledWith('📊 SYNC SUMMARY')).to.be.true;
+      expect(
+        consoleSpy.calledWith(
+          "🚀 Starting optimized GitHub programming languages sync..."
+        )
+      ).to.be.true;
+      expect(consoleSpy.calledWith("📋 Found 1 projects to process")).to.be
+        .true;
+      expect(consoleSpy.calledWith("🔍 Checking languages for facebook/react"))
+        .to.be.true;
+      expect(consoleSpy.calledWith("📊 SYNC SUMMARY")).to.be.true;
 
       // Verify statistics
       expect(syncManager.stats.processed).to.equal(1);
@@ -616,9 +688,15 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
   describe("Performance and Efficiency Tests", () => {
     it("should minimize database queries through efficient operations", async () => {
       // Spy on database operations
-      const findAllSpy = sinon.spy(models.ProjectProgrammingLanguage, 'findAll');
-      const createSpy = sinon.spy(models.ProjectProgrammingLanguage, 'create');
-      const destroySpy = sinon.spy(models.ProjectProgrammingLanguage, 'destroy');
+      const findAllSpy = sinon.spy(
+        models.ProjectProgrammingLanguage,
+        "findAll"
+      );
+      const createSpy = sinon.spy(models.ProjectProgrammingLanguage, "create");
+      const destroySpy = sinon.spy(
+        models.ProjectProgrammingLanguage,
+        "destroy"
+      );
 
       await syncManager.updateProjectLanguages(testProject, TEST_LANGUAGES);
 
@@ -648,223 +726,9 @@ describe("GitHub Language Sync - Production Grade Tests", () => {
 
       // Verify all languages were created
       const associations = await models.ProjectProgrammingLanguage.findAll({
-        where: { projectId: testProject.id }
+        where: { projectId: testProject.id },
       });
       expect(associations).to.have.length(50);
-    });
-  });
-});
-            documentation_url:
-              "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api",
-          },
-          {
-            "x-ratelimit-remaining": "0",
-            "x-ratelimit-reset": resetTime.toString(),
-          }
-        );
-
-      try {
-        await githubAPI.getRepositoryLanguages("testorg", "testrepo");
-        expect.fail("Should have thrown rate limit error");
-      } catch (error) {
-        expect(error.isRateLimit).to.be.true;
-        expect(error.retryAfter).to.be.a("number");
-        expect(error.retryAfter).to.be.greaterThan(0);
-      }
-    });
-
-    it("should handle conditional requests with ETag", async () => {
-      nock("https://api.github.com")
-        .get("/repos/testorg/testrepo/languages")
-        .query({
-          client_id: process.env.GITHUB_CLIENT_ID || "test",
-          client_secret: process.env.GITHUB_CLIENT_SECRET || "test",
-        })
-        .matchHeader("If-None-Match", '"abc123"')
-        .reply(304, "", {
-          "x-ratelimit-remaining": "4999",
-          "x-ratelimit-reset": Math.floor(Date.now() / 1000) + 3600,
-          etag: '"abc123"',
-        });
-
-      const result = await githubAPI.getRepositoryLanguages(
-        "testorg",
-        "testrepo",
-        {
-          etag: '"abc123"',
-        }
-      );
-
-      expect(result.notModified).to.be.true;
-      expect(result.languages).to.deep.equal({});
-      expect(result.etag).to.equal('"abc123"');
-    });
-
-    it("should handle repository not found", async () => {
-      nock("https://api.github.com")
-        .get("/repos/testorg/nonexistent")
-        .query({
-          client_id: process.env.GITHUB_CLIENT_ID || "test",
-          client_secret: process.env.GITHUB_CLIENT_SECRET || "test",
-        })
-        .reply(404, {
-          message: "Not Found",
-          documentation_url: "https://docs.github.com/rest",
-        });
-
-      const result = await githubAPI.getRepositoryLanguages(
-        "testorg",
-        "nonexistent"
-      );
-
-      expect(result.languages).to.deep.equal({});
-      expect(result.etag).to.be.null;
-      expect(result.notModified).to.be.false;
-    });
-  });
-
-  describe("LanguageSyncManager", () => {
-    it("should generate consistent language hashes", () => {
-      const languages1 = { JavaScript: 100, Python: 200 };
-      const languages2 = { Python: 200, JavaScript: 100 }; // Different order
-
-      const hash1 = syncManager.generateLanguageHash(languages1);
-      const hash2 = syncManager.generateLanguageHash(languages2);
-
-      expect(hash1).to.equal(hash2);
-      expect(hash1).to.be.a("string");
-      expect(hash1).to.have.length(32); // MD5 hash length
-    });
-
-    it("should detect when languages need updating", async () => {
-      const languages = { JavaScript: 100, Python: 200 };
-      const hash = syncManager.generateLanguageHash(languages);
-
-      // Project with no previous sync
-      let needsUpdate = await syncManager.shouldUpdateLanguages(
-        testProject,
-        hash
-      );
-      expect(needsUpdate).to.be.true;
-
-      // Update project with sync data
-      await testProject.update({
-        lastLanguageSync: new Date(),
-        languageHash: hash,
-      });
-      await testProject.reload();
-
-      // Same hash - no update needed
-      needsUpdate = await syncManager.shouldUpdateLanguages(testProject, hash);
-      expect(needsUpdate).to.be.false;
-
-      // Different hash - update needed
-      const newLanguages = { JavaScript: 100, Python: 200, TypeScript: 50 };
-      const newHash = syncManager.generateLanguageHash(newLanguages);
-      needsUpdate = await syncManager.shouldUpdateLanguages(
-        testProject,
-        newHash
-      );
-      expect(needsUpdate).to.be.true;
-    });
-
-    it("should update project languages efficiently", async () => {
-      // Create initial languages
-      const initialLanguages = { JavaScript: 100, Python: 200 };
-
-      await syncManager.updateProjectLanguages(testProject, initialLanguages);
-
-      // Verify languages were created and associated
-      const associations = await models.ProjectProgrammingLanguage.findAll({
-        where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage],
-      });
-
-      expect(associations).to.have.length(2);
-      const languageNames = associations
-        .map((a) => a.ProgrammingLanguage.name)
-        .sort();
-      expect(languageNames).to.deep.equal(["JavaScript", "Python"]);
-
-      // Update with new languages (add TypeScript, remove Python)
-      const updatedLanguages = { JavaScript: 100, TypeScript: 50 };
-
-      await syncManager.updateProjectLanguages(testProject, updatedLanguages);
-
-      // Verify updated associations
-      const updatedAssociations =
-        await models.ProjectProgrammingLanguage.findAll({
-          where: { projectId: testProject.id },
-          include: [models.ProgrammingLanguage],
-        });
-
-      expect(updatedAssociations).to.have.length(2);
-      const updatedLanguageNames = updatedAssociations
-        .map((a) => a.ProgrammingLanguage.name)
-        .sort();
-      expect(updatedLanguageNames).to.deep.equal(["JavaScript", "TypeScript"]);
-
-      // Verify project metadata was updated
-      await testProject.reload();
-      expect(testProject.lastLanguageSync).to.not.be.null;
-      expect(testProject.languageHash).to.not.be.null;
-    });
-
-    it("should handle projects without organizations", async () => {
-      // Create project without organization
-      const orphanProject = await models.Project.create({
-        name: "orphan-repo",
-      });
-
-      await syncManager.processProject(orphanProject);
-
-      expect(syncManager.stats.skipped).to.equal(1);
-      expect(syncManager.stats.errors).to.equal(0);
-    });
-  });
-
-  describe("Integration Tests", () => {
-    it("should perform complete sync with mocked GitHub API", async () => {
-      const mockLanguages = {
-        JavaScript: 100000,
-        TypeScript: 50000,
-      };
-
-      nock("https://api.github.com")
-        .get("/repos/testorg/testrepo/languages")
-        .query({
-          client_id: process.env.GITHUB_CLIENT_ID || "test",
-          client_secret: process.env.GITHUB_CLIENT_SECRET || "test",
-        })
-        .reply(200, mockLanguages, {
-          "x-ratelimit-remaining": "4999",
-          "x-ratelimit-reset": Math.floor(Date.now() / 1000) + 3600,
-          etag: '"def456"',
-        });
-
-      await syncManager.syncAllProjects();
-
-      expect(syncManager.stats.processed).to.equal(1);
-      expect(syncManager.stats.updated).to.equal(1);
-      expect(syncManager.stats.errors).to.equal(0);
-
-      // Verify languages were stored
-      const associations = await models.ProjectProgrammingLanguage.findAll({
-        where: { projectId: testProject.id },
-        include: [models.ProgrammingLanguage],
-      });
-
-      expect(associations).to.have.length(2);
-      const languageNames = associations
-        .map((a) => a.ProgrammingLanguage.name)
-        .sort();
-      expect(languageNames).to.deep.equal(["JavaScript", "TypeScript"]);
-
-      // Verify project metadata
-      await testProject.reload();
-      expect(testProject.lastLanguageSync).to.not.be.null;
-      expect(testProject.languageHash).to.not.be.null;
-      expect(testProject.languageEtag).to.equal('"def456"');
     });
   });
 });
