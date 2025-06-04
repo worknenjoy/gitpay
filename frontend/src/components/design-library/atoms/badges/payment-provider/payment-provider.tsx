@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { createStyles, Theme } from '@material-ui/core/styles';
 import { orange, green, blue } from '@material-ui/core/colors';
 import { 
   CreditCard as CreditCardIcon,
@@ -12,42 +12,7 @@ import { paymentProviders, paymentSources } from '../../../../../consts'
 
 const logoPaypal = require('images/paypal-icon.png').default;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    card: {
-      backgroundColor: green[400],
-      color: theme.palette.common.white,
-      '& .MuiChip-icon': {
-        color: theme.palette.common.white,
-      },
-    },
-    invoice: {
-      backgroundColor: orange[600],
-      color: theme.palette.common.white,
-      '& .MuiChip-icon': {
-        color: theme.palette.common.white,
-      },
-    },
-    paypal: {
-      backgroundColor: blue[300],
-      color: theme.palette.common.white
-    },
-    wallet: {
-      backgroundColor: theme.palette.grey[500],
-      color: theme.palette.common.white,
-      '& .MuiChip-icon': {
-        color: theme.palette.common.white,
-      },
-    },
-    unknown: {
-      backgroundColor: theme.palette.grey[400],
-      color: theme.palette.common.white,
-      '& .MuiChip-icon': {
-        color: theme.palette.common.white,
-      },
-    }
-  }),
-);
+import useStyles from './payment-provider.styles';
 
 type statusProps = {
   provider: string;

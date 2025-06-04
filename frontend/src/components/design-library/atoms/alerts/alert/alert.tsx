@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import MuiAlert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
-import { makeStyles } from '@material-ui/core/styles'
+import useStyles from './alert.styles'
 import { Button } from '@material-ui/core'
 import ReactPlacholder from 'react-placeholder'
 
-const useStyles = makeStyles((theme) => ({
-  closeButton: {
-    
-  },
-}))
 
 export const Alert = (props) => {
   const { onClose, alertKey = 'default', actions, dismissable = false, completed, ...rest } = props

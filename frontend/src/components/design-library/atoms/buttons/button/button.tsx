@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button as MaterialButton, CircularProgress } from '@material-ui/core';
+import useStyles from './button.styles';
 
 type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
@@ -20,6 +21,7 @@ const Button = ({
   completed,
   onClick,
 }:ButtonProps) => {
+  const classes = useStyles();
   return (
     <MaterialButton
       type={type}
@@ -29,7 +31,7 @@ const Button = ({
       onClick={onClick}
     >
       {label}
-      {!completed ? <CircularProgress style={{marginLeft: 10}} size={24} color="inherit" /> : <></>}
+      {!completed ? <CircularProgress className={classes.progress} size={24} color="inherit" /> : <></>}
     </MaterialButton>
   );
 }

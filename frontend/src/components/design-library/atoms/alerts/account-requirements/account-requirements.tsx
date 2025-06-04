@@ -5,8 +5,10 @@ import ReactPlaceholder from 'react-placeholder';
 import { Alert } from '../alert/alert';
 import { validAccount } from '../../../../../utils/valid-account';
 import api from '../../../../../consts';
+import useStyles from './account-requirements.styles';
 
 const AccountRequirements = ({ user, account, intl, onClick }) => {
+  const classes = useStyles()
   const { completed = true } = account;
 
   const missingRequirements = () => {
@@ -29,7 +31,7 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
     !validAccount(user, account) ?
       <Alert
         completed={completed}
-        style={{ marginBottom: 20 }}
+        className={classes.alert}
         severity='warning'
         action={
           <Button
