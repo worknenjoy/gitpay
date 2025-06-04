@@ -9,6 +9,7 @@ import * as walletOrderActions from '../../src/actions/walletOrderActions'
 import * as types from '../../src/actions/walletOrderActions'
 import * as typesNotification from '../../src/actions/notificationActions'
 import api from '../../src/consts'
+import _ from 'lodash'
 import Auth from '../../src/modules/auth'
 
 Auth.getToken = () => true
@@ -114,7 +115,7 @@ describe('wallet order actions', () => {
 
     it('creates LIST_WALLET_ORDERS_SUCCESS when listing wallet orders has been done', () => {
       const walletOrdersData = [{ id: 1 }]
-      moxios.stubRequest(new RegExp(`${api.API_URL}/wallets/orders.*`), {
+      moxios.stubRequest(`${api.API_URL}/wallets/orders/*`), {
         status: 200,
         response: walletOrdersData
       })
@@ -130,7 +131,7 @@ describe('wallet order actions', () => {
     })
 
     it('creates LIST_WALLET_ORDERS_ERROR when listing wallet orders fails', () => {
-      moxios.stubRequest(new RegExp(`${api.API_URL}/wallets/orders.*`), {
+      moxios.stubRequest(`${api.API_URL}/wallets/orders/*`), {
         status: 500
       })
 
