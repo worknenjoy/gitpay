@@ -1,33 +1,33 @@
 ---
 layout: doc
-title: Recebendo pagamentos como recompensa
-subtitle: Como funciona as transações entre os envolvidos em uma tarefa no Gitpay 
+title: Receiving payments as a reward
+subtitle: How transactions work between the parties involved in a Gitpay task
 author:
 tags:
 ---
 
-#### O que você vai encontrar aqui
+#### What you will find here
 {:.no_toc}
 * TOC
 {:toc}
 
-## Pagamento por uma tarefa
-Quando uma tarefa é criada no Gitpay, ela pode receber recompensas.
+## Paying for a task
+When a task is created on Gitpay it can receive rewards.
 
-As recompensas podem ser pagas atualmente com cartão de crédito e PayPal.
+Currently rewards can be paid with credit card or PayPal.
 
-Também é possível que seja feito mais de um pedido que pode ter as duas categorias.
+It is also possible to create more than one order and combine both methods.
 
-Quando você recebe a recompensa, você precisa receber de acordo como a tarefa foi paga
+When you get paid you will receive the amount according to the payment method used.
 
-> Quando você vê um valor de uma tarefa no Gitpay, o pagamento já foi pré-autorizado
+> When you see the value of a task on Gitpay the payment has already been pre-authorized.
 
-Sendo assim, quando uma tarefa é paga no cartão de crédito, você irá receber na sua conta cadastrada.
+If the task was paid by credit card the amount will be deposited in your registered account.
 
-Se o pagamento foi realizado com PayPal, você irá receber o pagamento com sua conta do PayPal.
+If it was paid through PayPal the payment will be sent to your PayPal account.
 
-Você precisa configurar seus pagamentos configurando sua conta em [https://gitpay.me/#/profile/payment-options](https://gitpay.me/#/profile/payment-options) 
+You need to configure your payment options at [https://gitpay.me/#/profile/payment-options](https://gitpay.me/#/profile/payment-options).
 
-> Para saber como o pagamento foi realizado para aquela tarefa, verifique nos pedidos
+> To know which payment method was used for a task check the orders page.
 
-Os pedidos são pagamentos realizados que são enviados para sua conta ativada quando a tarefa é concluída.
+Orders are the payments that are released to your active account when the task is completed.

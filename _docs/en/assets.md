@@ -1,79 +1,76 @@
 ---
 layout: doc
-title: Como configurar um repositório
+title: How to set up a repository
 categories: [Getting Started, Troubleshooting]
 author: John Black
-tags: 
+tags:
 ---
 
-#### O que você vai ver aqui
+#### What you will learn here
 {:.no_toc}
 * TOC
 {:toc}
 
-## Como trabalhar em um repositório de um projeto
+## Working on a project repository
 
-Quando um repositório já está definido, geralmente já criado pelo cliente, você precisa fazer um *clone do projeto*.
+When a repository already exists, usually created by the client, you need to clone the project.
 
-Para isto, execute: `git clone <url do repositorio>`
+To do that, run: `git clone <repository url>`
 
-Para saber qual o repositório do projeto, basta ir no Github na opção *Clone or download*
+To find the repository address go to the GitHub page and choose *Clone or download*.
 
-Quando você realiza um clone, você tem a cópia do projeto criada em um diretório.
+After cloning you will have a copy of the project in a directory.
 
-Quando um clone é executado, a última versão do repositório é criada.
+Every clone grabs the latest version of the repository.
 
-Para obter as mudanças do repositório e ficar com a última versão, você deve executar `git pull origin master`
+To pull new changes from the repository and keep it up to date, run `git pull origin master`.
 
-## Versões do projeto
+## Project versions
 
-Quando você realiza um fork (basta ver a opção Fork no Github, dizendo quantos forks daquele projeto já foram feitos), você obtem uma nova versão sua.
+When you fork a project (check the Fork option on GitHub to see how many forks it has) you create your own copy.
 
-Para clonar o seu projeto criado, você deve executar o seguinte comando: `git clone <url do repositorio>`
+To clone your fork run: `git clone <repository url>`
 
-> Quando você realiza esta etapa, você tem uma versão (geralmente o origin) e o projeto original seguiu o seu ciclo de vida em outro caminho
+> After this step you have your own version (usually named origin) while the original project continues evolving separately.
 
-A partir dali, o seu projeto que veio a partir do projeto principal tem um novo endereço e você pode cloná-lo também. Isto é o recomendável.
+From that point your fork has its own address and you can also clone it again if needed. This is recommended.
 
-No entanto, quando isto acontece, você perdeu as mudanças do projeto original, e quando você envia as mudanças, você na verdade está enviando para o seu repositório.
+However you will not automatically get changes from the original repository and pushing will send changes only to your fork.
 
-> Uma das principais vantagens do Git é poder ter vários repositórios a partir de outros
+> One of the main advantages of Git is having multiple repositories derived from others.
 
-Para ter ainda as atualizações do projeto principal, você irá precisar adicionar um *upstream*. Este termo define o projeto principal
+To keep receiving updates from the main project you need to add an *upstream* remote, which points to the original repository.
 
-Sendo, assim, você precisará adicionar um novo remote com a referência para o upstream com este comando: `git remote add upstream <url do repositorio>`
+Add it with: `git remote add upstream <repository url>`
 
-Com isto, quando você executa um `git pull origin master` você estará obtendo o seu projeto e executando um `git pull upstream master` você está obtendo as mudanças do projeto principal.
+Now running `git pull origin master` fetches your fork and `git pull upstream master` fetches changes from the main repository.
 
-## Realizando modificações
+## Making changes
 
-O Git Workflow no modelo Fork diz que você trabalha na sua versão independente e envia as mudanças para o repositório principal através de Pull Requests.
+The Forking Workflow says you work on your own version and submit changes to the main repository through Pull Requests.
 
-Para se organizar melhor, é sempre bom no seu próprio repositório você usar um modelo de desenvolvimento baseado em branch. Então, para iniciar qualquer tarefa você execute:
+To stay organized it's best to use branches in your fork. To start any task run:
 
-`git branch nome-da-branch`
+`git branch branch-name`
 
-Depois para entrar nesta branch você roda: `git checkout nome-da-branch`
+Then switch to it with: `git checkout branch-name`
 
-A partir daí você realiza modificações necessárias, faz um commit e então você pode enviar como uma branch para seu repositório
+Make the necessary modifications, commit and push the branch to your fork.
 
-## Sincronizar branchs com o repositório principal
+## Keeping branches in sync
 
-Quando você está no seu master, você pode usá-lo como uma branch principal, onde você não realiza nenhuam alteração, e sim o usa como um espelho do repositório principal.
+Use your local master branch as a mirror of the main repository where you don't make changes directly.
 
-Assim, você pode executar sempre do seu master: `git pull upstream master`
+From master run `git pull upstream master` regularly.
 
-Então, a partir da sua branch você pode executar `git rebase master`
+Then update your feature branch with `git rebase master`.
 
-## Enviando modificações
+## Sending your changes
 
-Uma vez, estando sem conflitos e com sua versão no master, você pode enviar como uma branch do seu repositório com o comando: `git push origin sua-branch`
+Once your branch has no conflicts and is updated with master you can push it using: `git push origin branch-name`
 
-Quando você entrar no Github, na página do fork, você verá uma opção para criar um pull request a partir desta branch remota, e assim você cria um pull request que serve como uma solicitação para que seu código seja integrado ao seu projeto
+On GitHub you'll see an option to open a pull request from that remote branch. Create the pull request so your code can be merged into the project.
 
-Uma vez que o código seja aprovado, quando você obter novamente as mudanças do upstream, ele estará com o seu código e aquela branch poderá ser apagada e o seu projeto está em dia com o projeto principal novamente!
+When the code is approved and you pull updates from upstream again your changes will be included. You can delete the branch and your fork will be in sync with the main project.
 
-Saiba mais em [https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches](https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches)
-
-
-
+Learn more at [https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches](https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches)

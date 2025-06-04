@@ -1,17 +1,17 @@
 ---
 layout: doc
-title: Como rodar o projeto do Gitpay
-subtitle: Veja como contribuir com o core do Gitpay para melhorar e evoluir na plataforma
+title: Running the Gitpay project
+subtitle: Learn how to contribute to the Gitpay core and evolve the platform
 author: Alexandre Magno
 tags:
 ---
 
-#### O que você vai ver aqui
+#### What you will learn here
 {:.no_toc}
 * TOC
 {:toc}
 
-## Como rodar o projeto
+## Running the project
 
 ### Frontend server
 `npm run dev`
@@ -19,32 +19,32 @@ tags:
 ### Backend (node.js)
 `npm run start:dev`
 
-Você então pode acessar o projeto em http://localhost:8082
+After starting both services you can access the application at http://localhost:8082
 
-### Usando Docker
+### Using Docker
 
-Tivemos uma ótima contribuição da comunidade para suportarmos o docker e facilitar o desenvolvimento e execução do ambiente local para desenvolvimento.
+We received a great community contribution to support Docker and make it easier to run a local environment for development.
 
-### Requisitos
+### Requirements
 
 * Docker Engine
 * Docker Compose
 
 ### Ubuntu
 
-#### Instalando
+#### Installing
 
 * Docker Engine: https://docs.docker.com/install/linux/docker-ce/ubuntu/
 * Docker Compose: https://docs.docker.com/compose/install/
 
-#### Executando o projeto das imagens do docker
+#### Running the project from Docker images
 
-#### Development environment
+##### Development environment
 
-`Run docker-compose up`
+Run `docker-compose up`
 
-Abra então o projeto em http://localhost:8082
+Then open the application at http://localhost:8082
 
-#### Para testar
+##### Running tests
 
-`Run docker-compose -f docker-compose.test.yml up`
+Run `docker-compose -f docker-compose.test.yml up`

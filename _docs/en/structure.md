@@ -1,35 +1,35 @@
 ---
 layout: doc
-title: Como o Git pode ajudar nas organizações
-subtitle: Saiba como diferentes envolvidos no projeto podem tirar proveito do Workflow do Git para gerenciar as tarefas do projeto
+title: How Git can help organizations
+subtitle: Learn how different project members can benefit from the Git Workflow to manage tasks
 author:
 ---
 
-#### O que você vai ver aqui
+#### What you will learn here
 {:.no_toc}
 * TOC
 {:toc}
 
-O Git é um sistema de controle de versão descentralizado que muda o jeito como pensamos no desenvolvimento de software. Ele é a evolução de outros controles de versão, como o SVN, e atualmente é difícil imaginar que um projeto consiga escalar pelo uso tradicional do FTP.
+Git is a distributed version control system that changes the way we think about software development. It evolved from other systems such as SVN and today it is hard to imagine scaling a project using the traditional FTP approach.
 
-Um controle de versão atualmente é indispensável para controlar as versões do projeto e permite que vários conflitos sejam resolvidos e equipes distribuidas podem trabalhar sem maiores complicações.
+Having version control is indispensable to track project versions and allows teams to resolve conflicts and work together without major issues.
 
-O uso deste workflow impacta positivamente toda a escala do negócio. Com o Gitpay, é incluído como parte de processo o pagamento pelo trabalho realizado, tornando a empresa mais independente e flexível para realizar as necessidades dos projetos e investindo sob demanda.
+Using this workflow has a positive impact on the entire business. With Gitpay payments are part of the process so the company becomes more independent and flexible to address project needs and invest on demand.
 
-## Git para desenvolvedores 
+## Git for developers
 
-Não dá para negar que os desenvolvedores sejam os mais beneficiados por usarem o Git como controle de versão e gerenciar seu projeto em uma das suas plataformas (como Github e Bitbucket).
+Developers benefit the most from using Git and hosting their projects on platforms like GitHub or Bitbucket.
 
-Para comunidades de desenvolvedores, temos a vantagem de não precisar treinar ou discutir abordagens e possíveis modelos de contratações para projetos.
+Developer communities don't need to discuss hiring models or workflows because they share common tools and processes.
 
-O que torna o Gitpay uma forma de trabalho para desenvolvedores muito mais vantajosa que trabalhar em projetos que não possuem uma visão ágil dos processos de desenvolvimento.
+That makes Gitpay a better option for developers than working on projects without an agile mindset.
 
-Desenvolvedores que são adeptos do Git se tornam familiares com times distribuídos.
+Developers familiar with Git are comfortable working in distributed teams.
 
-### Lançamentos contínuos de novas versões do projeto
+### Continuous releases of new versions
 
-Pelo fato de diferentes desenvolvedores trabalharem independente nos seus repositórios a partir dos projetos, o desenvolvimento distribuido se torna eficiente e uma comunidade trabalhando em conjunto sem ter conflitos entre suas soluções torna possível um ciclo de entrega mais rápido.
+Since different developers work independently in their own repositories, distributed development becomes efficient and a community can collaborate without conflicts, enabling a faster delivery cycle.
 
-Projetos de desenvolvimento encorajam pequenas mudanças mas mudanças frequentes para serem integradas rapidamente ao projeto. Com a mudança enviada, um ciclo é iniciado para realizar todas as etapas necessárias para enviar a mudança para o sistema em questão.
+Development projects encourage small but frequent changes to be integrated quickly. Once a change is sent, a cycle starts to run all the steps necessary to deploy the update.
 
-O Git trabalha muito bem com integração contínua.
+Git works very well with continuous integration.
