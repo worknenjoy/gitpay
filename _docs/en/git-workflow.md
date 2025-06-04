@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 title: Working with Git Workflow
-subtitle: How to delivery a task on Gitpay using Git Workflow
+subtitle: How to deliver a task on Gitpay using Git Workflow
 author: Alexandre Magno
 tags: workflow, git, work, task, delivery, issue, solve
 
@@ -13,21 +13,21 @@ tags: workflow, git, work, task, delivery, issue, solve
 * TOC
 {:toc}
 
-The Git Workflow is a process to validate a task specially for Open Source projects, and even for private projects.
+The Git workflow is a process used to validate a task in open source and private projects.
 
-They have a workflow of how to integrate projects between distributed teams using the Git version control.
+It defines how distributed teams integrate their work using Git.
 
 ## Our workflow
 
-We use the contribution process in a git repository to validate work. GIT is our smart contract. From a change request that is checked with automated tests and validation in several environments, and then we validate the code integration from team work.
+We use contributions in a Git repository to validate work. Git acts as our smart contract. Change requests go through automated tests and multiple validation stages before the code is integrated.
 
 ## Git Workflow
 
-Git workflow is the guideline we use to deliver tasks from projects consistently and effective.
+Git workflow is the guideline we use to deliver tasks consistently and effectively.
 
-Working in a project, when we use git as our version control system, we have a workflow to work as a team in the codebase. With git we can scale teams to work on our codebase, and the workflow goes from open an issue from closed by a Pull Request.
+When using Git as our version control system we follow a workflow that allows the team to collaborate on the codebase. Issues are opened and closed through Pull Requests.
 
-There's many workflow for teams using git, and here we will talk about what we use on Gitpay and a process used by many companies worldwide.
+There are many workflows for teams using Git. Here we describe the one used on Gitpay, similar to processes adopted by companies worldwide.
 
 
 > Workflow are ways to present the work process in agile development. They are based in project guidelines using git as version control system.
@@ -36,14 +36,14 @@ There's many workflow for teams using git, and here we will talk about what we u
 
 ![](/uploads/img-multidev-forking-800-2.png)
 
-This is the forking workflow used to integrated the code of our projects. In this forking workflow, repositories can be created from the main source, and one of them is your changes. You should be able to create a new environment to reproduce and then do the changes and conclude the task. 
+This is the forking workflow used to integrate code into our projects. You create a repository from the main source, make your changes and then open a Pull Request.
 
-Every change has their own approval process. This process follow agile guidelines and good development practices.
+Every change goes through an approval process that follows agile guidelines and good development practices.
 
 ## Validating changes
 
 We validate your changes with the following guidelines:
 
-1. We may avoid go into details, and we will evaluate the value of the task you're delivering
-2. We will be flexible to discuss best solutions, whatever, a well written issue and described will avoid unnecessary scope disorder
-3. We use agile development, and we incite the development with automated tests, specially to fix bugs.
+1. We evaluate the value of the task being delivered rather than every minor detail.
+2. We are flexible to discuss better solutions, but a well written issue avoids unnecessary scope changes.
+3. We encourage automated tests, especially when fixing bugs.

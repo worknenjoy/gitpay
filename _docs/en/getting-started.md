@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 title: Getting Started
-subtitle: Understand how receive bounties with contributions on Gitpay
+subtitle: Understand how to receive bounties for contributions on Gitpay
 tags:
 ---
 
@@ -11,81 +11,81 @@ tags:
 * TOC
 {:toc}
 
-Gitpay is a platform to solve issues from Git. 
+Gitpay is a platform designed to help you solve issues on projects that use Git.
 
-Once registered, you can work in available tasks in the platform, from many projects, and from issues of Gitpay. This means that we use Gitpay to create our features, by contributions from our users.
+Once registered you can work on available tasks from many projects, including Gitpay itself. We develop new features using contributions from our community.
 
-Who contribute with our project is helping to build *your platform to work, contribute and receive payments* and learn with collaboration. Your contributions from any project using Git will provide experience to perform tasks from other projects.
+Those who contribute to our project are helping to build *your platform to work, collaborate and get paid*. Experience gained on any Git project will help you deliver tasks on other repositories.
 
-These tasks are divided in small changes with specific guidelines, but if is well described, it can be used for larger tasks, and a whole project. But we try to create small tasks to reduce the risks and make it easier to conclude the tasks. Some issues can be described as a _challenge_ too.
+Tasks are usually small and well defined, but larger features can also be broken into issues. We keep tasks small to reduce risk and make them easier to complete. Some issues might be presented as a _challenge_.
 
 The issues can be considered done in many levels, and some levels can be automated, and avoid extra effort for repetitive tasks, like validate a code beforehand, or use end to end testing, and a robot can do basic tests before you move into manual testing. These process is part of extreme programming and agile development, used by many companies. Contributing with Gitpay is helping you to work with newest technologies and development workflow. You will be able to maintain projects, in a sustainable, and be part of projects maintained by a development community.
 
-## What I need to know?
+## What do I need to know?
 
-You don't need any extra requirement to start to contribute with Gitpay, even to start to receive bounties. If you don't know about the concepts here, we will help you to get any task done. You just need to be open to learn.
+You do not need any special requirement to start contributing and earning bounties on Gitpay. If you are not familiar with the concepts mentioned here, we will help you complete your tasks. The only thing you need is a willingness to learn.
 
-We build our company with agile development, scrum, extreme programing, open source, releases, Pull Requests, and continuous integration, build pipeline and TDD. All these terms are part of our development process and we try to have the same concept for maintainers and organizations that add their issues into our platform.
+We follow modern practices such as agile development, Scrum, extreme programming, open source, releases, pull requests, continuous integration and TDD. These concepts are also recommended for maintainers and organizations that add their issues to the platform.
 
-Gitpay is a process of payment for a work based in the bounty format with projects using Git. We track by this version control system as a workflow and a contract to solve a task in different ways, all using validation process used in a Git workflow. The git workflow process is clear and straightforward to define when a task should be considered as done.
+Gitpay handles payments through the bounty model in projects that use Git. The version control system works like a contract to track the task and its validation. The Git workflow clearly defines when a task is considered done.
 
-The tasks follow guidelines that can be used to describe requirements to solve a bug or create a feature. Git provide issue templates model to serve as a template to create new issues. We use all the tools existing in Git clients like Github and Bitbucket and use their best practices to speed up the development, and we focus in make sure the developer will be paid by the bounty provided.
+Tasks follow guidelines describing how to fix bugs or implement features. Git provides templates to help create new issues. We rely on tools from Git clients such as GitHub and Bitbucket, following their best practices to speed up development and ensure contributors receive their bounty.
 
 
 ## Delivery tasks for projects with agile development
 
-With Gitpay, you work using agile practices and continuous integrations, that can be distributes in distributed development teams.
+With Gitpay you work using agile practices and continuous integration. The workflow fits well with distributed development teams.
 
-This means that each task sent by a *Pull Request* goes to production when approved. We use an existent git process to send a solution to an issue in production to validate the work and send the payment.
+Each task submitted through a *Pull Request* goes to production once it is approved. We rely on the existing Git process to validate the work and trigger the payment.
 
 ## How to contribute with a project and receive payments
-We will show in this topic the lifecycle of an issue to be solved. When you register on Gitpay, you can receive proposals for tasks of our platform and from maintainers and organizations that needs an issue solved in their projects.
+Below we present the typical lifecycle of an issue. After registering on Gitpay you can receive proposals for tasks from our platform, maintainers or organizations that need issues solved in their projects.
 
-These projects have different sources, from Open Source, and someone want that feature or bug solved, and then interested users to have their implementation can sponsor, as a crowdfunding. So the bounty you may receive sometimes can be originated from many sources.
+Tasks can come from open source or private projects. Sometimes several sponsors fund a bounty, similar to crowdfunding, so the reward may come from multiple sources.
 
-Gitpay is for users, maintainers or developers, contributors and people engaged with causes, and for organization and for any software development.
+Gitpay is designed for users, maintainers and organizations who wish to collaborate on software development.
 
-You can navigate on our platform to check the available tasks, as setup preferences to receive notifications and proposals about projects available. You can apply to work on that issue and once approve by the author, you can start to work on that solution.
+Browse the platform to see available tasks and set your preferences to receive notifications. Apply to work on any issue and, once approved by the maintainer, you can start working on the solution.
 
-For a real world example, we have a demand to solve an issue to place a *favicon* in their website. Favicon is an mini icon that will be placed in the navigation bar in your browser.
+As an example, imagine a task to place a *favicon* on a website. The favicon is the small icon displayed in your browser's address bar.
 
-So this task was created on a Github repository, and this task is a beginner task to add a line on the document header, considered that the icon was already created in this project. All the website code is on a Github repository.
+Such a task could be created in a GitHub repository. It would simply require adding a line in the document header (assuming the icon already exists). All website code would be hosted on GitHub.
 
 #### Apply to work on an issue
 
-You visit a task page on Gitpay from an issue on Github: [https://gitpay.me/#/task/64](https://gitpay.me/#/task/64)
+Visit a task page on Gitpay, for example: [https://gitpay.me/#/task/64](https://gitpay.me/#/task/64)
 
-You can apply to work and be notified if your request was approved by the maintainer.
+Apply to work on it and you will be notified once the maintainer approves your request.
 
-> There's no limit of tasks to apply to work, if you're not be assigned to one, maybe you can be assigned to another ones available
+> There is no limit to how many tasks you can apply for. If you are not assigned to one, you can still be selected for others.
 
 #### You were assigned
 
-If you were assigned, you can start to work on that issue.
+If you are assigned you can start working on the issue immediately.
 
-The maintainer may contact you to provide extra information of how to run the project.
+The maintainer may provide additional information on how to run the project.
 
 ## Create a fork
 
-The first step when you're assigned is start a fork. When you do this you will be able to create branches from your version of the project that you will be working. With this "copy" you can modify and send the solution back to be merged in the main codebase.
+When assigned, start by creating a fork. From your fork you can create branches, make changes and then submit them for merging into the main codebase.
 
-The fork is to you make the required changes, that once concluded, will be merged into the main codebase.
+Your fork lets you work safely on the required changes until they are ready to merge back.
 
-The project may change while you're working, like bug fixes and new features, maybe that will conflict to yours, specially if the tasks require time. When you have a fork, you had diverged and the project follow another branch three. 
+The project may evolve while you are working. Keep your fork up to date to avoid conflicts.
 
-You can always fetch to obtain the updated version and leave with git to merge the changes. So you should always be up to date with the changes and we will not have any conflict to merge your code.
+Fetch the latest changes from the original repository and merge them into your fork regularly. Staying up to date helps avoid conflicts when merging your code.
 
 Let's suppose that the issue would be an issue from our own Gitpay project: https://github.com/worknenjoy/gitpay/issues/12
 
-The first step to solve that issue it would be follow the instructions to start this project: http://github.com/worknenjoy/gitpay
+The first step to solve the issue is to follow the setup instructions at <http://github.com/worknenjoy/gitpay>
 
-And we can run the project with:
+Run the project with:
 
 Frontend: `npm run dev`
 
 Backend (node.js): `npm run start:dev`
 
-Then we could change the source code
+Then edit the source code
 
 File: [https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html](https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html)
 ```html
@@ -99,9 +99,9 @@ File: [https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.ht
 </head>
 ```
 
-With a line: `<link rel="shortcut icon" type="image/png" href="favicon.png">`
+Add the line `<link rel="shortcut icon" type="image/png" href="favicon.png">`
 
-And the final version:
+The final version becomes:
 
 ```html
 <head>
@@ -115,19 +115,19 @@ And the final version:
 </head>
 ```
 
-Then you can check in the local version from your browser, that the icon was updated.
+Check the local version in your browser to verify that the icon has changed.
 
-If you want to learn, you can send your first Pull Request with these changes.
+You can even send your first Pull Request with these changes as a learning exercise.
 
 
 ## Sending your Pull Request
 
-Now that you have the changes, you should commit and push to your forked repo.
+After making the changes, commit and push them to your forked repository.
 
-> Don't forget to run the tests `npm run test` e `npm run lint` that we do automated tests to check if the projects is good to go for a review. If these tests fails, we will ask you to fix and when you send a pull request, our continuous integration system will verify your changes before move on.
+> Run `npm run test` and `npm run lint` before creating a pull request. Fix any failures so the continuous integration system can verify your changes.
 
-So for this issue, the pull request can be send in [https://github.com/worknenjoy/gitpay/pulls](https://github.com/worknenjoy/gitpay/pulls)
+For this example issue the pull request can be opened at [https://github.com/worknenjoy/gitpay/pulls](https://github.com/worknenjoy/gitpay/pulls)
 
-When you send the pull request, we can review and ask for changes, and you can do the fixings and the pull request can be updated, and it is approved when the solution is good to go.
+After you submit the pull request we will review it and may request changes. Update the pull request until the solution is ready to be merged.
 
-When approved, your code is merged, approved and you will receive a bounty for your contribution.
+Once approved your code is merged and you will receive a bounty for your contribution.
