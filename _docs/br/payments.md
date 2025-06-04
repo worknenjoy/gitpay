@@ -10,31 +10,31 @@ tags:
 * TOC
 {:toc}
 
-Quando a tarefa é concluída, a issue relacionada é fechada, o Pull Request é integrado e de acordo com o processo de integração contínua o código é enviado para produção e você recebe a recompensa.
+Quando a tarefa é concluída, a issue relacionada e o Pull Request são fechados. O código vai para produção e você recebe a recompensa.
 
-Para entender melhor como esse processo funciona, ele segue as seguintes etapas:
+Para entender melhor como funciona, siga as etapas abaixo:
 
 ## Investindo em uma tarefa
 
 Uma tarefa que está disponível na plataforma tem um valor que foi investido por quem tem interesse na resolução. Ela pode ser o cliente, ou quem mantém o projeto ou um conjunto de envolvidos que quer se juntar para resolver algo, no modelo de *financiamento coletivo*
 
-Quando uma tarefa aparece na plataforma com um valor, aquele valor já foi pago e está retido na plataforma. Você então pode demonstrar interesse. Você também precisa ativar sua conta, colocando seus dados bancários para receber diretamente por transferência bancária
+Quando uma tarefa aparece na plataforma com um valor, ele já foi pago e fica retido até a conclusão. Você pode demonstrar interesse e deve ativar sua conta informando seus dados bancários para receber via transferência.
 
-> Quando o valor de uma tarefa aparece na plataforma, ele foi pago por alguém interessado em tê-la concluída e quem criou a tarefa poderá avaliar a solução e aprovar para que seja enviada a recompensa
+> Quando o valor de uma tarefa é exibido significa que alguém já pagou por ela. Quem criou a tarefa irá avaliar a solução e liberar a recompensa.
 
 ## Pagamentos com Cartão: Recebimento diretamente na sua conta 
-Quando um pagamento é feito por uma tarefa criada, uma nova ordem é criada. Se ela é paga no cartão de crédito, o pagamento foi realizado pelo cliente e é liberado quando a tarefa é integrada.
+Quando uma tarefa é paga com cartão de crédito uma nova ordem é criada e o valor é liberado quando a tarefa é integrada.
 
-Para este tipo de pagamento, você precisa estar com sua conta bancária ativa, que pode ser feito na plataforma para poder receber os pagamentos. Uma vez ativada, o pagamento é liberado e leva em média *2 dias para ser realizado*
+Para este tipo de pagamento você precisa cadastrar sua conta bancária na plataforma. Após ativada, o pagamento leva em média *2 dias* para ser depositado.
 
-> O recebimento nesta modalidade é isento de taxas, as tarefas são em dólar e o valor é definido na cotação do dia do pagamento realizado no cartão pelo interessado
+> Nesta modalidade não há taxas. As tarefas são em dólar e o valor considera a cotação do dia do pagamento.
 
 ## Pagamentos com Paypal: Recebimento com Paypal
-Se o pagamento foi realizado com PayPal, você precisa ativar sua conta do PayPal para recebimento. Lembrando que o pagamento irá ser reajustado de acordo com as taxas do PayPal.
+Se o pagamento foi feito via PayPal você precisa ativar sua conta PayPal para recebimento. O valor será ajustado conforme as taxas do PayPal.
 
-> Se você usa o Paypal e quer receber com o Paypal, verifique se o pagamento foi realizado com Paypal  
+> Se quiser receber via PayPal, verifique se a tarefa foi financiada com PayPal.
 
 
 ## Pagamentos realizados por cartão e pelo PayPal
 
-Pode ser criada mais de uma ordem para aquela tarefa e ela ter tido diferentes tipos de pagamento. Para receber o valor integral, você precisará ter tanto sua conta bancária ativa quanto a do PayPal.
+Uma tarefa pode ter mais de uma ordem e diferentes meios de pagamento. Para receber o valor total, mantenha ativa sua conta bancária e a do PayPal.

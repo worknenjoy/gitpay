@@ -10,19 +10,19 @@ tags:
 * TOC
 {:toc}
 
-O Gitpay é uma plataforma que oferece tarefas que usam qualquer outro sistema Git para entrega de alguma parte do projeto. Estas tarefas são muitas vezes chamadas de Issue, como por exemplo no Github, e Incidentes, no Bitbucket.
+O Gitpay é uma plataforma que oferece tarefas para projetos que utilizam Git. Essas tarefas costumam ser chamadas de *issues* no GitHub ou *incidentes* no Bitbucket.
 
-Você pode trabalhar em tarefas disponíveis na plataforma, de diferentes projetos e do próprio Gitpay. Isto quer dizer que a plataforma usa o seu próprio processo para evoluir suas features, utilizando as contribuições dos interessados.
+Você pode trabalhar em tarefas disponíveis na plataforma de diversos projetos, inclusive do próprio Gitpay. Dessa forma a plataforma evolui utilizando as contribuições da comunidade.
 
-Neste caso, quem contribui para o próprio projeto está ajudando a construir *a sua própria plataforma de trabalho independente* e aprender de forma colaborativa. Contribuições de projetos contam como experiência para outros projetos.
+Quem contribui para o projeto ajuda a construir *sua própria plataforma de trabalho* e aprende de forma colaborativa. A experiência adquirida pode ser aplicada em outros projetos.
 
-Estas tarefas são geralmente dividida em mudanças pequenas e específicas, mas também pode significar tarefas maiores, parte de um projeto. A vantagem de sempre buscar tarefas menores, é poder diminuir o risco e facilitar os testes e integrações necessárias para validar a tarefa.
-Com o Gitpay, as tarefas podem ser validadas em diversos níveis para serem consideradas como prontas. Estes processos seguem as melhores práticas de desenvolvimento de software ágil, já consolidados e usados em diversas empresas. Contribuindo com o Gitpay, você também estará aprendendo como empresas podem funcionar totalmente remotas e projetos podem ser mantidos de maneira sustentável, colaborativo e com apoio da comunidade. 
+As tarefas normalmente são pequenas e específicas, mas também podem envolver demandas maiores. Focamos em tarefas menores para reduzir riscos e facilitar testes e integrações.
+No Gitpay as tarefas passam por diversas validações seguindo as melhores práticas de desenvolvimento ágil. Contribuindo você aprende como projetos podem ser mantidos de forma sustentável e colaborativa, mesmo em equipes remotas.
 
 ## O que eu preciso saber?
-Você não precisa saber destes conceitos para contribuir, usar o Gitpay e receber recompensas. No entanto, se não souber os conceitos abordados aqui, você tem que desejar ou estar aberto para aprender.
+Você não precisa dominar todos os conceitos para contribuir e receber recompensas. Basta estar disposto a aprender.
 
-Conceitos como desenvolvimento ágil, scrum, extreme programming, open source, releases, Pull Requests, integração contínua, build pipeline e TDD, são parte da composição do processo de desenvolvimento que o Gitpay usa para os projetos cadastrados.
+Trabalhamos com práticas como desenvolvimento ágil, Scrum, extreme programming, open source, releases, pull requests, integração contínua e TDD. Essas práticas também são recomendadas para os projetos cadastrados na plataforma.
 
 O Gitpay envolve um processo de recompensa e contribuição por projetos que usam o Git. Ele transforma o Git numa ferramenta de trabalho e pagamento pela realização de tarefas. Diferente de uma tarefa ou projeto que um cliente ofereça, aqui ela passa a fazer parte de um ciclo de desenvolvimento que é claro para quem desenvolve, e que no fim se torna claro para quem usa também.
 
@@ -41,39 +41,32 @@ Isto significa que cada tarefa quando enviada através de um *Pull Request* vai 
 {% include image.html img="https://alexandremagno.net/wp-content/uploads/2018/09/Global-Business-Deals-Venn-Diagram.png" style="wide" lightbox="true" alt="Alt for image" caption="Image in lightbox" %}
 
 ## Como contribuir na prática e ser recompensado
-Vamos mostrar de uma forma bem geral como é o processo a partir do interesse de uma tarefa. Quando você cadastra no Gitpay, podemos enviar propostas de tarefas da plataforma e também de clientes que disponibilizam tarefas de seus projetos.
+Vamos mostrar de forma resumida como funciona o processo a partir do momento em que você demonstra interesse por uma tarefa. Depois de se cadastrar no Gitpay podemos enviar propostas tanto da plataforma quanto de clientes que disponibilizam demandas de seus projetos.
 
-Estas tarefas podem vir de várias fontes, de projetos Open Source, onde alguém quer que ela seja resolvida, e a partir disto pessoas interessadas na resolução podem investir em projetos. Isto mesmo, a recompensa da tarefa pode vir como investimento de várias fontes que desejam que aquela tarefa seja resolvida.
+As tarefas podem ter origem em projetos open source ou privados. Pessoas interessadas podem investir na solução, então a recompensa pode ser financiada por várias fontes.
 
-Sendo assim, o Gitpay é para usuários e empresas.
+O Gitpay atende tanto usuários individuais quanto empresas.
 
-Você então, navegando pela plataforma na listagem de tarefas ou recebendo notificações sobre tarefas, você pode manifestar interesse em iniciá-la e começar a resolução.
+Navegando pela plataforma ou recebendo notificações você pode manifestar interesse e iniciar a solução da tarefa.
 
-Pegando um exemplo que poderia ser real, temos por exemplo o pedido de um cliente de colocar um favicon em seu site. O favicon é um ícone que aparece como uma miniatura do site na barra de endereços de um navegador.
+Por exemplo, imagine a solicitação de adicionar um favicon ao site. O favicon é um pequeno ícone exibido na barra de endereços do navegador.
 
-Vamos supor que a tarefa tenha sido criada na plataforma a partir de uma issue que descreve esta necessidade em um repositório no Github, e ela seja tão simples quanto colocar uma linha no header do documento de um site que esteja na plataforma com a referência para o favicon. O código do site se encontra em um repositório do Github.
+Suponha que essa tarefa tenha sido criada a partir de uma issue no GitHub. A solução seria apenas adicionar uma linha no *header* do site com a referência do favicon. O código do site estaria hospedado em um repositório do GitHub.
 
 #### Interesse em uma tarefa
 
 Você primeiro chega até a tarefa: [https://gitpay.me/#/task/64](https://gitpay.me/#/task/64)
-
-Nela, você pode demonstrar interesse e quem criou o tarefa será notificado.
-
-> Não se acanhe em pegar quantas tarefas tiver interesse e se não for escolhido, o processo é dinâmico e garantiremos que você tenha oportunidade para diferentes tipos de tarefas e desafios
+Nessa página você pode demonstrar interesse e o criador da tarefa será notificado.
+> Não hesite em se candidatar para quantas tarefas quiser. Caso não seja escolhido em uma, haverá outras oportunidades.
 
 #### Escolhido
-
-Você então é escolhido para iniciar a tarefa.
-
-Dependendo da tarefa, você poderá ter que receber mais informações para acessar o projeto.
+Se você for escolhido, pode iniciar a tarefa.
+Dependendo da tarefa, pode ser necessário receber instruções adicionais para acessar o projeto.
 
 ## Criando um fork
-
-O primeiro passo para começar a trabalhar em um projeto de fato é quando realizamos um Fork. Quando você realiza este passo você obtem uma ramificação do projeto. Com esta "cópia" você pode realizar as modificações para enviar de volta ao projeto e ser integrado na base principal.
-A versão do fork é para você realizar as modificações para quando concluídas, possam integrar o projeto.
-
-O projeto pode, enquanto você estiver trabalhando em uma tarefa, passar por modificações, correção de bugs e novas funcionalidades, principalmente se a tarefa tiver uma longa duração. Quando você tem um fork, você saiu da raíz do projeto e ele seguiu outro caminho.
-Você pode sempre obter a versão atualizada do projeto e deixar para o git sincronizar as mudanças. Assim você está em dia com as modificações e não teremos nenhum conflito para ter seu código integrado.
+O primeiro passo para trabalhar em um projeto é realizar um *fork*. Com essa "cópia" você faz as modificações e ao final envia de volta para integração na base principal.
+O fork serve para que você trabalhe nas mudanças até que estejam prontas para integrar o projeto.
+Enquanto você trabalha na tarefa o projeto pode sofrer atualizações. Mantenha seu fork sincronizado para evitar conflitos na hora de integrar o código.
 
 Vamos supor que seja o próprio projeto do Gitpay esta tarefa, sendo assim, teríamos: https://github.com/worknenjoy/gitpay/issues/12
 
@@ -121,13 +114,13 @@ Quer começar a aprender na prática? Essa é uma tarefa de teste, você pode en
 
 
 ## Enviando seu Pull Request
-Agora que você tem a solução implementada, você deve efetuar um commit e um push para o seu repositório.
+Com a solução implementada, faça commit e push para o seu repositório.
 
-> Não se esqueça de executar os testes como `npm run test` e `npm run lint` que verificam automaticamente se seu código está nos padrões deste projeto
+> Não se esqueça de executar `npm run test` e `npm run lint` para garantir que o código está nos padrões do projeto.
 
 
-Para este projeto, no caso sendo do Gitpay, o pull request será enviado em [https://github.com/worknenjoy/gitpay/pulls](https://github.com/worknenjoy/gitpay/pulls)
+Para este projeto o pull request deve ser aberto em [https://github.com/worknenjoy/gitpay/pulls](https://github.com/worknenjoy/gitpay/pulls)
 
-Após o Pull Request ser enviado, podemos avaliar a mudança e pedir modificações se for necessário, e você passa fazer as correções solicitadas e os pull requests são atualizados, até chegar na solução final.
+Após abrir o Pull Request poderemos solicitar ajustes. Faça as correções necessárias até chegar à solução final.
 
-Uma vez aprovado, o seu código é integrado, aprovado e você recebe o pagamento daquela recompensa.
+Depois de aprovado seu código é integrado e você recebe a recompensa pela tarefa.

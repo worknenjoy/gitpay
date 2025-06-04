@@ -1,7 +1,7 @@
 ---
 layout: doc
 title: Trabalhando com o Git Workflow
-subtitle: O processo de entrega intregado de uma tarefa no Gitpay
+subtitle: O processo de entrega integrado de uma tarefa no Gitpay
 author: Alexandre Magno
 tags: 
 
@@ -12,21 +12,21 @@ tags:
 * TOC
 {:toc}
 
-O Git Workflow é um processo já existente no desenvolvimento de software que usamos como base para validar uma tarefa de um projeto Open Source, ou até mesmo de forma interna em projetos privados.
+O Git Workflow é um processo usado no desenvolvimento de software para validar tarefas em projetos open source ou privados.
 
-Ele consiste em disseminar diretrizes e processos de trabalho com o Git para times distribuidos.
+Ele define diretrizes e processos de trabalho com Git para times distribuídos.
 
 ## O nosso Workflow
 
-Usamos os processo de contribuição de um repositório git para validar o trabalho. O Git é o nosso contrato inteligente. A partir de uma integração de mudança que passa por testes automatizados e validações em vários ambientes, é possível realizar processos de trabalhos independnetes de forma integrada.
+Utilizamos o processo de contribuição em um repositório Git para validar o trabalho. O Git funciona como nosso contrato. Mudanças passam por testes automatizados e validações em vários ambientes antes de serem integradas.
 
 ## Git Workflow
 
-O Git Workflow é um processo e recomendação de como devemos usar o Git para finalizar tarefas de uma maneira consistente e produtiva.
+O Git Workflow recomenda como usar o Git para finalizar tarefas de maneira consistente e produtiva.
 
-Trabalhando em projeto, quando usamos o Git para o controle de versão, temos um fluxo de trabalho tendo ele como base. Para garantir que times e projetos em grande escala estejam na mesma página, acordamos de ter o Git Workflow para considerar a tarefa como finalizada.
+Quando usamos Git para controle de versão seguimos um fluxo de trabalho comum. Ele garante que times em grande escala estejam na mesma página e define quando a tarefa é considerada finalizada.
 
-Há diversos tipos de Workflow para times, e aqui vamos falar do que usamos no Gitpay e que muitas empresas também usam
+Existem diversos tipos de workflow para equipes. Aqui apresentamos o que usamos no Gitpay e que também é adotado por muitas empresas.
 
 > Workflows são formas de apresentar um processo de trabalho no desenvolvimento de software ágil. Ele se baseia em regras claras e concretas de como trabalhamos em projetos usando o Git como controle de versão.
 
@@ -34,14 +34,14 @@ Há diversos tipos de Workflow para times, e aqui vamos falar do que usamos no G
 
 ![](/uploads/img-multidev-forking-800-2.png)
 
-Este é o processo que usamos para integração das tarefas. No Forking Workflow, repositórios são criados a partir do principal onde contém a sua mudança. Você deve ser capaz de reproduzir um ambiente com o que você precisa para concluir aquela tarefa.
+Este é o processo que usamos para integrar tarefas. No Forking Workflow você cria um repositório a partir do principal, faz suas alterações e depois abre um Pull Request.
 
-Toda mudança passa por um processo de aprovação. Este processo é concreto e segue as linhas das práticas de desenvolvimento.
+Toda mudança passa por um processo de aprovação que segue as melhores práticas de desenvolvimento.
 
 ## Avaliando as mudanças
 
 Avaliamos as mudanças seguindo as seguintes premissas:
 
-1. Não vamos nos atentar a detalhes, e sim no valor daquela entrega
-2. Seremos sempre flexíveis e abertos a discutir melhores soluções, no entanto, uma tarefa bem descrita evita que o escopo aumente descontrolodamente
-3. Adotamos o desenvolvimento ágil, então estimulamos o desenvolvimento juntamente com testes automatizados, principalmente na correção de bugs
+1. Focamos no valor da entrega, não em cada detalhe.
+2. Somos flexíveis para discutir melhores soluções, mas uma tarefa bem descrita evita aumento de escopo.
+3. Adotamos desenvolvimento ágil e incentivamos testes automatizados, principalmente em correções de bugs.
