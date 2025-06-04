@@ -1,15 +1,31 @@
 import React from 'react';
-import { Button, Container, Typography } from '@material-ui/core';
+import { Button, Container, Typography, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder';
-import ShowMoreText from 'react-show-more-text';
-import { marked } from 'marked';
+import ShowMoreText from 'react-show-more-text'
+import { marked } from 'marked'
 import parse from 'html-react-parser';
 import IssueHeader from '../../../molecules/headers/issue-header/issue-header';
 import IssueAuthorList from '../../../molecules/lists/issue-author-list/issue-author-list';
 
+const useStyles = makeStyles(theme => ({
+
+  issueContent: {
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
+    '& a': {
+      wordBreak: 'break-all'
+    },
+    '& img': {
+      maxWidth: '100%',
+      height: 'auto'
+    }
+  }
+}))
+
 const IssueContent = ({ className, user, project, organization, updateTask, reportTask, logged, task, messageAuthor }) => {
+  const classes = useStyles();
   const taskOwner = () => {
     const creator = logged && task.data.User && user.id === task.data.User.id
     const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === user.id).length > 0 : false
@@ -32,7 +48,7 @@ const IssueContent = ({ className, user, project, organization, updateTask, repo
         <FormattedMessage id='task.info.description' defaultMessage='Description' />
       </Typography>
       <ReactPlaceholder showLoadingAnimation type={'text'} rows={5} ready={task.completed}>
-        <Typography variant='body1' style={{ marginBottom: 40 }} className={className}>
+        <Typography variant='body1' style={{ marginBottom: 40 }} className={`${classes.issueContent} ${className || ''}`}>
           <ShowMoreText
             lines={8}
             more={
