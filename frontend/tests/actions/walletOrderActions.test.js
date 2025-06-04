@@ -118,7 +118,7 @@ describe('wallet order actions', () => {
       moxios.stubRequest(`${api.API_URL}/wallets/orders/*`), {
         status: 200,
         response: walletOrdersData
-      })
+      });
 
       const expectedActions = [
         { type: types.LIST_WALLET_ORDERS_REQUESTED, completed: false },
