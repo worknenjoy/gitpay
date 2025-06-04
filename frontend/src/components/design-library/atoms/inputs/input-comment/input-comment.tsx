@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { TextareaAutosize, FormControl } from '@material-ui/core';
+import useStyles from './input-comment.styles';
 
 const InputComment = ({ placeholder, onChange }) => {
   const intl = useIntl()
   const [interestedComment, setInterestedComment] = useState('')
   const [charactersCount, setCharactersCount] = useState(0)
+  const classes = useStyles()
 
   const handleInputInterestedCommentChange = (e) => {
     setInterestedComment(e.target.value)
@@ -22,7 +24,7 @@ const InputComment = ({ placeholder, onChange }) => {
         value={interestedComment}
         onChange={handleInputInterestedCommentChange}
       />
-      <small style={{ fontFamily: 'Roboto', color: '#a9a9a9', marginTop: '10px', textAlign: 'right' }}>{charactersCount + '/1000'}</small>
+      <small className={classes.counter}>{charactersCount + '/1000'}</small>
     </FormControl >
   );
 };

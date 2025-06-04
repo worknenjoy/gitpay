@@ -1,6 +1,5 @@
 import React from 'react';
-import { green, orange } from '@material-ui/core/colors';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import useStyles from './account-holder-status.styles'
 import { 
   CheckCircleOutlineTwoTone as ActiveIcon,
   InfoSharp as InfoIcon,
@@ -10,26 +9,6 @@ import {
 
 import BaseStatus from '../../base-status/base-status';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    pending: {
-      backgroundColor: orange[500],
-      color: theme.palette.common.white,
-    },
-    active: {
-      backgroundColor: green[500],
-      color: theme.palette.common.white,
-    },
-    inactive: {
-      backgroundColor: theme.palette.grey[400],
-      color: theme.palette.common.white,
-    },
-    unknown: {
-      backgroundColor: theme.palette.grey[500],
-      color: theme.palette.common.white,
-    },
-  }),
-);
 
 interface AccountHolderStatusProps {
   status: string;

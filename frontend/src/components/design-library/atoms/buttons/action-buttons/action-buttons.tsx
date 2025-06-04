@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '@material-ui/core';
+import useStyles from './action-buttons.styles';
 
 
 interface ActionButtonsProps {
@@ -10,6 +11,7 @@ interface ActionButtonsProps {
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => {
   const [ currentKey, setCurrentKey ] = React.useState('');
+  const classes = useStyles();
 
   const actionClick = (key:string, onClick: any) => {
     setCurrentKey(key);
@@ -20,7 +22,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
     <div>
       {primary?.map((action, index) => (
         <>
-          <div style={{ marginTop: 30, marginBottom: 10 }}>
+          <div className={classes.primaryWrapper}>
             <Button
               onClick={() => actionClick(action.key, action.onClick)}
               color='primary'
@@ -30,7 +32,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
               disabled={action.disabled}
               endIcon={action.icon}
             >
-              <span style={{ display: 'inline-block', marginRight: 10 }}>
+              <span className={classes.primaryLabel}>
           <FormattedMessage id={action.label} />
               </span>
             </Button>
@@ -38,7 +40,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
           {action.component && React.cloneElement(action.component, { open: action.key === currentKey, onClose: () => setCurrentKey('') })}
         </>
       ))}
-      <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+      <div className={classes.secondaryContainer}>
         {secondary?.map((action, index) => (
           <>
             <Button
@@ -48,10 +50,10 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
               variant='contained'
               disabled={action.disabled}
               fullWidth
-              style={{ marginRight: 5 }}
+              className={classes.secondaryButton}
               endIcon={action.icon}
             >
-              <span style={{ display: 'inline-block', marginRight: 10 }}>
+              <span className={classes.secondaryLabel}>
                 {action.label}
               </span>
             </Button>

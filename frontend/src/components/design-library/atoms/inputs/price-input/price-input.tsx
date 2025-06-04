@@ -3,21 +3,14 @@ import {
   FormControl,
   InputLabel,
   Input,
-  InputAdornment,
-  withStyles 
+  InputAdornment
 } from '@material-ui/core';
-import { Theme, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
+import useStyles from './price-input.styles';
 
 
-const styles = (theme: Theme) =>
-  createStyles({
-    formPayment: {
-      marginTop: 10,
-      marginBottom: 10
-    }
-  });
-
-const PriceInput = ({ classes, priceLabel, value, onChange, defaultValue, currency = '$', endAdornment = true }) => {
+const PriceInput = ({ priceLabel, value, onChange, defaultValue, currency = '$', endAdornment = true }) => {
+  const classes = useStyles();
   const [ price, setPrice ] = useState(0)
 
   const handleChange = (event) => {
@@ -44,19 +37,19 @@ const PriceInput = ({ classes, priceLabel, value, onChange, defaultValue, curren
           }
           startAdornment={
             <InputAdornment position='start'>
-              <span style={{ fontSize: 28 }}> {currency} </span>
+              <span className={classes.currencySymbol}> {currency} </span>
             </InputAdornment>
           }
           type='number'
-          inputProps={{ 'min': 0, style: { textAlign: 'right', height: 98 } }}
+          inputProps={{ 'min': 0 }}
           defaultValue={defaultValue}
           value={price}
           onChange={handleChange}
-          style={{ fontSize: 42, fontWeight: 'bold' }}
+          className={classes.input}
         />
       </FormControl>
     </form>
   );
 }
 
-export default withStyles(styles)(PriceInput)
+export default PriceInput

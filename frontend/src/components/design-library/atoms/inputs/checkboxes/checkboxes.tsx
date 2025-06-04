@@ -6,26 +6,8 @@ import {
   GridSize
 } from '@material-ui/core';
 
-import { makeStyles } from '@material-ui/core/styles';
+import useStyles from './checkboxes.styles';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    fontFamily: 'Roboto',
-    color: '#a9a9a9',
-  },
-  item: {
-    paddingBottom: 0,
-  },
-  starterCheckbox: {
-    // Add any specific styles for starterCheckbox if needed
-  },
-  termsLabel: {
-    paddingTop: 0,
-  },
-  checkbox: {
-    paddingRight: 5,
-  },
-}));
 
 type CheckboxesProps = {
   checkboxes: any;
