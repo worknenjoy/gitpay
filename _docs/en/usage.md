@@ -1,42 +1,42 @@
 ---
 layout: doc
 lang: en
-title: Como são definidas as tarefas?
-subtitle: Como definimos a tarefa a ser desenvolvida de modo que fique claro e facilite a solução
+title: How tasks are defined
+subtitle: Defining tasks clearly so the solution becomes easier
 author:
 ---
 
-#### O que você vai ver aqui
+#### What you will learn here
 {:.no_toc}
 * TOC
 {:toc}
 
-Uma das maiores vantagens do Git Workflow é ter tarefas definidas de acordo com um modelo. Este modelo pode variar e com o tempo descobrimos o que funcionava melhor para a gente.
+One of the biggest advantages of Git Workflow is having tasks defined following a template. The template may vary and over time we discover what works best for us.
 
-Para criar uma tarefa no Gitpay, basta colar o link de uma tarefa já criada no Github, onde é possível definir templates e modelos de contribuição entre times.
+To create a task on Gitpay simply paste the link to an issue already created on GitHub, where you can define templates and contribution guidelines for teams.
 
-Para toda tarefa, geralmente devemos abordar os seguintes pontos:
+For every task we usually address the following points:
 
-## O porquê da tarefa
+## Why this task
 
-Qual a motivação para levantar esta tarefa, qual o motivo ou propósito dela?
+What is the motivation for opening this task? What's the purpose?
 
-## Nível
+## Level
 
-Bom saber o nível necessário para conclui-la, ela seria para um iniciante, intermediário ou avançado?
+It's good to know the required level to finish it: beginner, intermediate or advanced.
 
-## Comportamento atual
+## Current behaviour
 
-Para sabermos de forma clara o que está acontecendo atualmente para que seja possível reproduzir e saber melhor o que temos agora
+Describe clearly what's happening now so we can reproduce and understand the present state.
 
-## Comportamento esperado
+## Expected behaviour
 
-Como deveria ficar seguindo o caminho do comportamento atual para que possa ficar claro como era antes e como deve ficar depois
+How things should be after the changes. Describe the ideal scenario so it's clear how it differs from the current behaviour.
 
-## Links úteis
+## Useful links
 
-Referências úteis que podem servir de inspiração para ajudar em algum ponto da tarefa
+References that can serve as inspiration or help with some aspect of the task.
 
-## Como reproduzir o cenário
+## How to reproduce
 
-Como alguém que irá trabalhar na tarefa irá chegará naquele comportamento atual que precisa ser modificado?
+Explain how someone working on the task can reach the current behaviour that needs to be changed.
