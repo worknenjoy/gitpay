@@ -22,7 +22,7 @@
     "start:dev": "nodemon ./server.js --ignore '/frontend/*'",
     "start": "node ./server.js",
     "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --timeout 30000 --exit test/*.test.js",
-    "test:github-sync": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --timeout 30000 --exit test/github-language-sync-basic.test.js",
+    "test:github-sync": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --timeout 30000 --exit test/github-language-sync-fixed.test.js",
     "test:github-sync-comprehensive": "node scripts/github-language-sync/test-runner.js",
     "validate:solution": "node scripts/github-language-sync/validate-solution.js",
     "sync:languages": "node scripts/github-language-sync/update_projects_programming_languages.js",
