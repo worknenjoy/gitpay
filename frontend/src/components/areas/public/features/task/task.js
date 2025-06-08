@@ -874,6 +874,7 @@ class Task extends Component {
               updateTask={this.props.updateTask}
               reportTask={this.props.reportTask}
               messageAuthor={this.props.messageAuthor}
+              onDeleteTask={this.handleDeleteTask}
             />
             {this.props.logged ?
               (

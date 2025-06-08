@@ -9,7 +9,7 @@ import parse from 'html-react-parser';
 import IssueHeader from '../../../molecules/headers/issue-header/issue-header';
 import IssueAuthorList from '../../../molecules/lists/issue-author-list/issue-author-list';
 
-const IssueContent = ({ user, project, organization, updateTask, reportTask, logged, task, messageAuthor }) => {
+const IssueContent = ({ user, project, organization, updateTask, onDeleteTask, reportTask, logged, task, messageAuthor }) => {
   const taskOwner = () => {
     const creator = logged && task.data.User && user.id === task.data.User.id
     const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === user.id).length > 0 : false
@@ -26,7 +26,7 @@ const IssueContent = ({ user, project, organization, updateTask, reportTask, log
         updateTask={updateTask}
         taskOwner={taskOwner()}
         reportTask={reportTask}
-        handleDeleteTask={() => { }}
+        handleDeleteTask={onDeleteTask}
       />
       <Typography variant='subtitle1' style={{ marginBottom: 10, marginTop: 20 }}>
         <FormattedMessage id='task.info.description' defaultMessage='Description' />
