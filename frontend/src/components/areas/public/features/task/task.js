@@ -357,8 +357,58 @@ const styles = theme => ({
     marginTop: 10,
     display: 'inline-block',
     textAlign: 'middle'
-  }
+  },
+  sidebar: {
 
+    backgroundColor: '#eee',
+
+    padding: 25,
+
+    [theme.breakpoints.down('xs')]: {
+
+      padding: 15,
+
+    },
+
+  },
+
+  sidebarSection: {
+
+    display: 'flex',
+
+    justifyContent: 'space-evenly',
+
+    marginTop: 20,
+
+    marginBottom: 20,
+
+    [theme.breakpoints.down('xs')]: {
+
+      flexDirection: 'column',
+
+      alignItems: 'center',
+
+      marginTop: 10,
+
+      marginBottom: 10,
+
+    },
+
+  },
+
+  sidebarItem: {
+
+    textAlign: 'center',
+
+    [theme.breakpoints.down('xs')]: {
+
+      marginBottom: 15,
+
+      maxWidth: '100%',
+
+    },
+
+  },
 })
 
 class Task extends Component {
@@ -864,9 +914,10 @@ class Task extends Component {
         {noTopBar ? null : (
           <TopBarContainer />
         )}
-        <Grid container style={{ marginBottom: 4 }}>
+        <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
           <Grid item xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
             <IssueContent
+              className={classes.issueContent}
               logged={this.props.logged.data.id}
               task={task}
               project={project}
@@ -912,7 +963,7 @@ class Task extends Component {
                 </Collapse>
               )}
           </Grid>
-          <Grid style={{ backgroundColor: '#eee', padding: 25 }} item xs={12} sm={12} md={4}>
+          <Grid className={classes.sidebar} item xs={12} sm={12} md={4}>
             {task.values && task.values.available > 0 &&
               <div style={{ textAlign: 'center', marginTop: 10 }}>
                 <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
@@ -928,8 +979,8 @@ class Task extends Component {
               </div>
             }
 
-            <div style={{ display: 'flex', marginTop: 20, marginBottom: 20, justifyContent: 'space-evenly' }}>
-              <div style={{ textAlign: 'center' }}>
+            <div className={classes.sidebarSection}>
+              <div className={classes.sidebarItem}>
                 <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                   <FormattedMessage id='task.publicy.label' defaultMessage='Publicy' />
                 </Typography>
@@ -938,7 +989,7 @@ class Task extends Component {
                 </div>
               </div>
               {task.data.status &&
-                <div style={{ textAlign: 'center' }}>
+                <div className={classes.sidebarItem}>
                   <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                     <FormattedMessage id='task.status.label' defaultMessage='Status' />
                   </Typography>
@@ -969,9 +1020,9 @@ class Task extends Component {
               }
 
             </div>
-            <div style={{ display: 'flex', marginTop: 20, marginBottom: 40, justifyContent: 'space-evenly' }}>
+            <div className={classes.sidebarSection}>
               {task.data.level && !this.taskOwner() &&
-                <div style={{ textAlign: 'center' }}>
+                <div className={classes.sidebarItem}>
                   <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                     <FormattedMessage id='task.level.label' defaultMessage='Level' />
                   </Typography>
@@ -984,7 +1035,7 @@ class Task extends Component {
                 </div>
               }
               {task.data.deadline && !this.taskOwner() &&
-                <div style={{ textAlign: 'center' }}>
+                <div className={classes.sidebarItem}>
                   <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                     <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
                   </Typography>
@@ -1008,7 +1059,7 @@ class Task extends Component {
                 </div>
               }
               {this.taskOwner() &&
-                <div style={{ textAlign: 'center' }}>
+                <div className={classes.sidebarItem}>
                   <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                     <FormattedMessage id='task.level.label' defaultMessage='Level' />
                   </Typography>
@@ -1020,7 +1071,7 @@ class Task extends Component {
                 </div>
               }
               {this.taskOwner() &&
-                <div style={{ textAlign: 'center' }}>
+                <div className={classes.sidebarItem}>
                   <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
                     <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
                   </Typography>
