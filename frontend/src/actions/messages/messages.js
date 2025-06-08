@@ -163,7 +163,7 @@ const messages = defineMessages({
   },
   notificationOrderTransferSuccess: {
     id: 'actions.order.transfer.success',
-    defaultMessage: 'The order was transfered successfully'
+    defaultMessage: 'The order was transferred successfully'
   },
   notificationOrderTransferError: {
     id: 'actions.order.transfer.error',
@@ -315,7 +315,7 @@ const messages = defineMessages({
   },
   notificationTaskReportSuccess: {
     id: 'actions.task.report.success',
-    defaultMessage: 'Task successfuly reported'
+    defaultMessage: 'Task successfully reported'
   },
   notificationTaskReportError: {
     id: 'actions.task.report.error',
@@ -419,7 +419,7 @@ const messages = defineMessages({
   },
   notificationTaskClaimSuccess: {
     id: 'actions.task.claim.success',
-    defaultMessage: 'Issue successfuly claimed'
+    defaultMessage: 'Issue successfully claimed'
   },
   notificationTaskClaimError: {
     id: 'actions.task.claim.error',
