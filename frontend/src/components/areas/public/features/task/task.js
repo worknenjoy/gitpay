@@ -914,7 +914,7 @@ class Task extends Component {
         {noTopBar ? null : (
           <TopBarContainer />
         )}
-        <Grid container style={{ marginBottom: 4 }} alignItems="flex-start">
+        <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
           <Grid item xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
             <IssueContent
               className={classes.issueContent}
