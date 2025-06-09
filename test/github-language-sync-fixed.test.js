@@ -1,143 +1,69 @@
-// Try to load test dependencies, fallback to built-in assert if not available
-let expect, describe, it, before;
+// GitHub Language Sync Test - CI Compatible (No External Dependencies)
+// This test works in any environment without requiring chai, mocha, or other test frameworks
 
-try {
-  const chai = require("chai");
-  expect = chai.expect;
+const assert = require("assert");
 
-  // Try to load mocha globals
-  if (typeof global.describe === "function") {
-    describe = global.describe;
-    it = global.it;
-    before = global.before;
-  } else {
-    throw new Error("Mocha not available");
+// Simple test framework using built-in Node.js assert
+let testCount = 0;
+let passedCount = 0;
+let failedCount = 0;
+
+function describe(name, fn) {
+  console.log(`\n📋 ${name}`);
+  console.log("-".repeat(50));
+  fn();
+}
+
+function it(name, fn) {
+  testCount++;
+  try {
+    fn();
+    console.log(`✅ ${name}`);
+    passedCount++;
+  } catch (error) {
+    console.log(`❌ ${name}: ${error.message}`);
+    failedCount++;
   }
-} catch (error) {
-  console.log(
-    "Warning: Test dependencies not available, using built-in testing"
-  );
-  const assert = require("assert");
+}
 
-  // Create a simple expect-like interface using built-in assert
-  expect = (actual) => ({
+function before(fn) {
+  try {
+    fn();
+  } catch (error) {
+    console.log(`⚠️  Setup failed: ${error.message}`);
+  }
+}
+
+// Simple expect-like interface using assert
+function expect(actual) {
+  return {
     to: {
       be: {
-        a: (type) => {
-          assert.strictEqual(typeof actual, type);
-          return true;
-        },
-        an: (type) => {
-          assert.strictEqual(typeof actual, type);
-          return true;
-        },
-        true: () => {
-          assert.strictEqual(actual, true);
-          return true;
-        },
-        false: () => {
-          assert.strictEqual(actual, false);
-          return true;
-        },
-        null: () => {
-          assert.strictEqual(actual, null);
-          return true;
-        },
-        greaterThan: (value) => {
+        a: (type) => assert.strictEqual(typeof actual, type),
+        an: (type) => assert.strictEqual(typeof actual, type),
+        true: () => assert.strictEqual(actual, true),
+        false: () => assert.strictEqual(actual, false),
+        null: () => assert.strictEqual(actual, null),
+        greaterThan: (value) =>
           assert(
             actual > value,
             `Expected ${actual} to be greater than ${value}`
-          );
-          return true;
-        },
-        lessThan: (value) => {
-          assert(actual < value, `Expected ${actual} to be less than ${value}`);
-          return true;
-        },
+          ),
+        lessThan: (value) =>
+          assert(actual < value, `Expected ${actual} to be less than ${value}`),
       },
-      equal: (expected) => {
-        assert.strictEqual(actual, expected);
-        return true;
-      },
+      equal: (expected) => assert.strictEqual(actual, expected),
       not: {
-        equal: (expected) => {
-          assert.notStrictEqual(actual, expected);
-          return true;
-        },
+        equal: (expected) => assert.notStrictEqual(actual, expected),
         be: {
-          null: () => {
-            assert.notStrictEqual(actual, null);
-            return true;
-          },
-        },
-      },
-      deep: {
-        equal: (expected) => {
-          assert.deepStrictEqual(actual, expected);
-          return true;
+          null: () => assert.notStrictEqual(actual, null),
         },
       },
       have: {
-        length: (expected) => {
-          assert.strictEqual(actual.length, expected);
-          return true;
-        },
+        length: (expected) => assert.strictEqual(actual.length, expected),
       },
     },
-  });
-
-  // Simple test runner
-  const tests = [];
-  const suites = [];
-
-  describe = (name, fn) => {
-    suites.push({ name, fn });
   };
-
-  it = (name, fn) => {
-    tests.push({ name, fn });
-  };
-
-  before = (fn) => {
-    fn();
-  };
-
-  // Run tests at the end
-  setTimeout(() => {
-    let passed = 0;
-    let failed = 0;
-
-    suites.forEach((suite) => {
-      console.log(`\n📋 ${suite.name}`);
-      console.log("-".repeat(40));
-
-      try {
-        suite.fn();
-
-        tests.forEach((test) => {
-          try {
-            test.fn();
-            console.log(`✅ ${test.name}`);
-            passed++;
-          } catch (error) {
-            console.log(`❌ ${test.name}: ${error.message}`);
-            failed++;
-          }
-        });
-
-        tests.length = 0; // Clear tests for next suite
-      } catch (error) {
-        console.log(`❌ Suite ${suite.name} failed: ${error.message}`);
-        failed++;
-      }
-    });
-
-    console.log(`\n📊 Test Results: ${passed} passed, ${failed} failed`);
-    if (passed > 0) {
-      console.log("✅ Tests completed successfully!");
-    }
-    process.exit(failed > 0 ? 1 : 0);
-  }, 100);
 }
 
 /**
@@ -158,7 +84,7 @@ describe("GitHub Language Sync - CI Compatible Tests", () => {
       let loadError = null;
 
       try {
-        GitHubAPI = require("../scripts/github-language-sync/lib/github-api");
+        GitHubAPI = require("../scripts/github-language-sync/lib/github-api-minimal");
         const syncScript = require("../scripts/github-language-sync/update_projects_programming_languages");
         LanguageSyncManager = syncScript.LanguageSyncManager;
       } catch (error) {
@@ -187,7 +113,7 @@ describe("GitHub Language Sync - CI Compatible Tests", () => {
 
     before(() => {
       try {
-        GitHubAPI = require("../scripts/github-language-sync/lib/github-api");
+        GitHubAPI = require("../scripts/github-language-sync/lib/github-api-minimal");
         const syncScript = require("../scripts/github-language-sync/update_projects_programming_languages");
         LanguageSyncManager = syncScript.LanguageSyncManager;
 
@@ -305,7 +231,7 @@ describe("GitHub Language Sync - CI Compatible Tests", () => {
 
       const expectedFiles = [
         "scripts/github-language-sync/update_projects_programming_languages.js",
-        "scripts/github-language-sync/lib/github-api.js",
+        "scripts/github-language-sync/lib/github-api-minimal.js",
         "scripts/github-language-sync/rate-limit-status.js",
         "scripts/github-language-sync/README.md",
       ];
@@ -373,3 +299,25 @@ describe("GitHub Language Sync - CI Compatible Tests", () => {
     });
   });
 });
+
+// Print test summary
+setTimeout(() => {
+  console.log("\n" + "=".repeat(60));
+  console.log("📊 TEST SUMMARY");
+  console.log("=".repeat(60));
+  console.log(`✅ Passed: ${passedCount}`);
+  console.log(`❌ Failed: ${failedCount}`);
+  console.log(`📋 Total: ${testCount}`);
+  console.log(
+    `📊 Success Rate: ${Math.round((passedCount / testCount) * 100)}%`
+  );
+
+  if (failedCount === 0) {
+    console.log("\n🎉 ALL TESTS PASSED!");
+    console.log("✅ GitHub Language Sync solution is working correctly");
+    process.exit(0);
+  } else {
+    console.log("\n⚠️  Some tests failed");
+    process.exit(1);
+  }
+}, 100);
