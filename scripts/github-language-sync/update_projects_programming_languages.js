@@ -118,11 +118,13 @@ class LanguageSyncManager {
           )
           .map((assoc) => assoc.programmingLanguageId);
 
-        await models.ProjectProgrammingLanguage.destroy({
-          where: {
-            projectId: project.id,
-            programmingLanguageId: languageIdsToRemove,
-          },
+        // Use Sequelize's many-to-many remove method
+        const languagesToRemoveObjects =
+          await models.ProgrammingLanguage.findAll({
+            where: { id: languageIdsToRemove },
+            transaction,
+          });
+        await project.removeProgrammingLanguages(languagesToRemoveObjects, {
           transaction,
         });
       }
@@ -137,14 +139,10 @@ class LanguageSyncManager {
             transaction,
           });
 
-        // Create association
-        await models.ProjectProgrammingLanguage.create(
-          {
-            projectId: project.id,
-            programmingLanguageId: programmingLanguage.id,
-          },
-          { transaction }
-        );
+        // Use Sequelize's many-to-many add method
+        await project.addProgrammingLanguage(programmingLanguage, {
+          transaction,
+        });
       }
 
       // Update project sync metadata
