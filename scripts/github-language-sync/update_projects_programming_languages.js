@@ -90,17 +90,26 @@ class LanguageSyncManager {
     try {
       const languageNames = Object.keys(languages);
 
-      // Get existing language associations
+      // Get existing language associations without include to avoid association errors
       const existingAssociations =
         await models.ProjectProgrammingLanguage.findAll({
           where: { projectId: project.id },
-          include: [models.ProgrammingLanguage],
           transaction,
         });
 
-      const existingLanguageNames = existingAssociations.map(
-        (assoc) => assoc.ProgrammingLanguage.name
+      // Get language names by querying ProgrammingLanguage separately
+      const existingLanguageIds = existingAssociations.map(
+        (assoc) => assoc.programmingLanguageId
       );
+      const existingLanguages =
+        existingLanguageIds.length > 0
+          ? await models.ProgrammingLanguage.findAll({
+              where: { id: existingLanguageIds },
+              transaction,
+            })
+          : [];
+
+      const existingLanguageNames = existingLanguages.map((lang) => lang.name);
 
       // Find languages to add and remove
       const languagesToAdd = languageNames.filter(
@@ -112,19 +121,21 @@ class LanguageSyncManager {
 
       // Remove obsolete language associations
       if (languagesToRemove.length > 0) {
-        const languageIdsToRemove = existingAssociations
-          .filter((assoc) =>
-            languagesToRemove.includes(assoc.ProgrammingLanguage.name)
-          )
-          .map((assoc) => assoc.programmingLanguageId);
-
-        // Use Sequelize's many-to-many remove method
+        // Find language IDs to remove by matching names
         const languagesToRemoveObjects =
           await models.ProgrammingLanguage.findAll({
-            where: { id: languageIdsToRemove },
+            where: { name: languagesToRemove },
             transaction,
           });
-        await project.removeProgrammingLanguages(languagesToRemoveObjects, {
+        const languageIdsToRemove = languagesToRemoveObjects.map(
+          (lang) => lang.id
+        );
+
+        await models.ProjectProgrammingLanguage.destroy({
+          where: {
+            projectId: project.id,
+            programmingLanguageId: languageIdsToRemove,
+          },
           transaction,
         });
       }
@@ -139,10 +150,14 @@ class LanguageSyncManager {
             transaction,
           });
 
-        // Use Sequelize's many-to-many add method
-        await project.addProgrammingLanguage(programmingLanguage, {
-          transaction,
-        });
+        // Create association
+        await models.ProjectProgrammingLanguage.create(
+          {
+            projectId: project.id,
+            programmingLanguageId: programmingLanguage.id,
+          },
+          { transaction }
+        );
       }
 
       // Update project sync metadata
