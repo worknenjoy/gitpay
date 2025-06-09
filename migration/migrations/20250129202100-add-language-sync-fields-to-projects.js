@@ -1,7 +1,8 @@
 'use strict';
 
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     // Add language sync tracking fields to Projects table
     await queryInterface.addColumn('Projects', 'lastLanguageSync', {
       type: Sequelize.DATE,
@@ -20,18 +21,9 @@ module.exports = {
       allowNull: true,
       comment: 'ETag from GitHub API for conditional requests'
     });
-
-    // Add index for performance on language sync queries
-    await queryInterface.addIndex('Projects', ['lastLanguageSync'], {
-      name: 'projects_last_language_sync_idx'
-    });
   },
 
-  down: async (queryInterface, Sequelize) => {
-    // Remove index first
-    await queryInterface.removeIndex('Projects', 'projects_last_language_sync_idx');
-    
-    // Remove columns
+  async down(queryInterface, Sequelize) {
     await queryInterface.removeColumn('Projects', 'languageEtag');
     await queryInterface.removeColumn('Projects', 'languageHash');
     await queryInterface.removeColumn('Projects', 'lastLanguageSync');

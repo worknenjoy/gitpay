@@ -1,5 +1,8 @@
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     // Create ProgrammingLanguages table
     await queryInterface.createTable('ProgrammingLanguages', {
       id: {
@@ -62,11 +65,8 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
-    // Drop ProjectProgrammingLanguages table first due to foreign key dependency
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('ProjectProgrammingLanguages');
-
-    // Drop ProgrammingLanguages table
     await queryInterface.dropTable('ProgrammingLanguages');
   }
 };
