@@ -255,7 +255,7 @@ const ProfileOptions = ({ user }) => {
               <Typography variant="body2">
                 <FormattedMessage
                   id="account.profile.roles.description"
-                  defaultMessage="Set your roles to define your capatibilities on Gitpay"
+                  defaultMessage="Set your roles to define your capabilities on Gitpay"
                 />
               </Typography>
             </CardContent>

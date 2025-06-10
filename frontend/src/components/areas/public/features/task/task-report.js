@@ -99,7 +99,7 @@ class TaskReport extends Component {
           <DialogContent>
             <Typography variant='subtitle1' gutterBottom style={ { color: 'grey', fontWeight: 'bold', marginBottom: 20 } }>
               <FormattedMessage id='task.report.subtitle' defaultMessage='If you think this issue is invalid, is just for test purposes,
-                or has some error or even inapropriate content, please let us know and we will take action' />
+                or has some error or even inappropriate content, please let us know and we will take action' />
             </Typography>
             <form onChange={ this.onChangeReason } type='POST' style={ { marginTop: '20px 0px 10px', color: 'grey' } }>
               <FormControl fullWidth >
