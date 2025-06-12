@@ -203,7 +203,7 @@ export default defineMessages({
   },
   workflowItemSecondary: {
     id: 'welcome.workflow.item.secondary',
-    defaultMessage: 'The company may use personal information for the following purposes: login and signup for Gitpay service, email notifications when enabled, and statitic data when authorized'
+    defaultMessage: 'The company may use personal information for the following purposes: login and signup for Gitpay service, email notifications when enabled, and statistic data when authorized'
   },
   workflowItemTwoPrimary: {
     id: 'welcome.workflow.item.two.primary',
