@@ -15,49 +15,45 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template = (args) => <InvoiceStatus {...args} />;
 
-export const Primary = Template.bind({});
+
+
+export const Pending= Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
-  invoiceStatus: 'paid',
+Pending.args = {
+  status: 'pending',
 };
 
-export const PendingStatus = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-PendingStatus.args = {
-  invoiceStatus: 'pending',
+export const Draft= Template.bind({});
+Draft.args = {
+  status: 'draft',
 };
 
-export const DraftStatus = Template.bind({});
-DraftStatus.args = {
-  invoiceStatus: 'draft',
+export const Open= Template.bind({});
+Open.args = {
+  status: 'open',
 };
 
-export const OpenStatus = Template.bind({});
-OpenStatus.args = {
-  invoiceStatus: 'open',
+export const Paid= Template.bind({});
+Paid.args = {
+  status: 'paid',
 };
 
-export const PaidStatus = Template.bind({});
-PaidStatus.args = {
-  invoiceStatus: 'paid',
+export const Failed= Template.bind({});
+Failed.args = {
+  status: 'failed',
 };
 
-export const FailedStatus = Template.bind({});
-FailedStatus.args = {
-  invoiceStatus: 'failed',
+export const Uncollectible= Template.bind({});
+Uncollectible.args = {
+  status: 'uncollectible',
 };
 
-export const UncollectibleStatus = Template.bind({});
-UncollectibleStatus.args = {
-  invoiceStatus: 'uncollectible',
+export const Void= Template.bind({});
+Void.args = {
+  status: 'void',
 };
 
-export const VoidStatus = Template.bind({});
-VoidStatus.args = {
-  invoiceStatus: 'void',
-};
-
-export const RefundedStatus = Template.bind({});
-RefundedStatus.args = {
-  invoiceStatus: 'refunded',
+export const Refunded= Template.bind({});
+Refunded.args = {
+  status: 'refunded',
 };
