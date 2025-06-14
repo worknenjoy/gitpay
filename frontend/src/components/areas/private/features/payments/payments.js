@@ -365,7 +365,7 @@ const Payments = ({
           completed={item.completed}
         />
       ) : (
-        <PaymentStatus orderStatus={item.status} />
+        <PaymentStatus status={item.status} completed={item.completed} />
       ),
       issueRow(item.Task),
       `$ ${item.amount}`,
