@@ -29,7 +29,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import TaskOrderDetails from '../../../../public/features/task/order/task-order-details'
 import TaskOrderTransfer from '../../../../public/features/task/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
-import CustomPaginationActionsTable from '../payments-table'
+import CustomPaginationActionsTable from './payments-table'
 import InvoiceStatus from '../../../../../design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
 import PaymentStatus from '../../../../../design-library/atoms/status/payment-types-status/payment-status/payment-status'
 
