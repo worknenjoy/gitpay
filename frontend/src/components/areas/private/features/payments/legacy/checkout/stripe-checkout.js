@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StripeProvider, Elements } from 'react-stripe-elements'
-import CheckoutForm from '../../../../../../containers/checkout-form'
+import CheckoutForm from '../../../../../../../containers/checkout-form'
 
 class StripeCheckout extends Component {
   render () {

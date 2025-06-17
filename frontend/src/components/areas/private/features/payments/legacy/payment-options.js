@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@material-ui/core'
 
-import AccountContainer from '../../../../../containers/account'
+import AccountContainer from '../../../../../../containers/account'
 
 class PaymentOptions extends Component {
   constructor (props) {

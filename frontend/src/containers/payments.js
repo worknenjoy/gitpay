@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Payments from '../components/areas/private/features/payments/payments'
+import Payments from '../components/areas/private/features/payments/legacy/payments'
 import { addNotification } from '../actions/notificationActions'
 import { listTasks, filterTasks, changeTaskTab } from '../actions/taskActions'
 import { listOrders, transferOrder, detailOrder, refundOrder, cancelOrder, updateOrder  } from '../actions/orderActions'
