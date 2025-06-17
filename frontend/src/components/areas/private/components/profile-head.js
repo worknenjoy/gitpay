@@ -5,7 +5,7 @@ import {
   withStyles,
   Typography,
   Chip,
-  Avatar,
+  Avatar
 } from '@material-ui/core'
 
 import {
@@ -37,7 +37,7 @@ const styles = theme => ({
   website: {
     textAlign: 'center',
     color: '#515bc4',
-    fontSize: '0.8rem',
+    fontSize: '0.8rem'
   }
 })
 
@@ -63,7 +63,7 @@ const ProfileHead = (props) => {
         ) : (
           <Avatar
             alt={ profile.username }
-            src=''
+            src=""
             className={ classes.avatar }
           >
             { profile.name ? (
@@ -77,14 +77,14 @@ const ProfileHead = (props) => {
         ) }
       </div>
       <div className={ classes.nameContainer }>
-        <Typography component='h4' variant='h4'>{ profile.name }</Typography>
-        <a target='_blank' href={ profile.profile_url } rel="noreferrer">
-          <img width='20' src={ logoGithub } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
+        <Typography component="h4" variant="h4">{ profile.name }</Typography>
+        <a target="_blank" href={ profile.profile_url } rel="noreferrer">
+          <img width="20" src={ logoGithub } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
         </a>
       </div>
       <div>
         <Typography className={ classes.website }>
-          <a href={ profile.website } target='__blank'>
+          <a href={ profile.website } target="__blank">
             { profile.website &&
                         profile.website.replace(/^https?:\/\//, '') }
           </a>

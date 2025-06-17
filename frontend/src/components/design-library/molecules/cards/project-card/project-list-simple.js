@@ -9,7 +9,6 @@ import Chip from '@material-ui/core/Chip'
 import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import slugify from '@sindresorhus/slugify'
 import Link from '@material-ui/core/Link'
 
 import logoGithub from 'images/github-logo.png'
@@ -33,17 +32,17 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%' // 16:9
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+      duration: theme.transitions.duration.shortest
+    })
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(180deg)'
   }
 }))
 
@@ -83,7 +82,7 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
     return (
       <Chip 
         style={ { marginLeft: 10 } }
-        size='medium'
+        size="medium"
         clickable
         avatar={ <Avatar>{ p.Tasks.filter(t => t.status === 'open').length }</Avatar> }
         label={ ' open issue(s)' }
@@ -100,15 +99,15 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
             <Card className={ classes.rootCard }>
               <CardHeader
                 avatar={
-                  <Avatar aria-label='recipe' className={ classes.avatar }>
+                  <Avatar aria-label="recipe" className={ classes.avatar }>
                     { p.name[0] }
                   </Avatar>
                 }
                 action={
-                  <IconButton aria-label='provider'>
-                    <Tooltip id='tooltip-fab' title={ p.Organization && (p.Organization.provider ? p.Organization.provider : 'See on repository') } placement='right'>
-                      <a target='_blank' href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) } rel="noreferrer">
-                        <img width='28' src={ p.Organization && (p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
+                  <IconButton aria-label="provider">
+                    <Tooltip id="tooltip-fab" title={ p.Organization && (p.Organization.provider ? p.Organization.provider : 'See on repository') } placement="right">
+                      <a target="_blank" href={ p.Organization && (p.Organization.provider === 'bitbucket' ? `https://bitbucket.com/${p.Organization.name}/${p.name}` : `https://github.com/${p.Organization.name}/${p.name}`) } rel="noreferrer">
+                        <img width="28" src={ p.Organization && (p.Organization.provider === 'bitbucket' ? logoBitbucket : logoGithub) }
                           style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
                         />
                       </a>
@@ -120,14 +119,14 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
               />
               { p.description &&
               <CardContent>
-                <Typography variant='body2' color='textSecondary' component='p'>
+                <Typography variant="body2" color="textSecondary" component="p">
                   { p.description }
                 </Typography>
               </CardContent>
               }
               <div>
                 <CardActions disableSpacing style={ { alignItems: 'center' } }>
-                  <Typography variant='subtitle1'>
+                  <Typography variant="subtitle1">
                     { projectBountiesList(p.Tasks) }
                   </Typography>
                   {getProjectLink(p)}

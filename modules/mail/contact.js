@@ -22,7 +22,7 @@ if (constants.canSendEmail) {
           country: ${params.country} <br />
           message: ${params.message} <br />
           ${Signatures.sign()}`
-        },
+        }
       ]
     )
   }

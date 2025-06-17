@@ -9,7 +9,7 @@ import { mount } from 'enzyme'
 xdescribe('components', () => {
   describe('message author component', () => {
     it('should start a new message author form dialog empty state', () => {
-      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name='Foo' />)
+      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name="Foo" />)
 
       expect(component).toEqual({})
       expect(component.state().message).toEqual('')
@@ -20,7 +20,7 @@ xdescribe('components', () => {
     })
 
     it('should start a new messageAuthor and set state', () => {
-      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name='Foo' />)
+      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name="Foo" />)
       component.setState({ message: 'other foo' })
       expect(component).toEqual({})
       expect(component.state().message).toEqual('other foo')
@@ -28,7 +28,7 @@ xdescribe('components', () => {
     })
 
     xit('should start a new checkout and check if a payment is requested and change state', () => {
-      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name='Foo' />)
+      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name="Foo" />)
       component.find('input').first().simulate('change', {
         target: {
           name: 'message',

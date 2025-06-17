@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   spanText: {
     display: 'inline-block',
     verticalAlign: 'middle'
-  },
+  }
 }));
 
 interface OfferDrawerCreateProps {
@@ -98,12 +98,12 @@ const OfferDrawerCreate: React.FC<OfferDrawerCreateProps> = ({
       <PricePlan plan={
         {
           fee: 8,
-          category: <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />,
-          title: <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />,
+          category: <FormattedMessage id="actions.task.payment.plan.opensource" defaultMessage="Open Source" />,
+          title: <FormattedMessage id="actions.task.payment.plan.opensource.info" defaultMessage="For Open Source Project" />,
           items: [
-            <FormattedMessage id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />,
-            <FormattedMessage id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />,
-          ],
+            <FormattedMessage id="actions.task.payment.plan.bullet.public" defaultMessage="For Public Projects" />,
+            <FormattedMessage id="actions.task.payment.plan.bullet.basic" defaultMessage="Basic Campaign" />
+          ]
         }
       } price={currentPrice} onChange={(price) => setCurrentPrice(price)} />
       <InputComment

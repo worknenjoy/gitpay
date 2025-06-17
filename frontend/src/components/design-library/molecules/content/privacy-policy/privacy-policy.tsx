@@ -52,7 +52,7 @@ If you have any questions or concerns about our privacy policy, please contact u
           <>
             <div style={{marginBottom: 10}}>
               { onArrowBack && (
-                <a onClick={onArrowBack} href='#'>
+                <a onClick={onArrowBack} href="#">
                   <ArrowBack />
                 </a>
               )}

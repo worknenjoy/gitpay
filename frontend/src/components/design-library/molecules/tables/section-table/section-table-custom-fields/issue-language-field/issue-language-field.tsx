@@ -12,7 +12,7 @@ const IssueLanguageField = ({ issue }) => {
           (
             <Chip
               style={{ marginRight: 5, marginBottom: 5 }}
-              size='small'
+              size="small"
               label={
                 TextEllipsis(`${language.name || ''}`, 10)
               }

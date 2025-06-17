@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       where: {
         walletId: this.id,
         status: 'paid'
-      },
+      }
     })
     const balance = orders.reduce((acc, order) => {
       return acc.plus(order.amount)

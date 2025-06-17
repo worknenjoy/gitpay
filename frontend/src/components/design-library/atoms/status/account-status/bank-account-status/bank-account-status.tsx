@@ -16,7 +16,7 @@ interface BankAccountStatusProps {
 
 const BankAccountStatus: React.FC<BankAccountStatusProps> = ({
   status,
-  completed = true, // Default to true if not provided
+  completed = true // Default to true if not provided
 }) => {
   const classes = useStyles();
   
@@ -26,7 +26,7 @@ const BankAccountStatus: React.FC<BankAccountStatusProps> = ({
     { status: 'verified', label: 'Active', color: 'active', icon: <ActiveIcon className={classes.active} /> },
     { status: 'errored', label: 'Inactive', color: 'inactive', icon: <InactiveIcon className={classes.inactive} />, message: 'Your bank account is inactive. Please complete all required information. If your account remains inactive, contact support at issues@gitpay.me for assistance.' },
     { status: 'verification_failed', label: 'Inactive', color: 'inactive', icon: <InactiveIcon className={classes.inactive} />, message: 'Your bank account is inactive. Please complete all required information. If your account remains inactive, contact support at issues@gitpay.me for assistance.' },
-    { status: 'unknown', label: 'Unknown', color: 'unknown', icon: <QuestionInfoIcon className={classes.unknown} />, message: 'Your status is unknown. Please check back later.' },
+    { status: 'unknown', label: 'Unknown', color: 'unknown', icon: <QuestionInfoIcon className={classes.unknown} />, message: 'Your status is unknown. Please check back later.' }
   ];
 
   return (

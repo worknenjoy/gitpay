@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   inline: {
-    display: 'inline',
-  },
+    display: 'inline'
+  }
 }))
 
 export default function IssueAuthorList ({ authors, logged, user, task, messageAuthor }) {
@@ -45,16 +45,16 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
 
   return (
     <React.Fragment>
-      <Typography variant='subtitle1' style={{ marginBottom: 10, marginTop: 20 }}>
-        <FormattedMessage id='task.info.authors' defaultMessage='Imported by' />
+      <Typography variant="subtitle1" style={{ marginBottom: 10, marginTop: 20 }}>
+        <FormattedMessage id="task.info.authors" defaultMessage="Imported by" />
       </Typography>
-      <Placeholder type='media' rows={1} ready={ task.completed }>
+      <Placeholder type="media" rows={1} ready={ task.completed }>
         <List className={ classes.root }>
           { authors && authors.map(a => {
             return (
               <React.Fragment>
                 { a.name &&
-                <ListItem alignItems='center'>
+                <ListItem alignItems="center">
                   <ListItemAvatar>
                     { a.avatar_url ? (
                       <Avatar alt={ nameInitials(a.name) } src={ a.avatar_url } />
@@ -66,8 +66,8 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
                   </ListItemAvatar>
                   <ListItemText
                     primary={
-                      <a href='#' onClick={ handleMessageAuthorDialog }>
-                        <Typography variant='subtitle2'>
+                      <a href="#" onClick={ handleMessageAuthorDialog }>
+                        <Typography variant="subtitle2">
                           { a.name }
                           { a.email && <MessageIcon style={ { display: 'inline', verticalAlign: 'middle', marginLeft: 10 } } /> }
                         </Typography>
@@ -83,9 +83,9 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
       </Placeholder>
       <React.Fragment>
         { !logged ? (
-          <Dialog open={ openDialog } onClose={ () => setOpenDialog(false) } aria-labelledby='form-dialog-title'>
-            <DialogTitle id='form-dialog-title'>
-              <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to send messages to the author' />
+          <Dialog open={ openDialog } onClose={ () => setOpenDialog(false) } aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">
+              <FormattedMessage id="task.bounties.logged.info" defaultMessage="You need to login to send messages to the author" />
             </DialogTitle>
             <DialogContent>
               <div className={ classes.mainBlock }>

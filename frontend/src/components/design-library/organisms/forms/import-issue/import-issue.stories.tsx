@@ -1,10 +1,9 @@
 import React from 'react';
 import ImportIssue from './import-issue';
-import { on } from 'events';
 
 export default {
   title: 'Design Library/Organisms/Forms/ImportIssue',
-  component: ImportIssue,
+  component: ImportIssue
 };
 
 const Template = (args) => <ImportIssue {...args} />;

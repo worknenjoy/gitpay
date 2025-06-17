@@ -24,11 +24,11 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    padding: theme.spacing(0.5),
+    padding: theme.spacing(0.5)
   },
   chip: {
-    margin: theme.spacing(0.5),
-  },
+    margin: theme.spacing(0.5)
+  }
 })
 
 class OrganizationUpdate extends Component {
@@ -74,39 +74,39 @@ class OrganizationUpdate extends Component {
       <React.Fragment>
         <Chip
           style={ { marginLeft: 10 } }
-          size='small'
+          size="small"
           deleteIcon={ <SyncIcon /> }
-          label='Couldnt obtain provider. Update now to sync'
-          color='secondary'
+          label="Couldnt obtain provider. Update now to sync"
+          color="secondary"
           onDelete={ () => this.setState({ dialogOpen: true }) }
         />
-        <Dialog open={ dialogOpen } onClose={ this.handleClose } aria-labelledby='form-dialog-title'>
-          <DialogTitle id='form-dialog-title'>
-            <FormattedMessage id='organization.update.dialog.title' defaultMessage='Update Organization provider' />
+        <Dialog open={ dialogOpen } onClose={ this.handleClose } aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <FormattedMessage id="organization.update.dialog.title" defaultMessage="Update Organization provider" />
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <FormattedMessage id='organization.update.dialog.desc' defaultMessage='We could find your provider. Please provide to us.' />
+              <FormattedMessage id="organization.update.dialog.desc" defaultMessage="We could find your provider. Please provide to us." />
             </DialogContentText>
             <FormControl fullWidth>
               <RadioGroup name={ 'reason' } value={ this.state.provider } onChange={ this.onChangeProvider }>
-                <FormControlLabel id='organization.provider.github'
+                <FormControlLabel id="organization.provider.github"
                   value={ 'github' }
                   label={ 'Github' }
-                  control={ <Radio color='primary' /> } />
-                <FormControlLabel id='organization.provider.bitbucket'
+                  control={ <Radio color="primary" /> } />
+                <FormControlLabel id="organization.provider.bitbucket"
                   value={ 'bitbucket' }
                   label={ 'Bitbucket' }
-                  control={ <Radio color='primary' /> } />
+                  control={ <Radio color="primary" /> } />
               </RadioGroup>
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={ this.handleClose } color='primary'>
-              <FormattedMessage id='organization.dialog.cancel' defaultMessage='Cancel' />
+            <Button onClick={ this.handleClose } color="primary">
+              <FormattedMessage id="organization.dialog.cancel" defaultMessage="Cancel" />
             </Button>
-            <Button onClick={ (e) => this.handleUpdate(e, organization.id) } disabled={ !this.state.provider } color='primary'>
-              <FormattedMessage id='organization.dialog.action.update' defaultMessage='Update' />
+            <Button onClick={ (e) => this.handleUpdate(e, organization.id) } disabled={ !this.state.provider } color="primary">
+              <FormattedMessage id="organization.dialog.action.update" defaultMessage="Update" />
             </Button>
           </DialogActions>
         </Dialog>

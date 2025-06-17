@@ -34,10 +34,10 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
     ...params,
     currency: 'usd',
     status: 'pending',
-    paid: false,
+    paid: false
   }, {
     hooks: true,
-    individualHooks: true,
+    individualHooks: true
   })
   try {
     let userCustomer = user.customer_id
@@ -51,7 +51,7 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       days_until_due: 30,
       metadata: {
         'wallet_order_id': walletOrder.id
-      },
+      }
     })
 
     const invoiceItem = await stripe.invoiceItems.create({
@@ -62,7 +62,7 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       invoice: invoice.id,
       metadata: {
         'wallet_order_id': walletOrder.id
-      },
+      }
     })
 
     const finalizeInvoice = await stripe.invoices.finalizeInvoice(invoice.id)

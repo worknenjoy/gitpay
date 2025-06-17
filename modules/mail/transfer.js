@@ -27,7 +27,7 @@ if (constants.canSendEmail) {
           value: emailTemplate.baseContentEmailTemplate(`
             <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`
           )
-        },
+        }
       ]
     )
   }
@@ -44,7 +44,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
             `<p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
-        },
+        }
       ]
     )
   }
@@ -61,7 +61,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
           <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
-        },
+        }
       ]
     )
   }
@@ -77,7 +77,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`<p>${i18n.__('mail.transfer.missing.message')}</p>`)
-        },
+        }
       ]
     )
   }
@@ -95,7 +95,7 @@ if (constants.canSendEmail) {
           value: emailTemplate.baseContentEmailTemplate(
             `<p>${i18n.__('mail.transfer.invalid.message')}</p>`
           )
-        },
+        }
       ]
     )
   }
@@ -118,7 +118,7 @@ if (constants.canSendEmail) {
     taskToUrl: taskTo.url,
     amount: order.amount
   })}</p>`)
-        },
+        }
       ]
     )
   }

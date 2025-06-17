@@ -23,7 +23,7 @@ const errorMapping = {
   'external_account[country]': 'Invalid country',
   'external_account[currency]': 'Invalid currency',
   'external_account[bank_code]': 'Invalid bank code',
-  'external_account[account_type]': 'Invalid bank account type',
+  'external_account[account_type]': 'Invalid bank account type'
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -53,8 +53,8 @@ const BankAccountForm = ({
   return (
     <form onSubmit={onSubmit}>
       <ProfileSecondaryHeader
-        title={<FormattedMessage id='payout-settings.bank-account-info.title' defaultMessage='Bank account information' />}
-        subtitle={<FormattedMessage id='payout-settings.bank-account-info.description' defaultMessage='Please provide your bank account activation to receive payouts' />}
+        title={<FormattedMessage id="payout-settings.bank-account-info.title" defaultMessage="Bank account information" />}
+        subtitle={<FormattedMessage id="payout-settings.bank-account-info.description" defaultMessage="Please provide your bank account activation to receive payouts" />}
         aside={ 
           <BankAccountStatus status={status} completed={completed} />
         }
@@ -78,7 +78,7 @@ const BankAccountForm = ({
       )}
       <Grid container spacing={2}>
         <Grid item xs={12} md={12}>
-          <ReactPlaceholder className={classes.placholder} type='text' rows={1} ready={completed} showLoadingAnimation>
+          <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
             <AccountTypeField
               type={account_holder_type}
             />
@@ -86,7 +86,7 @@ const BankAccountForm = ({
         </Grid>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <ReactPlaceholder className={classes.placholder} type='text' rows={1} ready={completed} showLoadingAnimation>
+            <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
               <CountrySelectField
                 user={user}
                 country={currentCountry}
@@ -96,14 +96,14 @@ const BankAccountForm = ({
             </ReactPlaceholder>
           </Grid>
           <Grid item xs={12} md={6}>
-            <ReactPlaceholder className={classes.placholder} type='text' rows={1} ready={completed} showLoadingAnimation>
+            <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
               <BankCurrencyField currency={currency} countries={countries} disabled={!!id} />
             </ReactPlaceholder>
           </Grid>
         </Grid>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
-            <ReactPlaceholder className={classes.placholder} type='text' rows={1} ready={completed} showLoadingAnimation>
+            <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
               <BankSelectField
                 country={currentCountry}
                 disabled={!!id}
@@ -131,7 +131,7 @@ const BankAccountForm = ({
           type="submit"
           variant="contained"
           color="secondary"
-          label={<FormattedMessage id='account.actions.update' defaultMessage='Update Bank Account' />}
+          label={<FormattedMessage id="account.actions.update" defaultMessage="Update Bank Account" />}
           disabled={false}
           completed={completed}
         />

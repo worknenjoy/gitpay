@@ -6,7 +6,7 @@ import {
   Tabs,
   Tab,
   Typography,
-  withStyles,
+  withStyles
 } from '@material-ui/core'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
 import ProjectListSimple from '../../../../design-library/molecules/cards/project-card/project-list-simple'
@@ -23,7 +23,7 @@ const styles = theme => ({
   },
   rootTabs: {
     marginRight: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(3)
   },
   button: {
 
@@ -128,7 +128,7 @@ const customColumnRenderer = {
     <IssueCreatedField
       issue={item}
     />
-  ),
+  )
 }
 
 const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
@@ -304,20 +304,20 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           </div>
         }
         { isOrganizationPage &&
-        <ReactPlaceholder ready={organization.completed} type='media' rows={2}>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+        <ReactPlaceholder ready={organization.completed} type="media" rows={2}>
+          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
             <FormattedMessage
-              id='task.list.org.headline'
-              defaultMessage='Organization'
+              id="task.list.org.headline"
+              defaultMessage="Organization"
             />
           </Typography>
-          <Typography variant='h3' component='h2'>
+          <Typography variant="h3" component="h2">
             { organizationData.name }
           </Typography>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
             <FormattedMessage
-              id='task.list.org.projects.headline'
-              defaultMessage='Projects'
+              id="task.list.org.projects.headline"
+              defaultMessage="Projects"
             />
           </Typography>
           <ProjectListSimple 
@@ -328,14 +328,14 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
         </ReactPlaceholder>
         }
         { isProjectPage &&
-          <ReactPlaceholder ready={project.completed} type='text' rows={2}>
-            <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+          <ReactPlaceholder ready={project.completed} type="text" rows={2}>
+            <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
               <FormattedMessage
-                id='task.list.headline'
-                defaultMessage='Project'
+                id="task.list.headline"
+                defaultMessage="Project"
               />
             </Typography>
-            <Typography variant='h3' component='h2'>
+            <Typography variant="h3" component="h2">
               { project.data.name }
             </Typography>
           </ReactPlaceholder>
@@ -344,9 +344,9 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
         <Tabs
           value={ currentTab }
           onChange={ handleSecTabChange }
-          scrollButtons='on'
-          indicatorColor='secondary'
-          textColor='secondary'
+          scrollButtons="on"
+          indicatorColor="secondary"
+          textColor="secondary"
           style={{marginTop: 20, marginBottom: 20}}
         >
           { user.Types && user.Types.map(t => t.name).includes('maintainer') &&

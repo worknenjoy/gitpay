@@ -3,7 +3,7 @@ import AccountTabs from './account-tabs';
 
 export default {
   title: 'Design Library/Molecules/Tabs/AccountTabs',
-  component: AccountTabs,
+  component: AccountTabs
 };
 
 const Template = (args) => <AccountTabs {...args} />;
@@ -18,9 +18,9 @@ Default.args = {
       Types: [
         { name: 'contributor' },
         { name: 'maintainer' },
-        { name: 'funding' },
-      ],
-    },
+        { name: 'funding' }
+      ]
+    }
   },
-  children: <div>Account Tabs Content</div>,
+  children: <div>Account Tabs Content</div>
 };

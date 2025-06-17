@@ -104,7 +104,7 @@ const scripts = {
       console.log('totalFromTransfers', totalFromTransfers)
       return { 
         payments_fee: totalFromOrders.toFixed(2),
-        payouts: totalFromTransfers.toFixed(2),
+        payouts: totalFromTransfers.toFixed(2)
       };
     } catch (e) {
       console.log('error on balance script', e);
@@ -189,7 +189,7 @@ const scripts = {
               models.Order.destroy({ where: { TaskId: invalidTask.id } }),
               models.Assign.destroy({ where: { TaskId: invalidTask.id } }),
               models.Offer.destroy({ where: { taskId: invalidTask.id } }),
-              models.Member.destroy({ where: { taskId: invalidTask.id } }),
+              models.Member.destroy({ where: { taskId: invalidTask.id } })
             ]).then(result => {
               return models.Task.destroy({
                 where: {

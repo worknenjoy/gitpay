@@ -47,7 +47,7 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       open={open}
       onClose={onClose}
       PaperProps={{ style: { width: '40%' } }}
@@ -55,15 +55,15 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
       <Container>
         <div style={{ padding: 20 }}>
           <Typography variant="h5" gutterBottom>
-            <FormattedMessage id="transfer.details" defaultMessage='Transfer details' />
+            <FormattedMessage id="transfer.details" defaultMessage="Transfer details" />
           </Typography>
-          <ReactPlaceholder type='media' ready={completed} rows={4} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
+          <ReactPlaceholder type="media" ready={completed} rows={4} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
             <Card style={{ padding: 5, marginBottom: 10, marginTop: 10 }} title={data.id} elevation={1}>
               <CardHeader
                 title={
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                     <Typography variant="body1">
-                      <FormattedMessage id="transfer.destination.label" defaultMessage='Sending bounty to {value}'
+                      <FormattedMessage id="transfer.destination.label" defaultMessage="Sending bounty to {value}"
                         values={{ value: <strong>{getUserDisplayName(data?.destination)}</strong> }}
                       />
                     </Typography>
@@ -75,10 +75,10 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
                 subheader={
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                     <Typography variant="caption">
-                      <FormattedMessage id="transfer.status" defaultMessage='Status' />
+                      <FormattedMessage id="transfer.status" defaultMessage="Status" />
                     </Typography>
                     <Typography variant="body2">
-                      <Chip label={data.status} color={data.status === 'completed' ? 'primary' : 'secondary'} size='small' />
+                      <Chip label={data.status} color={data.status === 'completed' ? 'primary' : 'secondary'} size="small" />
                     </Typography>
                   </div>
                 }
@@ -91,50 +91,50 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
               {!user.account_id && (data.transfer_method === 'multiple' || data.transfer_method === 'stripe') && data.to === user.id &&
                 <CardContent>
                   <Alert
-                    severity='warning'
+                    severity="warning"
                     action={
                       <Button
-                        size='small'
+                        size="small"
                         onClick={() => {
                           history.push('/profile/payout-settings')
                         }}
-                        variant='contained'
-                        color='secondary'
+                        variant="contained"
+                        color="secondary"
                       >
-                        <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
+                        <FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />
                       </Button>
                     }
                   >
-                    <Typography variant='body2' gutterBottom>
-                      <FormattedMessage id='profile.transfer.notactive' defaultMessage='Your account is not active, please finish the setup of your account to receive payouts' />
+                    <Typography variant="body2" gutterBottom>
+                      <FormattedMessage id="profile.transfer.notactive" defaultMessage="Your account is not active, please finish the setup of your account to receive payouts" />
                     </Typography>
                   </Alert>
                 </CardContent>}
               {!user.paypal_id && (data.transfer_method === 'multiple' || data.transfer_method === 'paypal') && data.to === user.id &&
                 <CardContent>
                   <Alert
-                    severity='warning'
+                    severity="warning"
                     action={
                       <Button
-                        size='small'
+                        size="small"
                         onClick={() => {
                           history.push('/profile/payout-settings')
                         }}
-                        variant='contained'
-                        color='secondary'
+                        variant="contained"
+                        color="secondary"
                       >
-                        <FormattedMessage id='transfers.alert.button.paypal' defaultMessage='Link your Paypal account' />
+                        <FormattedMessage id="transfers.alert.button.paypal" defaultMessage="Link your Paypal account" />
                       </Button>
                     }
                   >
-                    <Typography variant='body2' gutterBottom>
-                      <FormattedMessage id='profile.transfer.paypal.notactive' defaultMessage='Your Paypal account is not active, please finish the setup of your account to receive the missing Paypal payment' />
+                    <Typography variant="body2" gutterBottom>
+                      <FormattedMessage id="profile.transfer.paypal.notactive" defaultMessage="Your Paypal account is not active, please finish the setup of your account to receive the missing Paypal payment" />
                     </Typography>
                   </Alert>
                 </CardContent>}
             </Card>
           </ReactPlaceholder>
-          <ReactPlaceholder type='text' ready={completed} rows={1} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
+          <ReactPlaceholder type="text" ready={completed} rows={1} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
             <Tabs
               indicatorColor="secondary"
               textColor="secondary"
@@ -145,12 +145,12 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
               {data.paypalTransfer && <Tab label="Paypal" value={1} />}
             </Tabs>
           </ReactPlaceholder>
-          <ReactPlaceholder type='text' ready={completed} rows={1} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
+          <ReactPlaceholder type="text" ready={completed} rows={1} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
           {currentTab === 0 && data.stripeTransfer && (
             <div style={{ margin: '20px 0' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                 <Typography variant="caption">
-                  <FormattedMessage id="transfer.amount" defaultMessage='Amount' />
+                  <FormattedMessage id="transfer.amount" defaultMessage="Amount" />
                 </Typography>
                 <Typography variant="body2">
                   $ {(data.stripeTransfer.amount / 100).toFixed(2)}
@@ -158,20 +158,20 @@ const TransferDetails = ({ open, onClose, fetchTransfer, transfer, id, history, 
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                 <Typography variant="caption">
-                  <FormattedMessage id="transfer.status" defaultMessage='Status' />
+                  <FormattedMessage id="transfer.status" defaultMessage="Status" />
                 </Typography>
                 <Typography variant="body2">
-                  <Chip label={data.status} color={data.status === 'completed' ? 'primary' : 'secondary'} size='small' />
+                  <Chip label={data.status} color={data.status === 'completed' ? 'primary' : 'secondary'} size="small" />
                 </Typography>
               </div>
             </div>
           )}
           {currentTab === 1 && data.paypalTransfer && (
             <div style={{ margin: '20px 0' }}>
-              <TransactionRow label={<FormattedMessage id='transfer.details.transaction_id' defaultMessage='Transaction ID' />} value={'#' + data.paypalTransfer.batch_header.payout_batch_id} />
-              <TransactionRow label={<FormattedMessage id='transfer.details.status' defaultMessage='Status' />} value={data.paypalTransfer.batch_header.batch_status} />
-              <TransactionRow label={<FormattedMessage id='transfer.details.amount' defaultMessage='Amount' />} value={data.paypalTransfer.batch_header.amount.value} />
-              <TransactionRow label={<FormattedMessage id='transfer.details.time' defaultMessage='Time' />} value={data.paypalTransfer.batch_header.time_completed} />
+              <TransactionRow label={<FormattedMessage id="transfer.details.transaction_id" defaultMessage="Transaction ID" />} value={'#' + data.paypalTransfer.batch_header.payout_batch_id} />
+              <TransactionRow label={<FormattedMessage id="transfer.details.status" defaultMessage="Status" />} value={data.paypalTransfer.batch_header.batch_status} />
+              <TransactionRow label={<FormattedMessage id="transfer.details.amount" defaultMessage="Amount" />} value={data.paypalTransfer.batch_header.amount.value} />
+              <TransactionRow label={<FormattedMessage id="transfer.details.time" defaultMessage="Time" />} value={data.paypalTransfer.batch_header.time_completed} />
             </div>
           )}
           </ReactPlaceholder>

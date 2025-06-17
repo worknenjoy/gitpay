@@ -4,7 +4,7 @@ import { AccountBalance as EmptyBankAccountIcon } from '@material-ui/icons'; // 
 import { FormattedMessage } from 'react-intl';
 
 const EmptyBankAccount = ({
-  onActionClick,
+  onActionClick
 }) => {
   
   return (

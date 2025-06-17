@@ -9,21 +9,21 @@ import BankAccount from '../account/features/account-bank-details/bank-account';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
+      width: '100%'
     },
     instructions: {
       marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(1)
     },
     step: {
       '& .MuiStepIcon-root.MuiStepIcon-active': {
-        color: theme.palette.secondary.main,
+        color: theme.palette.secondary.main
       },
       '& .MuiStepLabel-labelContainer .MuiStepLabel-active': {
-        color: theme.palette.secondary.main,
+        color: theme.palette.secondary.main
       } 
     }
-  }),
+  })
 );
 
 export default function BankAccountSettings({
@@ -37,7 +37,7 @@ export default function BankAccountSettings({
   bankAccount,
   createBankAccount,
   updateBankAccount,
-  getBankAccount,
+  getBankAccount
 }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);

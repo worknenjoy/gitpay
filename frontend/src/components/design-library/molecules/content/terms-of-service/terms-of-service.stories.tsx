@@ -3,7 +3,7 @@ import TermsOfService from './terms-of-service';
 
 export default {
   title: 'Design Library/Molecules/Content/TermsOfService',
-  component: TermsOfService,
+  component: TermsOfService
 };
 
 const Template = (args) => <TermsOfService {...args} />;

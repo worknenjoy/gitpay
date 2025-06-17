@@ -12,7 +12,7 @@ import {
   Button,
   FormControl,
   Input,
-  InputLabel,
+  InputLabel
 } from '@material-ui/core';
 import messages from '../../shared/messages';
 
@@ -51,7 +51,7 @@ const styles = theme => ({
     marginBottom: 12
   },
   chip: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   label: {}
 })
@@ -61,7 +61,7 @@ const PaypalSettings = ({
   intl,
   user,
   updateUser,
-  classes,
+  classes
 }) => {
 
   const handlePaypalAccount = (e) => {
@@ -81,14 +81,14 @@ const PaypalSettings = ({
       <Card elevation={0} className={classes.card}>
         <CardContent>
           <div className={classes.title}>
-            <Typography variant='h6' className={classes.pos}>
-              <FormattedMessage id='account.register.paypal.title' defaultMessage='Activate PayPal account:' />
+            <Typography variant="h6" className={classes.pos}>
+              <FormattedMessage id="account.register.paypal.title" defaultMessage="Activate PayPal account:" />
             </Typography>
-            <Typography component='p' color='textSecondary' style={{ marginBottom: 20, marginTop: 20 }}>
-              <FormattedMessage id='account.register.paypal.warning' defaultMessage='When you activate your account with PayPal, you will receive the bounties paid with Paypal in the account that you will provide here. The Paypal taxes will be applied' />
+            <Typography component="p" color="textSecondary" style={{ marginBottom: 20, marginTop: 20 }}>
+              <FormattedMessage id="account.register.paypal.warning" defaultMessage="When you activate your account with PayPal, you will receive the bounties paid with Paypal in the account that you will provide here. The Paypal taxes will be applied" />
             </Typography>
             {!user.paypal_id ? (
-              <FormattedMessage id='account.register.paypal.status' defaultMessage='This account is not associated with PayPal'>
+              <FormattedMessage id="account.register.paypal.status" defaultMessage="This account is not associated with PayPal">
                 {(msg) => (
                   <Chip
                     label={msg}
@@ -98,8 +98,8 @@ const PaypalSettings = ({
               </FormattedMessage>
             ) : (
               <div>
-                <Typography className={classes.pos} color='textSecondary'>
-                  <FormattedMessage id='account.register.account.status' defaultMessage='Account status' />
+                <Typography className={classes.pos} color="textSecondary">
+                  <FormattedMessage id="account.register.account.status" defaultMessage="Account status" />
                 </Typography>
                 <Chip
                   label={intl.formatMessage(messages.activeStatus)}
@@ -114,13 +114,13 @@ const PaypalSettings = ({
           </div>
           <Grid item xs={12}>
             <FormControl>
-              <InputLabel htmlFor='adornment-password'>
-                <FormattedMessage id='account.register.paypay.email' defaultMessage='PayPal registered email' />
+              <InputLabel htmlFor="adornment-password">
+                <FormattedMessage id="account.register.paypay.email" defaultMessage="PayPal registered email" />
               </InputLabel>
               <Input
-                name='paypal_email'
-                type='email'
-                id='email'
+                name="paypal_email"
+                type="email"
+                id="email"
                 style={{ marginRight: 20 }}
                 defaultValue={
                   user.paypal_id ? `${user.paypal_id}` : `${user.email}`
@@ -132,14 +132,14 @@ const PaypalSettings = ({
         <CardActions style={{ justifyContent: 'end' }}>
           <Button
             style={{ color: 'white' }}
-            size='large'
-            variant='contained'
-            color='secondary'
-            type='submit'
+            size="large"
+            variant="contained"
+            color="secondary"
+            type="submit"
           >
             {!user.paypal_id
-              ? <FormattedMessage id='account.register.paypay.activate' defaultMessage='Activate account' />
-              : <FormattedMessage id='account.register.paypay.update' defaultMessage='Update account' />
+              ? <FormattedMessage id="account.register.paypay.activate" defaultMessage="Activate account" />
+              : <FormattedMessage id="account.register.paypay.update" defaultMessage="Update account" />
             }
           </Button>
         </CardActions>

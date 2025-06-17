@@ -6,7 +6,7 @@ import {
   Card,
   CardContent,
   Checkbox,
-  Typography,
+  Typography
 } from '@material-ui/core'
 
 class PaypalPaymentDialog extends Component {
@@ -57,12 +57,12 @@ class PaypalPaymentDialog extends Component {
         fullWidth
       >
         <CardContent>
-          <Typography variant='h6' gutterBottom>
-            <FormattedMessage id='payment.paypal.title' defaultMessage='Make a new payment with Paypal' />
+          <Typography variant="h6" gutterBottom>
+            <FormattedMessage id="payment.paypal.title" defaultMessage="Make a new payment with Paypal" />
           </Typography>
           <div>
-            <Typography variant='body1' gutterBottom>
-              <FormattedMessage id='payment.paypal.subtitle' defaultMessage='The user who solves this issue, once they activate their PayPal account on Gitpay, will be able to receive payment via PayPal' />
+            <Typography variant="body1" gutterBottom>
+              <FormattedMessage id="payment.paypal.subtitle" defaultMessage="The user who solves this issue, once they activate their PayPal account on Gitpay, will be able to receive payment via PayPal" />
             </Typography>
             <div style={ {
               margin: 'auto',
@@ -72,14 +72,14 @@ class PaypalPaymentDialog extends Component {
               background: '#ecf0f1',
               padding: 20
             } }>
-              <Typography variant='body1' gutterBottom>
-                <FormattedMessage id='payment.paypal.warning2' defaultMessage='By continuing with PayPal, you will initiate a pre-authorized payment. We will authorize the payment afterwards, and you will receive a confirmation from Paypal' />
+              <Typography variant="body1" gutterBottom>
+                <FormattedMessage id="payment.paypal.warning2" defaultMessage="By continuing with PayPal, you will initiate a pre-authorized payment. We will authorize the payment afterwards, and you will receive a confirmation from Paypal" />
               </Typography>
             </div>
             <div style={ { textAlign: 'center' } }>
-              <Typography variant='body1' gutterBottom>
+              <Typography variant="body1" gutterBottom>
                 <Checkbox onChange={ this.agreeTermsPaypal } />
-                <FormattedMessage id='payment.paypal.confirm' defaultMessage='Ok, I accept.' />
+                <FormattedMessage id="payment.paypal.confirm" defaultMessage="Ok, I accept." />
               </Typography>
             </div>
           </div>
@@ -87,12 +87,12 @@ class PaypalPaymentDialog extends Component {
             'Requesting'
           ) : (
             <div style={ { textAlign: 'center', width: '100%', marginTop: 20 } }>
-              <FormattedMessage id='payment.paypal.logo.title' defaultMessage='Make the payment with paypal'>
+              <FormattedMessage id="payment.paypal.logo.title" defaultMessage="Make the payment with paypal">
                 { (msg) => (
                   <Button
-                    type='submit'
-                    variant='contained'
-                    color='secondary'
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
                     disabled={ !this.state.termsPaypal || this.props.price === 0 }
                     onClick={ this.handleNewOrder }
                     
@@ -100,7 +100,7 @@ class PaypalPaymentDialog extends Component {
                     <span style={{marginRight: 10, display: 'inline-block'}}>
                       {msg}
                     </span>
-                    <img width={32} height={19} src='https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg' border='0' alt='PayPal Logo' />
+                    <img width={32} height={19} src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg" border="0" alt="PayPal Logo" />
                   </Button>
                 ) }
               </FormattedMessage>

@@ -8,7 +8,7 @@ module.exports = Promise.method(function listProjects () {
       {
         model: models.Task,
         include: [models.User]
-      },
+      }
     ]
   })
     .then(data => {

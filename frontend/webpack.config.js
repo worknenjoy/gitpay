@@ -12,7 +12,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   node: {
-    global: true,
+    global: true
   },
   devtool: 'source-map',
   mode: 'development',
@@ -32,7 +32,7 @@ module.exports = {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`,
       images: path.resolve(__dirname, "src/images"),
-      "design-library": path.resolve(__dirname, "src/components/design-library"),
+      "design-library": path.resolve(__dirname, "src/components/design-library")
     },
     fallback: {
       stream: 'stream-browserify'
@@ -53,11 +53,11 @@ module.exports = {
         'API_HOST': JSON.stringify('http://localhost:3000'),
         'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY),
         'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK),
-        'GOOGLE_RECAPTCHA_SITE_KEY': JSON.stringify(process.env.GOOGLE_RECAPTCHA_SITE_KEY),
+        'GOOGLE_RECAPTCHA_SITE_KEY': JSON.stringify(process.env.GOOGLE_RECAPTCHA_SITE_KEY)
       }
     }),
     new webpack.ProvidePlugin({
-      process: 'process/browser',
+      process: 'process/browser'
     })
   ],
   module: {
@@ -65,7 +65,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /.js[x]?$/,

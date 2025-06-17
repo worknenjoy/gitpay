@@ -43,7 +43,7 @@ const Topbar = ({
       <Container>
         <LeftSide isActive={ isActive }>
          <div>
-            <StyledButton href='/'>
+            <StyledButton href="/">
               <Logo src={ logo } />
             </StyledButton>
           </div>
@@ -52,8 +52,8 @@ const Topbar = ({
           </OnlyDesktop>
            <MenuMobile
               onClick={ handleClickMenuMobile }
-              variant='text'
-              size='small'
+              variant="text"
+              size="small"
             >
               <IconHamburger isActive={ isActive } />
             </MenuMobile>

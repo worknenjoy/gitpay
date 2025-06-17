@@ -18,21 +18,21 @@ const BankSelectField = ({ routingNumber, country, onChange, disabled }) => {
     Const.BANK_NUMBERS[country] ?
       <FormControl style={{ width: '100%' }}>
         <div>
-          <Typography variant='caption' gutterBottom>
-            <FormattedMessage id='account.register.bank.name' defaultMessage='Choose your local bank name:' />
+          <Typography variant="caption" gutterBottom>
+            <FormattedMessage id="account.register.bank.name" defaultMessage="Choose your local bank name:" />
           </Typography>
         </div>
         <Select
           value={selectedBank}
           displayEmpty
-          name='bankCode'
+          name="bankCode"
           onChange={handleBankNumberSelect}
           style={{ marginTop: 12, marginBottom: 12 }}
           disabled={disabled}
         >
-          <MenuItem value='' disabled>
+          <MenuItem value="" disabled>
             <em>
-              <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
+              <FormattedMessage id="account.banks.list.title" defaultMessage="Select your bank" />
             </em>
           </MenuItem>
           {Object.keys(Const.BANK_NUMBERS[country]).map(
@@ -48,7 +48,7 @@ const BankSelectField = ({ routingNumber, country, onChange, disabled }) => {
         {bankNumberError && (
           <FormHelperText>
             {' '}
-            <FormattedMessage id='account.bank.select' defaultMessage='Please select your bank' />
+            <FormattedMessage id="account.bank.select" defaultMessage="Please select your bank" />
           </FormHelperText>
         )}
       </FormControl>

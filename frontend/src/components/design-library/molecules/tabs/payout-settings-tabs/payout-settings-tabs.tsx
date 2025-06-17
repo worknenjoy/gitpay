@@ -9,15 +9,15 @@ interface PayoutSetingsTabsProps {
 const PayoutSettingsTabs: React.FC<PayoutSetingsTabsProps> = ({ children }) => {
   const tabs = [
     {
-      label: <FormattedMessage id="payout-settings.tabs.bank-account" defaultMessage='Bank Account' />,
+      label: <FormattedMessage id="payout-settings.tabs.bank-account" defaultMessage="Bank Account" />,
       value: 'bank-account',
-      link: '/profile/payout-settings/bank-account',
+      link: '/profile/payout-settings/bank-account'
     },
     {
-      label: <FormattedMessage id="payout-settings.tabs.paypal" defaultMessage='PayPal' />,
+      label: <FormattedMessage id="payout-settings.tabs.paypal" defaultMessage="PayPal" />,
       value: 'paypal',
-      link: '/profile/payout-settings/paypal',
-    },
+      link: '/profile/payout-settings/paypal'
+    }
   ];
 
   return (

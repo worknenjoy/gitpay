@@ -15,7 +15,7 @@ async function fetchAllStripeData(listFn, params = {}) {
     const response = await listFn({
       limit: 100,
       ...params,
-      ...(startingAfter && { starting_after: startingAfter }),
+      ...(startingAfter && { starting_after: startingAfter })
     });
 
     results = results.concat(response.data);
@@ -64,7 +64,7 @@ async function getDatabaseData() {
   const unpaidTasksList = await Task.findAll({
     where: {
       value: { [Op.gt]: 0 },
-      paid: false,
+      paid: false
     },
     include: [Order]
   });
@@ -72,8 +72,8 @@ async function getDatabaseData() {
   const unpaidTasks = await Task.sum("value", {
     where: {
       value: { [Op.gt]: 0 },
-      paid: false,
-    },
+      paid: false
+    }
   }) || 0;
 
   return { walletReserved, orderTotal, unpaidTasks, unpaidTasksList };

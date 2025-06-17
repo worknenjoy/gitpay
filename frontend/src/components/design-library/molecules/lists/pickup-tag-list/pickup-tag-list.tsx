@@ -18,7 +18,7 @@ const styles = (theme: Theme) =>
     },
     chip: {
       marginRight: theme.spacing(1)
-    },
+    }
   });
 
   const tags = [
@@ -74,10 +74,10 @@ const PickupTagList = ({ classes, onPickItem, primaryText, secondaryText }) => {
   return (
     <div className={classes.root}>
       <div className={classes.chipContainer}>
-        <Typography variant='subtitle2'>
+        <Typography variant="subtitle2">
           {primaryText}
         </Typography>
-        <Typography variant='body1' color='textSecondary' gutterBottom>
+        <Typography variant="body1" color="textSecondary" gutterBottom>
           {secondaryText}
         </Typography>
         <div className={classes.chipContainer}>
@@ -89,7 +89,7 @@ const PickupTagList = ({ classes, onPickItem, primaryText, secondaryText }) => {
               onClick={() => onPickItem(tag.value)}
               icon={tag?.info && (
               <Tooltip title={tag.info}>
-                <InfoIcon fontSize='small' />
+                <InfoIcon fontSize="small" />
               </Tooltip>
               )}
             />

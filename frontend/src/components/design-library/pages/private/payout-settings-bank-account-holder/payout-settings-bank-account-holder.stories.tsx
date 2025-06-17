@@ -1,12 +1,11 @@
 import React from 'react';
 import { withProfileTemplate, withProfilePayoutSettingsBankAccountTemplate } from '../../../../../../.storybook/decorators/withPrivateTemplate';
 import PayoutSettingsBankAccountHolder from './payout-settings-bank-account-holder';
-import { add } from 'lodash';
 
 export default {
   title: 'Design Library/Pages/Private/PayoutSettingsBankAccountHolder',
   component: PayoutSettingsBankAccountHolder,
-  decorators: [withProfilePayoutSettingsBankAccountTemplate, withProfileTemplate],
+  decorators: [withProfilePayoutSettingsBankAccountTemplate, withProfileTemplate]
 };
 
 const Template = (args) => <PayoutSettingsBankAccountHolder {...args} />;
@@ -15,7 +14,7 @@ export const Default = Template.bind({});
 Default.args = {
   profileHeaderProps: {
     title: 'Payout Settings',
-    subtitle: 'Manage your payout settings and preferences.',
+    subtitle: 'Manage your payout settings and preferences.'
   },
   user: {
     completed: true,
@@ -26,10 +25,10 @@ Default.args = {
       Types: [
         { name: 'contributor' },
         { name: 'maintainer' },
-        { name: 'funding' },
-      ],
+        { name: 'funding' }
+      ]
     },
-    country: 'us',
+    country: 'us'
   },
   account: {
     completed: true,
@@ -43,10 +42,10 @@ Default.args = {
         city: 'New York',
         state: 'NY',
         zip_code: '10001',
-        country: 'us',
-      },
+        country: 'us'
+      }
     },
-    country: 'us',
+    country: 'us'
   },
   countries: {
     completed: true,
@@ -57,10 +56,10 @@ Default.args = {
         eur: 'eur',
         gbp: 'gbp',
         jpy: 'jpy',
-        aud: 'aud',
-      },
-    },
-  },
+        aud: 'aud'
+      }
+    }
+  }
 
 };
 
@@ -68,14 +67,14 @@ export const Loading = Template.bind({});
 Loading.args = {
   profileHeaderProps: {
     title: 'Payout Settings',
-    subtitle: 'Manage your payout settings and preferences.',
+    subtitle: 'Manage your payout settings and preferences.'
   },
   user: {
     completed: false,
-    data: {},
+    data: {}
   },
   account: {
     completed: false,
-    data: {},
-  },
+    data: {}
+  }
 }

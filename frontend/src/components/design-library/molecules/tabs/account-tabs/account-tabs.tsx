@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Tabs,
   Tab,
@@ -25,12 +25,12 @@ const AccountTabs = ({
         <Tabs 
           value={value}
           onChange={handleChange}
-          textColor='secondary'
-          indicatorColor='secondary'
+          textColor="secondary"
+          indicatorColor="secondary"
         >
           <Tab 
             label={
-              <FormattedMessage id="profile.account.tab.login" defaultMessage='Login and account details' />
+              <FormattedMessage id="profile.account.tab.login" defaultMessage="Login and account details" />
             }
             value={'account'} 
           />
@@ -38,7 +38,7 @@ const AccountTabs = ({
              user?.Types?.map(u => u.name)?.includes('sponsor')) && 
             <Tab 
               label={
-                <FormattedMessage id="profile.account.tab.customer" defaultMessage='Billing details' />
+                <FormattedMessage id="profile.account.tab.customer" defaultMessage="Billing details" />
               }
               value={'customer'}  
             />
@@ -46,30 +46,30 @@ const AccountTabs = ({
           { user?.Types?.map(u => u.name)?.includes('contributor') &&
             <Tab
               label={
-                <FormattedMessage id="profile.account.tab.payouts" defaultMessage='Payout settings' />
+                <FormattedMessage id="profile.account.tab.payouts" defaultMessage="Payout settings" />
               }
               value={'payouts'} 
             />
           }
           <Tab
             label={
-              <FormattedMessage id="profile.account.tab.roles" defaultMessage='Roles' />
+              <FormattedMessage id="profile.account.tab.roles" defaultMessage="Roles" />
             }
-            value='roles'
+            value="roles"
           />
           { user?.Types?.map(u => u.name)?.includes('contributor') && 
             <Tab
               label={
-                <FormattedMessage id="profile.account.tab.skills" defaultMessage='Skills' />
+                <FormattedMessage id="profile.account.tab.skills" defaultMessage="Skills" />
               }
-              value='skills'
+              value="skills"
             />
           }
           <Tab
             label={
-              <FormattedMessage id="profile.account.tab.settings" defaultMessage='Settings' />
+              <FormattedMessage id="profile.account.tab.settings" defaultMessage="Settings" />
             }
-            value='settings'
+            value="settings"
           />
         </Tabs>
       </Box>

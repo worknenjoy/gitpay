@@ -13,11 +13,11 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '16px',
+    padding: '16px'
   },
   checkbox: {
-    marginBottom: '8px',
-  },
+    marginBottom: '8px'
+  }
 });
 
 const InviteDrawerCheckboxes = ({
@@ -35,7 +35,7 @@ const InviteDrawerCheckboxes = ({
             <Checkbox
               checked={termsAgreed}
               onChange={handleCheckboxTerms}
-              color='primary'
+              color="primary"
               style={{ paddingRight: 5 }}
             />
           }
@@ -45,11 +45,11 @@ const InviteDrawerCheckboxes = ({
             }
           }
           label={
-          <Typography variant='caption' >
-            <FormattedMessage id='task.bounties.interested.termsOfUseLabel' defaultMessage='I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION' values={{
+          <Typography variant="caption" >
+            <FormattedMessage id="task.bounties.interested.termsOfUseLabel" defaultMessage="I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION" values={{
               termsOfUseAnchor: (
                 <Link onClick={props.handleTermsDialog}>
-                  <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
+                  <FormattedMessage id="task.bounties.interested.termsOfUse" defaultMessage="TERMS OF USE" />
                 </Link>
               )
             }} />

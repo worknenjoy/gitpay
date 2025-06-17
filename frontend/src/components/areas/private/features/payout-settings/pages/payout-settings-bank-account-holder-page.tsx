@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PayoutSettingsBankAccountHolder from '../../../../../design-library/pages/private/payout-settings-bank-account-holder/payout-settings-bank-account-holder';
 
 const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {

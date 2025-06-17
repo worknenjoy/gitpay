@@ -5,7 +5,7 @@ import { listTasks } from '../actions/taskActions'
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listTasks: ({ status }) => dispatch(listTasks({ status })),
+    listTasks: ({ status }) => dispatch(listTasks({ status }))
   }
 }
 

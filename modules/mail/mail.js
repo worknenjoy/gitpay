@@ -21,7 +21,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(msg)
-        },
+        }
       ]
     )
   }
@@ -37,7 +37,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(msg)
-        },
+        }
       ]
     )
   }

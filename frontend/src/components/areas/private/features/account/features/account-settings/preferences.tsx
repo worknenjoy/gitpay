@@ -4,7 +4,7 @@ import {
   Paper,
   Grid,
   Typography,
-  Checkbox,
+  Checkbox
 } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 import Skill from '../account-skills/skill'
@@ -19,7 +19,7 @@ const skillsList = [
 const styles = theme => ({
   title: {
     marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2
   }
 })
 
@@ -71,38 +71,38 @@ const Preferences = (props) => {
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
-      <Grid container alignItems='center' spacing={1}>
+      <Grid container alignItems="center" spacing={1}>
         <Grid item xs={12}>
-          <Typography variant='h5' className={classes.title} gutterBottom>
-            <FormattedMessage id='preferences.title.main' defaultMessage='Preferences' />
+          <Typography variant="h5" className={classes.title} gutterBottom>
+            <FormattedMessage id="preferences.title.main" defaultMessage="Preferences" />
           </Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography color='primary' variant='h5'>
-            <FormattedMessage id='preferences.os' defaultMessage='OS' />
+          <Typography color="primary" variant="h5">
+            <FormattedMessage id="preferences.os" defaultMessage="OS" />
           </Typography>
-          <Checkbox id='checkbox_windows' checked={osArray?.includes('Windows')} onClick={() => handleOSClick('Windows')} />
-          <label htmlFor='checkbox_windows'>
-            <Typography style={{ display: 'inline-block' }} component='span' color='primary' variant='body2'>
+          <Checkbox id="checkbox_windows" checked={osArray?.includes('Windows')} onClick={() => handleOSClick('Windows')} />
+          <label htmlFor="checkbox_windows">
+            <Typography style={{ display: 'inline-block' }} component="span" color="primary" variant="body2">
               Windows
             </Typography>
           </label>
-          <Checkbox id='checkbox_linux' checked={osArray?.includes('Linux')} onClick={() => handleOSClick('Linux')} />
-          <label htmlFor='checkbox_linux'>
-            <Typography style={{ display: 'inline-block' }} component='span' color='primary' variant='body2'>
+          <Checkbox id="checkbox_linux" checked={osArray?.includes('Linux')} onClick={() => handleOSClick('Linux')} />
+          <label htmlFor="checkbox_linux">
+            <Typography style={{ display: 'inline-block' }} component="span" color="primary" variant="body2">
               Linux
             </Typography>
           </label>
-          <Checkbox id='checkbox_mac' checked={osArray?.includes('Mac')} onClick={() => handleOSClick('Mac')} />
-          <label htmlFor='checkbox_mac'>
-            <Typography style={{ display: 'inline-block' }} component='span' color='primary' variant='body2'>
+          <Checkbox id="checkbox_mac" checked={osArray?.includes('Mac')} onClick={() => handleOSClick('Mac')} />
+          <label htmlFor="checkbox_mac">
+            <Typography style={{ display: 'inline-block' }} component="span" color="primary" variant="body2">
               Mac
             </Typography>
           </label>
         </Grid>
         <Grid item xs={12}>
-          <Typography color='primary' variant='h5'>
-            <FormattedMessage id='prefences.header.title' defaultMessage='Preferences' />
+          <Typography color="primary" variant="h5">
+            <FormattedMessage id="prefences.header.title" defaultMessage="Preferences" />
           </Typography>
         </Grid>
         <Grid item xs={12} style={{ marginBottom: 10 }}>
@@ -112,16 +112,16 @@ const Preferences = (props) => {
         </Grid>
         <div style={{ width: '100%', flex: 'auto', display: 'flex', marginTop: 20 }}>
           <Grid item xs={12}>
-            <Typography color='primary' variant='h5'>
-              <FormattedMessage id='prefences.header.sub' defaultMessage='My language preferences' />
+            <Typography color="primary" variant="h5">
+              <FormattedMessage id="prefences.header.sub" defaultMessage="My language preferences" />
             </Typography>
             <Grid container xs={12} style={{ padding: 10 }}>
               <div className={classes.chipContainer}>
                 {hasSomeSkill ? (
                   selectedSkillsList
                 ) : (
-                  <Typography color='textSecondary' variant='body2'>
-                    <FormattedMessage id='prefences.my.skills.zero' defaultMessage='No skills selected' />
+                  <Typography color="textSecondary" variant="body2">
+                    <FormattedMessage id="prefences.my.skills.zero" defaultMessage="No skills selected" />
                   </Typography>
                 )}
               </div>

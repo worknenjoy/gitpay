@@ -59,22 +59,22 @@ class DeleteUser extends Component {
         <Dialog
           open={ visible }
           onClose={ () => this.props.onClose() }
-          aria-labelledby='alert-dialog-title'
+          aria-labelledby="alert-dialog-title"
         >
-          <DialogTitle id='alert-dialog-title'>
-            <FormattedMessage id='account.profile.settings.delete.user.title' defaultMessage='Delete User' />
+          <DialogTitle id="alert-dialog-title">
+            <FormattedMessage id="account.profile.settings.delete.user.title" defaultMessage="Delete User" />
           </DialogTitle>
           <DialogContent>
-            <Typography type='subheading' gutterBottom>
-              <FormattedMessage id='account.profile.settings.delete.user.alert' defaultMessage='When you delete, you erase data associated with the user, such as tasks and interests.' />
+            <Typography type="subheading" gutterBottom>
+              <FormattedMessage id="account.profile.settings.delete.user.alert" defaultMessage="When you delete, you erase data associated with the user, such as tasks and interests." />
             </Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={ () => this.props.onClose() } color='primary'>
-              <FormattedMessage id='account.profile.settings.delete.user.form.cancel' defaultMessage='Cancel' />
+            <Button onClick={ () => this.props.onClose() } color="primary">
+              <FormattedMessage id="account.profile.settings.delete.user.form.cancel" defaultMessage="Cancel" />
             </Button>
-            <Button onClick={ this.confirmDelete } variant='contained' className={ classes.deleteButton } >
-              <FormattedMessage id='account.profile.settings.delete.user.form.confirm' defaultMessage='Confirm' />
+            <Button onClick={ this.confirmDelete } variant="contained" className={ classes.deleteButton } >
+              <FormattedMessage id="account.profile.settings.delete.user.form.confirm" defaultMessage="Confirm" />
             </Button>
           </DialogActions>
         </Dialog>

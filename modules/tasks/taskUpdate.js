@@ -107,7 +107,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters, notif
     .update(taskParameters, {
       where: {
         id: taskParameters.id,
-        userId: taskParameters.userId,
+        userId: taskParameters.userId
       },
       individualHooks: true,
       include: [models.User, models.Order, models.Offer, models.Member]

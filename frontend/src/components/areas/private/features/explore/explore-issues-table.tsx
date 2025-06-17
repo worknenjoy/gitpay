@@ -46,7 +46,7 @@ export const ExploreIssuesTable = ({ issues }) => {
       <IssueCreatedField
         issue={item}
       />
-    ),
+    )
   }
 
   return (

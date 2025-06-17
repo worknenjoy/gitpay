@@ -20,7 +20,7 @@ module.exports = Promise.method(function userBankAccountUpdate({ userParams, ban
               bankAccount.id,
               {  
                 account_holder_name: bank_account.account_holder_name,
-                account_holder_type: bank_account.account_holder_type,
+                account_holder_type: bank_account.account_holder_type
               }).then(account => {
                 return account
               })

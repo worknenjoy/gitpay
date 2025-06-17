@@ -1,12 +1,11 @@
 import React from 'react';
 import { withProfileTemplate, withProfilePayoutSettingsBankAccountTemplate } from '../../../../../../.storybook/decorators/withPrivateTemplate';
 import PayoutSettingsBankAccountInfo from './payout-settings-bank-account-info';
-import { add } from 'lodash';
 
 export default {
   title: 'Design Library/Pages/Private/PayoutSettingsBankAccountInfo',
   component: PayoutSettingsBankAccountInfo,
-  decorators: [withProfilePayoutSettingsBankAccountTemplate, withProfileTemplate],
+  decorators: [withProfilePayoutSettingsBankAccountTemplate, withProfileTemplate]
 };
 
 const Template = (args) => <PayoutSettingsBankAccountInfo {...args} />;
@@ -15,7 +14,7 @@ export const Default = Template.bind({});
 Default.args = {
   profileHeaderProps: {
     title: 'Payout Settings',
-    subtitle: 'Manage your payout settings and preferences.',
+    subtitle: 'Manage your payout settings and preferences.'
   },
   user: {
     completed: true,
@@ -26,10 +25,10 @@ Default.args = {
       Types: [
         { name: 'contributor' },
         { name: 'maintainer' },
-        { name: 'funding' },
-      ],
+        { name: 'funding' }
+      ]
     },
-    country: 'us',
+    country: 'us'
   },
   bank_account: {
     completed: true,
@@ -40,7 +39,7 @@ Default.args = {
       bank_id: '123456',
       currency: 'usd',
       account_holder_name: 'John Doe',
-      account_holder_type: 'individual',
+      account_holder_type: 'individual'
     }
   },
   countries: {
@@ -52,12 +51,12 @@ Default.args = {
         eur: 'eur',
         gbp: 'gbp',
         jpy: 'jpy',
-        aud: 'aud',
-      },
-    },
+        aud: 'aud'
+      }
+    }
   },
   onChangeBankCode: () => {},
-  onSubmit: () => {},
+  onSubmit: () => {}
 
 };
 
@@ -65,20 +64,20 @@ export const Loading = Template.bind({});
 Loading.args = {
   profileHeaderProps: {
     title: 'Payout Settings',
-    subtitle: 'Manage your payout settings and preferences.',
+    subtitle: 'Manage your payout settings and preferences.'
   },
   user: {
     completed: false,
-    data: {},
+    data: {}
   },
   account: {
     completed: false,
-    data: {},
+    data: {}
   },
   countries: {
     completed: false,
-    data: {},
+    data: {}
   },
   onChangeBankCode: () => {},
-  onSubmit: () => {},
+  onSubmit: () => {}
 }

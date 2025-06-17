@@ -5,7 +5,7 @@ import InvoicePayment from './invoice-payment';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Organisms/Forms/InvoicePayment',
-  component: InvoicePayment,
+  component: InvoicePayment
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -28,11 +28,11 @@ Primary.args = {
         city: 'City',
         state: 'State',
         postal_code: 'Postal Code',
-        country: 'Country',
-      },
+        country: 'Country'
+      }
     },
     completed: true
   },
   onInfoClick: () => { },
-  onInvoicePayment: () => { },
+  onInvoicePayment: () => { }
 };

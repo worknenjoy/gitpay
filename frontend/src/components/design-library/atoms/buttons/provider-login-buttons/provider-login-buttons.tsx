@@ -40,23 +40,23 @@ return (
   <>
     { provider ?
       <div style={ styles }>
-        <Typography variant='caption' color={ contrast ? 'inherit' : 'textSecondary' } gutterBottom>
-          <FormattedMessage id='account.login.connect.provider.connected' defaultMessage='You are already connected on {value}' values={
+        <Typography variant="caption" color={ contrast ? 'inherit' : 'textSecondary' } gutterBottom>
+          <FormattedMessage id="account.login.connect.provider.connected" defaultMessage="You are already connected on {value}" values={
             { value: provider }
           } />
           { (login_strategy === 'local' || login_strategy === null) &&
-          <a href='#' onClick={(e) => {
+          <a href="#" onClick={(e) => {
             e.preventDefault();
             disconnectGithub();
           }} className={classesLocal.linkMargin}>
-            <FormattedMessage id='account.login.connect.provider.disconnect' defaultMessage='disconnect' />
+            <FormattedMessage id="account.login.connect.provider.disconnect" defaultMessage="disconnect" />
           </a> }
         </Typography>
       </div> : 
       <div style={ { display: hideExtra ? 'none' : 'block' } }>
         <div style={ styles }>
-          <Typography variant='caption' color={ contrast ? 'inherit' : 'textSecondary' } gutterBottom>
-            <FormattedMessage id='account.login.connect.provider.label' defaultMessage='You can also connect or signup with ' />
+          <Typography variant="caption" color={ contrast ? 'inherit' : 'textSecondary' } gutterBottom>
+            <FormattedMessage id="account.login.connect.provider.label" defaultMessage="You can also connect or signup with " />
           </Typography>
         </div>
       </div>
@@ -69,20 +69,20 @@ return (
             { onClick: () => authorizeGithub() } :
             { href: `${api.API_URL}/authorize/github`}
           }
-          variant='contained'
-          color='secondary'
+          variant="contained"
+          color="secondary"
           disabled={provider === 'github'}
         >
-          <img width='16' src={GithubLogo} />
+          <img width="16" src={GithubLogo} />
           <span className={classesLocal.textMargin}>Github</span>
         </Button>
         <Button
           href={`${api.API_URL}/authorize/bitbucket`}
-          variant='contained'
-          color='secondary'
+          variant="contained"
+          color="secondary"
           disabled={provider === 'bitbucket'}
         >
-          <img width='16' src={BitbucketLogo} />
+          <img width="16" src={BitbucketLogo} />
           <span className={classesLocal.textMargin}>Bitbucket</span>
         </Button>
       </div>

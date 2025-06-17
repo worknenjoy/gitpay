@@ -17,7 +17,7 @@ const InputComment = ({ placeholder, onChange }) => {
   return (
     <FormControl fullWidth>
       <TextareaAutosize
-        id='interested-comment'
+        id="interested-comment"
         placeholder={intl.formatMessage({ id: 'issue.bounties.offer.comment.placeholder', defaultMessage: 'Leave a comment' })}
         minRows={8}
         maxLength={1000}

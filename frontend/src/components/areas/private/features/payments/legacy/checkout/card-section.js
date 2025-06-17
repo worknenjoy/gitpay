@@ -1,5 +1,5 @@
 // CardSection.js
-import React, { useState } from 'react'
+import React from 'react'
 import { CardElement } from 'react-stripe-elements'
 import ReactPlaceholder from 'react-placeholder'
 
@@ -7,7 +7,7 @@ const CardSection = (props) => {
   return (
     <label>
       <ReactPlaceholder
-        type='text'
+        type="text"
         rows={4}
         ready={props.stripe}
       >

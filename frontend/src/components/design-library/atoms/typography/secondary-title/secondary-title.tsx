@@ -11,7 +11,7 @@ const SecondaryTitle = ({ title, subtitle }: SecondaryTitleProps) => {
     <BaseTitle
       title={title}
       subtitle={subtitle}
-      level='h6' // Default level set to h6 for secondary titles
+      level="h6" // Default level set to h6 for secondary titles
     />
   );
 }

@@ -23,19 +23,19 @@ const containUrl = (string) => {
 const useStyles = makeStyles((theme) => ({
   cssLabel: {
     '&$cssFocused': {
-      color: theme.palette.primary.main,
-    },
+      color: theme.palette.primary.main
+    }
   },
   cssFocused: {},
   cssUnderline: {
     '&:after': {
       borderBottomColor: theme.palette.primary.main
-    },
+    }
   },
   cssOutlinedInput: {
     '&$cssFocused $notchedOutline': {
       borderColor: theme.palette.primary.main
-    },
+    }
   },
   notchedOutline: {},
   margins: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10
   },
   button: {
-    marginRight: 20,
+    marginRight: 20
   },
   center: {
     display: 'flex',
@@ -71,7 +71,7 @@ const LoginFormSignup = ({
   agreeTermsCheckError,
   onSignin,
   roles,
-  fetchRoles,
+  fetchRoles
 }: LoginFormSignupProps) => {
   const classes = useStyles()
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
@@ -277,7 +277,7 @@ const LoginFormSignup = ({
           name: name,
           email: username,
           password: password,
-          Types: Types,
+          Types: Types
         })
         const errorType = response?.error && response?.error?.response?.data.message
         if (errorType === 'user.exist') {
@@ -320,28 +320,28 @@ const LoginFormSignup = ({
   const { error, password, confirmPassword } = state
 
   return (
-    <form onSubmit={handleForm} action={action} method='POST' autoComplete='off'>
+    <form onSubmit={handleForm} action={action} method="POST" autoComplete="off">
       <div className={classes.margins}>
         <TextField
-          name='name'
+          name="name"
           onChange={handleChange('name')}
           fullWidth
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           }}
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           }}
-          label='Name'
-          variant='outlined'
-          id='name'
+          label="Name"
+          variant="outlined"
+          id="name"
           error={!!error.name}
           helperText={error.name}
           defaultValue={state.name}
@@ -349,7 +349,7 @@ const LoginFormSignup = ({
       </div>
       <div className={classes.margins}>
         <TextField
-          name='username'
+          name="username"
           onChange={handleChange('username')}
           onBlur={handleBlur}
           onFocus={handleFocus}
@@ -357,19 +357,19 @@ const LoginFormSignup = ({
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           }}
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           }}
-          label='E-mail'
-          variant='outlined'
-          id='username'
+          label="E-mail"
+          variant="outlined"
+          id="username"
           error={!!error.username}
           helperText={error.username}
           defaultValue={state.username}
@@ -377,7 +377,7 @@ const LoginFormSignup = ({
       </div>
       <div className={classes.margins}>
         <TextField
-          name='password'
+          name="password"
           onChange={handleChange('password')}
           onBlur={handleBlur}
           onFocus={handleFocus}
@@ -385,20 +385,20 @@ const LoginFormSignup = ({
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           }}
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           }}
-          type='password'
-          label='Password'
-          variant='outlined'
-          id='password'
+          type="password"
+          label="Password"
+          variant="outlined"
+          id="password"
           error={!!error.password}
           helperText={error.password}
           defaultValue={state.password}
@@ -408,8 +408,8 @@ const LoginFormSignup = ({
       <div className={classes.margins}>
         <TextField
           error={validating && password !== confirmPassword}
-          helperText={validating && password !== confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : ''}
-          name='confirm_password'
+          helperText={validating && password !== confirmPassword ? <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> : ''}
+          name="confirm_password"
           onChange={handleChange('confirmPassword')}
           onBlur={handleBlur}
           onFocus={handleFocus}
@@ -417,20 +417,20 @@ const LoginFormSignup = ({
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           }}
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           }}
-          type='password'
-          label='Confirm Password'
-          variant='outlined'
-          id='confirmPassword'
+          type="password"
+          label="Confirm Password"
+          variant="outlined"
+          id="confirmPassword"
           defaultValue={state.confirmPassword}
         />
       </div>
@@ -443,17 +443,17 @@ const LoginFormSignup = ({
       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {state.agreeTermsCheck
-            ? <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid='agree-terms-checkbox-checked' />
-            : <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid='agree-terms-checkbox' />
+            ? <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox-checked" />
+            : <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox" />
           }
-          <Typography variant='body1'>
-            <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the ' />
-            <a onClick={handleOpenTermsOfService} href='/#/terms' target='_blank' style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
-              <FormattedMessage id='account.login.label.terms' defaultMessage='Terms of Service' />
+          <Typography variant="body1">
+            <FormattedMessage id="account.login.label.terms.agree" defaultMessage="I agree with the " />
+            <a onClick={handleOpenTermsOfService} href="/#/terms" target="_blank" style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
+              <FormattedMessage id="account.login.label.terms" defaultMessage="Terms of Service" />
             </a>
-            <FormattedMessage id='account.login.label.terms.and' defaultMessage=' and' />
-            <a href='/#/privacy-policy' onClick={handleOpenPrivacyPolicy} target='_blank' style={{ display: 'inline-block', marginLeft: 5 }}>
-              <FormattedMessage id='account.login.label.privacy' defaultMessage='Privacy Policy' />
+            <FormattedMessage id="account.login.label.terms.and" defaultMessage=" and" />
+            <a href="/#/privacy-policy" onClick={handleOpenPrivacyPolicy} target="_blank" style={{ display: 'inline-block', marginLeft: 5 }}>
+              <FormattedMessage id="account.login.label.privacy" defaultMessage="Privacy Policy" />
             </a>
           </Typography>
         </div>
@@ -463,10 +463,10 @@ const LoginFormSignup = ({
           color: 'red',
           fontSize: 10,
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}>
-          <Typography variant='body1' component='span'>
-            <FormattedMessage id='account.login.label.terms.agree.error' defaultMessage='You must agree with the Terms of Service and Privacy Policy' />
+          <Typography variant="body1" component="span">
+            <FormattedMessage id="account.login.label.terms.agree.error" defaultMessage="You must agree with the Terms of Service and Privacy Policy" />
           </Typography>
         </div>
       }
@@ -484,9 +484,9 @@ const LoginFormSignup = ({
           color: 'red',
           fontSize: 10,
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}>
-          <Typography variant='body1' component='span'>
+          <Typography variant="body1" component="span">
             {error.captcha}
           </Typography>
         </div>
@@ -494,19 +494,19 @@ const LoginFormSignup = ({
       <div className={classes.center} style={{ marginTop: 20 }}>
         <div>
           {noCancelButton ? null : (
-            <Button onClick={onClose} size='large' variant='text' color='primary' className={classes.button}>
-              <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+            <Button onClick={onClose} size="large" variant="text" color="primary" className={classes.button}>
+              <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
             </Button>
           )}
-          <Button data-testid='signup-button' type='submit' size='large' variant='contained' color='primary' className={classes.button}>
-            <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+          <Button data-testid="signup-button" type="submit" size="large" variant="contained" color="primary" className={classes.button}>
+            <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
           </Button>
           <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
-            <Typography variant='body1' component='span'>
-              <FormattedMessage id='account.login.label.or.signup' defaultMessage='Have an account?' />
+            <Typography variant="body1" component="span">
+              <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
             </Typography>
-            <Button onClick={onSignin} variant='text' size='large' color='primary'>
-              <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+            <Button onClick={onSignin} variant="text" size="large" color="primary">
+              <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
             </Button>
           </div>
         </div>

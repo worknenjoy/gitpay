@@ -15,7 +15,7 @@ module.exports = Promise.method(function orderRefund (orderParams) {
       switch (order.provider) {
         case 'stripe':
           refund = await stripe.refunds.create({
-            charge: order.source,
+            charge: order.source
           })
           if (refund.id) {
             return models.Order

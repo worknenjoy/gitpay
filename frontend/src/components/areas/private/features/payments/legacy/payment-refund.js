@@ -10,7 +10,7 @@ import {
 import MuiAlert from '@material-ui/lab/Alert'
 
 function Alert (props) {
-  return <MuiAlert elevation={ 0 } variant='outlined' { ...props } />
+  return <MuiAlert elevation={ 0 } variant="outlined" { ...props } />
 }
 
 export default function PaymentRefund ({ open, handleClose, orderId, onRefund, listOrders }) {
@@ -26,22 +26,22 @@ export default function PaymentRefund ({ open, handleClose, orderId, onRefund, l
       <Dialog
         open={ open }
         onClose={ handleClose }
-        aria-labelledby='simple-modal-title'
-        aria-describedby='simple-modal-description'
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
       >
         <DialogContent>
           <Typography>
-            <FormattedMessage id='user.profile.payments.refund.confirm' defaultMessage='Are you sure you want to refund?' />
+            <FormattedMessage id="user.profile.payments.refund.confirm" defaultMessage="Are you sure you want to refund?" />
           </Typography>
-          <Alert severity='warning'>
-            <FormattedMessage id='user.profile.payments.refund.message' defaultMessage='You will be refunded with the value paid for the issue, excluding fees' />
+          <Alert severity="warning">
+            <FormattedMessage id="user.profile.payments.refund.message" defaultMessage="You will be refunded with the value paid for the issue, excluding fees" />
           </Alert>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ handleClose } variant='outlined' color='secondary'>
+          <Button onClick={ handleClose } variant="outlined" color="secondary">
             Cancel
           </Button>
-          <Button variant='contained' color='primary' onClick={ handleRefund }>
+          <Button variant="contained" color="primary" onClick={ handleRefund }>
             Refund
           </Button>
         </DialogActions>

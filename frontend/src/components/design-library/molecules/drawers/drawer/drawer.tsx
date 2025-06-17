@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
   Drawer as MuiDrawer,
-  Container,
   Typography,
   Fab,
-  Box,
+  Box
 } from '@material-ui/core'
 
 import CloseIcon from '@material-ui/icons/Close'
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: 'darkgray',
     color: 'white',
     boxShadow: 'none'
-  },
+  }
 }));
 
 type DrawerProps = {
@@ -45,8 +44,8 @@ const Drawer = ({
   const closeDialogButton = () => {
 
     return (
-      <Fab size='small' aria-label='close' className={classes.closeButton} onClick={onClose}>
-        <CloseIcon fontSize='small' />
+      <Fab size="small" aria-label="close" className={classes.closeButton} onClick={onClose}>
+        <CloseIcon fontSize="small" />
       </Fab>
     )
 
@@ -55,19 +54,19 @@ const Drawer = ({
   return (
     <MuiDrawer
       open={open} onClose={onClose}
-      aria-labelledby='form-dialog-title'
-      anchor='right'
+      aria-labelledby="form-dialog-title"
+      anchor="right"
     >
       <Box
-        display='flex'
-        flexDirection='column'
-        height='100%'
+        display="flex"
+        flexDirection="column"
+        height="100%"
         p={2}
       >
         
           <Box flexGrow={1}>
             <div style={{ padding: 20 }}>
-              <Typography variant='h5' id='form-dialog-title' gutterBottom>
+              <Typography variant="h5" id="form-dialog-title" gutterBottom>
                 {title}
               </Typography>
               {closeDialogButton()}

@@ -14,7 +14,7 @@ i18n.configure({
 i18n.init()
 
 const OrderMail = {
-  expiredOrders: (order) => {},
+  expiredOrders: (order) => {}
 }
 
 if(constants.canSendEmail) {
@@ -27,7 +27,7 @@ if(constants.canSendEmail) {
     const mailData = { 
       title: task.title,
       url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`,
-      value: order.amount,
+      value: order.amount
     }
     user?.receiveNotifications && request(
       to,
@@ -38,7 +38,7 @@ if(constants.canSendEmail) {
           value: emailTemplate.baseContentEmailTemplate(`
           <p>${i18n.__('mail.order.expiredOrders.content.main', mailData)}</p>`, 
             `The pre authorized payment of $ ${mailData.value} for the issue <a href=\"${mailData.url}\">${mailData.title}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Please visit https://gitpay.me/#/profile/payments to update your payment.`)
-        },
+        }
       ]
     )
   }

@@ -15,7 +15,7 @@ export const InvoiceId = ({ walletOrderId, fetchWalletOrder }) => {
 
   return (
     <div>
-      <ReactPlaceholder type='text' ready={!!invoiceNumber} rows={1} color='#E0E0E0'>
+      <ReactPlaceholder type="text" ready={!!invoiceNumber} rows={1} color="#E0E0E0">
         {invoiceNumber}
       </ReactPlaceholder>
     </div>

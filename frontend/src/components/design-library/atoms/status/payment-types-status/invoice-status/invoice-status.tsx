@@ -1,6 +1,4 @@
 import React from 'react';
-import { createStyles, Theme } from '@material-ui/core/styles';
-import { cyan, blue, lime, orange } from '@material-ui/core/colors';
 import Chip from '@material-ui/core/Chip';
 import { status } from '../../../../../../consts'
 import useStyles from './invoice-status.styles'
@@ -23,55 +21,55 @@ export default function InvoiceStatus({ invoiceStatus }:statusProps) {
       case `${invoice.pending}`:
         choosenStatus = {
           label: 'Pending',
-          color: 'pending',
+          color: 'pending'
         };
       break;
       case invoice.draft:
         choosenStatus = {
           label: 'Draft',
-          color: 'draft',
+          color: 'draft'
         };
       break;
       case `${invoice.open}`:
         choosenStatus = {
           label: 'Open',
-          color: 'open',
+          color: 'open'
         };
       break;
       case `${invoice.paid}`:
         choosenStatus = {
           label: 'Paid',
-          color: 'paid',
+          color: 'paid'
         };
       break;
       case invoice.failed:
         choosenStatus = {
           label: 'Failed',
-          color: 'failed',
+          color: 'failed'
         };
       break;
       case invoice.uncollectible:
         choosenStatus = {
           label: 'Uncollectible',
-          color: 'uncollectible',
+          color: 'uncollectible'
         };
       break;
       case invoice.void:
         choosenStatus = {
           label: 'Void',
-          color: 'void',
+          color: 'void'
         };
       break;
       case invoice.refunded:
         choosenStatus = {
           label: 'Refunded',
-          color: 'refunded',
+          color: 'refunded'
         };
       break;
       default:
         choosenStatus = {
           label: 'Unknown',
-          color: 'unknown',
+          color: 'unknown'
         };
       break;
     }

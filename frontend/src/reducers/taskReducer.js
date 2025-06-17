@@ -215,7 +215,7 @@ export const tasks = (state = {
         filteredData: action.data,
         filterType: action.filterType,
         filterValue: action.filterValue,
-        filterAdditional: action.filterAdditional,
+        filterAdditional: action.filterAdditional
       }
     default:
       return state

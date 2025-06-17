@@ -13,7 +13,7 @@ const PaymentTypeIcon = props => {
         : (<div style={ { textAlign: 'left', color: '#12789a', fontSize: 8 } }><img src={ creditCardIcon } width={ 32 } /> <br />
           { !props.notext &&
             <span>
-              <FormattedMessage id='payment.creditcard' defaultMessage='Credit Card' />
+              <FormattedMessage id="payment.creditcard" defaultMessage="Credit Card" />
             </span> }
         </div>)
       }

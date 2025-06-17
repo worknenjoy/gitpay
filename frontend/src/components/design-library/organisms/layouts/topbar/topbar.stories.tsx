@@ -3,7 +3,7 @@ import Topbar from './topbar';
 
 export default {
   title: 'Design Library/Organisms/Layout/Topbar',
-  component: Topbar,
+  component: Topbar
 };
 
 const Template = (args: any) => <Topbar {...args} />;
@@ -19,7 +19,7 @@ LoggedIn.args = {
       username: 'test',
       Types: [{
         id: 1,
-        name: 'maintainer',
+        name: 'maintainer'
       }]
     }
   }

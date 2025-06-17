@@ -4,7 +4,7 @@ import { AccessAlarm as AlarmIcon } from '@material-ui/icons'; // you can replac
 
 export default {
   title: 'Design Library/Molecules/Empty/EmptyBase',
-  component: EmptyBase,
+  component: EmptyBase
 };
 
 const Template = (args) => <EmptyBase {...args} />;
@@ -14,5 +14,5 @@ Default.args = {
   text: 'No data available',
   actionText: 'Add Data',
   onActionClick: () => alert('Action clicked!'),
-  icon: <AlarmIcon />,
+  icon: <AlarmIcon />
 }

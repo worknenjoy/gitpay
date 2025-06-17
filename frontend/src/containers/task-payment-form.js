@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
     order: state.order,
     customer: state.customer,
     wallets: state.wallets,
-    wallet: state.wallet,
+    wallet: state.wallet
   }
 }
 
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     createOrder: (order) => dispatch(createOrder(order)),
     fetchCustomer: (id) => dispatch(fetchCustomer(id)),
     fetchWallet: (id) => dispatch(fetchWallet(id)),
-    listWallets: () => dispatch(listWallets()),
+    listWallets: () => dispatch(listWallets())
   }
 }
 

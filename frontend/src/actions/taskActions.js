@@ -199,7 +199,7 @@ const filterTaskSuccess = (filteredTasks, filter, value, additional) => {
     data: filteredTasks,
     filterType: filter,
     filterValue: value,
-    filterAdditional: additional,
+    filterAdditional: additional
   };
 };
 

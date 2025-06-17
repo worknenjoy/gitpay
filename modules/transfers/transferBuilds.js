@@ -38,7 +38,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       {
         model: models.User,
         as: 'User'
-      },
+      }
     ]
   })
 
@@ -58,7 +58,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       {
         model: models.User,
         as: 'User'
-      },
+      }
     ]
   })
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Grid, Typography, Container } from '@material-ui/core';
 import AccountTabs from './components/account-tabs';
-import { changePassword } from '../../../../../actions/loginActions';
 
 
 export const UserAccount = ({ 
@@ -17,8 +16,8 @@ export const UserAccount = ({
     <Container>
     <Grid container spacing={2}>
         <Grid item xs={ 12 } md={ 12 }>
-          <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
-            <FormattedMessage id='user.account.page.title' defaultMessage='Account' />
+          <Typography variant="h5" gutterBottom style={{marginTop: 40}}>
+            <FormattedMessage id="user.account.page.title" defaultMessage="Account" />
           </Typography>
         </Grid>
         <Grid item xs={ 12 } md={ 12 }>

@@ -33,7 +33,7 @@ const IssueContent = ({ className, user, project, organization, updateTask, repo
   }
 
   return (
-    <Container fixed maxWidth='lg'>
+    <Container fixed maxWidth="lg">
       <IssueHeader
         task={task}
         user={user}
@@ -44,28 +44,28 @@ const IssueContent = ({ className, user, project, organization, updateTask, repo
         reportTask={reportTask}
         handleDeleteTask={onDeleteTask}
       />
-      <Typography variant='subtitle1' style={{ marginBottom: 10, marginTop: 20 }}>
-        <FormattedMessage id='task.info.description' defaultMessage='Description' />
+      <Typography variant="subtitle1" style={{ marginBottom: 10, marginTop: 20 }}>
+        <FormattedMessage id="task.info.description" defaultMessage="Description" />
       </Typography>
       <ReactPlaceholder showLoadingAnimation type={'text'} rows={5} ready={task.completed}>
-        <Typography variant='body1' style={{ marginBottom: 40 }} className={`${classes.issueContent} ${className || ''}`}>
+        <Typography variant="body1" style={{ marginBottom: 40 }} className={`${classes.issueContent} ${className || ''}`}>
           <ShowMoreText
             lines={8}
             more={
               <Button
-                size='small'
-                variant='outlined'
+                size="small"
+                variant="outlined"
               >
-                <FormattedMessage id='task.description.more' defaultMessage='Show more' />
+                <FormattedMessage id="task.description.more" defaultMessage="Show more" />
                 <ExpandMore />
               </Button>
             }
             less={
               <Button
-                size='small'
-                variant='outlined'
+                size="small"
+                variant="outlined"
               >
-                <FormattedMessage id='task.description.less' defaultMessage='Show less' />
+                <FormattedMessage id="task.description.less" defaultMessage="Show less" />
                 <ExpandLess />
               </Button>
             }

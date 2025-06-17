@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginTop: 0
-  },
+  }
 }))
 
 type PublicBaseProps = {

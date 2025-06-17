@@ -3,7 +3,7 @@ import PrivacyPolicy from './privacy-policy';
 
 export default {
   title: 'Design Library/Molecules/Content/PrivacyPolicy',
-  component: PrivacyPolicy,
+  component: PrivacyPolicy
 };
 
 const Template = (args) => <PrivacyPolicy {...args} />;

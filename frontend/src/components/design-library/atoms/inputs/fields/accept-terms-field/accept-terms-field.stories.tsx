@@ -3,7 +3,7 @@ import AcceptTermsField from './accept-terms-field';
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/AcceptTermsField',
-  component: AcceptTermsField,
+  component: AcceptTermsField
 };
 
 const Template = (args) => <AcceptTermsField {...args} />;
@@ -14,7 +14,7 @@ Default.args = {
   acceptanceDate: 0,
   country: 'us',
   onAccept: () => {},
-  onReject: () => {},
+  onReject: () => {}
 };
 
 export const Accepted = Template.bind({});
@@ -23,5 +23,5 @@ Accepted.args = {
   acceptanceDate: 1633036800, // Example timestamp
   country: 'us',
   onAccept: () => {},
-  onReject: () => {},
+  onReject: () => {}
 };

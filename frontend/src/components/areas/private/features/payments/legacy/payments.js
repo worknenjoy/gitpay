@@ -44,7 +44,7 @@ const styles = theme => ({
   button: {
     width: 100,
     font: 10,
-    margin: 5,
+    margin: 5
   },
   icon: {
     marginLeft: 5
@@ -155,10 +155,10 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
   const retryPaypalPaymentButton = (item) => {
     const { payment_url: paymentUrl } = item
     return (
-      <Button variant='contained' size='small' color='secondary' className={ classes.button } onClick={ (e) => {
+      <Button variant="contained" size="small" color="secondary" className={ classes.button } onClick={ (e) => {
         retryPaypalPayment(e, item)
       } }>
-        <FormattedMessage id='general.buttons.retry' defaultMessage='Retry' />
+        <FormattedMessage id="general.buttons.retry" defaultMessage="Retry" />
         <RefreshIcon className={classes.icon} />
       </Button>
     )
@@ -166,10 +166,10 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
 
   const cancelPaypalPaymentButton = (id) => {
     return (
-      <Button variant='contained' size='small' color='secondary' className={ classes.button } onClick={ (e) => {
+      <Button variant="contained" size="small" color="secondary" className={ classes.button } onClick={ (e) => {
         cancelPaypalPayment(id)
       } }>
-        <FormattedMessage id='general.buttons.cancel' defaultMessage='Cancel' />
+        <FormattedMessage id="general.buttons.cancel" defaultMessage="Cancel" />
         <CancelIcon className={classes.icon} />
       </Button>
     )
@@ -180,13 +180,13 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
       if (item.User && userId === item.User.id) {
         return (
           <Button
-            variant='contained'
-            size='small'
-            color='secondary'
+            variant="contained"
+            size="small"
+            color="secondary"
             className={ classes.button }
             onClick={ (e) => openOrderDetailsDialog(e, item.id) }
           >
-            <FormattedMessage id='general.buttons.details' defaultMessage='Details' />
+            <FormattedMessage id="general.buttons.details" defaultMessage="Details" />
           <InfoIcon className={classes.icon} />
           </Button>
         )
@@ -198,7 +198,7 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
     return (
       <span>
         { issue && issue.title ? (
-          <Link href='' onClick={ (e) => {
+          <Link href="" onClick={ (e) => {
             e.preventDefault()
             window.location.href = `/#/task/${issue.id}/${slugify(issue.title)}`
             window.location.reload()
@@ -230,13 +230,13 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
         return (
           <React.Fragment>
             <Button
-              variant='contained'
-              size='small'
-              color='secondary'
+              variant="contained"
+              size="small"
+              color="secondary"
               className={ classes.button }
               onClick={(e) => openTransferDialog(e)}
             >
-              <FormattedMessage id='general.buttons.transfer' defaultMessage='Transfer' />
+              <FormattedMessage id="general.buttons.transfer" defaultMessage="Transfer" />
               <TransferIcon classes={classes.icon} />
             </Button>
             <TaskOrderTransfer task={ item.Task } order={ item } onSend={ transferOrder } tasks={ tasks } open={ transferDialogOpen } onClose={ closeTransferDialog } listOrders={async () => await listOrders({ userId: user.id })} />
@@ -255,13 +255,13 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
         return (
           <React.Fragment>
             <Button
-              variant='contained'
-              size='small'
-              color='secondary'
+              variant="contained"
+              size="small"
+              color="secondary"
               className={ classes.button }
               onClick={ (e) => openRefundDialog(e, item) }
             >
-              <FormattedMessage id='general.buttons.refund' defaultMessage='Refund' />
+              <FormattedMessage id="general.buttons.refund" defaultMessage="Refund" />
               <ReceiptIcon className={classes.icon } />
             </Button>
           </React.Fragment>
@@ -300,15 +300,15 @@ const Payments = ({ classes, tasks, orders, order, user, logged, listOrders, lis
         { retryOrCancelButton(item, userId) }
         { transferButton(item, userId) }
         { refundButton(item, userId) }
-      </div>,
+      </div>
     ])
   }
 
   return (
     <div style={ { marginTop: 40 } }>
       <Container>
-        <Typography variant='h5' gutterBottom>
-          <FormattedMessage id='general.payments' defaultMessage='Payments' />
+        <Typography variant="h5" gutterBottom>
+          <FormattedMessage id="general.payments" defaultMessage="Payments" />
         </Typography>
         <div style={ { marginTop: 40, marginBottom: 30 } }>
           <CustomPaginationActionsTable

@@ -50,9 +50,9 @@ export default function OffersList({
                   {offer?.User?.username || offer?.User?.name}
                   <Chip
                     label={offer?.status || 'pending'}
-                    color='secondary'
+                    color="secondary"
                     variant="default"
-                    size='small'
+                    size="small"
                     style={{marginLeft: 10, display: 'inline-block'}}
                   />
                 </>
@@ -76,14 +76,14 @@ export default function OffersList({
                     </Typography>
                     }
                     { offer?.comment &&
-                    <Typography variant="body1" color="secondary" component='div' gutterBottom>
+                    <Typography variant="body1" color="secondary" component="div" gutterBottom>
                       Comment:<br />
                       {offer?.comment}
                     </Typography>
                     }
                     { offer?.learn &&
                       <Typography variant="body1" color="secondary" gutterBottom>
-                        <FormattedMessage id='task.learn' defaultMessage={'For learning purposes'} />
+                        <FormattedMessage id="task.learn" defaultMessage={'For learning purposes'} />
                       </Typography>
                     }
                     { offer?.createdAt &&
@@ -102,7 +102,7 @@ export default function OffersList({
                       Accept
                     </Button>
                     <Button onClick={(e) => onSendMessage(offer.id)} variant="outlined" color="secondary" size={'small'}>
-                      <MessageIcon fontSize='small' />
+                      <MessageIcon fontSize="small" />
                     </Button>
                   </div>
                   ) : null }

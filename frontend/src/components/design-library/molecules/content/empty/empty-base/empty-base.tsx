@@ -14,17 +14,17 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     border: `1px dashed ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   icon: {
     fontSize: 72,
     color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(0),
+    marginBottom: theme.spacing(0)
   },
   message: {
     color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(5),
-  },
+    marginBottom: theme.spacing(5)
+  }
 }));
 
 type EmptyBaseProps = {
@@ -40,7 +40,7 @@ const EmptyBase = ({
   icon,
   text,
   actionText,
-  completed = true,
+  completed = true
 }: EmptyBaseProps) => {
   const classes = useStyles();
 

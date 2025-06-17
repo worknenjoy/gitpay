@@ -317,7 +317,7 @@ exports.createBankAccount = (req, res) => {
 }
 
 exports.updateBankAccount = (req, res) => {
-  user.userBankAccountUpdate({userParams: req.user, bank_account: req.body, })
+  user.userBankAccountUpdate({userParams: req.user, bank_account: req.body })
     .then(data => {
       res.send(data)
     }).catch(error => {

@@ -9,7 +9,7 @@ interface IssueActionsProps {
 
 const IssueActions = ({
   role,
-  roles,
+  roles
 }:IssueActionsProps) => {
   return (
     <ActionButtons

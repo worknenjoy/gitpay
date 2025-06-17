@@ -7,15 +7,15 @@ const useStyles = makeStyles({
     maxWidth: 345,
     margin: 10,
     textAlign: 'right',
-    padding: 10,
+    padding: 10
   },
   balance: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   name: {
-    fontSize: 18,
-  },
+    fontSize: 18
+  }
 });
 
 type BalanceCardProps = {
@@ -40,9 +40,9 @@ const BalanceCard = ({ name, balance, onAdd }:BalanceCardProps) => {
       { onAdd &&
         <CardActions style={{display: 'flex', justifyContent: 'flex-end'}}>
           <Button 
-            variant='contained'
-            size='small'
-            color='secondary'
+            variant="contained"
+            size="small"
+            color="secondary"
             onClick={onAdd}
           >
             <FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />

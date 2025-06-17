@@ -47,7 +47,7 @@ xdescribe('task actions', () => {
       ]
       const store = mockStore({ intl: { messages: {} }, task: { completed: true, id: 1 }, loggedIn: { logged: true, user: { id: 1 } } })
       return store.dispatch(taskActions.updateTask({
-        id: 1,
+        id: 1
       })).then(() => {
         // return of async actions
         expect(store.getActions()).toEqual(expectedActions)

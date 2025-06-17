@@ -20,13 +20,13 @@ const useStyles = makeStyles((theme) => ({
   avatarStatusSuccess: {
     width: theme.spacing(0),
     height: theme.spacing(0),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main
   },
   avatarStatusClosed: {
     width: theme.spacing(0),
     height: theme.spacing(0),
-    backgroundColor: theme.palette.error.main,
-  },
+    backgroundColor: theme.palette.error.main
+  }
 }));
 
 

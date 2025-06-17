@@ -25,10 +25,10 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
           <div className={classes.primaryWrapper}>
             <Button
               onClick={() => actionClick(action.key, action.onClick)}
-              color='primary'
+              color="primary"
               fullWidth
-              size='large'
-              variant='contained'
+              size="large"
+              variant="contained"
               disabled={action.disabled}
               endIcon={action.icon}
             >
@@ -45,9 +45,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
           <>
             <Button
               onClick={() => actionClick(action.key, action.onClick)}
-              size='small'
-              color='secondary'
-              variant='contained'
+              size="small"
+              color="secondary"
+              variant="contained"
               disabled={action.disabled}
               fullWidth
               className={classes.secondaryButton}

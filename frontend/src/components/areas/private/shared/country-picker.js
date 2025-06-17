@@ -59,7 +59,7 @@ class CountryPicker extends Component {
     const { classes } = this.props
 
     const Alert = (props) => {
-      return <MuiAlert elevation={ 2 } variant='outlined' { ...props } />
+      return <MuiAlert elevation={ 2 } variant="outlined" { ...props } />
     }
 
     const getCountryButtons = () => {
@@ -68,8 +68,8 @@ class CountryPicker extends Component {
         const countryImageSrc = imageModule.default || imageModule
         return (
           <Button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
-            <img width='48' style={{marginRight: 10}} src={ countryImageSrc } onLoad={() => {}} />
-            <Typography component='span' gutterBottom>
+            <img width="48" style={{marginRight: 10}} src={ countryImageSrc } onLoad={() => {}} />
+            <Typography component="span" gutterBottom>
               { item.country }
             </Typography>
           </Button>
@@ -86,17 +86,17 @@ class CountryPicker extends Component {
             country: null,
             image: null
           }) }
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
           fullWidth
           maxWidth={ 'md' }
         >
-          <DialogTitle id='alert-dialog-title'>{ 'Choose your country' }</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{ 'Choose your country' }</DialogTitle>
           <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              <Alert severity='info'>
-                <Typography variant='body1'>
-                  <FormattedMessage id='countryPicker.info' defaultMessage='If your country is not listed, please contact us at contact@gitpay.me' />
+            <DialogContentText id="alert-dialog-description">
+              <Alert severity="info">
+                <Typography variant="body1">
+                  <FormattedMessage id="countryPicker.info" defaultMessage="If your country is not listed, please contact us at contact@gitpay.me" />
                 </Typography>
               </Alert>
             </DialogContentText>
@@ -104,24 +104,24 @@ class CountryPicker extends Component {
               { getCountryButtons() }
             </div>
           </DialogContent>
-          <DialogActions alignItems='space-evenly'>
-            <DialogContent id='alert-dialog-footer'>
+          <DialogActions alignItems="space-evenly">
+            <DialogContent id="alert-dialog-footer">
               <DialogContentText>
-                Icons made by <a href='http://www.freepik.com/' title='Freepik'>Freepik</a>, <a href="https://www.flaticon.com/free-icons/pakistan" title="pakistan icons">Pakistan icons created by Roundicons - Flaticon</a>,  <a href="https://www.flaticon.com/free-icons/turkey" title="turkey icons">Turkey icons created by IconsBox - Flaticon</a> and <a href="https://www.flaticon.com/free-icons/flags" title="flags icons">Icon.doit - Flaticon</a> from <a href='https://www.flaticon.com/' title='Flaticon'>www.flaticon.com</a> is licensed by <a href='http://creativecommons.org/licenses/by/3.0/' title='Creative Commons BY 3.0' target='_blank' rel="noreferrer">CC 3.0 BY</a>
+                Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a>, <a href="https://www.flaticon.com/free-icons/pakistan" title="pakistan icons">Pakistan icons created by Roundicons - Flaticon</a>,  <a href="https://www.flaticon.com/free-icons/turkey" title="turkey icons">Turkey icons created by IconsBox - Flaticon</a> and <a href="https://www.flaticon.com/free-icons/flags" title="flags icons">Icon.doit - Flaticon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noreferrer">CC 3.0 BY</a>
               </DialogContentText>
             </DialogContent>
             <Button onClick={ (e) => this.props.onClose(e, {
               country: null,
               code: null,
               image: null
-            }) } size='large'>
+            }) } size="large">
               Cancel
             </Button>
-            <Button variant='contained' onClick={ (e) => this.props.onClose(e, {
+            <Button variant="contained" onClick={ (e) => this.props.onClose(e, {
               country: this.state.currentCountryLabel,
               code: this.state.currentCountryCode,
               image: this.state.currentCountryImage
-            }) } size='large' color='secondary' autoFocus style={{
+            }) } size="large" color="secondary" autoFocus style={{
               minWidth: 'auto'
             }}>
               Choose { this.state.currentCountryLabel }

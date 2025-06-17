@@ -173,7 +173,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                     where: {
                       id: data.id
                     },
-                    returning: true,
+                    returning: true
                   })
                 responseGithub.status = dataStatusUpdateInProgress.status
               }
@@ -184,7 +184,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                     where: {
                       id: data.id
                     },
-                    returning: true,
+                    returning: true
                   })
                 responseGithub.status = dataStatusUpdatedClosed.status
               }
@@ -199,7 +199,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                         where: {
                           name: l['name']
                         },
-                        include: [models.Task],
+                        include: [models.Task]
                       })
                       data.addLabel(label[0])
                     }

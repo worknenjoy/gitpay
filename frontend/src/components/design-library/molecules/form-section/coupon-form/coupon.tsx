@@ -24,24 +24,24 @@ const Coupon: React.FC<CouponProps> = (props) => {
   if (props.couponState.couponInput) {
     return (
       <div style={ { display: 'flex', alignItems: 'center', flexDirection: 'row', flexFlow: 'wrap' } }>
-        <TextField label='Coupon code' onChange={ props.handleCouponInput } variant='outlined' value={ props.couponState.coupon } disabled={ props.couponState.couponApplied } />
+        <TextField label="Coupon code" onChange={ props.handleCouponInput } variant="outlined" value={ props.couponState.coupon } disabled={ props.couponState.couponApplied } />
         {
           props.couponState.couponApplied
             ? (
               <div style={ { display: 'flex', alignItems: 'center' } }>
                 <Chip label={ `${couponStoreState.amount}%` } style={ { margin: '0px 5px 0px 5px' } } />
-                <Typography variant='caption'>
-                  <FormattedMessage id='checkout.coupon.orderPrice' defaultMessage='Order price: $ {orderPrice}' values={ { orderPrice: couponStoreState.orderPrice } } />
+                <Typography variant="caption">
+                  <FormattedMessage id="checkout.coupon.orderPrice" defaultMessage="Order price: $ {orderPrice}" values={ { orderPrice: couponStoreState.orderPrice } } />
                 </Typography>
               </div>
-            ) : (<Button color='primary' onClick={ props.applyCoupon } disabled={ props.couponState.coupon.length < 10 }>Apply</Button>)
+            ) : (<Button color="primary" onClick={ props.applyCoupon } disabled={ props.couponState.coupon.length < 10 }>Apply</Button>)
         }
       </div>
     )
   }
   else {
     return (
-      <Button color='primary' startIcon={ <AddIcon /> } onClick={ props.showCouponInput }>Add coupon</Button>
+      <Button color="primary" startIcon={ <AddIcon /> } onClick={ props.showCouponInput }>Add coupon</Button>
     )
   }
 }

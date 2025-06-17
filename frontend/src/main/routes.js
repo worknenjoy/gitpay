@@ -13,7 +13,6 @@ import TaskOrdersContainer from '../containers/task-orders'
 import TaskExplorer from '../containers/task-explorer'
 import TeamContainer from '../containers/team.js'
 import LoginPageContainer from '../containers/login-page'
-import RecoverPasswordContainer from '../containers/recover-password'
 import FourOFour from '../components/design-library/pages/public/four-o-four/four-o-four'
 import LandingPage from '../components/areas/public/features/welcome/legacy/landing-page'
 import Stats from '../components/areas/public/features/stats/Stats-main-page'
@@ -27,48 +26,48 @@ const TaskExplorerOrganizations = (props) => <TaskExplorer {...props} />
 export default props => (
   <HashRouter>
     <Switch>
-      <Route path='/recruitment' component={ LandingPage } />
-      <Route exact path='/' component={ Auth.isUserAuthenticated() ? () => <Redirect to='/profile' /> : HomeContainer } />
-      <Route exact path='/welcome' component={ WelcomeContainer } />
-      <PrivateRoute path='/profile' component={ ProfileContainer } />
-      <Route path='/pricing' component={ Pricing } />
-      <Route exact path='/projects' component={ (props) => <TaskExplorerOrganizations {...props} /> } />
-      <Route exact path='/organizations' component={ (props) => <TaskExplorerOrganizations {...props} /> } />
-      <Route exact path='/organizations/:organization_id' component={ (props) => <TaskExplorerOrganizations {...props} /> } />
-      <Route exact path='/organizations/:organization_id/:slug' component={ (props) => <TaskExplorerOrganizations {...props} /> } />
-      <Route exact path='/organizations/:organization_id/projects/:project_id' component={ (props) => <TaskExplorerProjects {...props} />} />
-      <Route exact path='/organizations/:organization_id/projects/:project_id/:filter' component={ (props) => <TaskExplorerProjects {...props} /> } />
-      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug' component={ (props) => <TaskExplorerProjects {...props} /> } />
-      <Route exact path='/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter' component={ (props) => <TaskExplorerProjects {...props} /> } />
-      <Route exact path='/tasks/:filter' component={ (props) => <TaskExplorer {...props} /> } />
-      <Route exact path='/team' component={ TeamContainer } />
-      <Route exact path='/signin' component={ LoginPageContainer } />
-      <Route exact path='/signin/:status' component={ LoginPageContainer } />
-      <Route exact path='/signup' component={ LoginPageContainer } />
-      <Route exact path='/reset-password/:token' component={ LoginPageContainer } />
-      <Route exact path='/activate/user/:userId/token/:token' component={ AccountActivation } />
-      <Route exact path='/signup/:status' component={ LoginPageContainer } />
-      <Route exact path='/token/:token' component={ Session } />
-      <Route exact path='/task/:id' component={ TaskContainer } />
-      <Route exact path='/task/:id/:slug' component={ TaskContainer } />
-      <Route exact path='/task/:id/orders' component={ TaskContainer } />
-      <Route exact path='/task/:id/status' component={ TaskContainer } />
-      <Route exact path='/task/:id/status/:status' component={ TaskContainer } />
-      <Route exact path='/task/:id/orders/:order_id' component={ TaskContainer } />
-      <Route exact path='/task/:id/:slug/interested' component={ TaskContainer } />
-      <Route exact path='/task/:id/interested/:interested_id' component={ TaskContainer } />
-      <Route exact path='/task/:id/members' component={ TaskContainer } />
+      <Route path="/recruitment" component={ LandingPage } />
+      <Route exact path="/" component={ Auth.isUserAuthenticated() ? () => <Redirect to="/profile" /> : HomeContainer } />
+      <Route exact path="/welcome" component={ WelcomeContainer } />
+      <PrivateRoute path="/profile" component={ ProfileContainer } />
+      <Route path="/pricing" component={ Pricing } />
+      <Route exact path="/projects" component={ (props) => <TaskExplorerOrganizations {...props} /> } />
+      <Route exact path="/organizations" component={ (props) => <TaskExplorerOrganizations {...props} /> } />
+      <Route exact path="/organizations/:organization_id" component={ (props) => <TaskExplorerOrganizations {...props} /> } />
+      <Route exact path="/organizations/:organization_id/:slug" component={ (props) => <TaskExplorerOrganizations {...props} /> } />
+      <Route exact path="/organizations/:organization_id/projects/:project_id" component={ (props) => <TaskExplorerProjects {...props} />} />
+      <Route exact path="/organizations/:organization_id/projects/:project_id/:filter" component={ (props) => <TaskExplorerProjects {...props} /> } />
+      <Route exact path="/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug" component={ (props) => <TaskExplorerProjects {...props} /> } />
+      <Route exact path="/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter" component={ (props) => <TaskExplorerProjects {...props} /> } />
+      <Route exact path="/tasks/:filter" component={ (props) => <TaskExplorer {...props} /> } />
+      <Route exact path="/team" component={ TeamContainer } />
+      <Route exact path="/signin" component={ LoginPageContainer } />
+      <Route exact path="/signin/:status" component={ LoginPageContainer } />
+      <Route exact path="/signup" component={ LoginPageContainer } />
+      <Route exact path="/reset-password/:token" component={ LoginPageContainer } />
+      <Route exact path="/activate/user/:userId/token/:token" component={ AccountActivation } />
+      <Route exact path="/signup/:status" component={ LoginPageContainer } />
+      <Route exact path="/token/:token" component={ Session } />
+      <Route exact path="/task/:id" component={ TaskContainer } />
+      <Route exact path="/task/:id/:slug" component={ TaskContainer } />
+      <Route exact path="/task/:id/orders" component={ TaskContainer } />
+      <Route exact path="/task/:id/status" component={ TaskContainer } />
+      <Route exact path="/task/:id/status/:status" component={ TaskContainer } />
+      <Route exact path="/task/:id/orders/:order_id" component={ TaskContainer } />
+      <Route exact path="/task/:id/:slug/interested" component={ TaskContainer } />
+      <Route exact path="/task/:id/interested/:interested_id" component={ TaskContainer } />
+      <Route exact path="/task/:id/members" component={ TaskContainer } />
       
-      <Route exact path='/task/:id/history' component={ TaskContainer } />
-      <Route exact path='/task/:id/claim' component={ TaskContainer } />
-      <Route exact path='/stats' component={ Stats } />
+      <Route exact path="/task/:id/history" component={ TaskContainer } />
+      <Route exact path="/task/:id/claim" component={ TaskContainer } />
+      <Route exact path="/stats" component={ Stats } />
       <Route
         exact
-        path='/task/:id/order/:order_id/status/:status'
+        path="/task/:id/order/:order_id/status/:status"
         component={ TaskOrdersContainer }
       />
-      <Route exact path='/users/:usernameId' component={ TaskListUser } />
-      <Route path='/404' component={ FourOFour } />
+      <Route exact path="/users/:usernameId" component={ TaskListUser } />
+      <Route path="/404" component={ FourOFour } />
       <Route component={ FourOFour } />
     </Switch>
   </HashRouter>

@@ -23,7 +23,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
           taskSolution={{}}
           pullRequestData={{}}
           task={{
-            data: {},
+            data: {}
           }}
           user={{
             id: 1,
@@ -48,11 +48,11 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isPRMerged: false,
             isIssueClosed: false,
             isConnectedToGitHub: false,
-            hasIssueReference: false,
+            hasIssueReference: false
           }}
           task={{
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
@@ -80,7 +80,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
         resolve({
           pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
           taskId: 1,
-          userId: 1,
+          userId: 1
         })
       })
     })
@@ -96,12 +96,12 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isIssueClosed: true,
             isConnectedToGitHub: true,
             hasIssueReference: true,
-            isAuthorOfPR: true,
+            isAuthorOfPR: true
           }}
           task={{
             id: 1,
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
@@ -116,7 +116,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             body: 'Fixes #1',
             user: {
               login: 'alexanmtz'
-            },
+            }
           })}
           completed={true}
           updateTaskSolution={spy}
@@ -142,7 +142,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
         resolve({
           pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
           taskId: 1,
-          userId: 1,
+          userId: 1
         })
       })
     })
@@ -158,12 +158,12 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isIssueClosed: true,
             isConnectedToGitHub: true,
             hasIssueReference: true,
-            isAuthorOfPR: true,
+            isAuthorOfPR: true
           }}
           task={{
             id: 1,
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
@@ -178,7 +178,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             body: 'Fixes #1',
             user: {
               login: 'alexanmtz'
-            },
+            }
           })}
           completed={true}
           updateTaskSolution={spy}
@@ -208,7 +208,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isAuthorOfPR: true,
             taskId: 1,
             userId: 1,
-            id: 1,
+            id: 1
           }}
           pullRequestData={{
             
@@ -216,7 +216,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
           task={{
             id: 1,
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
@@ -231,7 +231,7 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             body: 'Fixes #1',
             user: {
               login: 'alexanmtz'
-            },
+            }
           })}
           completed={true}
           updateTaskSolution={() => {}}

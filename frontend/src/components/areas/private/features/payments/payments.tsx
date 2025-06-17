@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import {
   Paper,
   Container,
-  Typography,
+  Typography
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -32,12 +32,12 @@ const Payments = ({ orders, getOrders, user }) => {
   return (
     <Paper elevation={0} style={{ backgroundColor: 'transparent' }}>
       <Container>
-        <Typography variant='h5' gutterBottom style={{ marginTop: 40 }}>
-          <FormattedMessage id='issues.explore.title' defaultMessage='Explore issues' />
+        <Typography variant="h5" gutterBottom style={{ marginTop: 40 }}>
+          <FormattedMessage id="issues.explore.title" defaultMessage="Explore issues" />
         </Typography>
-        <Typography variant='caption' gutterBottom>
+        <Typography variant="caption" gutterBottom>
           <FormattedMessage
-            id='issues.explore.description'
+            id="issues.explore.description"
             defaultMessage="Here you can see all the issues on our network"
           />
         </Typography>

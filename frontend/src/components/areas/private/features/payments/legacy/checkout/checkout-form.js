@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import {
   Grid,
   Typography,
-  Button,
+  Button
 } from '@material-ui/core'
 import { injectStripe } from 'react-stripe-elements'
 
@@ -183,10 +183,10 @@ const CheckoutForm = (props) => {
             <div>
               { user && user.name ? (
                 <div>
-                  <Typography variant='caption'>
-                    <FormattedMessage id='checkout.loggedas' defaultMessage='Logged as' />
+                  <Typography variant="caption">
+                    <FormattedMessage id="checkout.loggedas" defaultMessage="Logged as" />
                   </Typography>
-                  <Typography variant='body1'>
+                  <Typography variant="body1">
                     { `${checkoutFormState.fullname} (${checkoutFormState.email})` }
                   </Typography>
                 </div>
@@ -212,15 +212,15 @@ const CheckoutForm = (props) => {
         <Grid item xs={ 12 }>
           <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
             <Button
-              type='submit'
-              variant='contained'
-              color='secondary'
+              type="submit"
+              variant="contained"
+              color="secondary"
               disabled={ checkoutFormState.paymentRequested || price === 0 }
             >
               {
                 (couponStoreState.coupon.orderPrice !== null || couponStoreState.coupon.orderPrice !== undefined) && couponStoreState.coupon.orderPrice >= 0 && couponState.couponApplied
-                  ? <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: `$${couponStoreState.coupon.orderPrice}` } } />
-                  : <FormattedMessage id='checkout.payment.action' defaultMessage='Pay {price}' values={ { price: props.formatedPrice } } />
+                  ? <FormattedMessage id="checkout.payment.action" defaultMessage="Pay {price}" values={ { price: `$${couponStoreState.coupon.orderPrice}` } } />
+                  : <FormattedMessage id="checkout.payment.action" defaultMessage="Pay {price}" values={ { price: props.formatedPrice } } />
               }
             </Button>
           </div>

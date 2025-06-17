@@ -65,7 +65,7 @@ const useStyles = makeStyles<Theme>((theme) => ({
     [theme.breakpoints.down('sm')]: {
       marginTop: 20,
       width: '100%',
-      justifyContent: 'center',
+      justifyContent: 'center'
     }
   }
 }));
@@ -95,7 +95,7 @@ const AccountHeader = ({
       <Grid xs={12} md={8} className={classes.wrapper}>
         <div className={classes.inner}>
           {user?.Types?.map((t: any) => t.name).includes('contributor') &&
-            <Grid container direction='column' alignItems='center'>
+            <Grid container direction="column" alignItems="center">
               <Grid item xs={ 12 }>
                 <Button
                   onClick={ () => history.push('/profile/explore') }
@@ -103,7 +103,7 @@ const AccountHeader = ({
                   variant="outlined"
                   className={ classes.actionButtons }
                 >
-                  <FormattedMessage id="profile.header.action.secondary" defaultMessage='Work on an issue' />
+                  <FormattedMessage id="profile.header.action.secondary" defaultMessage="Work on an issue" />
                 </Button>
               </Grid>
             </Grid>

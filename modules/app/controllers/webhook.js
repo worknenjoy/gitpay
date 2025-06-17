@@ -200,7 +200,7 @@ exports.github = async (req, res) => {
                   deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null,
                   userId: userData ? userData.id : null,
                   label: label.name,
-                  status: !taskUpdate ? 404 : 200,
+                  status: !taskUpdate ? 404 : 200
                 }
               }
             }
@@ -258,7 +258,7 @@ exports.github = async (req, res) => {
                   title: taskData.title,
                   userId: userData ? userData.id : null,
                   label: label.name,
-                  status: 200,
+                  status: 200
                 }
               }
             }
@@ -440,7 +440,7 @@ exports.updateWebhook = async (req, res) => {
                       user.dataValues,
                       i18n.__('mail.webhook.payment.unapproved.subject'),
                       i18n.__('mail.webhook.payment.unapproved.message', {
-                        reason: FAILED_REASON[event.data.object.outcome.network_status],
+                        reason: FAILED_REASON[event.data.object.outcome.network_status]
 
                       })
                     )
@@ -762,7 +762,7 @@ exports.updateWebhook = async (req, res) => {
                 status: event.data.object.status,
                 source_id: event.data.object.id,
                 description: event.data.object.description,
-                method: event.data.object.type,
+                method: event.data.object.type
               }).save()
 
               if (!payout) return res.status(400).send({ error: 'Error to create payout' })

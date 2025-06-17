@@ -3,7 +3,7 @@ import BirthDateField from './birth-date-field';
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/BirthDateField',
-  component: BirthDateField,
+  component: BirthDateField
 };
 
 const Template = (args) => <BirthDateField {...args} />;

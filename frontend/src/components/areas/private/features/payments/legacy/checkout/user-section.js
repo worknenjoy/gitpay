@@ -61,13 +61,13 @@ class UserSection extends Component {
     return (
       <label>
       <FormControl error={ this.state.error.fullname }>
-        <FormattedMessage id='user.data.fullname' defaultMessage='Full name'>
+        <FormattedMessage id="user.data.fullname" defaultMessage="Full name">
         { (msg) => (
           <Input
-          id='payment-form-user'
-          name='fullname'
+          id="payment-form-user"
+          name="fullname"
           startAdornment={
-            <InputAdornment position='start'>
+            <InputAdornment position="start">
             <AccountCircle />
             </InputAdornment>
           }
@@ -81,7 +81,7 @@ class UserSection extends Component {
         ) }
         </FormattedMessage>
         { this.state.error.fullname && (
-        <FormattedMessage id='user.data.fullname.error' defaultMessage='Provide your full name'>
+        <FormattedMessage id="user.data.fullname.error" defaultMessage="Provide your full name">
           { (msg) => (
           <FormHelperText error={ this.state.error.fullname }>
             { msg }
@@ -92,23 +92,23 @@ class UserSection extends Component {
       </FormControl>
       <FormControl error={ this.state.error.email }>
         <Input
-        name='email'
-        id='adornment-email'
+        name="email"
+        id="adornment-email"
         startAdornment={
-          <InputAdornment position='start'>
+          <InputAdornment position="start">
           <Email />
           </InputAdornment>
         }
-        placeholder='e-mail'
+        placeholder="e-mail"
         ref={ emailInputRef }
-        type='email'
+        type="email"
         disabled={ this.props.email }
         defaultValue={ this.props.email }
         required
         onChange={ this.onChangeEmail }
         />
         { this.state.error.email && (
-        <FormattedMessage id='user.data.email.error' defaultMessage='Provide your email correctly'>
+        <FormattedMessage id="user.data.email.error" defaultMessage="Provide your email correctly">
           { (msg) => (
           <FormHelperText error={ this.state.error.email }>
             { msg }

@@ -5,11 +5,11 @@ import TaskFilters from '../components/areas/public/features/task/task-filters'
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks.data,
-  filteredTasks: state.tasks.filteredData,
+  filteredTasks: state.tasks.filteredData
 })
 
 const mapDispatchToProps = {
-  filterTasks,
+  filterTasks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskFilters)

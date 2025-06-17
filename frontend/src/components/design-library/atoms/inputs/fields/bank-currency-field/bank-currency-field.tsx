@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactPlaceholder from 'react-placeholder';
 import { FormattedMessage } from 'react-intl';
 import { FormControl, Input, Select, Typography } from '@material-ui/core';
@@ -19,22 +19,22 @@ const BankCurrencyField = ({ currency, countries, disabled = false }) => {
   return (
     <FormControl style={{ width: '100%' }}>
       <div>
-        <Typography variant='caption' gutterBottom>
-          <FormattedMessage id='account.register.bank.account.currency' defaultMessage='Currency:' />
+        <Typography variant="caption" gutterBottom>
+          <FormattedMessage id="account.register.bank.account.currency" defaultMessage="Currency:" />
         </Typography>
       </div>
-      <ReactPlaceholder type='text' rows={1} ready={completed}>
+      <ReactPlaceholder type="text" rows={1} ready={completed}>
         <Select
           native
-          name='bank_account_currency'
+          name="bank_account_currency"
           defaultValue={currency ? currency?.toUpperCase() : default_currency?.toUpperCase() || ''}
-          input={<Input id='bank-currency' />}
+          input={<Input id="bank-currency" />}
           fullWidth
           style={{ marginTop: 12, marginBottom: 12 }}
           onChange={onChangeCurrency}
           disabled={disabled}
         >
-          <option value=''>
+          <option value="">
             Select currency
           </option>
           {countryCurrencies.map((c, index) => (

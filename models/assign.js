@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'pending'
     },
     message: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     }
   })
 

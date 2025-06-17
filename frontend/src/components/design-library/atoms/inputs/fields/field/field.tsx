@@ -26,7 +26,7 @@ type FieldProps = {
 export const Field = ({ ref, name, value, label, completed = true, error, type = 'text', min, max, required = false, defaultValue, placeholder, disabled, help, inputComponent, endAdornment, onChange }: FieldProps) => {
   return (
     <FormControl style={{ width: '100%' }}>
-      <ReactPlaceholder type='text' rows={1} ready={completed} style={{margin: '20px 0'}} showLoadingAnimation>
+      <ReactPlaceholder type="text" rows={1} ready={completed} style={{margin: '20px 0'}} showLoadingAnimation>
       <>
       <InputLabel
         htmlFor={name}
@@ -52,8 +52,8 @@ export const Field = ({ ref, name, value, label, completed = true, error, type =
         inputProps={type === 'number' ? { min, max } : {}}
       />
       {help &&
-        <FormHelperText id='component-helper-text'>
-          <FormattedMessage id='validation-message' defaultMessage='+Country code and Number' />
+        <FormHelperText id="component-helper-text">
+          <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
         </FormHelperText>
       }
       </>

@@ -3,7 +3,7 @@ import Coupon from './coupon';
 
 export default {
   title: 'Design Library/Molecules/Forms/CouponForm',
-  component: Coupon,
+  component: Coupon
 };
 
 const Template = (args) => <Coupon {...args} />;

@@ -12,15 +12,15 @@ import SideMenuPlaceholder from './side-menu.placeholder'
 const useStyles = makeStyles((theme) => ({
   sidePaper: {
     backgroundColor: '#2c5c46',
-    height: '100%',
+    height: '100%'
   },
   row: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   menuItem: {
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 10
     /*
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   primary: {
     color: theme.palette.primary.contrastText,
     fontSize: '11px !important',
-    fontWeight: 500,
+    fontWeight: 500
     
   },
   icon: {
@@ -49,35 +49,35 @@ const useStyles = makeStyles((theme) => ({
       maxWitdh: '100%',
       borderRadius: '50%',
       marginBottom: 8,
-      border: '4px solid white',
+      border: '4px solid white'
     },
     '& .name': {
       textAlign: 'center',
       color: theme.palette.primary.dark,
-      fontSize: '1.2rem',
+      fontSize: '1.2rem'
     },
     '& .website': {
       textAlign: 'center',
       color: '#515bc4',
-      fontSize: '0.8rem',
+      fontSize: '0.8rem'
     },
     '& .details': {
       textAlign: 'center',
       marginTop: 10,
       padding: '12px 0 5px 0',
       backgroundColor: '#4D7E6F',
-      color: 'rgba(255, 255, 255, 0.7)',
+      color: 'rgba(255, 255, 255, 0.7)'
     },
     '& .details-mid': {
       textAlign: 'center',
       marginTop: 10,
       padding: '12px 0 5px 0',
       backgroundColor: '#4D7E6F',
-      color: 'rgba(255, 255, 255, 0.7)',
+      color: 'rgba(255, 255, 255, 0.7)'
     },
     '& .num': {
       color: '#eee',
-      fontSize: '1.5rem',
+      fontSize: '1.5rem'
     },
     '& .buttons': {
       background: 'transparent',
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 0,
       justifyContent: 'center',
       border: '2px solid white',
-      color: 'white',
+      color: 'white'
     },
     '& .buttons-disabled': {
       background: 'transparent',
@@ -99,13 +99,13 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 0,
       justifyContent: 'center',
       border: '2px solid #999',
-      color: '#999',
+      color: '#999'
     },
     '& .icon': {
       height: '25px',
       width: '25px',
-      marginLeft: 15,
-    },
+      marginLeft: 15
+    }
   }
 }))
 
@@ -138,7 +138,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
       <div>
         <div className={classes.profile}>
           <div style={{ display: 'flex', justifyContent: 'center', padding: 20, paddingBottom: 0 }}>
-            <StyledButton href='/'>
+            <StyledButton href="/">
               <Logo src={logo} />
             </StyledButton>
           </div>
@@ -166,7 +166,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                         fontWeight: 600,
                         marginTop: sectionIndex === 0 ? 0 : 16,
                         marginBottom: 16,
-                        paddingLeft: 16,
+                        paddingLeft: 16
                       }}
                     >
                       {section.category}

@@ -7,7 +7,7 @@ import LoginPage from '../components/areas/private/components/session/login-page
 const mapStateToProps = (state, props) => {
   return {
     user: state.user,
-    roles: state.roles,
+    roles: state.roles
   }
 }
 
@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchRoles: () => dispatch(fetchRoles()),
     registerUser: (data) => dispatch(registerUser(data)),
     forgotPassword: (data) => dispatch(forgotPassword(data)),
-    resetPassword: (data) => dispatch(resetPassword(data)),
+    resetPassword: (data) => dispatch(resetPassword(data))
   }
 }
 

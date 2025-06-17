@@ -11,7 +11,7 @@ const generateTableData = (count) => {
       role: 'Contributor',
       status: 'Active',
       action: 'Edit',
-      other: 'Other',
+      other: 'Other'
     });
   }
   return data;
@@ -19,7 +19,7 @@ const generateTableData = (count) => {
 
 export default {
   title: 'Design Library/Molecules/Tables/SectionTable',
-  component: SectionTable,
+  component: SectionTable
 }
 
 const Template = (args) => <SectionTable {...args} />;
@@ -29,7 +29,7 @@ Table.args = {
   // Add default props here
   tableData: {
     completed: true,
-    data: generateTableData(25),
+    data: generateTableData(25)
   },
   tableHeaderMetadata: {
     "id": { sortable: true, numeric: true, dataBaseKey: "id", label: 'Id' },
@@ -37,9 +37,9 @@ Table.args = {
     "email": { sortable: true, dataBaseKey: "email", label: 'Email' },
     "role": { sortable: true, dataBaseKey: "role", label: 'Role' },
     "status": { sortable: true, dataBaseKey: "status", label: 'Status' },
-    "action": { sortable: false, dataBaseKey: "action", label: 'Action' },
+    "action": { sortable: false, dataBaseKey: "action", label: 'Action' }
   },
   customColumnRenderer: {
-    action: (item) => <a href='#'>{item.action}</a>,
+    action: (item) => <a href="#">{item.action}</a>
   }
 };

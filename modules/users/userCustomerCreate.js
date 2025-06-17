@@ -31,7 +31,7 @@ module.exports = Promise.method(function userCustomerCreate(id, customerParamete
           },
           {
             where: { id },
-            returning: true,
+            returning: true
           }
           ).then(userUpdated => {
             return customer

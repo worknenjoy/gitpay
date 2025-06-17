@@ -3,7 +3,7 @@ import SignupSignin from './signup-signin';
 
 export default {
   title: 'Design Library/Organisms/Forms/SignupSignin',
-  component: SignupSignin,
+  component: SignupSignin
 };
 
 const Template = (args) => <SignupSignin {...args} />;

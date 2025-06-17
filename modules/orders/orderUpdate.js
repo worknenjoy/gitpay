@@ -47,7 +47,7 @@ module.exports = Promise.method(function orderUpdate (orderParameters) {
                   'value': totalPrice,
                   'currency_code': currency
                 },
-                'description': 'Development services provided by Gitpay',
+                'description': 'Development services provided by Gitpay'
               }],
               'application_context': {
                 'return_url': `${process.env.API_HOST}/orders/authorize`,

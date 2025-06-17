@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
     tasks: getFilteredTasks(state),
     organizations: state.organizations.organizations,
     completed: state.loggedIn.completed,
-    info: state.info,
+    info: state.info
   }
 }
 
@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     listTasks: ({ organizationId, projectId, userId, status, labelIds }) => dispatch(listTasks({ organizationId, projectId, userId, status, labelIds })),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
     signOut: () => dispatch(logOut()),
-    getInfo: () => dispatch(info()),
+    getInfo: () => dispatch(info())
   }
 }
 

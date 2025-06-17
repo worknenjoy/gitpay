@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       defaultValue: 'pending'
-    },
+    }
   })
 
   Offer.associate = (models) => {

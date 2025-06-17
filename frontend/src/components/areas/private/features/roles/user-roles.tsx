@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, FormattedMessage, defineMessages, useIntl } from 'react-intl'
+import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 import funder from 'images/bounty.png'
 import contributor from 'images/sharing.png'
 import maintainer from 'images/notifications.png'
 
 import {
-  withStyles,
   Paper,
   Grid,
   Typography,
@@ -14,12 +13,11 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CardActions,
+  CardActions
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
-import { set } from 'lodash'
 import ReactPlaceholder from 'react-placeholder'
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       padding: '3% 0 3% 0',
       margin: '0 0 0 0',
-      alignItems: 'center',
-    },
+      alignItems: 'center'
+    }
   },
   bigRow: {
     margin: '2% 5% 0 0',
@@ -50,10 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
   rowList: {
     [theme.breakpoints.down('lg')]: {
-      margin: '0 0% 10% 0',
+      margin: '0 0% 10% 0'
     },
     [theme.breakpoints.up('lg')]: {
-      margin: '0 5% 0% 0',
+      margin: '0 5% 0% 0'
     }
   },
   rowContent: {
@@ -76,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '5px 16px 0px',
     backgroundColor: '#455a64',
     '& h5': {
-      color: 'white',
+      color: 'white'
     }
   },
   action: {
@@ -127,12 +125,12 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       marginTop: '0px',
       marginBottom: '0px'
-    },
+    }
   },
   buttons: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   cButton: {
     border: 'none',
@@ -153,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
     height: '20%',
     color: '#FFFFFF',
     cursor: 'pointer',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   }
 }))
 
@@ -180,7 +178,7 @@ const Roles = ({
   fetchRoles,
   updateUser,
   onClose,
-  addNotification,
+  addNotification
 }) => {
   const { data, completed } = roles
   const classes = useStyles()
@@ -233,17 +231,17 @@ const Roles = ({
       {placeholders.map((_, index: number) => (
         <Grid key={index} item xs={12} md={3} spacing={2} className={classes.rowList}>
           <Paper>
-            <Card className={classes.rowContent} variant='outlined'>
+            <Card className={classes.rowContent} variant="outlined">
                 <CardMedia>
                   <div style={{ width: '100%', height: 270, backgroundColor: 'lightgray' }} />
                 </CardMedia>
               <CardContent className={classes.rootLabel}>
-                <Typography variant='h5'>
+                <Typography variant="h5">
                   <div style={{ width: '100%', height: '20px', backgroundColor: 'lightgray' }} />
                 </Typography>
               </CardContent>
               <CardActions className={classes.action}>
-                <Typography variant='body2' color='textSecondary' component='p'>
+                <Typography variant="body2" color="textSecondary" component="p">
                   <div style={{ width: '100%', height: '20px', backgroundColor: 'lightgray' }} />
                 </Typography>
               </CardActions>
@@ -257,35 +255,35 @@ const Roles = ({
   return (
     <Paper elevation={2} style={{ padding: '10px 20px 20px 20px' }}>
       <div className={classes.bigRow}>
-        <Typography variant='h4' noWrap>
-          <FormattedMessage id='user.type.title' defaultMessage='What type of user are you?' />
+        <Typography variant="h4" noWrap>
+          <FormattedMessage id="user.type.title" defaultMessage="What type of user are you?" />
         </Typography>
-        <Typography variant='body2' color='textSecondary' component='p' noWrap>
-          <FormattedMessage id='user.type.description' defaultMessage='Define how you will use Gitpay. You can choose multiple types of user roles you want.' />
+        <Typography variant="body2" color="textSecondary" component="p" noWrap>
+          <FormattedMessage id="user.type.description" defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want." />
         </Typography>
       </div>
-      <Grid container className={classes.row} direction='row' alignItems='stretch'>
+      <Grid container className={classes.row} direction="row" alignItems="stretch">
         <ReactPlaceholder customPlaceholder={CardListPlaceholder} ready={completed} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
           {data.map(r => (
             <Grid key={r.id} item xs={12} md={3} spacing={2} className={classes.rowList}>
               <Paper>
-                <Card className={classes.rowContent} variant='outlined'>
+                <Card className={classes.rowContent} variant="outlined">
                   <CardMedia>
                     <img src={imageMap[r.name]} alt={r.name} width={250} height={270} />
                   </CardMedia>
                   <CardContent className={classes.rootLabel}>
-                    <Typography variant='h5'>
+                    <Typography variant="h5">
                       {r.label}
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.action}>
-                    <Typography variant='body2' color='textSecondary' component='p'>
+                    <Typography variant="body2" color="textSecondary" component="p">
                       {r.description}
                     </Typography>
                     <Checkbox
-                      icon={<CheckBoxOutlineBlankIcon fontSize='large' style={{ color: 'transparent' }} />}
-                      checkedIcon={<CheckBoxIcon fontSize='large' />}
-                      color='primary'
+                      icon={<CheckBoxOutlineBlankIcon fontSize="large" style={{ color: 'transparent' }} />}
+                      checkedIcon={<CheckBoxIcon fontSize="large" />}
+                      color="primary"
                       inputProps={{ 'aria-label': r.name }}
                       checked={shouldBeChecked(r)}
                       onChange={(e) => handleRoleClick(e, r)}

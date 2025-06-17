@@ -42,7 +42,7 @@ const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBotto
 
 const styles = theme => ({
   root: {
-    backgroundColor: '#F7F7F7',
+    backgroundColor: '#F7F7F7'
   },
   altButton: {
     marginRight: 10
@@ -53,7 +53,7 @@ const styles = theme => ({
   },
   row: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   rowList: {
     marginTop: 10,
@@ -84,16 +84,16 @@ const styles = theme => ({
     marginBottom: 20
   },
   chipSkill: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   chipLanguage: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   chipContainer: {
     marginTop: 12,
     marginBottom: 12,
     width: '100%'
-  },
+  }
 })
 
 class Profile extends Component {
@@ -149,15 +149,15 @@ class Profile extends Component {
   getTitleNavigation = () => {
     switch (this.state.selected) {
       case 0:
-        return (<FormattedMessage id='account.profile.issues.setup' defaultMessage='Issues' />)
+        return (<FormattedMessage id="account.profile.issues.setup" defaultMessage="Issues" />)
       case 1:
-        return (<FormattedMessage id='account.profile.payment.setup' defaultMessage='Setup payment' />)
+        return (<FormattedMessage id="account.profile.payment.setup" defaultMessage="Setup payment" />)
       case 2:
-        return (<FormattedMessage id='account.profile.preferences' defaultMessage='Preferences' />)
+        return (<FormattedMessage id="account.profile.preferences" defaultMessage="Preferences" />)
       case 3:
-        return (<FormattedMessage id='account.profile.settings' defaultMessage='Settings' />)
+        return (<FormattedMessage id="account.profile.settings" defaultMessage="Settings" />)
       case 4:
-        return (<FormattedMessage id='account.profile.roles' defaultMessage='Roles' />)
+        return (<FormattedMessage id="account.profile.roles" defaultMessage="Roles" />)
       default:
         return null
     }
@@ -188,41 +188,41 @@ class Profile extends Component {
         <Dialog open={ emailNotVerifiedDialog }>
           <DialogTitle>
             <FormattedMessage
-              id='account.profile.email.verification'
-              defaultMessage='Please check your e-mail'
+              id="account.profile.email.verification"
+              defaultMessage="Please check your e-mail"
             />
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
               <FormattedMessage
-                id='account.profile.email.verification.message'
-                defaultMessage='Please check your email inbox to validate your account to proceed'
+                id="account.profile.email.verification.message"
+                defaultMessage="Please check your email inbox to validate your account to proceed"
               />
             </DialogContentText>
             <DialogContentText>
               <FormattedMessage
-                id='account.profile.email.verification.message2'
-                defaultMessage='If you have not received the email, please check your spam folder'
+                id="account.profile.email.verification.message2"
+                defaultMessage="If you have not received the email, please check your spam folder"
               />
             </DialogContentText>
             <DialogContentText>
               <FormattedMessage
-                id='account.profile.email.verification.message3'
-                defaultMessage='If you have not received the email, please click here to resend'
+                id="account.profile.email.verification.message3"
+                defaultMessage="If you have not received the email, please click here to resend"
               />
             </DialogContentText>
             <DialogActions>
-              <Button onClick={ (e) => this.handlingResendActivationEmail(e, user.id) } color='primary'>
-                <FormattedMessage id='user.email.resend.link.label' defaultMessage='Resend verification link to your email' />
+              <Button onClick={ (e) => this.handlingResendActivationEmail(e, user.id) } color="primary">
+                <FormattedMessage id="user.email.resend.link.label" defaultMessage="Resend verification link to your email" />
               </Button>
             </DialogActions>
           </DialogContent>
         </Dialog>
         <AppBar
-          component='div'
+          component="div"
           classes={ { colorPrimary: classes.secondaryBar } }
-          color='primary'
-          position='static'
+          color="primary"
+          position="static"
           elevation={ 0 } />
         { this.state.selected === 2 &&
           <PreferencesBar classes={ classes } />
@@ -245,10 +245,10 @@ class Profile extends Component {
                 history={ this.props.history }
                 onLogout={ this.handleSignOut }
               />
-              <Container maxWidth='lg'>
+              <Container maxWidth="lg">
                 <HashRouter>
                   <Switch>
-                    <Route exact path='/profile' component={
+                    <Route exact path="/profile" component={
                       (props) =>
                         (<ProfileOptions
                           { ...props }
@@ -266,7 +266,7 @@ class Profile extends Component {
                           onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
                         />)
                     } />
-                    <Route path='/profile/user-account' component={
+                    <Route path="/profile/user-account" component={
                       (props) =>
                         (<UserAccount
                           user={ this.props.user }
@@ -281,7 +281,7 @@ class Profile extends Component {
                     { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
                       <Route
                         exact
-                        path='/profile/user/orgs'
+                        path="/profile/user/orgs"
                         component={ (props) => (<UserOganizationTree { ...props }
                           createOrganizations={ this.props.createOrganizations }
                           updateOrganization={ this.props.updateOrganization }
@@ -296,7 +296,7 @@ class Profile extends Component {
                       this.props.user.Types.map(t => t.name).includes('funding')) &&
                       <Route
                         exact
-                        path='/profile/explore'
+                        path="/profile/explore"
                         component={ UserTasksExploreContainer }
                       />
                     }
@@ -305,7 +305,7 @@ class Profile extends Component {
                       this.props.user.Types.map(t => t.name).includes('funding')) &&
                       <Route
                         exact
-                        path='/profile/explore/:filter'
+                        path="/profile/explore/:filter"
                         component={ UserTasksExploreContainer }
                       />
                     }
@@ -313,7 +313,7 @@ class Profile extends Component {
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
                       <Route
                         exact
-                        path='/profile/tasks'
+                        path="/profile/tasks"
                         component={ UserTasksContainer }
                       />
                     }
@@ -322,7 +322,7 @@ class Profile extends Component {
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
                       <Route
                         exact
-                        path='/profile/tasks/:filter'
+                        path="/profile/tasks/:filter"
                         component={ UserTasksContainer }
                       />
 
@@ -331,7 +331,7 @@ class Profile extends Component {
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('funding')) &&
                       <Route
                         exact
-                        path='/profile/payments'
+                        path="/profile/payments"
                         component={ PaymentsContainer }
                       />
                     }
@@ -339,7 +339,7 @@ class Profile extends Component {
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('funding')) &&
                       <Route
                         exact
-                        path='/profile/wallets'
+                        path="/profile/wallets"
                         component={ WalletsContainer }
                       />
                     }
@@ -347,7 +347,7 @@ class Profile extends Component {
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
                       <Route
                         exact
-                        path='/profile/transfers'
+                        path="/profile/transfers"
                         component={ TransfersContainer }
                       />
                     }
@@ -355,14 +355,14 @@ class Profile extends Component {
                       this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
                       <Route
                         exact
-                        path='/profile/transfers/:transfer_id'
+                        path="/profile/transfers/:transfer_id"
                         component={ TransfersContainer }
                       />
                     }
                     { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
                       <Route
                         exact
-                        path='/profile/payouts'
+                        path="/profile/payouts"
                         component={ PayoutsContainer }
                       />
                     }
@@ -378,12 +378,12 @@ class Profile extends Component {
                     />
                     <Route
                       exact
-                      path='/profile/task/:id/offers'
+                      path="/profile/task/:id/offers"
                       component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
                     <Route
                       exact
-                      path='/profile/task/:id/:slug/offers'
+                      path="/profile/task/:id/:slug/offers"
                       component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
                     />
                     <Route
@@ -407,7 +407,7 @@ class Profile extends Component {
                         '/profile/explore/organizations/:organization_id/projects/:project_id',
                         '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
                         '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
-                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
+                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
                       ]}
                     >
                       <TaskListProfileProjects noTopBar noBottomBar />

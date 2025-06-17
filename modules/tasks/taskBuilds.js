@@ -45,9 +45,9 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
         const programmingLanguagesResponse = await requestPromise({
           uri: programmingLanguagesUri,
           headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
           },
-          json: true,
+          json: true
         });
 
         const languages = Object.keys(programmingLanguagesResponse);
@@ -59,20 +59,20 @@ module.exports = Promise.method(async function taskBuilds (taskParameters) {
               for (const language of languages) {
                 // Check if the language exists
                 let programmingLanguage = await models.ProgrammingLanguage.findOne({
-                  where: { name: language },
+                  where: { name: language }
                 });
 
                 // If it doesn't exist, create it
                 if (!programmingLanguage) {
                   programmingLanguage = await models.ProgrammingLanguage.create({
-                    name: language,
+                    name: language
                   });
                 }
 
                 // Associate the programming language with the task
                 await models.ProjectProgrammingLanguage.create({
                   projectId: task.ProjectId,
-                  programmingLanguageId: programmingLanguage.id,
+                  programmingLanguageId: programmingLanguage.id
                 });
               }
 

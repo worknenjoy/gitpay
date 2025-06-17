@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 
 import {
   Paper,
-  Typography,
+  Typography
 } from '@material-ui/core'
 
 import AccountContainer from '../../../../../../containers/account'
@@ -30,11 +30,11 @@ class PaymentOptions extends Component {
   render () {
     return (
       <Paper elevation={ 1 } style={ { padding: 20 } }>
-        <Typography variant='h5' component='h3' gutterBottom>
-          <FormattedMessage id='payment.options.headline' defaultMessage='Payout settings' />
+        <Typography variant="h5" component="h3" gutterBottom>
+          <FormattedMessage id="payment.options.headline" defaultMessage="Payout settings" />
         </Typography>
-        <Typography component='p' color='textSecondary' style={ { marginBottom: 5 } }>
-          <FormattedMessage id='payment.options.description.title' defaultMessage='Setup payouts for your issues completed' />
+        <Typography component="p" color="textSecondary" style={ { marginBottom: 5 } }>
+          <FormattedMessage id="payment.options.description.title" defaultMessage="Setup payouts for your issues completed" />
         </Typography>
         <AccountContainer />
       </Paper>

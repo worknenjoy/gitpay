@@ -34,8 +34,6 @@ import {
   Person,
   ExitToApp,
   Settings,
-  FaceSharp,
-  Business,
   AccountBox as AccountIcon,
   AccountBalance,
   Payment as PaymentIcon
@@ -136,14 +134,14 @@ class TopBar extends Component {
         const currentLangSuccess = currentUserLanguage(this.props.preferences)
         store.dispatch(updateIntl({
           locale: currentLangSuccess,
-          messages: messages[currentLangSuccess],
+          messages: messages[currentLangSuccess]
         }))
       }
     }).catch(e => {
       const currentLangError = currentUserLanguage(this.props.preferences)
       store.dispatch(updateIntl({
         locale: currentLangError,
-        messages: messages[currentLangError],
+        messages: messages[currentLangError]
       }))
     })
     this.props.info()
@@ -219,7 +217,7 @@ class TopBar extends Component {
     localStorage.setItem('userLanguage', lang)
     store.dispatch(updateIntl({
       locale: lang,
-      messages: messages[lang],
+      messages: messages[lang]
     }))
   }
 
@@ -235,7 +233,7 @@ class TopBar extends Component {
         <Container>
           <LeftSide isActive={ isActive }>
             <div>
-              <StyledButton href='/'>
+              <StyledButton href="/">
                 <Logo src={ logo } />
               </StyledButton>
             </div>
@@ -245,8 +243,8 @@ class TopBar extends Component {
 
             <MenuMobile
               onClick={ this.handleClickMenuMobile }
-              variant='text'
-              size='small'
+              variant="text"
+              size="small"
             >
               <IconHamburger isActive={ isActive } />
             </MenuMobile>
@@ -261,33 +259,33 @@ class TopBar extends Component {
                   <div style={ { display: 'flex', justifyContent: 'space-around', marginRight: 20 } }>
                     <LinkButton
                       onClick={ (e) => this.handleClickDialogSignUser(e, 'signup') }
-                      variant='text'
-                      size='small'
-                      color='primary'
+                      variant="text"
+                      size="small"
+                      color="primary"
                     >
                       <LabelButton>
                         <FormattedMessage
-                          id='topbar.signup.label'
-                          defaultMessage='Signup' />
+                          id="topbar.signup.label"
+                          defaultMessage="Signup" />
                       </LabelButton>
                     </LinkButton>
 
                     <LinkButton
                       onClick={ (e) => this.handleClickDialogSignUser(e, 'signin') }
-                      variant='text'
-                      size='small'
-                      color='primary'
+                      variant="text"
+                      size="small"
+                      color="primary"
                     >
                       <LabelButton>
                         <FormattedMessage
-                          id='topbar.signin.label'
-                          defaultMessage='Signin' />
+                          id="topbar.signin.label"
+                          defaultMessage="Signin" />
                       </LabelButton>
                     </LinkButton>
-                    <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
+                    <FormattedMessage id="task.actions.tooltip.language" defaultMessage="Choose your language">
                       { (msg) => (
-                        <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-                          <Button style={ { padding: 0 } } id='language-menu' onClick={ this.handleMenu }>
+                        <Tooltip id="tooltip-lang" title={ msg } placement="bottom">
+                          <Button style={ { padding: 0 } } id="language-menu" onClick={ this.handleMenu }>
                             { completed ? (
                               <StyledAvatarIconOnly
                                 alt={ user.username || '' }
@@ -303,7 +301,7 @@ class TopBar extends Component {
                       ) }
                     </FormattedMessage>
                     <Menu
-                      id='menu-appbar'
+                      id="menu-appbar"
                       anchorEl={ anchorEl }
                       anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
                       transformOrigin={ { vertical: 'top', horizontal: 'right' } }
@@ -312,14 +310,14 @@ class TopBar extends Component {
                     >
                       <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => this.switchLang('en') }>
                         <StyledAvatarIconOnly
-                          alt='English'
+                          alt="English"
                           src={ logoLangEn }
                         />
                         <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
                       </MenuItem>
                       <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => this.switchLang('br') }>
                         <StyledAvatarIconOnly
-                          alt='Português'
+                          alt="Português"
                           src={ logoLangBr }
                         />
                         <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>
@@ -329,13 +327,13 @@ class TopBar extends Component {
                   <Dialog
                     open={ dialog.open && dialog.target === 'SignupUser' }
                     onClose={ this.handleSignUserDialogClose }
-                    aria-labelledby='form-dialog-title'
+                    aria-labelledby="form-dialog-title"
                   >
                     <DialogContent>
                       <div style={ { display: 'flex', justifyContent: 'center', position: 'relative' } }>
                         <LoginButton
                           referer={ this.props.location }
-                          size='medium'
+                          size="medium"
                           includeForm
                           mode={ mode }
                           onClose={ this.handleSignUserDialogClose }
@@ -348,10 +346,10 @@ class TopBar extends Component {
                 <React.Fragment>
                   <StyledButton
                     onClick={ this.handleMenu }
-                    variant='text'
-                    size='small'
-                    color='primary'
-                    id='account-menu'
+                    variant="text"
+                    size="small"
+                    color="primary"
+                    id="account-menu"
                   >
                     <Chip
                       avatar={ user.picture_url
@@ -359,12 +357,12 @@ class TopBar extends Component {
                           alt={ user.username || '' }
                           src={ user.picture_url }
                         />
-                        : <StyledAvatar alt={ user.username || '' } src=''>
+                        : <StyledAvatar alt={ user.username || '' } src="">
                           { user.username ? nameInitials(user.username) : <Person /> }
                         </StyledAvatar>
                       }
-                      color='secondary'
-                      label='Account'
+                      color="secondary"
+                      label="Account"
                       onClick={ this.handleMenu }
                     />
                   </StyledButton>
@@ -385,18 +383,18 @@ class TopBar extends Component {
               <Dialog
                 open={ this.state.createTaskDialog }
                 onClose={ this.handleClickDialogCreateTaskClose }
-                aria-labelledby='form-dialog-title'
+                aria-labelledby="form-dialog-title"
               >
-                <DialogTitle id='form-dialog-title'>
-                  <FormattedMessage id='task.actions.gitpay.call' defaultMessage='Join the Gitpay community' />
+                <DialogTitle id="form-dialog-title">
+                  <FormattedMessage id="task.actions.gitpay.call" defaultMessage="Join the Gitpay community" />
                 </DialogTitle>
                 <DialogContent>
-                  <LoginButton referer={ this.props.location } size='medium' includeForm />
+                  <LoginButton referer={ this.props.location } size="medium" includeForm />
                 </DialogContent>
               </Dialog>
             ) }
             <OnlyDesktop>
-              <Drawer id='menu-appbar-language' open={ anchorEl && anchorEl.id === 'account-menu' } onClose={ this.handleClose } anchor={ 'right' }>
+              <Drawer id="menu-appbar-language" open={ anchorEl && anchorEl.id === 'account-menu' } onClose={ this.handleClose } anchor={ 'right' }>
                 <List>
                   <ListItem>
                     <ListItemText>
@@ -406,11 +404,11 @@ class TopBar extends Component {
                             alt={ user.username || '' }
                             src={ user.picture_url }
                           />
-                          : <StyledAvatar alt={ user.username || '' } src=''>
+                          : <StyledAvatar alt={ user.username || '' } src="">
                             { user.username ? nameInitials(user.username) : <Person /> }
                           </StyledAvatar>
                         }
-                        color='secondary'
+                        color="secondary"
                         label={ `${user.name || user.username} (${user.email})` }
                       />
                     </ListItemText>
@@ -420,7 +418,7 @@ class TopBar extends Component {
                       <Home />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.dashboard' defaultMessage='Dashboard' />
+                      <FormattedMessage id="task.actions.account.profile.dashboard" defaultMessage="Dashboard" />
                     </ListItemText>
                   </ListItem>
                   <ListItem button onClick={ (e) => this.handleProfile(e, user.id, user.username) }>
@@ -428,7 +426,7 @@ class TopBar extends Component {
                       <Web />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.account.profile.page' defaultMessage='Profile page' />
+                      <FormattedMessage id="task.actions.account.profile.page" defaultMessage="Profile page" />
                     </ListItemText>
                   </ListItem>
                   <ListItem button onClick={ () => {
@@ -439,7 +437,7 @@ class TopBar extends Component {
                       <AccountIcon />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.menu.user.account' defaultMessage='Account' />
+                      <FormattedMessage id="task.actions.menu.user.account" defaultMessage="Account" />
                     </ListItemText>
                   </ListItem>
                   { user.Types && user.Types.map(t => t.name).includes('contributor') &&
@@ -451,7 +449,7 @@ class TopBar extends Component {
                         <AccountBalance />
                       </ListItemIcon>
                       <ListItemText>
-                        <FormattedMessage id='task.actions.account.profile.bank' defaultMessage='Setup Bank Account' />
+                        <FormattedMessage id="task.actions.account.profile.bank" defaultMessage="Setup Bank Account" />
                       </ListItemText>
                     </ListItem>
                   }
@@ -464,7 +462,7 @@ class TopBar extends Component {
                         <LibraryBooks />
                       </ListItemIcon>
                       <ListItemText>
-                        <FormattedMessage id='task.actions.account.profile.issues' defaultMessage='Your issues' />
+                        <FormattedMessage id="task.actions.account.profile.issues" defaultMessage="Your issues" />
                       </ListItemText>
                     </ListItem>
                   }
@@ -477,7 +475,7 @@ class TopBar extends Component {
                         <PaymentIcon />
                       </ListItemIcon>
                       <ListItemText>
-                        <FormattedMessage id='task.actions.account.payments.topmenu' defaultMessage='Payments' />
+                        <FormattedMessage id="task.actions.account.payments.topmenu" defaultMessage="Payments" />
                       </ListItemText>
                     </ListItem>
                   }
@@ -490,7 +488,7 @@ class TopBar extends Component {
                         <Tune />
                       </ListItemIcon>
                       <ListItemText>
-                        <FormattedMessage id='task.actions.account.profile.preferences' defaultMessage='Preferences' />
+                        <FormattedMessage id="task.actions.account.profile.preferences" defaultMessage="Preferences" />
                       </ListItemText>
                     </ListItem>
                   }
@@ -502,7 +500,7 @@ class TopBar extends Component {
                       <Settings />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.account.settings' defaultMessage='Settings' />
+                      <FormattedMessage id="task.actions.account.settings" defaultMessage="Settings" />
                     </ListItemText>
                   </ListItem>
                   <ListItem button onClick={ this.handleSignOut }>
@@ -510,7 +508,7 @@ class TopBar extends Component {
                       <ExitToApp />
                     </ListItemIcon>
                     <ListItemText>
-                      <FormattedMessage id='task.actions.account.logout' defaultMessage='Logout' />
+                      <FormattedMessage id="task.actions.account.logout" defaultMessage="Logout" />
                     </ListItemText>
                   </ListItem>
                 </List>

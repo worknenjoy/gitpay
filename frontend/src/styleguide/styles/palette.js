@@ -1,9 +1,8 @@
 import { grey, green } from '@material-ui/core/colors'
-import { divide } from 'lodash'
 
 const Palette = {
   typography: {
-    fontFamily: ['Roboto', 'Inter', 'Helvetica', ],
+    fontFamily: ['Roboto', 'Inter', 'Helvetica' ],
     h3: {
       fontWeight: 200,
       fontSize: 42,
@@ -38,10 +37,10 @@ const Palette = {
       color: '#9B9B9B'
     },
     subtitle1: {
-      fontWeight: 500,
+      fontWeight: 500
     },
     subtitle2: {
-      fontWeight: 400,
+      fontWeight: 400
     }
   },
   palette: {
@@ -64,7 +63,7 @@ const Palette = {
       light: '#d0722a',
       main: '#d0722a',
       // dark: will be calculated from palette.secondary.main,
-      contrastText: '#fff',
+      contrastText: '#fff'
     }
   },
   overrides: {
@@ -83,10 +82,10 @@ const Palette = {
     },
     MuiAppBar: {
       colorPrimary: {
-        backgroundColor: '#4D7E6F',
+        backgroundColor: '#4D7E6F'
       },
       root: {
-        backgroundColor: '#4D7E6F',
+        backgroundColor: '#4D7E6F'
       }
     },
     MuiTabs: {
@@ -100,12 +99,12 @@ const Palette = {
         textTransform: 'none',
         minWidth: '72px !important',
         padding: 0,
-        margin: '0 24px 0 0',
+        margin: '0 24px 0 0'
       }
     },
     MuiTableCell: {
       root: {
-        padding: '8px 16px',
+        padding: '8px 16px'
       }
     },
     MuiMenuItem: {
@@ -130,7 +129,7 @@ const Palette = {
     MuiButtonBase: {
       root: {
         textTransform: 'none',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'nowrap'
       }
     },
     MuiButton: {
@@ -145,7 +144,7 @@ const Palette = {
       },
       contained: {
         boxShadow: 'none',
-        textTransform: 'none',
+        textTransform: 'none'
       },
       primary: {
         color: '#fff',
@@ -168,7 +167,7 @@ const Palette = {
         height: 52,
         '&:focus': {
           border: '2px solid #353A42'
-        },
+        }
       },
       underline: {
         '&:before': {
@@ -178,15 +177,15 @@ const Palette = {
           borderBottom: 'none'
         },
         '&:hover:not(.Mui-disabled):before': {
-          borderBottom: 'none',
-        },
+          borderBottom: 'none'
+        }
       }
     },
     MuiFormLabel: {
       root: {
         '&$focused': {
-          color: '#353A42',
-        },
+          color: '#353A42'
+        }
       }
     },
     MuiInputLabel: {
@@ -201,8 +200,8 @@ const Palette = {
       outlined: {
         margin: 0,
         padding: 0
-      },
-    },
+      }
+    }
   }
 }
 

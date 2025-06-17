@@ -35,7 +35,7 @@ describe('User Actions', () => {
       { type: types.FETCH_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
     ]
     const store = mockStore({
-      intl: { messages: {} },
+      intl: { messages: {} }
     })
 
     return store.dispatch(actions.fetchAccount()).then(() => {

@@ -5,7 +5,7 @@ module.exports = Promise.method(function userSearch (params) {
   return models.User
     .findAll(
       {
-        where: params || {},
+        where: params || {}
       }
     )
     .then(users => {

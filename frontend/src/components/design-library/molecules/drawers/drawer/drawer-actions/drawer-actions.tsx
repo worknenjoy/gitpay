@@ -6,11 +6,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   button: {
-    marginLeft: theme.spacing(1),
-  },
+    marginLeft: theme.spacing(1)
+  }
 }));
 
 const DrawerActions = ({ actions }) => {

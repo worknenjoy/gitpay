@@ -5,7 +5,6 @@ import {
   Input,
   InputAdornment
 } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
 import useStyles from './price-input.styles';
 
 
@@ -25,22 +24,22 @@ const PriceInput = ({ priceLabel, value, onChange, defaultValue, currency = '$',
   }, [value])
   
   return (
-    <form className={classes.formPayment} action='POST'>
+    <form className={classes.formPayment} action="POST">
       <FormControl>
-        <InputLabel htmlFor='adornment-amount'>
+        <InputLabel htmlFor="adornment-amount">
           {priceLabel}
         </InputLabel>
         <Input
-          id='adornment-amount'
+          id="adornment-amount"
           endAdornment={
-            endAdornment ? <InputAdornment position='end'> + </InputAdornment> : null
+            endAdornment ? <InputAdornment position="end"> + </InputAdornment> : null
           }
           startAdornment={
-            <InputAdornment position='start'>
+            <InputAdornment position="start">
               <span className={classes.currencySymbol}> {currency} </span>
             </InputAdornment>
           }
-          type='number'
+          type="number"
           inputProps={{ 'min': 0 }}
           defaultValue={defaultValue}
           value={price}

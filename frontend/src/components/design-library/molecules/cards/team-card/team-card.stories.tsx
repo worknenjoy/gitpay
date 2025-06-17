@@ -1,10 +1,9 @@
 import React from 'react';
 import TeamCard from './TeamCard';
-import { link } from 'fs';
 
 export default {
   title: 'Design Library/Molecules/Cards/TeamCard',
-  component: TeamCard,
+  component: TeamCard
 };
 
 const TeamTemplate = (args) => <TeamCard {...args} />;
@@ -17,14 +16,14 @@ Team.args = {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       image: 'https://via.placeholder.com/150',
       linkedinUrl: 'https://www.linkedin.com/',
-      githubUrl: 'https://github.com/test',
+      githubUrl: 'https://github.com/test'
     },
     {
       name: 'Jane Doe',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       image: 'https://via.placeholder.com/150',
       linkedinUrl: 'https://www.linkedin.com/',
-      githubUrl: 'https://github.com/anothertest',
-    },
+      githubUrl: 'https://github.com/anothertest'
+    }
   ]
 };

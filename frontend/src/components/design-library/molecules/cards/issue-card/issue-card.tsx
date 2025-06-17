@@ -29,13 +29,13 @@ const useStyles = makeStyles(theme => ({
       margin: 'auto',
       display: 'block',
       marginBottom: 5
-    },
+    }
   },
   taskTitle: {
     [theme.breakpoints.down('sm')]: {
       display: 'flex', alignItems: 'center', justifyContent: 'center'
     }
-  },
+  }
 }));
 
 
@@ -57,8 +57,8 @@ const IssueCard = ({ issue }) => {
       return (
         <Link
           href={`${issue.data.metadata.issue.user.html_url}`}
-          target='_blank'>
-          <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
+          target="_blank">
+          <FormattedMessage id="task.status.created.name.short" defaultMessage="by {name}" values={{
             name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
           }} />
         </Link>
@@ -66,7 +66,7 @@ const IssueCard = ({ issue }) => {
     }
     else {
       return (
-        <FormattedMessage id='task.status.created.name.short' defaultMessage='by {name}' values={{
+        <FormattedMessage id="task.status.created.name.short" defaultMessage="by {name}" values={{
           name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
         }} />
       )
@@ -79,25 +79,25 @@ const IssueCard = ({ issue }) => {
     <ReactPlaceholder
       ready={issue.completed}
       showLoadingAnimation={true}
-      type='media'
+      type="media"
     >
     <Card>
       <CardHeader
         className={classes.cardHeader}
         classes={{ avatar: classes.cardAvatar }}
         avatar={
-          <FormattedMessage id='task.status.created.name' defaultMessage='Created by {name}' values={{
+          <FormattedMessage id="task.status.created.name" defaultMessage="Created by {name}" values={{
             name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
           }}>
             {(msg) => (
               <Tooltip
-                id='tooltip-github'
+                id="tooltip-github"
                 title={msg}
-                placement='bottom'
+                placement="bottom"
               >
                 <a
                   href={`${issue.data.metadata?.issue?.user?.html_url}`}
-                  target='_blank' rel="noreferrer"
+                  target="_blank" rel="noreferrer"
                 >
                   <Avatar
                     src={issue.data.metadata?.issue?.user?.avatar_url}
@@ -109,24 +109,24 @@ const IssueCard = ({ issue }) => {
           </FormattedMessage>
         }
         title={
-          <Typography variant='h6' color='primary'>
+          <Typography variant="h6" color="primary">
             <Link
               href={`${issue.data.url}`}
-              target='_blank'
+              target="_blank"
               className={classes.taskTitle}>
               {issue.data.title}
-              <img width='24' height='24' style={{ marginLeft: 10 }} src={issue.data.provider === 'github' ? logoGithub : logoBitbucket} />
+              <img width="24" height="24" style={{ marginLeft: 10 }} src={issue.data.provider === 'github' ? logoGithub : logoBitbucket} />
             </Link>
           </Typography>
         }
         subheader={
-          <Typography variant='body1' style={{ marginTop: 5 }} color='primary'>
+          <Typography variant="body1" style={{ marginTop: 5 }} color="primary">
             {renderIssueAuthorLink()}
           </Typography>
         }
         action={
-          <Typography variant='caption' style={{ padding: 10, color: 'gray', marginRight: 10 }}>
-            <FormattedMessage id='task.bounties.interested.created' defaultMessage='created' /> {updatedAtTimeString}
+          <Typography variant="caption" style={{ padding: 10, color: 'gray', marginRight: 10 }}>
+            <FormattedMessage id="task.bounties.interested.created" defaultMessage="created" /> {updatedAtTimeString}
           </Typography>
         }
       />

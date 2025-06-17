@@ -3,7 +3,7 @@ import LoginFormForgot from './login-form-forgot';
 
 export default {
   title: 'Design Library/Molecules/Forms/LoginForm/LoginFormForgot',
-  component: LoginFormForgot,
+  component: LoginFormForgot
 };
 
 const Template = (args) => <LoginFormForgot {...args} />;

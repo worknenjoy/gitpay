@@ -27,7 +27,7 @@ const PrivatePage = ({
   deleteUser,
   signOut,
   info,
-  getInfo,
+  getInfo
 }) => {
   const history = useHistory()
 
@@ -46,20 +46,20 @@ const PrivatePage = ({
       bottomProps={
         {
           info: info.data,
-          getInfo,
+          getInfo
         }
       }
     >
       <HashRouter>
         <Switch>
-          <Route exact path='/profile' component={
+          <Route exact path="/profile" component={
             (props) =>
             (<ProfileOptions
               {...props}
               user={user}
             />)
           } />
-          <Route path='/profile/user-account' component={
+          <Route path="/profile/user-account" component={
             (props) =>
             (<UserAccount
               user={data}
@@ -73,51 +73,51 @@ const PrivatePage = ({
           />
           <Route
             exact
-            path='/profile/explore'
+            path="/profile/explore"
             component={UserTasksExploreContainer}
           />
           <Route
             exact
-            path='/profile/explore/:filter'
+            path="/profile/explore/:filter"
             component={UserTasksExploreContainer}
           />
           <Route
             exact
-            path='/profile/tasks'
+            path="/profile/tasks"
             component={UserTasksContainer}
           />
           <Route
             exact
-            path='/profile/tasks/:filter'
+            path="/profile/tasks/:filter"
             component={UserTasksContainer}
           />
           <Route
             exact
-            path='/profile/payments'
+            path="/profile/payments"
             component={PaymentsContainer}
           />
 
           <Route
             exact
-            path='/profile/wallets'
+            path="/profile/wallets"
             component={WalletsContainer}
           />
 
           <Route
             exact
-            path='/profile/transfers'
+            path="/profile/transfers"
             component={TransfersContainer}
           />
 
           <Route
             exact
-            path='/profile/transfers/:transfer_id'
+            path="/profile/transfers/:transfer_id"
             component={TransfersContainer}
           />
 
           <Route
             exact
-            path='/profile/payouts'
+            path="/profile/payouts"
             component={PayoutsContainer}
           />
 
@@ -133,12 +133,12 @@ const PrivatePage = ({
           />
           <Route
             exact
-            path='/profile/task/:id/offers'
+            path="/profile/task/:id/offers"
             component={(props) => <TaskContainer noTopBar noBottomBar {...props} />}
           />
           <Route
             exact
-            path='/profile/task/:id/:slug/offers'
+            path="/profile/task/:id/:slug/offers"
             component={(props) => <TaskContainer noTopBar noBottomBar {...props} />}
           />
           <Route
@@ -162,7 +162,7 @@ const PrivatePage = ({
               '/profile/explore/organizations/:organization_id/projects/:project_id',
               '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
               '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
-              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
+              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
             ]}
           >
             <TaskListProfileProjects noTopBar noBottomBar />

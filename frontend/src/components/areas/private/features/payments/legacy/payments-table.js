@@ -60,8 +60,8 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
+    marginLeft: theme.spacing(2.5)
+  }
 })
 
 class TablePaginationActions extends React.Component {
@@ -128,7 +128,7 @@ TablePaginationActions.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 }
 
 const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
@@ -138,14 +138,14 @@ const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { wit
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3)
   },
   table: {
     minWidth: 500
   },
   tableWrapper: {
-    overflowX: 'auto',
-  },
+    overflowX: 'auto'
+  }
 })
 
 class CustomPaginationActionsTable extends React.Component {
@@ -154,7 +154,7 @@ class CustomPaginationActionsTable extends React.Component {
 
     this.state = {
       page: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 10
     }
   }
 
@@ -188,7 +188,7 @@ class CustomPaginationActionsTable extends React.Component {
         { [0,1,2,3,4,5,6].map(() => (
           <TableCell>
             <div style={{ width: 80 }}>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={payments.completed} />
+              <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={payments.completed} />
             </div>
           </TableCell>
         ))}
@@ -199,8 +199,8 @@ class CustomPaginationActionsTable extends React.Component {
       return (
         <Paper className={ classes.root }>
           <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
-            <Typography variant='caption' color='textSecondary'>
-              <FormattedMessage id='payment.table.body.payments.empty' defaultMessage='No Payments' />
+            <Typography variant="caption" color="textSecondary">
+              <FormattedMessage id="payment.table.body.payments.empty" defaultMessage="No Payments" />
             </Typography>
           </div>
         </Paper>
@@ -227,7 +227,7 @@ class CustomPaginationActionsTable extends React.Component {
                   return (
                     <TableRow key={ n.id }>
                       { n.map( p => 
-                        <TableCell component='th' scope='row' style={{ padding: 10, position: 'relative' }}>
+                        <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
                           {p}    
                         </TableCell>
                       )}

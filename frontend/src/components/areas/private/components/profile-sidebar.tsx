@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Grid, MenuList, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { 
   Home,
   AccountBalanceWallet as WalletIcon,
@@ -52,87 +52,87 @@ const ProfileSidebar = ({
                   include: true,
                   onClick: () => history.push('/profile'),
                   icon: <Home />,
-                  label: <FormattedMessage id='account.profile.sidemenu.home.link.label' defaultMessage='Dashboard' />,
+                  label: <FormattedMessage id="account.profile.sidemenu.home.link.label" defaultMessage="Dashboard" />,
                   selected: selected === 0
                 }
               ]
             },
             {
-              category: <FormattedMessage id='account.profile.sidemenu.issues' defaultMessage='Issues' />,
+              category: <FormattedMessage id="account.profile.sidemenu.issues" defaultMessage="Issues" />,
               items: [
                 {
                   include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')),
                   onClick: () => history.push('/profile/tasks'),
                   icon: <LibraryBooks />,
-                  label: <FormattedMessage id='account.profile.sidemenu.issues.network' defaultMessage='My issues' />,
+                  label: <FormattedMessage id="account.profile.sidemenu.issues.network" defaultMessage="My issues" />,
                   selected: selected === 1
                 },
                 {
                   include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('funding')),
                   onClick: () => history.push('/profile/explore'),
                   icon: <ExploreIcon />,
-                  label: <FormattedMessage id='account.profile.sidemenu.issues.explore' defaultMessage='Explore issues' />,
+                  label: <FormattedMessage id="account.profile.sidemenu.issues.explore" defaultMessage="Explore issues" />,
                   selected: selected === 2
                 }
               ]
             },
             {
-              category: <FormattedMessage id='account.profile.sidemenu.section.bounties' defaultMessage='Bounties' />,
+              category: <FormattedMessage id="account.profile.sidemenu.section.bounties" defaultMessage="Bounties" />,
               items: [
                 {
                   include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
                   onClick: () => history.push('/profile/payments'),
                   icon: <PaymentIcon />,
-                  label: <FormattedMessage id='account.profile.payments.list' defaultMessage='Payments' />,
+                  label: <FormattedMessage id="account.profile.payments.list" defaultMessage="Payments" />,
                   selected: selected === 3
                 },
                 {
                   include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
                   onClick: () => history.push('/profile/wallets'),
                   icon: <WalletIcon />,
-                  label: <FormattedMessage id='account.profile.wallet.list' defaultMessage='Wallets' />,
+                  label: <FormattedMessage id="account.profile.wallet.list" defaultMessage="Wallets" />,
                   selected: selected === 4
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
                   onClick: () => history.push('/profile/transfers'),
                   icon: <TransferIcon />,
-                  label: <FormattedMessage id='account.profile.transfer.list' defaultMessage='Transfers' />,
+                  label: <FormattedMessage id="account.profile.transfer.list" defaultMessage="Transfers" />,
                   selected: selected === 5
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
                   onClick: () => history.push('/profile/payouts'),
                   icon: <PayoutIcon />,
-                  label: <FormattedMessage id='account.profile.payout.list' defaultMessage='Payouts' />,
+                  label: <FormattedMessage id="account.profile.payout.list" defaultMessage="Payouts" />,
                   selected: selected === 6
                 }
               ]
             },
             {
-              category: <FormattedMessage id='account.profile.sidemenu.section.account' defaultMessage='Account' />,
+              category: <FormattedMessage id="account.profile.sidemenu.section.account" defaultMessage="Account" />,
               items: [
                 {
                   include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
                   onClick: () => history.push('/profile/payments'),
                   icon: <AccountBox />,
-                  label: <FormattedMessage id='account.profile.account.settings' defaultMessage='Account settings' />,
+                  label: <FormattedMessage id="account.profile.account.settings" defaultMessage="Account settings" />,
                   selected: selected === 3
                 },
                 {
                   include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
                   onClick: () => history.push('/profile/wallets'),
                   icon: <WalletIcon />,
-                  label: <FormattedMessage id='account.profile.payout.settings' defaultMessage='Payout settings' />,
+                  label: <FormattedMessage id="account.profile.payout.settings" defaultMessage="Payout settings" />,
                   selected: selected === 4
                 },
                 {
                   include: userTypes && userTypes?.includes('maintainer'),
                   onClick: () => history.push('/profile/transfers'),
                   icon: <TransferIcon />,
-                  label: <FormattedMessage id='account.profile.billing.info' defaultMessage='Billing information' />,
+                  label: <FormattedMessage id="account.profile.billing.info" defaultMessage="Billing information" />,
                   selected: selected === 5
-                },
+                }
               ]
             }
           ]

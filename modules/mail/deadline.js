@@ -43,7 +43,7 @@ if (constants.canSendEmail) {
 ${i18n.__('mail.assigned.update.intro', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
 ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
           <p>${Signatures.sign(language)}</p>`
-        },
+        }
       ]
     )
   }
@@ -158,7 +158,7 @@ ${Signatures.buttons(language, {
         {
           type: 'text/html',
           value: msg
-        },
+        }
       ]
     )
   }

@@ -3,7 +3,6 @@ import axios from 'axios'
 import { addNotification } from './notificationActions'
 import { logOut, fetchLoggedUser } from './loginActions'
 import { validToken } from './helpers'
-import { StripeErrorMessages } from './messages/stripe-error-messages'
 import convertParamsToStripeObject from './helpers/convert-params-to-stripe-object'
 
 const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
@@ -609,7 +608,7 @@ const createBankAccount = (bank) => {
         country: bank.country,
         account_holder_type: bank.account_holder_type,
         account_holder_name: bank.account_holder_name,
-        currency: bank.currency,
+        currency: bank.currency
       })
       .then(bankAccount => {
         if (bankAccount.data.statusCode === 400) {
@@ -710,5 +709,5 @@ export {
   createBankAccount,
   updateBankAccount,
   getBankAccount,
-  deleteUser,
+  deleteUser
 }

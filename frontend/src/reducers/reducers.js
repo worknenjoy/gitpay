@@ -57,7 +57,7 @@ const reducers = combineReducers({
   wallets,
   wallet,
   walletOrders,
-  walletOrder,
+  walletOrder
 })
 
 export default reducers

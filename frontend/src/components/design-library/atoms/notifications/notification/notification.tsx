@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import {
   Snackbar,
-  IconButton,
+  IconButton
 } from '@material-ui/core'
 
 import Close from '@material-ui/icons/Close'
@@ -13,9 +13,9 @@ const Notification = ({ open, onClose, message, link, linkLabel }) => {
   const getActions = useCallback(() => {
     let actions = [
       <IconButton
-        key='close'
-        aria-label='Close'
-        color='inherit'
+        key="close"
+        aria-label="Close"
+        color="inherit"
         onClick={onClose}
       >
         <Close />
@@ -41,7 +41,7 @@ const Notification = ({ open, onClose, message, link, linkLabel }) => {
       open={open}
       onClose={onClose}
       autoHideDuration={8000}
-      message={<span id='message-id'>{message}</span>}
+      message={<span id="message-id">{message}</span>}
       action={getActions()}
     />
   )

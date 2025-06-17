@@ -14,14 +14,14 @@ class PaymentDialog extends Component {
       <div style={{marginTop: 10}}>
         <Card
           fullWidth
-          maxWidth='md'
+          maxWidth="md"
         >
           <CardContent>
-            <Typography variant='h6' gutterBottom>
-              <FormattedMessage id='payment.new.title' defaultMessage='Make a new payment' />
+            <Typography variant="h6" gutterBottom>
+              <FormattedMessage id="payment.new.title" defaultMessage="Make a new payment" />
             </Typography>
-            <Typography variant='body1' gutterBottom>
-              <FormattedMessage id='payment.new.text' defaultMessage='Please fill your credit card details' />
+            <Typography variant="body1" gutterBottom>
+              <FormattedMessage id="payment.new.text" defaultMessage="Please fill your credit card details" />
             </Typography>
             <StripeCheckout { ...this.props } />
           </CardContent>

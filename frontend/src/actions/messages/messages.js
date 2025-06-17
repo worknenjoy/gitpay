@@ -520,7 +520,7 @@ const messages = defineMessages({
   notificationUpdateErrorDateOfBirthYear: {
     id: 'actions.user.account.update.error.dob.year',
     defaultMessage: 'Invalid year of birth'
-  },
+  }
 
 })
 

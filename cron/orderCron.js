@@ -76,7 +76,7 @@ const OrderCron = {
                 method: 'GET',
                 uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${o.source_id}`,
                 headers: {
-                  'Authorization': 'Bearer ' + JSON.parse(authorize)['access_token'],
+                  'Authorization': 'Bearer ' + JSON.parse(authorize)['access_token']
                 }
               }).then(result => {
                 return JSON.parse(result)

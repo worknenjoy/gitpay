@@ -30,29 +30,29 @@ class Auth extends Component {
   }
   render () {
     return (
-      <Card className='container' style={ cardStyle }>
+      <Card className="container" style={ cardStyle }>
         <form onSubmit={ () => this.onSubmit() }>
-          <h2 className='card-heading'>Login</h2>
-          <div className='field-line'>
+          <h2 className="card-heading">Login</h2>
+          <div className="field-line">
             <Input
-              label='Name'
-              type='text'
-              name='username'
+              label="Name"
+              type="text"
+              name="username"
               hide={ this.state.loginMode }
-              value='this.state.username'
+              value="this.state.username"
             />
             <br />
             <Input
-              label='E-mail'
-              type='text'
-              name='email'
+              label="E-mail"
+              type="text"
+              name="email"
               value={ this.state.email }
             />
             <br />
             <Input
-              label='Password'
-              name='password'
-              type='password'
+              label="Password"
+              name="password"
+              type="password"
               value={ this.state.password }
             />
           </div>

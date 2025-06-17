@@ -12,7 +12,7 @@ const styles = (theme) => ({
   legend: {
     fontSize: 18,
     fontWeight: 500,
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.dark
   },
   fieldset: {
     border: `1px solid ${theme.palette.primary.light}`,
@@ -86,7 +86,7 @@ const AccountTabMain = ({
               <fieldset className={ classes.fieldset }>
                 <legend className={ classes.legend }>
                   <Typography>
-                    <FormattedMessage id='account.provider.link' defaultMessage='Link accounts' />
+                    <FormattedMessage id="account.provider.link" defaultMessage="Link accounts" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
@@ -94,8 +94,8 @@ const AccountTabMain = ({
                     <ProviderLoginButtons 
                       provider={provider}
                       login_strategy={login_strategy}
-                      position='flex-start'
-                      textPosition='left'
+                      position="flex-start"
+                      textPosition="left"
                     />
                   </Grid>
                 </Grid>
@@ -103,16 +103,16 @@ const AccountTabMain = ({
               <fieldset className={ classes.fieldset }>
                 <legend className={ classes.legend }>
                   <Typography>
-                    <FormattedMessage id='account.account' defaultMessage='Account' />
+                    <FormattedMessage id="account.account" defaultMessage="Account" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                    <FormattedMessage id='account.basic.name' defaultMessage='name'>
+                    <FormattedMessage id="account.basic.name" defaultMessage="name">
                       { (msg) => (
                         <Field
                           onChange={ (e) => setFieldName(e.target.value) }
-                          name='name'
+                          name="name"
                           label={ msg }
                           value={ fieldName }
                         />
@@ -122,12 +122,12 @@ const AccountTabMain = ({
                   <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
                     <div style={{float: 'right'}}>
                       <Button
-                        type='submit'
-                        variant='contained'
-                        color='secondary'
+                        type="submit"
+                        variant="contained"
+                        color="secondary"
                         onClick={ handleUpdateAccount }
                       >
-                        <FormattedMessage id='account.user.actions.update' defaultMessage='Update Account' />
+                        <FormattedMessage id="account.user.actions.update" defaultMessage="Update Account" />
                       </Button>
                     </div>
                   </Grid>
@@ -136,41 +136,41 @@ const AccountTabMain = ({
               <fieldset className={ classes.fieldset }>
                 <legend className={ classes.legend }>
                   <Typography>
-                    <FormattedMessage id='account.password.change.title' defaultMessage='Change password' />
+                    <FormattedMessage id="account.password.change.title" defaultMessage="Change password" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                    <FormattedMessage id='account.basic.password.current' defaultMessage='Current password'>
+                    <FormattedMessage id="account.basic.password.current" defaultMessage="Current password">
                       { (msg) => (
                         <Field
-                          name='currentPassword'
+                          name="currentPassword"
                           label={ msg }
                           disabled={!shouldAllowPasswordChange}
                           onChange={ (e) => setCurrentPassword(e.target.value) }
-                          type='password'
+                          type="password"
                         />
                       ) }
                     </FormattedMessage>
-                    <FormattedMessage id='account.basic.password.new' defaultMessage='New password'>
+                    <FormattedMessage id="account.basic.password.new" defaultMessage="New password">
                       { (msg) => (
                         <Field
-                          name='newPassword'
+                          name="newPassword"
                           label={ msg }
                           disabled={!shouldAllowPasswordChange}
                           onChange={ (e) => setNewPassword(e.target.value) }
-                          type='password'
+                          type="password"
                         />
                       ) }
                     </FormattedMessage>
-                    <FormattedMessage id='account.basic.password.old' defaultMessage='Confirm new password'>
+                    <FormattedMessage id="account.basic.password.old" defaultMessage="Confirm new password">
                       { (msg) => (
                         <Field
-                          name='confirmNewPassword'
+                          name="confirmNewPassword"
                           label={ msg }
                           disabled={!shouldAllowPasswordChange}
                           onChange={ (e) => setConfirmNewPassword(e.target.value) }
-                          type='password'
+                          type="password"
                         />
                       ) }
                     </FormattedMessage>
@@ -178,13 +178,13 @@ const AccountTabMain = ({
                   <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
                     <div style={{float: 'right'}}>
                       <Button
-                        type='submit'
-                        variant='contained'
-                        color='secondary'
+                        type="submit"
+                        variant="contained"
+                        color="secondary"
                         disabled={!shouldAllowPasswordChange}
                         onClick={onChangePassword}
                       >
-                        <FormattedMessage id='account.user.actions.change' defaultMessage='Change password' />
+                        <FormattedMessage id="account.user.actions.change" defaultMessage="Change password" />
                       </Button>
                     </div>
                   </Grid>

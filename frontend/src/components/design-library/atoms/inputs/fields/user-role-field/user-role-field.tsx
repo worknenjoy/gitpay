@@ -14,12 +14,12 @@ const UserRoleField = ({ roles, onChange }) => {
   }));
 
   return (
-    <Grid container spacing={2} alignContent='center' alignItems='center'>
+    <Grid container spacing={2} alignContent="center" alignItems="center">
       <Grid item xs={12} md={2}>
         <Typography variant="caption" color="textSecondary" style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
           <FormattedMessage id="user.types.roles.select.label" defaultMessage="Signup as: " />
-          <Tooltip placement='right' title={<FormattedMessage id="user.types.roles.tooltip" defaultMessage="You can change this later." />}>
-            <Help fontSize='small' />
+          <Tooltip placement="right" title={<FormattedMessage id="user.types.roles.tooltip" defaultMessage="You can change this later." />}>
+            <Help fontSize="small" />
           </Tooltip>
         </Typography>
       </Grid>

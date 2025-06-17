@@ -1,5 +1,4 @@
 import React from 'react';
-import { orange, green, yellow } from '@material-ui/core/colors';
 import Chip from '@material-ui/core/Chip';
 import { status } from '../../../../../../consts'
 import useStyles from './payment-status.styles'
@@ -22,61 +21,61 @@ export default function PaymentStatus({ orderStatus }:statusProps) {
       case `${order.open}`:
         choosenStatus = {
           label: 'Open',
-          color: 'open',
+          color: 'open'
         };
       break;
       case `${order.pending}`:
         choosenStatus = {
           label: 'Pending',
-          color: 'pending',
+          color: 'pending'
         };
       break;
       case `${order.succeeded}`:
         choosenStatus = {
           label: 'Succeeded',
-          color: 'succeeded',
+          color: 'succeeded'
         };
       break;
       case order.failed:
         choosenStatus = {
           label: 'Failed',
-          color: 'failed',
+          color: 'failed'
         };
       break;
       case order.fail:
         choosenStatus = {
           label: 'Failed',
-          color: 'failed',
+          color: 'failed'
         };
       break;
       case order.expired:
         choosenStatus = {
           label: 'Expired',
-          color: 'expired',
+          color: 'expired'
         };
       break;
       case order.cancelled:
         choosenStatus = {
           label: 'Cancelled',
-          color: 'failed',
+          color: 'failed'
         };
       break;
       case order.canceled:
         choosenStatus = {
           label: 'Cancelled',
-          color: 'failed',
+          color: 'failed'
         };
       break;
       case order.refunded:
         choosenStatus = {
           label: 'Refunded',
-          color: 'expired',
+          color: 'expired'
         };
       break;
       default:
         choosenStatus = {
           label: 'unknown',
-          color: 'unknown',
+          color: 'unknown'
         };
       break;
     }

@@ -38,7 +38,7 @@ module.exports = Promise.method(function taskPayment (paymentParams) {
           amount: centavosAmount * 0.92, // 8% base fee
           currency: 'usd',
           destination: dest,
-          source_type: 'card',
+          source_type: 'card'
         }
 
         const order = await models.Order.findOne({ where: { TaskId: task.id } })

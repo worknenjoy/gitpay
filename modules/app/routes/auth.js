@@ -55,7 +55,7 @@ router.get('/authorize/github/disconnect', secure, (req, res, next) => {
     provider: null,
     provider_username: null,
     provider_id: null,
-    provider_email: null,
+    provider_email: null
   }).then((userUpdated) => {
     if(userUpdated) {
       res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`)  
@@ -78,7 +78,7 @@ router.post('/authorize/local',
   passport.authenticate('local', {
     session: false,
     failureMessage: true,
-    failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`,
+    failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`
     // successRedirect: `${process.env.FRONTEND_HOST}/#/token/${req?.user?.token}`
   }),
   (req, res, next) => {

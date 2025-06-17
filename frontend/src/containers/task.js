@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
     order: state.order,
     customer: state.customer,
     wallets: state.wallets,
-    wallet: state.wallet,
+    wallet: state.wallet
   }
 }
 
@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     requestClaimTask: (taskId, userId, comments, isApproved, token, history) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
     fetchCustomer: (id) => dispatch(fetchCustomer(id)),
     fetchWallet: (id) => dispatch(fetchWallet(id)),
-    listWallets: () => dispatch(listWallets()),
+    listWallets: () => dispatch(listWallets())
   }
 }
 

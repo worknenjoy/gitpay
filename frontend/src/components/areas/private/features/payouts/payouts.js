@@ -51,7 +51,7 @@ const currencyMap = {
   krw: '₩', // South Korean Won
   cop: 'COL$', // Colombian Peso
   php: '₱', // Philippine Peso
-  huf: 'Ft', // Hungarian Forint
+  huf: 'Ft' // Hungarian Forint
 };
 
 //Function to convert currency code to symbol
@@ -97,7 +97,7 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
   return (
     <div style={ { margin: '40px 0' } }>
       <Container>
-        <Typography variant='h5' gutterBottom>
+        <Typography variant="h5" gutterBottom>
           <FormattedMessage {...payoutMessages.title} />
         </Typography>
         <div>
@@ -106,14 +106,14 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
               intl.formatMessage(payoutMessages.headerStatus),
               intl.formatMessage(payoutMessages.headerMethod),
               intl.formatMessage(payoutMessages.headerValue),
-              intl.formatMessage(payoutMessages.headerCreated),
+              intl.formatMessage(payoutMessages.headerCreated)
             ] }
             payouts={
               payouts && payouts.data && {
                 ...payouts,
                 data: payouts.data.map(t => [
                   <Chip label={ t.status } />,
-                  <Typography variant='body2'>
+                  <Typography variant="body2">
                     {t.method}
                   </Typography>,
                   `${currencyCodeToSymbol(t.currency)} ${t.method === 'stripe' ? formatStripeAmount(t.amount) : t.amount}`,

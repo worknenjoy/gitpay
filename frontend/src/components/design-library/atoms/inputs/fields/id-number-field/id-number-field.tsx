@@ -18,7 +18,7 @@ const IdNumberField = ({ account }) => {
 
   return (
     <Field
-      name='individual[id_number]'
+      name="individual[id_number]"
       label={
         editIdNumber ? intl.formatMessage(messages.documentProvide) : (
           accountData.individual && accountData.individual
@@ -47,17 +47,17 @@ const IdNumberField = ({ account }) => {
           .id_number_provided
         && (
           <Button
-            variant='text'
-            color='primary'
-            size='small'
+            variant="text"
+            color="primary"
+            size="small"
             onClick={(e) => {
               setEditIdNumber(!editIdNumber)
             }}
           >
             {!editIdNumber ? (
-              <FormattedMessage id='account.actions.id.edit' defaultMessage='Change' />
+              <FormattedMessage id="account.actions.id.edit" defaultMessage="Change" />
             ) : (
-              <FormattedMessage id='account.actions.id.cancel' defaultMessage='Cancel' />
+              <FormattedMessage id="account.actions.id.cancel" defaultMessage="Cancel" />
             )}
           </Button>
         )

@@ -25,7 +25,7 @@ module.exports = async function orderBuilds(orderParameters) {
       models.User,
       {
         association: models.Order.Plan,
-        include: [models.Plan.plan],
+        include: [models.Plan.plan]
       }
     ]
   }).save()
@@ -81,7 +81,7 @@ module.exports = async function orderBuilds(orderParameters) {
       metadata: {
         'task_id': orderParameters.taskId,
         'order_id': orderCreated.dataValues.id
-      },
+      }
     })
 
     const invoiceItem = await stripe.invoiceItems.create({
@@ -107,7 +107,7 @@ module.exports = async function orderBuilds(orderParameters) {
         id: orderCreated.dataValues.id
       },
       include: [
-        { model: models.User },
+        { model: models.User }
       ]
     })
     await stripe.invoices.sendInvoice(invoice.id)
@@ -148,7 +148,7 @@ module.exports = async function orderBuilds(orderParameters) {
             'value': totalPrice,
             'currency_code': orderParameters.currency
           },
-          'description': 'Development services provided by Gitpay',
+          'description': 'Development services provided by Gitpay'
         }],
         'application_context': {
           'return_url': `${process.env.API_HOST}/orders/authorize`,

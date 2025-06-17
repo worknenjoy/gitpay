@@ -170,16 +170,16 @@ class Order extends Component {
           <TopBar />
           <Grid item xs={ 12 }>
             <Typography
-              variant='display1'
-              color='primary'
-              align='left'
+              variant="display1"
+              color="primary"
+              align="left"
               className={ classes.typo }
               gutterBottom
             >
               page
             </Typography>
           </Grid>
-          <Notification message='Pedido criado com sucesso' open />
+          <Notification message="Pedido criado com sucesso" open />
         </Grid>
         <Bottom />
       </div>

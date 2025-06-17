@@ -19,7 +19,7 @@ const Button = ({
   label,
   disabled,
   completed,
-  onClick,
+  onClick
 }:ButtonProps) => {
   const classes = useStyles();
   return (
