@@ -148,7 +148,7 @@ export const messages = defineMessages({
   },
   cardSubtitle: {
     id: 'task.card.subtitle',
-    defaultMessage: 'This payments will be transfered after the task be finished'
+    defaultMessage: 'This payments will be transferred after the task be finished'
   },
   cardTableHeaderNumber: {
     id: 'task.table.head.number',
