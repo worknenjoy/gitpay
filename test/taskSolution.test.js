@@ -98,7 +98,7 @@ describe("Task Solution", () => {
         throw err;
       }
     });
-    it('should create a task solution with stripe response with insuficient capatibilities', async () => {
+    it('should create a task solution with stripe response with insufficient capatibilities', async () => {
       try {
         const solutionParams = {
           pullRequestId: '2',
