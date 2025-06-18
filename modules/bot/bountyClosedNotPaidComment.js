@@ -33,7 +33,7 @@ If you have a Pull Request merged, please claim on Gitpay (https://gitpay.me) on
 ${gitPayURL}
 
 Please set the title of your pull request to *issue#${issueId}* and go in _Solve issue_ and send your Pull Request URL.
-If you already received your bounty, please ignore this messsage.`
+If you already received your bounty, please ignore this message.`
     }
   })
 
