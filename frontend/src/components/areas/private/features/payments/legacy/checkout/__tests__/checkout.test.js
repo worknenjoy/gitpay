@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { CheckoutFormPure } from '../../src/components/areas/private/features/payments/legacy/checkout/checkout-form'
+import { CheckoutFormPure } from '../checkout-form'
 import { mount } from 'enzyme'
 
 /*
