@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import TeamCard from '../../src/components/design-library/molecules/cards/team-card/TeamCard'
+import TeamCard from '../TeamCard'
 import { mount } from 'enzyme'
 
 xdescribe('components', () => {
