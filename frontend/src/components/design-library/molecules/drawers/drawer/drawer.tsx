@@ -27,6 +27,7 @@ type DrawerProps = {
   open: boolean;
   onClose: any;
   title: any;
+  subtitle?: any;
   children: any;
   actions?: Array<any>;
 }
@@ -35,6 +36,7 @@ const Drawer = ({
   open,
   onClose,
   title,
+  subtitle,
   children,
   actions = []
 }: DrawerProps) => {
@@ -66,9 +68,16 @@ const Drawer = ({
         
           <Box flexGrow={1}>
             <div style={{ padding: 20 }}>
-              <Typography variant="h5" id="form-dialog-title" gutterBottom>
-                {title}
-              </Typography>
+              <div>
+                <Typography variant="h5" id="form-dialog-title" gutterBottom>
+                  {title}
+                </Typography>
+                { subtitle && 
+                  <Typography variant="subtitle2" gutterBottom>
+                    {subtitle}
+                  </Typography>
+                }
+              </div>
               {closeDialogButton()}
               {children}
             </div>

@@ -9,6 +9,7 @@ import {
   AccountBalance as TransferIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
+  PaymentRounded as PaymentRequestsIcon,
   AccountBox
 } from '@material-ui/icons'
 import { SideMenu } from '../../../design-library/molecules/menus/side-menu/side-menu'
@@ -84,6 +85,13 @@ const ProfileSidebar = ({
                   onClick: () => history.push('/profile/payments'),
                   icon: <PaymentIcon />,
                   label: <FormattedMessage id="account.profile.payments.list" defaultMessage="Payments" />,
+                  selected: selected === 3
+                },
+                {
+                  include: userTypes && (userTypes?.includes('contributor')),
+                  onClick: () => history.push('/profile/payments'),
+                  icon: <PaymentRequestsIcon />,
+                  label: <FormattedMessage id="account.profile.paymentRequests.list" defaultMessage="Payment Requests" />,
                   selected: selected === 3
                 },
                 {

@@ -7,6 +7,7 @@ import {
   AccountBalanceWallet as WalletIcon,
   LibraryBooks,
   Payment as PaymentIcon,
+  CardMembership as PaymentRequestsIcon,
   AccountBalance as TransferIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
@@ -90,6 +91,13 @@ const ProfileSidebar = ({
                   onClick: () => history.push('/profile/payments'),
                   icon: <PaymentIcon />,
                   label: <FormattedMessage id="account.profile.payments.list" defaultMessage="Payments" />,
+                  selected: selected === 3
+                },
+                {
+                  include: userTypes && (userTypes?.includes('contributor')),
+                  onClick: () => history.push('/profile/payments'),
+                  icon: <PaymentRequestsIcon />,
+                  label: <FormattedMessage id="account.profile.paymentRequests.list" defaultMessage="Payment Requests" />,
                   selected: selected === 3
                 },
                 {
