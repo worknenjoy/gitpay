@@ -8,7 +8,7 @@ const request = require('supertest')
 const agent = request.agent(api)
 const { TaskCron, OrderCron } = require('../cron')
 const MockDate = require('mockdate')
-const paypalOrder = require('./data/paypal.order')
+const paypalOrder = require('./data/paypal/paypal.order')
 
 describe('Crons', () => {
   beforeEach(async () => {

@@ -19,6 +19,7 @@ const routerPayout = require('./routes/payout')
 const routerWallet = require('./routes/wallet')
 const routerWalletOrder = require('./routes/walletOrder')
 const routerLanguage = require('./routes/language')
+const routerPaymentRequest = require('./routes/paymentRequest')
 
 exports.init = (app) => {
   app.use('/', routerAuth)
@@ -40,4 +41,5 @@ exports.init = (app) => {
   app.use('/payouts', routerPayout)
   app.use('/wallets/orders', routerWalletOrder)
   app.use('/wallets', routerWallet)
+  app.use('/payment-requests', routerPaymentRequest)
 }

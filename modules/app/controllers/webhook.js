@@ -18,6 +18,8 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 
 const chargeSucceeded = require('../../webhooks/chargeSucceeded')
 
+const checkoutSessionCompleted = require('./webhooks/checkoutSessionCompleted')
+
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
   not_sent_to_network: 'Hight risk card, please provide all the information'
@@ -478,9 +480,6 @@ exports.updateWebhook = async (req, res) => {
               paid: false,
               status: event.data.object.status
             })
-            if(walletOrder) {
-              console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
-            }
           }
         }
         return models.Order.update(
@@ -566,10 +565,6 @@ exports.updateWebhook = async (req, res) => {
               paid: event.data.object.paid,
               status: event.data.object.status
             })
-
-            if(walletOrderCreateOnUpdate) {
-              console.log('wallet order created on invoice.updated stripe webhook event: ', walletOrderCreateOnUpdate)
-            }
           }
         }
         return models.Order.update(
@@ -928,9 +923,6 @@ exports.updateWebhook = async (req, res) => {
             paid: false,
             status: event.data.object.status
           })
-          if(walletOrder) {
-            console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
-          }
         } else {
           const walletOrderUpdate = await models.WalletOrder.update({
             status: event.data.object.status
@@ -941,6 +933,9 @@ exports.updateWebhook = async (req, res) => {
           })
         }
         return res.json(req.body)
+      break;
+      case 'checkout.session.completed':
+        return await checkoutSessionCompleted(event, req, res)
       break;
     }
   }

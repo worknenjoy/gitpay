@@ -40,6 +40,10 @@ if (env === 'production' || env === 'staging') {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+sequelize.query('SELECT current_database();')
+  .then(([res]) => console.log('✅ Connected to DB:', res[0].current_database));
+
+
 const migrationType = process.env.TYPE
 
 const umzug = new Umzug({
@@ -74,6 +78,10 @@ umzug.on('migrating', logUmzugEvent('migrating'));
 umzug.on('migrated', logUmzugEvent('migrated'));
 umzug.on('reverting', logUmzugEvent('reverting'));
 umzug.on('reverted', logUmzugEvent('reverted'));
+umzug.on('error', (err) => {
+  console.error('Umzug error:', err);
+});
+
 
 function cmdStatus() {
     let result = {};
