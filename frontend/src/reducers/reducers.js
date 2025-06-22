@@ -60,7 +60,7 @@ const reducers = combineReducers({
   walletOrders,
   walletOrder,
   paymentRequest,
-  paymentRequests,
+  paymentRequests
 })
 
 export default reducers

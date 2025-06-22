@@ -11,7 +11,7 @@ interface PaymentRequestDrawerProps {
 const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
   open,
   onClose,
-  onSuccess,
+  onSuccess
 }) => {
   return (
     <Drawer
@@ -23,14 +23,14 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
         {
           label: 'Cancel',
           onClick: onClose,
-          variant: 'text',
+          variant: 'text'
         },
         {
           label: 'Create Payment Request',
           onClick: onSuccess,
           variant: 'contained',
-          color: 'secondary',
-        },
+          color: 'secondary'
+        }
       ]}
     >
       <PaymentRequestForm

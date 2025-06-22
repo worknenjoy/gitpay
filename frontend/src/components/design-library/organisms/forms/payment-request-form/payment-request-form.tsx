@@ -3,9 +3,7 @@ import { Grid, Typography, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../atoms/inputs/fields/field/field';
-import Button from '../../../atoms/buttons/button/button';
 import Alert from '../../../atoms/alerts/alert/alert';
-import ProfileSecondaryHeader from '../../../molecules/headers/profile-secondary-header/profile-secondary-header';
 
 const errorMapping = {
   'external_account[account_number]': 'Invalid account number or iban',

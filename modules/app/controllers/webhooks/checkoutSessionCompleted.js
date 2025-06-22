@@ -21,7 +21,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
             model: models.User,
             as: 'user',
             attributes: ['id', 'email', 'account_id']
-          },
+          }
         ]
       });
       
@@ -33,7 +33,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       const { account_id } = user;
 
       const paymentRequestUpdate = await paymentRequest.update({
-        status: 'paid',
+        status: 'paid'
       });
       
       if (!paymentRequestUpdate) {
@@ -47,7 +47,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         description: `Payment for request ${paymentRequest.id}`,
         metadata: {
           payment_request_id: paymentRequest.id,
-          user_id: paymentRequest.user.id,
+          user_id: paymentRequest.user.id
         }
       });
 

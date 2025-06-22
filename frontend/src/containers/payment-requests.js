@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: getUserData(state),
     paymentRequests: state.paymentRequests,
-    paymentRequest: state.paymentRequest,
+    paymentRequest: state.paymentRequest
   }
 }
 

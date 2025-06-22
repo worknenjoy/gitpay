@@ -8,23 +8,24 @@ const meta = {
     open: true,
     amount: 100,
     title: 'Request Payment',
-    description: 'Please fill out the form to request payment',
-  },
+    description: 'Please fill out the form to request payment'
+  }
 };
 
 export default meta;
 
-export const Default = {
-  render: (args) => {
-    const [open, setOpen] = useState(true);
+const DefaultStory = (args) => {
+  const [open, setOpen] = useState(true);
 
-    return (
-      <PaymentRequestDrawer
-        {...args}
-        open={open}
-        onClose={() => setOpen(false)}
-        onSubmit={() => alert('Payment requested!')}
-      />
-    );
-  },
+  return (
+    <PaymentRequestDrawer
+      {...args}
+      open={open}
+      onClose={() => setOpen(false)}
+    />
+  );
+};
+
+export const Default = {
+  render: (args) => <DefaultStory {...args} />
 };
