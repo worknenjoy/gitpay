@@ -6,7 +6,7 @@ import {
   Public as PublicIcon,
   Person as PersonIcon
 } from '@material-ui/icons'
-import Alert from '../../../../../../design-library/atoms/alerts/alert/alert';
+import Alert from 'design-library/atoms/alerts/alert/alert';
 import ReactPlaceholder from 'react-placeholder';
 import CountryPicker from '../../../../shared/country-picker';
 import Const from '../../../../../../../consts'

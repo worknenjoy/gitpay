@@ -8,10 +8,10 @@ import Background from 'images/login_bg.png'
 import TermsOfService from './terms-of-service'
 import PrivacyPolicy from './privacy-policy'
 import CookiePolicy from './cookie-policy'
-import LoginFormSignin from '../../../../design-library/molecules/form-section/login-form/login-form-signin/login-form-signin'
-import LoginFormSignup from '../../../../design-library/molecules/form-section/login-form/login-form-signup/login-form-signup'
-import LoginFormReset from '../../../../design-library/molecules/form-section/login-form/login-form-reset/login-form-reset'
-import LoginFormForgot from '../../../../design-library/molecules/form-section/login-form/login-form-forgot/login-form-forgot'
+import LoginFormSignin from 'design-library/molecules/form-section/login-form/login-form-signin/login-form-signin'
+import LoginFormSignup from 'design-library/molecules/form-section/login-form/login-form-signup/login-form-signup'
+import LoginFormReset from 'design-library/molecules/form-section/login-form/login-form-reset/login-form-reset'
+import LoginFormForgot from 'design-library/molecules/form-section/login-form/login-form-forgot/login-form-forgot'
 
 const useStyles = makeStyles((theme) => ({
   container: {

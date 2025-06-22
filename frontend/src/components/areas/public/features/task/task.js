@@ -44,7 +44,7 @@ import {
   EmojiFoodBeverage as CoffeeIcon,
 } from '@material-ui/icons'
 
-import OfferDrawer from '../../../../design-library/molecules/drawers/offer-drawer/offer-drawer'
+import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
 
 import IssueActionsByRole from './components/issue-actions-by-role'
 import TopBarContainer from '../../../../../containers/topbar'
@@ -59,8 +59,8 @@ import TaskStatusIcons from './task-status-icons'
 
 import Constants from '../../../../../consts'
 
-import TaskDeadlineDrawer from '../../../../design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
-import IssueContent from '../../../../design-library/organisms/layouts/issue-content/issue-content'
+import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
+import IssueContent from 'design-library/organisms/layouts/issue-content/issue-content'
 
 const taskCover = require('images/task-cover.png')
 const inviteCover = require('images/funds.png')

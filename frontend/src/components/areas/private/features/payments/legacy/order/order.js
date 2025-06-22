@@ -6,12 +6,12 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core'
-import Notification from '../../../../../../design-library/atoms/notifications/notification/notification'
+import Notification from 'design-library/atoms/notifications/notification/notification'
 
 import '../../../../../checkout/checkout-form'
 
-import TopBar from '../../../../../design-library/organisms/topbar/topbar'
-import Bottom from '../../../../../../design-library/organisms/layouts/bottom-bar/bottom'
+import TopBar from 'design-library/organisms/topbar/topbar'
+import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
 
 // const paymentIcon = require('images/payment-icon-alt.png')
 

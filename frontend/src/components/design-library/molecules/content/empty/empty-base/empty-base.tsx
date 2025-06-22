@@ -54,7 +54,7 @@ const EmptyBase = ({
       </Typography>
       <Button 
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={onActionClick}
         completed={completed}
         label={actionText}

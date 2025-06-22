@@ -1,22 +1,25 @@
 import { connect } from 'react-redux'
-import Payments from '../components/areas/private/features/payments/legacy/payments'
-import { addNotification } from '../actions/notificationActions'
-import { listTasks, filterTasks, changeTaskTab } from '../actions/taskActions'
-import { listOrders, transferOrder, detailOrder, refundOrder, cancelOrder, updateOrder  } from '../actions/orderActions'
-import { getFilteredTasks } from '../selectors/tasks'
+import PaymentRequest from '../components/areas/private/features/payment-requests/payment-requests'
+import {  createPaymentRequest, listPaymentRequests  } from '../actions/paymentRequestActions'
 import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     user: getUserData(state),
     paymentRequests: state.paymentRequests,
+    paymentRequest: state.paymentRequest,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getPaymentRequests: (query) => dispatch(listOrders(query)),
+    createPaymentRequest: (data) => {
+      return dispatch(createPaymentRequest(data))
+    },
+    listPaymentRequests: () => {
+      return dispatch(listPaymentRequests())
+    }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Payments)
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentRequest)

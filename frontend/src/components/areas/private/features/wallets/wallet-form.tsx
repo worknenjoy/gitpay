@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 
-import { Field } from '../../../../design-library/atoms/inputs/fields/field/field';
+import { Field } from 'design-library/atoms/inputs/fields/field/field';
 
 const styles = (theme) => ({
   legend: {

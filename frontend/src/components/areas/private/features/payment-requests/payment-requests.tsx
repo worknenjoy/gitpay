@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
+import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -22,15 +23,16 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const PaymentRequests = ({ paymentRequests, getPaymentRequests, user }) => {
+const PaymentRequests = ({ paymentRequests, listPaymentRequests, user }) => {
   const classes = useStyles()
+  const { completed, data } = paymentRequests
 
   useEffect(() => {
-    getPaymentRequests()
+    listPaymentRequests()
   }, [])
 
   return (
-    <Paper elevation={0} style={{ backgroundColor: 'transparent' }}>
+    
       <Container>
         <Typography variant="h5" gutterBottom style={{ marginTop: 40 }}>
           <FormattedMessage id="payment.requests.title" defaultMessage="Payment requests" />
@@ -41,13 +43,18 @@ const PaymentRequests = ({ paymentRequests, getPaymentRequests, user }) => {
             defaultMessage="Here you can see all the payments requests on our account"
           />
         </Typography>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ marginTop: 20, marginBottom: 20 }}>
-            <></>
+        <Paper>
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ marginTop: 20, marginBottom: 20, padding: 20 }}>
+              {data.length === 0 ? (
+                <EmptyPaymentRequest onActionClick={() => { }} />
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
-        </div>
+        </Paper>
       </Container>
-    </Paper>
   )
 }
 

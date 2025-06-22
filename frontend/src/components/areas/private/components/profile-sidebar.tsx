@@ -12,7 +12,7 @@ import {
   PaymentRounded as PaymentRequestsIcon,
   AccountBox
 } from '@material-ui/icons'
-import { SideMenu } from '../../../design-library/molecules/menus/side-menu/side-menu'
+import { SideMenu } from 'design-library/molecules/menus/side-menu/side-menu'
 
 const ProfileSidebar = ({
   classes,

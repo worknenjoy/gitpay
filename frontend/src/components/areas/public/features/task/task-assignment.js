@@ -32,10 +32,10 @@ import {
   Info as InfoIcon
 } from '@material-ui/icons'
 
-import Drawer from '../../../../design-library/molecules/drawers/drawer/drawer'
-import Introduction from '../../../../design-library/molecules/content/introduction/introduction'
-import PickupTagList from '../../../../design-library/molecules/lists/pickup-tag-list/pickup-tag-list'
-import PricePlan from '../../../../design-library/organisms/forms/price-plan-form/price-plan'
+import Drawer from 'design-library/molecules/drawers/drawer/drawer'
+import Introduction from 'design-library/molecules/content/introduction/introduction'
+import PickupTagList from 'design-library/molecules/lists/pickup-tag-list/pickup-tag-list'
+import PricePlan from 'design-library/organisms/forms/price-plan-form/price-plan'
 
 import LoginButton from '../../../private/components/session/login-button'
 

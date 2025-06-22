@@ -33,7 +33,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import media from '../../../../../styleguide/media'
 
-import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
+import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 
 import TaskLabels from './task-labels'
 

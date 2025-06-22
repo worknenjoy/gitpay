@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder'
 import { Button, createStyles, makeStyles, Theme } from '@material-ui/core'
 import { formatCurrency } from '../../../../../../../../utils/format-currency'
-import BalanceCard from '../../../../../../../design-library/molecules/cards/balance-card/balance-card'
+import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 
 function isGreaterThan(a: string | number, b: string | number): boolean {
   const numA = parseFloat(a as string);
