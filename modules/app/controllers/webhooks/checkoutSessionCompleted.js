@@ -34,7 +34,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
 
       const paymentRequestUpdate = await paymentRequest.update({
         status: 'paid',
-        active: false,
+        active: false
       });
       
       if (!paymentRequestUpdate) {
@@ -42,7 +42,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       }
 
       const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
-        active: false,
+        active: false
       });
 
       if (!paymentRequestLinkUpdate) {

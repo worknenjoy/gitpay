@@ -142,7 +142,7 @@ TransferMail.paymentRequestInitiated = (user, paymentRequest, transfer_amount) =
           amount: paymentRequest.amount,
           currency: paymentRequest.currency,
           paymentUrl: paymentRequest.payment_url,
-          transfer_amount: transfer_amount,
+          transfer_amount: transfer_amount
         })}</p>`)
       }
     ]
