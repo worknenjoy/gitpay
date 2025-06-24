@@ -24,6 +24,10 @@ module.exports = {
         },
         allowNull: false
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
       title: Sequelize.STRING,
       description: Sequelize.STRING,
       amount: Sequelize.DECIMAL,

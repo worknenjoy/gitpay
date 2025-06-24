@@ -1,6 +1,10 @@
 
 module.exports = (sequelize, DataTypes) => {
   const PaymentRequest = sequelize.define('PaymentRequest', {
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
     currency: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
     title: DataTypes.STRING,
@@ -15,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'pending_payment'
     },
-    transfer_id: DataTypes.STRING,
+    transfer_id: DataTypes.STRING
   })
 
   PaymentRequest.associate = (models) => {

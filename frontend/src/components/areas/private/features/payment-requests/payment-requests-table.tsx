@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Link as LinkIcon,
+  Link as LinkIcon
 } from '@material-ui/icons'
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
@@ -9,6 +9,7 @@ import AmountField from 'design-library/molecules/tables/section-table/section-t
 import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
 
 const paymentRequestMetadata = {
+  "active": { sortable: true, numeric: false, dataBaseKey: "active", label: 'Is active?' },
   "title": { sortable: true, numeric: false, dataBaseKey: "title", label: 'Title' },
   "description": { sortable: true, numeric: false, dataBaseKey: "description", label: 'Description' },
   "amount": { sortable: true, numeric: true, dataBaseKey: "amount", label: 'Amount' },
@@ -21,6 +22,11 @@ const paymentRequestMetadata = {
 export const PaymentRequestsTable = ({ paymentRequests }) => {
 
   const customColumnRenderer = {
+    active: (item:any) => (
+      <TextField
+        title={item.active ? 'Yes' : 'No'}
+      />
+    ),
     title: (item:any) => (
       <TextField
         title={item.title}

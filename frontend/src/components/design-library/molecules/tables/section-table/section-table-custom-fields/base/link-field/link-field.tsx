@@ -3,7 +3,6 @@ import TextEllipsis from 'text-ellipsis';
 import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { Tooltip, Typography, IconButton } from '@material-ui/core';
-import logoGithub from 'images/github-logo.png';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 
 const LinkField = ({ url, icon, iconImg = false, title, tooltipTitle, external = false, copiable = false, limit = 42, width = 350 }) => {

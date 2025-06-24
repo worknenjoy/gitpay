@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import Drawer from '../drawer/drawer';
 import PaymentRequestForm from '../../../organisms/forms/payment-request-form/payment-request-form';
-import { AnyMxRecord } from 'dns';
 
 interface PaymentRequestDrawerProps {
   open: boolean;

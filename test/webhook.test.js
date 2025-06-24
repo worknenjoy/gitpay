@@ -962,6 +962,12 @@ describe('webhooks', () => {
         }, {
           'Content-Type': 'application/json'
         });
+
+      nock('https://api.stripe.com')
+        .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+        .reply(200, {
+          active: false,
+        })
       const user = await registerAndLogin(agent)
       const paymentRequest = models.PaymentRequest.create({
         title: 'Payment for services',
@@ -995,6 +1001,7 @@ describe('webhooks', () => {
       expect(paymentLink.title).to.equal('Payment for services')
       expect(paymentLink.transfer_status).to.equal('initiated')
       expect(paymentLink.transfer_id).to.equal('tr_1KkomkBrSjgsps2DGGBtipW4')
+      expect(paymentLink.active).to.equal(false)
     })
   })
 })

@@ -324,7 +324,7 @@ exports.updateWebhook = async (req, res) => {
         /* eslint-disable no-unreachable */
         break
       case 'charge.updated':
-        if(!event.data.object.source.id) {
+        if(!event?.data?.object?.source?.id) {
           return res.json(req.body)
         }
         return models.Order.update(

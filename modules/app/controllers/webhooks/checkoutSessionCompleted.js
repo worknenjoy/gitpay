@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 const models = require('../../../../models/index.js');
+const TransferMail = require('../../../mail/transfer.js');
 
 module.exports = async function checkoutSessionCompleted(event, req, res) {
   try {
@@ -32,15 +33,26 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       const { account_id } = user;
 
       const paymentRequestUpdate = await paymentRequest.update({
-        status: 'paid'
+        status: 'paid',
+        active: false,
       });
       
       if (!paymentRequestUpdate) {
         return res.status(500).json({ error: 'Failed to update payment request' });
       }
 
+      const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
+        active: false,
+      });
+
+      if (!paymentRequestLinkUpdate) {
+        return res.status(500).json({ error: 'Failed to update payment link' });
+      }
+
+      const transfer_amount = Math.round(amount * 100 * 0.92); // Convert to cents and round
+
       const transfer = await stripe.transfers.create({
-        amount: Math.round(amount * 100 * 0.92), // Convert to cents and round
+        amount: transfer_amount, // Convert to cents and round
         currency: currency,
         destination: account_id,
         description: `Payment for service using Payment Request id: ${paymentRequest.id}`,
@@ -53,6 +65,12 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       if (!transfer) {
         return res.status(500).json({ error: 'Failed to create transfer' });
       }
+
+      TransferMail.paymentRequestInitiated(
+        user,
+        paymentRequest,
+        transfer_amount
+      )
 
       const paymentRequestTransferUpdate = await paymentRequest.update({
         transfer_status: 'initiated',
