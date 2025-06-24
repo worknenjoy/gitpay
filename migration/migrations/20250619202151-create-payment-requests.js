@@ -34,6 +34,11 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: 'open'
       },
+      transfer_status: {
+        type: Sequelize.STRING,
+        defaultValue: 'pending_payment'
+      },
+      transfer_id: Sequelize.STRING,
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW')

@@ -68,7 +68,7 @@ export const listPaymentRequests = () => {
   return (dispatch) => {
     dispatch(listPaymentRequestsRequested());
     return axios
-      .get(api.API_URL + '/paymentRequests')
+      .get(api.API_URL + '/payment-requests')
       .then(response => {
         if (response.data) {
           return dispatch(listPaymentRequestsSuccess(response.data))

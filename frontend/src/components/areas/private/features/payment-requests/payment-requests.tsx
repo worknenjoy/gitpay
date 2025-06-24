@@ -4,11 +4,16 @@ import { FormattedMessage } from 'react-intl'
 import {
   Paper,
   Container,
-  Typography
+  Button
 } from '@material-ui/core'
+
+import { AddRounded as AddIcon } from '@material-ui/icons'
 
 import { makeStyles } from '@material-ui/core/styles'
 import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
+import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
+import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
+import PaymentRequestsTable from './payment-requests-table'
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -23,38 +28,67 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const PaymentRequests = ({ paymentRequests, listPaymentRequests, user }) => {
+const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentRequests }) => {
   const classes = useStyles()
   const { completed, data } = paymentRequests
+
+  const [openNewPaymentRequestDrawer, setOpenNewPaymentRequestDrawer] = React.useState(false)
+
+  const handlePaymentRequestCreate = async (e, data) => {
+    e.preventDefault()
+    try {
+      await createPaymentRequest(data)
+      setOpenNewPaymentRequestDrawer(false)
+      listPaymentRequests() // Refresh the list after creating a new payment request
+    } catch (error) {
+      console.error('Error creating payment request:', error)
+    }
+  }
 
   useEffect(() => {
     listPaymentRequests()
   }, [])
 
   return (
-    
-      <Container>
-        <Typography variant="h5" gutterBottom style={{ marginTop: 40 }}>
-          <FormattedMessage id="payment.requests.title" defaultMessage="Payment requests" />
-        </Typography>
-        <Typography variant="caption" gutterBottom>
-          <FormattedMessage
-            id="payment.requests.description"
-            defaultMessage="Here you can see all the payments requests on our account"
-          />
-        </Typography>
+    <Container>
+      <ProfileHeader
+        title={<FormattedMessage id="payment.requests.title" defaultMessage="Payment requests" />}
+        subtitle={<FormattedMessage id="payment.requests.description" defaultMessage="Here you can see all the payment requests on your account" />}
+        aside={
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            onClick={() => setOpenNewPaymentRequestDrawer(true)}
+            endIcon={<AddIcon />}
+          >
+            <FormattedMessage id="payment.requests.create" defaultMessage="Create new payment request" />
+          </Button>
+        }
+      />
+
+      {data.length === 0 ? (
+
         <Paper>
           <div style={{ marginBottom: 20 }}>
             <div style={{ marginTop: 20, marginBottom: 20, padding: 20 }}>
-              {data.length === 0 ? (
-                <EmptyPaymentRequest onActionClick={() => { }} />
-              ) : (
-                <></>
-              )}
-            </div>
+              <EmptyPaymentRequest onActionClick={() => setOpenNewPaymentRequestDrawer(true)} /></div>
           </div>
         </Paper>
-      </Container>
+
+      ) : (
+        <PaymentRequestsTable
+          paymentRequests={paymentRequests}
+        />
+      )}
+      <PaymentRequestDrawer
+        open={openNewPaymentRequestDrawer}
+        onClose={() => setOpenNewPaymentRequestDrawer(false)}
+        onSuccess={handlePaymentRequestCreate}
+      />
+
+
+    </Container>
   )
 }
 

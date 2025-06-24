@@ -3,7 +3,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY)
 const models = require('../../models');
 
 module.exports = async function paymentRequestBuilds(paymentRequestParams) {
-
+  paymentRequestParams.currency = paymentRequestParams.currency || 'usd';
   const product = await stripe.products.create({
     name: paymentRequestParams.title,
     description: paymentRequestParams.description,

@@ -43,7 +43,7 @@ describe("PaymentRequests", () => {
 
     const user = await registerAndLogin(agent);
     const res = await agent
-      .post('/payment-requests/create')
+      .post('/payment-requests')
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .set('authorization', user.headers.authorization)
@@ -61,6 +61,8 @@ describe("PaymentRequests", () => {
     expect(res.body.amount).to.equal('100');
     expect(res.body.currency).to.equal('USD');
     expect(res.body.status).to.equal('open');
+    expect(res.body.transfer_status).to.equal('pending_payment');
+    expect(res.body.transfer_id).to.be.null;
     expect(res.body.payment_link_id).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km');
     expect(res.body.payment_url).to.equal('https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04')
   });

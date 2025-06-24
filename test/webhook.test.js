@@ -964,6 +964,7 @@ describe('webhooks', () => {
         });
       const user = await registerAndLogin(agent)
       const paymentRequest = models.PaymentRequest.create({
+        title: 'Payment for services',
         amount: 1000,
         currency: 'usd',
         description: 'Payment for services',
@@ -990,6 +991,10 @@ describe('webhooks', () => {
       expect(paymentLink.amount).to.equal('1000')
       expect(paymentLink.currency).to.equal('usd')
       expect(paymentLink.userId).to.equal(user.body.id)
+      expect(paymentLink.description).to.equal('Payment for services')
+      expect(paymentLink.title).to.equal('Payment for services')
+      expect(paymentLink.transfer_status).to.equal('initiated')
+      expect(paymentLink.transfer_id).to.equal('tr_1KkomkBrSjgsps2DGGBtipW4')
     })
   })
 })

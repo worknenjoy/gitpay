@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Drawer from '../drawer/drawer';
 import PaymentRequestForm from '../../../organisms/forms/payment-request-form/payment-request-form';
+import { AnyMxRecord } from 'dns';
 
 interface PaymentRequestDrawerProps {
   open: boolean;
   onClose: () => void;
-  onSuccess?: () => void;
+  onSuccess?: (e:any, data:any) => void;
 }
 
 const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
@@ -13,6 +14,8 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
   onClose,
   onSuccess
 }) => {
+  const formRef = useRef<{ submit: () => void }>(null);
+  
   return (
     <Drawer
       open={open}
@@ -27,16 +30,17 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
         },
         {
           label: 'Create Payment Request',
-          onClick: onSuccess,
+          onClick: () => {
+            formRef.current?.submit();
+          },
           variant: 'contained',
           color: 'secondary'
         }
       ]}
     >
       <PaymentRequestForm
+        ref={formRef}
         onSubmit={onSuccess}
-        user={{ completed: true, data: { country: 'US' } }} // Example user data
-        paymentRequest={{ completed: true, data: { amount: 100, currency: 'USD', description: 'Payment for services rendered' } }}  
       />
     </Drawer>
   );

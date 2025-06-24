@@ -10,11 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       defaultValue: 'open'
-    }
+    },
+    transfer_status: {
+      type: DataTypes.STRING,
+      defaultValue: 'pending_payment'
+    },
+    transfer_id: DataTypes.STRING,
   })
 
   PaymentRequest.associate = (models) => {
-    PaymentRequest.belongsTo(models.User, { foreignKey: 'userId', as: 'user' })
+    PaymentRequest.belongsTo(models.User, { foreignKey: 'userId' })
   }
 
   return PaymentRequest

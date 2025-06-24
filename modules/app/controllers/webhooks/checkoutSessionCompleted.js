@@ -19,7 +19,6 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         include: [
           {
             model: models.User,
-            as: 'user',
             attributes: ['id', 'email', 'account_id']
           }
         ]
@@ -29,7 +28,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         return res.status(404).json({ error: 'Payment request not found' });
       }
 
-      const { amount, currency, user = {} } = paymentRequest;
+      const { amount, currency, User: user = {} } = paymentRequest;
       const { account_id } = user;
 
       const paymentRequestUpdate = await paymentRequest.update({
@@ -44,16 +43,26 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         amount: Math.round(amount * 100 * 0.92), // Convert to cents and round
         currency: currency,
         destination: account_id,
-        description: `Payment for request ${paymentRequest.id}`,
+        description: `Payment for service using Payment Request id: ${paymentRequest.id}`,
         metadata: {
           payment_request_id: paymentRequest.id,
-          user_id: paymentRequest.user.id
+          user_id: paymentRequest.User.id
         }
       });
-
+      
       if (!transfer) {
         return res.status(500).json({ error: 'Failed to create transfer' });
       }
+
+      const paymentRequestTransferUpdate = await paymentRequest.update({
+        transfer_status: 'initiated',
+        transfer_id: transfer.id
+      });
+
+      if (!paymentRequestTransferUpdate) {
+        return res.status(500).json({ error: 'Failed to update payment request transfer status' });
+      }
+      
     }
     return res.json(req.body);
   } catch (error) {
