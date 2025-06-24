@@ -36,7 +36,8 @@
     ],
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
-      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/tests/components/__mocks__/fileMock.js"
+      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/tests/components/__mocks__/fileMock.js",
+      "^design-library(.*)$": "<rootDir>/src/components/design-library$1"
     },
     "transform": {
       "^.+\\.jsx?$": "babel-jest",

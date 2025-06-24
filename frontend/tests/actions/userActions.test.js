@@ -9,7 +9,7 @@ import * as actions from '../../src/actions/userActions'
 import * as types from '../../src/actions/userActions'
 import * as typesNotification from '../../src/actions/notificationActions'
 import api from '../../src/consts'
-import StripeAccountInvalidRequest from '../data/stripe/create-account-invalid-request.json'
+import StripeAccountInvalidRequest from '../data/create-account-invalid-request.json'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)

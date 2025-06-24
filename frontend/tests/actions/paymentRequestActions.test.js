@@ -80,7 +80,7 @@ describe('paymentRequest actions', () => {
     })
 
     xit('creates CREATE_PAYMENT_REQUEST_ERROR when creating paymentRequest fails', () => {
-      moxios.stubRequest(`${api.API_URL}/paymentRequests`, {
+      moxios.stubRequest(`${api.API_URL}/payment-requests`, {
         status: 500
       })
 
@@ -103,7 +103,7 @@ describe('paymentRequest actions', () => {
 
     it('creates LIST_PAYMENT_REQUESTS_SUCCESS when listing paymentRequests has been done', () => {
       const paymentRequestsData = [{ id: 1 }]
-      moxios.stubRequest(`${api.API_URL}/paymentRequests`, {
+      moxios.stubRequest(`${api.API_URL}/payment-requests`, {
         status: 200,
         response: paymentRequestsData
       })
@@ -119,7 +119,7 @@ describe('paymentRequest actions', () => {
     })
 
     xit('creates LIST_PAYMENT_REQUESTS_ERROR when listing paymentRequests fails', () => {
-      moxios.stubRequest(`${api.API_URL}/paymentRequests`, {
+      moxios.stubRequest(`${api.API_URL}/payment-requests`, {
         status: 500
       })
 

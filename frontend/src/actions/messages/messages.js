@@ -532,7 +532,7 @@ const messages = defineMessages({
   notificationPaymentRequestListError: {
     id: 'actions.paymentRequest.list.error',
     defaultMessage: 'We could not list your payment requests'
-  },
+  }
 })
 
 export default messages
