@@ -368,6 +368,7 @@ exports.updateWebhook = async (req, res) => {
               return res.status(400).send(e)
             })
           }
+        return res.json(req.body)
         break
       case 'charge.refunded':
         return models.Order.update(
