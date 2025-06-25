@@ -324,51 +324,50 @@ exports.updateWebhook = async (req, res) => {
         /* eslint-disable no-unreachable */
         break
       case 'charge.updated':
-        if(!event?.data?.object?.source?.id) {
-          return res.json(req.body)
-        }
-        return models.Order.update(
-          {
-            paid: paid,
-            status: status
-          },
-          {
-            where: {
-              source_id: event.data.object.source.id,
-              source: event.data.object.id
+        if(event?.data?.object?.source?.id) {
+          return models.Order.update(
+            {
+              paid: paid,
+              status: status
             },
-            returning: true
-          }
-        )
-          .then(order => {
-            if (order[0]) {
-              return models.User.findOne({
-                where: {
-                  id: order[1][0].dataValues.userId
-                }
-              })
-                .then(user => {
-                  if (user) {
-                    if (paid && status === 'succeeded') {
-                      const language = user.language || 'en'
-                      i18n.setLocale(language)
-                      SendMail.success(
-                        user.dataValues,
-                        i18n.__('mail.webhook.payment.update.subject'),
-                        i18n.__('mail.webhook.payment.update.message', { amount: event.data.object.amount / 100 })
-                      )
-                    }
-                  }
-                  return res.json(req.body)
-                })
-                .catch(e => {
-                  return res.status(400).send(e)
-                })
+            {
+              where: {
+                source_id: event.data.object.source.id,
+                source: event.data.object.id
+              },
+              returning: true
             }
-          })
-          .catch(e => {
-            return res.status(400).send(e)
-          })
+          )
+            .then(order => {
+              if (order[0]) {
+                return models.User.findOne({
+                  where: {
+                    id: order[1][0].dataValues.userId
+                  }
+                })
+                  .then(user => {
+                    if (user) {
+                      if (paid && status === 'succeeded') {
+                        const language = user.language || 'en'
+                        i18n.setLocale(language)
+                        SendMail.success(
+                          user.dataValues,
+                          i18n.__('mail.webhook.payment.update.subject'),
+                          i18n.__('mail.webhook.payment.update.message', { amount: event.data.object.amount / 100 })
+                        )
+                      }
+                    }
+                    return res.json(req.body)
+                  })
+                  .catch(e => {
+                    return res.status(400).send(e)
+                  })
+              }
+            })
+            .catch(e => {
+              return res.status(400).send(e)
+            })
+          }
         break
       case 'charge.refunded':
         return models.Order.update(
