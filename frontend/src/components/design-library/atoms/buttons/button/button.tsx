@@ -30,8 +30,12 @@ const Button = ({
       disabled={!completed ? true : disabled}
       onClick={onClick}
     >
-      {label}
-      {!completed ? <CircularProgress className={classes.progress} size={24} color="inherit" /> : <></>}
+      <>
+        {label}
+        {!completed && (
+          <CircularProgress className={classes.progress} size={24} color="inherit" />
+        )}
+      </>
     </MaterialButton>
   );
 }

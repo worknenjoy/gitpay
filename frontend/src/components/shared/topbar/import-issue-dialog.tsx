@@ -34,7 +34,7 @@ const ImportIssueDialog = ({
   const handleCreateTask = async (e:any) => {
     if (validURL(url)) {
       if (privateRepo) {
-        window.location = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${user.id}` as unknown as Location
+        window.location.href = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${user.id}`
         return
       }
       try { 

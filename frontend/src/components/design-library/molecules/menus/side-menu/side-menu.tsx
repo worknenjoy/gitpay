@@ -180,7 +180,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                           className={classes.menuItem}
                           selected={item.selected}
                         >
-                          <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
+                          <ListItemIcon className={classes.icon}><>{item.icon}</></ListItemIcon>
                           <ListItemText classes={{ primary: classes.primary }} primary={item.label} />
                         </MenuItem>
                       )

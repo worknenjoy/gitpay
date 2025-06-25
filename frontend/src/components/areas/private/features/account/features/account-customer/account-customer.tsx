@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import {
   Paper,
-  withStyles,
   Grid,
   Button,
   Typography,
@@ -13,10 +12,11 @@ import {
   Select,
   FormHelperText
 } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { countryCodesFull } from '../../../../shared/country-codes'
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   legend: {
     fontSize: 18,
     fontWeight: 500,
@@ -29,7 +29,7 @@ const styles = (theme) => ({
       color: theme.palette.primary.light
     }
   }
-})
+}))
 
 type FieldProps = {
   name: string,
@@ -86,14 +86,14 @@ export const Field = ({ ref, name, value, label, type = 'text', required = false
 }
 
 const CustomerDetails = ({
-  intl,
   customer,
   fetchCustomer,
   createCustomer,
   updateCustomer,
-  user,
-  classes
+  user
 }) => {
+  const classes = useStyles()
+  const intl = useIntl()
   const [customerData, setCustomerData] = useState({})
   const { data } = user
 
@@ -128,7 +128,7 @@ const CustomerDetails = ({
     if (!e.target) return false
     setCustomerData({
       ...customerData,
-      [e.target.name]: e.target.value || e.target.options[e.target.selectedIndex].value
+      [e.target.name]: e.target.value || e.target.options?.[e.target.selectedIndex]?.value
     })
   }
 
@@ -137,7 +137,7 @@ const CustomerDetails = ({
       const userId = data.id
       fetchCustomer(userId)
     }
-  }, [data, createCustomer, updateCustomer])
+  }, [data, createCustomer, updateCustomer, fetchCustomer])
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
@@ -213,7 +213,7 @@ const CustomerDetails = ({
                         style={{ marginTop: 16 }}
                       >
                         <option value="">
-                          Select country
+                          {intl.formatMessage({ id: 'select.country', defaultMessage: 'Select country' })}
                         </option>
                         {countryCodesFull.map((c, index) => (
                           <option key={index} value={c.code} selected={customer.data.address?.country === c.code}>{c.country}</option>
@@ -247,4 +247,4 @@ const CustomerDetails = ({
   )
 }
 
-export default injectIntl(withStyles(styles)(CustomerDetails))
+export default CustomerDetails

@@ -31,7 +31,7 @@ type EmptyBaseProps = {
   onActionClick: () => void;
   icon?: React.ReactElement<{ className?: string }>;
   text: string | React.ReactNode;
-  actionText: string | React.ReactNode | OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+  actionText: string | React.ReactNode;
   completed?: boolean;
 };
 
