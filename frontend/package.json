@@ -46,8 +46,8 @@
     "testURL": "http://localhost:3000"
   },
   "engines": {
-    "node": "17.3.0",
-    "npm": "8.3.0"
+    "node": "18.20.8",
+    "npm": "10.8.2"
   },
   "keywords": [],
   "author": "",
