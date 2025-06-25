@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, Typography, SvgIconTypeMap } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
 import Button from '../../../../atoms/buttons/button/button';
 
 const useStyles = makeStyles((theme) => ({
