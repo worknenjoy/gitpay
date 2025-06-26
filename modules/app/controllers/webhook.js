@@ -3,6 +3,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+console.log('🚨 Heroku reached webhook route')
+
 const i18n = require('i18n')
 const dateFormat = require('dateformat')
 const moment = require('moment')
@@ -83,6 +85,8 @@ i18n.configure({
 })
 
 i18n.init()
+
+console.log('🚀 Initiate webhook controller')
 
 exports.github = async (req, res) => {
   const response = req.body || res.body
