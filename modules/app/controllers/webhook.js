@@ -938,6 +938,7 @@ exports.updateWebhook = async (req, res) => {
         return res.json(req.body)
       break;
       case 'checkout.session.completed':
+        console.log('checkout.session.completed webhook received')
         return await checkoutSessionCompleted(event, req, res)
       break;
     }
