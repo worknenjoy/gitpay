@@ -20,8 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(xFrameOptions())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SECRET_PHRASE,
   saveUninitialized: true,

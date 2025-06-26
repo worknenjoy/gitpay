@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser')
 require('../../models')
 
 const routerAuth = require('./routes/auth')
@@ -22,12 +23,14 @@ const routerLanguage = require('./routes/language')
 const routerPaymentRequest = require('./routes/paymentRequest')
 
 exports.init = (app) => {
+  app.use('/webhooks', bodyParser.raw({ type: 'application/json' }), routerWebhook)
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }))
   app.use('/', routerAuth)
   app.use('/tasks', routerTask)
   app.use('/projects', routerProject)
   app.use('/team', routerTeam)
   app.use('/orders', routerOrder)
-  app.use('/webhooks', routerWebhook)
   app.use('/info', routerInfo)
   app.use('/organizations', routerOrganization)
   app.use('/types', routerTypes)

@@ -293,11 +293,25 @@ exports.github = async (req, res) => {
   // eslint-disable-next-line no-console
 }
 
-exports.updateWebhook = async (req, res) => {
-  // eslint-disable-next-line no-console
 
-  if (req.body.object === 'event') {
-    const event = req.body
+
+exports.updateWebhook = async (req, res) => {
+  console.log('Webhook secret:', process.env.STRIPE_WEBHOOK_SECRET);
+
+  const sig = req.headers['stripe-signature']
+  let event
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET)
+    console.log('✅ Stripe event:', event.type)
+  } catch (err) {
+    console.error('❌ Signature verification failed:', err.message)
+    return res.status(400).send(`Webhook Error: ${err.message}`)
+  }
+  // eslint-disable-next-line no-console
+  console.log('✅ Webhook verified:', event.type);
+
+  if (event) {
     const paid = event.data.object.paid || false
     const status = event.data.object.status
 
