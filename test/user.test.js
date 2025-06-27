@@ -8,7 +8,7 @@ const agent = request.agent(api);
 const models = require('../models');
 const { registerAndLogin, register, login, truncateModels} = require('./helpers')
 const nock = require('nock')
-const githubOrg = require('./data/github.org')
+const githubOrg = require('./data/github/github.org')
 const secrets = require('../config/secrets')
 
 describe("Users", () => {

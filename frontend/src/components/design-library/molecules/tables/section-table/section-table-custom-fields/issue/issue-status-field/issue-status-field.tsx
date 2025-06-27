@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { Chip, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Constants from '../../../../../../../consts'
+import Constants from '../../../../../../../../consts'
 
 const useStyles = makeStyles((theme) => ({
   chipStatusSuccess: {

@@ -11,7 +11,7 @@ import {
   ListItem
 } from '@material-ui/core'
 
-import SubscribeForm from '../../design-library/organisms/forms/subscribe-form/subscribe-form'
+import SubscribeForm from 'design-library/organisms/forms/subscribe-form/subscribe-form'
 import InfoContainer from '../../../containers/info'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'

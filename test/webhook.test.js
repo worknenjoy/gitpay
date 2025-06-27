@@ -8,21 +8,20 @@ const nock = require('nock')
 const { truncateModels, registerAndLogin, createTransfer } = require('./helpers')
 const models = require('../models')
 
-const chargeData = require('./data/charge')
-const transferData = require('./data/transfer')
-const payoutData = require('./data/payout')
-const balanceTransactionData = require('./data/balance.transaction')
-const cardData = require('./data/card')
-const balanceData = require('./data/balance')
-const refundData = require('./data/refund')
-const githubWebhookMain = require('./data/github.event.main')
-const githubWebhookIssue = require('./data/github.issue.create')
-const githubWebhookIssueLabeled = require('./data/github.issue.labeled')
-const invoiceUpdated = require('./data/stripe.invoice.update')
-const invoiceCreated = require('./data/stripe.invoice.create')
-const invoicePaid = require('./data/stripe.invoice.paid')
-const invoiceWebhookPaid = require('./data/stripe.webhook.invoice')
-const { register } = require('module')
+const chargeData = require('./data/stripe/charge')
+const transferData = require('./data/stripe/transfer')
+const payoutData = require('./data/stripe/payout')
+const cardData = require('./data/stripe/card')
+const balanceData = require('./data/stripe/balance')
+const refundData = require('./data/stripe/refund')
+const githubWebhookMain = require('./data/github/github.event.main')
+const githubWebhookIssue = require('./data/github/github.issue.create')
+const githubWebhookIssueLabeled = require('./data/github/github.issue.labeled')
+const invoiceUpdated = require('./data/stripe/stripe.invoice.update')
+const invoiceCreated = require('./data/stripe/stripe.invoice.create')
+const invoicePaid = require('./data/stripe/stripe.invoice.paid')
+const invoiceWebhookPaid = require('./data/stripe/stripe.webhook.invoice')
+const eventCheckout = require('./data/stripe/stripe.webhook.checkout.session.completed')
 
 describe('webhooks', () => {
   beforeEach(async () => {
@@ -31,6 +30,11 @@ describe('webhooks', () => {
     await truncateModels(models.Assign);
     await truncateModels(models.Order);
     await truncateModels(models.Transfer);
+    await truncateModels(models.PaymentRequest);
+  })
+
+  afterEach(async () => {
+    nock.cleanAll()
   })
 
   describe('webhooks for charge', () => {
@@ -938,5 +942,66 @@ describe('webhooks', () => {
         }).catch(done)
     })
   })
+  describe('webhooks for payment links', () => {
+    it('should make a transfer when a payment link is paid', async () => {
+      nock('https://api.stripe.com')
+        .post('/v1/transfers')
+        .reply(200, {
+          id: 'tr_1KkomkBrSjgsps2DGGBtipW4',
+          amount: 1000,
+          currency: 'usd',
+          destination: 'acct_1KkomkBrSjgsps2DGGGtipW4',
+          status: 'paid',
+          transfer_group: 'group_1KkomkBrSjgsps2DGGBtipW4',
+          created: 1633036800,
+          livemode: false,
+          metadata: {
+            payment_link_id: 'plink_1KknpoBrSjgsps2DMwiQEzJ9',
+            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+          }
+        }, {
+          'Content-Type': 'application/json'
+        });
 
+      nock('https://api.stripe.com')
+        .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+        .reply(200, {
+          active: false,
+        })
+      const user = await registerAndLogin(agent)
+      const paymentRequest = models.PaymentRequest.create({
+        title: 'Payment for services',
+        amount: 1000,
+        currency: 'usd',
+        description: 'Payment for services',
+        payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
+        userId: user.body.id
+      });
+      const res = await agent
+        .post('/webhooks')
+        .send(eventCheckout.completed.success)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.id).to.equal('evt_1Q2fklBrSjgsps2Dx0mEXsXv')
+      expect(res.body.data.object.payment_link).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km')
+      const paymentLink = await models.PaymentRequest.findOne({
+        where: {
+          payment_link_id: res.body.data.object.payment_link
+        }
+      })
+      expect(paymentLink).to.exist
+      expect(paymentLink.status).to.equal('paid')
+      expect(paymentLink.amount).to.equal('1000')
+      expect(paymentLink.currency).to.equal('usd')
+      expect(paymentLink.userId).to.equal(user.body.id)
+      expect(paymentLink.description).to.equal('Payment for services')
+      expect(paymentLink.title).to.equal('Payment for services')
+      expect(paymentLink.transfer_status).to.equal('initiated')
+      expect(paymentLink.transfer_id).to.equal('tr_1KkomkBrSjgsps2DGGBtipW4')
+      expect(paymentLink.active).to.equal(false)
+    })
+  })
 })

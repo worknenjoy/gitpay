@@ -7,6 +7,7 @@ import {
   AccountBalanceWallet as WalletIcon,
   LibraryBooks,
   Payment as PaymentIcon,
+  CardMembership as PaymentRequestsIcon,
   AccountBalance as TransferIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
@@ -31,16 +32,18 @@ const ProfileSidebar = ({
       setSelected(1)
     } else if (path.includes('/profile/payments')) {
       setSelected(3)
-    } else if (path.includes('/profile/wallets')) {
+    } else if (path.includes('/profile/payment-requests')) {
       setSelected(4)
-    } else if (path.includes('/profile/transfers')) {
+    } else if (path.includes('/profile/wallets')) {
       setSelected(5)
-    } else if (path.includes('/profile/payouts')) {
+    } else if (path.includes('/profile/transfers')) {
       setSelected(6)
-    } else if (path.includes('/profile/user-account')) {
+    } else if (path.includes('/profile/payouts')) {
       setSelected(7)
-    } else if (path.includes('/profile/payout-settings')) {
+    } else if (path.includes('/profile/user-account')) {
       setSelected(8)
+    } else if (path.includes('/profile/payout-settings')) {
+      setSelected(9)
     } else {
       setSelected(0)
     }
@@ -93,25 +96,32 @@ const ProfileSidebar = ({
                   selected: selected === 3
                 },
                 {
+                  include: userTypes && (userTypes?.includes('contributor')),
+                  onClick: () => history.push('/profile/payment-requests'),
+                  icon: <PaymentRequestsIcon />,
+                  label: <FormattedMessage id="account.profile.paymentRequests.list" defaultMessage="Payment Requests" />,
+                  selected: selected === 4
+                },
+                {
                   include: userTypes && (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
                   onClick: () => history.push('/profile/wallets'),
                   icon: <WalletIcon />,
                   label: <FormattedMessage id="account.profile.wallet.list" defaultMessage="Wallets" />,
-                  selected: selected === 4
+                  selected: selected === 5
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
                   onClick: () => history.push('/profile/transfers'),
                   icon: <TransferIcon />,
                   label: <FormattedMessage id="account.profile.transfer.list" defaultMessage="Transfers" />,
-                  selected: selected === 5
+                  selected: selected === 6
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
                   onClick: () => history.push('/profile/payouts'),
                   icon: <PayoutIcon />,
                   label: <FormattedMessage id="account.profile.payout.list" defaultMessage="Payouts" />,
-                  selected: selected === 6
+                  selected: selected === 7
                 }
               ]
             },
@@ -123,14 +133,14 @@ const ProfileSidebar = ({
                   onClick: () => history.push('/profile/user-account'),
                   icon: <AccountIcon />,
                   label: <FormattedMessage id="account.profile.account.settings" defaultMessage="Account settings" />,
-                  selected: selected === 7
+                  selected: selected === 8
                 },
                 {
                   include: userTypes && (userTypes?.includes('contributor')),
                   onClick: () => history.push('/profile/payout-settings'),
                   icon: <PayoutSettingsIcon />,
                   label: <FormattedMessage id="account.profile.payout.settings" defaultMessage="Payout settings" />,
-                  selected: selected === 8
+                  selected: selected === 9
                 }
               ]
             }

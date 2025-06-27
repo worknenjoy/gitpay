@@ -1,5 +1,5 @@
 import React from 'react';
-import PayoutSettingsBankAccountInfo from '../../../../../design-library/pages/private/payout-settings-bank-account-info/payout-settings-bank-account-info';
+import PayoutSettingsBankAccountInfo from 'design-library/pages/private/payout-settings-bank-account-info/payout-settings-bank-account-info';
 
 const PayoutSettingsBankAccountInfoPage = ({
   user,

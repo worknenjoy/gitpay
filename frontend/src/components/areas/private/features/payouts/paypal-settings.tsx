@@ -1,8 +1,6 @@
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-
+import { useIntl, FormattedMessage } from 'react-intl';
 import {
-  withStyles,
   Grid,
   Typography,
   Card,
@@ -14,16 +12,17 @@ import {
   Input,
   InputLabel
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import messages from '../../shared/messages';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   card: {
     minWidth: 275,
     padding: 0
   },
   cardEmpty: {
     minWidth: 275,
-    textAlign: 'center' as 'center',
+    textAlign: 'center' as const,
     marginBottom: 40
   },
   cardEmptyActions: {
@@ -45,7 +44,7 @@ const styles = theme => ({
   title: {
     marginBottom: 16,
     fontSize: 18,
-    fontWeight: 700 // 'bold' as a number
+    fontWeight: 700
   },
   pos: {
     marginBottom: 12
@@ -54,24 +53,23 @@ const styles = theme => ({
     margin: theme.spacing(1)
   },
   label: {}
-})
-
+}));
 
 const PaypalSettings = ({
-  intl,
   user,
-  updateUser,
-  classes
+  updateUser
 }) => {
+  const classes = useStyles();
+  const intl = useIntl();
 
   const handlePaypalAccount = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     updateUser({
       paypal_id: e.target.paypal_email.value
-    })
-  }
+    });
+  };
 
-  if (!user) return <>Needs user</>
+  if (!user) return <>Needs user</>;
 
   return (
     <form
@@ -145,8 +143,7 @@ const PaypalSettings = ({
         </CardActions>
       </Card>
     </form>
-
   );
-}
+};
 
-export default injectIntl(withStyles(styles)(PaypalSettings));
+export default PaypalSettings;

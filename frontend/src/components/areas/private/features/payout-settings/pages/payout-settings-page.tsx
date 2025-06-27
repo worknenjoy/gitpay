@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
-import ProfileHeader from '../../../../../design-library/molecules/headers/profile-main-header/profile-main-header';
-import PayoutSettings from '../../../../../design-library/pages/private/payout-settings/payout-settings';
+import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header';
+import PayoutSettings from 'design-library/pages/private/payout-settings/payout-settings';
 import PayoutSettingsBankAccountContainer from '../../../../../../containers/account/payout-settings/payouts-settings-bank-account';
 import PayoutSettingsPaypalContainer from '../../../../../../containers/account/payout-settings/payout-settings-paypal';
 import { FormattedMessage } from 'react-intl';

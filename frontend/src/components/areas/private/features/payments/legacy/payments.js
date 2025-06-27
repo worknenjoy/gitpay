@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../../../../public/features/task/messages/task-messages'
 import MomentComponent from 'moment'
-import PaymentProvider from '../../../../../design-library/atoms/badges/payment-provider/payment-provider'
+import PaymentProvider from 'design-library/atoms/badges/payment-provider/payment-provider'
 
 import {
   Container,
@@ -30,8 +30,8 @@ import TaskOrderDetails from '../../../../public/features/task/order/task-order-
 import TaskOrderTransfer from '../../../../public/features/task/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
 import CustomPaginationActionsTable from './payments-table'
-import InvoiceStatus from '../../../../../design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
-import PaymentStatus from '../../../../../design-library/atoms/status/payment-types-status/payment-status/payment-status'
+import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
+import PaymentStatus from 'design-library/atoms/status/payment-types-status/payment-status/payment-status'
 
 const styles = theme => ({
   paper: {

@@ -17,7 +17,7 @@ import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfer-detail'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import { validAccount } from '../../../../../utils/valid-account'
-import AccountRequirements from '../../../../design-library/atoms/alerts/account-requirements/account-requirements'
+import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
 
 
 const transferMessages = defineMessages({

@@ -520,8 +520,19 @@ const messages = defineMessages({
   notificationUpdateErrorDateOfBirthYear: {
     id: 'actions.user.account.update.error.dob.year',
     defaultMessage: 'Invalid year of birth'
+  },
+  notificationPaymentRequestCreateSuccess: {
+    id: 'actions.paymentRequest.create.success',
+    defaultMessage: 'Payment request created successfully'
+  },
+  notificationPaymentRequestCreateError: {
+    id: 'actions.paymentRequest.create.error',
+    defaultMessage: 'We could not create this payment request'
+  },
+  notificationPaymentRequestListError: {
+    id: 'actions.paymentRequest.list.error',
+    defaultMessage: 'We could not list your payment requests'
   }
-
 })
 
 export default messages

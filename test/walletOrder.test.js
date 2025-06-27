@@ -5,9 +5,9 @@ const api = require('../server')
 const agent = request.agent(api)
 const models = require('../models')
 const { truncateModels, registerAndLogin } = require('./helpers')
-const invoiceBasic = require('./data/stripe.invoice.basic')
-const invoiceItem = require('./data/stripe.invoiceitem')
-const customer = require('./data/stripe.customer')
+const invoiceBasic = require('./data/stripe/stripe.invoice.basic')
+const invoiceItem = require('./data/stripe/stripe.invoiceitem')
+const customer = require('./data/stripe/stripe.customer')
 
 describe('WalletOrder', () => {
 

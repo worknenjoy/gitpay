@@ -12,7 +12,7 @@ const PaymentMail = require('../modules/mail/payment')
 const plan = require('../models/plan')
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
-const customerData = require('./data/stripe.customer')
+const customerData = require('./data/stripe/stripe.customer')
 
 describe('orders', () => {
   beforeEach(async () => {

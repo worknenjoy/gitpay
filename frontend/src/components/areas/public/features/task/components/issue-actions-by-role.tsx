@@ -5,7 +5,7 @@ import {
   CreditCard as BountyIcon,
   HowToReg as HowToRegIcon,
 } from '@material-ui/icons';
-import IssueActions from '../../../../../design-library/atoms/buttons/issue-actions/issue-actions';
+import IssueActions from 'design-library/atoms/buttons/issue-actions/issue-actions';
 import TaskPaymentContainer from '../../../../../../containers/task-payment';
 import TaskPaymentFormContainer from '../../../../../../containers/task-payment-form';
 import TaskSolutionDrawer from '../../../../../../containers/send-solution-drawer';

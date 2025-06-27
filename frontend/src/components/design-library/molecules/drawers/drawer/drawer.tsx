@@ -27,16 +27,20 @@ type DrawerProps = {
   open: boolean;
   onClose: any;
   title: any;
+  subtitle?: any;
   children: any;
   actions?: Array<any>;
+  completed?: boolean;
 }
 
 const Drawer = ({
   open,
   onClose,
   title,
+  subtitle,
   children,
-  actions = []
+  actions = [],
+  completed = true
 }: DrawerProps) => {
 
   const classes = useStyles();
@@ -66,9 +70,16 @@ const Drawer = ({
         
           <Box flexGrow={1}>
             <div style={{ padding: 20 }}>
-              <Typography variant="h5" id="form-dialog-title" gutterBottom>
-                {title}
-              </Typography>
+              <div>
+                <Typography variant="h5" id="form-dialog-title" gutterBottom>
+                  {title}
+                </Typography>
+                { subtitle && 
+                  <Typography variant="subtitle2" gutterBottom>
+                    {subtitle}
+                  </Typography>
+                }
+              </div>
               {closeDialogButton()}
               {children}
             </div>
@@ -76,7 +87,7 @@ const Drawer = ({
 
           {actions.length > 0 &&
             <Box>
-              <DrawerActions actions={actions} />
+              <DrawerActions actions={actions} completed={completed} />
             </Box>
           }
         

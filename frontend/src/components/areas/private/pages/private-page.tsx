@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, HashRouter, useHistory } from 'react-router-dom'
-import PrivateBase from '../../../design-library/templates/base/private-base/private-base';
+import PrivateBase from 'design-library/templates/base/private-base/private-base';
 import ProfileOptions from '../features/dashboard/profile-options'
 import { UserAccount } from '../features/account/user-account'
 import UserTasksExploreContainer from '../../../../containers/user-tasks-explore'
 import UserTasksContainer from '../../../../containers/user-tasks'
 import TransfersContainer from '../../../../containers/transfers'
 import PaymentsContainer from '../../../../containers/payments'
+import PaymentRequestContainer from '../../../../containers/payment-requests'
 import WalletsContainer from '../../../../containers/wallets'
 import PayoutsContainer from '../../../../containers/payouts'
 import TaskListProfile from '../../../../containers/task-list-profile'
@@ -95,6 +96,12 @@ const PrivatePage = ({
             exact
             path="/profile/payments"
             component={PaymentsContainer}
+          />
+
+          <Route
+            exact
+            path="/profile/payment-requests"
+            component={PaymentRequestContainer}
           />
 
           <Route
