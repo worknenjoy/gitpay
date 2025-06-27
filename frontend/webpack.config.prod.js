@@ -42,7 +42,9 @@ module.exports = {
       "design-library": path.resolve(__dirname, "src/components/design-library")
     },
     fallback: {
-      stream: 'stream-browserify'
+      stream: 'stream-browserify',
+      buffer: require.resolve('buffer'),
+
     }
   },
   plugins: [
@@ -68,7 +70,8 @@ module.exports = {
       cleanOnceBeforeBuildPatterns: ['!favicon-gitpay.ico']
     }),
     new webpack.ProvidePlugin({
-      process: 'process/browser'
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
     })
   ],
   module: {
