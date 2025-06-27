@@ -7,6 +7,9 @@ import SectionTable from 'design-library/molecules/tables/section-table/section-
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
 import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
+import PaymentRequestStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-status-field/payment-request-status-field'
+import PaymentRequestActiveField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-active-field/payment-request-active-field'
+import PaymentRequestTransferStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-transfer-status-field/payment-request-transfer-status-field'
 
 const paymentRequestMetadata = {
   "active": { sortable: true, numeric: false, dataBaseKey: "active", label: 'Is active?' },
@@ -23,8 +26,8 @@ export const PaymentRequestsTable = ({ paymentRequests }) => {
 
   const customColumnRenderer = {
     active: (item:any) => (
-      <TextField
-        title={item.active ? 'Yes' : 'No'}
+      <PaymentRequestActiveField
+        status={item.active ? 'yes' : 'no'}
       />
     ),
     title: (item:any) => (
@@ -43,13 +46,13 @@ export const PaymentRequestsTable = ({ paymentRequests }) => {
       />
     ),
     status: (item:any) => (
-      <TextField
-        title={item.status}
+      <PaymentRequestStatusField
+        status={item.status}
       />
     ),
     transfer_status: (item:any) => (
-      <TextField
-        title={item.transfer_status}
+      <PaymentRequestTransferStatusField
+        status={item.transfer_status}
       />
     ),
     paymentLink: (item:any) => (

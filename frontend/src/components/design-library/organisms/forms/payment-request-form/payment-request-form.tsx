@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../atoms/inputs/fields/field/field';
 import Alert from '../../../atoms/alerts/alert/alert';
+import ReactPlaceholder from 'react-placeholder';
 
 const useStyles = makeStyles((theme) => ({
   placholder: {
@@ -13,13 +14,14 @@ const useStyles = makeStyles((theme) => ({
 
 interface PaymentRequestFormProps {
   onSubmit?: (e:any, data: any) => void;
+  completed?: boolean;
 }
 
 type PaymentRequestFormHandle = {
   submit: () => void;
 };
 
-const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ onSubmit }, ref) => {
+const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ onSubmit, completed = true }, ref) => {
   const classes = useStyles();
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
@@ -52,7 +54,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         <Alert
           severity="error"
           style={{ marginBottom: 20, marginTop: 20 }}
-          completed={true}
+          completed={completed}
         >
           <div style={{ marginBottom: 20 }}>
             <FormattedMessage
@@ -72,18 +74,26 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             name="title"
             type="text"
             placeholder="Title of your service"
+            completed={completed}
           />
         </Grid>
         <Grid item xs={12} md={12}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Description"
-            name="description"
-            placeholder="Describe your service"
-            multiline
+          <ReactPlaceholder
+            type="text"
             rows={4}
-          />
+            ready={completed}
+            showLoadingAnimation
+          >
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Description"
+              name="description"
+              placeholder="Describe your service"
+              multiline
+              rows={4}
+            />
+          </ReactPlaceholder>
         </Grid>
         <Grid item xs={12} md={12}>
           <Field
@@ -92,6 +102,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             type="number"
             placeholder="Enter the amount"
             inputProps={{ min: 0, step: '0.01' }}
+            completed={completed}
             endAdornment={
               <div style={{ marginLeft: 8 }}>
                 <i>

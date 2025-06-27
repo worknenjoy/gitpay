@@ -30,6 +30,7 @@ type DrawerProps = {
   subtitle?: any;
   children: any;
   actions?: Array<any>;
+  completed?: boolean;
 }
 
 const Drawer = ({
@@ -38,7 +39,8 @@ const Drawer = ({
   title,
   subtitle,
   children,
-  actions = []
+  actions = [],
+  completed = true
 }: DrawerProps) => {
 
   const classes = useStyles();
@@ -85,7 +87,7 @@ const Drawer = ({
 
           {actions.length > 0 &&
             <Box>
-              <DrawerActions actions={actions} />
+              <DrawerActions actions={actions} completed={completed} />
             </Box>
           }
         

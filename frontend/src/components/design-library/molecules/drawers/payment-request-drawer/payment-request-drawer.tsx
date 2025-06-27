@@ -6,17 +6,20 @@ interface PaymentRequestDrawerProps {
   open: boolean;
   onClose: () => void;
   onSuccess?: (e:any, data:any) => void;
+  completed?: boolean;
 }
 
 const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
   open,
   onClose,
-  onSuccess
+  onSuccess,
+  completed = true
 }) => {
   const formRef = useRef<{ submit: () => void }>(null);
   
   return (
     <Drawer
+      completed={completed}
       open={open}
       onClose={onClose}
       title="New Payment request"
@@ -40,6 +43,7 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
       <PaymentRequestForm
         ref={formRef}
         onSubmit={onSuccess}
+        completed={completed}
       />
     </Drawer>
   );

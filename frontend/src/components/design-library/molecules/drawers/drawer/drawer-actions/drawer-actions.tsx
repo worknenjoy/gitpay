@@ -1,19 +1,17 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import Button from 'design-library/atoms/buttons/button/button';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: theme.spacing(2)
-  },
-  button: {
-    marginLeft: theme.spacing(1)
+    padding: theme.spacing(2),
+    marginLeft: theme.spacing(1),
   }
 }));
 
-const DrawerActions = ({ actions }) => {
+const DrawerActions = ({ actions, completed = true }) => {
   const classes = useStyles();
 
   return (
@@ -23,11 +21,10 @@ const DrawerActions = ({ actions }) => {
           onClick={action.onClick}
           variant={action.variant}
           color={action.color}
-          className={classes.button}
           disabled={action.disabled}
-        >
-          {action.label}
-        </Button>
+          label={action.label}
+          completed={completed}
+        />
       ))}
     </div>
   );

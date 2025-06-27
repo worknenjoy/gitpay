@@ -32,16 +32,20 @@ const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentReq
   const classes = useStyles()
   const { completed, data } = paymentRequests
 
+  const [ createPaymentRequestCompleted, setCreatePaymentRequestCompleted ] = React.useState(true)
   const [openNewPaymentRequestDrawer, setOpenNewPaymentRequestDrawer] = React.useState(false)
 
   const handlePaymentRequestCreate = async (e, data) => {
     e.preventDefault()
     try {
+      setCreatePaymentRequestCompleted(false)
       await createPaymentRequest(data)
       setOpenNewPaymentRequestDrawer(false)
       listPaymentRequests() // Refresh the list after creating a new payment request
     } catch (error) {
       console.error('Error creating payment request:', error)
+    } finally {
+      setCreatePaymentRequestCompleted(true)
     }
   }
 
@@ -67,12 +71,13 @@ const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentReq
         }
       />
 
-      {data.length === 0 ? (
+      {data.length === 0 && completed ? (
 
         <Paper>
           <div style={{ marginBottom: 20 }}>
             <div style={{ marginTop: 20, marginBottom: 20, padding: 20 }}>
-              <EmptyPaymentRequest onActionClick={() => setOpenNewPaymentRequestDrawer(true)} /></div>
+              <EmptyPaymentRequest onActionClick={() => setOpenNewPaymentRequestDrawer(true)} />
+            </div>
           </div>
         </Paper>
 
@@ -85,6 +90,7 @@ const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentReq
         open={openNewPaymentRequestDrawer}
         onClose={() => setOpenNewPaymentRequestDrawer(false)}
         onSuccess={handlePaymentRequestCreate}
+        completed={createPaymentRequestCompleted}
       />
 
 
