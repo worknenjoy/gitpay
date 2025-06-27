@@ -1,11 +1,7 @@
 import React from 'react';
 import useStyles from './payment-request-status-field.styles';
-import {
-  HourglassEmpty as PendingIcon,
-  PlayCircleOutline as InitiatedIcon,
-  CheckCircleOutlineTwoTone as CompletedIcon,
-  ErrorOutline as ErrorIcon,
-} from '@material-ui/icons';
+
+
 
 import BaseStatus from 'design-library/atoms/status/base-status/base-status';
 
@@ -16,7 +12,7 @@ interface PaymentRequestTransferStatusFieldProps {
 
 const PaymentRequestTransferStatusField: React.FC<PaymentRequestTransferStatusFieldProps> = ({
   status,
-  completed = true,
+  completed = true
 }) => {
   const classes = useStyles();
 
@@ -24,23 +20,23 @@ const PaymentRequestTransferStatusField: React.FC<PaymentRequestTransferStatusFi
     {
       status: 'pending_payment',
       label: 'Pending Payment',
-      color: 'pending',
+      color: 'pending'
     },
     {
       status: 'initiated',
       label: 'Initiated',
-      color: 'initiated',
+      color: 'initiated'
     },
     {
       status: 'completed',
       label: 'Completed',
-      color: 'completed',
+      color: 'completed'
     },
     {
       status: 'error',
       label: 'Error',
-      color: 'error',
-    },
+      color: 'error'
+    }
   ];
 
   return (

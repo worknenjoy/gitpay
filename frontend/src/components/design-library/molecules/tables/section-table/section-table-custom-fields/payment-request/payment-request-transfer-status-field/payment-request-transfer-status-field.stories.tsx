@@ -1,34 +1,33 @@
-import React from 'react';
 import PaymentRequestStatusField from './payment-request-transfer-status-field';
 
 const meta = {
   title: 'Design Library/Molecules/Tables/Fields/PaymentRequest/PaymentRequestStatusField',
   component: PaymentRequestStatusField,
   args: {
-    status: 'pending_payment',
-  },
+    status: 'pending_payment'
+  }
 };
 
 export const Pending = {
   args: {
-    status: 'pending_payment',
-  },
+    status: 'pending_payment'
+  }
 };
 
 export const Initiated = {
   args: {
-    status: 'initiated',
-  },
+    status: 'initiated'
+  }
 };
 
 export const Completed = {
   args: {
-    status: 'completed',
-  },
+    status: 'completed'
+  }
 };
 
 export const Error = {
   args: {
-    status: 'error',
-  },
+    status: 'error'
+  }
 };

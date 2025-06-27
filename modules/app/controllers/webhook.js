@@ -292,18 +292,22 @@ exports.github = async (req, res) => {
 
 
 exports.updateWebhook = async (req, res) => {
-  const sig = req.headers['stripe-signature']
-  let event
+  const sig = req.headers['stripe-signature'];
+  const connectedAccount = req.headers['stripe-account']; // Present if from a connected account
 
+  const secret = connectedAccount
+    ? process.env.STRIPE_WEBHOOK_SECRET_CONNECT
+    : process.env.STRIPE_WEBHOOK_SECRET_PLATFORM;
+
+  let event;
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET)
-    console.log('✅ Stripe event:', event.type)
+    event = stripe.webhooks.constructEvent(req.body, sig, secret);
   } catch (err) {
-    console.error('❌ Signature verification failed:', err.message)
-    return res.status(400).send(`Webhook Error: ${err.message}`)
+    console.error('❌ Webhook signature verification failed:', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
   }
-  // eslint-disable-next-line no-console
-  console.log('✅ Webhook verified:', event.type);
+
+  console.log('✅ Received event:', event.type);
 
   if (event) {
     const paid = event.data.object.paid || false

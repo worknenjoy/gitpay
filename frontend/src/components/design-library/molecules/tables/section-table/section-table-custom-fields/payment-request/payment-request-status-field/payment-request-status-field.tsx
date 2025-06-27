@@ -1,9 +1,7 @@
 import React from 'react';
 import useStyles from './payment-request-status-field.styles';
-import { 
-  InfoSharp as InfoIcon,
-  CheckCircleOutlineTwoTone as PaidIcon,
-} from '@material-ui/icons';
+
+
 
 import BaseStatus from 'design-library/atoms/status/base-status/base-status';
 
@@ -14,7 +12,7 @@ interface PaymentRequestStatusFieldProps {
 
 const PaymentRequestStatusField: React.FC<PaymentRequestStatusFieldProps> = ({
   status,
-  completed = true,
+  completed = true
 }) => {
   const classes = useStyles();
 
@@ -22,13 +20,13 @@ const PaymentRequestStatusField: React.FC<PaymentRequestStatusFieldProps> = ({
     {
       status: 'open',
       label: 'Open',
-      color: 'open',
+      color: 'open'
     },
     {
       status: 'paid',
       label: 'Paid',
-      color: 'paid',
-    },
+      color: 'paid'
+    }
   ];
 
   return (
