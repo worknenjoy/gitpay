@@ -3,7 +3,6 @@ const sslRedirect = require('heroku-ssl-redirect')
 const app = express()
 const session = require('express-session')
 const compression = require('compression')
-const bodyParser = require('body-parser')
 require('./models')
 const passport = require('passport')
 require('./config/passport')
@@ -18,6 +17,9 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   app.use(sslRedirect())
 }
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(xFrameOptions())
 app.use(session({

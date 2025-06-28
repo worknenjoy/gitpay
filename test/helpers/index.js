@@ -1,4 +1,3 @@
-const { create } = require('core-js/core/object')
 const models = require('../../models')
 const testEmail = `teste+${Math.random()*100}@gmail.com`
 const testPassword = 'test12345678'
@@ -33,23 +32,23 @@ const activate = (agent, res) => {
     .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
 }
 
-const registerAndLogin = (agent, params = {}) => {
-  return register(agent, params)
-    .then((a) => {
-      return activate(agent, a).then((active) => {
-        return login(agent, params).then(
-          (res) => {
-            return {...a, headers: res.headers}
-          }
-        ).catch((e) => {
-          console.log('error on login', e)
-        })
-      }).catch((e) => {
-        console.log('error on activate', e)
-      })
-    }).catch((e) => {
-      console.log('error on register', e)
-    })
+const registerAndLogin = async (agent, params = {}) => {
+  try {
+    const a = await register(agent, params)
+    try {
+      await activate(agent, a)
+      try {
+        const res = await login(agent, params)
+        return { ...a, headers: res.headers }
+      } catch (e) {
+        console.log('error on login', e)
+      }
+    } catch (e) {
+      console.log('error on activate', e)
+    }
+  } catch (e) {
+    console.log('error on register', e)
+  }
 }
 
 const createTask = (agent, params = {}, userParams = {}) => {
