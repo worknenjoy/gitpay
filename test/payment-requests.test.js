@@ -16,7 +16,7 @@ const samplePaymentLink = require('./data/stripe/stripe.paymentLinks.create');
 describe("PaymentRequests", () => {
   beforeEach(async () => {
     await truncateModels(models.User);
-    //await truncateModels(models.PaymentRequest);
+    await truncateModels(models.PaymentRequest);
   })
   afterEach(async () => {
     nock.cleanAll()
@@ -42,6 +42,7 @@ describe("PaymentRequests", () => {
       .reply(200, samplePaymentLink.stripe.paymentLinks.create);
 
     const user = await registerAndLogin(agent);
+    
     const res = await agent
       .post('/payment-requests')
       .set('Content-Type', 'application/json')
@@ -54,6 +55,7 @@ describe("PaymentRequests", () => {
         amount: 100.00,
         currency: 'USD'
       });
+    
     expect(res.body).to.exist;
     expect(res.body.id).to.exist;
     expect(res.body.title).to.equal('Test Payment Request');

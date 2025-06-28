@@ -43,7 +43,7 @@ module.exports = {
     },
     fallback: {
       stream: 'stream-browserify',
-      buffer: require.resolve('buffer'),
+      buffer: require.resolve('buffer')
 
     }
   },

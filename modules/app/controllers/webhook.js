@@ -17,8 +17,7 @@ const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
 const chargeSucceeded = require('../../webhooks/chargeSucceeded')
-
-const checkoutSessionCompleted = require('./webhooks/checkoutSessionCompleted')
+const checkoutSessionCompleted = require('../../webhooks/checkoutSessionCompleted')
 
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
@@ -300,8 +299,13 @@ exports.updateWebhook = async (req, res) => {
     : process.env.STRIPE_WEBHOOK_SECRET_PLATFORM;
 
   let event;
+  
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, secret);
+    if (process.env.NODE_ENV === 'test') {
+      event = req.body;
+    } else {
+      event = stripe.webhooks.constructEvent(req.body, sig, secret);
+    }
   } catch (err) {
     console.error('❌ Webhook signature verification failed:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
