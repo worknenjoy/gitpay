@@ -89,6 +89,7 @@ const OrderCron = {
               return JSON.parse(e.error);
             });
             const orderDetailsResult = await orderDetails();
+            console.log(`📜 [OrderCron][checkExpiredPaypalOrders] PayPal order details for order ID: ${order.id}:`, orderDetailsResult);
             if (orderDetailsResult["name"] === 'RESOURCE_NOT_FOUND') {
               console.log(`🕑 [OrderCron][checkExpiredPaypalOrders] PayPal resource not found for order ID: ${order.id}. Marking as expired...`);
               await models.Order.update({ status: 'expired', paid: false }, { where: { id: o.dataValues.id } }).then(orderUpdated => {
