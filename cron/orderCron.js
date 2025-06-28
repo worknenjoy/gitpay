@@ -9,13 +9,13 @@ const OrderCron = {
   verify: async () => {
     const orders = await models.Order.findAll({ where: {
       amount: {
-        $gt: 0
+        [Op.gt]: 0
       },
       status: {
-        $eq: 'succeeded'
+        [Op.eq]: 'succeeded'
       },
       provider: {
-        $eq: 'paypal'
+        [Op.eq]: 'paypal'
       }
     },
     include: [ models.User, models.Task ]
