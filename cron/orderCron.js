@@ -89,13 +89,14 @@ const OrderCron = {
               return JSON.parse(e.error);
             });
             const orderDetailsResult = await orderDetails();
-            const authorizationDetails = orderDetailsResult?.['purchase_units']?.length && orderDetailsResult['purchase_units']?.[0]?.['payments']?.[0]?.['authorizations']?.[0]
+            const authorizationDetails = orderDetailsResult?.['purchase_units']?.length && orderDetailsResult['purchase_units']?.[0]?.['payments']?.[0]
               ? orderDetailsResult['purchase_units'][0]['payments'][0]['authorizations'][0]
               : null;
+            const authorizationStatus = authorizationDetails?.["status"];
             console.log(`📜 [OrderCron][checkExpiredPaypalOrders] PayPal order details for order ID: ${order.id}:`, orderDetailsResult);
             console.log(`🔍 [OrderCron][checkExpiredPaypalOrders] PayPal authorization details for ID: ${order.id}`, authorizationDetails);
-            console.log(`⏳ [OrderCron][checkExpiredPaypalOrders] Checking if authorization for order ID: ${order.id} with STATUS ${authorizationDetails?.["status"]} has expired...`);
-            if (orderDetailsResult["name"] === 'RESOURCE_NOT_FOUND' || authorizationDetails["status"] === 'VOIDED' || authorizationDetails["status"] === 'CANCELED') {
+            console.log(`⏳ [OrderCron][checkExpiredPaypalOrders] Checking if authorization for order ID: ${order.id} with STATUS ${authorizationStatus} has expired...`);
+            if (orderDetailsResult["name"] === 'RESOURCE_NOT_FOUND') {
               console.log(`🕑 [OrderCron][checkExpiredPaypalOrders] PayPal resource not found for order ID: ${order.id}. Marking as expired...`);
               await models.Order.update({ status: 'expired', paid: false }, { where: { id: o.dataValues.id } }).then(orderUpdated => {
                 if (orderUpdated[0] === 1) {
