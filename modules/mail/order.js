@@ -31,7 +31,7 @@ if(constants.canSendEmail) {
     }
     user?.receiveNotifications && request(
       to,
-      i18n.__('mail.order.expiredOrders.subject'),
+      i18n.__('mail.order.expiredOrders.subject') || "The payment for an issue on Gitpay expired",
       [
         {
           type: 'text/html',

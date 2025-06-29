@@ -139,7 +139,7 @@ const OrderCron = {
       console.log(`❗ [OrderCron][sendExpiredOrderEmail] Error sending expired order email for order ID: ${orderId}:`, error);
       return false;
     }
-  },
+  }
 }
 
 module.exports = OrderCron
