@@ -21,42 +21,44 @@ module.exports.authorization_expired = {
       description: 'Development services provided by Gitpay',
       soft_descriptor: 'PAYPAL *WORKNENJOY',
       shipping: {},
-      payments: [
-        {
-          status: 'VOIDED',
-          id: 'TEST_AUTH_ID',
-          amount: { currency_code: 'USD', value: '32.00' },
-          seller_protection: {
-            status: 'ELIGIBLE',
-            dispute_categories: ['ITEM_NOT_RECEIVED', 'UNAUTHORIZED_TRANSACTION']
-          },
-          expiration_time: '2025-06-28T07:52:46Z',
-          links: [
-            {
-              href: 'https://api.sandbox.paypal.com/v2/payments/authorizations/TEST_AUTH_ID',
-              rel: 'self',
-              method: 'GET'
+      payments: {
+        authorizations: [
+          {
+            status: 'VOIDED',
+            id: 'TEST_AUTH_ID',
+            amount: { currency_code: 'USD', value: '32.00' },
+            seller_protection: {
+              status: 'ELIGIBLE',
+              dispute_categories: ['ITEM_NOT_RECEIVED', 'UNAUTHORIZED_TRANSACTION']
             },
-            {
-              href: 'https://api.sandbox.paypal.com/v2/payments/authorizations/TEST_AUTH_ID/capture',
-              rel: 'capture',
-              method: 'POST'
-            },
-            {
-              href: 'https://api.sandbox.paypal.com/v2/payments/authorizations/TEST_AUTH_ID/void',
-              rel: 'void',
-              method: 'POST'
-            },
-            {
-              href: 'https://api.sandbox.paypal.com/v2/checkout/orders/TEST_ORDER_ID',
-              rel: 'up',
-              method: 'GET'
-            }
-          ],
-          create_time: '2025-05-30T07:52:46Z',
-          update_time: '2025-06-28T07:53:19Z'
-        }
-      ]
+            expiration_time: '2025-06-28T07:52:46Z',
+            links: [
+              {
+                href: 'https://api.sandbox.paypal.com/v2/payments/authorizations/TEST_AUTH_ID',
+                rel: 'self',
+                method: 'GET'
+              },
+              {
+                href: 'https://api.sandbox.paypal.com/v2/payments/authorizations/TEST_AUTH_ID/capture',
+                rel: 'capture',
+                method: 'POST'
+              },
+              {
+                href: 'https://api.sandbox.paypal.com/v2/payments/authorizations/TEST_AUTH_ID/void',
+                rel: 'void',
+                method: 'POST'
+              },
+              {
+                href: 'https://api.sandbox.paypal.com/v2/checkout/orders/TEST_ORDER_ID',
+                rel: 'up',
+                method: 'GET'
+              }
+            ],
+            create_time: '2025-05-30T07:52:46Z',
+            update_time: '2025-06-28T07:53:19Z'
+          }
+        ]
+      }
     }
   ],
   payer: {

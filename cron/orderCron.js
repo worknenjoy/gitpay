@@ -89,14 +89,16 @@ const OrderCron = {
               return JSON.parse(e.error);
             });
             const orderDetailsResult = await orderDetails();
-            const authorizationDetails = orderDetailsResult?.['purchase_units']?.length && orderDetailsResult['purchase_units']?.[0]?.['payments']?.[0]
-              ? orderDetailsResult['purchase_units'][0]['payments'][0]['authorizations'][0]
-              : null;
-            const authorizationStatus = authorizationDetails?.["status"];
+            const purchaseUnits = orderDetailsResult['purchase_units'] || [];
+            const authorizationDetails = purchaseUnits.length > 0 ? purchaseUnits[0] : null;
+            const paymentAuthorization = authorizationDetails?.['payments']?.['authorizations'] || [];
+            const authorizationStatus = paymentAuthorization.length > 0 ? paymentAuthorization[0]['status'] : null;
             console.log(`📜 [OrderCron][checkExpiredPaypalOrders] PayPal order details for order ID: ${order.id}:`, orderDetailsResult);
+            console.log(`📦 [OrderCron][checkExpiredPaypalOrders] Purchase units for order ID: ${order.id}:`, purchaseUnits);
+            console.log(`💳 [OrderCron][checkExpiredPaypalOrders] Payment authorizations for order ID: ${order.id}:`, paymentAuthorization);
             console.log(`🔍 [OrderCron][checkExpiredPaypalOrders] PayPal authorization details for ID: ${order.id}`, authorizationDetails);
             console.log(`⏳ [OrderCron][checkExpiredPaypalOrders] Checking if authorization for order ID: ${order.id} with STATUS ${authorizationStatus} has expired...`);
-            if (orderDetailsResult["name"] === 'RESOURCE_NOT_FOUND') {
+            if (orderDetailsResult["name"] === 'RESOURCE_NOT_FOUND' || authorizationStatus === 'VOIDED' || authorizationStatus === 'EXPIRED' || authorizationStatus === 'CANCELED') {
               console.log(`🕑 [OrderCron][checkExpiredPaypalOrders] PayPal resource not found for order ID: ${order.id}. Marking as expired...`);
               await models.Order.update({ status: 'expired', paid: false }, { where: { id: o.dataValues.id } }).then(orderUpdated => {
                 if (orderUpdated[0] === 1) {
