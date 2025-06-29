@@ -121,24 +121,6 @@ const OrderCron = {
       console.log('ℹ️ [OrderCron][checkExpiredPaypalOrders] No PayPal orders to check.');
     }
     return orders;
-  },
-  sendExpiredOrderEmail: async (orderId) => {
-    try {
-      const order = await models.Order.findOne({
-        where: { id: orderId },
-        include: [models.User, models.Task]
-      });
-      if (!order) {
-        console.log(`❌ [OrderCron][sendExpiredOrderEmail] Order ID: ${orderId} not found.`);
-        return false;
-      }
-      await orderMail.expiredOrders(order.dataValues);
-      console.log(`✅ [OrderCron][sendExpiredOrderEmail] Expired order email sent for order ID: ${orderId}.`);
-      return true;
-    } catch (error) {
-      console.log(`❗ [OrderCron][sendExpiredOrderEmail] Error sending expired order email for order ID: ${orderId}:`, error);
-      return false;
-    }
   }
 }
 

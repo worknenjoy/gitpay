@@ -4,15 +4,6 @@ const constants = require('./constants')
 const i18n = require('i18n')
 const emailTemplate = require('./templates/base-content')
 
-i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
-  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
-  defaultLocale: 'en',
-  updateFiles: false
-})
-
-i18n.init()
-
 const OrderMail = {
   expiredOrders: (order) => {}
 }
@@ -31,7 +22,8 @@ if(constants.canSendEmail) {
     }
     user?.receiveNotifications && request(
       to,
-      i18n.__('mail.order.expiredOrders.subject') || "The payment for an issue on Gitpay expired",
+      //i18n.__('mail.order.expiredOrders.content.main'),
+      "The pre-authorized payment for an issue on Gitpay expired",
       [
         {
           type: 'text/html',
