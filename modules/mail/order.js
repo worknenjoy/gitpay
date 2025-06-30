@@ -22,8 +22,7 @@ if(constants.canSendEmail) {
     }
     user?.receiveNotifications && request(
       to,
-      //i18n.__('mail.order.expiredOrders.content.main'),
-      "The pre-authorized payment for an issue on Gitpay expired",
+      i18n.__('mail.order.expiredOrders.subject'),
       [
         {
           type: 'text/html',
