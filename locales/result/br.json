@@ -167,7 +167,7 @@
   "issue.invalid.script.subject": "A issue que você criou no Gitpay foi deletada",
   "issue.invalid.script.message": "A issue que você importou com a {{url}} para o Gitpay foi deletada da nossa lista no Gitpay porque é uma URL de issue inválida.",
   "mail.order.expiredOrders.subject": "O pagamento pré-autorizado para uma tarefa no Gitpay expirou",
-  "mail.order.expiredOrders.content.main": "The pre-authorized payment of ${{value}} for the issue <a href=\"{{url}}\">{{title}}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Checkout your payments on https://gitpay.me/#/profile/payments to see your payments.",
+  "mail.order.expiredOrders.content.main": "O pagamento pré-autorizado de ${{value}} pela issue <a href=\"{{url}}\">{{title}}</a> feito usando o Paypal expirou, e você precisa efetuar um novo pagamento para manter a recompensa disponível. Confira seus pagamentos em https://gitpay.me/#/profile/pagamentos para ver seus pagamentos.",
   "mail.webhook.wallet.invoice.intro": "Olá {{name}},",
   "mail.webhook.wallet.invoice.subject": "Nova Fatura para Adicionar Fundos à sua Carteira Gitpay",
   "mail.webhook.wallet.invoice.message": "<p>Geramos uma nova fatura de ${{amount}} para adicionar fundos à sua carteira {{walletName}} no Gitpay.</p>",
