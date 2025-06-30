@@ -40,7 +40,7 @@ module.exports.findExpiredOrders = async () => {
   try {
     const expiredOrders = await models.Order.findAll({
       where: {
-        status: 'expired',
+        status: 'expired'
       },
       include: [models.User, models.Task]
     });
