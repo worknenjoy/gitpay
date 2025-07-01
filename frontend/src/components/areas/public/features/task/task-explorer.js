@@ -19,6 +19,7 @@ import { Page, PageContent } from 'app/styleguide/components/Page'
 import TaskListContainer from '../../../../../containers/task-list'
 import ProjectListContainer from '../../../../../containers/project-list'
 import OrganizationListContainer from '../../../../../containers/organization-list'
+import TaskFiltersContainer from '../../../../../containers/task-filter'
 
 const styles = theme => ({
   root: {
@@ -199,9 +200,15 @@ const TaskExplorer = (props) => {
         <Container fixed maxWidth='lg'>
           <Grid container className={ classes.root }>
             <Grid item xs={ 12 } md={ 12 }>
-              { state.value === 0 &&
-                <TaskListContainer />
-              }
+              { state.value === 0 && (
+                <div>
+                  <TaskFiltersContainer
+                    filterTasks={ props.filterTasks }
+                    baseUrl="/tasks/"
+                  />
+                  <TaskListContainer />
+                </div>
+              )}
               { state.value === 1 &&
                 <ProjectListContainer />
               }
