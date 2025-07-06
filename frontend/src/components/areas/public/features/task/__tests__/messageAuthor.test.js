@@ -1,44 +1,38 @@
 /**
  * @jest-environment jsdom
  */
-
 import React from 'react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import MessageAuthor from '../task-message-author'
-import { mount } from 'enzyme'
 
-xdescribe('components', () => {
-  describe('message author component', () => {
-    it('should start a new message author form dialog empty state', () => {
-      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name="Foo" />)
+xdescribe('MessageAuthor component', () => {
+  it('should render with props', () => {
+    render(<MessageAuthor userId={1} taskId={1} name="Foo" />)
 
-      expect(component).toEqual({})
-      expect(component.state().message).toEqual('')
-      expect(component.props().userId).toEqual(1)
-      expect(component.props().taskId).toEqual(1)
-      expect(component.props().name).toEqual('Foo')
-      component.unmount()
-    })
+    const input = screen.getByRole('textbox')
+    expect(input).toBeInTheDocument()
+  })
 
-    it('should start a new messageAuthor and set state', () => {
-      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name="Foo" />)
-      component.setState({ message: 'other foo' })
-      expect(component).toEqual({})
-      expect(component.state().message).toEqual('other foo')
-      component.unmount()
-    })
+  it('should update message state on input change', () => {
+    render(<MessageAuthor userId={1} taskId={1} name="Foo" />)
 
-    xit('should start a new checkout and check if a payment is requested and change state', () => {
-      const component = mount(<MessageAuthor userId={ 1 } taskId={ 1 } name="Foo" />)
-      component.find('input').first().simulate('change', {
-        target: {
-          name: 'message',
-          value: 'foo message written'
-        }
-      })
-      component.find('form').simulate('submit')
-      expect(component).toEqual({})
-      expect(component.state().message).toEqual('foo message written')
-      component.unmount()
-    })
+    const input = screen.getByRole('textbox')
+    fireEvent.change(input, { target: { value: 'foo message written' } })
+
+    expect(input.value).toBe('foo message written')
+  })
+
+  it('should submit the form', () => {
+    render(<MessageAuthor userId={1} taskId={1} name="Foo" />)
+
+    const input = screen.getByRole('textbox')
+    fireEvent.change(input, { target: { value: 'foo message written' } })
+
+    const form = screen.getByRole('form') || input.closest('form')
+    if (form) {
+      fireEvent.submit(form)
+    }
+
+    expect(input.value).toBe('foo message written') // valor não muda por padrão sem lógica interna
   })
 })
