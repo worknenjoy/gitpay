@@ -20,7 +20,7 @@
     "rollback-test": "NODE_ENV=test node migrate.js prev",
     "reset:dev": "node migrate.js reset-hard",
     "reset:test": "NODE_ENV=test node migrate.js reset-hard",
-    "start:dev": "nodemon ./server.js --ignore '/frontend/*'",
+    "start:dev": "nodemon ./index.js --ignore '/frontend/*'",
     "start": "node ./index.js",
     "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --timeout 30000 --exit test/*.test.js",
     "test:e2e": "playwright test",
