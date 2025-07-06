@@ -4,8 +4,7 @@ const requestPromise = require('request-promise')
 const URLSearchParams = require('url-search-params')
 const URL = require('url')
 
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(function orderUpdate (orderParameters) {
     return models.Order.findOne({

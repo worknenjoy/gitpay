@@ -1,8 +1,7 @@
 const AssignMail = require('../mail/assign')
 const Promise = require('bluebird')
 const models = require('../../models')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists

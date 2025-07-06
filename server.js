@@ -38,10 +38,6 @@ i18n.configure({
 app.use(i18n.init)
 
 dailyJob.start()
-// weeklyJob.start()
-// weeklyJobLatest.start()
-// weeklyJobBountiesClosedNotPaid.start();
-
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -56,9 +52,4 @@ app.get('/recruitment', (req, res) => {
 
 load.init(app)
 
-app.listen(app.get('port'), () => {
-  // eslint-disable-next-line no-console
-  console.log('Node app is running on port', app.get('port'))
-})
-
-module.exports = app
+module.exports = app;

@@ -69,9 +69,10 @@ describe("PaymentRequests", () => {
     expect(res.body.payment_url).to.equal('https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04')
   });
   it('should list all payment requests for a user', async () => {
-    const user = await registerAndLogin(agent);
-    const { body, headers } = user;
-    const paymentRequestSample = await models.PaymentRequest.create({
+    const register = await registerAndLogin(agent);
+    const { body, headers } = register;
+
+    await models.PaymentRequest.create({
       userId: body.id,
       title: 'Sample Payment Request',
       description: 'This is a sample payment request',

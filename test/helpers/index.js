@@ -1,5 +1,5 @@
 const models = require('../../models')
-const testEmail = `teste+${Math.random()*100}@gmail.com`
+const testEmail = `teste+${Math.random() * 100}@gmail.com`
 const testPassword = 'test12345678'
 const testName = 'Test'
 
@@ -39,7 +39,8 @@ const registerAndLogin = async (agent, params = {}) => {
       await activate(agent, a)
       try {
         const res = await login(agent, params)
-        return { ...a, headers: res.headers }
+        return { body: a.body, headers: res.headers }
+
       } catch (e) {
         console.log('error on login', e)
       }
@@ -65,8 +66,8 @@ const createTask = (agent, params = {}, userParams = {}) => {
       status: params.status,
       userId: user.id
     }, {
-      include: [ models.User ]
-    
+      include: [models.User]
+
     }).then(task => {
       return task
     }).catch((e) => {
@@ -78,7 +79,7 @@ const createTask = (agent, params = {}, userParams = {}) => {
 }
 
 const createAssign = (agent, params = {}, userParams = {}) => {
-  return register(agent,{
+  return register(agent, {
     ...userParams,
     email: `${Math.random()}anotheruser@example.com`,
     password: '123345',
@@ -91,11 +92,11 @@ const createAssign = (agent, params = {}, userParams = {}) => {
       TaskId: params.taskId,
       userId: user.id
     }, {
-      include: [ models.User ]
+      include: [models.User]
     }).then((assigned) => {
       const assignedData = assigned.dataValues
-      return models.Task.update({assigned: assignedData.id}, {where: {id: assignedData.TaskId}}).then( task => {
-      return assigned
+      return models.Task.update({ assigned: assignedData.id }, { where: { id: assignedData.TaskId } }).then(task => {
+        return assigned
       }).catch((e) => {
         console.log('error on updateTask', e)
       })
@@ -141,11 +142,11 @@ const createPayout = (params = {}) => {
 }
 
 async function truncateModels(model) {
-  await model.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-    if(rowDeleted === 1){
+  await model.truncate({ where: {}, cascade: true, restartIdentity: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
+    if (rowDeleted === 1) {
       console.log('Deleted successfully');
     }
-  }, function(err){
+  }, function (err) {
     console.log(err);
   });
 }

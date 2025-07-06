@@ -1,7 +1,6 @@
 const Promise = require('bluebird')
 const models = require('../../models')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(function userBankAccountUpdate({ userParams, bank_account }) {
   return models.User

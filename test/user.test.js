@@ -1,5 +1,5 @@
 'use strict'
-
+const nock = require('nock')
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
@@ -7,13 +7,13 @@ const api = require('../server');
 const agent = request.agent(api);
 const models = require('../models');
 const { registerAndLogin, register, login, truncateModels} = require('./helpers')
-const nock = require('nock')
 const githubOrg = require('./data/github/github.org')
 const secrets = require('../config/secrets')
 
 describe("Users", () => {
 
   beforeEach(async () => {
+
     await truncateModels(models.Task);
     await truncateModels(models.User);
     await truncateModels(models.Assign);
@@ -21,7 +21,7 @@ describe("Users", () => {
     await truncateModels(models.Transfer);
   })
   afterEach(async () => {
-    nock.cleanAll()
+    nock.cleanAll();
   })
 
   describe('findAll User', () => {
@@ -317,6 +317,7 @@ describe("Users", () => {
     })
     it('Should delete user', (done) => {
       registerAndLogin(agent).then(res => {
+        console.log(res.statusCode, res.headers)
         const userId = res.body.id
         agent
           .delete(`/user/delete/`)
@@ -444,6 +445,7 @@ describe("Users", () => {
       }).catch(done)
     });
     it('should try get customer info with customer id set', (done) => {
+      
       nock('https://api.stripe.com')
         .get('/v1/customers/cus_Ec8ZOuHXnSlBh8')
         .reply(200, {
@@ -467,7 +469,11 @@ describe("Users", () => {
             expect(user.body.id).to.equal('cus_Ec8ZOuHXnSlBh8');
             done(err);
           })
-      }).catch(done)
+      }).catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+        done(err);
+      })
     });
   });
 

@@ -13,8 +13,7 @@ const SendMail = require('../../mail/mail')
 const IssueClosedMail = require('../../mail/issueClosed')
 const WalletMail = require('../../mail/wallet')
 
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../../shared/stripe/stripe')()
 
 const chargeSucceeded = require('../../webhooks/chargeSucceeded')
 const checkoutSessionCompleted = require('../../webhooks/checkoutSessionCompleted')
