@@ -282,7 +282,7 @@ exports.github = async (req, res) => {
   }
   else {
     console.log('send req body that as it is.....')
-    return res.status(200).json(event);
+    return res.status(200).json(req.body);
   }
   // eslint-disable-next-line no-console
 }
