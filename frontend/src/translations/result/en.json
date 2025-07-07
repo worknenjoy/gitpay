@@ -576,7 +576,7 @@
   "task.card.interested.subtitle": "This is interested users to conclude this issue",
   "task.card.interested.title": "Interest to work on this issue",
   "task.card.payments.title": "Payments on Gitpay",
-  "task.card.subtitle": "This payments will be transferred after the task be finished",
+  "task.card.subtitle": "These payments will be transferred after the task has been closed",
   "task.card.table.header.actions": "Actions",
   "task.card.table.header.due.date": "Due date",
   "task.card.table.header.issue": "Issue",

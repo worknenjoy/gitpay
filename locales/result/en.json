@@ -166,12 +166,12 @@
   "mail.issue.claim.confirmation.body": "<p>The issue <a href=\"{{url}}\">{{title}}</a> you imported on Gitpay was claimed by the author.<br><br>So now you don't have admin access to this issue anymore.<br><br>Comments: {{comments}}</p>",
   "issue.invalid.script.subject": "The issue you created on Gitpay was deleted",
   "issue.invalid.script.message": "The issue you imported with the {{url}} to Gitpay was deleted from our list on Gitpay because it is an invalid issue URL.",
-  "mail.order.expiredOrders.subject": "The payment for an issue on Gitpay expired",
-  "mail.order.expiredOrders.content.main": "The pre-authorized payment of ${{value}} for the issue <a href=\"{{url}}\">{{title}}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Please visit https://gitpay.me/#/profile/payments to update your payment.",
+  "mail.order.expiredOrders.subject": "The pre-authorized payment for an issue on Gitpay expired",
+  "mail.order.expiredOrders.content.main": "The pre-authorized payment of ${{value}} for the issue <a href=\"{{url}}\">{{title}}</a> made using Paypal expired, and you need to make a new payment to keep the bounty available. Checkout your payments on https://gitpay.me/#/profile/payments to see your payments.",
   "mail.webhook.wallet.invoice.intro": "Hello {{name}},",
   "mail.webhook.wallet.invoice.subject": "New Invoice for Adding Funds to Your Gitpay Wallet",
   "mail.webhook.wallet.invoice.message": "<p>We generated a new invoice of ${{amount}} to add funds to your {{walletName}} wallet on Gitpay.</p>",
   "mail.webhook.wallet.invoice.button": "Pay invoice",
   "mail.webhook.wallet.invoice.footer": "You’re receiving this message because you recently requested to add funds to your <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a> wallet.",
-  "mail.paymentRequest.initiated.message": "A payment request was initiated for your Payment request.<br/><br/><strong>Title:</strong> {{title}}<br/><strong>Description:</strong> {{description}}<br/><strong>Requested Amount:</strong>{{amount}} USD<br/><strong>Payment Link:</strong> <a href=\"{{paymentUrl}}\">Pay here</a><br/><br/>After processing fees, the final transfer amount will be <strong>{{transfer_amount}} USD</strong>."
+  "mail.paymentRequest.initiated.message": "A payment request has been initiated for your Payment request.<br/><br/><strong>Title:</strong> {{title}}<br/><strong>Description:</strong> {{description}}<br/><strong>Requested Amount:</strong>{{amount}} USD<br/><strong>Payment Link:</strong> <a href=\"{{paymentUrl}}\">Pay here</a><br/><br/>After processing fees, the final transfer amount will be <strong>{{transfer_amount}} USD</strong>."
 }
