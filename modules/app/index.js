@@ -24,6 +24,10 @@ const routerPaymentRequest = require('./routes/paymentRequest')
 
 exports.init = (app) => {
   app.use('/webhooks', express.raw({ type: 'application/json' }), routerWebhook)
+
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
+
   app.use('/', routerAuth)
   app.use('/tasks', routerTask)
   app.use('/projects', routerProject)

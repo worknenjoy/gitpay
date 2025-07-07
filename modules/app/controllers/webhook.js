@@ -282,7 +282,7 @@ exports.github = async (req, res) => {
   }
   else {
     console.log('send req body that as it is.....')
-    return res.json(req.body)
+    return res.status(200).json(event);
   }
   // eslint-disable-next-line no-console
 }
@@ -301,7 +301,7 @@ exports.updateWebhook = async (req, res) => {
   
   try {
     if (process.env.NODE_ENV === 'test') {
-      event = req.body;
+      event = JSON.parse(req.body.toString());
     } else {
       event = stripe.webhooks.constructEvent(req.body, sig, secret);
     }
@@ -338,7 +338,7 @@ exports.updateWebhook = async (req, res) => {
               })
             )
           }
-          return res.json(req.body)
+          return res.status(200).json(event);
         }).catch(error => res.status(400).send(error))
         /* eslint-disable no-unreachable */
         break
@@ -376,7 +376,7 @@ exports.updateWebhook = async (req, res) => {
                         )
                       }
                     }
-                    return res.json(req.body)
+                    return res.status(200).json(event);
                   })
                   .catch(e => {
                     return res.status(400).send(e)
@@ -387,7 +387,7 @@ exports.updateWebhook = async (req, res) => {
               return res.status(400).send(e)
             })
           }
-        return res.json(req.body)
+        return res.status(200).json(event);
         break
       case 'charge.refunded':
         return models.Order.update(
@@ -422,7 +422,7 @@ exports.updateWebhook = async (req, res) => {
                       )
                     }
                   }
-                  return res.json(req.body)
+                  return res.status(200).json(event);
                 })
                 .catch(e => {
                   return res.status(400).send(e)
@@ -468,7 +468,7 @@ exports.updateWebhook = async (req, res) => {
 
                       })
                     )
-                    return res.json(req.body)
+                    return res.status(200).json(event);
                   }
                 }
               })
@@ -552,9 +552,9 @@ exports.updateWebhook = async (req, res) => {
                   })
                 )
               }
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
-            return res.json(req.body)
+            return res.status(200).json(event);
           })
           .catch(e => {
             // eslint-disable-next-line no-console
@@ -640,9 +640,9 @@ exports.updateWebhook = async (req, res) => {
                   )
                 }
               }
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
-            return res.json(req.body)
+            return res.status(200).json(event);
           })
           .catch(e => {
             return res.status(400).send(e)
@@ -658,10 +658,10 @@ exports.updateWebhook = async (req, res) => {
               source: event.data.object.id
             }
           })
-          return res.json(req.body)
+          return res.status(200).json(event);
         } catch (error) {
           console.log('error', error)
-          return res.json(req.body)
+          return res.status(200).json(event);
         }
         break
       case 'invoice.finalized':
@@ -681,11 +681,11 @@ exports.updateWebhook = async (req, res) => {
             })
           if(walletOrder?.id) {
             WalletMail.invoiceCreated(invoice,  walletOrder, walletOrder.Wallet.User)
-            return res.json(req.body)
+            return res.status(200).json(event);
           }
         } catch (error) {
           console.log('error', error)
-          return res.json(req.body)
+          return res.status(200).json(event);
         }
       case 'transfer.created':
         models.Transfer.findOne({
@@ -724,7 +724,7 @@ exports.updateWebhook = async (req, res) => {
                     url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
                   })
                 )
-                return res.json(req.body)
+                return res.status(200).json(event);
               })
               .catch(e => {
                 return res.status(400).send(e)
@@ -749,7 +749,7 @@ exports.updateWebhook = async (req, res) => {
                   url: `${event.data.object.id}`
                 })
               )
-              return res.json(req.body)
+              return res.status(200).json(event);
             }).catch(e => {
               return res.status(400).send(e)
             })
@@ -770,7 +770,7 @@ exports.updateWebhook = async (req, res) => {
                 }
               })
 
-              if (existingPayout) return res.json(req.body)
+              if (existingPayout) return res.status(200).json(event);
                 
               const payout = await models.Payout.build({
                 userId: user.dataValues.id,
@@ -795,7 +795,7 @@ exports.updateWebhook = async (req, res) => {
                   date: moment(date).format('LLL')
                 })
               )
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
           })
           .catch(e => {
@@ -821,7 +821,7 @@ exports.updateWebhook = async (req, res) => {
                   amount: event.data.object.amount / 100
                 })
               )
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
           })
           .catch(e => {
@@ -857,7 +857,7 @@ exports.updateWebhook = async (req, res) => {
                     date: date
                   })
                 )
-                return res.json(req.body)
+                return res.status(200).json(event);
               }
             })
             .catch(e => {
@@ -878,10 +878,10 @@ exports.updateWebhook = async (req, res) => {
                   ${event.data.object.available.map(b => `<li>${b.currency}: ${b.amount}</li>`).join('')}
                   </ul>
               `)
-        return res.json(req.body)
+        return res.status(200).json(event);
         break
       default:
-        return res.json(req.body)
+        return res.status(200).json(event);
         break
       case 'invoice.payment_succeeded':
         return models.User.findOne(
@@ -914,10 +914,10 @@ exports.updateWebhook = async (req, res) => {
                     returning: true
                   }
                 ).then(order => {
-                  return res.json(req.body)
+                  return res.status(200).json(event);
                 })
               }
-              return res.json(req.body)
+              return res.status(200).json(event);
             })
           }
         }).catch(e => {
@@ -954,7 +954,7 @@ exports.updateWebhook = async (req, res) => {
             }
           })
         }
-        return res.json(req.body)
+        return res.status(200).json(event);
       break;
       case 'checkout.session.completed':
         console.log('checkout.session.completed webhook received')

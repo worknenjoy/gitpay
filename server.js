@@ -18,9 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(sslRedirect())
 }
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
 app.use(xFrameOptions())
 app.use(session({
   secret: process.env.SECRET_PHRASE,

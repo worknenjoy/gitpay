@@ -20,9 +20,6 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "setupFiles": [
-      "<rootDir>/stripe-v3.js"
-    ],
     "moduleFileExtensions": [
       "js",
       "jsx",
@@ -100,6 +97,8 @@
     "@mui/material": "^5.11.8",
     "@mui/styled-engine-sc": "^5.11.0",
     "@sindresorhus/slugify": "^2.2.0",
+    "@stripe/react-stripe-js": "^3.7.0",
+    "@stripe/stripe-js": "^7.4.0",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.21.4",
     "babel-jest": "^23.4.2",
@@ -172,7 +171,6 @@
     "react-scroll-to-component": "^1.0.2",
     "react-show-more-text": "^1.4.6",
     "react-spring": "^8.0.27",
-    "react-stripe-elements": "^6.1.2",
     "react-tap-event-plugin": "^2.0.1",
     "react-text-mask": "^5.5.0",
     "reactjs-localstorage": "0.0.6",

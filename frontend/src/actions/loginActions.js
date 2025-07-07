@@ -121,7 +121,7 @@ export const loggedIn = () => {
   }
   else {
     return dispatch => {
-      return Promise.reject(dispatch(loggedInError({ error: 'not logged' })))
+      return Promise.resolve(dispatch(loggedInError({ error: 'not logged' })))
     }
   }
 }
