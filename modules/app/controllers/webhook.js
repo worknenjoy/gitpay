@@ -300,6 +300,7 @@ exports.updateWebhook = async (req, res) => {
   console.log('SIG:', sig);
   console.log('IS BUFFER:', Buffer.isBuffer(req.body));
   console.log('RAW BODY:', req.body.toString());
+  console.log('connected account', connectedAccount);
 
   let event;
   
