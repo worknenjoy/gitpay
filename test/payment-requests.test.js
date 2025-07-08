@@ -16,7 +16,7 @@ const samplePaymentLink = require('./data/stripe/stripe.paymentLinks.create');
 describe("PaymentRequests", () => {
   beforeEach(async () => {
     await truncateModels(models.User);
-    //await truncateModels(models.PaymentRequest);
+    await truncateModels(models.PaymentRequest);
   })
   afterEach(async () => {
     nock.cleanAll()
@@ -42,6 +42,7 @@ describe("PaymentRequests", () => {
       .reply(200, samplePaymentLink.stripe.paymentLinks.create);
 
     const user = await registerAndLogin(agent);
+    
     const res = await agent
       .post('/payment-requests')
       .set('Content-Type', 'application/json')
@@ -54,6 +55,7 @@ describe("PaymentRequests", () => {
         amount: 100.00,
         currency: 'USD'
       });
+    
     expect(res.body).to.exist;
     expect(res.body.id).to.exist;
     expect(res.body.title).to.equal('Test Payment Request');
@@ -67,9 +69,10 @@ describe("PaymentRequests", () => {
     expect(res.body.payment_url).to.equal('https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04')
   });
   it('should list all payment requests for a user', async () => {
-    const user = await registerAndLogin(agent);
-    const { body, headers } = user;
-    const paymentRequestSample = await models.PaymentRequest.create({
+    const register = await registerAndLogin(agent);
+    const { body, headers } = register;
+
+    await models.PaymentRequest.create({
       userId: body.id,
       title: 'Sample Payment Request',
       description: 'This is a sample payment request',

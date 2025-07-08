@@ -1,8 +1,7 @@
 const Transfer = require('../../models').Transfer
 const Promise = require('bluebird')
 const requestPromise = require('request-promise')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
 

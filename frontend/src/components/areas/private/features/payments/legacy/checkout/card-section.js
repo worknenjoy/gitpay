@@ -1,22 +1,15 @@
 // CardSection.js
 import React from 'react'
-import { CardElement } from 'react-stripe-elements'
-import ReactPlaceholder from 'react-placeholder'
+import { CardElement } from '@stripe/react-stripe-js'
 
 const CardSection = (props) => {
   return (
     <label>
-      <ReactPlaceholder
-        type="text"
-        rows={4}
-        ready={props.stripe}
-      >
-        <CardElement
-          style={{
-            base: { fontSize: '22px', marginTop: 20, marginBottom: 20 }
-          }}
-        />
-      </ReactPlaceholder>
+      <CardElement
+        style={{
+          base: { fontSize: '22px', marginTop: 20, marginBottom: 20 }
+        }}
+      />
     </label>
   )
 }

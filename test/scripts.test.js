@@ -21,6 +21,9 @@ describe('Scripts', () => {
     await truncateModels(models.Order);
     await truncateModels(models.Transfer);
     await truncateModels(models.Payout);
+  })
+
+  afterEach(async () => {
     nock.cleanAll()
   })
 

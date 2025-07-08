@@ -2,10 +2,9 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
-const models = require('../../../../models/index.js');
-const TransferMail = require('../../../mail/transfer.js');
+const stripe = require('../shared/stripe/stripe')()
+const models = require('../../models')
+const TransferMail = require('../mail/transfer.js');
 
 module.exports = async function checkoutSessionCompleted(event, req, res) {
   try {
