@@ -1,3 +1,18 @@
+/* eslint-disable no-console */
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+const i18n = require('i18n')
+const dateFormat = require('dateformat')
+const moment = require('moment')
+const models = require('../../../../models')
+const constants = require('../../../mail/constants')
+const TaskMail = require('../../../mail/task')
+const SendMail = require('../../../mail/mail')
+const IssueClosedMail = require('../../../mail/issueClosed')
+
+
 exports.github = async (req, res) => {
   const response = req.body || res.body
   const labels = response && response.issue && response.issue.labels
