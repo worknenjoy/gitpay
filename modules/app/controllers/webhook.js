@@ -307,6 +307,11 @@ exports.updateWebhook = async (req, res) => {
     if (process.env.NODE_ENV === 'test') {
       event = JSON.parse(req.body.toString());
     } else {
+      console.log('[Stripe Webhook] Signature:', req.headers['stripe-signature']);
+      console.log('[Stripe Webhook] Secret in use:', secret);
+      console.log('environment is', process.env.NODE_ENV);
+      console.log('environment STRIPE_WEBHOOK_SECRET_PLATFORM is', process.env.STRIPE_WEBHOOK_SECRET_PLATFORM);
+      console.log('environment STRIPE_WEBHOOK_SECRET_CONNECT is', process.env.STRIPE_WEBHOOK_SECRET_CONNECT);
       event = stripe.webhooks.constructEvent(req.body, sig, secret);
     }
   } catch (err) {
