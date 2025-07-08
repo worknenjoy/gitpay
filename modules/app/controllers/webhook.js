@@ -297,6 +297,10 @@ exports.updateWebhook = async (req, res) => {
     ? process.env.STRIPE_WEBHOOK_SECRET_CONNECT
     : process.env.STRIPE_WEBHOOK_SECRET_PLATFORM;
 
+  console.log('SIG:', sig);
+  console.log('IS BUFFER:', Buffer.isBuffer(req.body));
+  console.log('RAW BODY:', req.body.toString());
+
   let event;
   
   try {
