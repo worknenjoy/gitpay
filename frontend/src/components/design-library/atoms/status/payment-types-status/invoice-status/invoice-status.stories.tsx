@@ -1,9 +1,8 @@
-import React from 'react';
 import InvoiceStatus from './invoice-status';
 
 export default {
   title: 'Design Library/Atoms/Status/Payments/InvoiceStatus',
-  component: InvoiceStatus,
+  component: InvoiceStatus
 };
 
 
@@ -34,6 +33,6 @@ args : { status: 'refunded' }
 export const Loading ={
 args : {
   status: 'pending',
-  completed: false,
+  completed: false
 }
 };

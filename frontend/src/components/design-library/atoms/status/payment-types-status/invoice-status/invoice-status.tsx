@@ -15,7 +15,7 @@ interface InvoiceStatusProps {
 
 const InvoiceStatus: React.FC<InvoiceStatusProps> = ({
   status,
-  completed = true,
+  completed = true
 }) => {
   const classes = useStyles();
 
@@ -25,59 +25,59 @@ const InvoiceStatus: React.FC<InvoiceStatusProps> = ({
       label: 'Pending',
       color: 'pending',
       icon: <InfoIcon className={classes.pending} />,
-      message: 'Your invoice is pending. It may require additional actions to complete.',
+      message: 'Your invoice is pending. It may require additional actions to complete.'
     },
     {
       status: 'draft',
       label: 'Draft',
       color: 'draft',
       icon: <InactiveIcon className={classes.draft} />,
-      message: 'This invoice is in draft state and has not been finalized yet.',
+      message: 'This invoice is in draft state and has not been finalized yet.'
     },
     {
       status: 'open',
       label: 'Open',
       color: 'open',
-      icon: <InfoIcon className={classes.open} />,
+      icon: <InfoIcon className={classes.open} />
     },
     {
       status: 'paid',
       label: 'Paid',
       color: 'paid',
-      icon: <ActiveIcon className={classes.paid} />,
+      icon: <ActiveIcon className={classes.paid} />
     },
     {
       status: 'failed',
       label: 'Failed',
       color: 'failed',
       icon: <InactiveIcon className={classes.failed} />,
-      message: 'This invoice payment has failed. Please retry or contact support.',
+      message: 'This invoice payment has failed. Please retry or contact support.'
     },
     {
       status: 'uncollectible',
       label: 'Uncollectible',
       color: 'uncollectible',
-      icon: <InactiveIcon className={classes.uncollectible} />,
+      icon: <InactiveIcon className={classes.uncollectible} />
     },
     {
       status: 'void',
       label: 'Void',
       color: 'void',
-      icon: <InactiveIcon className={classes.void} />,
+      icon: <InactiveIcon className={classes.void} />
     },
     {
       status: 'refunded',
       label: 'Refunded',
       color: 'refunded',
-      icon: <InfoIcon className={classes.refunded} />,
+      icon: <InfoIcon className={classes.refunded} />
     },
     {
       status: 'unknown',
       label: 'Unknown',
       color: 'unknown',
       icon: <QuestionInfoIcon className={classes.unknown} />,
-      message: 'Your status is unknown. Please check back later.',
-    },
+      message: 'Your status is unknown. Please check back later.'
+    }
   ];
 
   return (

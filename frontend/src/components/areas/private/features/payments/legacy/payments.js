@@ -10,7 +10,7 @@ import {
   withStyles,
   Button,
   Link,
-  Typography,
+  Typography
 } from "@material-ui/core";
 
 import {
@@ -39,7 +39,7 @@ const styles = theme => ({
     marginTop: 10,
     marginBottom: 10,
     textAlign: "left",
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   button: {
     width: 100,
@@ -47,8 +47,8 @@ const styles = theme => ({
     margin: 5
   },
   icon: {
-    marginLeft: 5,
-  },
+    marginLeft: 5
+  }
 });
 
 const Payments = ({
@@ -66,7 +66,7 @@ const Payments = ({
   transferOrder,
   refundOrder,
   updateOrder,
-  intl,
+  intl
 }) => {
   const [cancelPaypalConfirmDialog, setCancelPaypalConfirmDialog] =
     useState(false);
@@ -83,7 +83,7 @@ const Payments = ({
     failed: intl.formatMessage(messages.failStatus),
     canceled: intl.formatMessage(messages.canceledStatus),
     refunded: intl.formatMessage(messages.refundedStatus),
-    expired: intl.formatMessage(messages.expiredStatus),
+    expired: intl.formatMessage(messages.expiredStatus)
   };
 
   useEffect(() => {
@@ -378,7 +378,7 @@ const Payments = ({
         {retryOrCancelButton(item, userId)}
         {transferButton(item, userId)}
         {refundButton(item, userId)}
-      </div>,
+      </div>
     ]);
   };
 
@@ -397,7 +397,7 @@ const Payments = ({
               intl.formatMessage(messages.cardTableHeaderValue),
               intl.formatMessage(messages.cardTableHeaderPayment),
               intl.formatMessage(messages.cardTableHeaderCreated),
-              intl.formatMessage(messages.cardTableHeaderActions),
+              intl.formatMessage(messages.cardTableHeaderActions)
             ]}
             payments={
               orders && orders.data && orders.data.length
@@ -440,7 +440,7 @@ Payments.propTypes = {
   cancelPaypalPayment: PropTypes.func,
   transferOrder: PropTypes.func,
   refundOrder: PropTypes.func,
-  intl: PropTypes.object,
+  intl: PropTypes.object
 };
 
 export default injectIntl(withStyles(styles)(Payments));

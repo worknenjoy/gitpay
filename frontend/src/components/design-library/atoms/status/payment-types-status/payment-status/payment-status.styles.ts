@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     
         refunded: {
           backgroundColor: blue[500],
-          color: theme.palette.common.white,
+          color: theme.palette.common.white
         },
     canceled: {
       backgroundColor: theme.palette.grey[500],
