@@ -6,13 +6,16 @@ import {
   Typography,
   Button
 } from '@material-ui/core'
-import { injectStripe } from 'react-stripe-elements'
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 
 import CardSection from './card-section'
 import UserSection from './user-section'
 import Coupon from 'design-library/molecules/form-section/coupon-form/coupon'
 
 const CheckoutForm = (props) => {
+  const stripe = useStripe()
+  const elements = useElements()
+
   const [checkoutFormState, setCheckoutFormState] = useState({
     email: null,
     fullname: null,
@@ -33,118 +36,89 @@ const CheckoutForm = (props) => {
     couponApplied: false
   })
 
-  const { couponStoreState } = props
+  const { couponStoreState, user, price, formatedPrice } = props
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault()
-
     setCheckoutFormState({ ...checkoutFormState, paymentRequested: true })
 
-    // Within the context of `Elements`, this call to createToken knows which Element to
-    // tokenize, since there's only one in this group.
-    if (!checkoutFormState.fullname) {
-      setCheckoutFormState({ ...checkoutFormState, error: { fullname: true } })
+    if ((!checkoutFormState.fullname || checkoutFormState.fullname.length < 3 ) && !checkoutFormState.authenticated && !checkoutFormState.userId) {
+      setCheckoutFormState((prev) => ({ ...prev, error: { ...prev.error, fullname: true }, paymentRequested: false }))
       return
-    }
-    else {
-      setCheckoutFormState({ ...checkoutFormState, error: { fullname: false } })
     }
 
     if (!checkoutFormState.email) {
-      setCheckoutFormState({ ...checkoutFormState, error: { email: true } })
-    }
-    else {
-      setCheckoutFormState({ ...checkoutFormState, error: { email: false } })
-    }
-    if (!props.stripe) {
+      setCheckoutFormState((prev) => ({ ...prev, error: { ...prev.error, email: true }, paymentRequested: false }))
       return
     }
-    props.stripe
-      .createToken({ name: checkoutFormState.fullname })
-      .then(({ token }) => {
-        if (token) {
-          try {
-            props.onPayment({
-              id: props.task,
-              Orders: {
-                source_id: token.id,
-                currency: 'usd',
-                provider: 'stripe',
-                amount: props.price,
-                email: checkoutFormState.email,
-                userId: checkoutFormState.userId,
-                plan: props.plan
-              },
-              coupon: couponState.couponApplied ? {
-                code: couponState.coupon ? couponState.coupon : null,
-                originalOrderPrice: props.price
-              } : null
-            })
-            props.onClose()
-          }
-          catch (e) {
-            console.log('error to process your payment', e)
-            props.addNotification(
-              'payment.message.error', e.message
-            )
-            setCheckoutFormState({
-              ...checkoutFormState,
-              paymentRequested: false
-            })
-          }
-        }
-        else {
-          props.addNotification('payment.message.error', 'No token')
-          setCheckoutFormState({
-            ...checkoutFormState,
-            paymentRequested: false
-          })
-        }
-      })
-      .catch(e => {
-        // eslint-disable-next-line no-console
-        console.log('error to create token')
-        // eslint-disable-next-line no-console
-        console.log(e)
-        props.addNotification('payment.message.error', 'error to create token')
-        setCheckoutFormState({
-          ...checkoutFormState,
-          paymentRequested: false
-        })
-      })
 
-    // However, this line of code will do the same thing:
-    // props.stripe.createToken({type: 'card', name: 'Jenny Rosen'});
+    if (!stripe || !elements) {
+      props.addNotification('payment.message.error', 'Stripe not initialized')
+      setCheckoutFormState((prev) => ({ ...prev, paymentRequested: false }))
+      return
+    }
+
+    const cardElement = elements.getElement(CardElement)
+
+    try {
+      const { token } = await stripe.createToken(cardElement, { name: checkoutFormState.fullname })
+
+      if (token) {
+        props.onPayment({
+          id: props.task,
+          Orders: {
+            source_id: token.id,
+            currency: 'usd',
+            provider: 'stripe',
+            amount: price,
+            email: checkoutFormState.email,
+            userId: checkoutFormState.userId,
+            plan: props.plan
+          },
+          coupon: couponState.couponApplied ? {
+            code: couponState.coupon || null,
+            originalOrderPrice: price
+          } : null
+        })
+        props.onClose()
+      } else {
+        throw new Error('No token received')
+      }
+    } catch (e) {
+      console.log('Error creating token or processing payment:', e)
+      props.addNotification('payment.message.error', e.message || 'Error processing payment')
+      setCheckoutFormState((prev) => ({ ...prev, paymentRequested: false }))
+    }
   }
 
   const onChange = (ev) => {
     ev.preventDefault()
-    let formData = {}
-    formData[ev.target.name] = ev.target.value
-    setCheckoutFormState({ ...checkoutFormState, ...formData, paymentRequested: false })
+    setCheckoutFormState((prev) => ({
+      ...prev,
+      [ev.target.name]: ev.target.value,
+      paymentRequested: false
+    }))
   }
 
   useEffect(() => {
-    const { user } = props
-
     if (user && user.id) {
-      setCheckoutFormState({
-        ...checkoutFormState,
+      setCheckoutFormState((prev) => ({
+        ...prev,
         authenticated: true,
         fullname: user.name,
         email: user.email,
         userId: user.id
-      })
+      }))
     }
-  }, [])
+  }, [user])
 
   useEffect(() => {
-    setCouponState({ ...couponState, couponApplied: false })
+    setCouponState((prev) => ({ ...prev, couponApplied: false }))
   }, [couponState.couponInput])
 
   const setCouponApplied = () => {
     if (couponStoreState.completed && Object.keys(couponStoreState.coupon).length > 0) {
-      setCouponState({ ...couponState, couponApplied: true })
+      setCouponState((prev) => ({ ...prev, couponApplied: true }))
     }
   }
 
@@ -157,71 +131,68 @@ const CheckoutForm = (props) => {
   }, [handleCouponApplied])
 
   const showCouponInput = () => {
-    setCouponState({ ...couponState, couponInput: true })
+    setCouponState((prev) => ({ ...prev, couponInput: true }))
   }
 
   const handleCouponInput = (event) => {
-    setCouponState({ ...couponState, coupon: event.target.value })
+    setCouponState((prev) => ({ ...prev, coupon: event.target.value }))
   }
 
   const applyCoupon = () => {
-    props.validateCoupon(couponState.coupon, props.price)
+    props.validateCoupon(couponState.coupon, price)
   }
 
   const logged = checkoutFormState.authenticated
-  const { user, price } = props
 
   return (
-    <form
-      onSubmit={ handleSubmit }
-      onChange={ onChange }
-      style={ { marginTop: 20 } }
-    >
+    <form onSubmit={ handleSubmit } onChange={ onChange } style={ { marginTop: 20 } }>
       <Grid container spacing={ 3 }>
         <Grid item xs={ 12 } style={ { marginBottom: 20 } }>
-          { logged ? (
+          {logged ? (
             <div>
-              { user && user.name ? (
-                <div>
-                  <Typography variant="caption">
-                    <FormattedMessage id="checkout.loggedas" defaultMessage="Logged as" />
-                  </Typography>
-                  <Typography variant="body1">
-                    { `${checkoutFormState.fullname} (${checkoutFormState.email})` }
-                  </Typography>
-                </div>
-              ) : (
-                <UserSection error={ checkoutFormState.error } name={ checkoutFormState.fullname } email={ checkoutFormState.email } />
-              ) }
+              <Typography variant="caption">
+                <FormattedMessage id="checkout.loggedas" defaultMessage="Logged as" />
+              </Typography>
+              <Typography variant="body1">
+                { `${checkoutFormState.fullname} (${checkoutFormState.email})` }
+              </Typography>
             </div>
           ) : (
             <UserSection error={ checkoutFormState.error } />
-          ) }
+          )}
         </Grid>
+
         <Grid item xs={ 12 }>
-          <CardSection { ...props } />
+          <CardSection />
         </Grid>
+
         <Grid item xs={ 12 }>
           <Coupon
             couponState={ couponState }
             handleCouponInput={ handleCouponInput }
             showCouponInput={ showCouponInput }
             applyCoupon={ applyCoupon }
-            couponStoreState={ couponStoreState.coupon } />
+            couponStoreState={ couponStoreState.coupon }
+          />
         </Grid>
+
         <Grid item xs={ 12 }>
-          <div style={ { marginTop: 20, marginBottom: 0, float: 'right' } }>
+          <div style={ { marginTop: 20, float: 'right' } }>
             <Button
               type="submit"
               variant="contained"
               color="secondary"
               disabled={ checkoutFormState.paymentRequested || price === 0 }
             >
-              {
-                (couponStoreState.coupon.orderPrice !== null || couponStoreState.coupon.orderPrice !== undefined) && couponStoreState.coupon.orderPrice >= 0 && couponState.couponApplied
-                  ? <FormattedMessage id="checkout.payment.action" defaultMessage="Pay {price}" values={ { price: `$${couponStoreState.coupon.orderPrice}` } } />
-                  : <FormattedMessage id="checkout.payment.action" defaultMessage="Pay {price}" values={ { price: props.formatedPrice } } />
-              }
+              <FormattedMessage
+                id="checkout.payment.action"
+                defaultMessage="Pay {price}"
+                values={{
+                  price: couponState.couponApplied && couponStoreState.coupon.orderPrice >= 0
+                    ? `$${couponStoreState.coupon.orderPrice}`
+                    : formatedPrice
+                }}
+              />
             </Button>
           </div>
         </Grid>
@@ -237,9 +208,11 @@ CheckoutForm.propTypes = {
   onClose: PropTypes.func,
   addNotification: PropTypes.func,
   price: PropTypes.any,
-  priceAfterFee: PropTypes.string,
-  user: PropTypes.object
+  formatedPrice: PropTypes.string,
+  user: PropTypes.object,
+  plan: PropTypes.string,
+  couponStoreState: PropTypes.object,
+  validateCoupon: PropTypes.func
 }
 
-export const CheckoutFormPure = CheckoutForm
-export default injectStripe(CheckoutForm)
+export default CheckoutForm

@@ -10,8 +10,7 @@ const models = require('../models')
 const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const PaymentMail = require('../modules/mail/payment')
 const plan = require('../models/plan')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../modules/shared/stripe/stripe')()
 const customerData = require('./data/stripe/stripe.customer')
 
 describe('orders', () => {

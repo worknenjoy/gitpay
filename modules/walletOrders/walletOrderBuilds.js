@@ -1,8 +1,7 @@
 
 const Promise = require('bluebird')
 const Decimal = require('decimal.js')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 const WalletOrder = require('../../models').WalletOrder
 const Wallet = require('../../models').Wallet
 const User = require('../../models').User

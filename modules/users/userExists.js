@@ -1,13 +1,19 @@
 const models = require('../../models')
 
 const userExists = async userAttributes => {
+  const conditions = {}
+  if (userAttributes.id) {
+    conditions.id = userAttributes.id
+  }
+  if (userAttributes.email) {
+    conditions.email = userAttributes.email
+  }
   try {
     const user = await models.User
       .findOne({
         where: {
-          email: userAttributes.email
+          ...conditions
         },
-        
         include: [
           models.Type,
           {
@@ -18,7 +24,6 @@ const userExists = async userAttributes => {
             }]
           }
         ]
-        
       })
     if (!user) return false
 
@@ -41,6 +46,7 @@ const userExists = async userAttributes => {
       createdAt: user.dataValues.createdAt,
       updatedAt: user.dataValues.updatedAt
     } */
+   
     return user
   }
   catch (error) {

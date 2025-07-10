@@ -1,24 +1,26 @@
 /**
  * @jest-environment jsdom
  */
-
 import React from 'react'
+import { render, screen } from '@testing-library/react'
+import { IntlProvider } from 'react-intl'
 import TeamCard from '../TeamCard'
-import { mount } from 'enzyme'
 
-xdescribe('components', () => {
-  describe('Card component', () => {
-    it('should start a new Card with no data', () => {
-      const component = mount(<TeamCard />)
+const renderWithIntl = (content, { locale = 'en', messages = {} } = {}) =>
+  render(
+    <IntlProvider locale={locale} messages={messages}>
+      {content}
+    </IntlProvider>
+  )
 
-      expect(component).toEqual({})
-      component.unmount()
-    })
+xdescribe('TeamCard component', () => {
+  it('should render with no data', () => {
+    renderWithIntl(<TeamCard />)
+    expect(screen.getByTestId('team-card')).toBeInTheDocument()
+  })
 
-    it('should start a new card with data', () => {
-      const component = mount(<TeamCard data={ [{ name: 'foo' }] } />)
-      expect(component.props().data[0].name).toEqual('foo')
-      component.unmount()
-    })
+  it('should render with data', () => {
+    renderWithIntl(<TeamCard data={[{ name: 'foo' }]} />)
+    expect(screen.getByText('foo')).toBeInTheDocument()
   })
 })

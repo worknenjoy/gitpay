@@ -205,6 +205,9 @@ exports.organizations = (req, res) => {
 }
 
 exports.customer = (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
   user.userCustomer({ id: req.user.id })
     .then(data => {
       res.send(data)
