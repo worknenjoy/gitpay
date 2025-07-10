@@ -1,7 +1,8 @@
 const languageSearch = require('../../language')
 
 exports.languageSearchController = (req, res) => {
-  languageSearch.languageSearch(req.body)
+  // Use query parameters for GET requests
+  languageSearch.languageSearch(req.query)
     .then(data => {
       res.status(200).send(data)
     }).catch(error => {
@@ -11,7 +12,8 @@ exports.languageSearchController = (req, res) => {
     })
 }
 exports.projectLanguageSearchController = (req, res) => {
-  languageSearch.projectlanguageSearch(req.body)
+  // Use query parameters for GET requests
+  languageSearch.projectlanguageSearch(req.query)
     .then(data => {
       res.status(200).send(data)
     }).catch(error => {
