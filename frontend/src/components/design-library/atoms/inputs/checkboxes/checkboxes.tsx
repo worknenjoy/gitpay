@@ -70,7 +70,7 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
     if (checked['all'] !== allOptionsChecked) {
       setChecked((prevChecked) => ({
         ...prevChecked,
-        all: allOptionsChecked,
+        all: allOptionsChecked
       }));
     }
   }, [checked, checkboxes]);
@@ -85,7 +85,7 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
               <Checkbox
                 checked={checked[checkbox.name] || false}
                 onChange={(e) => handleChange(e, checkbox?.onChange)}
-                color='primary'
+                color="primary"
                 className={classes.checkbox}
                 name={checkbox.name}
                 value={checkbox.value}

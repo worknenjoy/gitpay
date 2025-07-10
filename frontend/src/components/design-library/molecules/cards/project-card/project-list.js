@@ -99,13 +99,13 @@ const ProjectList = ({ listProjects, projects }) => {
       <Box
         mt={ 3 }
         mb={ 3 }
-        display='flex'
-        justifyContent='center'
+        display="flex"
+        justifyContent="center"
       >
         <Pagination
-          color='primary'
+          color="primary"
           count={ pages }
-          size='small'
+          size="small"
           page={ page } onChange={ handlePagination }
         />
       </Box>

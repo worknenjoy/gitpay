@@ -17,7 +17,7 @@ import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfer-detail'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import { validAccount } from '../../../../../utils/valid-account'
-import AccountRequirements from '../../../../design-library/atoms/alerts/account-requirements/account-requirements'
+import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
 
 
 const transferMessages = defineMessages({
@@ -28,7 +28,7 @@ const transferMessages = defineMessages({
   cardTableHeaderTo: {
     id: 'card.table.header.to',
     defaultMessage: 'Transfers received'
-  },
+  }
 })
 
 const styles = theme => ({
@@ -82,41 +82,41 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
       case 'from':
         return (user.account_id && t.status === 'pending') ?
           (<Button
-            size='small'
+            size="small"
             onClick={async () => {
               await updateTransfer({ id: t.id })
               await searchTransfer({ userId: user.id })
             }}
-            variant='contained'
-            color='secondary'
+            variant="contained"
+            color="secondary"
           >
-            <FormattedMessage id='transfers.button.cancel' defaultMessage='Send bounty' />
+            <FormattedMessage id="transfers.button.cancel" defaultMessage="Send bounty" />
           </Button>
           ) : null
       case 'to':
         return (user.account_id && t.status === 'pending') ?
           <Button
-            size='small'
+            size="small"
             onClick={async () => {
               await updateTransfer({ id: t.id })
               await searchTransfer({ to: user.id })
             }}
-            variant='contained'
-            color='secondary'
+            variant="contained"
+            color="secondary"
             disabled={t.status !== 'pending' || !validAccount(user, account)}
           >
-            <FormattedMessage id='transfers.action.payout.button' defaultMessage='Request payout' />
+            <FormattedMessage id="transfers.action.payout.button" defaultMessage="Request payout" />
           </Button>
           :
           !user.account_id && <Button
-            size='small'
+            size="small"
             onClick={() => {
               history.push('/profile/payout-settings')
             }}
-            variant='contained'
-            color='secondary'
+            variant="contained"
+            color="secondary"
           >
-            <FormattedMessage id='transfers.alert.button' defaultMessage='Update your account' />
+            <FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />
           </Button>
       default:
         return null
@@ -141,18 +141,18 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
             } 
             />
         }
-        <Typography variant='h5' gutterBottom>
-          <FormattedMessage id='profile.transfer.title' defaultMessage='Transfers' />
+        <Typography variant="h5" gutterBottom>
+          <FormattedMessage id="profile.transfer.title" defaultMessage="Transfers" />
         </Typography>
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor='secondary'
-          textColor='secondary'
+          indicatorColor="secondary"
+          textColor="secondary"
           style={{ margin: '20px 0' }}
         >
-          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderFrom)} value='from' />
-          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderTo)} value='to' />
+          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderFrom)} value="from" />
+          <Tab label={intl.formatMessage(transferMessages.cardTableHeaderTo)} value="to" />
         </Tabs>
         <div>
           <CustomPaginationActionsTable
@@ -169,7 +169,7 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
                 ...transfers,
                 data: transfers.data.map(t => [
                   <Chip label={t.status} />,
-                  <Typography variant='body2' gutterBottom>{t.transfer_method}</Typography>,
+                  <Typography variant="body2" gutterBottom>{t.transfer_method}</Typography>,
                   <a href={`/#/task/${t.Task.id}/${slugify(t.Task.title)}`}>
                     {t.Task.title}
                   </a>,
@@ -178,15 +178,15 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
                   <>
                     {transferActions(t)}
                     <Button
-                      size='small'
+                      size="small"
                       onClick={() => {
                         history.push(`/profile/transfers/${t.id}`)
                       }}
-                      variant='contained'
-                      color='secondary'
+                      variant="contained"
+                      color="secondary"
                       style={{ marginLeft: 10 }}
                     >
-                      <FormattedMessage id='transfers.button.details' defaultMessage='Details' />
+                      <FormattedMessage id="transfers.button.details" defaultMessage="Details" />
                     </Button>
                   </>
                 ])

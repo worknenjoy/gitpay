@@ -1,5 +1,5 @@
 import React from 'react';
-import PayoutSettingsBankAccountInfo from '../../../../../design-library/pages/private/payout-settings-bank-account-info/payout-settings-bank-account-info';
+import PayoutSettingsBankAccountInfo from 'design-library/pages/private/payout-settings-bank-account-info/payout-settings-bank-account-info';
 
 const PayoutSettingsBankAccountInfoPage = ({
   user,
@@ -26,7 +26,7 @@ const PayoutSettingsBankAccountInfoPage = ({
         e.target['account_holder_name'].value,
       'account_holder_type':
         e.target['bank_account_type'].value,
-      'currency': e.target['bank_account_currency'].value,
+      'currency': e.target['bank_account_currency'].value
       //'external_account[bank_name]': e.target['bankCode'].value
     };
     

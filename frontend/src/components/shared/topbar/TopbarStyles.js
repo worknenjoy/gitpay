@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import {
   Button,
-  Avatar,
+  Avatar
 } from '@material-ui/core'
 
 import media from '../../../styleguide/media'

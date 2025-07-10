@@ -27,7 +27,7 @@ const ERRORS = {
   'COULD_NOT_UPDATE_TASK_SOLUTION': 'issue.solution.dialog.update.error',
   'COULD_NOT_CREATE_TASK_SOLUTION': 'issue.solution.dialog.create.error',
   'COULD_NOT_FETCH_PULL_REQUEST_DATA': 'issue.solution.dialog.fetch.error',
-  'PULL_REQUEST_NOT_FOUND': 'issue.solution.dialog.pullRequest.notFound',
+  'PULL_REQUEST_NOT_FOUND': 'issue.solution.dialog.pullRequest.notFound'
 }
 
 const getTaskSolutionRequested = () => {

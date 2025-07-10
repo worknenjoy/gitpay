@@ -8,34 +8,34 @@ import {
   IconButton,
   Slide,
   SlideProps,
-  makeStyles,
+  makeStyles
 } from '@material-ui/core'
 
 import {
-  Close,
+  Close
 } from '@material-ui/icons'
 
 import { InfoList } from './bottom-section-dialog.styles'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: 'relative',
+    position: 'relative'
   },
   appBarHeader: {
     marginLeft: theme.spacing(2),
-    flex: 1,
-  },
+    flex: 1
+  }
 }))
 
 
 const BottomSectionDialog = ({
   Transition = React.forwardRef<unknown, SlideProps>((props, ref) => (
-    <Slide direction='up' ref={ ref } { ...props } />
+    <Slide direction="up" ref={ ref } { ...props } />
   )),
   header,
   title,
   subtitle,
-  content,
+  content
 }) => {
 
   const classes = useStyles()
@@ -43,11 +43,11 @@ const BottomSectionDialog = ({
   const [ open, setOpen ] = React.useState(false)
 
   return (
-    <ListItem button component='a'>
+    <ListItem button component="a">
       <Typography
-        variant='subtitle1'
+        variant="subtitle1"
         onClick={ () => setOpen(!open) }
-        component='div'
+        component="div"
         style={ { display: 'block', width: '100%' } }
       >
         {header}
@@ -61,13 +61,13 @@ const BottomSectionDialog = ({
         <AppBar className={ classes.appBar }>
           <Toolbar>
             <IconButton
-              color='inherit'
+              color="inherit"
               onClick={ () => setOpen(false) }
-              aria-label='Close'
+              aria-label="Close"
             >
               <Close />
             </IconButton>
-            <Typography variant='subtitle1' className={ classes.appBarHeader }>
+            <Typography variant="subtitle1" className={ classes.appBarHeader }>
               {title}
             </Typography>
           </Toolbar>

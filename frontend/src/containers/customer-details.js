@@ -3,7 +3,7 @@ import CustomerDetails from '../components/areas/private/features/account/featur
 import {
  fetchCustomer,
  createCustomer,
- updateCustomer,
+ updateCustomer
 } from '../actions/userActions'
 import { searchUser } from '../actions/loginActions' 
 

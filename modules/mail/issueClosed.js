@@ -27,7 +27,7 @@ if (constants.canSendEmail) {
           <p>${i18n.__('mail.hello', { name: data.name })}</p>
           ${i18n.__('mail.status.when.closed', { url: data.url, title: data.title })}
           <p>${Signatures.sign(language)}</p>`
-        },
+        }
       ]
     )
   }
@@ -40,7 +40,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: msg
-        },
+        }
       ]
     )
   }

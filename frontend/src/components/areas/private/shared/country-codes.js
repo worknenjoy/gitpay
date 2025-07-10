@@ -24,6 +24,7 @@ export const countryCodes = [
   { country: 'Ireland', code: 'IE', image: 'ireland' },
   { country: 'Italy', code: 'IT', image: 'italy' },
   { country: 'Japan', code: 'JP', image: 'japan' },
+  { country: 'Jordan', code: 'JO', image: 'jordan' },
   { country: 'Kenya', code: 'KE', image: 'kenya' },
   { country: 'Latvia', code: 'LV', image: 'latvia' },
   { country: 'Liechtenstein', code: 'LI', image: 'liechtenstein'},
@@ -89,7 +90,8 @@ export const countryCurrencies = [
   { currency: 'British Pound', symbol: '£', code: 'GBP', countries: ['GB'] },
   { currency: 'United States Dollar', symbol: '$', code: 'USD', countries: ['US'] },
   { currency: 'Turkish Lira', symbol: '₺', code: 'TRY', countries: ['TR'] },
-  { currency: 'Pakistani Rupee', symbol: '₨', code: 'PKR', countries: ['PK'] }
+  { currency: 'Pakistani Rupee', symbol: '₨', code: 'PKR', countries: ['PK'] },
+  { currency: 'Jordanian Dinar', symbol: 'JD', code: 'JOD', countries: ['JO'] }
 ];
 
 export const countryCodesFull = [

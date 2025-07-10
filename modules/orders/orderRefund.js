@@ -2,8 +2,7 @@ const Promise = require('bluebird')
 const models = require('../../models')
 const PaymentMail = require('../mail/payment')
 const requestPromise = require('request-promise')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(function orderRefund (orderParams) {
   return models.Order
@@ -15,7 +14,7 @@ module.exports = Promise.method(function orderRefund (orderParams) {
       switch (order.provider) {
         case 'stripe':
           refund = await stripe.refunds.create({
-            charge: order.source,
+            charge: order.source
           })
           if (refund.id) {
             return models.Order

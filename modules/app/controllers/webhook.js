@@ -13,10 +13,10 @@ const SendMail = require('../../mail/mail')
 const IssueClosedMail = require('../../mail/issueClosed')
 const WalletMail = require('../../mail/wallet')
 
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../../shared/stripe/stripe')()
 
 const chargeSucceeded = require('../../webhooks/chargeSucceeded')
+const checkoutSessionCompleted = require('../../webhooks/checkoutSessionCompleted')
 
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
@@ -79,8 +79,6 @@ i18n.configure({
   defaultLocale: 'en',
   updateFiles: false
 })
-
-i18n.init()
 
 exports.github = async (req, res) => {
   const response = req.body || res.body
@@ -200,7 +198,7 @@ exports.github = async (req, res) => {
                   deadline: taskData.deadline ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})` : null,
                   userId: userData ? userData.id : null,
                   label: label.name,
-                  status: !taskUpdate ? 404 : 200,
+                  status: !taskUpdate ? 404 : 200
                 }
               }
             }
@@ -258,7 +256,7 @@ exports.github = async (req, res) => {
                   title: taskData.title,
                   userId: userData ? userData.id : null,
                   label: label.name,
-                  status: 200,
+                  status: 200
                 }
               }
             }
@@ -282,16 +280,32 @@ exports.github = async (req, res) => {
   }
   else {
     console.log('send req body that as it is.....')
-    return res.json(req.body)
+    return res.status(200).json(req.body);
   }
   // eslint-disable-next-line no-console
 }
 
 exports.updateWebhook = async (req, res) => {
-  // eslint-disable-next-line no-console
+  const sig = req.headers['stripe-signature'];
 
-  if (req.body.object === 'event') {
-    const event = req.body
+  const secret =  process.env.STRIPE_WEBHOOK_SECRET_PLATFORM;
+
+  let event;
+  
+  try {
+    if (process.env.NODE_ENV === 'test') {
+      event = JSON.parse(req.body.toString());
+    } else {
+      event = stripe.webhooks.constructEvent(req.body, sig, secret);
+    }
+  } catch (err) {
+    console.error('❌ Webhook signature verification failed:', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  console.log('✅ Received event:', event.type);
+
+  if (event) {
     const paid = event.data.object.paid || false
     const status = event.data.object.status
 
@@ -317,53 +331,56 @@ exports.updateWebhook = async (req, res) => {
               })
             )
           }
-          return res.json(req.body)
+          return res.status(200).json(event);
         }).catch(error => res.status(400).send(error))
         /* eslint-disable no-unreachable */
         break
       case 'charge.updated':
-        return models.Order.update(
-          {
-            paid: paid,
-            status: status
-          },
-          {
-            where: {
-              source_id: event.data.object.source.id,
-              source: event.data.object.id
+        if(event?.data?.object?.source?.id) {
+          return models.Order.update(
+            {
+              paid: paid,
+              status: status
             },
-            returning: true
-          }
-        )
-          .then(order => {
-            if (order[0]) {
-              return models.User.findOne({
-                where: {
-                  id: order[1][0].dataValues.userId
-                }
-              })
-                .then(user => {
-                  if (user) {
-                    if (paid && status === 'succeeded') {
-                      const language = user.language || 'en'
-                      i18n.setLocale(language)
-                      SendMail.success(
-                        user.dataValues,
-                        i18n.__('mail.webhook.payment.update.subject'),
-                        i18n.__('mail.webhook.payment.update.message', { amount: event.data.object.amount / 100 })
-                      )
-                    }
-                  }
-                  return res.json(req.body)
-                })
-                .catch(e => {
-                  return res.status(400).send(e)
-                })
+            {
+              where: {
+                source_id: event.data.object.source.id,
+                source: event.data.object.id
+              },
+              returning: true
             }
-          })
-          .catch(e => {
-            return res.status(400).send(e)
-          })
+          )
+            .then(order => {
+              if (order[0]) {
+                return models.User.findOne({
+                  where: {
+                    id: order[1][0].dataValues.userId
+                  }
+                })
+                  .then(user => {
+                    if (user) {
+                      if (paid && status === 'succeeded') {
+                        const language = user.language || 'en'
+                        i18n.setLocale(language)
+                        SendMail.success(
+                          user.dataValues,
+                          i18n.__('mail.webhook.payment.update.subject'),
+                          i18n.__('mail.webhook.payment.update.message', { amount: event.data.object.amount / 100 })
+                        )
+                      }
+                    }
+                    return res.status(200).json(event);
+                  })
+                  .catch(e => {
+                    return res.status(400).send(e)
+                  })
+              }
+            })
+            .catch(e => {
+              return res.status(400).send(e)
+            })
+          }
+        return res.status(200).json(event);
         break
       case 'charge.refunded':
         return models.Order.update(
@@ -398,7 +415,7 @@ exports.updateWebhook = async (req, res) => {
                       )
                     }
                   }
-                  return res.json(req.body)
+                  return res.status(200).json(event);
                 })
                 .catch(e => {
                   return res.status(400).send(e)
@@ -440,11 +457,11 @@ exports.updateWebhook = async (req, res) => {
                       user.dataValues,
                       i18n.__('mail.webhook.payment.unapproved.subject'),
                       i18n.__('mail.webhook.payment.unapproved.message', {
-                        reason: FAILED_REASON[event.data.object.outcome.network_status],
+                        reason: FAILED_REASON[event.data.object.outcome.network_status]
 
                       })
                     )
-                    return res.json(req.body)
+                    return res.status(200).json(event);
                   }
                 }
               })
@@ -478,9 +495,6 @@ exports.updateWebhook = async (req, res) => {
               paid: false,
               status: event.data.object.status
             })
-            if(walletOrder) {
-              console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
-            }
           }
         }
         return models.Order.update(
@@ -531,9 +545,9 @@ exports.updateWebhook = async (req, res) => {
                   })
                 )
               }
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
-            return res.json(req.body)
+            return res.status(200).json(event);
           })
           .catch(e => {
             // eslint-disable-next-line no-console
@@ -566,10 +580,6 @@ exports.updateWebhook = async (req, res) => {
               paid: event.data.object.paid,
               status: event.data.object.status
             })
-
-            if(walletOrderCreateOnUpdate) {
-              console.log('wallet order created on invoice.updated stripe webhook event: ', walletOrderCreateOnUpdate)
-            }
           }
         }
         return models.Order.update(
@@ -623,9 +633,9 @@ exports.updateWebhook = async (req, res) => {
                   )
                 }
               }
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
-            return res.json(req.body)
+            return res.status(200).json(event);
           })
           .catch(e => {
             return res.status(400).send(e)
@@ -641,10 +651,10 @@ exports.updateWebhook = async (req, res) => {
               source: event.data.object.id
             }
           })
-          return res.json(req.body)
+          return res.status(200).json(event);
         } catch (error) {
           console.log('error', error)
-          return res.json(req.body)
+          return res.status(200).json(event);
         }
         break
       case 'invoice.finalized':
@@ -664,11 +674,11 @@ exports.updateWebhook = async (req, res) => {
             })
           if(walletOrder?.id) {
             WalletMail.invoiceCreated(invoice,  walletOrder, walletOrder.Wallet.User)
-            return res.json(req.body)
+            return res.status(200).json(event);
           }
         } catch (error) {
           console.log('error', error)
-          return res.json(req.body)
+          return res.status(200).json(event);
         }
       case 'transfer.created':
         models.Transfer.findOne({
@@ -707,7 +717,7 @@ exports.updateWebhook = async (req, res) => {
                     url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
                   })
                 )
-                return res.json(req.body)
+                return res.status(200).json(event);
               })
               .catch(e => {
                 return res.status(400).send(e)
@@ -732,7 +742,7 @@ exports.updateWebhook = async (req, res) => {
                   url: `${event.data.object.id}`
                 })
               )
-              return res.json(req.body)
+              return res.status(200).json(event);
             }).catch(e => {
               return res.status(400).send(e)
             })
@@ -753,7 +763,7 @@ exports.updateWebhook = async (req, res) => {
                 }
               })
 
-              if (existingPayout) return res.json(req.body)
+              if (existingPayout) return res.status(200).json(event);
                 
               const payout = await models.Payout.build({
                 userId: user.dataValues.id,
@@ -762,7 +772,7 @@ exports.updateWebhook = async (req, res) => {
                 status: event.data.object.status,
                 source_id: event.data.object.id,
                 description: event.data.object.description,
-                method: event.data.object.type,
+                method: event.data.object.type
               }).save()
 
               if (!payout) return res.status(400).send({ error: 'Error to create payout' })
@@ -778,7 +788,7 @@ exports.updateWebhook = async (req, res) => {
                   date: moment(date).format('LLL')
                 })
               )
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
           })
           .catch(e => {
@@ -804,7 +814,7 @@ exports.updateWebhook = async (req, res) => {
                   amount: event.data.object.amount / 100
                 })
               )
-              return res.json(req.body)
+              return res.status(200).json(event);
             }
           })
           .catch(e => {
@@ -840,7 +850,7 @@ exports.updateWebhook = async (req, res) => {
                     date: date
                   })
                 )
-                return res.json(req.body)
+                return res.status(200).json(event);
               }
             })
             .catch(e => {
@@ -861,10 +871,10 @@ exports.updateWebhook = async (req, res) => {
                   ${event.data.object.available.map(b => `<li>${b.currency}: ${b.amount}</li>`).join('')}
                   </ul>
               `)
-        return res.json(req.body)
+        return res.status(200).json(event);
         break
       default:
-        return res.json(req.body)
+        return res.status(200).json(event);
         break
       case 'invoice.payment_succeeded':
         return models.User.findOne(
@@ -897,10 +907,10 @@ exports.updateWebhook = async (req, res) => {
                     returning: true
                   }
                 ).then(order => {
-                  return res.json(req.body)
+                  return res.status(200).json(event);
                 })
               }
-              return res.json(req.body)
+              return res.status(200).json(event);
             })
           }
         }).catch(e => {
@@ -928,9 +938,6 @@ exports.updateWebhook = async (req, res) => {
             paid: false,
             status: event.data.object.status
           })
-          if(walletOrder) {
-            console.log('wallet order created on invoice.created stripe webhook event: ', walletOrder)
-          }
         } else {
           const walletOrderUpdate = await models.WalletOrder.update({
             status: event.data.object.status
@@ -940,7 +947,11 @@ exports.updateWebhook = async (req, res) => {
             }
           })
         }
-        return res.json(req.body)
+        return res.status(200).json(event);
+      break;
+      case 'checkout.session.completed':
+        console.log('checkout.session.completed webhook received')
+        return await checkoutSessionCompleted(event, req, res)
       break;
     }
   }

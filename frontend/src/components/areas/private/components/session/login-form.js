@@ -21,19 +21,19 @@ import PrivacyPolicy from './privacy-policy'
 const styles = theme => ({
   cssLabel: {
     '&$cssFocused': {
-      color: purple[500],
-    },
+      color: purple[500]
+    }
   },
   cssFocused: {},
   cssUnderline: {
     '&:after': {
       borderBottomColor: purple[500]
-    },
+    }
   },
   cssOutlinedInput: {
     '&$cssFocused $notchedOutline': {
       borderColor: purple[500]
-    },
+    }
   },
   notchedOutline: {},
   margins: {
@@ -41,7 +41,7 @@ const styles = theme => ({
     marginBottom: 10
   },
   button: {
-    marginRight: 20,
+    marginRight: 20
   },
   center: {
     display: 'flex',
@@ -387,29 +387,29 @@ class LoginForm extends Component {
     }
 
     return (
-      <form onSubmit={ this.submitByFormType } action={ action } method='POST' autoComplete='off'>
+      <form onSubmit={ this.submitByFormType } action={ action } method="POST" autoComplete="off">
         { formType === 'signup' && (
           <div className={ classes.margins }>
             <TextField
-              name='name'
+              name="name"
               onChange={ this.handleChange('name') }
               fullWidth
               InputLabelProps={ {
                 classes: {
                   root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
+                  focused: classes.cssFocused
+                }
               } }
               InputProps={ {
                 classes: {
                   root: classes.cssOutlinedInput,
                   focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
+                  notchedOutline: classes.notchedOutline
+                }
               } }
-              label='Name'
-              variant='outlined'
-              id='name'
+              label="Name"
+              variant="outlined"
+              id="name"
               error={ error.name }
               helperText={ error.name }
               defaultValue={ this.state.name }
@@ -419,26 +419,26 @@ class LoginForm extends Component {
         { formType !== 'reset' && (
           <div className={ classes.margins }>
             <TextField
-              name='username'
+              name="username"
               onChange={ this.handleChange('username') }
               onBlur={ this.handleBlur }
               fullWidth
               InputLabelProps={ {
                 classes: {
                   root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
+                  focused: classes.cssFocused
+                }
               } }
               InputProps={ {
                 classes: {
                   root: classes.cssOutlinedInput,
                   focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
+                  notchedOutline: classes.notchedOutline
+                }
               } }
-              label='E-mail'
-              variant='outlined'
-              id='username'
+              label="E-mail"
+              variant="outlined"
+              id="username"
               error={ error.username }
               helperText={ error.username }
               defaultValue={ this.state.username }
@@ -448,27 +448,27 @@ class LoginForm extends Component {
         { formType !== 'forgot' && (
         <div className={ classes.margins }>
           <TextField
-            name='password'
+            name="password"
             onChange={ this.handleChange('password') }
             onBlur={ this.handleBlur }
             fullWidth
             InputLabelProps={ {
               classes: {
                 root: classes.cssLabel,
-                focused: classes.cssFocused,
-              },
+                focused: classes.cssFocused
+              }
             } }
             InputProps={ {
               classes: {
                 root: classes.cssOutlinedInput,
                 focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              },
+                notchedOutline: classes.notchedOutline
+              }
             } }
-            type='password'
-            label='Password'
-            variant='outlined'
-            id='password'
+            type="password"
+            label="Password"
+            variant="outlined"
+            id="password"
             error={ error.password }
             helperText={ error.password }
             defaultValue={ this.state.password }
@@ -478,28 +478,28 @@ class LoginForm extends Component {
           <div className={ classes.margins }>
             <TextField
               error={ validating && password !== confirmPassword }
-              helperText={ validating && password !== confirmPassword ? <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> : '' }
-              name='confirm_password'
+              helperText={ validating && password !== confirmPassword ? <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> : '' }
+              name="confirm_password"
               onChange={ this.handleChange('confirmPassword') }
               onBlur={ this.handleBlur }
               fullWidth
               InputLabelProps={ {
                 classes: {
                   root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
+                  focused: classes.cssFocused
+                }
               } }
               InputProps={ {
                 classes: {
                   root: classes.cssOutlinedInput,
                   focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
+                  notchedOutline: classes.notchedOutline
+                }
               } }
-              type='password'
-              label='Confirm Password'
-              variant='outlined'
-              id='confirmPassword'
+              type="password"
+              label="Confirm Password"
+              variant="outlined"
+              id="confirmPassword"
               defaultValue={ this.state.confirmPassword }
             />
           </div>
@@ -512,12 +512,12 @@ class LoginForm extends Component {
                 ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleRememberMe } />
                 : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleRememberMe } />
               }
-              <Typography variant='caption' style={ { marginLeft: 10 } }>
-                <FormattedMessage id='account.login.label.remember' defaultMessage='Remember me' />
+              <Typography variant="caption" style={ { marginLeft: 10 } }>
+                <FormattedMessage id="account.login.label.remember" defaultMessage="Remember me" />
               </Typography>
             </div>
-            <Button variant='text' style={ { margin: 0, padding: 0 } } onClick={ () => this.handleType('forgot') } component='a' size='small' color='primary'>
-              <FormattedMessage variant='caption' id='account.login.label.forgot' defaultMessage='Forgot password?' />
+            <Button variant="text" style={ { margin: 0, padding: 0 } } onClick={ () => this.handleType('forgot') } component="a" size="small" color="primary">
+              <FormattedMessage variant="caption" id="account.login.label.forgot" defaultMessage="Forgot password?" />
             </Button>
           </div>
         ) }
@@ -526,17 +526,17 @@ class LoginForm extends Component {
           <div style={ { display: 'flex', justifyContent: 'flex-start' } }>
             <div style={ { display: 'flex', alignItems: 'center' } }>
               { this.state.agreeTermsCheck
-                ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid='agree-terms-checkbox-checked' />
-                : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid='agree-terms-checkbox' />
+                ? <CheckBox checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid="agree-terms-checkbox-checked" />
+                : <CheckBoxOutlineBlank checked={ this.state.rememberMe } onClick={ this.handleAgreeTerms } data-testid="agree-terms-checkbox" />
               }
-              <Typography variant='body1' style={ { marginLeft: 10 } }>
-                <FormattedMessage id='account.login.label.terms.agree' defaultMessage='I agree with the ' /> 
-                <a onClick={this.handleOpenTermsOfService} href='/#/terms' target='_blank' style={ { display: 'inline-block', marginRight: 5, marginLeft: 5 } }>
-                  <FormattedMessage id='account.login.label.terms' defaultMessage='Terms of Service' />
+              <Typography variant="body1" style={ { marginLeft: 10 } }>
+                <FormattedMessage id="account.login.label.terms.agree" defaultMessage="I agree with the " /> 
+                <a onClick={this.handleOpenTermsOfService} href="/#/terms" target="_blank" style={ { display: 'inline-block', marginRight: 5, marginLeft: 5 } }>
+                  <FormattedMessage id="account.login.label.terms" defaultMessage="Terms of Service" />
                 </a> 
-                 <FormattedMessage id='account.login.label.terms.and' defaultMessage=' and' /> 
-                <a href='/#/privacy-policy' onClick={this.handleOpenPrivacyPolicy} target='_blank' style={ { display: 'inline-block', marginLeft: 5 } }>
-                  <FormattedMessage id='account.login.label.privacy' defaultMessage='Privacy Policy' />
+                 <FormattedMessage id="account.login.label.terms.and" defaultMessage=" and" /> 
+                <a href="/#/privacy-policy" onClick={this.handleOpenPrivacyPolicy} target="_blank" style={ { display: 'inline-block', marginLeft: 5 } }>
+                  <FormattedMessage id="account.login.label.privacy" defaultMessage="Privacy Policy" />
                 </a>
               </Typography>
             </div>
@@ -546,10 +546,10 @@ class LoginForm extends Component {
               color: 'red',
               fontSize: 10,
               display: 'flex',
-              justifyContent: 'center',
+              justifyContent: 'center'
             } }>
-              <Typography type='body1' component='span'>
-                <FormattedMessage id='account.login.label.terms.agree.error' defaultMessage='You must agree with the Terms of Service and Privacy Policy' />
+              <Typography type="body1" component="span">
+                <FormattedMessage id="account.login.label.terms.agree.error" defaultMessage="You must agree with the Terms of Service and Privacy Policy" />
               </Typography>
             </div>
           }
@@ -569,9 +569,9 @@ class LoginForm extends Component {
             color: 'red',
             fontSize: 10,
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'center'
           } }>
-            <Typography type='body1' component='span'>
+            <Typography type="body1" component="span">
               { error.captcha }
             </Typography>
           </div>
@@ -580,12 +580,12 @@ class LoginForm extends Component {
 
           { formType === 'signin' ? (
             <div>
-              <Button fullWidth type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
-                <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+              <Button fullWidth type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+                <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
               </Button>
               { noCancelButton ? null : (
-                <Button onClick={ onClose } fullWidth size='large' variant='text' color='primary' className={ classes.button } style={ { marginTop: 10 } }>
-                  <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+                <Button onClick={ onClose } fullWidth size="large" variant="text" color="primary" className={ classes.button } style={ { marginTop: 10 } }>
+                  <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
                 </Button>
               ) }
               { formType === 'signin' && (
@@ -594,42 +594,42 @@ class LoginForm extends Component {
                 </div>
               ) }
               <div style={ { marginTop: 10 } }>
-                <Typography type='body1' component='span' style={ { display: 'inline-block', verticalAlign: 'middle' } }>
-                  <FormattedMessage id='account.login.label.or.signing' defaultMessage='Dont have an account?' />
+                <Typography type="body1" component="span" style={ { display: 'inline-block', verticalAlign: 'middle' } }>
+                  <FormattedMessage id="account.login.label.or.signing" defaultMessage="Dont have an account?" />
                 </Typography>
-                <Button onClick={ () => this.handleType('signup') } variant='text' color='primary' size='large'>
-                  <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+                <Button onClick={ () => this.handleType('signup') } variant="text" color="primary" size="large">
+                  <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
                 </Button>
               </div>
             </div>
           ) : (
             <div>
               { noCancelButton ? null : (
-                <Button onClick={ onClose } size='large' variant='text' color='primary' className={ classes.button }>
-                  <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+                <Button onClick={ onClose } size="large" variant="text" color="primary" className={ classes.button }>
+                  <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
                 </Button>
               ) }
               { formType === 'signup' && (
-                <Button data-testid='signup-button' type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
-                  <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+                <Button data-testid="signup-button" type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+                  <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
                 </Button>
               ) }
               { formType === 'forgot' && (
-                <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
-                  <FormattedMessage id='account.login.label.password.recover' defaultMessage='Recover password' />
+                <Button type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+                  <FormattedMessage id="account.login.label.password.recover" defaultMessage="Recover password" />
                 </Button>
               ) }
               { formType === 'reset' && (
-                <Button type='submit' size='large' variant='contained' color='primary' className={ classes.button }>
-                  <FormattedMessage id='account.login.label.password.reset' defaultMessage='Reset password' />
+                <Button type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+                  <FormattedMessage id="account.login.label.password.reset" defaultMessage="Reset password" />
                 </Button>
               ) }
               <div style={ { marginTop: 20, display: 'flex', alignItems: 'baseline' } }>
-                <Typography type='body1' component='span'>
-                  <FormattedMessage id='account.login.label.or.signup' defaultMessage='Have an account?' />
+                <Typography type="body1" component="span">
+                  <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
                 </Typography>
-                <Button onClick={ () => this.handleType('signin') } variant='text' size='large' color='primary'>
-                  <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+                <Button onClick={ () => this.handleType('signin') } variant="text" size="large" color="primary">
+                  <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
                 </Button>
               </div>
             </div>

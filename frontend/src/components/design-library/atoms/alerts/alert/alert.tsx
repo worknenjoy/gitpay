@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import MuiAlert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import useStyles from './alert.styles'
@@ -29,7 +29,7 @@ export const Alert = (props) => {
   }
 
   return (
-    <ReactPlacholder rows={1} type='text' ready={completed}>
+    <ReactPlacholder rows={1} type="text" ready={completed}>
       <MuiAlert
         elevation={1}
         variant="standard"

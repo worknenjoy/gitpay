@@ -11,10 +11,10 @@ import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-d
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    backgroundColor: '#F7F7F7',
+    backgroundColor: '#F7F7F7'
   },
   containerRoot: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(4)
   },
   menuContainer: {
     marginBottom: 40,
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   secondaryBar: {
     backgroundColor: theme.palette.primary.light
-  },
+  }
   
 }));
 
@@ -55,7 +55,7 @@ const PrivateBase = ({
   onResendActivationEmail,
   signOut,
   profileHeaderProps = undefined,
-  bottomProps = { info: { bounties: 0, users: 0, tasks: 0 }, getInfo: () => {} },
+  bottomProps = { info: { bounties: 0, users: 0, tasks: 0 }, getInfo: () => {} }
 }:PrivateBaseProps) => {
   const classes = useStyles();
   const history = useHistory();
@@ -84,10 +84,10 @@ const PrivateBase = ({
         />
       }
       <AppBar
-        component='div'
+        component="div"
         classes={{ colorPrimary: classes.secondaryBar }}
-        color='primary'
-        position='static'
+        color="primary"
+        position="static"
         elevation={0} />
       <PageContent>
         <Grid container className={classes.root} spacing={0}>
@@ -102,7 +102,7 @@ const PrivateBase = ({
               onLogout={handleSignOut}
             />
             
-            <Container maxWidth='lg' className={classes.containerRoot}>
+            <Container maxWidth="lg" className={classes.containerRoot}>
             { profileHeaderProps && (
               <ProfileHeader
                 title={profileHeaderProps.title}

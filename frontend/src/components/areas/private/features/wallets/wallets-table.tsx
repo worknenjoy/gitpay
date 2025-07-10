@@ -9,8 +9,6 @@ import {
   TableHead,
   TableBody,
   TableCell,
-  TableFooter,
-  TablePagination,
   TableRow,
   Typography,
   withStyles,
@@ -59,8 +57,8 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
+    marginLeft: theme.spacing(2.5)
+  }
 })
 
 const TablePaginationActions = (props) => {
@@ -81,7 +79,7 @@ const TablePaginationActions = (props) => {
   const handleLastPageButtonClick = event => {
     props.onChangePage(
       event,
-      Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1),
+      Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1)
     )
   }
 
@@ -127,7 +125,7 @@ TablePaginationActions.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 }
 
 const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
@@ -137,14 +135,14 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3)
   },
   table: {
     minWidth: 500
   },
   tableWrapper: {
     //overflowX: 'auto',
-  },
+  }
 })
 
 const CustomPaginationActionsTable = (props) => {
@@ -170,7 +168,7 @@ const CustomPaginationActionsTable = (props) => {
           { [0,1,2,3,4,5,6].map(() => (
             <TableCell>
               <div style={{ width: 80 }}>
-                <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={walletOrders.completed}>
+                <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={walletOrders.completed}>
                   <div style={{ width: 80 }}></div>
                 </ReactPlaceholder>
               </div>
@@ -185,8 +183,8 @@ const CustomPaginationActionsTable = (props) => {
     return (
       <Paper className={ classes.root }>
         <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
-          <Typography variant='caption' color='textSecondary'>
-            <FormattedMessage id='walletOrders.table.body.walletOrders.empty' defaultMessage='No Wallet Orders' />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage id="walletOrders.table.body.walletOrders.empty" defaultMessage="No Wallet Orders" />
           </Typography>
         </div>
       </Paper>
@@ -212,7 +210,7 @@ const CustomPaginationActionsTable = (props) => {
               return (
                 <TableRow key={ n.id }>
                   { n.map( p => 
-                    <TableCell component='th' scope='row' style={{ padding: 10, position: 'relative' }}>
+                    <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
                       {p}    
                     </TableCell>
                   )}

@@ -10,7 +10,8 @@ const TransferMail = {
   error: (to, task, value) => {},
   paymentForInvalidAccount: (to) => {},
   futurePaymentForInvalidAccount: (to) => {},
-  transferBounty: (order, taskFrom, taskTo, user) => {}
+  transferBounty: (order, taskFrom, taskTo, user) => {},
+  paymentRequestInitiated: (user, paymentRequest) => {}
 }
 
 if (constants.canSendEmail) {
@@ -27,7 +28,7 @@ if (constants.canSendEmail) {
           value: emailTemplate.baseContentEmailTemplate(`
             <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`
           )
-        },
+        }
       ]
     )
   }
@@ -44,7 +45,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
             `<p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
-        },
+        }
       ]
     )
   }
@@ -61,7 +62,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
           <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
-        },
+        }
       ]
     )
   }
@@ -77,7 +78,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`<p>${i18n.__('mail.transfer.missing.message')}</p>`)
-        },
+        }
       ]
     )
   }
@@ -95,7 +96,7 @@ if (constants.canSendEmail) {
           value: emailTemplate.baseContentEmailTemplate(
             `<p>${i18n.__('mail.transfer.invalid.message')}</p>`
           )
-        },
+        }
       ]
     )
   }
@@ -118,10 +119,34 @@ if (constants.canSendEmail) {
     taskToUrl: taskTo.url,
     amount: order.amount
   })}</p>`)
-        },
+        }
       ]
     )
   }
+}
+
+TransferMail.paymentRequestInitiated = (user, paymentRequest, transfer_amount) => {
+  const to = user.email
+  const language = user.language || 'en'
+  i18n.setLocale(language)
+  user?.receiveNotifications && request(
+    to,
+    i18n.__('mail.paymentRequest.initiated.subject'),
+    [
+      {
+        type: 'text/html',
+        value: emailTemplate.baseContentEmailTemplate(`
+          <p>${i18n.__('mail.paymentRequest.initiated.message', {
+          title: paymentRequest.title,
+          description: paymentRequest.description,
+          amount: paymentRequest.amount,
+          currency: paymentRequest.currency,
+          paymentUrl: paymentRequest.payment_url,
+          transfer_amount: transfer_amount
+        })}</p>`)
+      }
+    ]
+  )
 }
 
 module.exports = TransferMail

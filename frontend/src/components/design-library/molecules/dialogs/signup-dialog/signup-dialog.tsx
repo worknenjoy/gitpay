@@ -19,7 +19,7 @@ const SignupDialog = ({
     <Dialog
       open={ open }
       onClose={ onClose }
-      aria-labelledby='form-dialog-title'
+      aria-labelledby="form-dialog-title"
     >
       <DialogContent>
         <div style={ { display: 'flex', justifyContent: 'center', position: 'relative' } }>

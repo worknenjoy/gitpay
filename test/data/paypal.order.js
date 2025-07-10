@@ -1,2 +1,0 @@
-module.exports.resource_not_found = { "name": "RESOURCE_NOT_FOUND", "details": [{ "issue": "INVALID_RESOURCE_ID", "description": "Specified resource ID does not exist. Please check the resource ID and try again." }], "message": "The specified resource does not exist.", "debug_id": "1c21fae7e5989", "links": [{ "href": "https://developer.paypal.com/docs/api/orders/v2/#error-INVALID_RESOURCE_ID", "rel": "information_link", "method": "GET" }] }
-

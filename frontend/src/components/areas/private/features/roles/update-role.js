@@ -47,12 +47,12 @@ class UpdateRole extends Component {
         <Dialog
           open={ visible }
           onClose={ () => this.props.onClose() }
-          aria-labelledby='alert-dialog-title'
+          aria-labelledby="alert-dialog-title"
           fullWidth
           fullScreen
         >
-          <DialogTitle id='alert-dialog-title'>
-            <FormattedMessage id='account.user.role.dialog.title' defaultMessage='User type' />
+          <DialogTitle id="alert-dialog-title">
+            <FormattedMessage id="account.user.role.dialog.title" defaultMessage="User type" />
           </DialogTitle>
           <DialogContent>
             <Roles { ...this.props } />

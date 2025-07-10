@@ -8,10 +8,10 @@ import {
   Divider,
   List,
   withStyles,
-  ListItem,
+  ListItem
 } from '@material-ui/core'
 
-import SubscribeForm from '../../design-library/organisms/forms/subscribe-form/subscribe-form'
+import SubscribeForm from 'design-library/organisms/forms/subscribe-form/subscribe-form'
 import InfoContainer from '../../../containers/info'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
@@ -38,77 +38,77 @@ class Bottom extends Component {
         <Container>
           <Grid container spacing={ 3 }>
             <Grid item xs={ 12 } sm={ 3 }>
-              <Typography component='div'>
+              <Typography component="div">
                 <strong>
                   <FormattedMessage
-                    id='bottom.header.subheading.primary'
-                    defaultMessage='Main menu'
+                    id="bottom.header.subheading.primary"
+                    defaultMessage="Main menu"
                   />
                 </strong>
               </Typography>
-              <List component='nav'>
-                <ListItem button component='a'>
+              <List component="nav">
+                <ListItem button component="a">
                   <Typography
-                    variant='subtitle1'
-                    component='div'
+                    variant="subtitle1"
+                    component="div"
                     style={ { display: 'block', width: '100%' } }
                     onClick={ () => window.location.assign('/#/welcome') }
                   >
                     <FormattedMessage
-                      id='welcome.about.title'
-                      defaultMessage='About us'
+                      id="welcome.about.title"
+                      defaultMessage="About us"
                     />
                   </Typography>
                 </ListItem>
-                <ListItem button component='a'>
+                <ListItem button component="a">
                   <Typography
-                    variant='subtitle1'
-                    component='div'
+                    variant="subtitle1"
+                    component="div"
                     style={ { display: 'block', width: '100%' } }
                     onClick={ () => window.location.assign('/#/pricing') }
                   >
                     <FormattedMessage
-                      id='welcome.pricing.title'
-                      defaultMessage='Pricing'
+                      id="welcome.pricing.title"
+                      defaultMessage="Pricing"
                     />
                   </Typography>
                 </ListItem>
-                <ListItem button component='a'>
+                <ListItem button component="a">
                   <Typography
-                    variant='subtitle1'
-                    component='div'
+                    variant="subtitle1"
+                    component="div"
                     style={ { display: 'block', width: '100%' } }
                     onClick={ () => window.location.assign('/#/team') }
                   >
                     <FormattedMessage
-                      id='welcome.team.title'
-                      defaultMessage='Team'
+                      id="welcome.team.title"
+                      defaultMessage="Team"
                     />
                   </Typography>
                 </ListItem>
-                <ListItem button component='a'>
+                <ListItem button component="a">
                   <Typography
-                    variant='subtitle1'
-                    component='div'
+                    variant="subtitle1"
+                    component="div"
                     style={ { display: 'block', width: '100%' } }
                     onClick={ () => window.open('https://docs.gitpay.me/en') }
                   >
                     <FormattedMessage
-                      id='welcome.docs.title'
-                      defaultMessage='Documentation'
+                      id="welcome.docs.title"
+                      defaultMessage="Documentation"
                     />
                   </Typography>
                 </ListItem>
-                <ListItem button component='a'>
+                <ListItem button component="a">
                   <Typography
-                    variant='subtitle1'
-                    component='div'
+                    variant="subtitle1"
+                    component="div"
                     style={ { display: 'block', width: '100%' } }
                     onClick={ () => window.location.assign('/#/tasks/open') }
                   >
                     <FormattedMessage
-                      id='welcome.explore.title'
-                      defaultMessage='Explore'
+                      id="welcome.explore.title"
+                      defaultMessage="Explore"
                     />
                   </Typography>
                 </ListItem>
@@ -116,19 +116,19 @@ class Bottom extends Component {
               </List>
             </Grid>
             <Grid item xs={ 12 } sm={ 3 }>
-              <Typography component='div'>
+              <Typography component="div">
                 <strong>
                   <FormattedMessage
-                    id='bottom.header.subheading.secondary'
-                    defaultMessage='Legal'
+                    id="bottom.header.subheading.secondary"
+                    defaultMessage="Legal"
                   />
                 </strong>
               </Typography>
-              <List component='nav'>
+              <List component="nav">
                 <BottomSectionDialog
                   classes={ classes }
-                  title='Legal'
-                  header='Privacy policy'
+                  title="Legal"
+                  header="Privacy policy"
                   subtitle={ 'Privacy Policy' }
                   content={
                     <PrivacyPolicy extraStyles={ false } />
@@ -136,8 +136,8 @@ class Bottom extends Component {
                 />
                 <BottomSectionDialog
                   classes={ classes }
-                  title='Legal'
-                  header='Terms of Service'
+                  title="Legal"
+                  header="Terms of Service"
                   subtitle={ 'Terms of Service' }
                   content={
                     <TermsOfService extraStyles={ false } />
@@ -145,8 +145,8 @@ class Bottom extends Component {
                 />
                 <BottomSectionDialog
                   classes={ classes }
-                  title='Legal'
-                  header='Cookie Policy'
+                  title="Legal"
+                  header="Cookie Policy"
                   subtitle={ 'Cookie Policy' }
                   content={
                     <CookiePolicy extraStyles={ false } />
@@ -159,13 +159,13 @@ class Bottom extends Component {
               <GithubCard />
             </Grid>
             <Grid item xs={ 12 } sm={ 4 }>
-              <Typography component='div'>
+              <Typography component="div">
                 <FormattedMessage
-                  id='bottom.subheading.newsletter'
-                  defaultMessage='If you want to get in touch, leave your e-mail with our news and challenges!'
+                  id="bottom.subheading.newsletter"
+                  defaultMessage="If you want to get in touch, leave your e-mail with our news and challenges!"
                 />
               </Typography>
-              <SubscribeFromWrapper className='subscribe-form'>
+              <SubscribeFromWrapper className="subscribe-form">
                 <SubscribeForm render />
               </SubscribeFromWrapper>
               <div style={ { float: 'right' } }>
@@ -173,28 +173,28 @@ class Bottom extends Component {
                   style={ { display: 'flex', alignItems: 'center' } }
                 >
                   <div>
-                    <img className={ classes.img } src={ logoCompleteGray } width='100' />
+                    <img className={ classes.img } src={ logoCompleteGray } width="100" />
                   </div>
                   <Typography
-                    component='span'
+                    component="span"
                     style={ {
                       marginLeft: 10,
                       marginRight: 10,
-                      display: 'inline-block',
+                      display: 'inline-block'
                     } }
                   >
                     <FormattedMessage
-                      id='bottom.company.org'
-                      defaultMessage='is part of'
+                      id="bottom.company.org"
+                      defaultMessage="is part of"
                     />
                   </Typography>
-                  <a href='http://worknenjoy.com' target='_blank' rel="noreferrer">
-                    <img className={ classes.img } src={ logoWorknEnjoy } width='100' />
+                  <a href="http://worknenjoy.com" target="_blank" rel="noreferrer">
+                    <img className={ classes.img } src={ logoWorknEnjoy } width="100" />
                   </a>
                 </BaseFooter>
                 <div style={ { textAlign: 'right' } }>
-                  <Typography variant={ 'caption' } component='span'>
-                    <a href='http://worknenjoy.com'>worknenjoy, Inc.</a> <br />
+                  <Typography variant={ 'caption' } component="span">
+                    <a href="http://worknenjoy.com">worknenjoy, Inc.</a> <br />
                     <abbr>MA: </abbr>
                     9450 SW Gemini Dr
                     PMB 72684
@@ -213,7 +213,7 @@ class Bottom extends Component {
 }
 
 Bottom.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Bottom)

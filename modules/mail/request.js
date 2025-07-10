@@ -34,8 +34,8 @@ module.exports = (to, subject, content, replyEmail) => {
         {
           to: [
             {
-              email: to,
-            },
+              email: to
+            }
           ],
           bcc: [
             {
@@ -43,7 +43,7 @@ module.exports = (to, subject, content, replyEmail) => {
             }
           ],
           subject
-        },
+        }
       ],
       from: {
         email: notificationEmail
@@ -56,6 +56,6 @@ module.exports = (to, subject, content, replyEmail) => {
         type: content[0].type,
         value: emailTemplate.defaultEmailTemplate(content[0].value)
       }]
-    },
+    }
   })).then(handleResponse).catch(handleError)
 }

@@ -5,7 +5,7 @@ import TaskSolve from '../components/areas/public/features/task/task-solve'
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn,
-    task: getTaskOrdersByFilter(state),
+    task: getTaskOrdersByFilter(state)
   }
 }
 

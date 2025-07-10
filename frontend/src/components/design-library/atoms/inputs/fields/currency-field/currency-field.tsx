@@ -8,7 +8,7 @@ const CurrencyField = ({ countries, currency, disabled, completed, onChange }) =
 
   return (
     <Fieldset
-      legend='Currency'
+      legend="Currency"
       completed={completed}
     >
       <FormControl style={{ width: '100%' }}>
@@ -20,7 +20,7 @@ const CurrencyField = ({ countries, currency, disabled, completed, onChange }) =
           onChange={onChange}
           inputProps={{
             name: 'account_currency',
-            id: 'country-native-simple',
+            id: 'country-native-simple'
           }}
         >
           <option aria-label="None" value="" />

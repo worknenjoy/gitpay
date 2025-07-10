@@ -13,7 +13,7 @@ const BaseTitle = ({ title, subtitle, level = 'h5' }: BaseTitleProps) => {
       <Typography variant={level} gutterBottom>
         {title}
       </Typography>
-      <Typography variant='caption' gutterBottom>
+      <Typography variant="caption" gutterBottom>
         {subtitle}
       </Typography>
     </div>

@@ -3,7 +3,7 @@ import ProfileSidebar from './profile-sidebar';
 
 export default {
   title: 'Design Library/Organisms/Layout/ProfileSidebar',
-  component: ProfileSidebar,
+  component: ProfileSidebar
 };
 
 const Template = (args) => <ProfileSidebar {...args} />;
@@ -20,23 +20,23 @@ Default.args = {
         issue: {
           user: {
             login: 'octocat',
-            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
           }
-        },
+        }
       },
       Types: [
         {
           id: 1,
-          name: 'contributor',
+          name: 'contributor'
         },
         {
           id: 2,
-          name: 'maintainer',
+          name: 'maintainer'
         },
         {
           id: 3,
-          name: 'funding',
-        },
+          name: 'funding'
+        }
       ]
     }
   }
@@ -46,6 +46,6 @@ export const Loading = Template.bind({});
 Loading.args = {
   user: {
     completed: false,
-    data: {},
+    data: {}
   }
 };

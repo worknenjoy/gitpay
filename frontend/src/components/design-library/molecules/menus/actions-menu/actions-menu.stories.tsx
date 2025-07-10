@@ -5,7 +5,7 @@ import ActionsMenu from './actions-menu';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Molecules/Menus/ActionsMenu',
-  component: ActionsMenu,
+  component: ActionsMenu
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -21,11 +21,11 @@ Primary.args = {
   actions: [
     {
       children: 'Action 1',
-      onClick: () => {},
+      onClick: () => {}
     },
     {
       children: 'Action 2',
-      onClick: () => {},
-    },
-  ],
+      onClick: () => {}
+    }
+  ]
 };

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     times: {
       type: DataTypes.INTEGER
-    },
+    }
   })
 
   Coupon.associate = (models) => {

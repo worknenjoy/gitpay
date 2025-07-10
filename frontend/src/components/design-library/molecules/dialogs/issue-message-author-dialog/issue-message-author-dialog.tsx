@@ -36,38 +36,38 @@ const IssueMessageAuthor = ({ open = false, userId, taskId, name, onClose, onSen
       <Dialog
         open={open}
         onClose={onClose}
-        aria-labelledby='form-dialog-title'
+        aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id='form-dialog-title'>
-          <FormattedMessage id='task.message.title' defaultMessage='Send a message to the author' />
+        <DialogTitle id="form-dialog-title">
+          <FormattedMessage id="task.message.title" defaultMessage="Send a message to the author" />
         </DialogTitle>
         <DialogContent>
-          <form onChange={onChangeMessage} method='POST'>
+          <form onChange={onChangeMessage} method="POST">
             <FormControl fullWidth>
-              <Typography variant='subtitle2' gutterBottom>
-                <FormattedMessage id='task.message.author.label' defaultMessage='Write a message to the author of this issue' />
+              <Typography variant="subtitle2" gutterBottom>
+                <FormattedMessage id="task.message.author.label" defaultMessage="Write a message to the author of this issue" />
               </Typography>
               {name && (
-                <Typography variant='subtitle2' gutterBottom>
+                <Typography variant="subtitle2" gutterBottom>
                   {name}
                 </Typography>
               )}
               <TextField
                 autoFocus
-                name='message'
+                name="message"
                 multiline
-                rows='5'
+                rows="5"
                 fullWidth
               />
             </FormControl>
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color='primary'>
-            <FormattedMessage id='task.message.form.cancel' defaultMessage='Cancel' />
+          <Button onClick={onClose} color="primary">
+            <FormattedMessage id="task.message.form.cancel" defaultMessage="Cancel" />
           </Button>
-          <Button disabled={message.length === 0} onClick={sendMessage} variant='contained' color='secondary'>
-            <FormattedMessage id='task.message.form.send' defaultMessage='Send' />
+          <Button disabled={message.length === 0} onClick={sendMessage} variant="contained" color="secondary">
+            <FormattedMessage id="task.message.form.send" defaultMessage="Send" />
           </Button>
         </DialogActions>
       </Dialog>

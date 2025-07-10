@@ -1,9 +1,7 @@
 const AssignMail = require('../mail/assign')
 const Promise = require('bluebird')
 const models = require('../../models')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
-const TransferMail = require('../mail/transfer')
+const stripe = require('../shared/stripe/stripe')()
 const DeadlineMail = require('../mail/deadline')
 const assignExist = require('../assigns').assignExists
 const offerExists = require('../offers').offerExists
@@ -107,7 +105,7 @@ module.exports = Promise.method(async function taskUpdate (taskParameters, notif
     .update(taskParameters, {
       where: {
         id: taskParameters.id,
-        userId: taskParameters.userId,
+        userId: taskParameters.userId
       },
       individualHooks: true,
       include: [models.User, models.Order, models.Offer, models.Member]

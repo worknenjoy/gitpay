@@ -7,8 +7,8 @@ export default {
   component: Fieldset,
   argTypes: {
     legend: { control: 'text' },
-    children: { control: 'text' },
-  },
+    children: { control: 'text' }
+  }
 };
 
 const Template = (args) => <Fieldset {...args} />;
@@ -19,16 +19,16 @@ Default.args = {
   completed: true,
   children: (
     <Field
-      name='custom-field'
-      label='Custom Field'
-      placeholder='Enter text'
-      value=''
+      name="custom-field"
+      label="Custom Field"
+      placeholder="Enter text"
+      value=""
       onChange={() => {}}
-      type='text'
+      type="text"
       disabled={false}
       required={false}
     />
-  ),
+  )
 };
 
 export const Loading = Template.bind({});
@@ -37,5 +37,5 @@ Loading.args = {
   completed: false,
   children: (
     <></>
-  ),
+  )
 };

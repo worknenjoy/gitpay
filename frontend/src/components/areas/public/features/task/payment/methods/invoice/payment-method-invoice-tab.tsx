@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import LoginButton from '../../../../../../private/components/session/login-button'
 import { useIntl } from 'react-intl'
-import InvoicePayment from '../../../../../../../design-library/organisms/forms/invoice-payment/invoice-payment'
+import InvoicePayment from 'design-library/organisms/forms/invoice-payment/invoice-payment'
 
 interface PaymentMethodInvoiceTabProps extends RouteComponentProps {
   price: any;

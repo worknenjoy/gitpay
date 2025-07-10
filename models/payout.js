@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Users',
         key: 'id'
-      },
-    },
+      }
+    }
   })
 
   Payout.associate = (models) => {

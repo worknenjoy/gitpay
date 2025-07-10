@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Tasks',
         key: 'id'
       },
-      allowNull: false,
+      allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Users',
         key: 'id'
       },
-      allowNull: false,
+      allowNull: false
     },
     to: {
       type: DataTypes.INTEGER,
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Users',
         key: 'id'
       },
-      allowNull: false,
+      allowNull: false
     }
   }, {
 
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Transfer.associate = function (models) {
     Transfer.belongsTo(models.Task, {
-      foreignKey: 'taskId',
+      foreignKey: 'taskId'
     })
     Transfer.belongsTo(models.User, {
       foreignKey: 'userId',

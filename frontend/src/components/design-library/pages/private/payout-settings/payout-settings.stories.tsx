@@ -5,7 +5,7 @@ import PayoutSettings from './payout-settings';
 export default {
   title: 'Design Library/Pages/Private/PayoutSettings',
   component: PayoutSettings,
-  decorators: [withProfileTemplate],
+  decorators: [withProfileTemplate]
 };
 
 const Template = (args) => <PayoutSettings {...args} />;
@@ -14,7 +14,7 @@ export const Default = Template.bind({});
 Default.args = {
   profileHeaderProps: {
     title: 'Payout Settings',
-    subtitle: 'Manage your payout settings and preferences.',
+    subtitle: 'Manage your payout settings and preferences.'
   },
   user: {
     completed: true,
@@ -24,8 +24,8 @@ Default.args = {
       Types: [
         { name: 'contributor' },
         { name: 'maintainer' },
-        { name: 'funding' },
-      ],
-    },
+        { name: 'funding' }
+      ]
+    }
   }
 };

@@ -53,12 +53,12 @@ const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user }) => {
   return (
     <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
       <Container>
-        <Typography variant='h5' gutterBottom style={{marginTop: 40}}>
-          <FormattedMessage id='issues.explore.title' defaultMessage='Explore issues' />
+        <Typography variant="h5" gutterBottom style={{marginTop: 40}}>
+          <FormattedMessage id="issues.explore.title" defaultMessage="Explore issues" />
         </Typography>
-        <Typography variant='caption' gutterBottom>
+        <Typography variant="caption" gutterBottom>
           <FormattedMessage
-            id='issues.explore.description'
+            id="issues.explore.description"
             defaultMessage="Here you can see all the issues on our network"
           />
         </Typography>
@@ -70,16 +70,16 @@ const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user }) => {
                 src={ imageGettingStarted }
               />
               <CardContent>
-                <Typography gutterBottom variant='h5' component='h2'>
+                <Typography gutterBottom variant="h5" component="h2">
                   <FormattedMessage
-                    id='task.user.account.create.headline'
-                    defaultMessage='Login / signup to work in our tasks'
+                    id="task.user.account.create.headline"
+                    defaultMessage="Login / signup to work in our tasks"
                   />
                 </Typography>
-                <Typography component='p'>
+                <Typography component="p">
                   <FormattedMessage
-                    id='task.user.account.create.description'
-                    defaultMessage='Creating your account, you can be assigned to a task and receive bounties'
+                    id="task.user.account.create.description"
+                    defaultMessage="Creating your account, you can be assigned to a task and receive bounties"
                   />
                 </Typography>
               </CardContent>
@@ -87,23 +87,23 @@ const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user }) => {
                 <Button
                   style={ { marginRight: 10 } }
                   href={ `${api.API_URL}/authorize/github` }
-                  variant='contained'
-                  size='small'
-                  color='secondary'
+                  variant="contained"
+                  size="small"
+                  color="secondary"
                   className={ classes.logButtons }
                 >
-                  <img width='16' src={ logoGithub } />
+                  <img width="16" src={ logoGithub } />
                   <span className={ classes.gutterLeft }>Github</span>
                 </Button>
 
                 <Button
                   href={ `${api.API_URL}/authorize/bitbucket` }
-                  variant='contained'
-                  size='small'
-                  color='secondary'
+                  variant="contained"
+                  size="small"
+                  color="secondary"
                   className={ classes.logButtons }
                 >
-                  <img width='16' src={ logoBitbucket } />
+                  <img width="16" src={ logoBitbucket } />
                   <span className={ classes.gutterLeft }>Bitbucket</span>
                 </Button>
               </CardActions>

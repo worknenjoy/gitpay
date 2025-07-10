@@ -205,6 +205,9 @@ exports.organizations = (req, res) => {
 }
 
 exports.customer = (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
   user.userCustomer({ id: req.user.id })
     .then(data => {
       res.send(data)
@@ -317,7 +320,7 @@ exports.createBankAccount = (req, res) => {
 }
 
 exports.updateBankAccount = (req, res) => {
-  user.userBankAccountUpdate({userParams: req.user, bank_account: req.body, })
+  user.userBankAccountUpdate({userParams: req.user, bank_account: req.body })
     .then(data => {
       res.send(data)
     }).catch(error => {

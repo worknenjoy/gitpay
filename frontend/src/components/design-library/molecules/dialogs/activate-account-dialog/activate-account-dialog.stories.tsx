@@ -6,8 +6,8 @@ export default {
   component: ActivateAccountDialog,
   argTypes: {
     onClose: { action: 'closed' },
-    onActivate: { action: 'activated' },
-  },
+    onActivate: { action: 'activated' }
+  }
 };
 
 const Template = (args) => (
@@ -19,7 +19,7 @@ Default.args = {
   open: true,
   onClose: () => {},
   onResend: () => {},
-  completed: true,
+  completed: true
 };
 
 export const Loading = Template.bind({});
@@ -27,5 +27,5 @@ Loading.args = {
   open: true,
   onClose: () => {},
   onResend: () => {},
-  completed: false,
+  completed: false
 };

@@ -64,7 +64,7 @@ const currentLang = localStorage.getItem('userLanguage') || 'en'
 
 store.dispatch(updateIntl({
   locale: currentLang,
-  messages: messages[currentLang],
+  messages: messages[currentLang]
 }))
 
 const theme = createTheme(Palette)

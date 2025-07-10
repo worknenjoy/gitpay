@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactPlaceholder from 'react-placeholder'
 import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../../../public/features/task/messages/task-messages'
@@ -13,9 +13,9 @@ import moment from 'moment'
 
 import CustomPaginationActionsTable from './wallets-table'
 import AddFundsFormDrawer from '../payments/add-funds-form-drawer'
-import BalanceCard from '../../../../design-library/molecules/cards/balance-card/balance-card'
+import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 import WalletForm from './wallet-form'
-import InvoiceStatus from '../../../../design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
+import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
 import InvoiceId from './invoice-id'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import InvoiceDueDate from './invoice-due-date'
@@ -72,7 +72,7 @@ const Wallets = ({
 
   const confirmWalletCreate = async () => {
     await createWallet({
-      name: walletName,
+      name: walletName
     })
     await listWallets(user.id)
   }
@@ -142,11 +142,11 @@ const Wallets = ({
             justifyContent: 'space-between'
           }}
         >
-          <Typography variant='h5' gutterBottom>
-            <FormattedMessage id='general.wallets' defaultMessage='Wallets' />
+          <Typography variant="h5" gutterBottom>
+            <FormattedMessage id="general.wallets" defaultMessage="Wallets" />
           </Typography>
         </div>
-        <ReactPlaceholder type='text' rows={2} ready={wallet.completed}>
+        <ReactPlaceholder type="text" rows={2} ready={wallet.completed}>
           {wallet.data.id ? (
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
               <BalanceCard
@@ -171,11 +171,11 @@ const Wallets = ({
                     alignItems: 'center',
                     height: '60vh'
                   }}>
-                    <Typography variant='body1' gutterBottom>
-                      <FormattedMessage id='general.wallets.empty' defaultMessage='You dont have any active wallet' />
+                    <Typography variant="body1" gutterBottom>
+                      <FormattedMessage id="general.wallets.empty" defaultMessage="You dont have any active wallet" />
                     </Typography>
-                    <Button style={{ marginTop: 12 }} onClick={createWalletName} variant='contained' size='large' color='secondary' className={classes.button}>
-                      <FormattedMessage id='general.wallets.create' defaultMessage='Create wallet' />
+                    <Button style={{ marginTop: 12 }} onClick={createWalletName} variant="contained" size="large" color="secondary" className={classes.button}>
+                      <FormattedMessage id="general.wallets.create" defaultMessage="Create wallet" />
                     </Button>
                   </div>
                 )}
@@ -206,13 +206,13 @@ const Wallets = ({
                     <InvoiceDueDate key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
                     <>
                       {(wo.status === 'open') &&
-                        <Button onClick={(e) => handleInvoicePayment(wo.id)} variant='contained' color='secondary' size='small'>
-                          <FormattedMessage id='general.wallets.table.actions.pay' defaultMessage='Pay invoice' />
+                        <Button onClick={(e) => handleInvoicePayment(wo.id)} variant="contained" color="secondary" size="small">
+                          <FormattedMessage id="general.wallets.table.actions.pay" defaultMessage="Pay invoice" />
                         </Button>
                       }
                       {(wo.status === 'paid') &&
-                        <Button onClick={(e) => downloadInvoicePayment(wo.id)} variant='contained' color='secondary' size='small'>
-                          <FormattedMessage id='general.wallets.table.actions.download' defaultMessage='Download invoice' />
+                        <Button onClick={(e) => downloadInvoicePayment(wo.id)} variant="contained" color="secondary" size="small">
+                          <FormattedMessage id="general.wallets.table.actions.download" defaultMessage="Download invoice" />
                         </Button>
                       }
                     </>

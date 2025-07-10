@@ -22,11 +22,11 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    padding: theme.spacing(0.5),
+    padding: theme.spacing(0.5)
   },
   chip: {
-    margin: theme.spacing(0.5),
-  },
+    margin: theme.spacing(0.5)
+  }
 })
 
 class Organizations extends Component {
@@ -87,14 +87,14 @@ class Organizations extends Component {
             />
           )
         }) }
-        <Dialog open={ dialogOpen } onClose={ this.handleClose } aria-labelledby='form-dialog-title'>
-          <DialogTitle id='form-dialog-title'>
-            <FormattedMessage id='organization.dialog.title' defaultMessage='Import organizations' />
+        <Dialog open={ dialogOpen } onClose={ this.handleClose } aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <FormattedMessage id="organization.dialog.title" defaultMessage="Import organizations" />
           </DialogTitle>
           <DialogContent>
             { currentOrg && currentOrg.organizations &&
               <DialogContentText>
-                <FormattedMessage id='organization.dialog.exist' defaultMessage='We have an project imported already' />
+                <FormattedMessage id="organization.dialog.exist" defaultMessage="We have an project imported already" />
                 { currentOrg.organizations.map(o => {
                   return (
                     <div style={ { marginTop: 20, marginBottom: 20 } }>
@@ -106,29 +106,29 @@ class Organizations extends Component {
               </DialogContentText>
             }
             <DialogContentText>
-              <FormattedMessage id='organization.dialog.desc' defaultMessage='You can import organizations in order to manage on Gitpay' />
+              <FormattedMessage id="organization.dialog.desc" defaultMessage="You can import organizations in order to manage on Gitpay" />
             </DialogContentText>
             <TextField
               autoFocus
-              margin='dense'
-              id='name'
-              label='Organization name'
+              margin="dense"
+              id="name"
+              label="Organization name"
               value={ currentOrg.name }
               disabled
               fullWidth
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={ this.handleClose } color='primary'>
-              <FormattedMessage id='organization.dialog.cancel' defaultMessage='Cancel' />
+            <Button onClick={ this.handleClose } color="primary">
+              <FormattedMessage id="organization.dialog.cancel" defaultMessage="Cancel" />
             </Button>
             { currentOrg && currentOrg.organizations && currentOrg.organizations.length ? (
-              <Button onClick={ this.handleImport } disabled color='primary'>
-                <FormattedMessage id='organization.dialog.action.transfer' defaultMessage='Cant transfer now' />
+              <Button onClick={ this.handleImport } disabled color="primary">
+                <FormattedMessage id="organization.dialog.action.transfer" defaultMessage="Cant transfer now" />
               </Button>
             ) : (
-              <Button onClick={ this.handleImport } disabled={ currentOrg.imported } color='primary'>
-                <FormattedMessage id='organization.dialog.action.import' defaultMessage='Import' />
+              <Button onClick={ this.handleImport } disabled={ currentOrg.imported } color="primary">
+                <FormattedMessage id="organization.dialog.action.import" defaultMessage="Import" />
               </Button>
             ) }
 

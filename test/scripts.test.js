@@ -10,8 +10,8 @@ const agent = request.agent(api)
 const { createTask, createOrder, createPayout, truncateModels } = require('./helpers')
 const SendMail = require('../modules/mail/mail')
 const { scripts } = require('../scripts')
-const sampleCharge = require('./data/stripe.charge').get
-const sampleTransaction = require('./data/stripe.charge.balance_transaction').get
+const sampleCharge = require('./data/stripe/stripe.charge').get
+const sampleTransaction = require('./data/stripe/stripe.charge.balance_transaction').get
 
 describe('Scripts', () => {
   beforeEach(async () => {
@@ -21,6 +21,9 @@ describe('Scripts', () => {
     await truncateModels(models.Order);
     await truncateModels(models.Transfer);
     await truncateModels(models.Payout);
+  })
+
+  afterEach(async () => {
     nock.cleanAll()
   })
 

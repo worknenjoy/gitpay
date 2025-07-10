@@ -24,20 +24,20 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     flexFlow: 'column wrap',
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
+      flexDirection: 'column'
     }
   },
   card: {
     maxWidth: 400,
     minWidth: 350,
     [theme.breakpoints.down('sm')]: {
-      minWidth: 0,
+      minWidth: 0
     },
     margin: 40
   },
   media: {
-    height: 220,
-  },
+    height: 220
+  }
 }))
 
 export default function TeamCard (props) {
@@ -46,10 +46,10 @@ export default function TeamCard (props) {
 
   return (
     <div className={ classes.wrapper }>
-      <Typography variant='h5' gutterBottom>
+      <Typography variant="h5" gutterBottom>
         <FormattedMessage
-          id='team.title'
-          defaultMessage='Team'
+          id="team.title"
+          defaultMessage="Team"
         />
       </Typography>
       <div className={ classes.root }>
@@ -63,23 +63,23 @@ export default function TeamCard (props) {
                   title={ member.name }
                 />
                 <CardContent>
-                  <Typography gutterBottom variant='h5' component='h2'>
+                  <Typography gutterBottom variant="h5" component="h2">
                     { member.name }
                   </Typography>
-                  <Typography variant='body2' color='textSecondary' style={ { whiteSpace: 'initial' } }>
+                  <Typography variant="body2" color="textSecondary" style={ { whiteSpace: 'initial' } }>
                     { member.description }
                   </Typography>
                 </CardContent>
               </CardActionArea>
               <CardActions style={ { display: 'flex', flexDirection: 'row', justifyContent: 'center' } }>
                 { member.linkedinUrl &&
-                  <Button target='_blank' href={ member.linkedinUrl } size='small' color='secondary' variant='outlined'>
+                  <Button target="_blank" href={ member.linkedinUrl } size="small" color="secondary" variant="outlined">
                     <span>Linkedin</span>
                     <LinkedInIcon />
                   </Button>
                 }
                 { member.githubUrl &&
-                  <Button target='_blank' href={ member.githubUrl } size='small' variant='outlined'>
+                  <Button target="_blank" href={ member.githubUrl } size="small" variant="outlined">
                     <span>Github&thinsp;</span>
                     <GitHubIcon />
                   </Button>

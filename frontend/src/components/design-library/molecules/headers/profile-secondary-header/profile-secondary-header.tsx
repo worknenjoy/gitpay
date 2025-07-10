@@ -1,5 +1,4 @@
 import React from 'react';
-import AccountHolderStatus from '../../../atoms/status/account-status/account-holder-status/account-holder-status';
 import SecondaryTitle from '../../../atoms/typography/secondary-title/secondary-title';
 
 type ProfileSecondaryHeaderProps = {

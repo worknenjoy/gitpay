@@ -5,8 +5,8 @@ const useStyles = makeStyles(() => ({
     fontFamily: 'Roboto',
     color: '#a9a9a9',
     marginTop: '10px',
-    textAlign: 'right',
-  },
+    textAlign: 'right'
+  }
 }))
 
 export default useStyles

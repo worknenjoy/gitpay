@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { countryCodes } from '../../../../areas/private/shared/country-codes';
 
 import {
-  withStyles,
   Button,
   Dialog,
   DialogActions,
@@ -27,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
       padding: 8,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-    },
+      justifyContent: 'center'
+    }
   },
   countryItem: {
     display: 'inline-block',
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       boxSizing: 'border-box',
       flex: '1 1 100%',
       minWidth: 0,
-      fontSize: '0.8rem',
+      fontSize: '0.8rem'
     }
   },
   fullWidthMobile: {
@@ -54,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 0,
       width: '100%',
       boxSizing: 'border-box',
-      fontSize: '0.7rem',
-    },
+      fontSize: '0.7rem'
+    }
   },
   actionsWrapper: {
     [theme.breakpoints.down('sm')]: {
@@ -63,8 +62,8 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       alignItems: 'center',
       padding: '8px 16px',
-      boxSizing: 'border-box',
-    },
+      boxSizing: 'border-box'
+    }
   },
   creditTextMobile: {
     [theme.breakpoints.down('sm')]: {
@@ -72,20 +71,20 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      order: 3,
-    },
+      order: 3
+    }
   },
   buttomPrimaryActionMobile: {
     [theme.breakpoints.down('sm')]: {
       order: 1
-    },
+    }
   },
   buttomSecondaryActionMobile: {
     [theme.breakpoints.down('sm')]: {
       order: 2,
       marginTop: 8,
-      marginBottom: 8,
-    },
+      marginBottom: 8
+    }
   }
 }));
 
@@ -247,7 +246,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
               }}
               className={classes.buttomPrimaryActionMobile}
             >
-              <FormattedMessage id='dialog.picker.choose' defaultMessage={`Choose {country}`} values={{
+              <FormattedMessage id="dialog.picker.choose" defaultMessage={`Choose {country}`} values={{
                 country: currentCountry.label
               }} /> 
             </Button>

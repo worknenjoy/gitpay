@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   spanText: {
     display: 'inline-block',
     verticalAlign: 'middle'
-  },
+  }
 }));
 
 export type OfferDrawerProps = {
@@ -109,7 +109,7 @@ const OfferDrawer = ({
       label: (
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span>Make a new offer</span>
-            <AddIcon fontSize='small'  style={{ marginLeft: 3 }} />
+            <AddIcon fontSize="small"  style={{ marginLeft: 3 }} />
         </div>
       ),
       component: createSection

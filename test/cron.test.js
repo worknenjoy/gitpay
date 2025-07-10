@@ -8,7 +8,7 @@ const request = require('supertest')
 const agent = request.agent(api)
 const { TaskCron, OrderCron } = require('../cron')
 const MockDate = require('mockdate')
-const paypalOrder = require('./data/paypal.order')
+const paypalOrder = require('./data/paypal/paypal.order')
 
 describe('Crons', () => {
   beforeEach(async () => {
@@ -27,7 +27,7 @@ describe('Crons', () => {
     it('should update order status when payment expired on Paypal', async () => {
       const task = await createTask(agent)
       const taskData = task.dataValues
-      const order = await createOrder({userId: taskData.userId, taskId: taskData.id, provider: 'paypal', status: 'succeeded', paid: true})
+      const order = await createOrder({source_id: '123', userId: taskData.userId, taskId: taskData.id, provider: 'paypal', status: 'succeeded', paid: true})
       const orderData = order.dataValues
       nock('https://api.sandbox.paypal.com')
           .persist()  
@@ -40,7 +40,28 @@ describe('Crons', () => {
           .reply(200, paypalOrder.resource_not_found );
 
       await OrderCron.checkExpiredPaypalOrders()
-      models.Order.findOne({ where: { id: orderData.id } }).then( updatedOrder => {
+      await models.Order.findOne({ where: { id: orderData.id } }).then( updatedOrder => {
+        expect(updatedOrder.dataValues.status).to.equal('expired')
+        expect(updatedOrder.dataValues.paid).to.equal(false)
+      })
+    })
+    it('should update order status when payment authorization expired after one month on Paypal', async () => {
+      const task = await createTask(agent)
+      const taskData = task.dataValues
+      const order = await createOrder({source_id: '123', userId: taskData.userId, taskId: taskData.id, provider: 'paypal', status: 'succeeded', paid: true})
+      const orderData = order.dataValues
+      nock('https://api.sandbox.paypal.com')
+          .persist()  
+          .post(`/v1/oauth2/token`)
+          .reply(200, '{"access_token": "123"}' )
+
+      nock('https://api.sandbox.paypal.com')
+          .persist()  
+          .get(`/v2/checkout/orders/${orderData.source_id}`)
+          .reply(200, paypalOrder.authorization_expired );
+
+      await OrderCron.checkExpiredPaypalOrders()
+      await models.Order.findOne({ where: { id: orderData.id } }).then( updatedOrder => {
         expect(updatedOrder.dataValues.status).to.equal('expired')
         expect(updatedOrder.dataValues.paid).to.equal(false)
       })

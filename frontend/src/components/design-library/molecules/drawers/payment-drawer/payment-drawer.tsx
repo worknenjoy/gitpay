@@ -18,7 +18,7 @@ const styles = (theme: Theme) =>
     details: {
       display: 'flex',
       flexDirection: 'column'
-    },
+    }
   });
 
 type PaymentDrawerProps = {
@@ -65,8 +65,8 @@ const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickup
         <Tabs
           value={tabValue}
           onChange={handleChange}
-          indicatorColor='secondary'
-          textColor='secondary'
+          indicatorColor="secondary"
+          textColor="secondary"
         >
           {tabs.map((tab) => <Tab label={tab.label} value={tab.value} />)}
         </Tabs>

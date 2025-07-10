@@ -86,7 +86,7 @@ const actionAssign = async (data) => {
   // Accept Task
   if (confirm) {
     await assign.update({ status: 'accepted' }, { where: { id: assignId } })
-    return taskUpdate({ id: taskId, assigned: assignId, })
+    return taskUpdate({ id: taskId, assigned: assignId })
   }
   // Reject Task
   else {

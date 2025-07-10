@@ -27,10 +27,10 @@ const LanguageSwitcher = ({ completed, onSwitchLang, userCurrentLanguage, user }
 
   return (
     <>
-      <FormattedMessage id='task.actions.tooltip.language' defaultMessage='Choose your language'>
+      <FormattedMessage id="task.actions.tooltip.language" defaultMessage="Choose your language">
       { (msg) => (
-        <Tooltip id='tooltip-lang' title={ msg } placement='bottom'>
-          <Button style={ { padding: 0 } } id='language-menu' onClick={ handleMenu }>
+        <Tooltip id="tooltip-lang" title={ msg } placement="bottom">
+          <Button style={ { padding: 0 } } id="language-menu" onClick={ handleMenu }>
             { completed ? (
               <StyledAvatarIconOnly
                 alt={ user.username || '' }
@@ -46,7 +46,7 @@ const LanguageSwitcher = ({ completed, onSwitchLang, userCurrentLanguage, user }
       ) }
       </FormattedMessage>
       <Menu
-        id='menu-appbar'
+        id="menu-appbar"
         anchorOrigin={ { vertical: 'top', horizontal: 'right' } }
         transformOrigin={ { vertical: 'top', horizontal: 'right' } }
         open={ open }
@@ -54,14 +54,14 @@ const LanguageSwitcher = ({ completed, onSwitchLang, userCurrentLanguage, user }
       >
         <MenuItem selected={ userCurrentLanguage === 'en' } onClick={ (e) => onSwitchLang('en') }>
           <StyledAvatarIconOnly
-            alt='English'
+            alt="English"
             src={ logoLangEn }
           />
           <strong style={ { display: 'inline-block', margin: 10 } }>English</strong>
         </MenuItem>
         <MenuItem selected={ userCurrentLanguage === 'br' } onClick={ (e) => onSwitchLang('br') }>
           <StyledAvatarIconOnly
-            alt='Português'
+            alt="Português"
             src={ logoLangBr }
           />
           <strong style={ { display: 'inline-block', margin: 10 } }>Português</strong>

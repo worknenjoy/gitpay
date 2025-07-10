@@ -8,13 +8,13 @@ import {
   SEARCH_USER_ERROR,
   FETCH_LOGGED_USER_REQUESTED,
   FETCH_LOGGED_USER_SUCCESS,
-  FETCH_LOGGED_USER_ERROR,
+  FETCH_LOGGED_USER_ERROR
 } from '../actions/loginActions'
 
 import {
   UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_ERROR,
+  UPDATE_USER_ERROR
 } from '../actions/userActions'
 
 export const loggedIn = (state = { logged: false, data: {}, completed: true, error: {} }, action) => {

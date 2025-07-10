@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core';
 
 export default {
   title: 'Design Library/Templates/Base/PrivateBase',
-  component: PrivateBase,
+  component: PrivateBase
 };
 
 const Template = (args) => <PrivateBase {...args} />;
@@ -22,19 +22,19 @@ Default.args = {
       Types: [
         { name: 'contributor' },
         { name: 'maintainer' },
-        { name: 'funding' },
-      ],
+        { name: 'funding' }
+      ]
     },
-    completed: true,
+    completed: true
   },
   profileHeaderProps: {
     title: 'Profile Header',
-    subtitle: 'Subtitle',
+    subtitle: 'Subtitle'
   },
   bottomProps: {
     info: { bounties: 0, users: 0, tasks: 0 },
-    getInfo: () => {},
-  },
+    getInfo: () => {}
+  }
 };
 
 export const Loading = Template.bind({});
@@ -44,16 +44,16 @@ Loading.args = {
   signOut: () => console.log('Sign Out'),
   user: {
     data: {},
-    completed: false,
+    completed: false
   },
   profileHeaderProps: {
     title: 'Loading...',
-    subtitle: 'Loading...',
+    subtitle: 'Loading...'
   },
   bottomProps: {
     info: { bounties: 0, users: 0, tasks: 0 },
-    getInfo: () => {},
-  },
+    getInfo: () => {}
+  }
 };
 
 export const NotActiveUser = Template.bind({});
@@ -67,16 +67,16 @@ NotActiveUser.args = {
       name: 'John Doe',
       Types: [],
       completed: false,
-      email_verified: false,
+      email_verified: false
     },
-    completed: true,
+    completed: true
   },
   profileHeaderProps: {
     title: 'Not Active User',
-    subtitle: 'Please activate your account',
+    subtitle: 'Please activate your account'
   },
   bottomProps: {
     info: { bounties: 0, users: 0, tasks: 0 },
-    getInfo: () => {},
-  },
+    getInfo: () => {}
+  }
 };

@@ -9,7 +9,6 @@ import * as walletOrderActions from '../../src/actions/walletOrderActions'
 import * as types from '../../src/actions/walletOrderActions'
 import * as typesNotification from '../../src/actions/notificationActions'
 import api from '../../src/consts'
-import _ from 'lodash'
 import Auth from '../../src/modules/auth'
 
 Auth.getToken = () => true

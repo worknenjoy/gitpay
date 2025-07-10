@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Page } from 'app/styleguide/components/Page'
 import TopBarContainer from '../../../../../containers/topbar'
-import Bottom from '../../../../design-library/organisms/layouts/bottom-bar/bottom'
+import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages } from 'react-intl'
 import CustomPaginationActionsTable from './task-table'

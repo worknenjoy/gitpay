@@ -3,7 +3,7 @@ import { activateUser } from '../actions/userActions';
 import AccountActivation from '../components/areas/private/features/account/features/account-activation/account-activation';
 
 const mapDispatchToProps = (dispatch) => ({
-  activateAccount: (token: string, userId: number) => dispatch(activateUser(userId, token)),
+  activateAccount: (token: string, userId: number) => dispatch(activateUser(userId, token))
 });
 
 export default connect(null, mapDispatchToProps)(AccountActivation);

@@ -16,7 +16,7 @@ export const InvoiceDueDate = ({ walletOrderId, fetchWalletOrder }) => {
 
   return (
     <div>
-      <ReactPlaceholder type='text' ready={!!invoiceDueDate} rows={1} color='#E0E0E0'>
+      <ReactPlaceholder type="text" ready={!!invoiceDueDate} rows={1} color="#E0E0E0">
         {moment.unix(invoiceDueDate).fromNow()}
       </ReactPlaceholder>
     </div>

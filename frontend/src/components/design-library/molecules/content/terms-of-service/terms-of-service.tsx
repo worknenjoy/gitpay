@@ -53,7 +53,7 @@ By using our platform, you agree to these terms and conditions. If you do not ag
       <div style={extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, background: 'white', width: '100%'} : {}}>
         <div style={{marginBottom: 10}}>
           { onArrowBack && (
-            <a onClick={onArrowBack} href='#'>
+            <a onClick={onArrowBack} href="#">
               <ArrowBack />
             </a>
           )}

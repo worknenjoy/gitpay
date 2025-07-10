@@ -25,16 +25,16 @@ const useStyles = makeStyles((theme) => ({
   },
   cssLabel: {
     '&$cssFocused': {
-      color: theme.palette.primary.main,
-    },
+      color: theme.palette.primary.main
+    }
   },
   cssFocused: {},
   cssOutlinedInput: {
     '&$cssFocused $notchedOutline': {
-      borderColor: theme.palette.primary.main,
-    },
+      borderColor: theme.palette.primary.main
+    }
   },
-  notchedOutline: {},
+  notchedOutline: {}
 }))
 
 type LoginFormSigninProps = {
@@ -158,29 +158,29 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
   const { error } = state
 
   return (
-    <form onSubmit={submitByFormType} action={`${api.API_URL}/authorize/local`} method='POST' autoComplete='off'>
+    <form onSubmit={submitByFormType} action={`${api.API_URL}/authorize/local`} method="POST" autoComplete="off">
       <div className={classes.margins}>
         <TextField
-          name='username'
+          name="username"
           onChange={handleChange('username')}
           onBlur={handleBlur}
           fullWidth
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           }}
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           }}
-          label='E-mail'
-          variant='outlined'
-          id='username'
+          label="E-mail"
+          variant="outlined"
+          id="username"
           error={!!error.username}
           helperText={error.username}
           defaultValue={state.username}
@@ -189,27 +189,27 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
 
       <div className={classes.margins}>
         <TextField
-          name='password'
+          name="password"
           onChange={handleChange('password')}
           onBlur={handleBlur}
           fullWidth
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           }}
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           }}
-          type='password'
-          label='Password'
-          variant='outlined'
-          id='password'
+          type="password"
+          label="Password"
+          variant="outlined"
+          id="password"
           error={!!error.password}
           helperText={error.password}
           defaultValue={state.password}
@@ -221,12 +221,12 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
             ? <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
             : <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
           }
-          <Typography variant='caption'>
-            <FormattedMessage id='account.login.label.remember' defaultMessage='Remember me' />
+          <Typography variant="caption">
+            <FormattedMessage id="account.login.label.remember" defaultMessage="Remember me" />
           </Typography>
         </div>
-        <Button variant='text' style={{ margin: 0, padding: 0 }} onClick={onForgot} component='a' size='small' color='primary'>
-          <FormattedMessage id='account.login.label.forgot' defaultMessage='Forgot password?' />
+        <Button variant="text" style={{ margin: 0, padding: 0 }} onClick={onForgot} component="a" size="small" color="primary">
+          <FormattedMessage id="account.login.label.forgot" defaultMessage="Forgot password?" />
         </Button>
       </div>
 
@@ -243,21 +243,21 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
           color: 'red',
           fontSize: 10,
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}>
-          <Typography variant='body1' component='span'>
+          <Typography variant="body1" component="span">
             {error.captcha}
           </Typography>
         </div>
       }
       <div className={classes.center} style={{ marginTop: 20 }}>
         <div>
-          <Button fullWidth type='submit' size='large' variant='contained' color='primary' className={classes.button}>
-            <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+          <Button fullWidth type="submit" size="large" variant="contained" color="primary" className={classes.button}>
+            <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
           </Button>
           {noCancelButton ? null : (
-            <Button onClick={onClose} fullWidth size='large' variant='text' color='primary' className={classes.button} style={{ marginTop: 10 }}>
-              <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+            <Button onClick={onClose} fullWidth size="large" variant="text" color="primary" className={classes.button} style={{ marginTop: 10 }}>
+              <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
             </Button>
           )}
 
@@ -266,11 +266,11 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
           </div>
 
           <div style={{ marginTop: 10 }}>
-            <Typography variant='body1' component='span' style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-              <FormattedMessage id='account.login.label.or.signing' defaultMessage='Dont have an account?' />
+            <Typography variant="body1" component="span" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+              <FormattedMessage id="account.login.label.or.signing" defaultMessage="Dont have an account?" />
             </Typography>
-            <Button onClick={onSignup} variant='text' color='primary' size='large'>
-              <FormattedMessage id='account.login.label.signup' defaultMessage='Sign up' />
+            <Button onClick={onSignup} variant="text" color="primary" size="large">
+              <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
             </Button>
           </div>
         </div>

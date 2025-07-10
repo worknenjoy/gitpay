@@ -15,8 +15,8 @@ const OfferDrawerTabs = ({ tabs, onTabChange }) => {
       <Tabs
         value={tabValue}
         onChange={handleChange}
-        indicatorColor='secondary'
-        textColor='secondary'
+        indicatorColor="secondary"
+        textColor="secondary"
       >
         {tabs.map((tab) => <Tab label={tab.label} value={tab.value} />)}
       </Tabs>

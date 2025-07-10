@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { injectIntl, FormattedMessage, FormattedDate } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 import {
   Paper,
-  withStyles,
   Grid,
   Button,
   Typography,
@@ -11,26 +10,26 @@ import {
   FormControl,
   Input,
   Select,
-  Options,
-  FormHelperText,
+  FormHelperText
 } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { countryCodesFull } from '../../../../shared/country-codes'
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   legend: {
     fontSize: 18,
     fontWeight: 500,
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.dark
   },
   fieldset: {
     border: `1px solid ${theme.palette.primary.light}`,
     marginBottom: 20,
     '&[disabled] legend': {
-      color: theme.palette.primary.light,
+      color: theme.palette.primary.light
     }
   }
-})
+}))
 
 type FieldProps = {
   name: string,
@@ -52,7 +51,7 @@ export const Field = ({ ref, name, value, label, type = 'text', required = false
   return (
     <FormControl style={{ width: '100%' }}>
        <ReactPlaceholder
-          type='text'
+          type="text"
           rows={1}
           ready={completed}
       >
@@ -77,8 +76,8 @@ export const Field = ({ ref, name, value, label, type = 'text', required = false
         onChange={onChange}
       />
       {help &&
-        <FormHelperText id='component-helper-text'>
-          <FormattedMessage id='validation-message' defaultMessage='+Country code and Number' />
+        <FormHelperText id="component-helper-text">
+          <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
         </FormHelperText>
       }
       </ReactPlaceholder>
@@ -87,14 +86,14 @@ export const Field = ({ ref, name, value, label, type = 'text', required = false
 }
 
 const CustomerDetails = ({
-  intl,
   customer,
   fetchCustomer,
   createCustomer,
   updateCustomer,
-  user,
-  classes
+  user
 }) => {
+  const classes = useStyles()
+  const intl = useIntl()
   const [customerData, setCustomerData] = useState({})
   const { data } = user
 
@@ -113,7 +112,7 @@ const CustomerDetails = ({
         state: e.target['address[state]'].value
       },
       metadata: {
-        user_id: data.id,
+        user_id: data.id
         //customer_type: e.target['customer_type'].value
       }
     }
@@ -129,7 +128,7 @@ const CustomerDetails = ({
     if (!e.target) return false
     setCustomerData({
       ...customerData,
-      [e.target.name]: e.target.value || e.target.options[e.target.selectedIndex].value
+      [e.target.name]: e.target.value || e.target.options?.[e.target.selectedIndex]?.value
     })
   }
 
@@ -138,7 +137,7 @@ const CustomerDetails = ({
       const userId = data.id
       fetchCustomer(userId)
     }
-  }, [data, createCustomer, updateCustomer])
+  }, [data, createCustomer, updateCustomer, fetchCustomer])
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
@@ -149,8 +148,8 @@ const CustomerDetails = ({
       >
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
-            <Typography variant='h6' gutterBottom>
-              <FormattedMessage id='account.customer.title' defaultMessage='Billing information' />
+            <Typography variant="h6" gutterBottom>
+              <FormattedMessage id="account.customer.title" defaultMessage="Billing information" />
             </Typography>
           </Grid>
           
@@ -158,15 +157,15 @@ const CustomerDetails = ({
               <fieldset className={classes.fieldset}>
                 <legend className={classes.legend}>
                   <Typography>
-                    <FormattedMessage id='customer.personal.title' defaultMessage='1. Personal / business details' />
+                    <FormattedMessage id="customer.personal.title" defaultMessage="1. Personal / business details" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12}>
-                    <FormattedMessage id='customer.verify.fullName' defaultMessage='Full name / Business name'>
+                    <FormattedMessage id="customer.verify.fullName" defaultMessage="Full name / Business name">
                       {(msg) => (
                         <Field
-                          name='name'
+                          name="name"
                           label={msg}
                           defaultValue={customer.data.name}
                           value={customerData['name']}
@@ -180,41 +179,41 @@ const CustomerDetails = ({
               <fieldset className={classes.fieldset}>
                 <legend className={classes.legend}>
                   <Typography>
-                    <FormattedMessage id='account-details-address' defaultMessage='2. Address information' />
+                    <FormattedMessage id="account-details-address" defaultMessage="2. Address information" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
-                    <Field name='address[line1]' label='Address line 1' value={customerData['address[line1]']} defaultValue={customer.data.address?.line1} completed={customer.completed} />
+                    <Field name="address[line1]" label="Address line 1" value={customerData['address[line1]']} defaultValue={customer.data.address?.line1} completed={customer.completed} />
                   </Grid>
                   <Grid item xs={12} md={4}>
-                    <Field name='address[line2]' label='Address line 2' value={customerData['address[line2]']} defaultValue={customer.data.address?.line2} completed={customer.completed} />
+                    <Field name="address[line2]" label="Address line 2" value={customerData['address[line2]']} defaultValue={customer.data.address?.line2} completed={customer.completed} />
                   </Grid>
                   <Grid item xs={12} md={2}>
-                    <Field name='address[postal_code]' label='Postal code' value={customerData['address[postal_code]']} defaultValue={customer.data.address?.postal_code} completed={customer.completed} />
+                    <Field name="address[postal_code]" label="Postal code" value={customerData['address[postal_code]']} defaultValue={customer.data.address?.postal_code} completed={customer.completed} />
                   </Grid>
                   <Grid item xs={12} md={6}>
-                    <Field name='address[city]' label='City' value={customerData['address[city]']} defaultValue={customer.data.address?.city} completed={customer.completed} />
+                    <Field name="address[city]" label="City" value={customerData['address[city]']} defaultValue={customer.data.address?.city} completed={customer.completed} />
                   </Grid>
                   <Grid item xs={12} md={2}>
-                    <Field name='address[state]' label='State' value={customerData['address[state]']} defaultValue={customer.data.address?.state} completed={customer.completed} />
+                    <Field name="address[state]" label="State" value={customerData['address[state]']} defaultValue={customer.data.address?.state} completed={customer.completed} />
                   </Grid>
                    <Grid item xs={12} md={4}>
                     <ReactPlaceholder
-                      type='text'
+                      type="text"
                       rows={1}
                       ready={customer.completed}
                     >
                       <Select
                         native
-                        name='address[country]'
+                        name="address[country]"
                         value={customerData['address[country]']}
-                        input={<Input id='address-country' />}
+                        input={<Input id="address-country" />}
                         fullWidth
                         style={{ marginTop: 16 }}
                       >
-                        <option value=''>
-                          Select country
+                        <option value="">
+                          {intl.formatMessage({ id: 'select.country', defaultMessage: 'Select country' })}
                         </option>
                         {countryCodesFull.map((c, index) => (
                           <option key={index} value={c.code} selected={customer.data.address?.country === c.code}>{c.country}</option>
@@ -227,17 +226,17 @@ const CustomerDetails = ({
               <Grid item xs={12}>
                 <div style={{ float: 'right' }}>
                   <Button
-                    variant='text'
+                    variant="text"
                     style={{ marginRight: 10 }}
                   >
-                    <FormattedMessage id='account.actions.cancel' defaultMessage='Cancel' />
+                    <FormattedMessage id="account.actions.cancel" defaultMessage="Cancel" />
                   </Button>
                   <Button
-                    type='submit'
-                    variant='contained'
-                    color='secondary'
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
                   >
-                    <FormattedMessage id='customer.actions.save' defaultMessage='Save payment information' />
+                    <FormattedMessage id="customer.actions.save" defaultMessage="Save payment information" />
                   </Button>
                 </div>
               </Grid>
@@ -248,4 +247,4 @@ const CustomerDetails = ({
   )
 }
 
-export default injectIntl(withStyles(styles)(CustomerDetails))
+export default CustomerDetails

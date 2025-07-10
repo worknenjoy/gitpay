@@ -9,8 +9,8 @@ const agent = request.agent(api)
 const nock = require('nock')
 const { createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
 const models = require('../models')
-const transfer = require('./data/transfer').updated.data.object
-const paypalGetPayoutSample = require('./data/paypal.payout').get 
+const transfer = require('./data/stripe/transfer').updated.data.object
+const paypalGetPayoutSample = require('./data/paypal/paypal.payout').get 
 
 // Common function to create transfer
 const createTransferWithTaskData = async (taskData, userId, transferId) => {

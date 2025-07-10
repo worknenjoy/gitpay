@@ -14,7 +14,7 @@ module.exports = Promise.method(async function transferSearch (params = {}) {
         {
           model: User,
           as: 'User'
-        },  
+        }  
       ]
     })
   }
@@ -26,7 +26,7 @@ module.exports = Promise.method(async function transferSearch (params = {}) {
         {
           model: User,
           as: 'User'
-        },  
+        }  
       ]
     })
   }

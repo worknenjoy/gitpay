@@ -21,7 +21,7 @@ export default function SlackCard(): JSX.Element {
         flexDirection: 'row',
         backgroundColor: '#F2F2F2',
         '&:hover': {
-          cursor: 'pointer',
+          cursor: 'pointer'
         }
         }} >
         <div style={{

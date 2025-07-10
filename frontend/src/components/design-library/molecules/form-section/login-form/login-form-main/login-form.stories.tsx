@@ -3,7 +3,7 @@ import LoginFormSignin from './login-form';
 
 export default {
   title: 'Design Library/Molecules/Forms/LoginForm/LoginFormMain/LoginFormSignin',
-  component: LoginFormSignin,
+  component: LoginFormSignin
 };
 
 const Template = (args) => <LoginFormSignin {...args} />;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import ImportIssueButton from '../../../../../design-library/organisms/layouts/topbar/import-issue';
-import ImportIssueDialog from '../../../../../design-library/organisms/layouts/topbar/import-issue-dialog';
+import ImportIssueButton from 'design-library/organisms/layouts/topbar/import-issue';
+import ImportIssueDialog from 'design-library/organisms/layouts/topbar/import-issue-dialog';
 import AccountMenu from './account-menu';
 import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
-import { Container, Grid, withStyles } from '@material-ui/core';
+import { Grid, withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
   container: {
@@ -63,7 +63,7 @@ const styles = (theme) => ({
     '@media (max-width: 37.5em)': {
       marginTop: 20,
       width: '100%',
-      justifyContent: 'center',
+      justifyContent: 'center'
     }
   }
 })
@@ -93,7 +93,7 @@ const AccountHeader = ({
       <Grid xs={12} md={8} className={classes.wrapper}>
         <div className={classes.inner}>
           {user?.Types?.map(t => t.name).includes('contributor') &&
-            <Grid container direction='column' alignItems='center'>
+            <Grid container direction="column" alignItems="center">
               <Grid item xs={ 12 }>
                 <Button
                   onClick={ () => history.push('/profile/explore') }
@@ -101,7 +101,7 @@ const AccountHeader = ({
                   variant="outlined"
                   className={ classes.actionButtons }
                 >
-                  <FormattedMessage id="profile.header.action.secondary" defaultMessage='Work on an issue' />
+                  <FormattedMessage id="profile.header.action.secondary" defaultMessage="Work on an issue" />
                 </Button>
               </Grid>
             </Grid>

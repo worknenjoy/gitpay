@@ -54,8 +54,8 @@ const PersonalDetailsForm = ({ account }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Field
-            label='Website'
-            name='website'
+            label="Website"
+            name="website"
             defaultValue={url}
           />
         </Grid>

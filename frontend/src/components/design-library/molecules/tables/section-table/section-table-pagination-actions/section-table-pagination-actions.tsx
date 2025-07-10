@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
+    marginLeft: theme.spacing(2.5)
+  }
 }));
 
 const TablePaginationActions = ({ count, page, rowsPerPage, onPageChange }) => {

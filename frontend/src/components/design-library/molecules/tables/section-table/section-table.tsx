@@ -13,7 +13,7 @@ import {
   TableRow,
   TableSortLabel,
   Typography,
-  Paper,
+  Paper
 } from '@material-ui/core';
 
 import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions';
@@ -22,41 +22,41 @@ import TablePaginationActions from './section-table-pagination-actions/section-t
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3)
   },
   table: {
-    minWidth: 500,
+    minWidth: 500
   },
   tableCell: {
     root: {
-      padding: 5,
-    },
+      padding: 5
+    }
   },
   tableWrapper: {
-    overflowX: 'auto',
+    overflowX: 'auto'
   },
   chipStatusSuccess: {
     marginBottom: theme.spacing(1),
     verticalAlign: 'middle',
     backgroundColor: 'transparent',
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.main
   },
   chipStatusClosed: {
     marginBottom: theme.spacing(1),
     verticalAlign: 'middle',
     backgroundColor: 'transparent',
-    color: theme.palette.error.main,
+    color: theme.palette.error.main
   },
   avatarStatusSuccess: {
     width: theme.spacing(0),
     height: theme.spacing(0),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main
   },
   avatarStatusClosed: {
     width: theme.spacing(0),
     height: theme.spacing(0),
-    backgroundColor: theme.palette.error.main,
-  },
+    backgroundColor: theme.palette.error.main
+  }
 }));
 
 type MetaDataProps = {
@@ -191,8 +191,8 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
     return (
       <Paper className={classes.root}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
-          <Typography variant='caption'>
-            <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
+          <Typography variant="caption">
+            <FormattedMessage id="task.table.body.noIssues" defaultMessage="No issues" />
           </Typography>
         </div>
       </Paper>
@@ -206,7 +206,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
           {[0, 1, 2, 3, 4, 5].map(() => (
             <TableCell className={classes.tableCell}>
               <div style={{ width: 80, padding: '8px 4px' }}>
-                <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={tableData.completed}>
+                <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={tableData.completed}>
                   <div />
                 </ReactPlaceholder>
               </div>
@@ -228,7 +228,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
                 <TableRow key={n.id}>
                   {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
                   <TableCell key={fieldId} className={classes.tableCell}>
-                    <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={tableData.completed}>
+                    <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={tableData.completed}>
                     <div>
                       {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
                     </div>

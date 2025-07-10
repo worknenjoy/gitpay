@@ -7,8 +7,8 @@ const PayoutSettingsPaypal = ({ user, onSubmit }) => {
   return (
    <>
     <ProfileHeader
-      title={<FormattedMessage id='payoutSettings.paypal.title' defaultMessage='PayPal Account' />}
-      subtitle={<FormattedMessage id='payoutSettings.paypal.subtitle' defaultMessage='Manage your PayPal account settings.' />}
+      title={<FormattedMessage id="payoutSettings.paypal.title" defaultMessage="PayPal Account" />}
+      subtitle={<FormattedMessage id="payoutSettings.paypal.subtitle" defaultMessage="Manage your PayPal account settings." />}
     />
     <PaypalInfoForm
       user={user}

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: 4,
       marginLeft: 10
     }
-  },
+  }
 }));
 
 const DeliveryDate = ({ date, onDateChange }) => {
@@ -60,15 +60,15 @@ const DeliveryDate = ({ date, onDateChange }) => {
   return (
     <Paper style={{ background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10, paddingTop: 0 }}>
       <div style={{ textAlign: 'center' }}>
-        <Typography variant='body1'>
-          <FormattedMessage id='task.bounties.interested.deliveryDateTitle' defaultMessage='Review Delivery Dates' />
+        <Typography variant="body1">
+          <FormattedMessage id="task.bounties.interested.deliveryDateTitle" defaultMessage="Review Delivery Dates" />
         </Typography>
       </div>
       <div style={{ display: 'flex', marginTop: 10, marginBottom: 10 }}>
         <div style={{ width: 25, justifyContent: 'center', display: 'flex' }}><WarningIcon style={{ color: '#D7472F', fontSize: 18 }} /></div>
         <div style={{ paddingLeft: 5 }}>
-          <Typography variant='caption' gutterBottom style={{ color: 'gray' }}>
-            <FormattedMessage id='task.bounties.interested.deliveryDateSuggest' defaultMessage={'You can suggest other delivery date.'}>
+          <Typography variant="caption" gutterBottom style={{ color: 'gray' }}>
+            <FormattedMessage id="task.bounties.interested.deliveryDateSuggest" defaultMessage={'You can suggest other delivery date.'}>
               {(msg) => (
                 <span className={classes.spanText}>
                   {msg}
@@ -81,32 +81,32 @@ const DeliveryDate = ({ date, onDateChange }) => {
       <div style={{ display: 'flex', marginTop: 10, marginBottom: 10 }}>
         <div style={{ width: 25, justifyContent: 'center', display: 'flex', alignItems: 'center' }}><CalendarIcon style={{ color: 'gray' }} /></div>
         <div className={classes.deliveryDateSuggestion}>
-          <Typography variant='caption' style={{ color: 'gray' }}>
+          <Typography variant="caption" style={{ color: 'gray' }}>
             <span className={classes.spanText}>
-              <FormattedMessage id='task.bounties.interested.deliveryDate' defaultMessage='Delivery date at {deliveryDate}' values={{ deliveryDate: deliveryDate }} />
+              <FormattedMessage id="task.bounties.interested.deliveryDate" defaultMessage="Delivery date at {deliveryDate}" values={{ deliveryDate: deliveryDate }} />
               {deadline
-                ? <FormattedMessage id='task.bounties.interested.deadline' defaultMessage=' (in {deadline} days)' values={{ deadline: deadline }} />
+                ? <FormattedMessage id="task.bounties.interested.deadline" defaultMessage=" (in {deadline} days)" values={{ deadline: deadline }} />
                 : null}
             </span>
           </Typography>
-          <Link onClick={handleSuggestAnotherDate} variant='body1' className={classes.dateSuggestionBtn}>
-            <FormattedMessage id='task.bounties.actions.sugggestAnotherDate' defaultMessage='SUGGEST ANOTHER DATE' />&nbsp;
+          <Link onClick={handleSuggestAnotherDate} variant="body1" className={classes.dateSuggestionBtn}>
+            <FormattedMessage id="task.bounties.actions.sugggestAnotherDate" defaultMessage="SUGGEST ANOTHER DATE" />&nbsp;
           </Link>
         </div>
       </div>
 
       {showSuggestAnotherDateField && (
         <FormControl fullWidth>
-          <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
+          <FormattedMessage id="task.status.deadline.day.label" defaultMessage="Day">
             {(msg) => (
-              <InputLabel htmlFor='interested-date' shrink={true}>{msg}</InputLabel>
+              <InputLabel htmlFor="interested-date" shrink={true}>{msg}</InputLabel>
             )}
           </FormattedMessage>
           <Input
-            id='interested-date'
-            startAdornment={<InputAdornment position='start'><DateIcon /></InputAdornment>}
+            id="interested-date"
+            startAdornment={<InputAdornment position="start"><DateIcon /></InputAdornment>}
             placeholder={intl.formatMessage({ id: 'task.status.deadline.day.insert.label', defaultMessage: 'Choose a date' })}
-            type='date'
+            type="date"
             value={`${MomentComponent(interestedSuggestedDate).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}`}
             onChange={handleInputChangeCalendar}
           />

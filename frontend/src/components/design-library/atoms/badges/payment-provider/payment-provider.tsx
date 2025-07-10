@@ -1,6 +1,4 @@
 import React from 'react';
-import { createStyles, Theme } from '@material-ui/core/styles';
-import { orange, green, blue } from '@material-ui/core/colors';
 import { 
   CreditCard as CreditCardIcon,
   Receipt as InvoiceIcon,

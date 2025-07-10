@@ -14,7 +14,7 @@ const Fieldset = ({ children, completed, legend, rows = 1 }) => {
       </legend>
       <ReactPlaceholder
         showLoadingAnimation
-        type='text'
+        type="text"
         rows={rows}
         ready={completed}
         lineSpacing={24}

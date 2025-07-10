@@ -249,7 +249,7 @@ passport.use(
                   userUpdate(data)
                     .then(user => {
                       const token = jwt.sign(
-                        { email: data.email },
+                        { id: data.id, email: data.email },
                         process.env.SECRET_PHRASE
                       )
                       data.token = token
@@ -268,7 +268,7 @@ passport.use(
                   userBuild(data)
                     .then(user => {
                       const token = jwt.sign(
-                        { email: data.email },
+                        { id: data.id, email: data.email },
                         process.env.SECRET_PHRASE
                       )
                       data.token = token
@@ -343,7 +343,7 @@ passport.use(
                   userUpdate(data)
                     .then(_ => {
                       const token = jwt.sign(
-                        { email: data.email },
+                        { id: data.id, email: data.email },
                         process.env.SECRET_PHRASE
                       )
                       data.token = token
@@ -410,7 +410,7 @@ passport.use(
         if (user.login_strategy && user.login_strategy !== 'local') return done(null, false)
         if (user.verifyPassword(password, user.password)) {
           const token = jwt.sign(
-            { email: user.email },
+            { id: user.id, email: user.email },
             process.env.SECRET_PHRASE
           )
           user.token = token

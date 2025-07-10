@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     transferTask: (taskId) => dispatch(transferTask(taskId)),
     paymentOrder: (order) => dispatch(payOrder(order)),
     createOrder: (order) => dispatch(createOrder(order)),
-    filterTaskOrders: (filter) => dispatch(filterTaskOrders(filter)),
+    filterTaskOrders: (filter) => dispatch(filterTaskOrders(filter))
   }
 }
 

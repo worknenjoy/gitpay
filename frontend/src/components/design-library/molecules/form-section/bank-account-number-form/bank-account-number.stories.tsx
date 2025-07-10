@@ -3,7 +3,7 @@ import BankAccountNumberForm from './bank-account-number-form';
 
 export default {
   title: 'Design Library/Molecules/Forms/BankAccountNumberForm',
-  component: BankAccountNumberForm,
+  component: BankAccountNumberForm
 };
 
 const Template = (args) => <BankAccountNumberForm {...args} />;
@@ -17,8 +17,8 @@ export const Loading = Template.bind({});
 Loading.args = {
   bankAccount: {
     completed: false,
-    data: {},
-  },
+    data: {}
+  }
 };
 
 export const WithData = Template.bind({});
@@ -28,7 +28,7 @@ WithData.args = {
     data: {
       id: '123456',
       routing_number: '987654321',
-      last4: '6789',
-    },
-  },
+      last4: '6789'
+    }
+  }
 };

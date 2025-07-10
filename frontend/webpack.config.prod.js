@@ -38,10 +38,13 @@ module.exports = {
     alias: {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`,
-      images: path.resolve(__dirname, "src/images")
+      images: path.resolve(__dirname, "src/images"),
+      "design-library": path.resolve(__dirname, "src/components/design-library")
     },
     fallback: {
-      stream: 'stream-browserify'
+      stream: 'stream-browserify',
+      buffer: require.resolve('buffer')
+
     }
   },
   plugins: [
@@ -60,7 +63,7 @@ module.exports = {
         'API_HOST': JSON.stringify(process.env.API_HOST),
         'STRIPE_PUBKEY': JSON.stringify(process.env.STRIPE_PUBKEY),
         'SLACK_CHANNEL_INVITE_LINK': JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK),
-        'GOOGLE_RECAPTCHA_SITE_KEY': JSON.stringify(process.env.GOOGLE_RECAPTCHA_SITE_KEY),
+        'GOOGLE_RECAPTCHA_SITE_KEY': JSON.stringify(process.env.GOOGLE_RECAPTCHA_SITE_KEY)
       }
     }),
     new CleanWebpackPlugin({
@@ -68,6 +71,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
     })
   ],
   module: {
@@ -75,7 +79,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /.js[x]?$/,

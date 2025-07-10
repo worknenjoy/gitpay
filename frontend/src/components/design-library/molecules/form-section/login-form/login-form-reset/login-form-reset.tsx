@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import {
   Button,
   TextField,
@@ -13,19 +13,19 @@ import { purple } from '@material-ui/core/colors'
 const useStyles = makeStyles((theme) => ({
   cssLabel: {
     '&$cssFocused': {
-      color: purple[500],
-    },
+      color: purple[500]
+    }
   },
   cssFocused: {},
   cssUnderline: {
     '&:after': {
       borderBottomColor: purple[500]
-    },
+    }
   },
   cssOutlinedInput: {
     '&$cssFocused $notchedOutline': {
       borderColor: purple[500]
-    },
+    }
   },
   notchedOutline: {},
   margins: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10
   },
   button: {
-    marginRight: 20,
+    marginRight: 20
   },
   center: {
     display: 'flex',
@@ -110,9 +110,9 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
   useEffect(() => {
     if(validatingPassword) {
       if (password.length < 7) {
-        setError({ ...error, password: <FormattedMessage id='user.password.error.minimum' defaultMessage='Password must be at least 8 characters' /> })
+        setError({ ...error, password: <FormattedMessage id="user.password.error.minimum" defaultMessage="Password must be at least 8 characters" /> })
       } else if (password.length > 72) {
-        setError({ ...error, password: <FormattedMessage id='user.password.error.maximum' defaultMessage='Password cannot be longer than 72 characters' /> })
+        setError({ ...error, password: <FormattedMessage id="user.password.error.maximum" defaultMessage="Password cannot be longer than 72 characters" /> })
       } else {
         setError({ ...error, password: false })
       }
@@ -122,7 +122,7 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
   useEffect(() => {
     if(validatingConfirmPassword) {
       if (password !== confirmPassword) {
-        setError({ ...error, confirmPassword: <FormattedMessage id='user.confirm.password.error' defaultMessage='Passwords do not match' /> })
+        setError({ ...error, confirmPassword: <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> })
       } else {
         setError({ ...error, confirmPassword: false })
       }
@@ -130,10 +130,10 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
   }, [password, confirmPassword, validatingConfirmPassword])
 
   return (
-    <form onSubmit={submitByFormType} action={action} method='POST' autoComplete='off'>
+    <form onSubmit={submitByFormType} action={action} method="POST" autoComplete="off">
       <div className={ classes.margins }>
         <TextField
-          name='password'
+          name="password"
           onChange={ handleChangePassword }
           onBlur={ handleBlurPassword }
           onFocus={ handleFocusPassword }
@@ -141,20 +141,20 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
           InputLabelProps={ {
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           } }
           InputProps={ {
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           } }
-          type='password'
-          label='Password'
-          variant='outlined'
-          id='password'
+          type="password"
+          label="Password"
+          variant="outlined"
+          id="password"
           error={ !!error.password }
           helperText={ error.password }
           defaultValue={ password }
@@ -164,7 +164,7 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
         <TextField
           error={ !!error.confirmPassword }
           helperText={ error.confirmPassword }
-          name='confirm_password'
+          name="confirm_password"
           onChange={handleChangeConfirmPassword}
           onBlur={handleBlurConfirmPassword}
           onFocus={ handleFocusConfirmPassword }
@@ -172,39 +172,39 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
           InputLabelProps={{
             classes: {
               root: classes.cssLabel,
-              focused: classes.cssFocused,
-            },
+              focused: classes.cssFocused
+            }
           }}
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
               focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline,
-            },
+              notchedOutline: classes.notchedOutline
+            }
           }}
-          type='password'
-          label='Confirm Password'
-          variant='outlined'
-          id='confirmPassword'
+          type="password"
+          label="Confirm Password"
+          variant="outlined"
+          id="confirmPassword"
           defaultValue={confirmPassword}
         />
       </div>
       <div className={classes.center} style={{ marginTop: 20 }}>
         <div>
           {noCancelButton ? null : (
-            <Button onClick={onClose} size='large' variant='text' color='primary' className={classes.button}>
-              <FormattedMessage id='account.login.label.cancel' defaultMessage='Cancel' />
+            <Button onClick={onClose} size="large" variant="text" color="primary" className={classes.button}>
+              <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
             </Button>
           )}
-          <Button type='submit' size='large' variant='contained' color='primary' className={classes.button}>
-            <FormattedMessage id='account.login.label.password.reset' defaultMessage='Reset password' />
+          <Button type="submit" size="large" variant="contained" color="primary" className={classes.button}>
+            <FormattedMessage id="account.login.label.password.reset" defaultMessage="Reset password" />
           </Button>
           <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
-            <Typography variant='body1' component='span'>
-              <FormattedMessage id='account.login.label.or.signup' defaultMessage='Have an account?' />
+            <Typography variant="body1" component="span">
+              <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
             </Typography>
-            <Button onClick={onSignin} variant='text' size='large' color='primary'>
-              <FormattedMessage id='account.login.label.signin' defaultMessage='Sign in' />
+            <Button onClick={onSignin} variant="text" size="large" color="primary">
+              <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
             </Button>
           </div>
         </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import {
-  NavigateNext as NavigateNextIcon,
   MoreVert as MoreIcon,
   Delete as DeleteIcon,
   BugReport as ReportIcon,
@@ -8,7 +7,6 @@ import {
   VisibilityOff as VisibilityOffIcon
 } from '@material-ui/icons'
 import ReactPlaceholder from 'react-placeholder'
-import { RectShape } from 'react-placeholder/lib/placeholders'
 import {
   Button,
   Dialog,
@@ -21,7 +19,7 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  ListItemText,
+  ListItemText
 } from '@material-ui/core'
 
 import { FormattedMessage } from 'react-intl'
@@ -112,7 +110,7 @@ const IssueHeader = ({
           ready={task.completed} style={{ marginTop: 32, marginBottom: 26, width: '80%' }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant='h5' gutterBottom>
+            <Typography variant="h5" gutterBottom>
               <strong>
                 {task.data.title}
               </strong>
@@ -133,7 +131,7 @@ const IssueHeader = ({
               handleCloseMoreButton()
             }}>
               <ListItemIcon>
-                {task.data.not_listed ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
+                {task.data.not_listed ? <VisibilityIcon fontSize="small" /> : <VisibilityOffIcon fontSize="small" />}
               </ListItemIcon>
               <ListItemText primary={task.data.not_listed ? 'Change to public' : 'Change to not listed'} />
             </MenuItem>
@@ -143,9 +141,9 @@ const IssueHeader = ({
             setReportDialog(true)
           }}>
             <ListItemIcon>
-              <ReportIcon fontSize='small' />
+              <ReportIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary='Report' />
+            <ListItemText primary="Report" />
           </MenuItem>
           {taskOwner &&
             <MenuItem onClick={() => {
@@ -153,9 +151,9 @@ const IssueHeader = ({
               setDeleteDialog(true)
             }}>
               <ListItemIcon>
-                <DeleteIcon fontSize='small' />
+                <DeleteIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary='Delete' />
+              <ListItemText primary="Delete" />
             </MenuItem>
           }
         </Menu>
@@ -169,23 +167,23 @@ const IssueHeader = ({
         <Dialog
           open={deleteDialog}
           onClose={handleDeleteDialogClose}
-          aria-labelledby='form-dialog-title'
+          aria-labelledby="form-dialog-title"
         >
           <div>
-            <DialogTitle id='form-dialog-title'>
-              <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
+            <DialogTitle id="form-dialog-title">
+              <FormattedMessage id="task.bounties.delete.confirmation" defaultMessage="Are you sure you want to delete this issue?" />
             </DialogTitle>
             <DialogContent>
-              <Typography variant='caption'>
-                <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
+              <Typography variant="caption">
+                <FormattedMessage id="task.bounties.delete.caution" defaultMessage="If you delete this issue, all the records related about orders and payments will be lost" />
               </Typography>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleDeleteDialogClose} color='primary'>
-                <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
+              <Button onClick={handleDeleteDialogClose} color="primary">
+                <FormattedMessage id="task.actions.cancel" defaultMessage="Cancel" />
               </Button>
-              <Button onClick={handleDeleteTask} variant='contained' color='secondary' >
-                <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
+              <Button onClick={handleDeleteTask} variant="contained" color="secondary" >
+                <FormattedMessage id="task.actions.delete" defaultMessage="Delete" />
               </Button>
             </DialogActions>
           </div>
@@ -193,14 +191,14 @@ const IssueHeader = ({
         <ReactPlaceholder type={'text'} rows={1} showLoadingAnimation
           ready={task.completed} style={{ marginTop: 20, marginBottom: 20, width: '40%' }}
         >
-          <Typography variant='caption' style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}>
+          <Typography variant="caption" style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}>
             {task.data.provider &&
               <div>
                 Created on <a
                   href={task.data.url}
                   style={{ textDecoration: 'underline' }}
                 >
-                  {task.data.provider} <img width='12' src={task.data.provider === 'github' ? logoGithub : logoBitbucket} style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' }} />
+                  {task.data.provider} <img width="12" src={task.data.provider === 'github' ? logoGithub : logoBitbucket} style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' }} />
                 </a>
                 by {' '}
                 <a
@@ -209,7 +207,7 @@ const IssueHeader = ({
                   {task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user}
                   <img
                     style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'bottom' }}
-                    width='16'
+                    width="16"
                     src={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''}
                   />
                 </a>

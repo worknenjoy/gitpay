@@ -23,12 +23,12 @@ const CookieConsentBar = () => {
       expires={150}
       enableDeclineButton
     >
-      <FormattedMessage id='cookie.message' defaultMessage='We use cookies on our website to provide you with the best possible experience and to help improve our services.' />
+      <FormattedMessage id="cookie.message" defaultMessage="We use cookies on our website to provide you with the best possible experience and to help improve our services." />
       <br />
       <span style={{ fontSize: "10px" }}>
         <FormattedMessage 
-          id='cookie.more' 
-          defaultMessage='By clicking “I understand” or continuing to browse, you agree to our use of cookies and our {cookiepolicy}.' 
+          id="cookie.more" 
+          defaultMessage="By clicking “I understand” or continuing to browse, you agree to our use of cookies and our {cookiepolicy}." 
           values={{
             cookiepolicy: 
               <a href="#" onClick={
@@ -37,7 +37,7 @@ const CookieConsentBar = () => {
                   setOpenCookiePolicy(true);
                 }
               } style={{ color: "#fff" }}>
-                <FormattedMessage id='cookie.policy' defaultMessage='Cookie Policy' /> 
+                <FormattedMessage id="cookie.policy" defaultMessage="Cookie Policy" /> 
               </a>
           }}
         />

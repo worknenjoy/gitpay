@@ -77,7 +77,7 @@ module.exports = (event, paid, status, req, res) => {
       where: {
         source_id: event?.data?.object?.source?.id,
         source: event?.data?.object?.id
-      },
+      }
     }).then(order => {
       if (order) {
         return updateOrder(event, paid, status, req, res)

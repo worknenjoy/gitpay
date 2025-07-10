@@ -26,7 +26,7 @@ InputAuth.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.any,
+  value: PropTypes.any
 }
 
 export default InputAuth

@@ -9,7 +9,7 @@ const styles = (theme: Theme) =>
   createStyles({
     planGridItem: {
       padding: theme.spacing(1),
-      marginTop: 16,
+      marginTop: 16
     },
     planContainer: {
       paddingTop: 5,
@@ -31,7 +31,7 @@ const styles = (theme: Theme) =>
     planButton: {
       display: 'flex',
       alignItems: 'center',
-      flexDirection: 'column',
+      flexDirection: 'column'
     },
     planBullets: {
       paddingLeft: theme.spacing(1),
@@ -41,7 +41,7 @@ const styles = (theme: Theme) =>
       textAlign: 'center',
       fontSize: 32,
       padding: 2
-    },
+    }
   });
 
 type PlanDetails = {
@@ -64,20 +64,20 @@ const PlanCard = ({ classes, plan }:PlanProps) => {
         <CardContent className={classes.planGridContent}>
           <div className={classes.planButton}>
             <MotorcycleIcon color={'primary'} className={classes.planIcon} />
-            <Typography align='center' color='textPrimary' variant='h5'>
-              <FormattedMessage id='actions.task.payment.plan.percentagefee' defaultMessage='{fee}% fee' values={{ fee: fee }} />
+            <Typography align="center" color="textPrimary" variant="h5">
+              <FormattedMessage id="actions.task.payment.plan.percentagefee" defaultMessage="{fee}% fee" values={{ fee: fee }} />
             </Typography>
-            <Typography align='center' color='textSecondary' variant='h6' gutterBottom>
+            <Typography align="center" color="textSecondary" variant="h6" gutterBottom>
               {category}
             </Typography>
           </div>
           <div className={classes.planBullets}>
-            <Typography align='center' variant='caption' gutterBottom>
+            <Typography align="center" variant="caption" gutterBottom>
               {title}
             </Typography>
             {items.map((item, index) => (
               item && <Typography>
-                <CheckIcon fontSize='small' color='primary' />
+                <CheckIcon fontSize="small" color="primary" />
                 {item}
               </Typography>
             ))}

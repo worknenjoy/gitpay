@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -9,7 +9,7 @@ import { Dialog } from '@material-ui/core';
 
 export default {
   title: 'Design Library/Atoms/Buttons/ActionButtons',
-  component: ActionButtons,
+  component: ActionButtons
 };
 
 const Template = (args) => <ActionButtons {...args} />;
@@ -22,9 +22,9 @@ Default.args = {
       onClick: () => {},
       label: 'Create',
       disabled: false,
-      icon: <AddIcon fontSize='small' />,
-      component: <Dialog open={false}>create</Dialog>,
-    },
+      icon: <AddIcon fontSize="small" />,
+      component: <Dialog open={false}>create</Dialog>
+    }
   ],
   secondary: [
     {
@@ -32,10 +32,10 @@ Default.args = {
       onClick: () => {},
       label: 'Cancel',
       disabled: false,
-      icon: <CancelIcon fontSize='small' />,
-      component: <Dialog open={false}>cancel</Dialog>,
-    },
-  ],
+      icon: <CancelIcon fontSize="small" />,
+      component: <Dialog open={false}>cancel</Dialog>
+    }
+  ]
 };
 
 export const WithManyActions = Template.bind({});
@@ -46,25 +46,25 @@ WithManyActions.args = {
       onClick: () => {},
       label: 'Create',
       disabled: false,
-      icon: <AddIcon fontSize='small' />,
-      component: <Dialog open={false}>create 2</Dialog>,
+      icon: <AddIcon fontSize="small" />,
+      component: <Dialog open={false}>create 2</Dialog>
     },
     {
       key: 'edit',
       onClick: () => {},
       label: 'Edit',
       disabled: false,
-      icon: <EditIcon fontSize='small' />,
-      component: <Dialog open={false}>edit</Dialog>,
+      icon: <EditIcon fontSize="small" />,
+      component: <Dialog open={false}>edit</Dialog>
     },
     {
       key: 'delete',
       onClick: () => {},
       label: 'Delete',
       disabled: false,
-      icon: <DeleteIcon fontSize='small' />,
-      component: <Dialog open={false}>delete</Dialog>,
-    },
+      icon: <DeleteIcon fontSize="small" />,
+      component: <Dialog open={false}>delete</Dialog>
+    }
   ],
   secondary: [
     {
@@ -72,16 +72,16 @@ WithManyActions.args = {
       onClick: () => {},
       label: 'Cancel',
       disabled: false,
-      icon: <CancelIcon fontSize='small' />,
-      component: <Dialog open={false}>cancel secondary</Dialog>,
+      icon: <CancelIcon fontSize="small" />,
+      component: <Dialog open={false}>cancel secondary</Dialog>
     },
     {
       key: 'save secondary',
       onClick: () => {},
       label: 'Save',
       disabled: false,
-      icon: <SaveIcon fontSize='small' />,
-      component: <Dialog open={false}>save secondary</Dialog>,
-    },
-  ],
+      icon: <SaveIcon fontSize="small" />,
+      component: <Dialog open={false}>save secondary</Dialog>
+    }
+  ]
 };

@@ -124,7 +124,7 @@ let msgs: any = defineMessages({
   statusBusinessTypeMCC: {
     id: 'consts.account.statuses.business_type.mcc',
     defaultMessage: 'MCC Bksiness type'
-  },
+  }
 })
 
 msgs = msgs || {}
@@ -202,7 +202,7 @@ const api = {
     'business_profile.url': msgs.statusBusinessProfileUrl,
     'business_type': msgs.statusBusinessType,
     'business_profile.mcc': msgs.statusBusinessTypeMCC,
-    'individual.id_number': msgs.idNumber,
+    'individual.id_number': msgs.idNumber
   },
   ACCOUNT_REASONS: {
     'external_account': msgs.accountReasonsFieldsExternal,

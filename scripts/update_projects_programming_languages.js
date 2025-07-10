@@ -25,9 +25,9 @@ async function updateProjectLanguages() {
         uri: `https://api.github.com/repos/${owner}/${repo}/languages?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
         headers: {
           "User-Agent":
-            "octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0",
+            "octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0"
         },
-        json: true,
+        json: true
       });
 
       // Extract languages
@@ -37,27 +37,27 @@ async function updateProjectLanguages() {
 
       // Clear existing language associations for the task
       await models.ProjectProgrammingLanguage.destroy({
-        where: { projectId: project.id },
+        where: { projectId: project.id }
       });
 
       // Ensure all programming languages exist in the ProgrammingLanguage table
       for (const language of languages) {
         // Check if the language already exists
         let programmingLanguage = await models.ProgrammingLanguage.findOne({
-          where: { name: language },
+          where: { name: language }
         });
 
         // If the language doesn't exist, insert it
         if (!programmingLanguage) {
           programmingLanguage = await models.ProgrammingLanguage.create({
-            name: language,
+            name: language
           });
         }
 
         // Associate the language with the task
         await models.ProjectProgrammingLanguage.create({
           projectId: project.id,
-          programmingLanguageId: programmingLanguage.id,
+          programmingLanguageId: programmingLanguage.id
         });
       }
 

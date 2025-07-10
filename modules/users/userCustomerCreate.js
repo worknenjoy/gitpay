@@ -1,7 +1,6 @@
 const Promise = require('bluebird')
 const models = require('../../models')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(function userCustomerCreate(id, customerParameters) {
   return models.User
@@ -31,7 +30,7 @@ module.exports = Promise.method(function userCustomerCreate(id, customerParamete
           },
           {
             where: { id },
-            returning: true,
+            returning: true
           }
           ).then(userUpdated => {
             return customer

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
-import PayoutSettingsBankAccount from '../../../../../design-library/pages/private/payout-settings-bank-account/payout-settings-bank-account'
+import PayoutSettingsBankAccount from 'design-library/pages/private/payout-settings-bank-account/payout-settings-bank-account'
 import PayoutSettingsBankAcccountHolderPage from './payout-settings-bank-account-holder-page'
 import PayoutSettingsBankAccountInfoPage from './payout-settings-bank-account-info-page'
 
@@ -32,10 +32,10 @@ const PayoutSettingsBankAccountPage = ({
     >
       <HashRouter>
         <Switch>
-          <Route exact path='/profile/payout-settings/bank-account' component={() => <Redirect to='/profile/payout-settings/bank-account/account-holder' />} />
+          <Route exact path="/profile/payout-settings/bank-account" component={() => <Redirect to="/profile/payout-settings/bank-account/account-holder" />} />
           <Route
             exact
-            path='/profile/payout-settings/bank-account/account-holder'
+            path="/profile/payout-settings/bank-account/account-holder"
             component={(routeProps) => 
               <PayoutSettingsBankAcccountHolderPage 
                 {...routeProps}
@@ -49,7 +49,7 @@ const PayoutSettingsBankAccountPage = ({
           />
           <Route 
             exact
-            path='/profile/payout-settings/bank-account/bank-account-info'
+            path="/profile/payout-settings/bank-account/bank-account-info"
             component={(routeProps) =>
               <PayoutSettingsBankAccountInfoPage
                 {...routeProps}

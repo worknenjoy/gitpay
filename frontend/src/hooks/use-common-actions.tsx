@@ -35,7 +35,7 @@ const useCommonActions = ({
     loggedIn: loggedIn,
     bottomBarProps: {
       info,
-      getInfo,
+      getInfo
     },
     accountMenuProps: {
       signOut
@@ -43,14 +43,14 @@ const useCommonActions = ({
     loginFormSignupFormProps: {
       onSubmit: handleSignupUser,
       roles,
-      fetchRoles,
+      fetchRoles
     },
     loginFormForgotFormProps: {
-      onSubmit: handleForgotPassword,
+      onSubmit: handleForgotPassword
     },
     importIssuesProps: {
-      onImport: handleImportIssue,
-    },
+      onImport: handleImportIssue
+    }
   };
 };
 

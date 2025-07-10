@@ -13,27 +13,27 @@ const SigninButtons = ({
     <div className="signin-buttons">
       <LinkButton
         onClick={ onSignup }
-        variant='text'
-        size='small'
-        color='primary'
+        variant="text"
+        size="small"
+        color="primary"
       >
         <LabelButton>
           <FormattedMessage
-            id='topbar.signup.label'
-            defaultMessage='Signup' />
+            id="topbar.signup.label"
+            defaultMessage="Signup" />
         </LabelButton>
       </LinkButton>
 
       <LinkButton
         onClick={ onSignin }
-        variant='text'
-        size='small'
-        color='primary'
+        variant="text"
+        size="small"
+        color="primary"
       >
         <LabelButton>
           <FormattedMessage
-            id='topbar.signin.label'
-            defaultMessage='Signin' />
+            id="topbar.signin.label"
+            defaultMessage="Signin" />
         </LabelButton>
       </LinkButton>
     </div>

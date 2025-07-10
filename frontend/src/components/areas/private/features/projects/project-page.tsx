@@ -6,11 +6,11 @@ import {
   Tabs,
   Tab,
   Typography,
-  withStyles,
+  withStyles
 } from '@material-ui/core'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
-import ProjectListSimple from '../../../../design-library/molecules/cards/project-card/project-list-simple'
-import { Breadcrumb } from '../../../../design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
+import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
+import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 import ReactPlaceholder from 'react-placeholder'
 
 const styles = theme => ({
@@ -23,7 +23,7 @@ const styles = theme => ({
   },
   rootTabs: {
     marginRight: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(3)
   },
   button: {
 
@@ -63,14 +63,14 @@ const messages = defineMessages({
 
 import { RouteComponentProps } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import SectionTable from '../../../../design-library/molecules/tables/section-table/section-table'
-import IssueLinkField from '../../../../design-library/molecules/tables/section-table/section-table-custom-fields/issue-link-field/issue-link-field'
-import IssueCreatedField from '../../../../design-library/molecules/tables/section-table/section-table-custom-fields/issue-created-field/issue-created-field'
-import IssueLabelsField from '../../../../design-library/molecules/tables/section-table/section-table-custom-fields/issue-labels-field/issue-labels-field'
-import IssueLanguageField from '../../../../design-library/molecules/tables/section-table/section-table-custom-fields/issue-language-field/issue-language-field'
-import IssuePriceField from '../../../../design-library/molecules/tables/section-table/section-table-custom-fields/issue-price-field/issue-price-field'
-import IssueProjectField from '../../../../design-library/molecules/tables/section-table/section-table-custom-fields/issue-project-field/issue-project-field'
-import IssueStatusField from '../../../../design-library/molecules/tables/section-table/section-table-custom-fields/issue-status-field/issue-status-field'
+import SectionTable from 'design-library/molecules/tables/section-table/section-table'
+import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
+import IssueCreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-created-field/issue-created-field'
+import IssueLabelsField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-labels-field/issue-labels-field'
+import IssueLanguageField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-language-field/issue-language-field'
+import IssuePriceField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-price-field/issue-price-field'
+import IssueProjectField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-project-field/issue-project-field'
+import IssueStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-status-field/issue-status-field'
 
 interface TaskListProps extends RouteComponentProps {
   user: any;
@@ -128,7 +128,7 @@ const customColumnRenderer = {
     <IssueCreatedField
       issue={item}
     />
-  ),
+  )
 }
 
 const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
@@ -304,20 +304,20 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           </div>
         }
         { isOrganizationPage &&
-        <ReactPlaceholder ready={organization.completed} type='media' rows={2}>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+        <ReactPlaceholder ready={organization.completed} type="media" rows={2}>
+          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
             <FormattedMessage
-              id='task.list.org.headline'
-              defaultMessage='Organization'
+              id="task.list.org.headline"
+              defaultMessage="Organization"
             />
           </Typography>
-          <Typography variant='h3' component='h2'>
+          <Typography variant="h3" component="h2">
             { organizationData.name }
           </Typography>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
             <FormattedMessage
-              id='task.list.org.projects.headline'
-              defaultMessage='Projects'
+              id="task.list.org.projects.headline"
+              defaultMessage="Projects"
             />
           </Typography>
           <ProjectListSimple 
@@ -328,14 +328,14 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
         </ReactPlaceholder>
         }
         { isProjectPage &&
-          <ReactPlaceholder ready={project.completed} type='text' rows={2}>
-            <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
+          <ReactPlaceholder ready={project.completed} type="text" rows={2}>
+            <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
               <FormattedMessage
-                id='task.list.headline'
-                defaultMessage='Project'
+                id="task.list.headline"
+                defaultMessage="Project"
               />
             </Typography>
-            <Typography variant='h3' component='h2'>
+            <Typography variant="h3" component="h2">
               { project.data.name }
             </Typography>
           </ReactPlaceholder>
@@ -344,9 +344,9 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
         <Tabs
           value={ currentTab }
           onChange={ handleSecTabChange }
-          scrollButtons='on'
-          indicatorColor='secondary'
-          textColor='secondary'
+          scrollButtons="on"
+          indicatorColor="secondary"
+          textColor="secondary"
           style={{marginTop: 20, marginBottom: 20}}
         >
           { user.Types && user.Types.map(t => t.name).includes('maintainer') &&

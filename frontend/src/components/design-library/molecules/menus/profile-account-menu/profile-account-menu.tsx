@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 import {
   Web,
   AccountBox as AccountIcon,
-  ArrowDownward as SettingsIcon,
+  ArrowDownward as SettingsIcon
 } from '@material-ui/icons'
 import nameInitials from 'name-initials';
 import { useHistory } from 'react-router-dom';
@@ -51,15 +51,15 @@ export default function ProfileAccountMenu({
                 alt={ user.username || '' }
                 src={ user.picture_url }
               />
-              : <Avatar alt={ user?.username || '' } src=''>
+              : <Avatar alt={ user?.username || '' } src="">
                 { user?.username ? nameInitials(user.username) : <Person /> }
               </Avatar>
             }
             <div style={ { textAlign: 'left', marginLeft: 10, color: '#1c1c1f' } }>
-              <Typography variant='body1' color='text'>
+              <Typography variant="body1" color="text">
                 { user?.username }
               </Typography>
-              <Typography variant='body2' style={ { fontSize: 8, color: '#666' } }>
+              <Typography variant="body2" style={ { fontSize: 8, color: '#666' } }>
                 { user?.email }
               </Typography>
             </div>
@@ -83,7 +83,7 @@ export default function ProfileAccountMenu({
               width: 32,
               height: 32,
               ml: -0.5,
-              mr: 1,
+              mr: 1
             },
             '&:before': {
               content: '""',
@@ -95,9 +95,9 @@ export default function ProfileAccountMenu({
               height: 10,
               bgcolor: 'background.paper',
               transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
+              zIndex: 0
+            }
+          }
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -106,7 +106,7 @@ export default function ProfileAccountMenu({
           <Avatar>
             <Web fontSize={'small'} /> 
           </Avatar>
-          <Typography variant='body2' color='text'>
+          <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />
            </Typography>
         </MenuItem>
@@ -115,7 +115,7 @@ export default function ProfileAccountMenu({
           <Avatar>
             <AccountIcon fontSize={'small'} />
           </Avatar>
-          <Typography variant='body2' color='text'>
+          <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
            </Typography>
         </MenuItem>
@@ -124,7 +124,7 @@ export default function ProfileAccountMenu({
           <Avatar>
             <SettingsIcon fontSize={'small'} />
           </Avatar>
-          <Typography variant='body2' color='text'>
+          <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.payoutSettings" defaultMessage="Payout Settings" />
             </Typography>
         </MenuItem>

@@ -10,7 +10,7 @@ module.exports = Promise.method(function listOrganizations () {
       },
       {
         model: models.User
-      },
+      }
     ]
   })
     .then(data => {

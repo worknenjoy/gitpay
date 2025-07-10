@@ -27,23 +27,23 @@ const CountrySelectField = ({ user, country, onChange, disabled = false }) => {
   return (
     <FormControl style={{ width: '100%' }}>
       <div>
-        <Typography variant='caption' gutterBottom>
-          <FormattedMessage id='account.register.bank.account.country' defaultMessage='Country:' />
+        <Typography variant="caption" gutterBottom>
+          <FormattedMessage id="account.register.bank.account.country" defaultMessage="Country:" />
         </Typography>
       </div>
-      <ReactPlaceholder type='text' rows={1} ready={completed}>
+      <ReactPlaceholder type="text" rows={1} ready={completed}>
         <Select
           native
-          name='bank_account_country'
+          name="bank_account_country"
           value={currentCountry}
           defaultValue={userCountry}
-          input={<Input id='bank-country' />}
+          input={<Input id="bank-country" />}
           fullWidth
           style={{ marginTop: 12, marginBottom: 12 }}
           onChange={onChangeCountry}
           disabled={disabled}
         >
-          <option value=''>
+          <option value="">
             Select bank country
           </option>
           {countryCodes.map((c, index) => (

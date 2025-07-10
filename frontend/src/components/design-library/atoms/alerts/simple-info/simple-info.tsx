@@ -15,7 +15,7 @@ export const SimpleInfo = ({ text }) => {
         <InfoIcon className={classes.iconCenter} />
       </div>
       <div>
-        <Typography variant='body2' gutterBottom className={classes.text}>
+        <Typography variant="body2" gutterBottom className={classes.text}>
           {text}
         </Typography>
       </div>

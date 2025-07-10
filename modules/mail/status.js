@@ -40,7 +40,7 @@ if (constants.canSendEmail) {
           `<p>${i18n.__('mail.status.message.first', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.status.message.second', { status: STATUSES[task.status] })}</p>
           <p>${Signatures.sign(language)}</p>`)
-        },
+        }
       ]
     )
   }
@@ -53,7 +53,7 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(msg)
-        },
+        }
       ]
     )
   }

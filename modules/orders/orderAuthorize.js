@@ -36,7 +36,7 @@ module.exports = Promise.method(function orderAuthorize (orderParameters) {
           payer_id: orderParameters.PayerID,
           paid: !!(orderParameters.token && orderParameters.PayerID && authorization.id),
           status: (orderParameters.token && orderParameters.PayerID && authorization.id) ? 'succeeded' : 'fail',
-          authorization_id: authorization.purchase_units && authorization.purchase_units[0] && authorization.purchase_units[0].payments && authorization.purchase_units[0].payments.authorizations[0].id,
+          authorization_id: authorization.purchase_units && authorization.purchase_units[0] && authorization.purchase_units[0].payments && authorization.purchase_units[0].payments.authorizations[0].id
         }, {
           where: {
             token: orderParameters.token

@@ -21,7 +21,7 @@ const errorMapping = {
   'individual[address][postal_code]': 'Invalid postal code',
   'individual[phone]': 'Invalid phone number',
   'individual[first_name]': 'Invalid first name',
-  'individual[last_name]': 'Invalid last name',
+  'individual[last_name]': 'Invalid last name'
 }
 
 const AccountDetailsForm = ({
@@ -41,8 +41,8 @@ const AccountDetailsForm = ({
   return (
     <form onSubmit={onSubmit}>
       <ProfileSecondaryHeader
-        title={<FormattedMessage id='payout-settings.bank-account-holder' defaultMessage='Account holder details' />}
-        subtitle={<FormattedMessage id='payout-settings.bank-account-holder.description' defaultMessage='Please provide your information to activate your bank account.' />}
+        title={<FormattedMessage id="payout-settings.bank-account-holder" defaultMessage="Account holder details" />}
+        subtitle={<FormattedMessage id="payout-settings.bank-account-holder.description" defaultMessage="Please provide your information to activate your bank account." />}
         aside={
           <AccountHolderStatus
             status={accountHolderStatus}
@@ -97,7 +97,7 @@ const AccountDetailsForm = ({
           type="submit"
           variant="contained"
           color="secondary" 
-          label={<FormattedMessage id='account.actions.update' defaultMessage='Update Account' />}
+          label={<FormattedMessage id="account.actions.update" defaultMessage="Update Account" />}
           disabled={false}
           completed={completed}
         />

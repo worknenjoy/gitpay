@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Organizations',
         key: 'id'
       },
-      allowNull: true,
+      allowNull: true
     }
   })
 

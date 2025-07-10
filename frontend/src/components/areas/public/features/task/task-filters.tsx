@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Select, MenuItem, Chip, InputLabel, OutlinedInput } from '@material-ui/core';
-import FormControl from '@mui/material/FormControl';
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Select, MenuItem, Chip, FormControl } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { useIntl, defineMessages } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 import Labels from '../../../../../containers/label';
 import Language from '../../../../../containers/language';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   select: {
     backgroundColor: 'transparent'
   },
@@ -19,7 +18,7 @@ const styles = (theme) => ({
     color: theme.palette.primary.dark,
     borderColor: theme.palette.primary.light,
   },
-});
+}));
 
 const messages = defineMessages({
   allTasks: {
@@ -34,14 +33,9 @@ const messages = defineMessages({
     id: 'task.list.lable.filterNoBounties',
     defaultMessage: 'Issues without bounties'
   }
-})
+});
 
-import { RouteComponentProps } from 'react-router-dom';
-
-interface TaskFiltersProps extends RouteComponentProps {
-  intl: any;
-  history: any;
-  classes: any;
+interface TaskFiltersProps {
   filterTasks: any;
   baseUrl?: string;
   tasks: any;
@@ -49,25 +43,28 @@ interface TaskFiltersProps extends RouteComponentProps {
 }
 
 const TaskFilters: React.FC<TaskFiltersProps> = ({
-  intl,
-  history,
-  classes,
   filterTasks,
   baseUrl = '/tasks/',
   tasks,
   filteredTasks,
 }) => {
+  const classes = useStyles();
+  const intl = useIntl();
+  const history = useHistory();
+
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
-  })
+  });
   const [allTasksCount, setAllTasksCount] = useState(0);
   const [withBountiesCount, setWithBountiesCount] = useState(0);
   const [noBountiesCount, setNoBountiesCount] = useState(0);
+
   useEffect(() => {
     updateCounts(tasks);
   }, [tasks]);
-  const updateCounts = (taskList) => {
+
+  const updateCounts = (taskList: any[]) => {
     setAllTasksCount(taskList.length);
     setWithBountiesCount(
       taskList.filter((task) => parseFloat(task.value) > 0).length
@@ -76,8 +73,9 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
       taskList.filter((task) => parseFloat(task.value) === 0).length
     );
   };
-  const handleTabChange = (event) => {
-    const value = event.target.value;
+
+  const handleTabChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const value = event.target.value as number;
     setTaskListState({ ...taskListState, tab: value });
     let filterPromise;
     switch (value) {
@@ -96,8 +94,8 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
       default:
         filterPromise = filterTasks("all");
     }
-    filterPromise.then((result) => {
-      // We don't need to update the counts here, as they reflect the total
+    filterPromise.then(() => {
+      // No need to update counts here
     });
   };
 
@@ -150,7 +148,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
         </div>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
-export default injectIntl(withRouter(withStyles(styles)(TaskFilters)))
+export default TaskFilters;

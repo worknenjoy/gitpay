@@ -1,6 +1,5 @@
-const { create } = require('core-js/core/object')
 const models = require('../../models')
-const testEmail = `teste+${Math.random()*100}@gmail.com`
+const testEmail = `teste+${Math.random() * 100}@gmail.com`
 const testPassword = 'test12345678'
 const testName = 'Test'
 
@@ -33,23 +32,24 @@ const activate = (agent, res) => {
     .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
 }
 
-const registerAndLogin = (agent, params = {}) => {
-  return register(agent, params)
-    .then((a) => {
-      return activate(agent, a).then((active) => {
-        return login(agent, params).then(
-          (res) => {
-            return {...a, headers: res.headers}
-          }
-        ).catch((e) => {
-          console.log('error on login', e)
-        })
-      }).catch((e) => {
-        console.log('error on activate', e)
-      })
-    }).catch((e) => {
-      console.log('error on register', e)
-    })
+const registerAndLogin = async (agent, params = {}) => {
+  try {
+    const a = await register(agent, params)
+    try {
+      await activate(agent, a)
+      try {
+        const res = await login(agent, params)
+        return { body: a.body, headers: res.headers }
+
+      } catch (e) {
+        console.log('error on login', e)
+      }
+    } catch (e) {
+      console.log('error on activate', e)
+    }
+  } catch (e) {
+    console.log('error on register', e)
+  }
 }
 
 const createTask = (agent, params = {}, userParams = {}) => {
@@ -66,8 +66,8 @@ const createTask = (agent, params = {}, userParams = {}) => {
       status: params.status,
       userId: user.id
     }, {
-      include: [ models.User ]
-    
+      include: [models.User]
+
     }).then(task => {
       return task
     }).catch((e) => {
@@ -79,7 +79,7 @@ const createTask = (agent, params = {}, userParams = {}) => {
 }
 
 const createAssign = (agent, params = {}, userParams = {}) => {
-  return register(agent,{
+  return register(agent, {
     ...userParams,
     email: `${Math.random()}anotheruser@example.com`,
     password: '123345',
@@ -92,11 +92,11 @@ const createAssign = (agent, params = {}, userParams = {}) => {
       TaskId: params.taskId,
       userId: user.id
     }, {
-      include: [ models.User ]
+      include: [models.User]
     }).then((assigned) => {
       const assignedData = assigned.dataValues
-      return models.Task.update({assigned: assignedData.id}, {where: {id: assignedData.TaskId}}).then( task => {
-      return assigned
+      return models.Task.update({ assigned: assignedData.id }, { where: { id: assignedData.TaskId } }).then(task => {
+        return assigned
       }).catch((e) => {
         console.log('error on updateTask', e)
       })
@@ -142,11 +142,11 @@ const createPayout = (params = {}) => {
 }
 
 async function truncateModels(model) {
-  await model.truncate({where: {}, cascade: true, restartIdentity:true}).then(function(rowDeleted){ // rowDeleted will return number of rows deleted
-    if(rowDeleted === 1){
+  await model.truncate({ where: {}, cascade: true, restartIdentity: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
+    if (rowDeleted === 1) {
       console.log('Deleted successfully');
     }
-  }, function(err){
+  }, function (err) {
     console.log(err);
   });
 }

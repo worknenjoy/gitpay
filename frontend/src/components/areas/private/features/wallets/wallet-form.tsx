@@ -4,13 +4,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button, Paper } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 
-import { Field } from '../../../../design-library/atoms/inputs/fields/field/field';
+import { Field } from 'design-library/atoms/inputs/fields/field/field';
 
 const styles = (theme) => ({
   legend: {
     fontSize: 18,
     fontWeight: 500,
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.dark
   },
   fieldset: {
     border: `1px solid ${theme.palette.primary.light}`,
@@ -39,16 +39,16 @@ const WalletForm = ({
               <fieldset className={ classes.fieldset }>
                 <legend className={ classes.legend }>
                   <Typography>
-                    <FormattedMessage id='wallet.new.fieldset.title' defaultMessage='New wallet' />
+                    <FormattedMessage id="wallet.new.fieldset.title" defaultMessage="New wallet" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
-                    <FormattedMessage id='account.basic.name' defaultMessage='name'>
+                    <FormattedMessage id="account.basic.name" defaultMessage="name">
                       { (msg) => (
                         <Field
                           onChange={ (e) => onChange(e.target.value) }
-                          name='name'
+                          name="name"
                           label={ msg }
                           value={ value }
                         />
@@ -58,12 +58,12 @@ const WalletForm = ({
                   <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
                     <div style={{float: 'right'}}>
                       <Button
-                        type='submit'
-                        variant='contained'
-                        color='secondary'
+                        type="submit"
+                        variant="contained"
+                        color="secondary"
                         onClick={ handleCreateWallet }
                       >
-                        <FormattedMessage id='account.wallet.actions.create' defaultMessage='Create Wallet' />
+                        <FormattedMessage id="account.wallet.actions.create" defaultMessage="Create Wallet" />
                       </Button>
                     </div>
                   </Grid>

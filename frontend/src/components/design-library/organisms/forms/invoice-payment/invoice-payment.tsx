@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     btnPayment: {
       float: 'right',
       marginTop: 10
-    },
+    }
   })
 )
 
@@ -34,27 +34,27 @@ const InvoicePayment = ({
     <>
       <div style={ { marginTop: 10, marginBottom: 10 } }>
         <Alert
-          severity='info'
+          severity="info"
           action={
             <Button
-              size='small'
+              size="small"
               onClick={onInfoClick}
-              variant='contained'
-              color='secondary'
+              variant="contained"
+              color="secondary"
             >
-              <FormattedMessage id='issue.payment.invoice.info.action' defaultMessage='Update billing information before continue' />
+              <FormattedMessage id="issue.payment.invoice.info.action" defaultMessage="Update billing information before continue" />
             </Button>
           }
         >
           <AlertTitle>
-            <FormattedMessage id='issue.payment.invoice.info.title' defaultMessage='Billing information on your invoice' />
+            <FormattedMessage id="issue.payment.invoice.info.title" defaultMessage="Billing information on your invoice" />
           </AlertTitle>
-          <FormattedMessage id='issue.payment.invoice.info.description' defaultMessage='To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice' />
+          <FormattedMessage id="issue.payment.invoice.info.description" defaultMessage="To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice" />
         </Alert>
       </div>
       <ReactPlaceholder
         showLoadingAnimation={true}
-        type='media'
+        type="media"
         ready={customer.completed}
         rows={5}
       >
@@ -71,11 +71,11 @@ const InvoicePayment = ({
       <Button
         disabled={!price}
         onClick={onInvoicePayment}
-        variant='contained'
-        color='secondary'
+        variant="contained"
+        color="secondary"
         className={classes.btnPayment}
       >
-        <FormattedMessage id='fund.payment.invoice.action' defaultMessage='Generate a {amount} invoice' values={{
+        <FormattedMessage id="fund.payment.invoice.action" defaultMessage="Generate a {amount} invoice" values={{
           amount: formatCurrency(price)
         }} />
       </Button>

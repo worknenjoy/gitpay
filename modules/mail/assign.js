@@ -20,7 +20,7 @@ const setMomentLocale = (lang) => {
 const AssignMail = {
   owner: {
     interested: (to, task, name, offer) => { },
-    assigned: (to, task, name) => { },
+    assigned: (to, task, name) => { }
   },
   messageInterested: (user, task, message) => { },
   notifyInterestedUser: (user, task) => { },
@@ -53,7 +53,7 @@ ${Signatures.buttons(language, {
                 url: `${process.env.FRONTEND_HOST}/#/profile/task/${task.id}/offers`
               }
             })}`)
-        },
+        }
       ]
     )
   }
@@ -79,7 +79,7 @@ ${Signatures.buttons(language, {
           <p>${i18n.__('mail.assign.owner.assigned.deadline.date', { date: deadline })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.deadline.days', { days: deadlineFromNow })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.instructions')}</p>`)
-        },
+        }
       ]
     )
   }
@@ -100,7 +100,7 @@ ${Signatures.buttons(language, {
           `<p>${i18n.__('mail.interested.main', { email: user.email, name: user.name || user.username, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.interested.owner.sec')}</p>
           `)
-        },
+        }
       ]
     )
   }
@@ -191,7 +191,7 @@ ${i18n.__('mail.messageInterested.message', { message })} <p>${Signatures.sign(l
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(msg)
-        },
+        }
       ]
     )
   }

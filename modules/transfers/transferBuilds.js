@@ -3,8 +3,7 @@ const Task = require('../../models').Task
 const Order = require('../../models').Order
 const Promise = require('bluebird')
 const requestPromise = require('request-promise')
-const Stripe = require('stripe')
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = require('../shared/stripe/stripe')()
 const TransferMail = require('../mail/transfer')
 const models = require('../../models')
 
@@ -38,7 +37,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       {
         model: models.User,
         as: 'User'
-      },
+      }
     ]
   })
 
@@ -58,7 +57,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       {
         model: models.User,
         as: 'User'
-      },
+      }
     ]
   })
 

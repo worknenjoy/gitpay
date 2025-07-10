@@ -26,16 +26,16 @@ const CheckboxTerms = ({ onAccept }) => {
             <Checkbox
               checked={checked}
               onChange={handleChange}
-              color='primary'
+              color="primary"
               className={classes.checkbox}
             />
           }
           onClick={handleChange}
-          label={<Typography variant='caption' >
-            <FormattedMessage id='task.bounties.interested.termsOfUseLabel' defaultMessage='I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION' values={{
+          label={<Typography variant="caption" >
+            <FormattedMessage id="task.bounties.interested.termsOfUseLabel" defaultMessage="I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION" values={{
               termsOfUseAnchor: (
                 <Link onClick={() => setOpenTerms(true)}>
-                  <FormattedMessage id='task.bounties.interested.termsOfUse' defaultMessage='TERMS OF USE' />
+                  <FormattedMessage id="task.bounties.interested.termsOfUse" defaultMessage="TERMS OF USE" />
                 </Link>
               )
             }} />

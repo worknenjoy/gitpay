@@ -7,7 +7,7 @@ import { getUserData } from '../common/selectors/user/getUser'
 const mapStateToProps = (state) => {
   return {
     user: getUserData(state),
-    tasks: getFilteredTasks(state),
+    tasks: getFilteredTasks(state)
   }
 }
 

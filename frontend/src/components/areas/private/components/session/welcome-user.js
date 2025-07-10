@@ -46,7 +46,7 @@ export default class WelcomeUser extends Component {
       <Dialog
         open={ this.state.dialogueVisible }
         maxWidth={ 'xs' }
-        aria-labelledby='form-dialog-title'
+        aria-labelledby="form-dialog-title"
       >
         <DialogContent>
           <button
@@ -56,18 +56,18 @@ export default class WelcomeUser extends Component {
               window.localStorage.setItem('firstLogin', false)
             } }
           >
-            <Typography variant='caption'>
-              <FormattedMessage id='skip' defaultMessage='Skip' />
+            <Typography variant="caption">
+              <FormattedMessage id="skip" defaultMessage="Skip" />
             </Typography>
           </button>
           <div style={ { textAlign: 'center' } }>
             <img
               src={ content[this.state.currentStepIndex]['image'] }
               style={ { margin: '20px auto 0' } }
-              width='70%'
+              width="70%"
             />
 
-            <Typography variant='h5'>
+            <Typography variant="h5">
               { content[this.state.currentStepIndex]['textHeading'] }
             </Typography>
             <DialogContentText>
@@ -76,13 +76,13 @@ export default class WelcomeUser extends Component {
           </div>
         </DialogContent>
         <MobileStepper
-          variant='dots'
+          variant="dots"
           steps={ 3 }
-          position='static'
+          position="static"
           activeStep={ this.state.currentStepIndex }
           nextButton={
             <Button
-              size='small'
+              size="small"
               onClick={ () => {
                 if (this.state.currentStepIndex === 2) {
                   this.setState({ dialogueVisible: false })
@@ -97,11 +97,11 @@ export default class WelcomeUser extends Component {
             >
               { this.state.currentStepIndex === 2 ? (
                 <FormattedMessage
-                  id='first.task.Finish'
-                  defaultMessage='Finish'
+                  id="first.task.Finish"
+                  defaultMessage="Finish"
                 />
               ) : (
-                <FormattedMessage id='first.task.next' defaultMessage='Next' />
+                <FormattedMessage id="first.task.next" defaultMessage="Next" />
               ) }
             </Button>
           }
@@ -113,10 +113,10 @@ export default class WelcomeUser extends Component {
                 }))
               }
               disabled={ this.state.currentStepIndex === 0 }
-              size='small'
+              size="small"
             >
               { this.state.currentStepIndex !== 0 && (
-                <FormattedMessage id='first.task.back' defaultMessage='Back' />
+                <FormattedMessage id="first.task.back" defaultMessage="Back" />
               ) }
             </Button>
           }

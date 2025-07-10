@@ -6,7 +6,7 @@ import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, props) => {
   return {
-    user: getUserData(state),
+    user: getUserData(state)
   }
 }
 

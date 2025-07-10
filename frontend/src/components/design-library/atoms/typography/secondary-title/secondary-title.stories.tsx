@@ -5,8 +5,8 @@ const meta = {
   component: SecondaryTitle,
   args: {
     title: 'Sample Title',
-    subtitle: 'This is a subtitle',
-  },
+    subtitle: 'This is a subtitle'
+  }
 };
 
 export default meta;
@@ -15,5 +15,5 @@ export const Default = {
   args: {
     title: 'Default Title',
     subtitle: 'This is a default subtitle'
-  },
+  }
 };

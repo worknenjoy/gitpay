@@ -6,7 +6,7 @@ import {
   Public as PublicIcon,
   Person as PersonIcon
 } from '@material-ui/icons'
-import Alert from '../../../../../../design-library/atoms/alerts/alert/alert';
+import Alert from 'design-library/atoms/alerts/alert/alert';
 import ReactPlaceholder from 'react-placeholder';
 import CountryPicker from '../../../../shared/country-picker';
 import Const from '../../../../../../../consts'
@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: 12
   },
   chip: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   label: {},
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 120
   }
 }))
 
@@ -149,7 +149,7 @@ const BankAccount = ({
           if (editBankAccount) {
             updateBankAccount({
               account_holder_type: bankAccountType,
-              account_holder_name: bankAccountHolderName,
+              account_holder_name: bankAccountHolderName
             })
           } else {
             createBankAccount(userId, ibanMode ? {
@@ -188,7 +188,7 @@ const BankAccount = ({
       if (editBankAccount) {
         updateBankAccount({
           account_holder_type: bankAccountType,
-          account_holder_name: bankAccountHolderName,
+          account_holder_name: bankAccountHolderName
         })
       } else {
         createBankAccount(userId, accountInfo)
@@ -225,14 +225,14 @@ const BankAccount = ({
       <Grid item xs={12} md={12}>
         <ReactPlaceholder
           showLoadingAnimation
-          type='media'
+          type="media"
           rows={5}
           ready={bankAccount.completed}
         >
           {editBankAccount && (
-            <Alert severity='info' variant='outlined'>
-              <Typography color='primary'>
-                <FormattedMessage id='account.active.info' defaultMessage='You can edit only some information of your bank account' />
+            <Alert severity="info" variant="outlined">
+              <Typography color="primary">
+                <FormattedMessage id="account.active.info" defaultMessage="You can edit only some information of your bank account" />
               </Typography>
             </Alert>
           )}
@@ -244,38 +244,38 @@ const BankAccount = ({
               >
                 <Card className={classes.card} elevation={0}>
                   <CardContent>
-                    <Typography variant='h6'>
-                      <FormattedMessage id='account.register.bank.title' defaultMessage='Activate bank account:' />
+                    <Typography variant="h6">
+                      <FormattedMessage id="account.register.bank.title" defaultMessage="Activate bank account:" />
                     </Typography>
                     <Grid container spacing={3}>
                       <Grid item xs={12}>
                         {bankAccount.data.routing_number ? (
                           <div style={{ marginBottom: 8, marginTop: 8 }}>
                             <Alert
-                              severity='success'
-                              variant='outlined'
+                              severity="success"
+                              variant="outlined"
                               action={
                                 !editBankAccount ?
                                   <Button
-                                    size='small'
+                                    size="small"
                                     onClick={handleEditAccount}
-                                    variant='contained'
-                                    color='secondary'
+                                    variant="contained"
+                                    color="secondary"
                                   >
-                                    <FormattedMessage id='bank.alert.button.edit' defaultMessage='Edit bank account' />
+                                    <FormattedMessage id="bank.alert.button.edit" defaultMessage="Edit bank account" />
                                   </Button> :
                                   <Button
-                                    size='small'
+                                    size="small"
                                     onClick={() => setEditBankAccount(false)}
-                                    variant='contained'
-                                    color='secondary'
+                                    variant="contained"
+                                    color="secondary"
                                   >
-                                    <FormattedMessage id='bank.alert.button.cancel' defaultMessage='Cancel edit bank account' />
+                                    <FormattedMessage id="bank.alert.button.cancel" defaultMessage="Cancel edit bank account" />
                                   </Button>
                               }
                             >
-                              <Typography color='primary'>
-                                <FormattedMessage id='account.active.statement' defaultMessage='Your bank account is active' />
+                              <Typography color="primary">
+                                <FormattedMessage id="account.active.statement" defaultMessage="Your bank account is active" />
                               </Typography>
                             </Alert>
                           </div>
@@ -288,12 +288,12 @@ const BankAccount = ({
                               <Select
                                 value={selectedBank}
                                 displayEmpty
-                                name='bank_number'
+                                name="bank_number"
                                 onChange={handleBankNumberSelect}
                               >
-                                <MenuItem value='' disabled>
+                                <MenuItem value="" disabled>
                                   <em>
-                                    <FormattedMessage id='account.banks.list.title' defaultMessage='Select your bank' />
+                                    <FormattedMessage id="account.banks.list.title" defaultMessage="Select your bank" />
                                   </em>
                                 </MenuItem>
                                 {Object.keys(Const.BANK_NUMBERS).map(
@@ -310,7 +310,7 @@ const BankAccount = ({
                             {bankNumberError && (
                               <FormHelperText>
                                 {' '}
-                                <FormattedMessage id='account.bank.select' defaultMessage='Please select your bank' />
+                                <FormattedMessage id="account.bank.select" defaultMessage="Please select your bank" />
                               </FormHelperText>
                             )}
                           </FormControl>
@@ -321,21 +321,21 @@ const BankAccount = ({
                       <Grid item xs={12} md={3}>
                         <FormControl>
                           <div>
-                            <Typography variant='caption' gutterBottom>
-                              <FormattedMessage id='account.register.bank.account.country' defaultMessage='Country:' />
+                            <Typography variant="caption" gutterBottom>
+                              <FormattedMessage id="account.register.bank.account.country" defaultMessage="Country:" />
                             </Typography>
                           </div>
                           <Select
                             native
-                            name='country'
+                            name="country"
                             value={currentCountry}
-                            input={<Input id='bank-country' />}
+                            input={<Input id="bank-country" />}
                             fullWidth
                             style={{ marginTop: 12, marginBottom: 12 }}
                             onChange={onChangeCountry}
                             disabled={!!bankAccount.data.routing_number}
                           >
-                            <option value=''>
+                            <option value="">
                               Select bank country
                             </option>
                             {countryCodes.map((c, index) => (
@@ -347,21 +347,21 @@ const BankAccount = ({
                       <Grid item xs={12} md={9}>
                         <FormControl>
                           <div>
-                            <Typography variant='caption' gutterBottom>
-                              <FormattedMessage id='account.register.bank.account.currency' defaultMessage='Currency:' />
+                            <Typography variant="caption" gutterBottom>
+                              <FormattedMessage id="account.register.bank.account.currency" defaultMessage="Currency:" />
                             </Typography>
                           </div>
                           <Select
                             native
-                            name='currency'
+                            name="currency"
                             value={currentCurrency}
-                            input={<Input id='bank-currency' />}
+                            input={<Input id="bank-currency" />}
                             fullWidth
                             style={{ marginTop: 12, marginBottom: 12 }}
                             onChange={onChangeCurrency}
                             disabled={!!bankAccount.data.routing_number}
                           >
-                            <option value=''>
+                            <option value="">
                               Select currency
                             </option>
                             {countryCurrencies.map((c, index) => (
@@ -399,12 +399,12 @@ const BankAccount = ({
                           </RadioGroup>
                         </FormControl>
                         <FormControl fullWidth>
-                          <InputLabel htmlFor='adornment-password'>
-                            <FormattedMessage id='account.register.bank.accountHolderName' defaultMessage='Account holder name / company name' />
+                          <InputLabel htmlFor="adornment-password">
+                            <FormattedMessage id="account.register.bank.accountHolderName" defaultMessage="Account holder name / company name" />
                           </InputLabel>
                           <Input
-                            name='account_holder_name'
-                            id='account_holder_name'
+                            name="account_holder_name"
+                            id="account_holder_name"
                             disabled={!!bankAccount.data.routing_number && !editBankAccount}
                             value={bankAccountHolderName}
                             onChange={onChangeHolderName}
@@ -418,12 +418,12 @@ const BankAccount = ({
                           <FormControl
                             error={AccountNumberError}
                           >
-                            <Typography variant='caption' gutterBottom style={{ width: '100%' }}>
-                              <FormattedMessage id='account.details.iban' defaultMessage='IBAN' />
+                            <Typography variant="caption" gutterBottom style={{ width: '100%' }}>
+                              <FormattedMessage id="account.details.iban" defaultMessage="IBAN" />
                             </Typography>
                             <Input
-                              id='bank-account-number'
-                              name='account_number'
+                              id="bank-account-number"
+                              name="account_number"
                               placeholder={intl.formatMessage({id: 'account.details.iban', defaultMessage: 'IBAN'})}
                               disabled={!!bankAccount.data.routing_number}
                               defaultValue={
@@ -435,7 +435,7 @@ const BankAccount = ({
                             {AccountNumberError && (
                               <FormHelperText>
                                 {' '}
-                                <FormattedMessage id='account.details.numbersOnly' defaultMessage='Just numbers only' />
+                                <FormattedMessage id="account.details.numbersOnly" defaultMessage="Just numbers only" />
                               </FormHelperText>
                             )}
                           </FormControl>
@@ -446,12 +446,12 @@ const BankAccount = ({
                             <>
 
                               <FormControl>
-                                <Typography variant='caption' gutterBottom style={{ width: '100%' }}>
-                                  <FormattedMessage id='account.register.bank.routing' defaultMessage='Routing number' />
+                                <Typography variant="caption" gutterBottom style={{ width: '100%' }}>
+                                  <FormattedMessage id="account.register.bank.routing" defaultMessage="Routing number" />
                                 </Typography>
                                 <Input
-                                  id='bank-routing-number'
-                                  name='routing_number'
+                                  id="bank-routing-number"
+                                  name="routing_number"
                                   placeholder={intl.formatMessage({ id: 'account.details.rountingNumber', defaultMessage: 'Routing number' })}
                                   style={{ marginRight: 20 }}
                                   disabled={!!bankAccount.data.routing_number}
@@ -463,12 +463,12 @@ const BankAccount = ({
                           <FormControl
                             error={AccountNumberError}
                           >
-                            <Typography variant='caption' gutterBottom style={{ width: '100%' }}>
-                              <FormattedMessage id='account.register.bank.accountNumber' defaultMessage='Account number' />
+                            <Typography variant="caption" gutterBottom style={{ width: '100%' }}>
+                              <FormattedMessage id="account.register.bank.accountNumber" defaultMessage="Account number" />
                             </Typography>
                             <Input
-                              id='bank-account-number'
-                              name='account_number'
+                              id="bank-account-number"
+                              name="account_number"
                               placeholder={intl.formatMessage({id: 'account.details.accountNumber', defaultMessage: 'Account number'})}
                               disabled={!!bankAccount.data.routing_number}
                               defaultValue={
@@ -481,7 +481,7 @@ const BankAccount = ({
                             {AccountNumberError && (
                               <FormHelperText>
                                 {' '}
-                                <FormattedMessage id='account.details.numbersOnly' defaultMessage='Just numbers only' />
+                                <FormattedMessage id="account.details.numbersOnly" defaultMessage="Just numbers only" />
                               </FormHelperText>
                             )}
                           </FormControl>
@@ -492,18 +492,18 @@ const BankAccount = ({
                         {user.country !== 'BR' && !bankAccount.data.routing_number && (
                           <FormControl>
                             <FormattedMessage
-                              id='account.details.bank.mode.iban'
-                              defaultMessage='I want to provide my IBAN number instead'
+                              id="account.details.bank.mode.iban"
+                              defaultMessage="I want to provide my IBAN number instead"
                             >
                               {(msg) => (
                                 <FormControlLabel
                                   control={
                                     <Switch
-                                      name='iban'
+                                      name="iban"
                                       checked={ibanMode}
                                       onChange={handleIbanModeChange}
-                                      value='iban'
-                                      color='primary'
+                                      value="iban"
+                                      color="primary"
                                     />
                                   }
                                   label={msg}
@@ -518,16 +518,16 @@ const BankAccount = ({
                   <CardActions style={{ justifyContent: 'flex-end' }}>
                     <Button
                       style={{ color: 'white' }}
-                      size='large'
-                      variant='contained'
-                      color='secondary'
-                      type='submit'
+                      size="large"
+                      variant="contained"
+                      color="secondary"
+                      type="submit"
                       disabled={!editBankAccount && bankAccount.data.routing_number}
                     >
                       {editBankAccount ? (
-                        <FormattedMessage id='account.details.update.action' defaultMessage='Update bank account' />
+                        <FormattedMessage id="account.details.update.action" defaultMessage="Update bank account" />
                       ) : (
-                        <FormattedMessage id='account.details.activate.action' defaultMessage='Activate bank account' />
+                        <FormattedMessage id="account.details.activate.action" defaultMessage="Activate bank account" />
                       )}
                     </Button>
                   </CardActions>
@@ -539,13 +539,13 @@ const BankAccount = ({
               {!account.data.id &&
                 <Card className={classes.cardEmpty} elevation={0}>
                   <CardContent>
-                    <Typography className={classes.title} color='textSecondary'>
-                      <FormattedMessage id='account.register.headline' defaultMessage='There is no account registered to receive the payments' />
+                    <Typography className={classes.title} color="textSecondary">
+                      <FormattedMessage id="account.register.headline" defaultMessage="There is no account registered to receive the payments" />
                     </Typography>
                     {countryCode && (
                       <div>
-                        <Typography component='p' color='textSecondary'>
-                          <FormattedMessage id='account.register.country.label' defaultMessage='The country you chose to create your account' />
+                        <Typography component="p" color="textSecondary">
+                          <FormattedMessage id="account.register.country.label" defaultMessage="The country you chose to create your account" />
                         </Typography>
                         <Chip
                           avatar={<Avatar><img width={72} src={require(`images/countries/${countryImage}.png`).default} /></Avatar>}
@@ -558,25 +558,25 @@ const BankAccount = ({
                   <CardActions className={classes.cardEmptyActionsAlt}>
                     <Button
                       style={{ color: 'white' }}
-                      size='large'
-                      variant='contained'
-                      color='primary'
+                      size="large"
+                      variant="contained"
+                      color="primary"
                       onClick={handleCountry}
                     >
-                      <FormattedMessage id='account.register.create.country' defaultMessage='Choose your country to start' />
+                      <FormattedMessage id="account.register.create.country" defaultMessage="Choose your country to start" />
                       <PublicIcon style={{ marginLeft: 10 }} />
                     </Button>
                   </CardActions>
                   <CardActions className={classes.cardEmptyActions}>
                     <Button
                       style={{ color: 'white' }}
-                      size='large'
-                      variant='contained'
-                      color='primary'
+                      size="large"
+                      variant="contained"
+                      color="primary"
                       disabled={!canCreateAccount}
                       onClick={handleCreateAccount}
                     >
-                      <FormattedMessage id='account.register.create.action' defaultMessage='Create account' />
+                      <FormattedMessage id="account.register.create.action" defaultMessage="Create account" />
                       <PersonIcon style={{ marginLeft: 10 }} />
                     </Button>
                   </CardActions>

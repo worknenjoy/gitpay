@@ -18,10 +18,10 @@ const DeleteAccountButton = ({ deleteUser, user, history }) => {
   return (
     <>
       <Button onClick={ () => setDeleteUserDialog(true) }
-          variant='outlined'
+          variant="outlined"
           style={ { color: '#353A42' } }
       >
-        <FormattedMessage id='account.profile.settings.delete.user.button' defaultMessage='Delete my account' />
+        <FormattedMessage id="account.profile.settings.delete.user.button" defaultMessage="Delete my account" />
       </Button>
       <DeleteUser
         deleteUser={ () => user && onDeleteUser(user) }

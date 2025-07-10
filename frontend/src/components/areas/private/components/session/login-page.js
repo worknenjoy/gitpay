@@ -8,10 +8,10 @@ import Background from 'images/login_bg.png'
 import TermsOfService from './terms-of-service'
 import PrivacyPolicy from './privacy-policy'
 import CookiePolicy from './cookie-policy'
-import LoginFormSignin from '../../../../design-library/molecules/form-section/login-form/login-form-signin/login-form-signin'
-import LoginFormSignup from '../../../../design-library/molecules/form-section/login-form/login-form-signup/login-form-signup'
-import LoginFormReset from '../../../../design-library/molecules/form-section/login-form/login-form-reset/login-form-reset'
-import LoginFormForgot from '../../../../design-library/molecules/form-section/login-form/login-form-forgot/login-form-forgot'
+import LoginFormSignin from 'design-library/molecules/form-section/login-form/login-form-signin/login-form-signin'
+import LoginFormSignup from 'design-library/molecules/form-section/login-form/login-form-signup/login-form-signup'
+import LoginFormReset from 'design-library/molecules/form-section/login-form/login-form-reset/login-form-reset'
+import LoginFormForgot from 'design-library/molecules/form-section/login-form/login-form-forgot/login-form-forgot'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,24 +26,24 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${Background})`,
     backgroundSize: '100% 100%',
     backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
+    backgroundRepeat: 'no-repeat'
   },
   card: {
     minWidth: 420,
     marginTop: 40,
     opacity: 0.8,
-    overflow: 'visible',
+    overflow: 'visible'
   },
   cardContent: {
     textAlign: 'center',
-    position: 'relative',
+    position: 'relative'
   },
   title: {
-    fontSize: 12,
+    fontSize: 12
   },
   pos: {
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
 }))
 
 const Content = styled.div`
@@ -60,7 +60,7 @@ const LoginPage = ({
   fetchRoles,
   registerUser,
   forgotPassword,
-  resetPassword,
+  resetPassword
 }) => {
   const classes = useStyles()
   const history = useHistory()
@@ -117,7 +117,7 @@ const LoginPage = ({
   }
 
   if (mode === 'reset' && !token && !user?.id) {
-    return <Redirect to='/signin' />
+    return <Redirect to="/signin" />
   }
 
   return (
@@ -125,35 +125,35 @@ const LoginPage = ({
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
-            <Link to='/#'>
+            <Link to="/#">
               <img src={logo} width={140} alt="Logo" />
             </Link>
             <Content>
-              <Typography variant='h6' style={{ fontWeight: 'bold' }} gutterBottom>
-                <FormattedMessage id='account.login.title.welcome' defaultMessage='Welcome to Gitpay!' />
+              <Typography variant="h6" style={{ fontWeight: 'bold' }} gutterBottom>
+                <FormattedMessage id="account.login.title.welcome" defaultMessage="Welcome to Gitpay!" />
               </Typography>
               {mode === 'signin' || mode === 'singup' && (
-                <Typography style={{ marginBottom: 20 }} variant='body2' gutterBottom noWrap>
-                  <FormattedMessage id='account.login.connect.form' defaultMessage='Connect or signup with your account' />
+                <Typography style={{ marginBottom: 20 }} variant="body2" gutterBottom noWrap>
+                  <FormattedMessage id="account.login.connect.form" defaultMessage="Connect or signup with your account" />
                 </Typography>
               )}
               {mode === 'reset' && (
                 <>
-                  <Typography variant='h6' style={{ fontWeight: 'bold' }} gutterBottom>
-                    <FormattedMessage id='account.login.title' defaultMessage='Recover your password' />
+                  <Typography variant="h6" style={{ fontWeight: 'bold' }} gutterBottom>
+                    <FormattedMessage id="account.login.title" defaultMessage="Recover your password" />
                   </Typography>
-                  <Typography style={{ marginBottom: 20 }} variant='body1' gutterBottom noWrap>
-                    <FormattedMessage id='account.login.connect.form.reset' defaultMessage='To reset your password, type the new password and confirm' />
+                  <Typography style={{ marginBottom: 20 }} variant="body1" gutterBottom noWrap>
+                    <FormattedMessage id="account.login.connect.form.reset" defaultMessage="To reset your password, type the new password and confirm" />
                   </Typography>
                 </>
               )}
               {mode === 'forgot' && (
                 <>
-                  <Typography variant='h6' style={{ fontWeight: 'bold' }} gutterBottom>
-                    <FormattedMessage id='account.login.title' defaultMessage='Recover your password' />
+                  <Typography variant="h6" style={{ fontWeight: 'bold' }} gutterBottom>
+                    <FormattedMessage id="account.login.title" defaultMessage="Recover your password" />
                   </Typography>
-                  <Typography style={{ marginBottom: 20 }} variant='body1' gutterBottom noWrap>
-                    <FormattedMessage id='account.login.connect.form.forgot' defaultMessage='To recover your password, type the email address you used to register and we will send you a link to reset it.' />
+                  <Typography style={{ marginBottom: 20 }} variant="body1" gutterBottom noWrap>
+                    <FormattedMessage id="account.login.connect.form.forgot" defaultMessage="To recover your password, type the email address you used to register and we will send you a link to reset it." />
                   </Typography>
                 </>
               )}
@@ -196,18 +196,18 @@ const LoginPage = ({
           </CardContent>
         </Card>
         <div style={{ marginTop: 10, textAlign: 'center' }}>
-          <Typography variant='caption' color='default' gutterBottom noWrap component='span'>
-            <FormattedMessage id='account.login.connect.bottom' defaultMessage='© 2023 Gitpay - All rights reserved' />
-            <Link to='#' color='inherit' onClick={(e) => handleOpenDialog(e, 'cookie')} style={{ display: 'inline-block', margin: '0 5px' }}>
-              <FormattedMessage id='legal.cookie.label' defaultMessage='Cookie Preferences' />
+          <Typography variant="caption" color="default" gutterBottom noWrap component="span">
+            <FormattedMessage id="account.login.connect.bottom" defaultMessage="© 2023 Gitpay - All rights reserved" />
+            <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'cookie')} style={{ display: 'inline-block', margin: '0 5px' }}>
+              <FormattedMessage id="legal.cookie.label" defaultMessage="Cookie Preferences" />
             </Link>
             |
-            <Link to='#' color='inherit' onClick={(e) => handleOpenDialog(e, 'privacy')} style={{ display: 'inline-block', margin: '0 5px' }}>
-              <FormattedMessage id='legal.prviacy.label' defaultMessage='Privacy' />
+            <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'privacy')} style={{ display: 'inline-block', margin: '0 5px' }}>
+              <FormattedMessage id="legal.prviacy.label" defaultMessage="Privacy" />
             </Link>
             |
-            <Link to='#' color='inherit' onClick={(e) => handleOpenDialog(e, 'terms')} style={{ display: 'inline-block', margin: '0 5px' }}>
-              <FormattedMessage id='legal.terms.label' defaultMessage='Terms' />
+            <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'terms')} style={{ display: 'inline-block', margin: '0 5px' }}>
+              <FormattedMessage id="legal.terms.label" defaultMessage="Terms" />
             </Link>
           </Typography>
           <Dialog onClose={closeDialog} open={openDialog}>

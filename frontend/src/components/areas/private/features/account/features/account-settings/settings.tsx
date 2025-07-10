@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import LanguageIcon from '@material-ui/icons/Language'
 import { updateIntl } from 'react-intl-redux'
-import { LabelButton, StyledAvatarIconOnly } from '../../../../../../design-library/organisms/layouts/topbar/TopbarStyles'
+import { LabelButton, StyledAvatarIconOnly } from 'design-library/organisms/layouts/topbar/TopbarStyles'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { store } from '../../../../../../../main/app'
 import messagesBr from '../../../../../../../translations/result/br.json'
@@ -31,7 +31,7 @@ const logoLangBr = require('images/brazil.png')
 const useStyles = makeStyles(theme => ({
   title: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   }
 }))
 
@@ -56,7 +56,7 @@ const Settings = (props) => {
       localStorage.setItem('userLanguage', lang)
       store.dispatch(updateIntl({
         locale: lang,
-        messages: messages[lang],
+        messages: messages[lang]
       }))
     } catch (e) {
       console.log('error', e)
@@ -85,22 +85,22 @@ const Settings = (props) => {
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
-      <Grid container alignItems='center' spacing={1}>
+      <Grid container alignItems="center" spacing={1}>
         <Grid item xs={12}>
-          <Typography variant='h5' className={classes.title} gutterBottom>
-            <FormattedMessage id='preferences.title' defaultMessage='Settings' />
+          <Typography variant="h5" className={classes.title} gutterBottom>
+            <FormattedMessage id="preferences.title" defaultMessage="Settings" />
           </Typography>
         </Grid>
         <Grid item xs={5} style={{ marginBottom: 20, marginTop: 40 }}>
-          <Typography color='primary' variant='h5' gutterBottom>
-            <FormattedMessage id='preferences.actions.language.title' defaultMessage='Language' />
+          <Typography color="primary" variant="h5" gutterBottom>
+            <FormattedMessage id="preferences.actions.language.title" defaultMessage="Language" />
           </Typography>
           <Button
-            id='chooseLanguageButton'
+            id="chooseLanguageButton"
             onClick={handleMenu}
-            variant='contained'
-            size='medium'
-            color='primary'
+            variant="contained"
+            size="medium"
+            color="primary"
           >
             {language ? (
               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -117,14 +117,14 @@ const Settings = (props) => {
               <div>
                 <LanguageIcon />
                 <LabelButton>
-                  <FormattedMessage id='preferences.actions.choose.language' defaultMessage='Choose language' />
+                  <FormattedMessage id="preferences.actions.choose.language" defaultMessage="Choose language" />
                 </LabelButton>
               </div>
             )}
           </Button>
 
           <Menu
-            id='menu-appbar'
+            id="menu-appbar"
             anchorEl={anchorEl}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -132,45 +132,45 @@ const Settings = (props) => {
             onClose={() => setAnchorEl(null)}
           >
             <MenuItem onClick={() => handleLanguageClick('en')}>
-              <StyledAvatarIconOnly alt='English' src={logoLangEn} />
+              <StyledAvatarIconOnly alt="English" src={logoLangEn} />
               <strong style={{ display: 'inline-block', margin: 10 }}>English</strong>
             </MenuItem>
             <MenuItem onClick={() => handleLanguageClick('br')}>
-              <StyledAvatarIconOnly alt='Português' src={logoLangBr} />
+              <StyledAvatarIconOnly alt="Português" src={logoLangBr} />
               <strong style={{ display: 'inline-block', margin: 10 }}>Português</strong>
             </MenuItem>
           </Menu>
         </Grid>
         <Grid item xs={12} style={{ marginTop: 20, marginBottom: 20 }}>
-          <Typography color='primary' variant='h5'>
-            <FormattedMessage id='prefences.my.notifications' defaultMessage='Notifications' />
+          <Typography color="primary" variant="h5">
+            <FormattedMessage id="prefences.my.notifications" defaultMessage="Notifications" />
           </Typography>
           <Switch
-            id='switch_receive_notifications'
+            id="switch_receive_notifications"
             checked={receiveNotifications}
             onChange={handleHiddenChange}
-            value='hidden'
-            color='primary'
+            value="hidden"
+            color="primary"
           />
           &nbsp;
-          <label htmlFor='switch_receive_notifications'>
-            <Typography component='span' style={{ display: 'inline-block' }} color='primary' variant='body2'>
-              <FormattedMessage id='preferences.notifications.receiveNotifications' defaultMessage='I want to receive relevant notifications from Gitpay' />
+          <label htmlFor="switch_receive_notifications">
+            <Typography component="span" style={{ display: 'inline-block' }} color="primary" variant="body2">
+              <FormattedMessage id="preferences.notifications.receiveNotifications" defaultMessage="I want to receive relevant notifications from Gitpay" />
             </Typography>
           </label>
         </Grid>
         <Grid item xs={12} style={{ marginTop: 20, marginBottom: 20 }}>
-          <Typography color='primary' variant='h5'>
-            <FormattedMessage id='prefences.my.openforjobs' defaultMessage='Open For Jobs' />
+          <Typography color="primary" variant="h5">
+            <FormattedMessage id="prefences.my.openforjobs" defaultMessage="Open For Jobs" />
           </Typography>
           <Checkbox
             onClick={handleJobsCheck}
             checked={openForJobs}
           />
           &nbsp;
-          <label htmlFor='check_open_for_jobs'>
-            <Typography component='span' style={{ display: 'inline-block' }} color='primary' variant='body2'>
-              <FormattedMessage id='preferences.jobs.checkbox' defaultMessage='Are you open for job opportunities?' />
+          <label htmlFor="check_open_for_jobs">
+            <Typography component="span" style={{ display: 'inline-block' }} color="primary" variant="body2">
+              <FormattedMessage id="preferences.jobs.checkbox" defaultMessage="Are you open for job opportunities?" />
             </Typography>
           </label>
         </Grid>

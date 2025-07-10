@@ -5,7 +5,7 @@ import PricePlan from './price-plan';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Organisms/Forms/PricePlan',
-  component: PricePlan,
+  component: PricePlan
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -28,7 +28,7 @@ Primary.args = {
     items: [
       'Feature 1',
       'Feature 2',
-      'Feature 3',
-    ],
-  },
+      'Feature 3'
+    ]
+  }
 };

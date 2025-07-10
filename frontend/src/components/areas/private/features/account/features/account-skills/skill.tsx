@@ -1,15 +1,15 @@
 import React from "react";
 import classNames from "classnames";
-import { withStyles, Grid, Typography, Checkbox, Avatar, } from "@material-ui/core";
+import { withStyles, Grid, Typography, Checkbox, Avatar } from "@material-ui/core";
 import { SkillIcon } from "./skill-icon"
 
 const styles = theme => ({
   skillIcon: {
     borderRadius: 0,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   greyed: {
-    filter: 'grayscale(0.8)',
+    filter: 'grayscale(0.8)'
   }
 })
 

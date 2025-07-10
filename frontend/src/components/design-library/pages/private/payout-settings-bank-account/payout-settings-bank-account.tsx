@@ -47,7 +47,7 @@ const PayoutSetingsBankAccount = ({
   }
 
   return (
-    <ReactPlaceholder type='media' rows={7} ready={completed}>
+    <ReactPlaceholder type="media" rows={7} ready={completed}>
       {!data?.account_id ? (
         <>
           {!country?.code ? (
@@ -61,7 +61,7 @@ const PayoutSetingsBankAccount = ({
             </>
           ) : (
             <EmptyBase
-              actionText={<FormattedMessage id='payout.settings.choose.country' defaultMessage='Choose country and continue' />}
+              actionText={<FormattedMessage id="payout.settings.choose.country" defaultMessage="Choose country and continue" />}
               text={country.label}
               onActionClick={() => saveCountryAndContinue(country.code)}
               icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}

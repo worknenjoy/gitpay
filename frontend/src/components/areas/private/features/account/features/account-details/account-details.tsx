@@ -7,7 +7,7 @@ import {
   Button,
   Typography,
   FormControl,
-  Select,
+  Select
 } from '@material-ui/core'
 
 import 'react-phone-number-input/style.css'
@@ -17,8 +17,8 @@ import Switch from '@material-ui/core/Switch'
 
 import CountryPicker from '../../../../shared/country-picker'
 import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
-import Field from '../../../../../../design-library/atoms/inputs/fields/field/field'
-import Alert from '../../../../../../design-library/atoms/alerts/alert/alert'
+import Field from 'design-library/atoms/inputs/fields/field/field'
+import Alert from 'design-library/atoms/alerts/alert/alert'
 import TextMaskCustom from './TextMaskCustom';
 import messages from '../../../../shared/messages'
 
@@ -26,7 +26,7 @@ const styles = (theme) => ({
   legend: {
     fontSize: 18,
     fontWeight: 500,
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.dark
   },
   fieldset: {
     border: `1px solid ${theme.palette.primary.light}`,
@@ -120,8 +120,8 @@ const AccountDetails = ({
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={12}>
-        <Typography variant='h6' gutterBottom>
-          <FormattedMessage id='account-details-personal-information-title' defaultMessage='Account details' />
+        <Typography variant="h6" gutterBottom>
+          <FormattedMessage id="account-details-personal-information-title" defaultMessage="Account details" />
         </Typography>
       </Grid>
       <Grid item xs={12} md={12}>
@@ -129,21 +129,21 @@ const AccountDetails = ({
           <Grid item xs={12} md={account && account.data.country ? 6 : 12}>
             <ReactPlaceholder
               showLoadingAnimation
-              type='media'
+              type="media"
               rows={1}
               ready={account.completed}
             >
               <fieldset className={classes.fieldset}>
                 <legend className={classes.legend}>
                   <Typography>
-                    <FormattedMessage id='account-details-country-information-title' defaultMessage='Country' />
+                    <FormattedMessage id="account-details-country-information-title" defaultMessage="Country" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   {displayCurrentCountry.country &&
                     <Grid item xs={12} md={12}>
-                      <Alert severity='info'>
-                        <FormattedMessage id='account-details-country-information-desc' defaultMessage='Please make sure you have bank account on the country selected before continue.' />
+                      <Alert severity="info">
+                        <FormattedMessage id="account-details-country-information-desc" defaultMessage="Please make sure you have bank account on the country selected before continue." />
                       </Alert>
                     </Grid>
                   }
@@ -151,16 +151,16 @@ const AccountDetails = ({
                     ? <>
                       <Grid item xs={12} md={6}>
                         <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                          <img width='48' src={require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
-                          <Typography component='span' style={{ marginLeft: 10 }}>
+                          <img width="48" src={require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
+                          <Typography component="span" style={{ marginLeft: 10 }}>
                             {countryCodes.find(c => c.code === account.data.country).country}
                           </Typography>
                         </div>
                       </Grid>
                     </>
                     : <div>
-                      <Button variant='outlined' onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
-                        <FormattedMessage id='account-details-country-information-action' defaultMessage='Select Country' />
+                      <Button variant="outlined" onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
+                        <FormattedMessage id="account-details-country-information-action" defaultMessage="Select Country" />
                       </Button>
                       <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
                     </div>
@@ -171,18 +171,18 @@ const AccountDetails = ({
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={12}>
                       <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-                        <img width='48' src={require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
-                        <Typography component='span' style={{ marginLeft: 10 }}>
+                        <img width="48" src={require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
+                        <Typography component="span" style={{ marginLeft: 10 }}>
                           {countryCodes.find(c => c.code === displayCurrentCountry.code).country}
                         </Typography>
                       </div>
                     </Grid>
-                    <Grid item xs={12} md={12} justifyContent='flex-end' alignContent='flex-end' style={{ display: 'flex' }}>
-                      <Button variant='contained' color='secondary' onClick={() => {
+                    <Grid item xs={12} md={12} justifyContent="flex-end" alignContent="flex-end" style={{ display: 'flex' }}>
+                      <Button variant="contained" color="secondary" onClick={() => {
                         displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
                         setDisplayCurrentCountry({ country: '', code: '' })
                       }} style={{ margin: 20 }}>
-                        <FormattedMessage id='account-details-country-information-save' defaultMessage='Save Country and continue' />
+                        <FormattedMessage id="account-details-country-information-save" defaultMessage="Save Country and continue" />
                       </Button>
                     </Grid>
                   </Grid>
@@ -195,12 +195,12 @@ const AccountDetails = ({
             <fieldset className={classes.fieldset} style={{height: 108, display: 'flex', alignItems: 'center'}}>
               <legend className={classes.legend}>
                 <Typography>
-                  <FormattedMessage id='account.details.currency.title' defaultMessage='Currency' />
+                  <FormattedMessage id="account.details.currency.title" defaultMessage="Currency" />
                 </Typography>
               </legend>
               <ReactPlaceholder
                 showLoadingAnimation
-                type='text'
+                type="text"
                 rows={1}
                 ready={countries.completed}
               >
@@ -214,7 +214,7 @@ const AccountDetails = ({
                     }}
                     inputProps={{
                       name: 'country',
-                      id: 'country-native-simple',
+                      id: 'country-native-simple'
                     }}
                   >
                     <option aria-label="None" value="" />
@@ -244,15 +244,15 @@ const AccountDetails = ({
             <fieldset className={classes.fieldset}>
               <legend className={classes.legend}>
                 <Typography>
-                  <FormattedMessage id='account-details-personal-information' defaultMessage='Personal details' />
+                  <FormattedMessage id="account-details-personal-information" defaultMessage="Personal details" />
                 </Typography>
               </legend>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
-                  <FormattedMessage id='account.verify.firstName' defaultMessage='First name'>
+                  <FormattedMessage id="account.verify.firstName" defaultMessage="First name">
                     {(msg) => (
                       <Field
-                        name='individual[first_name]'
+                        name="individual[first_name]"
                         label={msg}
                         defaultValue={accountData['individual[first_name]'] || account.data.individual && account.data.individual.first_name}
                       />
@@ -260,10 +260,10 @@ const AccountDetails = ({
                   </FormattedMessage>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
-                  <FormattedMessage id='account.verify.lastName' defaultMessage='Last name'>
+                  <FormattedMessage id="account.verify.lastName" defaultMessage="Last name">
                     {(msg) => (
                       <Field
-                        name='individual[last_name]'
+                        name="individual[last_name]"
                         label={msg}
                         defaultValue={accountData['individual[last_name]'] || account.data.individual && account.data.individual.last_name}
                       />
@@ -272,7 +272,7 @@ const AccountDetails = ({
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                   <Field
-                    name='individual[id_number]'
+                    name="individual[id_number]"
                     label={
                       editIdNumber ? intl.formatMessage(messages.documentProvide) : (
                         account.data.individual && account.data.individual
@@ -301,17 +301,17 @@ const AccountDetails = ({
                         .id_number_provided
                       && (
                         <Button
-                          variant='text'
-                          color='primary'
-                          size='small'
+                          variant="text"
+                          color="primary"
+                          size="small"
                           onClick={(e) => {
                             setEditIdNumber(!editIdNumber)
                           }}
                         >
                           {!editIdNumber ? (
-                            <FormattedMessage id='account.actions.id.edit' defaultMessage='Change' />
+                            <FormattedMessage id="account.actions.id.edit" defaultMessage="Change" />
                           ) : (
-                            <FormattedMessage id='account.actions.id.cancel' defaultMessage='Cancel' />
+                            <FormattedMessage id="account.actions.id.cancel" defaultMessage="Cancel" />
                           )}
                         </Button>
                       )
@@ -319,11 +319,11 @@ const AccountDetails = ({
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={4}>
-                  <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
+                  <FormattedMessage id="account.verify.phone_number" defaultMessage="Phone number">
                     {
                       (msg) => (
                         <Field
-                          name='individual[phone]'
+                          name="individual[phone]"
                           label={msg}
                           defaultValue={accountData['individual[phone]'] || account.data.individual && account.data.individual.phone}
                           help
@@ -333,10 +333,10 @@ const AccountDetails = ({
                   </FormattedMessage>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4}>
-                  <FormattedMessage id='account.verify.business_profile_url' defaultMessage='Website'>
+                  <FormattedMessage id="account.verify.business_profile_url" defaultMessage="Website">
                     {(msg) => (
                       <Field
-                        name='business_profile[url]'
+                        name="business_profile[url]"
                         label={msg}
                         defaultValue={accountData['business_profile[url]'] || account.data.business_profile && account.data.business_profile.url}
                       />
@@ -346,22 +346,22 @@ const AccountDetails = ({
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={12}>
-                  <Typography color='textPrimary' style={{ marginBottom: -20, marginTop: 10 }}>
-                    <FormattedMessage id='account-details-personal-information-birth-date' defaultMessage='Birth date' />
+                  <Typography color="textPrimary" style={{ marginBottom: -20, marginTop: 10 }}>
+                    <FormattedMessage id="account-details-personal-information-birth-date" defaultMessage="Birth date" />
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Field name='individual[dob][day]' label='Day' type='number' defaultValue={accountData['individual[dob][day]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.day} />
+                  <Field name="individual[dob][day]" label="Day" type="number" defaultValue={accountData['individual[dob][day]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.day} />
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl style={{ width: '100%' }}>
                     <Select
                       autoWidth
                       native
-                      name='individual[dob][month]'
+                      name="individual[dob][month]"
                       style={{ marginRight: 8, marginTop: 16, width: '100%' }}
                     >
-                      <FormattedMessage id='account.details.month' defaultMessage='Month of birth'>{(msg) => <option value='' key={'default'}>{msg}</option>}</FormattedMessage>
+                      <FormattedMessage id="account.details.month" defaultMessage="Month of birth">{(msg) => <option value="" key={'default'}>{msg}</option>}</FormattedMessage>
                       {[[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
                         (item, i) => {
                           return (
@@ -375,38 +375,38 @@ const AccountDetails = ({
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Field name='individual[dob][year]' label='Year' type='number' defaultValue={accountData['individual[dob][year]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.year} />
+                  <Field name="individual[dob][year]" label="Year" type="number" defaultValue={accountData['individual[dob][year]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.year} />
                 </Grid>
               </Grid>
             </fieldset>
             <fieldset className={classes.fieldset}>
               <legend className={classes.legend}>
                 <Typography>
-                  <FormattedMessage id='account-details-address' defaultMessage='Address information' />
+                  <FormattedMessage id="account-details-address" defaultMessage="Address information" />
                 </Typography>
               </legend>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <Field name='individual[address][line1]' label='Address line 1' defaultValue={accountData['individual[address][line1]'] || account.data.individual && account.data.individual.address.line1} />
+                  <Field name="individual[address][line1]" label="Address line 1" defaultValue={accountData['individual[address][line1]'] || account.data.individual && account.data.individual.address.line1} />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Field name='individual[address][line2]' label='Address line 2' defaultValue={accountData['individual[address][line2]'] || account.data.individual && account.data.individual.address.line2} />
+                  <Field name="individual[address][line2]" label="Address line 2" defaultValue={accountData['individual[address][line2]'] || account.data.individual && account.data.individual.address.line2} />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <Field name='individual[address][city]' label='City' defaultValue={accountData['individual[address][city]'] || account.data.individual && account.data.individual.address.city} />
+                  <Field name="individual[address][city]" label="City" defaultValue={accountData['individual[address][city]'] || account.data.individual && account.data.individual.address.city} />
                 </Grid>
                 <Grid item xs={12} md={2}>
-                  <Field name='individual[address][state]' label='State' defaultValue={accountData['individual[address][state]'] || account.data.individual && account.data.individual.address.state} />
+                  <Field name="individual[address][state]" label="State" defaultValue={accountData['individual[address][state]'] || account.data.individual && account.data.individual.address.state} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Field name='individual[address][postal_code]' label='Postal code' defaultValue={accountData['individual[address][postal_code]'] || account.data.individual && account.data.individual.address.postal_code} />
+                  <Field name="individual[address][postal_code]" label="Postal code" defaultValue={accountData['individual[address][postal_code]'] || account.data.individual && account.data.individual.address.postal_code} />
                 </Grid>
               </Grid>
             </fieldset>
             <fieldset className={classes.fieldset}>
               <legend className={classes.legend}>
                 <Typography>
-                  <FormattedMessage id='account.details.terms' defaultMessage='Accept terms' />
+                  <FormattedMessage id="account.details.terms" defaultMessage="Accept terms" />
                 </Typography>
               </legend>
               <Grid container spacing={2}>
@@ -415,18 +415,18 @@ const AccountDetails = ({
                     <>
                       <FormControl>
                         <FormattedMessage
-                          id='account.details.terms.read'
-                          defaultMessage='I read and I accept the Stripe terms to receive transfers about payments directly on my account'
+                          id="account.details.terms.read"
+                          defaultMessage="I read and I accept the Stripe terms to receive transfers about payments directly on my account"
                         >
                           {(msg) => (
                             <FormControlLabel
                               control={
                                 <Switch
-                                  name='tos_acceptance'
+                                  name="tos_acceptance"
                                   checked={terms}
                                   onChange={() => setTerms(!terms)}
                                   value={terms}
-                                  color='primary'
+                                  color="primary"
                                 />
                               }
                               label={msg}
@@ -435,21 +435,21 @@ const AccountDetails = ({
                         </FormattedMessage>
                       </FormControl>
                       <FormControl>
-                        <Typography color='primary' style={{ marginTop: 8 }}>
+                        <Typography color="primary" style={{ marginTop: 8 }}>
                           <a
-                            target='_blank'
+                            target="_blank"
                             href={`https://stripe.com/${user.country}/connect-account/legal`} rel="noreferrer"
                           >
                             {' '}
-                            <FormattedMessage id='account.details.terms.access' defaultMessage='see stripe terms' />{' '}
+                            <FormattedMessage id="account.details.terms.access" defaultMessage="see stripe terms" />{' '}
                           </a>
                         </Typography>
                       </FormControl>
                     </>
                   ) : (
                     <FormControl style={{ display: 'block' }}>
-                      <Typography color='primary' style={{ display: 'block' }}>
-                        <FormattedMessage id='account.terms.accepted' defaultMessage='You agreed with the terms in ' />
+                      <Typography color="primary" style={{ display: 'block' }}>
+                        <FormattedMessage id="account.terms.accepted" defaultMessage="You agreed with the terms in " />
                         {' '}
                         <FormattedDate value={Moment.unix(
                           account.data.tos_acceptance.date
@@ -463,11 +463,11 @@ const AccountDetails = ({
             <Grid item xs={12}>
               <div style={{ float: 'right' }}>
                 <Button
-                  type='submit'
-                  variant='contained'
-                  color='secondary'
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
                 >
-                  <FormattedMessage id='account.actions.update' defaultMessage='Update Account' />
+                  <FormattedMessage id="account.actions.update" defaultMessage="Update Account" />
                 </Button>
               </div>
             </Grid>

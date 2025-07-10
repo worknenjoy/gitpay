@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   tabsVertical: {
     borderRight: `1px solid ${theme.palette.divider}`,
     width: 280,
-    alignItems: 'flex-end',
+    alignItems: 'flex-end'
   },
   tabs: {
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   tab: {
     margin: 10,
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   tabPanelVertical: {
     marginTop: 0,
-    width: '100%',
+    width: '100%'
   }
 }));
 
@@ -111,8 +111,8 @@ const BaseTabs = ({
       <Tabs 
         value={value}
         onChange={handleChange}
-        textColor='secondary'
-        indicatorColor='secondary'
+        textColor="secondary"
+        indicatorColor="secondary"
         orientation={orientation}
         className={isVertical ? classes.tabsVertical : classes.tabs}
       >

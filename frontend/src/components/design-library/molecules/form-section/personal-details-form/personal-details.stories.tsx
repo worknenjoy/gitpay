@@ -3,7 +3,7 @@ import PersonalDetailsForm from './personal-details-form';
 
 export default {
   title: 'Design Library/Molecules/Forms/PersonalDetailsForm',
-  component: PersonalDetailsForm,
+  component: PersonalDetailsForm
 };
 
 const Template = (args) => <PersonalDetailsForm {...args} />;

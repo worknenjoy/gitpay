@@ -5,11 +5,11 @@ import Field from '../field/field';
 
 const PhoneNumberField = ({ phone }) => {
   return (
-    <FormattedMessage id='account.verify.phone_number' defaultMessage='Phone number'>
+    <FormattedMessage id="account.verify.phone_number" defaultMessage="Phone number">
       {
         (msg) => (
           <Field
-            name='phone_number'
+            name="phone_number"
             label={msg}
             defaultValue={ phone }
             help

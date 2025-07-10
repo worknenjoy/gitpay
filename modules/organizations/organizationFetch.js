@@ -11,7 +11,7 @@ module.exports = Promise.method(function fetchOrganization (orgParams) {
         model: models.Project,
         where: null,
         include: [models.Task, models.Organization]
-      },
+      }
     ]
   })
     .then(data => {

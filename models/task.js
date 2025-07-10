@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Assigns',
         key: 'id'
       },
-      allowNull: true,
+      allowNull: true
     },
     TransferId: {
       type: DataTypes.INTEGER,
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Transfers',
         key: 'id'
       },
-      allowNull: true,
+      allowNull: true
     },
     ProjectId: {
       type: DataTypes.INTEGER,
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Projects',
         key: 'id'
       },
-      allowNull: true,
+      allowNull: true
     }
   }, {
     hooks: {

@@ -61,18 +61,18 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
             <FormControlLabel
               control={
                 <Switch
-                  name='iban'
+                  name="iban"
                   checked={ibanMode}
                   onChange={handleIbanModeChange}
-                  value='iban'
-                  color='primary'
+                  value="iban"
+                  color="primary"
                   disabled={id}
                 />
               }
               label={
                 <FormattedMessage
-                  id='account.details.bank.mode.iban'
-                  defaultMessage='I want to provide my IBAN number instead'
+                  id="account.details.bank.mode.iban"
+                  defaultMessage="I want to provide my IBAN number instead"
                 />
               }
             />

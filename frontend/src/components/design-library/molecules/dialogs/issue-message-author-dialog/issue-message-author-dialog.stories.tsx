@@ -3,7 +3,7 @@ import IssueMessageAuthorDiialog from './issue-message-author-dialog';
 
 export default {
   title: 'Design Library/Molecules/Dialogs/IssueMessageAuthor',
-  component: IssueMessageAuthorDiialog,
+  component: IssueMessageAuthorDiialog
 };
 
 const Template = (args) => <IssueMessageAuthorDiialog {...args} />;
@@ -15,5 +15,5 @@ Default.args = {
   taskId: '456',
   name: 'John Doe',
   onClose: () => console.log('Dialog closed'),
-  onSend: (userId, taskId, message) => console.log(`Message sent to user ${userId} for task ${taskId}: ${message}`),
+  onSend: (userId, taskId, message) => console.log(`Message sent to user ${userId} for task ${taskId}: ${message}`)
 };

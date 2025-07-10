@@ -110,7 +110,7 @@ const TaskCron = {
       })
     }
     return tasks
-  },
+  }
 }
 
 const dailyJob = new CronJob({

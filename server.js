@@ -3,7 +3,6 @@ const sslRedirect = require('heroku-ssl-redirect')
 const app = express()
 const session = require('express-session')
 const compression = require('compression')
-const bodyParser = require('body-parser')
 require('./models')
 const passport = require('passport')
 require('./config/passport')
@@ -20,8 +19,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(xFrameOptions())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SECRET_PHRASE,
   saveUninitialized: true,
@@ -38,10 +35,6 @@ i18n.configure({
 app.use(i18n.init)
 
 dailyJob.start()
-// weeklyJob.start()
-// weeklyJobLatest.start()
-// weeklyJobBountiesClosedNotPaid.start();
-
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -56,9 +49,4 @@ app.get('/recruitment', (req, res) => {
 
 load.init(app)
 
-app.listen(app.get('port'), () => {
-  // eslint-disable-next-line no-console
-  console.log('Node app is running on port', app.get('port'))
-})
-
-module.exports = app
+module.exports = app;
