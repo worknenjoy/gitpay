@@ -1,73 +1,61 @@
-import React from 'react';
-
 import PaymentStatus from './payment-status';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Atoms/Status/Payments/PaymentStatus',
   component: PaymentStatus
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  //argTypes: {
-  //  tags: { control: '' },
-  //},
 };
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template = (args) => <PaymentStatus {...args} />;
-
-export const Primary = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
-  orderStatus: 'succeeded'
+export const Open = {
+  args: {
+    status: 'open'
+  }
 };
 
-export const OpenStatus = Template.bind({});
-OpenStatus.args = {
-  orderStatus: 'open'
+export const Pending = {
+  args: {
+    status: 'pending'
+  }
 };
 
-export const PendingStatus = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-PendingStatus.args = {
-  orderStatus: 'pending'
+export const Succeeded = {
+  args: {
+    status: 'succeeded'
+  }
 };
 
-export const SucceededStatus = Template.bind({});
-SucceededStatus.args = {
-  orderStatus: 'succeeded'
+export const Failed = {
+  args: {
+    status: 'failed'
+  }
 };
 
-export const FailedStatus = Template.bind({});
-FailedStatus.args = {
-  orderStatus: 'failed'
+export const Expired = {
+  args: {
+    status: 'expired'
+  }
 };
 
-export const ExpiredStatus = Template.bind({});
-ExpiredStatus.args = {
-  orderStatus: 'expired'
+export const Canceled = {
+  args: {
+    status: 'canceled'
+  }
 };
 
-export const CancelledStatus = Template.bind({});
-CancelledStatus.args = {
-  orderStatus: 'cancelled'
+export const Refunded = {
+  args: {
+    status: 'refunded'
+  }
 };
 
-export const FailStatus = Template.bind({});
-FailStatus.args = {
-  orderStatus: 'fail'
+export const Unknown = {
+  args: {
+    status: 'unknown'
+  }
 };
 
-export const CanceledStatus = Template.bind({});
-CanceledStatus.args = {
-  orderStatus: 'canceled'
-};
-
-export const RefundedStatus = Template.bind({});
-RefundedStatus.args = {
-  orderStatus: 'refunded'
-};
-
-export const UndefinedStatus = Template.bind({});
-UndefinedStatus.args = {
-  orderStatus: 'undefined'
+export const Loading = {
+  args: {
+    status: 'pending',
+    completed: false
+  }
 };

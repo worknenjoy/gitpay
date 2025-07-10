@@ -200,7 +200,7 @@ const Wallets = ({
                   ...walletOrders,
                   data: walletOrders?.data?.map( wo => [
                     <InvoiceId key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
-                    <InvoiceStatus invoiceStatus={wo.status} />,
+                    <InvoiceStatus status={wo.status} completed={wo.completed} />,
                     formatCurrency(wo.amount),
                     moment(wo.createdAt).fromNow(),
                     <InvoiceDueDate key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,

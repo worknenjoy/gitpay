@@ -1,5 +1,5 @@
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
-import { orange, green, yellow } from '@material-ui/core/colors'
+import { orange, green, blue, yellow } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.grey[500],
       color: theme.palette.common.white
     },
+    
+        refunded: {
+          backgroundColor: blue[500],
+          color: theme.palette.common.white
+        },
     canceled: {
       backgroundColor: theme.palette.grey[500],
       color: theme.palette.common.white
