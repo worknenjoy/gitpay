@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { Drawer, IconButton, MenuList, MenuItem, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@material-ui/core'
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
 import logo from 'images/gitpay-logo.png'
+import logoSymbol from 'images/logo-symbol.png'
 import {
   Logo,
   StyledButton
@@ -12,11 +14,29 @@ import SideMenuPlaceholder from './side-menu.placeholder'
 const useStyles = makeStyles((theme) => ({
   sidePaper: {
     backgroundColor: '#2c5c46',
-    height: '100%'
+    height: '100%',
+    width: 220,
+    transition: 'width 0.3s'
+  },
+  sidePaperCollapsed: {
+    width: 60
   },
   row: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  collapseButton: {
+    color: '#fff',
+    position: 'absolute',
+    top: 8,
+    right: -20,
+    backgroundColor: '#4D7E6F',
+    '&:hover': {
+      backgroundColor: '#355c4a'
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
   },
   menuItem: {
     marginTop: 10,
@@ -131,15 +151,25 @@ export const SideMenu: React.FC<SideMenuProps> = ({
   menuItems
 }) => {
   const classes = useStyles()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [selected, setSelected] = useState(0)
+  const [collapsed, setCollapsed] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  return (
-    <div className={classes.sidePaper}>
+  const handleToggleCollapse = () => setCollapsed(!collapsed)
+  const handleToggleMobile = () => setOpen(!open)
+
+  const content = (
+    <div className={`${classes.sidePaper} ${collapsed ? classes.sidePaperCollapsed : ''}`}>
+      <IconButton onClick={handleToggleCollapse} className={classes.collapseButton} size="small">
+        {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      </IconButton>
       <div>
         <div className={classes.profile}>
           <div style={{ display: 'flex', justifyContent: 'center', padding: 20, paddingBottom: 0 }}>
             <StyledButton href="/">
-              <Logo src={logo} />
+              <Logo src={collapsed ? logoSymbol : logo} />
             </StyledButton>
           </div>
           <div className={classes.row}>
@@ -181,7 +211,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                           selected={item.selected}
                         >
                           <ListItemIcon className={classes.icon}><>{item.icon}</></ListItemIcon>
-                          <ListItemText classes={{ primary: classes.primary }} primary={item.label} />
+                          {!collapsed && <ListItemText classes={{ primary: classes.primary }} primary={item.label} />}
                         </MenuItem>
                       )
                     ))}
@@ -195,4 +225,19 @@ export const SideMenu: React.FC<SideMenuProps> = ({
       </div>
     </div>
   )
+
+  if (isMobile) {
+    return (
+      <>
+        <IconButton onClick={handleToggleMobile} style={{ margin: 8 }}>
+          <KeyboardArrowRight />
+        </IconButton>
+        <Drawer open={open} onClose={handleToggleMobile}>
+          {content}
+        </Drawer>
+      </>
+    )
+  }
+
+  return content
 }
