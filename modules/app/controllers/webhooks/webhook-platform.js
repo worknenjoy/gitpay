@@ -84,7 +84,6 @@ exports.webhookPlatform = async (req, res) => {
         return await invoicePaid(event, req, res)
       case 'invoice.finalized':
         return await invoiceFinalized(event, req, res)
-        break
       case 'transfer.created':
         return await transferCreated(event, req, res)
       case 'payout.created':
@@ -95,15 +94,11 @@ exports.webhookPlatform = async (req, res) => {
         return await payoutPaid(event, req, res)
       case 'balance.available':
         return balanceAvailable(event, req, res)
-        default:
-          return res.status(200).json(event);
-          break
       case 'invoice.payment_succeeded':
         return await invoicePaymentSucceeded(event, req, res)
       case 'invoice.payment_failed':
         return await invoicePaymentFailed(event, req, res)
       case 'checkout.session.completed':
-        console.log('checkout.session.completed webhook received')
         return await checkoutSessionCompleted(event, req, res)
       break;
     }

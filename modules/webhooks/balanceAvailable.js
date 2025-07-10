@@ -17,6 +17,4 @@ module.exports = async function balanceAvailable(event, req, res) {
                   </ul>
               `)
         return res.status(200).json(event);
-      default:
-        return res.status(200).json(event);
 }
