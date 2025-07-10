@@ -23,7 +23,7 @@ const invoicePaid = require('./data/stripe/stripe.invoice.paid')
 const invoiceWebhookPaid = require('./data/stripe/stripe.webhook.invoice')
 const eventCheckout = require('./data/stripe/stripe.webhook.checkout.session.completed')
 
-describe('webhooks', () => {
+describe('webhooks for connect', () => {
   beforeEach(async () => {
     await truncateModels(models.Task);
     await truncateModels(models.User);
@@ -40,7 +40,7 @@ describe('webhooks', () => {
   describe('webhooks for charge', () => {
     xit('should return false when the request is not a charge event', done => {
       agent
-        .post('/webhooks')
+        .post('/webhooks/stripe-connect')
         .send({})
         .expect('Content-Type', /json/)
         .expect(200)
@@ -73,7 +73,7 @@ describe('webhooks', () => {
                 })
                 .then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .send(chargeData.update)
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -118,7 +118,7 @@ describe('webhooks', () => {
                 })
                 .then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .send(refundData.refund)
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -163,7 +163,7 @@ describe('webhooks', () => {
                 })
                 .then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .set('Content-Type', 'application/json')
                     .send(JSON.stringify(chargeData.success))
                     .expect('Content-Type', /json/)
@@ -204,7 +204,7 @@ describe('webhooks', () => {
             .save()
             .then(() => {
               agent
-                .post('/webhooks')
+                .post('/webhooks/stripe-connect')
                 .send(chargeData.success)
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -251,7 +251,7 @@ describe('webhooks', () => {
                 })
                 .then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .set('Content-Type', 'application/json')
                     .send(JSON.stringify(chargeData.failed))
                     .expect('Content-Type', /json/)
@@ -298,7 +298,7 @@ describe('webhooks', () => {
                 })
                 .then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .send(invoiceWebhookPaid.payment_failed)
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -333,7 +333,7 @@ describe('webhooks', () => {
           .save()
           .then(user => {
             agent
-              .post('/webhooks')
+              .post('/webhooks/stripe-connect')
               .send(cardData.sourceCreated)
               .expect('Content-Type', /json/)
               .expect(200)
@@ -367,7 +367,7 @@ describe('webhooks', () => {
                       .then(updatedTask => {
                         createTransfer({ userId: user.dataValues.id, transfer_method: 'stripe', taskId: task.id, transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', to: assign.dataValues.userId, status: 'pending' }).then(transfer => {
                           agent
-                            .post('/webhooks')
+                            .post('/webhooks/stripe-connect')
                             .send(transferData.updated)
                             .expect('Content-Type', /json/)
                             .expect(200)
@@ -400,7 +400,7 @@ describe('webhooks', () => {
           .save()
           .then(user => {
             agent
-              .post('/webhooks')
+              .post('/webhooks/stripe-connect')
               .send(payoutData.created)
               .expect('Content-Type', /json/)
               .expect(200)
@@ -437,7 +437,7 @@ describe('webhooks', () => {
               method: 'bank_account',
             })
             agent
-              .post('/webhooks')
+              .post('/webhooks/stripe-connect')
               .send(payoutData.created)
               .expect('Content-Type', /json/)
               .expect(200)
@@ -483,7 +483,7 @@ describe('webhooks', () => {
               method: 'bank_account',
             }).save().then(newPayout => {
               agent
-                .post('/webhooks')
+                .post('/webhooks/stripe-connect')
                 .send(payoutData.done)
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -514,7 +514,7 @@ describe('webhooks', () => {
           .save()
           .then(user => {
             agent
-              .post('/webhooks')
+              .post('/webhooks/stripe-connect')
               .send(payoutData.failed)
               .expect('Content-Type', /json/)
               .expect(200)
@@ -533,7 +533,7 @@ describe('webhooks', () => {
   describe('webhooks for balance', () => {
     it('should notify the user when he/she gets a new balance', done => {
       agent
-        .post('/webhooks')
+        .post('/webhooks/stripe-connect')
         .send(balanceData.update)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -569,7 +569,7 @@ describe('webhooks', () => {
                   amount: 200
                 }).then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .send(invoiceCreated.created)
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -619,7 +619,7 @@ describe('webhooks', () => {
                   amount: 200
                 }).then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .send(invoiceUpdated.updated)
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -673,7 +673,7 @@ describe('webhooks', () => {
                   source_id: 'in_1KknpoBrSjgsps2DMwiQEzJ9'
                 }).then(order => {
                   agent
-                    .post('/webhooks')
+                    .post('/webhooks/stripe-connect')
                     .send(invoicePaid.paid)
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -733,7 +733,7 @@ describe('webhooks', () => {
         walletId: wallet.id
       })
       const res = await agent
-        .post('/webhooks')
+        .post('/webhooks/stripe-connect')
         .send(invoiceWebhookPaid.paid)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -761,7 +761,7 @@ describe('webhooks', () => {
       const invoiceWebhookCreated = invoiceWebhookPaid.created
       invoiceWebhookCreated.data.object.metadata['wallet_id'] = wallet.id
       const res = await agent
-        .post('/webhooks')
+        .post('/webhooks/stripe-connect')
         .send(invoiceWebhookCreated)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -790,7 +790,7 @@ describe('webhooks', () => {
       const invoiceWebhookUpdated = invoiceWebhookPaid.updated
       invoiceWebhookUpdated.data.object.metadata['wallet_id'] = wallet.id
       const res = await agent
-        .post('/webhooks')
+        .post('/webhooks/stripe-connect')
         .send(invoiceWebhookUpdated)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -820,7 +820,7 @@ describe('webhooks', () => {
       const invoiceWebhookUpdated = invoiceWebhookPaid.payment_failed
       invoiceWebhookUpdated.data.object.metadata['wallet_id'] = wallet.id
       const res = await agent
-        .post('/webhooks')
+        .post('/webhooks/stripe-connect')
         .send(invoiceWebhookUpdated)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -844,7 +844,7 @@ describe('webhooks', () => {
   describe('webhooks for Github events', () => {
     xit('should post event from github webhooks', done => {
       agent
-        .post('/webhooks/github')
+        .post('/webhooks/stripe-connect/github')
         .send(githubWebhookMain.main)
         .expect('Content-Type', /json/)
         .expect(200)
@@ -864,7 +864,7 @@ describe('webhooks', () => {
         .then(async user => {
           const task = await models.Task.create({ provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id, status: 'closed' })
           agent
-            .post('/webhooks/github')
+            .post('/webhooks/stripe-connect/github')
             .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
             .send(customIssue)
             .expect('Content-Type', /json/)
@@ -883,7 +883,7 @@ describe('webhooks', () => {
     })
     xit('should create new task when an event of new issue is triggered', done => {
       agent
-        .post('/webhooks/github')
+        .post('/webhooks/stripe-connect/github')
         .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
         .send(githubWebhookIssueLabeled.issue)
         .expect('Content-Type', /json/)
@@ -904,7 +904,7 @@ describe('webhooks', () => {
         .save()
         .then(user => {
           agent
-            .post('/webhooks/github')
+            .post('/webhooks/stripe-connect/github')
             .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
             .send(githubWebhookIssueLabeled.issue)
             .expect('Content-Type', /json/)
@@ -929,7 +929,7 @@ describe('webhooks', () => {
         .then(async user => {
           const task = await models.Task.create({ provider: 'github', url: 'https://github.com/worknenjoy/gitpay/issues/244', userId: user.dataValues.id })
           agent
-            .post('/webhooks/github')
+            .post('/webhooks/stripe-connect/github')
             .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
             .send(customIssue)
             .expect('Content-Type', /json/)
@@ -956,7 +956,7 @@ describe('webhooks', () => {
         .save()
         .then(async user => {
           agent
-            .post('/webhooks/github')
+            .post('/webhooks/stripe-connect/github')
             .set('Authorization', `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`)
             .send(customIssue)
             .expect('Content-Type', /json/)
@@ -1009,7 +1009,7 @@ describe('webhooks', () => {
         userId: user.body.id
       });
       const res = await agent
-        .post('/webhooks')
+        .post('/webhooks/stripe-connect')
         .send(eventCheckout.completed.success)
         .expect('Content-Type', /json/)
         .expect(200)
