@@ -1,7 +1,8 @@
 const labelSearch = require('../../label').labelSearch
 
 exports.labelSearchController = (req, res) => {
-  labelSearch(req.body)
+  // Use query parameters for GET requests
+  labelSearch(req.query)
     .then(data => {
       res.status(200).send(data)
     }).catch(error => {
