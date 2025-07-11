@@ -100,7 +100,8 @@ exports.webhookConnect = async (req, res) => {
         return await invoicePaymentFailed(event, req, res)
       case 'checkout.session.completed':
         return await checkoutSessionCompleted(event, req, res)
-      break;
+      default:
+        return res.status(200).json(event);
     }
   }
   else {
