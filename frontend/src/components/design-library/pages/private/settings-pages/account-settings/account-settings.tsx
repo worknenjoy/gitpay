@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountTabs from '../../../molecules/tabs/account-tabs/account-tabs';
+import AccountTabs from '../../../../molecules/tabs/account-tabs/account-tabs';
 
 const AccountSettings = ({
   user,

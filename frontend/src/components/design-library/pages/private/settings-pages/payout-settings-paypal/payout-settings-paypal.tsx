@@ -1,6 +1,6 @@
 import React from 'react';
-import PaypalInfoForm from '../../../organisms/forms/paypal-info-form/paypal-info-form';
-import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header';
+import PaypalInfoForm from '../../../../organisms/forms/paypal-info-form/paypal-info-form';
+import ProfileHeader from '../../../../molecules/headers/profile-main-header/profile-main-header';
 import { FormattedMessage } from 'react-intl';
 
 const PayoutSettingsPaypal = ({ user, onSubmit }) => {

@@ -1,8 +1,8 @@
 // .storybook/decorators/withProfileTemplate.tsx
 import React from 'react';
 import PrivateBase from '../../src/components/design-library/templates/base/private-base/private-base';
-import PayoutSettings from '../../src/components/design-library/pages/private/payout-settings/payout-settings';
-import PayoutSettingsBankAccount from '../../src/components/design-library/pages/private/payout-settings-bank-account/payout-settings-bank-account';
+import PayoutSettings from '../../src/components/design-library/pages/private/settings-pages/payout-settings/payout-settings';
+import PayoutSettingsBankAccount from '../../src/components/design-library/pages/private/settings-pages/payout-settings-bank-account/payout-settings-bank-account';
 
 export const withProfileTemplate = (Story: any, context: any) => {
   const { user, profileHeaderProps, onResendActivationEmail } = context.args;

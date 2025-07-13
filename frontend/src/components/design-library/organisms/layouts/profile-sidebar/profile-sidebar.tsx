@@ -12,7 +12,8 @@ import {
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
   AccountBox as AccountIcon,
-  AssignmentReturnedTwoTone as PayoutSettingsIcon
+  AssignmentReturnedTwoTone as PayoutSettingsIcon,
+  AssignmentTurnedIn as ClaimIcon
 } from '@material-ui/icons'
 import { SideMenu } from '../../../molecules/menus/side-menu/side-menu'
 
@@ -38,7 +39,7 @@ const ProfileSidebar = ({
       setSelected(5)
     } else if (path.includes('/profile/transfers')) {
       setSelected(6)
-    } else if (path.includes('/profile/payouts')) {
+    } else if (path.includes('/profile/claims')) {
       setSelected(7)
     } else if (path.includes('/profile/user-account')) {
       setSelected(8)
@@ -118,10 +119,17 @@ const ProfileSidebar = ({
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
+                  onClick: () => history.push('/profile/claims'),
+                  icon: <ClaimIcon />,
+                  label: <FormattedMessage id="account.profile.claims.list" defaultMessage="Claims" />,
+                  selected: selected === 8
+                },
+                {
+                  include: userTypes && userTypes?.includes('contributor'),
                   onClick: () => history.push('/profile/payouts'),
                   icon: <PayoutIcon />,
                   label: <FormattedMessage id="account.profile.payout.list" defaultMessage="Payouts" />,
-                  selected: selected === 7
+                  selected: selected === 9
                 }
               ]
             },
@@ -133,14 +141,14 @@ const ProfileSidebar = ({
                   onClick: () => history.push('/profile/user-account'),
                   icon: <AccountIcon />,
                   label: <FormattedMessage id="account.profile.account.settings" defaultMessage="Account settings" />,
-                  selected: selected === 8
+                  selected: selected === 10
                 },
                 {
                   include: userTypes && (userTypes?.includes('contributor')),
                   onClick: () => history.push('/profile/payout-settings'),
                   icon: <PayoutSettingsIcon />,
                   label: <FormattedMessage id="account.profile.payout.settings" defaultMessage="Payout settings" />,
-                  selected: selected === 9
+                  selected: selected === 11
                 }
               ]
             }

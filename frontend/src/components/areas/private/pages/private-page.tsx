@@ -6,6 +6,7 @@ import { UserAccount } from '../features/account/user-account'
 import UserTasksExploreContainer from '../../../../containers/user-tasks-explore'
 import UserTasksContainer from '../../../../containers/user-tasks'
 import TransfersContainer from '../../../../containers/transfers'
+import ClaimsContainer from '../../../../containers/claims'
 import PaymentsContainer from '../../../../containers/payments'
 import PaymentRequestContainer from '../../../../containers/payment-requests'
 import WalletsContainer from '../../../../containers/wallets'
@@ -114,6 +115,12 @@ const PrivatePage = ({
             exact
             path="/profile/transfers"
             component={TransfersContainer}
+          />
+
+          <Route
+            exact
+            path="/profile/claims"
+            component={ClaimsContainer}
           />
 
           <Route

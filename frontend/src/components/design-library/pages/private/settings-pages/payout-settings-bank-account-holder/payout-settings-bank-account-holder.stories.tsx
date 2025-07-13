@@ -1,14 +1,14 @@
 import React from 'react';
-import { withProfileTemplate, withProfilePayoutSettingsBankAccountTemplate } from '../../../../../../.storybook/decorators/withPrivateTemplate';
-import PayoutSettingsBankAccountInfo from './payout-settings-bank-account-info';
+import { withProfileTemplate, withProfilePayoutSettingsBankAccountTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
+import PayoutSettingsBankAccountHolder from './payout-settings-bank-account-holder';
 
 export default {
-  title: 'Design Library/Pages/Private/PayoutSettingsBankAccountInfo',
-  component: PayoutSettingsBankAccountInfo,
+  title: 'Design Library/Pages/Private/PayoutSettingsBankAccountHolder',
+  component: PayoutSettingsBankAccountHolder,
   decorators: [withProfilePayoutSettingsBankAccountTemplate, withProfileTemplate]
 };
 
-const Template = (args) => <PayoutSettingsBankAccountInfo {...args} />;
+const Template = (args) => <PayoutSettingsBankAccountHolder {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -30,17 +30,22 @@ Default.args = {
     },
     country: 'us'
   },
-  bank_account: {
+  account: {
     completed: true,
     data: {
-      routing_number: '123456',
-      account_number: '123456789',
-      account_type: 'individual',
-      bank_id: '123456',
-      currency: 'usd',
-      account_holder_name: 'John Doe',
-      account_holder_type: 'individual'
-    }
+      id: '123456789',
+      name: 'John Doe',
+      account_id: '123456789',
+      address: {
+        address_line1: '123 Main St',
+        address_line2: 'Apt 4B',
+        city: 'New York',
+        state: 'NY',
+        zip_code: '10001',
+        country: 'us'
+      }
+    },
+    country: 'us'
   },
   countries: {
     completed: true,
@@ -54,9 +59,7 @@ Default.args = {
         aud: 'aud'
       }
     }
-  },
-  onChangeBankCode: () => {},
-  onSubmit: () => {}
+  }
 
 };
 
@@ -73,11 +76,5 @@ Loading.args = {
   account: {
     completed: false,
     data: {}
-  },
-  countries: {
-    completed: false,
-    data: {}
-  },
-  onChangeBankCode: () => {},
-  onSubmit: () => {}
+  }
 }

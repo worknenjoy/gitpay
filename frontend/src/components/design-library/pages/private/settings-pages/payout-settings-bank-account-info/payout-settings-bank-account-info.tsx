@@ -1,5 +1,5 @@
 import React from 'react'
-import BankAccountForm from '../../../organisms/forms/bank-account-form/bank-account-form'
+import BankAccountForm from '../../../../organisms/forms/bank-account-form/bank-account-form'
 
 const PayoutSetingsBankAccountHolder = ({
   user,

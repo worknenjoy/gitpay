@@ -1,21 +1,6 @@
 import React from 'react';
 import SectionTable from './section-table';
-
-const generateTableData = (count) => {
-  const data = [];
-  for (let i = 0; i < count; i++) {
-    data.push({
-      id: i + 1,
-      name: `John Doe ${i + 1}`,
-      email: `john${i}@gmail.com`,
-      role: 'Contributor',
-      status: 'Active',
-      action: 'Edit',
-      other: 'Other'
-    });
-  }
-  return data;
-};
+import { generateTableData } from '../../../../../../.storybook/utils/generateTableData';
 
 export default {
   title: 'Design Library/Molecules/Tables/SectionTable',

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
-import PayoutSettingsBankAccount from 'design-library/pages/private/payout-settings-bank-account/payout-settings-bank-account'
+import PayoutSettingsBankAccount from 'design-library/pages/private/settings-pages/payout-settings-bank-account/payout-settings-bank-account'
 import PayoutSettingsBankAcccountHolderPage from './payout-settings-bank-account-holder-page'
 import PayoutSettingsBankAccountInfoPage from './payout-settings-bank-account-info-page'
 

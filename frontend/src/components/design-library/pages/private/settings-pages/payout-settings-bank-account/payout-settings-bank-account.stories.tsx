@@ -1,5 +1,5 @@
 import React from 'react';
-import { withProfileTemplate, withProfilePayoutSettingsTemplate } from '../../../../../../.storybook/decorators/withPrivateTemplate';
+import { withProfileTemplate, withProfilePayoutSettingsTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
 import PayoutSettingsBankAccount from './payout-settings-bank-account';
 
 export default {

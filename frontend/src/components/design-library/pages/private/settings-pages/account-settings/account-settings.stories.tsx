@@ -1,5 +1,5 @@
 import React from 'react';
-import { withProfileTemplate } from '../../../../../../.storybook/decorators/withPrivateTemplate';
+import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
 import AccountSettings from './account-settings';
 
 export default {
