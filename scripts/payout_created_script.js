@@ -20,7 +20,12 @@ rl.on('line', (line) => {
 rl.on('close', async () => {
   try {
     const event = JSON.parse(json);
-    const result = await payoutCreated(event, {});
+    console.log('📦 Event received:', event);
+    const result = await payoutCreated(event, {
+      status: (code) => {
+        json: (response) => response;
+      }
+    });
     console.log('✅ Handler executed successfully:', result);
   } catch (err) {
     console.error('❌ Error processing event:', err.message);
