@@ -57,7 +57,7 @@ export const Default = {
             action: (item) => <a href="#">{item.action}</a>
           }
         }
-      },
+      }
     ],
     user: {
       completed: true,
@@ -70,6 +70,6 @@ export const Default = {
           { name: 'funding' }
         ]
       }
-    },
-  },
+    }
+  }
 };

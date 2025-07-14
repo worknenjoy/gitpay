@@ -9,7 +9,8 @@ const { truncateModels, registerAndLogin, createTransfer } = require('./helpers'
 const models = require('../models')
 
 const chargeData = require('./data/stripe/charge')
-const transferData = require('./data/stripe/transfer')
+const createdTransferData = require('./data/stripe/stripe.transfer.created')
+const updatedTransferData = require('./data/stripe/stripe.transfer.updated')
 const payoutData = require('./data/stripe/payout')
 const cardData = require('./data/stripe/card')
 const balanceData = require('./data/stripe/balance')
@@ -354,7 +355,7 @@ describe('webhooks for connect', () => {
             models.Task.build({
               url: 'https://github.com/worknenjoy/truppie/issues/99',
               provider: 'github',
-              transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5',
+              transfer_id: 'tr_test_123',
               paid: true
             })
               .save()
@@ -365,10 +366,10 @@ describe('webhooks for connect', () => {
                     task
                       .update({ assigned: assign.dataValues.id }, { where: { id: task.id } })
                       .then(updatedTask => {
-                        createTransfer({ userId: user.dataValues.id, transfer_method: 'stripe', taskId: task.id, transfer_id: 'tr_1CcGcaBrSjgsps2DGToaoNF5', to: assign.dataValues.userId, status: 'pending' }).then(transfer => {
+                        createTransfer({ userId: user.dataValues.id, transfer_method: 'stripe', taskId: task.id, transfer_id: 'tr_test_123', to: assign.dataValues.userId, status: 'pending' }).then(transfer => {
                           agent
                             .post('/webhooks/stripe-connect')
-                            .send(transferData.updated)
+                            .send(createdTransferData.created)
                             .expect('Content-Type', /json/)
                             .expect(200)
                             .end((err, res) => {
@@ -377,7 +378,7 @@ describe('webhooks for connect', () => {
                                 const event = res.body;
                                 expect(event).to.exist
                                 expect(event.id).to.equal(
-                                  'evt_1CcecMBrSjgsps2DMFZw5Tyx'
+                                  'evt_test_123'
                                 )
                                 expect(transfer.dataValues.status).to.equal('created')
                                 done(err);

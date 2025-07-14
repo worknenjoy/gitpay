@@ -21,6 +21,7 @@ const routerWallet = require('./routes/wallet')
 const routerWalletOrder = require('./routes/walletOrder')
 const routerLanguage = require('./routes/language')
 const routerPaymentRequest = require('./routes/paymentRequest')
+const routerPaymentRequestTransfer = require('./routes/paymentRequestTransfer')
 
 exports.init = (app) => {
   app.use('/webhooks', express.raw({ type: 'application/json' }), routerWebhook)
@@ -47,4 +48,5 @@ exports.init = (app) => {
   app.use('/wallets/orders', routerWalletOrder)
   app.use('/wallets', routerWallet)
   app.use('/payment-requests', routerPaymentRequest)
+  app.use('/payment-request-transfers', routerPaymentRequestTransfer)
 }

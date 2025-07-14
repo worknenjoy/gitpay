@@ -4,7 +4,7 @@ import { generateTableData } from '../../../../../../.storybook/utils/generateTa
 
 const meta = {
   title: 'Design Library/Molecules/Tables/TabbedTable/TabbedTable',
-  component: TabbedTable,
+  component: TabbedTable
 };
 
 export default meta;
@@ -52,11 +52,11 @@ const tabs = [
         action: (item) => <a href="#">{item.action}</a>
       }
     }
-  },
+  }
 ];
 
 export const Default = {
   args: {
-    tabs,
-  },
+    tabs
+  }
 };

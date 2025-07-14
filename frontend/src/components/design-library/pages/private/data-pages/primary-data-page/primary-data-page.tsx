@@ -7,7 +7,7 @@ const PrimaryDataPage = ({
   title,
   description,
   activeTab,
-  tabs = [],
+  tabs = []
   // Add other props as needed
 }) => {
   return (

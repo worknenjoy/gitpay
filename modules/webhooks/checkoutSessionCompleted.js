@@ -27,31 +27,22 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       if (!paymentRequest) {
         return res.status(404).json({ error: 'Payment request not found' });
       }
-      console.log('Payment Request found:', paymentRequest.id);
 
       const { amount, currency, User: user = {} } = paymentRequest;
       const { account_id } = user;
-
-      console.log('User account ID:', account_id);
 
       const paymentRequestUpdate = await paymentRequest.update({
         status: 'paid',
         active: false
       });
 
-      console.log('Payment Request updated:', paymentRequestUpdate);
-      
       if (!paymentRequestUpdate) {
         return res.status(500).json({ error: 'Failed to update payment request' });
       }
 
-      console.log('Payment Request Link ID:', payment_link);
-
       const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
         active: false
       });
-
-      console.log('Payment Request Link updated:', paymentRequestLinkUpdate);
 
       if (!paymentRequestLinkUpdate) {
         return res.status(500).json({ error: 'Failed to update payment link' });
@@ -71,14 +62,10 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           user_id: paymentRequest.User.id
         }
       });
-
-      console.log('Transfer created:', transfer);
       
       if (!transfer) {
         return res.status(500).json({ error: 'Failed to create transfer' });
       }
-
-      console.log('Transfer ID:', transfer.id);
 
       TransferMail.paymentRequestInitiated(
         user,
@@ -86,20 +73,14 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         transfer_amount
       )
 
-      console.log('Transfer email sent to user:', user.email);
-
       const paymentRequestTransferUpdate = await paymentRequest.update({
         transfer_status: 'initiated',
         transfer_id: transfer.id
       });
 
-      console.log('Payment Request transfer status updated:', paymentRequestTransferUpdate);
-
       if (!paymentRequestTransferUpdate) {
         return res.status(500).json({ error: 'Failed to update payment request transfer status' });
       }
-
-      console.log('Payment Request transfer ID:', paymentRequestTransferUpdate.transfer_id);
       
     }
     return res.json(req.body);

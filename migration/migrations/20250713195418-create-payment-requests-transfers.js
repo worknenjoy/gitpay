@@ -9,25 +9,36 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('Transfers', { 
+    await queryInterface.createTable('PaymentRequestTransfers', { 
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      status: Sequelize.STRING,
+      paymentRequestId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'PaymentRequests',
+          key: 'id'
+        },
+        allowNull: false
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        allowNull: false
+      },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'pending'
+      },
       value: Sequelize.DECIMAL,
       transfer_id: Sequelize.STRING,
       transfer_method: Sequelize.STRING,
-      taskId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Tasks',
-          key: 'id'
-        },
-        allowNull: false,
-      },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
     });
@@ -40,6 +51,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('Transfers');
+    await queryInterface.dropTable('PaymentRequestTransfers');
   }
 };

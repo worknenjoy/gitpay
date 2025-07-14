@@ -9,7 +9,7 @@ const agent = request.agent(api)
 const nock = require('nock')
 const { createTask, createOrder, createAssign, createTransfer, truncateModels } = require('./helpers')
 const models = require('../models')
-const transfer = require('./data/stripe/transfer').updated.data.object
+const transfer = require('./data/stripe/stripe.transfer.updated').updated.data.object
 const paypalGetPayoutSample = require('./data/paypal/paypal.payout').get 
 
 // Common function to create transfer

@@ -37,14 +37,12 @@ const ProfileSidebar = ({
       setSelected(4)
     } else if (path.includes('/profile/wallets')) {
       setSelected(5)
-    } else if (path.includes('/profile/transfers')) {
+   } else if (path.includes('/profile/claims')) {
       setSelected(6)
-    } else if (path.includes('/profile/claims')) {
-      setSelected(7)
     } else if (path.includes('/profile/user-account')) {
-      setSelected(8)
+      setSelected(7)
     } else if (path.includes('/profile/payout-settings')) {
-      setSelected(9)
+      setSelected(8)
     } else {
       setSelected(0)
     }
@@ -112,24 +110,17 @@ const ProfileSidebar = ({
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
-                  onClick: () => history.push('/profile/transfers'),
-                  icon: <TransferIcon />,
-                  label: <FormattedMessage id="account.profile.transfer.list" defaultMessage="Transfers" />,
-                  selected: selected === 6
-                },
-                {
-                  include: userTypes && userTypes?.includes('contributor'),
                   onClick: () => history.push('/profile/claims'),
                   icon: <ClaimIcon />,
                   label: <FormattedMessage id="account.profile.claims.list" defaultMessage="Claims" />,
-                  selected: selected === 8
+                  selected: selected === 6
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
                   onClick: () => history.push('/profile/payouts'),
                   icon: <PayoutIcon />,
                   label: <FormattedMessage id="account.profile.payout.list" defaultMessage="Payouts" />,
-                  selected: selected === 9
+                  selected: selected === 7
                 }
               ]
             },
@@ -141,14 +132,14 @@ const ProfileSidebar = ({
                   onClick: () => history.push('/profile/user-account'),
                   icon: <AccountIcon />,
                   label: <FormattedMessage id="account.profile.account.settings" defaultMessage="Account settings" />,
-                  selected: selected === 10
+                  selected: selected === 8
                 },
                 {
                   include: userTypes && (userTypes?.includes('contributor')),
                   onClick: () => history.push('/profile/payout-settings'),
                   icon: <PayoutSettingsIcon />,
                   label: <FormattedMessage id="account.profile.payout.settings" defaultMessage="Payout settings" />,
-                  selected: selected === 11
+                  selected: selected === 9
                 }
               ]
             }

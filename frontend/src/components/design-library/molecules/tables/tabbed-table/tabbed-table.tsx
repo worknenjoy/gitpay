@@ -4,8 +4,6 @@ import SectionTable from '../section-table/section-table';
 
 const TabbedTable = ({ tabs, activeTab }) => {
   const [ currentTab, setCurrentTab ] = React.useState(tabs.find(tab => tab.value === activeTab) || tabs[0]);
-  const { label, value, table } = currentTab;
-  const { tableData, tableHeaderMetadata, customColumnRenderer } = table || {};
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(tabs.find(tab => tab.value === newValue));
@@ -19,6 +17,9 @@ const TabbedTable = ({ tabs, activeTab }) => {
       }
     }
   }, [activeTab, tabs]);
+
+  const { label, value, table } = currentTab || {};
+  const { tableData, tableHeaderMetadata, customColumnRenderer } = table || {};
 
   return (
     <BaseTabs
