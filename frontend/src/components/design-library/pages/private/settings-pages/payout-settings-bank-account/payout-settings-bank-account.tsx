@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactPlaceholder from 'react-placeholder';
-import CountryPicker from '../../../molecules/dialogs/country-picker-dialog/country-picker-dialog';
-import BankAccountTabs from '../../../molecules/tabs/bank-account-tabs/bank-account-tabs';
-import EmptyBase from '../../../molecules/content/empty/empty-base/empty-base';
-import EmptyBankAccount from '../../../molecules/content/empty/empty-bank-account/empty-bank-account';
+import CountryPicker from '../../../../molecules/dialogs/country-picker-dialog/country-picker-dialog';
+import BankAccountTabs from '../../../../molecules/tabs/bank-account-tabs/bank-account-tabs';
+import EmptyBase from '../../../../molecules/content/empty/empty-base/empty-base';
+import EmptyBankAccount from '../../../../molecules/content/empty/empty-bank-account/empty-bank-account';
 import { FormattedMessage } from 'react-intl';
 
 

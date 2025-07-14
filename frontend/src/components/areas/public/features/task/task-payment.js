@@ -283,15 +283,15 @@ class TaskPayment extends Component {
               {(this.props.transferId || this.props.task?.Transfer) ? (
                 <Alert gutterBottom
                   severity='success'
-                  action={<Link to={`/profile/transfers`}>
+                  action={<Link to={`/profile/claims`}>
                     <Button size='small' variant='outlined' color='primary'>
-                      <FormattedMessage id='task.payment.transfer.view' defaultMessage='view transfers' />
+                      <FormattedMessage id='task.payment.claims.view' defaultMessage='view claims' />
                     </Button>
                   </Link>}
                 >
                   <AlertTitle gutterBottom>
                     <Typography type='subheading' color='primary' gutterBottom noWrap>
-                      <FormattedMessage id='task.payment.transfer.done' defaultMessage='Your transfer is concluded' />
+                      <FormattedMessage id='task.payment.claim.done' defaultMessage='Your claim is concluded' />
                     </Typography>
                   </AlertTitle>
 
@@ -302,7 +302,7 @@ class TaskPayment extends Component {
                     :
                     <div>
                       <Typography type='heading' color='primary' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.transfer.value' defaultMessage='Transfer of {value} requested' values={{
+                        <FormattedMessage id='task.payment.claim.value' defaultMessage='Claim of {value} requested' values={{
                           value: formatCurrency(this.props.task?.Transfer?.value)
                         }}
                         />

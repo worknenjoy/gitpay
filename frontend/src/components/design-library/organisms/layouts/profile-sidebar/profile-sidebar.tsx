@@ -8,11 +8,11 @@ import {
   LibraryBooks,
   Payment as PaymentIcon,
   CardMembership as PaymentRequestsIcon,
-  AccountBalance as TransferIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
   AccountBox as AccountIcon,
-  AssignmentReturnedTwoTone as PayoutSettingsIcon
+  AssignmentReturnedTwoTone as PayoutSettingsIcon,
+  AssignmentTurnedIn as ClaimIcon
 } from '@material-ui/icons'
 import { SideMenu } from '../../../molecules/menus/side-menu/side-menu'
 
@@ -36,14 +36,12 @@ const ProfileSidebar = ({
       setSelected(4)
     } else if (path.includes('/profile/wallets')) {
       setSelected(5)
-    } else if (path.includes('/profile/transfers')) {
+   } else if (path.includes('/profile/claims')) {
       setSelected(6)
-    } else if (path.includes('/profile/payouts')) {
-      setSelected(7)
     } else if (path.includes('/profile/user-account')) {
-      setSelected(8)
+      setSelected(7)
     } else if (path.includes('/profile/payout-settings')) {
-      setSelected(9)
+      setSelected(8)
     } else {
       setSelected(0)
     }
@@ -111,9 +109,9 @@ const ProfileSidebar = ({
                 },
                 {
                   include: userTypes && userTypes?.includes('contributor'),
-                  onClick: () => history.push('/profile/transfers'),
-                  icon: <TransferIcon />,
-                  label: <FormattedMessage id="account.profile.transfer.list" defaultMessage="Transfers" />,
+                  onClick: () => history.push('/profile/claims'),
+                  icon: <ClaimIcon />,
+                  label: <FormattedMessage id="account.profile.claims.list" defaultMessage="Claims" />,
                   selected: selected === 6
                 },
                 {

@@ -63,12 +63,12 @@ export const listPaymentRequestsError = (error) => {
   return { type: LIST_PAYMENT_REQUESTS_ERROR, completed: true, error };
 }
 
-export const listPaymentRequests = () => {
+export const listPaymentRequests = (params) => {
   validToken()
   return (dispatch) => {
     dispatch(listPaymentRequestsRequested());
     return axios
-      .get(api.API_URL + '/payment-requests')
+      .get(api.API_URL + '/payment-requests', { params })
       .then(response => {
         if (response.data) {
           return dispatch(listPaymentRequestsSuccess(response.data))

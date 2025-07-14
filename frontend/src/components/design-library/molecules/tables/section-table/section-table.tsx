@@ -192,7 +192,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
       <Paper className={classes.root}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
           <Typography variant="caption">
-            <FormattedMessage id="task.table.body.noIssues" defaultMessage="No issues" />
+            <FormattedMessage id="task.table.body.noData" defaultMessage="No data" />
           </Typography>
         </div>
       </Paper>

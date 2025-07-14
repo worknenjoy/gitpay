@@ -1,5 +1,5 @@
 import React from 'react';
-import PayoutSettingsPaypal from 'design-library/pages/private/payout-settings-paypal/payout-settings-paypal';
+import PayoutSettingsPaypal from 'design-library/pages/private/settings-pages/payout-settings-paypal/payout-settings-paypal';
 
 const PayoutSettingsPaypalPage = ({ user, updateUser }) => {
 

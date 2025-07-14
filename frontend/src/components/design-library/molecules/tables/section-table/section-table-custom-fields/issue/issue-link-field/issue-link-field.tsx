@@ -26,29 +26,31 @@ const IssueLinkField = ({ issue }) => {
     <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
       <a style={{ cursor: 'pointer' }} onClick={() => handleClickListItem(issue)}>
         <Typography variant="subtitle2">
-          {TextEllipsis(`${issue.title || 'no title'}`, 42)}
+          {TextEllipsis(`${issue?.title || 'no title'}`, 42)}
         </Typography>
       </a>
-      <a target="_blank" href={issue.url} rel="noreferrer">
-        <Tooltip
-          id="tooltip-fab"
-          title={`${intl.formatMessage(messages.onHoverTaskProvider)} ${issue.provider}`}
-          placement="top"
-        >
-          <img
-            width="18"
-            src={issue.provider === 'github' ? logoGithub : logoBitbucket}
-            style={{
-              borderRadius: '50%',
-              padding: 3,
-              backgroundColor: 'black',
-              borderColor: 'black',
-              borderWidth: 1,
-              marginLeft: 10
-            }}
-          />
-        </Tooltip>
-      </a>
+      { issue?.url &&
+        <a target="_blank" href={issue.url} rel="noreferrer">
+          <Tooltip
+            id="tooltip-fab"
+            title={`${intl.formatMessage(messages.onHoverTaskProvider)} ${issue.provider}`}
+            placement="top"
+          >
+            <img
+              width="18"
+              src={issue.provider === 'github' ? logoGithub : logoBitbucket}
+              style={{
+                borderRadius: '50%',
+                padding: 3,
+                backgroundColor: 'black',
+                borderColor: 'black',
+                borderWidth: 1,
+                marginLeft: 10
+              }}
+            />
+          </Tooltip>
+        </a>
+      }
     </div>
   );
 };

@@ -45,11 +45,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface TabPanelProps {
   children?: React.ReactNode;
   isVertical?: boolean;
+  withCard?: boolean;
 }
 
 function TabPanel(props: TabPanelProps) {
   const classes = useStyles();
-  const { children, isVertical } = props;
+  const { children, isVertical, withCard = true } = props;
 
   return (
     <div
@@ -57,11 +58,12 @@ function TabPanel(props: TabPanelProps) {
       className={isVertical ? classes.tabPanelVertical : classes.tabPanel}
     >  
       <Box p={0}>
-        <Card className={classes.card} elevation={0}>
+        {withCard ? <Card className={classes.card} elevation={0}>
           <CardContent>
             {children}
           </CardContent>
-        </Card>
+        </Card> : children}
+        
       </Box>
     </div>
   );
@@ -75,13 +77,17 @@ type BaseTabsProps = {
   }>;
   activeTab?: string;
   orientation?: 'horizontal' | 'vertical';
+  onChange?: (event: React.ChangeEvent<{}>, newValue: string) => void;
   children: React.ReactNode;
+  withCard?: boolean;
 }
 
 const BaseTabs = ({
   tabs,
   activeTab = '0',
   orientation = 'horizontal',
+  onChange,
+  withCard = true,
   children
 }:BaseTabsProps) => {
   const classes = useStyles();
@@ -92,10 +98,14 @@ const BaseTabs = ({
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    if (onChange) {
+      onChange(event, newValue);
+    }
   }
 
-  const handleTabClick = (e, link) => {
-    history.push(link);
+  const handleTabClick = (e, tab) => {
+    tab.link && history.push(tab.link);
+    tab.onChange && tab.onChange(e, tab.value);
   }
 
   useEffect(() => {
@@ -122,12 +132,12 @@ const BaseTabs = ({
             label={
               tab.label
             }
-            onClick={(e) => handleTabClick(e, tab.link)}
+            onClick={(e) => handleTabClick(e, tab)}
             value={tab.value} 
           />
         ))}
       </Tabs>
-      <TabPanel isVertical={isVertical}>
+      <TabPanel isVertical={isVertical} withCard={withCard}>
         {children}
       </TabPanel>
     </div>
