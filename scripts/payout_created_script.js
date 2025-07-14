@@ -23,7 +23,7 @@ rl.on('close', async () => {
     console.log('📦 Event received:', event);
     const result = await payoutCreated(event, {
       status: (code) => {
-        (response) => {};
+        response: (res) => console.log(`Response status: ${code}`);
       }
     });
     console.log('✅ Handler executed successfully:', result);
