@@ -118,12 +118,6 @@ const PrivatePage = ({
 
           <Route
             exact
-            path="/profile/transfers/:transfer_id"
-            component={TransfersContainer}
-          />
-
-          <Route
-            exact
             path="/profile/payouts"
             component={PayoutsContainer}
           />
