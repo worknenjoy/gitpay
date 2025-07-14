@@ -35,7 +35,7 @@ const Claims = ({
               transfer_method: { sortable: true, dataBaseKey: 'transfer_method', label: <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" /> },
               issue: { sortable: true, dataBaseKey: 'issue', label: <FormattedMessage id="account.profile.claims.issue" defaultMessage="Issue" /> },
               value: { sortable: true, numeric: true, dataBaseKey: 'value', label: <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" /> },
-              createdAt: { sortable: true, numeric: true, dataBaseKey: 'createdAt', label: <FormattedMessage id="account.profile.claims.createdAt" defaultMessage="Created At" /> },
+              createdAt: { sortable: true, numeric: true, dataBaseKey: 'createdAt', label: <FormattedMessage id="account.profile.claims.createdAt" defaultMessage="Created At" /> }
             },
             customColumnRenderer: {
               issue: (item) => (
@@ -57,16 +57,16 @@ const Claims = ({
           }
         },
         {
-          label: <FormattedMessage id="account.profile.claims.tab.label" defaultMessage="Claims for payment requests" />,
+          label: <FormattedMessage id="account.profile.paymentRequestTransfers.tab.label" defaultMessage="Claims for payment requests" />,
           value: 'payment-request-transfers',
           table: {
             tableData: paymentRequestTransfers,
             tableHeaderMetadata: {
-              title: { sortable: true, dataBaseKey: 'PaymentRequest.title', label: <FormattedMessage id="account.profile.claims.title" defaultMessage="Payment Request" /> },
+              title: { sortable: true, dataBaseKey: 'PaymentRequest.title', label: <FormattedMessage id="account.profile.paymentRequestTransfer.title" defaultMessage="Payment Request" /> },
               status: { sortable: true, dataBaseKey: 'status', label: <FormattedMessage id="account.profile.claims.status" defaultMessage="Status" /> },
               transfer_method: { sortable: true, dataBaseKey: 'transfer_method', label: <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" /> },
               value: { sortable: true, numeric: true, dataBaseKey: 'value', label: <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" /> },
-              createdAt: { sortable: true, numeric: true, dataBaseKey: 'createdAt', label: <FormattedMessage id="account.profile.claims.createdAt" defaultMessage="Created At" /> },
+              createdAt: { sortable: true, numeric: true, dataBaseKey: 'createdAt', label: <FormattedMessage id="account.profile.claims.createdAt" defaultMessage="Created At" /> }
             },
             customColumnRenderer: {
               title: (item:any) => (

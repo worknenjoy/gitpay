@@ -9,7 +9,7 @@ module.exports = async function paymentRequestTransferUpdate(paymentRequestTrans
   await transfer.update(
     updateData,
     {
-      returning: true,
+      returning: true
     }
   );
   transfer.reload();

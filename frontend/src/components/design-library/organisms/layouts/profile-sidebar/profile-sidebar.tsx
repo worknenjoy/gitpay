@@ -8,7 +8,6 @@ import {
   LibraryBooks,
   Payment as PaymentIcon,
   CardMembership as PaymentRequestsIcon,
-  AccountBalance as TransferIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
   AccountBox as AccountIcon,

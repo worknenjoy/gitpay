@@ -39,16 +39,16 @@ const IssueSolutionCard = ({ task, taskSolution }) => {
         <Alert 
           severity="success"
           action={
-          <Link to={`/profile/transfers`}>
+          <Link to={`/profile/claims`}>
             <Button size="small" variant="outlined" color="primary">
-              <FormattedMessage id="task.payment.transfer.view" defaultMessage="view transfers" />
+              <FormattedMessage id="task.payment.claims.view" defaultMessage="view claims" />
             </Button>
           </Link>
           }
         >
           <AlertTitle>
             <Typography variant="subtitle1" color="primary" gutterBottom noWrap>
-              <FormattedMessage id="issue.transfer.card.done" defaultMessage="New transfer initiated!" />
+              <FormattedMessage id="issue.claimn.card.done" defaultMessage="Your issue was claimed" />
             </Typography>
           </AlertTitle>
           
@@ -62,7 +62,7 @@ const IssueSolutionCard = ({ task, taskSolution }) => {
           : 
             <div>
               <Typography variant="subtitle2" color="primary" gutterBottom noWrap>
-                <FormattedMessage id="issue.transfer.card.value" defaultMessage="Transfer of {value} requested" values={{
+                <FormattedMessage id="issue.claim.card.value" defaultMessage="Claim of {value} requested" values={{
                     value: formatCurrency(Transfer.value)
                   }}
                 />
