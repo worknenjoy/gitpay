@@ -1,19 +1,24 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography, useMediaQuery, Tooltip, IconButton } from '@material-ui/core'
 import logo from 'images/gitpay-logo.png'
+import responsiveLogo from 'images/logo-symbol.png'
 import {
   Logo,
   StyledButton
 } from '../../../organisms/layouts/topbar/TopbarStyles'
 import ReactPlaceholder from 'react-placeholder'
 import SideMenuPlaceholder from './side-menu.placeholder'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const useStyles = makeStyles((theme) => ({
-  sidePaper: {
+  sidePaper: (props: { collapsed: boolean }) => ({
     backgroundColor: '#2c5c46',
-    height: '100%'
-  },
+    height: '100%',
+    width: props.collapsed && 70 ,
+    transition: 'width 0.3s ease',
+  }),
   row: {
     display: 'flex',
     justifyContent: 'center'
@@ -130,47 +135,49 @@ export const SideMenu: React.FC<SideMenuProps> = ({
   completed,
   menuItems
 }) => {
-  const classes = useStyles()
   const [selected, setSelected] = useState(0)
+  const theme = useTheme()
+  const [collapsed, setCollapsed] = useState(false)
+  const classes = useStyles({collapsed});
 
   return (
     <div className={classes.sidePaper}>
-      <div>
-        <div className={classes.profile}>
-          <div style={{ display: 'flex', justifyContent: 'center', padding: 20, paddingBottom: 0 }}>
-            <StyledButton href="/">
-              <Logo src={logo} />
-            </StyledButton>
-          </div>
-          <div className={classes.row}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flex: 1,
-              padding: '5px 20px'
-            }}>
-              <ReactPlaceholder
-                ready={completed}
-                customPlaceholder={<SideMenuPlaceholder />}
-              >
+      <div className={classes.profile}>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 20, paddingBottom: 0 }}>
+          <StyledButton href="/" >
+            <Logo src={!collapsed?logo:responsiveLogo} style={{
+              width:collapsed&&'50px',
+            }}  />
+             
+          </StyledButton>
+        </div>
+        <div className={classes.row}>
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '5px 20px', position:'relative', zIndex:1 }}>
+            <ReactPlaceholder ready={completed} customPlaceholder={<SideMenuPlaceholder />}>
+        
+            <IconButton onClick={() => setCollapsed(!collapsed)} style={{ color: 'white' , width:'30px',height:'30px', position:'absolute', right:0,top:-10, fontWeight:'bold',
+              fontSize:'15px',padding:'3px', zIndex:5,backgroundColor:"#d3d3d3"}}>
+              {!collapsed?<ChevronLeftIcon color='primary' /> : <ChevronRightIcon color='primary' />}
+            </IconButton>
+       
               <MenuList>
                 {menuItems.map((section, sectionIndex) => (
                   <div key={`section-${sectionIndex}`}>
-                    {section.category && (
-                    <Typography
-                      variant="caption"
-                      style={{
-                        color: "rgba(255, 255, 255, 0.5)",
-                        fontSize: "0.58rem",
-                        textTransform: "uppercase",
-                        fontWeight: 600,
-                        marginTop: sectionIndex === 0 ? 0 : 16,
-                        marginBottom: 16,
-                        paddingLeft: 16
-                      }}
-                    >
-                      {section.category}
-                    </Typography>
+                    {section.category  && (
+                      <Typography
+                        variant="caption"
+                        style={{
+                          color: "rgba(255, 255, 255, 0.5)",
+                          fontSize: "0.58rem",
+                          textTransform: "uppercase",
+                          fontWeight: 600,
+                          marginTop: sectionIndex === 0 ? 0 : 16,
+                          marginBottom: 16,
+                          paddingLeft: 16
+                        }}
+                      >
+                        {section.category}
+                      </Typography>
                     )}
                     {section.items.map((item, index) => (
                       item.include && (
@@ -180,16 +187,24 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                           className={classes.menuItem}
                           selected={item.selected}
                         >
-                          <ListItemIcon className={classes.icon}><>{item.icon}</></ListItemIcon>
-                          <ListItemText classes={{ primary: classes.primary }} primary={item.label} />
+                          <Tooltip title={item.label} placement="right" disableHoverListener={!collapsed}>
+                          <ListItemIcon className={classes.icon}>
+                            <>{item.icon}</>
+                          </ListItemIcon>
+                          </Tooltip>
+                          {!collapsed && (
+                            <ListItemText
+                              classes={{ primary: classes.primary }}
+                              primary={item.label}
+                            />
+                          )}
                         </MenuItem>
                       )
                     ))}
                   </div>
                 ))}
               </MenuList>
-              </ReactPlaceholder>
-            </div>
+            </ReactPlaceholder>
           </div>
         </div>
       </div>
