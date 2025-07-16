@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography, useMediaQuery, Tooltip, IconButton } from '@material-ui/core'
+import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography, Tooltip, IconButton } from '@material-ui/core'
 import logo from 'images/gitpay-logo.png'
 import responsiveLogo from 'images/logo-symbol.png'
 import {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#2c5c46',
     height: '100%',
     width: props.collapsed && 70 ,
-    transition: 'width 0.3s ease',
+    transition: 'width 0.3s ease'
   }),
   row: {
     display: 'flex',
@@ -135,8 +135,6 @@ export const SideMenu: React.FC<SideMenuProps> = ({
   completed,
   menuItems
 }) => {
-  const [selected, setSelected] = useState(0)
-  const theme = useTheme()
   const [collapsed, setCollapsed] = useState(false)
   const classes = useStyles({collapsed});
 
@@ -146,7 +144,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
         <div style={{ display: 'flex', justifyContent: 'center', padding: 20, paddingBottom: 0 }}>
           <StyledButton href="/" >
             <Logo src={!collapsed?logo:responsiveLogo} style={{
-              width:collapsed&&'50px',
+              width:collapsed&&'50px'
             }}  />
              
           </StyledButton>
@@ -158,7 +156,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
             <IconButton onClick={() => setCollapsed(!collapsed)} style={{ color: 'white' , width:'30px',height:'30px', position:'absolute', right:0,top:-10, fontWeight:'bold',
               fontSize:'15px',padding:'3px', zIndex:5,backgroundColor:"#d3d3d3"}}>
                 
-              {!collapsed?<ChevronLeftIcon color='primary' /> : <ChevronRightIcon color='primary' />}
+              {!collapsed?<ChevronLeftIcon color="primary" /> : <ChevronRightIcon color="primary" />}
             </IconButton>
        
               <MenuList>
