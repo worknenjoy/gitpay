@@ -157,6 +157,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
         
             <IconButton onClick={() => setCollapsed(!collapsed)} style={{ color: 'white' , width:'30px',height:'30px', position:'absolute', right:0,top:-10, fontWeight:'bold',
               fontSize:'15px',padding:'3px', zIndex:5,backgroundColor:"#d3d3d3"}}>
+                
               {!collapsed?<ChevronLeftIcon color='primary' /> : <ChevronRightIcon color='primary' />}
             </IconButton>
        
