@@ -26,7 +26,7 @@ module.exports = async function paymentRequestBuilds(paymentRequestParams) {
     line_items: [{
       price: price.id,
       quantity: 1
-    }],
+    }]
   });
 
   const paymentRequest = await models.PaymentRequest.create({
