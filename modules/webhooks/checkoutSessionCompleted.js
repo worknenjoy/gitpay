@@ -10,7 +10,6 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
   try {
     const session = event.data.object;
     const { payment_link, payment_status } = session;
-    console.log('Checkout session completed:', session);
     if (payment_status === 'paid') {
       const paymentRequest = await models.PaymentRequest.findOne({
         where: {
@@ -23,32 +22,32 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           }
         ]
       });
-      console.log('Payment Request:', paymentRequest);
+      
       if (!paymentRequest) {
         return res.status(404).json({ error: 'Payment request not found' });
       }
 
-      const { amount, currency, User: user = {} } = paymentRequest;
+      const { amount, currency, deactivate_after_payment, User: user = {} } = paymentRequest;
       const { account_id } = user;
 
       const paymentRequestUpdate = await paymentRequest.update({
         status: 'paid',
-        active: false
+        active: deactivate_after_payment ? false : true
       });
 
       if (!paymentRequestUpdate) {
         return res.status(500).json({ error: 'Failed to update payment request' });
       }
 
-      const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
-        active: false
-      });
+      if (deactivate_after_payment) {
+        const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
+          active: false
+        });
 
-      if (!paymentRequestLinkUpdate) {
-        return res.status(500).json({ error: 'Failed to update payment link' });
+        if (!paymentRequestLinkUpdate) {
+          return res.status(500).json({ error: 'Failed to update payment link' });
+        }
       }
-
-      console.log('Payment Request amount:', amount);
 
       const transfer_amount = Math.round(amount * 100 * 0.92); // Convert to cents and round
 

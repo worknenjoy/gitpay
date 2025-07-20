@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
+    deactivate_after_payment: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     currency: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
     title: DataTypes.STRING,

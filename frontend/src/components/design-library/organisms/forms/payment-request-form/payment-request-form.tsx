@@ -1,10 +1,11 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Grid, Typography, TextField } from '@material-ui/core';
+import { Grid, Typography, TextField, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../atoms/inputs/fields/field/field';
 import Alert from '../../../atoms/alerts/alert/alert';
 import ReactPlaceholder from 'react-placeholder';
+import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
 
 const useStyles = makeStyles((theme) => ({
   placholder: {
@@ -110,6 +111,18 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 </i>
               </div>
             }
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Checkboxes
+            checkboxes={[
+              { 
+                label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
+                name: 'deactivate_after_payment',
+                value: true
+              }
+            ]}
+            includeSelectAll={false}
           />
         </Grid>
       </Grid>
