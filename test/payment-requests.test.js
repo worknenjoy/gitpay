@@ -41,6 +41,11 @@ describe("PaymentRequests", () => {
       .post('/v1/payment_links')
       .reply(200, samplePaymentLink.stripe.paymentLinks.create);
 
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+      .reply(200, {});
+
     const user = await registerAndLogin(agent);
     
     const res = await agent
@@ -98,5 +103,6 @@ describe("PaymentRequests", () => {
     expect(res.body[0].status).to.equal('open');
     expect(res.body[0].payment_link_id).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km');
     expect(res.body[0].payment_url).to.equal('https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04');
+    expect(res.body[0].deactivate_after_payment).to.equal(false);
   });
 });

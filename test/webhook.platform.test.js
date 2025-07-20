@@ -640,6 +640,7 @@ describe('webhooks for platform', () => {
         currency: 'usd',
         description: 'Payment for services',
         payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
+        deactivate_after_payment: true,
         userId: user.body.id
       })
       const res = await agent

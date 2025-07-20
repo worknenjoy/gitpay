@@ -6,8 +6,6 @@ if (process.env.NODE_ENV !== 'production') {
 const i18n = require('i18n')
 const moment = require('moment')
 const models = require('../../../../models')
-const SendMail = require('../../../mail/mail')
-const WalletMail = require('../../../mail/wallet')
 
 const stripe = require('../../../shared/stripe/stripe')()
 
@@ -50,7 +48,9 @@ exports.webhookConnect = async (req, res) => {
   
   try {
     if (process.env.NODE_ENV === 'test') {
-      event = JSON.parse(req.body.toString());
+      event = typeof req.body === 'string' || Buffer.isBuffer(req.body)
+        ? JSON.parse(req.body.toString())
+        : req.body;
     } else {
       event = stripe.webhooks.constructEvent(req.body, sig, secret);
     }
