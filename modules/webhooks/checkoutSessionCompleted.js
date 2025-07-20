@@ -22,7 +22,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           }
         ]
       });
-      
+
       if (!paymentRequest) {
         return res.status(404).json({ error: 'Payment request not found' });
       }

@@ -2,9 +2,6 @@ const models = require('../../models')
 const i18n = require('i18n')
 const moment = require('moment')
 const SendMail = require('../mail/mail')
-const WalletMail = require('../mail/wallet')
-const stripe = require('../shared/stripe/stripe')()
-const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
 
 module.exports = async function chargeUpdated(event, paid, status, req, res) {
   if(event?.data?.object?.source?.id) {

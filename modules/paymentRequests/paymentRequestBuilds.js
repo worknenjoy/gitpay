@@ -27,10 +27,6 @@ module.exports = async function paymentRequestBuilds(paymentRequestParams) {
       price: price.id,
       quantity: 1
     }],
-    metadata: {
-      payment_request_id: paymentRequestParams.id || null,
-      user_id: paymentRequestParams.userId || null
-    }
   });
 
   const paymentRequest = await models.PaymentRequest.create({
@@ -41,6 +37,13 @@ module.exports = async function paymentRequestBuilds(paymentRequestParams) {
     amount: paymentRequestParams.amount,
     title: paymentRequestParams.title,
     description: paymentRequestParams.description
+  });
+
+  const updatePaymentLink = await stripe.paymentLinks.update(paymentLink.id, {
+    metadata: {
+      payment_request_id: paymentRequest.id,
+      user_id: paymentRequest.userId
+    }
   });
   
   return paymentRequest;

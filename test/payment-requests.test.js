@@ -41,6 +41,11 @@ describe("PaymentRequests", () => {
       .post('/v1/payment_links')
       .reply(200, samplePaymentLink.stripe.paymentLinks.create);
 
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+      .reply(200, {});
+
     const user = await registerAndLogin(agent);
     
     const res = await agent
