@@ -129,7 +129,7 @@ TransferMail.paymentRequestInitiated = (user, paymentRequest, transfer_amount) =
   const to = user.email
   const language = user.language || 'en'
   i18n.setLocale(language)
-  return user?.receiveNotifications && request(
+  user?.receiveNotifications && request(
     to,
     i18n.__('mail.paymentRequest.initiated.subject'),
     [

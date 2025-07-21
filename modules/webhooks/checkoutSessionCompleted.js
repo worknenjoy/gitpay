@@ -66,13 +66,11 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         return res.status(500).json({ error: 'Failed to create transfer' });
       }
 
-      const transferMailInitiated = await TransferMail.paymentRequestInitiated(
+      TransferMail.paymentRequestInitiated(
         user,
         paymentRequest,
         transfer_amount
       );
-
-      console.log('TransferMail paymentRequestInitiated response:', transferMailInitiated);
 
       const paymentRequestTransferUpdate = await paymentRequest.update({
         transfer_status: 'initiated',
