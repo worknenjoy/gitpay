@@ -173,5 +173,6 @@
   "mail.webhook.wallet.invoice.message": "<p>We generated a new invoice of ${{amount}} to add funds to your {{walletName}} wallet on Gitpay.</p>",
   "mail.webhook.wallet.invoice.button": "Pay invoice",
   "mail.webhook.wallet.invoice.footer": "You’re receiving this message because you recently requested to add funds to your <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a> wallet.",
+  "mail.paymentRequest.initiated.subject": "A payment request was paid on Gitpay",
   "mail.paymentRequest.initiated.message": "A payment request has been initiated for your Payment request.<br/><br/><strong>Title:</strong> {{title}}<br/><strong>Description:</strong> {{description}}<br/><strong>Requested Amount:</strong>{{amount}} USD<br/><strong>Payment Link:</strong> <a href=\"{{paymentUrl}}\">Pay here</a><br/><br/>After processing fees, the final transfer amount will be <strong>{{transfer_amount}} USD</strong>."
 }
