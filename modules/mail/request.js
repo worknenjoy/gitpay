@@ -1,12 +1,19 @@
+const sgMail = require('@sendgrid/mail')
 const { sendgrid } = require('../../config/secrets')
-const sg = require('sendgrid')(sendgrid.apiKey)
 const handleResponse = require('./handleResponse')
 const handleError = require('./handleError')
-const Signatures = require('./content')
 const { copyEmail, notificationEmail, fromEmail } = require('./constants')
 const emailTemplate = require('./templates/default')
 
 module.exports = async (to, subject, content, replyEmail) => {
+
+  if (!sendgrid.apiKey) {
+    console.warn('SendGrid API key is missing')
+    return
+  }
+
+  sgMail.setApiKey(sendgrid.apiKey)
+
   // eslint-disable-next-line no-console
   console.log(' ----- email / subject ---- ')
   // eslint-disable-next-line no-console
@@ -27,44 +34,22 @@ module.exports = async (to, subject, content, replyEmail) => {
   // eslint-disable-next-line no-console
   console.log(' ----- end email full content ---- ')
 
-  if (!sendgrid.apiKey) return
-
   try {
-    const request = sg.emptyRequest({
-      method: 'POST',
-      path: '/v3/mail/send',
-      body: {
-        personalizations: [
-          {
-            to: [
-              {
-                email: to
-              }
-            ],
-            bcc: [
-              {
-                email: copyEmail
-              }
-            ],
-            subject
-          }
-        ],
-        from: {
-          email: notificationEmail
-        },
-        reply_to: {
-          email: replyEmail || fromEmail
-        },
-        content: [
-          {
-            type: content[0].type,
-            value: emailTemplate.defaultEmailTemplate(content[0].value)
-          }
-        ]
-      }
-    })
+    const msg = {
+      to,
+      bcc: copyEmail,
+      from: notificationEmail,
+      replyTo: replyEmail || fromEmail,
+      subject,
+      content: [
+        {
+          type: content[0].type || 'text/html',
+          value: emailTemplate.defaultEmailTemplate(content[0].value)
+        }
+      ]
+    }
 
-    const response = await sg.API(request)
+    const response = await sgMail.send(msg)
     return handleResponse(response)
   } catch (err) {
     return handleError(err)

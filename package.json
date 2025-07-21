@@ -40,7 +40,7 @@
   },
   "private": true,
   "dependencies": {
-    "@sendgrid/mail": "^6.3.1",
+    "@sendgrid/mail": "^6.5.5",
     "bcrypt": "^5.1.0",
     "bitbucket-api-v2": "^0.6.2",
     "bitbucket-v2": "^0.4.3",

@@ -62,6 +62,6 @@ describe('Mail', () => {
       },
       92.00
     );
-    expect(mailResponse.statusCode).to.equal(202);
+    expect(mailResponse[0].statusCode).to.equal(202);
   });
 });
