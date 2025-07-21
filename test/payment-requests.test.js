@@ -23,6 +23,17 @@ describe("PaymentRequests", () => {
   })
 
   it("should create a new payment request", async () => {
+
+    nock('https://api.sendgrid.com')
+      .persist()
+      .post('/v3/mail/send')
+      .reply(202, [
+        {
+          type: 'text/html',
+          value: 'email content'
+        }
+      ]);
+      
     // Mock the Stripe API to return a sample product
     nock('https://api.stripe.com')
       .persist()
@@ -47,7 +58,7 @@ describe("PaymentRequests", () => {
       .reply(200, {});
 
     const user = await registerAndLogin(agent);
-    
+
     const res = await agent
       .post('/payment-requests')
       .set('Content-Type', 'application/json')
@@ -60,7 +71,7 @@ describe("PaymentRequests", () => {
         amount: 100.00,
         currency: 'USD'
       });
-    
+
     expect(res.body).to.exist;
     expect(res.body.id).to.exist;
     expect(res.body.title).to.equal('Test Payment Request');
@@ -87,7 +98,7 @@ describe("PaymentRequests", () => {
       payment_url: 'https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04',
       status: 'open'
     });
-    
+
     const res = await agent
       .get('/payment-requests')
       .set('Content-Type', 'application/json')

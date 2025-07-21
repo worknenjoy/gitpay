@@ -7,4 +7,5 @@ module.exports = error => {
   console.log(error.response.body.errors)
   // eslint-disable-next-line no-console
   console.log(error.response.statusCode)
+  return error
 }

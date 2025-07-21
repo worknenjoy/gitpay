@@ -1,5 +1,6 @@
 const stripe = require('../shared/stripe/stripe')()
 const models = require('../../models');
+const PaymentRequestMail = require('../mail/paymentRequest');
 
 module.exports = async function paymentRequestBuilds(paymentRequestParams) {
   paymentRequestParams.currency = paymentRequestParams.currency || 'usd';
@@ -29,7 +30,7 @@ module.exports = async function paymentRequestBuilds(paymentRequestParams) {
     }]
   });
 
-  const paymentRequest = await models.PaymentRequest.create({
+  const createPaymentRequest = await models.PaymentRequest.create({
     ...paymentRequestParams,
     payment_link_id: paymentLink.id,
     payment_url: paymentLink.url,
@@ -38,13 +39,28 @@ module.exports = async function paymentRequestBuilds(paymentRequestParams) {
     title: paymentRequestParams.title,
     description: paymentRequestParams.description
   });
-
+  
   const updatePaymentLink = await stripe.paymentLinks.update(paymentLink.id, {
     metadata: {
-      payment_request_id: paymentRequest.id,
-      user_id: paymentRequest.userId
+      payment_request_id: createPaymentRequest.id,
+      user_id: createPaymentRequest.userId
     }
   });
-  
-  return paymentRequest;
+
+  const paymentRequest = await models.PaymentRequest.findByPk(createPaymentRequest.id, {
+    include: [
+      {
+        model: models.User
+      }
+    ]
+  });
+
+  if(createPaymentRequest?.id) {
+    await PaymentRequestMail.paymentRequestInitiated(
+      paymentRequest.User,
+      paymentRequest
+    );
+  }
+
+  return createPaymentRequest;
 }
