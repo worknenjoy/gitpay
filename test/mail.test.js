@@ -26,7 +26,7 @@ describe('Mail', () => {
     await truncateModels(models.User);
   });
 
-  xit('should send transfer initiated email', async () => {
+  it('should send transfer initiated email', async () => {
 
     nock('https://api.sendgrid.com')
       .persist()
@@ -51,7 +51,7 @@ describe('Mail', () => {
     const user = await register(agent);
     const { body } = user;
 
-    TransferMail.paymentRequestInitiated(
+    const mailResponse = await TransferMail.paymentRequestInitiated(
       body,
       {
         title: 'Test Payment Request',
