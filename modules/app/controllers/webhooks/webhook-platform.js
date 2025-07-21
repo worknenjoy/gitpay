@@ -37,7 +37,7 @@ exports.webhookPlatform = async (req, res) => {
   const secret = process.env.STRIPE_WEBHOOK_SECRET_PLATFORM;
 
   let event;
-  console.log('🔗 Webhook received for platform:', req.body, process.env.NODE_ENV);
+  
   try {
     if (process.env.NODE_ENV === 'test') {
       event = typeof req.body === 'string' || Buffer.isBuffer(req.body)
