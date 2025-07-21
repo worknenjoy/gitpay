@@ -25,7 +25,7 @@ const PaymentRequestMail = {
               description: paymentRequest.description,
               amount: paymentRequest.amount,
               currency: paymentRequest.currency,
-              paymentUrl: paymentRequest.payment_url,
+              paymentUrl: paymentRequest.payment_url
             })}</p>`)
           }
         ]
