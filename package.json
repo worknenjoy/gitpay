@@ -139,6 +139,7 @@
     "protractor": "^5.4.2",
     "request": "^2.88.0",
     "should": "^11.2.1",
+    "sinon": "^21.0.0",
     "supertest": "^7.1.1",
     "ts-node": "~2.0.0",
     "typescript": ">=4.0.0-dev"

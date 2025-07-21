@@ -5,4 +5,5 @@ module.exports = response => {
   console.log(response.body)
   // eslint-disable-next-line no-console
   console.log(response.headers)
+  return response
 }

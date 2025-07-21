@@ -6,7 +6,7 @@ const Signatures = require('./content')
 const { copyEmail, notificationEmail, fromEmail } = require('./constants')
 const emailTemplate = require('./templates/default')
 
-module.exports = (to, subject, content, replyEmail) => {
+module.exports = async (to, subject, content, replyEmail) => {
   // eslint-disable-next-line no-console
   console.log(' ----- email / subject ---- ')
   // eslint-disable-next-line no-console
@@ -26,36 +26,47 @@ module.exports = (to, subject, content, replyEmail) => {
   console.log(emailTemplate.defaultEmailTemplate(content[0].value))
   // eslint-disable-next-line no-console
   console.log(' ----- end email full content ---- ')
-  return sendgrid.apiKey && sg.API(sg.emptyRequest({
-    method: 'POST',
-    path: '/v3/mail/send',
-    body: {
-      personalizations: [
-        {
-          to: [
-            {
-              email: to
-            }
-          ],
-          bcc: [
-            {
-              email: copyEmail
-            }
-          ],
-          subject
-        }
-      ],
-      from: {
-        email: notificationEmail
-      },
-      reply_to: {
-        email: replyEmail || fromEmail
-      },
-      content:
-      [{
-        type: content[0].type,
-        value: emailTemplate.defaultEmailTemplate(content[0].value)
-      }]
-    }
-  })).then(handleResponse).catch(handleError)
+
+  if (!sendgrid.apiKey) return
+
+  try {
+    const request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: {
+        personalizations: [
+          {
+            to: [
+              {
+                email: to
+              }
+            ],
+            bcc: [
+              {
+                email: copyEmail
+              }
+            ],
+            subject
+          }
+        ],
+        from: {
+          email: notificationEmail
+        },
+        reply_to: {
+          email: replyEmail || fromEmail
+        },
+        content: [
+          {
+            type: content[0].type,
+            value: emailTemplate.defaultEmailTemplate(content[0].value)
+          }
+        ]
+      }
+    })
+
+    const response = await sg.API(request)
+    return handleResponse(response)
+  } catch (err) {
+    return handleError(err)
+  }
 }
