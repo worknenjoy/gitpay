@@ -128,8 +128,13 @@ if (constants.canSendEmail) {
 TransferMail.paymentRequestInitiated = async (user, paymentRequest, transfer_amount) => {
   const to = user.email
   const language = user.language || 'en'
+  const receiveNotifications = user?.receiveNotifications
+  
+  if (!receiveNotifications) {
+    return
+  }
   i18n.setLocale(language)
-  return user?.receiveNotifications && request(
+  await request(
     to,
     i18n.__('mail.paymentRequest.initiated.subject'),
     [
