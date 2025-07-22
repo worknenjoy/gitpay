@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography, Tooltip, IconButton } from '@material-ui/core'
 import logo from 'images/gitpay-logo.png'
@@ -129,22 +129,28 @@ interface SideMenuProps {
     category?: React.ReactNode;
     items: MenuItemProps[];
   }[];
+  onCollapse?: (collapsed: boolean) => void;
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({
   completed,
-  menuItems
+  menuItems,
+  onCollapse
 }) => {
   const [collapsed, setCollapsed] = useState(false)
   const classes = useStyles({collapsed});
+
+  useEffect(() => {
+    onCollapse && onCollapse(collapsed);
+  }, [collapsed]);
 
   return (
     <div className={classes.sidePaper}>
       <div className={classes.profile}>
         <div style={{ display: 'flex', justifyContent: 'center', padding: 20, paddingBottom: 0 }}>
           <StyledButton href="/" >
-            <Logo src={!collapsed?logo:responsiveLogo} style={{
-              width:collapsed&&'50px'
+            <Logo src={!collapsed ? logo : responsiveLogo} style={{
+              width: collapsed && '50px'
             }}  />
              
           </StyledButton>
@@ -153,8 +159,19 @@ export const SideMenu: React.FC<SideMenuProps> = ({
           <div style={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '5px 20px', position:'relative', zIndex:1 }}>
             <ReactPlaceholder ready={completed} customPlaceholder={<SideMenuPlaceholder />}>
         
-            <IconButton onClick={() => setCollapsed(!collapsed)} style={{ color: 'white' , width:'30px',height:'30px', position:'absolute', right:0,top:-10, fontWeight:'bold',
-              fontSize:'15px',padding:'3px', zIndex:5,backgroundColor:"#d3d3d3"}}>
+            <IconButton onClick={() => setCollapsed(!collapsed)} style={{ 
+              color: 'white' ,
+              width: 20,
+              height: 20,
+              position:'absolute',
+              right:-12,
+              top:-30,
+              fontWeight:'bold',
+              fontSize:'15px',
+              padding:'3px',
+              zIndex:5,
+              backgroundColor: 'white',
+            }}>
                 
               {!collapsed?<ChevronLeftIcon color="primary" /> : <ChevronRightIcon color="primary" />}
             </IconButton>
@@ -187,9 +204,9 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                           selected={item.selected}
                         >
                           <Tooltip title={item.label} placement="right" disableHoverListener={!collapsed}>
-                          <ListItemIcon className={classes.icon}>
-                            <>{item.icon}</>
-                          </ListItemIcon>
+                            <ListItemIcon className={classes.icon}>
+                              <>{item.icon}</>
+                            </ListItemIcon>
                           </Tooltip>
                           {!collapsed && (
                             <ListItemText

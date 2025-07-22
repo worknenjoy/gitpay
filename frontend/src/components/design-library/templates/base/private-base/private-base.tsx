@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { AppBar, Container, Grid } from '@material-ui/core';
+import { AppBar, Container, Grid, GridSize } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Page, PageContent } from '../../../../../styleguide/components/Page';
 import ProfileSideBar from '../../../organisms/layouts/profile-sidebar/profile-sidebar'
@@ -62,6 +62,7 @@ const PrivateBase = ({
   const { data = {}, completed } = user;
   const { email_verified } = data;
   const [ emailNotVerified, setEmailNotVerified ] = React.useState(false);
+  const [ gridSideBarCollapsed, setGridSideBarCollapsed ] = React.useState<boolean>(false);
 
   const handleSignOut = () => {
     history.replace({ pathname: '/' })
@@ -91,11 +92,15 @@ const PrivateBase = ({
         elevation={0} />
       <PageContent>
         <Grid container className={classes.root} spacing={0}>
-          <ProfileSideBar
-            user={user}
-          />
-          <Grid item xs={12} md={10}>
-            
+          <Grid item xs={12} md={gridSideBarCollapsed ? 1 : 2}>
+            <ProfileSideBar
+              user={user}
+              onCollapse={(collapsed: boolean) => {
+                setGridSideBarCollapsed(collapsed);
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={gridSideBarCollapsed ? 11 : 10}>
             <AccountHeader
               user={data}
               onCreateTask={createTask}
@@ -103,12 +108,12 @@ const PrivateBase = ({
             />
             
             <Container maxWidth="lg" className={classes.containerRoot}>
-            { profileHeaderProps && (
-              <ProfileHeader
-                title={profileHeaderProps.title}
-                subtitle={profileHeaderProps.subtitle}
-              />
-            )}
+              { profileHeaderProps && (
+                <ProfileHeader
+                  title={profileHeaderProps.title}
+                  subtitle={profileHeaderProps.subtitle}
+                />
+              )}
               {children}
             </Container>
           </Grid>
