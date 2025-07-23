@@ -40,7 +40,6 @@ export const IconHamburger = styled.span`
   width: 25px;
   height: 3px;
   position: relative;
-  top: 5px;
 
   transition-delay: 200ms;
   transform-origin: 50% 50%;
@@ -85,9 +84,8 @@ export const IconHamburger = styled.span`
 `
 
 export const LeftSide = styled(Side)`
-  display: flex;
-  align-items: space-between;
-  justify-content: space-between;
+  display: block;
+  
   z-index: 1300;
   padding: 0;
   width: 100%;
@@ -106,15 +104,15 @@ export const LeftSide = styled(Side)`
     box-sizing: border-box;
   `}
 
-  @media (min-width: 37.5em) {
+  @media (max-width: 37.5em) {
     align-items: flex-start;
     justify-content: flex-start;
   }
 `
 
 export const RightSide = styled(Side)`
-  justify-content: flex-start;
-  align-items: flex-start;
+  display: block;
+  width: 100%;
 
 @media (max-width: 37.5em) {
     display: flex;
@@ -123,7 +121,7 @@ export const RightSide = styled(Side)`
     top: 0;
     right: 0;
     background-color: #2c5c46;
-    height: 80vh;
+    height: 100vh;
     width: 100vw;
     justify-content: center;
     align-items: center;
