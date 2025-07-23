@@ -42,7 +42,7 @@ const ProfileSidebar = ({
   }, [history.location.pathname])
 
   return (
-    <Grid item xs={ 12 } md={ 2 } spacing={ 0 } className={ classes.sidePaper }>
+    <Grid item xs={ 12 } md={ 1 } spacing={ 0 } className={ classes.sidePaper }>
       <SideMenu
         completed={ user.completed }
         menuItems={
