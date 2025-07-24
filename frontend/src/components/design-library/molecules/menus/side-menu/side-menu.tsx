@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { MenuList, MenuItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core'
 import logo from 'images/gitpay-logo.png'
 import {
   IconHamburger,
@@ -15,7 +14,6 @@ import {
 import ReactPlaceholder from 'react-placeholder'
 import SideMenuPlaceholder from './side-menu.placeholder'
 import SideMenuItems from './side-menu-items'
-import { red } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   sidePaper: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
+      width: '100%'
     }
   },
   mainHeaderWrapper: { 
@@ -38,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: 10,
+      padding: 10
     }
   },
   menuItem: {
