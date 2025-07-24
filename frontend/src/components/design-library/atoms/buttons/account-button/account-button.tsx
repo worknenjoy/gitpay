@@ -9,7 +9,9 @@ const AccountButton = ({
   handleMenu,
   loggedIn
 }) => {
-  const { user } = loggedIn;
+  const { data } = loggedIn;
+  const { username, picture_url } = data;
+  
   return (
     <>
       <StyledButton
@@ -20,13 +22,13 @@ const AccountButton = ({
         id="account-menu"
       >
         <Chip
-          avatar={ user.picture_url
+          avatar={ picture_url
             ? <StyledAvatar
-              alt={ user.username || '' }
-              src={ user.picture_url }
+              alt={ username || '' }
+              src={ picture_url }
             />
-            : <StyledAvatar alt={ user.username || '' } src="">
-              { user.username ? nameInitials(user.username) : <Person /> }
+            : <StyledAvatar alt={ username || '' } src="">
+              { username ? nameInitials(username) : <Person /> }
             </StyledAvatar>
           }
           color="secondary"
