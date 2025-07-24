@@ -17,8 +17,8 @@ module.exports = async function paymentRequestBuilds(paymentRequestParams) {
   const finalAmount = amount ? amount * 100 : 0;
   const finalPriceData = custom_amount ? {
     custom_unit_amount: {
-      enabled: true,
-    },
+      enabled: true
+    }
   } : { unit_amount: finalAmount };
 
   const price = await stripe.prices.create({
