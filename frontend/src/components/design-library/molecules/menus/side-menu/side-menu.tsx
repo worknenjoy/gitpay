@@ -163,6 +163,16 @@ export const SideMenu: React.FC<SideMenuProps> = ({
     setIsActive(!isActive)
   }
 
+  const menuItemsMobile = menuItems.map(section => ({
+    ...section,
+    items: section.items.map(item => ({
+      ...item,
+      onClick: () => {
+        setIsActive(false)
+        item.onClick()
+      }
+    }))
+  }))
 
   return (
     <div className={classes.sidePaper}>
@@ -199,7 +209,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                   </OnlyDesktop>
 
                   <OnlyMobile>
-                    <SideMenuItems menuItems={menuItems} />
+                    <SideMenuItems menuItems={menuItemsMobile} />
                   </OnlyMobile>
 
                 </ReactPlaceholder>
