@@ -5,13 +5,14 @@ const emailTemplate = require('./templates/base-content')
 
 const PaymentRequestMail = {
   paymentRequestInitiated: async (user, paymentRequest) => {
-    const to = user.email
-    const language = user.language || 'en'
-    const receiveNotifications = user?.receiveNotifications
+    const { email, language, receiveNotifications } = user
+    const { title, description, amount, custom_amount, currency, payment_url } = paymentRequest
+    const to = email
+    
     if (!receiveNotifications) {
       return
     }
-    i18n.setLocale(language)
+    i18n.setLocale(language || 'en')
     try {
       return await request(
         to,
@@ -21,11 +22,11 @@ const PaymentRequestMail = {
             type: 'text/html',
             value: emailTemplate.baseContentEmailTemplate(`
       <p>${i18n.__('mail.paymentRequest.created.message', {
-              title: paymentRequest.title,
-              description: paymentRequest.description,
-              amount: paymentRequest.amount,
-              currency: paymentRequest.currency,
-              paymentUrl: paymentRequest.payment_url
+              title: title,
+              description: description,
+              amount: custom_amount ? 'custom amount' : amount,
+              currency: currency,
+              paymentUrl: payment_url
             })}</p>`)
           }
         ]

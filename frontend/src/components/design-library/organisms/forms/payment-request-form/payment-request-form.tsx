@@ -26,6 +26,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
   const classes = useStyles();
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
+  const [ customAmount, setCustomAmount ] = useState(false);
 
   // Expose `submit` method to parent
   useImperativeHandle(ref, () => ({
@@ -38,15 +39,18 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-
-    // Validate the form data
-    if (!data.title || !data.description || !data.amount) {
+    
+    if (!data.title || !data.description || (!customAmount && !data.amount)) {
       setError('All fields are required.');
       return;
     }
 
     setError(false);
     onSubmit?.(event, data);
+  };
+
+  const handleCustomAmountChange = (selected: boolean) => {
+    setCustomAmount(selected);
   };
 
   return (
@@ -111,11 +115,18 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 </i>
               </div>
             }
+            disabled={customAmount}
           />
         </Grid>
         <Grid item xs={12} md={12}>
           <Checkboxes
             checkboxes={[
+              {
+                label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
+                name: 'custom_amount',
+                value: true,
+                onChange: handleCustomAmountChange
+              },
               { 
                 label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
                 name: 'deactivate_after_payment',

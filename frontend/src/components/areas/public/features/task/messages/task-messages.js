@@ -54,6 +54,10 @@ export const messages = defineMessages({
     id: 'task.table.value.none',
     defaultMessage: 'No bounty added'
   },
+  noAmountDefined: {
+    id: 'task.table.amount.none',
+    defaultMessage: 'No amount defined'
+  },
   onHoverTaskProvider: {
     id: 'task.table.onHover',
     defaultMessage: 'See on'
