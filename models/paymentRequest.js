@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     currency: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
+    custom_amount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     payment_link_id: DataTypes.STRING,

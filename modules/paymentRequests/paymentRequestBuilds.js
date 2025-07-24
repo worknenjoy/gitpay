@@ -4,22 +4,30 @@ const PaymentRequestMail = require('../mail/paymentRequest');
 
 module.exports = async function paymentRequestBuilds(paymentRequestParams) {
   paymentRequestParams.currency = paymentRequestParams.currency || 'usd';
+  const { id, userId, title, description, amount, currency, custom_amount } = paymentRequestParams;
   const product = await stripe.products.create({
-    name: paymentRequestParams.title,
-    description: paymentRequestParams.description,
+    name: title,
+    description: description,
     metadata: {
-      payment_request_id: paymentRequestParams.id || null,
-      user_id: paymentRequestParams.userId || null
+      payment_request_id: id || null,
+      user_id: userId || null
     }
   });
 
+  const finalAmount = amount ? amount * 100 : 0;
+  const finalPriceData = custom_amount ? {
+    custom_unit_amount: {
+      enabled: true,
+    },
+  } : { unit_amount: finalAmount };
+
   const price = await stripe.prices.create({
-    unit_amount: paymentRequestParams.amount * 100, // Stripe expects amount in cents
-    currency: paymentRequestParams.currency,
+    ...finalPriceData,
+    currency: currency,
     product: product.id,
     metadata: {
-      payment_request_id: paymentRequestParams.id || null,
-      user_id: paymentRequestParams.userId || null
+      payment_request_id: id || null,
+      user_id: userId || null
     }
   });
 
@@ -34,10 +42,11 @@ module.exports = async function paymentRequestBuilds(paymentRequestParams) {
     ...paymentRequestParams,
     payment_link_id: paymentLink.id,
     payment_url: paymentLink.url,
-    currency: paymentRequestParams.currency,
-    amount: paymentRequestParams.amount,
-    title: paymentRequestParams.title,
-    description: paymentRequestParams.description
+    currency: currency,
+    amount: amount,
+    custom_amount: custom_amount || false,
+    title: title,
+    description: description
   });
   
   const updatePaymentLink = await stripe.paymentLinks.update(paymentLink.id, {

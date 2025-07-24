@@ -10,7 +10,7 @@ const PaymentRequestMail = require('../mail/paymentRequest');
 module.exports = async function checkoutSessionCompleted(event, req, res) {
   try {
     const session = event.data.object;
-    const { payment_link, payment_status } = session;
+    const { payment_link, payment_status, amount_total } = session;
     if (payment_status === 'paid') {
       const paymentRequest = await models.PaymentRequest.findOne({
         where: {
@@ -27,7 +27,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         return res.status(404).json({ error: 'Payment request not found' });
       }
 
-      const { amount, currency, deactivate_after_payment, User: user = {} } = paymentRequest;
+      const { amount, custom_amount, currency, deactivate_after_payment, User: user = {} } = paymentRequest;
       const { account_id } = user;
 
       const paymentRequestUpdate = await paymentRequest.update({
@@ -48,7 +48,9 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           return res.status(500).json({ error: 'Failed to update payment link' });
         }
       }
-      const amountAfterFee = handleAmount(paymentRequest.amount, 8, 'decimal');
+      const amountAfterFee = custom_amount ? 
+        handleAmount(amount_total, 8, 'centavos') :
+        handleAmount(amount, 8, 'decimal');
       const transfer_amount = amountAfterFee.decimal;
       const transfer_amount_cents = amountAfterFee.centavos;
 
