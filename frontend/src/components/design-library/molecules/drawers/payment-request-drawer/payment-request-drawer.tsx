@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Drawer from '../drawer/drawer';
-import PaymentRequestForm from '../../../organisms/forms/payment-request-form/payment-request-form';
+import PaymentRequestForm from '../../../organisms/forms/payment-request-forms/payment-request-form/payment-request-form';
 
 interface PaymentRequestDrawerProps {
   open: boolean;

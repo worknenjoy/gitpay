@@ -14,6 +14,11 @@ const BankAccountTabs = ({children}) => {
       label: <FormattedMessage id="payout-settings.tabs.bank-account.bankInfo" defaultMessage="Bank account information" />,
       value: 'bank-info',
       link: '/profile/payout-settings/bank-account/bank-account-info'
+    },
+    {
+      label: <FormattedMessage id="payout-settings.tabs.bank-account.payoutSchedule" defaultMessage="Payout Schedule" />,
+      value: 'payout-schedule',
+      link: '/profile/payout-settings/bank-account/payout-schedule'
     }
   ];
 
