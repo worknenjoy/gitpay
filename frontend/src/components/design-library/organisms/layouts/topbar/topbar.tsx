@@ -15,8 +15,8 @@ import {
 import logo from 'images/gitpay-logo.png'
 
 import TopbarMenu from './topbar-menu'
-import SignupSignin from '../../../organisms/forms/signup-signin/signup-signin'
-import ImportIssue from '../../../organisms/forms/import-issue/import-issue'
+import SignupSignin from '../../forms/signup-forms/signup-signin/signup-signin'
+import ImportIssue from '../../forms/issue-forms/import-issue/import-issue'
 import AccountSettings from '../../../molecules/trigger-buttons/account-settings/account-settings'
 
 const Topbar = ({
