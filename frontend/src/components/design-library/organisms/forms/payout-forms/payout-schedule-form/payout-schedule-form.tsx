@@ -21,7 +21,7 @@ const PayoutScheduleForm = ({ completed = true }) => {
         label={<FormattedMessage id="payoutSchedule.frequency" defaultMessage="Payout Schedule Settings" />}
         options={[
           { value: 'manual', label: <FormattedMessage id="payout.settings.schedule.manual" defaultMessage="Manual Payouts" /> },
-          { value: 'automatic', label: <FormattedMessage id="payout.settings.schedule.automatic" defaultMessage="Automatic Payouts" /> },
+          { value: 'automatic', label: <FormattedMessage id="payout.settings.schedule.automatic" defaultMessage="Automatic Payouts" /> }
         ]}
       />
       {automaticPayoutOptions && (
@@ -34,7 +34,7 @@ const PayoutScheduleForm = ({ completed = true }) => {
               options={[
                 { value: 'daily', label: <FormattedMessage id="payoutSchedule.automatic.daily" defaultMessage="Daily" /> },
                 { value: 'weekly', label: <FormattedMessage id="payoutSchedule.automatic.weekly" defaultMessage="Weekly" /> },
-                { value: 'monthly', label: <FormattedMessage id="payoutSchedule.automatic.monthly" defaultMessage="Monthly" /> },
+                { value: 'monthly', label: <FormattedMessage id="payoutSchedule.automatic.monthly" defaultMessage="Monthly" /> }
               ]}
               value={'daily'}
               onChange={() => {}}
