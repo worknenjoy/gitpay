@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import logo from 'images/gitpay-logo.png'
-import responsiveLogo from 'images/logo-symbol.png'
 import {
   IconHamburger,
   LeftSide,
