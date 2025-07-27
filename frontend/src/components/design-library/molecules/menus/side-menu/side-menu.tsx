@@ -16,13 +16,12 @@ import ReactPlaceholder from 'react-placeholder'
 import SideMenuPlaceholder from './side-menu.placeholder'
 import SideMenuItems from './side-menu-items'
 
+
 const useStyles = makeStyles((theme) => ({
-  sidePaper: (props: { collapsed: boolean }) => ({
+  sidePaper: {
     backgroundColor: '#2c5c46',
-    height: '100%',
-    width: props.collapsed && 70 ,
-    transition: 'width 0.3s ease'
-  }),
+    height: '100%'
+    },
   row: {
     display: 'flex',
     justifyContent: 'center',
