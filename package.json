@@ -21,7 +21,7 @@
     "reset:dev": "node migrate.js reset-hard",
     "reset:test": "NODE_ENV=test node migrate.js reset-hard",
     "start:dev": "nodemon ./index.js --ignore '/frontend/*'",
-    "start": "node ./index.js",
+    "start": "node --max-old-space-size=480 ./index.js",
     "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --timeout 30000 --exit test/*.test.js",
     "test:e2e": "playwright test",
     "build-css": "node-sass --include-path scss src/assets/sass/material-dashboard.scss src/assets/css/material-dashboard.css",
@@ -30,7 +30,8 @@
     "prepush": "npm run lint-fix",
     "postbuild": "cd frontend && npm run test",
     "heroku-postbuild": "cd frontend && npm install --legacy-peer-deps && npm run production && npm run sitemap && cd .. && npm run migrate",
-    "stripe:webhook": "stripe listen --forward-to localhost:3000/webhooks"
+    "stripe:webhook": "stripe listen --forward-to localhost:3000/webhooks",
+    "simulate:webhook": "NODE_ENV=test node ./scripts/webhook_script.js"
   },
   "husky": {
     "hooks": {
@@ -39,7 +40,7 @@
   },
   "private": true,
   "dependencies": {
-    "@sendgrid/mail": "^6.3.1",
+    "@sendgrid/mail": "^6.5.5",
     "bcrypt": "^5.1.0",
     "bitbucket-api-v2": "^0.6.2",
     "bitbucket-v2": "^0.4.3",
@@ -138,6 +139,7 @@
     "protractor": "^5.4.2",
     "request": "^2.88.0",
     "should": "^11.2.1",
+    "sinon": "^21.0.0",
     "supertest": "^7.1.1",
     "ts-node": "~2.0.0",
     "typescript": ">=4.0.0-dev"

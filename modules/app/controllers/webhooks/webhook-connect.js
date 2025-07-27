@@ -2,12 +2,8 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-
-const i18n = require('i18n')
 const moment = require('moment')
 const models = require('../../../../models')
-const SendMail = require('../../../mail/mail')
-const WalletMail = require('../../../mail/wallet')
 
 const stripe = require('../../../shared/stripe/stripe')()
 
@@ -34,14 +30,6 @@ const {
   formatStripeAmount
 } = require('../../../webhooks/constants')
 
-
-i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
-  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
-  defaultLocale: 'en',
-  updateFiles: false
-})
-
 exports.webhookConnect = async (req, res) => {
   const sig = req.headers['stripe-signature'];
   const secret = process.env.STRIPE_WEBHOOK_SECRET_CONNECT;
@@ -50,7 +38,9 @@ exports.webhookConnect = async (req, res) => {
   
   try {
     if (process.env.NODE_ENV === 'test') {
-      event = JSON.parse(req.body.toString());
+      event = typeof req.body === 'string' || Buffer.isBuffer(req.body)
+        ? JSON.parse(req.body.toString())
+        : req.body;
     } else {
       event = stripe.webhooks.constructEvent(req.body, sig, secret);
     }

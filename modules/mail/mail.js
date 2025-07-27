@@ -1,4 +1,3 @@
-const Signatures = require('./content')
 const request = require('./request')
 const constants = require('./constants')
 const i18n = require('i18n')

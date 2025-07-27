@@ -4,13 +4,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const stripe = require('../shared/stripe/stripe')()
 const models = require('../../models')
-const TransferMail = require('../mail/transfer.js');
+const { handleAmount } = require('../util/handle-amount/handle-amount')
+const PaymentRequestMail = require('../mail/paymentRequest');
 
 module.exports = async function checkoutSessionCompleted(event, req, res) {
   try {
     const session = event.data.object;
-    const { payment_link, payment_status } = session;
-    console.log('Checkout session completed:', session);
+    const { payment_link, payment_status, amount_total } = session;
     if (payment_status === 'paid') {
       const paymentRequest = await models.PaymentRequest.findOne({
         where: {
@@ -18,42 +18,44 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         },
         include: [
           {
-            model: models.User,
-            attributes: ['id', 'email', 'account_id']
+            model: models.User
           }
         ]
       });
-      console.log('Payment Request:', paymentRequest);
+
       if (!paymentRequest) {
         return res.status(404).json({ error: 'Payment request not found' });
       }
 
-      const { amount, currency, User: user = {} } = paymentRequest;
+      const { amount, custom_amount, currency, deactivate_after_payment, User: user = {} } = paymentRequest;
       const { account_id } = user;
 
       const paymentRequestUpdate = await paymentRequest.update({
         status: 'paid',
-        active: false
+        active: deactivate_after_payment ? false : true
       });
 
       if (!paymentRequestUpdate) {
         return res.status(500).json({ error: 'Failed to update payment request' });
       }
 
-      const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
-        active: false
-      });
+      if (deactivate_after_payment) {
+        const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
+          active: false
+        });
 
-      if (!paymentRequestLinkUpdate) {
-        return res.status(500).json({ error: 'Failed to update payment link' });
+        if (!paymentRequestLinkUpdate) {
+          return res.status(500).json({ error: 'Failed to update payment link' });
+        }
       }
-
-      console.log('Payment Request amount:', amount);
-
-      const transfer_amount = Math.round(amount * 100 * 0.92); // Convert to cents and round
+      const amountAfterFee = custom_amount ? 
+        handleAmount(amount_total, 8, 'centavos') :
+        handleAmount(amount, 8, 'decimal');
+      const transfer_amount = amountAfterFee.decimal;
+      const transfer_amount_cents = amountAfterFee.centavos;
 
       const transfer = await stripe.transfers.create({
-        amount: transfer_amount, // Convert to cents and round
+        amount: transfer_amount_cents,
         currency: currency,
         destination: account_id,
         description: `Payment for service using Payment Request id: ${paymentRequest.id}`,
@@ -66,12 +68,11 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       if (!transfer) {
         return res.status(500).json({ error: 'Failed to create transfer' });
       }
-
-      TransferMail.paymentRequestInitiated(
+      await PaymentRequestMail.transferInitiatedForPaymentRequest(
         user,
         paymentRequest,
         transfer_amount
-      )
+      );
 
       const paymentRequestTransferUpdate = await paymentRequest.update({
         transfer_status: 'initiated',

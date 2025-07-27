@@ -11,7 +11,7 @@ const TransferMail = {
   paymentForInvalidAccount: (to) => {},
   futurePaymentForInvalidAccount: (to) => {},
   transferBounty: (order, taskFrom, taskTo, user) => {},
-  paymentRequestInitiated: (user, paymentRequest) => {}
+  paymentRequestInitiated: async (user, paymentRequest) => {}
 }
 
 if (constants.canSendEmail) {
@@ -123,30 +123,6 @@ if (constants.canSendEmail) {
       ]
     )
   }
-}
-
-TransferMail.paymentRequestInitiated = (user, paymentRequest, transfer_amount) => {
-  const to = user.email
-  const language = user.language || 'en'
-  i18n.setLocale(language)
-  user?.receiveNotifications && request(
-    to,
-    i18n.__('mail.paymentRequest.initiated.subject'),
-    [
-      {
-        type: 'text/html',
-        value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.paymentRequest.initiated.message', {
-          title: paymentRequest.title,
-          description: paymentRequest.description,
-          amount: paymentRequest.amount,
-          currency: paymentRequest.currency,
-          paymentUrl: paymentRequest.payment_url,
-          transfer_amount: transfer_amount
-        })}</p>`)
-      }
-    ]
-  )
 }
 
 module.exports = TransferMail

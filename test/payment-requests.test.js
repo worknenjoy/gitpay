@@ -23,6 +23,17 @@ describe("PaymentRequests", () => {
   })
 
   it("should create a new payment request", async () => {
+
+    nock('https://api.sendgrid.com')
+      .persist()
+      .post('/v3/mail/send')
+      .reply(202, [
+        {
+          type: 'text/html',
+          value: 'email content'
+        }
+      ]);
+      
     // Mock the Stripe API to return a sample product
     nock('https://api.stripe.com')
       .persist()
@@ -41,8 +52,13 @@ describe("PaymentRequests", () => {
       .post('/v1/payment_links')
       .reply(200, samplePaymentLink.stripe.paymentLinks.create);
 
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+      .reply(200, {});
+
     const user = await registerAndLogin(agent);
-    
+
     const res = await agent
       .post('/payment-requests')
       .set('Content-Type', 'application/json')
@@ -55,7 +71,7 @@ describe("PaymentRequests", () => {
         amount: 100.00,
         currency: 'USD'
       });
-    
+
     expect(res.body).to.exist;
     expect(res.body.id).to.exist;
     expect(res.body.title).to.equal('Test Payment Request');
@@ -68,6 +84,49 @@ describe("PaymentRequests", () => {
     expect(res.body.payment_link_id).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km');
     expect(res.body.payment_url).to.equal('https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04')
   });
+
+  it('should create a new payment request with custom amount', async () => {
+    nock('https://api.sendgrid.com')
+      .persist()
+      .post('/v3/mail/send')
+      .reply(202, [
+        {
+          type: 'text/html',
+          value: 'email content'
+        }
+      ]);
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/products')
+      .reply(200, sampleProduct.stripe.product.create.success);
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/prices')
+      .reply(200, samplePrice.stripe.price.create);
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links')
+      .reply(200, samplePaymentLink.stripe.paymentLinks.create);
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+      .reply(200, {});
+    const user = await registerAndLogin(agent);
+    const res = await agent
+      .post('/payment-requests')
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', user.headers.authorization)
+      .expect(201)
+      .send({
+        title: 'Test Payment Request with Custom Amount',
+        description: 'This is a test payment request with custom amount',
+        amount: 0.00,
+        currency: 'USD',
+        custom_amount: true
+      });
+  });
+
   it('should list all payment requests for a user', async () => {
     const register = await registerAndLogin(agent);
     const { body, headers } = register;
@@ -75,14 +134,14 @@ describe("PaymentRequests", () => {
     await models.PaymentRequest.create({
       userId: body.id,
       title: 'Sample Payment Request',
+      custom_amount: true,
       description: 'This is a sample payment request',
-      amount: 50.00,
       currency: 'USD',
       payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
       payment_url: 'https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04',
       status: 'open'
     });
-    
+
     const res = await agent
       .get('/payment-requests')
       .set('Content-Type', 'application/json')
@@ -93,10 +152,12 @@ describe("PaymentRequests", () => {
     expect(res.body.length).to.be.greaterThan(0);
     expect(res.body[0].title).to.equal('Sample Payment Request');
     expect(res.body[0].description).to.equal('This is a sample payment request');
-    expect(res.body[0].amount).to.equal('50');
+    expect(res.body[0].amount).to.equal(null);
+    expect(res.body[0].custom_amount).to.equal(true);
     expect(res.body[0].currency).to.equal('USD');
     expect(res.body[0].status).to.equal('open');
     expect(res.body[0].payment_link_id).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km');
     expect(res.body[0].payment_url).to.equal('https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04');
+    expect(res.body[0].deactivate_after_payment).to.equal(false);
   });
 });

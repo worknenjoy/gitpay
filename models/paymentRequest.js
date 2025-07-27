@@ -5,8 +5,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
+    deactivate_after_payment: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     currency: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
+    custom_amount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     payment_link_id: DataTypes.STRING,

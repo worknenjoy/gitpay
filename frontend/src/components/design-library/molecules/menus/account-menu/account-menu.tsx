@@ -31,11 +31,11 @@ const AccountMenu = ({
   signOut
 }) => {
   const history = useHistory();
-  const { user } = loggedIn;
-  const { id, username } = user;
+  const { data } = loggedIn;
+  const { id, name, username, picture_url, email, Types } = data;
 
   const getUserType = (userTypes) => {
-    return userTypes.some(type => user.Types.map(t => t.name).includes(type));
+    return userTypes.some(type => Types.map(t => t.name).includes(type));
   }
 
   const handleLogout = () => {
@@ -106,17 +106,17 @@ const AccountMenu = ({
         <ListItem>
           <ListItemText>
             <Chip
-              avatar={ user.picture_url
+              avatar={ picture_url
                 ? <StyledAvatar
-                  alt={ user.username || '' }
-                  src={ user.picture_url }
+                  alt={ username || '' }
+                  src={ picture_url }
                 />
-                : <StyledAvatar alt={ user.username || '' } src="">
-                  { user.username ? nameInitials(user.username) : <Person /> }
+                : <StyledAvatar alt={ username || '' } src="">
+                  { username ? nameInitials(username) : <Person /> }
                 </StyledAvatar>
               }
               color="secondary"
-              label={ `${user.name || user.username} (${user.email})` }
+              label={ `${name || username} (${email})` }
             />
           </ListItemText>
         </ListItem>

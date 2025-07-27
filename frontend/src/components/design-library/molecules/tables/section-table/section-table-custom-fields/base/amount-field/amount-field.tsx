@@ -7,7 +7,7 @@ const AmountField = ({ value }) => {
   const intl = useIntl();
   return (
     <div style={{ width: 70, textAlign: 'center' }}>
-      {value ? (value === '0' ? intl.formatMessage(messages.noBounty) : `$ ${value}`) : intl.formatMessage(messages.noBounty)}
+      {value ? (value === '0' ? intl.formatMessage(messages.noAmountDefined) : `$ ${value}`) : intl.formatMessage(messages.noBounty)}
     </div>
   );
 };
