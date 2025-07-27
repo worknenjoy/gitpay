@@ -9,6 +9,12 @@ function extractIssueReferences(text) {
   return matches ? matches.map(match => match.slice(1)) : []; // Remove the '#' prefix
 }
 
+function extractIssueReferenceByURL(content, url) {
+  if (!content || !url) return false;
+  const regex = new RegExp(`\\b${url}\\b`, 'g');
+  return regex.test(content);
+}
+
 function extractIssueNumberFromURL(url) {
   const match = url.match(/\/issues\/(\d+)(\/)?$/);
   return match ? match[1] : null;
@@ -70,6 +76,11 @@ module.exports = Promise.method(async function fetchTaskSolutionData (solutionPa
     const issueReferences = extractIssueReferences(pullRequestData.body)
     const issueNumber = extractIssueNumberFromURL(task.dataValues.url)
     const issueReferencesMatch = issueReferences.some(issueReference => issueNumber === issueReference)
+
+    const issueReferencesByURL = extractIssueReferenceByURL(pullRequestData.body, task.url)
+    if(issueReferencesByURL) {
+      hasIssueReference = true
+    }
     
     if(issueReferences.length && issueReferencesMatch) {
       hasIssueReference = true

@@ -9,7 +9,7 @@ const clientSecret = process.env.PAYPAL_SECRET;
 const client = new paypal.Client({
   clientCredentialsAuthCredentials: {
     oAuthClientId: clientId,
-    oAuthClientSecret: clientSecret,
+    oAuthClientSecret: clientSecret
   }
 });
 
