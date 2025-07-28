@@ -17,7 +17,7 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
     if (value === 'automatic') {
       setAutomaticPayoutOptions(true);
       setCurrentRadioValue('automatic');
-      setCurrentValue(value)
+      setCurrentValue('daily');
       setCurrentSelectValue('daily'); // Default to daily if automatic is selected
     }
     if (value === 'manual') {
