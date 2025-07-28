@@ -1,11 +1,28 @@
 import PayoutScheduleForm from 'design-library/organisms/forms/payout-forms/payout-schedule-form/payout-schedule-form';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const PayoutSettingsBankAccountPayoutSchedulePage = () => {
+const PayoutSettingsBankAccountPayoutSchedulePage = ({
+  user,
+  account,
+  updateAccount
+}) => {
+  const { data, completed } = account || {};
+  const { settings = {} } = data || {};
+  const { payouts } = settings || {};
+  const { schedule } = payouts || {};
+  const { interval } = schedule || {};
+
+  useEffect(() => {
+   console.log(user, account, updateAccount);
+  }, [user, account, updateAccount]);
+  
   return (
     <div>
-      <h1>Payout Schedule</h1>
-      <PayoutScheduleForm />
+      <PayoutScheduleForm
+        completed={completed}
+        value={interval}
+        onSubmit={updateAccount}
+      />
     </div>
   );
 };

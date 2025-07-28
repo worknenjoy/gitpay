@@ -64,7 +64,13 @@ const PayoutSettingsBankAccountPage = ({
           <Route
             exact
             path="/profile/payout-settings/bank-account/payout-schedule"
-            component={(routeProps) => <PayoutSettingsBankAccountPayoutSchedulePage {...routeProps} />}
+            component={(routeProps) => 
+              <PayoutSettingsBankAccountPayoutSchedulePage
+                {...routeProps} 
+                user={user}
+                account={account}
+                updateAccount={updateAccount}
+              />}
           />
         </Switch>
       </HashRouter>
