@@ -7,20 +7,20 @@ import Button from 'design-library/atoms/buttons/button/button';
 import ProfileSecondaryHeader from 'design-library/molecules/headers/profile-secondary-header/profile-secondary-header';
 
 const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
-  const [ automaticPayoutOptions, setAutomaticPayoutOptions ] = React.useState(false);
-  const [ currentSelectValue, setCurrentSelectValue] = React.useState(value || 'daily');
-  const [ currentRadioValue, setCurrentRadioValue] = React.useState(value || 'automatic');
-  const [ currentValue, setCurrentValue ] = React.useState(value || 'daily');
+  const [automaticPayoutOptions, setAutomaticPayoutOptions] = React.useState(false);
+  const [currentSelectValue, setCurrentSelectValue] = React.useState(value || 'daily');
+  const [currentRadioValue, setCurrentRadioValue] = React.useState(value || 'automatic');
+  const [currentValue, setCurrentValue] = React.useState(value || 'daily');
 
   const handlePayoutScheduleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if(value === 'automatic') {
+    if (value === 'automatic') {
       setAutomaticPayoutOptions(true);
       setCurrentRadioValue('automatic');
       setCurrentValue(value)
       setCurrentSelectValue('daily'); // Default to daily if automatic is selected
     }
-    if(value === 'manual') {
+    if (value === 'manual') {
       setAutomaticPayoutOptions(false);
       setCurrentRadioValue('manual');
       setCurrentSelectValue(null);
@@ -29,11 +29,11 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
   };
 
   useEffect(() => {
-    if(value === 'manual') {
+    if (value === 'manual') {
       setCurrentRadioValue('manual');
       setCurrentSelectValue(null)
     }
-    if( value === 'daily' || value === 'weekly' || value === 'monthly') {
+    if (value === 'daily' || value === 'weekly' || value === 'monthly') {
       setCurrentRadioValue('automatic');
       setCurrentSelectValue(value);
       setAutomaticPayoutOptions(true);
@@ -62,31 +62,40 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
         completed={completed}
         onChange={handlePayoutScheduleChange}
         name={'payoutSchedule'}
-        label={<FormattedMessage id="payoutSchedule.frequency" defaultMessage="Payout Schedule Settings" />}
+        label={<FormattedMessage id="payoutSchedule.frequency" defaultMessage="Your payout schedule determines when Gitpay sends money to your registered bank account." />}
         value={currentRadioValue}
         options={[
-          { value: 'manual', label: <FormattedMessage id="payout.settings.schedule.manual" defaultMessage="Manual Payouts" /> },
-          { value: 'automatic', label: <FormattedMessage id="payout.settings.schedule.automatic" defaultMessage="Automatic Payouts" /> }
+          {
+            value: 'manual',
+            label: <FormattedMessage id="payout.settings.schedule.manual" defaultMessage="Manual Payouts" />,
+            caption: <FormattedMessage id="payout.settings.schedule.manual.caption" defaultMessage="You can manually initiate a payout from Gitpay whenever you want." />
+          },
+          {
+            value: 'automatic',
+            label: <FormattedMessage id="payout.settings.schedule.automatic" defaultMessage="Automatic Payouts" />,
+            caption: <FormattedMessage id="payout.settings.schedule.automatic.caption" defaultMessage="Gitpay will automatically payout funds to your bank account based on the selected schedule." />,
+            content: automaticPayoutOptions && (
+              <div style={{ width: 400 }}>
+                <Typography variant="caption" style={{ marginTop: 20 }}>
+                  <FormattedMessage id="payoutSchedule.automaticOptions" defaultMessage="Set a custom schedule to payout funds to your bank account." />
+                </Typography>
+                <div>
+                  <SelectInput
+                    options={[
+                      { value: 'daily', label: <FormattedMessage id="payoutSchedule.automatic.daily" defaultMessage="Daily" /> },
+                      { value: 'weekly', label: <FormattedMessage id="payoutSchedule.automatic.weekly" defaultMessage="Weekly" /> },
+                      { value: 'monthly', label: <FormattedMessage id="payoutSchedule.automatic.monthly" defaultMessage="Monthly" /> }
+                    ]}
+                    value={currentSelectValue}
+                    onChange={handleSelectChange}
+                    completed={completed}
+                  />
+                </div>
+              </div>
+            )
+          }
         ]}
       />
-      {automaticPayoutOptions && (
-        <div>
-          <Typography variant="caption" style={{ marginTop: 20 }}>
-            <FormattedMessage id="payoutSchedule.automaticOptions" defaultMessage="Automatic payout options will be displayed here." />
-          </Typography>
-          <div>
-            <SelectInput
-              options={[
-                { value: 'daily', label: <FormattedMessage id="payoutSchedule.automatic.daily" defaultMessage="Daily" /> },
-                { value: 'weekly', label: <FormattedMessage id="payoutSchedule.automatic.weekly" defaultMessage="Weekly" /> },
-                { value: 'monthly', label: <FormattedMessage id="payoutSchedule.automatic.monthly" defaultMessage="Monthly" /> }
-              ]}
-              value={currentSelectValue}
-              onChange={handleSelectChange}
-            />
-          </div>
-        </div>
-      )}
       <div style={{ marginTop: 20, display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           completed={completed}
