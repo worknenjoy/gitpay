@@ -9,12 +9,22 @@ import ProfileSecondaryHeader from 'design-library/molecules/headers/profile-sec
 const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
   const [ automaticPayoutOptions, setAutomaticPayoutOptions ] = React.useState(false);
   const [ currentSelectValue, setCurrentSelectValue] = React.useState(value || 'daily');
-  const [ currentRadioValue, setCurrentRadioValue] = React.useState(value || 'manual');
+  const [ currentRadioValue, setCurrentRadioValue] = React.useState(value || 'automatic');
+  const [ currentValue, setCurrentValue ] = React.useState(value || 'daily');
 
   const handlePayoutScheduleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if(value === 'automatic') {
       setAutomaticPayoutOptions(true);
+      setCurrentRadioValue('automatic');
+      setCurrentValue(value)
+      setCurrentSelectValue('daily'); // Default to daily if automatic is selected
+    }
+    if(value === 'manual') {
+      setAutomaticPayoutOptions(false);
+      setCurrentRadioValue('manual');
+      setCurrentSelectValue(null);
+      setCurrentValue(value);
     }
   };
 
@@ -27,16 +37,29 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
       setCurrentRadioValue('automatic');
       setCurrentSelectValue(value);
       setAutomaticPayoutOptions(true);
+      setCurrentValue(value);
     }
   }, [value]);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit(event, currentValue);
+  }
+
+  const handleSelectChange = (event) => {
+    setCurrentSelectValue(event.target.value);
+    setCurrentValue(event.target.value);
+  };
+
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <ProfileSecondaryHeader
         title={<FormattedMessage id="payout-schedule.settings.title" defaultMessage="Payout Schedule Settings" />}
         subtitle={<FormattedMessage id="payout-schedule.settings.description" defaultMessage="Configure your payout schedule preferences." />}
       />
       <Radios
+        completed={completed}
         onChange={handlePayoutScheduleChange}
         name={'payoutSchedule'}
         label={<FormattedMessage id="payoutSchedule.frequency" defaultMessage="Payout Schedule Settings" />}
@@ -59,7 +82,7 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
                 { value: 'monthly', label: <FormattedMessage id="payoutSchedule.automatic.monthly" defaultMessage="Monthly" /> }
               ]}
               value={currentSelectValue}
-              onChange={(event) => setCurrentSelectValue(event.target.value)}
+              onChange={handleSelectChange}
             />
           </div>
         </div>

@@ -2,7 +2,6 @@ import PayoutScheduleForm from 'design-library/organisms/forms/payout-forms/payo
 import React, { useEffect } from 'react';
 
 const PayoutSettingsBankAccountPayoutSchedulePage = ({
-  user,
   account,
   updateAccount
 }) => {
@@ -12,16 +11,29 @@ const PayoutSettingsBankAccountPayoutSchedulePage = ({
   const { schedule } = payouts || {};
   const { interval } = schedule || {};
 
+  /*
   useEffect(() => {
-   console.log(user, account, updateAccount);
-  }, [user, account, updateAccount]);
+   console.log(account, updateAccount);
+  }, [account, updateAccount]);
+  */
+
+  const handlePayoutScheduleUpdate = (event, value) => {
+    event.preventDefault();
+    
+    const formData = {
+      'settings[payouts][schedule][interval]': value,
+      ...(value === 'weekly' ? { 'settings[payouts][schedule][weekly_anchor]': 'monday' } : {}),
+      ...(value === 'monthly' ? { 'settings[payouts][schedule][monthly_anchor]': '1' } : {})
+    };
+    updateAccount(formData);
+  }; 
   
   return (
     <div>
       <PayoutScheduleForm
         completed={completed}
         value={interval}
-        onSubmit={updateAccount}
+        onSubmit={handlePayoutScheduleUpdate}
       />
     </div>
   );

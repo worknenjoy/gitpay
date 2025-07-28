@@ -67,7 +67,6 @@ const PayoutSettingsBankAccountPage = ({
             component={(routeProps) => 
               <PayoutSettingsBankAccountPayoutSchedulePage
                 {...routeProps} 
-                user={user}
                 account={account}
                 updateAccount={updateAccount}
               />}
