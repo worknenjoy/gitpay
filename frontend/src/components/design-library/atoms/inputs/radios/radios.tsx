@@ -21,7 +21,7 @@ type RadiosProps = {
 
 export default function Radios({ name, label, options, value, onChange, completed = true }: RadiosProps) {
   return (
-    <ReactPlaceholder type='text' rows={3} ready={completed} showLoadingAnimation>
+    <ReactPlaceholder type="text" rows={3} ready={completed} showLoadingAnimation>
       <FormControl component="fieldset">
         {label && <FormLabel component="legend">
           <Typography variant="body1" gutterBottom>{label}</Typography>

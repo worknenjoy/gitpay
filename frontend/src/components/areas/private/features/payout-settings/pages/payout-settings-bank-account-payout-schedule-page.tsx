@@ -1,5 +1,5 @@
 import PayoutScheduleForm from 'design-library/organisms/forms/payout-forms/payout-schedule-form/payout-schedule-form';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const PayoutSettingsBankAccountPayoutSchedulePage = ({
   account,

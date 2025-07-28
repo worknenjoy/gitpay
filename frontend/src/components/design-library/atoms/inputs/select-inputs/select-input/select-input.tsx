@@ -5,7 +5,7 @@ import ReactPlaceholder from 'react-placeholder';
 const SelectInput = ({ options, value, onChange, completed = true }) => {
 
   return (
-    <ReactPlaceholder type='text' rows={1} ready={completed} showLoadingAnimation>
+    <ReactPlaceholder type="text" rows={1} ready={completed} showLoadingAnimation>
       <FormControl variant="standard" size="medium" style={{ margin: '10px 0', width: '100%' }}>
         <Select
           SelectDisplayProps={{ style: { paddingTop: 8, paddingBottom: 8 } }}
