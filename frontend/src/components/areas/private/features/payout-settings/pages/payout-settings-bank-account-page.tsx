@@ -3,6 +3,7 @@ import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import PayoutSettingsBankAccount from 'design-library/pages/private/settings-pages/payout-settings-bank-account/payout-settings-bank-account'
 import PayoutSettingsBankAcccountHolderPage from './payout-settings-bank-account-holder-page'
 import PayoutSettingsBankAccountInfoPage from './payout-settings-bank-account-info-page'
+import PayoutSettingsBankAccountPayoutSchedulePage from './payout-settings-bank-account-payout-schedule-page';
 
 
 const PayoutSettingsBankAccountPage = ({ 
@@ -59,6 +60,16 @@ const PayoutSettingsBankAccountPage = ({
                 updateBankAccount={updateBankAccount}
                 countries={countries}
               />} 
+          />
+          <Route
+            exact
+            path="/profile/payout-settings/bank-account/payout-schedule"
+            component={(routeProps) => 
+              <PayoutSettingsBankAccountPayoutSchedulePage
+                {...routeProps} 
+                account={account}
+                updateAccount={updateAccount}
+              />}
           />
         </Switch>
       </HashRouter>
