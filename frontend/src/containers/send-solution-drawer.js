@@ -17,11 +17,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTaskSolution: (userId, taskId) => dispatch(getTaskSolution(userId, taskId)),
+    getTaskSolution: (taskId) => dispatch(getTaskSolution(taskId)),
     createTaskSolution: (taskSolution) => dispatch(createTaskSolution(taskSolution)),
     updateTaskSolution: (payload) => dispatch(updateTaskSolution(payload)),
-    fetchPullRequestData: (owner, repositoryName, pullRequestId, userId, taskId) => dispatch(
-      fetchPullRequestData(owner, repositoryName, pullRequestId, userId, taskId)
+    fetchPullRequestData: (owner, repositoryName, pullRequestId, taskId) => dispatch(
+      fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)
     ),
     cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
     fetchAccount: () => dispatch(fetchAccount())
