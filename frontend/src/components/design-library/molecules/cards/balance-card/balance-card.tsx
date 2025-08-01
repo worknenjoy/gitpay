@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 });
 
 type BalanceCardProps = {
-  name: string;
+  name: string | React.ReactNode;
   balance: number;
   currency?: string;
   onAdd?: (e: any) => void;

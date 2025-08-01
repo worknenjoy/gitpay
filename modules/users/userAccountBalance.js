@@ -1,3 +1,4 @@
+const Promise = require('bluebird')
 const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(async function userAccountBalance (userParameters) {
