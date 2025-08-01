@@ -1,7 +1,7 @@
 const Tasks = require('../../tasks')
 
 exports.getTaskSolution = (req, res) => {
-  Tasks.taskSolutionGet(req.query.taskId, req.query.userId)
+  Tasks.taskSolutionGet(req.query.taskId, req.user.id)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -14,7 +14,7 @@ exports.getTaskSolution = (req, res) => {
 exports.fetchPullRequestData = (req, res) => {
   const params = {
     pullRequestId: req.query.pullRequestId,
-    userId: req.query.userId,
+    userId: req.user.id,
     repositoryName: req.query.repositoryName,
     owner: req.query.owner,
     taskId: req.query.taskId
@@ -30,7 +30,7 @@ exports.fetchPullRequestData = (req, res) => {
 }
 
 exports.createTaskSolution = (req, res) => {
-  Tasks.taskSolutionCreate(req.body)
+  Tasks.taskSolutionCreate({ ...req.body, userId: req.user.id })
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -41,7 +41,7 @@ exports.createTaskSolution = (req, res) => {
 }
 
 exports.updateTaskSolution = (req, res) => {
-  Tasks.taskSolutionUpdate(req.body, req.params.id).then(data => {
+  Tasks.taskSolutionUpdate({ ...req.body, userId: req.user.id }, req.params.id).then(data => {
     res.send(data)
   }).catch(error => {
     // eslint-disable-next-line no-console

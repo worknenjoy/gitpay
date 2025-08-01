@@ -42,11 +42,11 @@ const getTaskSolutionError = error => {
   return { type: GET_TASK_SOLUTION_ERROR, completed: true, error: error }
 }
 
-const getTaskSolution = (userId, taskId) => {
+const getTaskSolution = (taskId) => {
   validToken()
   return dispatch => {
     dispatch(getTaskSolutionRequested())
-    return axios.get(`${api.API_URL}/tasksolutions`, { params: { userId: userId, taskId: taskId } }).then(response => {
+    return axios.get(`${api.API_URL}/tasksolutions`, { params: { taskId: taskId } }).then(response => {
       return dispatch(getTaskSolutionSuccess(response.data))
     }).catch(error => {
       if (error) {
@@ -77,12 +77,12 @@ const createTaskSolutionError = error => {
   return { type: CREATE_TASK_SOLUTION_ERROR, completed: true, error: error }
 }
 
-const fetchPullRequestData = (owner, repositoryName, pullRequestId, userId, taskId) => {
+const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
   validToken()
   return dispatch => {
     dispatch(fetchPullRequestDataRequested())
     return axios.get(`${api.API_URL}/tasksolutions/fetch`, {
-      params: { owner: owner, repositoryName: repositoryName, pullRequestId: pullRequestId, userId: userId, taskId: taskId }
+      params: { owner: owner, repositoryName: repositoryName, pullRequestId: pullRequestId, taskId: taskId }
     }).then(response => {
       return dispatch(fetchPullRequestDataSuccess(response.data))
     }).catch(error => {
@@ -138,11 +138,11 @@ const updateTaskSolutionError = error => {
   return { type: UPDATE_TASK_SOLUTION_ERROR, completed: true, error: error }
 }
 
-const updateTaskSolution = ({ taskSolutionId, pullRequestURL, userId, taskId }) => {
+const updateTaskSolution = ({ taskSolutionId, pullRequestURL, taskId }) => {
   validToken()
   return dispatch => {
     dispatch(updateTaskSolutionRequested())
-    return axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, userId: userId, taskId: taskId }).then(response => {
+    return axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, taskId: taskId }).then(response => {
       dispatch(addNotification('issue.solution.dialog.update.success'))
       dispatch(fetchTask(taskId))
       return dispatch(updateTaskSolutionSuccess(response.data))

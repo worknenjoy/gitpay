@@ -31,7 +31,6 @@ describe("Task Solution", () => {
       try {
         const solutionParams = {
           pullRequestId: '2',
-          userId: 1,
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
           taskId: 1
@@ -89,7 +88,6 @@ describe("Task Solution", () => {
             isIssueClosed: true,
             hasIssueReference: true,
             pullRequestURL: "https://github.com/alexanmtz/test-repository/pull/2",
-            userId: user.id,
             taskId: task.id
           });
         expect(taskSolutionCreateRes.body).to.have.property('id');
@@ -102,7 +100,6 @@ describe("Task Solution", () => {
       try {
         const solutionParams = {
           pullRequestId: '2',
-          userId: 1,
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
           taskId: 1
@@ -172,7 +169,6 @@ describe("Task Solution", () => {
             isIssueClosed: true,
             hasIssueReference: true,
             pullRequestURL: "https://github.com/alexanmtz/test-repository/pull/2",
-            userId: user.id,
             taskId: task.id
           });
         expect(taskSolutionCreateRes.statusCode).to.equal(400);
@@ -186,7 +182,6 @@ describe("Task Solution", () => {
       try {
         const solutionParams = {
           pullRequestId: '2',
-          userId: 1,
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
           taskId: 1
@@ -253,7 +248,6 @@ describe("Task Solution", () => {
             isIssueClosed: true,
             hasIssueReference: true,
             pullRequestURL: "https://github.com/alexanmtz/test-repository/pull/2",
-            userId: user.id,
             taskId: task.id
           });
         expect(taskSolutionUpdateRes.body).to.have.property('isConnectedToGitHub');
@@ -272,7 +266,6 @@ describe("Task Solution", () => {
       try {
         const solutionParams = {
           pullRequestId: '2',
-          userId: 1,
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
           taskId: 1
@@ -310,14 +303,13 @@ describe("Task Solution", () => {
 
         const params = {
           pullRequestId: solutionParams.pullRequestId,
-          userId: solutionParams.userId,
           repositoryName: solutionParams.repositoryName,
           owner: solutionParams.owner,
           taskId: solutionParams.taskId
         }
         // Send a GET request to fetch task solution data
         const taskSolutionFetchDataRes = await agent
-          .get(`/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&userId=${params.userId}&taskId=${params.taskId}`)
+          .get(`/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`)
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)
           .expect(200)
@@ -342,7 +334,6 @@ describe("Task Solution", () => {
       try {
         const solutionParams = {
           pullRequestId: '2',
-          userId: 1,
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
           taskId: 1
@@ -380,14 +371,13 @@ describe("Task Solution", () => {
 
         const params = {
           pullRequestId: solutionParams.pullRequestId,
-          userId: solutionParams.userId,
           repositoryName: solutionParams.repositoryName,
           owner: solutionParams.owner,
           taskId: solutionParams.taskId
         }
         // Send a GET request to fetch task solution data
         const taskSolutionFetchDataRes = await agent
-          .get(`/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&userId=${params.userId}&taskId=${params.taskId}`)
+          .get(`/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`)
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)
           .expect(200)
@@ -429,7 +419,6 @@ describe("Task Solution", () => {
 
         const solutionParams = {
           pullRequestId: '2',
-          userId: user.id,
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
           taskId: task.id
@@ -451,14 +440,13 @@ describe("Task Solution", () => {
 
         const params = {
           pullRequestId: solutionParams.pullRequestId,
-          userId: solutionParams.userId,
           repositoryName: solutionParams.repositoryName,
           owner: solutionParams.owner,
           taskId: solutionParams.taskId
         }
         // Send a GET request to fetch task solution data
         const taskSolutionFetchDataRes = await agent
-          .get(`/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&userId=${params.userId}&taskId=${params.taskId}`)
+          .get(`/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`)
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)
           .expect(200)

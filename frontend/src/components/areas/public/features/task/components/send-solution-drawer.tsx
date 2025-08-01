@@ -19,7 +19,7 @@ const SendSolutionDrawer = props => {
   const { taskSolution, pullRequestData, task, user, fetchAccount, account, history } = props
 
   useEffect(() => {
-    user.id && task.data.id && props.getTaskSolution(user.id, task.data.id)
+    user.id && task.data.id && props.getTaskSolution(task.data.id)
   }, [user, task])
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const SendSolutionDrawer = props => {
       clearTimeout(timer)
       setTimer(setTimeout(() => {
         const urlSplitted = pullRequestURL.split('/')
-        props.fetchPullRequestData(urlSplitted[3], urlSplitted[4], urlSplitted[6], props.user.id, task.data.id)
+        props.fetchPullRequestData(urlSplitted[3], urlSplitted[4], urlSplitted[6], task.data.id)
       }, 2500))
     }
   }, [pullRequestURL])
@@ -50,7 +50,7 @@ const SendSolutionDrawer = props => {
 
   const submitTaskSolution = () => {
     if (editMode) {
-      const payload = { pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id, taskSolutionId: taskSolution.id }
+      const payload = { pullRequestURL: pullRequestURL, taskId: task.data.id, taskSolutionId: taskSolution.id }
       props.updateTaskSolution(payload).then((solution) => {
         
       })
@@ -59,7 +59,7 @@ const SendSolutionDrawer = props => {
       return
     }
 
-    const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: task.data.id, userId: props.user.id }
+    const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: task.data.id }
 
     props.createTaskSolution(payload).then((solution) => {
       
