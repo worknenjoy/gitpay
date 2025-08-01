@@ -686,7 +686,7 @@ describe("Users", () => {
           }).catch(done)
         }).catch(done)
     });
-    xit('should retrieve user account balance', async () => {
+    it('should retrieve user account balance', async () => {
       nock('https://api.stripe.com')
         .get('/v1/balance')
         .reply(200, {
