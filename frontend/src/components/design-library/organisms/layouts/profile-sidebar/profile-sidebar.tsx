@@ -38,10 +38,12 @@ const ProfileSidebar = ({
       setSelected(5)
    } else if (path.includes('/profile/claims')) {
       setSelected(6)
-    } else if (path.includes('/profile/user-account')) {
+    } else if (path.includes('/profile/payouts')) {
       setSelected(7)
-    } else if (path.includes('/profile/payout-settings')) {
+    } else if (path.includes('/profile/user-account')) {
       setSelected(8)
+    } else if (path.includes('/profile/payout-settings')) {
+      setSelected(9)
     } else {
       setSelected(0)
     }

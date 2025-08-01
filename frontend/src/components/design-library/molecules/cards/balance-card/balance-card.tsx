@@ -21,10 +21,12 @@ const useStyles = makeStyles({
 type BalanceCardProps = {
   name: string;
   balance: number;
+  currency?: string;
   onAdd?: (e: any) => void;
+  action?: React.PropsWithChildren<any>;
 }
 
-const BalanceCard = ({ name, balance, onAdd }:BalanceCardProps) => {
+const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action }:BalanceCardProps) => {
   const classes = useStyles();
 
   return (
@@ -34,10 +36,10 @@ const BalanceCard = ({ name, balance, onAdd }:BalanceCardProps) => {
           {name}
         </Typography>
         <Typography className={classes.balance} color="primary">
-          ${balance}
+          {currency} {balance}
         </Typography>
       </CardContent>
-      { onAdd &&
+      { onAdd && action && (
         <CardActions style={{display: 'flex', justifyContent: 'flex-end'}}>
           <Button 
             variant="contained"
@@ -45,10 +47,10 @@ const BalanceCard = ({ name, balance, onAdd }:BalanceCardProps) => {
             color="secondary"
             onClick={onAdd}
           >
-            <FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />
+            {action}
           </Button>
         </CardActions>
-      }
+      )}
     </Card>
   );
 };

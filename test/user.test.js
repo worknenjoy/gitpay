@@ -686,6 +686,38 @@ describe("Users", () => {
           }).catch(done)
         }).catch(done)
     });
+    xit('should retrieve user account balance', async () => {
+      nock('https://api.stripe.com')
+        .get('/v1/balance')
+        .reply(200, {
+          object: 'balance',
+          available: [
+            {
+              amount: 1000,
+              currency: 'usd'
+            }
+          ],
+          pending: [
+            {
+              amount: 500,
+              currency: 'usd'
+            }
+          ]
+        });
+      const res = await registerAndLogin(agent, {
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      });
+      const account = await agent
+        .get(`/user/account/balance`)
+        .set('Authorization', res.headers.authorization)
+        .expect(200);
+      expect(account.statusCode).to.equal(200);
+      expect(account.body.object).to.equal('balance');
+      expect(account.body.available[0].amount).to.equal(1000);
+      expect(account.body.available[0].currency).to.equal('usd');
+      expect(account.body.pending[0].amount).to.equal(500);
+      expect(account.body.pending[0].currency).to.equal('usd');
+    });
     it('should retrieve country specs for user', (done) => {
       nock('https://api.stripe.com')
         .get('/v1/accounts/acct_1CVSl2EI8tTzMKoL')

@@ -12,7 +12,7 @@ exports.createPayout = async function createPayout(req, res) {
 }
 
 exports.searchPayout = (req, res) => {
-  Payout.payoutSearch(req.query)
+  Payout.payoutSearch({...req.query, userId: req.user.id})
     .then(data => {
       res.send(data)
     }).catch(error => {
