@@ -1,11 +1,15 @@
 import React from 'react'
-import { Container } from '@material-ui/core'
+import { Box, Container, Paper } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 import ProfileHeader from '../../../../design-library/molecules/headers/profile-main-header/profile-main-header'
 import PayoutsTable from './payouts-table'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
+import EmptyPayout from 'design-library/molecules/content/empty/empty-payout/empty-payout'
+import { useHistory } from 'react-router-dom'
 
 const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, user }) => {
+  const history = useHistory()
+  const { data: userData, completed: userCompleted } = user || {}
   const { data, completed } = balance || {}
   const available = data?.available || [{ amount: 0, currency: 'USD' }]
 
@@ -28,16 +32,27 @@ const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, user }) 
         />
 
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-        <BalanceCard
-          name={<FormattedMessage id="payouts.balance" defaultMessage="Balance" />}
-          balance={available[0].amount}
-          currency={available[0].currency}
-          onAdd={(e) => {}}
-          action={<FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />}
-        />
-      </div>
-      <PayoutsTable payouts={payouts} />
+      {(!userData?.account_id && userCompleted) ? (
+        <Paper elevation={0} style={{ padding: 20, marginTop: 10 }}>
+          <EmptyPayout
+            onActionClick={() => history.push('/profile/payout-settings')}
+          />
+        </Paper>
+      ) : (
+      <>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <BalanceCard
+            name={<FormattedMessage id="payouts.balance" defaultMessage="Balance" />}
+            balance={available[0].amount}
+            currency={available[0].currency}
+            onAdd={(e) => { }}
+            action={<FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />}
+            completed={completed}
+          />
+        </div>
+        <PayoutsTable payouts={payouts} />
+      </>
+    )}
     </Container>
   )
 }

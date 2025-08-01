@@ -1,6 +1,6 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Button, Card, CardContent, CardActions, Typography, makeStyles } from '@material-ui/core';
+import ReactPlaceholder from 'react-placeholder';
 
 const useStyles = makeStyles({
   root: {
@@ -24,24 +24,33 @@ type BalanceCardProps = {
   currency?: string;
   onAdd?: (e: any) => void;
   action?: React.PropsWithChildren<any>;
+  completed?: boolean;
 }
 
-const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action }:BalanceCardProps) => {
+const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, completed }: BalanceCardProps) => {
   const classes = useStyles();
 
   return (
+
     <Card className={classes.root}>
       <CardContent>
-        <Typography className={classes.name} color="textSecondary" gutterBottom>
-          {name}
-        </Typography>
-        <Typography className={classes.balance} color="primary">
-          {currency} {balance}
-        </Typography>
+        <ReactPlaceholder
+          showLoadingAnimation={true}
+          type="text"
+          ready={completed}
+          rows={2}
+        >
+          <Typography className={classes.name} color="textSecondary" gutterBottom>
+            {name}
+          </Typography>
+          <Typography className={classes.balance} color="primary">
+            {currency} {balance}
+          </Typography>
+        </ReactPlaceholder>
       </CardContent>
-      { onAdd && action && (
-        <CardActions style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <Button 
+      {onAdd && action && (
+        <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
             variant="contained"
             size="small"
             color="secondary"
@@ -51,7 +60,9 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action }:BalanceC
           </Button>
         </CardActions>
       )}
+
     </Card>
+
   );
 };
 
