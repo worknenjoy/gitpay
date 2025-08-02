@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchAccountBalance } from '../actions/userActions';
-import { searchPayout } from '../actions/payoutActions';
+import { searchPayout, requestPayout } from '../actions/payoutActions';
 import Payouts from '../components/areas/private/features/payouts/payouts';
 import { getCurrentUser } from '../common/selectors/user/getUser'
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     searchPayout: (params: any) => dispatch(searchPayout(params)),
+    requestPayout: (params: any) => dispatch(requestPayout(params)),
     fetchAccountBalance: () => dispatch(fetchAccountBalance())
   }
 }

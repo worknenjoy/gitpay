@@ -39,7 +39,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    onSubmit?.(event, data);
+    onSubmit?.(event, {...data, currency: currency });
   };
 
   const handleCustomAmountChange = (selected: boolean) => {
@@ -86,7 +86,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
           <BalanceCard
             name={<FormattedMessage id="PayoutRequest.form.title" defaultMessage="Available funds to payout to your account" />}
             balance={balance}
-            currency="USD"
+            currency={currency}
             action={<FormattedMessage id="PayoutRequest.form.action" defaultMessage="Use total balance" />}
             actionProps={{ disabled: balance === 0 }}
             onAdd={handleAddBalance}
@@ -100,7 +100,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             type="number"
             ref={amountInputRef}
             placeholder="Enter the amount"
-            inputProps={{ min: 0, max: formatStripeAmount(balance) }}
+            inputProps={{ min: 0, step: 0.01, max: formatStripeAmount(balance) }}
             completed={completed}
             disabled={balance === 0}
             endAdornment={

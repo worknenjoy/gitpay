@@ -49,7 +49,7 @@ type BalanceCardProps = {
   completed?: boolean;
 }
 
-const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps,completed }: BalanceCardProps) => {
+const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps, completed }: BalanceCardProps) => {
   const classes = useStyles();
 
   const convertedBalance = `${currencyCodeToSymbol(currency)} ${formatStripeAmount(balance)}`

@@ -153,6 +153,7 @@ const Wallets = ({
                 name={wallet.data.name || `Wallet #${wallet.id}`} balance={wallet.data.balance}
                 onAdd={(e) => openAddFundsDialog(e)}
                 action={<FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />}
+                completed={wallet.completed}
               />
             </div>
           ) : (

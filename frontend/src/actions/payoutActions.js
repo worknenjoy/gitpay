@@ -1,9 +1,36 @@
 import axios from 'axios'
 import api from '../consts'
 
+const REQUEST_PAYOUT_REQUESTED = 'REQUEST_PAYOUT_REQUESTED'
+const REQUEST_PAYOUT_SUCCESS = 'REQUEST_PAYOUT_SUCCESS'
+const REQUEST_PAYOUT_FAILED = 'REQUEST_PAYOUT_FAILED'
+
 const SEARCH_PAYOUT_REQUESTED = 'SEARCH_PAYOUT_REQUESTED'
 const SEARCH_PAYOUT_SUCCESS = 'SEARCH_PAYOUT_SUCCESS'
 const SEARCH_PAYOUT_FAILED = 'SEARCH_PAYOUT_FAILED'
+
+const requestPayoutRequested = () => {
+  return {
+    type: REQUEST_PAYOUT_REQUESTED,
+    completed: false
+  }
+}
+
+const requestPayoutSuccess = (data) => {
+  return {
+    type: REQUEST_PAYOUT_SUCCESS,
+    data: data,
+    completed: true
+  }
+}
+
+const requestPayoutFailed = (error) => {
+  return {
+    type: REQUEST_PAYOUT_FAILED,
+    error: error,
+    completed: true
+  }
+}
 
 const searchPayoutRequested = () => {
   return {
@@ -29,6 +56,22 @@ const searchPayoutFailed = (error) => {
   }
 }
 
+const requestPayout = (params) => (dispatch) => {
+  dispatch(requestPayoutRequested())
+  return axios.post(api.API_URL + '/payouts/request', params).then(
+    payout => {
+      if (payout.data) {
+        return dispatch(requestPayoutSuccess(payout.data))
+      }
+      if (payout.error) {
+        return dispatch(requestPayoutFailed(payout.error))
+      }
+    }
+  ).catch(e => {
+    return dispatch(requestPayoutFailed(e))
+  })
+}
+
 const searchPayout = (params) => (dispatch) => {
   dispatch(searchPayoutRequested())
   return axios.get(api.API_URL + '/payouts/search', { params }).then(
@@ -46,8 +89,12 @@ const searchPayout = (params) => (dispatch) => {
 }
 
 export {
+  REQUEST_PAYOUT_REQUESTED,
+  REQUEST_PAYOUT_SUCCESS,
+  REQUEST_PAYOUT_FAILED,
   SEARCH_PAYOUT_REQUESTED,
   SEARCH_PAYOUT_SUCCESS,
   SEARCH_PAYOUT_FAILED,
+  requestPayout,
   searchPayout
 }
