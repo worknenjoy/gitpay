@@ -40,16 +40,18 @@ const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, user }) 
         </Paper>
       ) : (
       <>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-          <BalanceCard
-            name={<FormattedMessage id="payouts.balance" defaultMessage="Balance" />}
-            balance={available[0].amount}
-            currency={available[0].currency}
-            onAdd={(e) => { }}
-            action={<FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />}
-            completed={completed}
-          />
-        </div>
+        {available.map ((item, index) => (
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <BalanceCard
+              name={<FormattedMessage id="payouts.balance" defaultMessage="Balance" />}
+              balance={item.amount}
+              currency={item.currency}
+              onAdd={(e) => { }}
+              action={<FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />}
+              completed={completed}
+            />
+          </div>
+        ))}
         <PayoutsTable payouts={payouts} />
       </>
     )}

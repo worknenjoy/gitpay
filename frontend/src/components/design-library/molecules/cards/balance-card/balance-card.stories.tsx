@@ -8,9 +8,14 @@ const meta = {
     balance: 1500,
     currency: 'USD',
     name: 'Available Balance',
+    completed: true
   },
 };
 
 export default meta;
 
 export const Default = {};
+
+export const Loading = {
+  completed: false
+}
