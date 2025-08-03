@@ -1,6 +1,8 @@
-import SectionTable from 'design-library/molecules/tables/section-table/section-table';
-import { method } from 'lodash';
 import React from 'react';
+import { formatStripeAmount, currencyCodeToSymbol } from 'design-library/molecules/cards/balance-card/balance-card';
+import SectionTable from 'design-library/molecules/tables/section-table/section-table';
+import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field';
+import StatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/status-field/status-field'
 
 const PayoutsTable = ({ payouts }) => {
 
@@ -13,13 +15,13 @@ const PayoutsTable = ({ payouts }) => {
 
   const customColumnRenderer = {
     status: (item: any) => (
-      <span>{item.status}</span>
+      <StatusField status={item.status} />
     ),
     method: (item: any) => (
       <span>{item.transfer_method}</span>
     ),
     amount: (item: any) => (
-      <span>{item.amount}</span>
+      <AmountField value={formatStripeAmount(item.amount)} currency={currencyCodeToSymbol(item.currency)} />
     ),
     createdAt: (item: any) => (
       <span>{new Date(item.createdAt).toLocaleDateString()}</span>

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import api from '../consts'
+import { validToken } from './helpers'
 import { addNotification } from './notificationActions'
 
 const REQUEST_PAYOUT_REQUESTED = 'REQUEST_PAYOUT_REQUESTED'
@@ -77,6 +78,7 @@ const requestPayout = (params) => (dispatch) => {
 }
 
 const searchPayout = (params) => (dispatch) => {
+  validToken()
   dispatch(searchPayoutRequested())
   return axios.get(api.API_URL + '/payouts/search', { params }).then(
     payout => {
@@ -84,10 +86,12 @@ const searchPayout = (params) => (dispatch) => {
         return dispatch(searchPayoutSuccess(payout.data))
       }
       if (payout.error) {
+        dispatch(addNotification('actions.payoutRequest.search.error'))
         return dispatch(searchPayoutFailed(payout.error))
       }
     }
   ).catch(e => {
+    dispatch(addNotification('actions.payoutRequest.search.error'))
     return dispatch(searchPayoutFailed(e))
   })
 }

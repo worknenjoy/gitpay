@@ -39,7 +39,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    onSubmit?.(event, {...data, currency: currency });
+    onSubmit?.(event, {...data, currency: currency, method: 'stripe' });
   };
 
   const handleCustomAmountChange = (selected: boolean) => {

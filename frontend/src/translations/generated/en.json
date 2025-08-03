@@ -205,6 +205,7 @@
   "actions.paymentRequest.list.error": "We could not list your payment requests",
   "actions.payoutRequest.create.error": "We could not create this payout request",
   "actions.payoutRequest.create.success": "Payout request created successfully",
+  "actions.payoutRequest.search.error": "We could not list your payout requests",
   "actions.task.claim.error": "Error on claim issue",
   "actions.task.claim.error.invalid_provider": "Invalid provider",
   "actions.task.claim.error.user_is_not_the_owner": "You cannot claim this issue because you're not the Owner.",

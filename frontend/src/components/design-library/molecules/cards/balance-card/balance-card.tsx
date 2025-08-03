@@ -5,7 +5,7 @@ import currencyMap from './currency-map';
 
 
 //Function to convert currency code to symbol
-function currencyCodeToSymbol(code) {
+export function currencyCodeToSymbol(code) {
   return currencyMap[code.toLowerCase()] || code;
 }
 

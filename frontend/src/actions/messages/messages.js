@@ -541,6 +541,10 @@ const messages = defineMessages({
     id: 'actions.payoutRequest.create.error',
     defaultMessage: 'We could not create this payout request'
   },
+  notificationPayoutRequestSearchError: {
+    id: 'actions.payoutRequest.search.error',
+    defaultMessage: 'We could not list your payout requests'
+  },
 })
 
 export default messages
