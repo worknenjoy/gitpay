@@ -1,5 +1,6 @@
 import axios from 'axios'
 import api from '../consts'
+import { addNotification } from './notificationActions'
 
 const REQUEST_PAYOUT_REQUESTED = 'REQUEST_PAYOUT_REQUESTED'
 const REQUEST_PAYOUT_SUCCESS = 'REQUEST_PAYOUT_SUCCESS'
@@ -61,13 +62,16 @@ const requestPayout = (params) => (dispatch) => {
   return axios.post(api.API_URL + '/payouts/request', params).then(
     payout => {
       if (payout.data) {
+        dispatch(addNotification('actions.payoutRequest.create.success'))
         return dispatch(requestPayoutSuccess(payout.data))
       }
       if (payout.error) {
+        dispatch(addNotification('actions.payoutRequest.create.error'))
         return dispatch(requestPayoutFailed(payout.error))
       }
     }
   ).catch(e => {
+    dispatch(addNotification('actions.payoutRequest.create.error', e))
     return dispatch(requestPayoutFailed(e))
   })
 }
