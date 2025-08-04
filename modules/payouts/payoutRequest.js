@@ -35,7 +35,7 @@ module.exports = Promise.method(async function payoutRequest(params) {
       type: 'payout_request'
     }
   }, {
-    stripeAccount: user.account_id,
+    stripeAccount: user.account_id
   })
 
   if(!stripePayout) {
