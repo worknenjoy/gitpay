@@ -112,7 +112,7 @@ describe("Payouts", () => {
         .post('/payouts/request')
         .set('Authorization', user.headers.authorization)
         .send({
-          amount: 10000,
+          amount: 100,
           currency: 'usd',
           method: 'bank_account',
         });
