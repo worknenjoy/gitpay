@@ -102,7 +102,8 @@ describe("Payouts", () => {
           id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
           amount: 100,
           currency: 'usd',
-          status: 'pending',
+          status: 'created',
+          method: 'bank_account',
         });
       const user = await registerAndLogin(agent, {
         account_id: 'acct_1CZ5vkLlCJ9CeQRe',
@@ -117,10 +118,10 @@ describe("Payouts", () => {
         });
       expect(res.body).to.exist;
       expect(res.body.id).to.exist;
-      expect(res.body.amount).to.equal('100');
+      expect(res.body.amount).to.equal(100);
       expect(res.body.currency).to.equal('usd');
-      expect(res.body.method).to.equal('stripe');
-      expect(res.body.status).to.equal('pending');
+      expect(res.body.method).to.equal('bank_account');
+      expect(res.body.status).to.equal('created');
     });
   })
 
